@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1388771897 source:c:\users\degryll\documents\github\zbe\src\zbe\main.cpp
+	<iostream>
+	"ZBE/test.h"
+
+1388765012 c:\users\degryll\documents\github\zbe\include\test.h
+
+1388771948 c:\users\degryll\documents\github\zbe\include\zbe\test.h
+

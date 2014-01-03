@@ -2,22 +2,29 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="ZBE" />
+		<Option title="ZBETest" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="../../../bin/Debug/ZBE" prefix_auto="1" extension_auto="1" />
+				<Option output="../../../bin/Debug/ZBETest" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add directory="../../../src/ZBETest/include" />
 					<Add directory="../../../include" />
+					<Add directory="../../../src/ZBE" />
+					<Add directory="../../../extlibs/googletest/include" />
 				</Compiler>
+				<Linker>
+					<Add library="..\..\..\extlibs\googletest\lib\libgtest.dll.a" />
+					<Add directory="../../../extlibs/googletest/lib" />
+				</Linker>
 			</Target>
 			<Target title="Release">
-				<Option output="../../../bin/Release/ZBE" prefix_auto="1" extension_auto="1" />
+				<Option output="../../../bin/Release/ZBETest" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -33,13 +40,13 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="../../../include/ZBE/test.h" />
-		<Unit filename="../../../src/ZBE/main.cpp" />
+		<Unit filename="../../../src/ZBETest/include/unittest.h" />
+		<Unit filename="../../../src/ZBETest/src/main.cpp" />
+		<Unit filename="../../../src/ZBETest/src/unittest.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
 			<debugger />
-			<lib_finder disable_auto="1" />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

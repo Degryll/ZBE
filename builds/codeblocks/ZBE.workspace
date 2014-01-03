@@ -2,5 +2,6 @@
 <CodeBlocks_workspace_file>
 	<Workspace title="Workspace">
 		<Project filename="ZBE/ZBE.cbp" />
+		<Project filename="ZBETest/ZBETest.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>
