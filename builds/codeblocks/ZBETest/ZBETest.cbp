@@ -17,10 +17,13 @@
 					<Add directory="../../../include" />
 					<Add directory="../../../src/ZBE" />
 					<Add directory="../../../extlibs/googletest/include" />
+					<Add directory="../../../extlibs/SDL2/2.0.1/x86_64-w64-mingw32/include" />
 				</Compiler>
 				<Linker>
 					<Add library="..\..\..\extlibs\googletest\lib\libgtest.dll.a" />
+					<Add library="..\..\..\extlibs\SDL2\2.0.1\x86_64-w64-mingw32\lib\libSDL2.dll.a" />
 					<Add directory="../../../extlibs/googletest/lib" />
+					<Add directory="../../../extlibs/SDL2/2.0.1/x86_64-w64-mingw32/lib" />
 				</Linker>
 			</Target>
 			<Target title="Release">
