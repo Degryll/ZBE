@@ -1,9 +1,9 @@
 # depslib dependency file v1.0
-1394386883 source:c:\users\degryll\documents\github\zbe\src\zbe\main.cpp
-	<iostream>
+1394392733 source:c:\users\degryll\documents\github\zbe\src\zbe\main.cpp
 	<cstdio>
-	<SDL2/SDL.h>
-	"ZBE/test.h"
+	"batismain.h"
+	"degryllmain.h"
+	"ludomain.h"
 
 1388765012 c:\users\degryll\documents\github\zbe\include\test.h
 
@@ -961,4 +961,25 @@
 	"close_code.h"
 
 1394387321 c:\users\bautista\documents\github\zbe\include\zbe\test.h
+
+1394392749 source:c:\users\degryll\documents\github\zbe\src\zbe\batismain.cpp
+	"ZBE/batismain.h"
+
+1394392826 c:\users\degryll\documents\github\zbe\src\zbe\batismain.h
+	<cstdio>
+
+1394391388 source:c:\users\degryll\documents\github\zbe\src\zbe\degryllmain.cpp
+	"ZBE/degryllmain.h"
+
+1394391096 c:\users\degryll\documents\github\zbe\src\zbe\degryllmain.h
+	<iostream>
+	<cstdio>
+	<SDL2/SDL.h>
+	"ZBE/test.h"
+
+1394392654 source:c:\users\degryll\documents\github\zbe\src\zbe\ludomain.cpp
+	"ZBE/ludomain.h"
+
+1394392835 c:\users\degryll\documents\github\zbe\src\zbe\ludomain.h
+	<cstdio>
 

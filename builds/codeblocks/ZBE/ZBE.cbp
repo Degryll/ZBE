@@ -16,6 +16,7 @@
 					<Add option="-g" />
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/SDL2/2.0.1/i686-w64-mingw32/include" />
+					<Add directory="../../../src" />
 				</Compiler>
 				<Linker>
 					<Add option="-lmingw32 -lSDL2main -lSDL2" />
@@ -40,6 +41,12 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="../../../include/ZBE/test.h" />
+		<Unit filename="../../../src/ZBE/batismain.cpp" />
+		<Unit filename="../../../src/ZBE/batismain.h" />
+		<Unit filename="../../../src/ZBE/degryllmain.cpp" />
+		<Unit filename="../../../src/ZBE/degryllmain.h" />
+		<Unit filename="../../../src/ZBE/ludomain.cpp" />
+		<Unit filename="../../../src/ZBE/ludomain.h" />
 		<Unit filename="../../../src/ZBE/main.cpp" />
 		<Extensions>
 			<code_completion />

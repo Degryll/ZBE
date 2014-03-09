@@ -1,8 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_workspace_layout_file>
-	<ActiveProject path="ZBETest/ZBETest.cbp" />
-<<<<<<< HEAD
-	<PreferredTarget name="Debug" />
-=======
->>>>>>> 9a08f55e44aa6b7850411a2cce6670a3e465c798
+	<ActiveProject path="ZBE/ZBE.cbp" />
 </CodeBlocks_workspace_layout_file>
