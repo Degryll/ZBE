@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="ZBE" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug-Win32">
+				<Option output="../../../bin/Debug/ZBE" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option use_console_runner="0" />
+				<Compiler>
+					<Add option="-g" />
+					<Add directory="../../../include" />
+					<Add directory="../../../extlibs/SDL2/2.0.1/i686-w64-mingw32/include" />
+					<Add directory="../../../src" />
+				</Compiler>
+				<Linker>
+					<Add option="-lmingw32 -lSDL2main -lSDL2" />
+					<Add directory="../../../extlibs/SDL2/2.0.1/i686-w64-mingw32/lib" />
+				</Linker>
+			</Target>
+			<Target title="Release-Win32">
+				<Option output="../../../bin/Release/ZBE" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+			<Target title="Debug-Linux64">
+				<Option output="../../../bin/Debug/ZBE" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option use_console_runner="0" />
+				<Compiler>
+					<Add option="-g" />
+					<Add directory="../../../include" />
+					<Add directory="../../../extlibs/SDL2/2.0.1/i686-w64-mingw32/include" />
+				</Compiler>
+				<Linker>
+					<Add option="-lSDL2main -lSDL2" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+		</Compiler>
+		<Unit filename="../../../include/ZBE/test.h" />
+		<Unit filename="../../../src/ZBE/batismain.cpp" />
+		<Unit filename="../../../src/ZBE/batismain.h" />
+		<Unit filename="../../../src/ZBE/degryllmain.cpp" />
+		<Unit filename="../../../src/ZBE/degryllmain.h" />
+		<Unit filename="../../../src/ZBE/ludomain.cpp" />
+		<Unit filename="../../../src/ZBE/ludomain.h" />
+		<Unit filename="../../../src/ZBE/main.cpp" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
