@@ -1,7 +1,6 @@
 
 #include "ZBE/degryllmain.h"
 
-#include<pthread.h>
 #include <SDL2/SDL.h>
 
 int degryllmain(int argc, char* argv[]) {
@@ -24,7 +23,7 @@ int degryllmain(int argc, char* argv[]) {
         return 1;
     }
 
-    SDL_Surface *bmp = SDL_LoadBMP("pandarojo.bmp");
+    SDL_Surface *bmp = SDL_LoadBMP("data/images/test/pandarojo.bmp");
     if (bmp == 0){
         std::cout << "SDL_LoadBMP Error: " << SDL_GetError() << std::endl;
         return 1;

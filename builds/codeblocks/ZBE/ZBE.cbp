@@ -8,6 +8,7 @@
 		<Build>
 			<Target title="Debug-Win32">
 				<Option output="../../../bin/Debug/ZBE" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../../../../ZBE" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -27,6 +28,7 @@
 			</Target>
 			<Target title="Release-Win32">
 				<Option output="../../../bin/Release/ZBE" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../../../../ZBE" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -46,6 +48,7 @@
 			</Target>
 			<Target title="Debug-Linux64">
 				<Option output="../../../bin/Debug/ZBE" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../../../../ZBE" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -64,6 +67,7 @@
 			</Target>
 			<Target title="Release-Linux64">
 				<Option output="../../../bin/Release/ZBE" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../../../../ZBE" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -85,9 +89,11 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="../../../include/ZBE/core/system/SysError.h" />
 		<Unit filename="../../../include/ZBE/test.h" />
 		<Unit filename="../../../src/ZBE/batismain.cpp" />
 		<Unit filename="../../../src/ZBE/batismain.h" />
+		<Unit filename="../../../src/ZBE/core/system/SysError.cpp" />
 		<Unit filename="../../../src/ZBE/degryllmain.cpp" />
 		<Unit filename="../../../src/ZBE/degryllmain.h" />
 		<Unit filename="../../../src/ZBE/ludomain.cpp" />

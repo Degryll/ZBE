@@ -8,6 +8,7 @@
 		<Build>
 			<Target title="Debug-Win32">
 				<Option output="../../../bin/Debug/ZBETest" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../../../../ZBE" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -20,14 +21,14 @@
 					<Add directory="../../../extlibs/SDL2/2.0.1/x86_64-w64-mingw32/include" />
 				</Compiler>
 				<Linker>
-					<Add library="../../../extlibs/googletest/lib/libgtest.dll.a" />
-					<Add library="../../../extlibs/SDL2/2.0.1/x86_64-w64-mingw32/lib/libSDL2.dll.a" />
+					<Add library="gtest" />
 					<Add directory="../../../extlibs/googletest/lib" />
 					<Add directory="../../../extlibs/SDL2/2.0.1/x86_64-w64-mingw32/lib" />
 				</Linker>
 			</Target>
 			<Target title="Release-Win32">
 				<Option output="../../../bin/Release/ZBETest" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../../../../ZBE" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -41,13 +42,14 @@
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add library="../../../extlibs/googletest/lib/libgtest.dll.a" />
+					<Add library="gtest" />
 					<Add directory="../../../extlibs/googletest/lib" />
 					<Add directory="../../../extlibs/SDL2/2.0.1/x86_64-w64-mingw32/lib" />
 				</Linker>
 			</Target>
 			<Target title="Debug-Linux64">
 				<Option output="../../../bin/Debug/ZBETest" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../../../../ZBE" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -67,6 +69,7 @@
 			</Target>
 			<Target title="Release-Linux64">
 				<Option output="../../../bin/Release/ZBETest" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../../../../ZBE" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />

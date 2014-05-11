@@ -968,16 +968,17 @@
 1394392826 c:\users\degryll\documents\github\zbe\src\zbe\batismain.h
 	<cstdio>
 
-1394391388 source:c:\users\degryll\documents\github\zbe\src\zbe\degryllmain.cpp
+1399826390 source:c:\users\degryll\documents\github\zbe\src\zbe\degryllmain.cpp
 	"ZBE/degryllmain.h"
+	<SDL2/SDL.h>
 
-1394391096 c:\users\degryll\documents\github\zbe\src\zbe\degryllmain.h
+1399825820 c:\users\degryll\documents\github\zbe\src\zbe\degryllmain.h
 	<iostream>
 	<cstdio>
 	<SDL2/SDL.h>
 	"ZBE/test.h"
 
-1394392654 source:c:\users\degryll\documents\github\zbe\src\zbe\ludomain.cpp
+1394392786 source:c:\users\degryll\documents\github\zbe\src\zbe\ludomain.cpp
 	"ZBE/ludomain.h"
 
 1394392835 c:\users\degryll\documents\github\zbe\src\zbe\ludomain.h
@@ -1644,4 +1645,11 @@
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
+
+1394996994 source:c:\users\degryll\documents\github\zbe\src\zbe\core\system\syserror.cpp
+	<string>
+	"ZBE/core/system/SysError.h"
+
+1394996438 c:\users\degryll\documents\github\zbe\include\zbe\core\system\syserror.h
+	<string>
 
