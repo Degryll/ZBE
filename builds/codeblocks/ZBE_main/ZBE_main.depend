@@ -66,3 +66,25 @@
 1408880915 c:\users\degryll\documents\github\zbe\include\zbe\core\utf8.h
 	<string>
 
+1409332853 source:/home/degryll/programing/github/ZBE/src/ZBE_main/src/batismain.cpp
+	"batismain.h"
+
+1409332853 /home/degryll/programing/github/ZBE/src/ZBE_main/include/batismain.h
+	<cstdio>
+
+1409332853 source:/home/degryll/programing/github/ZBE/src/ZBE_main/src/ludomain.cpp
+	"ludomain.h"
+
+1409332853 /home/degryll/programing/github/ZBE/src/ZBE_main/include/ludomain.h
+	<cstdio>
+
+1409332853 source:/home/degryll/programing/github/ZBE/src/ZBE_main/src/main.cpp
+	<cstdio>
+	"batismain.h"
+	"degryllmain.h"
+	"ludomain.h"
+
+1409332853 /home/degryll/programing/github/ZBE/src/ZBE_main/include/degryllmain.h
+	<iostream>
+	<cstdio>
+

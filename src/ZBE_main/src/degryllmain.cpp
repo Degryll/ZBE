@@ -17,19 +17,19 @@
 int degryllmain(int argc, char* argv[]) {
   printf("--- Degryll main ---\n\n");
 
-  zbe::Logger::createInstance()->setDefaultWriters();
-
-  int i = 42;
-  float d = 3.1416;
-  char a = 65;
-  std::string s = "Hola Mundo!";
-  int *pi = &i;
-
-  ZBE_LOG_INFO("Prueba Info." << d << "añadiendo un double.");
-  ZBE_LOG_DEBUG("Prueba Debug." << i << "un int y" << pi << "su puntero.");
-  ZBE_LOG_WARNING("Prueba Warning." << a << "un caracter");
-  ZBE_LOG_ERROR("Prueba Error." << s << "una cadena.");
-  ZBE_LOG("[PROPIA]","Prueba Propia.");
+//  zbe::Logger::createInstance()->setDefaultWriters();
+//
+//  int i = 42;
+//  float d = 3.1416;
+//  char a = 65;
+//  std::string s = "Hola Mundo!";
+//  int *pi = &i;
+//
+//  ZBE_LOG_INFO("Prueba Info." << d << "aÃ±adiendo un double.");
+//  ZBE_LOG_DEBUG("Prueba Debug." << i << "un int y" << pi << "su puntero.");
+//  ZBE_LOG_WARNING("Prueba Warning." << a << "un caracter");
+//  ZBE_LOG_ERROR("Prueba Error." << s << "una cadena.");
+//  ZBE_LOG("[PROPIA]","Prueba Propia.");
 
 
 //////////////////////////////////////////////////

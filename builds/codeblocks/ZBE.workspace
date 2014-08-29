@@ -2,10 +2,10 @@
 <CodeBlocks_workspace_file>
 	<Workspace title="Workspace">
 		<Project filename="ZBE/ZBE.cbp" />
-		<Project filename="ZBE_main/ZBE_main.cbp">
+		<Project filename="ZBETest/ZBETest.cbp">
 			<Depends filename="ZBE/ZBE.cbp" />
 		</Project>
-		<Project filename="ZBETest/ZBETest.cbp">
+		<Project filename="ZBE_main/ZBE_main.cbp">
 			<Depends filename="ZBE/ZBE.cbp" />
 		</Project>
 	</Workspace>

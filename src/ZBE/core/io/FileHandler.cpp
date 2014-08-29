@@ -74,7 +74,7 @@ bool FileHandler::rmdir(const char* dirname) {
   std::wstring fn;
   zbe::utf8to16(back_inserter(fn),dirname);
 
-  return (RemoveDirectoryW(fn.c_str()));
+  return (!RemoveDirectoryW(fn.c_str()));
 
 #endif // OS
 }
@@ -89,7 +89,7 @@ FileHandler::FileHandler(const char* filename, const char* mode, bool createPath
     }
   }
 
-  if(fopen(filename, mode)) {
+  if(!(f=fopen(filename, mode))) {
     SysError::setError("FILE ERROR: Can't open file.");
   }
 

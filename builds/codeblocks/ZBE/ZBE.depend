@@ -38,3 +38,42 @@
 	"ZBE/core/utf8.h"
 	"ZBE/core/system/SysError.h"
 
+1409332853 source:/home/degryll/programing/github/ZBE/src/ZBE/core/io/FileHandler.cpp
+	"ZBE/core/io/FileHandler.h"
+	"ZBE/core/system/SysError.h"
+	"ZBE/core/utf8.h"
+	"sys/stat.h"
+	<stdio.h>
+
+1409332853 /home/degryll/programing/github/ZBE/include/ZBE/core/io/FileHandler.h
+	<errno.h>
+	<windows.h>
+	<string>
+
+1409332853 /home/degryll/programing/github/ZBE/include/ZBE/core/system/SysError.h
+	<string>
+
+1409332853 /home/degryll/programing/github/ZBE/include/ZBE/core/utf8.h
+	<string>
+
+1409332853 source:/home/degryll/programing/github/ZBE/src/ZBE/core/system/Logger.cpp
+	"ZBE/core/system/Logger.h"
+	"ZBE/core/io/FileHandler.h"
+	<iostream>
+
+1409332853 /home/degryll/programing/github/ZBE/include/ZBE/core/system/Logger.h
+	<vector>
+	<forward_list>
+	<string>
+	<sstream>
+	<mutex>
+
+1409332853 source:/home/degryll/programing/github/ZBE/src/ZBE/core/system/SysError.cpp
+	<string>
+	"ZBE/core/system/SysError.h"
+
+1409332853 source:/home/degryll/programing/github/ZBE/src/ZBE/core/utf8.cpp
+	<string>
+	"ZBE/core/utf8.h"
+	"ZBE/core/system/SysError.h"
+

@@ -49,7 +49,7 @@
 				<Option working_dir="../../../../ZBE" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
-				<Option compiler="mingw_64-bit_compiler" />
+				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-std=c++11" />
 					<Add option="-g" />
@@ -68,7 +68,7 @@
 				<Option working_dir="../../../../ZBE" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
-				<Option compiler="mingw_64-bit_compiler" />
+				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
 					<Add option="-std=c++11" />

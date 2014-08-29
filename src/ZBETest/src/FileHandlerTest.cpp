@@ -23,7 +23,7 @@ TEST(FileHandler, OpenClose) {
 
   // Open existent file
   zbe::FileHandler *f = new zbe::FileHandler("src/ZBETest/src/FileHandlerTest.cpp","r");
-  EXPECT_EQ(0,zbe::SysError::getNErrors()) << "Open file.";
+  EXPECT_EQ(0,zbe::SysError::getNErrors()) << "Open file:" << zbe::SysError::getLastErrorString();
   delete f;
   EXPECT_EQ(0,zbe::SysError::getNErrors()) << "Close file.";
 
@@ -90,7 +90,7 @@ TEST(FileHandler, CreateDeleteDirFile) {
   EXPECT_TRUE(zbe::FileHandler::exist("foo/bar")) << "The file and dir still exist.";
   EXPECT_EQ(0,zbe::FileHandler::rm("foo/bar")) << "Delete file.";
   EXPECT_FALSE(zbe::FileHandler::exist("foo/bar")) << "The file no longer exist.";
-  EXPECT_TRUE(zbe::FileHandler::rmdir("foo")) << "Delete dir.";
+  EXPECT_EQ(0,zbe::FileHandler::rmdir("foo")) << "Delete dir.";
   EXPECT_FALSE(zbe::FileHandler::existDir("foo")) << "The dir no longer exist.";
   EXPECT_EQ(0,zbe::SysError::getNErrors()) << "No errors.";
 
@@ -110,7 +110,7 @@ TEST(FileHandler, CreateDeleteDirFile) {
   EXPECT_TRUE(zbe::FileHandler::exist(filename)) << "The UTF-8 file and dir still exist.";
   EXPECT_EQ(0,zbe::FileHandler::rm(filename)) << "Delete UTF-8 file.";
   EXPECT_FALSE(zbe::FileHandler::exist(filename)) << "The UTF-8 file no longer exist.";
-  EXPECT_TRUE(zbe::FileHandler::rmdir(dirname)) << "Delete UTF-8 dir.";
+  EXPECT_EQ(0,zbe::FileHandler::rmdir(dirname)) << "Delete UTF-8 dir.";
   EXPECT_FALSE(zbe::FileHandler::existDir(dirname)) << "The UTF-8 dir no longer exist.";
   EXPECT_EQ(0,zbe::SysError::getNErrors()) << "No errors.";
 }
