@@ -1,0 +1,3 @@
+﻿"testutf82.txt" "Hello, 世界" 日ш fin
+asdflo, 世
+界" 日ш hello

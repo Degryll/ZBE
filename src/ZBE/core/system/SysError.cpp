@@ -1,6 +1,6 @@
 /**
  * Copyright 2012 Batis Degryll Ludo
- * @file degryllmain.cpp
+ * @file SysError.cpp
  * @since 2013-11-23
  * @date 2014-03-16
  * @author Degryll
@@ -16,11 +16,11 @@ namespace zbe {
 int SysError::nerrors = 0;
 std::string SysError::errorString = "";
 
-int SysError::getErrors() {
+int SysError::getNErrors() {
   return (nerrors);
 }
 
-std::string SysError::getErrorString() {
+std::string SysError::getLastErrorString() {
   return (errorString);
 }
 
@@ -29,6 +29,11 @@ void SysError::setError(std::string errorString) {
                 SysError::errorString = errorString;
         }
         SysError::nerrors++;
+}
+
+void SysError::clear() {
+  SysError::nerrors = 0;
+  SysError::errorString = "";
 }
 
 }  // namespace zbe

@@ -1,0 +1,68 @@
+# depslib dependency file v1.0
+1408728337 source:c:\users\degryll\documents\github\zbe\src\zbe_main\src\batismain.cpp
+	"batismain.h"
+
+1394392826 c:\users\degryll\documents\github\zbe\src\zbe_main\include\batismain.h
+	<cstdio>
+
+1408728357 source:c:\users\degryll\documents\github\zbe\src\zbe_main\src\ludomain.cpp
+	"ludomain.h"
+
+1394392835 c:\users\degryll\documents\github\zbe\src\zbe_main\include\ludomain.h
+	<cstdio>
+
+1394392733 source:c:\users\degryll\documents\github\zbe\src\zbe_main\src\main.cpp
+	<cstdio>
+	"batismain.h"
+	"degryllmain.h"
+	"ludomain.h"
+
+1408991257 c:\users\degryll\documents\github\zbe\src\zbe_main\include\degryllmain.h
+	<iostream>
+	<cstdio>
+
+1394386480 c:\users\degryll\documents\github\zbe\include\zbe\test.h
+
+1408999811 source:c:\users\degryll\documents\github\zbe\src\zbe_main\src\degryllmain.cpp
+	"degryllmain.h"
+	<sstream>
+	<fstream>
+	<cstdio>
+	"ZBE/core/system/SysError.h"
+	"ZBE/core/system/Logger.h"
+	"ZBE/core/io/FileHandler.h"
+	"utf8.h"
+	"ZBE/core/utf8.h"
+
+1408458196 c:\users\degryll\documents\github\zbe\include\zbe\core\system\syserror.h
+	<string>
+
+1408998931 c:\users\degryll\documents\github\zbe\include\zbe\core\system\logger.h
+	<vector>
+	<forward_list>
+	<string>
+	<sstream>
+	<mutex>
+
+1408998335 c:\users\degryll\documents\github\zbe\include\zbe\core\io\filehandler.h
+	<windows.h>
+	<sys/stat.h>
+	<string>
+
+1360466712 c:\users\degryll\documents\github\zbe\extlibs\utf8cpp\source\utf8.h
+	"utf8/checked.h"
+	"utf8/unchecked.h"
+
+1361151336 c:\users\degryll\documents\github\zbe\extlibs\utf8cpp\source\utf8\checked.h
+	"core.h"
+	<stdexcept>
+
+1360466712 c:\users\degryll\documents\github\zbe\extlibs\utf8cpp\source\utf8\core.h
+	<iterator>
+
+1360466712 c:\users\degryll\documents\github\zbe\extlibs\utf8cpp\source\utf8\unchecked.h
+	"core.h"
+
+1408880915 c:\users\degryll\documents\github\zbe\include\zbe\core\utf8.h
+	<string>
+

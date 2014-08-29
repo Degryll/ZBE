@@ -1,9 +1,9 @@
 # depslib dependency file v1.0
-1399827883 source:c:\users\degryll\documents\github\zbe\src\zbetest\src\main.cpp
+1408632253 source:c:\users\degryll\documents\github\zbe\src\zbetest\src\main.cpp
 	<stdio.h>
 	"gtest/gtest.h"
 
-1394389848 source:c:\users\degryll\documents\github\zbe\src\zbetest\src\unittest.cpp
+1408631584 source:c:\users\degryll\documents\github\zbe\src\zbetest\src\unittest.cpp
 	"unittest.h"
 
 1394386480 c:\users\degryll\documents\github\zbe\src\zbetest\include\unittest.h
@@ -455,7 +455,7 @@
 
 1399408984 /home/degryll/programacion/github/ZBE/include/ZBE/test.h
 
-1399825943 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\gtest.h
+1379526510 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\gtest.h
 	<limits>
 	<ostream>
 	<vector>
@@ -470,7 +470,7 @@
 	"gtest/gtest-typed-test.h"
 	"gtest/gtest_pred_impl.h"
 
-1399825943 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\internal\gtest-internal.h
+1379526510 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\internal\gtest-internal.h
 	"gtest/internal/gtest-port.h"
 	<stdlib.h>
 	<sys/types.h>
@@ -488,7 +488,7 @@
 	"gtest/internal/gtest-filepath.h"
 	"gtest/internal/gtest-type-util.h"
 
-1399825943 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\internal\gtest-port.h
+1379526510 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\internal\gtest-port.h
 	<ctype.h>
 	<stddef.h>
 	<stdlib.h>
@@ -518,42 +518,42 @@
 	<tuple>
 	<vector>
 
-1399825943 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\internal\gtest-tuple.h
+1379526510 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\internal\gtest-tuple.h
 	<utility>
 
-1399825943 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\gtest-message.h
+1379526510 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\gtest-message.h
 	<limits>
 	"gtest/internal/gtest-port.h"
 
-1399825943 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\internal\gtest-string.h
+1379526510 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\internal\gtest-string.h
 	<mem.h>
 	<string.h>
 	<string>
 	"gtest/internal/gtest-port.h"
 
-1399825943 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\internal\gtest-filepath.h
+1379526510 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\internal\gtest-filepath.h
 	"gtest/internal/gtest-string.h"
 
-1399825943 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\internal\gtest-type-util.h
+1379526510 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\internal\gtest-type-util.h
 	"gtest/internal/gtest-port.h"
 	<cxxabi.h>
 	<acxx_demangle.h>
 
-1399825943 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\gtest-death-test.h
+1379526510 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\gtest-death-test.h
 	"gtest/internal/gtest-death-test-internal.h"
 
-1399825943 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\internal\gtest-death-test-internal.h
+1379526510 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\internal\gtest-death-test-internal.h
 	"gtest/internal/gtest-internal.h"
 	<stdio.h>
 
-1399825943 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\gtest-param-test.h
+1379526510 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\gtest-param-test.h
 	"gtest/internal/gtest-port.h"
 	<utility>
 	"gtest/internal/gtest-internal.h"
 	"gtest/internal/gtest-param-util.h"
 	"gtest/internal/gtest-param-util-generated.h"
 
-1399825943 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\internal\gtest-param-util.h
+1379526510 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\internal\gtest-param-util.h
 	<iterator>
 	<utility>
 	<vector>
@@ -562,12 +562,12 @@
 	"gtest/internal/gtest-port.h"
 	"gtest/gtest-printers.h"
 
-1399825943 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\internal\gtest-linked_ptr.h
+1379526510 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\internal\gtest-linked_ptr.h
 	<stdlib.h>
 	<assert.h>
 	"gtest/internal/gtest-port.h"
 
-1399825943 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\gtest-printers.h
+1379526510 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\gtest-printers.h
 	<ostream>
 	<sstream>
 	<string>
@@ -576,21 +576,50 @@
 	"gtest/internal/gtest-port.h"
 	"gtest/internal/gtest-internal.h"
 
-1399825943 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\internal\gtest-param-util-generated.h
+1379526510 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\internal\gtest-param-util-generated.h
 	"gtest/internal/gtest-param-util.h"
 	"gtest/internal/gtest-port.h"
 
-1399825943 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\gtest_prod.h
+1379526510 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\gtest_prod.h
 
-1399825943 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\gtest-test-part.h
+1379526510 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\gtest-test-part.h
 	<iosfwd>
 	<vector>
 	"gtest/internal/gtest-internal.h"
 	"gtest/internal/gtest-string.h"
 
-1399825943 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\gtest-typed-test.h
+1379526510 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\gtest-typed-test.h
 	"gtest/internal/gtest-port.h"
 	"gtest/internal/gtest-type-util.h"
 
-1399825943 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\gtest_pred_impl.h
+1379526510 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\gtest_pred_impl.h
+
+1409000992 source:c:\users\degryll\documents\github\zbe\src\zbetest\src\filehandlertest.cpp
+	"gtest/gtest.h"
+	"ZBE/core/io/FileHandler.h"
+	"ZBE/core/system/SysError.h"
+
+1408998335 c:\users\degryll\documents\github\zbe\include\zbe\core\io\filehandler.h
+	<windows.h>
+	<sys/stat.h>
+	<string>
+
+1408819159 source:c:\users\degryll\documents\github\zbe\src\zbetest\src\syserrortest.cpp
+	"gtest/gtest.h"
+	"ZBE/core/system/SysError.h"
+
+1408458196 c:\users\degryll\documents\github\zbe\include\zbe\core\system\syserror.h
+	<string>
+
+1409275230 source:c:\users\degryll\documents\github\zbe\src\zbetest\src\loggertest.cpp
+	"gtest/gtest.h"
+	"ZBE/core/system/Logger.h"
+	"ZBE/core/system/SysError.h"
+
+1409275273 c:\users\degryll\documents\github\zbe\include\zbe\core\system\logger.h
+	<vector>
+	<forward_list>
+	<string>
+	<sstream>
+	<mutex>
 

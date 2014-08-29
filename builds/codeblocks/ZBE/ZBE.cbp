@@ -8,16 +8,17 @@
 		<Build>
 			<Target title="Debug-Win32">
 				<Option output="../../../bin/Debug/ZBE" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="../../../../ZBE" />
+				<Option working_dir="" />
 				<Option object_output="obj/Debug/" />
-				<Option type="1" />
+				<Option type="2" />
 				<Option compiler="gcc" />
-				<Option use_console_runner="0" />
 				<Compiler>
 					<Add option="-g" />
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/SDL2/2.0.1/i686-w64-mingw32/include" />
 					<Add directory="../../../src" />
+					<Add directory="include/ZBE/core/io" />
+					<Add directory="../../../extlibs/utf8cpp/source" />
 				</Compiler>
 				<Linker>
 					<Add library="mingw32" />
@@ -34,9 +35,12 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add option="-std=c++11" />
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/SDL2/2.0.1/i686-w64-mingw32/include" />
 					<Add directory="../../../src" />
+					<Add directory="include/ZBE/core/io" />
+					<Add directory="../../../extlibs/utf8cpp/source" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -58,6 +62,8 @@
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/SDL2/2.0.1/linux-x64/include" />
 					<Add directory="../../../src" />
+					<Add directory="include/ZBE/core/io" />
+					<Add directory="../../../extlibs/utf8cpp/source" />
 				</Compiler>
 				<Linker>
 					<Add library="SDL2main" />
@@ -73,9 +79,12 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add option="-std=c++11" />
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/SDL2/2.0.1/linux-x64/include" />
 					<Add directory="../../../src" />
+					<Add directory="include/ZBE/core/io" />
+					<Add directory="../../../extlibs/utf8cpp/source" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -84,21 +93,69 @@
 					<Add directory="../../../extlibs/SDL2/2.0.1/linux-x64/lib" />
 				</Linker>
 			</Target>
+			<Target title="Debug-Win64">
+				<Option output="../../../bin/Debug/ZBE_x64d" imp_lib="../../../lib/libZBE_x64d.a" def_file="$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME).def" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../../../../ZBE" />
+				<Option object_output="obj/Debug/" />
+				<Option type="3" />
+				<Option compiler="mingw_64-bit_compiler" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-std=c++11" />
+					<Add option="-g" />
+					<Add option="-m64" />
+					<Add option="-static-libstdc++" />
+					<Add directory="../../../include" />
+					<Add directory="../../../extlibs/SDL2/2.0.1/x86_64-w64-mingw32/include" />
+					<Add directory="../../../src" />
+					<Add directory="include/ZBE/core/io" />
+					<Add directory="../../../extlibs/utf8cpp/source" />
+				</Compiler>
+				<Linker>
+					<Add library="mingw32" />
+					<Add library="SDL2main" />
+					<Add library="SDL2" />
+					<Add directory="../../../extlibs/SDL2/2.0.1/x86_64-w64-mingw32/lib" />
+				</Linker>
+			</Target>
+			<Target title="Release-Win64">
+				<Option output="../../../bin/Release/ZBE_x64" imp_lib="../../../lib/libZBE_x64.a" def_file="$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME).def" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../../../../ZBE" />
+				<Option object_output="obj/Release/" />
+				<Option type="3" />
+				<Option compiler="mingw_64-bit_compiler" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-std=c++11" />
+					<Add option="-m64" />
+					<Add directory="../../../include" />
+					<Add directory="../../../extlibs/SDL2/2.0.1/x86_64-w64-mingw32/include" />
+					<Add directory="../../../src" />
+					<Add directory="include/ZBE/core/io" />
+					<Add directory="../../../extlibs/utf8cpp/source" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="mingw32" />
+					<Add library="SDL2main" />
+					<Add library="SDL2" />
+					<Add directory="../../../extlibs/SDL2/2.0.1/x86_64-w64-mingw32/lib" />
+				</Linker>
+			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="../../../include/ZBE/core/io/FileHandler.h" />
+		<Unit filename="../../../include/ZBE/core/system/Logger.h" />
 		<Unit filename="../../../include/ZBE/core/system/SysError.h" />
-		<Unit filename="../../../include/ZBE/test.h" />
-		<Unit filename="../../../src/ZBE/batismain.cpp" />
-		<Unit filename="../../../src/ZBE/batismain.h" />
+		<Unit filename="../../../include/ZBE/core/utf8.h" />
+		<Unit filename="../../../src/ZBE/core/io/FileHandler.cpp" />
+		<Unit filename="../../../src/ZBE/core/system/Logger.cpp" />
 		<Unit filename="../../../src/ZBE/core/system/SysError.cpp" />
-		<Unit filename="../../../src/ZBE/degryllmain.cpp" />
-		<Unit filename="../../../src/ZBE/degryllmain.h" />
-		<Unit filename="../../../src/ZBE/ludomain.cpp" />
-		<Unit filename="../../../src/ZBE/ludomain.h" />
-		<Unit filename="../../../src/ZBE/main.cpp" />
+		<Unit filename="../../../src/ZBE/core/utf8.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
