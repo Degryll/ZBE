@@ -6,47 +6,6 @@
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
-			<Target title="Debug-Win32">
-				<Option output="../../../bin/Debug/ZBETest" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="../../../../ZBE" />
-				<Option object_output="obj/Debug/" />
-				<Option type="1" />
-				<Option compiler="gcc" />
-				<Compiler>
-					<Add option="-g" />
-					<Add directory="../../../src/ZBETest/include" />
-					<Add directory="../../../include" />
-					<Add directory="../../../src/ZBE" />
-					<Add directory="../../../extlibs/googletest/include" />
-					<Add directory="../../../extlibs/SDL2/2.0.1/i686-w64-mingw32/include" />
-				</Compiler>
-				<Linker>
-					<Add library="gtest" />
-					<Add directory="../../../extlibs/googletest/lib" />
-					<Add directory="../../../extlibs/SDL2/2.0.1/i686-w64-mingw32/lib" />
-				</Linker>
-			</Target>
-			<Target title="Release-Win32">
-				<Option output="../../../bin/Release/ZBETest" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="../../../../ZBE" />
-				<Option object_output="obj/Release/" />
-				<Option type="1" />
-				<Option compiler="gcc" />
-				<Compiler>
-					<Add option="-O2" />
-					<Add directory="../../../src/ZBETest/include" />
-					<Add directory="../../../include" />
-					<Add directory="../../../src/ZBE" />
-					<Add directory="../../../extlibs/googletest/include" />
-					<Add directory="../../../extlibs/SDL2/2.0.1/i686-w64-mingw32/include" />
-				</Compiler>
-				<Linker>
-					<Add option="-s" />
-					<Add library="gtest" />
-					<Add directory="../../../extlibs/googletest/lib" />
-					<Add directory="../../../extlibs/SDL2/2.0.1/i686-w64-mingw32/lib" />
-				</Linker>
-			</Target>
 			<Target title="Debug-Linux64">
 				<Option output="../../../bin/Debug/ZBETest" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="../../../../ZBE" />
@@ -54,17 +13,20 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-std=c++11" />
 					<Add option="-g" />
+					<Add option="-m64" />
 					<Add directory="../../../src/ZBETest/include" />
 					<Add directory="../../../include" />
-					<Add directory="../../../src/ZBE" />
 					<Add directory="../../../extlibs/googletest/1.7.0/include" />
 					<Add directory="../../../extlibs/SDL2/2.0.1/linux-x64/include" />
 				</Compiler>
 				<Linker>
 					<Add library="gtest" />
-					<Add directory="../../../extlibs/googletest/1.7.0/lib" />
+					<Add library="ZBE_x64d" />
+					<Add directory="../../../extlibs/googletest/1.7.0/lib/linux64" />
 					<Add directory="../../../extlibs/SDL2/2.0.1/linux-x64/lib" />
+					<Add directory="../../../lib" />
 				</Linker>
 			</Target>
 			<Target title="Release-Linux64">
@@ -75,17 +37,20 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add option="-std=c++11" />
+					<Add option="-m64" />
 					<Add directory="../../../src/ZBETest/include" />
 					<Add directory="../../../include" />
-					<Add directory="../../../src/ZBE" />
 					<Add directory="../../../extlibs/googletest/1.7.0/include" />
 					<Add directory="../../../extlibs/SDL2/2.0.1/linux-x64/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
 					<Add library="gtest" />
-					<Add directory="../../../extlibs/googletest/1.7.0/lib" />
+					<Add library="ZBE_x64" />
+					<Add directory="../../../extlibs/googletest/1.7.0/lib/linux64" />
 					<Add directory="../../../extlibs/SDL2/2.0.1/linux-x64/lib" />
+					<Add directory="../../../lib" />
 				</Linker>
 			</Target>
 			<Target title="Debug-Win64">

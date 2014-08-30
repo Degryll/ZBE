@@ -11,11 +11,11 @@
 #define CORE_IO_FILEHANDLER_H
 
 #ifdef __linux__
-  //something something
+  #include <errno.h>
 
 #elif _WIN32
   #include <windows.h>
-  #include <sys/stat.h>
+  //#include <sys/stat.h>
 
 #endif // OS
 
@@ -26,7 +26,7 @@ namespace zbe {
 class FileHandler {
   public:
 #ifdef __linux__
-  static const std::string SEPARATORS;
+  const std::string SEPARATORS = "\\/";
 
 #elif _WIN32
   static const std::wstring SEPARATORS;
@@ -60,10 +60,10 @@ class FileHandler {
 
   protected:
 #ifdef __linux__
-  //something something
+  bool createDirectories(std::string path);
 
 #elif _WIN32
-    bool createDirectories(std::wstring path);
+  bool createDirectories(std::wstring path);
 
 #endif // OS
 

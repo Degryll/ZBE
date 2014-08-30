@@ -16,7 +16,7 @@
 namespace zbe {
 
 #ifdef __linux__
-  const std::string FileHandler::SEPARATORS(L"\\/");
+//  const std::string FileHandler::SEPARATORS("\\/");
 
 #elif _WIN32
   const std::wstring FileHandler::SEPARATORS(L"\\/");
@@ -25,7 +25,8 @@ namespace zbe {
 
 bool FileHandler::exist(const char* filename) {
 #ifdef __linux__
-  //something something
+  struct stat buffer;
+  return (stat(filename, &buffer) == 0 && (buffer.st_mode & S_IFREG));
 
 #elif _WIN32
   std::wstring fn;
@@ -39,7 +40,8 @@ bool FileHandler::exist(const char* filename) {
 
 bool FileHandler::existDir(const char* dirname) {
 #ifdef __linux__
-  //something something
+  struct stat buffer;
+  return (stat(dirname, &buffer) == 0 && (buffer.st_mode & S_IFDIR));
 
 #elif _WIN32
   std::wstring fn;
@@ -53,7 +55,7 @@ bool FileHandler::existDir(const char* dirname) {
 
 int FileHandler::rm(const char* filename) {
 #ifdef __linux__
-  //something something
+  return (remove(filename));
 
 #elif _WIN32
   std::wstring fn;
@@ -66,7 +68,7 @@ int FileHandler::rm(const char* filename) {
 
 bool FileHandler::rmdir(const char* dirname) {
 #ifdef __linux__
-  //something something
+  return (remove(dirname));
 
 #elif _WIN32
   std::wstring fn;
@@ -79,7 +81,17 @@ bool FileHandler::rmdir(const char* dirname) {
 
 FileHandler::FileHandler(const char* filename, const char* mode, bool createPath) {
 #ifdef __linux__
-  //something something
+  std::string s(filename);
+  if (createPath) {
+    size_t lastslash = s.find_last_of(SEPARATORS);
+    if(lastslash != std::string::npos) {
+      if (createDirectories(s.substr(0,lastslash))) return;
+    }
+  }
+
+  if(fopen(filename, mode)) {
+    SysError::setError("FILE ERROR: Can't open file.");
+  }
 
 #elif _WIN32
   std::wstring fn;
@@ -183,7 +195,22 @@ void FileHandler::flush() {
 }
 
 #ifdef __linux__
-  //something something
+
+bool FileHandler::createDirectories(std::string path) {
+    std::size_t slashIndex = path.find_last_of(SEPARATORS);
+    if(slashIndex != std::string::npos) {
+      createDirectories(path.substr(0, slashIndex));
+    }
+
+    if(mkdir(path.c_str(), 0777)) {
+      if (errno != EEXIST) {
+        SysError::setError("FILE ERROR: Can't create directory.");
+        return 1;
+      }
+    }
+
+    return 0;
+}
 
 #elif _WIN32
 

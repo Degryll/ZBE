@@ -3,8 +3,12 @@
 	<stdio.h>
 	"gtest/gtest.h"
 
+1399408984 st.h"
+
 1408631584 source:c:\users\degryll\documents\github\zbe\src\zbetest\src\unittest.cpp
 	"unittest.h"
+
+1399408984 h"
 
 1394386480 c:\users\degryll\documents\github\zbe\src\zbetest\include\unittest.h
 	"gtest/gtest.h"
@@ -25,6 +29,8 @@
 	"gtest/gtest-typed-test.h"
 	"gtest/gtest_pred_impl.h"
 
+1379526510 st_pred_impl.h"
+
 1394386480 c:\users\degryll\documents\github\zbe\extlibs\googletest\include\gtest\internal\gtest-internal.h
 	"gtest/internal/gtest-port.h"
 	<stdlib.h>
@@ -42,6 +48,8 @@
 	"gtest/internal/gtest-string.h"
 	"gtest/internal/gtest-filepath.h"
 	"gtest/internal/gtest-type-util.h"
+
+1379526510 ernal/gtest-type-util.h"
 
 1394386480 c:\users\degryll\documents\github\zbe\extlibs\googletest\include\gtest\internal\gtest-port.h
 	<ctype.h>
@@ -73,12 +81,16 @@
 	<tuple>
 	<vector>
 
+1409275273 
+
 1394386480 c:\users\degryll\documents\github\zbe\extlibs\googletest\include\gtest\internal\gtest-tuple.h
 	<utility>
 
 1394386480 c:\users\degryll\documents\github\zbe\extlibs\googletest\include\gtest\gtest-message.h
 	<limits>
 	"gtest/internal/gtest-port.h"
+
+1379526510 ernal/gtest-port.h"
 
 1394386480 c:\users\degryll\documents\github\zbe\extlibs\googletest\include\gtest\internal\gtest-string.h
 	<mem.h>
@@ -89,13 +101,19 @@
 1394386480 c:\users\degryll\documents\github\zbe\extlibs\googletest\include\gtest\internal\gtest-filepath.h
 	"gtest/internal/gtest-string.h"
 
+1379526510 ernal/gtest-string.h"
+
 1394386480 c:\users\degryll\documents\github\zbe\extlibs\googletest\include\gtest\internal\gtest-type-util.h
 	"gtest/internal/gtest-port.h"
 	<cxxabi.h>
 	<acxx_demangle.h>
 
+1379526510 ngle.h>
+
 1394386480 c:\users\degryll\documents\github\zbe\extlibs\googletest\include\gtest\gtest-death-test.h
 	"gtest/internal/gtest-death-test-internal.h"
+
+1379526510 ernal/gtest-death-test-internal.h"
 
 1394386480 c:\users\degryll\documents\github\zbe\extlibs\googletest\include\gtest\internal\gtest-death-test-internal.h
 	"gtest/internal/gtest-internal.h"
@@ -108,6 +126,8 @@
 	"gtest/internal/gtest-param-util.h"
 	"gtest/internal/gtest-param-util-generated.h"
 
+1379526510 ernal/gtest-param-util-generated.h"
+
 1394386480 c:\users\degryll\documents\github\zbe\extlibs\googletest\include\gtest\internal\gtest-param-util.h
 	<iterator>
 	<utility>
@@ -116,6 +136,8 @@
 	"gtest/internal/gtest-linked_ptr.h"
 	"gtest/internal/gtest-port.h"
 	"gtest/gtest-printers.h"
+
+1379526510 st-printers.h"
 
 1394386480 c:\users\degryll\documents\github\zbe\extlibs\googletest\include\gtest\internal\gtest-linked_ptr.h
 	<stdlib.h>
@@ -130,6 +152,8 @@
 	<vector>
 	"gtest/internal/gtest-port.h"
 	"gtest/internal/gtest-internal.h"
+
+1379526510 ernal/gtest-internal.h"
 
 1394386480 c:\users\degryll\documents\github\zbe\extlibs\googletest\include\gtest\internal\gtest-param-util-generated.h
 	"gtest/internal/gtest-param-util.h"
@@ -599,6 +623,8 @@
 	"ZBE/core/io/FileHandler.h"
 	"ZBE/core/system/SysError.h"
 
+1409275230 system/SysError.h"
+
 1408998335 c:\users\degryll\documents\github\zbe\include\zbe\core\io\filehandler.h
 	<windows.h>
 	<sys/stat.h>
@@ -622,4 +648,177 @@
 	<string>
 	<sstream>
 	<mutex>
+
+1409000992 source:/media/degryll/6C3625AF36257B6A/Users/Degryll/Documents/GitHub/ZBE/src/ZBETest/src/FileHandlerTest.cpp
+	"gtest/gtest.h"
+	"ZBE/core/io/FileHandler.h"
+	"ZBE/core/system/SysError.h"
+
+1379526510 /media/degryll/6C3625AF36257B6A/Users/Degryll/Documents/GitHub/ZBE/extlibs/googletest/1.7.0/include/gtest/gtest.h
+	<limits>
+	<ostream>
+	<vector>
+	"gtest/internal/gtest-internal.h"
+	"gtest/internal/gtest-string.h"
+	"gtest/gtest-death-test.h"
+	"gtest/gtest-message.h"
+	"gtest/gtest-param-test.h"
+	"gtest/gtest-printers.h"
+	"gtest/gtest_prod.h"
+	"gtest/gtest-test-part.h"
+	"gtest/gtest-typed-test.h"
+	"gtest/gtest_pred_impl.h"
+
+1379526510 /media/degryll/6C3625AF36257B6A/Users/Degryll/Documents/GitHub/ZBE/extlibs/googletest/1.7.0/include/gtest/internal/gtest-internal.h
+	"gtest/internal/gtest-port.h"
+	<stdlib.h>
+	<sys/types.h>
+	<sys/wait.h>
+	<unistd.h>
+	<stdexcept>
+	<ctype.h>
+	<float.h>
+	<string.h>
+	<iomanip>
+	<limits>
+	<set>
+	"gtest/gtest-message.h"
+	"gtest/internal/gtest-string.h"
+	"gtest/internal/gtest-filepath.h"
+	"gtest/internal/gtest-type-util.h"
+
+1379526510 /media/degryll/6C3625AF36257B6A/Users/Degryll/Documents/GitHub/ZBE/extlibs/googletest/1.7.0/include/gtest/internal/gtest-port.h
+	<ctype.h>
+	<stddef.h>
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	<sys/types.h>
+	<sys/stat.h>
+	<AvailabilityMacros.h>
+	<TargetConditionals.h>
+	<iostream>
+	<sstream>
+	<string>
+	<unistd.h>
+	<strings.h>
+	<direct.h>
+	<io.h>
+	<android/api-level.h>
+	<regex.h>
+	<typeinfo>
+	<pthread.h>
+	<time.h>
+	"gtest/internal/gtest-tuple.h"
+	<tuple>
+	<tuple>
+	<tr1/tuple>
+	<tr1/tuple>
+	<tuple>
+	<vector>
+
+1379526510 /media/degryll/6C3625AF36257B6A/Users/Degryll/Documents/GitHub/ZBE/extlibs/googletest/1.7.0/include/gtest/internal/gtest-tuple.h
+	<utility>
+
+1379526510 /media/degryll/6C3625AF36257B6A/Users/Degryll/Documents/GitHub/ZBE/extlibs/googletest/1.7.0/include/gtest/gtest-message.h
+	<limits>
+	"gtest/internal/gtest-port.h"
+
+1379526510 /media/degryll/6C3625AF36257B6A/Users/Degryll/Documents/GitHub/ZBE/extlibs/googletest/1.7.0/include/gtest/internal/gtest-string.h
+	<mem.h>
+	<string.h>
+	<string>
+	"gtest/internal/gtest-port.h"
+
+1379526510 /media/degryll/6C3625AF36257B6A/Users/Degryll/Documents/GitHub/ZBE/extlibs/googletest/1.7.0/include/gtest/internal/gtest-filepath.h
+	"gtest/internal/gtest-string.h"
+
+1379526510 /media/degryll/6C3625AF36257B6A/Users/Degryll/Documents/GitHub/ZBE/extlibs/googletest/1.7.0/include/gtest/internal/gtest-type-util.h
+	"gtest/internal/gtest-port.h"
+	<cxxabi.h>
+	<acxx_demangle.h>
+
+1379526510 /media/degryll/6C3625AF36257B6A/Users/Degryll/Documents/GitHub/ZBE/extlibs/googletest/1.7.0/include/gtest/gtest-death-test.h
+	"gtest/internal/gtest-death-test-internal.h"
+
+1379526510 /media/degryll/6C3625AF36257B6A/Users/Degryll/Documents/GitHub/ZBE/extlibs/googletest/1.7.0/include/gtest/internal/gtest-death-test-internal.h
+	"gtest/internal/gtest-internal.h"
+	<stdio.h>
+
+1379526510 /media/degryll/6C3625AF36257B6A/Users/Degryll/Documents/GitHub/ZBE/extlibs/googletest/1.7.0/include/gtest/gtest-param-test.h
+	"gtest/internal/gtest-port.h"
+	<utility>
+	"gtest/internal/gtest-internal.h"
+	"gtest/internal/gtest-param-util.h"
+	"gtest/internal/gtest-param-util-generated.h"
+
+1379526510 /media/degryll/6C3625AF36257B6A/Users/Degryll/Documents/GitHub/ZBE/extlibs/googletest/1.7.0/include/gtest/internal/gtest-param-util.h
+	<iterator>
+	<utility>
+	<vector>
+	"gtest/internal/gtest-internal.h"
+	"gtest/internal/gtest-linked_ptr.h"
+	"gtest/internal/gtest-port.h"
+	"gtest/gtest-printers.h"
+
+1379526510 /media/degryll/6C3625AF36257B6A/Users/Degryll/Documents/GitHub/ZBE/extlibs/googletest/1.7.0/include/gtest/internal/gtest-linked_ptr.h
+	<stdlib.h>
+	<assert.h>
+	"gtest/internal/gtest-port.h"
+
+1379526510 /media/degryll/6C3625AF36257B6A/Users/Degryll/Documents/GitHub/ZBE/extlibs/googletest/1.7.0/include/gtest/gtest-printers.h
+	<ostream>
+	<sstream>
+	<string>
+	<utility>
+	<vector>
+	"gtest/internal/gtest-port.h"
+	"gtest/internal/gtest-internal.h"
+
+1379526510 /media/degryll/6C3625AF36257B6A/Users/Degryll/Documents/GitHub/ZBE/extlibs/googletest/1.7.0/include/gtest/internal/gtest-param-util-generated.h
+	"gtest/internal/gtest-param-util.h"
+	"gtest/internal/gtest-port.h"
+
+1379526510 /media/degryll/6C3625AF36257B6A/Users/Degryll/Documents/GitHub/ZBE/extlibs/googletest/1.7.0/include/gtest/gtest_prod.h
+
+1379526510 /media/degryll/6C3625AF36257B6A/Users/Degryll/Documents/GitHub/ZBE/extlibs/googletest/1.7.0/include/gtest/gtest-test-part.h
+	<iosfwd>
+	<vector>
+	"gtest/internal/gtest-internal.h"
+	"gtest/internal/gtest-string.h"
+
+1379526510 /media/degryll/6C3625AF36257B6A/Users/Degryll/Documents/GitHub/ZBE/extlibs/googletest/1.7.0/include/gtest/gtest-typed-test.h
+	"gtest/internal/gtest-port.h"
+	"gtest/internal/gtest-type-util.h"
+
+1379526510 /media/degryll/6C3625AF36257B6A/Users/Degryll/Documents/GitHub/ZBE/extlibs/googletest/1.7.0/include/gtest/gtest_pred_impl.h
+
+1409259937 /media/degryll/6C3625AF36257B6A/Users/Degryll/Documents/GitHub/ZBE/include/ZBE/core/io/FileHandler.h
+	<errno.h>
+	<windows.h>
+	<string>
+
+1408458196 /media/degryll/6C3625AF36257B6A/Users/Degryll/Documents/GitHub/ZBE/include/ZBE/core/system/SysError.h
+	<string>
+
+1409277030 source:/media/degryll/6C3625AF36257B6A/Users/Degryll/Documents/GitHub/ZBE/src/ZBETest/src/LoggerTest.cpp
+	"gtest/gtest.h"
+	"ZBE/core/system/Logger.h"
+	"ZBE/core/system/SysError.h"
+	"ZBE/core/io/FileHandler.h"
+
+1409275273 /media/degryll/6C3625AF36257B6A/Users/Degryll/Documents/GitHub/ZBE/include/ZBE/core/system/Logger.h
+	<vector>
+	<forward_list>
+	<string>
+	<sstream>
+	<mutex>
+
+1408632253 source:/media/degryll/6C3625AF36257B6A/Users/Degryll/Documents/GitHub/ZBE/src/ZBETest/src/main.cpp
+	<stdio.h>
+	"gtest/gtest.h"
+
+1408819159 source:/media/degryll/6C3625AF36257B6A/Users/Degryll/Documents/GitHub/ZBE/src/ZBETest/src/SysErrorTest.cpp
+	"gtest/gtest.h"
+	"ZBE/core/system/SysError.h"
 
