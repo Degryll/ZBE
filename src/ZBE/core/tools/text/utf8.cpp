@@ -9,7 +9,7 @@
 
 #include <string>
 
-#include "ZBE/core/utf8.h"
+#include "ZBE/core/tools/text/utf8.h"
 #include "ZBE/core/system/SysError.h"
 
 namespace zbe {

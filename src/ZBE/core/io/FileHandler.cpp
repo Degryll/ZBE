@@ -9,7 +9,7 @@
 
 #include "ZBE/core/io/FileHandler.h"
 #include "ZBE/core/system/SysError.h"
-#include "ZBE/core/utf8.h"
+#include "ZBE/core/tools/text/utf8.h"
 #include "sys/stat.h"
 #include <stdio.h>
 

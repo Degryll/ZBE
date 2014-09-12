@@ -108,14 +108,29 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="../../../include/ZBE/core/Behavior.h" />
+		<Unit filename="../../../include/ZBE/core/CollisionData.h" />
+		<Unit filename="../../../include/ZBE/core/Timer.h" />
+		<Unit filename="../../../include/ZBE/core/archetypes/Collisioner.h" />
+		<Unit filename="../../../include/ZBE/core/archetypes/Runnable.h" />
 		<Unit filename="../../../include/ZBE/core/io/FileHandler.h" />
+		<Unit filename="../../../include/ZBE/core/system/App.h" />
+		<Unit filename="../../../include/ZBE/core/system/GameApp.h" />
 		<Unit filename="../../../include/ZBE/core/system/Logger.h" />
 		<Unit filename="../../../include/ZBE/core/system/SysError.h" />
-		<Unit filename="../../../include/ZBE/core/utf8.h" />
+		<Unit filename="../../../include/ZBE/core/tools/math/Vector2D.h" />
+		<Unit filename="../../../include/ZBE/core/tools/math/Vector2DCartesian.h" />
+		<Unit filename="../../../include/ZBE/core/tools/math/Vector2DPolar.h" />
+		<Unit filename="../../../include/ZBE/core/tools/text/utf8.h" />
+		<Unit filename="../../../src/ZBE/core/CollisionData.cpp" />
 		<Unit filename="../../../src/ZBE/core/io/FileHandler.cpp" />
+		<Unit filename="../../../src/ZBE/core/system/App.cpp" />
 		<Unit filename="../../../src/ZBE/core/system/Logger.cpp" />
 		<Unit filename="../../../src/ZBE/core/system/SysError.cpp" />
-		<Unit filename="../../../src/ZBE/core/utf8.cpp" />
+		<Unit filename="../../../src/ZBE/core/tools/math/Vector2D.cpp" />
+		<Unit filename="../../../src/ZBE/core/tools/math/Vector2DCartesian.cpp" />
+		<Unit filename="../../../src/ZBE/core/tools/math/Vector2DPolar.cpp" />
+		<Unit filename="../../../src/ZBE/core/tools/text/utf8.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
