@@ -16,8 +16,6 @@ class Behavior {
   public:
     virtual ~Behavior() {}
 
-    virtual void updateBehaviors(double time) = 0;
-
     virtual void behaveUntil(double time) = 0;
 };
 

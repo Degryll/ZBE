@@ -28,14 +28,13 @@ public:
 
   void behaveviorAndPhysics();
 
-  void updateBehaviors(double time);
   void behaveUntil(double time);
 
   void draw();
 
 protected:
   double collisionDetection(std::forward_list<CollisionData> *cdata, double timeRemain);
-  void collisionReaction(const std::forward_list<CollisionData>& cdata, double collisionTime);
+  void reportCollision(const std::forward_list<CollisionData>& cdata, double collisionTime);
 
 private:
     Timer *t;
@@ -47,37 +46,29 @@ private:
     DrawerIterator lastD;
 };
 
-template <typename BehaviorIterator, typename CollisionadorIterator>
+template <typename BehaviorIterator, typename CollisionadorIterator, typename DrawerIterator>
 void GameApp<BehaviorIterator,CollisionadorIterator>::behaveviorAndPhysics() {
   double timeRemain = t->getMilliseconds();
   double collisionTime = 0.0;
   std::forward_list<CollisionData> cdata;
 
-  while(remainFrameTime > 0.0){
-    updateBehaviors(timeRemain);
+  while(timeRemain > 0.0){
     collisionTime = collisionDetection(&cdata, timeRemain);
+    if (!cdata.empty()) reportCollision(cdata, collisionTime);
     behaveUntil(collisionTime);
-    if (!cdata.empty()) collisionReaction(cdata, collisionTime);
 
     timeRemain -= collisionTime;
-  }  // while
+  }  // while timeRemain
 }
 
-template <typename BehaviorIterator, typename CollisionadorIterator>
-void GameApp<BehaviorIterator,CollisionadorIterator>::updateBehaviors(double time) {
-  for(auto it = firstB; it != lastB; ++it) {
-    static_cast<Behavior*>(*it)->updateBehaviors(time);
-  }
-}
-
-template <typename BehaviorIterator, typename CollisionadorIterator>
+template <typename BehaviorIterator, typename CollisionadorIterator, typename DrawerIterator>
 void GameApp<BehaviorIterator,CollisionadorIterator>::behaveUntil(double time) {
   for(auto it = firstB; it != lastB; ++it) {
     static_cast<Behavior*>(*it)->behaveUntil(time);
   }
 }
 
-template <typename BehaviorIterator, typename CollisionadorIterator>
+template <typename BehaviorIterator, typename CollisionadorIterator, typename DrawerIterator>
 double GameApp<BehaviorIterator,CollisionadorIterator>::collisionDetection(std::forward_list<CollisionData> *cdata, double timeRemain) {
   double bestTime = timeRemain;
   for(auto it = firstC; it != lastC; ++it) {
@@ -87,8 +78,8 @@ double GameApp<BehaviorIterator,CollisionadorIterator>::collisionDetection(std::
   return bestTime;
 }
 
-template <typename BehaviorIterator, typename CollisionIterator>
-void GameApp<BehaviorIterator,CollisionIterator>::collisionReaction(std::forward_list<CollisionData> *cdata, double collisionTime) {
+template <typename BehaviorIterator, typename CollisionIterator, typename DrawerIterator>
+void GameApp<BehaviorIterator,CollisionIterator>::reportCollision(std::forward_list<CollisionData> *cdata, double collisionTime) {
   for(auto it = cdata->begin(); it < cdata->end(); ++it) {
     CollisionData *cd = &(*it);
     Collisionador *d = cd->getCollisionador();
@@ -100,7 +91,7 @@ void GameApp<BehaviorIterator,CollisionIterator>::collisionReaction(std::forward
   }
 }
 
-template <typename BehaviorIterator, typename CollisionIterator>
+template <typename BehaviorIterator, typename CollisionIterator, typename DrawerIterator>
 void GameApp<BehaviorIterator,CollisionIterator>::paint() {
   for(auto it = firstD; it != lastD; ++it) {
     static_cast<Drawer*>(*it)->draw();

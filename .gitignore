@@ -1,5 +1,9 @@
 builds/codeblocks/ZBE/obj/
 builds/codeblocks/ZBETest/obj/
 builds/codeblocks/ZBE_main/obj/
-bin/
-lib/
+./bin
+./lib
+bin/Release/libZBE_x64.dll
+bin/Release/ZBETest.exe
+bin/Release/ZBE_main.exe
+lib/libZBE_x64.a
