@@ -21,6 +21,7 @@ class Collisioner {
     virtual void react(Collisioner *c, const Vector2D& normal,const Vector2D& point, double time) = 0;
 
     virtual unsigned int getType() = 0;
+    virtual unsigned int collisionLevel() = 0;
 };
 
 }  // namespace zbe

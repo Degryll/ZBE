@@ -28,10 +28,10 @@ class CollisionData {
     void react(double time);
 
   private:
-    Vector2D n;
-    Vector2D p;
     Collisioner *d;
     Collisioner *b;
+    Vector2D n;
+    Vector2D p;
 };
 
 }  // namespace zbe

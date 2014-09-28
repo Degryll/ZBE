@@ -5,7 +5,7 @@
  *      Author: ludo
  */
 
-#include "ZBE/core/CollisionData.h"
+#include "ZBE/core/tools/math/collisions/CollisionData.h"
 
 namespace zbe {
 

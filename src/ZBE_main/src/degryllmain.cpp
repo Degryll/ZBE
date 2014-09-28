@@ -11,7 +11,6 @@
 #include "ZBE/core/system/Logger.h"
 #include "ZBE/core/io/FileHandler.h"
 
-//#include "utf8.h"
 #include "ZBE/core/tools/text/utf8.h"
 
 int degryllmain(int argc, char* argv[]) {
