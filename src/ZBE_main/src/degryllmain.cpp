@@ -5,6 +5,8 @@
 #include <fstream>
 #include <cstdio>
 
+#include <vector>
+
 //#include <SDL2/SDL.h>
 
 #include "ZBE/core/system/SysError.h"
@@ -12,6 +14,23 @@
 #include "ZBE/core/io/FileHandler.h"
 
 #include "ZBE/core/tools/text/utf8.h"
+
+#include "any_iterator.hpp"
+#include "boost/iterator/iterator_categories.hpp"
+
+#include "ZBE/core/tools/containers/arrayList.h"
+#include "ZBE/core/tools/containers/arrayListIterator.h"
+#include "ZBE/core/tools/containers/arrayListTicketedIterator.h"
+
+#include <memory>
+
+template<class InputIterator>
+void imprime(InputIterator first, InputIterator last) {
+  while (first!=last) {
+    std::cout << *first <<std::endl;
+  ++first;
+  }
+}
 
 int degryllmain(int argc, char* argv[]) {
   printf("--- Degryll main ---\n\n");
@@ -29,6 +48,42 @@ int degryllmain(int argc, char* argv[]) {
   ZBE_LOG_WARNING("Prueba Warning." << a << "un caracter");
   ZBE_LOG_ERROR("Prueba Error." << s << "una cadena.");
   ZBE_LOG("[PROPIA]","Prueba Propia.");
+
+//  typedef IteratorTypeErasure::any_iterator<
+//    int const,
+//    boost::bidirectional_traversal_tag
+//  > number_iterator;
+//
+//  std::vector<int> v(42,43);
+//  number_iterator nit,endit;
+//  nit = v.begin();
+//  endit = v.end();
+//  for(; nit != endit; nit++) {
+//    printf("numero %d\n",*nit);
+//  }
+//
+//  std::auto_ptr<zbe::node<int> > nodes(new zbe::node<int>(42));
+//  nodes->append(new zbe::node<int>(37));
+//  nodes->append(new zbe::node<int>(13));
+//
+//  zbe::node_iterator it(nodes.get());
+//
+//  //int auxn;
+//
+//  (*it).print(std::cout);
+//
+////  auxn = *it;
+//
+//  //printf("printf: %d\n",auxn);
+//
+//  std::cout << "antes:" << *it <<std::endl;
+//  ++it;
+//  std::cout << "antes:" << *it <<std::endl;
+//  ++it;
+//  std::cout << "antes:" << *it <<std::endl;
+//
+//  imprime(zbe::node_iterator(nodes.get()),zbe::node_iterator());
+
 
 
 //////////////////////////////////////////////////

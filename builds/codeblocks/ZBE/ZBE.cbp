@@ -22,6 +22,8 @@
 					<Add directory="../../../src" />
 					<Add directory="include/ZBE/core/io" />
 					<Add directory="../../../extlibs/utf8cpp/source" />
+					<Add directory="../../../extlibs/boost_1_57_0" />
+					<Add directory="../../../extlibs/IteratorTypeErasure/IteratorTypeErasure/any_iterator" />
 				</Compiler>
 				<Linker>
 					<Add library="SDL2main" />
@@ -45,6 +47,8 @@
 					<Add directory="../../../src" />
 					<Add directory="include/ZBE/core/io" />
 					<Add directory="../../../extlibs/utf8cpp/source" />
+					<Add directory="../../../extlibs/boost_1_57_0" />
+					<Add directory="../../../extlibs/IteratorTypeErasure/IteratorTypeErasure/any_iterator" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -70,6 +74,8 @@
 					<Add directory="../../../src" />
 					<Add directory="include/ZBE/core/io" />
 					<Add directory="../../../extlibs/utf8cpp/source" />
+					<Add directory="../../../extlibs/boost_1_57_0" />
+					<Add directory="../../../extlibs/IteratorTypeErasure/IteratorTypeErasure/any_iterator" />
 				</Compiler>
 				<Linker>
 					<Add library="mingw32" />
@@ -97,6 +103,8 @@
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-w64-mingw32/include" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-w64-mingw32/include" />
 					<Add directory="../../../extlibs/utf8cpp/source" />
+					<Add directory="../../../extlibs/boost_1_57_0" />
+					<Add directory="../../../extlibs/IteratorTypeErasure/IteratorTypeErasure/any_iterator" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -132,6 +140,11 @@
 		<Unit filename="../../../include/ZBE/core/system/Logger.h" />
 		<Unit filename="../../../include/ZBE/core/system/SysError.h" />
 		<Unit filename="../../../include/ZBE/core/tools/Timer.h" />
+		<Unit filename="../../../include/ZBE/core/tools/containers/arrayList.h" />
+		<Unit filename="../../../include/ZBE/core/tools/containers/arrayListIterator.h" />
+		<Unit filename="../../../include/ZBE/core/tools/containers/arrayListTicketedIterator.h" />
+		<Unit filename="../../../include/ZBE/core/tools/containers/ticket.h" />
+		<Unit filename="../../../include/ZBE/core/tools/containers/ticketedContent.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/Vector2D.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/Vector2DCartesian.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/Vector2DPolar.h" />

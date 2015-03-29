@@ -19,6 +19,8 @@
 					<Add directory="../../../src/ZBE_main/include" />
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/utf8cpp/source" />
+					<Add directory="../../../extlibs/boost_1_57_0" />
+					<Add directory="../../../extlibs/IteratorTypeErasure/IteratorTypeErasure/any_iterator" />
 				</Compiler>
 				<Linker>
 					<Add library="ZBE_x64d" />
@@ -37,6 +39,8 @@
 					<Add option="-m64" />
 					<Add directory="../../../src/ZBE_main/include" />
 					<Add directory="../../../include" />
+					<Add directory="../../../extlibs/boost_1_57_0" />
+					<Add directory="../../../extlibs/IteratorTypeErasure/IteratorTypeErasure/any_iterator" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -57,6 +61,8 @@
 					<Add directory="../../../src/ZBE_main/include" />
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/utf8cpp/source" />
+					<Add directory="../../../extlibs/boost_1_57_0" />
+					<Add directory="../../../extlibs/IteratorTypeErasure/IteratorTypeErasure/any_iterator" />
 				</Compiler>
 				<Linker>
 					<Add library="ZBE_x64d" />
@@ -75,6 +81,8 @@
 					<Add option="-m64" />
 					<Add directory="../../../src/ZBE_main/include" />
 					<Add directory="../../../include" />
+					<Add directory="../../../extlibs/boost_1_57_0" />
+					<Add directory="../../../extlibs/IteratorTypeErasure/IteratorTypeErasure/any_iterator" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
