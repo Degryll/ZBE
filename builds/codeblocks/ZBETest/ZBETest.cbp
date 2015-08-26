@@ -20,6 +20,7 @@
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/googletest/1.7.0/include" />
 					<Add directory="../../../extlibs/SDL2/2.0.1/linux-x64/include" />
+					<Add directory="../../../extlibs/boost_1_57_0" />
 				</Compiler>
 				<Linker>
 					<Add library="gtest" />
@@ -43,6 +44,7 @@
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/googletest/1.7.0/include" />
 					<Add directory="../../../extlibs/SDL2/2.0.1/linux-x64/include" />
+					<Add directory="../../../extlibs/boost_1_57_0" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -67,6 +69,7 @@
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/googletest/1.7.0/include" />
 					<Add directory="../../../extlibs/SDL2/2.0.1/x86_64-w64-mingw32/include" />
+					<Add directory="../../../extlibs/boost_1_57_0" />
 				</Compiler>
 				<Linker>
 					<Add library="mingw32" />
@@ -91,6 +94,7 @@
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/googletest/1.7.0/include" />
 					<Add directory="../../../extlibs/SDL2/2.0.1/x86_64-w64-mingw32/include" />
+					<Add directory="../../../extlibs/boost_1_57_0" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -106,6 +110,11 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="../../../src/ZBETest/core/tools/containers/ArrayListTest.cpp" />
+		<Unit filename="../../../src/ZBETest/core/tools/math/PointTest.cpp" />
+		<Unit filename="../../../src/ZBETest/core/tools/math/VectorTest.cpp" />
+		<Unit filename="../../../src/ZBETest/core/tools/math/collisions/intersectionsTest.cpp" />
+		<Unit filename="../../../src/ZBETest/core/tools/math/objectsTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/FileHandlerTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/LoggerTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/SysErrorTest.cpp" />

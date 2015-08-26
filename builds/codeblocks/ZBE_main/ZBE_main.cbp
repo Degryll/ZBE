@@ -21,10 +21,17 @@
 					<Add directory="../../../extlibs/utf8cpp/source" />
 					<Add directory="../../../extlibs/boost_1_57_0" />
 					<Add directory="../../../extlibs/IteratorTypeErasure/IteratorTypeErasure/any_iterator" />
+					<Add directory="../../../extlibs/SDL2/2.0.3/x86_64-w64-mingw32/include" />
+					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-w64-mingw32/include" />
 				</Compiler>
 				<Linker>
 					<Add library="ZBE_x64d" />
+					<Add library="SDL2main" />
+					<Add library="SDL2" />
+					<Add library="SDL2_image" />
 					<Add directory="../../../lib" />
+					<Add directory="../../../extlibs/SDL2/2.0.3/x86_64-w64-mingw32/lib" />
+					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-w64-mingw32/lib" />
 				</Linker>
 			</Target>
 			<Target title="Release-Win64">
@@ -41,11 +48,18 @@
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/boost_1_57_0" />
 					<Add directory="../../../extlibs/IteratorTypeErasure/IteratorTypeErasure/any_iterator" />
+					<Add directory="../../../extlibs/SDL2/2.0.3/x86_64-w64-mingw32/include" />
+					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-w64-mingw32/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
 					<Add library="ZBE_x64" />
+					<Add library="SDL2main" />
+					<Add library="SDL2" />
+					<Add library="SDL2_image" />
 					<Add directory="../../../lib" />
+					<Add directory="../../../extlibs/SDL2/2.0.3/x86_64-w64-mingw32/lib" />
+					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-w64-mingw32/lib" />
 				</Linker>
 			</Target>
 			<Target title="Debug-Linux64">
@@ -63,10 +77,12 @@
 					<Add directory="../../../extlibs/utf8cpp/source" />
 					<Add directory="../../../extlibs/boost_1_57_0" />
 					<Add directory="../../../extlibs/IteratorTypeErasure/IteratorTypeErasure/any_iterator" />
+					<Add directory="../../../extlibs/SDL2/2.0.3/include" />
 				</Compiler>
 				<Linker>
 					<Add library="ZBE_x64d" />
 					<Add directory="../../../lib" />
+					<Add directory="../../../extlibs/SDL2/2.0.3/lib/linux64" />
 				</Linker>
 			</Target>
 			<Target title="Release-Linux64">
@@ -83,11 +99,13 @@
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/boost_1_57_0" />
 					<Add directory="../../../extlibs/IteratorTypeErasure/IteratorTypeErasure/any_iterator" />
+					<Add directory="../../../extlibs/SDL2/2.0.3/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
 					<Add library="ZBE_x64" />
 					<Add directory="../../../lib" />
+					<Add directory="../../../extlibs/SDL2/2.0.3/lib/linux64" />
 				</Linker>
 			</Target>
 		</Build>

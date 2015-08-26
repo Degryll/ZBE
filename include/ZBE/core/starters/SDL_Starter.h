@@ -3,7 +3,7 @@
  * @file SDL_Starter.h
  *
  * @since 2010/07/06
- * @date 2014/09/25
+ * @date 2015/05/28
  * @author Degryll
  * @brief Implements SDL_Starter class.
  */
@@ -21,22 +21,14 @@ namespace zbe {
  */
 class SDL_Starter {
   public:
-    static SDL_Starter* createInstance() {return (_instance = new SDL_Starter);}
-    static void         deleteInstance() {delete _instance;}
+    static SDL_Starter* createInstance(Uint32 flags = 0);
+    static void         deleteInstance() {SDL_Quit(); delete _instance;}
     static SDL_Starter* getInstance()    {return (_instance);}
 
     bool addSubsystem(Uint32 flags);
-    SDL_Surface* createWindow(const char* title, int x, int y, int w, int h, Uint32 flags);
-    void destroyWindow() {SDL_DestroyWindow(window);}
-
-    SDL_Window* getWindow() {return window;}
-    SDL_Surface* getSurface() {return s;}
 
   private:
     static SDL_Starter* _instance;
-
-    SDL_Window* window;
-    SDL_Surface* s;
 
     SDL_Starter() {}
 };

@@ -11,7 +11,7 @@
 #define CORE_COLLISIONDATA_H_
 
 #include "ZBE/core/archetypes/Collisioner.h"
-#include "ZBE/core/tools/math/Vector2D.h"
+#include "ZBE/core/tools/math/Vector.h"
 
 namespace zbe {
 
@@ -20,8 +20,8 @@ class CollisionData {
     CollisionData(Collisioner *collisionador, Collisioner *collisionable, const Vector2D& normal,const Vector2D& point)
       : d(collisionador), b(collisionable), n(normal), p(point){}
 
-    Collisioner* getCollisionador() {return d;}
-    Collisioner* getCollisionable() {return b;}
+    Collisioner* getCollisionador() const {return d;}
+    Collisioner* getCollisionable() const {return b;}
     const Vector2D& getNormal() const {return n;}
     const Vector2D& getPoint()  const {return p;}
 
@@ -30,8 +30,8 @@ class CollisionData {
   private:
     Collisioner *d;
     Collisioner *b;
-    Vector2D n;
-    Vector2D p;
+    const Vector2D& n;
+    const Vector2D& p;
 };
 
 }  // namespace zbe

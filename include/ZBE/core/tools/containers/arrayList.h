@@ -2,7 +2,7 @@
  * Copyright 2011 Batis Degryll Ludo
  * @file arrayList.h
  * @since 2015/02/08
- * @date 2015/02/08
+ * @date 2015/04/03
  * @author Degryll
  * @brief A list in an static array.
  */
@@ -10,7 +10,10 @@
 #ifndef CORE_TOOLS_CONTAINERS_ARRAYLIST_H_
 #define CORE_TOOLS_CONTAINERS_ARRAYLIST_H_
 
-#include <iostream>
+#include "ZBE/core/system/SysError.h"
+
+#include "ZBE/core/tools/containers/Ticket.h"
+#include "ZBE/core/tools/containers/ArrayListIterator.h"
 
 namespace zbe {
 
@@ -32,23 +35,22 @@ class ArrayList {
     virtual ~ArrayList();
 
     unsigned insert(Value value);
-    void erase(unsigned index);
+    //void erase(unsigned index);  // cant be erased directly, the iterator will erase it
 
     unsigned getCapacity() {return (c);}
     unsigned getSize() {return (s);}
+    unsigned getIndex() {return (i);}
 
     bool isEmpty() {return (s==0);}
 
     ArrayListIter<Value> begin() {return (ArrayListIter<Value>(this));}
     ArrayListIter<Value> end() {return (ArrayListIter<Value>(this,-1));}
 
-    arrayListNode<Value>& operator[](unsigned idx);
-    const arrayListNode<Value>& operator[](unsigned idx) const;
+    ArrayListNode<Value>& operator[](unsigned idx);
+    const ArrayListNode<Value>& operator[](unsigned idx) const;
 
   private:
     ArrayListNode<Value> *values;
-    // [TODO] Index of free, no index of ocupied (each element has his ticket)
-    // no iterator, change name
     unsigned i;
     unsigned f;
     unsigned c;
@@ -56,7 +58,7 @@ class ArrayList {
 };
 
 template <class Value>
-ArrayList<Value>::ArrayList<Value>(unsigned capacity) : i(-1), f(0), c(capacity), s(0) {
+ArrayList<Value>::ArrayList(unsigned capacity) : i(-1), f(0), c(capacity), s(0) {
   values = new ArrayListNode<Value>[capacity];
   for(unsigned i = 0; i < c; i++) {
      values[i].next = i+1;
@@ -65,7 +67,7 @@ ArrayList<Value>::ArrayList<Value>(unsigned capacity) : i(-1), f(0), c(capacity)
 }
 
 template <class Value>
-ArrayList<Value>::ArrayList<Value>(const ArrayList<Value>& arraylist) : i(arraylist.i), f(arraylist.f), c(arraylist.c), s(arraylist.s) {
+ArrayList<Value>::ArrayList(const ArrayList<Value>& arraylist) : i(arraylist.i), f(arraylist.f), c(arraylist.c), s(arraylist.s) {
   values = new ArrayListNode<Value>[c];
   for(unsigned i = 0; i < c; i++) {
      values[i].next = i+1;
@@ -90,71 +92,177 @@ unsigned ArrayList<Value>::insert(Value value) {
     values[f].next = i;
     i = f;
     f = aux;
-  } // else error not enough space
+    s++;
+  } else {
+    SysError::setError("ArrayList ERROR: Not enough space.");
+  }
+
+  return 0;  // TODO return what!
 }
 
 template <class Value>
-void ArrayList<Value>::erase(unsigned index) {
-
+ArrayListNode<Value>& ArrayList<Value>::operator[](unsigned idx) {
+  return (this->values[idx]);
 }
 
 template <class Value>
-arrayListNode<Value>& ArrayList<Value>::operator[](unsigned idx) {
-  return (this->values[idx])
+const ArrayListNode<Value>& ArrayList<Value>::operator[](unsigned idx) const {
+  return (this->values[idx]);
 }
+
+////////////////////////////////////
 
 template <class Value>
-const arrayListNode<Value>& ArrayList<Value>::operator[](unsigned idx) const {
-  return (this->values[idx])
-}
+class ArrayListTicketedIter;
 
-struct node_base
-{
-    node_base() : m_next(0) {}
-
-    // Each node manages all of its tail nodes
-    virtual ~node_base() { delete m_next; }
-
-    // Access the rest of the list
-    node_base* next() const { return m_next; }
-
-    // print to the stream
-    virtual void print(std::ostream& s) const = 0;
-
-    // double the value
-    virtual void double_me() = 0;
-
-    void append(node_base* p)
-    {
-        if (m_next)
-            m_next->append(p);
-        else
-            m_next = p;
-    }
-
- private:
-    node_base* m_next;
+template <class Value>
+struct ArrayListTicketedNode {
+  Value v;
+  int next;
+  Ticket t;
 };
 
-template <class T>
-struct node : node_base
-{
-    node(T x)
-      : m_value(x)
-    {}
+template <class Value>
+class ArrayListTicketed {
+  public:
+    ArrayListTicketed(unsigned capacity);
+    //ArrayList(const ArrayList< TicketedContent<Value> >& arraylist);
 
-    void print(std::ostream& s) const { s << this->m_value; }
-    void double_me() { m_value += m_value; }
+    virtual ~ArrayListTicketed();
 
- private:
-    T m_value;
+    Ticket& insert(Value value);
+    //void erase(unsigned index);  // cant be erased directly, the iterator will erase it
+
+    unsigned getCapacity() {return (c);}
+    unsigned getSize() {return (s);}
+
+    bool isEmpty() {return (s==0);}
+
+    ArrayListTicketedIter<Value> begin() {return (ArrayListTicketedIter<Value>(this));}
+    ArrayListTicketedIter<Value>   end() {return (ArrayListTicketedIter<Value>(this,-1));}
+
+    ArrayListTicketedNode<Value>& operator[](unsigned idx);
+    const ArrayListTicketedNode<Value>& operator[](unsigned idx) const;
+
+  private:
+    friend class ArrayListTicketedIter<Value>;
+
+    ArrayListTicketedNode<Value> *values;
+    int i;
+    int f;
+    unsigned c;
+    unsigned s;
 };
 
-inline std::ostream& operator<<(std::ostream& s, node_base const& n)
-{
-    n.print(s);
-    return s;
+template <class Value>
+ArrayListTicketed<Value>::ArrayListTicketed(unsigned capacity) : i(-1), f(0), c(capacity), s(0) {
+  values = new ArrayListTicketedNode<Value>[capacity];
+  for(unsigned i = 0; i < c; i++) {
+     values[i].next = i+1;
+  }
+  values[c-1].next = -1;
 }
+
+//template <class Value>
+//ArrayList< TicketedContent<Value> >::ArrayList(const ArrayList< TicketedContent<Value> >& arraylist) : i(arraylist.i), f(arraylist.f), c(arraylist.c), s(arraylist.s) {
+//printf("ArrayList constructor ticketd.\n");
+//  values = new ArrayListNode< TicketedContent<Value> >[c];
+//  for(unsigned i = 0; i < c; i++) {
+//     values[i].next = i+1;
+//  }
+//  values[c-1].next = -1;
+//  ArrayListIter< TicketedContent<Value> > it = arraylist.begin();
+//  for(;it != arraylist.end(); ++it) {
+//    this->insert(*it);
+//  }
+//}
+
+template <class Value>
+ArrayListTicketed<Value>::~ArrayListTicketed() {
+  delete[] values;
+}
+
+template <class Value>
+Ticket& ArrayListTicketed<Value>::insert(Value value) {
+  if(s < c) {
+    values[f].v = value;
+    values[f].t.setACTIVE();
+    unsigned aux = values[f].next;
+    values[f].next = i;
+    i = f;
+    f = aux;
+    s++;
+  } else {
+    SysError::setError("ArrayListTicketed ERROR: Not enough space.");
+  }
+  return (values[i].t);
+}
+
+template <class Value>
+ArrayListTicketedNode<Value>& ArrayListTicketed<Value>::operator[](unsigned idx) {
+  return (this->values[idx]);
+}
+
+template <class Value>
+const ArrayListTicketedNode<Value>& ArrayListTicketed<Value>::operator[](unsigned idx) const {
+  return (this->values[idx]);
+}
+
+
+
+
+
+
+
+
+
+//struct node_base
+//{
+//    node_base() : m_next(0) {}
+//
+//    // Each node manages all of its tail nodes
+//    virtual ~node_base() { delete m_next; }
+//
+//    // Access the rest of the list
+//    node_base* next() const { return m_next; }
+//
+//    // print to the stream
+//    virtual void print(std::ostream& s) const = 0;
+//
+//    // double the value
+//    virtual void double_me() = 0;
+//
+//    void append(node_base* p)
+//    {
+//        if (m_next)
+//            m_next->append(p);
+//        else
+//            m_next = p;
+//    }
+//
+// private:
+//    node_base* m_next;
+//};
+//
+//template <class T>
+//struct node : node_base
+//{
+//    node(T x)
+//      : m_value(x)
+//    {}
+//
+//    void print(std::ostream& s) const { s << this->m_value; }
+//    void double_me() { m_value += m_value; }
+//
+// private:
+//    T m_value;
+//};
+//
+//inline std::ostream& operator<<(std::ostream& s, node_base const& n)
+//{
+//    n.print(s);
+//    return s;
+//}
 
 }  // namespace zbe
 

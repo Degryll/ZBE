@@ -10,7 +10,7 @@
 #ifndef CORE_ARCHETYPES_COLLISIONADOR_H_
 #define CORE_ARCHETYPES_COLLISIONADOR_H_
 
-#include "ZBE/core/CollisionData.h"
+#include "ZBE/core/tools/math/collisions/CollisionData.h"
 
 namespace zbe {
 

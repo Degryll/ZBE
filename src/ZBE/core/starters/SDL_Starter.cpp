@@ -15,11 +15,19 @@ namespace zbe {
 
 SDL_Starter* SDL_Starter::_instance = NULL;
 
+SDL_Starter* SDL_Starter::createInstance(Uint32 flags) {
+  if (SDL_Init(flags) != 0) {
+    zbe::SysError::setError("SDL ERROR: SDL could not initialize!");
+    // añadir al mensaje de error SDL_GetError()
+  }
+  return (_instance = new SDL_Starter);
+}
+
 /**
  * @fn bool SDL_Starter::addSubsystem(Uint32 flags)
  * @brief Initiates the SDL subsystem if it's not already initiated
  * @param flags Uint32. A integer with the necessary flags to initiate SDL.
- * @return if no errors occur, it returns true, else, false.
+ * @return if any errors occur, it returns true, else, false.
  */
 bool SDL_Starter::addSubsystem(Uint32 flags) {
   Uint32 f = SDL_WasInit(0);
@@ -36,16 +44,6 @@ bool SDL_Starter::addSubsystem(Uint32 flags) {
     }
   }
   return (false);
-}
-
-SDL_Surface* SDL_Starter::createWindow(const char* title, int x, int y, int w, int h, Uint32 flags) {
-  window = SDL_CreateWindow( title, x, y, w, h, flags);
-  if( window == NULL ) {
-    zbe::SysError::setError("SDL ERROR: The window could not be created!");
-  } else {
-    s = SDL_GetWindowSurface(window);
-  }
-  return s;
 }
 
 }  // namespace zbe

@@ -7,7 +7,10 @@
 
 #include <vector>
 
-//#include <SDL2/SDL.h>
+#include <ctime>
+
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 
 #include "ZBE/core/system/SysError.h"
 #include "ZBE/core/system/Logger.h"
@@ -18,36 +21,304 @@
 #include "any_iterator.hpp"
 #include "boost/iterator/iterator_categories.hpp"
 
+#include "ZBE/core/tools/containers/ticket.h"
 #include "ZBE/core/tools/containers/arrayList.h"
 #include "ZBE/core/tools/containers/arrayListIterator.h"
-#include "ZBE/core/tools/containers/arrayListTicketedIterator.h"
+
+#include "ZBE/core/tools/math/Vector.h"
+#include "ZBE/core/tools/math/objects.h"
+#include "ZBE/core/tools/math/collisions/intersections.h"
 
 #include <memory>
-
-template<class InputIterator>
-void imprime(InputIterator first, InputIterator last) {
-  while (first!=last) {
-    std::cout << *first <<std::endl;
-  ++first;
-  }
-}
 
 int degryllmain(int argc, char* argv[]) {
   printf("--- Degryll main ---\n\n");
 
-  zbe::Logger::createInstance()->setDefaultWriters();
+if (SDL_Init(SDL_INIT_VIDEO) != 0){
+	std::cout << "SDL_Init Error: " << SDL_GetError() << std::endl;
+	return 1;
+}
+SDL_Window *win = SDL_CreateWindow("Hello World!", 100, 100, 640, 480, SDL_WINDOW_SHOWN);
+if (win == nullptr){
+	std::cout << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
+	SDL_Quit();
+	return 1;
+}
+SDL_Window *win2 = SDL_CreateWindow("Hello World!2", 150, 100, 640, 480, SDL_WINDOW_SHOWN);
+if (win == nullptr){
+	std::cout << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
+	SDL_Quit();
+	return 1;
+}
+SDL_Renderer *ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+if (ren == nullptr){
+	SDL_DestroyWindow(win);
+	std::cout << "SDL_CreateRenderer Error: " << SDL_GetError() << std::endl;
+	SDL_Quit();
+	return 1;
+}
+SDL_Renderer *ren2 = SDL_CreateRenderer(win2, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+if (ren == nullptr){
+	SDL_DestroyWindow(win);
+	std::cout << "SDL_CreateRenderer Error: " << SDL_GetError() << std::endl;
+	SDL_Quit();
+	return 1;
+}
+//std::string imagePath = "data/images/zombieball/zombieball_back_640.png";
+//SDL_Surface *bmp = SDL_LoadBMP(imagePath.c_str());
+//if (bmp == nullptr){
+//	SDL_DestroyRenderer(ren);
+//	SDL_DestroyWindow(win);
+//	std::cout << "SDL_LoadBMP Error: " << SDL_GetError() << std::endl;
+//	SDL_Quit();
+//	return 1;
+//}
+//SDL_Texture *tex = SDL_CreateTextureFromSurface(ren, bmp);
+//SDL_FreeSurface(bmp);
+//if (tex == nullptr){
+//	SDL_DestroyRenderer(ren);
+//	SDL_DestroyWindow(win);
+//	std::cout << "SDL_CreateTextureFromSurface Error: " << SDL_GetError() << std::endl;
+//	SDL_Quit();
+//	return 1;
+//}
 
-  int i = 42;
-  float d = 3.1416;
-  char a = 65;
-  std::string s = "Hola Mundo!";
-  int *pi = &i;
+//SDL_Texture* loadTexture(const std::string &file, SDL_Renderer *ren){
+	SDL_Texture *tex = IMG_LoadTexture(ren, "data/images/zombieball/zombieball_back_640.png");
+	if (tex == nullptr){
+    SDL_DestroyRenderer(ren);
+    SDL_DestroyWindow(win);
+    std::cout << "SDL_CreateTextureFromSurface Error: " << SDL_GetError() << std::endl;
+    SDL_Quit();
+    return 1;
+	}
+	SDL_Texture *tex2 = IMG_LoadTexture(ren2, "data/images/zombieball/zombieball_back_640.png");
+	if (tex == nullptr){
+    SDL_DestroyRenderer(ren);
+    SDL_DestroyWindow(win);
+    std::cout << "SDL_CreateTextureFromSurface Error: " << SDL_GetError() << std::endl;
+    SDL_Quit();
+    return 1;
+	}
+//	return texture;
+//}
 
-  ZBE_LOG_INFO("Prueba Info." << d << "añadiendo un double.");
-  ZBE_LOG_DEBUG("Prueba Debug." << i << "un int y" << pi << "su puntero.");
-  ZBE_LOG_WARNING("Prueba Warning." << a << "un caracter");
-  ZBE_LOG_ERROR("Prueba Error." << s << "una cadena.");
-  ZBE_LOG("[PROPIA]","Prueba Propia.");
+//A sleepy rendering loop, wait for 3 seconds and render and present the screen each time
+for (int i = 0; i < 3; ++i){
+	//First clear the renderer
+	SDL_RenderClear(ren);
+	SDL_RenderClear(ren2);
+	//Draw the texture
+	SDL_RenderCopy(ren, tex, NULL, NULL);
+	SDL_RenderCopy(ren2, tex2, NULL, NULL);
+	//Update the screen
+	SDL_RenderPresent(ren);
+	SDL_RenderPresent(ren2);
+	//Take a quick break after all that hard work
+	SDL_Delay(1000);
+}
+SDL_DestroyTexture(tex);
+SDL_DestroyRenderer(ren);
+SDL_DestroyWindow(win);
+SDL_DestroyTexture(tex2);
+SDL_DestroyRenderer(ren2);
+SDL_DestroyWindow(win2);
+SDL_Quit();
+
+
+//  zbe::Logger::createInstance()->setDefaultWriters();
+//
+//  int i = 42;
+//  float d = 3.1416;
+//  char a = 65;
+//  std::string s = "Hola Mundo!";
+//  int *pi = &i;
+//
+//  ZBE_LOG_INFO("Prueba Info." << d << "añadiendo un double.");
+//  ZBE_LOG_DEBUG("Prueba Debug." << i << "un int y" << pi << "su puntero.");
+//  ZBE_LOG_WARNING("Prueba Warning." << a << "un caracter");
+//  ZBE_LOG_ERROR("Prueba Error." << s << "una cadena.");
+//  ZBE_LOG("[PROPIA]","Prueba Propia.");
+//
+//
+//  zbe::Vector2D v1;
+//  printf("Construct v1: (%lf,%lf)\n",v1.x,v1.y);
+//  v1.setCartesian(3,4);
+//  printf("SetCartesian v1: (%lf,%lf)\n",v1.x,v1.y);
+//  zbe::Vector2D v2 = v1;
+//  printf("Construct copy v2: (%lf,%lf)\n",v2.x,v2.y);
+//  printf("State v1: (%lf,%lf)\n",v1.x,v1.y);
+//  v2.setCartesian(4,3);
+//  printf("SetCartesian v2: (%lf,%lf)\n",v2.x,v2.y);
+//  zbe::Vector2D v3;
+//  printf("Construct v3: (%lf,%lf)\n",v3.x,v3.y);
+//  v3 = v2;
+//  printf("Assign v3: (%lf,%lf)\n",v3.x,v3.y);
+//  printf("State v1: (%lf,%lf)\n",v1.x,v1.y);
+//  printf("State v2: (%lf,%lf)\n",v2.x,v2.y);
+//  zbe::Vector2D v4(v1+v2+v3);
+//  printf("Construct v4 addition: (%lf,%lf)\n",v4.x,v4.y);
+//  printf("State v1: (%lf,%lf)\n",v1.x,v1.y);
+//  printf("State v2: (%lf,%lf)\n",v2.x,v2.y);
+//  printf("State v3: (%lf,%lf)\n",v3.x,v3.y);
+//  zbe::Vector2D v5;
+//  printf("Construct v5: (%lf,%lf)\n",v5.x,v5.y);
+//  v5 = v4 + v1 + v2;
+//  printf("addition v5: (%lf,%lf)\n",v5.x,v5.y);
+//  printf("State v1: (%lf,%lf)\n",v1.x,v1.y);
+//  printf("State v2: (%lf,%lf)\n",v2.x,v2.y);
+//  printf("State v3: (%lf,%lf)\n",v3.x,v3.y);
+//  printf("State v4: (%lf,%lf)\n",v4.x,v4.y);
+//
+//  double aux;
+//  int iterations = 100000000;
+//  clock_t t;
+//  for(int i = 0; i < 10; i++) {
+//    t = clock();
+//    for(int j = 0; j < iterations; j++) {
+//      aux = 0;
+//      zbe::Vector2D v1;
+//      v1.setCartesian(3,4);
+//      zbe::Vector2D v2 = v1;
+//      v2.setCartesian(4,3);
+//      zbe::Vector2D v3;
+//      v3 = v2;
+//      zbe::Vector2D v4(v1+v2+v3);
+//      zbe::Vector2D v5;
+//      v5 = v4 + v1 + v2;
+//      aux += v5.x;
+//    }
+//    t = clock() - t;
+//    printf ("Construct took me %ld clicks (%f seconds) %lf.\n",t,((float)t)/CLOCKS_PER_SEC,aux);
+//  }
+//
+//  zbe::Ray<2> r;
+//  r.o = {3.0,4.0};
+//
+//  zbe::Ray2D r2;
+//  r2.o = {3.0,4.0};
+//
+//  zbe::Ray3D r3{{0.0,0.0,0.0},{10.0,10.0,0.0}};
+//
+//  printf("%lf, %lf, %lf, %lf, %lf, %lf\n",r3.o[0],r3.o[1],r3.o[2],r3.d[0],r3.d[1],r3.d[2]);
+//
+//  zbe::Sphere bola({4.0,5.0,0.0},1.0);
+//
+//  double time;
+//  zbe::Point3D p;
+//  bool collision = zbe::intersectionRaySphere(r3,bola,time,p);
+//  //bool collision = zbe::intersectionRayNSphere<3>(r3,bola,time,p);
+//
+//  if(collision){
+//    printf("Collision en (%lf,%lf,%lf) dentro de %lf sec.!!\n",p[0],p[1],p[2],time);
+//  } else {
+//    printf("NO Collision!!\n");
+//  }
+
+//  zbe::ArrayList<int> l(1);
+//  l.insert(2);
+//
+//  zbe::ArrayListIterator<int> it(l.begin());
+//
+//  zbe::ArrayListIterator<int> itend(l.end());
+//
+//  printf("Inicialmente distintos: %d\n",it!=itend);
+//  fflush(stdout);
+//  it++;
+//  printf("Incremento.\n");
+//  fflush(stdout);
+//  printf("Despues del incremento son iguales: %d\n",it==itend);
+//  fflush(stdout);
+//
+//  typedef IteratorTypeErasure::make_any_iterator_type<zbe::ArrayListIterator<int> >::type anynormaliterator;
+//
+//  anynormaliterator anibegin;
+//  anynormaliterator aniend;
+//  it = l.begin();
+//  anibegin = it;
+//  aniend = itend;
+//
+//  printf("Inicialmente distintos: %d\n",anibegin!=aniend);
+//  fflush(stdout);
+//  anibegin++;
+//  printf("Incremento.\n");
+//  fflush(stdout);
+//  printf("Despues del incremento son iguales: %d\n",anibegin==aniend);
+//  fflush(stdout);
+//
+//  printf("TICKETED.\n");
+//  fflush(stdout);
+//
+//  zbe::ArrayListTicketed<int> tl(2);
+//  zbe::Ticket &t2 = tl.insert(2);
+//  tl.insert(3);
+//
+//  t2.setINACTIVE();
+//
+//  zbe::ArrayListTicketedIterator<int> tit(tl.begin());
+//
+//  zbe::ArrayListTicketedIterator<int> titend(tl.end());
+//
+//  printf("Inicialmente distintos: %d\n",tit!=titend);
+//  fflush(stdout);
+//  tit++;
+//  printf("Incremento.\n");
+//  fflush(stdout);
+//  printf("Despues del incremento son iguales: %d\n",tit==titend);
+//  fflush(stdout);
+//
+//  //typedef IteratorTypeErasure::make_any_iterator_type<zbe::ArrayListTicketedIterator<int> >::type anyticketediterator;
+//  typedef IteratorTypeErasure::any_iterator<
+//    int, // value type
+//    boost::forward_traversal_tag, // traversal tag. Note: std iterator categories are supported here
+//    int&, // reference type
+//    ptrdiff_t // difference type is irrelevant here, just don't use void, that'll throw the iterator_adaptor for a loop
+//  > anyticketediterator;
+//
+//  anyticketediterator tanibegin;
+//  anyticketediterator taniend;
+//  tit = tl.begin();
+//  tanibegin = tit;
+//  taniend = titend;
+//
+//  printf("Inicialmente distintos: %d\n",tanibegin!=taniend);
+//  fflush(stdout);
+//  tanibegin++;
+//  printf("Incremento.\n");
+//  fflush(stdout);
+//  printf("Despues del incremento son iguales: %d\n",tanibegin==taniend);
+//  fflush(stdout);
+//
+//  t2.setACTIVE();
+//  tit = tl.begin();
+//  tanibegin = tit;
+//  taniend = titend;
+//
+//  anyticketediterator taux = tanibegin;
+//
+//  printf("Inicialmente distintos: %d\n",taux!=taniend);
+//  fflush(stdout);
+//  taux++;
+//  printf("Incremento.\n");
+//  fflush(stdout);
+//  printf("Despues del incremento NO iguales: %d\n",taux!=taniend);
+//  fflush(stdout);
+//  taux++;
+//  printf("Incremento.\n");
+//  fflush(stdout);
+//  printf("Despues del incremento SI iguales: %d\n",taux==taniend);
+//  fflush(stdout);
+//
+//
+//  double x = 5.f;
+//  double y = 4.f;
+//  double m = std::sqrt(x*x+y*y);
+//  double nx = x / m;
+//  double ny = y / m;
+//  double mn = std::sqrt(nx*nx+ny*ny);
+//  std::cout << "Normal module: " << mn << std::endl;
+//
+//  printf("x(%lf), y(%lf), m(%.30lf), nx(%.30lf), ny(%lf), mn(%lf)\n\n",x,y,m,nx,ny,mn);
 
 //  typedef IteratorTypeErasure::any_iterator<
 //    int const,

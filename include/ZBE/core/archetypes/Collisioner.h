@@ -10,18 +10,23 @@
 #ifndef CORE_ARCHETYPES_COLLISIONER_H_
 #define CORE_ARCHETYPES_COLLISIONER_H_
 
-#include "ZBE/core/tools/math/Vector2D.h"
+#include "ZBE/core/tools/math/Vector.h"
 
 namespace zbe {
 
 class Collisioner {
   public:
+    enum CollysionType{
+      SPHERE = 0,
+      AABB   = 1
+    };
+
     virtual ~Collisioner() {}
 
     virtual void react(Collisioner *c, const Vector2D& normal,const Vector2D& point, double time) = 0;
 
-    virtual unsigned int getType() = 0;
-    virtual unsigned int collisionLevel() = 0;
+    virtual CollysionType getType() = 0;
+    virtual unsigned collisionLevel() = 0;
 };
 
 }  // namespace zbe

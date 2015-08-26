@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_workspace_file>
 	<Workspace title="Workspace">
-		<Project filename="ZBE/ZBE.cbp" />
 		<Project filename="ZBETest/ZBETest.cbp">
 			<Depends filename="ZBE/ZBE.cbp" />
 		</Project>
 		<Project filename="ZBE_main/ZBE_main.cbp">
 			<Depends filename="ZBE/ZBE.cbp" />
 		</Project>
+		<Project filename="ZBE/ZBE.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>

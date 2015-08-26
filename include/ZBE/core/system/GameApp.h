@@ -10,18 +10,41 @@
 #ifndef CORE_SYSTEM_GAMEAPP_H_
 #define CORE_SYSTEM_GAMEAPP_H_
 
+#include <forward_list>
+#include <algorithm>
+
+#include "any_iterator.hpp"
+
 #include "ZBE/core/system/App.h"
 #include "ZBE/core/Timer.h"
 #include "ZBE/core/CollisionData.h"
 #include "ZBE/core/Behavior.h"
 #include "ZBE/core/Drawer.h"
 
-#include <forward_list>
-#include <algorithm>
-
 namespace zbe {
 
-template <typename BehaviorIterator, typename CollisionadorIterator, typename DrawerIterator>
+//typedef IteratorTypeErasure::make_any_iterator_type<zbe::ArrayListTicketedIterator<int> >::type anyticketediterator;
+typedef IteratorTypeErasure::any_iterator<
+    Behavior, // value type
+    boost::forward_traversal_tag, // traversal tag. Note: std iterator categories are supported here
+    Behavior&, // reference type
+    ptrdiff_t // difference type is irrelevant here, just don't use void, that'll throw the iterator_adaptor for a loop
+  > BehaviorIterator;
+
+typedef IteratorTypeErasure::any_iterator<
+    Collisioner, // value type
+    boost::forward_traversal_tag, // traversal tag. Note: std iterator categories are supported here
+    Collisioner&, // reference type
+    ptrdiff_t // difference type is irrelevant here, just don't use void, that'll throw the iterator_adaptor for a loop
+  > CollisionerIterator;
+
+typedef IteratorTypeErasure::any_iterator<
+    Drawer, // value type
+    boost::forward_traversal_tag, // traversal tag. Note: std iterator categories are supported here
+    Drawer&, // reference type
+    ptrdiff_t // difference type is irrelevant here, just don't use void, that'll throw the iterator_adaptor for a loop
+  > DrawerIterator;
+
 class GameApp : App {
 public:
   virtual ~GameApp() {}
@@ -40,14 +63,13 @@ private:
     Timer *t;
     BehaviorIterator firstB;
     BehaviorIterator lastB;
-    CollisionadorIterator firstC;
-    CollisionadorIterator lastC;
+    CollisionerIterator firstC;
+    CollisionerIterator lastC;
     DrawerIterator firstD;
     DrawerIterator lastD;
 };
 
-template <typename BehaviorIterator, typename CollisionadorIterator, typename DrawerIterator>
-void GameApp<BehaviorIterator,CollisionadorIterator>::behaveviorAndPhysics() {
+void GameApp::behaveviorAndPhysics() {
   double timeRemain = t->getMilliseconds();
   double collisionTime = 0.0;
   std::forward_list<CollisionData> cdata;
@@ -61,40 +83,30 @@ void GameApp<BehaviorIterator,CollisionadorIterator>::behaveviorAndPhysics() {
   }  // while timeRemain
 }
 
-template <typename BehaviorIterator, typename CollisionadorIterator, typename DrawerIterator>
-void GameApp<BehaviorIterator,CollisionadorIterator>::behaveUntil(double time) {
+void GameApp::behaveUntil(double time) {
   for(auto it = firstB; it != lastB; ++it) {
-    static_cast<Behavior*>(*it)->behaveUntil(time);
+    it->behaveUntil(time);
   }
 }
 
-template <typename BehaviorIterator, typename CollisionadorIterator, typename DrawerIterator>
-double GameApp<BehaviorIterator,CollisionadorIterator>::collisionDetection(std::forward_list<CollisionData> *cdata, double timeRemain) {
+double GameApp::collisionDetection(std::forward_list<CollisionData> *cdata, double timeRemain) {
   double bestTime = timeRemain;
   for(auto it = firstC; it != lastC; ++it) {
-    bestTime = static_cast<Collisionador*>(*it)->collisionDetection(cdata, bestTime);
+    bestTime = it->collisionDetection(cdata, bestTime);
   }
 
   return bestTime;
 }
 
-template <typename BehaviorIterator, typename CollisionIterator, typename DrawerIterator>
-void GameApp<BehaviorIterator,CollisionIterator>::reportCollision(std::forward_list<CollisionData> *cdata, double collisionTime) {
-  for(auto it = cdata->begin(); it < cdata->end(); ++it) {
-    CollisionData *cd = &(*it);
-    Collisionador *d = cd->getCollisionador();
-    Collisionador *b = cd->getCollisionable();
-    Vector2D &n = cd->getNormal();
-    Vector2D &p = cd->getPoint();
-    d->react(b,n,p,collisionTime);
-    b->react(d,n,p,collisionTime);
+void GameApp::reportCollision(const std::forward_list<CollisionData> &cdata, double collisionTime) {
+  for(auto it = cdata.begin(); it < cdata.end(); ++it) {
+    it->react(collisionTime);
   }
 }
 
-template <typename BehaviorIterator, typename CollisionIterator, typename DrawerIterator>
-void GameApp<BehaviorIterator,CollisionIterator>::paint() {
+void GameApp::paint() {
   for(auto it = firstD; it != lastD; ++it) {
-    static_cast<Drawer*>(*it)->draw();
+    it->draw();
   }
 }
 

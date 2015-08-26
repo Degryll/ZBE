@@ -24,6 +24,7 @@ public:
   virtual void shutdown() {}
 
   void run();
+  // TODO maybe this functions should be undefined to avoid errors
   virtual void pause() {}
   virtual void resume() {}
   virtual void restart() {}

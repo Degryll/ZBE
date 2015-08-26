@@ -63,3 +63,432 @@
 [WARNING]> Prueba Warning.Aun caracter
 [ERROR]> Prueba Error.Hola Mundo!una cadena.
 [PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:46> Prueba Debug.42un int y0x22f27csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[DEBUG]..\..\..\include/ZBE/core/tools/containers/arrayList.h:65> ArrayList constructor capacity.
+[DEBUG]..\..\..\include/ZBE/core/tools/containers/arrayListIterator.h:35> ArrayListIter constructor begin.
+[DEBUG]..\..\..\include/ZBE/core/tools/containers/arrayListIterator.h:39> ArrayListIter destructor.
+[DEBUG]..\..\..\include/ZBE/core/tools/containers/arrayList.h:87> ArrayList destructor.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:46> Prueba Debug.42un int y0x22f27csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[DEBUG]..\..\..\include/ZBE/core/tools/containers/arrayList.h:67> ArrayList constructor capacity.
+[DEBUG]..\..\..\include/ZBE/core/tools/containers/arrayListIterator.h:35> ArrayListIter constructor begin.
+[DEBUG]..\..\..\include/ZBE/core/tools/containers/arrayListIterator.h:39> ArrayListIter destructor.
+[DEBUG]..\..\..\include/ZBE/core/tools/containers/arrayList.h:89> ArrayList destructor.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:47> Prueba Debug.42un int y0x22ef6csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[DEBUG]..\..\..\include/ZBE/core/tools/containers/arrayList.h:67> ArrayList constructor capacity.
+[DEBUG]..\..\..\include/ZBE/core/tools/containers/arrayList.h:162> ArrayListTicketed constructor capacity.
+[DEBUG]..\..\..\include/ZBE/core/tools/containers/arrayListIterator.h:35> ArrayListIter constructor begin.
+[DEBUG]..\..\..\include/ZBE/core/tools/containers/arrayListIterator.h:78> ArrayListTicketedIter constructor begin.
+[DEBUG]..\..\..\include/ZBE/core/tools/containers/arrayListIterator.h:82> ArrayListTicketedIter destructor.
+[DEBUG]..\..\..\include/ZBE/core/tools/containers/arrayListIterator.h:39> ArrayListIter destructor.
+[DEBUG]..\..\..\include/ZBE/core/tools/containers/arrayList.h:184> ArrayListTicketed destructor.
+[DEBUG]..\..\..\include/ZBE/core/tools/containers/arrayList.h:89> ArrayList destructor.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:47> Prueba Debug.42un int y0x22ef6csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[DEBUG]..\..\..\include/ZBE/core/tools/containers/arrayList.h:67> ArrayList constructor capacity.
+[DEBUG]..\..\..\include/ZBE/core/tools/containers/arrayList.h:162> ArrayListTicketed constructor capacity.
+[DEBUG]..\..\..\include/ZBE/core/tools/containers/arrayListIterator.h:35> ArrayListIter constructor begin.
+[DEBUG]..\..\..\include/ZBE/core/tools/containers/arrayListIterator.h:78> ArrayListTicketedIter constructor begin.
+[DEBUG]..\..\..\include/ZBE/core/tools/containers/arrayListIterator.h:82> ArrayListTicketedIter destructor.
+[DEBUG]..\..\..\include/ZBE/core/tools/containers/arrayListIterator.h:39> ArrayListIter destructor.
+[DEBUG]..\..\..\include/ZBE/core/tools/containers/arrayList.h:184> ArrayListTicketed destructor.
+[DEBUG]..\..\..\include/ZBE/core/tools/containers/arrayList.h:89> ArrayList destructor.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:47> Prueba Debug.42un int y0x22f5acsu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:47> Prueba Debug.42un int y0x22f5acsu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:47> Prueba Debug.42un int y0x22f5acsu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:47> Prueba Debug.42un int y0x22f5acsu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:47> Prueba Debug.42un int y0x22f5ccsu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:47> Prueba Debug.42un int y0x22f5ccsu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:47> Prueba Debug.42un int y0x22f5ccsu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:47> Prueba Debug.42un int y0x22f59csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:47> Prueba Debug.42un int y0x22f59csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:47> Prueba Debug.42un int y0x22f58csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:47> Prueba Debug.42un int y0x22f58csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:47> Prueba Debug.42un int y0x22f58csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:47> Prueba Debug.42un int y0x22f58csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:47> Prueba Debug.42un int y0x22f58csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:47> Prueba Debug.42un int y0x22f58csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:47> Prueba Debug.42un int y0x22f58csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:47> Prueba Debug.42un int y0x22f58csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:47> Prueba Debug.42un int y0x22f58csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:47> Prueba Debug.42un int y0x22f58csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:47> Prueba Debug.42un int y0x22f58csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f5bcsu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f5bcsu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f52csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f52csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f49csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f49csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f49csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f49csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f49csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f45csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f45csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f45csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f45csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f45csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f45csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f45csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f49csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f49csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f49csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f43csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f43csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f43csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f43csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f43csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f43csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f43csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f39csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f43csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f43csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f39csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f43csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f43csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f43csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:44> Prueba Debug.42un int y0x22f48csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:44> Prueba Debug.42un int y0x22f4ccsu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:44> Prueba Debug.42un int y0x22f4ccsu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:44> Prueba Debug.42un int y0x22f4ccsu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f49csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f5ecsu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f49csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f5ecsu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f49csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f5ecsu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f5ecsu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f49csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f44csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f44csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f44csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f44csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f44csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f44csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f44csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f44csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f44csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f44csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f44csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
+[INFO]> Prueba Info.3.1416añadiendo un double.
+[DEBUG]C:\Users\Degryll\Documents\GitHub\ZBE\src\ZBE_main\src\degryllmain.cpp:45> Prueba Debug.42un int y0x22f44csu puntero.
+[WARNING]> Prueba Warning.Aun caracter
+[ERROR]> Prueba Error.Hola Mundo!una cadena.
+[PROPIA]> Prueba Propia.
