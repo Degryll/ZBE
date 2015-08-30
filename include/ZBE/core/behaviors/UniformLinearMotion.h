@@ -14,16 +14,17 @@
 #include "any_iterator.hpp"
 
 #include "ZBE/core/behaviors/Behavior.h"
-#include "ZBE/core/archetypes/Movible.h"
+#include "ZBE/core/archetypes/Movable.h"
 
 namespace zbe {
 
 typedef IteratorTypeErasure::any_iterator<
-    Movible, // value type
+    //degrill cuidadin cuidadin!! 2 en el movable.
+    Movable<2>, // value type
     boost::forward_traversal_tag, // traversal tag. Note: std iterator categories are supported here
-    Movible&, // reference type
+    Movable<2>&, // reference type
     ptrdiff_t // difference type is irrelevant here, just don't use void, that'll throw the iterator_adaptor for a loop
-  > MovibleIterator;
+  > MovableIterator;
 
 class UniformLinearMotion : private Behavior {
   public:
@@ -32,8 +33,8 @@ class UniformLinearMotion : private Behavior {
     void behaveUntil(double time);
 
   private:
-    MovibleIterator first;
-    MovibleIterator last;
+    MovableIterator first;
+    MovableIterator last;
 };
 
 }  // namespace zbe

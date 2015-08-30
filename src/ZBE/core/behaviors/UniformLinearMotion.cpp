@@ -14,10 +14,11 @@ namespace zbe {
 
 void UniformLinearMotion::behaveUntil(double time) {
   for(auto it = first; it != last; ++it) {
-    int vx = it->getVelocityX();
-    int vy = it->getVelocityY();
-    it->increaseX(int(vx*time));
-    it->increaseY(int(vy*time));
+    it->travel(time);
+    //int vx = it->getVelocityX();
+    //int vy = it->getVelocityY();
+    //it->increaseX(int(vx*time));
+    //it->increaseY(int(vy*time));
   }
 }
 

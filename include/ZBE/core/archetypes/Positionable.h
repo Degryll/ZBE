@@ -10,27 +10,26 @@
 #ifndef CORE_ARCHETYPES_POSITIONABLE_H_
 #define CORE_ARCHETYPES_POSITIONABLE_H_
 
+#include "ZBE/core/tools/math/Vector.h"
+#include "ZBE/core/tools/math/Point.h"
+
 namespace zbe {
 
+template <unsigned s>
 class Positionable {
   public:
-    Positionable() : x(0), y(0) {}
-    Positionable(int x, int y) : x(x), y(y) {}
+    Positionable() : position() {}
+    Positionable(Point<s> position) : position(position) {}
 
     virtual ~Positionable() {}
 
-    inline int getX() const {return (x);}
-    inline int getY() const {return (y);}
+    inline Point<s> getPosition() const {return (position);}
+    inline void setPosition(Point<s> position) {this->position = position;}
 
-    inline void setX(int x) {this->x = x;}
-    inline void setY(int y) {this->y = y;}
-
-    inline void increaseX(int x) {this->x += x;}
-    inline void increaseY(int y) {this->y += y;}
+    inline void increase(Vector<s> offset) {this->position += offset;}
 
   private:
-    int x = 0;
-    int y = 0;
+    Point<s> position;
 };
 
 }  // namespace zbe
