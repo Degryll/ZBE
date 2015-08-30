@@ -69,6 +69,8 @@ private:
     DrawerIterator lastD;
 };
 
+// Degryll TODO en lugar de collision, que se llame event
+// una entidad puede reaccionar a una colision, un evento de windows (click) u otra cosa (ha muerto otra entidad, una entidad se acerca...)
 void GameApp::behaveviorAndPhysics() {
   double timeRemain = t->getMilliseconds();
   double collisionTime = 0.0;
@@ -76,8 +78,8 @@ void GameApp::behaveviorAndPhysics() {
 
   while(timeRemain > 0.0){
     collisionTime = collisionDetection(&cdata, timeRemain);
-    if (!cdata.empty()) reportCollision(cdata, collisionTime);
     behaveUntil(collisionTime);
+    if (!cdata.empty()) reportCollision(cdata, collisionTime);
 
     timeRemain -= collisionTime;
   }  // while timeRemain

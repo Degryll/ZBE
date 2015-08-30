@@ -81,6 +81,7 @@ class Logger {
     using WriterCallback = void (*)(const char * type, const char * msg);
 
     void addWriter(WriterCallback callback);
+    // TODO delWriter
 
     void log(const char * type, LoggerMsg msg);
 
