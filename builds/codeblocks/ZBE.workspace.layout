@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_workspace_layout_file>
 	<ActiveProject path="ZBE/ZBE.cbp" />
+<<<<<<< HEAD
 	<PreferredTarget name="Release-Win64" />
+=======
+>>>>>>> f340828bc885dcfbe67e76cfc4b351d2065f422d
 </CodeBlocks_workspace_layout_file>
