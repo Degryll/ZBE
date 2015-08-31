@@ -123,7 +123,7 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="../../../include/ZBE/core/SDL2.0/SDL_Window.h" />
+		<Unit filename="../../../include/ZBE/core/SDL2.0/Window.h" />
 		<Unit filename="../../../include/ZBE/core/archetypes/AABBCollisionable.h" />
 		<Unit filename="../../../include/ZBE/core/archetypes/AABBSphereCollisionable.h" />
 		<Unit filename="../../../include/ZBE/core/archetypes/Collisionable.h" />
@@ -156,7 +156,7 @@
 		<Unit filename="../../../include/ZBE/core/tools/math/math.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/objects.h" />
 		<Unit filename="../../../include/ZBE/core/tools/text/utf8.h" />
-		<Unit filename="../../../src/ZBE/core/SDL2.0/SDL_Window.cpp" />
+		<Unit filename="../../../src/ZBE/core/SDL2.0/Window.cpp" />
 		<Unit filename="../../../src/ZBE/core/behaviors/UniformLinearMotion.cpp" />
 		<Unit filename="../../../src/ZBE/core/drawers/SDL/SimpleSpriteSDLDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/core/io/FileHandler.cpp" />

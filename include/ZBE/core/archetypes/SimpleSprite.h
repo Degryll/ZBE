@@ -17,8 +17,8 @@ namespace zbe {
 class SimpleSprite {
   public:
     SimpleSprite() : x(0), y(0), w(0), h(0), img(0) {}
-    SimpleSprite(unsigned width, unsigned height, SDL_Surface* img) : x(0), y(0), w(width), h(height), img(img) {}
-    SimpleSprite(int x, int y,unsigned width, unsigned height, SDL_Surface* img) : x(x), y(y), w(width), h(height), img(img) {}
+    SimpleSprite(unsigned width, unsigned height, unsigned img) : x(0), y(0), w(width), h(height), img(img) {}
+    SimpleSprite(int x, int y,unsigned width, unsigned height, unsigned img) : x(x), y(y), w(width), h(height), img(img) {}
 
     ~SimpleSprite() {}
 

@@ -42,7 +42,7 @@ class FileHandler {
     ~FileHandler();
 
     size_t read(void* buffer, size_t size, size_t count);
-    char*  readln(char* buffer, size_t buffersize);
+    char*  readln(char* buffer, size_t size);
 
     size_t write(const char* text);
     size_t write(const void* buffer, size_t size, size_t count);

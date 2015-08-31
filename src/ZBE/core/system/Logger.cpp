@@ -14,12 +14,12 @@
 
 namespace zbe {
 
+Logger* Logger::_instance = nullptr;
+
 LoggerMsg& LoggerMsg::operator<<(bool b) {
   this->msg << ((b) ? "true" : "false");
   return (*this);
 }
-
-Logger* Logger::_instance = 0;
 
 const char Logger::TINFO[] = "[INFO]";
 const char Logger::TDEBUG[] = "[DEBUG]";

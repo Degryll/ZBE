@@ -25,7 +25,7 @@ void SimpleSpriteSDLDrawer::draw() {
     dst.y = entitie.getTopY();
     dst.w = entitie.getWidth();
     dst.h = entitie.getHeight();
-    window.render(entitie.getImage(),&src,&dst);
+    window->render(entitie.getImage(),&src,&dst);
   }
 }
 

@@ -12,7 +12,9 @@
 
 #include "ZBE/core/drawers/Drawer.h"
 #include "ZBE/core/archetypes/SimpleSprite.h"
-#include "ZBE/core/SDL2.0/SDL_Window.h"
+#include "ZBE/core/SDL2.0/Window.h"
+
+#include "any_iterator.hpp"
 
 #include <SDL2/SDL.h>
 
@@ -33,13 +35,13 @@ typedef IteratorTypeErasure::any_iterator<
 
 class SimpleSpriteSDLDrawer : public Drawer {
   public:
-    SimpleSpriteSDLDrawer(SDL_Window* window, SimpleSpriteIterator first, SimpleSpriteIterator end) : window(window), firstSS(first), endSS(end) {}
+    SimpleSpriteSDLDrawer(Window* window, SimpleSpriteIterator first, SimpleSpriteIterator end) : window(window), firstSS(first), endSS(end) {}
     ~SimpleSpriteSDLDrawer() {}
 
     void draw();
 
   private:
-    SDL_Window* window;
+    Window* window;
     SimpleSpriteIterator firstSS;
     SimpleSpriteIterator endSS;
 };

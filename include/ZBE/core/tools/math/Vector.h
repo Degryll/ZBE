@@ -53,6 +53,7 @@ class Vector {
 // Friend Functions
 ///////////////////////////////////////////////////////////////////////////////
 
+    // Degryll usar operador += que pa eso esta
     friend Vector operator+(Vector lhs, const Vector& rhs) {
       for(unsigned i = 0; i < s; i++) {
         lhs.data[i] += rhs.data[i];
