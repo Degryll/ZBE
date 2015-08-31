@@ -12,6 +12,7 @@
 #define SRC_SDL_WINDOW_H_
 
 #include <vector>
+#include <mutex>
 
 #include <SDL2/SDL.h>
 
@@ -45,8 +46,8 @@ class Window {
   private:
     SDL_Window* window;
     SDL_Renderer* renderer;
-    // Degryll TODO vector puede dar problemas a la hora de descargar y cargar imagenes
     std::vector<SDL_Texture*> imgCollection;
+    std::mutex m;
 };
 
 }  // namespace zbe

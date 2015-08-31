@@ -11,6 +11,8 @@
 #include "ZBE/core/starters/SDL_Starter.h"
 #include "ZBE/core/system/SysError.h"
 
+#include <string>
+
 namespace zbe {
 
 SDL_Starter* SDL_Starter::_instance = NULL;
@@ -34,12 +36,12 @@ bool SDL_Starter::addSubsystem(Uint32 flags) {
 
   if (f == 0) {
     if (SDL_Init(flags) != 0) {
-      zbe::SysError::setError("SDL ERROR: SDL could not initialize!");
+      zbe::SysError::setError(std::string("ERROR: SDL could not initialize! SDL ERROR: ") + SDL_GetError());
       return (true);
     }
   } else if ((flags & f) != flags) {
     if (SDL_InitSubSystem(flags) != 0) {
-      zbe::SysError::setError("SDL ERROR: Could not initialize subsystem!");
+      zbe::SysError::setError(std::string("ERROR: Could not initialize subsystem! SDL ERROR: ") + SDL_GetError());
       return (true);
     }
   }
