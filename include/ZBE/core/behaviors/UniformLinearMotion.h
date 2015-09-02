@@ -18,14 +18,23 @@
 
 namespace zbe {
 
-typedef IteratorTypeErasure::any_iterator<
-    //degrill cuidadin cuidadin!! 2 en el movable.
-    Movable<2>, // value type
-    boost::forward_traversal_tag, // traversal tag. Note: std iterator categories are supported here
-    Movable<2>&, // reference type
-    ptrdiff_t // difference type is irrelevant here, just don't use void, that'll throw the iterator_adaptor for a loop
-  > MovableIterator;
+//typedef IteratorTypeErasure::any_iterator<
+//    //degrill cuidadin cuidadin!! 2 en el movable.
+//    Movable<2>, // value type
+//    boost::forward_traversal_tag, // traversal tag. Note: std iterator categories are supported here
+//    Movable<2>&, // reference type
+//    ptrdiff_t // difference type is irrelevant here, just don't use void, that'll throw the iterator_adaptor for a loop
+//  > MovableIterator;
 
+template <unsigned s>
+using MovableIterator = IteratorTypeErasure::any_iterator<
+                          Movable<s>, // value type
+                          boost::forward_traversal_tag, // traversal tag. Note: std iterator categories are supported here
+                          Movable<s>&, // reference type
+                          ptrdiff_t // difference type is irrelevant here, just don't use void, that'll throw the iterator_adaptor for a loop
+                        >;
+
+template <unsigned s>
 class UniformLinearMotion : private Behavior {
   public:
     ~UniformLinearMotion() {}
@@ -33,8 +42,8 @@ class UniformLinearMotion : private Behavior {
     void behaveUntil(double time);
 
   private:
-    MovableIterator first;
-    MovableIterator last;
+    MovableIterator<s> first;
+    MovableIterator<s> last;
 };
 
 }  // namespace zbe

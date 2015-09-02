@@ -8,3 +8,5 @@ bin/Release/ZBETest.exe
 bin/Release/ZBE_main.exe
 lib/libZBE_x64.a
 *.layout
+*.dll
+*.a

@@ -3,18 +3,16 @@
  * @file SDL_Window.cpp
  *
  * @since 2015/05/30
- * @date 2015/05/30
+ * @date 2015/09/01
  * @author Degryll
  * @brief Create a windows using SDL 2.0.
  */
 
 #include "ZBE/core/SDL2.0/Window.h"
+#include "ZBE/core/system/SysError.h"
 
 #include <string>
 #include <SDL2/SDL_Image.h>
-
-//#include "ZBE/core/starters/SDL_Starter.h"
-#include "ZBE/core/system/SysError.h"
 
 namespace zbe {
 

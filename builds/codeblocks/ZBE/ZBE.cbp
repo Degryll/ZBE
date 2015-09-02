@@ -70,9 +70,12 @@
 					<Add option="-m64" />
 					<Add option="-static-libstdc++" />
 					<Add directory="../../../include" />
-					<Add directory="../../../extlibs/SDL2/2.0.1/x86_64-w64-mingw32/include" />
 					<Add directory="../../../src" />
 					<Add directory="include/ZBE/core/io" />
+					<Add directory="../../../extlibs/SDL2/2.0.3/x86_64-w64-mingw32/include" />
+					<Add directory="../../../extlibs/SDL2/2.0.3/x86_64-w64-mingw32/include/SDL2" />
+					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-w64-mingw32/include" />
+					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-w64-mingw32/include" />
 					<Add directory="../../../extlibs/utf8cpp/source" />
 					<Add directory="../../../extlibs/boost_1_57_0" />
 					<Add directory="../../../extlibs/IteratorTypeErasure/IteratorTypeErasure/any_iterator" />
@@ -81,7 +84,11 @@
 					<Add library="mingw32" />
 					<Add library="SDL2main" />
 					<Add library="SDL2" />
-					<Add directory="../../../extlibs/SDL2/2.0.1/x86_64-w64-mingw32/lib" />
+					<Add library="SDL2_image" />
+					<Add library="SDL2_ttf" />
+					<Add directory="../../../extlibs/SDL2/2.0.3/x86_64-w64-mingw32/lib" />
+					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-w64-mingw32/lib" />
+					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-w64-mingw32/lib" />
 				</Linker>
 			</Target>
 			<Target title="Release-Win64">
@@ -148,7 +155,7 @@
 		<Unit filename="../../../include/ZBE/core/tools/Timer.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/ArrayList.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/ArrayListIterator.h" />
-		<Unit filename="../../../include/ZBE/core/tools/containers/ticket.h" />
+		<Unit filename="../../../include/ZBE/core/tools/containers/Ticket.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/Point.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/Vector.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/collisions/CollisionData.h" />

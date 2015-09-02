@@ -12,7 +12,8 @@
 
 namespace zbe {
 
-void UniformLinearMotion::behaveUntil(double time) {
+template <unsigned s>
+void UniformLinearMotion<s>::behaveUntil(double time) {
   for(auto it = first; it != last; ++it) {
     it->travel(time);
     //int vx = it->getVelocityX();

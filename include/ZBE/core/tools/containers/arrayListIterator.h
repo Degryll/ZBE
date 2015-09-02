@@ -90,6 +90,8 @@ public:
 
   virtual ~ArrayListTicketedIter() {}
 
+
+// que hace? para que?
   void reset() {
     i = l->i;
     if ((i != -1) && ((*l)[i].t.isNOTACTIVE())) {
@@ -117,6 +119,7 @@ public:
           l->f = aux;
           aux = aux2;
         } else {
+          i = aux;  // avoid bug in line (*l)[i].next = aux2;
           aux = (*l)[aux].next;
         }
       }
