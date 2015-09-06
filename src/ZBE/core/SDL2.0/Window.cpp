@@ -12,7 +12,7 @@
 #include "ZBE/core/system/SysError.h"
 
 #include <string>
-#include <SDL2/SDL_Image.h>
+#include <SDL2/SDL_image.h>
 
 namespace zbe {
 

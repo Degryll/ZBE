@@ -19,16 +19,23 @@
 					<Add option="-fPIC" />
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/SDL2/2.0.3/include" />
+					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/include" />
+					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/include" />
 					<Add directory="../../../src" />
 					<Add directory="include/ZBE/core/io" />
 					<Add directory="../../../extlibs/utf8cpp/source" />
 					<Add directory="../../../extlibs/boost_1_57_0" />
 					<Add directory="../../../extlibs/IteratorTypeErasure/IteratorTypeErasure/any_iterator" />
+					<Add directory="include/ZBE/core/daemons" />
 				</Compiler>
 				<Linker>
 					<Add library="SDL2main" />
 					<Add library="SDL2" />
+					<Add library="SDL2_image" />
+					<Add library="SDL2_ttf" />
 					<Add directory="../../../extlibs/SDL2/2.0.3/lib/linux64" />
+					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />
+					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/lib" />
 				</Linker>
 			</Target>
 			<Target title="Release-Linux64">
@@ -44,17 +51,24 @@
 					<Add option="-fPIC" />
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/SDL2/2.0.3/include" />
+					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/include" />
+					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/include" />
 					<Add directory="../../../src" />
 					<Add directory="include/ZBE/core/io" />
 					<Add directory="../../../extlibs/utf8cpp/source" />
 					<Add directory="../../../extlibs/boost_1_57_0" />
 					<Add directory="../../../extlibs/IteratorTypeErasure/IteratorTypeErasure/any_iterator" />
+					<Add directory="include/ZBE/core/daemons" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
 					<Add library="SDL2main" />
 					<Add library="SDL2" />
+					<Add library="SDL2_image" />
+					<Add library="SDL2_ttf" />
 					<Add directory="../../../extlibs/SDL2/2.0.3/lib/linux64" />
+					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />
+					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/lib" />
 				</Linker>
 			</Target>
 			<Target title="Debug-Win64">
@@ -79,6 +93,7 @@
 					<Add directory="../../../extlibs/utf8cpp/source" />
 					<Add directory="../../../extlibs/boost_1_57_0" />
 					<Add directory="../../../extlibs/IteratorTypeErasure/IteratorTypeErasure/any_iterator" />
+					<Add directory="include/ZBE/core/daemons" />
 				</Compiler>
 				<Linker>
 					<Add library="mingw32" />
@@ -112,6 +127,7 @@
 					<Add directory="../../../extlibs/utf8cpp/source" />
 					<Add directory="../../../extlibs/boost_1_57_0" />
 					<Add directory="../../../extlibs/IteratorTypeErasure/IteratorTypeErasure/any_iterator" />
+					<Add directory="include/ZBE/core/daemons" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -143,6 +159,7 @@
 		<Unit filename="../../../include/ZBE/core/archetypes/SphereCollisionable.h" />
 		<Unit filename="../../../include/ZBE/core/behaviors/Behavior.h" />
 		<Unit filename="../../../include/ZBE/core/behaviors/UniformLinearMotion.h" />
+		<Unit filename="../../../include/ZBE/core/daemons/Daemon.h" />
 		<Unit filename="../../../include/ZBE/core/drawers/Drawer.h" />
 		<Unit filename="../../../include/ZBE/core/drawers/SDL/SimpleSpriteSDLDrawer.h" />
 		<Unit filename="../../../include/ZBE/core/io/FileHandler.h" />
@@ -165,6 +182,7 @@
 		<Unit filename="../../../include/ZBE/core/tools/text/utf8.h" />
 		<Unit filename="../../../src/ZBE/core/SDL2.0/Window.cpp" />
 		<Unit filename="../../../src/ZBE/core/behaviors/UniformLinearMotion.cpp" />
+		<Unit filename="../../../src/ZBE/core/daemons/Daemon.cpp" />
 		<Unit filename="../../../src/ZBE/core/drawers/SDL/SimpleSpriteSDLDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/core/io/FileHandler.cpp" />
 		<Unit filename="../../../src/ZBE/core/loaders/SDLFontLoader.cpp" />
