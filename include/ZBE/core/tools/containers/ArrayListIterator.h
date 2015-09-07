@@ -34,6 +34,7 @@ class ArrayListIter
 
 public:
 
+// si null es -1, i tiene que ser int
   ArrayListIter() : l(0), i(-1) {}
   ArrayListIter(ArrayList<Value> *list) : l(list), i(list->getIndex()) {}
   ArrayListIter(ArrayList<Value> *list, unsigned i) : l(list), i(i) {}
@@ -111,7 +112,7 @@ public:
 
     void increment() {
       int aux = (*l)[i].next;
-      while((aux != -1) && ((*l)[aux].t.isNOTACTIVE())) {
+      while((aux != -1) && ((*l)[aux].t.isNotACTIVE())) {
         if((*l)[aux].t.isERASED()) {
           int aux2  = (*l)[aux].next;
           (*l)[i].next = aux2;
