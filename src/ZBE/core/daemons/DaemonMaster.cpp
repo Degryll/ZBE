@@ -2,23 +2,24 @@
 
 namespace zbe {
 
-DaemonMaster::DaemonMaster():daemonList(0) {
-  daemonList = new std::vector<Daemon>();
-}
+    DaemonMaster::DaemonMaster():daemonList(0) {
+      daemonList = new std::vector<Daemon>();
+    }
 
-DaemonMaster::~DaemonMaster() {
-  if(daemonList){
-      delete daemonList;
-  }
-}
+    DaemonMaster::~DaemonMaster() {
+      if(daemonList){
+        delete daemonList;
+      }
+    }
 
-void DaemonMaster::run(){
-  for(auto it = daemonList->begin(); it < daemonList->end(); ++it) {
-    it->run();
-  }
-}
+    void DaemonMaster::run(){
+      for(auto it = daemonList->begin(); it < daemonList->end(); ++it) {
+        it->run();
+      }
+    }
 
-void DaemonMaster::addDaemon(Daemon * daemon){
+    void DaemonMaster::addDaemon(const Daemon &daemon){
+        //daemonList->push_back(daemon);
+    }
 
-}
 }

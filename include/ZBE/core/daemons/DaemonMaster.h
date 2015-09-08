@@ -12,7 +12,7 @@ class DaemonMaster : public Daemon {
 
     void run();
 
-    void addDaemon(Daemon * daemon);
+    void addDaemon(const Daemon &daemon);
 
   private:
     std::vector<Daemon> * daemonList;

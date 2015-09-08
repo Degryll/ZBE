@@ -160,6 +160,7 @@
 		<Unit filename="../../../include/ZBE/core/behaviors/Behavior.h" />
 		<Unit filename="../../../include/ZBE/core/behaviors/UniformLinearMotion.h" />
 		<Unit filename="../../../include/ZBE/core/daemons/Daemon.h" />
+		<Unit filename="../../../include/ZBE/core/daemons/DaemonMaster.h" />
 		<Unit filename="../../../include/ZBE/core/drawers/Drawer.h" />
 		<Unit filename="../../../include/ZBE/core/drawers/SDL/SimpleSpriteSDLDrawer.h" />
 		<Unit filename="../../../include/ZBE/core/io/FileHandler.h" />
@@ -182,7 +183,7 @@
 		<Unit filename="../../../include/ZBE/core/tools/text/utf8.h" />
 		<Unit filename="../../../src/ZBE/core/SDL2.0/Window.cpp" />
 		<Unit filename="../../../src/ZBE/core/behaviors/UniformLinearMotion.cpp" />
-		<Unit filename="../../../src/ZBE/core/daemons/Daemon.cpp" />
+		<Unit filename="../../../src/ZBE/core/daemons/DaemonMaster.cpp" />
 		<Unit filename="../../../src/ZBE/core/drawers/SDL/SimpleSpriteSDLDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/core/io/FileHandler.cpp" />
 		<Unit filename="../../../src/ZBE/core/loaders/SDLFontLoader.cpp" />

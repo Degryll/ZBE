@@ -38,4 +38,4 @@ dlopen=''
 dlpreopen=''
 
 # Directory that this library needs to be installed in:
-libdir='/usr/local/lib'
+libdir='/media/ALMACEN/zombeer/SDL2_image-2.0.0/bin/lib'
