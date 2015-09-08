@@ -28,7 +28,7 @@ class Ticket {
     void setERASED()   {s = ERASED;}
 
     bool isACTIVE()    {return (s == ACTIVE);}
-    bool isNOTACTIVE() {return (s != ACTIVE);}
+    bool isNotACTIVE() {return (s != ACTIVE);}
     bool isINACTIVE()  {return (s == INACTIVE);}
     bool isERASED()    {return (s == ERASED);}
 
