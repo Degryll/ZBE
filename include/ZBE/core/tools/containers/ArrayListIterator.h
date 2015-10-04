@@ -14,7 +14,7 @@
 
 #include <boost/iterator/iterator_facade.hpp>
 
-#include "arrayList.h"
+#include "ArrayList.h"
 #include "Ticket.h"
 
 namespace zbe {
@@ -95,7 +95,7 @@ public:
 // que hace? para que?
   void reset() {
     i = l->i;
-    if ((i != -1) && ((*l)[i].t.isNOTACTIVE())) {
+    if ((i != -1) && ((*l)[i].t.isNotACTIVE())) {
       increment();
     }
   }

@@ -7892,7 +7892,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1440967229 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL.h
+1441562278 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL.h
 	"SDL_main.h"
 	"SDL_stdinc.h"
 	"SDL_assert.h"
@@ -7923,12 +7923,12 @@
 	"begin_code.h"
 	"close_code.h"
 
-1440967229 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_main.h
+1441562278 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_main.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
 
-1440967229 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_stdinc.h
+1441562278 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_stdinc.h
 	"SDL_config.h"
 	<sys/types.h>
 	<stdio.h>
@@ -7956,27 +7956,19 @@
 	<stdlib.h>
 	"close_code.h"
 
-1440967229 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_config.h
+1441562278 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_config.h
 	"SDL_platform.h"
-	"SDL_config_premake.h"
-	"SDL_config_windows.h"
-	"SDL_config_winrt.h"
-	"SDL_config_macosx.h"
-	"SDL_config_iphoneos.h"
-	"SDL_config_android.h"
-	"SDL_config_psp.h"
-	"SDL_config_minimal.h"
 
-1440967229 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_platform.h
+1441562278 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_platform.h
 	"AvailabilityMacros.h"
 	"TargetConditionals.h"
 	<winapifamily.h>
 	"begin_code.h"
 	"close_code.h"
 
-1440967229 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/begin_code.h
+1441562278 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/begin_code.h
 
-1440967229 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/close_code.h
+1441562278 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/close_code.h
 
 1440967229 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_config_windows.h
 	"SDL_platform.h"
@@ -8001,19 +7993,19 @@
 1440967229 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_config_minimal.h
 	"SDL_platform.h"
 
-1440967229 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_assert.h
+1441562278 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_assert.h
 	"SDL_config.h"
 	"begin_code.h"
 	<signal.h>
 	"close_code.h"
 
-1440967229 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_atomic.h
+1441562278 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_atomic.h
 	"SDL_stdinc.h"
 	"SDL_platform.h"
 	"begin_code.h"
 	"close_code.h"
 
-1440967229 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_audio.h
+1441562278 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_audio.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_endian.h"
@@ -8023,24 +8015,24 @@
 	"begin_code.h"
 	"close_code.h"
 
-1440967229 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_error.h
+1441562278 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_error.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
 
-1440967229 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_endian.h
+1441562278 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_endian.h
 	"SDL_stdinc.h"
 	<endian.h>
 	"begin_code.h"
 	"close_code.h"
 
-1440967229 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_mutex.h
+1441562278 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_mutex.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"begin_code.h"
 	"close_code.h"
 
-1440967229 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_thread.h
+1441562278 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_thread.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_atomic.h"
@@ -8049,18 +8041,18 @@
 	<process.h>
 	"close_code.h"
 
-1440967229 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_rwops.h
+1441562278 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_rwops.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"begin_code.h"
 	"close_code.h"
 
-1440967229 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_clipboard.h
+1441562278 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_clipboard.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
 
-1440967229 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_cpuinfo.h
+1441562278 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_cpuinfo.h
 	"SDL_stdinc.h"
 	<intrin.h>
 	<intrin.h>
@@ -8072,7 +8064,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1440967229 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_events.h
+1441562278 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_events.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_video.h"
@@ -8086,7 +8078,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1440967229 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_video.h
+1441562278 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_video.h
 	"SDL_stdinc.h"
 	"SDL_pixels.h"
 	"SDL_rect.h"
@@ -8094,12 +8086,12 @@
 	"begin_code.h"
 	"close_code.h"
 
-1440967229 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_pixels.h
+1441562278 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_pixels.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
 
-1440967229 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_rect.h
+1441562278 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_rect.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_pixels.h"
@@ -8107,7 +8099,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1440967229 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_surface.h
+1441562278 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_surface.h
 	"SDL_stdinc.h"
 	"SDL_pixels.h"
 	"SDL_rect.h"
@@ -8116,11 +8108,11 @@
 	"begin_code.h"
 	"close_code.h"
 
-1440967229 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_blendmode.h
+1441562278 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_blendmode.h
 	"begin_code.h"
 	"close_code.h"
 
-1440967229 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_keyboard.h
+1441562278 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_keyboard.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_keycode.h"
@@ -8128,27 +8120,27 @@
 	"begin_code.h"
 	"close_code.h"
 
-1440967229 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_keycode.h
+1441562278 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_keycode.h
 	"SDL_stdinc.h"
 	"SDL_scancode.h"
 
-1440967229 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_scancode.h
+1441562278 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_scancode.h
 	"SDL_stdinc.h"
 
-1440967229 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_mouse.h
+1441562278 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_mouse.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_video.h"
 	"begin_code.h"
 	"close_code.h"
 
-1440967229 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_joystick.h
+1441562278 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_joystick.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"begin_code.h"
 	"close_code.h"
 
-1440967229 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_gamecontroller.h
+1441562278 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_gamecontroller.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_rwops.h"
@@ -8156,11 +8148,11 @@
 	"begin_code.h"
 	"close_code.h"
 
-1440967229 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_quit.h
+1441562278 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_quit.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 
-1440967229 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_gesture.h
+1441562278 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_gesture.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_video.h"
@@ -8168,60 +8160,60 @@
 	"begin_code.h"
 	"close_code.h"
 
-1440967229 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_touch.h
+1441562278 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_touch.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_video.h"
 	"begin_code.h"
 	"close_code.h"
 
-1440967229 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_filesystem.h
+1441562278 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_filesystem.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
 
-1440967229 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_haptic.h
+1441562278 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_haptic.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_joystick.h"
 	"begin_code.h"
 	"close_code.h"
 
-1440967229 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_hints.h
+1441562278 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_hints.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
 
-1440967229 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_loadso.h
+1441562278 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_loadso.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"begin_code.h"
 	"close_code.h"
 
-1440967229 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_log.h
+1441562278 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_log.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
 
-1440967229 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_messagebox.h
+1441562278 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_messagebox.h
 	"SDL_stdinc.h"
 	"SDL_video.h"
 	"begin_code.h"
 	"close_code.h"
 
-1440967229 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_power.h
+1441562278 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_power.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
 
-1440967229 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_render.h
+1441562278 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_render.h
 	"SDL_stdinc.h"
 	"SDL_rect.h"
 	"SDL_video.h"
 	"begin_code.h"
 	"close_code.h"
 
-1440967229 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_system.h
+1441562278 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_system.h
 	"SDL_stdinc.h"
 	"SDL_keyboard.h"
 	"SDL_render.h"
@@ -8229,13 +8221,13 @@
 	"begin_code.h"
 	"close_code.h"
 
-1440967229 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_timer.h
+1441562278 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_timer.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"begin_code.h"
 	"close_code.h"
 
-1440967229 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_version.h
+1441562278 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.3/include/SDL_version.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
@@ -8299,12 +8291,12 @@
 	"ZBE/core/tools/text/utf8.h"
 	"ZBE/core/system/SysError.h"
 
-1441561899 source:/home/ludo/workspace/ZBE/src/ZBE/core/daemons/DaemonMaster.cpp
+1443981298 source:/home/ludo/workspace/ZBE/src/ZBE/core/daemons/DaemonMaster.cpp
 	"ZBE/core/daemons/DaemonMaster.h"
 
-1441561631 /home/ludo/workspace/ZBE/include/ZBE/core/daemons/DaemonMaster.h
+1443981259 /home/ludo/workspace/ZBE/include/ZBE/core/daemons/DaemonMaster.h
 	<vector>
 	"./Daemon.h"
 
-1441488258 /home/ludo/workspace/ZBE/include/ZBE/core/daemons/Daemon.h
+1443981269 /home/ludo/workspace/ZBE/include/ZBE/core/daemons/Daemon.h
 

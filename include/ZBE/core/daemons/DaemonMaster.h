@@ -5,19 +5,18 @@
 #include "./Daemon.h"
 
 namespace zbe {
-class DaemonMaster : public Daemon {
-  public:
-    DaemonMaster();
-    virtual ~DaemonMaster();
+  class DaemonMaster : public Daemon {
+    public:
+      DaemonMaster();
+      virtual ~DaemonMaster();
 
-    void run();
+      void run();
 
-    void addDaemon(const Daemon &daemon);
+      void addDaemon(Daemon * daemon);
 
-  private:
-    std::vector<Daemon> * daemonList;
-};
-
+    private:
+      std::vector<Daemon*> * daemonList;
+  };
 }
 
 #endif // CORE_DAEMONS_DAEMONMASTER_H

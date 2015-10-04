@@ -21,9 +21,9 @@
 #include "any_iterator.hpp"
 #include "boost/iterator/iterator_categories.hpp"
 
-#include "ZBE/core/tools/containers/ticket.h"
-#include "ZBE/core/tools/containers/arrayList.h"
-#include "ZBE/core/tools/containers/arrayListIterator.h"
+#include "ZBE/core/tools/containers/Ticket.h"
+#include "ZBE/core/tools/containers/ArrayList.h"
+#include "ZBE/core/tools/containers/ArrayListIterator.h"
 
 #include "ZBE/core/tools/math/Vector.h"
 #include "ZBE/core/tools/math/objects.h"
