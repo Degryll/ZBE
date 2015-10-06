@@ -10,10 +10,12 @@
 #ifndef CORE_DAEMONS_DAEMON_H
 #define CORE_DAEMONS_DAEMON_H
 
-class Daemon {
-  public:
-    virtual void run() = 0;
-    virtual ~Daemon(){};
-};
+namespace zbe {
+  class Daemon {
+    public:
+      virtual void run() = 0;
+      virtual ~Daemon(){};
+  };
+}
 
 #endif // CORE_DAEMONS_DAEMON_H

@@ -8,6 +8,10 @@ namespace zbe {
 
   DaemonMaster::~DaemonMaster() {
     if(daemonList){
+      for(auto it = daemonList->begin(); it < daemonList->end(); ++it) {
+        Daemon *d = (*it);
+        delete d;
+      }
       delete daemonList;
     }
   }
