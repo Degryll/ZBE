@@ -1,8 +1,8 @@
 /**
  * Copyright 2015 Batis Degryll Ludo
- * @file Behavior.h
- * @since 2014-09-12
- * @date 2015-05-04
+ * @file Daemon.h
+ * @since 2015-05-04
+ * @date 2015-12-09
  * @author Ludo
  * @brief Define the minimal functions of demons.
  */
@@ -11,9 +11,19 @@
 #define CORE_DAEMONS_DAEMON_H
 
 namespace zbe {
+  /** \brief Interface for all daemons. Daemons are responsible for execute automated processes. Basically Daemons rules the world.
+   */
   class Daemon {
     public:
+
+      /** \brief Do de actual Daemon job.
+       *  Must be implemented by all subclasses.
+       */
       virtual void run() = 0;
+
+      /** \brief Destructor.
+       * Destroys the daemon.
+       */
       virtual ~Daemon(){};
   };
 }
