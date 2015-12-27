@@ -1,0 +1,42 @@
+\hypertarget{intersections_8h}{}\section{include/\+Z\+B\+E/core/tools/math/collisions/intersections.h File Reference}
+\label{intersections_8h}\index{include/\+Z\+B\+E/core/tools/math/collisions/intersections.\+h@{include/\+Z\+B\+E/core/tools/math/collisions/intersections.\+h}}
+{\ttfamily \#include $<$limits$>$}\\*
+{\ttfamily \#include \char`\"{}Z\+B\+E/core/tools/math/\+Point.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Z\+B\+E/core/tools/math/\+Vector.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Z\+B\+E/core/tools/math/objects.\+h\char`\"{}}\\*
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespacezbe}{zbe}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$unsigned dim$>$ }\\bool \hyperlink{namespacezbe_ac9a202f7547f1cb45f4c4afa11f81c3f}{zbe\+::intersection\+Ray\+N\+Sphere} (Ray$<$ dim $>$ ray, N\+Sphere$<$ dim $>$ nsphere, double \&time, Point$<$ dim $>$ \&point)
+\item 
+bool \hyperlink{namespacezbe_ae0689e28c9b31335ae8710770472ecd9}{zbe\+::intersection\+Ray\+Circle} (Ray2\+D ray, Circle circle, double \&time, Point2\+D \&point)
+\item 
+bool \hyperlink{namespacezbe_ad51f308d977b5de5206de75a7cb9e39a}{zbe\+::intersection\+Ray\+Sphere} (Ray3\+D ray, Sphere sphere, double \&time, Point3\+D \&point)
+\item 
+{\footnotesize template$<$unsigned dim$>$ }\\bool \hyperlink{namespacezbe_a49c30c9e5f53c2ea848f1bad7a876cde}{zbe\+::intersection\+Normal\+Ray\+N\+Sphere} (Ray$<$ dim $>$ ray, N\+Sphere$<$ dim $>$ nsphere, double \&time, Point$<$ dim $>$ \&point)
+\item 
+bool \hyperlink{namespacezbe_aad46b4cfe1179f03ab2b129baed182d1}{zbe\+::intersection\+Normal\+Ray\+Circle} (Ray2\+D ray, Circle circle, double \&time, Point2\+D \&point)
+\item 
+bool \hyperlink{namespacezbe_a537d4ec3efdd4130bcbfda0f7f4a6c94}{zbe\+::intersection\+Normal\+Ray\+Sphere} (Ray3\+D ray, Sphere sphere, double \&time, Point3\+D \&point)
+\item 
+{\footnotesize template$<$unsigned dim$>$ }\\bool \hyperlink{namespacezbe_adcf36e5bc580c6fdb219ae678717dda5}{zbe\+::intersection\+Ray\+A\+A\+B\+B} (Ray$<$ dim $>$ ray, A\+A\+B\+B$<$ dim $>$ box, double \&time, Point$<$ dim $>$ \&point)
+\item 
+bool \hyperlink{namespacezbe_a0684473ae5bb50303b93fbf1ea800990}{zbe\+::intersection\+Ray\+A\+A\+B\+B2\+D} (Ray2\+D ray, A\+A\+B\+B2\+D box, double \&time, Point2\+D \&point)
+\item 
+bool \hyperlink{namespacezbe_ae32604921c6c169643a1c807ada77ab1}{zbe\+::intersection\+Ray\+A\+A\+B\+B3\+D} (Ray3\+D ray, A\+A\+B\+B3\+D box, double \&time, Point3\+D \&point)
+\item 
+{\footnotesize template$<$unsigned dim$>$ }\\bool \hyperlink{namespacezbe_ab6f7d7861525788a9c123c3ba04ecb3f}{zbe\+::intersection\+Segment\+A\+A\+B\+B} (Ray$<$ dim $>$ ray, A\+A\+B\+B$<$ dim $>$ box, double \&time, Point$<$ dim $>$ \&point)
+\item 
+bool \hyperlink{namespacezbe_a9f6932d918cf0e4187a1f0bf4ac4a58e}{zbe\+::intersection\+Segment\+A\+A\+B\+B2\+D} (Ray2\+D ray, A\+A\+B\+B2\+D box, double \&time, Point2\+D \&point)
+\item 
+bool \hyperlink{namespacezbe_a77c37d3bb4edc9d4736ee344fb064150}{zbe\+::intersection\+Segment\+A\+A\+B\+B3\+D} (Ray3\+D ray, A\+A\+B\+B3\+D box, double \&time, Point3\+D \&point)
+\item 
+bool \hyperlink{namespacezbe_ac73f82f5a353978659602cc2532074aa}{zbe\+::\+Intersection\+Moving\+Circle\+A\+A\+B\+B2\+D} (Circle circle, Vector2\+D d, A\+A\+B\+B2\+D box, double \&time, Point2\+D \&point)
+\item 
+{\footnotesize template$<$unsigned dim$>$ }\\bool \hyperlink{namespacezbe_ab8a4e54917626ba3695877b0b794cd29}{zbe\+::\+Ray\+A\+A\+B\+B} (Ray$<$ dim $>$ ray, A\+A\+B\+B$<$ dim $>$ box, double tmin, double tmax, double \&time, Point$<$ dim $>$ \&point)
+\end{DoxyCompactItemize}

@@ -1,0 +1,145 @@
+\hypertarget{classzbe_1_1_logger_msg}{}\section{zbe\+:\+:Logger\+Msg Class Reference}
+\label{classzbe_1_1_logger_msg}\index{zbe\+::\+Logger\+Msg@{zbe\+::\+Logger\+Msg}}
+
+
+Wrapper class to use the operator \char`\"{}$<$$<$\char`\"{} in the log messages.  
+
+
+
+
+{\ttfamily \#include $<$Logger.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classzbe_1_1_logger_msg_a6e2d3bd59184b8aef437dd8d73beefed}{Logger\+Msg} ()
+\begin{DoxyCompactList}\small\item\em Void constructor. \end{DoxyCompactList}\item 
+\hyperlink{classzbe_1_1_logger_msg_ac332c2a9128e05a0aa59e9eb43a6b7b6}{Logger\+Msg} (const \hyperlink{classzbe_1_1_logger_msg}{Logger\+Msg} \&l)
+\begin{DoxyCompactList}\small\item\em Copy constructor. \end{DoxyCompactList}\item 
+\hyperlink{classzbe_1_1_logger_msg_aa51d696e4c27d65739c8d03d3a7269a9}{$\sim$\+Logger\+Msg} ()
+\item 
+{\footnotesize template$<$typename T $>$ }\\\hyperlink{classzbe_1_1_logger_msg}{Logger\+Msg} \& \hyperlink{classzbe_1_1_logger_msg_a6b39d79ba4c3cd4add6c509fe06d0dd1}{operator$<$$<$} (T t)
+\begin{DoxyCompactList}\small\item\em Define operator$<$$<$ to build a std\+::stringstream. \end{DoxyCompactList}\item 
+\hyperlink{classzbe_1_1_logger_msg}{Logger\+Msg} \& \hyperlink{classzbe_1_1_logger_msg_acca04ee3162cafd8a3fd1e646caba5f7}{operator$<$$<$} (bool b)
+\begin{DoxyCompactList}\small\item\em Specialization of operator$<$$<$ for bool values (to print \char`\"{}true\char`\"{} or \char`\"{}false\char`\"{} instead of 1 or 0). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::stringstream \hyperlink{classzbe_1_1_logger_msg_a5829a582578494ec03debf9e574004cc}{msg}
+\begin{DoxyCompactList}\small\item\em Used to store the \hyperlink{classzbe_1_1_logger}{Logger} message. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Wrapper class to use the operator \char`\"{}$<$$<$\char`\"{} in the log messages. 
+
+This class is not used directly.
+
+This class let us use the operator \char`\"{}$<$$<$\char`\"{} to concatenate distinct type of variables. i.\+e.\+: \begin{DoxyVerb}  int a = 3;
+  double b = 3.1415;
+  bool c = true;
+  ZBE_LOG_INFO("A message with " << a << " variables ( " << b << ") of distinct type: " << c);
+\end{DoxyVerb}
+
+
+\begin{quote}
+\mbox{[}I\+N\+F\+O\mbox{]}$>$ A message with 3 variables (3.\+1415) of distinct type\+: true; \end{quote}
+
+
+This class also change the printed value of a bool variable from 1 or 0 to \char`\"{}true\char`\"{} or "false.
+
+To use a custom type in the message composition, the new type should define an operator$<$$<$ that returns a stringstream compatible type, i.\+e. a std\+::string. 
+
+Definition at line 90 of file Logger.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classzbe_1_1_logger_msg_a6e2d3bd59184b8aef437dd8d73beefed}{}\index{zbe\+::\+Logger\+Msg@{zbe\+::\+Logger\+Msg}!Logger\+Msg@{Logger\+Msg}}
+\index{Logger\+Msg@{Logger\+Msg}!zbe\+::\+Logger\+Msg@{zbe\+::\+Logger\+Msg}}
+\subsubsection[{Logger\+Msg()}]{\setlength{\rightskip}{0pt plus 5cm}zbe\+::\+Logger\+Msg\+::\+Logger\+Msg (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classzbe_1_1_logger_msg_a6e2d3bd59184b8aef437dd8d73beefed}
+
+
+Void constructor. 
+
+
+
+Definition at line 94 of file Logger.\+h.
+
+\hypertarget{classzbe_1_1_logger_msg_ac332c2a9128e05a0aa59e9eb43a6b7b6}{}\index{zbe\+::\+Logger\+Msg@{zbe\+::\+Logger\+Msg}!Logger\+Msg@{Logger\+Msg}}
+\index{Logger\+Msg@{Logger\+Msg}!zbe\+::\+Logger\+Msg@{zbe\+::\+Logger\+Msg}}
+\subsubsection[{Logger\+Msg(const Logger\+Msg \&l)}]{\setlength{\rightskip}{0pt plus 5cm}zbe\+::\+Logger\+Msg\+::\+Logger\+Msg (
+\begin{DoxyParamCaption}
+\item[{const {\bf Logger\+Msg} \&}]{l}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classzbe_1_1_logger_msg_ac332c2a9128e05a0aa59e9eb43a6b7b6}
+
+
+Copy constructor. 
+
+
+
+Definition at line 98 of file Logger.\+h.
+
+\hypertarget{classzbe_1_1_logger_msg_aa51d696e4c27d65739c8d03d3a7269a9}{}\index{zbe\+::\+Logger\+Msg@{zbe\+::\+Logger\+Msg}!````~Logger\+Msg@{$\sim$\+Logger\+Msg}}
+\index{````~Logger\+Msg@{$\sim$\+Logger\+Msg}!zbe\+::\+Logger\+Msg@{zbe\+::\+Logger\+Msg}}
+\subsubsection[{$\sim$\+Logger\+Msg()}]{\setlength{\rightskip}{0pt plus 5cm}zbe\+::\+Logger\+Msg\+::$\sim$\+Logger\+Msg (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classzbe_1_1_logger_msg_aa51d696e4c27d65739c8d03d3a7269a9}
+
+
+Definition at line 100 of file Logger.\+h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classzbe_1_1_logger_msg_a6b39d79ba4c3cd4add6c509fe06d0dd1}{}\index{zbe\+::\+Logger\+Msg@{zbe\+::\+Logger\+Msg}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!zbe\+::\+Logger\+Msg@{zbe\+::\+Logger\+Msg}}
+\subsubsection[{operator$<$$<$(\+T t)}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ {\bf Logger\+Msg} \& zbe\+::\+Logger\+Msg\+::operator$<$$<$ (
+\begin{DoxyParamCaption}
+\item[{T}]{t}
+\end{DoxyParamCaption}
+)}\label{classzbe_1_1_logger_msg_a6b39d79ba4c3cd4add6c509fe06d0dd1}
+
+
+Define operator$<$$<$ to build a std\+::stringstream. 
+
+
+
+Definition at line 115 of file Logger.\+h.
+
+\hypertarget{classzbe_1_1_logger_msg_acca04ee3162cafd8a3fd1e646caba5f7}{}\index{zbe\+::\+Logger\+Msg@{zbe\+::\+Logger\+Msg}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!zbe\+::\+Logger\+Msg@{zbe\+::\+Logger\+Msg}}
+\subsubsection[{operator$<$$<$(bool b)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Logger\+Msg}\& zbe\+::\+Logger\+Msg\+::operator$<$$<$ (
+\begin{DoxyParamCaption}
+\item[{bool}]{b}
+\end{DoxyParamCaption}
+)}\label{classzbe_1_1_logger_msg_acca04ee3162cafd8a3fd1e646caba5f7}
+
+
+Specialization of operator$<$$<$ for bool values (to print \char`\"{}true\char`\"{} or \char`\"{}false\char`\"{} instead of 1 or 0). 
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classzbe_1_1_logger_msg_a5829a582578494ec03debf9e574004cc}{}\index{zbe\+::\+Logger\+Msg@{zbe\+::\+Logger\+Msg}!msg@{msg}}
+\index{msg@{msg}!zbe\+::\+Logger\+Msg@{zbe\+::\+Logger\+Msg}}
+\subsubsection[{msg}]{\setlength{\rightskip}{0pt plus 5cm}std\+::stringstream zbe\+::\+Logger\+Msg\+::msg}\label{classzbe_1_1_logger_msg_a5829a582578494ec03debf9e574004cc}
+
+
+Used to store the \hyperlink{classzbe_1_1_logger}{Logger} message. 
+
+
+
+Definition at line 111 of file Logger.\+h.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\+Z\+B\+E/core/system/\hyperlink{_logger_8h}{Logger.\+h}\end{DoxyCompactItemize}

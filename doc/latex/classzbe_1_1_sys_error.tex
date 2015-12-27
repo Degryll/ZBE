@@ -1,0 +1,107 @@
+\hypertarget{classzbe_1_1_sys_error}{}\section{zbe\+:\+:Sys\+Error Class Reference}
+\label{classzbe_1_1_sys_error}\index{zbe\+::\+Sys\+Error@{zbe\+::\+Sys\+Error}}
+
+
+A system class to inform about errors.  
+
+
+
+
+{\ttfamily \#include $<$Sys\+Error.\+h$>$}
+
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{classzbe_1_1_sys_error_ac6ec5427abbbb641f5ad8dcd7f42e3fc}{set\+Error} (std\+::string error\+String)
+\begin{DoxyCompactList}\small\item\em Set a new error. \end{DoxyCompactList}\item 
+static int \hyperlink{classzbe_1_1_sys_error_a76f58259f20be485bbbb6c2ef3da9c61}{get\+N\+Errors} ()
+\begin{DoxyCompactList}\small\item\em Return the number of calls to set\+Error. \end{DoxyCompactList}\item 
+static std\+::string \hyperlink{classzbe_1_1_sys_error_ae37dcefda00e9c5251825d98df183ce9}{get\+First\+Error\+String} ()
+\begin{DoxyCompactList}\small\item\em Return the error message of the first error. \end{DoxyCompactList}\item 
+static void \hyperlink{classzbe_1_1_sys_error_aa402e67479e917839290230b47976c5b}{clear} ()
+\begin{DoxyCompactList}\small\item\em Set error counter to 0 and empty the error string. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A system class to inform about errors. 
+
+Store the number of errors (calls to set\+Error) and the text for the first error. 
+
+Definition at line 22 of file Sys\+Error.\+h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classzbe_1_1_sys_error_aa402e67479e917839290230b47976c5b}{}\index{zbe\+::\+Sys\+Error@{zbe\+::\+Sys\+Error}!clear@{clear}}
+\index{clear@{clear}!zbe\+::\+Sys\+Error@{zbe\+::\+Sys\+Error}}
+\subsubsection[{clear()}]{\setlength{\rightskip}{0pt plus 5cm}static void zbe\+::\+Sys\+Error\+::clear (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classzbe_1_1_sys_error_aa402e67479e917839290230b47976c5b}
+
+
+Set error counter to 0 and empty the error string. 
+
+\hypertarget{classzbe_1_1_sys_error_ae37dcefda00e9c5251825d98df183ce9}{}\index{zbe\+::\+Sys\+Error@{zbe\+::\+Sys\+Error}!get\+First\+Error\+String@{get\+First\+Error\+String}}
+\index{get\+First\+Error\+String@{get\+First\+Error\+String}!zbe\+::\+Sys\+Error@{zbe\+::\+Sys\+Error}}
+\subsubsection[{get\+First\+Error\+String()}]{\setlength{\rightskip}{0pt plus 5cm}static std\+::string zbe\+::\+Sys\+Error\+::get\+First\+Error\+String (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classzbe_1_1_sys_error_ae37dcefda00e9c5251825d98df183ce9}
+
+
+Return the error message of the first error. 
+
+If there is, at least, one call to set\+Error, this function return the string message of the first error, empty string otherwise.
+
+\begin{DoxyReturn}{Returns}
+the first (if any) error string. 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classzbe_1_1_sys_error_ac6ec5427abbbb641f5ad8dcd7f42e3fc}{set\+Error()} and \hyperlink{classzbe_1_1_sys_error_aa402e67479e917839290230b47976c5b}{clear()} 
+\end{DoxySeeAlso}
+\hypertarget{classzbe_1_1_sys_error_a76f58259f20be485bbbb6c2ef3da9c61}{}\index{zbe\+::\+Sys\+Error@{zbe\+::\+Sys\+Error}!get\+N\+Errors@{get\+N\+Errors}}
+\index{get\+N\+Errors@{get\+N\+Errors}!zbe\+::\+Sys\+Error@{zbe\+::\+Sys\+Error}}
+\subsubsection[{get\+N\+Errors()}]{\setlength{\rightskip}{0pt plus 5cm}static int zbe\+::\+Sys\+Error\+::get\+N\+Errors (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classzbe_1_1_sys_error_a76f58259f20be485bbbb6c2ef3da9c61}
+
+
+Return the number of calls to set\+Error. 
+
+\begin{DoxyReturn}{Returns}
+the number of errors so far. 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classzbe_1_1_sys_error_ac6ec5427abbbb641f5ad8dcd7f42e3fc}{set\+Error()} and \hyperlink{classzbe_1_1_sys_error_aa402e67479e917839290230b47976c5b}{clear()} 
+\end{DoxySeeAlso}
+\hypertarget{classzbe_1_1_sys_error_ac6ec5427abbbb641f5ad8dcd7f42e3fc}{}\index{zbe\+::\+Sys\+Error@{zbe\+::\+Sys\+Error}!set\+Error@{set\+Error}}
+\index{set\+Error@{set\+Error}!zbe\+::\+Sys\+Error@{zbe\+::\+Sys\+Error}}
+\subsubsection[{set\+Error(std\+::string error\+String)}]{\setlength{\rightskip}{0pt plus 5cm}static void zbe\+::\+Sys\+Error\+::set\+Error (
+\begin{DoxyParamCaption}
+\item[{std\+::string}]{error\+String}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classzbe_1_1_sys_error_ac6ec5427abbbb641f5ad8dcd7f42e3fc}
+
+
+Set a new error. 
+
+Increment the error counter in 1. If this is the first call, also stores the error\+String string.
+
+
+\begin{DoxyParams}{Parameters}
+{\em error\+String} & the description of the error \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classzbe_1_1_sys_error_a76f58259f20be485bbbb6c2ef3da9c61}{get\+N\+Errors()} and \hyperlink{classzbe_1_1_sys_error_ae37dcefda00e9c5251825d98df183ce9}{get\+First\+Error\+String()} 
+\end{DoxySeeAlso}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\+Z\+B\+E/core/system/\hyperlink{_sys_error_8h}{Sys\+Error.\+h}\end{DoxyCompactItemize}

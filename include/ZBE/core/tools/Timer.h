@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file Timer.h
  * @since 2014-09-09
- * @date 2014-09-09
+ * @date 2015-12-01
  * @author Ludo and Degryll
  * @brief Abstract timer class.
  */
@@ -12,15 +12,19 @@
 
 namespace zbe {
 
+/** \brief An abstract class to inform about time.
+ *
+ *  Declare the basic functions of every Timer.
+ */
 class Timer {
   public:
-    virtual ~Timer() {}
+    virtual ~Timer() {}  //!< Virtual destructor for inheritance.
 
-    virtual void restart() = 0;
-    virtual void pause() = 0;
-    virtual void resume() = 0;
+    virtual void restart() = 0;  //!< Set the Timer to zero.
+    virtual void pause()   = 0;  //!< Pause the Timer, stop counting.
+    virtual void resume()  = 0;  //!< Resume the Timer, continue the counting.
 
-    virtual unsigned int getMilliseconds() = 0;
+    virtual unsigned int getMilliseconds() = 0;  //!< Get the elapsed time in milliseconds.
 };
 
 }  // namespace zbe

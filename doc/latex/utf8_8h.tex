@@ -1,0 +1,55 @@
+\hypertarget{utf8_8h}{}\section{include/\+Z\+B\+E/core/tools/text/utf8.h File Reference}
+\label{utf8_8h}\index{include/\+Z\+B\+E/core/tools/text/utf8.\+h@{include/\+Z\+B\+E/core/tools/text/utf8.\+h}}
+
+
+To work with U\+T\+F-\/8.  
+
+
+{\ttfamily \#include $<$string$>$}\\*
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespacezbe}{zbe}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{namespacezbe_acd6991877d6abe58ace979bfd37b7fea}{zbe\+::next} (const char $\ast$\&it, unsigned int \&code\+\_\+point)
+\item 
+int \hyperlink{namespacezbe_a0d3c3c34e3b9b33a36fec13a32445888}{zbe\+::utf8to16} (unsigned short $\ast$dst, const char $\ast$src)
+\item 
+{\footnotesize template$<$typename u16bit\+\_\+iterator $>$ }\\int \hyperlink{namespacezbe_ac2e9dac736cfb1dda0601d69e411acec}{zbe\+::utf8to16} (u16bit\+\_\+iterator result, const char $\ast$src)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const uint16\+\_\+t \hyperlink{namespacezbe_ade15aa1a63520ce8b98ea85ea838453e}{zbe\+::\+L\+E\+A\+D\+\_\+\+S\+U\+R\+R\+O\+G\+A\+T\+E\+\_\+\+M\+I\+N} = 0xd800u
+\item 
+const uint16\+\_\+t \hyperlink{namespacezbe_a834003cf73290548f7010b40b160a329}{zbe\+::\+L\+E\+A\+D\+\_\+\+S\+U\+R\+R\+O\+G\+A\+T\+E\+\_\+\+M\+A\+X} = 0xdbffu
+\item 
+const uint16\+\_\+t \hyperlink{namespacezbe_abe0fe1fa2e911637fa7bbf8df43a50f5}{zbe\+::\+T\+R\+A\+I\+L\+\_\+\+S\+U\+R\+R\+O\+G\+A\+T\+E\+\_\+\+M\+I\+N} = 0xdc00u
+\item 
+const uint16\+\_\+t \hyperlink{namespacezbe_a046d90a4a14bcf0b439a6be2082ddd3b}{zbe\+::\+T\+R\+A\+I\+L\+\_\+\+S\+U\+R\+R\+O\+G\+A\+T\+E\+\_\+\+M\+A\+X} = 0xdfffu
+\item 
+const uint16\+\_\+t \hyperlink{namespacezbe_a6402cf0e195d586a56e170600d540e11}{zbe\+::\+L\+E\+A\+D\+\_\+\+O\+F\+F\+S\+E\+T} = L\+E\+A\+D\+\_\+\+S\+U\+R\+R\+O\+G\+A\+T\+E\+\_\+\+M\+I\+N -\/ (0x10000 $>$$>$ 10)
+\item 
+const uint32\+\_\+t \hyperlink{namespacezbe_a84ab9fa319a6700376e4c409444c3b2b}{zbe\+::\+S\+U\+R\+R\+O\+G\+A\+T\+E\+\_\+\+O\+F\+F\+S\+E\+T} = 0x10000u -\/ (\+L\+E\+A\+D\+\_\+\+S\+U\+R\+R\+O\+G\+A\+T\+E\+\_\+\+M\+I\+N $<$$<$ 10) -\/ T\+R\+A\+I\+L\+\_\+\+S\+U\+R\+R\+O\+G\+A\+T\+E\+\_\+\+M\+I\+N
+\item 
+const uint32\+\_\+t \hyperlink{namespacezbe_a22d672605de5842ffd69d3f0741c85fa}{zbe\+::\+C\+O\+D\+E\+\_\+\+P\+O\+I\+N\+T\+\_\+\+M\+A\+X} = 0x0010ffffu
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+To work with U\+T\+F-\/8. 
+
+Copyright 2012 Batis Degryll Ludo
+
+\begin{DoxySince}{Since}
+2014-\/08-\/23 
+\end{DoxySince}
+\begin{DoxyDate}{Date}
+2014-\/08-\/23 
+\end{DoxyDate}
+\begin{DoxyAuthor}{Author}
+Degryll 
+\end{DoxyAuthor}

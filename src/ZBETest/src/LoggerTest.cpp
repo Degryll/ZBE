@@ -21,7 +21,7 @@ TEST(Logger, stdoutLog) {
   ZBE_LOG_DEBUG("Prueba Debug. " << i << " un int y " << pi << " su puntero.");
   ZBE_LOG_WARNING("Prueba Warning. '" << a << "' un caracter");
   ZBE_LOG_ERROR("Prueba Error. \"" << s << "\" una cadena.");
-  ZBE_LOG("[PROPIA]","Prueba Propia -> " << t <<".");
+  ZBE_LOG(33, "[PROPIA]","Prueba Propia -> " << t <<".");
 
   std::stringstream chk;
   chk << "[INFO]> Prueba Info. " << d << " añadiendo un double.\n";
@@ -36,7 +36,7 @@ TEST(Logger, stdoutLog) {
   zbe::Logger::deleteInstance();
 }
 
-void aFileWriter(const char * type, const char * msg) {
+void aFileWriter(int ntype, const char * type, const char * msg) {
   zbe::FileHandler f("data/test/test.log", "a", true);
   f.write(type);
   f.writelnflush(msg);
@@ -60,7 +60,7 @@ TEST(Logger, FileLog) {
   ZBE_LOG_DEBUG("Prueba Debug. " << i << " un int y " << pi << " su puntero.");
   ZBE_LOG_WARNING("Prueba Warning. '" << a << "' un caracter");
   ZBE_LOG_ERROR("Prueba Error. \"" << s << "\" una cadena.");
-  ZBE_LOG("[PROPIA]","Prueba Propia -> " << t <<".");
+  ZBE_LOG(33, "[PROPIA]","Prueba Propia -> " << t <<".");
 
   char buffer[256];
 

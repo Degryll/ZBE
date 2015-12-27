@@ -23,7 +23,7 @@ TEST(FileHandler, OpenClose) {
 
   // Open existent file
   zbe::FileHandler *f = new zbe::FileHandler("src/ZBETest/src/FileHandlerTest.cpp","r");
-  EXPECT_EQ(0,zbe::SysError::getNErrors()) << "Open file:" << zbe::SysError::getLastErrorString();
+  EXPECT_EQ(0,zbe::SysError::getNErrors()) << "Open file:" << zbe::SysError::getFirstErrorString();
   delete f;
   EXPECT_EQ(0,zbe::SysError::getNErrors()) << "Close file.";
 
@@ -37,7 +37,7 @@ TEST(FileHandler, OpenClose) {
   // Open no existent file
   f = new zbe::FileHandler("NOEXIST","r");
   EXPECT_EQ(1,zbe::SysError::getNErrors()) << "Open no existent file and an error is set.";
-  EXPECT_STREQ("FILE ERROR: Can't open file.",zbe::SysError::getLastErrorString().c_str()) << "Check for the expected error.";
+  EXPECT_STREQ("FILE ERROR: Can't open file.",zbe::SysError::getFirstErrorString().c_str()) << "Check for the expected error.";
   zbe::SysError::clear();
 }
 

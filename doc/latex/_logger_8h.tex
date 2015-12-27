@@ -1,0 +1,185 @@
+\hypertarget{_logger_8h}{}\section{include/\+Z\+B\+E/core/system/\+Logger.h File Reference}
+\label{_logger_8h}\index{include/\+Z\+B\+E/core/system/\+Logger.\+h@{include/\+Z\+B\+E/core/system/\+Logger.\+h}}
+
+
+To create Logs.  
+
+
+{\ttfamily \#include $<$vector$>$}\\*
+{\ttfamily \#include $<$forward\+\_\+list$>$}\\*
+{\ttfamily \#include $<$string$>$}\\*
+{\ttfamily \#include $<$sstream$>$}\\*
+{\ttfamily \#include $<$mutex$>$}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classzbe_1_1_logger_msg}{zbe\+::\+Logger\+Msg}
+\begin{DoxyCompactList}\small\item\em Wrapper class to use the operator \char`\"{}$<$$<$\char`\"{} in the log messages. \end{DoxyCompactList}\item 
+class \hyperlink{classzbe_1_1_logger}{zbe\+::\+Logger}
+\begin{DoxyCompactList}\small\item\em A class to handle logs. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespacezbe}{zbe}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_logger_8h_aea637f7a5ceb1e47013610d365595634}{Z\+B\+E\+\_\+\+L\+O\+G\+\_\+\+I\+N\+F\+O}(M\+S\+G)
+\begin{DoxyCompactList}\small\item\em Add a \mbox{[}I\+N\+F\+O\mbox{]} annotation to the logs. \end{DoxyCompactList}\item 
+\#define \hyperlink{_logger_8h_a8704b8bde1fad7b530734b70ab7e152a}{Z\+B\+E\+\_\+\+L\+O\+G\+\_\+\+D\+E\+B\+U\+G}(M\+S\+G)
+\begin{DoxyCompactList}\small\item\em Add a \mbox{[}D\+E\+B\+U\+G\mbox{]} annotation to the logs. \end{DoxyCompactList}\item 
+\#define \hyperlink{_logger_8h_a430ab0c478a3ca182053b637cf310e2a}{Z\+B\+E\+\_\+\+L\+O\+G\+\_\+\+W\+A\+R\+N\+I\+N\+G}(M\+S\+G)
+\begin{DoxyCompactList}\small\item\em Add a \mbox{[}W\+A\+R\+N\+I\+N\+G\mbox{]} annotation to the logs. \end{DoxyCompactList}\item 
+\#define \hyperlink{_logger_8h_a892ae22564bc52ef9ab2e7f0a3fe685b}{Z\+B\+E\+\_\+\+L\+O\+G\+\_\+\+E\+R\+R\+O\+R}(M\+S\+G)
+\begin{DoxyCompactList}\small\item\em Add a \mbox{[}E\+R\+R\+O\+R\mbox{]} annotation to the logs. \end{DoxyCompactList}\item 
+\#define \hyperlink{_logger_8h_a5e9327e95d0334514b212936d9e22672}{Z\+B\+E\+\_\+\+L\+O\+G\+\_\+\+O\+T\+H\+E\+R}(M\+S\+G\+T\+Y\+P\+E,  M\+S\+G)
+\begin{DoxyCompactList}\small\item\em Add an user defined annotation to the logs. \end{DoxyCompactList}\item 
+\#define \hyperlink{_logger_8h_ae7ed7d8c8b4553579d64206520feca76}{Z\+B\+E\+\_\+\+L\+O\+G}(N\+T\+Y\+P\+E,  M\+S\+G\+T\+Y\+P\+E,  M\+S\+G)
+\begin{DoxyCompactList}\small\item\em Add an user defined annotation to the logs. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+To create Logs. 
+
+Copyright 2012 Batis Degryll Ludo
+
+\begin{DoxySince}{Since}
+2014-\/05-\/16 
+\end{DoxySince}
+\begin{DoxyDate}{Date}
+2015-\/10-\/24 
+\end{DoxyDate}
+\begin{DoxyAuthor}{Author}
+Degryll 
+\end{DoxyAuthor}
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{_logger_8h_ae7ed7d8c8b4553579d64206520feca76}{}\index{Logger.\+h@{Logger.\+h}!Z\+B\+E\+\_\+\+L\+O\+G@{Z\+B\+E\+\_\+\+L\+O\+G}}
+\index{Z\+B\+E\+\_\+\+L\+O\+G@{Z\+B\+E\+\_\+\+L\+O\+G}!Logger.\+h@{Logger.\+h}}
+\subsubsection[{Z\+B\+E\+\_\+\+L\+O\+G}]{\setlength{\rightskip}{0pt plus 5cm}\#define Z\+B\+E\+\_\+\+L\+O\+G(
+\begin{DoxyParamCaption}
+\item[{}]{N\+T\+Y\+P\+E, }
+\item[{}]{M\+S\+G\+T\+Y\+P\+E, }
+\item[{}]{M\+S\+G}
+\end{DoxyParamCaption}
+)}\label{_logger_8h_ae7ed7d8c8b4553579d64206520feca76}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\textcolor{keywordflow}{do}\{ \hyperlink{classzbe_1_1_logger_msg}{zbe::LoggerMsg} lm; \(\backslash\)
+    zbe::Logger::getInstance()->log(NTYPE, MSGTYPE, lm << \textcolor{stringliteral}{"> "} << MSG); \} \textcolor{keywordflow}{while}(0)
+\end{DoxyCode}
+
+
+Add an user defined annotation to the logs. 
+
+Used to add messages to the logs with custom type (\mbox{[}T\+Y\+P\+E\mbox{]}) and type number (N\+T\+Y\+P\+E). 
+
+Definition at line 64 of file Logger.\+h.
+
+\hypertarget{_logger_8h_a8704b8bde1fad7b530734b70ab7e152a}{}\index{Logger.\+h@{Logger.\+h}!Z\+B\+E\+\_\+\+L\+O\+G\+\_\+\+D\+E\+B\+U\+G@{Z\+B\+E\+\_\+\+L\+O\+G\+\_\+\+D\+E\+B\+U\+G}}
+\index{Z\+B\+E\+\_\+\+L\+O\+G\+\_\+\+D\+E\+B\+U\+G@{Z\+B\+E\+\_\+\+L\+O\+G\+\_\+\+D\+E\+B\+U\+G}!Logger.\+h@{Logger.\+h}}
+\subsubsection[{Z\+B\+E\+\_\+\+L\+O\+G\+\_\+\+D\+E\+B\+U\+G}]{\setlength{\rightskip}{0pt plus 5cm}\#define Z\+B\+E\+\_\+\+L\+O\+G\+\_\+\+D\+E\+B\+U\+G(
+\begin{DoxyParamCaption}
+\item[{}]{M\+S\+G}
+\end{DoxyParamCaption}
+)}\label{_logger_8h_a8704b8bde1fad7b530734b70ab7e152a}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\textcolor{keywordflow}{do}\{ \hyperlink{classzbe_1_1_logger_msg}{zbe::LoggerMsg} lm; \(\backslash\)
+    zbe::Logger::getInstance()->log(\hyperlink{classzbe_1_1_logger_a33ad8282f2667bd086686ee3afa877d8}{zbe::Logger::NDEBUG}, 
+      \hyperlink{classzbe_1_1_logger_a3b3e816024fb94bacee114109ce2c462}{zbe::Logger::TDEBUG}, lm << \_\_FILE\_\_ << \textcolor{stringliteral}{":"} << \_\_LINE\_\_ << \textcolor{stringliteral}{"> "} << MSG); \} \textcolor{keywordflow}{while}(0)
+\end{DoxyCode}
+
+
+Add a \mbox{[}D\+E\+B\+U\+G\mbox{]} annotation to the logs. 
+
+Used to add debug messages to the logs, this annotation also include the file and line where the message comes from. 
+
+Definition at line 32 of file Logger.\+h.
+
+\hypertarget{_logger_8h_a892ae22564bc52ef9ab2e7f0a3fe685b}{}\index{Logger.\+h@{Logger.\+h}!Z\+B\+E\+\_\+\+L\+O\+G\+\_\+\+E\+R\+R\+O\+R@{Z\+B\+E\+\_\+\+L\+O\+G\+\_\+\+E\+R\+R\+O\+R}}
+\index{Z\+B\+E\+\_\+\+L\+O\+G\+\_\+\+E\+R\+R\+O\+R@{Z\+B\+E\+\_\+\+L\+O\+G\+\_\+\+E\+R\+R\+O\+R}!Logger.\+h@{Logger.\+h}}
+\subsubsection[{Z\+B\+E\+\_\+\+L\+O\+G\+\_\+\+E\+R\+R\+O\+R}]{\setlength{\rightskip}{0pt plus 5cm}\#define Z\+B\+E\+\_\+\+L\+O\+G\+\_\+\+E\+R\+R\+O\+R(
+\begin{DoxyParamCaption}
+\item[{}]{M\+S\+G}
+\end{DoxyParamCaption}
+)}\label{_logger_8h_a892ae22564bc52ef9ab2e7f0a3fe685b}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\textcolor{keywordflow}{do}\{ \hyperlink{classzbe_1_1_logger_msg}{zbe::LoggerMsg} lm; \(\backslash\)
+    zbe::Logger::getInstance()->log(\hyperlink{classzbe_1_1_logger_a78cd96d72ec926945b9a90f4d120ca28}{zbe::Logger::NERROR}, 
+      \hyperlink{classzbe_1_1_logger_ac0b85a476489ca300a423ddbd1419040}{zbe::Logger::TERROR}, lm << \textcolor{stringliteral}{"> "} << MSG); \} \textcolor{keywordflow}{while}(0)
+\end{DoxyCode}
+
+
+Add a \mbox{[}E\+R\+R\+O\+R\mbox{]} annotation to the logs. 
+
+Used to add error messages to the logs. 
+
+Definition at line 48 of file Logger.\+h.
+
+\hypertarget{_logger_8h_aea637f7a5ceb1e47013610d365595634}{}\index{Logger.\+h@{Logger.\+h}!Z\+B\+E\+\_\+\+L\+O\+G\+\_\+\+I\+N\+F\+O@{Z\+B\+E\+\_\+\+L\+O\+G\+\_\+\+I\+N\+F\+O}}
+\index{Z\+B\+E\+\_\+\+L\+O\+G\+\_\+\+I\+N\+F\+O@{Z\+B\+E\+\_\+\+L\+O\+G\+\_\+\+I\+N\+F\+O}!Logger.\+h@{Logger.\+h}}
+\subsubsection[{Z\+B\+E\+\_\+\+L\+O\+G\+\_\+\+I\+N\+F\+O}]{\setlength{\rightskip}{0pt plus 5cm}\#define Z\+B\+E\+\_\+\+L\+O\+G\+\_\+\+I\+N\+F\+O(
+\begin{DoxyParamCaption}
+\item[{}]{M\+S\+G}
+\end{DoxyParamCaption}
+)}\label{_logger_8h_aea637f7a5ceb1e47013610d365595634}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\textcolor{keywordflow}{do}\{ \hyperlink{classzbe_1_1_logger_msg}{zbe::LoggerMsg} lm; \(\backslash\)
+    zbe::Logger::getInstance()->log(\hyperlink{classzbe_1_1_logger_ad30e9493ec117daa24977bfa4cc883f1}{zbe::Logger::NINFO}, 
+      \hyperlink{classzbe_1_1_logger_a90a7ec362737bacdfb922582cb7e142f}{zbe::Logger::TINFO}, lm << \textcolor{stringliteral}{"> "} << MSG); \} \textcolor{keywordflow}{while}(0)
+\end{DoxyCode}
+
+
+Add a \mbox{[}I\+N\+F\+O\mbox{]} annotation to the logs. 
+
+Used to add information messages to the logs. 
+
+Definition at line 23 of file Logger.\+h.
+
+\hypertarget{_logger_8h_a5e9327e95d0334514b212936d9e22672}{}\index{Logger.\+h@{Logger.\+h}!Z\+B\+E\+\_\+\+L\+O\+G\+\_\+\+O\+T\+H\+E\+R@{Z\+B\+E\+\_\+\+L\+O\+G\+\_\+\+O\+T\+H\+E\+R}}
+\index{Z\+B\+E\+\_\+\+L\+O\+G\+\_\+\+O\+T\+H\+E\+R@{Z\+B\+E\+\_\+\+L\+O\+G\+\_\+\+O\+T\+H\+E\+R}!Logger.\+h@{Logger.\+h}}
+\subsubsection[{Z\+B\+E\+\_\+\+L\+O\+G\+\_\+\+O\+T\+H\+E\+R}]{\setlength{\rightskip}{0pt plus 5cm}\#define Z\+B\+E\+\_\+\+L\+O\+G\+\_\+\+O\+T\+H\+E\+R(
+\begin{DoxyParamCaption}
+\item[{}]{M\+S\+G\+T\+Y\+P\+E, }
+\item[{}]{M\+S\+G}
+\end{DoxyParamCaption}
+)}\label{_logger_8h_a5e9327e95d0334514b212936d9e22672}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\textcolor{keywordflow}{do}\{ \hyperlink{classzbe_1_1_logger_msg}{zbe::LoggerMsg} lm; \(\backslash\)
+    zbe::Logger::getInstance()->log(-1,MSGTYPE, lm << \textcolor{stringliteral}{"> "} << MSG); \} \textcolor{keywordflow}{while}(0)
+\end{DoxyCode}
+
+
+Add an user defined annotation to the logs. 
+
+Used to add messages to the logs with custom type (\mbox{[}T\+Y\+P\+E\mbox{]}). 
+
+Definition at line 56 of file Logger.\+h.
+
+\hypertarget{_logger_8h_a430ab0c478a3ca182053b637cf310e2a}{}\index{Logger.\+h@{Logger.\+h}!Z\+B\+E\+\_\+\+L\+O\+G\+\_\+\+W\+A\+R\+N\+I\+N\+G@{Z\+B\+E\+\_\+\+L\+O\+G\+\_\+\+W\+A\+R\+N\+I\+N\+G}}
+\index{Z\+B\+E\+\_\+\+L\+O\+G\+\_\+\+W\+A\+R\+N\+I\+N\+G@{Z\+B\+E\+\_\+\+L\+O\+G\+\_\+\+W\+A\+R\+N\+I\+N\+G}!Logger.\+h@{Logger.\+h}}
+\subsubsection[{Z\+B\+E\+\_\+\+L\+O\+G\+\_\+\+W\+A\+R\+N\+I\+N\+G}]{\setlength{\rightskip}{0pt plus 5cm}\#define Z\+B\+E\+\_\+\+L\+O\+G\+\_\+\+W\+A\+R\+N\+I\+N\+G(
+\begin{DoxyParamCaption}
+\item[{}]{M\+S\+G}
+\end{DoxyParamCaption}
+)}\label{_logger_8h_a430ab0c478a3ca182053b637cf310e2a}
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\textcolor{keywordflow}{do}\{ \hyperlink{classzbe_1_1_logger_msg}{zbe::LoggerMsg} lm; \(\backslash\)
+    zbe::Logger::getInstance()->log(\hyperlink{classzbe_1_1_logger_aba8b4f2b50b95b7df8475cd3cf5584b9}{zbe::Logger::NWARNING}, 
+      \hyperlink{classzbe_1_1_logger_a9dbd65ebc9452231ee1a0adaa3c08d93}{zbe::Logger::TWARNING}, lm << \textcolor{stringliteral}{"> "} << MSG); \} \textcolor{keywordflow}{while}(0)
+\end{DoxyCode}
+
+
+Add a \mbox{[}W\+A\+R\+N\+I\+N\+G\mbox{]} annotation to the logs. 
+
+Used to add warning messages to the logs. 
+
+Definition at line 40 of file Logger.\+h.
+

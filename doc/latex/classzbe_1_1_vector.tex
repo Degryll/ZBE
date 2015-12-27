@@ -1,0 +1,505 @@
+\hypertarget{classzbe_1_1_vector}{}\section{zbe\+:\+:Vector$<$ s $>$ Class Template Reference}
+\label{classzbe_1_1_vector}\index{zbe\+::\+Vector$<$ s $>$@{zbe\+::\+Vector$<$ s $>$}}
+
+
+A class that represent Vectors of any dimension.  
+
+
+
+
+{\ttfamily \#include $<$Point.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classzbe_1_1_vector_af478126eacae828b0d6454c5ae686c5f}{Vector} ()
+\begin{DoxyCompactList}\small\item\em Void constructor, the \hyperlink{classzbe_1_1_vector}{Vector}\textquotesingle{}s values are unknown. \end{DoxyCompactList}\item 
+\hyperlink{classzbe_1_1_vector_a7caf8410ba2f9f2d5671d4a1f1e5153c}{Vector} (std\+::initializer\+\_\+list$<$ double $>$ l)
+\begin{DoxyCompactList}\small\item\em A list initializer constructor. \end{DoxyCompactList}\item 
+double \& \hyperlink{classzbe_1_1_vector_a84bb0163dbc21094e70bf7340f4bb7dc}{operator\mbox{[}$\,$\mbox{]}} (std\+::size\+\_\+t idx)
+\begin{DoxyCompactList}\small\item\em Implements direct access to \hyperlink{classzbe_1_1_vector}{Vector} values with operator\mbox{[}\mbox{]}. \end{DoxyCompactList}\item 
+const double \& \hyperlink{classzbe_1_1_vector_a13087f897b6386630adf82f540fda49d}{operator\mbox{[}$\,$\mbox{]}} (std\+::size\+\_\+t idx) const 
+\begin{DoxyCompactList}\small\item\em Implements direct access to \hyperlink{classzbe_1_1_vector}{Vector} values with operator\mbox{[}\mbox{]}. \end{DoxyCompactList}\item 
+\hyperlink{classzbe_1_1_vector}{Vector}$<$ s $>$ \& \hyperlink{classzbe_1_1_vector_ae506e73798e78b596dd43be34bfbdd73}{operator+=} (\hyperlink{classzbe_1_1_vector}{Vector}$<$ s $>$ rhs)
+\begin{DoxyCompactList}\small\item\em Implements \hyperlink{classzbe_1_1_vector}{Vector} addition. \end{DoxyCompactList}\item 
+\hyperlink{classzbe_1_1_vector}{Vector}$<$ s $>$ \& \hyperlink{classzbe_1_1_vector_a879b33b5c6c62bc16b771cc874614189}{operator-\/=} (\hyperlink{classzbe_1_1_vector}{Vector}$<$ s $>$ rhs)
+\begin{DoxyCompactList}\small\item\em Implements \hyperlink{classzbe_1_1_vector}{Vector} subtraction. \end{DoxyCompactList}\item 
+\hyperlink{classzbe_1_1_vector}{Vector}$<$ s $>$ \& \hyperlink{classzbe_1_1_vector_a215c195ff041f6e8230c5ce619174651}{operator-\/} ()
+\begin{DoxyCompactList}\small\item\em Changes the orientation of a vector changing the sign of its dimensions. \end{DoxyCompactList}\item 
+\hyperlink{classzbe_1_1_vector}{Vector}$<$ s $>$ \& \hyperlink{classzbe_1_1_vector_a7088f4ab907e75ce8ba529189917c5ca}{operator$\ast$=} (double rhs)
+\begin{DoxyCompactList}\small\item\em Implements \hyperlink{classzbe_1_1_vector}{Vector} multiplication by a scalar. \end{DoxyCompactList}\item 
+double \hyperlink{classzbe_1_1_vector_aaff6572fe9c7ccb0ede8d017a135f4c1}{get\+Module} ()
+\begin{DoxyCompactList}\small\item\em Compute the \hyperlink{classzbe_1_1_vector}{Vector} Module. \end{DoxyCompactList}\item 
+double \hyperlink{classzbe_1_1_vector_ad9f7babae7c512392583c36d9611140b}{get\+Sqr\+Module} ()
+\begin{DoxyCompactList}\small\item\em Compute the squared \hyperlink{classzbe_1_1_vector}{Vector} Module. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+double \hyperlink{classzbe_1_1_vector_a1adaf8d4244fe2c1d762d6c58f4b01eb}{data} \mbox{[}s\mbox{]}
+\begin{DoxyCompactList}\small\item\em \hyperlink{classzbe_1_1_point}{Point} data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classzbe_1_1_vector}{Vector} \hyperlink{classzbe_1_1_vector_aa00684a017bf5c29d04889cd160208dc}{operator+} (\hyperlink{classzbe_1_1_vector}{Vector} lhs, const \hyperlink{classzbe_1_1_vector}{Vector} \&rhs)
+\begin{DoxyCompactList}\small\item\em Implements \hyperlink{classzbe_1_1_vector}{Vector} addition. \end{DoxyCompactList}\item 
+\hyperlink{classzbe_1_1_vector}{Vector} \hyperlink{classzbe_1_1_vector_a4cc289b80e2fcb276841865d247a68e2}{operator+} (\hyperlink{classzbe_1_1_vector}{Vector} \&lhs, \hyperlink{classzbe_1_1_vector}{Vector} \&\&rhs)
+\begin{DoxyCompactList}\small\item\em Implements \hyperlink{classzbe_1_1_vector}{Vector} addition. \end{DoxyCompactList}\item 
+\hyperlink{classzbe_1_1_vector}{Vector} \hyperlink{classzbe_1_1_vector_a23f5fd27917e1626fc0a07fd5b635f66}{operator-\/} (\hyperlink{classzbe_1_1_vector}{Vector} lhs, const \hyperlink{classzbe_1_1_vector}{Vector} \&rhs)
+\begin{DoxyCompactList}\small\item\em Implements \hyperlink{classzbe_1_1_vector}{Vector} subtraction. \end{DoxyCompactList}\item 
+\hyperlink{classzbe_1_1_vector}{Vector} \hyperlink{classzbe_1_1_vector_a7a4ea7ee2d59cb2320f59d5ee8ed8b3c}{operator-\/} (const \hyperlink{classzbe_1_1_vector}{Vector} \&lhs, \hyperlink{classzbe_1_1_vector}{Vector} \&\&rhs)
+\begin{DoxyCompactList}\small\item\em Implements \hyperlink{classzbe_1_1_vector}{Vector} subtraction. \end{DoxyCompactList}\item 
+\hyperlink{classzbe_1_1_vector}{Vector} \hyperlink{classzbe_1_1_vector_ad2d25cf5fc77db8c11d242bd491b64f9}{operator$\ast$} (\hyperlink{classzbe_1_1_vector}{Vector} lhs, double rhs)
+\begin{DoxyCompactList}\small\item\em Changes the orientation of a vector changing the sign of its dimensions. \end{DoxyCompactList}\item 
+double \hyperlink{classzbe_1_1_vector_a0e8b1be97267a83a75eda5e387aeb635}{operator$\ast$} (const \hyperlink{classzbe_1_1_vector}{Vector} \&lhs, const \hyperlink{classzbe_1_1_vector}{Vector} \&rhs)
+\begin{DoxyCompactList}\small\item\em Implements \hyperlink{classzbe_1_1_vector}{Vector} multiplication by a scalar. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$unsigned s$>$class zbe\+::\+Vector$<$ s $>$}
+
+A class that represent Vectors of any dimension. 
+
+This template needs to know the number of dimensions of the \hyperlink{classzbe_1_1_vector}{Vector}. 
+
+Definition at line 20 of file Point.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classzbe_1_1_vector_af478126eacae828b0d6454c5ae686c5f}{}\index{zbe\+::\+Vector@{zbe\+::\+Vector}!Vector@{Vector}}
+\index{Vector@{Vector}!zbe\+::\+Vector@{zbe\+::\+Vector}}
+\subsubsection[{Vector()}]{\setlength{\rightskip}{0pt plus 5cm}template$<$unsigned s$>$ {\bf zbe\+::\+Vector}$<$ s $>$\+::{\bf Vector} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classzbe_1_1_vector_af478126eacae828b0d6454c5ae686c5f}
+
+
+Void constructor, the \hyperlink{classzbe_1_1_vector}{Vector}\textquotesingle{}s values are unknown. 
+
+
+
+Definition at line 33 of file Vector.\+h.
+
+\hypertarget{classzbe_1_1_vector_a7caf8410ba2f9f2d5671d4a1f1e5153c}{}\index{zbe\+::\+Vector@{zbe\+::\+Vector}!Vector@{Vector}}
+\index{Vector@{Vector}!zbe\+::\+Vector@{zbe\+::\+Vector}}
+\subsubsection[{Vector(std\+::initializer\+\_\+list$<$ double $>$ l)}]{\setlength{\rightskip}{0pt plus 5cm}template$<$unsigned s$>$ {\bf zbe\+::\+Vector}$<$ s $>$\+::{\bf Vector} (
+\begin{DoxyParamCaption}
+\item[{std\+::initializer\+\_\+list$<$ double $>$}]{l}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classzbe_1_1_vector_a7caf8410ba2f9f2d5671d4a1f1e5153c}
+
+
+A list initializer constructor. 
+
+You can create a \hyperlink{classzbe_1_1_vector}{Vector} of N dimension with a list of N values\+: \begin{DoxyVerb}  Vector<N> p(v1, v2, ... , vN)
+\end{DoxyVerb}
+
+
+or \begin{DoxyVerb}  Vector<N> p = {v1, v2, ... , vN}\end{DoxyVerb}
+ 
+
+Definition at line 46 of file Vector.\+h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classzbe_1_1_vector_aaff6572fe9c7ccb0ede8d017a135f4c1}{}\index{zbe\+::\+Vector@{zbe\+::\+Vector}!get\+Module@{get\+Module}}
+\index{get\+Module@{get\+Module}!zbe\+::\+Vector@{zbe\+::\+Vector}}
+\subsubsection[{get\+Module()}]{\setlength{\rightskip}{0pt plus 5cm}template$<$unsigned s$>$ double {\bf zbe\+::\+Vector}$<$ s $>$\+::get\+Module (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classzbe_1_1_vector_aaff6572fe9c7ccb0ede8d017a135f4c1}
+
+
+Compute the \hyperlink{classzbe_1_1_vector}{Vector} Module. 
+
+\begin{DoxyReturn}{Returns}
+The \hyperlink{classzbe_1_1_vector}{Vector} module. 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classzbe_1_1_vector_ad9f7babae7c512392583c36d9611140b}{get\+Sqr\+Module()}. 
+\end{DoxySeeAlso}
+
+
+Definition at line 364 of file Vector.\+h.
+
+\hypertarget{classzbe_1_1_vector_ad9f7babae7c512392583c36d9611140b}{}\index{zbe\+::\+Vector@{zbe\+::\+Vector}!get\+Sqr\+Module@{get\+Sqr\+Module}}
+\index{get\+Sqr\+Module@{get\+Sqr\+Module}!zbe\+::\+Vector@{zbe\+::\+Vector}}
+\subsubsection[{get\+Sqr\+Module()}]{\setlength{\rightskip}{0pt plus 5cm}template$<$unsigned s$>$ double {\bf zbe\+::\+Vector}$<$ s $>$\+::get\+Sqr\+Module (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classzbe_1_1_vector_ad9f7babae7c512392583c36d9611140b}
+
+
+Compute the squared \hyperlink{classzbe_1_1_vector}{Vector} Module. 
+
+\begin{DoxyReturn}{Returns}
+The squared \hyperlink{classzbe_1_1_vector}{Vector} module. 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classzbe_1_1_vector_aaff6572fe9c7ccb0ede8d017a135f4c1}{get\+Module()}. 
+\end{DoxySeeAlso}
+
+
+Definition at line 374 of file Vector.\+h.
+
+\hypertarget{classzbe_1_1_vector_a7088f4ab907e75ce8ba529189917c5ca}{}\index{zbe\+::\+Vector@{zbe\+::\+Vector}!operator$\ast$=@{operator$\ast$=}}
+\index{operator$\ast$=@{operator$\ast$=}!zbe\+::\+Vector@{zbe\+::\+Vector}}
+\subsubsection[{operator$\ast$=(double rhs)}]{\setlength{\rightskip}{0pt plus 5cm}template$<$unsigned s$>$ {\bf Vector}$<$ s $>$ \& {\bf zbe\+::\+Vector}$<$ s $>$\+::operator$\ast$= (
+\begin{DoxyParamCaption}
+\item[{double}]{rhs}
+\end{DoxyParamCaption}
+)}\label{classzbe_1_1_vector_a7088f4ab907e75ce8ba529189917c5ca}
+
+
+Implements \hyperlink{classzbe_1_1_vector}{Vector} multiplication by a scalar. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rhs} & The scalar. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to the resulting \hyperlink{classzbe_1_1_vector}{Vector}. 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classzbe_1_1_vector_ae506e73798e78b596dd43be34bfbdd73}{operator+=()}, \hyperlink{classzbe_1_1_vector_a879b33b5c6c62bc16b771cc874614189}{operator-\/=()} and \hyperlink{classzbe_1_1_vector_a215c195ff041f6e8230c5ce619174651}{operator-\/()}. 
+\end{DoxySeeAlso}
+
+
+Definition at line 355 of file Vector.\+h.
+
+\hypertarget{classzbe_1_1_vector_ae506e73798e78b596dd43be34bfbdd73}{}\index{zbe\+::\+Vector@{zbe\+::\+Vector}!operator+=@{operator+=}}
+\index{operator+=@{operator+=}!zbe\+::\+Vector@{zbe\+::\+Vector}}
+\subsubsection[{operator+=(\+Vector$<$ s $>$ rhs)}]{\setlength{\rightskip}{0pt plus 5cm}template$<$unsigned s$>$ {\bf Vector}$<$ s $>$ \& {\bf zbe\+::\+Vector}$<$ s $>$\+::operator+= (
+\begin{DoxyParamCaption}
+\item[{{\bf Vector}$<$ s $>$}]{rhs}
+\end{DoxyParamCaption}
+)}\label{classzbe_1_1_vector_ae506e73798e78b596dd43be34bfbdd73}
+
+
+Implements \hyperlink{classzbe_1_1_vector}{Vector} addition. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rhs} & Second Summand. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to the \hyperlink{classzbe_1_1_vector}{Vector} resultant of the addition. 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classzbe_1_1_vector_a879b33b5c6c62bc16b771cc874614189}{operator-\/=()}, \hyperlink{classzbe_1_1_vector_a215c195ff041f6e8230c5ce619174651}{operator-\/()} and \hyperlink{classzbe_1_1_vector_a7088f4ab907e75ce8ba529189917c5ca}{operator$\ast$=()}. 
+\end{DoxySeeAlso}
+
+
+Definition at line 328 of file Vector.\+h.
+
+\hypertarget{classzbe_1_1_vector_a215c195ff041f6e8230c5ce619174651}{}\index{zbe\+::\+Vector@{zbe\+::\+Vector}!operator-\/@{operator-\/}}
+\index{operator-\/@{operator-\/}!zbe\+::\+Vector@{zbe\+::\+Vector}}
+\subsubsection[{operator-\/()}]{\setlength{\rightskip}{0pt plus 5cm}template$<$unsigned s$>$ {\bf Vector}$<$ s $>$ \& {\bf zbe\+::\+Vector}$<$ s $>$\+::operator-\/ (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classzbe_1_1_vector_a215c195ff041f6e8230c5ce619174651}
+
+
+Changes the orientation of a vector changing the sign of its dimensions. 
+
+\begin{DoxyReturn}{Returns}
+A reference to the resulting \hyperlink{classzbe_1_1_vector}{Vector}. 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classzbe_1_1_vector_ae506e73798e78b596dd43be34bfbdd73}{operator+=()}, \hyperlink{classzbe_1_1_vector_a879b33b5c6c62bc16b771cc874614189}{operator-\/=()} and \hyperlink{classzbe_1_1_vector_a7088f4ab907e75ce8ba529189917c5ca}{operator$\ast$=()}. 
+\end{DoxySeeAlso}
+
+
+Definition at line 346 of file Vector.\+h.
+
+\hypertarget{classzbe_1_1_vector_a879b33b5c6c62bc16b771cc874614189}{}\index{zbe\+::\+Vector@{zbe\+::\+Vector}!operator-\/=@{operator-\/=}}
+\index{operator-\/=@{operator-\/=}!zbe\+::\+Vector@{zbe\+::\+Vector}}
+\subsubsection[{operator-\/=(\+Vector$<$ s $>$ rhs)}]{\setlength{\rightskip}{0pt plus 5cm}template$<$unsigned s$>$ {\bf Vector}$<$ s $>$ \& {\bf zbe\+::\+Vector}$<$ s $>$\+::operator-\/= (
+\begin{DoxyParamCaption}
+\item[{{\bf Vector}$<$ s $>$}]{rhs}
+\end{DoxyParamCaption}
+)}\label{classzbe_1_1_vector_a879b33b5c6c62bc16b771cc874614189}
+
+
+Implements \hyperlink{classzbe_1_1_vector}{Vector} subtraction. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rhs} & Subtrahend. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to the \hyperlink{classzbe_1_1_vector}{Vector} resultant of the subtraction. 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classzbe_1_1_vector_ae506e73798e78b596dd43be34bfbdd73}{operator+=()}, \hyperlink{classzbe_1_1_vector_a215c195ff041f6e8230c5ce619174651}{operator-\/()} and \hyperlink{classzbe_1_1_vector_a7088f4ab907e75ce8ba529189917c5ca}{operator$\ast$=()}. 
+\end{DoxySeeAlso}
+
+
+Definition at line 337 of file Vector.\+h.
+
+\hypertarget{classzbe_1_1_vector_a84bb0163dbc21094e70bf7340f4bb7dc}{}\index{zbe\+::\+Vector@{zbe\+::\+Vector}!operator\mbox{[}$\,$\mbox{]}@{operator[]}}
+\index{operator\mbox{[}$\,$\mbox{]}@{operator[]}!zbe\+::\+Vector@{zbe\+::\+Vector}}
+\subsubsection[{operator[](std\+::size\+\_\+t idx)}]{\setlength{\rightskip}{0pt plus 5cm}template$<$unsigned s$>$ double\& {\bf zbe\+::\+Vector}$<$ s $>$\+::operator\mbox{[}$\,$\mbox{]} (
+\begin{DoxyParamCaption}
+\item[{std\+::size\+\_\+t}]{idx}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classzbe_1_1_vector_a84bb0163dbc21094e70bf7340f4bb7dc}
+
+
+Implements direct access to \hyperlink{classzbe_1_1_vector}{Vector} values with operator\mbox{[}\mbox{]}. 
+
+No bound checking is performed, the behavior accessing an out of bound index is undefined.
+
+
+\begin{DoxyParams}{Parameters}
+{\em idx} & Index of the dimension that you want to get the value. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The value of the idx dimension. 
+\end{DoxyReturn}
+
+
+Definition at line 65 of file Vector.\+h.
+
+\hypertarget{classzbe_1_1_vector_a13087f897b6386630adf82f540fda49d}{}\index{zbe\+::\+Vector@{zbe\+::\+Vector}!operator\mbox{[}$\,$\mbox{]}@{operator[]}}
+\index{operator\mbox{[}$\,$\mbox{]}@{operator[]}!zbe\+::\+Vector@{zbe\+::\+Vector}}
+\subsubsection[{operator[](std\+::size\+\_\+t idx) const }]{\setlength{\rightskip}{0pt plus 5cm}template$<$unsigned s$>$ const double\& {\bf zbe\+::\+Vector}$<$ s $>$\+::operator\mbox{[}$\,$\mbox{]} (
+\begin{DoxyParamCaption}
+\item[{std\+::size\+\_\+t}]{idx}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\label{classzbe_1_1_vector_a13087f897b6386630adf82f540fda49d}
+
+
+Implements direct access to \hyperlink{classzbe_1_1_vector}{Vector} values with operator\mbox{[}\mbox{]}. 
+
+No bound checking is performed, the behavior accessing an out of bound index is undefined.
+
+
+\begin{DoxyParams}{Parameters}
+{\em idx} & Index of the dimension that you want to get the value. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The constant value of the idx dimension. 
+\end{DoxyReturn}
+
+
+Definition at line 75 of file Vector.\+h.
+
+
+
+\subsection{Friends And Related Function Documentation}
+\hypertarget{classzbe_1_1_vector_ad2d25cf5fc77db8c11d242bd491b64f9}{}\index{zbe\+::\+Vector@{zbe\+::\+Vector}!operator$\ast$@{operator$\ast$}}
+\index{operator$\ast$@{operator$\ast$}!zbe\+::\+Vector@{zbe\+::\+Vector}}
+\subsubsection[{operator$\ast$}]{\setlength{\rightskip}{0pt plus 5cm}template$<$unsigned s$>$ {\bf Vector} operator$\ast$ (
+\begin{DoxyParamCaption}
+\item[{{\bf Vector}$<$ s $>$}]{lhs, }
+\item[{double}]{rhs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [friend]}}\label{classzbe_1_1_vector_ad2d25cf5fc77db8c11d242bd491b64f9}
+
+
+Changes the orientation of a vector changing the sign of its dimensions. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em lhs} & The original \hyperlink{classzbe_1_1_vector}{Vector}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to the resulting \hyperlink{classzbe_1_1_vector}{Vector}. 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classzbe_1_1_vector_aa00684a017bf5c29d04889cd160208dc}{operator+()}, \hyperlink{classzbe_1_1_vector_a215c195ff041f6e8230c5ce619174651}{operator-\/()} and \hyperlink{classzbe_1_1_vector_a7088f4ab907e75ce8ba529189917c5ca}{operator$\ast$=()}.Implements \hyperlink{classzbe_1_1_vector}{Vector} multiplication by a scalar.
+\end{DoxySeeAlso}
+
+\begin{DoxyParams}{Parameters}
+{\em lhs} & The original \hyperlink{classzbe_1_1_vector}{Vector}. \\
+\hline
+{\em rhs} & The scalar. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to the resulting \hyperlink{classzbe_1_1_vector}{Vector}. 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classzbe_1_1_vector_ae506e73798e78b596dd43be34bfbdd73}{operator+=()}, \hyperlink{classzbe_1_1_vector_a879b33b5c6c62bc16b771cc874614189}{operator-\/=()} and \hyperlink{classzbe_1_1_vector_a215c195ff041f6e8230c5ce619174651}{operator-\/()}. 
+\end{DoxySeeAlso}
+
+
+Definition at line 197 of file Vector.\+h.
+
+\hypertarget{classzbe_1_1_vector_a0e8b1be97267a83a75eda5e387aeb635}{}\index{zbe\+::\+Vector@{zbe\+::\+Vector}!operator$\ast$@{operator$\ast$}}
+\index{operator$\ast$@{operator$\ast$}!zbe\+::\+Vector@{zbe\+::\+Vector}}
+\subsubsection[{operator$\ast$}]{\setlength{\rightskip}{0pt plus 5cm}template$<$unsigned s$>$ double operator$\ast$ (
+\begin{DoxyParamCaption}
+\item[{const {\bf Vector}$<$ s $>$ \&}]{lhs, }
+\item[{const {\bf Vector}$<$ s $>$ \&}]{rhs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [friend]}}\label{classzbe_1_1_vector_a0e8b1be97267a83a75eda5e387aeb635}
+
+
+Implements \hyperlink{classzbe_1_1_vector}{Vector} multiplication by a scalar. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em lhs} & The original \hyperlink{classzbe_1_1_vector}{Vector}. \\
+\hline
+{\em rhs} & The scalar. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to the resulting \hyperlink{classzbe_1_1_vector}{Vector}. 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classzbe_1_1_vector_ae506e73798e78b596dd43be34bfbdd73}{operator+=()}, \hyperlink{classzbe_1_1_vector_a879b33b5c6c62bc16b771cc874614189}{operator-\/=()} and \hyperlink{classzbe_1_1_vector_a215c195ff041f6e8230c5ce619174651}{operator-\/()}. 
+\end{DoxySeeAlso}
+
+
+Definition at line 212 of file Vector.\+h.
+
+\hypertarget{classzbe_1_1_vector_aa00684a017bf5c29d04889cd160208dc}{}\index{zbe\+::\+Vector@{zbe\+::\+Vector}!operator+@{operator+}}
+\index{operator+@{operator+}!zbe\+::\+Vector@{zbe\+::\+Vector}}
+\subsubsection[{operator+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$unsigned s$>$ {\bf Vector} operator+ (
+\begin{DoxyParamCaption}
+\item[{{\bf Vector}$<$ s $>$}]{lhs, }
+\item[{const {\bf Vector}$<$ s $>$ \&}]{rhs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [friend]}}\label{classzbe_1_1_vector_aa00684a017bf5c29d04889cd160208dc}
+
+
+Implements \hyperlink{classzbe_1_1_vector}{Vector} addition. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em lhs} & First Summand. \\
+\hline
+{\em rhs} & Second Summand. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to the \hyperlink{classzbe_1_1_vector}{Vector} resultant of the addition. 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classzbe_1_1_vector_a879b33b5c6c62bc16b771cc874614189}{operator-\/=()}, \hyperlink{classzbe_1_1_vector_a215c195ff041f6e8230c5ce619174651}{operator-\/()} and \hyperlink{classzbe_1_1_vector_a7088f4ab907e75ce8ba529189917c5ca}{operator$\ast$=()}. 
+\end{DoxySeeAlso}
+
+
+Definition at line 135 of file Vector.\+h.
+
+\hypertarget{classzbe_1_1_vector_a4cc289b80e2fcb276841865d247a68e2}{}\index{zbe\+::\+Vector@{zbe\+::\+Vector}!operator+@{operator+}}
+\index{operator+@{operator+}!zbe\+::\+Vector@{zbe\+::\+Vector}}
+\subsubsection[{operator+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$unsigned s$>$ {\bf Vector} operator+ (
+\begin{DoxyParamCaption}
+\item[{{\bf Vector}$<$ s $>$ \&}]{lhs, }
+\item[{{\bf Vector}$<$ s $>$ \&\&}]{rhs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [friend]}}\label{classzbe_1_1_vector_a4cc289b80e2fcb276841865d247a68e2}
+
+
+Implements \hyperlink{classzbe_1_1_vector}{Vector} addition. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em lhs} & First Summand. \\
+\hline
+{\em rhs} & Second Summand. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to the \hyperlink{classzbe_1_1_vector}{Vector} resultant of the addition. 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classzbe_1_1_vector_a879b33b5c6c62bc16b771cc874614189}{operator-\/=()}, \hyperlink{classzbe_1_1_vector_a215c195ff041f6e8230c5ce619174651}{operator-\/()} and \hyperlink{classzbe_1_1_vector_a7088f4ab907e75ce8ba529189917c5ca}{operator$\ast$=()}. 
+\end{DoxySeeAlso}
+
+
+Definition at line 150 of file Vector.\+h.
+
+\hypertarget{classzbe_1_1_vector_a23f5fd27917e1626fc0a07fd5b635f66}{}\index{zbe\+::\+Vector@{zbe\+::\+Vector}!operator-\/@{operator-\/}}
+\index{operator-\/@{operator-\/}!zbe\+::\+Vector@{zbe\+::\+Vector}}
+\subsubsection[{operator-\/}]{\setlength{\rightskip}{0pt plus 5cm}template$<$unsigned s$>$ {\bf Vector} operator-\/ (
+\begin{DoxyParamCaption}
+\item[{{\bf Vector}$<$ s $>$}]{lhs, }
+\item[{const {\bf Vector}$<$ s $>$ \&}]{rhs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [friend]}}\label{classzbe_1_1_vector_a23f5fd27917e1626fc0a07fd5b635f66}
+
+
+Implements \hyperlink{classzbe_1_1_vector}{Vector} subtraction. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em lhs} & Minuend. \\
+\hline
+{\em rhs} & Subtrahend. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to the \hyperlink{classzbe_1_1_vector}{Vector} resultant of the subtraction. 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classzbe_1_1_vector_ae506e73798e78b596dd43be34bfbdd73}{operator+=()}, \hyperlink{classzbe_1_1_vector_a215c195ff041f6e8230c5ce619174651}{operator-\/()} and \hyperlink{classzbe_1_1_vector_a7088f4ab907e75ce8ba529189917c5ca}{operator$\ast$=()}. 
+\end{DoxySeeAlso}
+
+
+Definition at line 165 of file Vector.\+h.
+
+\hypertarget{classzbe_1_1_vector_a7a4ea7ee2d59cb2320f59d5ee8ed8b3c}{}\index{zbe\+::\+Vector@{zbe\+::\+Vector}!operator-\/@{operator-\/}}
+\index{operator-\/@{operator-\/}!zbe\+::\+Vector@{zbe\+::\+Vector}}
+\subsubsection[{operator-\/}]{\setlength{\rightskip}{0pt plus 5cm}template$<$unsigned s$>$ {\bf Vector} operator-\/ (
+\begin{DoxyParamCaption}
+\item[{const {\bf Vector}$<$ s $>$ \&}]{lhs, }
+\item[{{\bf Vector}$<$ s $>$ \&\&}]{rhs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [friend]}}\label{classzbe_1_1_vector_a7a4ea7ee2d59cb2320f59d5ee8ed8b3c}
+
+
+Implements \hyperlink{classzbe_1_1_vector}{Vector} subtraction. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em lhs} & Minuend. \\
+\hline
+{\em rhs} & Subtrahend. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to the \hyperlink{classzbe_1_1_vector}{Vector} resultant of the subtraction. 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classzbe_1_1_vector_ae506e73798e78b596dd43be34bfbdd73}{operator+=()}, \hyperlink{classzbe_1_1_vector_a215c195ff041f6e8230c5ce619174651}{operator-\/()} and \hyperlink{classzbe_1_1_vector_a7088f4ab907e75ce8ba529189917c5ca}{operator$\ast$=()}. 
+\end{DoxySeeAlso}
+
+
+Definition at line 176 of file Vector.\+h.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classzbe_1_1_vector_a1adaf8d4244fe2c1d762d6c58f4b01eb}{}\index{zbe\+::\+Vector@{zbe\+::\+Vector}!data@{data}}
+\index{data@{data}!zbe\+::\+Vector@{zbe\+::\+Vector}}
+\subsubsection[{data}]{\setlength{\rightskip}{0pt plus 5cm}template$<$unsigned s$>$ double {\bf zbe\+::\+Vector}$<$ s $>$\+::data\mbox{[}s\mbox{]}\hspace{0.3cm}{\ttfamily [protected]}}\label{classzbe_1_1_vector_a1adaf8d4244fe2c1d762d6c58f4b01eb}
+
+
+\hyperlink{classzbe_1_1_point}{Point} data. 
+
+
+
+Definition at line 229 of file Vector.\+h.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/\+Z\+B\+E/core/tools/math/\hyperlink{_point_8h}{Point.\+h}\item 
+include/\+Z\+B\+E/core/tools/math/\hyperlink{_vector_8h}{Vector.\+h}\end{DoxyCompactItemize}

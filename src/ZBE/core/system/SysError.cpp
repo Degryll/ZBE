@@ -20,7 +20,7 @@ int SysError::getNErrors() {
   return (nerrors);
 }
 
-std::string SysError::getLastErrorString() {
+std::string SysError::getFirstErrorString() {
   return (errorString);
 }
 

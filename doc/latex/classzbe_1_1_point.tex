@@ -1,0 +1,308 @@
+\hypertarget{classzbe_1_1_point}{}\section{zbe\+:\+:Point$<$ s $>$ Class Template Reference}
+\label{classzbe_1_1_point}\index{zbe\+::\+Point$<$ s $>$@{zbe\+::\+Point$<$ s $>$}}
+
+
+A class that represent Points of any dimension.  
+
+
+
+
+{\ttfamily \#include $<$Point.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classzbe_1_1_point_a2f4b573c8afece71382e36e8a972c768}{Point} ()
+\begin{DoxyCompactList}\small\item\em Void constructor, the \hyperlink{classzbe_1_1_point}{Point}\textquotesingle{}s values are unknown. \end{DoxyCompactList}\item 
+\hyperlink{classzbe_1_1_point_aebca7e4128f8cc20a0d2862126619aab}{Point} (const std\+::initializer\+\_\+list$<$ double $>$ l)
+\begin{DoxyCompactList}\small\item\em A list initializer constructor. \end{DoxyCompactList}\item 
+double \& \hyperlink{classzbe_1_1_point_a3f60b81f07951c6e1a012cfdd903c27a}{operator\mbox{[}$\,$\mbox{]}} (std\+::size\+\_\+t idx)
+\begin{DoxyCompactList}\small\item\em Implements direct access to \hyperlink{classzbe_1_1_point}{Point} values with operator\mbox{[}\mbox{]}. \end{DoxyCompactList}\item 
+const double \& \hyperlink{classzbe_1_1_point_a4a928fbbd33b681f7e7a1a0ab7f3ac92}{operator\mbox{[}$\,$\mbox{]}} (std\+::size\+\_\+t idx) const 
+\begin{DoxyCompactList}\small\item\em Implements direct access to \hyperlink{classzbe_1_1_point}{Point} values with operator\mbox{[}\mbox{]}. \end{DoxyCompactList}\item 
+\hyperlink{classzbe_1_1_point}{Point} \& \hyperlink{classzbe_1_1_point_affd866729abeadf7cfed39e9cc7148c4}{operator+=} (\hyperlink{classzbe_1_1_vector}{Vector}$<$ s $>$ rhs)
+\begin{DoxyCompactList}\small\item\em Translate a \hyperlink{classzbe_1_1_point}{Point} in the direction of a \hyperlink{classzbe_1_1_vector}{Vector}. \end{DoxyCompactList}\item 
+\hyperlink{classzbe_1_1_point}{Point} \& \hyperlink{classzbe_1_1_point_a7a0c2c5f931f27051bdb4e0ef8e25633}{operator$\ast$=} (double rhs)
+\begin{DoxyCompactList}\small\item\em Multiply a \hyperlink{classzbe_1_1_point}{Point} by a scalar. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+double \hyperlink{classzbe_1_1_point_a44784a8fc0112f976473e8e2da0193e5}{data} \mbox{[}s\mbox{]}
+\begin{DoxyCompactList}\small\item\em \hyperlink{classzbe_1_1_point}{Point} data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classzbe_1_1_point}{Point} \hyperlink{classzbe_1_1_point_a74ace46c2a8478251d76bceef6715c6d}{operator+} (\hyperlink{classzbe_1_1_point}{Point} lhs, const \hyperlink{classzbe_1_1_vector}{Vector}$<$ s $>$ \&rhs)
+\begin{DoxyCompactList}\small\item\em Translate a \hyperlink{classzbe_1_1_point}{Point} in the direction of a \hyperlink{classzbe_1_1_vector}{Vector}. \end{DoxyCompactList}\item 
+\hyperlink{classzbe_1_1_vector}{Vector}$<$ s $>$ \hyperlink{classzbe_1_1_point_afd14d87b02bf3ff8a034483748ba0f44}{operator-\/} (const \hyperlink{classzbe_1_1_point}{Point} \&lhs, const \hyperlink{classzbe_1_1_point}{Point} \&rhs)
+\begin{DoxyCompactList}\small\item\em Calculate the \hyperlink{classzbe_1_1_vector}{Vector} that connects two Points. \end{DoxyCompactList}\item 
+\hyperlink{classzbe_1_1_point}{Point} \hyperlink{classzbe_1_1_point_a5a5836772aa1d8dd4666c553c9b1ce45}{operator$\ast$} (\hyperlink{classzbe_1_1_point}{Point} lhs, double rhs)
+\begin{DoxyCompactList}\small\item\em Multiply a \hyperlink{classzbe_1_1_point}{Point} by a scalar. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$unsigned s$>$class zbe\+::\+Point$<$ s $>$}
+
+A class that represent Points of any dimension. 
+
+This template needs to know the number of dimensions of the hyperplane to which the \hyperlink{classzbe_1_1_point}{Point} belongs. 
+
+Definition at line 27 of file Point.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classzbe_1_1_point_a2f4b573c8afece71382e36e8a972c768}{}\index{zbe\+::\+Point@{zbe\+::\+Point}!Point@{Point}}
+\index{Point@{Point}!zbe\+::\+Point@{zbe\+::\+Point}}
+\subsubsection[{Point()}]{\setlength{\rightskip}{0pt plus 5cm}template$<$unsigned s$>$ {\bf zbe\+::\+Point}$<$ s $>$\+::{\bf Point} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classzbe_1_1_point_a2f4b573c8afece71382e36e8a972c768}
+
+
+Void constructor, the \hyperlink{classzbe_1_1_point}{Point}\textquotesingle{}s values are unknown. 
+
+
+
+Definition at line 32 of file Point.\+h.
+
+\hypertarget{classzbe_1_1_point_aebca7e4128f8cc20a0d2862126619aab}{}\index{zbe\+::\+Point@{zbe\+::\+Point}!Point@{Point}}
+\index{Point@{Point}!zbe\+::\+Point@{zbe\+::\+Point}}
+\subsubsection[{Point(const std\+::initializer\+\_\+list$<$ double $>$ l)}]{\setlength{\rightskip}{0pt plus 5cm}template$<$unsigned s$>$ {\bf zbe\+::\+Point}$<$ s $>$\+::{\bf Point} (
+\begin{DoxyParamCaption}
+\item[{const std\+::initializer\+\_\+list$<$ double $>$}]{l}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classzbe_1_1_point_aebca7e4128f8cc20a0d2862126619aab}
+
+
+A list initializer constructor. 
+
+You can create a \hyperlink{classzbe_1_1_point}{Point} of N dimension with a list of N values\+: \begin{DoxyVerb}  Point<N> p(v1, v2, ... , vN)
+\end{DoxyVerb}
+
+
+or \begin{DoxyVerb}  Point<N> p = {v1, v2, ... , vN}\end{DoxyVerb}
+ 
+
+Definition at line 45 of file Point.\+h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classzbe_1_1_point_a7a0c2c5f931f27051bdb4e0ef8e25633}{}\index{zbe\+::\+Point@{zbe\+::\+Point}!operator$\ast$=@{operator$\ast$=}}
+\index{operator$\ast$=@{operator$\ast$=}!zbe\+::\+Point@{zbe\+::\+Point}}
+\subsubsection[{operator$\ast$=(double rhs)}]{\setlength{\rightskip}{0pt plus 5cm}template$<$unsigned s$>$ {\bf Point}\& {\bf zbe\+::\+Point}$<$ s $>$\+::operator$\ast$= (
+\begin{DoxyParamCaption}
+\item[{double}]{rhs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classzbe_1_1_point_a7a0c2c5f931f27051bdb4e0ef8e25633}
+
+
+Multiply a \hyperlink{classzbe_1_1_point}{Point} by a scalar. 
+
+The resulting \hyperlink{classzbe_1_1_point}{Point} is as follows\+: \begin{DoxyVerb}  Point<2> p(1,2);
+  p *= 3;
+\end{DoxyVerb}
+
+
+p values are (3,6).
+
+
+\begin{DoxyParams}{Parameters}
+{\em rhs} & The scalar. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \hyperlink{classzbe_1_1_point}{Point}. 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classzbe_1_1_point_affd866729abeadf7cfed39e9cc7148c4}{operator+=()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 104 of file Point.\+h.
+
+\hypertarget{classzbe_1_1_point_affd866729abeadf7cfed39e9cc7148c4}{}\index{zbe\+::\+Point@{zbe\+::\+Point}!operator+=@{operator+=}}
+\index{operator+=@{operator+=}!zbe\+::\+Point@{zbe\+::\+Point}}
+\subsubsection[{operator+=(\+Vector$<$ s $>$ rhs)}]{\setlength{\rightskip}{0pt plus 5cm}template$<$unsigned s$>$ {\bf Point}\& {\bf zbe\+::\+Point}$<$ s $>$\+::operator+= (
+\begin{DoxyParamCaption}
+\item[{{\bf Vector}$<$ s $>$}]{rhs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classzbe_1_1_point_affd866729abeadf7cfed39e9cc7148c4}
+
+
+Translate a \hyperlink{classzbe_1_1_point}{Point} in the direction of a \hyperlink{classzbe_1_1_vector}{Vector}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rhs} & \hyperlink{classzbe_1_1_vector}{Vector} in which you want to move the \hyperlink{classzbe_1_1_point}{Point}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this \hyperlink{classzbe_1_1_point}{Point}. 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classzbe_1_1_point_a7a0c2c5f931f27051bdb4e0ef8e25633}{operator$\ast$=()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 83 of file Point.\+h.
+
+\hypertarget{classzbe_1_1_point_a3f60b81f07951c6e1a012cfdd903c27a}{}\index{zbe\+::\+Point@{zbe\+::\+Point}!operator\mbox{[}$\,$\mbox{]}@{operator[]}}
+\index{operator\mbox{[}$\,$\mbox{]}@{operator[]}!zbe\+::\+Point@{zbe\+::\+Point}}
+\subsubsection[{operator[](std\+::size\+\_\+t idx)}]{\setlength{\rightskip}{0pt plus 5cm}template$<$unsigned s$>$ double\& {\bf zbe\+::\+Point}$<$ s $>$\+::operator\mbox{[}$\,$\mbox{]} (
+\begin{DoxyParamCaption}
+\item[{std\+::size\+\_\+t}]{idx}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classzbe_1_1_point_a3f60b81f07951c6e1a012cfdd903c27a}
+
+
+Implements direct access to \hyperlink{classzbe_1_1_point}{Point} values with operator\mbox{[}\mbox{]}. 
+
+No bound checking is performed, the behavior accessing an out of bound index is undefined.
+
+
+\begin{DoxyParams}{Parameters}
+{\em idx} & Index of the dimension that you want to get the value. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The value of the idx dimension. 
+\end{DoxyReturn}
+
+
+Definition at line 65 of file Point.\+h.
+
+\hypertarget{classzbe_1_1_point_a4a928fbbd33b681f7e7a1a0ab7f3ac92}{}\index{zbe\+::\+Point@{zbe\+::\+Point}!operator\mbox{[}$\,$\mbox{]}@{operator[]}}
+\index{operator\mbox{[}$\,$\mbox{]}@{operator[]}!zbe\+::\+Point@{zbe\+::\+Point}}
+\subsubsection[{operator[](std\+::size\+\_\+t idx) const }]{\setlength{\rightskip}{0pt plus 5cm}template$<$unsigned s$>$ const double\& {\bf zbe\+::\+Point}$<$ s $>$\+::operator\mbox{[}$\,$\mbox{]} (
+\begin{DoxyParamCaption}
+\item[{std\+::size\+\_\+t}]{idx}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\label{classzbe_1_1_point_a4a928fbbd33b681f7e7a1a0ab7f3ac92}
+
+
+Implements direct access to \hyperlink{classzbe_1_1_point}{Point} values with operator\mbox{[}\mbox{]}. 
+
+No bound checking is performed, the behavior accessing an out of bound index is undefined.
+
+
+\begin{DoxyParams}{Parameters}
+{\em idx} & Index of the dimension that you want to get the value. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The constant value of the idx dimension. 
+\end{DoxyReturn}
+
+
+Definition at line 75 of file Point.\+h.
+
+
+
+\subsection{Friends And Related Function Documentation}
+\hypertarget{classzbe_1_1_point_a5a5836772aa1d8dd4666c553c9b1ce45}{}\index{zbe\+::\+Point@{zbe\+::\+Point}!operator$\ast$@{operator$\ast$}}
+\index{operator$\ast$@{operator$\ast$}!zbe\+::\+Point@{zbe\+::\+Point}}
+\subsubsection[{operator$\ast$}]{\setlength{\rightskip}{0pt plus 5cm}template$<$unsigned s$>$ {\bf Point} operator$\ast$ (
+\begin{DoxyParamCaption}
+\item[{{\bf Point}$<$ s $>$}]{lhs, }
+\item[{double}]{rhs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [friend]}}\label{classzbe_1_1_point_a5a5836772aa1d8dd4666c553c9b1ce45}
+
+
+Multiply a \hyperlink{classzbe_1_1_point}{Point} by a scalar. 
+
+The resulting \hyperlink{classzbe_1_1_point}{Point} is as follows\+: \begin{DoxyVerb}  Point<2> p(1,2);
+  Point<2> q = p * 3;
+\end{DoxyVerb}
+
+
+q values are (3,6).
+
+
+\begin{DoxyParams}{Parameters}
+{\em lhs} & The initial \hyperlink{classzbe_1_1_point}{Point}. \\
+\hline
+{\em rhs} & The scalar. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The resulting \hyperlink{classzbe_1_1_point}{Point} of multiplying the initial point by the scalar. 
+\end{DoxyReturn}
+
+
+Definition at line 152 of file Point.\+h.
+
+\hypertarget{classzbe_1_1_point_a74ace46c2a8478251d76bceef6715c6d}{}\index{zbe\+::\+Point@{zbe\+::\+Point}!operator+@{operator+}}
+\index{operator+@{operator+}!zbe\+::\+Point@{zbe\+::\+Point}}
+\subsubsection[{operator+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$unsigned s$>$ {\bf Point} operator+ (
+\begin{DoxyParamCaption}
+\item[{{\bf Point}$<$ s $>$}]{lhs, }
+\item[{const {\bf Vector}$<$ s $>$ \&}]{rhs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [friend]}}\label{classzbe_1_1_point_a74ace46c2a8478251d76bceef6715c6d}
+
+
+Translate a \hyperlink{classzbe_1_1_point}{Point} in the direction of a \hyperlink{classzbe_1_1_vector}{Vector}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em lhs} & The initial \hyperlink{classzbe_1_1_point}{Point}. \\
+\hline
+{\em rhs} & \hyperlink{classzbe_1_1_vector}{Vector} in which you want to move the \hyperlink{classzbe_1_1_point}{Point}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \hyperlink{classzbe_1_1_point}{Point} with the result of the translation. 
+\end{DoxyReturn}
+
+
+Definition at line 118 of file Point.\+h.
+
+\hypertarget{classzbe_1_1_point_afd14d87b02bf3ff8a034483748ba0f44}{}\index{zbe\+::\+Point@{zbe\+::\+Point}!operator-\/@{operator-\/}}
+\index{operator-\/@{operator-\/}!zbe\+::\+Point@{zbe\+::\+Point}}
+\subsubsection[{operator-\/}]{\setlength{\rightskip}{0pt plus 5cm}template$<$unsigned s$>$ {\bf Vector}$<$s$>$ operator-\/ (
+\begin{DoxyParamCaption}
+\item[{const {\bf Point}$<$ s $>$ \&}]{lhs, }
+\item[{const {\bf Point}$<$ s $>$ \&}]{rhs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [friend]}}\label{classzbe_1_1_point_afd14d87b02bf3ff8a034483748ba0f44}
+
+
+Calculate the \hyperlink{classzbe_1_1_vector}{Vector} that connects two Points. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em lhs} & The initial \hyperlink{classzbe_1_1_point}{Point}. \\
+\hline
+{\em rhs} & The destiny \hyperlink{classzbe_1_1_point}{Point}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A \hyperlink{classzbe_1_1_vector}{Vector} that translate the initial \hyperlink{classzbe_1_1_point}{Point} to the destination \hyperlink{classzbe_1_1_point}{Point}. 
+\end{DoxyReturn}
+
+
+Definition at line 129 of file Point.\+h.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classzbe_1_1_point_a44784a8fc0112f976473e8e2da0193e5}{}\index{zbe\+::\+Point@{zbe\+::\+Point}!data@{data}}
+\index{data@{data}!zbe\+::\+Point@{zbe\+::\+Point}}
+\subsubsection[{data}]{\setlength{\rightskip}{0pt plus 5cm}template$<$unsigned s$>$ double {\bf zbe\+::\+Point}$<$ s $>$\+::data\mbox{[}s\mbox{]}\hspace{0.3cm}{\ttfamily [protected]}}\label{classzbe_1_1_point_a44784a8fc0112f976473e8e2da0193e5}
+
+
+\hyperlink{classzbe_1_1_point}{Point} data. 
+
+
+
+Definition at line 161 of file Point.\+h.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\+Z\+B\+E/core/tools/math/\hyperlink{_point_8h}{Point.\+h}\end{DoxyCompactItemize}
