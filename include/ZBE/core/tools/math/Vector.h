@@ -2,7 +2,7 @@
  * Copyright 2011 Batis Degryll Ludo
  * @file Vector.h
  * @since 2010/07/22
- * @date 2015/13/12
+ * @date 2016/01/06
  * @author Ludo and Degryll
  * @brief Math Vector definition
  */
@@ -22,15 +22,17 @@ namespace zbe {
 
 /** \brief A class that represent Vectors of any dimension.
  *
- *  This template needs to know the number of dimensions of the Vector.
+ *  Not use this class, use Vector<s>.
+ *
+ *  \sa Vector
  */
 template<unsigned s>
-class Vector {
+class _VECTOR {
   public:
 
-    /** \brief Void constructor, the Vector's values are unknown.
+    /** \brief Void constructor, the vector's values are unknown.
      */
-    Vector() {}
+    _VECTOR() {}
 
     /** \brief A list initializer constructor.
      *
@@ -43,7 +45,7 @@ class Vector {
      *        Vector<N> p = {v1, v2, ... , vN}
      *
      */
-    Vector(std::initializer_list<double> l) {
+    _VECTOR(std::initializer_list<double> l) {
       if (l.size() != s) {
         SysError::setError("Vector ERROR: Initializer list size is incorrect.");
         return;
@@ -54,6 +56,13 @@ class Vector {
       }
     }
 
+//    virtual ~_VECTOR() {}
+
+//    _VECTOR& operator=(_VECTOR rhs) {
+//      std::swap(this->data, rhs.data);
+//      return (*this);
+//    }
+
     /** \brief Implements direct access to Vector values with operator[].
      *
      *  No bound checking is performed, the behavior accessing an out of bound
@@ -62,7 +71,7 @@ class Vector {
      * \param idx Index of the dimension that you want to get the value.
      * \return The value of the idx dimension.
      */
-          double& operator[](std::size_t idx)       {return (data[idx]);}
+    double& operator[](std::size_t idx)       {return (data[idx]);}
 
     /** \brief Implements direct access to Vector values with operator[].
      *
@@ -74,52 +83,91 @@ class Vector {
      */
     const double& operator[](std::size_t idx) const {return (data[idx]);}
 
-    /** \brief Implements Vector addition.
+    /** \brief Add a vector to this one.
      *
      * \param rhs Second Summand.
-     * \return A reference to the Vector resultant of the addition.
+     * \return A reference to this Vector, resultant of the addition.
      * \sa operator-=(), operator-() and operator*=().
      */
-    Vector<s>& operator+=(Vector<s> rhs);
+    _VECTOR<s>& operator+=(_VECTOR<s> rhs) {
+      for(unsigned i = 0; i < s; i++) {
+        data[i] += rhs.data[i];
+      }
 
-    /** \brief Implements Vector subtraction.
+      return (*this);
+    }
+
+    /** \brief subtract a vector to this one.
      *
      * \param rhs Subtrahend.
-     * \return A reference to the Vector resultant of the subtraction.
+     * \return A reference to this Vector, resultant of the subtraction.
      * \sa operator+=(), operator-() and operator*=().
      */
-    Vector<s>& operator-=(Vector<s> rhs);
+    _VECTOR<s>& operator-=(_VECTOR<s> rhs) {
+      for(unsigned i = 0; i < s; i++) {
+        data[i] -= rhs.data[i];
+      }
 
-    /** \brief Changes the orientation of a vector changing the sign of its dimensions.
+      return (*this);
+    }
+
+    /** \brief Changes the orientation of the vector changing the sign of its dimensions.
      *
-     * \return A reference to the resulting Vector.
+     * \return A reference to the this Vector.
      * \sa operator+=(), operator-=() and operator*=().
      */
-    Vector<s>& operator-();
+    _VECTOR<s>& operator-() {
+      for(unsigned i = 0; i < s; i++) {
+        data[i] = -data[i];
+      }
 
-    /** \brief Implements Vector multiplication by a scalar.
+      return (*this);
+    }
+
+    /** \brief Multiply this Vector by a scalar.
      *
      * \param rhs The scalar.
-     * \return A reference to the resulting Vector.
+     * \return A reference to this Vector after the multiplication.
      * \sa operator+=(), operator-=() and operator-().
      */
-    Vector<s>& operator*=(double rhs);
-    //double getAngle(const Vector& rhs);  // TODO espero a necesitarlo
-    //Vector& reflect(const Vector& rhs);  // TODO espero a necesitarlo
+    _VECTOR<s>& operator*=(double rhs) {
+      for(unsigned i = 0; i < s; i++) {
+        data[i] *= rhs;
+      }
+
+      return (*this);
+    }
 
     /** \brief Compute the Vector Module.
      *
      * \return The Vector module.
      * \sa getSqrModule().
      */
-    double getModule();
+    double getModule() {
+      double r = 0;
+      for(unsigned i = 0; i < s; i++) {
+        r += data[i] * data[i];
+      }
 
-    /** \brief Compute the squared Vector Module.
+      return (std::sqrt(r));
+    }
+
+    /** \brief Compute the squared Vector Module to avoid the square root.
      *
      * \return The squared Vector module.
      * \sa getModule().
      */
-    double getSqrModule();  // to avoid square root
+    double getSqrModule() {  // to avoid square root
+      double r2 = 0;
+      for(unsigned i = 0; i < s; i++) {
+        r2 += data[i] * data[i];
+      }
+
+      return (r2);
+    }
+
+    //double getAngle(const Vector& rhs);  // TODO espero a necesitarlo
+    //Vector& reflect(const Vector& rhs);  // TODO espero a necesitarlo
 
 ///////////////////////////////////////////////////////////////////////////////
 // Friend Functions
@@ -132,7 +180,7 @@ class Vector {
      * \return A reference to the Vector resultant of the addition.
      * \sa operator-=(), operator-() and operator*=().
      */
-    friend Vector operator+(Vector lhs, const Vector& rhs) {
+    friend _VECTOR operator+(_VECTOR lhs, const _VECTOR& rhs) {
 //      for(unsigned i = 0; i < s; i++) {
 //        lhs.data[i] += rhs.data[i];
 //      }
@@ -147,7 +195,7 @@ class Vector {
      * \return A reference to the Vector resultant of the addition.
      * \sa operator-=(), operator-() and operator*=().
      */
-    friend Vector operator+(Vector& lhs, Vector&& rhs) {
+    friend _VECTOR operator+(_VECTOR& lhs, _VECTOR&& rhs) {
 //      for(unsigned i = 0; i < s; i++) {
 //        rhs.data[i] += lhs.data[i];
 //      }
@@ -162,7 +210,7 @@ class Vector {
      * \return A reference to the Vector resultant of the subtraction.
      * \sa operator+=(), operator-() and operator*=().
      */
-    friend Vector operator-(Vector lhs, const Vector& rhs) {
+    friend _VECTOR operator-(_VECTOR lhs, const _VECTOR& rhs) {
       return (lhs-=rhs);
     }
 
@@ -173,7 +221,7 @@ class Vector {
      * \return A reference to the Vector resultant of the subtraction.
      * \sa operator+=(), operator-() and operator*=().
      */
-    friend Vector operator-(const Vector& lhs, Vector&& rhs) {
+    friend _VECTOR operator-(const _VECTOR& lhs, _VECTOR&& rhs) {
       return (rhs-=lhs);
     }
 
@@ -194,7 +242,7 @@ class Vector {
      * \return A reference to the resulting Vector.
      * \sa operator+=(), operator-=() and operator-().
      */
-    friend Vector operator*(Vector lhs, double rhs) {
+    friend _VECTOR operator*(_VECTOR lhs, double rhs) {
 //      for(unsigned i = 0; i < s; i++) {
 //        lhs.data[i] *= rhs;
 //      }
@@ -209,7 +257,7 @@ class Vector {
      * \return A reference to the resulting Vector.
      * \sa operator+=(), operator-=() and operator-().
      */
-    friend double operator*(const Vector& lhs, const Vector& rhs) {
+    friend double operator*(const _VECTOR& lhs, const _VECTOR& rhs) {
       double v = 0;
       for(unsigned i = 0; i < s; i++) {
         v += lhs.data[i] * rhs.data[i];
@@ -226,25 +274,57 @@ class Vector {
 ///////////////////////////////////////////////////////////////////////////////
 
   protected:
-    double data[s];  //!< Point data.
+    double data[s];  //!< Vector data.
 };
 
-/** \brief An aliases of a Vector<2>.
+/** \brief A class that represent Vectors of any dimension.
  *
- *  Used to implement some functionality of a 2 dimensional Vector.
+ *  This template needs to know the number of dimensions of the hyperplane to which the Vectors belongs to.
  */
-class Vector2D : public Vector<2> {
+template<unsigned s>
+class Vector : public _VECTOR<s> {
   public:
-    double &x = data[0];  //!< An alias to access the first dimension as v.x.
-    double &y = data[1];  //!< An alias to access the first dimension as v.y.
+    /** \brief Void constructor, the Vector's values are unknown.
+     */
+    Vector() : _VECTOR<s>() {}
+
+    /** \brief A list initializer constructor.
+     *
+     *  You can create a Vector of N dimension with a list of N values:
+     *
+     *        Vector<N> p(v1, v2, ... , vN)
+     *
+     *  or
+     *
+     *        Vector<N> p = {v1, v2, ... , vN}
+     *
+     */
+    Vector(std::initializer_list<double> l) : _VECTOR<s>(l) {}
+};
+
+/** \brief A class that represent 2D Vectors.
+ *
+ *  Vector2D is an alias of Vector<2>.
+ *
+ *  This specialization let you access with the alias .x or .y to the first and second dimension of the 2D Vectors.
+ */
+template<>
+class Vector<2> : public _VECTOR<2> {
+  public:
+    double &x;  //!< An alias to access the first dimension as v.x.
+    double &y;  //!< An alias to access the first dimension as v.y.
 
     /** \brief Void constructor, the Vector2D's values are unknown.
      */
-    Vector2D() : Vector<2>() {}
+    Vector() : _VECTOR<2>(), x(data[0]), y(data[1]) {}
 
-    /** \brief A copy constructor with Vector<2>.
+    /** \brief A copy constructor.
      */
-    Vector2D(const Vector<2>& v) : Vector<2>(v) {}
+    Vector(const Vector<2>& v) : _VECTOR<2>(v), x(data[0]), y(data[1]) {}
+
+    /** \brief A copy constructor with _VECTOR<2>.
+     */
+    Vector(const _VECTOR<2>& v) : _VECTOR<2>(v), x(data[0]), y(data[1]) {}
 
     /** \brief A list initializer constructor.
      *
@@ -257,11 +337,15 @@ class Vector2D : public Vector<2> {
      *        Vector2D v = {v1, v2}
      *
      */
-    Vector2D(std::initializer_list<double> l) : Vector(l) {}
+    Vector(std::initializer_list<double> l) : _VECTOR<2>(l), x(data[0]), y(data[1]) {}
 
-    /** \brief This class let you compare Vector<2> with Vector2D classes.
+    /** \brief Assign operator.
      */
-    Vector2D& operator=(Vector<2> rhs) {Vector<2>::operator=(rhs); return (*this);}
+    Vector& operator=(Vector<2> rhs) {_VECTOR<2>::operator=(rhs); return (*this);}
+
+    /** \brief This class let you assign _VECTOR<2> classes to Vector<2>.
+     */
+    Vector& operator=(_VECTOR<2> rhs) {_VECTOR<2>::operator=(rhs); return (*this);}
 
     /** \brief Set values of the vector as Cartesian coordinates (default).
      */
@@ -290,19 +374,32 @@ class Vector2D : public Vector<2> {
     //friend Vector2D getNormalB(Vector2D v)const;  // TODO espero a necesitarlo
 };
 
-class Vector3D : public Vector<3> {
+using Vector2D = Vector<2>;  //!< An alias to Vector<2>.
+
+/** \brief A class that represent 3D Vectors.
+ *
+ *  Vector3D is an alias of Vector<3>.
+ *
+ *  This specialization let you access with the alias .x, .y or .z to the first, second or third dimension of the 3D Vector.
+ */
+template<>
+class Vector<3> : public _VECTOR<3> {
   public:
-    double &x = data[0];  //!< An alias to access the first dimension as v.x.
-    double &y = data[1];  //!< An alias to access the first dimension as v.y.
-    double &z = data[2];  //!< An alias to access the first dimension as v.z.
+    double &x;  //!< An alias to access the first dimension as v.x.
+    double &y;  //!< An alias to access the first dimension as v.y.
+    double &z;  //!< An alias to access the first dimension as v.z.
 
     /** \brief Void constructor, the Vector3D's values are unknown.
      */
-    Vector3D() : Vector() {}
+    Vector() : _VECTOR<3>(), x(data[0]), y(data[1]), z(data[2]) {}
 
-    /** \brief A copy constructor with Vector<3>.
+    /** \brief A copy constructor.
      */
-    Vector3D(const Vector<3>& v) : Vector<3>(v) {}
+    Vector(const Vector<3>& v) : _VECTOR<3>(v), x(data[0]), y(data[1]), z(data[2]) {}
+
+    /** \brief A copy constructor with _VECTOR<3>.
+     */
+    Vector(const _VECTOR<3>& v) : _VECTOR<3>(v), x(data[0]), y(data[1]), z(data[2]) {}
 
     /** \brief A list initializer constructor.
      *
@@ -315,70 +412,20 @@ class Vector3D : public Vector<3> {
      *        Vector3D v = {v1, v2, v3}
      *
      */
-    Vector3D(std::initializer_list<double> l) : Vector(l) {}
+    Vector(std::initializer_list<double> l) : _VECTOR<3>(l), x(data[0]), y(data[1]), z(data[2]) {}
 
-    /** \brief This class let you compare Vector<3> with Vector3D classes.
+    /** \brief Assign operator.
      */
-    Vector3D& operator=(Vector<3> rhs) {Vector<3>::operator=(rhs); return (*this);}
+    Vector& operator=(Vector<3> rhs) {_VECTOR<3>::operator=(rhs); return (*this);}
+
+    /** \brief This class let you assign _VECTOR<3> classes to Vector<3>.
+     */
+    Vector& operator=(_VECTOR<3> rhs) {_VECTOR<3>::operator=(rhs); return (*this);}
 
     //vectorial multiplication
 };
 
-template <unsigned s>
-Vector<s>& Vector<s>::operator+=(Vector<s> rhs) {
-  for(unsigned i = 0; i < s; i++) {
-    data[i] += rhs.data[i];
-  }
-
-  return (*this);
-}
-
-template <unsigned s>
-Vector<s>& Vector<s>::operator-=(Vector<s> rhs) {
-  for(unsigned i = 0; i < s; i++) {
-    data[i] -= rhs.data[i];
-  }
-
-  return (*this);
-}
-
-template <unsigned s>
-Vector<s>& Vector<s>::operator-() {
-  for(unsigned i = 0; i < s; i++) {
-    data[i] = -data[i];
-  }
-
-  return (*this);
-}
-
-template <unsigned s>
-Vector<s>& Vector<s>::operator*=(double rhs) {
-  for(unsigned i = 0; i < s; i++) {
-    data[i] *= rhs;
-  }
-
-  return (*this);
-}
-
-template <unsigned s>
-double Vector<s>::getModule() {
-  double r = 0;
-  for(unsigned i = 0; i < s; i++) {
-    r += data[i] * data[i];
-  }
-
-  return (std::sqrt(r));
-}
-
-template <unsigned s>
-double Vector<s>::getSqrModule() {
-  double r2 = 0;
-    for(unsigned i = 0; i < s; i++) {
-    r2 += data[i] * data[i];
-  }
-
-  return (r2);
-}
+using Vector3D = Vector<3>; //!< An alias to Vector<3>.
 
 //Vector2D Vector2D::getNormalA()const {
 //  Vector2D aux;
@@ -460,6 +507,110 @@ double Vector<s>::getSqrModule() {
 //
 //  return (v);
 //}
+
+
+///******************************************/
+//
+//
+///** \brief An aliases of a Vector<2>.
+// *
+// *  Used to implement some functionality of a 2 dimensional Vector.
+// */
+//class Vector2D : public Vector<2> {
+//  public:
+//    double &x = data[0];  //!< An alias to access the first dimension as v.x.
+//    double &y = data[1];  //!< An alias to access the first dimension as v.y.
+//
+//    /** \brief Void constructor, the Vector2D's values are unknown.
+//     */
+//    Vector2D() : Vector<2>() {}
+//
+//    /** \brief A copy constructor with Vector<2>.
+//     */
+//    Vector2D(const Vector<2>& v) : Vector<2>(v) {}
+//
+//    /** \brief A list initializer constructor.
+//     *
+//     *  You can create a Vector2D with a list of 2 values:
+//     *
+//     *        Vector2D v(v1, v2)
+//     *
+//     *  or
+//     *
+//     *        Vector2D v = {v1, v2}
+//     *
+//     */
+//    Vector2D(std::initializer_list<double> l) : Vector(l) {}
+//
+//    /** \brief This class let you compare Vector<2> with Vector2D classes.
+//     */
+//    Vector2D& operator=(Vector<2> rhs) {Vector<2>::operator=(rhs); return (*this);}
+//
+//    /** \brief Set values of the vector as Cartesian coordinates (default).
+//     */
+//    void setCartesian(double x, double y) {data[0] = x; data[1] = y;}
+//
+//    /** \brief Set values of the vector as Polar coordinates in radians (transformed to Cartesian).
+//     */
+//    void setPolars(double r, double rads) {data[0] = r*cos(rads); data[1] = r*sin(rads);}
+//
+//    /** \brief Set values of the vector as Polar coordinates in degrees (transformed to Cartesian).
+//     */
+//    void setPolarsDegrees(double r, double degree) {data[0] = r*cos(degree*TORADIANS); data[1] = r*sin(degree*TORADIANS);}
+//
+//    /** \brief Get values of the Polar angles in radians (transformed from Cartesian).
+//     */
+//    double getRads()    {return (atan2(data[0],data[1]));}
+//
+//    /** \brief Get values of the Polar angles in degrees (transformed from Cartesian).
+//     */
+//    double getDegrees() {return (atan2(data[0],data[1])*TODEGREE);}
+//
+//    // reflect es comun a todos los vectores pero en 2D se puede hacer más eficiente usando polares
+//    //Vector2D& reflect(const Vector2D& rhs);  // TODO espero a necesitarlo
+//    //friend Vector2D reflect(Vector2D lhs, const Vector2D &rhs);  // TODO espero a necesitarlo
+//    //friend Vector2D getNormalA(Vector2D v)const;  // TODO espero a necesitarlo
+//    //friend Vector2D getNormalB(Vector2D v)const;  // TODO espero a necesitarlo
+//};
+//
+//class Vector3D : public Vector<3> {
+//  public:
+//    double &x = data[0];  //!< An alias to access the first dimension as v.x.
+//    double &y = data[1];  //!< An alias to access the first dimension as v.y.
+//    double &z = data[2];  //!< An alias to access the first dimension as v.z.
+//
+//    /** \brief Void constructor, the Vector3D's values are unknown.
+//     */
+//    Vector3D() : Vector() {}
+//
+//    /** \brief A copy constructor with Vector<3>.
+//     */
+//    Vector3D(const Vector<3>& v) : Vector<3>(v) {}
+//
+//    /** \brief A list initializer constructor.
+//     *
+//     *  You can create a Vector3D with a list of 3 values:
+//     *
+//     *        Vector3D v(v1, v2, v3)
+//     *
+//     *  or
+//     *
+//     *        Vector3D v = {v1, v2, v3}
+//     *
+//     */
+//    Vector3D(std::initializer_list<double> l) : Vector(l) {}
+//
+//    /** \brief This class let you compare Vector<3> with Vector3D classes.
+//     */
+//    Vector3D& operator=(Vector<3> rhs) {Vector<3>::operator=(rhs); return (*this);}
+//
+//    //vectorial multiplication
+//};
+//
+///****************************************/
+
+
+
 
 }  // namespace zbe
 
