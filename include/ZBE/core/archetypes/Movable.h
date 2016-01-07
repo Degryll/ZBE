@@ -15,22 +15,15 @@
 
 namespace zbe {
 
+/** \brief Define a class that can be moved around the world.
+ */
 template<unsigned s>
 class Movable : public Positionable<s> {
   public:
-    Movable() : Positionable<s>(), velocity() {}
-    //TODO: constructor por coordenadas. Movable(int x, int y, int vx, int vy) : Positionable(x,y), vx(vx), vy(vy) {}
-    Movable(Point<s> position, Vector<s> velocity) : Positionable<s>(position), velocity(velocity) {}
+    virtual ~Movable() = 0;
 
-    ~Movable() {}
-
-    inline void setVelocity(Vector<s> velocity) {this->velocity = velocity;}
-    inline Vector<s> getVelocity() const {return (velocity);}
-
-    inline void travel(double time) {Positionable<s>::increase(velocity*time);}
-
-  private:
-    Vector<s> velocity;
+    void setVelocity(Vector<s> velocity);
+    Vector<s> getVelocity() const;
 };
 
 }  // namespace zbe

@@ -12,6 +12,12 @@
 
 namespace zbe {
 
+/*
+
+template<unsigned s>
+void UniformLinearMotion::behave(Movable<s> * entity){
+}
+
 template <unsigned s>
 void UniformLinearMotion<s>::behaveUntil(double time) {
   for(auto it = first; it != last; ++it) {
@@ -23,4 +29,4 @@ void UniformLinearMotion<s>::behaveUntil(double time) {
   }
 }
 
-}  // namespace zbe
+*/}  // namespace zbe

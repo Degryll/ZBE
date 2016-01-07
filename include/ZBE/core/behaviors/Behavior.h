@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file Behavior.h
  * @since 2014-09-12
- * @date 2015-05-04
+ * @date 2015-12-18
  * @author Ludo and Degryll
  * @brief Define the minimal functions of every behavior.
  */
@@ -12,11 +12,12 @@
 
 namespace zbe {
 
+template<typename T>
 class Behavior {
   public:
     virtual ~Behavior() {}
 
-    virtual void behaveUntil(double time) = 0;
+    virtual void behave(T * entity) = 0;
 };
 
 }  // namespace zbe

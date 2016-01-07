@@ -17,6 +17,11 @@
 #include "ZBE/core/archetypes/Movable.h"
 
 namespace zbe {
+template <unsigned s>
+class UniformLinearMotion : private Behavior<Movable<s> > {
+  virtual void behave(Movable<s> * entity);
+};
+  /*
 
 //typedef IteratorTypeErasure::any_iterator<
 //    //degrill cuidadin cuidadin!! 2 en el movable.
@@ -46,6 +51,6 @@ class UniformLinearMotion : private Behavior {
     MovableIterator<s> last;
 };
 
-}  // namespace zbe
+*/}  // namespace zbe
 
 #endif  // CORE_BEHAVIORS_UNIFORMLINEARMOTION_H_

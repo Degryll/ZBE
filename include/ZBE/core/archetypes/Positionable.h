@@ -18,18 +18,10 @@ namespace zbe {
 template <unsigned s>
 class Positionable {
   public:
-    Positionable() : position() {}
-    Positionable(Point<s> position) : position(position) {}
-
     virtual ~Positionable() {}
 
-    inline Point<s> getPosition() const {return (position);}
-    inline void setPosition(Point<s> position) {this->position = position;}
-
-    inline void increase(Vector<s> offset) {this->position += offset;}
-
-  private:
-    Point<s> position;
+    Point<s> getPosition() const;
+    void setPosition(Point<s> position);
 };
 
 }  // namespace zbe
