@@ -3,9 +3,8 @@ builds/codeblocks/ZBETest/obj/
 builds/codeblocks/ZBE_main/obj/
 ./bin
 ./lib
-bin/Release/libZBE_x64.dll
-bin/Release/ZBETest.exe
-bin/Release/ZBE_main.exe
+bin/Release/
+bin/Debug/
 lib/libZBE_x64.a
 lib/libZBE_x64d.so
 *.layout

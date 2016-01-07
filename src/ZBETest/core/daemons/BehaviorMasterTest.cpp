@@ -1,47 +1,49 @@
 #include "gtest/gtest.h"
 
 #include "ZBE/core/tools/math/Vector.h"
+#include "ZBE/core/tools/math/Point.h"
 
 #include "ZBE/core/archetypes/Movable.h"
 
 #include "ZBE/core/daemons/Daemon.h"
 #include "ZBE/core/daemons/BehaviorMaster.h"
 
+#include "ZBE/core/behaviors/Behavior.h"
 #include "ZBE/core/behaviors/PerFrameLinearMotion.h"
 
-class DummyMovable : public zbe::Movable<2> {
+using namespace zbe;
+
+class DummyMovable : public Movable<2> {
 public:
-  DummyMovable():vel(),pos(){
-      vel.setCartesian(1,1);
-      pos.setCartesian(1,1);
+  DummyMovable():vel({1.0,1.0}),pos({1.0,1.0}){
   }
 
-  void setVelocity(zbe::Vector<2> velocity) {
+  void setVelocity(Vector<2> velocity) {
     //I said dummy
   }
 
-  zbe::Vector<2> getVelocity() const {
+  Vector<2> getVelocity() const {
       return vel;
   }
 
-  Point<s> getPosition() const {
+  Point<2> getPosition() const {
     return pos;
   }
 
-  void setPosition(Point<s> position) {
+  void setPosition(Point<2> position) {
     pos = position;
   }
 private:
-  zbe::Vector2D vel;
-  zbe::Point<2> pos;
+  Vector2D vel;
+  Point2D pos;
 };
 
 TEST(BehaviorMaster, DaemonMaster) {
-  Behavior<Movable<2> > * behav = new PerFrameLinearMotion();
+  /*Behavior<Movable<2> > * behav = new PerFrameLinearMotion<2>();
   std::vector<Movable<2> > * entities = new std::vector<Movable<2> >();
-  entities->
-  BehaviorMaster<Movable<2> > master(Behavior<T> * behavior, std::vector<T> * entities);
-  master.run();
+  //entities->
+  Daemon * master = new BehaviorMaster<Movable<2> >(behav, entities);
+  master->run();
   ASSERT_TRUE(true);
-  ASSERT_TRUE(true) << "All daemons called";
+  ASSERT_TRUE(true) << "All daemons called";*/
 }
