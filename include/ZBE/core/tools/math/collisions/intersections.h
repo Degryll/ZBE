@@ -58,6 +58,7 @@ bool intersectionRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, double &time, Po
   if (t < 0) t = 0;
   if (t > time) return (false);
   time = t;
+
   point = ray.o + ray.d * time;
 
   return (true);
