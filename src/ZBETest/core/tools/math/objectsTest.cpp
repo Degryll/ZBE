@@ -541,10 +541,10 @@ TEST(AABB, DataAccessAssignation) {
   EXPECT_EQ(13.0,p2.maximum.x) << "[AABB2D] Access maximum with alias \".x\".";
   EXPECT_EQ(11.0,p2.maximum.y) << "[AABB2D] Access maximum with alias \".y\".";
 
-  p2.minimun[0] = 6.0;
-  p2.minimun[1] = 7.0;
-  p2.maximun[0] = 1.0;
-  p2.maximun[1] = 3.0;
+  p2.minimum[0] = 6.0;
+  p2.minimum[1] = 7.0;
+  p2.maximum[0] = 1.0;
+  p2.maximum[1] = 3.0;
 
   EXPECT_EQ(6.0,p2.minimum[0]) << "[AABB2D] Modify minimum data through operator[].";
   EXPECT_EQ(7.0,p2.minimum[1]) << "[AABB2D] Modify minimum data through operator[](2).";
@@ -581,12 +581,12 @@ TEST(AABB, DataAccessAssignation) {
   EXPECT_EQ(11.0,p3.maximum.y) << "[AABB3D] Access with alias \".y\"(2).";
   EXPECT_EQ( 7.0,p3.maximum.z) << "[AABB3D] Access with alias \".z\"(2).";
 
-  p3.minimun[0] = 6.0;
-  p3.minimun[1] = 7.0;
-  p3.minimun[2] = 8.0;
-  p3.maximun[0] = 1.0;
-  p3.maximun[1] = 3.0;
-  p3.maximun[2] = 2.0;
+  p3.minimum[0] = 6.0;
+  p3.minimum[1] = 7.0;
+  p3.minimum[2] = 8.0;
+  p3.maximum[0] = 1.0;
+  p3.maximum[1] = 3.0;
+  p3.maximum[2] = 2.0;
 
   EXPECT_EQ(6.0,p3.minimum[0]) << "[AABB3D] Modify data through operator[].";
   EXPECT_EQ(7.0,p3.minimum[1]) << "[AABB3D] Modify data through operator[](2).";

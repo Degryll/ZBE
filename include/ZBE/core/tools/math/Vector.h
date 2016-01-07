@@ -2,7 +2,7 @@
  * Copyright 2011 Batis Degryll Ludo
  * @file Vector.h
  * @since 2010/07/22
- * @date 2016/01/06
+ * @date 2016/01/07
  * @author Ludo and Degryll
  * @brief Math Vector definition
  */
@@ -38,7 +38,7 @@ class _VECTOR {
      *
      *  You can create a Vector of N dimension with a list of N values:
      *
-     *        Vector<N> p(v1, v2, ... , vN)
+     *        Vector<N> p({v1, v2, ... , vN})
      *
      *  or
      *
@@ -292,7 +292,7 @@ class Vector : public _VECTOR<s> {
      *
      *  You can create a Vector of N dimension with a list of N values:
      *
-     *        Vector<N> p(v1, v2, ... , vN)
+     *        Vector<N> p({v1, v2, ... , vN})
      *
      *  or
      *
@@ -330,7 +330,7 @@ class Vector<2> : public _VECTOR<2> {
      *
      *  You can create a Vector2D with a list of 2 values:
      *
-     *        Vector2D v(v1, v2)
+     *        Vector2D v({v1, v2})
      *
      *  or
      *
@@ -405,7 +405,7 @@ class Vector<3> : public _VECTOR<3> {
      *
      *  You can create a Vector3D with a list of 3 values:
      *
-     *        Vector3D v(v1, v2, v3)
+     *        Vector3D v({v1, v2, v3})
      *
      *  or
      *

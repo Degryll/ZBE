@@ -98,10 +98,10 @@ TEST(Intersections, RayAABB) {
   EXPECT_DOUBLE_EQ(9.0,p[1]) << "Point of collision (y).";
 
   t = 1.0;
-  aabb.minimun[0] = 5.1;
-  aabb.minimun[1] = 8.0;
-  aabb.maximun[0] = 10.0;
-  aabb.maximun[1] = 9.0;
+  aabb.minimum[0] = 5.1;
+  aabb.minimum[1] = 8.0;
+  aabb.maximum[0] = 10.0;
+  aabb.maximum[1] = 9.0;
 
   result = intersectionRayAABB(ray, aabb, t, p);
   EXPECT_EQ(0,result) << "Second Ray vs AABB collision.";

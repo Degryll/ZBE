@@ -2,7 +2,7 @@
  * Copyright 2011 Batis Degryll Ludo
  * @file Point.h
  * @since 2015/05/16
- * @date 2016/01/06
+ * @date 2016/01/07
  * @author Degryll
  * @brief Math Point definitions
  */
@@ -187,7 +187,7 @@ class Point : public _POINT<s> {
      *
      *  You can create a Point of N dimension with a list of N values:
      *
-     *        Point<N> p(v1, v2, ... , vN)
+     *        Point<N> p({v1, v2, ... , vN})
      *
      *  or
      *
@@ -225,7 +225,7 @@ class Point<2> : public _POINT<2> {
      *
      *  You can create a Point2D with a list of 2 values:
      *
-     *        Point2D p(v1, v2)
+     *        Point2D p({v1, v2})
      *
      *  or
      *
@@ -274,7 +274,7 @@ class Point<3> : public _POINT<3> {
      *
      *  You can create a Point3D with a list of 3 values:
      *
-     *        Point2D p(v1, v2, v3)
+     *        Point2D p({v1, v2, v3})
      *
      *  or
      *

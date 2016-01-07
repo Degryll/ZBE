@@ -90,8 +90,8 @@ bool intersectionNormalRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, double &ti
 template <unsigned dim>
 bool RayAABB(Ray<dim> ray, AABB<dim> box, double tmin, double tmax, double &time, Point<dim>& point) {
   for(unsigned i = 0; i < dim; i++) {
-    double bmin = box.minimun[i];
-    double bmax = box.maximun[i];
+    double bmin = box.minimum[i];
+    double bmax = box.maximum[i];
     double o    = ray.o[i];
     double d    = ray.d[i];
     double n1 = bmin - o;
@@ -136,16 +136,16 @@ bool intersectionSegmentAABB(Ray<dim> ray, AABB<dim> box, double &time, Point<di
 bool IntersectionMovingCircleAABB2D(Circle circle, Vector2D d, AABB2D box, double& time, Point2D& point) {
   double r = circle.r;
   AABB2D e = box;
-  e.minimun[0] -= r; e.minimun[1] -= r;
-  e.maximun[0] += r; e.maximun[1] += r;
+  e.minimum[0] -= r; e.minimum[1] -= r;
+  e.maximum[0] += r; e.maximum[1] += r;
 
   Ray2D ray(circle.c,d);
   if (!intersectionRayAABB2D(ray, e, time, point) || time > 1.0f) {return (false);}
 
-  double bmin0 = box.minimun[0];
-  double bmax0 = box.maximun[0];
-  double bmin1 = box.minimun[1];
-  double bmax1 = box.maximun[1];
+  double bmin0 = box.minimum[0];
+  double bmax0 = box.maximum[0];
+  double bmin1 = box.minimum[1];
+  double bmax1 = box.maximum[1];
   Point2D c;
   int m=0;
   if (point.x < bmin0) {m++; c.x = bmin0; point[0] += r;}
