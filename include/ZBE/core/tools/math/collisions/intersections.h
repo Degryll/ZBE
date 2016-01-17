@@ -38,8 +38,21 @@ bool intersectionSegmentAABB(Ray<dim> ray, AABB<dim> box, double &time, Point<di
 inline bool intersectionSegmentAABB2D(Ray2D ray, AABB2D box, double &time, Point2D& point) {return (intersectionSegmentAABB<2>(ray,box,time,point));}
 inline bool intersectionSegmentAABB3D(Ray3D ray, AABB3D box, double &time, Point3D& point) {return (intersectionSegmentAABB<3>(ray,box,time,point));}
 
-bool IntersectionMovingCircleAABB2D(Circle circle, Vector2D d, AABB2D box, double& time, Point2D& point);
+bool IntersectionMovingCircleAABB2D(Circle circle, Vector2D direction, AABB2D box, double& time, Point2D& point);
 
+/** \brief A template function that compute the time and point of collision (if any) of an N-dimensional ray and a NSphere.
+ *
+ *  Compute if there is a collision between a ray and a nspehere before the initial value of time.
+ *  Time is updated with the time of an early collision.
+ *  Point store the point of collision, if any.
+ *
+ * \param ray A ray defined by its origin and a direction.
+ * \param nsphere The nsphere (a circle in 2D or a sphere in 3D) to test against the ray.
+ * \param time Initialy it has a limit time, if the collision happend before that time, its value is updated.
+ * \param point Stores the point of collision, if any.
+ * \return True if there is a collision between the ray and the nsphere before the initial value of time, false otherwise.
+ * \sa intersectionNormalRayNSphere.
+ */
 template <unsigned dim>
 bool intersectionRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, double &time, Point<dim>& point) {
   Vector<dim> f = ray.o - nsphere.c;
@@ -64,6 +77,21 @@ bool intersectionRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, double &time, Po
   return (true);
 }
 
+/** \brief A template function that compute the time and point of collision (if any) of an N-dimensional ray with its director vector normalized and a NSphere.
+ *
+ *  This version requires that the director vector of the ray is normalized.
+ *
+ *  Compute if there is a collision between a ray and a nspehere before the initial value of time.
+ *  Time is updated with the time of an early collision.
+ *  Point store the point of collision, if any.
+ *
+ * \param ray A ray defined by its origin and a direction.
+ * \param nsphere The nsphere (a circle in 2D or a sphere in 3D) to test against the ray.
+ * \param time Initialy it has a limit time, if the collision happens before that time, its value is updated.
+ * \param point Stores the point of collision, if any.
+ * \return True if there is a collision between the ray and the nsphere before the initial value of time, false otherwise.
+ * \sa intersectionRayNSphere.
+ */
 template <unsigned dim>
 bool intersectionNormalRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, double &time, Point<dim>& point) {
   Vector<dim> f = ray.o - nsphere.c;
@@ -87,6 +115,21 @@ bool intersectionNormalRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, double &ti
   return (true);
 }
 
+/** \brief Computes the collision of a N-dimensional Ray and AABB.
+ *
+ *  Don't use this function directly, use:
+ *    intersectionRayAABB: to test an infinite ray with an AABB
+ *    intersectionSegmentAABB: to test a finite segment with an ABB
+ *
+ * \param ray A ray defined by its origin and a direction.
+ * \param nsphere An AABB defined by its minimum and maximum corners.
+ * \param tmin If the collision happens before this time, is discarded.
+ * \param tmax If the collision happens after this time, is discarded.
+ * \param time Initialy it has a limit time, if the collision happens before that time, its value is updated.
+ * \param point Stores the point of collision, if any.
+ * \return True if there is a collision before the initial value of time, false otherwise.
+ * \sa intersectionRayAABB and intersectionSegmentAABB.
+ */
 template <unsigned dim>
 bool RayAABB(Ray<dim> ray, AABB<dim> box, double tmin, double tmax, double &time, Point<dim>& point) {
   for(unsigned i = 0; i < dim; i++) {
@@ -117,6 +160,19 @@ bool RayAABB(Ray<dim> ray, AABB<dim> box, double tmin, double tmax, double &time
   return (true);
 }
 
+/** \brief Computes the collision of a N-dimensional Ray and AABB.
+ *
+ *  This function considerate the ray an infinite ray.
+ *
+ * \param ray A ray defined by its origin and a direction.
+ * \param nsphere An AABB defined by its minimum and maximum corners.
+ * \param tmin If the collision happens before this time, is discarded.
+ * \param tmax If the collision happens after this time, is discarded.
+ * \param time Initialy it has a limit time, if the collision happens before that time, its value is updated.
+ * \param point Stores the point of collision, if any.
+ * \return True if there is a collision before the initial value of time, false otherwise.
+ * \sa intersectionSegmentAABB.
+ */
 template <unsigned dim>
 bool intersectionRayAABB(Ray<dim> ray, AABB<dim> box, double &time, Point<dim>& point) {
   double tmin = 0.0;
@@ -125,6 +181,19 @@ bool intersectionRayAABB(Ray<dim> ray, AABB<dim> box, double &time, Point<dim>& 
   return (RayAABB<dim>(ray, box, tmin, tmax, time, point));
 }
 
+/** \brief Computes the collision of a N-dimensional Ray and AABB.
+ *
+ *  This function considerate the ray a infinite segment.
+ *
+ * \param ray A ray defined by its origin and a direction.
+ * \param nsphere An AABB defined by its minimum and maximum corners.
+ * \param tmin If the collision happens before this time, is discarded.
+ * \param tmax If the collision happens after this time, is discarded.
+ * \param time Initialy it has a limit time, if the collision happens before that time, its value is updated.
+ * \param point Stores the point of collision, if any.
+ * \return True if there is a collision before the initial value of time, false otherwise.
+ * \sa intersectionRayAABB.
+ */
 template <unsigned dim>
 bool intersectionSegmentAABB(Ray<dim> ray, AABB<dim> box, double &time, Point<dim>& point) {
   double tmin = 0.0;
@@ -133,13 +202,22 @@ bool intersectionSegmentAABB(Ray<dim> ray, AABB<dim> box, double &time, Point<di
   return (RayAABB<dim>(ray, box, tmin, tmax, time, point));
 }
 
-bool IntersectionMovingCircleAABB2D(Circle circle, Vector2D d, AABB2D box, double& time, Point2D& point) {
+/** \brief Computes the collision of a moving circle with an AABB.
+ *
+ * \param Circle The moving circle.
+ * \param direction The velocity of the moving sphere.
+ * \param box The static AABB.
+ * \param time Initialy it has a limit time, if the collision happens before that time, its value is updated.
+ * \param point Stores the point of collision, if any.
+ * \return True if there is a collision before the initial value of time, false otherwise.
+ */
+bool IntersectionMovingCircleAABB2D(Circle circle, Vector2D direction, AABB2D box, double& time, Point2D& point) {
   double r = circle.r;
   AABB2D e = box;
   e.minimum[0] -= r; e.minimum[1] -= r;
   e.maximum[0] += r; e.maximum[1] += r;
 
-  Ray2D ray(circle.c,d);
+  Ray2D ray(circle.c,direction);
   if (!intersectionRayAABB2D(ray, e, time, point) || time > 1.0f) {return (false);}
 
   double bmin0 = box.minimum[0];
@@ -153,7 +231,7 @@ bool IntersectionMovingCircleAABB2D(Circle circle, Vector2D d, AABB2D box, doubl
   if (point.y < bmin1) {m++; c.y = bmin1; point[1] += r;}
   if (point.y > bmax1) {m++; c.y = bmax1; point[1] -= r;}
 
-  // The collision happends at the corner of the expansion box
+  // The collision happens at the corner of the expansion box
   // Check if there is an intersection with the vertex.
   if (m == 2) {
     return (intersectionRayCircle(ray, Circle(c,r), time, point));

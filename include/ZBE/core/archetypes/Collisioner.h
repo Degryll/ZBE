@@ -23,7 +23,7 @@ class Collisioner {
 
     virtual ~Collisioner() {}
 
-    virtual void react(Collisioner *c, const Vector2D& normal,const Vector2D& point, double time) = 0;
+    virtual void react(Collisioner *c, const Vector2D& normal,const Point2D& point, double time) = 0;
 
     virtual CollysionType getType() = 0;
     virtual unsigned collisionLevel() = 0;

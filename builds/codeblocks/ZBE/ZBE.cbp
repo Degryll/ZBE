@@ -161,6 +161,7 @@
 		<Unit filename="../../../include/ZBE/core/archetypes/Runnable.h" />
 		<Unit filename="../../../include/ZBE/core/archetypes/SimpleSprite.h" />
 		<Unit filename="../../../include/ZBE/core/archetypes/SphereCollisionable.h" />
+		<Unit filename="../../../include/ZBE/core/archetypes/Timer.h" />
 		<Unit filename="../../../include/ZBE/core/behaviors/Behavior.h" />
 		<Unit filename="../../../include/ZBE/core/behaviors/PerFrameLinearMotion.h" />
 		<Unit filename="../../../include/ZBE/core/behaviors/UniformLinearMotion.h" />
@@ -176,7 +177,6 @@
 		<Unit filename="../../../include/ZBE/core/system/GameApp.h" />
 		<Unit filename="../../../include/ZBE/core/system/Logger.h" />
 		<Unit filename="../../../include/ZBE/core/system/SysError.h" />
-		<Unit filename="../../../include/ZBE/core/tools/Timer.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/ArrayList.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/ArrayListIterator.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/Ticket.h" />

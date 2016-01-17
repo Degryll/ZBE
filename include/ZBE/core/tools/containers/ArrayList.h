@@ -20,12 +20,20 @@ namespace zbe {
 template <class Value>
 class ArrayListIter;
 
+/** \brief A node for ArrayList
+ *
+ *  Composed of a value and the index of the next node.
+ */
 template <class Value>
 struct ArrayListNode {
   Value value;
   unsigned next;
 };
 
+/** \brief A node for ArrayList
+ *
+ *  Composed of a value and the index of the next node.
+ */
 template <class Value>
 class ArrayList {
   public:

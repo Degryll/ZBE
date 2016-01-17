@@ -104,7 +104,7 @@ if (ren == nullptr){
 //}
 
 //A sleepy rendering loop, wait for 3 seconds and render and present the screen each time
-for (int i = 0; i < 3; ++i){
+for (int i = 0; i < 10; ++i){
 	//First clear the renderer
 	SDL_RenderClear(ren);
 	SDL_RenderClear(ren2);
