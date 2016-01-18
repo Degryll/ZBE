@@ -20,10 +20,22 @@ namespace zbe {
 template<unsigned s>
 class Movable : public Positionable<s> {
   public:
-    virtual ~Movable() = 0;
+    virtual ~Movable() {};
 
-    void setVelocity(Vector<s> velocity);
-    Vector<s> getVelocity() const;
+    /** \brief Set the velocity with which the entity moves
+     *
+     * \param velocity Vector<s> Given velocity
+     * \return virtual void
+     *
+     */
+    virtual void setVelocity(Vector<s> velocity) = 0;
+
+    /** \brief Get the velocity with which the entity moves
+     *
+     * \return virtual Vector<s> The velocity.
+     *
+     */
+    virtual Vector<s> getVelocity() const = 0;
 };
 
 }  // namespace zbe

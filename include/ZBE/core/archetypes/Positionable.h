@@ -20,8 +20,20 @@ class Positionable {
   public:
     virtual ~Positionable() {}
 
-    Point<s> getPosition() const;
-    void setPosition(Point<s> position);
+    /** \brief Gets the current position of the entity
+     *
+     * \return virtual Point<s> Current position
+     *
+     */
+    virtual Point<s> getPosition() const = 0;
+
+    /** \brief Sets the position of the entity.
+     *
+     * \param position Point<s> Given position
+     * \return virtual void
+     *
+     */
+    virtual void setPosition(Point<s> position) = 0;
 };
 
 }  // namespace zbe

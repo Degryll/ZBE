@@ -27,7 +27,7 @@ namespace zbe {
        * \param daemon Behavior* the daemon desired to be stored and executed.
        *
        */
-      BehaviorMaster(Behavior<T> * behavior, std::vector<T> * entities);
+      BehaviorMaster(Behavior<T> * behavior, std::vector<T*> * entities);
 
       /** \brief Destroys the BehaviorMaster and the contained Behavior
        *
@@ -45,11 +45,11 @@ namespace zbe {
 
     private:
       Behavior<T> * behavior;
-      std::vector<T> * entities;
+      std::vector<T*> * entities;
   };
 
 template<typename T>
-BehaviorMaster<T>::BehaviorMaster(Behavior<T> * behavior, std::vector<T> * entities):behavior(behavior), entities(entities) {
+BehaviorMaster<T>::BehaviorMaster(Behavior<T> * behavior, std::vector<T*> * entities):behavior(behavior), entities(entities) {
 }
 
 template<typename T>
@@ -60,7 +60,7 @@ BehaviorMaster<T>::~BehaviorMaster() {
 template<typename T>
 void BehaviorMaster<T>::run(){
   for(auto it = entities->begin(); it < entities->end(); ++it) {
-    behavior->behave(*it);
+    behavior->behave((*it));
   }
 }
 }
