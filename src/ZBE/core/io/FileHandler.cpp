@@ -53,7 +53,7 @@ bool FileHandler::existDir(const char* dirname) {
 #endif // OS
 }
 
-int FileHandler::rm(const char* filename) {
+bool FileHandler::rm(const char* filename) {
 #ifdef __linux__
   return (remove(filename));
 
