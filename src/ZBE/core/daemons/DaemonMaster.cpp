@@ -9,8 +9,7 @@ namespace zbe {
   DaemonMaster::~DaemonMaster() {
     if(daemonList){
       for(auto it = daemonList->begin(); it < daemonList->end(); ++it) {
-        Daemon *d = (*it);
-        delete d;
+        delete (*it);
       }
       delete daemonList;
     }
@@ -18,8 +17,7 @@ namespace zbe {
 
   void DaemonMaster::run(){
     for(auto it = daemonList->begin(); it < daemonList->end(); ++it) {
-      Daemon *d = (*it);
-      d->run();
+      (*it)->run();
     }
   }
 

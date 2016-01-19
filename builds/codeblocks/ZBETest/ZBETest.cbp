@@ -111,6 +111,7 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="../../../src/ZBETest/core/daemons/BehaviorMasterTest.cpp" />
+		<Unit filename="../../../src/ZBETest/core/daemons/PunishersTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/daemons/daemonsTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/tools/containers/ArrayListTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/tools/math/PointTest.cpp" />

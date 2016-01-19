@@ -14,7 +14,7 @@ class PerFrameLinearMotion : public Behavior<Movable<s> > {
     PerFrameLinearMotion();
     virtual ~PerFrameLinearMotion();
 
-    void behave(Movable<s> * entity);
+    void apply(Movable<s> * entity);
 
   protected:
   private:
@@ -26,7 +26,7 @@ PerFrameLinearMotion<s>::PerFrameLinearMotion() {
 }
 
 template<unsigned s>
-void PerFrameLinearMotion<s>::behave(Movable<s> * entity){
+void PerFrameLinearMotion<s>::apply(Movable<s> * entity){
   Point<s> endPos = entity->getPosition() + entity->getVelocity();
   entity->setPosition(endPos);
 }

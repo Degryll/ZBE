@@ -16,13 +16,12 @@ namespace zbe {
   class Daemon {
     public:
 
-      /** \brief Do de actual Daemon job.
+      /** \brief Do the actual Daemon job.
        *  Must be implemented by all subclasses.
        */
       virtual void run() = 0;
 
       /** \brief Destructor.
-       * Destroys the daemon.
        */
       virtual ~Daemon(){};
   };

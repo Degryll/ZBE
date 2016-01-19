@@ -17,7 +17,7 @@ class Behavior {
   public:
     virtual ~Behavior() {}
 
-    virtual void behave(T * entity) = 0;
+    virtual void apply(T * entity) = 0;
 };
 
 }  // namespace zbe

@@ -14,30 +14,26 @@
 #include "./Daemon.h"
 
 namespace zbe {
-  /** \brief DaemonMaster is a Daemon responsible for run others Daemons. This necessary to build the Daemons tree.
+  /** \brief DaemonMaster is a Daemon responsible for run others Daemons. This is necessary to build the Daemons tree.
    */
   class DaemonMaster : public Daemon {
     public:
 
-      /** \brief Constructor of the DaemonsMaster class.
-       *  No params.
+      /** \brief Empty constructor.
        */
       DaemonMaster();
 
-      /** \brief Destroy the DaemonMaster
+      /** \brief Destructor and the contained Daemons.
        */
       virtual ~DaemonMaster();
 
-      /** \brief It will execute al Daemons added to this DaemonMaster
-       *
-       * \return void
-       *
+      /** \brief It will execute all Daemons added to this DaemonMaster.
        */
       void run();
 
       /** \brief Add a Daemon to be executed by this Daemon.
        *  The given Daemon will be stored by this Daemon and destroyed with it. It will be executed when run method is called.
-       * \param daemon Daemon* the daemon desired to be stored and executed.
+       * \param daemon Pointer to the Daemon desired to be stored and executed.
        * \return void
        *
        */

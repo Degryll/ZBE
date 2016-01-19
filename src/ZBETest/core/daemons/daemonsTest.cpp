@@ -6,8 +6,8 @@
 //Dummy Daemon implementation. Just for test purposes.
 class DaemonTestImp : public zbe::Daemon{
   public:
-    DaemonTestImp(bool & call):called(call){
-    }
+    DaemonTestImp(bool &call) : called(call) {}
+
     virtual ~DaemonTestImp(){
       called = false;
     }
@@ -17,12 +17,13 @@ class DaemonTestImp : public zbe::Daemon{
     }
 
   private:
-    bool & called;
+    bool &called;
 };
 
-TEST(Daemon, Base) {
+TEST(Daemon, DaemonTestImpTest) {
   bool call = false;
-  zbe::Daemon * d = new DaemonTestImp(call);
+  zbe::Daemon *d = new DaemonTestImp(call);
+  ASSERT_FALSE(call) << "Nothing executed";
   d->run();
   ASSERT_TRUE(call) << "Daemon called";
   delete d;
@@ -41,11 +42,11 @@ TEST(Daemon, DaemonMaster) {
   d = new DaemonTestImp(call3);
   master->addDaemon(d);
   master->run();
-  ASSERT_TRUE(call1);
-  ASSERT_TRUE(call2);
-  ASSERT_TRUE(call3) << "All daemons called";
+  ASSERT_TRUE(call1) << "daemon 1 called";
+  ASSERT_TRUE(call2) << "daemon 2 called";
+  ASSERT_TRUE(call3) << "daemon 3 called";
   delete master;
-  ASSERT_FALSE(call1);
-  ASSERT_FALSE(call2);
-  ASSERT_FALSE(call3) << "All daemons deleted";
+  ASSERT_FALSE(call1) << "daemon 1 deleted";
+  ASSERT_FALSE(call2) << "daemon 2 deleted";
+  ASSERT_FALSE(call3) << "daemon 3 deleted";
 }
