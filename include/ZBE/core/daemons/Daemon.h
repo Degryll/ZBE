@@ -17,7 +17,6 @@ namespace zbe {
     public:
 
       /** \brief Do the actual Daemon job.
-       *  Must be implemented by all subclasses.
        */
       virtual void run() = 0;
 

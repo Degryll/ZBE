@@ -171,6 +171,9 @@
 		<Unit filename="../../../include/ZBE/core/daemons/Punishers.h" />
 		<Unit filename="../../../include/ZBE/core/drawers/Drawer.h" />
 		<Unit filename="../../../include/ZBE/core/drawers/SDL/SimpleSpriteSDLDrawer.h" />
+		<Unit filename="../../../include/ZBE/core/events/Event.h" />
+		<Unit filename="../../../include/ZBE/core/events/InputEvent.h" />
+		<Unit filename="../../../include/ZBE/core/events/TimeEvent.h" />
 		<Unit filename="../../../include/ZBE/core/io/FileHandler.h" />
 		<Unit filename="../../../include/ZBE/core/loaders/SDLFontLoader.h" />
 		<Unit filename="../../../include/ZBE/core/starters/SDL_Starter.h" />
