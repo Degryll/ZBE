@@ -1,5 +1,5 @@
-#ifndef TIMEEVENT_H
-#define TIMEEVENT_H
+#ifndef CORE_EVENTS_TIMEEVENT_H
+#define CORE_EVENTS_TIMEEVENT_H
 
 #include "./Event.h"
 
@@ -35,4 +35,4 @@ class TimeEvent : public Event {
 };
 }
 
-#endif // TIMEEVENT_H
+#endif // CORE_EVENTS_TIMEEVENT_H

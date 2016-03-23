@@ -1,5 +1,5 @@
-#ifndef EVENT_H
-#define EVENT_H
+#ifndef CORE_EVENTS_EVENT_H
+#define CORE_EVENTS_EVENT_H
 
 namespace zbe {
 
@@ -43,4 +43,4 @@ class Event {
 };
 
 }
-#endif // EVENT_H
+#endif // CORE_EVENTS_EVENT_H

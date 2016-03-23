@@ -12,7 +12,7 @@
 
 #include "ZBE/core/drawers/Drawer.h"
 #include "ZBE/core/archetypes/SimpleSprite.h"
-#include "ZBE/core/SDL2.0/Window.h"
+#include "ZBE/core/system/SDL/Window.h"
 
 #include "any_iterator.hpp"
 

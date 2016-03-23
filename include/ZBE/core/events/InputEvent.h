@@ -1,5 +1,5 @@
-#ifndef INPUTEVENT_H
-#define INPUTEVENT_H
+#ifndef CORE_EVENTS_INPUTEVENT_H
+#define CORE_EVENTS_INPUTEVENT_H
 
 #include "./Event.h"
 
@@ -50,4 +50,4 @@ class InputEvent : public Event {
 };
 }
 
-#endif // INPUTEVENT_H
+#endif // CORE_EVENTS_INPUTEVENT_H
