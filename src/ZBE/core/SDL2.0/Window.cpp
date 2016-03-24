@@ -85,7 +85,9 @@ unsigned Window::loadImg(const char *url) {
 }
 
 unsigned Window::reloadImg(const char *url, unsigned id) {
-  imgCollection[id] = IMG_LoadTexture(renderer, url);
+  m.lock();
+    imgCollection[id] = IMG_LoadTexture(renderer, url);
+  m.unlock();
 
   return (id);
 }
