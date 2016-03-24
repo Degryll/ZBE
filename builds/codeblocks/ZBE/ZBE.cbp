@@ -150,7 +150,6 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="../../../include/ZBE/core/SDL2.0/Window.h" />
 		<Unit filename="../../../include/ZBE/core/archetypes/AABBCollisionable.h" />
 		<Unit filename="../../../include/ZBE/core/archetypes/AABBSphereCollisionable.h" />
 		<Unit filename="../../../include/ZBE/core/archetypes/Collisionable.h" />
@@ -171,14 +170,22 @@
 		<Unit filename="../../../include/ZBE/core/daemons/Punishers.h" />
 		<Unit filename="../../../include/ZBE/core/drawers/Drawer.h" />
 		<Unit filename="../../../include/ZBE/core/drawers/SDL/SimpleSpriteSDLDrawer.h" />
+<<<<<<< HEAD
 		<Unit filename="../../../include/ZBE/core/entities/CollisionableEntity.h" />
 		<Unit filename="../../../include/ZBE/core/entities/Entity.h" />
+=======
+		<Unit filename="../../../include/ZBE/core/events/Event.h" />
+		<Unit filename="../../../include/ZBE/core/events/InputEvent.h" />
+		<Unit filename="../../../include/ZBE/core/events/TimeEvent.h" />
+>>>>>>> origin/master
 		<Unit filename="../../../include/ZBE/core/io/FileHandler.h" />
+		<Unit filename="../../../include/ZBE/core/io/InputReader.h" />
 		<Unit filename="../../../include/ZBE/core/loaders/SDLFontLoader.h" />
-		<Unit filename="../../../include/ZBE/core/starters/SDL_Starter.h" />
+		<Unit filename="../../../include/ZBE/core/starters/SDL/SDL_Starter.h" />
 		<Unit filename="../../../include/ZBE/core/system/App.h" />
 		<Unit filename="../../../include/ZBE/core/system/GameApp.h" />
 		<Unit filename="../../../include/ZBE/core/system/Logger.h" />
+		<Unit filename="../../../include/ZBE/core/system/SDL/Window.h" />
 		<Unit filename="../../../include/ZBE/core/system/SysError.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/ArrayList.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/ArrayListIterator.h" />
@@ -191,7 +198,6 @@
 		<Unit filename="../../../include/ZBE/core/tools/math/math.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/objects.h" />
 		<Unit filename="../../../include/ZBE/core/tools/text/utf8.h" />
-		<Unit filename="../../../src/ZBE/core/SDL2.0/Window.cpp" />
 		<Unit filename="../../../src/ZBE/core/behaviors/UniformLinearMotion.cpp" />
 		<Unit filename="../../../src/ZBE/core/daemons/DaemonMaster.cpp" />
 		<Unit filename="../../../src/ZBE/core/drawers/SDL/SimpleSpriteSDLDrawer.cpp" />
@@ -199,9 +205,10 @@
 		<Unit filename="../../../src/ZBE/core/entities/Entity.cpp" />
 		<Unit filename="../../../src/ZBE/core/io/FileHandler.cpp" />
 		<Unit filename="../../../src/ZBE/core/loaders/SDLFontLoader.cpp" />
-		<Unit filename="../../../src/ZBE/core/starters/SDL_Starter.cpp" />
+		<Unit filename="../../../src/ZBE/core/starters/SDL/SDL_Starter.cpp" />
 		<Unit filename="../../../src/ZBE/core/system/App.cpp" />
 		<Unit filename="../../../src/ZBE/core/system/Logger.cpp" />
+		<Unit filename="../../../src/ZBE/core/system/SDL/Window.cpp" />
 		<Unit filename="../../../src/ZBE/core/system/SysError.cpp" />
 		<Unit filename="../../../src/ZBE/core/tools/math/collisions/CollisionData.cpp" />
 		<Unit filename="../../../src/ZBE/core/tools/text/utf8.cpp" />

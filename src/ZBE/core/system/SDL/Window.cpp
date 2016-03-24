@@ -8,7 +8,7 @@
  * @brief Create a windows using SDL 2.0.
  */
 
-#include "ZBE/core/SDL2.0/Window.h"
+#include "ZBE/core/system/SDL/Window.h"
 #include "ZBE/core/system/SysError.h"
 
 #include <string>

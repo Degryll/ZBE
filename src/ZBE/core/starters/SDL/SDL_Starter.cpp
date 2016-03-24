@@ -8,7 +8,7 @@
  * @brief Implements SDL_Starter class.
  */
 
-#include "ZBE/core/starters/SDL_Starter.h"
+#include "ZBE/core/starters/SDL/SDL_Starter.h"
 #include "ZBE/core/system/SysError.h"
 
 #include <string>
