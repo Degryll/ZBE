@@ -170,14 +170,13 @@
 		<Unit filename="../../../include/ZBE/core/daemons/Punishers.h" />
 		<Unit filename="../../../include/ZBE/core/drawers/Drawer.h" />
 		<Unit filename="../../../include/ZBE/core/drawers/SDL/SimpleSpriteSDLDrawer.h" />
-<<<<<<< HEAD
 		<Unit filename="../../../include/ZBE/core/entities/CollisionableEntity.h" />
+		<Unit filename="../../../include/ZBE/core/entities/CollisionerEntity.h" />
 		<Unit filename="../../../include/ZBE/core/entities/Entity.h" />
-=======
+		<Unit filename="../../../include/ZBE/core/events/CollisionEvent.h" />
 		<Unit filename="../../../include/ZBE/core/events/Event.h" />
 		<Unit filename="../../../include/ZBE/core/events/InputEvent.h" />
 		<Unit filename="../../../include/ZBE/core/events/TimeEvent.h" />
->>>>>>> origin/master
 		<Unit filename="../../../include/ZBE/core/io/FileHandler.h" />
 		<Unit filename="../../../include/ZBE/core/io/InputReader.h" />
 		<Unit filename="../../../include/ZBE/core/loaders/SDLFontLoader.h" />
