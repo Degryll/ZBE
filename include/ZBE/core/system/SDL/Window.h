@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright 2010 Batis Degryll Ludo
  * @file SDL_Window.h
  *

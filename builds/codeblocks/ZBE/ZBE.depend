@@ -2767,7 +2767,7 @@
 	"ZBE/core/tools/text/utf8.h"
 	"ZBE/core/system/SysError.h"
 
-1458667619 /home/ludo/workspace/ZBE/include/ZBE/core/system/SDL/Window.h
+1459010550 /home/ludo/workspace/ZBE/include/ZBE/core/system/SDL/Window.h
 	<vector>
 	<mutex>
 	<SDL2/SDL.h>
@@ -2785,4 +2785,26 @@
 	"ZBE/core/system/SysError.h"
 	<string>
 	<SDL2/SDL_image.h>
+
+1459013331 source:/home/ludo/workspace/ZBE/src/ZBE/core/io/SDL/SDLInputReader.cpp
+	"ZBE/core/io/SDL/SDLInputReader.h"
+
+1459013314 /home/ludo/workspace/ZBE/include/ZBE/core/io/SDL/SDLInputReader.h
+	"../InputReader.h"
+	<SDL2/SDL.h>
+	<map>
+
+1459006465 /home/ludo/workspace/ZBE/include/ZBE/core/io/InputReader.h
+	<cstdint>
+	<list>
+
+1459011097 source:/home/ludo/workspace/ZBE/src/ZBE/core/system/SDL/SDLEventDispatcher.cpp
+	"ZBE/core/system/SDL/SDLEventDispatcher.h"
+
+1459007953 /home/ludo/workspace/ZBE/include/ZBE/core/system/SDL/SDLEventDispatcher.h
+	<map>
+	<list>
+	<SDL2/SDL.h>
+	"../../io/InputReader.h"
+	"../../io/SDL/SDLInputReader.h"
 

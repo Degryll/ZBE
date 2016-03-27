@@ -1,19 +1,35 @@
+/**
+ * Copyright 2016 Batis Degryll Ludo
+ * @file InputReader.h
+ * @since 2016-04-27
+ * @date 2016-04-27
+ * @author Ludo
+ * @brief Imput reader base.
+ */
+
 #ifndef CORE_IO_INPUTREADER_H
 #define CORE_IO_INPUTREADER_H
+
+#include <cstdint>
+#include <list>
+
 namespace zbe {
 
+/** \brief Abstract class for input readers.
+ */
 class InputReader {
-    public:
-        InputReader() {}
-        virtual ~InputReader() {}
+  public:
+    /** \brief Empty destructor.
+     */
+    virtual ~InputReader() {}
 
-        virtual void update();
+    /** Return a list of key ids that has changed.
+     */
+    virtual std::list<uint32_t>* changes() = 0;
 
-        virtual bool hasChanges();
-
-        virtual float getStatus();
-    protected:
-    private:
+    /** Get the state of an specific key.
+     */
+    virtual float getStatus(uint32_t keyid) = 0;
 };
 
 //Printable characters keys
@@ -256,16 +272,17 @@ const int32_t ZBEK_KBDILLUMUP = 1073742104;
 const int32_t ZBEK_EJECT = 1073742105;
 const int32_t ZBEK_SLEEP = 1073742106;
 
-//Non printable characters keys
+//Mouse state
 const int32_t ZBEK_MOUSE_LEFT = 2048;
 const int32_t ZBEK_MOUSE_RIGHT = 2049;
 const int32_t ZBEK_MOUSE_WHEEL = 2050;
-const int32_t ZBEK_MOUSE_WHEEL_UP = 2051;
-const int32_t ZBEK_MOUSE_WHEEL_DOWN = 2052;
-const int32_t ZBEK_MOUSE_COORDS_X = 2053;
-const int32_t ZBEK_MOUSE_COORDS_Y = 2054;
+const int32_t ZBEK_MOUSE_WHEEL_X = 2051;
+const int32_t ZBEK_MOUSE_WHEEL_Y = 2052;
+const int32_t ZBEK_MOUSE_OFFSET_X = 2053;
+const int32_t ZBEK_MOUSE_OFFSET_Y = 2054;
 const int32_t ZBEK_MOUSE_EB1 = 2055;
 const int32_t ZBEK_MOUSE_EB2 = 2056;
 
-}
+} // namespace zbe
+
 #endif // CORE_IO_INPUTREADER_H

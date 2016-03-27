@@ -1,9 +1,9 @@
-/*
- * Copyright 2011 Batis Degryll Ludo
+/**
+ * Copyright 2016 Batis Degryll Ludo
  * @file SDL_Window.cpp
  *
  * @since 2015/05/30
- * @date 2015/09/01
+ * @date 2016-04-27
  * @author Degryll
  * @brief Create a windows using SDL 2.0.
  */

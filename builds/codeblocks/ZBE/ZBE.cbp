@@ -28,6 +28,8 @@
 					<Add directory="../../../extlibs/IteratorTypeErasure/IteratorTypeErasure/any_iterator" />
 					<Add directory="include/ZBE/core/daemons" />
 					<Add directory="include/ZBE/core/behaviors" />
+					<Add directory="include/ZBE/core/io/SDL" />
+					<Add directory="include/ZBE/core/system/SDL" />
 				</Compiler>
 				<Linker>
 					<Add library="SDL2main" />
@@ -61,6 +63,8 @@
 					<Add directory="../../../extlibs/IteratorTypeErasure/IteratorTypeErasure/any_iterator" />
 					<Add directory="include/ZBE/core/daemons" />
 					<Add directory="include/ZBE/core/behaviors" />
+					<Add directory="include/ZBE/core/io/SDL" />
+					<Add directory="include/ZBE/core/system/SDL" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -97,6 +101,8 @@
 					<Add directory="../../../extlibs/IteratorTypeErasure/IteratorTypeErasure/any_iterator" />
 					<Add directory="include/ZBE/core/daemons" />
 					<Add directory="include/ZBE/core/behaviors" />
+					<Add directory="include/ZBE/core/io/SDL" />
+					<Add directory="include/ZBE/core/system/SDL" />
 				</Compiler>
 				<Linker>
 					<Add library="mingw32" />
@@ -132,6 +138,8 @@
 					<Add directory="../../../extlibs/IteratorTypeErasure/IteratorTypeErasure/any_iterator" />
 					<Add directory="include/ZBE/core/daemons" />
 					<Add directory="include/ZBE/core/behaviors" />
+					<Add directory="include/ZBE/core/io/SDL" />
+					<Add directory="include/ZBE/core/system/SDL" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -175,11 +183,13 @@
 		<Unit filename="../../../include/ZBE/core/events/TimeEvent.h" />
 		<Unit filename="../../../include/ZBE/core/io/FileHandler.h" />
 		<Unit filename="../../../include/ZBE/core/io/InputReader.h" />
+		<Unit filename="../../../include/ZBE/core/io/SDL/SDLInputReader.h" />
 		<Unit filename="../../../include/ZBE/core/loaders/SDLFontLoader.h" />
 		<Unit filename="../../../include/ZBE/core/starters/SDL/SDL_Starter.h" />
 		<Unit filename="../../../include/ZBE/core/system/App.h" />
 		<Unit filename="../../../include/ZBE/core/system/GameApp.h" />
 		<Unit filename="../../../include/ZBE/core/system/Logger.h" />
+		<Unit filename="../../../include/ZBE/core/system/SDL/SDLEventDispatcher.h" />
 		<Unit filename="../../../include/ZBE/core/system/SDL/Window.h" />
 		<Unit filename="../../../include/ZBE/core/system/SysError.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/ArrayList.h" />
@@ -196,10 +206,12 @@
 		<Unit filename="../../../src/ZBE/core/daemons/DaemonMaster.cpp" />
 		<Unit filename="../../../src/ZBE/core/drawers/SDL/SimpleSpriteSDLDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/core/io/FileHandler.cpp" />
+		<Unit filename="../../../src/ZBE/core/io/SDL/SDLInputReader.cpp" />
 		<Unit filename="../../../src/ZBE/core/loaders/SDLFontLoader.cpp" />
 		<Unit filename="../../../src/ZBE/core/starters/SDL/SDL_Starter.cpp" />
 		<Unit filename="../../../src/ZBE/core/system/App.cpp" />
 		<Unit filename="../../../src/ZBE/core/system/Logger.cpp" />
+		<Unit filename="../../../src/ZBE/core/system/SDL/SDLEventDispatcher.cpp" />
 		<Unit filename="../../../src/ZBE/core/system/SDL/Window.cpp" />
 		<Unit filename="../../../src/ZBE/core/system/SysError.cpp" />
 		<Unit filename="../../../src/ZBE/core/tools/math/collisions/CollisionData.cpp" />
