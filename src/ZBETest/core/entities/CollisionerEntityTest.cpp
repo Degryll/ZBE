@@ -11,9 +11,9 @@ TEST(CollisionerEntity, Usage) {
 
   e.setCollisionerType(42);
 
-  EXPECT_EQ((uint64_t) 42,e.getCollisionerType()) << "Get Collisioner.";
+  EXPECT_EQ(42u,e.getCollisionerType()) << "Get Collisioner.";
 
   e.setCollisionerType(314);
 
-  EXPECT_EQ((uint64_t) 314,e.getCollisionerType()) << "Get Collisioner.";
+  EXPECT_EQ(314u,e.getCollisionerType()) << "Get Collisioner.";
 }

@@ -31,7 +31,7 @@ TEST(SDLEventDispatcher, SDLEventDispatcher) {
   zbe::SDLEventDispatcher * sed = new zbe::SDLEventDispatcher();
   sed->run();
   // So 4 outputs are expected
-  EXPECT_EQ(ir->changes()->size(),4)<< "and event must be found";
+  EXPECT_EQ(ir->changes()->size(),4u)<< "and event must be found";
   // Checking values
   EXPECT_EQ(ir->getStatus(zbe::ZBEK_MOUSE_OFFSET_X),100.0);
   EXPECT_EQ(ir->getStatus(zbe::ZBEK_MOUSE_OFFSET_Y),100.0);

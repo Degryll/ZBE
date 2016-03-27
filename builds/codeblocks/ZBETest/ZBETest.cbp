@@ -83,6 +83,8 @@
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/googletest/1.7.0/include" />
 					<Add directory="../../../extlibs/SDL2/2.0.3/x86_64-w64-mingw32/include" />
+					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-w64-mingw32/include" />
+					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-w64-mingw32/include" />
 					<Add directory="../../../extlibs/boost_1_57_0" />
 					<Add directory="include" />
 				</Compiler>
@@ -90,8 +92,14 @@
 					<Add library="mingw32" />
 					<Add library="gtest" />
 					<Add library="ZBE_x64d" />
+					<Add library="SDL2main" />
+					<Add library="SDL2" />
+					<Add library="SDL2_image" />
+					<Add library="SDL2_ttf" />
 					<Add directory="../../../extlibs/googletest/1.7.0/lib/win64" />
 					<Add directory="../../../extlibs/SDL2/2.0.3/x86_64-w64-mingw32/lib" />
+					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-w64-mingw32/lib" />
+					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../lib" />
 				</Linker>
 			</Target>
@@ -109,6 +117,8 @@
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/googletest/1.7.0/include" />
 					<Add directory="../../../extlibs/SDL2/2.0.3/x86_64-w64-mingw32/include" />
+					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-w64-mingw32/include" />
+					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-w64-mingw32/include" />
 					<Add directory="../../../extlibs/boost_1_57_0" />
 					<Add directory="include" />
 				</Compiler>
@@ -116,8 +126,14 @@
 					<Add option="-s" />
 					<Add library="gtest" />
 					<Add library="ZBE_x64" />
+					<Add library="SDL2main" />
+					<Add library="SDL2" />
+					<Add library="SDL2_image" />
+					<Add library="SDL2_ttf" />
 					<Add directory="../../../extlibs/googletest/1.7.0/lib/win64" />
 					<Add directory="../../../extlibs/SDL2/2.0.3/x86_64-w64-mingw32/lib" />
+					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-w64-mingw32/lib" />
+					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../lib" />
 				</Linker>
 			</Target>
