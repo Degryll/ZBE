@@ -30,7 +30,7 @@ class CollisionerEntity : public Entity {
     /** \brief Return the type of collisioner.
      *  \return Type of the collsioner.
      */
-    inline uint64_t getCollsionerType() {return (t);}
+    inline uint64_t getCollisionerType() {return (t);}
 
   private:
     uint64_t t;  //!< Collisioner type

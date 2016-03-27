@@ -28,11 +28,11 @@ class CollisionEvent2D : public Event {
     * \param entityB The second entity involved in the collision.
     * \param point Point of collision.
     */
-    CollisionEvent2D(uint64_t id, uint64_t time, CollisionerEntity *entityA, CollisionerEntity *entityB, Point2D point) : Entity(id, time), a(entityA), b(entityB), p(point) {}
+    CollisionEvent2D(uint64_t id, uint64_t time, CollisionerEntity *entityA, CollisionerEntity *entityB, Point2D point) : Event(id, time), a(entityA), b(entityB), p(point) {}
 
     /** \brief Empty destructor.
     */
-    virtual ~CollisionEvent() {};
+    virtual ~CollisionEvent2D() {};
 
     /** \brief Get the first entity involved in the collision.
     * \return The first entity involved in the collision.

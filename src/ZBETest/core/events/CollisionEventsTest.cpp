@@ -8,9 +8,9 @@ class CollisionerEntityTest : public zbe::CollisionerEntity {
 };
 
 TEST(CollisionEvent, Usage) {
-  CollisionEntityTest a, b;
-  Point2D p(4.0, 2.0);
-  zbe::CollisionEvent e(1,100, &a, &b, p);
+  CollisionerEntityTest a, b;
+  zbe::Point2D p{4.0, 2.0};
+  zbe::CollisionEvent2D e(1,100, &a, &b, p);
   EXPECT_EQ((uint64_t)1, e.getId()) << "Must store id";
   EXPECT_EQ((uint64_t)100, e.getTime()) << "Must store time";
   EXPECT_EQ(&a, e.getEntityA()) << "Must store EntityA";

@@ -2780,34 +2780,35 @@
 1458667619 /home/ludo/workspace/ZBE/include/ZBE/core/starters/SDL/SDL_Starter.h
 	<SDL2/SDL.h>
 
-1459081024 source:/home/ludo/workspace/ZBE/src/ZBE/core/system/SDL/Window.cpp
+1458757082 source:/home/ludo/workspace/ZBE/src/ZBE/core/system/SDL/Window.cpp
 	"ZBE/core/system/SDL/Window.h"
 	"ZBE/core/system/SysError.h"
 	<string>
 	<SDL2/SDL_image.h>
 
-1459079930 source:/home/ludo/workspace/ZBE/src/ZBE/core/io/SDL/SDLInputReader.cpp
+<<<<<<< HEAD
+1459013331 source:/home/ludo/workspace/ZBE/src/ZBE/core/io/SDL/SDLInputReader.cpp
 	"ZBE/core/io/SDL/SDLInputReader.h"
 
-1459080108 /home/ludo/workspace/ZBE/include/ZBE/core/io/SDL/SDLInputReader.h
+1459013314 /home/ludo/workspace/ZBE/include/ZBE/core/io/SDL/SDLInputReader.h
 	"../InputReader.h"
 	<SDL2/SDL.h>
 	<map>
 
-1459078773 /home/ludo/workspace/ZBE/include/ZBE/core/io/InputReader.h
+1459006465 /home/ludo/workspace/ZBE/include/ZBE/core/io/InputReader.h
 	<cstdint>
 	<list>
 
-1459078559 source:/home/ludo/workspace/ZBE/src/ZBE/core/system/SDL/SDLEventDispatcher.cpp
+1459011097 source:/home/ludo/workspace/ZBE/src/ZBE/core/system/SDL/SDLEventDispatcher.cpp
 	"ZBE/core/system/SDL/SDLEventDispatcher.h"
 
-1459080292 /home/ludo/workspace/ZBE/include/ZBE/core/system/SDL/SDLEventDispatcher.h
+1459007953 /home/ludo/workspace/ZBE/include/ZBE/core/system/SDL/SDLEventDispatcher.h
 	<map>
 	<list>
 	<SDL2/SDL.h>
 	"../../io/InputReader.h"
 	"../../io/SDL/SDLInputReader.h"
-
+=======
 1452167704 source:c:\users\degryll\documents\github\zbe\src\zbe\core\behaviors\uniformlinearmotion.cpp
 	"ZBE/core/behaviors/UniformLinearMotion.h"
 
@@ -5592,21 +5593,5 @@
 	<string>
 	"ZBE/core/tools/text/utf8.h"
 	"ZBE/core/system/SysError.h"
-
-1459081024 source:/home/ludo/workspace/ZBE/src/ZBE/core/entities/CollisionableEntity.cpp
-	"ZBE/core/entities/CollisionableEntity.h"
-	"ZBE/core/system/SysError.h"
-
-1459081024 /home/ludo/workspace/ZBE/include/ZBE/core/entities/CollisionableEntity.h
-	"ZBE/core/entities/Entity.h"
-
-1459081024 /home/ludo/workspace/ZBE/include/ZBE/core/entities/Entity.h
-	<map>
-	"ZBE/core/tools/containers/Ticket.h"
-
-1459081024 /home/ludo/workspace/ZBE/include/ZBE/core/tools/containers/Ticket.h
-
-1459081024 source:/home/ludo/workspace/ZBE/src/ZBE/core/entities/Entity.cpp
-	"ZBE/core/entities/Entity.h"
-	"ZBE/core/system/SysError.h"
+>>>>>>> 6b334426fe46942a83511753670f860659a294f5
 
