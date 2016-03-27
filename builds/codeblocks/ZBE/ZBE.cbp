@@ -178,6 +178,10 @@
 		<Unit filename="../../../include/ZBE/core/daemons/Punishers.h" />
 		<Unit filename="../../../include/ZBE/core/drawers/Drawer.h" />
 		<Unit filename="../../../include/ZBE/core/drawers/SDL/SimpleSpriteSDLDrawer.h" />
+		<Unit filename="../../../include/ZBE/core/entities/CollisionableEntity.h" />
+		<Unit filename="../../../include/ZBE/core/entities/CollisionerEntity.h" />
+		<Unit filename="../../../include/ZBE/core/entities/Entity.h" />
+		<Unit filename="../../../include/ZBE/core/events/CollisionEvent.h" />
 		<Unit filename="../../../include/ZBE/core/events/Event.h" />
 		<Unit filename="../../../include/ZBE/core/events/InputEvent.h" />
 		<Unit filename="../../../include/ZBE/core/events/TimeEvent.h" />
@@ -195,6 +199,7 @@
 		<Unit filename="../../../include/ZBE/core/tools/containers/ArrayList.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/ArrayListIterator.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/Ticket.h" />
+		<Unit filename="../../../include/ZBE/core/tools/containers/TicketedForwardList.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/Point.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/Vector.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/collisions/CollisionData.h" />
@@ -205,6 +210,8 @@
 		<Unit filename="../../../src/ZBE/core/behaviors/UniformLinearMotion.cpp" />
 		<Unit filename="../../../src/ZBE/core/daemons/DaemonMaster.cpp" />
 		<Unit filename="../../../src/ZBE/core/drawers/SDL/SimpleSpriteSDLDrawer.cpp" />
+		<Unit filename="../../../src/ZBE/core/entities/CollisionableEntity.cpp" />
+		<Unit filename="../../../src/ZBE/core/entities/Entity.cpp" />
 		<Unit filename="../../../src/ZBE/core/io/FileHandler.cpp" />
 		<Unit filename="../../../src/ZBE/core/io/SDL/SDLInputReader.cpp" />
 		<Unit filename="../../../src/ZBE/core/loaders/SDLFontLoader.cpp" />

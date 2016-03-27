@@ -1,10 +1,20 @@
 # depslib dependency file v1.0
+<<<<<<< HEAD
+1451930747 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\tools\containers\arraylisttest.cpp
+	"gtest/gtest.h"
+	"ZBE/core/system/SysError.h"
+	"ZBE/core/tools/containers/ArrayList.h"
+	"ZBE/core/tools/containers/ArrayListIterator.h"
+
+1451930747 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\gtest.h
+=======
 1454957491 source:/home/ludo/workspace/ZBE/ZBE/src/ZBETest/core/daemons/daemonsTest.cpp
 	"gtest/gtest.h"
 	"ZBE/core/daemons/Daemon.h"
 	"ZBE/core/daemons/DaemonMaster.h"
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/googletest/1.7.0/include/gtest/gtest.h
+>>>>>>> origin/master
 	<limits>
 	<ostream>
 	<vector>
@@ -19,7 +29,11 @@
 	"gtest/gtest-typed-test.h"
 	"gtest/gtest_pred_impl.h"
 
+<<<<<<< HEAD
+1451930747 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\internal\gtest-internal.h
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/googletest/1.7.0/include/gtest/internal/gtest-internal.h
+>>>>>>> origin/master
 	"gtest/internal/gtest-port.h"
 	<stdlib.h>
 	<sys/types.h>
@@ -37,7 +51,11 @@
 	"gtest/internal/gtest-filepath.h"
 	"gtest/internal/gtest-type-util.h"
 
+<<<<<<< HEAD
+1451930747 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\internal\gtest-port.h
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/googletest/1.7.0/include/gtest/internal/gtest-port.h
+>>>>>>> origin/master
 	<ctype.h>
 	<stddef.h>
 	<stdlib.h>
@@ -67,6 +85,16 @@
 	<tuple>
 	<vector>
 
+<<<<<<< HEAD
+1451930747 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\internal\gtest-tuple.h
+	<utility>
+
+1451930747 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\gtest-message.h
+	<limits>
+	"gtest/internal/gtest-port.h"
+
+1451930747 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\internal\gtest-string.h
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/googletest/1.7.0/include/gtest/internal/gtest-tuple.h
 	<utility>
 
@@ -75,19 +103,37 @@
 	"gtest/internal/gtest-port.h"
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/googletest/1.7.0/include/gtest/internal/gtest-string.h
+>>>>>>> origin/master
 	<mem.h>
 	<string.h>
 	<string>
 	"gtest/internal/gtest-port.h"
 
+<<<<<<< HEAD
+1451930747 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\internal\gtest-filepath.h
+	"gtest/internal/gtest-string.h"
+
+1451930747 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\internal\gtest-type-util.h
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/googletest/1.7.0/include/gtest/internal/gtest-filepath.h
 	"gtest/internal/gtest-string.h"
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/googletest/1.7.0/include/gtest/internal/gtest-type-util.h
+>>>>>>> origin/master
 	"gtest/internal/gtest-port.h"
 	<cxxabi.h>
 	<acxx_demangle.h>
 
+<<<<<<< HEAD
+1451930747 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\gtest-death-test.h
+	"gtest/internal/gtest-death-test-internal.h"
+
+1451930747 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\internal\gtest-death-test-internal.h
+	"gtest/internal/gtest-internal.h"
+	<stdio.h>
+
+1451930747 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\gtest-param-test.h
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/googletest/1.7.0/include/gtest/gtest-death-test.h
 	"gtest/internal/gtest-death-test-internal.h"
 
@@ -96,13 +142,18 @@
 	<stdio.h>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/googletest/1.7.0/include/gtest/gtest-param-test.h
+>>>>>>> origin/master
 	"gtest/internal/gtest-port.h"
 	<utility>
 	"gtest/internal/gtest-internal.h"
 	"gtest/internal/gtest-param-util.h"
 	"gtest/internal/gtest-param-util-generated.h"
 
+<<<<<<< HEAD
+1451930747 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\internal\gtest-param-util.h
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/googletest/1.7.0/include/gtest/internal/gtest-param-util.h
+>>>>>>> origin/master
 	<iterator>
 	<utility>
 	<vector>
@@ -111,12 +162,20 @@
 	"gtest/internal/gtest-port.h"
 	"gtest/gtest-printers.h"
 
+<<<<<<< HEAD
+1451930747 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\internal\gtest-linked_ptr.h
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/googletest/1.7.0/include/gtest/internal/gtest-linked_ptr.h
+>>>>>>> origin/master
 	<stdlib.h>
 	<assert.h>
 	"gtest/internal/gtest-port.h"
 
+<<<<<<< HEAD
+1451930747 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\gtest-printers.h
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/googletest/1.7.0/include/gtest/gtest-printers.h
+>>>>>>> origin/master
 	<ostream>
 	<sstream>
 	<string>
@@ -125,6 +184,15 @@
 	"gtest/internal/gtest-port.h"
 	"gtest/internal/gtest-internal.h"
 
+<<<<<<< HEAD
+1451930747 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\internal\gtest-param-util-generated.h
+	"gtest/internal/gtest-param-util.h"
+	"gtest/internal/gtest-port.h"
+
+1451930747 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\gtest_prod.h
+
+1451930747 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\gtest-test-part.h
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/googletest/1.7.0/include/gtest/internal/gtest-param-util-generated.h
 	"gtest/internal/gtest-param-util.h"
 	"gtest/internal/gtest-port.h"
@@ -132,11 +200,24 @@
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/googletest/1.7.0/include/gtest/gtest_prod.h
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/googletest/1.7.0/include/gtest/gtest-test-part.h
+>>>>>>> origin/master
 	<iosfwd>
 	<vector>
 	"gtest/internal/gtest-internal.h"
 	"gtest/internal/gtest-string.h"
 
+<<<<<<< HEAD
+1451930747 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\gtest-typed-test.h
+	"gtest/internal/gtest-port.h"
+	"gtest/internal/gtest-type-util.h"
+
+1451930747 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\gtest_pred_impl.h
+
+1451930747 c:\users\degryll\documents\github\zbe\include\zbe\core\system\syserror.h
+	<string>
+
+1452260491 c:\users\degryll\documents\github\zbe\include\zbe\core\tools\containers\arraylist.h
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/googletest/1.7.0/include/gtest/gtest-typed-test.h
 	"gtest/internal/gtest-port.h"
 	"gtest/internal/gtest-type-util.h"
@@ -221,19 +302,30 @@
 	"ZBE/core/tools/containers/ArrayListIterator.h"
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/include/ZBE/core/tools/containers/ArrayList.h
+>>>>>>> origin/master
 	"ZBE/core/system/SysError.h"
 	"ZBE/core/tools/containers/Ticket.h"
 	"ZBE/core/tools/containers/ArrayListIterator.h"
 
+<<<<<<< HEAD
+1458755920 c:\users\degryll\documents\github\zbe\include\zbe\core\tools\containers\ticket.h
+
+1451930747 c:\users\degryll\documents\github\zbe\include\zbe\core\tools\containers\arraylistiterator.h
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/include/ZBE/core/tools/containers/Ticket.h
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/include/ZBE/core/tools/containers/ArrayListIterator.h
+>>>>>>> origin/master
 	<cstdio>
 	<boost/iterator/iterator_facade.hpp>
 	"ArrayList.h"
 	"Ticket.h"
 
+<<<<<<< HEAD
+1451930742 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\iterator\iterator_facade.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/iterator/iterator_facade.hpp
+>>>>>>> origin/master
 	<boost/config.hpp>
 	<boost/iterator.hpp>
 	<boost/iterator/interoperable.hpp>
@@ -261,16 +353,26 @@
 	<boost/iterator/detail/config_def.hpp>
 	<boost/iterator/detail/config_undef.hpp>
 
+<<<<<<< HEAD
+1451930740 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config.hpp
+=======
 1454957490 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/config.hpp
+>>>>>>> origin/master
 	<boost/config/user.hpp>
 	<boost/config/select_compiler_config.hpp>
 	<boost/config/select_stdlib_config.hpp>
 	<boost/config/select_platform_config.hpp>
 	<boost/config/suffix.hpp>
 
+<<<<<<< HEAD
+1451930741 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\user.hpp
+
+1451930741 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\select_compiler_config.hpp
+=======
 1454957490 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/config/user.hpp
 
 1454957490 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/config/select_compiler_config.hpp
+>>>>>>> origin/master
 	"boost/config/compiler/nvcc.hpp"
 	"boost/config/compiler/gcc_xml.hpp"
 	"boost/config/compiler/cray.hpp"
@@ -294,6 +396,50 @@
 	"boost/config/compiler/pgi.hpp"
 	"boost/config/compiler/visualc.hpp"
 
+<<<<<<< HEAD
+1451930740 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\compiler\nvcc.hpp
+
+1451930740 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\compiler\gcc_xml.hpp
+
+1451930740 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\compiler\cray.hpp
+	"boost/config/compiler/common_edg.hpp"
+
+1451930740 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\compiler\common_edg.hpp
+
+1451930740 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\compiler\comeau.hpp
+	"boost/config/compiler/common_edg.hpp"
+
+1451930740 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\compiler\pathscale.hpp
+
+1451930740 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\compiler\intel.hpp
+	"boost/config/compiler/common_edg.hpp"
+	<cwchar>
+
+1451930740 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\compiler\clang.hpp
+
+1451930740 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\compiler\digitalmars.hpp
+	<cstddef>
+
+1451930740 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\compiler\gcc.hpp
+
+1451930740 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\compiler\kai.hpp
+	"boost/config/compiler/common_edg.hpp"
+
+1451930740 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\compiler\sgi_mipspro.hpp
+	"boost/config/compiler/common_edg.hpp"
+
+1451930740 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\compiler\compaq_cxx.hpp
+	"boost/config/compiler/common_edg.hpp"
+
+1451930740 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\compiler\greenhills.hpp
+	"boost/config/compiler/common_edg.hpp"
+
+1451930740 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\compiler\codegear.hpp
+	<cstring>
+	<errno.h>
+
+1451930740 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\compiler\borland.hpp
+=======
 1454957490 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/config/compiler/nvcc.hpp
 
 1454957490 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/config/compiler/gcc_xml.hpp
@@ -336,6 +482,7 @@
 	<errno.h>
 
 1454957490 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/config/compiler/borland.hpp
+>>>>>>> origin/master
 	<climits>
 	<cwchar>
 	<limits.h>
@@ -344,6 +491,24 @@
 	<errno.h>
 	<float.h>
 
+<<<<<<< HEAD
+1451930740 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\compiler\metrowerks.hpp
+
+1451930740 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\compiler\sunpro_cc.hpp
+
+1451930740 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\compiler\hp_acc.hpp
+	"boost/config/compiler/common_edg.hpp"
+
+1451930740 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\compiler\mpw.hpp
+
+1451930741 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\compiler\vacpp.hpp
+
+1451930740 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\compiler\pgi.hpp
+
+1451930741 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\compiler\visualc.hpp
+
+1451930741 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\select_stdlib_config.hpp
+=======
 1454957490 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/config/compiler/metrowerks.hpp
 
 1454957490 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/config/compiler/sunpro_cc.hpp
@@ -360,6 +525,7 @@
 1454957490 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/config/compiler/visualc.hpp
 
 1454957490 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/config/select_stdlib_config.hpp
+>>>>>>> origin/master
 	<cstddef>
 	<stddef.h>
 	<utility>
@@ -374,13 +540,35 @@
 	"boost/config/stdlib/modena.hpp"
 	"boost/config/stdlib/dinkumware.hpp"
 
+<<<<<<< HEAD
+1451930741 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\stdlib\stlport.hpp
+=======
 1454957490 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/config/stdlib/stlport.hpp
+>>>>>>> origin/master
 	<cstddef>
 	<unistd.h>
 	<stdlib.h>
 	<string.h>
 	<algorithm>
 
+<<<<<<< HEAD
+1451930741 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\stdlib\libcomo.hpp
+	<boost/config/no_tr1/utility.hpp>
+
+1451930741 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\no_tr1\utility.hpp
+	<utility>
+
+1451930741 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\stdlib\roguewave.hpp
+	<boost/config/no_tr1/utility.hpp>
+
+1451930741 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\stdlib\libcpp.hpp
+	<ciso646>
+
+1451930741 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\stdlib\libstdcpp3.hpp
+	<unistd.h>
+
+1451930741 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\stdlib\sgi.hpp
+=======
 1454957490 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/config/stdlib/libcomo.hpp
 	<boost/config/no_tr1/utility.hpp>
 
@@ -397,15 +585,32 @@
 	<unistd.h>
 
 1454957490 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/config/stdlib/sgi.hpp
+>>>>>>> origin/master
 	<boost/config/no_tr1/utility.hpp>
 	<unistd.h>
 	<string>
 
+<<<<<<< HEAD
+1451930741 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\stdlib\msl.hpp
+=======
 1454957490 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/config/stdlib/msl.hpp
+>>>>>>> origin/master
 	<boost/config/no_tr1/utility.hpp>
 	<cstddef>
 	<boost/config/posix_features.hpp>
 
+<<<<<<< HEAD
+1451930741 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\posix_features.hpp
+	<unistd.h>
+
+1451930741 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\stdlib\vacpp.hpp
+	<unistd.h>
+
+1451930741 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\stdlib\modena.hpp
+	<boost/config/no_tr1/utility.hpp>
+
+1451930741 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\stdlib\dinkumware.hpp
+=======
 1454957490 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/config/posix_features.hpp
 	<unistd.h>
 
@@ -416,11 +621,16 @@
 	<boost/config/no_tr1/utility.hpp>
 
 1454957490 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/config/stdlib/dinkumware.hpp
+>>>>>>> origin/master
 	<boost/config/no_tr1/utility.hpp>
 	<exception>
 	<typeinfo>
 
+<<<<<<< HEAD
+1451930741 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\select_platform_config.hpp
+=======
 1454957490 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/config/select_platform_config.hpp
+>>>>>>> origin/master
 	<boost/config/posix_features.hpp>
 	"boost/config/platform/linux.hpp"
 	"boost/config/platform/bsd.hpp"
@@ -440,11 +650,30 @@
 	"boost/config/platform/vms.hpp"
 	<boost/config/posix_features.hpp>
 
+<<<<<<< HEAD
+1451930741 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\platform\linux.hpp
+=======
 1454957490 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/config/platform/linux.hpp
+>>>>>>> origin/master
 	<cstdlib>
 	<stdlib.h>
 	<boost/config/posix_features.hpp>
 
+<<<<<<< HEAD
+1451930741 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\platform\bsd.hpp
+	<boost/config/posix_features.hpp>
+
+1451930741 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\platform\solaris.hpp
+	<boost/config/posix_features.hpp>
+
+1451930741 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\platform\irix.hpp
+	<boost/config/posix_features.hpp>
+
+1451930741 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\platform\hpux.hpp
+	<boost/config/posix_features.hpp>
+
+1451930741 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\platform\cygwin.hpp
+=======
 1454957490 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/config/platform/bsd.hpp
 	<boost/config/posix_features.hpp>
 
@@ -458,10 +687,31 @@
 	<boost/config/posix_features.hpp>
 
 1454957490 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/config/platform/cygwin.hpp
+>>>>>>> origin/master
 	<unistd.h>
 	<sys/types.h>
 	<boost/config/posix_features.hpp>
 
+<<<<<<< HEAD
+1451930741 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\platform\win32.hpp
+	<_mingw.h>
+
+1451930741 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\platform\beos.hpp
+	<boost/config/posix_features.hpp>
+
+1451930741 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\platform\macos.hpp
+	<boost/config/posix_features.hpp>
+
+1451930741 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\platform\aix.hpp
+	<boost/config/posix_features.hpp>
+
+1451930741 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\platform\amigaos.hpp
+
+1451930741 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\platform\qnxnto.hpp
+	<boost/config/posix_features.hpp>
+
+1451930741 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\platform\vxworks.hpp
+=======
 1454957490 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/config/platform/win32.hpp
 	<_mingw.h>
 
@@ -480,6 +730,7 @@
 	<boost/config/posix_features.hpp>
 
 1454957490 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/config/platform/vxworks.hpp
+>>>>>>> origin/master
 	<version.h>
 	<time.h>
 	<sysLib.h>
@@ -490,52 +741,112 @@
 	<signal.h>
 	<boost/config/posix_features.hpp>
 
+<<<<<<< HEAD
+1451930741 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\platform\symbian.hpp
+=======
 1454957490 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/config/platform/symbian.hpp
+>>>>>>> origin/master
 	<cstdlib>
 	<stdlib.h>
 	<boost/config/posix_features.hpp>
 	<sys/endian.h>
 
+<<<<<<< HEAD
+1451930741 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\platform\cray.hpp
+	<boost/config/posix_features.hpp>
+
+1451930741 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\platform\vms.hpp
+
+1451930741 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\config\suffix.hpp
+=======
 1454957490 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/config/platform/cray.hpp
 	<boost/config/posix_features.hpp>
 
 1454957490 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/config/platform/vms.hpp
 
 1454957490 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/config/suffix.hpp
+>>>>>>> origin/master
 	<limits.h>
 	<cstddef>
 	<typeinfo>
 
+<<<<<<< HEAD
+1451930742 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\iterator.hpp
+	<iterator>
+	<cstddef>
+
+1451930742 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\iterator\interoperable.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/iterator.hpp
 	<iterator>
 	<cstddef>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/iterator/interoperable.hpp
+>>>>>>> origin/master
 	<boost/mpl/bool.hpp>
 	<boost/mpl/or.hpp>
 	<boost/type_traits/is_convertible.hpp>
 	<boost/iterator/detail/config_def.hpp>
 	<boost/iterator/detail/config_undef.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\bool.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/bool.hpp
+>>>>>>> origin/master
 	<boost/mpl/bool_fwd.hpp>
 	<boost/mpl/integral_c_tag.hpp>
 	<boost/mpl/aux_/config/static_constant.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\bool_fwd.hpp
+	<boost/mpl/aux_/adl_barrier.hpp>
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\adl_barrier.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/bool_fwd.hpp
 	<boost/mpl/aux_/adl_barrier.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/adl_barrier.hpp
+>>>>>>> origin/master
 	<boost/mpl/aux_/config/adl.hpp>
 	<boost/mpl/aux_/config/gcc.hpp>
 	<boost/mpl/aux_/config/workaround.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\config\adl.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/config/adl.hpp
+>>>>>>> origin/master
 	<boost/mpl/aux_/config/msvc.hpp>
 	<boost/mpl/aux_/config/intel.hpp>
 	<boost/mpl/aux_/config/gcc.hpp>
 	<boost/mpl/aux_/config/workaround.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\config\msvc.hpp
+	<boost/config.hpp>
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\config\intel.hpp
+	<boost/config.hpp>
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\config\gcc.hpp
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\config\workaround.hpp
+	<boost/detail/workaround.hpp>
+
+1451930741 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\detail\workaround.hpp
+	<boost/config.hpp>
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\integral_c_tag.hpp
+	<boost/mpl/aux_/adl_barrier.hpp>
+	<boost/mpl/aux_/config/static_constant.hpp>
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\config\static_constant.hpp
+	<boost/config.hpp>
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\or.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/config/msvc.hpp
 	<boost/config.hpp>
 
@@ -558,6 +869,7 @@
 	<boost/config.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/or.hpp
+>>>>>>> origin/master
 	<boost/mpl/aux_/config/use_preprocessed.hpp>
 	<boost/mpl/bool.hpp>
 	<boost/mpl/aux_/nested_type_wknd.hpp>
@@ -567,6 +879,15 @@
 	<boost/mpl/aux_/include_preprocessed.hpp>
 	<boost/mpl/aux_/logical_op.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\config\use_preprocessed.hpp
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\nested_type_wknd.hpp
+	<boost/mpl/aux_/config/gcc.hpp>
+	<boost/mpl/aux_/config/workaround.hpp>
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\na_spec.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/config/use_preprocessed.hpp
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/nested_type_wknd.hpp
@@ -574,6 +895,7 @@
 	<boost/mpl/aux_/config/workaround.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/na_spec.hpp
+>>>>>>> origin/master
 	<boost/mpl/lambda_fwd.hpp>
 	<boost/mpl/int.hpp>
 	<boost/mpl/bool.hpp>
@@ -591,7 +913,11 @@
 	<boost/mpl/aux_/config/lambda.hpp>
 	<boost/mpl/aux_/config/overload_resolution.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\lambda_fwd.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/lambda_fwd.hpp
+>>>>>>> origin/master
 	<boost/mpl/void_fwd.hpp>
 	<boost/mpl/aux_/na.hpp>
 	<boost/mpl/aux_/config/lambda.hpp>
@@ -600,15 +926,36 @@
 	<boost/mpl/aux_/template_arity_fwd.hpp>
 	<boost/mpl/bool.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\void_fwd.hpp
+	<boost/mpl/aux_/adl_barrier.hpp>
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\na.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/void_fwd.hpp
 	<boost/mpl/aux_/adl_barrier.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/na.hpp
+>>>>>>> origin/master
 	<boost/mpl/bool.hpp>
 	<boost/mpl/aux_/na_fwd.hpp>
 	<boost/mpl/aux_/config/msvc.hpp>
 	<boost/mpl/aux_/config/ctps.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\na_fwd.hpp
+	<boost/mpl/aux_/adl_barrier.hpp>
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\config\ctps.hpp
+	<boost/mpl/aux_/config/workaround.hpp>
+	<boost/config.hpp>
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\config\lambda.hpp
+	<boost/mpl/aux_/config/ttp.hpp>
+	<boost/mpl/aux_/config/ctps.hpp>
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\config\ttp.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/na_fwd.hpp
 	<boost/mpl/aux_/adl_barrier.hpp>
 
@@ -621,10 +968,35 @@
 	<boost/mpl/aux_/config/ctps.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/config/ttp.hpp
+>>>>>>> origin/master
 	<boost/mpl/aux_/config/msvc.hpp>
 	<boost/mpl/aux_/config/gcc.hpp>
 	<boost/mpl/aux_/config/workaround.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\int.hpp
+	<boost/mpl/int_fwd.hpp>
+	<boost/mpl/aux_/integral_wrapper.hpp>
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\int_fwd.hpp
+	<boost/mpl/aux_/adl_barrier.hpp>
+	<boost/mpl/aux_/nttp_decl.hpp>
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\nttp_decl.hpp
+	<boost/mpl/aux_/config/nttp.hpp>
+	<boost/preprocessor/cat.hpp>
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\config\nttp.hpp
+	<boost/mpl/aux_/config/msvc.hpp>
+	<boost/mpl/aux_/config/workaround.hpp>
+
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\cat.hpp
+	<boost/preprocessor/config/config.hpp>
+
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\config\config.hpp
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\integral_wrapper.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/int.hpp
 	<boost/mpl/int_fwd.hpp>
 	<boost/mpl/aux_/integral_wrapper.hpp>
@@ -647,6 +1019,7 @@
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/config/config.hpp
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/integral_wrapper.hpp
+>>>>>>> origin/master
 	<boost/mpl/integral_c_tag.hpp>
 	<boost/mpl/aux_/static_cast.hpp>
 	<boost/mpl/aux_/nttp_decl.hpp>
@@ -654,6 +1027,17 @@
 	<boost/mpl/aux_/config/workaround.hpp>
 	<boost/preprocessor/cat.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\static_cast.hpp
+	<boost/mpl/aux_/config/workaround.hpp>
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\lambda_arity_param.hpp
+	<boost/mpl/aux_/config/ttp.hpp>
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\template_arity_fwd.hpp
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\arity.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/static_cast.hpp
 	<boost/mpl/aux_/config/workaround.hpp>
 
@@ -663,14 +1047,22 @@
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/template_arity_fwd.hpp
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/arity.hpp
+>>>>>>> origin/master
 	<boost/mpl/aux_/config/dtp.hpp>
 	<boost/mpl/aux_/nttp_decl.hpp>
 	<boost/mpl/aux_/config/static_constant.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\config\dtp.hpp
+	<boost/mpl/aux_/config/workaround.hpp>
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\preprocessor\params.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/config/dtp.hpp
 	<boost/mpl/aux_/config/workaround.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/preprocessor/params.hpp
+>>>>>>> origin/master
 	<boost/mpl/aux_/config/preprocessor.hpp>
 	<boost/preprocessor/cat.hpp>
 	<boost/preprocessor/comma_if.hpp>
@@ -678,6 +1070,15 @@
 	<boost/preprocessor/inc.hpp>
 	<boost/preprocessor/cat.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\config\preprocessor.hpp
+	<boost/mpl/aux_/config/workaround.hpp>
+
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\comma_if.hpp
+	<boost/preprocessor/punctuation/comma_if.hpp>
+
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\punctuation\comma_if.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/config/preprocessor.hpp
 	<boost/mpl/aux_/config/workaround.hpp>
 
@@ -685,16 +1086,38 @@
 	<boost/preprocessor/punctuation/comma_if.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/punctuation/comma_if.hpp
+>>>>>>> origin/master
 	<boost/preprocessor/config/config.hpp>
 	<boost/preprocessor/control/if.hpp>
 	<boost/preprocessor/facilities/empty.hpp>
 	<boost/preprocessor/punctuation/comma.hpp>
 
+<<<<<<< HEAD
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\control\if.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/control/if.hpp
+>>>>>>> origin/master
 	<boost/preprocessor/config/config.hpp>
 	<boost/preprocessor/control/iif.hpp>
 	<boost/preprocessor/logical/bool.hpp>
 
+<<<<<<< HEAD
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\control\iif.hpp
+	<boost/preprocessor/config/config.hpp>
+
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\logical\bool.hpp
+	<boost/preprocessor/config/config.hpp>
+
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\facilities\empty.hpp
+	<boost/preprocessor/config/config.hpp>
+
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\punctuation\comma.hpp
+
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\repeat.hpp
+	<boost/preprocessor/repetition/repeat.hpp>
+
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\repetition\repeat.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/control/iif.hpp
 	<boost/preprocessor/config/config.hpp>
 
@@ -710,21 +1133,45 @@
 	<boost/preprocessor/repetition/repeat.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/repetition/repeat.hpp
+>>>>>>> origin/master
 	<boost/preprocessor/cat.hpp>
 	<boost/preprocessor/config/config.hpp>
 	<boost/preprocessor/debug/error.hpp>
 	<boost/preprocessor/detail/auto_rec.hpp>
 	<boost/preprocessor/tuple/eat.hpp>
 
+<<<<<<< HEAD
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\debug\error.hpp
+	<boost/preprocessor/cat.hpp>
+	<boost/preprocessor/config/config.hpp>
+
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\detail\auto_rec.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/debug/error.hpp
 	<boost/preprocessor/cat.hpp>
 	<boost/preprocessor/config/config.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/detail/auto_rec.hpp
+>>>>>>> origin/master
 	<boost/preprocessor/config/config.hpp>
 	<boost/preprocessor/detail/dmc/auto_rec.hpp>
 	<boost/preprocessor/control/iif.hpp>
 
+<<<<<<< HEAD
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\detail\dmc\auto_rec.hpp
+	<boost/preprocessor/control/iif.hpp>
+
+1451930745 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\tuple\eat.hpp
+	<boost/preprocessor/config/config.hpp>
+
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\inc.hpp
+	<boost/preprocessor/arithmetic/inc.hpp>
+
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\arithmetic\inc.hpp
+	<boost/preprocessor/config/config.hpp>
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\preprocessor\enum.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/detail/dmc/auto_rec.hpp
 	<boost/preprocessor/control/iif.hpp>
 
@@ -738,12 +1185,17 @@
 	<boost/preprocessor/config/config.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/preprocessor/enum.hpp
+>>>>>>> origin/master
 	<boost/mpl/aux_/config/preprocessor.hpp>
 	<boost/preprocessor/cat.hpp>
 	<boost/preprocessor/comma_if.hpp>
 	<boost/preprocessor/repeat.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\preprocessor\def_params_tail.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/preprocessor/def_params_tail.hpp
+>>>>>>> origin/master
 	<boost/mpl/limits/arity.hpp>
 	<boost/mpl/aux_/config/dtp.hpp>
 	<boost/mpl/aux_/config/preprocessor.hpp>
@@ -760,13 +1212,36 @@
 	<boost/preprocessor/repeat.hpp>
 	<boost/preprocessor/cat.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\limits\arity.hpp
+
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\logical\and.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/limits/arity.hpp
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/logical/and.hpp
+>>>>>>> origin/master
 	<boost/preprocessor/config/config.hpp>
 	<boost/preprocessor/logical/bool.hpp>
 	<boost/preprocessor/logical/bitand.hpp>
 
+<<<<<<< HEAD
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\logical\bitand.hpp
+	<boost/preprocessor/config/config.hpp>
+
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\identity.hpp
+	<boost/preprocessor/facilities/identity.hpp>
+
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\facilities\identity.hpp
+	<boost/preprocessor/facilities/empty.hpp>
+
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\empty.hpp
+	<boost/preprocessor/facilities/empty.hpp>
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\preprocessor\filter_params.hpp
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\preprocessor\sub.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/logical/bitand.hpp
 	<boost/preprocessor/config/config.hpp>
 
@@ -782,23 +1257,37 @@
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/preprocessor/filter_params.hpp
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/preprocessor/sub.hpp
+>>>>>>> origin/master
 	<boost/mpl/aux_/config/preprocessor.hpp>
 	<boost/mpl/aux_/preprocessor/tuple.hpp>
 	<boost/preprocessor/cat.hpp>
 	<boost/preprocessor/arithmetic/sub.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\preprocessor\tuple.hpp
+
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\arithmetic\sub.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/preprocessor/tuple.hpp
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/arithmetic/sub.hpp
+>>>>>>> origin/master
 	<boost/preprocessor/arithmetic/dec.hpp>
 	<boost/preprocessor/config/config.hpp>
 	<boost/preprocessor/control/while.hpp>
 	<boost/preprocessor/tuple/elem.hpp>
 
+<<<<<<< HEAD
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\arithmetic\dec.hpp
+	<boost/preprocessor/config/config.hpp>
+
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\control\while.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/arithmetic/dec.hpp
 	<boost/preprocessor/config/config.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/control/while.hpp
+>>>>>>> origin/master
 	<boost/preprocessor/cat.hpp>
 	<boost/preprocessor/config/config.hpp>
 	<boost/preprocessor/debug/error.hpp>
@@ -811,7 +1300,11 @@
 	<boost/preprocessor/control/detail/dmc/while.hpp>
 	<boost/preprocessor/control/detail/while.hpp>
 
+<<<<<<< HEAD
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\list\fold_left.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/list/fold_left.hpp
+>>>>>>> origin/master
 	<boost/preprocessor/cat.hpp>
 	<boost/preprocessor/control/while.hpp>
 	<boost/preprocessor/debug/error.hpp>
@@ -820,21 +1313,46 @@
 	<boost/preprocessor/list/detail/dmc/fold_left.hpp>
 	<boost/preprocessor/list/detail/fold_left.hpp>
 
+<<<<<<< HEAD
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\list\detail\edg\fold_left.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/list/detail/edg/fold_left.hpp
+>>>>>>> origin/master
 	<boost/preprocessor/control/expr_iif.hpp>
 	<boost/preprocessor/control/iif.hpp>
 	<boost/preprocessor/list/adt.hpp>
 	<boost/preprocessor/tuple/eat.hpp>
 
+<<<<<<< HEAD
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\control\expr_iif.hpp
+	<boost/preprocessor/config/config.hpp>
+
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\list\adt.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/control/expr_iif.hpp
 	<boost/preprocessor/config/config.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/list/adt.hpp
+>>>>>>> origin/master
 	<boost/preprocessor/config/config.hpp>
 	<boost/preprocessor/detail/is_binary.hpp>
 	<boost/preprocessor/logical/compl.hpp>
 	<boost/preprocessor/tuple/eat.hpp>
 
+<<<<<<< HEAD
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\detail\is_binary.hpp
+	<boost/preprocessor/config/config.hpp>
+	<boost/preprocessor/detail/check.hpp>
+
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\detail\check.hpp
+	<boost/preprocessor/cat.hpp>
+	<boost/preprocessor/config/config.hpp>
+
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\logical\compl.hpp
+	<boost/preprocessor/config/config.hpp>
+
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\list\detail\dmc\fold_left.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/detail/is_binary.hpp
 	<boost/preprocessor/config/config.hpp>
 	<boost/preprocessor/detail/check.hpp>
@@ -847,12 +1365,17 @@
 	<boost/preprocessor/config/config.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/list/detail/dmc/fold_left.hpp
+>>>>>>> origin/master
 	<boost/preprocessor/control/expr_iif.hpp>
 	<boost/preprocessor/control/iif.hpp>
 	<boost/preprocessor/list/adt.hpp>
 	<boost/preprocessor/tuple/elem.hpp>
 
+<<<<<<< HEAD
+1451930745 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\tuple\elem.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/tuple/elem.hpp
+>>>>>>> origin/master
 	<boost/preprocessor/cat.hpp>
 	<boost/preprocessor/config/config.hpp>
 	<boost/preprocessor/facilities/expand.hpp>
@@ -861,6 +1384,20 @@
 	<boost/preprocessor/variadic/elem.hpp>
 	<boost/preprocessor/tuple/detail/is_single_return.hpp>
 
+<<<<<<< HEAD
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\facilities\expand.hpp
+	<boost/preprocessor/config/config.hpp>
+
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\facilities\overload.hpp
+	<boost/preprocessor/cat.hpp>
+	<boost/preprocessor/variadic/size.hpp>
+
+1451930745 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\variadic\size.hpp
+	<boost/preprocessor/cat.hpp>
+	<boost/preprocessor/config/config.hpp>
+
+1451930745 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\tuple\rem.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/facilities/expand.hpp
 	<boost/preprocessor/config/config.hpp>
 
@@ -873,23 +1410,36 @@
 	<boost/preprocessor/config/config.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/tuple/rem.hpp
+>>>>>>> origin/master
 	<boost/preprocessor/cat.hpp>
 	<boost/preprocessor/config/config.hpp>
 	<boost/preprocessor/facilities/expand.hpp>
 	<boost/preprocessor/facilities/overload.hpp>
 	<boost/preprocessor/tuple/detail/is_single_return.hpp>
 
+<<<<<<< HEAD
+1451930745 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\tuple\detail\is_single_return.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/tuple/detail/is_single_return.hpp
+>>>>>>> origin/master
 	<boost/preprocessor/config/config.hpp>
 	<boost/preprocessor/control/iif.hpp>
 	<boost/preprocessor/facilities/is_1.hpp>
 	<boost/preprocessor/tuple/size.hpp>
 
+<<<<<<< HEAD
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\facilities\is_1.hpp
+	<boost/preprocessor/cat.hpp>
+	<boost/preprocessor/facilities/is_empty.hpp>
+
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\facilities\is_empty.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/facilities/is_1.hpp
 	<boost/preprocessor/cat.hpp>
 	<boost/preprocessor/facilities/is_empty.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/facilities/is_empty.hpp
+>>>>>>> origin/master
 	<boost/preprocessor/config/config.hpp>
 	<boost/preprocessor/facilities/is_empty_variadic.hpp>
 	<boost/preprocessor/config/config.hpp>
@@ -898,11 +1448,31 @@
 	<boost/preprocessor/cat.hpp>
 	<boost/preprocessor/detail/split.hpp>
 
+<<<<<<< HEAD
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\facilities\is_empty_variadic.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/facilities/is_empty_variadic.hpp
+>>>>>>> origin/master
 	<boost/preprocessor/config/config.hpp>
 	<boost/preprocessor/punctuation/is_begin_parens.hpp>
 	<boost/preprocessor/facilities/detail/is_empty.hpp>
 
+<<<<<<< HEAD
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\punctuation\is_begin_parens.hpp
+	<boost/preprocessor/config/config.hpp>
+	<boost/preprocessor/punctuation/detail/is_begin_parens.hpp>
+
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\punctuation\detail\is_begin_parens.hpp
+	<boost/preprocessor/facilities/empty.hpp>
+
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\facilities\detail\is_empty.hpp
+	<boost/preprocessor/punctuation/is_begin_parens.hpp>
+
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\detail\split.hpp
+	<boost/preprocessor/config/config.hpp>
+
+1451930745 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\tuple\size.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/punctuation/is_begin_parens.hpp
 	<boost/preprocessor/config/config.hpp>
 	<boost/preprocessor/punctuation/detail/is_begin_parens.hpp>
@@ -917,21 +1487,34 @@
 	<boost/preprocessor/config/config.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/tuple/size.hpp
+>>>>>>> origin/master
 	<boost/preprocessor/cat.hpp>
 	<boost/preprocessor/config/config.hpp>
 	<boost/preprocessor/variadic/size.hpp>
 
+<<<<<<< HEAD
+1451930745 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\variadic\elem.hpp
+	<boost/preprocessor/cat.hpp>
+	<boost/preprocessor/config/config.hpp>
+
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\list\detail\fold_left.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/variadic/elem.hpp
 	<boost/preprocessor/cat.hpp>
 	<boost/preprocessor/config/config.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/list/detail/fold_left.hpp
+>>>>>>> origin/master
 	<boost/preprocessor/control/expr_iif.hpp>
 	<boost/preprocessor/control/iif.hpp>
 	<boost/preprocessor/list/adt.hpp>
 	<boost/preprocessor/tuple/eat.hpp>
 
+<<<<<<< HEAD
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\list\fold_right.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/list/fold_right.hpp
+>>>>>>> origin/master
 	<boost/preprocessor/cat.hpp>
 	<boost/preprocessor/control/while.hpp>
 	<boost/preprocessor/debug/error.hpp>
@@ -939,11 +1522,34 @@
 	<boost/preprocessor/list/detail/edg/fold_right.hpp>
 	<boost/preprocessor/list/detail/fold_right.hpp>
 
+<<<<<<< HEAD
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\list\detail\edg\fold_right.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/list/detail/edg/fold_right.hpp
+>>>>>>> origin/master
 	<boost/preprocessor/control/iif.hpp>
 	<boost/preprocessor/list/adt.hpp>
 	<boost/preprocessor/tuple/eat.hpp>
 
+<<<<<<< HEAD
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\list\detail\fold_right.hpp
+	<boost/preprocessor/list/fold_left.hpp>
+	<boost/preprocessor/list/reverse.hpp>
+
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\list\reverse.hpp
+	<boost/preprocessor/config/config.hpp>
+	<boost/preprocessor/list/fold_left.hpp>
+
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\control\detail\edg\while.hpp
+	<boost/preprocessor/control/if.hpp>
+	<boost/preprocessor/tuple/eat.hpp>
+
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\control\detail\msvc\while.hpp
+	<boost/preprocessor/control/if.hpp>
+	<boost/preprocessor/tuple/eat.hpp>
+
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\control\detail\dmc\while.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/list/detail/fold_right.hpp
 	<boost/preprocessor/list/fold_left.hpp>
 	<boost/preprocessor/list/reverse.hpp>
@@ -961,22 +1567,41 @@
 	<boost/preprocessor/tuple/eat.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/control/detail/dmc/while.hpp
+>>>>>>> origin/master
 	<boost/preprocessor/control/iif.hpp>
 	<boost/preprocessor/logical/bool.hpp>
 	<boost/preprocessor/tuple/eat.hpp>
 
+<<<<<<< HEAD
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\control\detail\while.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/control/detail/while.hpp
+>>>>>>> origin/master
 	<boost/preprocessor/control/iif.hpp>
 	<boost/preprocessor/logical/bool.hpp>
 	<boost/preprocessor/tuple/eat.hpp>
 
+<<<<<<< HEAD
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\arithmetic\add.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/arithmetic/add.hpp
+>>>>>>> origin/master
 	<boost/preprocessor/arithmetic/dec.hpp>
 	<boost/preprocessor/arithmetic/inc.hpp>
 	<boost/preprocessor/config/config.hpp>
 	<boost/preprocessor/control/while.hpp>
 	<boost/preprocessor/tuple/elem.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\config\eti.hpp
+	<boost/mpl/aux_/config/msvc.hpp>
+	<boost/mpl/aux_/config/workaround.hpp>
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\config\overload_resolution.hpp
+	<boost/mpl/aux_/config/workaround.hpp>
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\lambda_support.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/config/eti.hpp
 	<boost/mpl/aux_/config/msvc.hpp>
 	<boost/mpl/aux_/config/workaround.hpp>
@@ -985,6 +1610,7 @@
 	<boost/mpl/aux_/config/workaround.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/lambda_support.hpp
+>>>>>>> origin/master
 	<boost/mpl/aux_/config/lambda.hpp>
 	<boost/mpl/int_fwd.hpp>
 	<boost/mpl/aux_/yes_no.hpp>
@@ -998,24 +1624,40 @@
 	<boost/preprocessor/inc.hpp>
 	<boost/preprocessor/cat.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\yes_no.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/yes_no.hpp
+>>>>>>> origin/master
 	<boost/mpl/aux_/nttp_decl.hpp>
 	<boost/mpl/aux_/config/arrays.hpp>
 	<boost/mpl/aux_/config/msvc.hpp>
 	<boost/mpl/aux_/config/workaround.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\config\arrays.hpp
+	<boost/mpl/aux_/config/msvc.hpp>
+	<boost/mpl/aux_/config/workaround.hpp>
+
+1451930745 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\tuple\to_list.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/config/arrays.hpp
 	<boost/mpl/aux_/config/msvc.hpp>
 	<boost/mpl/aux_/config/workaround.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/tuple/to_list.hpp
+>>>>>>> origin/master
 	<boost/preprocessor/cat.hpp>
 	<boost/preprocessor/config/config.hpp>
 	<boost/preprocessor/facilities/overload.hpp>
 	<boost/preprocessor/tuple/size.hpp>
 	<boost/preprocessor/variadic/size.hpp>
 
+<<<<<<< HEAD
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\list\for_each_i.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/list/for_each_i.hpp
+>>>>>>> origin/master
 	<boost/preprocessor/arithmetic/inc.hpp>
 	<boost/preprocessor/config/config.hpp>
 	<boost/preprocessor/list/adt.hpp>
@@ -1023,7 +1665,11 @@
 	<boost/preprocessor/tuple/elem.hpp>
 	<boost/preprocessor/tuple/rem.hpp>
 
+<<<<<<< HEAD
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\repetition\for.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/repetition/for.hpp
+>>>>>>> origin/master
 	<boost/preprocessor/cat.hpp>
 	<boost/preprocessor/debug/error.hpp>
 	<boost/preprocessor/detail/auto_rec.hpp>
@@ -1032,6 +1678,17 @@
 	<boost/preprocessor/repetition/detail/dmc/for.hpp>
 	<boost/preprocessor/repetition/detail/for.hpp>
 
+<<<<<<< HEAD
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\repetition\detail\edg\for.hpp
+	<boost/preprocessor/control/if.hpp>
+	<boost/preprocessor/tuple/eat.hpp>
+
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\repetition\detail\msvc\for.hpp
+	<boost/preprocessor/control/if.hpp>
+	<boost/preprocessor/tuple/eat.hpp>
+
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\repetition\detail\dmc\for.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/repetition/detail/edg/for.hpp
 	<boost/preprocessor/control/if.hpp>
 	<boost/preprocessor/tuple/eat.hpp>
@@ -1041,25 +1698,38 @@
 	<boost/preprocessor/tuple/eat.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/repetition/detail/dmc/for.hpp
+>>>>>>> origin/master
 	<boost/preprocessor/control/expr_iif.hpp>
 	<boost/preprocessor/control/iif.hpp>
 	<boost/preprocessor/logical/bool.hpp>
 	<boost/preprocessor/tuple/eat.hpp>
 
+<<<<<<< HEAD
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\repetition\detail\for.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/repetition/detail/for.hpp
+>>>>>>> origin/master
 	<boost/preprocessor/control/expr_iif.hpp>
 	<boost/preprocessor/control/iif.hpp>
 	<boost/preprocessor/logical/bool.hpp>
 	<boost/preprocessor/tuple/eat.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\include_preprocessed.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/include_preprocessed.hpp
+>>>>>>> origin/master
 	<boost/mpl/aux_/config/compiler.hpp>
 	<boost/mpl/aux_/config/preprocessor.hpp>
 	<boost/mpl/aux_/config/workaround.hpp>
 	<boost/preprocessor/cat.hpp>
 	<boost/preprocessor/stringize.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\config\compiler.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/config/compiler.hpp
+>>>>>>> origin/master
 	<boost/mpl/aux_/config/dtp.hpp>
 	<boost/mpl/aux_/config/ttp.hpp>
 	<boost/mpl/aux_/config/ctps.hpp>
@@ -1067,10 +1737,17 @@
 	<boost/mpl/aux_/config/gcc.hpp>
 	<boost/mpl/aux_/config/workaround.hpp>
 
+<<<<<<< HEAD
+1451930745 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\stringize.hpp
+	<boost/preprocessor/config/config.hpp>
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\logical_op.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/stringize.hpp
 	<boost/preprocessor/config/config.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/logical_op.hpp
+>>>>>>> origin/master
 	<boost/mpl/bool.hpp>
 	<boost/mpl/aux_/nested_type_wknd.hpp>
 	<boost/mpl/aux_/na_spec.hpp>
@@ -1087,7 +1764,11 @@
 	<boost/preprocessor/inc.hpp>
 	<boost/preprocessor/cat.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\preprocessor\ext_params.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/preprocessor/ext_params.hpp
+>>>>>>> origin/master
 	<boost/mpl/aux_/config/preprocessor.hpp>
 	<boost/mpl/aux_/preprocessor/filter_params.hpp>
 	<boost/mpl/aux_/preprocessor/sub.hpp>
@@ -1098,10 +1779,17 @@
 	<boost/preprocessor/tuple/elem.hpp>
 	<boost/preprocessor/cat.hpp>
 
+<<<<<<< HEAD
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\dec.hpp
+	<boost/preprocessor/arithmetic/dec.hpp>
+
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\is_convertible.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/dec.hpp
 	<boost/preprocessor/arithmetic/dec.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/is_convertible.hpp
+>>>>>>> origin/master
 	<boost/type_traits/intrinsics.hpp>
 	<boost/type_traits/detail/yes_no_type.hpp>
 	<boost/type_traits/config.hpp>
@@ -1118,7 +1806,11 @@
 	<boost/type_traits/detail/bool_trait_def.hpp>
 	<boost/type_traits/detail/bool_trait_undef.hpp>
 
+<<<<<<< HEAD
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\intrinsics.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/intrinsics.hpp
+>>>>>>> origin/master
 	<boost/type_traits/config.hpp>
 	<boost/type_traits/is_same.hpp>
 	<algorithm>
@@ -1141,41 +1833,74 @@
 	<boost/type_traits/is_volatile.hpp>
 	<boost/type_traits/is_void.hpp>
 
+<<<<<<< HEAD
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\config.hpp
+	<boost/config.hpp>
+	<boost/detail/workaround.hpp>
+
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\is_same.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/config.hpp
 	<boost/config.hpp>
 	<boost/detail/workaround.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/is_same.hpp
+>>>>>>> origin/master
 	<boost/type_traits/config.hpp>
 	<boost/type_traits/detail/bool_trait_def.hpp>
 	<boost/type_traits/detail/bool_trait_undef.hpp>
 
+<<<<<<< HEAD
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\detail\bool_trait_def.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/detail/bool_trait_def.hpp
+>>>>>>> origin/master
 	<boost/type_traits/detail/template_arity_spec.hpp>
 	<boost/type_traits/integral_constant.hpp>
 	<boost/mpl/bool.hpp>
 	<boost/mpl/aux_/lambda_support.hpp>
 	<boost/config.hpp>
 
+<<<<<<< HEAD
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\detail\template_arity_spec.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/detail/template_arity_spec.hpp
+>>>>>>> origin/master
 	<boost/mpl/int.hpp>
 	<boost/mpl/aux_/template_arity_fwd.hpp>
 	<boost/mpl/aux_/preprocessor/params.hpp>
 	<boost/mpl/aux_/config/lambda.hpp>
 	<boost/mpl/aux_/config/overload_resolution.hpp>
 
+<<<<<<< HEAD
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\integral_constant.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/integral_constant.hpp
+>>>>>>> origin/master
 	<boost/config.hpp>
 	<boost/mpl/bool.hpp>
 	<boost/mpl/integral_c.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\integral_c.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/integral_c.hpp
+>>>>>>> origin/master
 	<boost/mpl/integral_c_fwd.hpp>
 	<boost/mpl/aux_/config/ctps.hpp>
 	<boost/mpl/aux_/config/static_constant.hpp>
 	<boost/mpl/aux_/config/workaround.hpp>
 	<boost/mpl/aux_/integral_wrapper.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\integral_c_fwd.hpp
+	<boost/mpl/aux_/config/workaround.hpp>
+	<boost/mpl/aux_/adl_barrier.hpp>
+
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\detail\bool_trait_undef.hpp
+
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\is_function.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/integral_c_fwd.hpp
 	<boost/mpl/aux_/config/workaround.hpp>
 	<boost/mpl/aux_/adl_barrier.hpp>
@@ -1183,6 +1908,7 @@
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/detail/bool_trait_undef.hpp
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/is_function.hpp
+>>>>>>> origin/master
 	<boost/type_traits/is_reference.hpp>
 	<boost/type_traits/detail/false_result.hpp>
 	<boost/config.hpp>
@@ -1192,7 +1918,11 @@
 	<boost/type_traits/detail/bool_trait_def.hpp>
 	<boost/type_traits/detail/bool_trait_undef.hpp>
 
+<<<<<<< HEAD
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\is_reference.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/is_reference.hpp
+>>>>>>> origin/master
 	<boost/type_traits/config.hpp>
 	<boost/type_traits/is_lvalue_reference.hpp>
 	<boost/type_traits/is_rvalue_reference.hpp>
@@ -1200,23 +1930,55 @@
 	<boost/type_traits/detail/bool_trait_def.hpp>
 	<boost/type_traits/detail/bool_trait_undef.hpp>
 
+<<<<<<< HEAD
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\is_lvalue_reference.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/is_lvalue_reference.hpp
+>>>>>>> origin/master
 	<boost/type_traits/config.hpp>
 	<boost/type_traits/detail/bool_trait_def.hpp>
 	<boost/type_traits/detail/bool_trait_undef.hpp>
 
+<<<<<<< HEAD
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\is_rvalue_reference.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/is_rvalue_reference.hpp
+>>>>>>> origin/master
 	<boost/type_traits/config.hpp>
 	<boost/type_traits/detail/bool_trait_def.hpp>
 	<boost/type_traits/detail/bool_trait_undef.hpp>
 
+<<<<<<< HEAD
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\ice.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/ice.hpp
+>>>>>>> origin/master
 	<boost/type_traits/detail/yes_no_type.hpp>
 	<boost/type_traits/detail/ice_or.hpp>
 	<boost/type_traits/detail/ice_and.hpp>
 	<boost/type_traits/detail/ice_not.hpp>
 	<boost/type_traits/detail/ice_eq.hpp>
 
+<<<<<<< HEAD
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\detail\yes_no_type.hpp
+
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\detail\ice_or.hpp
+	<boost/config.hpp>
+
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\detail\ice_and.hpp
+	<boost/config.hpp>
+
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\detail\ice_not.hpp
+	<boost/config.hpp>
+
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\detail\ice_eq.hpp
+	<boost/config.hpp>
+
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\detail\false_result.hpp
+	<boost/config.hpp>
+
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\detail\is_function_ptr_helper.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/detail/yes_no_type.hpp
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/detail/ice_or.hpp
@@ -1235,15 +1997,23 @@
 	<boost/config.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/detail/is_function_ptr_helper.hpp
+>>>>>>> origin/master
 	<boost/type_traits/config.hpp>
 	<boost/preprocessor/iterate.hpp>
 	<boost/preprocessor/enum_params.hpp>
 	<boost/preprocessor/comma_if.hpp>
 
+<<<<<<< HEAD
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\iterate.hpp
+	<boost/preprocessor/iteration/iterate.hpp>
+
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\iteration\iterate.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/iterate.hpp
 	<boost/preprocessor/iteration/iterate.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/iteration/iterate.hpp
+>>>>>>> origin/master
 	<boost/preprocessor/arithmetic/dec.hpp>
 	<boost/preprocessor/arithmetic/inc.hpp>
 	<boost/preprocessor/array/elem.hpp>
@@ -1252,12 +2022,36 @@
 	<boost/preprocessor/slot/slot.hpp>
 	<boost/preprocessor/tuple/elem.hpp>
 
+<<<<<<< HEAD
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\array\elem.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/array/elem.hpp
+>>>>>>> origin/master
 	<boost/preprocessor/array/data.hpp>
 	<boost/preprocessor/array/size.hpp>
 	<boost/preprocessor/config/config.hpp>
 	<boost/preprocessor/tuple/elem.hpp>
 
+<<<<<<< HEAD
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\array\data.hpp
+	<boost/preprocessor/config/config.hpp>
+	<boost/preprocessor/tuple/elem.hpp>
+
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\array\size.hpp
+	<boost/preprocessor/config/config.hpp>
+	<boost/preprocessor/tuple/elem.hpp>
+
+1451930745 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\slot\slot.hpp
+	<boost/preprocessor/cat.hpp>
+	<boost/preprocessor/slot/detail/def.hpp>
+
+1451930745 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\slot\detail\def.hpp
+
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\enum_params.hpp
+	<boost/preprocessor/repetition/enum_params.hpp>
+
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\repetition\enum_params.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/array/data.hpp
 	<boost/preprocessor/config/config.hpp>
 	<boost/preprocessor/tuple/elem.hpp>
@@ -1276,18 +2070,27 @@
 	<boost/preprocessor/repetition/enum_params.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/repetition/enum_params.hpp
+>>>>>>> origin/master
 	<boost/preprocessor/config/config.hpp>
 	<boost/preprocessor/punctuation/comma_if.hpp>
 	<boost/preprocessor/repetition/repeat.hpp>
 
+<<<<<<< HEAD
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\detail\is_function_ptr_tester.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/detail/is_function_ptr_tester.hpp
+>>>>>>> origin/master
 	<boost/type_traits/detail/yes_no_type.hpp>
 	<boost/type_traits/config.hpp>
 	<boost/preprocessor/iterate.hpp>
 	<boost/preprocessor/enum_params.hpp>
 	<boost/preprocessor/comma_if.hpp>
 
+<<<<<<< HEAD
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\is_volatile.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/is_volatile.hpp
+>>>>>>> origin/master
 	<boost/config.hpp>
 	<boost/detail/workaround.hpp>
 	<boost/type_traits/detail/cv_traits_impl.hpp>
@@ -1295,18 +2098,35 @@
 	<boost/type_traits/detail/bool_trait_def.hpp>
 	<boost/type_traits/detail/bool_trait_undef.hpp>
 
+<<<<<<< HEAD
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\detail\cv_traits_impl.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/detail/cv_traits_impl.hpp
+>>>>>>> origin/master
 	<cstddef>
 	<boost/config.hpp>
 	<boost/detail/workaround.hpp>
 
+<<<<<<< HEAD
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\remove_bounds.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/remove_bounds.hpp
+>>>>>>> origin/master
 	<boost/config.hpp>
 	<cstddef>
 	<boost/detail/workaround.hpp>
 	<boost/type_traits/detail/type_trait_def.hpp>
 	<boost/type_traits/detail/type_trait_undef.hpp>
 
+<<<<<<< HEAD
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\detail\type_trait_def.hpp
+	<boost/type_traits/detail/template_arity_spec.hpp>
+	<boost/mpl/aux_/lambda_support.hpp>
+
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\detail\type_trait_undef.hpp
+
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\is_void.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/detail/type_trait_def.hpp
 	<boost/type_traits/detail/template_arity_spec.hpp>
 	<boost/mpl/aux_/lambda_support.hpp>
@@ -1314,17 +2134,26 @@
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/detail/type_trait_undef.hpp
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/is_void.hpp
+>>>>>>> origin/master
 	<boost/config.hpp>
 	<boost/type_traits/detail/bool_trait_def.hpp>
 	<boost/type_traits/detail/bool_trait_undef.hpp>
 
+<<<<<<< HEAD
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\is_array.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/is_array.hpp
+>>>>>>> origin/master
 	<boost/type_traits/config.hpp>
 	<cstddef>
 	<boost/type_traits/detail/bool_trait_def.hpp>
 	<boost/type_traits/detail/bool_trait_undef.hpp>
 
+<<<<<<< HEAD
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\is_arithmetic.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/is_arithmetic.hpp
+>>>>>>> origin/master
 	<boost/type_traits/is_integral.hpp>
 	<boost/type_traits/is_float.hpp>
 	<boost/type_traits/detail/ice_or.hpp>
@@ -1332,16 +2161,28 @@
 	<boost/type_traits/detail/bool_trait_def.hpp>
 	<boost/type_traits/detail/bool_trait_undef.hpp>
 
+<<<<<<< HEAD
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\is_integral.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/is_integral.hpp
+>>>>>>> origin/master
 	<boost/config.hpp>
 	<boost/type_traits/detail/bool_trait_def.hpp>
 	<boost/type_traits/detail/bool_trait_undef.hpp>
 
+<<<<<<< HEAD
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\is_float.hpp
+	<boost/type_traits/detail/bool_trait_def.hpp>
+	<boost/type_traits/detail/bool_trait_undef.hpp>
+
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\is_abstract.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/is_float.hpp
 	<boost/type_traits/detail/bool_trait_def.hpp>
 	<boost/type_traits/detail/bool_trait_undef.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/is_abstract.hpp
+>>>>>>> origin/master
 	<boost/type_traits/intrinsics.hpp>
 	<boost/static_assert.hpp>
 	<boost/type_traits/detail/yes_no_type.hpp>
@@ -1351,11 +2192,19 @@
 	<boost/type_traits/detail/bool_trait_def.hpp>
 	<boost/type_traits/detail/bool_trait_undef.hpp>
 
+<<<<<<< HEAD
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\static_assert.hpp
+	<boost/config.hpp>
+	<boost/detail/workaround.hpp>
+
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\is_class.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/static_assert.hpp
 	<boost/config.hpp>
 	<boost/detail/workaround.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/is_class.hpp
+>>>>>>> origin/master
 	<boost/type_traits/config.hpp>
 	<boost/type_traits/intrinsics.hpp>
 	<boost/type_traits/is_union.hpp>
@@ -1371,14 +2220,22 @@
 	<boost/type_traits/detail/bool_trait_def.hpp>
 	<boost/type_traits/detail/bool_trait_undef.hpp>
 
+<<<<<<< HEAD
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\is_union.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/is_union.hpp
+>>>>>>> origin/master
 	<boost/type_traits/remove_cv.hpp>
 	<boost/type_traits/config.hpp>
 	<boost/type_traits/intrinsics.hpp>
 	<boost/type_traits/detail/bool_trait_def.hpp>
 	<boost/type_traits/detail/bool_trait_undef.hpp>
 
+<<<<<<< HEAD
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\remove_cv.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/remove_cv.hpp
+>>>>>>> origin/master
 	<boost/type_traits/detail/cv_traits_impl.hpp>
 	<boost/config.hpp>
 	<boost/detail/workaround.hpp>
@@ -1386,7 +2243,11 @@
 	<boost/type_traits/detail/type_trait_def.hpp>
 	<boost/type_traits/detail/type_trait_undef.hpp>
 
+<<<<<<< HEAD
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\is_scalar.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/is_scalar.hpp
+>>>>>>> origin/master
 	<boost/type_traits/is_arithmetic.hpp>
 	<boost/type_traits/is_enum.hpp>
 	<boost/type_traits/is_pointer.hpp>
@@ -1396,7 +2257,11 @@
 	<boost/type_traits/detail/bool_trait_def.hpp>
 	<boost/type_traits/detail/bool_trait_undef.hpp>
 
+<<<<<<< HEAD
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\is_enum.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/is_enum.hpp
+>>>>>>> origin/master
 	<boost/type_traits/intrinsics.hpp>
 	<boost/type_traits/add_reference.hpp>
 	<boost/type_traits/is_arithmetic.hpp>
@@ -1410,14 +2275,22 @@
 	<boost/type_traits/detail/bool_trait_def.hpp>
 	<boost/type_traits/detail/bool_trait_undef.hpp>
 
+<<<<<<< HEAD
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\add_reference.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/add_reference.hpp
+>>>>>>> origin/master
 	<boost/type_traits/is_reference.hpp>
 	<boost/detail/workaround.hpp>
 	<boost/config.hpp>
 	<boost/type_traits/detail/type_trait_def.hpp>
 	<boost/type_traits/detail/type_trait_undef.hpp>
 
+<<<<<<< HEAD
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\is_pointer.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/is_pointer.hpp
+>>>>>>> origin/master
 	<boost/type_traits/is_member_pointer.hpp>
 	<boost/type_traits/detail/ice_and.hpp>
 	<boost/type_traits/detail/ice_not.hpp>
@@ -1426,7 +2299,11 @@
 	<boost/type_traits/detail/bool_trait_def.hpp>
 	<boost/type_traits/detail/bool_trait_undef.hpp>
 
+<<<<<<< HEAD
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\is_member_pointer.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/is_member_pointer.hpp
+>>>>>>> origin/master
 	<boost/type_traits/config.hpp>
 	<boost/detail/workaround.hpp>
 	<boost/type_traits/is_member_function_pointer.hpp>
@@ -1439,7 +2316,11 @@
 	<boost/type_traits/detail/bool_trait_def.hpp>
 	<boost/type_traits/detail/bool_trait_undef.hpp>
 
+<<<<<<< HEAD
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\is_member_function_pointer.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/is_member_function_pointer.hpp
+>>>>>>> origin/master
 	<boost/type_traits/config.hpp>
 	<boost/detail/workaround.hpp>
 	<boost/type_traits/detail/is_mem_fun_pointer_impl.hpp>
@@ -1453,20 +2334,32 @@
 	<boost/type_traits/detail/bool_trait_def.hpp>
 	<boost/type_traits/detail/bool_trait_undef.hpp>
 
+<<<<<<< HEAD
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\detail\is_mem_fun_pointer_impl.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/detail/is_mem_fun_pointer_impl.hpp
+>>>>>>> origin/master
 	<boost/config.hpp>
 	<boost/preprocessor/iterate.hpp>
 	<boost/preprocessor/enum_params.hpp>
 	<boost/preprocessor/comma_if.hpp>
 
+<<<<<<< HEAD
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\detail\is_mem_fun_pointer_tester.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/detail/is_mem_fun_pointer_tester.hpp
+>>>>>>> origin/master
 	<boost/type_traits/detail/yes_no_type.hpp>
 	<boost/type_traits/config.hpp>
 	<boost/preprocessor/iterate.hpp>
 	<boost/preprocessor/enum_params.hpp>
 	<boost/preprocessor/comma_if.hpp>
 
+<<<<<<< HEAD
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\is_polymorphic.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/is_polymorphic.hpp
+>>>>>>> origin/master
 	<boost/type_traits/intrinsics.hpp>
 	<boost/type_traits/is_class.hpp>
 	<boost/type_traits/remove_cv.hpp>
@@ -1474,33 +2367,65 @@
 	<boost/detail/workaround.hpp>
 	<boost/type_traits/detail/bool_trait_undef.hpp>
 
+<<<<<<< HEAD
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\add_lvalue_reference.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/add_lvalue_reference.hpp
+>>>>>>> origin/master
 	<boost/type_traits/add_reference.hpp>
 	<boost/type_traits/detail/type_trait_def.hpp>
 	<boost/type_traits/detail/type_trait_undef.hpp>
 
+<<<<<<< HEAD
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\add_rvalue_reference.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/add_rvalue_reference.hpp
+>>>>>>> origin/master
 	<boost/config.hpp>
 	<boost/type_traits/is_void.hpp>
 	<boost/type_traits/is_reference.hpp>
 	<boost/type_traits/detail/type_trait_def.hpp>
 	<boost/type_traits/detail/type_trait_undef.hpp>
 
+<<<<<<< HEAD
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\remove_reference.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/remove_reference.hpp
+>>>>>>> origin/master
 	<boost/config.hpp>
 	<boost/detail/workaround.hpp>
 	<boost/type_traits/detail/type_trait_def.hpp>
 	<boost/type_traits/detail/type_trait_undef.hpp>
 
+<<<<<<< HEAD
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\utility\declval.hpp
+	<boost/config.hpp>
+	<boost/type_traits/add_rvalue_reference.hpp>
+
+1451930742 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\iterator\detail\config_def.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/utility/declval.hpp
 	<boost/config.hpp>
 	<boost/type_traits/add_rvalue_reference.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/iterator/detail/config_def.hpp
+>>>>>>> origin/master
 	<boost/config.hpp>
 	<boost/detail/workaround.hpp>
 	<boost/type_traits/is_convertible.hpp>
 
+<<<<<<< HEAD
+1451930742 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\iterator\detail\config_undef.hpp
+
+1451930742 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\iterator\iterator_traits.hpp
+	<boost/detail/iterator.hpp>
+	<boost/detail/workaround.hpp>
+
+1451930741 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\detail\iterator.hpp
+	<iterator>
+
+1451930742 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\iterator\iterator_categories.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/iterator/detail/config_undef.hpp
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/iterator/iterator_traits.hpp
@@ -1511,6 +2436,7 @@
 	<iterator>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/iterator/iterator_categories.hpp
+>>>>>>> origin/master
 	<boost/config.hpp>
 	<boost/detail/iterator.hpp>
 	<boost/iterator/detail/config_def.hpp>
@@ -1523,7 +2449,11 @@
 	<boost/static_assert.hpp>
 	<boost/iterator/detail/config_undef.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\eval_if.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/eval_if.hpp
+>>>>>>> origin/master
 	<boost/mpl/if.hpp>
 	<boost/mpl/aux_/na_spec.hpp>
 	<boost/mpl/aux_/lambda_support.hpp>
@@ -1531,7 +2461,11 @@
 	<boost/mpl/aux_/config/gcc.hpp>
 	<boost/mpl/aux_/config/workaround.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\if.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/if.hpp
+>>>>>>> origin/master
 	<boost/mpl/aux_/value_wknd.hpp>
 	<boost/mpl/aux_/static_cast.hpp>
 	<boost/mpl/aux_/na_spec.hpp>
@@ -1540,13 +2474,28 @@
 	<boost/mpl/aux_/config/ctps.hpp>
 	<boost/mpl/aux_/config/workaround.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\value_wknd.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/value_wknd.hpp
+>>>>>>> origin/master
 	<boost/mpl/aux_/static_cast.hpp>
 	<boost/mpl/aux_/config/integral.hpp>
 	<boost/mpl/aux_/config/eti.hpp>
 	<boost/mpl/aux_/config/workaround.hpp>
 	<boost/mpl/int.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\config\integral.hpp
+	<boost/mpl/aux_/config/msvc.hpp>
+	<boost/mpl/aux_/config/workaround.hpp>
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\identity.hpp
+	<boost/mpl/aux_/na_spec.hpp>
+	<boost/mpl/aux_/lambda_support.hpp>
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\placeholders.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/config/integral.hpp
 	<boost/mpl/aux_/config/msvc.hpp>
 	<boost/mpl/aux_/config/workaround.hpp>
@@ -1556,6 +2505,7 @@
 	<boost/mpl/aux_/lambda_support.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/placeholders.hpp
+>>>>>>> origin/master
 	<boost/mpl/arg.hpp>
 	<boost/mpl/aux_/adl_barrier.hpp>
 	<boost/mpl/aux_/config/use_preprocessed.hpp>
@@ -1565,7 +2515,11 @@
 	<boost/preprocessor/iterate.hpp>
 	<boost/preprocessor/cat.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\arg.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/arg.hpp
+>>>>>>> origin/master
 	<boost/mpl/arg_fwd.hpp>
 	<boost/mpl/aux_/na.hpp>
 	<boost/mpl/aux_/na_assert.hpp>
@@ -1584,18 +2538,30 @@
 	<boost/preprocessor/inc.hpp>
 	<boost/preprocessor/cat.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\arg_fwd.hpp
+	<boost/mpl/aux_/adl_barrier.hpp>
+	<boost/mpl/aux_/nttp_decl.hpp>
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\na_assert.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/arg_fwd.hpp
 	<boost/mpl/aux_/adl_barrier.hpp>
 	<boost/mpl/aux_/nttp_decl.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/na_assert.hpp
+>>>>>>> origin/master
 	<boost/mpl/aux_/na.hpp>
 	<boost/mpl/aux_/config/msvc.hpp>
 	<boost/mpl/aux_/config/workaround.hpp>
 	<boost/mpl/assert.hpp>
 	<boost/static_assert.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\assert.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/assert.hpp
+>>>>>>> origin/master
 	<boost/mpl/not.hpp>
 	<boost/mpl/aux_/value_wknd.hpp>
 	<boost/mpl/aux_/nested_type_wknd.hpp>
@@ -1615,13 +2581,26 @@
 	<cstddef>
 	<boost/mpl/if.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\not.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/not.hpp
+>>>>>>> origin/master
 	<boost/mpl/bool.hpp>
 	<boost/mpl/aux_/nttp_decl.hpp>
 	<boost/mpl/aux_/nested_type_wknd.hpp>
 	<boost/mpl/aux_/na_spec.hpp>
 	<boost/mpl/aux_/lambda_support.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\config\gpu.hpp
+	<boost/config.hpp>
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\config\pp_counter.hpp
+	<boost/mpl/aux_/config/msvc.hpp>
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\arity_spec.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/config/gpu.hpp
 	<boost/config.hpp>
 
@@ -1629,6 +2608,7 @@
 	<boost/mpl/aux_/config/msvc.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/arity_spec.hpp
+>>>>>>> origin/master
 	<boost/mpl/int.hpp>
 	<boost/mpl/limits/arity.hpp>
 	<boost/mpl/aux_/config/dtp.hpp>
@@ -1639,11 +2619,19 @@
 	<boost/mpl/aux_/config/lambda.hpp>
 	<boost/mpl/aux_/config/static_constant.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\arg_typedef.hpp
+	<boost/mpl/aux_/config/lambda.hpp>
+	<boost/mpl/aux_/config/workaround.hpp>
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\preprocessor\default_params.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/arg_typedef.hpp
 	<boost/mpl/aux_/config/lambda.hpp>
 	<boost/mpl/aux_/config/workaround.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/preprocessor/default_params.hpp
+>>>>>>> origin/master
 	<boost/mpl/aux_/config/preprocessor.hpp>
 	<boost/preprocessor/cat.hpp>
 	<boost/preprocessor/tuple/elem.hpp>
@@ -1652,7 +2640,11 @@
 	<boost/preprocessor/inc.hpp>
 	<boost/preprocessor/cat.hpp>
 
+<<<<<<< HEAD
+1451930742 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\iterator\detail\facade_iterator_category.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/iterator/detail/facade_iterator_category.hpp
+>>>>>>> origin/master
 	<boost/iterator/iterator_categories.hpp>
 	<boost/mpl/or.hpp>
 	<boost/mpl/and.hpp>
@@ -1669,7 +2661,11 @@
 	<boost/detail/indirect_traits.hpp>
 	<boost/iterator/detail/config_undef.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\and.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/and.hpp
+>>>>>>> origin/master
 	<boost/mpl/aux_/config/use_preprocessed.hpp>
 	<boost/mpl/bool.hpp>
 	<boost/mpl/aux_/nested_type_wknd.hpp>
@@ -1678,7 +2674,11 @@
 	<boost/mpl/aux_/include_preprocessed.hpp>
 	<boost/mpl/aux_/logical_op.hpp>
 
+<<<<<<< HEAD
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\is_const.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/is_const.hpp
+>>>>>>> origin/master
 	<boost/config.hpp>
 	<boost/detail/workaround.hpp>
 	<boost/type_traits/detail/cv_traits_impl.hpp>
@@ -1687,7 +2687,11 @@
 	<boost/type_traits/detail/bool_trait_def.hpp>
 	<boost/type_traits/detail/bool_trait_undef.hpp>
 
+<<<<<<< HEAD
+1451930741 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\detail\indirect_traits.hpp
+=======
 1454957490 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/detail/indirect_traits.hpp
+>>>>>>> origin/master
 	<boost/type_traits/is_function.hpp>
 	<boost/type_traits/is_reference.hpp>
 	<boost/type_traits/is_pointer.hpp>
@@ -1708,7 +2712,11 @@
 	<boost/mpl/not.hpp>
 	<boost/mpl/aux_/lambda_support.hpp>
 
+<<<<<<< HEAD
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\remove_pointer.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/remove_pointer.hpp
+>>>>>>> origin/master
 	<boost/config.hpp>
 	<boost/detail/workaround.hpp>
 	<boost/type_traits/remove_cv.hpp>
@@ -1716,31 +2724,54 @@
 	<boost/type_traits/detail/type_trait_def.hpp>
 	<boost/type_traits/detail/type_trait_undef.hpp>
 
+<<<<<<< HEAD
+1451930742 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\iterator\detail\enable_if.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/iterator/detail/enable_if.hpp
+>>>>>>> origin/master
 	<boost/detail/workaround.hpp>
 	<boost/mpl/identity.hpp>
 	<boost/iterator/detail/config_def.hpp>
 	<boost/iterator/detail/config_undef.hpp>
 
+<<<<<<< HEAD
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\utility\addressof.hpp
+	<boost/core/addressof.hpp>
+
+1451930741 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\core\addressof.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/utility/addressof.hpp
 	<boost/core/addressof.hpp>
 
 1454957490 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/core/addressof.hpp
+>>>>>>> origin/master
 	<boost/config.hpp>
 	<boost/detail/workaround.hpp>
 	<cstddef>
 
+<<<<<<< HEAD
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\add_const.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/add_const.hpp
+>>>>>>> origin/master
 	<boost/config.hpp>
 	<boost/type_traits/detail/type_trait_def.hpp>
 	<boost/type_traits/detail/type_trait_undef.hpp>
 
+<<<<<<< HEAD
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\add_pointer.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/add_pointer.hpp
+>>>>>>> origin/master
 	<boost/type_traits/remove_reference.hpp>
 	<boost/type_traits/detail/type_trait_def.hpp>
 	<boost/type_traits/detail/type_trait_undef.hpp>
 
+<<<<<<< HEAD
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\remove_const.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/remove_const.hpp
+>>>>>>> origin/master
 	<boost/type_traits/is_volatile.hpp>
 	<boost/type_traits/detail/cv_traits_impl.hpp>
 	<boost/config.hpp>
@@ -1749,7 +2780,11 @@
 	<boost/type_traits/detail/type_trait_def.hpp>
 	<boost/type_traits/detail/type_trait_undef.hpp>
 
+<<<<<<< HEAD
+1451930746 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\type_traits\is_pod.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/type_traits/is_pod.hpp
+>>>>>>> origin/master
 	<boost/type_traits/config.hpp>
 	<boost/type_traits/is_void.hpp>
 	<boost/type_traits/is_scalar.hpp>
@@ -1759,12 +2794,20 @@
 	<boost/type_traits/detail/bool_trait_def.hpp>
 	<boost/type_traits/detail/bool_trait_undef.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\always.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/always.hpp
+>>>>>>> origin/master
 	<boost/mpl/aux_/preprocessor/default_params.hpp>
 	<boost/mpl/aux_/na.hpp>
 	<boost/mpl/aux_/arity_spec.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\apply.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/apply.hpp
+>>>>>>> origin/master
 	<boost/mpl/apply_fwd.hpp>
 	<boost/mpl/apply_wrap.hpp>
 	<boost/mpl/placeholders.hpp>
@@ -1790,7 +2833,11 @@
 	<boost/preprocessor/cat.hpp>
 	<boost/mpl/aux_/count_args.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\apply_fwd.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/apply_fwd.hpp
+>>>>>>> origin/master
 	<boost/mpl/aux_/na.hpp>
 	<boost/mpl/aux_/config/use_preprocessed.hpp>
 	<boost/mpl/aux_/include_preprocessed.hpp>
@@ -1803,7 +2850,11 @@
 	<boost/preprocessor/iterate.hpp>
 	<boost/preprocessor/cat.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\apply_wrap.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/apply_wrap.hpp
+>>>>>>> origin/master
 	<boost/mpl/aux_/arity.hpp>
 	<boost/mpl/aux_/has_apply.hpp>
 	<boost/mpl/aux_/na.hpp>
@@ -1826,11 +2877,19 @@
 	<boost/preprocessor/iterate.hpp>
 	<boost/mpl/aux_/msvc_dtw.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\has_apply.hpp
+	<boost/mpl/has_xxx.hpp>
+	<boost/mpl/aux_/config/has_apply.hpp>
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\has_xxx.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/has_apply.hpp
 	<boost/mpl/has_xxx.hpp>
 	<boost/mpl/aux_/config/has_apply.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/has_xxx.hpp
+>>>>>>> origin/master
 	<boost/mpl/bool.hpp>
 	<boost/mpl/aux_/na_spec.hpp>
 	<boost/mpl/aux_/type_wrapper.hpp>
@@ -1850,6 +2909,24 @@
 	<boost/mpl/if.hpp>
 	<boost/mpl/bool.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\type_wrapper.hpp
+	<boost/mpl/aux_/config/ctps.hpp>
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\config\has_xxx.hpp
+	<boost/mpl/aux_/config/overload_resolution.hpp>
+	<boost/mpl/aux_/config/workaround.hpp>
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\config\msvc_typename.hpp
+	<boost/mpl/aux_/config/msvc.hpp>
+	<boost/mpl/aux_/config/workaround.hpp>
+
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\repetition\enum_trailing_params.hpp
+	<boost/preprocessor/config/config.hpp>
+	<boost/preprocessor/repetition/repeat.hpp>
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\config\has_apply.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/type_wrapper.hpp
 	<boost/mpl/aux_/config/ctps.hpp>
 
@@ -1866,20 +2943,38 @@
 	<boost/preprocessor/repetition/repeat.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/config/has_apply.hpp
+>>>>>>> origin/master
 	<boost/mpl/aux_/config/has_xxx.hpp>
 	<boost/mpl/aux_/config/msvc.hpp>
 	<boost/mpl/aux_/config/workaround.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\msvc_never_true.hpp
+	<boost/mpl/aux_/config/msvc.hpp>
+	<boost/mpl/aux_/config/workaround.hpp>
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\preprocessor\add.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/msvc_never_true.hpp
 	<boost/mpl/aux_/config/msvc.hpp>
 	<boost/mpl/aux_/config/workaround.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/preprocessor/add.hpp
+>>>>>>> origin/master
 	<boost/mpl/aux_/config/preprocessor.hpp>
 	<boost/mpl/aux_/preprocessor/tuple.hpp>
 	<boost/preprocessor/cat.hpp>
 	<boost/preprocessor/arithmetic/add.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\config\bcc.hpp
+	<boost/mpl/aux_/config/workaround.hpp>
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\msvc_dtw.hpp
+	<boost/mpl/aux_/preprocessor/params.hpp>
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\lambda.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/config/bcc.hpp
 	<boost/mpl/aux_/config/workaround.hpp>
 
@@ -1887,6 +2982,7 @@
 	<boost/mpl/aux_/preprocessor/params.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/lambda.hpp
+>>>>>>> origin/master
 	<boost/mpl/lambda_fwd.hpp>
 	<boost/mpl/bind.hpp>
 	<boost/mpl/aux_/config/lambda.hpp>
@@ -1894,7 +2990,11 @@
 	<boost/mpl/aux_/lambda_no_ctps.hpp>
 	<boost/mpl/aux_/lambda_support.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\bind.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/bind.hpp
+>>>>>>> origin/master
 	<boost/mpl/bind_fwd.hpp>
 	<boost/mpl/placeholders.hpp>
 	<boost/mpl/next.hpp>
@@ -1929,7 +3029,11 @@
 	<boost/preprocessor/inc.hpp>
 	<boost/mpl/aux_/count_args.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\bind_fwd.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/bind_fwd.hpp
+>>>>>>> origin/master
 	<boost/mpl/aux_/na.hpp>
 	<boost/mpl/aux_/config/bind.hpp>
 	<boost/mpl/aux_/config/use_preprocessed.hpp>
@@ -1942,6 +3046,19 @@
 	<boost/preprocessor/iterate.hpp>
 	<boost/preprocessor/cat.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\config\bind.hpp
+	<boost/mpl/aux_/config/msvc.hpp>
+	<boost/mpl/aux_/config/workaround.hpp>
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\config\dmc_ambiguous_ctps.hpp
+	<boost/mpl/aux_/config/workaround.hpp>
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\next.hpp
+	<boost/mpl/next_prior.hpp>
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\next_prior.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/config/bind.hpp
 	<boost/mpl/aux_/config/msvc.hpp>
 	<boost/mpl/aux_/config/workaround.hpp>
@@ -1953,32 +3070,52 @@
 	<boost/mpl/next_prior.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/next_prior.hpp
+>>>>>>> origin/master
 	<boost/mpl/aux_/common_name_wknd.hpp>
 	<boost/mpl/aux_/na_spec.hpp>
 	<boost/mpl/aux_/lambda_support.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\common_name_wknd.hpp
+	<boost/mpl/aux_/config/workaround.hpp>
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\protect.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/common_name_wknd.hpp
 	<boost/mpl/aux_/config/workaround.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/protect.hpp
+>>>>>>> origin/master
 	<boost/mpl/aux_/arity.hpp>
 	<boost/mpl/aux_/config/dtp.hpp>
 	<boost/mpl/aux_/nttp_decl.hpp>
 	<boost/mpl/aux_/na_spec.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\preprocessor\partial_spec_params.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/preprocessor/partial_spec_params.hpp
+>>>>>>> origin/master
 	<boost/mpl/limits/arity.hpp>
 	<boost/mpl/aux_/preprocessor/params.hpp>
 	<boost/mpl/aux_/preprocessor/enum.hpp>
 	<boost/mpl/aux_/preprocessor/sub.hpp>
 	<boost/preprocessor/comma_if.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\preprocessor\repeat.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/preprocessor/repeat.hpp
+>>>>>>> origin/master
 	<boost/mpl/aux_/config/preprocessor.hpp>
 	<boost/preprocessor/cat.hpp>
 	<boost/preprocessor/repeat.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\count_args.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/count_args.hpp
+>>>>>>> origin/master
 	<boost/preprocessor/expr_if.hpp>
 	<boost/preprocessor/inc.hpp>
 	<boost/preprocessor/cat.hpp>
@@ -1988,18 +3125,32 @@
 	<boost/preprocessor/repeat.hpp>
 	<boost/preprocessor/inc.hpp>
 
+<<<<<<< HEAD
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\expr_if.hpp
+	<boost/preprocessor/control/expr_if.hpp>
+
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\control\expr_if.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/expr_if.hpp
 	<boost/preprocessor/control/expr_if.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/control/expr_if.hpp
+>>>>>>> origin/master
 	<boost/preprocessor/config/config.hpp>
 	<boost/preprocessor/control/expr_iif.hpp>
 	<boost/preprocessor/logical/bool.hpp>
 
+<<<<<<< HEAD
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\enum_shifted_params.hpp
+	<boost/preprocessor/repetition/enum_shifted_params.hpp>
+
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\repetition\enum_shifted_params.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/enum_shifted_params.hpp
 	<boost/preprocessor/repetition/enum_shifted_params.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/repetition/enum_shifted_params.hpp
+>>>>>>> origin/master
 	<boost/preprocessor/arithmetic/dec.hpp>
 	<boost/preprocessor/arithmetic/inc.hpp>
 	<boost/preprocessor/cat.hpp>
@@ -2007,7 +3158,11 @@
 	<boost/preprocessor/punctuation/comma_if.hpp>
 	<boost/preprocessor/repetition/repeat.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\full_lambda.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/full_lambda.hpp
+>>>>>>> origin/master
 	<boost/mpl/lambda_fwd.hpp>
 	<boost/mpl/bind_fwd.hpp>
 	<boost/mpl/protect.hpp>
@@ -2033,7 +3188,11 @@
 	<boost/preprocessor/inc.hpp>
 	<boost/preprocessor/cat.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\quote.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/quote.hpp
+>>>>>>> origin/master
 	<boost/mpl/void.hpp>
 	<boost/mpl/aux_/has_type.hpp>
 	<boost/mpl/aux_/config/bcc.hpp>
@@ -2047,17 +3206,28 @@
 	<boost/preprocessor/iterate.hpp>
 	<boost/preprocessor/cat.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\void.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/void.hpp
+>>>>>>> origin/master
 	<boost/mpl/void_fwd.hpp>
 	<boost/mpl/bool.hpp>
 	<boost/mpl/aux_/na_spec.hpp>
 	<boost/mpl/aux_/config/msvc.hpp>
 	<boost/mpl/aux_/config/workaround.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\has_type.hpp
+	<boost/mpl/has_xxx.hpp>
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\template_arity.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/has_type.hpp
 	<boost/mpl/has_xxx.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/template_arity.hpp
+>>>>>>> origin/master
 	<boost/mpl/aux_/config/ttp.hpp>
 	<boost/mpl/aux_/config/lambda.hpp>
 	<boost/mpl/aux_/template_arity_fwd.hpp>
@@ -2079,7 +3249,11 @@
 	<boost/preprocessor/cat.hpp>
 	<boost/mpl/aux_/config/eti.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\has_rebind.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/has_rebind.hpp
+>>>>>>> origin/master
 	<boost/mpl/aux_/config/msvc.hpp>
 	<boost/mpl/aux_/config/intel.hpp>
 	<boost/mpl/aux_/config/workaround.hpp>
@@ -2097,39 +3271,65 @@
 	<boost/mpl/aux_/yes_no.hpp>
 	<boost/mpl/aux_/config/static_constant.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\msvc_is_class.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/msvc_is_class.hpp
+>>>>>>> origin/master
 	<boost/mpl/if.hpp>
 	<boost/mpl/bool.hpp>
 	<boost/mpl/aux_/type_wrapper.hpp>
 	<boost/mpl/aux_/yes_no.hpp>
 	<boost/type_traits/is_reference.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\preprocessor\range.hpp
+	<boost/preprocessor/seq/subseq.hpp>
+
+1451930745 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\seq\subseq.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/preprocessor/range.hpp
 	<boost/preprocessor/seq/subseq.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/seq/subseq.hpp
+>>>>>>> origin/master
 	<boost/preprocessor/config/config.hpp>
 	<boost/preprocessor/seq/first_n.hpp>
 	<boost/preprocessor/seq/rest_n.hpp>
 
+<<<<<<< HEAD
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\seq\first_n.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/seq/first_n.hpp
+>>>>>>> origin/master
 	<boost/preprocessor/config/config.hpp>
 	<boost/preprocessor/control/if.hpp>
 	<boost/preprocessor/seq/detail/split.hpp>
 	<boost/preprocessor/tuple/eat.hpp>
 	<boost/preprocessor/tuple/elem.hpp>
 
+<<<<<<< HEAD
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\seq\detail\split.hpp
+	<boost/preprocessor/config/config.hpp>
+
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\seq\rest_n.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/seq/detail/split.hpp
 	<boost/preprocessor/config/config.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/seq/rest_n.hpp
+>>>>>>> origin/master
 	<boost/preprocessor/arithmetic/inc.hpp>
 	<boost/preprocessor/config/config.hpp>
 	<boost/preprocessor/facilities/identity.hpp>
 	<boost/preprocessor/seq/detail/split.hpp>
 	<boost/preprocessor/tuple/elem.hpp>
 
+<<<<<<< HEAD
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\seq\fold_left.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/seq/fold_left.hpp
+>>>>>>> origin/master
 	<boost/preprocessor/arithmetic/dec.hpp>
 	<boost/preprocessor/cat.hpp>
 	<boost/preprocessor/control/if.hpp>
@@ -2138,20 +3338,36 @@
 	<boost/preprocessor/seq/seq.hpp>
 	<boost/preprocessor/seq/size.hpp>
 
+<<<<<<< HEAD
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\seq\seq.hpp
+	<boost/preprocessor/config/config.hpp>
+	<boost/preprocessor/seq/elem.hpp>
+
+1451930744 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\seq\elem.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/seq/seq.hpp
 	<boost/preprocessor/config/config.hpp>
 	<boost/preprocessor/seq/elem.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/seq/elem.hpp
+>>>>>>> origin/master
 	<boost/preprocessor/cat.hpp>
 	<boost/preprocessor/config/config.hpp>
 	<boost/preprocessor/facilities/empty.hpp>
 
+<<<<<<< HEAD
+1451930745 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\preprocessor\seq\size.hpp
+	<boost/preprocessor/cat.hpp>
+	<boost/preprocessor/config/config.hpp>
+
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\aux_\lambda_no_ctps.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/preprocessor/seq/size.hpp
 	<boost/preprocessor/cat.hpp>
 	<boost/preprocessor/config/config.hpp>
 
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/aux_/lambda_no_ctps.hpp
+>>>>>>> origin/master
 	<boost/mpl/lambda_fwd.hpp>
 	<boost/mpl/bind_fwd.hpp>
 	<boost/mpl/protect.hpp>
@@ -2177,7 +3393,11 @@
 	<boost/preprocessor/inc.hpp>
 	<boost/preprocessor/cat.hpp>
 
+<<<<<<< HEAD
+1451930743 c:\users\degryll\documents\github\zbe\extlibs\boost_1_57_0\boost\mpl\is_placeholder.hpp
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/extlibs/boost_1_57_0/boost/mpl/is_placeholder.hpp
+>>>>>>> origin/master
 	<boost/mpl/arg_fwd.hpp>
 	<boost/mpl/bool.hpp>
 	<boost/mpl/aux_/yes_no.hpp>
@@ -2186,7 +3406,11 @@
 	<boost/mpl/aux_/config/ctps.hpp>
 	<boost/mpl/aux_/config/static_constant.hpp>
 
+<<<<<<< HEAD
+1452167500 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\tools\math\collisions\intersectionstest.cpp
+=======
 1454957491 source:/home/ludo/workspace/ZBE/ZBE/src/ZBETest/core/tools/math/collisions/intersectionsTest.cpp
+>>>>>>> origin/master
 	"gtest/gtest.h"
 	"ZBE/core/system/SysError.h"
 	"ZBE/core/tools/math/Point.h"
@@ -2194,59 +3418,122 @@
 	"ZBE/core/tools/math/objects.h"
 	"ZBE/core/tools/math/collisions/intersections.h"
 
+<<<<<<< HEAD
+1452166247 c:\users\degryll\documents\github\zbe\include\zbe\core\tools\math\point.h
+	<initializer_list>
+	"ZBE/core/system/SysError.h"
+
+1452166291 c:\users\degryll\documents\github\zbe\include\zbe\core\tools\math\vector.h
+	<utility>
+	<initializer_list>
+	<cmath>
+	"ZBE/core/tools/math/math.h"
+	"ZBE/core/tools/math/Point.h"
+
+1451932428 c:\users\degryll\documents\github\zbe\include\zbe\core\tools\math\math.h
+	<utility>
+	<initializer_list>
+	<cstdio>
+
+1452167400 c:\users\degryll\documents\github\zbe\include\zbe\core\tools\math\objects.h
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/include/ZBE/core/tools/math/objects.h
+>>>>>>> origin/master
 	<initializer_list>
 	"ZBE/core/tools/math/Point.h"
 	"ZBE/core/tools/math/Vector.h"
 
+<<<<<<< HEAD
+1452192073 c:\users\degryll\documents\github\zbe\include\zbe\core\tools\math\collisions\intersections.h
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/include/ZBE/core/tools/math/collisions/intersections.h
+>>>>>>> origin/master
 	<limits>
 	"ZBE/core/tools/math/Point.h"
 	"ZBE/core/tools/math/Vector.h"
 	"ZBE/core/tools/math/objects.h"
 
+<<<<<<< HEAD
+1452167567 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\tools\math\objectstest.cpp
+=======
 1454957491 source:/home/ludo/workspace/ZBE/ZBE/src/ZBETest/core/tools/math/objectsTest.cpp
+>>>>>>> origin/master
 	"gtest/gtest.h"
 	"ZBE/core/system/SysError.h"
 	"ZBE/core/tools/math/Point.h"
 	"ZBE/core/tools/math/Vector.h"
 	"ZBE/core/tools/math/objects.h"
 
+<<<<<<< HEAD
+1451930747 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\tools\math\pointtest.cpp
+=======
 1454957491 source:/home/ludo/workspace/ZBE/ZBE/src/ZBETest/core/tools/math/PointTest.cpp
+>>>>>>> origin/master
 	"gtest/gtest.h"
 	"ZBE/core/system/SysError.h"
 	"ZBE/core/tools/math/Point.h"
 	"ZBE/core/tools/math/Vector.h"
 
+<<<<<<< HEAD
+1451930747 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\tools\math\vectortest.cpp
+=======
 1454957491 source:/home/ludo/workspace/ZBE/ZBE/src/ZBETest/core/tools/math/VectorTest.cpp
+>>>>>>> origin/master
 	"gtest/gtest.h"
 	"ZBE/core/system/SysError.h"
 	"ZBE/core/tools/math/Point.h"
 	"ZBE/core/tools/math/Vector.h"
 
+<<<<<<< HEAD
+1451930747 source:c:\users\degryll\documents\github\zbe\src\zbetest\src\filehandlertest.cpp
+=======
 1454957491 source:/home/ludo/workspace/ZBE/ZBE/src/ZBETest/src/FileHandlerTest.cpp
+>>>>>>> origin/master
 	"gtest/gtest.h"
 	"ZBE/core/io/FileHandler.h"
 	"ZBE/core/system/SysError.h"
 
+<<<<<<< HEAD
+1453054722 c:\users\degryll\documents\github\zbe\include\zbe\core\io\filehandler.h
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/include/ZBE/core/io/FileHandler.h
+>>>>>>> origin/master
 	<errno.h>
 	<windows.h>
 	<string>
 
+<<<<<<< HEAD
+1451930747 source:c:\users\degryll\documents\github\zbe\src\zbetest\src\loggertest.cpp
+=======
 1454957491 source:/home/ludo/workspace/ZBE/ZBE/src/ZBETest/src/LoggerTest.cpp
+>>>>>>> origin/master
 	"gtest/gtest.h"
 	"ZBE/core/system/Logger.h"
 	"ZBE/core/system/SysError.h"
 	"ZBE/core/io/FileHandler.h"
 
+<<<<<<< HEAD
+1451930747 c:\users\degryll\documents\github\zbe\include\zbe\core\system\logger.h
+=======
 1454957491 /home/ludo/workspace/ZBE/ZBE/include/ZBE/core/system/Logger.h
+>>>>>>> origin/master
 	<vector>
 	<forward_list>
 	<string>
 	<sstream>
 	<mutex>
 
+<<<<<<< HEAD
+1451930747 source:c:\users\degryll\documents\github\zbe\src\zbetest\src\main.cpp
+	<stdio.h>
+	"gtest/gtest.h"
+
+1451930747 source:c:\users\degryll\documents\github\zbe\src\zbetest\src\syserrortest.cpp
+	"gtest/gtest.h"
+	"ZBE/core/system/SysError.h"
+
+1453243521 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\daemons\daemonstest.cpp
+=======
 1454957491 source:/home/ludo/workspace/ZBE/ZBE/src/ZBETest/src/main.cpp
 	<stdio.h>
 	"gtest/gtest.h"
@@ -2256,10 +3543,20 @@
 	"ZBE/core/system/SysError.h"
 
 1459008532 source:/home/ludo/workspace/ZBE/src/ZBETest/core/daemons/daemonsTest.cpp
+>>>>>>> origin/master
 	"gtest/gtest.h"
 	"ZBE/core/daemons/Daemon.h"
 	"ZBE/core/daemons/DaemonMaster.h"
 
+<<<<<<< HEAD
+1453243521 c:\users\degryll\documents\github\zbe\include\zbe\core\daemons\daemon.h
+
+1453243521 c:\users\degryll\documents\github\zbe\include\zbe\core\daemons\daemonmaster.h
+	<vector>
+	"./Daemon.h"
+
+1453243521 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\daemons\punisherstest.cpp
+=======
 1458667619 /home/ludo/workspace/ZBE/extlibs/googletest/1.7.0/include/gtest/gtest.h
 	<limits>
 	<ostream>
@@ -2406,6 +3703,7 @@
 	"./Daemon.h"
 
 1458667619 source:/home/ludo/workspace/ZBE/src/ZBETest/core/daemons/PunishersTest.cpp
+>>>>>>> origin/master
 	"gtest/gtest.h"
 	"ZBE/core/tools/math/Vector.h"
 	"ZBE/core/tools/math/Point.h"
@@ -2415,6 +3713,64 @@
 	"ZBE/core/behaviors/Behavior.h"
 	"ZBE/core/behaviors/PerFrameLinearMotion.h"
 
+<<<<<<< HEAD
+1453235750 c:\users\degryll\documents\github\zbe\include\zbe\core\archetypes\movable.h
+	"ZBE/core/archetypes/Positionable.h"
+	"ZBE/core/tools/math/Vector.h"
+
+1453235750 c:\users\degryll\documents\github\zbe\include\zbe\core\archetypes\positionable.h
+	"ZBE/core/tools/math/Vector.h"
+	"ZBE/core/tools/math/Point.h"
+
+1453243521 c:\users\degryll\documents\github\zbe\include\zbe\core\daemons\punishers.h
+	"./PunisherDaemon.h"
+	"../behaviors/Behavior.h"
+
+1453243521 c:\users\degryll\documents\github\zbe\include\zbe\core\daemons\punisherdaemon.h
+	<vector>
+	"./Daemon.h"
+
+1453243521 c:\users\degryll\documents\github\zbe\include\zbe\core\behaviors\behavior.h
+
+1453243521 c:\users\degryll\documents\github\zbe\include\zbe\core\behaviors\perframelinearmotion.h
+	"ZBE/core/behaviors/Behavior.h"
+	"ZBE/core/archetypes/Movable.h"
+
+1458839942 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\tools\containers\ticketedforwardlisttest.cpp
+	"gtest/gtest.h"
+	<cstdio>
+	"ZBE/core/system/SysError.h"
+	"ZBE/core/tools/containers/TicketedForwardList.h"
+
+1458655141 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\tools\containers\tickettest.cpp
+	"gtest/gtest.h"
+	"ZBE/core/tools/containers/Ticket.h"
+
+1458839779 c:\users\degryll\documents\github\zbe\include\zbe\core\tools\containers\ticketedforwardlist.h
+	<type_traits>
+	<memory>
+	<forward_list>
+	"ZBE/core/system/SysError.h"
+	"ZBE/core/tools/containers/Ticket.h"
+
+1458851179 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\entities\collisionableentitytest.cpp
+	"gtest/gtest.h"
+	"ZBE/core/entities/CollisionableEntity.h"
+	"ZBE/core/system/SysError.h"
+
+1458851294 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\entities\entitytest.cpp
+	"gtest/gtest.h"
+	"ZBE/core/entities/Entity.h"
+	"ZBE/core/tools/containers/Ticket.h"
+	"ZBE/core/system/SysError.h"
+
+1458849741 c:\users\degryll\documents\github\zbe\include\zbe\core\entities\entity.h
+	<map>
+	"ZBE/core/tools/containers/Ticket.h"
+
+1458851009 c:\users\degryll\documents\github\zbe\include\zbe\core\entities\collisionableentity.h
+	"ZBE/core/entities/Entity.h"
+=======
 1458667619 /home/ludo/workspace/ZBE/include/ZBE/core/tools/math/Vector.h
 	<utility>
 	<initializer_list>
@@ -4510,345 +5866,4 @@
 1458667619 source:/home/ludo/workspace/ZBE/src/ZBETest/src/SysErrorTest.cpp
 	"gtest/gtest.h"
 	"ZBE/core/system/SysError.h"
-
-1459077651 source:/home/ludo/workspace/ZBE/src/ZBETest/core/system/SDL/SDLEventDispatcherTest.cpp
-	"gtest/gtest.h"
-	<SDL2/SDL.h>
-	"ZBE/core/io/InputReader.h"
-	"ZBE/core/io/SDL/SDLInputReader.h"
-	"ZBE/core/system/SDL/SDLEventDispatcher.h"
-
-1459007953 /home/ludo/workspace/ZBE/include/ZBE/core/system/SDL/SDLEventDispatcher.h
-	<map>
-	<list>
-	<SDL2/SDL.h>
-	"../../io/InputReader.h"
-	"../../io/SDL/SDLInputReader.h"
-
-1458667618 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.1/linux-x64/include/SDL2/SDL.h
-	"SDL_main.h"
-	"SDL_stdinc.h"
-	"SDL_assert.h"
-	"SDL_atomic.h"
-	"SDL_audio.h"
-	"SDL_clipboard.h"
-	"SDL_cpuinfo.h"
-	"SDL_endian.h"
-	"SDL_error.h"
-	"SDL_events.h"
-	"SDL_filesystem.h"
-	"SDL_joystick.h"
-	"SDL_gamecontroller.h"
-	"SDL_haptic.h"
-	"SDL_hints.h"
-	"SDL_loadso.h"
-	"SDL_log.h"
-	"SDL_messagebox.h"
-	"SDL_mutex.h"
-	"SDL_power.h"
-	"SDL_render.h"
-	"SDL_rwops.h"
-	"SDL_system.h"
-	"SDL_thread.h"
-	"SDL_timer.h"
-	"SDL_version.h"
-	"SDL_video.h"
-	"begin_code.h"
-	"close_code.h"
-
-1458667618 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.1/linux-x64/include/SDL2/SDL_main.h
-	"SDL_stdinc.h"
-	"begin_code.h"
-	"close_code.h"
-
-1458667618 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.1/linux-x64/include/SDL2/SDL_stdinc.h
-	"SDL_config.h"
-	<sys/types.h>
-	<stdio.h>
-	<stdlib.h>
-	<stddef.h>
-	<stdarg.h>
-	<stdlib.h>
-	<malloc.h>
-	<stddef.h>
-	<stdarg.h>
-	<memory.h>
-	<string.h>
-	<strings.h>
-	<inttypes.h>
-	<stdint.h>
-	<ctype.h>
-	<math.h>
-	<float.h>
-	<iconv.h>
-	"begin_code.h"
-	<alloca.h>
-	<malloc.h>
-	<malloc.h>
-	<malloc.h>
-	<stdlib.h>
-	"close_code.h"
-
-1458667618 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.1/linux-x64/include/SDL2/SDL_config.h
-	"SDL_platform.h"
-	<stdarg.h>
-
-1458667618 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.1/linux-x64/include/SDL2/SDL_platform.h
-	"AvailabilityMacros.h"
-	"TargetConditionals.h"
-	<winapifamily.h>
-	"begin_code.h"
-	"close_code.h"
-
-1458667618 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.1/linux-x64/include/SDL2/begin_code.h
-
-1458667618 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.1/linux-x64/include/SDL2/close_code.h
-
-1458667618 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.1/linux-x64/include/SDL2/SDL_assert.h
-	"SDL_config.h"
-	"begin_code.h"
-	<signal.h>
-	"close_code.h"
-
-1458667618 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.1/linux-x64/include/SDL2/SDL_atomic.h
-	"SDL_stdinc.h"
-	"SDL_platform.h"
-	"begin_code.h"
-	"close_code.h"
-
-1458667618 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.1/linux-x64/include/SDL2/SDL_audio.h
-	"SDL_stdinc.h"
-	"SDL_error.h"
-	"SDL_endian.h"
-	"SDL_mutex.h"
-	"SDL_thread.h"
-	"SDL_rwops.h"
-	"begin_code.h"
-	"close_code.h"
-
-1458667618 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.1/linux-x64/include/SDL2/SDL_error.h
-	"SDL_stdinc.h"
-	"begin_code.h"
-	"close_code.h"
-
-1458667618 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.1/linux-x64/include/SDL2/SDL_endian.h
-	"SDL_stdinc.h"
-	<endian.h>
-	"begin_code.h"
-	"close_code.h"
-
-1458667618 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.1/linux-x64/include/SDL2/SDL_mutex.h
-	"SDL_stdinc.h"
-	"SDL_error.h"
-	"begin_code.h"
-	"close_code.h"
-
-1458667618 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.1/linux-x64/include/SDL2/SDL_thread.h
-	"SDL_stdinc.h"
-	"SDL_error.h"
-	"SDL_atomic.h"
-	"SDL_mutex.h"
-	"begin_code.h"
-	<process.h>
-	"close_code.h"
-
-1458667618 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.1/linux-x64/include/SDL2/SDL_rwops.h
-	"SDL_stdinc.h"
-	"SDL_error.h"
-	"begin_code.h"
-	"close_code.h"
-
-1458667618 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.1/linux-x64/include/SDL2/SDL_clipboard.h
-	"SDL_stdinc.h"
-	"begin_code.h"
-	"close_code.h"
-
-1458667618 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.1/linux-x64/include/SDL2/SDL_cpuinfo.h
-	"SDL_stdinc.h"
-	<intrin.h>
-	<intrin.h>
-	<altivec.h>
-	<mmintrin.h>
-	<mm3dnow.h>
-	<xmmintrin.h>
-	<emmintrin.h>
-	"begin_code.h"
-	"close_code.h"
-
-1458667618 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.1/linux-x64/include/SDL2/SDL_events.h
-	"SDL_stdinc.h"
-	"SDL_error.h"
-	"SDL_video.h"
-	"SDL_keyboard.h"
-	"SDL_mouse.h"
-	"SDL_joystick.h"
-	"SDL_gamecontroller.h"
-	"SDL_quit.h"
-	"SDL_gesture.h"
-	"SDL_touch.h"
-	"begin_code.h"
-	"close_code.h"
-
-1458667618 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.1/linux-x64/include/SDL2/SDL_video.h
-	"SDL_stdinc.h"
-	"SDL_pixels.h"
-	"SDL_rect.h"
-	"SDL_surface.h"
-	"begin_code.h"
-	"close_code.h"
-
-1458667618 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.1/linux-x64/include/SDL2/SDL_pixels.h
-	"SDL_stdinc.h"
-	"begin_code.h"
-	"close_code.h"
-
-1458667618 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.1/linux-x64/include/SDL2/SDL_rect.h
-	"SDL_stdinc.h"
-	"SDL_error.h"
-	"SDL_pixels.h"
-	"SDL_rwops.h"
-	"begin_code.h"
-	"close_code.h"
-
-1458667618 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.1/linux-x64/include/SDL2/SDL_surface.h
-	"SDL_stdinc.h"
-	"SDL_pixels.h"
-	"SDL_rect.h"
-	"SDL_blendmode.h"
-	"SDL_rwops.h"
-	"begin_code.h"
-	"close_code.h"
-
-1458667618 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.1/linux-x64/include/SDL2/SDL_blendmode.h
-	"begin_code.h"
-	"close_code.h"
-
-1458667618 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.1/linux-x64/include/SDL2/SDL_keyboard.h
-	"SDL_stdinc.h"
-	"SDL_error.h"
-	"SDL_keycode.h"
-	"SDL_video.h"
-	"begin_code.h"
-	"close_code.h"
-
-1458667618 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.1/linux-x64/include/SDL2/SDL_keycode.h
-	"SDL_stdinc.h"
-	"SDL_scancode.h"
-
-1458667618 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.1/linux-x64/include/SDL2/SDL_scancode.h
-	"SDL_stdinc.h"
-
-1458667618 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.1/linux-x64/include/SDL2/SDL_mouse.h
-	"SDL_stdinc.h"
-	"SDL_error.h"
-	"SDL_video.h"
-	"begin_code.h"
-	"close_code.h"
-
-1458667618 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.1/linux-x64/include/SDL2/SDL_joystick.h
-	"SDL_stdinc.h"
-	"SDL_error.h"
-	"begin_code.h"
-	"close_code.h"
-
-1458667618 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.1/linux-x64/include/SDL2/SDL_gamecontroller.h
-	"SDL_stdinc.h"
-	"SDL_error.h"
-	"SDL_rwops.h"
-	"SDL_joystick.h"
-	"begin_code.h"
-	"close_code.h"
-
-1458667618 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.1/linux-x64/include/SDL2/SDL_quit.h
-	"SDL_stdinc.h"
-	"SDL_error.h"
-
-1458667618 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.1/linux-x64/include/SDL2/SDL_gesture.h
-	"SDL_stdinc.h"
-	"SDL_error.h"
-	"SDL_video.h"
-	"SDL_touch.h"
-	"begin_code.h"
-	"close_code.h"
-
-1458667618 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.1/linux-x64/include/SDL2/SDL_touch.h
-	"SDL_stdinc.h"
-	"SDL_error.h"
-	"SDL_video.h"
-	"begin_code.h"
-	"close_code.h"
-
-1458667618 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.1/linux-x64/include/SDL2/SDL_filesystem.h
-	"SDL_stdinc.h"
-	"begin_code.h"
-	"close_code.h"
-
-1458667618 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.1/linux-x64/include/SDL2/SDL_haptic.h
-	"SDL_stdinc.h"
-	"SDL_error.h"
-	"SDL_joystick.h"
-	"begin_code.h"
-	"close_code.h"
-
-1458667618 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.1/linux-x64/include/SDL2/SDL_hints.h
-	"SDL_stdinc.h"
-	"begin_code.h"
-	"close_code.h"
-
-1458667618 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.1/linux-x64/include/SDL2/SDL_loadso.h
-	"SDL_stdinc.h"
-	"SDL_error.h"
-	"begin_code.h"
-	"close_code.h"
-
-1458667618 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.1/linux-x64/include/SDL2/SDL_log.h
-	"SDL_stdinc.h"
-	"begin_code.h"
-	"close_code.h"
-
-1458667618 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.1/linux-x64/include/SDL2/SDL_messagebox.h
-	"SDL_stdinc.h"
-	"SDL_video.h"
-	"begin_code.h"
-	"close_code.h"
-
-1458667618 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.1/linux-x64/include/SDL2/SDL_power.h
-	"SDL_stdinc.h"
-	"begin_code.h"
-	"close_code.h"
-
-1458667618 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.1/linux-x64/include/SDL2/SDL_render.h
-	"SDL_stdinc.h"
-	"SDL_rect.h"
-	"SDL_video.h"
-	"begin_code.h"
-	"close_code.h"
-
-1458667618 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.1/linux-x64/include/SDL2/SDL_system.h
-	"SDL_stdinc.h"
-	"SDL_keyboard.h"
-	"SDL_render.h"
-	"SDL_video.h"
-	"begin_code.h"
-	"close_code.h"
-
-1458667618 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.1/linux-x64/include/SDL2/SDL_timer.h
-	"SDL_stdinc.h"
-	"SDL_error.h"
-	"begin_code.h"
-	"close_code.h"
-
-1458667618 /home/ludo/workspace/ZBE/extlibs/SDL2/2.0.1/linux-x64/include/SDL2/SDL_version.h
-	"SDL_stdinc.h"
-	"begin_code.h"
-	"close_code.h"
-
-1459006465 /home/ludo/workspace/ZBE/include/ZBE/core/io/InputReader.h
-	<cstdint>
-	<list>
-
-1459013314 /home/ludo/workspace/ZBE/include/ZBE/core/io/SDL/SDLInputReader.h
-	"../InputReader.h"
-	<SDL2/SDL.h>
-	<map>
 
