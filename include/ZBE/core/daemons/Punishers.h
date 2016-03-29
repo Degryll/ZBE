@@ -9,6 +9,8 @@ namespace zbe{
   template<typename L, typename E>
   using BehaviorDaemon = PunisherDaemon<Behavior<E>, L, E>;
 
+  template<typename L, typename E>
+  using DrawerDaemon = PunisherDaemon<Drawer<E>, L, E>;
 }
 
 #endif // CORE_DAEMONS_PUNISHERS_H_INCLUDED

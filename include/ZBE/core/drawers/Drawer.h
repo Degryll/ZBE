@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file Drawer.h
  * @since 2014-09-22
- * @date 2014-09-27
+ * @date 2016-03-29
  * @author Ludo and Degryll
  * @brief Define the minimal functions of every Drawer.
  */
@@ -12,11 +12,19 @@
 
 namespace zbe {
 
+/** \brief Define the minimal functions of every Drawer.
+ */
+template<typename T>
 class Drawer {
   public:
+    /** \brief Virtual destructor.
+     */
     virtual ~Drawer() {}
 
-    virtual void draw() = 0;
+    /** \brief The function every punisher must have.
+     *  \param entity The entity to be drawn.
+     */
+    virtual void apply(T * entity) = 0;
 };
 
 }  // namespace zbe

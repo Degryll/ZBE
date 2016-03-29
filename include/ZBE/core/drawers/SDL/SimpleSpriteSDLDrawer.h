@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file SimpleSpriteSDLDrawer.h
  * @since 2012-02-01
- * @date 2014-09-27
+ * @date 2016-03-29
  * @author degryll
  * @brief Class that know how to draw SimpleSprite entities with SDL.
  */
@@ -10,40 +10,34 @@
 #ifndef CORE_DRAWERS_SIMPLESPRITESDLDRAWER_H_
 #define CORE_DRAWERS_SIMPLESPRITESDLDRAWER_H_
 
+#include <SDL2/SDL.h>
+
 #include "ZBE/core/drawers/Drawer.h"
 #include "ZBE/core/archetypes/SimpleSprite.h"
 #include "ZBE/core/system/SDL/Window.h"
 
-#include "any_iterator.hpp"
-
-#include <SDL2/SDL.h>
-
-//#include <forward_list>
-
-
 namespace zbe {
 
-//typedef std::forward_list<SimpleSprite*> flist;
-//typedef std::forward_list<SimpleSprite*>::iterator iter;
-
-typedef IteratorTypeErasure::any_iterator<
-    SimpleSprite, // value type
-    boost::forward_traversal_tag, // traversal tag. Note: std iterator categories are supported here
-    SimpleSprite&, // reference type
-    ptrdiff_t // difference type is irrelevant here, just don't use void, that'll throw the iterator_adaptor for a loop
-  > SimpleSpriteIterator;
-
+/** \brief This draws a simple sprite (an image).
+ */
 class SimpleSpriteSDLDrawer : public Drawer {
   public:
-    SimpleSpriteSDLDrawer(Window* window, SimpleSpriteIterator first, SimpleSpriteIterator end) : window(window), firstSS(first), endSS(end) {}
+    /** \brief Create a new drawer in the given context.
+     *  \param window A SDL window with its context.
+     */
+    SimpleSpriteSDLDrawer(Window* window) : window(window) {}
+
+    /** \brief Destructor.
+     */
     ~SimpleSpriteSDLDrawer() {}
 
-    void draw();
+    /** \brief The function every punisher must have.
+     *  \param entity The entity to be drawn.
+     */
+    void apply(SimpleSprite *entity);
 
   private:
-    Window* window;
-    SimpleSpriteIterator firstSS;
-    SimpleSpriteIterator endSS;
+    Window* window;  //!< A SDL window with its context.
 };
 
 }  // namespace zbe
