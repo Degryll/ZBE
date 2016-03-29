@@ -1,8 +1,16 @@
+/**
+ * Copyright 2012 Batis Degryll Ludo
+ * @file InputEvent.h
+ * @since 2016-03-26
+ * @date 2016-03-26
+ * @author Ludo
+ * @brief An event for input devices.
+ */
+
 #ifndef CORE_EVENTS_INPUTEVENT_H
 #define CORE_EVENTS_INPUTEVENT_H
 
-#include "./Event.h"
-
+#include "ZBE/core/events/Event.h"
 
 namespace zbe {
 /** \brief An event caused by input devices.

@@ -1,7 +1,16 @@
+/**
+ * Copyright 2012 Batis Degryll Ludo
+ * @file TimeEvent.h
+ * @since 2016-03-26
+ * @date 2016-03-26
+ * @author Ludo
+ * @brief An event for time.
+ */
+
 #ifndef CORE_EVENTS_TIMEEVENT_H
 #define CORE_EVENTS_TIMEEVENT_H
 
-#include "./Event.h"
+#include "ZBE/core/events/Event.h"
 
 namespace zbe {
 /** \brief An event caused by time.

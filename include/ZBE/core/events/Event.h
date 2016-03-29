@@ -1,3 +1,12 @@
+/**
+ * Copyright 2012 Batis Degryll Ludo
+ * @file CollisionEvent.h
+ * @since 2016-03-26
+ * @date 2016-03-26
+ * @author Ludo
+ * @brief Base event.
+ */
+
 #ifndef CORE_EVENTS_EVENT_H
 #define CORE_EVENTS_EVENT_H
 

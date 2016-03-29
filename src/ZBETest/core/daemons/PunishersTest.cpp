@@ -9,18 +9,15 @@
 #include "ZBE/core/daemons/Punishers.h"
 
 #include "ZBE/core/behaviors/Behavior.h"
-#include "ZBE/core/behaviors/PerFrameLinearMotion.h"
+//#include "ZBE/core/behaviors/PerFrameLinearMotion.h"
 
 using namespace zbe;
 
 class DummyMovable : public Movable<2> {
 public:
-  DummyMovable():vel({1.0,1.0}),pos({1.0,1.0}){
-  }
+  DummyMovable():vel({1.0,1.0}),pos({1.0,1.0}){}
 
-  void setVelocity(Vector<2> velocity) {
-    //I said dummy
-  }
+  void setVelocity(Vector<2> velocity) {}
 
   Vector<2> getVelocity() const {
       return vel;
@@ -37,6 +34,20 @@ private:
   Vector2D vel;
   Point2D pos;
 };
+
+template<unsigned s>
+class PerFrameLinearMotion : public Behavior<Movable<s> > {
+  public:
+    PerFrameLinearMotion() {}
+
+    ~PerFrameLinearMotion() {}
+
+    void apply(Movable<s> * entity){
+      Point<s> endPos = entity->getPosition() + entity->getVelocity();
+      entity->setPosition(endPos);
+    }
+};
+
 
 TEST(Punishers, BehaviorDaemon) {
   Behavior<Movable<2> > * behav = new PerFrameLinearMotion<2>();
