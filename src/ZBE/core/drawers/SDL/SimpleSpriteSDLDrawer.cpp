@@ -15,14 +15,14 @@ void SimpleSpriteSDLDrawer::apply(SimpleSprite *entity) {
   SDL_Rect src,dst;
   src.x = 0;
   src.y = 0;
-  src.w = entity.getWidth();
-  src.h = entity.getHeight();
+  src.w = entity->getWidth();
+  src.h = entity->getHeight();
 
-  dst.x = entity.getLeftX();
-  dst.y = entity.getTopY();
-  dst.w = entity.getWidth();
-  dst.h = entity.getHeight();
-  window->render(entity.getImage(), &src, &dst);
+  dst.x = entity->getLeftX();
+  dst.y = entity->getTopY();
+  dst.w = entity->getWidth();
+  dst.h = entity->getHeight();
+  window->render(entity->getImage(), &src, &dst);
 }
 
 }  // namespace zbe

@@ -1,8 +1,9 @@
 #ifndef CORE_DAEMONS_PUNISHERS_H_INCLUDED
 #define CORE_DAEMONS_PUNISHERS_H_INCLUDED
 
-#include "./PunisherDaemon.h"
-#include "../behaviors/Behavior.h"
+#include "ZBE/core/daemons/PunisherDaemon.h"
+#include "ZBE/core/behaviors/Behavior.h"
+#include "ZBE/core/drawers/Drawer.h"
 
 namespace zbe{
 

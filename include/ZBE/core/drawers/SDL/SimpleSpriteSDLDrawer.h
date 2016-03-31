@@ -20,7 +20,7 @@ namespace zbe {
 
 /** \brief This draws a simple sprite (an image).
  */
-class SimpleSpriteSDLDrawer : public Drawer {
+class SimpleSpriteSDLDrawer : public Drawer<SimpleSprite> {
   public:
     /** \brief Create a new drawer in the given context.
      *  \param window A SDL window with its context.
