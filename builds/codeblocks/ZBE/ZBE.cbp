@@ -170,7 +170,6 @@
 		<Unit filename="../../../include/ZBE/core/archetypes/SphereCollisionable.h" />
 		<Unit filename="../../../include/ZBE/core/archetypes/Timer.h" />
 		<Unit filename="../../../include/ZBE/core/behaviors/Behavior.h" />
-		<Unit filename="../../../include/ZBE/core/behaviors/PerFrameLinearMotion.h" />
 		<Unit filename="../../../include/ZBE/core/behaviors/UniformLinearMotion.h" />
 		<Unit filename="../../../include/ZBE/core/daemons/Daemon.h" />
 		<Unit filename="../../../include/ZBE/core/daemons/DaemonMaster.h" />
@@ -183,6 +182,7 @@
 		<Unit filename="../../../include/ZBE/core/entities/Entity.h" />
 		<Unit filename="../../../include/ZBE/core/events/CollisionEvent.h" />
 		<Unit filename="../../../include/ZBE/core/events/Event.h" />
+		<Unit filename="../../../include/ZBE/core/events/EventStore.h" />
 		<Unit filename="../../../include/ZBE/core/events/InputEvent.h" />
 		<Unit filename="../../../include/ZBE/core/events/TimeEvent.h" />
 		<Unit filename="../../../include/ZBE/core/io/FileHandler.h" />
@@ -201,6 +201,7 @@
 		<Unit filename="../../../include/ZBE/core/tools/containers/ListManager.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/Ticket.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/TicketedForwardList.h" />
+		<Unit filename="../../../include/ZBE/core/tools/containers/TicketedForwardListIterator.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/Point.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/Vector.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/collisions/CollisionData.h" />
@@ -213,6 +214,7 @@
 		<Unit filename="../../../src/ZBE/core/drawers/SDL/SimpleSpriteSDLDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/core/entities/CollisionableEntity.cpp" />
 		<Unit filename="../../../src/ZBE/core/entities/Entity.cpp" />
+		<Unit filename="../../../src/ZBE/core/events/EventStore.cpp" />
 		<Unit filename="../../../src/ZBE/core/io/FileHandler.cpp" />
 		<Unit filename="../../../src/ZBE/core/io/SDL/SDLInputReader.cpp" />
 		<Unit filename="../../../src/ZBE/core/loaders/SDLFontLoader.cpp" />

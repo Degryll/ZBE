@@ -148,6 +148,7 @@
 		<Unit filename="../../../src/ZBETest/core/entities/CollisionerEntityTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/entities/EntityTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/events/CollisionEventsTest.cpp" />
+		<Unit filename="../../../src/ZBETest/core/events/EventStoreTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/events/EventsTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/system/SDL/SDLEventDispatcherTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/tools/containers/ArrayListTest.cpp" />
