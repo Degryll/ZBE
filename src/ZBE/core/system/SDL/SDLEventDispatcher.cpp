@@ -84,7 +84,7 @@ void SDLEventDispatcher::setMouseCoordsState(SDL_Event &event) {
 }
 
 void SDLEventDispatcher::setMouseButtonState(SDL_Event &event, float value) {
-  uint64_t key;
+  uint64_t key = 0;
   switch (event.button.button) {
     case SDL_BUTTON_LEFT:
       key = ZBEK_MOUSE_LEFT;
