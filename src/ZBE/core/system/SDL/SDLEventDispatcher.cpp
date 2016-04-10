@@ -11,11 +11,12 @@
 
 namespace zbe {
 
-SDLEventDispatcher::SDLEventDispatcher():irinstance(0), changedIds(0), states(0){
+SDLEventDispatcher::SDLEventDispatcher():irinstance(0), changedIds(0), states(0), times(0){
     irinstance = SDLInputReader::getInstance();
 
     changedIds = new std::list<uint32_t>();
     states = new std::map<uint32_t, float>();
+    times = new std::map<uint32_t, uint64_t>();
 }
 
 SDLEventDispatcher::~SDLEventDispatcher() {
@@ -33,15 +34,15 @@ void SDLEventDispatcher::run() {
     } else if(tryMouseEvent(event)){
     }
   }
-  irinstance->setInputStatus(changedIds, states);
+  irinstance->setInputStatus(changedIds, states, times);
 }
 
 bool SDLEventDispatcher::tryKeyboardEvent(SDL_Event &event){
     if (event.type == SDL_KEYDOWN) {
-      setState(getEquivalentToSDL(event.key.keysym.sym),1.0f);
+      setState(getEquivalentToSDL(event.key.keysym.sym),1.0f,event.key.timestamp);
       return true;
     } else if (event.type == SDL_KEYUP) {
-      setState(getEquivalentToSDL(event.key.keysym.sym),0.0f);
+      setState(getEquivalentToSDL(event.key.keysym.sym),0.0f,event.key.timestamp);
       return true;
     }
     return false;
@@ -68,19 +69,20 @@ uint32_t SDLEventDispatcher::getEquivalentToSDL(SDL_Keycode k) {
   return k;
 }
 
-void SDLEventDispatcher::setState(uint32_t key, float value){
+void SDLEventDispatcher::setState(uint32_t key, float value, uint64_t time){
   (*states)[key] = value;
+  (*times)[key] = time;
   changedIds->push_back(key);
 }
 
 void SDLEventDispatcher::setMouseWheelState(SDL_Event &event) {
-  setState(ZBEK_MOUSE_WHEEL_X,event.wheel.x);
-  setState(ZBEK_MOUSE_WHEEL_Y,event.wheel.y);
+  setState(ZBEK_MOUSE_WHEEL_X,event.wheel.x,event.key.timestamp);
+  setState(ZBEK_MOUSE_WHEEL_Y,event.wheel.y,event.key.timestamp);
 }
 
 void SDLEventDispatcher::setMouseCoordsState(SDL_Event &event) {
-  setState(ZBEK_MOUSE_OFFSET_X,event.motion.x);
-  setState(ZBEK_MOUSE_OFFSET_Y,event.motion.y);
+  setState(ZBEK_MOUSE_OFFSET_X,event.motion.x,event.key.timestamp);
+  setState(ZBEK_MOUSE_OFFSET_Y,event.motion.y,event.key.timestamp);
 }
 
 void SDLEventDispatcher::setMouseButtonState(SDL_Event &event, float value) {
@@ -104,7 +106,7 @@ void SDLEventDispatcher::setMouseButtonState(SDL_Event &event, float value) {
     default:
       break;
   }
-  setState(key,value);
+  setState(key,value,event.key.timestamp);
 }
 
 } // namespace zbe

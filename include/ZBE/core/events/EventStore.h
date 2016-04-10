@@ -19,7 +19,16 @@ namespace zbe {
    */
   class EventStore {
     public:
-      EventStore():store(),bettertime(UINT64_MAX) {};
+      EventStore(EventStore const&)    = delete;  //!< Needed for singleton.
+      void operator=(EventStore const&) = delete;  //!< Needed for singleton.
+
+      /** \brief Singleton implementation.
+       *  \return The only instance of the ListManager.
+       */
+      static EventStore& getInstance() {
+        static EventStore instance;
+        return (instance);
+      }
       ~EventStore(){};
 
       /** \brief Store an event if the event time is the same of the current
@@ -39,6 +48,7 @@ namespace zbe {
       const std::forward_list<Event> & getEvents();
 
     private:
+      EventStore():store(),bettertime(UINT64_MAX) {};
       std::forward_list<Event> store;
       uint64_t bettertime;
   };

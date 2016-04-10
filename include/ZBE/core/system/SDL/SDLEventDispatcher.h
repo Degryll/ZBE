@@ -30,7 +30,7 @@ class SDLEventDispatcher {
      */
     void run();
   private:
-    void setState(uint32_t key, float value);
+    void setState(uint32_t key, float value, uint64_t time);
 
     void setMouseButtonState(SDL_Event &event, float value);
 
@@ -48,6 +48,7 @@ class SDLEventDispatcher {
 
     std::list<uint32_t>* changedIds;
     std::map<uint32_t, float>* states;
+    std::map<uint32_t, uint64_t>* times;
 };
 }
 #endif // SDLEVENTDISPATCHER_H

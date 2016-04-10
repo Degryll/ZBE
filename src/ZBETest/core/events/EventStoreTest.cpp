@@ -12,7 +12,7 @@ TEST(EventStore, EventStore) {
   zbe::Event e3(3,101);
   zbe::Event e4(4,104);
 
-  zbe::EventStore store;
+  zbe::EventStore &store = zbe::EventStore::getInstance();
   std::forward_list<zbe::Event> eventlist = store.getEvents();
 
   EXPECT_EQ(true, eventlist.empty()) << "Must be empty at init";

@@ -1,8 +1,8 @@
 /**
  * Copyright 2016 Batis Degryll Ludo
  * @file InputReader.h
- * @since 2016-04-27
- * @date 2016-04-27
+ * @since 2016-03-27
+ * @date 2016-04-06
  * @author Ludo
  * @brief Imput reader base.
  */
@@ -30,6 +30,10 @@ class InputReader {
     /** Get the state of an specific key.
      */
     virtual float getStatus(uint32_t keyid) = 0;
+
+    /** Get the state of an specific key.
+     */
+    virtual uint64_t getTime(uint32_t keyid) = 0;
 };
 
 //Printable characters keys

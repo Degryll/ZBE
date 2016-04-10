@@ -10,9 +10,11 @@
 #ifndef SDLINPUTREADER_H
 #define SDLINPUTREADER_H
 
-#include "../InputReader.h"
 #include <SDL2/SDL.h>
 #include <map>
+
+#include "ZBE/core/io/InputReader.h"
+#include "ZBE/core/system/SysError.h"
 
 namespace zbe {
 /** \brief Manage intput from keyboard/mouse using SDL
@@ -21,7 +23,7 @@ class SDLInputReader : public InputReader {
   private:
     /** \brief Private empty constructor
      */
-    SDLInputReader():changedIds(0), states(0){}
+    SDLInputReader():changedIds(0), states(0), times(0){}
 
   public:
     /** \brief Returns singleton instance for SDLInputReader
@@ -30,15 +32,18 @@ class SDLInputReader : public InputReader {
 
     /** \brief Set the input data.
      */
-    void setInputStatus(std::list<uint32_t>* changedIds, std::map<uint32_t, float>* states);
+    void setInputStatus(std::list<uint32_t>* changedIds, std::map<uint32_t, float>* states, std::map<uint32_t, uint64_t>* times);
 
     inline std::list<uint32_t>* changes() {return changedIds;}
 
     float getStatus(uint32_t keyid);
 
+    uint64_t getTime(uint32_t keyid);
+
   private:
     std::list<uint32_t>* changedIds;
     std::map<uint32_t, float>* states;
+    std::map<uint32_t, uint64_t>* times;
 };
 
 } // namespace zbe
