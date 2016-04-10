@@ -197,6 +197,8 @@
 		<Unit filename="../../../include/ZBE/core/system/SDL/SDLEventDispatcher.h" />
 		<Unit filename="../../../include/ZBE/core/system/SDL/Window.h" />
 		<Unit filename="../../../include/ZBE/core/system/SysError.h" />
+		<Unit filename="../../../include/ZBE/core/tools/SDLTimer.h" />
+		<Unit filename="../../../include/ZBE/core/tools/Timer.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/ArrayList.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/ArrayListIterator.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/ListManager.h" />
@@ -226,6 +228,7 @@
 		<Unit filename="../../../src/ZBE/core/system/SDL/SDLEventDispatcher.cpp" />
 		<Unit filename="../../../src/ZBE/core/system/SDL/Window.cpp" />
 		<Unit filename="../../../src/ZBE/core/system/SysError.cpp" />
+		<Unit filename="../../../src/ZBE/core/tools/SDLTimer.cpp" />
 		<Unit filename="../../../src/ZBE/core/tools/math/collisions/CollisionData.cpp" />
 		<Unit filename="../../../src/ZBE/core/tools/text/utf8.cpp" />
 		<Extensions>

@@ -26,7 +26,7 @@ TEST(EventStore, EventStore) {
 
   auto it = eventlist.begin();
 
-  EXPECT_EQ(2,(*it++).getId()) << "Must find e2 first";
-  EXPECT_EQ(1,(*it++).getId()) << "Must find e1 next";
+  EXPECT_EQ(2u,(*it++).getId()) << "Must find e2 first";
+  EXPECT_EQ(1u,(*it++).getId()) << "Must find e1 next";
   EXPECT_EQ(eventlist.end(),it) << "Must found no more";
 }

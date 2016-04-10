@@ -2382,7 +2382,7 @@
 1459454658 source:/home/ludo/workspace/ZBE/src/ZBE/core/events/EventStore.cpp
 	"ZBE/core/events/EventStore.h"
 
-1459454658 /home/ludo/workspace/ZBE/include/ZBE/core/events/EventStore.h
+1460308738 /home/ludo/workspace/ZBE/include/ZBE/core/events/EventStore.h
 	<cstdint>
 	<forward_list>
 	"ZBE/core/events/Event.h"
@@ -2817,4 +2817,14 @@
 	"ZBE/core/system/SysError.h"
 
 1459969174 source:/home/ludo/workspace/ZBE/src/ZBE/core/io/InputManager.cpp
+
+1460309301 source:/home/ludo/workspace/ZBE/src/ZBE/core/tools/SDLTimer.cpp
+	"ZBE/core/tools/SDLTimer.h"
+
+1460309301 /home/ludo/workspace/ZBE/include/ZBE/core/tools/SDLTimer.h
+	"ZBE/core/tools/Timer.h"
+	<SDL2/SDL.h>
+
+1460309301 /home/ludo/workspace/ZBE/include/ZBE/core/tools/Timer.h
+	<stdint.h>
 
