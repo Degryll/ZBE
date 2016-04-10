@@ -9947,3 +9947,14 @@
 	"gtest/gtest.h"
 	"ZBE/core/system/SysError.h"
 
+1459455039 source:e:\zbe\zbe\src\zbetest\core\events\eventstoretest.cpp
+	"gtest/gtest.h"
+	<forward_list>
+	"ZBE/core/events/Event.h"
+	"ZBE/core/events/EventStore.h"
+
+1459455039 e:\zbe\zbe\include\zbe\core\events\eventstore.h
+	<cstdint>
+	<forward_list>
+	"ZBE/core/events/Event.h"
+
