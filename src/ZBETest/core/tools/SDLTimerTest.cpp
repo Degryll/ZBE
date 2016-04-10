@@ -9,7 +9,7 @@ inline void halfTimeTest(zbe::SDLTimer *t1, zbe::SDLTimer *t2, zbe::SDLTimer *t3
   const int delay = 100;
 
   t1->start();
-  EXPECT_EQ(true, t1->running());
+  EXPECT_TRUE(t1->running());
   t2->start();
 
   SDL_Delay(delay);
@@ -17,8 +17,8 @@ inline void halfTimeTest(zbe::SDLTimer *t1, zbe::SDLTimer *t2, zbe::SDLTimer *t3
   t2->stop();
 
   EXPECT_EQ(t1->lapTime(), t2->totalTime());
-  EXPECT_EQ(true, t1->running());
-  EXPECT_EQ(false, t2->running());
+  EXPECT_TRUE(t1->running());
+  EXPECT_FALSE(t2->running());
 
   t3->start();
 
@@ -27,7 +27,7 @@ inline void halfTimeTest(zbe::SDLTimer *t1, zbe::SDLTimer *t2, zbe::SDLTimer *t3
   t3->stop();
 
   EXPECT_EQ(t1->lapTime(), t3->totalTime());
-  EXPECT_EQ(true, t1->running());
+  EXPECT_TRUE(t1->running());
 
   t2->start();
 
@@ -35,7 +35,7 @@ inline void halfTimeTest(zbe::SDLTimer *t1, zbe::SDLTimer *t2, zbe::SDLTimer *t3
 
   t2->stop();
   t1->stop();
-  EXPECT_EQ(false, t1->running());
+  EXPECT_FALSE(t1->running());
 
   EXPECT_EQ(t1->totalTime(),t2->totalTime() + t3->totalTime()) << "Take elapsed times.";
 }
@@ -61,17 +61,17 @@ TEST (SDLTimer, usage) {
 
   halfTimeTest(&timer1, &timer2, &timer3);
 
-  EXPECT_NE(0,timer1.totalTime()) << "Timer1 elapsed time.";
-  EXPECT_NE(0,timer2.totalTime()) << "Timer2 elapsed time.";
-  EXPECT_NE(0,timer3.totalTime()) << "Timer3 elapsed time.";
+  EXPECT_NE(0u,timer1.totalTime()) << "Timer1 elapsed time.";
+  EXPECT_NE(0u,timer2.totalTime()) << "Timer2 elapsed time.";
+  EXPECT_NE(0u,timer3.totalTime()) << "Timer3 elapsed time.";
 
   timer1.reset();
   timer2.reset();
   timer3.reset();
 
-  EXPECT_EQ(0,timer1.totalTime()) << "Reset Timer1.";
-  EXPECT_EQ(0,timer2.totalTime()) << "Reset Timer2.";
-  EXPECT_EQ(0,timer3.totalTime()) << "Reset Timer3.";
+  EXPECT_EQ(0u,timer1.totalTime()) << "Reset Timer1.";
+  EXPECT_EQ(0u,timer2.totalTime()) << "Reset Timer2.";
+  EXPECT_EQ(0u,timer3.totalTime()) << "Reset Timer3.";
 
   halfTimeTest(&timer1, &timer2, &timer3);
 
