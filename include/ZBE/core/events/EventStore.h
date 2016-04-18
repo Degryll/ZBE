@@ -23,7 +23,7 @@ namespace zbe {
       void operator=(EventStore const&) = delete;  //!< Needed for singleton.
 
       /** \brief Singleton implementation.
-       *  \return The only instance of the ListManager.
+       *  \return The only instance of the EventStore.
        */
       static EventStore& getInstance() {
         static EventStore instance;
@@ -36,7 +36,7 @@ namespace zbe {
        *  current event will be wiped and only this one will be saved.
        * \param e The event to be stored
        */
-      void storeEvent(Event & e);
+      void storeEvent(Event e);
 
       /** \brief Erase all contained events.
        */

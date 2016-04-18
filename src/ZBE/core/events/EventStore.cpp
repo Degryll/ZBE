@@ -11,7 +11,7 @@
 
 namespace zbe {
 
-  void EventStore::storeEvent(Event & e) {
+  void EventStore::storeEvent(Event e) {
     if(e.getTime()==bettertime){
       store.push_front(e);
     } else if (e.getTime()<=bettertime){
