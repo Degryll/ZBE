@@ -197,6 +197,7 @@
 		<Unit filename="../../../include/ZBE/core/system/SDL/SDLEventDispatcher.h" />
 		<Unit filename="../../../include/ZBE/core/system/SDL/Window.h" />
 		<Unit filename="../../../include/ZBE/core/system/SysError.h" />
+		<Unit filename="../../../include/ZBE/core/system/SystemTime.h" />
 		<Unit filename="../../../include/ZBE/core/tools/SDLTimer.h" />
 		<Unit filename="../../../include/ZBE/core/tools/Timer.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/ArrayList.h" />

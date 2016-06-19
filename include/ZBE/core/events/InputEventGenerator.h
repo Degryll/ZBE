@@ -31,8 +31,10 @@ namespace zbe {
       ~InputEventGenerator() {};
 
       /** Will search for input events occurred between initTime and finalTime and send it to the EventStore.
+       * \param initTime Time from which events are generated
+       * \param endTime Time until the events are generated
        */
-      void generate(uint64_t initTime, uint64_t finalTime);
+      void generate(uint64_t initTime, uint64_t endTime);
 
     private:
       InputReader * inputReader;
