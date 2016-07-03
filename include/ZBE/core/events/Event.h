@@ -10,6 +10,8 @@
 #ifndef CORE_EVENTS_EVENT_H
 #define CORE_EVENTS_EVENT_H
 
+#include <cstdint>
+
 namespace zbe {
 
 /** \brief Represents a basic event. An event its something that, when it occurs, can cause some element of the game to change its state.

@@ -31,12 +31,6 @@ namespace zbe {
     }
   }
 
-  SDLInputReader * SDLInputReader::getInstance(){
-    static SDLInputReader * instance = new SDLInputReader();
-
-    return instance;
-  }
-
   void SDLInputReader::setInputStatus(std::list<uint32_t>* changedIds, std::map<uint32_t, float>* states, std::map<uint32_t, uint64_t>* times){
     this->changedIds = changedIds;
     this->states = states;

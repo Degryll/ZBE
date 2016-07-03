@@ -30,7 +30,7 @@ TEST(SDLEventDispatcher, SDLEventDispatcher) {
   SDL_PushEvent(&user_event1);
   SDL_PushEvent(&user_event2);
 
-  zbe::InputReader * ir = zbe::SDLInputReader::getInstance();
+  zbe::InputReader * ir = &zbe::SDLInputReader::getInstance();
   zbe::SDLEventDispatcher * sed = new zbe::SDLEventDispatcher();
   sed->run();
   // So 4 outputs are expected
