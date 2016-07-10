@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file Timer.h
  * @since 2016-03-24
- * @date 2016-03-24
+ * @date 2016-04-04
  * @author Batis
  * @brief Implements a timer that uses SDL to give times elapsed between events.
  */

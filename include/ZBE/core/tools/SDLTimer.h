@@ -2,13 +2,13 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file Timer.h
  * @since 2016-03-24
- * @date 2016-03-24
+ * @date 2016-04-04
  * @author Batis
  * @brief Define a timer that uses SDL to give elapsed times between events.
  */
 
-#ifndef CORE_TOOLS_TIMER_H_
-#define CORE_TOOLS_TIMER_H_
+#ifndef CORE_TOOLS_SDLTIMER_H_
+#define CORE_TOOLS_SDLTIMER_H_
 
 #include "ZBE/core/tools/Timer.h"
 #include <SDL2/SDL.h>
@@ -18,7 +18,7 @@ namespace zbe {
 /** \brief SDL implementation of Timer. Initially stopped.
  *
 */
-class SDLTimer {
+class SDLTimer : public Timer {
   public:
 
     SDLTimer(bool startHere = false);
@@ -43,4 +43,4 @@ class SDLTimer {
 
 }  // namespace zbe
 
-#endif  // CORE_TOOLS_TIMER_H_
+#endif  // CORE_TOOLS_SDLTIMER_H_

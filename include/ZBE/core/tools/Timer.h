@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file Timer.h
  * @since 2016-03-23
- * @date 2016-03-24
+ * @date 2016-04-04
  * @author Batis
  * @brief Define a timer that gives elapsed times between events.
  */
@@ -24,33 +24,33 @@ class Timer {
     /** \brief Starts counting.
      *
     */
-    virtual void start() {}
+    virtual void start() = 0;
 
     /** \brief Stops counting. Returns the lap time at this point.
      *
     */
-    virtual uint64_t stop() {}
+    virtual uint64_t stop() = 0;
 
     /** \brief Stops counting and sets to 0 all the saved times.
      *
     */
-    virtual void reset() {}
+    virtual void reset() = 0;
 
 
     /** \brief Returns the lap time: the time since the last lap time or since the beginning.
      *
     */
-    virtual uint64_t lapTime() {}
+    virtual uint64_t lapTime() = 0;
 
     /** \brief Returns the amount of time the timer has been active from the start.
      *
     */
-    virtual uint64_t totalTime() {}
+    virtual uint64_t totalTime() = 0;
 
     /** \brief Returns true if the timer is running, and false otherwise.
      *
     */
-    virtual bool running() {}
+    virtual bool running() = 0;
 
 };
 
