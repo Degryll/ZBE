@@ -28,7 +28,7 @@ class CollisionEvent2D : public Event {
     * \param entityB The second entity involved in the collision.
     * \param point Point of collision.
     */
-    CollisionEvent2D(uint64_t id, uint64_t time, CollisionerEntity *entityA, CollisionerEntity *entityB, Point2D point) : Event(id, time), a(entityA), b(entityB), p(point) {}
+    CollisionEvent2D(uint64_t id, uint64_t time, CollisionerEntity *entityA, CollisionerEntity *entityB, Point2D point, uint64_t timeRemain) : Event(id, time), a(entityA), b(entityB), p(point) {}
 
     /** \brief Empty destructor.
     */
@@ -53,6 +53,7 @@ class CollisionEvent2D : public Event {
     CollisionerEntity *a;  //!< First entitie involved.
     CollisionerEntity *b;  //!< Second entitie involved.
     Point2D p;             //!< Point of collision.
+    uint64_t t;            //!< Time remaining before .
 };
 
 }  // namespace zbe
