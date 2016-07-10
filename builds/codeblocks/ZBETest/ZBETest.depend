@@ -4379,7 +4379,7 @@
 	"ZBE/core/tools/math/math.h"
 	"ZBE/core/tools/math/Point.h"
 
-1451936028 c:\users\degryll\documents\github\zbe\include\zbe\core\tools\math\math.h
+1468174011 c:\users\degryll\documents\github\zbe\include\zbe\core\tools\math\math.h
 	<utility>
 	<initializer_list>
 	<cstdio>
@@ -4690,10 +4690,7 @@
 	"ZBE/core/system/SysError.h"
 	"ZBE/core/tools/containers/Ticket.h"
 
-1459084951 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\entities\collisionableentitytest.cpp
-	"gtest/gtest.h"
-	"ZBE/core/entities/CollisionableEntity.h"
-	"ZBE/core/system/SysError.h"
+1468174650 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\entities\collisionableentitytest.cpp
 
 1458855271 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\entities\entitytest.cpp
 	"gtest/gtest.h"
