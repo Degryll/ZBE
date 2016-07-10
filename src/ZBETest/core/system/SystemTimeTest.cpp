@@ -12,6 +12,7 @@ class DummyTimer : public zbe::Timer {
     }
 
     uint64_t stop() {
+      return 0;
     }
 
     void reset() {

@@ -11,11 +11,11 @@
 
 namespace zbe {
 
-  void EventStore::storeEvent(Event e) {
-    if(e.getTime()==bettertime){
+  void EventStore::storeEvent(Event* e) {
+    if(e->getTime()==bettertime){
       store.push_front(e);
-    } else if (e.getTime()<=bettertime){
-      bettertime = e.getTime();
+    } else if (e->getTime()<=bettertime){
+      bettertime = e->getTime();
       store.clear();
       store.push_front(e);
     }
@@ -25,7 +25,7 @@ namespace zbe {
       store.clear();
   }
 
-  const std::forward_list<Event> & EventStore::getEvents() {
+  const std::forward_list<Event*> & EventStore::getEvents() {
     return store;
   }
 

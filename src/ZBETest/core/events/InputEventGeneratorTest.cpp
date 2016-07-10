@@ -32,7 +32,7 @@ TEST(InputEventGenerator, Event) {
   zbe::InputEventGenerator ieg(ir,1);
   ieg.generate(2,4);
   zbe::EventStore &es = zbe::EventStore::getInstance();
-  zbe::Event e = es.getEvents().front();
-  EXPECT_EQ((uint64_t)1, e.getId()) << "must be stored with id 1";
-  EXPECT_EQ((uint64_t)3, e.getTime()) << "the event in time 3 must be stored";
+  zbe::Event* e = es.getEvents().front();
+  EXPECT_EQ((uint64_t)1, e->getId()) << "must be stored with id 1";
+  EXPECT_EQ((uint64_t)3, e->getTime()) << "the event in time 3 must be stored";
 }

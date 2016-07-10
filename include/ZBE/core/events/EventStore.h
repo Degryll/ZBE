@@ -36,7 +36,7 @@ namespace zbe {
        *  current event will be wiped and only this one will be saved.
        * \param e The event to be stored
        */
-      void storeEvent(Event e);
+      void storeEvent(Event* e);
 
       /** \brief Erase all contained events.
        */
@@ -45,11 +45,11 @@ namespace zbe {
       /** \brief Get the current event collection.
        *  \return A constant event list.
        */
-      const std::forward_list<Event> & getEvents();
+      const std::forward_list<Event*> & getEvents();
 
     private:
       EventStore():store(),bettertime(UINT64_MAX) {};
-      std::forward_list<Event> store;
+      std::forward_list<Event*> store;
       uint64_t bettertime;
   };
 } //namespace zbe

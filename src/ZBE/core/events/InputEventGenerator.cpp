@@ -18,7 +18,7 @@ namespace zbe {
         uint32_t c = (*it);
         uint32_t t = inputReader->getTime(c);
         if(t>initTime && t<=finalTime){
-            InputEvent e(eventId, t, c, inputReader->getStatus(c));
+            InputEvent* e = new InputEvent(eventId, t, c, inputReader->getStatus(c));
             store.storeEvent(e);
         }
       }

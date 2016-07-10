@@ -52,6 +52,8 @@ class Timer {
     */
     virtual bool running() = 0;
 
+    virtual ~Timer(){};
+
 };
 
 }  // namespace zbe
