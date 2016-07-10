@@ -27,6 +27,14 @@ static const double TORADIANS = PI/180.0;
     \sa TORADIANS
  */
 static const double TODEGREE = 180.0/PI;
+/** \brief This constant is used to transform the time from a velocity (in
+ *  seconds, because the velocity is in m/s) to the time stored in a uint64_t (nanoseconds).
+ */
+static const double VELOCITYTOTIME = 1.0e9;
 
+/** \brief This constant is used to transform the time stored in a uint64_t (nanoseconds)to the time in a velocity (in
+ *  seconds, because the velocity is in m/s).
+ */
+static const double TIMETOVELOCITY = 1.0e-9;
 }
 #endif  // ZBE_CORE_TOOLS_MATH_MATH_H_
