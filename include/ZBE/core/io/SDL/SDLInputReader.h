@@ -20,15 +20,14 @@ namespace zbe {
 /** \brief Manage intput from keyboard/mouse using SDL
  */
 class SDLInputReader : public InputReader {
-  private:
-    /** \brief Private empty constructor
-     */
-    SDLInputReader():changedIds(0), states(0), times(0){}
 
   public:
     /** \brief Returns singleton instance for SDLInputReader
      */
-    static SDLInputReader * getInstance();
+    static SDLInputReader & getInstance(){
+      static SDLInputReader instance;
+      return instance;
+    }
 
     /** \brief Set the input data.
      */
@@ -41,6 +40,10 @@ class SDLInputReader : public InputReader {
     uint64_t getTime(uint32_t keyid);
 
   private:
+    /** \brief Private empty constructor
+     */
+    SDLInputReader():changedIds(0), states(0), times(0){}
+
     std::list<uint32_t>* changedIds;
     std::map<uint32_t, float>* states;
     std::map<uint32_t, uint64_t>* times;

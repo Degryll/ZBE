@@ -12,7 +12,7 @@
 namespace zbe {
 
 SDLEventDispatcher::SDLEventDispatcher():irinstance(0), changedIds(0), states(0), times(0){
-    irinstance = SDLInputReader::getInstance();
+    irinstance = &SDLInputReader::getInstance();
 
     changedIds = new std::list<uint32_t>();
     states = new std::map<uint32_t, float>();

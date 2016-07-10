@@ -150,7 +150,9 @@
 		<Unit filename="../../../src/ZBETest/core/events/CollisionEventsTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/events/EventStoreTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/events/EventsTest.cpp" />
+		<Unit filename="../../../src/ZBETest/core/events/InputEventGeneratorTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/system/SDL/SDLEventDispatcherTest.cpp" />
+		<Unit filename="../../../src/ZBETest/core/system/SystemTimeTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/tools/SDLTimerTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/tools/containers/ArrayListTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/tools/containers/ListManagerTest.cpp" />

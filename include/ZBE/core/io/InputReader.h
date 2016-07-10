@@ -31,7 +31,7 @@ class InputReader {
      */
     virtual float getStatus(uint32_t keyid) = 0;
 
-    /** Get the state of an specific key.
+    /** Get the time of an specific key change.
      */
     virtual uint64_t getTime(uint32_t keyid) = 0;
 };
