@@ -69,12 +69,14 @@ bool intersectionRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, uint64_t &time, 
 
   if (discr < 0) return (false);
 
-  uint64_t t = (uint64_t)(((-b - sqrt(discr)) / (2 * a)) * VELOCITYTOTIME);
+  double taux = time * TIMETOVELOCITY;
+  double t = ((-b - sqrt(discr)) / (2 * a));
   if (t < 0) t = 0;
-  if (t > time) return (false);
-  time = t;
+  if (t > taux) return (false);
+  taux = t;
 
-  point = ray.o + ray.d * time * TIMETOVELOCITY;
+  point = ray.o + ray.d * taux;
+  time = (uint64_t)(taux * VELOCITYTOTIME);
 
   return (true);
 }
@@ -108,11 +110,13 @@ bool intersectionNormalRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, uint64_t &
 
   if (discr < 0) return (false);
 
-  uint64_t t = (uint64_t)((-b - sqrt(discr)) * VELOCITYTOTIME);
+  double taux = time * TIMETOVELOCITY;
+  double t = (-b - sqrt(discr));
   if (t < 0) t = 0;
-  if (t > time) return (false);
-  time = t;
-  point = ray.o + ray.d * time * TIMETOVELOCITY;
+  if (t > taux) return (false);
+  taux = t;
+  point = ray.o + ray.d * taux;
+  time = (uint64_t)(taux * VELOCITYTOTIME);
 
   return (true);
 }
@@ -134,6 +138,10 @@ bool intersectionNormalRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, uint64_t &
  */
 template <unsigned dim>
 bool RayAABB(Ray<dim> ray, AABB<dim> box, uint64_t tmin, uint64_t tmax, uint64_t &time, Point<dim>& point) {
+  double tmind = tmin * TIMETOVELOCITY;
+  double tmaxd = tmax * TIMETOVELOCITY;
+  double taux  = time * TIMETOVELOCITY;
+
   for(unsigned i = 0; i < dim; i++) {
     double bmin = box.minimum[i];
     double bmax = box.maximum[i];
@@ -145,20 +153,20 @@ bool RayAABB(Ray<dim> ray, AABB<dim> box, uint64_t tmin, uint64_t tmax, uint64_t
     if((o < bmin && d < n1) || (o > bmax && d > n2)) {return (0);}
 
     double ood = 1.0 / d;
-    uint64_t t1 = (uint64_t)(n1 * ood * VELOCITYTOTIME);
-    uint64_t t2 = (uint64_t)(n2 * ood * VELOCITYTOTIME);
+    double t1 = (n1 * ood);
+    double t2 = (n2 * ood);
 
     if(t1 > t2) {std::swap(t1,t2);}
-    if(t1 > tmin) {tmin = t1;}
-    if(t2 < tmax) {tmax = t2;}
+    if(t1 > tmind) {tmind = t1;}
+    if(t2 < tmaxd) {tmaxd = t2;}
 
-    if(tmin > tmax) {return (0);}
+    if(tmind > tmaxd) {return (0);}
   }  // for each dimension
 
-  if(tmin > time) {return (false);}
+  if(tmind > taux) {return (false);}
 
-  time = tmin;
-  point = ray.o + ray.d * time * TIMETOVELOCITY;
+  point = ray.o + ray.d * tmind;
+  time = tmind * VELOCITYTOTIME;
   return (true);
 }
 
@@ -223,7 +231,6 @@ bool IntersectionMovingCircleAABB2D(Circle circle, Vector2D direction, AABB2D bo
 
   Ray2D ray(circle.c,direction);
   if (!intersectionRayAABB2D(ray, e, t, point) || t > time) {return (false);}
-
   double bmin0 = box.minimum[0];
   double bmax0 = box.maximum[0];
   double bmin1 = box.minimum[1];
@@ -241,6 +248,7 @@ bool IntersectionMovingCircleAABB2D(Circle circle, Vector2D direction, AABB2D bo
     return (intersectionRayCircle(ray, Circle(c,r), time, point));
   }
 
+  time = t;
   // The intersection with the expanded AABB e is the correct.
   return (true);
 }
