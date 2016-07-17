@@ -13,6 +13,7 @@
 
 #include "ZBE/core/tools/Timer.h"
 #include "ZBE/core/system/SysError.h"
+#include "ZBE/core/system/SysTime.h"
 
 #include <cstdint>
 
@@ -20,14 +21,14 @@ namespace zbe {
 
   /** \brief This class will store and manage the system time.
    */
-  class SystemTime {
+  class SysTime {
     public:
 
       /** \brief Get the singleton instance of the SystemTime.
        * \return Singleton instance of the SystemTime.
        */
-      static SystemTime& getInstance() {
-        static SystemTime instance;
+      static SysTime& getInstance() {
+        static SysTime instance;
         return (instance);
       }
 
@@ -64,7 +65,7 @@ namespace zbe {
       }
 
     private:
-      SystemTime():timer(0),total(0),frame(0){}//!< Basic constructor to be used internally.
+      SysTime():timer(0),total(0),frame(0){}//!< Basic constructor to be used internally.
 
       Timer* timer;//!< Actual implementation of Timer to be used.
       uint64_t total;//!< Total time passed until the end of last frame.

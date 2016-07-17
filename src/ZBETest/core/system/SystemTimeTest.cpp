@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 
-#include "ZBE/core/system/SystemTime.h"
+#include "ZBE/core/system/SysTime.h"
 #include "ZBE/core/tools/Timer.h"
 
 class DummyTimer : public zbe::Timer {
@@ -36,8 +36,8 @@ class DummyTimer : public zbe::Timer {
     uint64_t meter;
 };
 
-TEST(SystemTime, SystemTime) {
-  zbe::SystemTime st = zbe::SystemTime::getInstance();
+TEST(SysTime, SysTime) {
+  zbe::SysTime st = zbe::SysTime::getInstance();
   zbe::Timer *t = new DummyTimer();
   st.setSystemTimer(t);
   uint64_t f1 = st.getFrameTime();
