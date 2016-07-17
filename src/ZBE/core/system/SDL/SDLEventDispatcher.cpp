@@ -22,6 +22,7 @@ SDLEventDispatcher::SDLEventDispatcher():irinstance(0), changedIds(0), states(0)
 SDLEventDispatcher::~SDLEventDispatcher() {
   delete changedIds;
   delete states;
+  delete times;
 }
 
 void SDLEventDispatcher::run() {
