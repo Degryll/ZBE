@@ -21,6 +21,7 @@ class ConstantMovingCircle;
 
 class CollisionObject {
 public:
+  virtual ~CollisionObject() {}
 // You must add a new "accept" function for any new derived CollisionObject
   virtual bool accept(CollisionSelector &visitor, CollisionObject& param1, uint64_t& time, Point2D& point) = 0;
   virtual bool accept(CollisionSelector &visitor, StaticAABB2D& param1, uint64_t& time, Point2D& point) = 0;

@@ -22,6 +22,7 @@ namespace zbe {
  */
 class SimpleSpriteSDLDrawer : public Drawer<SimpleSprite> {
   public:
+    SimpleSpriteSDLDrawer(const SimpleSpriteSDLDrawer&) = delete;
     /** \brief Create a new drawer in the given context.
      *  \param window A SDL window with its context.
      */
@@ -30,6 +31,8 @@ class SimpleSpriteSDLDrawer : public Drawer<SimpleSprite> {
     /** \brief Destructor.
      */
     ~SimpleSpriteSDLDrawer() {}
+
+    operator=(const SimpleSpriteSDLDrawer&) = delete;
 
     /** \brief The function every punisher must have.
      *  \param entity The entity to be drawn.

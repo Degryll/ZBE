@@ -1,5 +1,7 @@
 #include "gtest/gtest.h"
 
+#include <memory>
+
 #include "ZBE/core/daemons/Daemon.h"
 #include "ZBE/core/daemons/DaemonMaster.h"
 
@@ -35,12 +37,9 @@ TEST(Daemon, DaemonMaster) {
   bool call2 = false;
   bool call3 = false;
   zbe::DaemonMaster * master = new zbe::DaemonMaster();
-  zbe::Daemon * d = new DaemonTestImp(call1);
-  master->addDaemon(d);
-  d = new DaemonTestImp(call2);
-  master->addDaemon(d);
-  d = new DaemonTestImp(call3);
-  master->addDaemon(d);
+  master->addDaemon(std::shared_ptr<zbe::Daemon>(new DaemonTestImp(call1)));
+  master->addDaemon(std::shared_ptr<zbe::Daemon>(new DaemonTestImp(call2)));
+  master->addDaemon(std::shared_ptr<zbe::Daemon>(new DaemonTestImp(call3)));
   master->run();
   EXPECT_TRUE(call1) << "daemon 1 called";
   EXPECT_TRUE(call2) << "daemon 2 called";

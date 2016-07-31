@@ -11,6 +11,7 @@
 #define CORE_IO_INPUT_EVENT_GENERATOR_H
 
 #include <cstdint>
+#include <memory>
 
 #include "ZBE/core/io/InputReader.h"
 #include "ZBE/core/events/EventStore.h"
@@ -22,13 +23,18 @@ namespace zbe {
    */
   class InputEventGenerator {
     public:
+
+    InputEventGenerator(const InputEventGenerator&) = delete;
+
       /** \brief Default constructor.
        */
-      InputEventGenerator(InputReader * inputReader, int eventId):inputReader(inputReader),eventId(eventId) {};
+      InputEventGenerator(InputReader * inputReader, int eventId) : inputReader(inputReader), eventId(eventId) {};
 
       /** \brief Empty destructor.
        */
       ~InputEventGenerator() {};
+
+      operator=(const InputEventGenerator&) = delete;
 
       /** Will search for input events occurred between initTime and finalTime and send it to the EventStore.
        * \param initTime Time from which events are generated
@@ -37,7 +43,7 @@ namespace zbe {
       void generate(uint64_t initTime, uint64_t endTime);
 
     private:
-      InputReader * inputReader;
+      std::shared_ptr<InputReader> inputReader;
       int eventId;
   };
 } // namespace zbe

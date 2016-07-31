@@ -48,7 +48,7 @@ void Logger::addWriter(WriterCallback callback) {
   writers.push_front(callback);
 }
 
-void Logger::defaultCommandLineWriter(int ntype, const char *msgtype, const char *msg) {
+void Logger::defaultCommandLineWriter(int , const char *msgtype, const char *msg) {
   // cout is used instead of printf because is more easy to build test cases,
   // redirecting cout is simple and platform independent than redirecting
   // printf.
@@ -56,7 +56,7 @@ void Logger::defaultCommandLineWriter(int ntype, const char *msgtype, const char
   fflush(stdout);
 }
 
-void Logger::defaultFileWriter(int ntype, const char *msgtype, const char *msg) {
+void Logger::defaultFileWriter(int , const char *msgtype, const char *msg) {
   FileHandler f("system.log","a");
   f.write(msgtype);
   f.writelnflush(msg);

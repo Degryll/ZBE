@@ -36,7 +36,7 @@ TEST(Logger, stdoutLog) {
   zbe::Logger::deleteInstance();
 }
 
-void aFileWriter(int ntype, const char * type, const char * msg) {
+void aFileWriter(int , const char * type, const char * msg) {
   zbe::FileHandler f("data/test/test.log", "a", true);
   f.write(type);
   f.writelnflush(msg);

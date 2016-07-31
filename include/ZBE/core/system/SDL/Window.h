@@ -24,11 +24,14 @@ namespace zbe {
  */
 class Window {
   public:
+    Window(const Window&) = delete;
     Window(int width, int height, Uint32 window_flags = 0);
     Window(const char* title, int width, int height, Uint32 window_flags = 0, Uint32 rederer_flags = 0);
     Window(const char* title, int x, int y, int width, int height, Uint32 window_flags = 0, Uint32 rederer_flags = 0);
 
     ~Window();
+
+    operator=(const Window&) = delete;
 
     void clear();
 

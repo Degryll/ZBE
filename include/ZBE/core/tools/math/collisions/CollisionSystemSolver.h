@@ -72,7 +72,8 @@ private:
   Vector2D direction;
 };
 
-bool CollisionSelector::visit(StaticAABB2D& param1, StaticAABB2D& param2, uint64_t& time, Point2D& point) {
+//bool CollisionSelector::visit(StaticAABB2D& param1, StaticAABB2D& param2, uint64_t& time, Point2D& point) {
+bool CollisionSelector::visit(StaticAABB2D& , StaticAABB2D& , uint64_t& , Point2D& ) {
   // TODO Degryll implementar AABB contra AABB
   return (false);
 }
@@ -85,7 +86,8 @@ bool CollisionSelector::visit(ConstantMovingCircle& param1, StaticAABB2D& param2
   return(IntersectionMovingCircleAABB2D(param1.getCircle(), param1.getDirection(), param2.getAABB2D(), time, point));
 }
 
-bool CollisionSelector::visit(ConstantMovingCircle& param1, ConstantMovingCircle& param2, uint64_t& time, Point2D& point) {
+//bool CollisionSelector::visit(ConstantMovingCircle& param1, ConstantMovingCircle& param2, uint64_t& time, Point2D& point) {
+bool CollisionSelector::visit(ConstantMovingCircle& , ConstantMovingCircle& , uint64_t& , Point2D& ) {
   // TODO Degryll implementar ConstantMovingSphere contra ConstantMovingSphere
   return (false);
 }

@@ -91,11 +91,11 @@ class LoggerMsg {
 public:
   /** \brief Void constructor.
    */
-  LoggerMsg() {};
+  LoggerMsg() : msg() {};
 
   /** \brief Copy constructor.
    */
-  LoggerMsg(const LoggerMsg &l) {this->msg << l.msg.str();};
+  LoggerMsg(const LoggerMsg &l) : msg() {this->msg << l.msg.str();};
 
   ~LoggerMsg() {};
 
@@ -253,12 +253,13 @@ protected:
   static void defaultCommandLineWriter(int ntype, const char * msgtype, const char * msg);
 
 private:
+  Logger() : filename(), writers(), m() {}
+
   static Logger* _instance;
   std::string filename;
   std::forward_list<WriterCallback> writers;
   std::mutex m;
 
-  Logger() {}
 };
 
 }  // namespace zbe

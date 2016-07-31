@@ -79,7 +79,7 @@ bool FileHandler::rmdir(const char* dirname) {
 #endif // OS
 }
 
-FileHandler::FileHandler(const char* filename, const char* mode, bool createPath) {
+FileHandler::FileHandler(const char* filename, const char* mode, bool createPath) : f(0) {
 #ifdef __linux__
   std::string s(filename);
   if (createPath) {

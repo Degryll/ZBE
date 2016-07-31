@@ -22,6 +22,10 @@ namespace zbe {
 class SDLInputReader : public InputReader {
 
   public:
+    SDLInputReader(SDLInputReader const&) = delete;  //!< Needed for singleton.
+    void operator=(SDLInputReader const&) = delete;  //!< Needed for singleton.
+
+
     /** \brief Returns singleton instance for SDLInputReader
      */
     static SDLInputReader & getInstance(){

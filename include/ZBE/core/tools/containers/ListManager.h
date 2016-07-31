@@ -44,7 +44,7 @@ class ListManager {
     T* get(uint64_t id);
 
   private:
-    ListManager() {};  //!< Needed for singleton.
+    ListManager() : l() {};  //!< Needed for singleton.
 
     std::map<uint64_t, T*> l;  //!< Map that associates list with ids.
 };

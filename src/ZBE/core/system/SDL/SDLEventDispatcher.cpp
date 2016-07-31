@@ -11,23 +11,9 @@
 
 namespace zbe {
 
-SDLEventDispatcher::SDLEventDispatcher():irinstance(0), changedIds(0), states(0), times(0){
-    irinstance = &SDLInputReader::getInstance();
-
-    changedIds = new std::list<uint32_t>();
-    states = new std::map<uint32_t, float>();
-    times = new std::map<uint32_t, uint64_t>();
-}
-
-SDLEventDispatcher::~SDLEventDispatcher() {
-  delete changedIds;
-  delete states;
-  delete times;
-}
-
 void SDLEventDispatcher::run() {
-  states->clear();
-  changedIds->clear();
+  states.clear();
+  changedIds.clear();
   SDL_Event event;
   //Keyboard
   while (SDL_PollEvent(&event)) {
@@ -35,7 +21,7 @@ void SDLEventDispatcher::run() {
     } else if(tryMouseEvent(event)){
     }
   }
-  irinstance->setInputStatus(changedIds, states, times);
+  irinstance.setInputStatus(&changedIds, &states, &times);
 }
 
 bool SDLEventDispatcher::tryKeyboardEvent(SDL_Event &event){
@@ -71,9 +57,9 @@ uint32_t SDLEventDispatcher::getEquivalentToSDL(SDL_Keycode k) {
 }
 
 void SDLEventDispatcher::setState(uint32_t key, float value, uint64_t time){
-  (*states)[key] = value;
-  (*times)[key] = time;
-  changedIds->push_back(key);
+  states[key] = value;
+  times[key] = time;
+  changedIds.push_back(key);
 }
 
 void SDLEventDispatcher::setMouseWheelState(SDL_Event &event) {

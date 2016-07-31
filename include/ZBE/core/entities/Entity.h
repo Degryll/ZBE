@@ -19,6 +19,7 @@ namespace zbe {
  */
 class Entity {
   public:
+    Entity() : tl() {}
     /** \brief The destructor make sure the entity is marked as ERASED in every Ticket.
       */
     virtual ~Entity();

@@ -22,9 +22,10 @@ namespace zbe {
 class SDLEventDispatcher {
   public:
     /** Default constructor */
-    SDLEventDispatcher();
+    SDLEventDispatcher() : irinstance(SDLInputReader::getInstance()), changedIds(), states(), times() {}
+
     /** Default destructor */
-    virtual ~SDLEventDispatcher();
+    ~SDLEventDispatcher() {}
 
     /** \brief Dispatches SDL events where needed
      */
@@ -44,11 +45,11 @@ class SDLEventDispatcher {
 
     bool tryMouseEvent(SDL_Event &event);
 
-    SDLInputReader * irinstance;
+    SDLInputReader& irinstance;
 
-    std::list<uint32_t>* changedIds;
-    std::map<uint32_t, float>* states;
-    std::map<uint32_t, uint64_t>* times;
+    std::list<uint32_t> changedIds;
+    std::map<uint32_t, float> states;
+    std::map<uint32_t, uint64_t> times;
 };
 }
 #endif // SDLEVENTDISPATCHER_H

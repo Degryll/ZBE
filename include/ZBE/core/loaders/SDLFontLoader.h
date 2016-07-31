@@ -36,7 +36,7 @@ class SDLFontLoader {
 
     std::map<int,TTF_Font*> fontCollection;
 
-    SDLFontLoader() {}
+    SDLFontLoader() : fontCollection() {}
 };
 
 }  // namespace zbe

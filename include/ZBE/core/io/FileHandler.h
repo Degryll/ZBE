@@ -63,6 +63,8 @@ class FileHandler {
      */
     static bool rmdir(const char* dirname);
 
+    FileHandler(const FileHandler& rhs) : f(rhs.f) {}
+
     /** \brief Parametrized constructor.
      *  \param filename File path and name to open.
      *  \param mode Open mode (see fopen).
@@ -70,6 +72,11 @@ class FileHandler {
      */
     FileHandler(const char* filename, const char* mode, bool createPath = false);
     ~FileHandler();
+
+    FileHandler& operator=(const FileHandler& rhs) {
+      f = rhs.f;
+      return (*this);
+    }
 
     /** \brief Read elements from the file.
      *  \param buffer Buffer to store the data read.

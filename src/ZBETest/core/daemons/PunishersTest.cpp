@@ -17,7 +17,7 @@ class DummyMovable : public Movable<2> {
 public:
   DummyMovable():vel({1.0,1.0}),pos({1.0,1.0}){}
 
-  void setVelocity(Vector<2> velocity) {}
+  void setVelocity(Vector<2> ) {}
 
   Vector<2> getVelocity() const {
       return vel;

@@ -10,6 +10,7 @@
 #ifndef CORE_DAEMONS_DAEMONMASTER_H
 #define CORE_DAEMONS_DAEMONMASTER_H
 
+#include <memory>
 #include <vector>
 #include "./Daemon.h"
 
@@ -21,11 +22,11 @@ namespace zbe {
 
       /** \brief Empty constructor.
        */
-      DaemonMaster();
+      DaemonMaster() : daemonList() {}
 
       /** \brief Destructor and the contained Daemons.
        */
-      virtual ~DaemonMaster();
+      ~DaemonMaster() {}
 
       /** \brief It will execute all Daemons added to this DaemonMaster.
        */
@@ -37,10 +38,10 @@ namespace zbe {
        * \return void
        *
        */
-      void addDaemon(Daemon * daemon);
+      void addDaemon(std::shared_ptr<Daemon> daemon);
 
     private:
-      std::vector<Daemon*> * daemonList;
+      std::vector<std::shared_ptr<Daemon> > daemonList;
   };
 }
 

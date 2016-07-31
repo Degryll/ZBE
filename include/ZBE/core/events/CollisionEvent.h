@@ -20,6 +20,8 @@ namespace zbe {
  */
 class CollisionEvent2D : public Event {
   public:
+    CollisionEvent2D(const CollisionEvent2D& rhs) : Event(rhs), a(rhs.a), b(rhs.b), p(rhs.p), t(rhs.t) {}
+
     /** \brief Parametrized Constructor.
     *
     * \param id Represents the global id of this event.
@@ -28,11 +30,20 @@ class CollisionEvent2D : public Event {
     * \param entityB The second entity involved in the collision.
     * \param point Point of collision.
     */
-    CollisionEvent2D(uint64_t id, uint64_t time, CollisionerEntity *entityA, CollisionerEntity *entityB, Point2D point, uint64_t timeRemain) : Event(id, time), a(entityA), b(entityB), p(point) {}
+    CollisionEvent2D(uint64_t id, uint64_t time, CollisionerEntity *entityA, CollisionerEntity *entityB, Point2D point, uint64_t timeRemain) : Event(id, time), a(entityA), b(entityB), p(point), t(timeRemain) {}
 
     /** \brief Empty destructor.
     */
     virtual ~CollisionEvent2D() {};
+
+    CollisionEvent2D& operator=(const CollisionEvent2D& rhs) {
+      Event::operator=(rhs);
+      a = rhs.a;
+      b = rhs.b;
+      p = rhs.p;
+      t = rhs.t;
+      return (*this);
+    }
 
     /** \brief Get the first entity involved in the collision.
     * \return The first entity involved in the collision.
