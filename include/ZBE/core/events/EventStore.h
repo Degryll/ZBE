@@ -48,7 +48,7 @@ namespace zbe {
       const std::forward_list<Event*> & getEvents();
 
     private:
-      EventStore():store(),bettertime(UINT64_MAX) {};
+      EventStore() :store(), bettertime(UINT64_MAX) {};
       std::forward_list<Event*> store;
       uint64_t bettertime;
   };

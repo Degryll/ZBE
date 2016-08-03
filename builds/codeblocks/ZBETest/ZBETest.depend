@@ -1,6 +1,7 @@
 # depslib dependency file v1.0
-1469902644 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\daemons\daemonstest.cpp
+1469984324 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\daemons\daemonstest.cpp
 	"gtest/gtest.h"
+	<memory>
 	"ZBE/core/daemons/Daemon.h"
 	"ZBE/core/daemons/DaemonMaster.h"
 
@@ -145,11 +146,12 @@
 
 1469902644 c:\users\degryll\documents\github\zbe\include\zbe\core\daemons\daemon.h
 
-1469902644 c:\users\degryll\documents\github\zbe\include\zbe\core\daemons\daemonmaster.h
+1469979095 c:\users\degryll\documents\github\zbe\include\zbe\core\daemons\daemonmaster.h
+	<memory>
 	<vector>
 	"./Daemon.h"
 
-1469902644 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\daemons\punisherstest.cpp
+1469984794 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\daemons\punisherstest.cpp
 	"gtest/gtest.h"
 	"ZBE/core/tools/math/Vector.h"
 	"ZBE/core/tools/math/Point.h"
@@ -208,7 +210,7 @@
 	"ZBE/core/tools/containers/Ticket.h"
 	"ZBE/core/system/SysError.h"
 
-1469902644 c:\users\degryll\documents\github\zbe\include\zbe\core\entities\entity.h
+1469979924 c:\users\degryll\documents\github\zbe\include\zbe\core\entities\entity.h
 	<map>
 	"ZBE/core/tools/containers/Ticket.h"
 
@@ -237,12 +239,12 @@
 	"ZBE/core/events/Event.h"
 	"ZBE/core/events/EventStore.h"
 
-1469902644 c:\users\degryll\documents\github\zbe\include\zbe\core\events\eventstore.h
+1470224313 c:\users\degryll\documents\github\zbe\include\zbe\core\events\eventstore.h
 	<cstdint>
 	<forward_list>
 	"ZBE/core/events/Event.h"
 
-1469902644 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\events\inputeventgeneratortest.cpp
+1470224681 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\events\inputeventgeneratortest.cpp
 	"gtest/gtest.h"
 	<vector>
 	"ZBE/core/io/InputReader.h"
@@ -254,8 +256,9 @@
 	<cstdint>
 	<list>
 
-1469902644 c:\users\degryll\documents\github\zbe\include\zbe\core\events\inputeventgenerator.h
+1469981933 c:\users\degryll\documents\github\zbe\include\zbe\core\events\inputeventgenerator.h
 	<cstdint>
+	<memory>
 	"ZBE/core/io/InputReader.h"
 	"ZBE/core/events/EventStore.h"
 	"ZBE/core/events/InputEvent.h"
@@ -584,13 +587,13 @@
 	"begin_code.h"
 	"close_code.h"
 
-1469902644 c:\users\degryll\documents\github\zbe\include\zbe\core\io\sdl\sdlinputreader.h
+1469982418 c:\users\degryll\documents\github\zbe\include\zbe\core\io\sdl\sdlinputreader.h
 	<SDL2/SDL.h>
 	<map>
 	"ZBE/core/io/InputReader.h"
 	"ZBE/core/system/SysError.h"
 
-1469902644 c:\users\degryll\documents\github\zbe\include\zbe\core\system\sdl\sdleventdispatcher.h
+1469983352 c:\users\degryll\documents\github\zbe\include\zbe\core\system\sdl\sdleventdispatcher.h
 	<map>
 	<list>
 	<SDL2/SDL.h>
@@ -2587,7 +2590,7 @@
 	"ZBE/core/system/SysError.h"
 	"ZBE/core/tools/containers/TicketedForwardList.h"
 
-1469902644 c:\users\degryll\documents\github\zbe\include\zbe\core\tools\containers\listmanager.h
+1469981229 c:\users\degryll\documents\github\zbe\include\zbe\core\tools\containers\listmanager.h
 	<map>
 	"ZBE/core/system/SysError.h"
 
@@ -2618,12 +2621,12 @@
 	"ZBE/core/tools/math/objects.h"
 	"ZBE/core/tools/math/collisions/intersections.h"
 
-1469902644 c:\users\degryll\documents\github\zbe\include\zbe\core\tools\math\objects.h
+1469980049 c:\users\degryll\documents\github\zbe\include\zbe\core\tools\math\objects.h
 	<initializer_list>
 	"ZBE/core/tools/math/Point.h"
 	"ZBE/core/tools/math/Vector.h"
 
-1469902644 c:\users\degryll\documents\github\zbe\include\zbe\core\tools\math\collisions\intersections.h
+1470231073 c:\users\degryll\documents\github\zbe\include\zbe\core\tools\math\collisions\intersections.h
 	<cstdint>
 	<limits>
 	"ZBE/core/entities/CollisionerEntity.h"
@@ -2632,7 +2635,7 @@
 	"ZBE/core/tools/math/Vector.h"
 	"ZBE/core/tools/math/objects.h"
 
-1469902644 c:\users\degryll\documents\github\zbe\include\zbe\core\entities\collisionerentity.h
+1469979839 c:\users\degryll\documents\github\zbe\include\zbe\core\entities\collisionerentity.h
 	"ZBE/core/entities/Entity.h"
 	"ZBE/core/tools/math/Point.h"
 
@@ -2670,18 +2673,18 @@
 	"ZBE/core/io/FileHandler.h"
 	"ZBE/core/system/SysError.h"
 
-1469902644 c:\users\degryll\documents\github\zbe\include\zbe\core\io\filehandler.h
+1469982102 c:\users\degryll\documents\github\zbe\include\zbe\core\io\filehandler.h
 	<errno.h>
 	<windows.h>
 	<string>
 
-1469902644 source:c:\users\degryll\documents\github\zbe\src\zbetest\src\loggertest.cpp
+1469985121 source:c:\users\degryll\documents\github\zbe\src\zbetest\src\loggertest.cpp
 	"gtest/gtest.h"
 	"ZBE/core/system/Logger.h"
 	"ZBE/core/system/SysError.h"
 	"ZBE/core/io/FileHandler.h"
 
-1469902644 c:\users\degryll\documents\github\zbe\include\zbe\core\system\logger.h
+1469982666 c:\users\degryll\documents\github\zbe\include\zbe\core\system\logger.h
 	<vector>
 	<forward_list>
 	<string>

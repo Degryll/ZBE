@@ -13,6 +13,8 @@ namespace zbe {
   class PunisherDaemon : public Daemon {
     public:
 
+      PunisherDaemon(const PunisherDaemon&) = delete;
+
       /** \brief Build the Daemon with a punish and a .
        * The given Behavior will be stored by this Daemon and destroyed with it. It will be executed when run method is called.
        * \param daemon Pointer to the daemon desired to be stored and executed.
@@ -23,6 +25,8 @@ namespace zbe {
       /** \brief Destroys the PunisherDaemon and the contained punisher.
        */
       virtual ~PunisherDaemon();
+
+      void operator=(const PunisherDaemon&) = delete;
 
       /** \brief It will run the Behavior over the entity list.
        */

@@ -150,7 +150,7 @@ bool RayAABB(Ray<dim> ray, AABB<dim> box, uint64_t tmin, uint64_t tmax, uint64_t
     double n1 = bmin - o;
     double n2 = bmax - o;
 
-    if((o < bmin && d < n1) || (o > bmax && d > n2)) {return (0);}
+    if((o < bmin && d < n1) || (o > bmax && d > n2)) {return (false);}
 
     double ood = 1.0 / d;
     double t1 = (n1 * ood);
@@ -160,7 +160,7 @@ bool RayAABB(Ray<dim> ray, AABB<dim> box, uint64_t tmin, uint64_t tmax, uint64_t
     if(t1 > tmind) {tmind = t1;}
     if(t2 < tmaxd) {tmaxd = t2;}
 
-    if(tmind > tmaxd) {return (0);}
+    if(tmind > tmaxd) {return (false);}
   }  // for each dimension
 
   if(tmind > taux) {return (false);}
@@ -227,7 +227,7 @@ bool IntersectionMovingCircleAABB2D(Circle circle, Vector2D direction, AABB2D bo
   e.minimum[0] -= r; e.minimum[1] -= r;
   e.maximum[0] += r; e.maximum[1] += r;
 
-  uint64_t t;
+  uint64_t t = time;
 
   Ray2D ray(circle.c,direction);
   if (!intersectionRayAABB2D(ray, e, t, point) || t > time) {return (false);}

@@ -28,11 +28,12 @@ class DummyInputReader : public zbe::InputReader {
 };
 
 TEST(InputEventGenerator, Event) {
-  zbe::InputReader * ir = new DummyInputReader();
-  zbe::InputEventGenerator ieg(ir,1);
+  zbe::InputEventGenerator ieg(new DummyInputReader(), 1);
   ieg.generate(2,4);
   zbe::EventStore &es = zbe::EventStore::getInstance();
+  ASSERT_FALSE(es.getEvents().empty()) << "List must have items.";
   zbe::Event* e = es.getEvents().front();
   EXPECT_EQ((uint64_t)1, e->getId()) << "must be stored with id 1";
   EXPECT_EQ((uint64_t)3, e->getTime()) << "the event in time 3 must be stored";
+  delete e;
 }
