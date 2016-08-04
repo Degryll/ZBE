@@ -32,7 +32,7 @@ class SimpleSpriteSDLDrawer : public Drawer<SimpleSprite> {
      */
     ~SimpleSpriteSDLDrawer() {}
 
-    operator=(const SimpleSpriteSDLDrawer&) = delete;
+    void operator=(const SimpleSpriteSDLDrawer&) = delete;
 
     /** \brief The function every punisher must have.
      *  \param entity The entity to be drawn.

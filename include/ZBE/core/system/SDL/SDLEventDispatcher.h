@@ -27,7 +27,7 @@ class SDLEventDispatcher {
     /** Default destructor */
     ~SDLEventDispatcher() {}
 
-    /** \brief Dispatches SDL events where needed
+    /** \brief Distribute SDL events in the appropriate structures of the system.
      */
     void run();
   private:

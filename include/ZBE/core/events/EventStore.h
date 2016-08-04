@@ -32,8 +32,8 @@ namespace zbe {
       ~EventStore() {};  //!< Empty destructor.
 
       /** \brief Store an event if the event time is the same of the current
-       *  stored ones. If its worst it will be ignored. If its better, all
-       *  current event will be wiped and only this one will be saved.
+       *  stored ones. If event happen after current ones, it will be ignored. If it happen after, all
+       *   the current events will be wiped and only this one will be saved.
        * \param e The event to be stored
        */
       void storeEvent(Event* e);

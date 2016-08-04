@@ -24,8 +24,6 @@ namespace zbe {
   class InputEventGenerator {
     public:
 
-    InputEventGenerator(const InputEventGenerator&) = delete;
-
       /** \brief Default constructor.
        */
       InputEventGenerator(InputReader * inputReader, int eventId) : inputReader(inputReader), eventId(eventId) {};
@@ -33,8 +31,6 @@ namespace zbe {
       /** \brief Empty destructor.
        */
       ~InputEventGenerator() {};
-
-      operator=(const InputEventGenerator&) = delete;
 
       /** Will search for input events occurred between initTime and finalTime and send it to the EventStore.
        * \param initTime Time from which events are generated

@@ -33,7 +33,7 @@ class SDLInputReader : public InputReader {
       return instance;
     }
 
-    /** \brief Set the input data.
+    /** \brief Store the actual input status given by sdl.
      */
     void setInputStatus(std::list<uint32_t>* changedIds, std::map<uint32_t, float>* states, std::map<uint32_t, uint64_t>* times);
 

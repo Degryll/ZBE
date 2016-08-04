@@ -20,18 +20,18 @@ class TimeEvent : public Event {
 
         /** \brief Basic constructor
          *
-         * \param timerId
          * \param id Represents the global id of this event.
          * \param time Exact moment in which it occurred
+         * \param timerId Id of timer that generate this event.
          *
          */
         TimeEvent(uint64_t id, uint64_t time, uint64_t timerId):Event(id,time),timerId(timerId) {}
 
         ~TimeEvent() {}
 
-        /** \brief Get the id from this even as timer.
+        /** \brief Get timerId from the timer that generates this event.
         *
-        * \return An integer that identifies the time event.
+        * \return The identifyer of the timer.
         *
         */
         uint64_t getTimerId() {

@@ -29,12 +29,12 @@ class DaemonMaster : public Daemon {
      */
     ~DaemonMaster() {}
 
-    /** \brief It will execute all Daemons added to this DaemonMaster.
+    /** \brief It will run all Daemons added to this DaemonMaster.
      */
     void run();
 
-    /** \brief Add a Daemon to be executed by this Daemon.
-     *  The given Daemon will be stored by this Daemon and destroyed with it. It will be executed when run method is called.
+    /** \brief Add a Daemon to be run by this Daemon.
+     *  The given Daemon will be stored by this Daemon and destroyed with it.
      * \param daemon Pointer to the Daemon desired to be stored and executed.
      * \return void
      *

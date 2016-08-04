@@ -63,7 +63,7 @@ class Window {
      */
     ~Window();
 
-    operator=(const Window&) = delete;  //!< Does not make sense to "copy" a Window.
+    void operator=(const Window&) = delete;  //!< Does not make sense to "copy" a Window.
 
     /** \brief Clear the Renderer with the background color.
      *
