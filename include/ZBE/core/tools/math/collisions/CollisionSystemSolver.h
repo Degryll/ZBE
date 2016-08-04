@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file CollisionSystemSolver.h
  * @since 2016-05-01
- * @date 2016-06-05
+ * @date 2016-08-04
  * @author Degryll
  * @brief Apply the correct function to solve a collision.
  */
@@ -25,13 +25,49 @@ class ConstantMovingCircle;
  */
 class CollisionSelector {
   public:
+    /** \brief Using the Visitor pattern select the correct collision detection function to use depending of the types of the params.
+     *  \param param1 First collision object.
+     *  \param param2 Second collision object.
+     *  \param time Timeslot to search for a collision. If there is a collision the time is updated with the time of the collision.
+     *  \param point Point of collision if any.
+     *  \return True if there is a collision in the timeslot set by time, false otherwise.
+     */
     inline bool select(CollisionerEntity& param1, CollisionerEntity& param2, uint64_t& time, Point2D& point) {
       return (param2.getCollisionObject().accept(*this, param1.getCollisionObject(), time, point));
     }
 
+    /** \brief Collision detection for two AABB.
+     *  \param param1 First AABB.
+     *  \param param2 Second AABB.
+     *  \param time Timeslot to search for a collision. If there is a collision the time is updated with the time of the collision.
+     *  \param point Point of collision if any.
+     *  \return True if there is a collision in the timeslot set by time, false otherwise.
+     */
     inline bool visit(StaticAABB2D& param1, StaticAABB2D& param2, uint64_t& time, Point2D& point);
+    /** \brief Collision detection for an AABB and a circle.
+     *  \param param1 The AABB.
+     *  \param param2 The circle.
+     *  \param time Timeslot to search for a collision. If there is a collision the time is updated with the time of the collision.
+     *  \param point Point of collision if any.
+     *  \return True if there is a collision in the timeslot set by time, false otherwise.
+     */
     inline bool visit(StaticAABB2D& param1, ConstantMovingCircle& param2, uint64_t& time, Point2D& point);
+    /** \brief Collision detection for a circle and an AABB.
+     *  \param param1 The circle.
+     *  \param param2 The AABB.
+     *  \param time Timeslot to search for a collision. If there is a collision the time is updated with the time of the collision.
+     *  \param point Point of collision if any.
+     *  \return True if there is a collision in the timeslot set by time, false otherwise.
+     */
     inline bool visit(ConstantMovingCircle& param1, StaticAABB2D& param2, uint64_t& time, Point2D& point);
+
+    /** \brief Collision detection for two circles.
+     *  \param param1 First circle.
+     *  \param param2 Second circle.
+     *  \param time Timeslot to search for a collision. If there is a collision the time is updated with the time of the collision.
+     *  \param point Point of collision if any.
+     *  \return True if there is a collision in the timeslot set by time, false otherwise.
+     */
     inline bool visit(ConstantMovingCircle& param1, ConstantMovingCircle& param2, uint64_t& time, Point2D& point);
 };
 
@@ -50,26 +86,39 @@ class CollisionSelector {
     return (visitor.visit(*this, param2, time, point)); \
   } \
 
+/** \brief A collision object defined by a 2D AABB
+ */
 class StaticAABB2D: public CollisionObject {
 public:
   DERIVEDCOLLISIONOBJECT
 
+  /** \brief Return the 2D AABB.
+   *  \return A 2D AABB.
+   */
   inline AABB2D& getAABB2D() {return (box);}
 
 private:
-  AABB2D box;
+  AABB2D box;  //!< The 2D AABB.
 };
 
+/** \brief A collision object defined by a circle moving with a constant speed.
+ */
 class ConstantMovingCircle: public CollisionObject {
 public:
   DERIVEDCOLLISIONOBJECT
 
+  /** \brief Return the circle.
+   *  \return A circle.
+   */
   inline Circle& getCircle() {return (circle);}
+  /** \brief Return the circle's movement direction.
+   *  \return The direction of movement.
+   */
   inline Vector2D& getDirection() {return (direction);}
 
 private:
-  Circle circle;
-  Vector2D direction;
+  Circle circle;       //!< The circle.
+  Vector2D direction;  //!< The direction of movement.
 };
 
 //bool CollisionSelector::visit(StaticAABB2D& param1, StaticAABB2D& param2, uint64_t& time, Point2D& point) {

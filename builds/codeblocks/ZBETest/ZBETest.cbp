@@ -154,7 +154,6 @@
 		<Unit filename="../../../src/ZBETest/core/system/SDL/SDLEventDispatcherTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/system/SystemTimeTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/tools/SDLTimerTest.cpp" />
-		<Unit filename="../../../src/ZBETest/core/tools/containers/ArrayListTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/tools/containers/ListManagerTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/tools/containers/TicketTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/tools/containers/TicketedForwardListTest.cpp" />

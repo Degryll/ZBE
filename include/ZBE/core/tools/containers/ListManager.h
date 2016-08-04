@@ -2,7 +2,7 @@
  * Copyright 2011 Batis Degryll Ludo
  * @file ListManager.h
  * @since 2016/03/31
- * @date 2016/03/31
+ * @date 2016/08/04
  * @author Degryll
  * @brief A class that relates an id with a list.
  */
@@ -53,7 +53,7 @@ template <typename T>
 T* ListManager<T>::get(uint64_t id) {
   auto it = l.find(id);
   if (it == l.end()) {
-    SysError::setError("List is not found.");
+    SysError::setError("List not found.");
     return (0);
   } else {
     return (it->second);

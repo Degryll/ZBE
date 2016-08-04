@@ -8,8 +8,4 @@ void DaemonMaster::run(){
   }
 }
 
-void DaemonMaster::addDaemon(std::shared_ptr<Daemon> daemon){
-  daemonList.push_back(daemon);
-}
-
 }

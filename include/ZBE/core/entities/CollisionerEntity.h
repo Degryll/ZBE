@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file CollsionerEntity.h
  * @since 2016-03-26
- * @date 2016-03-26
+ * @date 2016-08-04
  * @author Degryll
  * @brief Every Collisioner (an entity involved in a collision) has a type.
  */
@@ -21,11 +21,11 @@ class ConstantMovingCircle;
 
 class CollisionObject {
 public:
-  virtual ~CollisionObject() {}
+  virtual ~CollisionObject() {}  //!< Empty destructor
 // You must add a new "accept" function for any new derived CollisionObject
-  virtual bool accept(CollisionSelector &visitor, CollisionObject& param1, uint64_t& time, Point2D& point) = 0;
-  virtual bool accept(CollisionSelector &visitor, StaticAABB2D& param1, uint64_t& time, Point2D& point) = 0;
-  virtual bool accept(CollisionSelector &visitor, ConstantMovingCircle& param1, uint64_t& time, Point2D& point) = 0;
+  virtual bool accept(CollisionSelector &visitor, CollisionObject& param1, uint64_t& time, Point2D& point) = 0;       //!< Collision solver using the visitor pattern
+  virtual bool accept(CollisionSelector &visitor, StaticAABB2D& param1, uint64_t& time, Point2D& point) = 0;          //!< Collision solver using the visitor pattern
+  virtual bool accept(CollisionSelector &visitor, ConstantMovingCircle& param1, uint64_t& time, Point2D& point) = 0;  //!< Collision solver using the visitor pattern
 };
 
 /** \brief Every Collisioner (an entity involved in a collision) has a collision object defining his "physical shape".

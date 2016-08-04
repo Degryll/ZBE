@@ -19,6 +19,8 @@ namespace zbe {
  */
 class Entity {
   public:
+    /** \brief Empty constructor.
+      */
     Entity() : tl() {}
     /** \brief The destructor make sure the entity is marked as ERASED in every Ticket.
       */

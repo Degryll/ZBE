@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file CollisionEventGenerator.h
  * @since 2016-06-05
- * @date 2016-06-16
+ * @date 2016-08-04
  * @author Degryll
  * @brief Generate collision events.
  */
@@ -16,6 +16,7 @@
 #include "ZBE/core/tools/math/collisions/CollisionSystemSolver.h"
 #include "ZBE/core/events/EventStore.h"
 #include "ZBE/core/tools/containers/ListManager.h"
+#include "ZBE/core/tools/containers/TicketedForwardList.h"
 
 namespace zbe {
 
@@ -29,8 +30,8 @@ class CollisionEventGenerator {
      */
     CollisionEventGenerator(uint64_t list, int eventId)
     : id(list), eventId(eventId), cs(), es(EventStore::getInstance()),
-      lmct(ListManager<std::forward_list<CollisionatorEntity*> >::getInstance()),
-      lmcn(ListManager<std::forward_list<CollisionerEntity*> >::getInstance()) {};
+      lmct(ListManager<TicketedForwardList<CollisionatorEntity*> >::getInstance()),
+      lmcn(ListManager<TicketedForwardList<CollisionerEntity*> >::getInstance()) {};
 
     /** \brief Empty destructor.
     */
@@ -48,8 +49,8 @@ class CollisionEventGenerator {
     CollisionSelector cs;  //!< Use to select the type of the collision.
     EventStore& es;
 
-    ListManager<std::forward_list<CollisionatorEntity*> >& lmct;
-    ListManager<std::forward_list<CollisionerEntity*> >& lmcn;
+    ListManager<TicketedForwardList<CollisionatorEntity*> >& lmct;
+    ListManager<TicketedForwardList<CollisionerEntity*> >& lmcn;
 };
 
 }  // namespace zbe

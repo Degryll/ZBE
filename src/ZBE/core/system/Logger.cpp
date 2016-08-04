@@ -14,8 +14,6 @@
 
 namespace zbe {
 
-Logger* Logger::_instance = nullptr;
-
 LoggerMsg& LoggerMsg::operator<<(bool b) {
   this->msg << ((b) ? "true" : "false");
   return (*this);
@@ -53,7 +51,7 @@ void Logger::defaultCommandLineWriter(int , const char *msgtype, const char *msg
   // redirecting cout is simple and platform independent than redirecting
   // printf.
   std::cout << msgtype << msg << std::endl;
-  fflush(stdout);
+  std::cout.flush();
 }
 
 void Logger::defaultFileWriter(int , const char *msgtype, const char *msg) {

@@ -10,19 +10,19 @@
  #include "ZBE/core/tools/SDLTimer.h"
 namespace zbe {
 
-SDLTimer::SDLTimer(bool startHere): counting(startHere), totalElapsedTime(0), lastTime(SDL_GetTicks()), lastLapTime(0) {}
+SDLTimer::SDLTimer(bool startHere): running(startHere), totalElapsedTime(0), lastTime(SDL_GetTicks()), lastLapTime(0) {}
 
 void SDLTimer::start() {
-  if (counting == false) {
-    counting = true;
+  if (running == false) {
+    running = true;
     lastTime = SDL_GetTicks();
   }
 }
 
 uint64_t SDLTimer::stop() {
   int lastLap = 0;
-  if (counting == true) {
-    counting = false;
+  if (running == true) {
+    running = false;
     lastLap = SDL_GetTicks() - lastTime;
     lastLapTime=lastLap;
     totalElapsedTime += lastLap;
@@ -31,7 +31,7 @@ uint64_t SDLTimer::stop() {
 }
 
 void SDLTimer::reset() {
-  counting = false;
+  running = false;
   totalElapsedTime = 0;
   lastLapTime = 0;
 }
@@ -39,7 +39,7 @@ void SDLTimer::reset() {
 uint64_t SDLTimer::lapTime() {
   uint64_t lastLap = -1;
   uint64_t now = SDL_GetTicks();
-  if (counting == true) {
+  if (running == true) {
     lastLap = lastLapTime + now - lastTime;
     lastTime = now;
     lastLapTime = 0;
@@ -53,14 +53,10 @@ uint64_t SDLTimer::totalTime() {
 
   totalElapsed = totalElapsedTime;
 
-  if (counting == true) {
+  if (running == true) {
     totalElapsed += SDL_GetTicks() - lastTime;
   }
   return totalElapsed;
-}
-
-bool SDLTimer::running() {
-  return counting;
 }
 
 }

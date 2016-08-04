@@ -146,7 +146,7 @@
 
 1469902644 c:\users\degryll\documents\github\zbe\include\zbe\core\daemons\daemon.h
 
-1469979095 c:\users\degryll\documents\github\zbe\include\zbe\core\daemons\daemonmaster.h
+1470325649 c:\users\degryll\documents\github\zbe\include\zbe\core\daemons\daemonmaster.h
 	<memory>
 	<vector>
 	"./Daemon.h"
@@ -192,7 +192,7 @@
 	"ZBE/core/behaviors/Behavior.h"
 	"ZBE/core/drawers/Drawer.h"
 
-1469902644 c:\users\degryll\documents\github\zbe\include\zbe\core\daemons\punisherdaemon.h
+1470251577 c:\users\degryll\documents\github\zbe\include\zbe\core\daemons\punisherdaemon.h
 	<vector>
 	"./Daemon.h"
 
@@ -210,7 +210,7 @@
 	"ZBE/core/tools/containers/Ticket.h"
 	"ZBE/core/system/SysError.h"
 
-1469979924 c:\users\degryll\documents\github\zbe\include\zbe\core\entities\entity.h
+1470324838 c:\users\degryll\documents\github\zbe\include\zbe\core\entities\entity.h
 	<map>
 	"ZBE/core/tools/containers/Ticket.h"
 
@@ -239,12 +239,12 @@
 	"ZBE/core/events/Event.h"
 	"ZBE/core/events/EventStore.h"
 
-1470224313 c:\users\degryll\documents\github\zbe\include\zbe\core\events\eventstore.h
+1470325668 c:\users\degryll\documents\github\zbe\include\zbe\core\events\eventstore.h
 	<cstdint>
 	<forward_list>
 	"ZBE/core/events/Event.h"
 
-1470224681 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\events\inputeventgeneratortest.cpp
+1470249295 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\events\inputeventgeneratortest.cpp
 	"gtest/gtest.h"
 	<vector>
 	"ZBE/core/io/InputReader.h"
@@ -593,14 +593,14 @@
 	"ZBE/core/io/InputReader.h"
 	"ZBE/core/system/SysError.h"
 
-1469983352 c:\users\degryll\documents\github\zbe\include\zbe\core\system\sdl\sdleventdispatcher.h
+1470319925 c:\users\degryll\documents\github\zbe\include\zbe\core\system\sdl\sdleventdispatcher.h
 	<map>
 	<list>
 	<SDL2/SDL.h>
 	"../../io/InputReader.h"
 	"../../io/SDL/SDLInputReader.h"
 
-1469902644 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\system\systemtimetest.cpp
+1470326448 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\system\systemtimetest.cpp
 	"gtest/gtest.h"
 	"ZBE/core/system/SysTime.h"
 	"ZBE/core/tools/Timer.h"
@@ -611,7 +611,7 @@
 	"ZBE/core/system/SysTime.h"
 	<cstdint>
 
-1469902644 c:\users\degryll\documents\github\zbe\include\zbe\core\tools\timer.h
+1470326430 c:\users\degryll\documents\github\zbe\include\zbe\core\tools\timer.h
 	<stdint.h>
 
 1469902644 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\tools\containers\arraylisttest.cpp
@@ -2590,7 +2590,7 @@
 	"ZBE/core/system/SysError.h"
 	"ZBE/core/tools/containers/TicketedForwardList.h"
 
-1469981229 c:\users\degryll\documents\github\zbe\include\zbe\core\tools\containers\listmanager.h
+1470322988 c:\users\degryll\documents\github\zbe\include\zbe\core\tools\containers\listmanager.h
 	<map>
 	"ZBE/core/system/SysError.h"
 
@@ -2626,7 +2626,7 @@
 	"ZBE/core/tools/math/Point.h"
 	"ZBE/core/tools/math/Vector.h"
 
-1470231073 c:\users\degryll\documents\github\zbe\include\zbe\core\tools\math\collisions\intersections.h
+1470321234 c:\users\degryll\documents\github\zbe\include\zbe\core\tools\math\collisions\intersections.h
 	<cstdint>
 	<limits>
 	"ZBE/core/entities/CollisionerEntity.h"
@@ -2635,7 +2635,7 @@
 	"ZBE/core/tools/math/Vector.h"
 	"ZBE/core/tools/math/objects.h"
 
-1469979839 c:\users\degryll\documents\github\zbe\include\zbe\core\entities\collisionerentity.h
+1470324981 c:\users\degryll\documents\github\zbe\include\zbe\core\entities\collisionerentity.h
 	"ZBE/core/entities/Entity.h"
 	"ZBE/core/tools/math/Point.h"
 
@@ -2658,13 +2658,13 @@
 	"ZBE/core/tools/math/Point.h"
 	"ZBE/core/tools/math/Vector.h"
 
-1469902644 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\tools\sdltimertest.cpp
+1470326400 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\tools\sdltimertest.cpp
 	"gtest/gtest.h"
 	<cstdio>
 	"ZBE/core/tools/SDLTimer.h"
 	"ZBE/core/system/SysError.h"
 
-1469902644 c:\users\degryll\documents\github\zbe\include\zbe\core\tools\sdltimer.h
+1470326239 c:\users\degryll\documents\github\zbe\include\zbe\core\tools\sdltimer.h
 	"ZBE/core/tools/Timer.h"
 	<SDL2/SDL.h>
 

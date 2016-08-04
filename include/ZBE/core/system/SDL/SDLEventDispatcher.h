@@ -39,7 +39,7 @@ class SDLEventDispatcher {
 
     void setMouseCoordsState(SDL_Event &event);
 
-    uint32_t getEquivalentToSDL(SDL_Keycode k);
+    uint32_t getEquivalentToSDL(SDL_Keycode k) {return (k);}
 
     bool tryKeyboardEvent(SDL_Event &event);
 

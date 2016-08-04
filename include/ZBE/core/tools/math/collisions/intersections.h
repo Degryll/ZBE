@@ -24,23 +24,23 @@ namespace zbe {
 
 template <unsigned dim>
 bool intersectionRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, uint64_t &time, Point<dim>& point);
-inline bool intersectionRayCircle(Ray2D ray, Circle circle, uint64_t &time, Point2D& point) {return (intersectionRayNSphere<2>(ray,circle,time,point));}
-inline bool intersectionRaySphere(Ray3D ray, Sphere sphere, uint64_t &time, Point3D& point) {return (intersectionRayNSphere<3>(ray,sphere,time,point));}
+inline bool intersectionRayCircle(Ray2D ray, Circle circle, uint64_t &time, Point2D& point) {return (intersectionRayNSphere<2>(ray,circle,time,point));}  //!< 2D allias of intersectionRayNSphere.
+inline bool intersectionRaySphere(Ray3D ray, Sphere sphere, uint64_t &time, Point3D& point) {return (intersectionRayNSphere<3>(ray,sphere,time,point));}  //!< 3D allias of intersectionRayNSphere.
 
 template <unsigned dim>
 bool intersectionNormalRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, uint64_t &time, Point<dim>& point);
-inline bool intersectionNormalRayCircle(Ray2D ray, Circle circle, uint64_t &time, Point2D& point) {return (intersectionNormalRayNSphere<2>(ray,circle,time,point));}
-inline bool intersectionNormalRaySphere(Ray3D ray, Sphere sphere, uint64_t &time, Point3D& point) {return (intersectionNormalRayNSphere<3>(ray,sphere,time,point));}
+inline bool intersectionNormalRayCircle(Ray2D ray, Circle circle, uint64_t &time, Point2D& point) {return (intersectionNormalRayNSphere<2>(ray,circle,time,point));}  //!< 2D allias of intersectionNormalRayNSphere.
+inline bool intersectionNormalRaySphere(Ray3D ray, Sphere sphere, uint64_t &time, Point3D& point) {return (intersectionNormalRayNSphere<3>(ray,sphere,time,point));}  //!< 3D allias of intersectionNormalRayNSphere.
 
 template <unsigned dim>
 bool intersectionRayAABB(Ray<dim> ray, AABB<dim> box, uint64_t &time, Point<dim>& point);
-inline bool intersectionRayAABB2D(Ray2D ray, AABB2D box, uint64_t &time, Point2D& point) {return (intersectionRayAABB<2>(ray,box,time,point));}
-inline bool intersectionRayAABB3D(Ray3D ray, AABB3D box, uint64_t &time, Point3D& point) {return (intersectionRayAABB<3>(ray,box,time,point));}
+inline bool intersectionRayAABB2D(Ray2D ray, AABB2D box, uint64_t &time, Point2D& point) {return (intersectionRayAABB<2>(ray,box,time,point));}  //!< 2D allias of intersectionRayAABB.
+inline bool intersectionRayAABB3D(Ray3D ray, AABB3D box, uint64_t &time, Point3D& point) {return (intersectionRayAABB<3>(ray,box,time,point));}  //!< 3D allias of intersectionRayAABB.
 
 template <unsigned dim>
 bool intersectionSegmentAABB(Ray<dim> ray, AABB<dim> box, uint64_t &time, Point<dim>& point);
-inline bool intersectionSegmentAABB2D(Ray2D ray, AABB2D box, uint64_t &time, Point2D& point) {return (intersectionSegmentAABB<2>(ray,box,time,point));}
-inline bool intersectionSegmentAABB3D(Ray3D ray, AABB3D box, uint64_t &time, Point3D& point) {return (intersectionSegmentAABB<3>(ray,box,time,point));}
+inline bool intersectionSegmentAABB2D(Ray2D ray, AABB2D box, uint64_t &time, Point2D& point) {return (intersectionSegmentAABB<2>(ray,box,time,point));}  //!< 2D allias of intersectionSegmentAABB.
+inline bool intersectionSegmentAABB3D(Ray3D ray, AABB3D box, uint64_t &time, Point3D& point) {return (intersectionSegmentAABB<3>(ray,box,time,point));}  //!< 3D allias of intersectionSegmentAABB.
 
 /** \brief A template function that compute the time and point of collision (if any) of an N-dimensional ray and a NSphere.
  *

@@ -50,7 +50,7 @@ class Timer {
     /** \brief Returns true if the timer is running, and false otherwise.
      *
     */
-    virtual bool running() = 0;
+    virtual bool isRunning() = 0;
 
     virtual ~Timer(){};
 

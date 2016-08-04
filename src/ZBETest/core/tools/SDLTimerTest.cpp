@@ -9,7 +9,7 @@ inline void halfTimeTest(zbe::SDLTimer *t1, zbe::SDLTimer *t2, zbe::SDLTimer *t3
   const int delay = 100;
 
   t1->start();
-  EXPECT_TRUE(t1->running());
+  EXPECT_TRUE(t1->isRunning());
   t2->start();
 
   SDL_Delay(delay);
@@ -17,8 +17,8 @@ inline void halfTimeTest(zbe::SDLTimer *t1, zbe::SDLTimer *t2, zbe::SDLTimer *t3
   t2->stop();
 
   EXPECT_EQ(t1->lapTime(), t2->totalTime());
-  EXPECT_TRUE(t1->running());
-  EXPECT_FALSE(t2->running());
+  EXPECT_TRUE(t1->isRunning());
+  EXPECT_FALSE(t2->isRunning());
 
   t3->start();
 
@@ -27,7 +27,7 @@ inline void halfTimeTest(zbe::SDLTimer *t1, zbe::SDLTimer *t2, zbe::SDLTimer *t3
   t3->stop();
 
   EXPECT_EQ(t1->lapTime(), t3->totalTime());
-  EXPECT_TRUE(t1->running());
+  EXPECT_TRUE(t1->isRunning());
 
   t2->start();
 
@@ -35,7 +35,7 @@ inline void halfTimeTest(zbe::SDLTimer *t1, zbe::SDLTimer *t2, zbe::SDLTimer *t3
 
   t2->stop();
   t1->stop();
-  EXPECT_FALSE(t1->running());
+  EXPECT_FALSE(t1->isRunning());
 
   EXPECT_EQ(t1->totalTime(),t2->totalTime() + t3->totalTime()) << "Take elapsed times.";
 }

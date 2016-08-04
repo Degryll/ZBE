@@ -5,7 +5,7 @@
 #include "ZBE/core/io/FileHandler.h"
 
 TEST(Logger, stdoutLog) {
-  zbe::Logger::createInstance()->setDefaultCommandLineWriter();
+  zbe::Logger::getInstance().setDefaultCommandLineWriter();
   std::streambuf* oldCout = std::cout.rdbuf();
   std::ostringstream strCout;
   std::cout.rdbuf(strCout.rdbuf());
@@ -32,8 +32,6 @@ TEST(Logger, stdoutLog) {
   EXPECT_STREQ(chk.str().c_str(), strCout.str().c_str()) << "Checking std::cout.";
 
   std::cout.rdbuf(oldCout);
-
-  zbe::Logger::deleteInstance();
 }
 
 void aFileWriter(int , const char * type, const char * msg) {
@@ -47,7 +45,7 @@ TEST(Logger, FileLog) {
   const char filename[] = "data/test/test.log";
   EXPECT_FALSE(zbe::FileHandler::existDir(filename)) << "This dir does not exist.";
 
-  zbe::Logger::createInstance()->addWriter(aFileWriter);
+  zbe::Logger::getInstance().addWriter(aFileWriter);
 
   int i = 42;
   float d = 3.1416;
@@ -72,7 +70,7 @@ TEST(Logger, FileLog) {
 
   EXPECT_TRUE(f->readln(buffer,256) != 0) << "Reading second Line.";
   std::stringstream chk;
-  chk << "[DEBUG]" << __FILE__ << ":60> Prueba Debug. " << i << " un int y " << pi << " su puntero.\n";
+  chk << "[DEBUG]" << __FILE__ << ":58> Prueba Debug. " << i << " un int y " << pi << " su puntero.\n";
   EXPECT_STREQ(chk.str().c_str(),buffer) << "Checking second line.";
 
   EXPECT_TRUE(f->readln(buffer,256) != 0) << "Reading third Line.";
@@ -90,6 +88,4 @@ TEST(Logger, FileLog) {
   // Remove file
   EXPECT_TRUE(zbe::FileHandler::exist(filename)) << "The file still exist.";
   EXPECT_EQ(0,zbe::FileHandler::rm(filename)) << "Delete file.";
-
-  zbe::Logger::deleteInstance();
 }

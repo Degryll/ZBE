@@ -31,7 +31,7 @@ class DummyTimer : public zbe::Timer {
       return time;
     }
 
-    bool running() {return true;}
+    bool isRunning() {return true;}
     uint64_t time;
     uint64_t meter;
 };

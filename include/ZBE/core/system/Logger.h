@@ -22,7 +22,7 @@
  */
 #define ZBE_LOG_INFO(MSG) \
 do{ zbe::LoggerMsg lm; \
-    zbe::Logger::getInstance()->log(zbe::Logger::NINFO, zbe::Logger::TINFO, lm << "> " << MSG); } while(0)
+    zbe::Logger::getInstance().log(zbe::Logger::NINFO, zbe::Logger::TINFO, lm << "> " << MSG); } while(0)
 
 /** \brief Add a [DEBUG] annotation to the logs.
  *
@@ -31,7 +31,7 @@ do{ zbe::LoggerMsg lm; \
  */
 #define ZBE_LOG_DEBUG(MSG) \
 do{ zbe::LoggerMsg lm; \
-    zbe::Logger::getInstance()->log(zbe::Logger::NDEBUG, zbe::Logger::TDEBUG, lm << __FILE__ << ":" << __LINE__ << "> " << MSG); } while(0)
+    zbe::Logger::getInstance().log(zbe::Logger::NDEBUG, zbe::Logger::TDEBUG, lm << __FILE__ << ":" << __LINE__ << "> " << MSG); } while(0)
 
 /** \brief Add a [WARNING] annotation to the logs.
  *
@@ -39,7 +39,7 @@ do{ zbe::LoggerMsg lm; \
  */
 #define ZBE_LOG_WARNING(MSG) \
 do{ zbe::LoggerMsg lm; \
-    zbe::Logger::getInstance()->log(zbe::Logger::NWARNING, zbe::Logger::TWARNING, lm << "> " << MSG); } while(0)
+    zbe::Logger::getInstance().log(zbe::Logger::NWARNING, zbe::Logger::TWARNING, lm << "> " << MSG); } while(0)
 
 /** \brief Add a [ERROR] annotation to the logs.
  *
@@ -47,7 +47,7 @@ do{ zbe::LoggerMsg lm; \
  */
 #define ZBE_LOG_ERROR(MSG) \
 do{ zbe::LoggerMsg lm; \
-    zbe::Logger::getInstance()->log(zbe::Logger::NERROR, zbe::Logger::TERROR, lm << "> " << MSG); } while(0)
+    zbe::Logger::getInstance().log(zbe::Logger::NERROR, zbe::Logger::TERROR, lm << "> " << MSG); } while(0)
 
 /** \brief Add an user defined annotation to the logs.
  *
@@ -55,7 +55,7 @@ do{ zbe::LoggerMsg lm; \
  */
 #define ZBE_LOG_OTHER(MSGTYPE,MSG) \
 do{ zbe::LoggerMsg lm; \
-    zbe::Logger::getInstance()->log(-1,MSGTYPE, lm << "> " << MSG); } while(0)
+    zbe::Logger::getInstance().log(-1,MSGTYPE, lm << "> " << MSG); } while(0)
 
 /** \brief Add an user defined annotation to the logs.
  *
@@ -63,7 +63,7 @@ do{ zbe::LoggerMsg lm; \
  */
 #define ZBE_LOG(NTYPE,MSGTYPE,MSG) \
 do{ zbe::LoggerMsg lm; \
-    zbe::Logger::getInstance()->log(NTYPE, MSGTYPE, lm << "> " << MSG); } while(0)
+    zbe::Logger::getInstance().log(NTYPE, MSGTYPE, lm << "> " << MSG); } while(0)
 
 namespace zbe {
 
@@ -121,9 +121,9 @@ LoggerMsg& LoggerMsg::operator<<(T t) {
  *
  *  This class implements singleton pattern so:
  *
- *    - There is no constructor, someone should call createInstance one to create the unique Logger.
- *    - To configure the Logger call getInstance and use the pointer to the unique Logger to configure it.
- *    - To use the Logger use directly the [macros](@ref Logger.h), i.e.:
+ *    - There is no constructor, someone should call getInstance to receive the unique instance of the Logger.
+ *    - The Logger instance is used only to create and configure it.
+ *    - To use the Logger use the [macros](@ref Logger.h), i.e.:
  *
  *          int a = 3;
  *          double b = 3.1415;
@@ -157,35 +157,19 @@ public:
   static const char TWARNING[]; //!< Text of WARNING annotations
   static const char TERROR[];   //!< Text of ERROR annotations
 
-  //Logger(bool standard = false);
-  //Logger(const char *filename, bool commandLine = false);
-  //virtual ~Logger();
-
-  /** \brief Create the Logger instance
-   *
-   *  Create the unique logger.
-   *
-   *  Call it only once. Remember to call `deleteInstance()` when you finish using it.
-   *
-   * \sa getInstance() and deleteInstance()
-   */
-  static Logger* createInstance() {return (_instance = new Logger);}
-
-  /** \brief Delete the Logger instance
-   *
-   *  Delete the unique logger.
-   *
-   * \sa createInstance()
-   */
-  static void    deleteInstance() {delete _instance;}
+  Logger(Logger const&)         = delete;  //!< Needed for singleton.
+  void operator=(Logger const&) = delete;  //!< Needed for singleton.
 
   /** \brief Return the Logger instance
    *
-   *  Used to configure the Logger, to use it you don't need to access the Logger directly, you should use the defined [macros](@ref Logger.h).
+   *  Uses the singleton pattern, only the first call create an instance the following calls use the same instance of the Logger.
    *
-   * \sa createInstance() and deleteInstance()
+   * \return The Logger instance
    */
-  static Logger* getInstance()    {return (_instance);}
+  static Logger& getInstance() {
+    static Logger instance;
+    return (instance);
+  }
 
   /** \brief Add a file writer to the Logger.
    *
@@ -235,7 +219,7 @@ public:
    * \sa setDefaultFileWriter(), setDefaultCommandLineWriter() and setDefaultWriters()
    */
   void addWriter(WriterCallback callback);
-  // TODO delWriter
+  // TODO delWriter probably use vector instead of forward_list
 
   /** \brief Log a new annotation.
    *
@@ -255,7 +239,6 @@ protected:
 private:
   Logger() : filename(), writers(), m() {}
 
-  static Logger* _instance;
   std::string filename;
   std::forward_list<WriterCallback> writers;
   std::mutex m;
