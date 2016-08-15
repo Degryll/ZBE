@@ -26,7 +26,7 @@ namespace zbe {
 
       /** \brief Default constructor.
        */
-      InputEventGenerator(InputReader * inputReader, int eventId) : inputReader(inputReader), eventId(eventId) {};
+      InputEventGenerator(InputReader * inputReader, int eventId) : inputReader(inputReader), eventId(eventId), store(EventStore::getInstance()) {};
 
       /** \brief Empty destructor.
        */
@@ -41,6 +41,7 @@ namespace zbe {
     private:
       std::shared_ptr<InputReader> inputReader;
       int eventId;
+      EventStore &store;
   };
 } // namespace zbe
 

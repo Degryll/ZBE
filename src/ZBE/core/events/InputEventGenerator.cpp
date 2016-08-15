@@ -13,7 +13,6 @@ namespace zbe {
 
     void InputEventGenerator::generate(uint64_t initTime, uint64_t finalTime) {
       std::list<uint32_t>* changes = inputReader->changes();
-      EventStore &store = EventStore::getInstance();
       for(auto it = changes->begin(); it != changes->end(); it++) {
         uint32_t c = (*it);
         uint32_t t = inputReader->getTime(c);
@@ -22,7 +21,6 @@ namespace zbe {
             store.storeEvent(e);
         }
       }
-
     }
 
 } // namespace zbe

@@ -234,3 +234,495 @@
 	"ZBE/core/entities/Entity.h"
 	"ZBE/core/tools/math/Point.h"
 
+1471284961 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\events\eventstoretest.cpp
+	"gtest/gtest.h"
+	<forward_list>
+	"ZBE/core/events/Event.h"
+	"ZBE/core/events/EventStore.h"
+
+1470767686 c:\users\degryll\documents\github\zbe\include\zbe\core\events\eventstore.h
+	<cstdint>
+	<forward_list>
+	"ZBE/core/events/Event.h"
+
+1471289449 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\events\inputeventgeneratortest.cpp
+	"gtest/gtest.h"
+	<vector>
+	"ZBE/core/io/InputReader.h"
+	"ZBE/core/events/EventDispatcher.h"
+	"ZBE/core/events/EventStore.h"
+	"ZBE/core/events/InputEventGenerator.h"
+
+1469902644 c:\users\degryll\documents\github\zbe\include\zbe\core\io\inputreader.h
+	<cstdint>
+	<list>
+
+1471289711 c:\users\degryll\documents\github\zbe\include\zbe\core\events\inputeventgenerator.h
+	<cstdint>
+	<memory>
+	"ZBE/core/io/InputReader.h"
+	"ZBE/core/events/EventStore.h"
+	"ZBE/core/events/EventDispatcher.h"
+
+1469902644 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\system\sdl\sdleventdispatchertest.cpp
+	"gtest/gtest.h"
+	<SDL2/SDL.h>
+	"ZBE/core/io/InputReader.h"
+	"ZBE/core/io/SDL/SDLInputReader.h"
+	"ZBE/core/system/SDL/SDLEventDispatcher.h"
+
+1469902639 c:\users\degryll\documents\github\zbe\extlibs\sdl2\2.0.3\x86_64-w64-mingw32\include\sdl2\sdl.h
+	"SDL_main.h"
+	"SDL_stdinc.h"
+	"SDL_assert.h"
+	"SDL_atomic.h"
+	"SDL_audio.h"
+	"SDL_clipboard.h"
+	"SDL_cpuinfo.h"
+	"SDL_endian.h"
+	"SDL_error.h"
+	"SDL_events.h"
+	"SDL_filesystem.h"
+	"SDL_joystick.h"
+	"SDL_gamecontroller.h"
+	"SDL_haptic.h"
+	"SDL_hints.h"
+	"SDL_loadso.h"
+	"SDL_log.h"
+	"SDL_messagebox.h"
+	"SDL_mutex.h"
+	"SDL_power.h"
+	"SDL_render.h"
+	"SDL_rwops.h"
+	"SDL_system.h"
+	"SDL_thread.h"
+	"SDL_timer.h"
+	"SDL_version.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1469902639 c:\users\degryll\documents\github\zbe\extlibs\sdl2\2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_main.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1469902639 c:\users\degryll\documents\github\zbe\extlibs\sdl2\2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_stdinc.h
+	"SDL_config.h"
+	<sys/types.h>
+	<stdio.h>
+	<stdlib.h>
+	<stddef.h>
+	<stdarg.h>
+	<stdlib.h>
+	<malloc.h>
+	<stddef.h>
+	<stdarg.h>
+	<memory.h>
+	<string.h>
+	<strings.h>
+	<inttypes.h>
+	<stdint.h>
+	<ctype.h>
+	<math.h>
+	<float.h>
+	<iconv.h>
+	"begin_code.h"
+	<alloca.h>
+	<malloc.h>
+	<malloc.h>
+	<malloc.h>
+	<stdlib.h>
+	"close_code.h"
+
+1469902639 c:\users\degryll\documents\github\zbe\extlibs\sdl2\2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_config.h
+	"SDL_platform.h"
+
+1469902639 c:\users\degryll\documents\github\zbe\extlibs\sdl2\2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_platform.h
+	"AvailabilityMacros.h"
+	"TargetConditionals.h"
+	<winapifamily.h>
+	"begin_code.h"
+	"close_code.h"
+
+1469902639 c:\users\degryll\documents\github\zbe\extlibs\sdl2\2.0.3\x86_64-w64-mingw32\include\sdl2\begin_code.h
+
+1469902639 c:\users\degryll\documents\github\zbe\extlibs\sdl2\2.0.3\x86_64-w64-mingw32\include\sdl2\close_code.h
+
+1469902639 c:\users\degryll\documents\github\zbe\extlibs\sdl2\2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_assert.h
+	"SDL_config.h"
+	"begin_code.h"
+	<signal.h>
+	"close_code.h"
+
+1469902639 c:\users\degryll\documents\github\zbe\extlibs\sdl2\2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_atomic.h
+	"SDL_stdinc.h"
+	"SDL_platform.h"
+	"begin_code.h"
+	"close_code.h"
+
+1469902639 c:\users\degryll\documents\github\zbe\extlibs\sdl2\2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_audio.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_endian.h"
+	"SDL_mutex.h"
+	"SDL_thread.h"
+	"SDL_rwops.h"
+	"begin_code.h"
+	"close_code.h"
+
+1469902639 c:\users\degryll\documents\github\zbe\extlibs\sdl2\2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_error.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1469902639 c:\users\degryll\documents\github\zbe\extlibs\sdl2\2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_endian.h
+	"SDL_stdinc.h"
+	<endian.h>
+	"begin_code.h"
+	"close_code.h"
+
+1469902639 c:\users\degryll\documents\github\zbe\extlibs\sdl2\2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_mutex.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1469902639 c:\users\degryll\documents\github\zbe\extlibs\sdl2\2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_thread.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_atomic.h"
+	"SDL_mutex.h"
+	"begin_code.h"
+	<process.h>
+	"close_code.h"
+
+1469902639 c:\users\degryll\documents\github\zbe\extlibs\sdl2\2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_rwops.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1469902639 c:\users\degryll\documents\github\zbe\extlibs\sdl2\2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_clipboard.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1469902639 c:\users\degryll\documents\github\zbe\extlibs\sdl2\2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_cpuinfo.h
+	"SDL_stdinc.h"
+	<intrin.h>
+	<intrin.h>
+	<altivec.h>
+	<mmintrin.h>
+	<mm3dnow.h>
+	<xmmintrin.h>
+	<emmintrin.h>
+	"begin_code.h"
+	"close_code.h"
+
+1469902639 c:\users\degryll\documents\github\zbe\extlibs\sdl2\2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_events.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"SDL_keyboard.h"
+	"SDL_mouse.h"
+	"SDL_joystick.h"
+	"SDL_gamecontroller.h"
+	"SDL_quit.h"
+	"SDL_gesture.h"
+	"SDL_touch.h"
+	"begin_code.h"
+	"close_code.h"
+
+1469902639 c:\users\degryll\documents\github\zbe\extlibs\sdl2\2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_video.h
+	"SDL_stdinc.h"
+	"SDL_pixels.h"
+	"SDL_rect.h"
+	"SDL_surface.h"
+	"begin_code.h"
+	"close_code.h"
+
+1469902639 c:\users\degryll\documents\github\zbe\extlibs\sdl2\2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_pixels.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1469902639 c:\users\degryll\documents\github\zbe\extlibs\sdl2\2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_rect.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_pixels.h"
+	"SDL_rwops.h"
+	"begin_code.h"
+	"close_code.h"
+
+1469902639 c:\users\degryll\documents\github\zbe\extlibs\sdl2\2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_surface.h
+	"SDL_stdinc.h"
+	"SDL_pixels.h"
+	"SDL_rect.h"
+	"SDL_blendmode.h"
+	"SDL_rwops.h"
+	"begin_code.h"
+	"close_code.h"
+
+1469902639 c:\users\degryll\documents\github\zbe\extlibs\sdl2\2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_blendmode.h
+	"begin_code.h"
+	"close_code.h"
+
+1469902639 c:\users\degryll\documents\github\zbe\extlibs\sdl2\2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_keyboard.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_keycode.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1469902639 c:\users\degryll\documents\github\zbe\extlibs\sdl2\2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_keycode.h
+	"SDL_stdinc.h"
+	"SDL_scancode.h"
+
+1469902639 c:\users\degryll\documents\github\zbe\extlibs\sdl2\2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_scancode.h
+	"SDL_stdinc.h"
+
+1469902639 c:\users\degryll\documents\github\zbe\extlibs\sdl2\2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_mouse.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1469902639 c:\users\degryll\documents\github\zbe\extlibs\sdl2\2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_joystick.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1469902639 c:\users\degryll\documents\github\zbe\extlibs\sdl2\2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_gamecontroller.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_rwops.h"
+	"SDL_joystick.h"
+	"begin_code.h"
+	"close_code.h"
+
+1469902639 c:\users\degryll\documents\github\zbe\extlibs\sdl2\2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_quit.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+
+1469902639 c:\users\degryll\documents\github\zbe\extlibs\sdl2\2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_gesture.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"SDL_touch.h"
+	"begin_code.h"
+	"close_code.h"
+
+1469902639 c:\users\degryll\documents\github\zbe\extlibs\sdl2\2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_touch.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1469902639 c:\users\degryll\documents\github\zbe\extlibs\sdl2\2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_filesystem.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1469902639 c:\users\degryll\documents\github\zbe\extlibs\sdl2\2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_haptic.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_joystick.h"
+	"begin_code.h"
+	"close_code.h"
+
+1469902639 c:\users\degryll\documents\github\zbe\extlibs\sdl2\2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_hints.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1469902639 c:\users\degryll\documents\github\zbe\extlibs\sdl2\2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_loadso.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1469902639 c:\users\degryll\documents\github\zbe\extlibs\sdl2\2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_log.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1469902639 c:\users\degryll\documents\github\zbe\extlibs\sdl2\2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_messagebox.h
+	"SDL_stdinc.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1469902639 c:\users\degryll\documents\github\zbe\extlibs\sdl2\2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_power.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1469902639 c:\users\degryll\documents\github\zbe\extlibs\sdl2\2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_render.h
+	"SDL_stdinc.h"
+	"SDL_rect.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1469902639 c:\users\degryll\documents\github\zbe\extlibs\sdl2\2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_system.h
+	"SDL_stdinc.h"
+	"SDL_keyboard.h"
+	"SDL_render.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1469902639 c:\users\degryll\documents\github\zbe\extlibs\sdl2\2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_timer.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1469902639 c:\users\degryll\documents\github\zbe\extlibs\sdl2\2.0.3\x86_64-w64-mingw32\include\sdl2\sdl_version.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1470767686 c:\users\degryll\documents\github\zbe\include\zbe\core\io\sdl\sdlinputreader.h
+	<SDL2/SDL.h>
+	<map>
+	"ZBE/core/io/InputReader.h"
+	"ZBE/core/system/SysError.h"
+
+1470767686 c:\users\degryll\documents\github\zbe\include\zbe\core\system\sdl\sdleventdispatcher.h
+	<map>
+	<list>
+	<SDL2/SDL.h>
+	"../../io/InputReader.h"
+	"../../io/SDL/SDLInputReader.h"
+
+1470326448 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\system\systemtimetest.cpp
+	"gtest/gtest.h"
+	"ZBE/core/system/SysTime.h"
+	"ZBE/core/tools/Timer.h"
+
+1469902644 c:\users\degryll\documents\github\zbe\include\zbe\core\system\systime.h
+	"ZBE/core/tools/Timer.h"
+	"ZBE/core/system/SysError.h"
+	"ZBE/core/system/SysTime.h"
+	<cstdint>
+
+1470326430 c:\users\degryll\documents\github\zbe\include\zbe\core\tools\timer.h
+	<stdint.h>
+
+1469902644 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\tools\containers\listmanagertest.cpp
+	"gtest/gtest.h"
+	"ZBE/core/tools/containers/ListManager.h"
+	"ZBE/core/system/SysError.h"
+	"ZBE/core/tools/containers/TicketedForwardList.h"
+
+1470322988 c:\users\degryll\documents\github\zbe\include\zbe\core\tools\containers\listmanager.h
+	<map>
+	"ZBE/core/system/SysError.h"
+
+1469902644 c:\users\degryll\documents\github\zbe\include\zbe\core\tools\containers\ticketedforwardlist.h
+	<type_traits>
+	<memory>
+	<forward_list>
+	"ZBE/core/system/SysError.h"
+	"ZBE/core/tools/containers/Ticket.h"
+
+1469902644 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\tools\containers\ticketedforwardlisttest.cpp
+	"gtest/gtest.h"
+	<cstdio>
+	"ZBE/core/system/SysError.h"
+	"ZBE/core/tools/containers/TicketedForwardList.h"
+
+1469902644 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\tools\containers\tickettest.cpp
+	"gtest/gtest.h"
+	"ZBE/core/tools/containers/Ticket.h"
+
+1469902644 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\tools\math\collisions\intersectionstest.cpp
+	"gtest/gtest.h"
+	<cstdint>
+	"ZBE/core/tools/math/math.h"
+	"ZBE/core/system/SysError.h"
+	"ZBE/core/tools/math/Point.h"
+	"ZBE/core/tools/math/Vector.h"
+	"ZBE/core/tools/math/objects.h"
+	"ZBE/core/tools/math/collisions/intersections.h"
+
+1469980049 c:\users\degryll\documents\github\zbe\include\zbe\core\tools\math\objects.h
+	<initializer_list>
+	"ZBE/core/tools/math/Point.h"
+	"ZBE/core/tools/math/Vector.h"
+
+1470321234 c:\users\degryll\documents\github\zbe\include\zbe\core\tools\math\collisions\intersections.h
+	<cstdint>
+	<limits>
+	"ZBE/core/entities/CollisionerEntity.h"
+	"ZBE/core/tools/math/math.h"
+	"ZBE/core/tools/math/Point.h"
+	"ZBE/core/tools/math/Vector.h"
+	"ZBE/core/tools/math/objects.h"
+
+1469902644 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\tools\math\objectstest.cpp
+	"gtest/gtest.h"
+	"ZBE/core/system/SysError.h"
+	"ZBE/core/tools/math/Point.h"
+	"ZBE/core/tools/math/Vector.h"
+	"ZBE/core/tools/math/objects.h"
+
+1469902644 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\tools\math\pointtest.cpp
+	"gtest/gtest.h"
+	"ZBE/core/system/SysError.h"
+	"ZBE/core/tools/math/Point.h"
+	"ZBE/core/tools/math/Vector.h"
+
+1469902644 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\tools\math\vectortest.cpp
+	"gtest/gtest.h"
+	"ZBE/core/system/SysError.h"
+	"ZBE/core/tools/math/Point.h"
+	"ZBE/core/tools/math/Vector.h"
+
+1470326400 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\tools\sdltimertest.cpp
+	"gtest/gtest.h"
+	<cstdio>
+	"ZBE/core/tools/SDLTimer.h"
+	"ZBE/core/system/SysError.h"
+
+1470326239 c:\users\degryll\documents\github\zbe\include\zbe\core\tools\sdltimer.h
+	"ZBE/core/tools/Timer.h"
+	<SDL2/SDL.h>
+
+1469902644 source:c:\users\degryll\documents\github\zbe\src\zbetest\src\filehandlertest.cpp
+	"gtest/gtest.h"
+	"ZBE/core/io/FileHandler.h"
+	"ZBE/core/system/SysError.h"
+
+1469982102 c:\users\degryll\documents\github\zbe\include\zbe\core\io\filehandler.h
+	<errno.h>
+	<windows.h>
+	<string>
+
+1470326928 source:c:\users\degryll\documents\github\zbe\src\zbetest\src\loggertest.cpp
+	"gtest/gtest.h"
+	"ZBE/core/system/Logger.h"
+	"ZBE/core/system/SysError.h"
+	"ZBE/core/io/FileHandler.h"
+
+1470326511 c:\users\degryll\documents\github\zbe\include\zbe\core\system\logger.h
+	<vector>
+	<forward_list>
+	<string>
+	<sstream>
+	<mutex>
+
+1469902644 source:c:\users\degryll\documents\github\zbe\src\zbetest\src\main.cpp
+	<stdio.h>
+	"gtest/gtest.h"
+
+1469902644 source:c:\users\degryll\documents\github\zbe\src\zbetest\src\syserrortest.cpp
+	"gtest/gtest.h"
+	"ZBE/core/system/SysError.h"
+
