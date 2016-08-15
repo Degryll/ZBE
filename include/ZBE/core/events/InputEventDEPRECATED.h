@@ -15,7 +15,7 @@
 namespace zbe {
 /** \brief An event caused by input devices.
  */
-class InputEvent : public Event {
+class InputEvent8765 : public Event {
     public:
 
         /** \brief Builds an InputEvent with the status and id of the associated input.

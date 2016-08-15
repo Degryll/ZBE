@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file CollisionEvent.h
  * @since 2016-03-26
- * @date 2016-03-26
+ * @date 2016-08-15
  * @author Ludo
  * @brief Base event.
  */
@@ -13,6 +13,8 @@
 #include <cstdint>
 
 namespace zbe {
+
+class EventDispatcher;
 
 /** \brief Represents a basic event. An event its something that, when it occurs, can cause some element of the game to change its state.
  */
@@ -27,7 +29,7 @@ class Event {
     */
     Event(uint64_t id, uint64_t time):id(id),time(time){}
 
-    virtual ~Event() {};
+    virtual ~Event() {};  //!< Empty destructor
 
     /** \brief Get the exact moment in which event occurred
     *
@@ -47,14 +49,21 @@ class Event {
       return id;
     }
 
+  /** \brief Sort events by time.
+    * \param e The event to compare this with.
+    *
+    * \return Return true if this occurs earlier than e.
+    */
     bool operator<(const Event & e) {
       return getTime() < e.getTime();
     }
 
+    virtual void accept(EventDispatcher &visitor) = 0;  //!< Event handler solver using the visitor pattern
+
   private:
 
-    uint64_t id;
-    uint64_t time;
+    uint64_t id;    //!< Event id
+    uint64_t time;  //!< Time when the event occurs
 };
 
 }

@@ -182,13 +182,11 @@
 		<Unit filename="../../../include/ZBE/core/entities/CollisionatorEntity.h" />
 		<Unit filename="../../../include/ZBE/core/entities/CollisionerEntity.h" />
 		<Unit filename="../../../include/ZBE/core/entities/Entity.h" />
-		<Unit filename="../../../include/ZBE/core/events/CollisionEvent.h" />
 		<Unit filename="../../../include/ZBE/core/events/CollisionEventGenerator.h" />
 		<Unit filename="../../../include/ZBE/core/events/Event.h" />
+		<Unit filename="../../../include/ZBE/core/events/EventDispatcher.h" />
 		<Unit filename="../../../include/ZBE/core/events/EventStore.h" />
-		<Unit filename="../../../include/ZBE/core/events/InputEvent.h" />
 		<Unit filename="../../../include/ZBE/core/events/InputEventGenerator.h" />
-		<Unit filename="../../../include/ZBE/core/events/TimeEvent.h" />
 		<Unit filename="../../../include/ZBE/core/io/FileHandler.h" />
 		<Unit filename="../../../include/ZBE/core/io/InputReader.h" />
 		<Unit filename="../../../include/ZBE/core/io/SDL/SDLInputReader.h" />

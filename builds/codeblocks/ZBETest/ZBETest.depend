@@ -1,1 +1,236 @@
 # depslib dependency file v1.0
+1469984324 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\daemons\daemonstest.cpp
+	"gtest/gtest.h"
+	<memory>
+	"ZBE/core/daemons/Daemon.h"
+	"ZBE/core/daemons/DaemonMaster.h"
+
+1469902644 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\gtest.h
+	<limits>
+	<ostream>
+	<vector>
+	"gtest/internal/gtest-internal.h"
+	"gtest/internal/gtest-string.h"
+	"gtest/gtest-death-test.h"
+	"gtest/gtest-message.h"
+	"gtest/gtest-param-test.h"
+	"gtest/gtest-printers.h"
+	"gtest/gtest_prod.h"
+	"gtest/gtest-test-part.h"
+	"gtest/gtest-typed-test.h"
+	"gtest/gtest_pred_impl.h"
+
+1469902644 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\internal\gtest-internal.h
+	"gtest/internal/gtest-port.h"
+	<stdlib.h>
+	<sys/types.h>
+	<sys/wait.h>
+	<unistd.h>
+	<stdexcept>
+	<ctype.h>
+	<float.h>
+	<string.h>
+	<iomanip>
+	<limits>
+	<set>
+	"gtest/gtest-message.h"
+	"gtest/internal/gtest-string.h"
+	"gtest/internal/gtest-filepath.h"
+	"gtest/internal/gtest-type-util.h"
+
+1469902644 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\internal\gtest-port.h
+	<ctype.h>
+	<stddef.h>
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	<sys/types.h>
+	<sys/stat.h>
+	<AvailabilityMacros.h>
+	<TargetConditionals.h>
+	<iostream>
+	<sstream>
+	<string>
+	<unistd.h>
+	<strings.h>
+	<direct.h>
+	<io.h>
+	<android/api-level.h>
+	<regex.h>
+	<typeinfo>
+	<pthread.h>
+	<time.h>
+	"gtest/internal/gtest-tuple.h"
+	<tuple>
+	<tuple>
+	<tr1/tuple>
+	<tr1/tuple>
+	<tuple>
+	<vector>
+
+1469902644 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\internal\gtest-tuple.h
+	<utility>
+
+1469902644 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\gtest-message.h
+	<limits>
+	"gtest/internal/gtest-port.h"
+
+1469902644 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\internal\gtest-string.h
+	<mem.h>
+	<string.h>
+	<string>
+	"gtest/internal/gtest-port.h"
+
+1469902644 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\internal\gtest-filepath.h
+	"gtest/internal/gtest-string.h"
+
+1469902644 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\internal\gtest-type-util.h
+	"gtest/internal/gtest-port.h"
+	<cxxabi.h>
+	<acxx_demangle.h>
+
+1469902644 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\gtest-death-test.h
+	"gtest/internal/gtest-death-test-internal.h"
+
+1469902644 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\internal\gtest-death-test-internal.h
+	"gtest/internal/gtest-internal.h"
+	<stdio.h>
+
+1469902644 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\gtest-param-test.h
+	"gtest/internal/gtest-port.h"
+	<utility>
+	"gtest/internal/gtest-internal.h"
+	"gtest/internal/gtest-param-util.h"
+	"gtest/internal/gtest-param-util-generated.h"
+
+1469902644 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\internal\gtest-param-util.h
+	<iterator>
+	<utility>
+	<vector>
+	"gtest/internal/gtest-internal.h"
+	"gtest/internal/gtest-linked_ptr.h"
+	"gtest/internal/gtest-port.h"
+	"gtest/gtest-printers.h"
+
+1469902644 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\internal\gtest-linked_ptr.h
+	<stdlib.h>
+	<assert.h>
+	"gtest/internal/gtest-port.h"
+
+1469902644 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\gtest-printers.h
+	<ostream>
+	<sstream>
+	<string>
+	<utility>
+	<vector>
+	"gtest/internal/gtest-port.h"
+	"gtest/internal/gtest-internal.h"
+
+1469902644 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\internal\gtest-param-util-generated.h
+	"gtest/internal/gtest-param-util.h"
+	"gtest/internal/gtest-port.h"
+
+1469902644 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\gtest_prod.h
+
+1469902644 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\gtest-test-part.h
+	<iosfwd>
+	<vector>
+	"gtest/internal/gtest-internal.h"
+	"gtest/internal/gtest-string.h"
+
+1469902644 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\gtest-typed-test.h
+	"gtest/internal/gtest-port.h"
+	"gtest/internal/gtest-type-util.h"
+
+1469902644 c:\users\degryll\documents\github\zbe\extlibs\googletest\1.7.0\include\gtest\gtest_pred_impl.h
+
+1469902644 c:\users\degryll\documents\github\zbe\include\zbe\core\daemons\daemon.h
+
+1470767686 c:\users\degryll\documents\github\zbe\include\zbe\core\daemons\daemonmaster.h
+	<memory>
+	<vector>
+	"./Daemon.h"
+
+1469984794 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\daemons\punisherstest.cpp
+	"gtest/gtest.h"
+	"ZBE/core/tools/math/Vector.h"
+	"ZBE/core/tools/math/Point.h"
+	"ZBE/core/archetypes/Movable.h"
+	"ZBE/core/daemons/Daemon.h"
+	"ZBE/core/daemons/Punishers.h"
+	"ZBE/core/behaviors/Behavior.h"
+
+1469902644 c:\users\degryll\documents\github\zbe\include\zbe\core\tools\math\vector.h
+	<utility>
+	<initializer_list>
+	<cmath>
+	"ZBE/core/tools/math/math.h"
+	"ZBE/core/tools/math/Point.h"
+
+1469902644 c:\users\degryll\documents\github\zbe\include\zbe\core\tools\math\math.h
+	<utility>
+	<initializer_list>
+	<cstdio>
+
+1469902644 c:\users\degryll\documents\github\zbe\include\zbe\core\tools\math\point.h
+	<initializer_list>
+	"ZBE/core/system/SysError.h"
+
+1469902644 c:\users\degryll\documents\github\zbe\include\zbe\core\system\syserror.h
+	<string>
+
+1469902644 c:\users\degryll\documents\github\zbe\include\zbe\core\archetypes\movable.h
+	"ZBE/core/archetypes/Positionable.h"
+	"ZBE/core/tools/math/Vector.h"
+
+1469902644 c:\users\degryll\documents\github\zbe\include\zbe\core\archetypes\positionable.h
+	"ZBE/core/tools/math/Vector.h"
+	"ZBE/core/tools/math/Point.h"
+
+1469902644 c:\users\degryll\documents\github\zbe\include\zbe\core\daemons\punishers.h
+	"ZBE/core/daemons/PunisherDaemon.h"
+	"ZBE/core/behaviors/Behavior.h"
+	"ZBE/core/drawers/Drawer.h"
+
+1470251577 c:\users\degryll\documents\github\zbe\include\zbe\core\daemons\punisherdaemon.h
+	<vector>
+	"./Daemon.h"
+
+1469902644 c:\users\degryll\documents\github\zbe\include\zbe\core\behaviors\behavior.h
+
+1469902644 c:\users\degryll\documents\github\zbe\include\zbe\core\drawers\drawer.h
+
+1469902644 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\entities\collisionableentitytest.cpp
+
+1469902644 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\entities\collisionerentitytest.cpp
+
+1469902644 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\entities\entitytest.cpp
+	"gtest/gtest.h"
+	"ZBE/core/entities/Entity.h"
+	"ZBE/core/tools/containers/Ticket.h"
+	"ZBE/core/system/SysError.h"
+
+1470324838 c:\users\degryll\documents\github\zbe\include\zbe\core\entities\entity.h
+	<map>
+	"ZBE/core/tools/containers/Ticket.h"
+
+1469902644 c:\users\degryll\documents\github\zbe\include\zbe\core\tools\containers\ticket.h
+
+1471284839 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\events\eventstest.cpp
+	"gtest/gtest.h"
+	"ZBE/core/events/Event.h"
+	"ZBE/core/events/EventDispatcher.h"
+	"ZBE/core/entities/CollisionerEntity.h"
+
+1471283608 c:\users\degryll\documents\github\zbe\include\zbe\core\events\event.h
+	<cstdint>
+
+1471284017 c:\users\degryll\documents\github\zbe\include\zbe\core\events\eventdispatcher.h
+	"ZBE/core/events/Event.h"
+	"ZBE/core/entities/CollisionerEntity.h"
+	"ZBE/core/tools/math/Point.h"
+
+1470324981 c:\users\degryll\documents\github\zbe\include\zbe\core\entities\collisionerentity.h
+	"ZBE/core/entities/Entity.h"
+	"ZBE/core/tools/math/Point.h"
+

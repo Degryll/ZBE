@@ -147,7 +147,6 @@
 		<Unit filename="../../../src/ZBETest/core/entities/CollisionableEntityTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/entities/CollisionerEntityTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/entities/EntityTest.cpp" />
-		<Unit filename="../../../src/ZBETest/core/events/CollisionEventsTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/events/EventStoreTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/events/EventsTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/events/InputEventGeneratorTest.cpp" />

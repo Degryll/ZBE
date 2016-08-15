@@ -2,7 +2,7 @@
 #include <vector>
 
 #include "ZBE/core/io/InputReader.h"
-#include "ZBE/core/events/InputEvent.h"
+#include "ZBE/core/events/EventDispatcher.h"
 #include "ZBE/core/events/EventStore.h"
 #include "ZBE/core/events/InputEventGenerator.h"
 

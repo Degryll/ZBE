@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file CollisionEventGenerator.h
  * @since 2016-06-05
- * @date 2016-08-04
+ * @date 2016-08-15
  * @author Degryll
  * @brief Generate collision events.
  */
@@ -11,7 +11,7 @@
 
 #include "ZBE/core/entities/CollisionerEntity.h"
 #include "ZBE/core/entities/CollisionatorEntity.h"
-#include "ZBE/core/events/CollisionEvent.h"
+#include "ZBE/core/events/EventDispatcher.h"
 #include "ZBE/core/tools/math/Point.h"
 
 namespace zbe {
