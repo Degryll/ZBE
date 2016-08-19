@@ -62,7 +62,7 @@ class CollisionEvent2D : public Event {
 
     /** \brief Copy Constructor.
      */
-    CollisionEvent2D(const CollisionEvent2D& rhs) : Event(rhs), a(rhs.a), b(rhs.b), p(rhs.p), t(rhs.t) {}
+    CollisionEvent2D(const CollisionEvent2D& rhs) : Event(rhs), a(rhs.a), b(rhs.b), p(rhs.p) {}
 
     /** \brief Parametrized Constructor.
     *
@@ -72,7 +72,7 @@ class CollisionEvent2D : public Event {
     * \param entityB The second entity involved in the collision.
     * \param point Point of collision.
     */
-    CollisionEvent2D(uint64_t id, uint64_t time, CollisionerEntity *entityA, CollisionerEntity *entityB, Point2D point, uint64_t timeRemain) : Event(id, time), a(entityA), b(entityB), p(point), t(timeRemain) {}
+    CollisionEvent2D(uint64_t id, uint64_t time, CollisionerEntity *entityA, CollisionerEntity *entityB, Point2D point) : Event(id, time), a(entityA), b(entityB), p(point) {}
 
     /** \brief Empty destructor.
     */
@@ -85,7 +85,6 @@ class CollisionEvent2D : public Event {
       a = rhs.a;
       b = rhs.b;
       p = rhs.p;
-      t = rhs.t;
       return (*this);
     }
 
@@ -108,7 +107,6 @@ class CollisionEvent2D : public Event {
     CollisionerEntity *a;  //!< First entitie involved.
     CollisionerEntity *b;  //!< Second entitie involved.
     Point2D p;             //!< Point of collision.
-    uint64_t t;            //!< Time remaining before .
 };
 
 /** \brief An event caused by time.

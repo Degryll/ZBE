@@ -144,7 +144,7 @@
 		</Compiler>
 		<Unit filename="../../../src/ZBETest/core/daemons/PunishersTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/daemons/daemonsTest.cpp" />
-		<Unit filename="../../../src/ZBETest/core/entities/CollisionableEntityTest.cpp" />
+		<Unit filename="../../../src/ZBETest/core/entities/CollisionatorEntityTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/entities/CollisionerEntityTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/entities/EntityTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/events/EventStoreTest.cpp" />

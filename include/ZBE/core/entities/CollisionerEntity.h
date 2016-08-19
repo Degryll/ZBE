@@ -35,24 +35,27 @@ class CollisionerEntity : public Entity {
     /** \brief A collisionable entity is defined by a collision object.
       * \param object A collision object that defines the "physical shape" of the entity.
       */
-    CollisionerEntity(CollisionObject& object) : Entity(), o(object) {}
+    CollisionerEntity(CollisionObject* object) : Entity(), o(object) {}
+    CollisionerEntity(const CollisionerEntity&) = delete;
 
     /** \brief Empty destructor.
       */
     virtual ~CollisionerEntity() {}
 
+    void operator=(const CollisionerEntity&) = delete;
+
     /** \brief Set the collision object this entity is.
      *  \param object The collision object.
      */
-    inline void setCollisionObject(CollisionObject& object) {o = object;}
+    inline void setCollisionObject(CollisionObject* object) {o = object;}
 
     /** \brief Return the collision object.
      *  \return Collision object.
      */
-    inline CollisionObject& getCollisionObject() {return (o);}
+    inline CollisionObject* getCollisionObject() {return (o);}
 
   private:
-    CollisionObject& o;  //!< Collision object
+    CollisionObject* o;  //!< Collision object
 };
 
 }  // namespace zbe

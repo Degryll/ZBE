@@ -42,6 +42,11 @@ bool intersectionSegmentAABB(Ray<dim> ray, AABB<dim> box, uint64_t &time, Point<
 inline bool intersectionSegmentAABB2D(Ray2D ray, AABB2D box, uint64_t &time, Point2D& point) {return (intersectionSegmentAABB<2>(ray,box,time,point));}  //!< 2D allias of intersectionSegmentAABB.
 inline bool intersectionSegmentAABB3D(Ray3D ray, AABB3D box, uint64_t &time, Point3D& point) {return (intersectionSegmentAABB<3>(ray,box,time,point));}  //!< 3D allias of intersectionSegmentAABB.
 
+template <unsigned dim>
+bool IntersectionMovingNSphereAABB(NSphere<dim> nsphere, Vector<dim> direction, AABB<dim> box, uint64_t& time, Point<dim>& point);
+inline bool IntersectionMovingCircleAABB2D(Circle circle, Vector2D direction, AABB2D box, uint64_t& time, Point2D& point) {return (IntersectionMovingNSphereAABB<2>(circle,direction,box,time,point));}  //!< 2D allias of IntersectionMovingNSphereAABB.
+inline bool IntersectionMovingSphereAABB3D(Sphere sphere, Vector3D direction, AABB3D box, uint64_t& time, Point3D& point) {return (IntersectionMovingNSphereAABB<3>(sphere,direction,box,time,point));}  //!< 3D allias of IntersectionMovingNSphereAABB.
+
 /** \brief A template function that compute the time and point of collision (if any) of an N-dimensional ray and a NSphere.
  *
  *  Compute if there is a collision between a ray and a nspehere before the initial value of time.
@@ -221,37 +226,89 @@ bool intersectionSegmentAABB(Ray<dim> ray, AABB<dim> box, uint64_t &time, Point<
  * \param point Stores the point of collision, if any.
  * \return True if there is a collision before the initial value of time, false otherwise.
  */
-bool IntersectionMovingCircleAABB2D(Circle circle, Vector2D direction, AABB2D box, uint64_t& time, Point2D& point) {
-  double r = circle.r;
-  AABB2D e = box;
-  e.minimum[0] -= r; e.minimum[1] -= r;
-  e.maximum[0] += r; e.maximum[1] += r;
+template <unsigned dim>
+bool IntersectionMovingNSphereAABB(NSphere<dim> nsphere, Vector<dim> direction, AABB<dim> box, uint64_t& time, Point<dim>& point) {
+  double r = nsphere.r;
+  AABB<dim> e = box;
+  for(unsigned i = 0; i < dim; i++) {
+    e.minimum[i] -= r;
+    e.maximum[i] += r;
+  }
 
   uint64_t t = time;
 
-  Ray2D ray(circle.c,direction);
-  if (!intersectionRayAABB2D(ray, e, t, point) || t > time) {return (false);}
-  double bmin0 = box.minimum[0];
-  double bmax0 = box.maximum[0];
-  double bmin1 = box.minimum[1];
-  double bmax1 = box.maximum[1];
-  Point2D c;
+  Ray<dim> ray(nsphere.c, direction);
+  if (!intersectionRayAABB<dim>(ray, e, t, point) || t > time) {return (false);}
+  double bmin[dim];
+  double bmax[dim];
+  for(unsigned i = 0; i < dim; i++) {
+    bmin[i] = box.minimum[i];
+    bmax[i] = box.maximum[i];
+  }
+  Point<dim> c;
   int m=0;
-  if (point.x < bmin0) {m++; c.x = bmin0; point[0] += r;}
-  if (point.x > bmax0) {m++; c.x = bmax0; point[0] -= r;}
-  if (point.y < bmin1) {m++; c.y = bmin1; point[1] += r;}
-  if (point.y > bmax1) {m++; c.y = bmax1; point[1] -= r;}
+  for(unsigned i = 0; i < dim; i++) {
+    if (point[i] < bmin[i]) {m++; c[i] = bmin[i]; point[i] += r;}
+    if (point[i] > bmax[i]) {m++; c[i] = bmax[i]; point[i] -= r;}
+  }
 
   // The collision happens at the corner of the expansion box
   // Check if there is an intersection with the vertex.
-  if (m == 2) {
-    return (intersectionRayCircle(ray, Circle(c,r), time, point));
+  if (m == dim) {
+    return (intersectionRayNSphere<dim>(ray, NSphere<dim>(c,r), time, point));
   }
 
   time = t;
   // The intersection with the expanded AABB e is the correct.
   return (true);
 }
+
+/**************************************************************/
+/*                                                            */
+/*             OLD 2D IMPLEMENTATION                          */
+/*                                                            */
+/**************************************************************/
+///** \brief Computes the collision of a moving circle with an AABB.
+// *
+// * \param Circle The moving circle.
+// * \param direction The velocity of the moving sphere.
+// * \param box The static AABB.
+// * \param time Initialy it has a limit time, if the collision happens before that time, its value is updated.
+// * \param point Stores the point of collision, if any.
+// * \return True if there is a collision before the initial value of time, false otherwise.
+// */
+//bool IntersectionMovingCircleAABB2D(Circle circle, Vector2D direction, AABB2D box, uint64_t& time, Point2D& point) {
+//  double r = circle.r;
+//  AABB2D e = box;
+//  e.minimum[0] -= r; e.minimum[1] -= r;
+//  e.maximum[0] += r; e.maximum[1] += r;
+//
+//  uint64_t t = time;
+//
+//  Ray2D ray(circle.c,direction);
+//  if (!intersectionRayAABB2D(ray, e, t, point) || t > time) {return (false);}
+//  double bmin0 = box.minimum[0];
+//  double bmax0 = box.maximum[0];
+//  double bmin1 = box.minimum[1];
+//  double bmax1 = box.maximum[1];
+//  Point2D c;
+//  int m=0;
+//  if (point.x < bmin0) {m++; c.x = bmin0; point[0] += r;}
+//  if (point.x > bmax0) {m++; c.x = bmax0; point[0] -= r;}
+//  if (point.y < bmin1) {m++; c.y = bmin1; point[1] += r;}
+//  if (point.y > bmax1) {m++; c.y = bmax1; point[1] -= r;}
+//
+//  // The collision happens at the corner of the expansion box
+//  // Check if there is an intersection with the vertex.
+//  if (m == 2) {
+//    return (intersectionRayCircle(ray, Circle(c,r), time, point));
+//  }
+//
+//  time = t;
+//  // The intersection with the expanded AABB e is the correct.
+//  return (true);
+//}
+
 
 //bool IntersectionMovingSphereAABB(Sphere s, Vector d, AABB b, float &t) {
 //  // Compute the AABB resulting from expanding b by sphere radius r

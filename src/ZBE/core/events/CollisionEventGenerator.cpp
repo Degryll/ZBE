@@ -23,12 +23,12 @@ void CollisionEventGenerator::generate(uint64_t initTime, uint64_t endTime) {
   TicketedForwardList<CollisionatorEntity*>* ctl = lmct.get(id);
 
   for(auto it = ctl->begin(); it != ctl->end(); it++) {
-    const std::forward_list<uint64_t>& cl = (*it)->getCollisionablesList();
+    const std::forward_list<uint64_t>& cl = (*it)->getCollisionablesLists();
     for(auto jt = cl.begin(); jt != cl.end(); jt++) {
       TicketedForwardList<CollisionerEntity*>* cnl = lmcn.get(*jt);
       for(auto kt = cnl->begin(); kt != cnl->end(); kt++) {
         if(cs.select(*(*it), *(*kt), totalTime, point)) {
-          es.storeEvent(new CollisionEvent2D(eventId, initTime+totalTime, *it, *kt, point, totalTime));
+          es.storeEvent(new CollisionEvent2D(eventId, initTime+totalTime, *it, *kt, point));
         }  // if collision
       } // for each collisionable
     }  // for collisionable list

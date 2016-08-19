@@ -21,22 +21,24 @@ namespace zbe {
  */
 class CollisionatorEntity : public CollisionerEntity {
   public:
+    CollisionatorEntity(CollisionObject* object) : CollisionerEntity(object), cl(), al() {}
+
     /** \brief Register a new list of collisionables.
      *  \param id Internal id to identify the list.
      *  \param listId Global id of the List.
      */
-    inline void addToCollisionablesList(uint64_t id) {cl.push_front(id);}
+    inline void addToCollisionablesLists(uint64_t id) {cl.push_front(id);}
 
     /** \brief Remove a list of collisionables.
      *  \param id Internal id to identify the list to be removed.
      */
-    inline void removeFromCollisionablesList(uint64_t id) {cl.remove(id);}
+    inline void removeFromCollisionablesLists(uint64_t id) {cl.remove(id);}  // TODO not has efficient has one may expect.
 
     /** \brief Returns the global id of the list of Collisionable identify by the Internal id.
      *  \param id Internal id to identify the list.
      *  \return The global id of the list.
      */
-    inline const std::forward_list<uint64_t>& getCollisionablesList() {return (cl);}
+    inline const std::forward_list<uint64_t>& getCollisionablesLists() {return (cl);}
 
     /** \brief Register a new list of Actuators.
      *  \param id Internal id to identify the list.
@@ -56,7 +58,7 @@ class CollisionatorEntity : public CollisionerEntity {
     uint64_t getActuatorsList(uint64_t id);
 
   private:
-    std::forward_list<uint64_t> cl;  //!< Container that identify id with list of collisionables
+    std::forward_list<uint64_t> cl;  //!< Container with ids of list of collisionables
     //std::map<uint64_t, uint64_t> cl;  //!< Container that identify id with list of collisionables
     std::map<uint64_t, uint64_t> al;  //!< Container that identify id with list of actuators
 

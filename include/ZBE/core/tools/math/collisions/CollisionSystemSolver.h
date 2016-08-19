@@ -33,7 +33,7 @@ class CollisionSelector {
      *  \return True if there is a collision in the timeslot set by time, false otherwise.
      */
     inline bool select(CollisionerEntity& param1, CollisionerEntity& param2, uint64_t& time, Point2D& point) {
-      return (param2.getCollisionObject().accept(*this, param1.getCollisionObject(), time, point));
+      return (param2.getCollisionObject()->accept(*this, *(param1.getCollisionObject()), time, point));
     }
 
     /** \brief Collision detection for two AABB.
@@ -92,6 +92,8 @@ class StaticAABB2D: public CollisionObject {
 public:
   DERIVEDCOLLISIONOBJECT
 
+  StaticAABB2D() : box() {}
+
   /** \brief Return the 2D AABB.
    *  \return A 2D AABB.
    */
@@ -106,6 +108,8 @@ private:
 class ConstantMovingCircle: public CollisionObject {
 public:
   DERIVEDCOLLISIONOBJECT
+
+  ConstantMovingCircle() : circle(), direction() {}
 
   /** \brief Return the circle.
    *  \return A circle.

@@ -202,7 +202,10 @@
 
 1469902644 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\entities\collisionableentitytest.cpp
 
-1469902644 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\entities\collisionerentitytest.cpp
+1471631262 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\entities\collisionerentitytest.cpp
+	"gtest/gtest.h"
+	"ZBE/core/entities/CollisionerEntity.h"
+	"ZBE/core/tools/math/collisions/CollisionSystemSolver.h"
 
 1469902644 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\entities\entitytest.cpp
 	"gtest/gtest.h"
@@ -216,21 +219,22 @@
 
 1469902644 c:\users\degryll\documents\github\zbe\include\zbe\core\tools\containers\ticket.h
 
-1471284839 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\events\eventstest.cpp
+1471631028 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\events\eventstest.cpp
 	"gtest/gtest.h"
 	"ZBE/core/events/Event.h"
 	"ZBE/core/events/EventDispatcher.h"
 	"ZBE/core/entities/CollisionerEntity.h"
+	"ZBE/core/tools/math/collisions/CollisionSystemSolver.h"
 
 1471283608 c:\users\degryll\documents\github\zbe\include\zbe\core\events\event.h
 	<cstdint>
 
-1471284017 c:\users\degryll\documents\github\zbe\include\zbe\core\events\eventdispatcher.h
+1471630709 c:\users\degryll\documents\github\zbe\include\zbe\core\events\eventdispatcher.h
 	"ZBE/core/events/Event.h"
 	"ZBE/core/entities/CollisionerEntity.h"
 	"ZBE/core/tools/math/Point.h"
 
-1470324981 c:\users\degryll\documents\github\zbe\include\zbe\core\entities\collisionerentity.h
+1471630188 c:\users\degryll\documents\github\zbe\include\zbe\core\entities\collisionerentity.h
 	"ZBE/core/entities/Entity.h"
 	"ZBE/core/tools/math/Point.h"
 
@@ -245,7 +249,7 @@
 	<forward_list>
 	"ZBE/core/events/Event.h"
 
-1471289449 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\events\inputeventgeneratortest.cpp
+1471289767 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\events\inputeventgeneratortest.cpp
 	"gtest/gtest.h"
 	<vector>
 	"ZBE/core/io/InputReader.h"
@@ -657,7 +661,7 @@
 	"ZBE/core/tools/math/Point.h"
 	"ZBE/core/tools/math/Vector.h"
 
-1470321234 c:\users\degryll\documents\github\zbe\include\zbe\core\tools\math\collisions\intersections.h
+1471628133 c:\users\degryll\documents\github\zbe\include\zbe\core\tools\math\collisions\intersections.h
 	<cstdint>
 	<limits>
 	"ZBE/core/entities/CollisionerEntity.h"
@@ -725,4 +729,10 @@
 1469902644 source:c:\users\degryll\documents\github\zbe\src\zbetest\src\syserrortest.cpp
 	"gtest/gtest.h"
 	"ZBE/core/system/SysError.h"
+
+1471630068 c:\users\degryll\documents\github\zbe\include\zbe\core\tools\math\collisions\collisionsystemsolver.h
+	<cstdint>
+	"ZBE/core/entities/CollisionerEntity.h"
+	"ZBE/core/tools/math/objects.h"
+	"ZBE/core/tools/math/collisions/intersections.h"
 
