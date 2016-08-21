@@ -188,6 +188,7 @@
 		<Unit filename="../../../include/ZBE/core/events/EventStore.h" />
 		<Unit filename="../../../include/ZBE/core/events/InputEventGenerator.h" />
 		<Unit filename="../../../include/ZBE/core/events/TimeEventGenerator.h" />
+		<Unit filename="../../../include/ZBE/core/events/TimeEventHandler.h" />
 		<Unit filename="../../../include/ZBE/core/guards/CollisionGuard.h" />
 		<Unit filename="../../../include/ZBE/core/guards/InputGuard.h" />
 		<Unit filename="../../../include/ZBE/core/guards/TimeGuard.h" />
