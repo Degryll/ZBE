@@ -36,7 +36,7 @@
 					<Add library="SDL2" />
 					<Add library="SDL2_image" />
 					<Add library="SDL2_ttf" />
-					<Add directory="../../../extlibs/SDL2/2.0.3/lib" />
+					<Add directory="../../../extlibs/SDL2/2.0.3/lib/linux64" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/lib" />
 				</Linker>
@@ -72,9 +72,9 @@
 					<Add library="SDL2" />
 					<Add library="SDL2_image" />
 					<Add library="SDL2_ttf" />
+					<Add directory="../../../extlibs/SDL2/2.0.3/lib/linux64" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/lib" />
-					<Add directory="../../../extlibs/SDL2/2.0.3/lib" />
 				</Linker>
 			</Target>
 			<Target title="Debug-Win64">
@@ -182,12 +182,16 @@
 		<Unit filename="../../../include/ZBE/core/entities/CollisionatorEntity.h" />
 		<Unit filename="../../../include/ZBE/core/entities/CollisionerEntity.h" />
 		<Unit filename="../../../include/ZBE/core/entities/Entity.h" />
+		<Unit filename="../../../include/ZBE/core/events/CollisionEvent.h" />
 		<Unit filename="../../../include/ZBE/core/events/CollisionEventGenerator.h" />
 		<Unit filename="../../../include/ZBE/core/events/Event.h" />
-		<Unit filename="../../../include/ZBE/core/events/EventDispatcher.h" />
+		<Unit filename="../../../include/ZBE/core/events/EventHandler.h" />
 		<Unit filename="../../../include/ZBE/core/events/EventStore.h" />
+		<Unit filename="../../../include/ZBE/core/events/InputEvent.h" />
 		<Unit filename="../../../include/ZBE/core/events/InputEventGenerator.h" />
-		<Unit filename="../../../include/ZBE/core/events/TimeEventGenerator.h" />
+		<Unit filename="../../../include/ZBE/core/events/KeyboardEventHandler.h" />
+		<Unit filename="../../../include/ZBE/core/events/TimeEvent.h" />
+		<Unit filename="../../../include/ZBE/core/guards/InputGuard.h" />
 		<Unit filename="../../../include/ZBE/core/io/FileHandler.h" />
 		<Unit filename="../../../include/ZBE/core/io/InputReader.h" />
 		<Unit filename="../../../include/ZBE/core/io/SDL/SDLInputReader.h" />
@@ -199,7 +203,7 @@
 		<Unit filename="../../../include/ZBE/core/system/SDL/SDLEventDispatcher.h" />
 		<Unit filename="../../../include/ZBE/core/system/SDL/Window.h" />
 		<Unit filename="../../../include/ZBE/core/system/SysError.h" />
-		<Unit filename="../../../include/ZBE/core/system/SysTime.h" />
+		<Unit filename="../../../include/ZBE/core/system/SystemTime.h" />
 		<Unit filename="../../../include/ZBE/core/tools/SDLTimer.h" />
 		<Unit filename="../../../include/ZBE/core/tools/Timer.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/ArrayList.h" />
@@ -224,7 +228,7 @@
 		<Unit filename="../../../src/ZBE/core/events/CollisionEventGenerator.cpp" />
 		<Unit filename="../../../src/ZBE/core/events/EventStore.cpp" />
 		<Unit filename="../../../src/ZBE/core/events/InputEventGenerator.cpp" />
-		<Unit filename="../../../src/ZBE/core/events/TimeEventGenerator.cpp" />
+		<Unit filename="../../../src/ZBE/core/events/KeyboardEventHandler.cpp" />
 		<Unit filename="../../../src/ZBE/core/io/FileHandler.cpp" />
 		<Unit filename="../../../src/ZBE/core/io/SDL/SDLInputReader.cpp" />
 		<Unit filename="../../../src/ZBE/core/loaders/SDLFontLoader.cpp" />
