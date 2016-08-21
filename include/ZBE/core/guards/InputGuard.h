@@ -7,9 +7,10 @@
  * @brief Receives a keyboard event and reacts to that.
  */
 
-#include "ZBE/core/events/InputEvent.h"
 #ifndef CORE_GUARDS_INPUTGUARD_H
 #define CORE_GUARDS_INPUTGUARD_H
+
+#include "ZBE/core/events/InputEvent.h"
 
 namespace zbe {
   /** \brief Receives a keyboard event and reacts to that.
