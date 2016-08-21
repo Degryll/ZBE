@@ -244,7 +244,7 @@
 	"ZBE/core/events/Event.h"
 	"ZBE/core/events/EventStore.h"
 
-1470767686 c:\users\degryll\documents\github\zbe\include\zbe\core\events\eventstore.h
+1471807539 c:\users\degryll\documents\github\zbe\include\zbe\core\events\eventstore.h
 	<cstdint>
 	<forward_list>
 	"ZBE/core/events/Event.h"
@@ -735,4 +735,15 @@
 	"ZBE/core/entities/CollisionerEntity.h"
 	"ZBE/core/tools/math/objects.h"
 	"ZBE/core/tools/math/collisions/intersections.h"
+
+1471632442 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\entities\collisionatorentitytest.cpp
+	"gtest/gtest.h"
+	"ZBE/core/entities/CollisionatorEntity.h"
+	"ZBE/core/system/SysError.h"
+	"ZBE/core/tools/math/collisions/CollisionSystemSolver.h"
+
+1471632547 c:\users\degryll\documents\github\zbe\include\zbe\core\entities\collisionatorentity.h
+	<cstdint>
+	<forward_list>
+	"ZBE/core/entities/CollisionerEntity.h"
 

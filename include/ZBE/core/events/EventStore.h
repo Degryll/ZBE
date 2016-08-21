@@ -40,7 +40,7 @@ namespace zbe {
 
       /** \brief Erase all contained events.
        */
-      void clearStore() {store.clear();}
+      void clearStore() {store.clear(); bettertime = UINT64_MAX;}
 
       /** \brief Get the current event collection.
        *  \return A constant event list.

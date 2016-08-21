@@ -2,7 +2,7 @@
 
 #include <forward_list>
 
-#include "ZBE/core/events/Event.h"
+#include "ZBE/core/events/EventDispatcher.h"
 #include "ZBE/core/events/EventStore.h"
 
 TEST(EventStore, EventStore) {
@@ -12,6 +12,7 @@ TEST(EventStore, EventStore) {
   zbe::TimeEvent e3(3,101, 3);
 
   zbe::EventStore &store = zbe::EventStore::getInstance();
+  store.clearStore();
   std::forward_list<zbe::Event*> eventlist = store.getEvents();
 
   EXPECT_EQ(true, eventlist.empty()) << "Must be empty at init";
@@ -28,4 +29,6 @@ TEST(EventStore, EventStore) {
   EXPECT_EQ(2u,(*it++)->getId()) << "Must find e2 first";
   EXPECT_EQ(1u,(*it++)->getId()) << "Must find e1 next";
   EXPECT_EQ(eventlist.end(),it) << "Must found no more";
+
+  store.clearStore();
 }

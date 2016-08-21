@@ -12,9 +12,9 @@
 namespace zbe {
 
 void EventStore::storeEvent(Event* e) {
-  if(e->getTime()==bettertime){
+  if(e->getTime() == bettertime){
     store.push_front(e);
-  } else if (e->getTime()<=bettertime){
+  } else if (e->getTime() < bettertime){
     bettertime = e->getTime();
     store.clear();
     store.push_front(e);

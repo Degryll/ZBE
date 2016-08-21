@@ -221,7 +221,6 @@
 		<Unit filename="../../../src/ZBE/core/events/CollisionEventGenerator.cpp" />
 		<Unit filename="../../../src/ZBE/core/events/EventStore.cpp" />
 		<Unit filename="../../../src/ZBE/core/events/InputEventGenerator.cpp" />
-		<Unit filename="../../../src/ZBE/core/events/KeyboardEventHandler.cpp" />
 		<Unit filename="../../../src/ZBE/core/io/FileHandler.cpp" />
 		<Unit filename="../../../src/ZBE/core/io/SDL/SDLInputReader.cpp" />
 		<Unit filename="../../../src/ZBE/core/loaders/SDLFontLoader.cpp" />
