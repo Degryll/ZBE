@@ -1,0 +1,87 @@
+@startuml
+enum State {
+  ACTIVE
+  INACTIVE
+  ERASED
+}
+
+class Ticket {
+    inline void setState(State state)
+    inline State getState() const
+
+    inline void setACTIVE()
+    inline void setINACTIVE()
+    inline void setERASED()
+
+    inline bool isACTIVE()
+    inline bool isNotACTIVE()
+    inline bool isINACTIVE()
+    inline bool isERASED()
+}
+
+State <- Ticket
+
+class Entitie {
+  void addToList(uint64_t id, Ticket *ticket)
+  void setState(uint64_t id, zbe::Ticket::State state)
+}
+
+Ticket <- Entitie
+
+interface CollisionObject {
+  bool accept(CollisionSelector &visitor, CollisionObject& param1, uint64_t& time, Point2D& point)
+  bool accept(CollisionSelector &visitor, StaticAABB2D& param1, uint64_t& time, Point2D& point)
+  bool accept(CollisionSelector &visitor, ConstantMovingCircle& param1, uint64_t& time, Point2D& point)
+}
+
+class CollisionerEntity {
+  inline void setCollisionObject(CollisionObject* object)
+  inline CollisionObject* getCollisionObject()
+}
+
+CollisionerEntity --o CollisionObject
+
+Entitie <|-- CollisionerEntity
+
+class CollisionatorEntity {
+  inline void addToCollisionablesLists(uint64_t id)
+  inline void removeFromCollisionablesLists(uint64_t id)
+  inline const std::forward_list<uint64_t>& getCollisionablesLists()
+  ..
+  void addToActuatorsList(uint64_t id, uint64_t listId)
+  void removeFromActuatorsList(uint64_t id)
+  uint64_t getActuatorsList(uint64_t id)
+}
+
+CollisionerEntity <|-left- CollisionatorEntity
+
+class StaticAABB2D {
+  inline AABB2D& getAABB2D()
+}
+
+CollisionObject <|-- StaticAABB2D 
+
+class ConstantMovingCircle {
+  inline Circle& getCircle()
+  inline Vector2D& getDirection()
+}
+
+CollisionObject <|-- ConstantMovingCircle
+
+class CollisionSelector {
+  inline bool select(CollisionerEntity& param1, CollisionerEntity& param2, uint64_t& time, Point2D& point)
+  ..
+  inline bool visit(StaticAABB2D& param1, StaticAABB2D& param2, uint64_t& time, Point2D& point)
+  inline bool visit(StaticAABB2D& param1, ConstantMovingCircle& param2, uint64_t& time, Point2D& point)
+  inline bool visit(ConstantMovingCircle& param1, StaticAABB2D& param2, uint64_t& time, Point2D& point)
+  inline bool visit(ConstantMovingCircle& param1, ConstantMovingCircle& param2, uint64_t& time, Point2D& point)
+}
+
+CollisionSelector -left-> CollisionerEntity
+CollisionSelector -down-> StaticAABB2D
+CollisionSelector -down-> ConstantMovingCircle
+
+
+CollisionSelector -down-> CollisionObject 
+CollisionObject -up-> CollisionSelector
+@enduml

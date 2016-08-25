@@ -1,0 +1,91 @@
+@startuml
+interface CollisionObject {
+  bool accept(CollisionSelector &visitor, CollisionObject& param1, uint64_t& time, Point2D& point)
+  bool accept(CollisionSelector &visitor, StaticAABB2D& param1, uint64_t& time, Point2D& point)
+  bool accept(CollisionSelector &visitor, ConstantMovingCircle& param1, uint64_t& time, Point2D& point)
+}
+
+class CollisionerEntity {
+  inline void setCollisionObject(CollisionObject* object)
+  inline CollisionObject* getCollisionObject()
+}
+
+CollisionerEntity --o CollisionObject
+
+class StaticAABB2D {
+  inline AABB2D& getAABB2D()
+}
+
+CollisionObject <|-up- StaticAABB2D 
+
+class ConstantMovingCircle {
+  inline Circle& getCircle()
+  inline Vector2D& getDirection()
+}
+
+CollisionObject <|-up- ConstantMovingCircle
+
+class CollisionSelector {
+  inline bool select(CollisionerEntity& param1, CollisionerEntity& param2, uint64_t& time, Point2D& point)
+  ..
+  inline bool visit(StaticAABB2D& param1, StaticAABB2D& param2, uint64_t& time, Point2D& point)
+  inline bool visit(StaticAABB2D& param1, ConstantMovingCircle& param2, uint64_t& time, Point2D& point)
+  inline bool visit(ConstantMovingCircle& param1, StaticAABB2D& param2, uint64_t& time, Point2D& point)
+  inline bool visit(ConstantMovingCircle& param1, ConstantMovingCircle& param2, uint64_t& time, Point2D& point)
+}
+
+CollisionSelector -up-> CollisionerEntity
+CollisionSelector -up-> StaticAABB2D
+CollisionSelector -up-> ConstantMovingCircle
+
+CollisionSelector -up-> CollisionObject 
+CollisionObject -down-> CollisionSelector
+
+class Point <dimension> {
+}
+
+Point <|-- Point2D
+Point <|-- Point3D
+
+CollisionObject -up-> Point2D
+CollisionSelector -up-> Point2D
+
+class Vector <dimension> {
+}
+
+Vector <|-- Vector2D
+Vector <|-- Vector3D
+
+
+class AABB <dimension> {
+  Point getMinimum()
+  Point getMaximum()
+}
+
+AABB -right-o Point
+AABB <|-- AABB2D
+AABB <|-- AABB3D
+
+StaticAABB2D -down-o AABB2D
+
+class Nsphere <dimension> {
+  Point getCenter()
+  double getRadius()
+}
+
+Nsphere -left-o Point
+Nsphere <|-- Circle
+Nsphere <|-- Sphere
+
+ConstantMovingCircle -down-o Circle
+ConstantMovingCircle -down-o Vector2D
+
+class CollisionEvent2D {
+  inline CollisionerEntity* getEntityA()
+  inline CollisionerEntity* getEntityB()
+  inline Point2D getPoint()
+}
+
+CollisionEvent2D -> CollisionerEntity
+CollisionEvent2D -up-> Point2D
+@enduml

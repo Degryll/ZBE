@@ -1,0 +1,120 @@
+@startuml
+abstract Event {
+  inline uint64_t getTime() const{
+  inline uint64_t getId() const{
+  virtual void accept(EventDispatcher &visitor)
+}
+
+class CollisionEvent2D {
+  inline CollisionerEntity* getEntityA()
+  inline CollisionerEntity* getEntityB()
+  inline Point2D getPoint()
+}
+
+Event <|-- CollisionEvent2D
+CollisionEvent2D -> CollisionerEntity
+CollisionEvent2D -> Point2D
+
+class TimeEvent {
+  uint64_t getTimerId()
+}
+
+Event <|-- TimeEvent
+
+class InputEvent {
+  inline uint32_t getKey()
+  inline float getState()
+}
+
+Event <|-- InputEvent
+
+class EventDispatcher {
+  inline void select(Event& param) {
+  ..
+  inline void visit(CollisionEvent2D& param);
+  inline void visit(TimeEvent& param);
+  inline void visit(InputEvent& param);
+}
+
+EventDispatcher -up-> Event
+Event -down-> EventDispatcher
+
+EventDispatcher -up-> CollisionEvent2D
+EventDispatcher -up-> TimeEvent
+EventDispatcher -up-> InputEvent
+
+class EventStore << (S,#FF7700) Singleton >> {
+  static EventStore& getInstance()
+  ..
+  void storeEvent(Event* e)
+  void clearStore()
+  const std::forward_list<Event*>& getEvents()
+}
+
+class CollisionEventGenerator {
+  void generate(uint64_t initTime, uint64_t endTime)
+}
+
+CollisionEventGenerator -up-> EventStore
+CollisionEventGenerator -up-> CollisionEvent2D
+
+class InputEventGenerator {
+  void generate(uint64_t initTime, uint64_t endTime)
+}
+
+InputEventGenerator -up-> EventStore
+InputEventGenerator -up-> InputEvent
+
+class TimeEventGenerator {
+  inline void addTimer(uint64_t id, uint64_t start, uint64_t time)
+  inline repeatdIter addRepeatedTimer(uint64_t id, uint64_t start, uint64_t time)
+  inline void eraseRepeatedTimer(repeatdIter it)
+  ..
+  void generate(uint64_t initTime, uint64_t endTime);
+}
+
+TimeEventGenerator -up-> EventStore
+TimeEventGenerator -up-> TimeEvent
+
+class TimeEventHandler {
+  inline void addOnceGuard(uint64_t id, *TimeGuard guard)
+  inline void addGuard(uint64_t id, *TimeGuard guard)
+  inline void eraseGuard(uint64_t id)
+..
+  void run(TimeEvent event)
+}
+
+TimeEventHandler -up-> EventDispatcher
+
+Interface TimeGuard {
+  void run(TimeEvent* e)
+}
+
+TimeGuard -up-> TimeEventHandler
+
+class CollisionEventHandler {
+..
+  void run(TimeEvent event)
+}
+
+CollisionEventHandler -up-> EventDispatcher
+
+Interface CollisionGuard {
+  void run(CollisionEvent* e)
+}
+
+CollisionGuard -up-> CollisionEventHandler
+
+class InputEventHandler {
+..
+  void run(TimeEvent event)
+}
+
+InputEventHandler -up-> EventDispatcher
+
+Interface InputGuard {
+  void run(TimeEvent* e)
+}
+
+InputGuard -up-> InputEventHandler
+@enduml
