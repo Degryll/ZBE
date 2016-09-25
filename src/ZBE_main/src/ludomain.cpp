@@ -2,26 +2,136 @@
 #include "ludomain.h"
 #include "ZBE/core/events/Event.h"
 #include "ZBE/core/events/EventStore.h"
-#include "ZBE/core/events/InputEvent.h"
+#include "ZBE/core/events/EventDispatcher.h"
 #include "ZBE/core/events/InputEventGenerator.h"
 #include "ZBE/core/io/InputReader.h"
 #include "ZBE/core/io/SDL/SDLInputReader.h"
+#include "ZBE/core/system/SysTime.h"
+#include "ZBE/core/tools/SDLTimer.h"
+#include "ZBE/core/tools/Timer.h"
+#include "ZBE/core/system/SysError.h"
+#include "ZBE/core/system/SDL/SDLEventDispatcher.h"
+
+#include <inttypes.h>
+#include <iostream>
+#include <chrono>
+#include <thread>
+
 
 int ludomain(int argc, char* argv[]) {
   printf("--- Ludo main ---\n\n");
 
   getchar();
 
-  //zbe::EventStore& store = zbe::EventStore::getInstance();
-  //zbe::InputReader* ir = &zbe::SDLInputReader::getInstance();
-  //zbe::InputEventGenerator* ieg = new zbe::InputEventGenerator(ir,1);
+  // Starting sdl systems.
+  if (SDL_Init(SDL_INIT_VIDEO) != 0){
+    std::cout << "SDL_Init Error: " << SDL_GetError() << std::endl;
+    return 1;
+  }
+  // Creating a sdl window
+  SDL_Window *win = SDL_CreateWindow("Hello World!", 100, 100, 640, 480, SDL_WINDOW_SHOWN);
+  if (win == nullptr){
+    std::cout << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
+    SDL_Quit();
+    return 1;
+  }
 
-  //bool keep = true;
-  //while(keep){
-    //uint64_t initT = logica para el tiempo inicial del parcial de frame
-    //uint64_t endT = logica para el tiempo final del parcial de frame
-    //ieg->generate(initT,endT);
-  //}
+  printf("|=================== Building up system ===================|\n");fflush(stdout);
+  printf("Event store\n");fflush(stdout);
+  printf("Will store all event independently of its type\n");fflush(stdout);
+  zbe::EventStore& store = zbe::EventStore::getInstance();
+  printf("Building SDLEventDispatcher\n");fflush(stdout);
+  printf("Will transform data from SDL to its corresponding events\n");fflush(stdout);
+  zbe::SDLEventDispatcher sdlEventDist;
+  printf("Acquiring the SDL implementation of InputReader\n");fflush(stdout);
+  printf("Will store input events like  mouse or keyboard\n");fflush(stdout);
+  zbe::InputReader* ir = &zbe::SDLInputReader::getInstance();
+  printf("Acquiring  and configuring InputEventGenerator with that InputReader\n");fflush(stdout);
+  printf("Will read events from the InputReader and send them to the store\n");fflush(stdout);
+  printf("Input events will use id 1\n");fflush(stdout);
+  zbe::InputEventGenerator* ieg = new zbe::InputEventGenerator(ir,1);
+  printf("Building a SDL implementation of Timer\n");fflush(stdout);
+  zbe::Timer *sysTimer = new zbe::SDLTimer(true);
+  printf("Acquiring and configuring SysTime with that Timer\n");fflush(stdout);
+  printf("It will be the time reference for all the game context\n");fflush(stdout);
+  zbe::SysTime &sysTime = zbe::SysTime::getInstance();
+  sysTime.setSystemTimer(sysTimer);
+  printf("|=================== Starting up system ===================|\n");fflush(stdout);
+  printf("Starting SysTimer\n");fflush(stdout);
+  sysTimer->start();
+  printf("Acquiring sdl info for the first time\n");fflush(stdout);
+  printf("Input data will be stored into the InputReader\n");fflush(stdout);
+  sdlEventDist.run();
+  printf("Updating system time.\n");fflush(stdout);
+  sysTime.update();
+  printf("Acquiring initial times.\n");fflush(stdout);
+  uint64_t endT = sysTime.getTotalTime();// instant at which the frame ends
+  uint64_t initT = 0;//Lets start
+  printf("|==========================================================|\n");fflush(stdout);
+  printf("initT = 0x%" PRIx64 " ", initT);fflush(stdout);
+  printf("endT = 0x%" PRIx64 "\n", endT);fflush(stdout);
+
+  bool keep = true;
+  while(keep){
+
+    /* sleeping to simulate some work.
+     */
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+
+    /* Acquiring sdl info
+     * Input data will be stored into the InputReader
+     */
+    sdlEventDist.run();
+
+    /* Updating system time.
+     */
+    sysTime.update();
+
+    /* Reading that updated time info
+     */
+    initT = endT;// init time
+    endT = sysTime.getTotalTime();// instant at which the frame ends
+    //frameTime = sysTime.getFrameTime();// frame duration
+
+    //printf("frameTime = 0x%" PRIx64 " ", frameTime);fflush(stdout);
+    printf("initT = 0x%" PRIx64 " ", initT);fflush(stdout);
+    printf("endT = 0x%" PRIx64 "\n", endT);fflush(stdout);
+
+    /* Generating input events:
+     * It will take the events that sdlEventDist has stored
+     * into the InputReader and send it to the event store.
+     */
+    ieg->generate(initT,endT);
+
+    /* Time for look for those events!
+     * the closest input event (or events) found must be now
+     * on the event store.
+     */
+    const std::forward_list<zbe::Event*> & eventList = store.getEvents();
+
+    /* If there are event, we need to do something about it!
+     * For example... exit the program.
+     */
+    if(!eventList.empty()){
+      for ( auto it = eventList.begin(); it != eventList.end(); ++it ) {
+        zbe::InputEvent *e = (zbe::InputEvent*) (*it);
+        printf(" -> T = 0x%" PRIx64 " ", e->getTime());fflush(stdout);
+        printf("K = 0x%" PRIx32 " ", e->getKey());fflush(stdout);
+        printf("S = 0x%f\n", e->getState());fflush(stdout);
+      }
+      //keep = false;
+    }
+
+    /* If one or more error occurs, the ammount and the first one
+     * wille be stored into SysError estructure, so it can be consulted.
+     *
+     * If there are errors, the first one will be prompted.
+     */
+    int errcount = zbe::SysError::getNErrors();
+    if(errcount>0){
+        printf("Error: %s",zbe::SysError::getFirstErrorString().c_str());fflush(stdout);
+    }
+  }
 
   return 0;
 }

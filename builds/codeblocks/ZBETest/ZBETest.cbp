@@ -13,7 +13,10 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-Weffc++" />
 					<Add option="-std=c++11" />
+					<Add option="-Wextra" />
+					<Add option="-Wall" />
 					<Add option="-g" />
 					<Add option="-m64" />
 					<Add directory="../../../src/ZBETest/include" />
@@ -150,8 +153,9 @@
 		<Unit filename="../../../src/ZBETest/core/events/EventStoreTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/events/EventsTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/events/InputEventGeneratorTest.cpp" />
+		<Unit filename="../../../src/ZBETest/core/io/InputBufferTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/system/SDL/SDLEventDispatcherTest.cpp" />
-		<Unit filename="../../../src/ZBETest/core/system/SystemTimeTest.cpp" />
+		<Unit filename="../../../src/ZBETest/core/system/SysTimeTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/tools/SDLTimerTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/tools/containers/ListManagerTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/tools/containers/TicketTest.cpp" />

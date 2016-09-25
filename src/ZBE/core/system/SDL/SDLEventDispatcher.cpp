@@ -12,10 +12,9 @@
 namespace zbe {
 
 void SDLEventDispatcher::run() {
-  states.clear();
-  changedIds.clear();
+  //states.clear();
+  //changedIds.clear();
   SDL_Event event;
-  //Keyboard
   while (SDL_PollEvent(&event)) {
     if (tryKeyboardEvent(event)) {
     } else if(tryMouseEvent(event)){
