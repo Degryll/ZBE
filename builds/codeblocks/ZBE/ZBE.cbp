@@ -13,7 +13,10 @@
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-Weffc++" />
 					<Add option="-std=c++11" />
+					<Add option="-Wextra" />
+					<Add option="-Wall" />
 					<Add option="-g" />
 					<Add option="-m64" />
 					<Add option="-fPIC" />
@@ -186,17 +189,23 @@
 		<Unit filename="../../../include/ZBE/core/events/Event.h" />
 		<Unit filename="../../../include/ZBE/core/events/EventDispatcher.h" />
 		<Unit filename="../../../include/ZBE/core/events/EventStore.h" />
+		<Unit filename="../../../include/ZBE/core/events/InputEventDEPRECATED.h" />
 		<Unit filename="../../../include/ZBE/core/events/InputEventGenerator.h" />
+		<Unit filename="../../../include/ZBE/core/events/TimeEventDEPRECATED.h" />
 		<Unit filename="../../../include/ZBE/core/events/TimeEventGenerator.h" />
 		<Unit filename="../../../include/ZBE/core/events/TimeEventHandler.h" />
 		<Unit filename="../../../include/ZBE/core/guards/CollisionGuard.h" />
 		<Unit filename="../../../include/ZBE/core/guards/InputGuard.h" />
 		<Unit filename="../../../include/ZBE/core/guards/TimeGuard.h" />
 		<Unit filename="../../../include/ZBE/core/io/FileHandler.h" />
+		<Unit filename="../../../include/ZBE/core/io/InputBuffer.h" />
 		<Unit filename="../../../include/ZBE/core/io/InputReader.h" />
+		<Unit filename="../../../include/ZBE/core/io/InputStatus.h" />
 		<Unit filename="../../../include/ZBE/core/io/SDL/SDLInputReader.h" />
 		<Unit filename="../../../include/ZBE/core/loaders/SDLFontLoader.h" />
 		<Unit filename="../../../include/ZBE/core/starters/SDL/SDL_Starter.h" />
+		<Unit filename="../../../include/ZBE/core/system/App.h" />
+		<Unit filename="../../../include/ZBE/core/system/GameApp.h" />
 		<Unit filename="../../../include/ZBE/core/system/Logger.h" />
 		<Unit filename="../../../include/ZBE/core/system/SDL/SDLEventDispatcher.h" />
 		<Unit filename="../../../include/ZBE/core/system/SDL/Window.h" />
@@ -204,11 +213,15 @@
 		<Unit filename="../../../include/ZBE/core/system/SysTime.h" />
 		<Unit filename="../../../include/ZBE/core/tools/SDLTimer.h" />
 		<Unit filename="../../../include/ZBE/core/tools/Timer.h" />
+		<Unit filename="../../../include/ZBE/core/tools/containers/ArrayList.h" />
+		<Unit filename="../../../include/ZBE/core/tools/containers/ArrayListIterator.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/ListManager.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/Ticket.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/TicketedForwardList.h" />
+		<Unit filename="../../../include/ZBE/core/tools/containers/TicketedForwardListIterator.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/Point.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/Vector.h" />
+		<Unit filename="../../../include/ZBE/core/tools/math/collisions/CollisionData.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/collisions/CollisionSystemSolver.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/collisions/intersections.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/math.h" />
@@ -224,6 +237,7 @@
 		<Unit filename="../../../src/ZBE/core/events/InputEventGenerator.cpp" />
 		<Unit filename="../../../src/ZBE/core/events/TimeEventGenerator.cpp" />
 		<Unit filename="../../../src/ZBE/core/io/FileHandler.cpp" />
+		<Unit filename="../../../src/ZBE/core/io/InputBuffer.cpp" />
 		<Unit filename="../../../src/ZBE/core/io/SDL/SDLInputReader.cpp" />
 		<Unit filename="../../../src/ZBE/core/loaders/SDLFontLoader.cpp" />
 		<Unit filename="../../../src/ZBE/core/starters/SDL/SDL_Starter.cpp" />

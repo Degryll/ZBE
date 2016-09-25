@@ -8,6 +8,8 @@
  */
 
 #include "ZBE/core/events/InputEventGenerator.h"
+#include <inttypes.h>
+#include <iostream>
 
 namespace zbe {
 

@@ -1,4 +1,5 @@
 # depslib dependency file v1.0
+<<<<<<< HEAD
 1469984324 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\daemons\daemonstest.cpp
 	"gtest/gtest.h"
 	<memory>
@@ -788,3 +789,5 @@
 	"ZBE/core/entities/CollisionerEntity.h"
 	"ZBE/core/tools/math/collisions/CollisionSystemSolver.h"
 
+=======
+>>>>>>> origin/master
