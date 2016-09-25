@@ -1,6 +1,6 @@
 /**
  * Copyright 2011 Batis Degryll Ludo
- * @file arrayList.h
+ * @file TicketedForwardList.h
  * @since 2015/02/08
  * @date 2016/03/22
  * @author Degryll
@@ -40,7 +40,7 @@ class TicketedForwardList {
      */
     TicketedElement<T>* push_front(const T& val) {
       std::shared_ptr< TicketedElement<T> > t (new TicketedElement<T>(val));
-      l.push_front(std::shared_ptr<TicketedElement<T> >(t));
+      l.push_front(t);
       return (t.get());
     }
 
@@ -49,7 +49,7 @@ class TicketedForwardList {
      */
     TicketedElement<T>* push_front(T& val) {
       std::shared_ptr< TicketedElement<T> > t (new TicketedElement<T>(val));
-      l.push_front(std::shared_ptr<TicketedElement<T> >(t));
+      l.push_front(t);
       return (t.get());
     }
 

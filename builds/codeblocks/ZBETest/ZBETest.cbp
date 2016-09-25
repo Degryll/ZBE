@@ -147,9 +147,11 @@
 		<Unit filename="../../../src/ZBETest/core/entities/CollisionatorEntityTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/entities/CollisionerEntityTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/entities/EntityTest.cpp" />
+		<Unit filename="../../../src/ZBETest/core/events/CollisionEventGeneratorTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/events/EventStoreTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/events/EventsTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/events/InputEventGeneratorTest.cpp" />
+		<Unit filename="../../../src/ZBETest/core/events/TimeEventGeneratorTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/system/SDL/SDLEventDispatcherTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/system/SystemTimeTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/tools/SDLTimerTest.cpp" />
@@ -158,6 +160,7 @@
 		<Unit filename="../../../src/ZBETest/core/tools/containers/TicketedForwardListTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/tools/math/PointTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/tools/math/VectorTest.cpp" />
+		<Unit filename="../../../src/ZBETest/core/tools/math/collisions/CollisionSystemSolverTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/tools/math/collisions/intersectionsTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/tools/math/objectsTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/FileHandlerTest.cpp" />

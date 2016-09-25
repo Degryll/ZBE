@@ -217,7 +217,7 @@
 		<Unit filename="../../../src/ZBE/core/behaviors/UniformLinearMotion.cpp" />
 		<Unit filename="../../../src/ZBE/core/daemons/DaemonMaster.cpp" />
 		<Unit filename="../../../src/ZBE/core/drawers/SDL/SimpleSpriteSDLDrawer.cpp" />
-		<Unit filename="../../../src/ZBE/core/entities/CollisionatorEntity.cpp" />
+		<Unit filename="../../../src/ZBE/core/entities/CollisionerEntity.cpp" />
 		<Unit filename="../../../src/ZBE/core/entities/Entity.cpp" />
 		<Unit filename="../../../src/ZBE/core/events/CollisionEventGenerator.cpp" />
 		<Unit filename="../../../src/ZBE/core/events/EventStore.cpp" />

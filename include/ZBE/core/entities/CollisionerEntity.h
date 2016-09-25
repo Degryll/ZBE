@@ -35,7 +35,7 @@ class CollisionerEntity : public Entity {
     /** \brief A collisionable entity is defined by a collision object.
       * \param object A collision object that defines the "physical shape" of the entity.
       */
-    CollisionerEntity(CollisionObject* object) : Entity(), o(object) {}
+    CollisionerEntity(CollisionObject* object) : Entity(), o(object), al() {}
     CollisionerEntity(const CollisionerEntity&) = delete;
 
     /** \brief Empty destructor.
@@ -54,8 +54,27 @@ class CollisionerEntity : public Entity {
      */
     inline CollisionObject* getCollisionObject() {return (o);}
 
+    /** \brief Register a new list of Actuators.
+     *  \param id Internal id to identify the list.
+     *  \param listId Global id of the List.
+     */
+    void addToActuatorsList(uint64_t id, uint64_t listId);
+
+    /** \brief Remove a list of Actuators.
+     *  \param id Internal id to identify the list to be removed.
+     */
+    void removeFromActuatorsList(uint64_t id);
+
+    /** \brief Returns the global id of the list of Actuators identify by the Internal id.
+     *  \param id Internal id to identify the list.
+     *  \return The global id of the list.
+     */
+    uint64_t getActuatorsList(uint64_t id);
+
   private:
     CollisionObject* o;  //!< Collision object
+    std::map<uint64_t, uint64_t> al;  //!< Container that identify id with list of actuators
+
 };
 
 }  // namespace zbe

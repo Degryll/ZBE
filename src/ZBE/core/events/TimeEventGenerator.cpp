@@ -13,43 +13,23 @@
 
 namespace zbe {
 
-void TimeEventGenerator::addTimer(uint64_t id, uint64_t start, uint64_t time) {
-  timers.push_front(TimerData(id,start+time));
-}
-
-repeatdIter TimeEventGenerator::addRepeatedTimer(uint64_t id, uint64_t start, uint64_t time) {
-  repeatdIter it = iter;
-  iter = repeatdTimers.insert_after(it, RepeatdTimerData(id, start+time, time));
-  return (it);
-}
-
-void TimeEventGenerator::eraseRepeatedTimer(repeatdIter it) {
-  repeatdTimers.erase_after(it);
-}
-
 void TimeEventGenerator::generate(uint64_t initTime, uint64_t endTime) {
-  uint64_t duration = endTime - initTime + 1;  // +1 inclusive endTime
+  timers.erase(timers.begin(),timers.upper_bound(TimerData(0,initTime)));
 
-  auto pre = timers.before_begin();
-  auto it =  timers.begin();
-  while (it != timers.end()) {
-    uint64_t time = it->time;
-    if ((time - initTime) < duration) {
-      es.storeEvent(new TimeEvent(eventId, time, it->id));
-      it = timers.erase_after(pre);
-    } else {
-      pre = it;
-      ++it;
-    }
-  }  // while timers
-
-  for (auto it = repeatdTimers.begin(); it != repeatdTimers.end(); ++it) {
-    uint64_t time = it->time;
-    if ((time - initTime) < duration) {
-      es.storeEvent(new TimeEvent(eventId, time, it->id));
-      it->time += it->totalTime;
-    }
+  uint64_t v = 0;
+  auto it = timers.begin();
+  if (timers.size() > 0) {
+    v = it->time;
   }
+
+  for(; it != timers.end(); ++it) {
+    if((it->time > endTime)
+    || (it->time != v)) {
+      break;
+    }
+
+    es.storeEvent(new TimeEvent(eventId, v, it->id));
+  }  // for each timer
 }
 
 }  // namespace zbe

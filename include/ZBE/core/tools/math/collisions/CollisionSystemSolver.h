@@ -93,6 +93,7 @@ public:
   DERIVEDCOLLISIONOBJECT
 
   StaticAABB2D() : box() {}
+  StaticAABB2D(AABB2D box) : box(box) {}
 
   /** \brief Return the 2D AABB.
    *  \return A 2D AABB.
@@ -110,6 +111,7 @@ public:
   DERIVEDCOLLISIONOBJECT
 
   ConstantMovingCircle() : circle(), direction() {}
+  ConstantMovingCircle(Circle circle, Vector2D direction) : circle(circle), direction(direction) {}
 
   /** \brief Return the circle.
    *  \return A circle.

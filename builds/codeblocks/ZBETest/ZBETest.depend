@@ -202,9 +202,10 @@
 
 1469902644 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\entities\collisionableentitytest.cpp
 
-1471631262 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\entities\collisionerentitytest.cpp
+1474657591 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\entities\collisionerentitytest.cpp
 	"gtest/gtest.h"
 	"ZBE/core/entities/CollisionerEntity.h"
+	"ZBE/core/system/SysError.h"
 	"ZBE/core/tools/math/collisions/CollisionSystemSolver.h"
 
 1469902644 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\entities\entitytest.cpp
@@ -234,14 +235,14 @@
 	"ZBE/core/entities/CollisionerEntity.h"
 	"ZBE/core/tools/math/Point.h"
 
-1471630188 c:\users\degryll\documents\github\zbe\include\zbe\core\entities\collisionerentity.h
+1472672407 c:\users\degryll\documents\github\zbe\include\zbe\core\entities\collisionerentity.h
 	"ZBE/core/entities/Entity.h"
 	"ZBE/core/tools/math/Point.h"
 
-1471284961 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\events\eventstoretest.cpp
+1471807739 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\events\eventstoretest.cpp
 	"gtest/gtest.h"
 	<forward_list>
-	"ZBE/core/events/Event.h"
+	"ZBE/core/events/EventDispatcher.h"
 	"ZBE/core/events/EventStore.h"
 
 1471807539 c:\users\degryll\documents\github\zbe\include\zbe\core\events\eventstore.h
@@ -629,7 +630,7 @@
 	<map>
 	"ZBE/core/system/SysError.h"
 
-1469902644 c:\users\degryll\documents\github\zbe\include\zbe\core\tools\containers\ticketedforwardlist.h
+1474653279 c:\users\degryll\documents\github\zbe\include\zbe\core\tools\containers\ticketedforwardlist.h
 	<type_traits>
 	<memory>
 	<forward_list>
@@ -730,20 +731,60 @@
 	"gtest/gtest.h"
 	"ZBE/core/system/SysError.h"
 
-1471630068 c:\users\degryll\documents\github\zbe\include\zbe\core\tools\math\collisions\collisionsystemsolver.h
+1472591390 c:\users\degryll\documents\github\zbe\include\zbe\core\tools\math\collisions\collisionsystemsolver.h
 	<cstdint>
 	"ZBE/core/entities/CollisionerEntity.h"
 	"ZBE/core/tools/math/objects.h"
 	"ZBE/core/tools/math/collisions/intersections.h"
 
-1471632442 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\entities\collisionatorentitytest.cpp
+1472672763 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\entities\collisionatorentitytest.cpp
 	"gtest/gtest.h"
 	"ZBE/core/entities/CollisionatorEntity.h"
-	"ZBE/core/system/SysError.h"
 	"ZBE/core/tools/math/collisions/CollisionSystemSolver.h"
 
-1471632547 c:\users\degryll\documents\github\zbe\include\zbe\core\entities\collisionatorentity.h
+1472672407 c:\users\degryll\documents\github\zbe\include\zbe\core\entities\collisionatorentity.h
 	<cstdint>
 	<forward_list>
 	"ZBE/core/entities/CollisionerEntity.h"
+
+1474831321 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\events\collisioneventgeneratortest.cpp
+	"gtest/gtest.h"
+	<vector>
+	"ZBE/core/events/EventDispatcher.h"
+	"ZBE/core/events/EventStore.h"
+	"ZBE/core/events/CollisionEventGenerator.h"
+	"ZBE/core/tools/containers/TicketedForwardList.h"
+	"ZBE/core/entities/CollisionerEntity.h"
+	"ZBE/core/entities/CollisionatorEntity.h"
+
+1470324755 c:\users\degryll\documents\github\zbe\include\zbe\core\events\collisioneventgenerator.h
+	<cstdint>
+	"ZBE/core/entities/CollisionatorEntity.h"
+	"ZBE/core/tools/math/collisions/CollisionSystemSolver.h"
+	"ZBE/core/events/EventStore.h"
+	"ZBE/core/tools/containers/ListManager.h"
+	"ZBE/core/tools/containers/TicketedForwardList.h"
+
+1474831821 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\events\timeeventgeneratortest.cpp
+	"gtest/gtest.h"
+	<vector>
+	"ZBE/core/events/EventDispatcher.h"
+	"ZBE/core/events/EventStore.h"
+	"ZBE/core/events/TimeEventGenerator.h"
+
+1474831948 c:\users\degryll\documents\github\zbe\include\zbe\core\events\timeeventgenerator.h
+	<cstdint>
+	<set>
+	"ZBE/core/events/EventStore.h"
+
+1474831860 source:c:\users\degryll\documents\github\zbe\src\zbetest\core\tools\math\collisions\collisionsystemsolvertest.cpp
+	"gtest/gtest.h"
+	<cstdint>
+	"ZBE/core/tools/math/math.h"
+	"ZBE/core/system/SysError.h"
+	"ZBE/core/tools/math/Point.h"
+	"ZBE/core/tools/math/Vector.h"
+	"ZBE/core/tools/math/objects.h"
+	"ZBE/core/entities/CollisionerEntity.h"
+	"ZBE/core/tools/math/collisions/CollisionSystemSolver.h"
 
