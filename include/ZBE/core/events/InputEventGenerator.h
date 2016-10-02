@@ -4,7 +4,7 @@
  * @since 2016-04-06
  * @date 2016-04-10
  * @author Ludo
- * @brief Input event generator, implementation file.
+ * @brief Input event generator.
  */
 
 #ifndef CORE_IO_INPUT_EVENT_GENERATOR_H
@@ -13,7 +13,7 @@
 #include <cstdint>
 #include <memory>
 
-#include "ZBE/core/io/InputReader.h"
+#include "ZBE/core/io/InputBuffer.h"
 #include "ZBE/core/events/EventStore.h"
 #include "ZBE/core/events/EventDispatcher.h"
 
@@ -26,7 +26,7 @@ namespace zbe {
 
       /** \brief Default constructor.
        */
-      InputEventGenerator(InputReader * inputReader, int eventId) : inputReader(inputReader), eventId(eventId), store(EventStore::getInstance()) {};
+      InputEventGenerator(InputBuffer * inputBuffer, int eventId) : inputBuffer(inputBuffer), eventId(eventId), store(EventStore::getInstance()) {};
 
       /** \brief Empty destructor.
        */
@@ -39,7 +39,7 @@ namespace zbe {
       void generate(uint64_t initTime, uint64_t endTime);
 
     private:
-      std::shared_ptr<InputReader> inputReader;
+      std::shared_ptr<InputBuffer> inputBuffer;
       int eventId;
       EventStore &store;
   };

@@ -4,7 +4,7 @@
  * @since 2016-04-06
  * @date 2016-04-10
  * @author Ludo
- * @brief Input event generator.
+ * @brief Input event generator, implementation file.
  */
 
 #include "ZBE/core/events/InputEventGenerator.h"
@@ -14,14 +14,11 @@
 namespace zbe {
 
     void InputEventGenerator::generate(uint64_t initTime, uint64_t finalTime) {
-      std::list<uint32_t>* changes = inputReader->changes();
-      for(auto it = changes->begin(); it != changes->end(); it++) {
-        uint32_t c = (*it);
-        uint32_t t = inputReader->getTime(c);
-        if(t>initTime && t<=finalTime){
-            InputEvent* e = new InputEvent(eventId, t, c, inputReader->getStatus(c));
-            store.storeEvent(e);
-        }
+      std::vector<InputStatus> currentInput;
+      inputBuffer->getRange(initTime, finalTime, currentInput);
+      for(auto it = currentInput.begin(); it != currentInput.end(); it++) {
+        InputEvent* e = new InputEvent(eventId, (*it).getTime(), (*it).getId(), (*it).getStatus());
+        store.storeEvent(e);
       }
     }
 

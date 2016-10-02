@@ -1,8 +1,9 @@
 #include "gtest/gtest.h"
 
 #include <SDL2/SDL.h>
-
-#include "ZBE/core/io/InputReader.h"
+#include <climits>
+#include "ZBE/core/io/InputBuffer.h"
+#include "ZBE/core/io/InputStatus.h"
 #include "ZBE/core/io/SDL/SDLInputReader.h"
 #include "ZBE/core/system/SDL/SDLEventDispatcher.h"
 
@@ -30,17 +31,11 @@ TEST(SDLEventDispatcher, SDLEventDispatcher) {
   SDL_PushEvent(&user_event1);
   SDL_PushEvent(&user_event2);
 
-  zbe::InputReader * ir = &zbe::SDLInputReader::getInstance();
-  zbe::SDLEventDispatcher * sed = new zbe::SDLEventDispatcher();
+  zbe::InputBuffer * ib = new zbe::InputBuffer();
+  zbe::SDLEventDispatcher * sed = new zbe::SDLEventDispatcher(ib);
   sed->run();
+  std::vector<zbe::InputStatus> input;
   // So 4 outputs are expected
-  EXPECT_EQ(ir->changes()->size(),4u)<< "and event must be found";
-  // Checking values
-  EXPECT_EQ(ir->getStatus(zbe::ZBEK_MOUSE_OFFSET_X),100.0);
-  EXPECT_EQ(ir->getStatus(zbe::ZBEK_MOUSE_OFFSET_Y),100.0);
-  EXPECT_EQ(ir->getStatus(zbe::ZBEK_LEFT),0.0);
-  EXPECT_EQ(ir->getStatus(zbe::ZBEK_RIGHT),1.0);
-  // Checking values
-  EXPECT_GE(ir->getTime(zbe::ZBEK_RIGHT),ir->getTime(zbe::ZBEK_LEFT));
-  EXPECT_GE(ir->getTime(zbe::ZBEK_LEFT),ir->getTime(zbe::ZBEK_MOUSE_OFFSET_X));
+  ib->getRange(0, UINT_MAX, input);
+  EXPECT_EQ(input.size(),4)<< "4 inputStatus must be found";
 }

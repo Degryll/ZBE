@@ -15,14 +15,14 @@
 
 #include <SDL2/SDL.h>
 
-#include "../../io/InputReader.h"
-#include "../../io/SDL/SDLInputReader.h"
+#include "../../io/InputBuffer.h"
+#include "../../io/InputStatus.h"
 
 namespace zbe {
 class SDLEventDispatcher {
   public:
     /** Default constructor */
-    SDLEventDispatcher() : irinstance(SDLInputReader::getInstance()), changedIds(), states(), times() {}
+    SDLEventDispatcher(InputBuffer * inputBuffer) : inputBuffer(inputBuffer) {}
 
     /** Default destructor */
     ~SDLEventDispatcher() {}
@@ -45,11 +45,7 @@ class SDLEventDispatcher {
 
     bool tryMouseEvent(SDL_Event &event);
 
-    SDLInputReader& irinstance;
-
-    std::list<uint32_t> changedIds;
-    std::map<uint32_t, float> states;
-    std::map<uint32_t, uint64_t> times;
+    InputBuffer * inputBuffer;
 };
 }
 #endif // SDLEVENTDISPATCHER_H

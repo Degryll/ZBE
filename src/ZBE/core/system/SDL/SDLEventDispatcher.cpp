@@ -12,15 +12,12 @@
 namespace zbe {
 
 void SDLEventDispatcher::run() {
-  //states.clear();
-  //changedIds.clear();
   SDL_Event event;
   while (SDL_PollEvent(&event)) {
-    if (tryKeyboardEvent(event)) {
-    } else if(tryMouseEvent(event)){
+    if (!tryKeyboardEvent(event)) {
+      tryMouseEvent(event);
     }
   }
-  irinstance.setInputStatus(&changedIds, &states, &times);
 }
 
 inline bool SDLEventDispatcher::tryKeyboardEvent(SDL_Event &event){
@@ -52,9 +49,8 @@ inline bool SDLEventDispatcher::tryMouseEvent(SDL_Event &event){
 }
 
 inline void SDLEventDispatcher::setState(uint32_t key, float value, uint64_t time){
-  states[key] = value;
-  times[key] = time;
-  changedIds.push_back(key);
+  InputStatus is(key,value,time);
+  inputBuffer->insert(is);
 }
 
 inline void SDLEventDispatcher::setMouseWheelState(SDL_Event &event) {

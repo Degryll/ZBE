@@ -1,34 +1,31 @@
 #include "gtest/gtest.h"
 #include <vector>
 
-#include "ZBE/core/io/InputReader.h"
+#include "ZBE/core/io/InputStatus.h"
+#include "ZBE/core/io/InputBuffer.h"
 #include "ZBE/core/events/EventDispatcher.h"
 #include "ZBE/core/events/EventStore.h"
 #include "ZBE/core/events/InputEventGenerator.h"
 
-class DummyInputReader : public zbe::InputReader {
-  public:
-    std::list<uint32_t> _changes;
-    std::vector<uint64_t> times;
-    std::vector<float> states;
-
-    DummyInputReader(): _changes({0,1,2,3,4,5}),
-                        times({0,1,2,3,4,5}),
-                        states({0.0,1.0,2.0,3.0,4.0,5.0}){
-    }
-
-    ~DummyInputReader() {
-    }
-
-    std::list<uint32_t>* changes() {return &_changes;}
-
-    float getStatus(uint32_t keyid) {return states[keyid];}
-
-    uint64_t getTime(uint32_t keyid) {return times[keyid];}
-};
-
 TEST(InputEventGenerator, Event) {
-  zbe::InputEventGenerator ieg(new DummyInputReader(), 1);
+  // Build tools
+  zbe::InputBuffer * ib = new zbe::InputBuffer();
+  zbe::InputEventGenerator ieg(ib, 1);
+  // Setup test
+  zbe::InputStatus isa(0,0.0,0);
+  zbe::InputStatus isb(1,1.0,1);
+  zbe::InputStatus isc(2,2.0,2);
+  zbe::InputStatus isd(3,3.0,3);
+  zbe::InputStatus ise(4,4.0,4);
+  zbe::InputStatus isf(5,5.0,5);
+  ib->insert(isa);
+  ib->insert(isb);
+  ib->insert(isc);
+  ib->insert(isd);
+  ib->insert(ise);
+  ib->insert(isf);
+
+  // Actual test
   ieg.generate(2,4);
   zbe::EventStore &es = zbe::EventStore::getInstance();
   ASSERT_FALSE(es.getEvents().empty()) << "List must have items.";
