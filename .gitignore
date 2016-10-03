@@ -6,7 +6,10 @@ builds/codeblocks/ZBE_main/obj/
 bin/Release/
 bin/Debug/
 lib/libZBE_x64.a
+lib/libZBE_x64.so
+lib/libZBE_x64d.a
 lib/libZBE_x64d.so
+lib/libZBE_x64.dll
+lib/libZBE_x64d.dll
 *.layout
-*.dll
-*.a
+*.depend
