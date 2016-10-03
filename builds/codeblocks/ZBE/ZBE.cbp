@@ -190,7 +190,6 @@
 		<Unit filename="../../../include/ZBE/core/events/EventDispatcher.h" />
 		<Unit filename="../../../include/ZBE/core/events/EventStore.h" />
 		<Unit filename="../../../include/ZBE/core/events/InputEventGenerator.h" />
-		<Unit filename="../../../include/ZBE/core/events/TimeEventDEPRECATED.h" />
 		<Unit filename="../../../include/ZBE/core/events/TimeEventGenerator.h" />
 		<Unit filename="../../../include/ZBE/core/events/TimeEventHandler.h" />
 		<Unit filename="../../../include/ZBE/core/guards/CollisionGuard.h" />
@@ -201,7 +200,6 @@
 		<Unit filename="../../../include/ZBE/core/io/InputStatus.h" />
 		<Unit filename="../../../include/ZBE/core/loaders/SDLFontLoader.h" />
 		<Unit filename="../../../include/ZBE/core/starters/SDL/SDL_Starter.h" />
-		<Unit filename="../../../include/ZBE/core/system/GameApp.h" />
 		<Unit filename="../../../include/ZBE/core/system/Logger.h" />
 		<Unit filename="../../../include/ZBE/core/system/SDL/SDLEventDispatcher.h" />
 		<Unit filename="../../../include/ZBE/core/system/SDL/Window.h" />
@@ -209,7 +207,6 @@
 		<Unit filename="../../../include/ZBE/core/system/SysTime.h" />
 		<Unit filename="../../../include/ZBE/core/tools/SDLTimer.h" />
 		<Unit filename="../../../include/ZBE/core/tools/Timer.h" />
-		<Unit filename="../../../include/ZBE/core/tools/containers/ArrayListIterator.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/ListManager.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/Ticket.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/TicketedForwardList.h" />

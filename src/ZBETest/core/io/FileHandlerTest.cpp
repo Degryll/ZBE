@@ -4,7 +4,7 @@
 #include "ZBE/core/system/SysError.h"
 
 TEST(FileHandler, Exist) {
-  EXPECT_TRUE(zbe::FileHandler::exist("src/ZBETest/src/FileHandlerTest.cpp")) << "This file exist.";
+  EXPECT_TRUE(zbe::FileHandler::exist("src/ZBETest/core/io/FileHandlerTest.cpp")) << "This file exist.";
   EXPECT_FALSE(zbe::FileHandler::exist("NOEXIST")) << "A file that does not exist.";
   char filename[] = "data/test/\u65e5\u0448/\u65e5\u0448.txt";
   EXPECT_TRUE(zbe::FileHandler::exist(filename)) << "An UTF-8 filename and path.";
@@ -13,7 +13,7 @@ TEST(FileHandler, Exist) {
 TEST(FileHandler, ExistDir) {
   EXPECT_TRUE(zbe::FileHandler::existDir("src/ZBETest/src")) << "This dir exist.";
   EXPECT_FALSE(zbe::FileHandler::existDir("NOEXIST")) << "A dir that does not exist.";
-  EXPECT_FALSE(zbe::FileHandler::existDir("src/ZBETest/src/FileHandlerTest.cpp")) << "This file is not a dir.";
+  EXPECT_FALSE(zbe::FileHandler::existDir("src/ZBETest/core/io/FileHandlerTest.cpp")) << "This file is not a dir.";
   char dirname[] = "data/test/\u65e5\u0448";
   EXPECT_TRUE(zbe::FileHandler::existDir(dirname)) << "An UTF-8 path.";
 }
@@ -22,7 +22,7 @@ TEST(FileHandler, OpenClose) {
   EXPECT_EQ(0,zbe::SysError::getNErrors()) << "Initially no errors.";
 
   // Open existent file
-  zbe::FileHandler *f = new zbe::FileHandler("src/ZBETest/src/FileHandlerTest.cpp","r");
+  zbe::FileHandler *f = new zbe::FileHandler("src/ZBETest/core/io/FileHandlerTest.cpp","r");
   EXPECT_EQ(0,zbe::SysError::getNErrors()) << "Open file:" << zbe::SysError::getFirstErrorString();
   delete f;
   EXPECT_EQ(0,zbe::SysError::getNErrors()) << "Close file.";
@@ -119,7 +119,7 @@ TEST(FileHandler, Read) {
   EXPECT_EQ(0,zbe::SysError::getNErrors()) << "Initially no errors.";
 
   // Open File
-  zbe::FileHandler *f = new zbe::FileHandler("src/ZBETest/src/FileHandlerTest.cpp","r");
+  zbe::FileHandler *f = new zbe::FileHandler("src/ZBETest/core/io/FileHandlerTest.cpp","r");
   EXPECT_EQ(0,zbe::SysError::getNErrors()) << "Open file.";
 
   char buffer[17];
@@ -153,7 +153,7 @@ TEST(FileHandler, ReadLine) {
   EXPECT_EQ(0,zbe::SysError::getNErrors()) << "Initially no errors.";
 
   // Open File
-  zbe::FileHandler *f = new zbe::FileHandler("src/ZBETest/src/FileHandlerTest.cpp","r");
+  zbe::FileHandler *f = new zbe::FileHandler("src/ZBETest/core/io/FileHandlerTest.cpp","r");
   EXPECT_EQ(0,zbe::SysError::getNErrors()) << "Open file.";
 
   char buffer[256];
