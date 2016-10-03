@@ -13,7 +13,7 @@
 #include <SDL2/SDL.h>
 #include <map>
 
-#include "ZBE/core/io/InputReader.h"
+#include "ZBE/core/io/InputReaderDEPRECATED.h"
 #include "ZBE/core/system/SysError.h"
 
 namespace zbe {

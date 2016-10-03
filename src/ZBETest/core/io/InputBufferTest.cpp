@@ -11,7 +11,7 @@ TEST (InputBuffer, insert) {
   zbe::InputStatus a(1,0.0,10);
   zbe::InputStatus b(2,0.0,20);
   zbe::InputStatus c(3,0.0,30);
-  zbe::InputStatus d(4,0.0,30);
+  zbe::InputStatus d(4,0.5,30);
   zbe::InputStatus e(5,0.0,40);
   zbe::InputStatus f(6,0.0,50);
 
@@ -26,9 +26,11 @@ TEST (InputBuffer, insert) {
 
   buf.getRange(25,35,store);
 
-  EXPECT_EQ(2,store.size()) << "just status c & d stored";
+  EXPECT_EQ(2,store.size()) << "just status c & d are stored";
   EXPECT_EQ(30,store.at(0).getTime()) << "c = 30";
   EXPECT_EQ(30,store.at(1).getTime()) << "d = 30";
+  EXPECT_EQ(0.0,store.at(0).getStatus()) << "c = 30";
+  EXPECT_EQ(0.5,store.at(1).getStatus()) << "d = 30";
 
   store.clear();
 

@@ -7,7 +7,7 @@
  * @brief Imput reader using sdl. Implementation file.
  */
 
-#include "ZBE/core/io/SDL/SDLInputReader.h"
+#include "ZBE/core/io/SDL/SDLInputReaderDEPRECATED.h"
 
 namespace zbe {
 

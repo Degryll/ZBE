@@ -4,8 +4,6 @@
 #include "ZBE/core/events/EventStore.h"
 #include "ZBE/core/events/EventDispatcher.h"
 #include "ZBE/core/events/InputEventGenerator.h"
-#include "ZBE/core/io/InputReader.h"
-#include "ZBE/core/io/SDL/SDLInputReader.h"
 #include "ZBE/core/system/SysTime.h"
 #include "ZBE/core/tools/SDLTimer.h"
 #include "ZBE/core/tools/Timer.h"
