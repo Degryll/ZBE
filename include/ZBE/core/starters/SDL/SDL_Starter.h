@@ -17,20 +17,26 @@ namespace zbe {
 
 /**
  * @class SDL_Starter
- * @brief Used to init SDL subsystems only once (alonelton).
+ * @brief Used to init SDL subsystems only once.
  */
 class SDL_Starter {
   public:
-    static SDL_Starter* createInstance(Uint32 flags = 0);
-    static void         deleteInstance() {SDL_Quit(); delete _instance;}
-    static SDL_Starter* getInstance()    {return (_instance);}
+    SDL_Starter(SDL_Starter const&)    = delete;  //!< Needed for singleton.
+    void operator=(SDL_Starter const&) = delete;  //!< Needed for singleton.
 
-    bool addSubsystem(Uint32 flags);
+    /** \brief Singleton implementation to start SDL subsystems.
+     *  \return The only instance of the SDL_Starter.
+     */
+    static SDL_Starter& getInstance(Uint32 flags) {
+      static SDL_Starter instance;
+      SDL_InitSubSystem(flags);
+      return (instance);
+    }
+
+    ~SDL_Starter() {SDL_Quit();}  //!< Call SDL_Quit.
 
   private:
-    static SDL_Starter* _instance;
-
-    SDL_Starter() {}
+    SDL_Starter() {SDL_Init(0);}  //!< Call SDL_Init(0).
 };
 
 }  // namespace zbe

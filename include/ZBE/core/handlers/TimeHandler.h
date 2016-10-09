@@ -7,10 +7,10 @@
  * @brief Receives a time event and reacts to that.
  */
 
-#ifndef CORE_GUARDS_INPUTGUARD_H
-#define CORE_GUARDS_INPUTGUARD_H
+#ifndef CORE_HANDLERS_TIMEHANDLER_H
+#define CORE_HANDLERS_TIMEHANDLER_H
 
-#include "ZBE/core/events/TimeEvent.h"
+#include "ZBE/core/events/EventDispatcher.h"
 
 namespace zbe {
 
@@ -30,4 +30,4 @@ namespace zbe {
 
 }  // namespace zbe
 
-#endif // CORE_GUARDS_INPUTGUARD_H
+#endif // CORE_HANDLERS_TIMEHANDLER_H

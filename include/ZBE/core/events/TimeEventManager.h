@@ -41,13 +41,13 @@ class TimeEventManager {
      * \param id Id of the Timer
      * \param handler Handler to run when this timer triggers
      */
-    inline void addOnceHandler(uint64_t id, *TimeHandler handler) {once[id] = handler;}
+    inline void addOnceHandler(uint64_t id, TimeHandler* handler) {once[id] = handler;}
 
     /** Add a handler to a timer event.
      * \param id Id of the Timer
      * \param handler Handler to run when this timer triggers
      */
-    inline void addHandler(uint64_t id, *TimeHandler handler) {many[id] = handler;}
+    inline void addHandler(uint64_t id, TimeHandler* handler) {many[id] = handler;}
 
     /** Erase a Handler.
      * \param id Id of the timer
@@ -58,25 +58,25 @@ class TimeEventManager {
      * \param id Timer id
      */
     void run(TimeEvent event) {
-      auto it = once.find(event.getId());
-      if (it != once.end()) {
-        (*it)->run(event);
-        once.erase(it);
-      }
-
-      auto jt = many.find(event.getId());
-      if (it != many.end()) {
-        (*it)->run(event);
-      }
+//      auto it = once.find(event.getId());
+//      if (it != once.end()) {
+//        (*it)->run(event);
+//        once.erase(it);
+//      }
+//
+//      auto jt = many.find(event.getId());
+//      if (it != many.end()) {
+//        (*it)->run(event);
+//      }
     }
 
   private:
     /** \brief Empty Constructor.
      */
-    TimeEventManager() : handlers() {};
+    TimeEventManager() {};
 
-    std::map<uint64_t id, *TimeHandler> once;
-    std::map<uint64_t id, *TimeHandler> many;
+    std::map<uint64_t, TimeHandler*> once;
+    std::map<uint64_t, TimeHandler*> many;
 };
 
 }  // namespace zbe

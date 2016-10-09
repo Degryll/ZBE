@@ -229,7 +229,6 @@
 		<Unit filename="../../../src/ZBE/core/io/FileHandler.cpp" />
 		<Unit filename="../../../src/ZBE/core/io/InputBuffer.cpp" />
 		<Unit filename="../../../src/ZBE/core/loaders/SDLFontLoader.cpp" />
-		<Unit filename="../../../src/ZBE/core/starters/SDL/SDL_Starter.cpp" />
 		<Unit filename="../../../src/ZBE/core/system/Logger.cpp" />
 		<Unit filename="../../../src/ZBE/core/system/SDL/SDLEventDispatcher.cpp" />
 		<Unit filename="../../../src/ZBE/core/system/SDL/Window.cpp" />
