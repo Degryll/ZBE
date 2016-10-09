@@ -1,6 +1,6 @@
 /**
  * Copyright 2015 Batis Degryll Ludo
- * @file InputGuard.h
+ * @file InputHandler.h
  * @since 2016-08-21
  * @date 2016-08-21
  * @author Batis
@@ -16,16 +16,16 @@ namespace zbe {
 
   /** \brief Receives a input(keyboard, mouse, etc) event and reacts to that.
    */
-  class InputGuard {
+  class InputHandler {
     public:
 
-      /** \brief Do the Guard job.
+      /** \brief Do the Handler job.
        */
       virtual void run(InputEvent* e) = 0;
 
       /** \brief Destructor.
        */
-      virtual ~InputGuard(){};
+      virtual ~InputHandler(){};
   };
 
 }  // namespace zbe

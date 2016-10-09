@@ -1,6 +1,6 @@
 /**
  * Copyright 2015 Batis Degryll Ludo
- * @file CollisionGuard.h
+ * @file CollisionHandler.h
  * @since 2016-08-21
  * @date 2016-08-21
  * @author Degryll
@@ -16,16 +16,16 @@ namespace zbe {
 
   /** \brief Receives a Collision event and reacts to that.
    */
-  class CollisionGuard {
+  class CollisionHandler {
     public:
 
-      /** \brief Do the Guard job.
+      /** \brief Do the Handler job.
        */
       virtual void run(CollisionEvent* e) = 0;
 
       /** \brief Destructor.
        */
-      virtual ~CollisionGuard(){};
+      virtual ~CollisionHandler(){};
   };
 
 }  // namespace zbe

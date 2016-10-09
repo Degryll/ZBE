@@ -1,6 +1,6 @@
 /**
  * Copyright 2012 Batis Degryll Ludo
- * @file TimeEventHandler.h
+ * @file TimeEventManager.h
  * @since 2016-08-21
  * @date 2016-08-21
  * @author Degryll
@@ -13,23 +13,23 @@
 #include <cstdint>
 #include <map>
 
-#include "ZBE/core/guards/TimeGuard.h"
+#include "ZBE/core/handlers/TimeHandler.h"
 #include "ZBE/core/events/eventDispatcher.h"
 
 namespace zbe {
 
 /** \brief Handle collision events.
  */
-class TimeEventHandler {
+class TimeEventManager {
   public:
-      TimeEventHandler(TimeEventHandler const&)  = delete;  //!< Needed for singleton.
-      void operator=(TimeEventHandler const&)    = delete;  //!< Needed for singleton.
+      TimeEventManager(TimeEventManager const&)  = delete;  //!< Needed for singleton.
+      void operator=(TimeEventManager const&)    = delete;  //!< Needed for singleton.
 
       /** \brief Singleton implementation.
        *  \return The unique instance of the EventStore.
        */
-      static TimeEventHandler& getInstance() {
-        static TimeEventHandler instance;
+      static TimeEventManager& getInstance() {
+        static TimeEventManager instance;
         return (instance);
       }
 
@@ -37,24 +37,24 @@ class TimeEventHandler {
 //    */
 //    ~TimeEventGenerator() {};
 
-    /** Add a guard to a timer event.
+    /** Add a handler to a timer event.
      * \param id Id of the Timer
-     * \param guard Guard to run when this timer triggers
+     * \param handler Handler to run when this timer triggers
      */
-    inline void addOnceGuard(uint64_t id, *TimeGuard guard) {once[id] = guard;}
+    inline void addOnceHandler(uint64_t id, *TimeHandler handler) {once[id] = handler;}
 
-    /** Add a guard to a timer event.
+    /** Add a handler to a timer event.
      * \param id Id of the Timer
-     * \param guard Guard to run when this timer triggers
+     * \param handler Handler to run when this timer triggers
      */
-    inline void addGuard(uint64_t id, *TimeGuard guard) {many[id] = guard;}
+    inline void addHandler(uint64_t id, *TimeHandler handler) {many[id] = handler;}
 
-    /** Erase a Guard.
+    /** Erase a Handler.
      * \param id Id of the timer
      */
-    inline void eraseGuard(uint64_t id) {many.erase(id);}
+    inline void eraseHandler(uint64_t id) {many.erase(id);}
 
-    /** Run the guard associated to the Timer.
+    /** Run the handler associated to the Timer.
      * \param id Timer id
      */
     void run(TimeEvent event) {
@@ -73,10 +73,10 @@ class TimeEventHandler {
   private:
     /** \brief Empty Constructor.
      */
-    TimeEventHandler() : guards() {};
+    TimeEventManager() : handlers() {};
 
-    std::map<uint64_t id, *TimeGuard> once;
-    std::map<uint64_t id, *TimeGuard> many;
+    std::map<uint64_t id, *TimeHandler> once;
+    std::map<uint64_t id, *TimeHandler> many;
 };
 
 }  // namespace zbe

@@ -1,6 +1,6 @@
 /**
  * Copyright 2015 Batis Degryll Ludo
- * @file TimeGuard.h
+ * @file TimeHandler.h
  * @since 2016-08-21
  * @date 2016-08-21
  * @author Degryll
@@ -16,16 +16,16 @@ namespace zbe {
 
   /** \brief Receives a time event and reacts to that.
    */
-  class TimeGuard {
+  class TimeHandler {
     public:
 
-      /** \brief Do the Guard job.
+      /** \brief Do the Handler job.
        */
       virtual void run(TimeEvent* e) = 0;
 
       /** \brief Destructor.
        */
-      virtual ~TimeGuard(){};
+      virtual ~TimeHandler(){};
   };
 
 }  // namespace zbe
