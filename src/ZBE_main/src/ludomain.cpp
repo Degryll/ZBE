@@ -38,13 +38,13 @@ int ludomain(int argc, char* argv[]) {
   printf("Event store\n");fflush(stdout);
   printf("Will store all event independently of its type\n");fflush(stdout);
   zbe::EventStore& store = zbe::EventStore::getInstance();
-  printf("InputBuffer\n");fflush(stdout);
-  printf("Will store input changes for a frame\n");fflush(stdout);
-  zbe::InputBuffer * inputBuffer = new zbe::InputBuffer();
   printf("Building SDLEventDispatcher\n");fflush(stdout);
   printf("Will extract data from SDL and get it usable for the engine\n");fflush(stdout);
-  zbe::SDLEventDispatcher sdlEventDist(inputBuffer);
-  printf("Acquiring  and configuring InputEventGenerator with that InputReader\n");fflush(stdout);
+  zbe::SDLEventDispatcher & sdlEventDist = zbe::SDLEventDispatcher::getInstance();
+  printf("Acquiring InputBuffer\n");fflush(stdout);
+  printf("SDLEventDispatcher Will store input changes for a frame into it\n");fflush(stdout);
+  zbe::InputBuffer * inputBuffer = sdlEventDist.getInputBuffer();
+  printf("Acquiring and configuring InputEventGenerator with that InputReader\n");fflush(stdout);
   printf("Will read events from the InputReader and send them to the store\n");fflush(stdout);
   printf("Input events will use id 1\n");fflush(stdout);
   zbe::InputEventGenerator* ieg = new zbe::InputEventGenerator(inputBuffer,1);

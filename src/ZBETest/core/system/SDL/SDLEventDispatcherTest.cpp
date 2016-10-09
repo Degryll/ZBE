@@ -30,9 +30,9 @@ TEST(SDLEventDispatcher, SDLEventDispatcher) {
   SDL_PushEvent(&user_event1);
   SDL_PushEvent(&user_event2);
 
-  zbe::InputBuffer * ib = new zbe::InputBuffer();
-  zbe::SDLEventDispatcher * sed = new zbe::SDLEventDispatcher(ib);
-  sed->run();
+  zbe::SDLEventDispatcher & sed = zbe::SDLEventDispatcher::getInstance();
+  zbe::InputBuffer * ib = sed.getInputBuffer();
+  sed.run();
   std::vector<zbe::InputStatus> input;
   // So 4 outputs are expected
   ib->getRange(0, UINT_MAX, input);

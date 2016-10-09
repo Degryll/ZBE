@@ -50,7 +50,7 @@ inline bool SDLEventDispatcher::tryMouseEvent(SDL_Event &event){
 
 inline void SDLEventDispatcher::setState(uint32_t key, float value, uint64_t time){
   InputStatus is(key,value,time);
-  inputBuffer->insert(is);
+  inputBuffer.insert(is);
 }
 
 inline void SDLEventDispatcher::setMouseWheelState(SDL_Event &event) {

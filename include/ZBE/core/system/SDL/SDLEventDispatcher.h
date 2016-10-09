@@ -21,16 +21,28 @@
 namespace zbe {
 class SDLEventDispatcher {
   public:
-    /** Default constructor */
-    SDLEventDispatcher(InputBuffer * inputBuffer) : inputBuffer(inputBuffer) {}
+    SDLEventDispatcher(SDLEventDispatcher const&)    = delete;  //!< Needed for singleton.
+    void operator=(SDLEventDispatcher const&) = delete;  //!< Needed for singleton.
 
-    /** Default destructor */
-    ~SDLEventDispatcher() {}
+    /** \brief Singleton implementation.
+     *  \return The only instance of the SDLEventDispatcher.
+     */
+    static SDLEventDispatcher& getInstance() {
+      static SDLEventDispatcher instance;
+      return (instance);
+    }
+
+    /** \brief Returns the InputBuffer where the input info will be written.
+     *  \return The InputBuffer.
+     */
+    InputBuffer * getInputBuffer() {return &inputBuffer;}
 
     /** \brief Distribute SDL events in the appropriate structures of the system.
      */
     void run();
   private:
+    SDLEventDispatcher() : inputBuffer() { }//!< Needed for singleton.
+
     void setState(uint32_t key, float value, uint64_t time);
 
     void setMouseButtonState(SDL_Event &event, float value);
@@ -45,7 +57,7 @@ class SDLEventDispatcher {
 
     bool tryMouseEvent(SDL_Event &event);
 
-    InputBuffer * inputBuffer;
+    InputBuffer inputBuffer;
 };
 }
 #endif // SDLEVENTDISPATCHER_H

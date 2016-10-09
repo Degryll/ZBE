@@ -157,6 +157,7 @@
 		<Unit filename="../../../src/ZBETest/core/events/TimeEventGeneratorTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/io/FileHandlerTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/io/InputBufferTest.cpp" />
+		<Unit filename="../../../src/ZBETest/core/io/InputStatusTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/system/LoggerTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/system/SDL/SDLEventDispatcherTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/system/SysErrorTest.cpp" />
