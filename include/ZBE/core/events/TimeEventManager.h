@@ -14,7 +14,7 @@
 #include <map>
 
 #include "ZBE/core/handlers/TimeHandler.h"
-#include "ZBE/core/events/eventDispatcher.h"
+#include "ZBE/core/events/EventDispatcher.h"
 
 namespace zbe {
 
