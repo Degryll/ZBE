@@ -33,7 +33,11 @@ class SDL_Starter {
       return (instance);
     }
 
-    ~SDL_Starter() {SDL_Quit();}  //!< Call SDL_Quit.
+    void quit() {SDL_Quit();}  //!< Call SDL_Quit.
+
+    void quitSubSystem(Uint32 flags) {
+      SDL_QuitSubSystem(flags);
+    }
 
   private:
     SDL_Starter() {SDL_Init(0);}  //!< Call SDL_Init(0).

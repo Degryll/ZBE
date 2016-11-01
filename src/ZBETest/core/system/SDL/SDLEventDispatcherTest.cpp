@@ -37,4 +37,6 @@ TEST(SDLEventDispatcher, SDLEventDispatcher) {
   // So 4 outputs are expected
   ib->getRange(0, UINT_MAX, input);
   EXPECT_EQ(input.size(),4)<< "4 inputStatus must be found";
+
+  SDL_Quit();
 }
