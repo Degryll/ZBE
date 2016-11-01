@@ -19,25 +19,19 @@
 
 namespace zbe {
 
-Window::Window(int width, int height, Uint32 window_flags) : window(0), renderer(0), ntextures(0), imgCollection(), m() {
-  SDL_Starter::getInstance(SDL_INIT_VIDEO);
+Window::Window(int width, int height, Uint32 window_flags) : sdl(SDL_Starter::getInstance(SDL_INIT_VIDEO)), window(0), renderer(0), ntextures(0), imgCollection(), m() {
   if(SDL_CreateWindowAndRenderer(width, height, window_flags, &window, &renderer)) {
     zbe::SysError::setError(std::string("ERROR: SDL could not create a window and/or a renderer! SDL ERROR: ") + SDL_GetError());
   }
 }
 
 Window::Window(const char* title, int width, int height, Uint32 window_flags, Uint32 rederer_flags)
-  : Window(title, 0, 0, width, height, window_flags, rederer_flags){
-
-  SDL_Starter::getInstance(SDL_INIT_VIDEO);
-}
+  : sdl(SDL_Starter::getInstance(SDL_INIT_VIDEO)), Window(title, 0, 0, width, height, window_flags, rederer_flags){}
 
 Window::Window(const char* title, int x, int y, int width, int height, Uint32 window_flags, Uint32 rederer_flags)
-       : window(SDL_CreateWindow(title, x, y, width, height, window_flags)),
+       : sdl(SDL_Starter::getInstance(SDL_INIT_VIDEO)), window(SDL_CreateWindow(title, x, y, width, height, window_flags)),
          renderer(SDL_CreateRenderer(window, -1, rederer_flags)),
          ntextures(0), imgCollection(), m() {
-
-  SDL_Starter::getInstance(SDL_INIT_VIDEO);
 
   if (window == nullptr){
     zbe::SysError::setError(std::string("ERROR: SDL could not create a window! SDL ERROR: ") + SDL_GetError());
@@ -54,6 +48,7 @@ Window::~Window() {
   }
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
+  sdl.quit();
 }
 
 void Window::clear() {
