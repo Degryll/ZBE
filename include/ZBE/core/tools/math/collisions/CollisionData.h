@@ -28,10 +28,21 @@ class CollisionData {
      */
     CollisionData(const Point2D& point): p(point){}
 
-    const Point2D& getPoint()  const {return p;}
+    /** \brief Returns the point associated with the collision.
+     *
+     * \return A Point2D.
+     */
+    const Point2D& getPoint() const {return p;}
+
+    /** \brief Returns the point associated with the collision.
+     *
+     * \return A Point2D.
+     */
+    Point2D& getPoint() {return p;}
 
   private:
-    const Point2D& p;
+
+    Point2D p;
 };
 
 }  // namespace zbe
