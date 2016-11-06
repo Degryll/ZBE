@@ -185,6 +185,7 @@
 		<Unit filename="../../../include/ZBE/core/entities/CollisionatorEntity.h" />
 		<Unit filename="../../../include/ZBE/core/entities/CollisionerEntity.h" />
 		<Unit filename="../../../include/ZBE/core/entities/Entity.h" />
+		<Unit filename="../../../include/ZBE/core/entities/EntityWithAttribs.h" />
 		<Unit filename="../../../include/ZBE/core/events/CollisionEventGenerator.h" />
 		<Unit filename="../../../include/ZBE/core/events/Event.h" />
 		<Unit filename="../../../include/ZBE/core/events/EventDispatcher.h" />
@@ -212,6 +213,7 @@
 		<Unit filename="../../../include/ZBE/core/tools/containers/TicketedForwardList.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/Point.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/Vector.h" />
+		<Unit filename="../../../include/ZBE/core/tools/math/collisions/CollisionData.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/collisions/CollisionSystemSolver.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/collisions/intersections.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/math.h" />

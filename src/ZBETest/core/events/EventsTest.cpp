@@ -23,15 +23,12 @@ TEST(Event, InputEvent) {
 
 TEST(Event, CollisionEvent) {
   zbe::StaticAABB2D coa;
-  zbe::StaticAABB2D cob;
   zbe::CollisionerEntity a(&coa);
-  zbe::CollisionerEntity b(&cob);
   zbe::Point2D p{4.0, 2.0};
-  zbe::CollisionEvent2D e(1,100, &a, &b, p);
+  zbe::CollisionEvent2D e(1,100, &a, p);
   EXPECT_EQ((uint64_t)1, e.getId()) << "Must store id";
   EXPECT_EQ((uint64_t)100, e.getTime()) << "Must store time";
-  EXPECT_EQ(&a, e.getEntityA()) << "Must store EntityA";
-  EXPECT_EQ(&b, e.getEntityB()) << "Must store EntityB";
+  EXPECT_EQ(&a, e.getEntity()) << "Must store EntityA";
   EXPECT_EQ(p.x, e.getPoint().x) << "Must store Point x coordinate";
   EXPECT_EQ(p.y, e.getPoint().y) << "Must store Point y coordinate";
 }

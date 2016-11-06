@@ -16,6 +16,8 @@
 
 #include <SDL2/SDL.h>
 
+#include "../../starters/SDL/SDL_Starter.h"
+
 namespace zbe {
 
 /**

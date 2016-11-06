@@ -8,13 +8,12 @@
  * @brief Create a windows using SDL 2.0.
  */
 
-#include "ZBE/core/system/SDL/Window.h"
+#include "../../../../../include/ZBE/core/system/SDL/Window.h"
 
 #include <string>
 #include <SDL2/SDL_image.h>
 
-#include "ZBE/core/starters/SDL/SDL_Starter.h"
-#include "ZBE/core/system/SysError.h"
+#include "../../../../../include/ZBE/core/system/SysError.h"
 
 
 namespace zbe {
@@ -26,7 +25,7 @@ Window::Window(int width, int height, Uint32 window_flags) : sdl(SDL_Starter::ge
 }
 
 Window::Window(const char* title, int width, int height, Uint32 window_flags, Uint32 rederer_flags)
-  : sdl(SDL_Starter::getInstance(SDL_INIT_VIDEO)), Window(title, 0, 0, width, height, window_flags, rederer_flags){}
+  : Window(title, 0, 0, width, height, window_flags, rederer_flags){}
 
 Window::Window(const char* title, int x, int y, int width, int height, Uint32 window_flags, Uint32 rederer_flags)
        : sdl(SDL_Starter::getInstance(SDL_INIT_VIDEO)), window(SDL_CreateWindow(title, x, y, width, height, window_flags)),

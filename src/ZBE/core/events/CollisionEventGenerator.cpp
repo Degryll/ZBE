@@ -28,7 +28,8 @@ void CollisionEventGenerator::generate(uint64_t initTime, uint64_t endTime) {
       TicketedForwardList<CollisionerEntity*>* cnl = lmcn.get(*jt);
       for(auto kt = cnl->begin(); kt != cnl->end(); kt++) {
         if(cs.select(*(*it), *(*kt), totalTime, point)) {
-          es.storeEvent(new CollisionEvent2D(eventId, initTime+totalTime, *it, *kt, point));
+          es.storeEvent(new CollisionEvent2D(eventId, initTime+totalTime, *it, point));
+          es.storeEvent(new CollisionEvent2D(eventId, initTime+totalTime, *kt, point));
         }  // if collision
       } // for each collisionable
     }  // for collisionable list

@@ -10,9 +10,9 @@
 #ifndef CORE_EVENTS_EVENTDISPATCHER_H
 #define CORE_EVENTS_EVENTDISPATCHER_H
 
-#include "ZBE/core/events/Event.h"
-#include "ZBE/core/entities/CollisionerEntity.h"
-#include "ZBE/core/tools/math/Point.h"
+#include "../events/Event.h"
+#include "../entities/CollisionerEntity.h"
+#include "../tools/math/collisions/CollisionData.h"
 
 namespace zbe {
 
@@ -62,7 +62,7 @@ class CollisionEvent2D : public Event {
 
     /** \brief Copy Constructor.
      */
-    CollisionEvent2D(const CollisionEvent2D& rhs) : Event(rhs), a(rhs.a), b(rhs.b), p(rhs.p) {}
+    CollisionEvent2D(const CollisionEvent2D& rhs) : Event(rhs), e(rhs.e), p(rhs.p) {}
 
     /** \brief Parametrized Constructor.
     *
@@ -72,7 +72,7 @@ class CollisionEvent2D : public Event {
     * \param entityB The second entity involved in the collision.
     * \param point Point of collision.
     */
-    CollisionEvent2D(uint64_t id, uint64_t time, CollisionerEntity *entityA, CollisionerEntity *entityB, Point2D point) : Event(id, time), a(entityA), b(entityB), p(point) {}
+    CollisionEvent2D(uint64_t id, uint64_t time, CollisionerEntity *entity, Point2D point) : Event(id, time), e(entity), p(point) {}
 
     /** \brief Empty destructor.
     */
@@ -82,21 +82,15 @@ class CollisionEvent2D : public Event {
      */
     CollisionEvent2D& operator=(const CollisionEvent2D& rhs) {
       Event::operator=(rhs);
-      a = rhs.a;
-      b = rhs.b;
+      e = rhs.e;
       p = rhs.p;
       return (*this);
     }
 
-    /** \brief Get the first entity involved in the collision.
-    * \return The first entity involved in the collision.
+    /** \brief Get the entity involved in the collision.
+    * \return The entity involved in the collision.
     */
-    inline CollisionerEntity* getEntityA() {return (a);}
-
-    /** \brief Get the second entity involved in the collision.
-    * \return The second entity involved in the collision.
-    */
-    inline CollisionerEntity* getEntityB() {return (b);}
+    inline CollisionerEntity* getEntity() {return (e);}
 
     /** \brief Get the point of collision.
     * \return The point of collision.
@@ -104,8 +98,7 @@ class CollisionEvent2D : public Event {
     inline Point2D getPoint() {return (p);}
 
   private:
-    CollisionerEntity *a;  //!< First entitie involved.
-    CollisionerEntity *b;  //!< Second entitie involved.
+    CollisionerEntity *e;  //!< First entitie involved.
     Point2D p;             //!< Point of collision.
 };
 

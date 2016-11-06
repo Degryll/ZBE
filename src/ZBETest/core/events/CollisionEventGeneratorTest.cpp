@@ -47,13 +47,18 @@ TEST(CollisionEventGenerator, Generate) {
   ceg.generate(0,2 * zbe::VELOCITYTOTIME);
   zbe::EventStore &es = zbe::EventStore::getInstance();
   ASSERT_FALSE(es.getEvents().empty()) << "List must have items.";
-  zbe::CollisionEvent2D* e = (zbe::CollisionEvent2D*)(es.getEvents().front());
-  EXPECT_EQ((uint64_t)1, e->getId()) << "must be stored with id 1";
-  EXPECT_DOUBLE_EQ(0.25 * zbe::VELOCITYTOTIME,e->getTime()) << "Time of collision.";
-  EXPECT_DOUBLE_EQ(2.75, e->getPoint()[0]) << "Point of collision (x).";
-  EXPECT_DOUBLE_EQ(5.0, e->getPoint()[1]) << "Point of collision (y).";
-  EXPECT_EQ(&a, e->getEntityA()) << "Collisionator.";
-  EXPECT_EQ(&b, e->getEntityB()) << "Collisionable.";
+  std::forward_list<zbe::Event*> events = es.getEvents();
+  zbe::CollisionEvent2D* e1 = (zbe::CollisionEvent2D*)(events.front());
+  events.pop_front();
+  zbe::CollisionEvent2D* e2 = (zbe::CollisionEvent2D*)(events.front());
+  events.pop_front();
+  EXPECT_EQ((uint64_t)1, e1->getId()) << "must be stored with id 1";
+  EXPECT_DOUBLE_EQ(0.25 * zbe::VELOCITYTOTIME,e1->getTime()) << "Time of collision.";
+  EXPECT_DOUBLE_EQ(2.75, e1->getPoint()[0]) << "Point of collision (x).";
+  EXPECT_DOUBLE_EQ(5.0, e1->getPoint()[1]) << "Point of collision (y).";
+  EXPECT_EQ(&b, e1->getEntity()) << "Collisionable.";
+  EXPECT_EQ(&a, e2->getEntity()) << "Collisionator.";
 
-  delete e;
+  delete e1;
+  delete e2;
 }
