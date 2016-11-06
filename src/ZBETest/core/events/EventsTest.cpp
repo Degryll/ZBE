@@ -29,6 +29,6 @@ TEST(Event, CollisionEvent) {
   EXPECT_EQ((uint64_t)1, e.getId()) << "Must store id";
   EXPECT_EQ((uint64_t)100, e.getTime()) << "Must store time";
   EXPECT_EQ(&a, e.getEntity()) << "Must store EntityA";
-  EXPECT_EQ(p.x, e.getPoint().x) << "Must store Point x coordinate";
-  EXPECT_EQ(p.y, e.getPoint().y) << "Must store Point y coordinate";
+  EXPECT_EQ(p.x, e.getCollisionData().getPoint().x) << "Must store Point x coordinate";
+  EXPECT_EQ(p.y, e.getCollisionData().getPoint().y) << "Must store Point y coordinate";
 }

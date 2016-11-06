@@ -62,7 +62,7 @@ class CollisionEvent2D : public Event {
 
     /** \brief Copy Constructor.
      */
-    CollisionEvent2D(const CollisionEvent2D& rhs) : Event(rhs), e(rhs.e), p(rhs.p) {}
+    CollisionEvent2D(const CollisionEvent2D& rhs) : Event(rhs), e(rhs.e), cd(rhs.cd) {}
 
     /** \brief Parametrized Constructor.
     *
@@ -72,7 +72,7 @@ class CollisionEvent2D : public Event {
     * \param entityB The second entity involved in the collision.
     * \param point Point of collision.
     */
-    CollisionEvent2D(uint64_t id, uint64_t time, CollisionerEntity *entity, Point2D point) : Event(id, time), e(entity), p(point) {}
+    CollisionEvent2D(uint64_t id, uint64_t time, CollisionerEntity *entity, CollisionData collisionData) : Event(id, time), e(entity), cd(collisionData) {}
 
     /** \brief Empty destructor.
     */
@@ -83,7 +83,7 @@ class CollisionEvent2D : public Event {
     CollisionEvent2D& operator=(const CollisionEvent2D& rhs) {
       Event::operator=(rhs);
       e = rhs.e;
-      p = rhs.p;
+      cd = rhs.cd;
       return (*this);
     }
 
@@ -95,11 +95,11 @@ class CollisionEvent2D : public Event {
     /** \brief Get the point of collision.
     * \return The point of collision.
     */
-    inline Point2D getPoint() {return (p);}
+    inline CollisionData getCollisionData() {return (cd);}
 
   private:
     CollisionerEntity *e;  //!< First entitie involved.
-    Point2D p;             //!< Point of collision.
+    CollisionData cd;             //!< Point of collision.
 };
 
 /** \brief An event caused by time.

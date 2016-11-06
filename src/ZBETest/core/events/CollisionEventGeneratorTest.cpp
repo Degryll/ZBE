@@ -54,8 +54,8 @@ TEST(CollisionEventGenerator, Generate) {
   events.pop_front();
   EXPECT_EQ((uint64_t)1, e1->getId()) << "must be stored with id 1";
   EXPECT_DOUBLE_EQ(0.25 * zbe::VELOCITYTOTIME,e1->getTime()) << "Time of collision.";
-  EXPECT_DOUBLE_EQ(2.75, e1->getPoint()[0]) << "Point of collision (x).";
-  EXPECT_DOUBLE_EQ(5.0, e1->getPoint()[1]) << "Point of collision (y).";
+  EXPECT_DOUBLE_EQ(2.75, e1->getCollisionData().getPoint()[0]) << "Point of collision (x).";
+  EXPECT_DOUBLE_EQ(5.0, e1->getCollisionData().getPoint()[1]) << "Point of collision (y).";
   EXPECT_EQ(&b, e1->getEntity()) << "Collisionable.";
   EXPECT_EQ(&a, e2->getEntity()) << "Collisionator.";
 
