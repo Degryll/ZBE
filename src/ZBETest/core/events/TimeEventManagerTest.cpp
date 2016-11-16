@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 
-#include "ZBE/core/events/TimeEventManager.h"
+#include "ZBE/core/events/managers/TimeEventManager.h"
 
 #include "ZBE/core/events/EventDispatcher.h"
 #include "ZBE/core/handlers/TimeHandler.h"

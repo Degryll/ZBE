@@ -3,7 +3,7 @@
 
 #include "ZBE/core/events/EventDispatcher.h"
 #include "ZBE/core/events/EventStore.h"
-#include "ZBE/core/events/CollisionEventGenerator.h"
+#include "ZBE/core/events/generators/CollisionEventGenerator.h"
 #include "ZBE/core/tools/containers/TicketedForwardList.h"
 #include "ZBE/core/entities/CollisionerEntity.h"
 #include "ZBE/core/entities/CollisionatorEntity.h"

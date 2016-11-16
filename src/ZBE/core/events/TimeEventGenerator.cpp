@@ -7,7 +7,7 @@
  * @brief Generate time events.
  */
 
-#include "ZBE/core/events/TimeEventGenerator.h"
+#include "ZBE/core/events/generators/TimeEventGenerator.h"
 
 #include "ZBE/core/events/EventDispatcher.h"
 

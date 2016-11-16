@@ -7,7 +7,7 @@
  * @brief Input event generator, implementation file.
  */
 
-#include "ZBE/core/events/InputEventGenerator.h"
+#include "ZBE/core/events/generators/InputEventGenerator.h"
 #include <inttypes.h>
 #include <iostream>
 

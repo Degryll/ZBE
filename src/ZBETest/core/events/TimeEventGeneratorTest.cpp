@@ -3,7 +3,7 @@
 
 #include "ZBE/core/events/EventDispatcher.h"
 #include "ZBE/core/events/EventStore.h"
-#include "ZBE/core/events/TimeEventGenerator.h"
+#include "ZBE/core/events/generators/TimeEventGenerator.h"
 
 TEST(TimeEventGenerator, Event) {
   zbe::TimeEventGenerator teg(3);

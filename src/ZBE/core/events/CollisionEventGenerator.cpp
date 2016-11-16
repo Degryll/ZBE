@@ -7,7 +7,7 @@
  * @brief Generate collision events.
  */
 
-#include "ZBE/core/events/CollisionEventGenerator.h"
+#include "ZBE/core/events/generators/CollisionEventGenerator.h"
 
 #include "ZBE/core/entities/CollisionerEntity.h"
 #include "ZBE/core/entities/CollisionatorEntity.h"

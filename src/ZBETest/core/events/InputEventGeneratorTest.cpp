@@ -5,7 +5,7 @@
 #include "ZBE/core/io/InputBuffer.h"
 #include "ZBE/core/events/EventDispatcher.h"
 #include "ZBE/core/events/EventStore.h"
-#include "ZBE/core/events/InputEventGenerator.h"
+#include "ZBE/core/events/generators/InputEventGenerator.h"
 
 TEST(InputEventGenerator, Event) {
   // Build tools
