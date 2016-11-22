@@ -13,8 +13,6 @@
 #include <cstdint>
 #include <limits>
 
-#include "ZBE/core/entities/CollisionerEntity.h"
-
 #include "ZBE/core/tools/math/math.h"
 #include "ZBE/core/tools/math/Point.h"
 #include "ZBE/core/tools/math/Vector.h"

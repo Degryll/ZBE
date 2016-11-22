@@ -10,9 +10,9 @@
 #ifndef CORE_EVENTS_EVENTDISPATCHER_H
 #define CORE_EVENTS_EVENTDISPATCHER_H
 
-#include "../events/Event.h"
-#include "../entities/CollisionerEntity.h"
-#include "../tools/math/collisions/CollisionData.h"
+#include "ZBE/core/events/Event.h"
+#include "ZBE/core/entities/avatars/Collisioner.h"
+#include "ZBE/core/tools/math/collisions/CollisionData.h"
 
 namespace zbe {
 
@@ -62,7 +62,7 @@ class CollisionEvent2D : public Event {
 
     /** \brief Copy Constructor.
      */
-    CollisionEvent2D(const CollisionEvent2D& rhs) : Event(rhs), e(rhs.e), cd(rhs.cd) {}
+    CollisionEvent2D(const CollisionEvent2D& rhs) : Event(rhs), c(rhs.c), cd(rhs.cd) {}
 
     /** \brief Parametrized Constructor.
     *
@@ -72,7 +72,7 @@ class CollisionEvent2D : public Event {
     * \param entityB The second entity involved in the collision.
     * \param point Point of collision.
     */
-    CollisionEvent2D(uint64_t id, uint64_t time, CollisionerEntity *entity, CollisionData collisionData) : Event(id, time), e(entity), cd(collisionData) {}
+    CollisionEvent2D(uint64_t id, uint64_t time, Collisioner *collisioner, CollisionData collisionData) : Event(id, time), c(collisioner), cd(collisionData) {}
 
     /** \brief Empty destructor.
     */
@@ -82,7 +82,7 @@ class CollisionEvent2D : public Event {
      */
     CollisionEvent2D& operator=(const CollisionEvent2D& rhs) {
       Event::operator=(rhs);
-      e = rhs.e;
+      c = rhs.c;
       cd = rhs.cd;
       return (*this);
     }
@@ -90,7 +90,7 @@ class CollisionEvent2D : public Event {
     /** \brief Get the entity involved in the collision.
     * \return The entity involved in the collision.
     */
-    inline CollisionerEntity* getEntity() {return (e);}
+    inline Collisioner* getEntity() {return (c);}
 
     /** \brief Get the point of collision.
     * \return The point of collision.
@@ -98,7 +98,7 @@ class CollisionEvent2D : public Event {
     inline CollisionData getCollisionData() {return (cd);}
 
   private:
-    CollisionerEntity *e;  //!< First entitie involved.
+    Collisioner *c;  //!< First entitie involved.
     CollisionData cd;             //!< Point of collision.
 };
 

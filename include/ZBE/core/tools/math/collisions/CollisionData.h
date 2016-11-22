@@ -10,7 +10,6 @@
 #ifndef CORE_COLLISIONDATA_H_
 #define CORE_COLLISIONDATA_H_
 
-#include "ZBE/core/archetypes/Collisioner.h"
 #include "ZBE/core/tools/math/Vector.h"
 #include "ZBE/core/tools/math/Point.h"
 

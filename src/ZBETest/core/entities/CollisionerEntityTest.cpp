@@ -1,16 +1,16 @@
 #include "gtest/gtest.h"
 
-#include "ZBE/core/entities/CollisionerEntity.h"
+#include "ZBE/core/entities/avatars/Collisioner.h"
 
 #include "ZBE/core/system/SysError.h"
 #include "ZBE/core/tools/math/collisions/CollisionSystemSolver.h"
 
-TEST(CollisionerEntity, Usage) {
+TEST(Collisioner, Usage) {
   zbe::StaticAABB2D box1;
   zbe::StaticAABB2D box2;
   zbe::StaticAABB2D box3;
 
-  zbe::CollisionerEntity ce(&box1);
+  zbe::Collisioner ce(&box1);
 
   EXPECT_EQ(&box1,ce.getCollisionObject()) << "Same object.";
   EXPECT_NE(&box2,ce.getCollisionObject()) << "Not same object.";
@@ -29,9 +29,9 @@ TEST(CollisionerEntity, Usage) {
   EXPECT_EQ(&box3,ce.getCollisionObject()) << "Same object.";
 }
 
-TEST(CollisionerEntity, Actuators) {
+TEST(Collisioner, Actuators) {
   zbe::StaticAABB2D box;
-  zbe::CollisionerEntity e(&box);
+  zbe::Collisioner e(&box);
 
   e.addToActuatorsList(1, 3);
   e.addToActuatorsList(2, 5);

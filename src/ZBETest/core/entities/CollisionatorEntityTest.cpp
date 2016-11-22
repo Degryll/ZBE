@@ -1,12 +1,12 @@
 #include "gtest/gtest.h"
 
-#include "ZBE/core/entities/CollisionatorEntity.h"
+#include "ZBE/core/entities/avatars/Collisionator.h"
 
 #include "ZBE/core/tools/math/collisions/CollisionSystemSolver.h"
 
-TEST(CollisionatorEntity, Collisionables) {
+TEST(Collisionator, Collisionables) {
   zbe::StaticAABB2D box;
-  zbe::CollisionatorEntity e(&box);
+  zbe::Collisionator e(&box);
 
   e.addToCollisionablesLists(1);
   e.addToCollisionablesLists(2);

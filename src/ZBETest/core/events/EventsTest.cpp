@@ -2,7 +2,7 @@
 
 #include "ZBE/core/events/Event.h"
 #include "ZBE/core/events/EventDispatcher.h"
-#include "ZBE/core/entities/CollisionerEntity.h"
+#include "ZBE/core/entities/avatars/Collisioner.h"
 #include "ZBE/core/tools/math/collisions/CollisionSystemSolver.h"
 
 
@@ -23,7 +23,7 @@ TEST(Event, InputEvent) {
 
 TEST(Event, CollisionEvent) {
   zbe::StaticAABB2D coa;
-  zbe::CollisionerEntity a(&coa);
+  zbe::Collisioner a(&coa);
   zbe::Point2D p{4.0, 2.0};
   zbe::CollisionEvent2D e(1,100, &a, p);
   EXPECT_EQ((uint64_t)1, e.getId()) << "Must store id";

@@ -167,7 +167,6 @@
 		<Unit filename="../../../include/ZBE/core/archetypes/AABBSphereCollisionable.h" />
 		<Unit filename="../../../include/ZBE/core/archetypes/Collisionable.h" />
 		<Unit filename="../../../include/ZBE/core/archetypes/Collisionador.h" />
-		<Unit filename="../../../include/ZBE/core/archetypes/Collisioner.h" />
 		<Unit filename="../../../include/ZBE/core/archetypes/Movable.h" />
 		<Unit filename="../../../include/ZBE/core/archetypes/Positionable.h" />
 		<Unit filename="../../../include/ZBE/core/archetypes/Runnable.h" />
@@ -182,8 +181,6 @@
 		<Unit filename="../../../include/ZBE/core/daemons/Punishers.h" />
 		<Unit filename="../../../include/ZBE/core/drawers/Drawer.h" />
 		<Unit filename="../../../include/ZBE/core/drawers/SDL/SimpleSpriteSDLDrawer.h" />
-		<Unit filename="../../../include/ZBE/core/entities/CollisionatorEntity.h" />
-		<Unit filename="../../../include/ZBE/core/entities/CollisionerEntity.h" />
 		<Unit filename="../../../include/ZBE/core/entities/Entity.h" />
 		<Unit filename="../../../include/ZBE/core/entities/EntityWithAttribs.h" />
 		<Unit filename="../../../include/ZBE/core/entities/adaptorentities/CollisionatorEntity.h" />
@@ -234,8 +231,8 @@
 		<Unit filename="../../../src/ZBE/core/behaviors/UniformLinearMotion.cpp" />
 		<Unit filename="../../../src/ZBE/core/daemons/DaemonMaster.cpp" />
 		<Unit filename="../../../src/ZBE/core/drawers/SDL/SimpleSpriteSDLDrawer.cpp" />
-		<Unit filename="../../../src/ZBE/core/entities/CollisionerEntity.cpp" />
 		<Unit filename="../../../src/ZBE/core/entities/Entity.cpp" />
+		<Unit filename="../../../src/ZBE/core/entities/avatars/Collisioner.cpp" />
 		<Unit filename="../../../src/ZBE/core/events/CollisionEventGenerator.cpp" />
 		<Unit filename="../../../src/ZBE/core/events/EventStore.cpp" />
 		<Unit filename="../../../src/ZBE/core/events/InputEventGenerator.cpp" />

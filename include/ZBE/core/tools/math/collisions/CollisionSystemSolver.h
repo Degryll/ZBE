@@ -12,7 +12,7 @@
 
 #include <cstdint>
 
-#include "ZBE/core/entities/CollisionerEntity.h"
+#include "ZBE/core/entities/avatars/Collisioner.h"
 #include "ZBE/core/tools/math/objects.h"
 #include "ZBE/core/tools/math/collisions/intersections.h"
 
@@ -32,7 +32,7 @@ class CollisionSelector {
      *  \param point Point of collision if any.
      *  \return True if there is a collision in the timeslot set by time, false otherwise.
      */
-    inline bool select(CollisionerEntity& param1, CollisionerEntity& param2, uint64_t& time, Point2D& point) {
+    inline bool select(Collisioner& param1, Collisioner& param2, uint64_t& time, Point2D& point) {
       return (param2.getCollisionObject()->accept(*this, *(param1.getCollisionObject()), time, point));
     }
 
