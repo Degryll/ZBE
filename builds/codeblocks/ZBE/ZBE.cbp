@@ -233,10 +233,10 @@
 		<Unit filename="../../../src/ZBE/core/drawers/SDL/SimpleSpriteSDLDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/core/entities/Entity.cpp" />
 		<Unit filename="../../../src/ZBE/core/entities/avatars/Collisioner.cpp" />
-		<Unit filename="../../../src/ZBE/core/events/CollisionEventGenerator.cpp" />
 		<Unit filename="../../../src/ZBE/core/events/EventStore.cpp" />
-		<Unit filename="../../../src/ZBE/core/events/InputEventGenerator.cpp" />
-		<Unit filename="../../../src/ZBE/core/events/TimeEventGenerator.cpp" />
+		<Unit filename="../../../src/ZBE/core/events/generators/CollisionEventGenerator.cpp" />
+		<Unit filename="../../../src/ZBE/core/events/generators/InputEventGenerator.cpp" />
+		<Unit filename="../../../src/ZBE/core/events/generators/TimeEventGenerator.cpp" />
 		<Unit filename="../../../src/ZBE/core/io/FileHandler.cpp" />
 		<Unit filename="../../../src/ZBE/core/io/InputBuffer.cpp" />
 		<Unit filename="../../../src/ZBE/core/loaders/SDLFontLoader.cpp" />
