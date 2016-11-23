@@ -20,12 +20,14 @@ namespace zbe {
 template <typedef T>
 class CollisionerEntity {
   public:
+    CollisionerEntity(T* entity) : entity(entity) {}
 
     void setAdaptor(CollisionerAdaptor *adaptor) {a = adaptor;}
 
-    Collisioner getCollisioner() {return (a->getCollisioner());}
+    Collisioner getCollisioner() {return (a->getCollisioner(entity));}
 
   private:
+    T* entity;
     CollisionerAdaptor *a;
 };
 

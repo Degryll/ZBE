@@ -20,12 +20,14 @@ namespace zbe {
 template <typedef T>
 class DrawableEntity {
   public:
+    DrawableEntity(T* entity) : entity(entity) {}
 
     void setAdaptor(DrawableAdaptor *adaptor) {a = adaptor;}
 
-    Drawable getDrawable() {return (a->getDrawable());}
+    Drawable getDrawable() {return (a->getDrawable(entity));}
 
   private:
+    T* entity;
     DrawableAdaptor *a;
 };
 
