@@ -6,32 +6,32 @@
 #include "ZBE/core/tools/math/collisions/CollisionSystemSolver.h"
 
 TEST(Collisioner, Usage) {
-  zbe::StaticAABB2D box1;
-  zbe::StaticAABB2D box2;
-  zbe::StaticAABB2D box3;
+  zbe::StaticAABB2D* box1 = new zbe::StaticAABB2D();
+  zbe::StaticAABB2D* box2 = new zbe::StaticAABB2D();
+  zbe::StaticAABB2D* box3 = new zbe::StaticAABB2D();
 
-  zbe::Collisioner ce(&box1);
+  zbe::Collisioner ce(box1);
 
-  EXPECT_EQ(&box1,ce.getCollisionObject()) << "Same object.";
-  EXPECT_NE(&box2,ce.getCollisionObject()) << "Not same object.";
-  EXPECT_NE(&box3,ce.getCollisionObject()) << "Not same object.";
+  EXPECT_EQ(box1,ce.getCollisionObject()) << "Same object.";
+  EXPECT_NE(box2,ce.getCollisionObject()) << "Not same object.";
+  EXPECT_NE(box3,ce.getCollisionObject()) << "Not same object.";
 
-  ce.setCollisionObject(&box2);
+  ce.setCollisionObject(box2);
 
-  EXPECT_NE(&box1,ce.getCollisionObject()) << "Not same object.";
-  EXPECT_EQ(&box2,ce.getCollisionObject()) << "Same object.";
-  EXPECT_NE(&box3,ce.getCollisionObject()) << "Not same object.";
+  EXPECT_NE(box1,ce.getCollisionObject()) << "Not same object.";
+  EXPECT_EQ(box2,ce.getCollisionObject()) << "Same object.";
+  EXPECT_NE(box3,ce.getCollisionObject()) << "Not same object.";
 
-  ce.setCollisionObject(&box3);
+  ce.setCollisionObject(box3);
 
-  EXPECT_NE(&box1,ce.getCollisionObject()) << "Not same object.";
-  EXPECT_NE(&box2,ce.getCollisionObject()) << "Not same object.";
-  EXPECT_EQ(&box3,ce.getCollisionObject()) << "Same object.";
+  EXPECT_NE(box1,ce.getCollisionObject()) << "Not same object.";
+  EXPECT_NE(box2,ce.getCollisionObject()) << "Not same object.";
+  EXPECT_EQ(box3,ce.getCollisionObject()) << "Same object.";
 }
 
 TEST(Collisioner, Actuators) {
-  zbe::StaticAABB2D box;
-  zbe::Collisioner e(&box);
+  zbe::StaticAABB2D* box = new zbe::StaticAABB2D();
+  zbe::Collisioner e(box);
 
   e.addToActuatorsList(1, 3);
   e.addToActuatorsList(2, 5);

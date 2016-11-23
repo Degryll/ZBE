@@ -16,10 +16,10 @@ namespace zbe {
 
 /** \brief Template that adapts an entity to a drawable.
  */
-template <typedef T>
+template <typename T>
 class CollisionerAdaptor {
   public:
-    virtual Collisioner getCollisioner(T entity) = 0;
+    virtual Collisioner* getCollisioner(T entity) = 0;
 };
 
 }  // namespace zbe

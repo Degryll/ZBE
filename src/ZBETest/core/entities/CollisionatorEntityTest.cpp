@@ -5,8 +5,8 @@
 #include "ZBE/core/tools/math/collisions/CollisionSystemSolver.h"
 
 TEST(Collisionator, Collisionables) {
-  zbe::StaticAABB2D box;
-  zbe::Collisionator e(&box);
+  zbe::StaticAABB2D*  box = new zbe::StaticAABB2D();
+  zbe::Collisionator e(box);
 
   e.addToCollisionablesLists(1);
   e.addToCollisionablesLists(2);

@@ -76,7 +76,7 @@ class CollisionEvent2D : public Event {
 
     /** \brief Empty destructor.
     */
-    virtual ~CollisionEvent2D() {};
+    virtual ~CollisionEvent2D() {delete c;};
 
     /** \brief Copy Operator.
      */

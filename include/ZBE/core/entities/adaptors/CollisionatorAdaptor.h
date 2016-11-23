@@ -10,16 +10,16 @@
 #ifndef CORE_ENTITIES_ADAPTORS_COLLISIONATORADAPTOR_H_
 #define CORE_ENTITIES_ADAPTORS_COLLISIONATORADAPTOR_H_
 
-#include "ZBE/core/entities/avatars/Collisioner.h"
+#include "ZBE/core/entities/avatars/Collisionator.h"
 
 namespace zbe {
 
-/** \brief Template that adapts an entity to a drawable.
+/** \brief Template that adapts an entity to a collisionator.
  */
-template <typedef T>
+template <typename T>
 class CollisionatorAdaptor {
   public:
-    virtual Collisionator getCollisionator(T entity) = 0;
+    virtual Collisionator* getCollisionator(T entity) = 0;
 };
 
 }  // namespace zbe

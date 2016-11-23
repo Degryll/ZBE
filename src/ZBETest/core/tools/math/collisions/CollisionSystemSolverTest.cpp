@@ -13,10 +13,10 @@
 #include "ZBE/core/tools/math/collisions/CollisionSystemSolver.h"
 
 TEST(CollisionSystemSolver, MovingCircleStaticAABB) {
-  zbe::ConstantMovingCircle cc(zbe::Circle({{2.0,3.0},1.0}),zbe::Vector2D({3.0,4.0}));
-  zbe::StaticAABB2D sbox(zbe::AABB2D({{1.0,5.0},{6.0,10.0}}));
-  zbe::Collisioner a(&cc);
-  zbe::Collisioner b(&sbox);
+  zbe::ConstantMovingCircle* cc = new zbe::ConstantMovingCircle(zbe::Circle({{2.0,3.0},1.0}),zbe::Vector2D({3.0,4.0}));
+  zbe::StaticAABB2D* sbox = new zbe::StaticAABB2D(zbe::AABB2D({{1.0,5.0},{6.0,10.0}}));
+  zbe::Collisioner a(cc);
+  zbe::Collisioner b(sbox);
 
   zbe::CollisionSelector cs;
 
@@ -34,10 +34,10 @@ TEST(CollisionSystemSolver, MovingCircleStaticAABB) {
 }
 
 TEST(CollisionSystemSolver, StaticAABBMovingCircle) {
-  zbe::ConstantMovingCircle cc(zbe::Circle({{2.0,3.0},1.0}),zbe::Vector2D({3.0,4.0}));
-  zbe::StaticAABB2D sbox(zbe::AABB2D({{1.0,5.0},{6.0,10.0}}));
-  zbe::Collisioner a(&cc);
-  zbe::Collisioner b(&sbox);
+  zbe::ConstantMovingCircle* cc= new zbe::ConstantMovingCircle(zbe::Circle({{2.0,3.0},1.0}),zbe::Vector2D({3.0,4.0}));
+  zbe::StaticAABB2D* sbox= new zbe::StaticAABB2D(zbe::AABB2D({{1.0,5.0},{6.0,10.0}}));
+  zbe::Collisioner a(cc);
+  zbe::Collisioner b(sbox);
 
   zbe::CollisionSelector cs;
 

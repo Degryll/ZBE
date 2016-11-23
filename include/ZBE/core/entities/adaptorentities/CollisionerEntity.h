@@ -15,20 +15,29 @@
 
 namespace zbe {
 
-/** \brief Template that adapts an entity to a drawable.
+/** \brief Entity that can be seen as a collisioner.
  */
-template <typedef T>
 class CollisionerEntity {
   public:
-    CollisionerEntity(T* entity) : entity(entity) {}
 
-    void setAdaptor(CollisionerAdaptor *adaptor) {a = adaptor;}
+    virtual Collisioner* getCollisioner() = 0;
 
-    Collisioner getCollisioner() {return (a->getCollisioner(entity));}
+};
+
+/** \brief Entity that can be seen as a collisioner using an adaptor.
+ */
+template <typename T>
+class CollisionerEntityAdapted {
+  public:
+    CollisionerEntityAdapted(T* entity) : entity(entity) {}
+
+    void setAdaptor(CollisionerAdaptor<T> *adaptor) {a = adaptor;}
+
+    Collisioner* getCollisioner() {return (a->getCollisioner(entity));}
 
   private:
     T* entity;
-    CollisionerAdaptor *a;
+    CollisionerAdaptor<T> *a;
 };
 
 }  // namespace zbe

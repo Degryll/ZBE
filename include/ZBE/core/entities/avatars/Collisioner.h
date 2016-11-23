@@ -40,7 +40,7 @@ class Collisioner {
 
     /** \brief Empty destructor.
       */
-    virtual ~Collisioner() {}
+    virtual ~Collisioner() {delete o;}
 
     void operator=(const Collisioner&) = delete;
 

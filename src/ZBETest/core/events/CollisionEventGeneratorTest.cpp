@@ -1,25 +1,25 @@
-//#include "gtest/gtest.h"
-//#include <vector>
-//
-//#include "ZBE/core/events/EventDispatcher.h"
-//#include "ZBE/core/events/EventStore.h"
-//#include "ZBE/core/events/generators/CollisionEventGenerator.h"
-//#include "ZBE/core/tools/containers/TicketedForwardList.h"
-//#include "ZBE/core/entities/CollisionerEntity.h"
-//#include "ZBE/core/entities/CollisionatorEntity.h"
-////#include "ZBE/core/tools/math/objects.h"
-//
-//class DummyCollisionator : public zbe::CollisionatorEntity {
-//public:
-//  DummyCollisionator(zbe::CollisionObject* object) : zbe::CollisionatorEntity(object) {}
-//};
-//
-//class DummyCollisionable : public zbe::CollisionerEntity {
-//public:
-//  DummyCollisionable(zbe::CollisionObject* object) : zbe::CollisionerEntity(object) {}
-//};
-//
-//TEST(CollisionEventGenerator, Generate) {
+#include "gtest/gtest.h"
+#include <vector>
+
+#include "ZBE/core/events/EventDispatcher.h"
+#include "ZBE/core/events/EventStore.h"
+#include "ZBE/core/events/generators/CollisionEventGenerator.h"
+#include "ZBE/core/tools/containers/TicketedForwardList.h"
+#include "ZBE/core/entities/adaptorentities/CollisionerEntity.h"
+#include "ZBE/core/entities/adaptorentities/CollisionatorEntity.h"
+//#include "ZBE/core/tools/math/objects.h"
+
+/*class DummyCollisionator : public zbe::CollisionatorEntity {
+public:
+  DummyCollisionator(zbe::CollisionObject* object) : zbe::CollisionatorEntity(object) {}
+};
+
+class DummyCollisionable : public zbe::CollisionerEntity {
+public:
+  DummyCollisionable(zbe::CollisionObject* object) : zbe::CollisionerEntity(object) {}
+};*/
+
+TEST(DISABLED_CollisionEventGenerator, Generate) {
 //  zbe::TicketedForwardList<zbe::CollisionatorEntity*> ctl;
 //  zbe::TicketedForwardList<zbe::CollisionerEntity*> cbl;
 //
@@ -61,4 +61,4 @@
 //
 //  delete e1;
 //  delete e2;
-//}
+}

@@ -16,10 +16,10 @@ namespace zbe {
 
 /** \brief Template that adapts an entity to a drawable.
  */
-template <typedef T>
+template <typename T>
 class DrawableAdaptor {
   public:
-    virtual Drawable getDrawable(T entity) = 0;
+    virtual Drawable* getDrawable(T entity) = 0;
 };
 
 }  // namespace zbe

@@ -15,16 +15,25 @@
 
 namespace zbe {
 
-/** \brief Template that adapts an entity to a drawable.
+/** \brief Entity that can be seen as a drawable.
  */
-template <typedef T>
 class DrawableEntity {
   public:
-    DrawableEntity(T* entity) : entity(entity) {}
+
+    virtual Drawable* getDrawable() = 0;
+
+};
+
+/** \brief Entity that can be seen as a drawable using an adaptor.
+ */
+template <typename T>
+class DrawableEntityAdapted {
+  public:
+    DrawableEntityAdapted(T* entity) : entity(entity) {}
 
     void setAdaptor(DrawableAdaptor *adaptor) {a = adaptor;}
 
-    Drawable getDrawable() {return (a->getDrawable(entity));}
+    Drawable* getDrawable() {return (a->getDrawable(entity));}
 
   private:
     T* entity;
