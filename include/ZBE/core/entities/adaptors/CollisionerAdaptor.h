@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file CollisionerAdaptor.h
  * @since 2016-11-22
- * @date 2016-11-22
+ * @date 2016-11-23
  * @author Degryll
  * @brief Template that adapts an entity to a collisioner.
  */
@@ -10,9 +10,7 @@
 #ifndef CORE_ENTITIES_ADAPTORS_COLLISIONERADAPTOR_H_
 #define CORE_ENTITIES_ADAPTORS_COLLISIONERADAPTOR_H_
 
-// Cambiar esto cuando esté lista
-//#include "ZBE/core/entities/avatars/Collisioner.h"
-class Collisioner {};
+#include "ZBE/core/entities/avatars/Collisioner.h"
 
 namespace zbe {
 
