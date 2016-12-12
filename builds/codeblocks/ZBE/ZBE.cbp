@@ -194,6 +194,7 @@
 		<Unit filename="../../../include/ZBE/core/entities/avatars/Collisioner.h" />
 		<Unit filename="../../../include/ZBE/core/entities/avatars/Drawable.h" />
 		<Unit filename="../../../include/ZBE/core/entities/avatars/ReactObject.h" />
+		<Unit filename="../../../include/ZBE/core/entities/avatars/ReactObjectCommons.h" />
 		<Unit filename="../../../include/ZBE/core/events/Event.h" />
 		<Unit filename="../../../include/ZBE/core/events/EventDispatcher.h" />
 		<Unit filename="../../../include/ZBE/core/events/EventStore.h" />
