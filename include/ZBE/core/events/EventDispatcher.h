@@ -48,21 +48,41 @@ class EventDispatcher {
 };
 
 // Every child event must define a accept function
+// This class is used to avoid repeated code
+template <typename T>
+class EventCommon : public Event {
+public:
+  EventCommon(const EventCommon&) = delete;
+  void operator=(const EventCommon&) = delete;
+
+  EventCommon(uint64_t id, uint64_t time, T* eventObject) : Event(id, time), e(eventObject) {}
+  EventCommon(const Event& rhs, T* eventObject) : Event(rhs), e(eventObject) {}
+
+  void accept(EventDispatcher &visitor) {
+    visitor.visit(*e);
+  }
+
+private:
+  T* e;
+};
+
+// TEMP
+// Every child event must define a accept function
 // This macro is used to avoid repeated code
-#define DERIVEDEVENT \
-  void accept(EventDispatcher &visitor) { \
-    visitor.visit(*this); \
-  } \
+//define DERIVEDEVENT \
+//  void accept(EventDispatcher &visitor) { \
+//    visitor.visit(*this); \
+//  } \
 
 /** \brief Has the information needed to resolve a collision.
  */
-class CollisionEvent2D : public Event {
+class CollisionEvent2D : public EventCommon<CollisionEvent2D> {
   public:
-    DERIVEDEVENT
+    //DERIVEDEVENT
 
     /** \brief Copy Constructor.
      */
-    CollisionEvent2D(const CollisionEvent2D& rhs) : Event(rhs), c(rhs.c), cd(rhs.cd) {}
+    CollisionEvent2D(const CollisionEvent2D& rhs) : EventCommon(rhs, this), c(rhs.c), cd(rhs.cd) {}
 
     /** \brief Parametrized Constructor.
     *
@@ -72,7 +92,7 @@ class CollisionEvent2D : public Event {
     * \param entityB The second entity involved in the collision.
     * \param point Point of collision.
     */
-    CollisionEvent2D(uint64_t id, uint64_t time, Collisioner *collisioner, CollisionData collisionData) : Event(id, time), c(collisioner), cd(collisionData) {}
+    CollisionEvent2D(uint64_t id, uint64_t time, Collisioner *collisioner, CollisionData collisionData) : EventCommon(id, time, this), c(collisioner), cd(collisionData) {}
 
     /** \brief Empty destructor.
     */
@@ -104,9 +124,9 @@ class CollisionEvent2D : public Event {
 
 /** \brief An event caused by time.
  */
-class TimeEvent : public Event {
+class TimeEvent : public EventCommon<TimeEvent> {
   public:
-    DERIVEDEVENT
+    //DERIVEDEVENT
 
     /** \brief Basic constructor
      *
@@ -115,7 +135,7 @@ class TimeEvent : public Event {
      * \param timerId Id of timer that generate this event.
      *
      */
-    TimeEvent(uint64_t id, uint64_t time, uint64_t timerId):Event(id,time),timerId(timerId) {}
+    TimeEvent(uint64_t id, uint64_t time, uint64_t timerId) : EventCommon(id, time, this), timerId(timerId) {}
 
     ~TimeEvent() {}
 
@@ -134,12 +154,9 @@ class TimeEvent : public Event {
 
 /** \brief An event caused by input devices.
  */
-class InputEvent : public Event {
+class InputEvent : public EventCommon<InputEvent> {
   public:
     //DERIVEDEVENT
-    void accept(EventDispatcher &visitor) {
-      visitor.visit(*this);
-    }
 
     /** \brief Builds an InputEvent with the status and id of the associated input.
      *
@@ -149,7 +166,7 @@ class InputEvent : public Event {
      * \param state The state of the related input as a value in the range (-1.0 .. +1.0).
      *
      */
-    InputEvent(uint64_t id, uint64_t time, uint32_t key, float state):Event(id,time), key(key),state(state) {}
+    InputEvent(uint64_t id, uint64_t time, uint32_t key, float state) : EventCommon(id, time, this), key(key), state(state) {}
 
     ~InputEvent() {}
 

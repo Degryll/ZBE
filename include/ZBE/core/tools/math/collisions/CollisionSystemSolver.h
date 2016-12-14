@@ -71,29 +71,55 @@ class CollisionSelector {
     inline bool visit(ConstantMovingCircle& param1, ConstantMovingCircle& param2, uint64_t& time, Point2D& point);
 };
 
+// You must add to this class a new "accept" function for any new derived CollisionObject
+// This class is used to avoid repeated code
+template <typename T>
+class CollisionObjectCommon : public CollisionObject {
+public:
+  CollisionObjectCommon(const CollisionObjectCommon&) = delete;
+  void operator=(const CollisionObjectCommon&) = delete;
+
+  CollisionObjectCommon(T* collisionObject) : c(collisionObject) {}
+
+  bool accept(CollisionSelector &visitor, CollisionObject& param1, uint64_t& time, Point2D& point) {
+    return (param1.accept(visitor, *c, time, point));
+  }
+
+  bool accept(CollisionSelector &visitor, StaticAABB2D& param2, uint64_t& time, Point2D& point) {
+    return (visitor.visit(*c, param2, time, point));
+  }
+
+  bool accept(CollisionSelector &visitor, ConstantMovingCircle& param2, uint64_t& time, Point2D& point) {
+    return (visitor.visit(*c, param2, time, point));
+  }
+
+private:
+  T* c;
+};
+
 // You must add to this macro a new "accept" function for any new derived CollisionObject
 // This macro is used to avoid repeated code
-#define DERIVEDCOLLISIONOBJECT \
-  bool accept(CollisionSelector &visitor, CollisionObject& param1, uint64_t& time, Point2D& point) { \
-    return (param1.accept(visitor, *this, time, point)); \
-  } \
- \
-  bool accept(CollisionSelector &visitor, StaticAABB2D& param2, uint64_t& time, Point2D& point) { \
-    return (visitor.visit(*this, param2, time, point)); \
-  } \
- \
-  bool accept(CollisionSelector &visitor, ConstantMovingCircle& param2, uint64_t& time, Point2D& point) { \
-    return (visitor.visit(*this, param2, time, point)); \
-  } \
+//define DERIVEDCOLLISIONOBJECT \
+//  bool accept(CollisionSelector &visitor, CollisionObject& param1, uint64_t& time, Point2D& point) { \
+//    return (param1.accept(visitor, *this, time, point)); \
+//  } \
+// \
+//  bool accept(CollisionSelector &visitor, StaticAABB2D& param2, uint64_t& time, Point2D& point) { \
+//    return (visitor.visit(*this, param2, time, point)); \
+//  } \
+// \
+//  bool accept(CollisionSelector &visitor, ConstantMovingCircle& param2, uint64_t& time, Point2D& point) { \
+//    return (visitor.visit(*this, param2, time, point)); \
+//  } \
 
 /** \brief A collision object defined by a 2D AABB
  */
-class StaticAABB2D: public CollisionObject {
+class StaticAABB2D: public CollisionObjectCommon<StaticAABB2D> {
 public:
-  DERIVEDCOLLISIONOBJECT
+  //DERIVEDCOLLISIONOBJECT
 
-  StaticAABB2D() : box() {}
-  StaticAABB2D(AABB2D box) : box(box) {}
+  StaticAABB2D() : CollisionObjectCommon(this), box() {}
+  StaticAABB2D(AABB2D box) : CollisionObjectCommon(this), box(box) {}
 
   /** \brief Return the 2D AABB.
    *  \return A 2D AABB.
@@ -106,12 +132,12 @@ private:
 
 /** \brief A collision object defined by a circle moving with a constant speed.
  */
-class ConstantMovingCircle: public CollisionObject {
+class ConstantMovingCircle: public CollisionObjectCommon<ConstantMovingCircle> {
 public:
-  DERIVEDCOLLISIONOBJECT
+  //DERIVEDCOLLISIONOBJECT
 
-  ConstantMovingCircle() : circle(), direction() {}
-  ConstantMovingCircle(Circle circle, Vector2D direction) : circle(circle), direction(direction) {}
+  ConstantMovingCircle() : CollisionObjectCommon(this), circle(), direction() {}
+  ConstantMovingCircle(Circle circle, Vector2D direction) : CollisionObjectCommon(this), circle(circle), direction(direction) {}
 
   /** \brief Return the circle.
    *  \return A circle.

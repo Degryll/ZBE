@@ -27,7 +27,7 @@ class Event {
     * \param time Exact moment in which it occurred
     *
     */
-    Event(uint64_t id, uint64_t time):id(id),time(time){}
+    Event(uint64_t id, uint64_t time) : id(id), time(time) {}
 
     virtual ~Event() {};  //!< Empty destructor
 
