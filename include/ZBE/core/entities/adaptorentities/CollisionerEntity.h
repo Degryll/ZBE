@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file CollisionerEntity.h
  * @since 2016-11-23
- * @date 2016-11-23
+ * @date 2016-12-14
  * @author Degryll
  * @brief Entity that can be seen as a collisioner.
  */
@@ -12,6 +12,8 @@
 
 #include "ZBE/core/entities/adaptors/CollisionerAdaptor.h"
 #include "ZBE/core/entities/avatars/Collisioner.h"
+#include "ZBE/core/entities/adaptors/ReactObjectAdaptor.h"
+#include "ZBE/core/entities/avatars/ReactObject.h"
 
 namespace zbe {
 
@@ -20,7 +22,11 @@ namespace zbe {
 class CollisionerEntity {
   public:
 
+    virtual ~CollisionerEntity();
+
     virtual Collisioner* getCollisioner() = 0;
+
+  	virtual ReactObject* getReactObject() = 0;
 
 };
 
@@ -31,13 +37,18 @@ class CollisionerEntityAdapted {
   public:
     CollisionerEntityAdapted(T* entity) : entity(entity) {}
 
-    void setAdaptor(CollisionerAdaptor<T> *adaptor) {a = adaptor;}
+    void setCollisionerAdaptor(CollisionerAdaptor<T> *adaptor) {c = adaptor;}
 
-    Collisioner* getCollisioner() {return (a->getCollisioner(entity));}
+    Collisioner* getCollisioner() {return (c->getCollisioner(entity));}
+
+  	void setReactObjectAdaptor(ReactObjectAdaptor<T> *adaptor) {r = adaptor;}
+
+  	ReactObject* getReactObject() {return (r->getReactObject(entity));}
 
   private:
     T* entity;
-    CollisionerAdaptor<T> *a;
+    CollisionerAdaptor<T> *c;
+  	ReactObjectAdaptor<T> *r;
 };
 
 }  // namespace zbe

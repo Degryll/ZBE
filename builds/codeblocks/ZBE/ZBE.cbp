@@ -208,7 +208,7 @@
 		<Unit filename="../../../include/ZBE/core/handlers/CollisionHandler.h" />
 		<Unit filename="../../../include/ZBE/core/handlers/InputHandler.h" />
 		<Unit filename="../../../include/ZBE/core/handlers/TimeHandler.h" />
-		<Unit filename="../../../include/ZBE/core/handlers/collision/Actor.h" />
+		<Unit filename="../../../include/ZBE/core/handlers/collision/Actuator.h" />
 		<Unit filename="../../../include/ZBE/core/handlers/collision/Reactor.h" />
 		<Unit filename="../../../include/ZBE/core/io/FileHandler.h" />
 		<Unit filename="../../../include/ZBE/core/io/InputBuffer.h" />
