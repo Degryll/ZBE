@@ -21,6 +21,8 @@ class SimplePosition2D : public Position2D {
     SimplePosition2D(double x, double y) : p(x, y) {}
     SimplePosition2D(Point2D position) : p(position) {}
 
+    virtual ~SimplePosition2D() {}
+
     void setX(double x) {p.x = x;}
     void setY(double y) {p.y = y;}
     void setPosition(double x, double y) {p.x = x; p.y = y;}
