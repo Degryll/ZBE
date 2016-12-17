@@ -20,7 +20,7 @@ namespace zbe {
 class DrawableEntity {
   public:
 
-    virtual Drawable* getDrawable() = 0;
+    virtual std::shared_ptr<Drawable> getDrawable() = 0;
 
 };
 
@@ -33,7 +33,7 @@ class DrawableEntityAdapted : public Drawable {
 
     void setAdaptor(DrawableAdaptor *adaptor) {a = adaptor;}
 
-    Drawable* getDrawable() {return (a->getDrawable(entity));}
+    std::shared_ptr<Drawable> getDrawable() {return (a->getDrawable(entity));}
 
   private:
     T* entity;

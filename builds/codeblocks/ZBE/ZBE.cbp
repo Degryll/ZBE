@@ -238,6 +238,11 @@
 		<Unit filename="../../../include/ZBE/core/tools/math/math.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/objects.h" />
 		<Unit filename="../../../include/ZBE/core/tools/text/utf8.h" />
+		<Unit filename="../../../include/ZBE/entities/adaptorentities/Movable2DEntity.h" />
+		<Unit filename="../../../include/ZBE/entities/adaptors/BaseMovable2DMobile2DAdaptor.h" />
+		<Unit filename="../../../include/ZBE/entities/adaptors/Movable2DAdaptor.h" />
+		<Unit filename="../../../include/ZBE/entities/avatars/BaseMovable2D.h" />
+		<Unit filename="../../../include/ZBE/entities/avatars/Movable2D.h" />
 		<Unit filename="../../../include/ZBE/zombienoid/Reactor.h" />
 		<Unit filename="../../../src/ZBE/core/behaviors/UniformLinearMotion.cpp" />
 		<Unit filename="../../../src/ZBE/core/daemons/DaemonMaster.cpp" />

@@ -10,6 +10,8 @@
 #ifndef CORE_ENTITIES_ADAPTORS_DRAWABLEADAPTOR_H_
 #define CORE_ENTITIES_ADAPTORS_DRAWABLEADAPTOR_H_
 
+#include <memory>
+
 #include "ZBE/core/entities/avatars/Drawable.h"
 
 namespace zbe {
@@ -19,7 +21,7 @@ namespace zbe {
 template <typename T>
 class DrawableAdaptor {
   public:
-    virtual Drawable* getDrawable(T entity) = 0;
+    virtual std::shared_ptr<Drawable> getDrawable(T* entity) = 0;
 };
 
 }  // namespace zbe

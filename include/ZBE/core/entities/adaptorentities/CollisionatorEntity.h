@@ -20,7 +20,7 @@ namespace zbe {
 class CollisionatorEntity {
   public:
 
-    virtual Collisionator* getCollisionator() = 0;
+    virtual std::shared_ptr<Collisionator> getCollisionator() = 0;
 
 };
 
@@ -33,7 +33,7 @@ class CollisionatorEntityAdapted : public CollisionatorEntity {
 
     void setAdaptor(CollisionatorAdaptor<T> *adaptor) {a = adaptor;}
 
-    Collisionator* getCollisionator() {return (a->getCollisionator(entity));}
+    std::shared_ptr<Collisionator> getCollisionator() {return (a->getCollisionator(entity));}
 
   private:
     T* entity;

@@ -25,9 +25,9 @@ class CollisionerEntity {
 
     virtual ~CollisionerEntity();
 
-    virtual Collisioner* getCollisioner() = 0;
+    virtual std::shared_ptr<Collisioner> getCollisioner() = 0;
 
-  	virtual ReactObject<R>* getReactObject() = 0;
+  	virtual std::shared_ptr<ReactObject<R> > getReactObject() = 0;
 
 };
 
@@ -40,11 +40,11 @@ class CollisionerEntityAdapted : public CollisionerEntity<R> {
 
     void setCollisionerAdaptor(CollisionerAdaptor<T> *adaptor) {c = adaptor;}
 
-    Collisioner* getCollisioner() {return (c->getCollisioner(entity));}
+    std::shared_ptr<Collisioner> getCollisioner() {return (c->getCollisioner(entity));}
 
   	void setReactObjectAdaptor(ReactObjectAdaptor<T, R> *adaptor) {r = adaptor;}
 
-  	ReactObject<R>* getReactObject() {return (r->getReactObject(entity));}
+  	std::shared_ptr<ReactObject<R> > getReactObject() {return (r->getReactObject(entity));}
 
   private:
     T* entity;

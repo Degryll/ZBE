@@ -10,6 +10,8 @@
 #ifndef CORE_ENTITIES_ADAPTORS_COLLISIONATORADAPTOR_H_
 #define CORE_ENTITIES_ADAPTORS_COLLISIONATORADAPTOR_H_
 
+#include <memory>
+
 #include "ZBE/core/entities/avatars/Collisionator.h"
 
 namespace zbe {
@@ -19,7 +21,7 @@ namespace zbe {
 template <typename T>
 class CollisionatorAdaptor {
   public:
-    virtual Collisionator* getCollisionator(T entity) = 0;
+    virtual std::shared_ptr<Collisionator> getCollisionator(T* entity) = 0;
 };
 
 }  // namespace zbe
