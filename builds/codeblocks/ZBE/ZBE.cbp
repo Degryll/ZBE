@@ -167,7 +167,6 @@
 		<Unit filename="../../../include/ZBE/archetypes/Damping.h" />
 		<Unit filename="../../../include/ZBE/archetypes/Mobile2D.h" />
 		<Unit filename="../../../include/ZBE/archetypes/Position2D.h" />
-		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleBounceable.h" />
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleDamping.h" />
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleMobile2D.h" />
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimplePosition2D.h" />
@@ -240,13 +239,16 @@
 		<Unit filename="../../../include/ZBE/core/tools/math/math.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/objects.h" />
 		<Unit filename="../../../include/ZBE/core/tools/text/utf8.h" />
+		<Unit filename="../../../include/ZBE/entities/adaptorentities/BounceableEntity.h" />
 		<Unit filename="../../../include/ZBE/entities/adaptorentities/Movable2DEntity.h" />
-		<Unit filename="../../../include/ZBE/entities/adaptors/BaseMovable2DMobile2DAdaptor.h" />
-		<Unit filename="../../../include/ZBE/entities/adaptors/DampingBounceable.h" />
+		<Unit filename="../../../include/ZBE/entities/adaptors/BounceableAdaptor.h" />
 		<Unit filename="../../../include/ZBE/entities/adaptors/Movable2DAdaptor.h" />
-		<Unit filename="../../../include/ZBE/entities/avatars/BaseMovable2D.h" />
+		<Unit filename="../../../include/ZBE/entities/adaptors/implementations/BaseDampingBounceableAdaptor.h" />
+		<Unit filename="../../../include/ZBE/entities/adaptors/implementations/BaseMovable2DMobile2DAdaptor.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/Bounceable.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/Movable2D.h" />
+		<Unit filename="../../../include/ZBE/entities/avatars/implementations/BaseMovable2D.h" />
+		<Unit filename="../../../include/ZBE/entities/avatars/implementations/SimpleBounceable.h" />
 		<Unit filename="../../../include/ZBE/zombienoid/Reactor.h" />
 		<Unit filename="../../../src/ZBE/actuators/MovableBouncer.cpp" />
 		<Unit filename="../../../src/ZBE/core/behaviors/UniformLinearMotion.cpp" />
