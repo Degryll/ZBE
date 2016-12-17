@@ -163,6 +163,7 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="../../../include/ZBE/actuators/MovableBouncer.h" />
 		<Unit filename="../../../include/ZBE/archetypes/Damping.h" />
 		<Unit filename="../../../include/ZBE/archetypes/Mobile2D.h" />
 		<Unit filename="../../../include/ZBE/archetypes/Position2D.h" />
@@ -247,6 +248,7 @@
 		<Unit filename="../../../include/ZBE/entities/avatars/Bounceable.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/Movable2D.h" />
 		<Unit filename="../../../include/ZBE/zombienoid/Reactor.h" />
+		<Unit filename="../../../src/ZBE/actuators/MovableBouncer.cpp" />
 		<Unit filename="../../../src/ZBE/core/behaviors/UniformLinearMotion.cpp" />
 		<Unit filename="../../../src/ZBE/core/daemons/DaemonMaster.cpp" />
 		<Unit filename="../../../src/ZBE/core/drawers/SDL/SimpleSpriteSDLDrawer.cpp" />
