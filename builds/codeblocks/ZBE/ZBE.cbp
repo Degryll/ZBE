@@ -243,8 +243,8 @@
 		<Unit filename="../../../include/ZBE/entities/adaptorentities/Movable2DEntity.h" />
 		<Unit filename="../../../include/ZBE/entities/adaptors/BounceableAdaptor.h" />
 		<Unit filename="../../../include/ZBE/entities/adaptors/Movable2DAdaptor.h" />
-		<Unit filename="../../../include/ZBE/entities/adaptors/implementations/BaseDampingBounceableAdaptor.h" />
 		<Unit filename="../../../include/ZBE/entities/adaptors/implementations/BaseMovable2DMobile2DAdaptor.h" />
+		<Unit filename="../../../include/ZBE/entities/adaptors/implementations/SimpleDampingBounceableAdaptor.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/Bounceable.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/Movable2D.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/BaseMovable2D.h" />
