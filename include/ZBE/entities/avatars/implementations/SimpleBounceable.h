@@ -11,7 +11,6 @@
 #define ZBE_ENTITIES_AVATARS_SIMPLEBOUNCEABLE_H_
 
 #include "ZBE/entities/avatars/Bounceable.h"
-#include "ZBE/archetypes/Damping.h"
 
 namespace zbe {
 
@@ -19,11 +18,10 @@ namespace zbe {
  */
 class SimpleBounceable {
   public:
-    SimpleBounceable(Damping* damping) : d(damping) {}
+    SimpleBounceable(double factor) : factor(factor) {}
     double getFactor(){return factor;}
 
   private:
-    Damping* d;
     double factor;
 };
 

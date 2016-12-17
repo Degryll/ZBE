@@ -20,7 +20,7 @@ namespace zbe {
 
 class BaseDampingBounceableAdaptor : public BounceableAdaptor<Damping> {
   public:
-    std::shared_ptr<Bounceable> getBounceable(Damping* entity) {return (new SimpleBounceable(entity));};
+    std::shared_ptr<Bounceable> getBounceable(Damping* entity) {return (new SimpleBounceable(entity->getFactor()));};
 };
 
 }  // namespace zbe
