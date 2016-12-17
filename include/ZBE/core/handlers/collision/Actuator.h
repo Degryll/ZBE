@@ -12,14 +12,13 @@
 
 #include "ZBE/core/entities/avatars/ReactObject.h"
 #include "ZBE/core/tools/math/collisions/CollisionData.h"
-#include "ZBE/core/handlers/collision/Reactor.h"
 
 namespace zbe {
 
 /** \brief Entity that can be seen as a collisionator using an adaptor.
  */
-template <typename T>
-class Actuator : public Reactor {
+template <typename T, typename R>
+class Actuator : public R {
   public:
   	Actuator(const Actuator&) = delete;
   	void operator=(const Actuator&) = delete;

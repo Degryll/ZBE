@@ -10,14 +10,12 @@
 #ifndef CORE_ENTITIES_AVATARS_REACTOBJECT_H
 #define CORE_ENTITIES_AVATARS_REACTOBJECT_H
 
-#include "ZBE/core/handlers/collision/Reactor.h"
-
 namespace zbe {
 
-
+template <typename R>
 class ReactObject {
   public:
-		virtual void act(Reactor * reactor) = 0;
+		virtual void act(R* reactor) = 0;
 };
 
 }  // namespace

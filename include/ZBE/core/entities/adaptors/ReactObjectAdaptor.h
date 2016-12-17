@@ -16,10 +16,10 @@ namespace zbe {
 
 /** \brief Template that adapts an entity to a reactObject.
  */
-template <typename T>
+template <typename T, typename R>
 class ReactObjectAdaptor {
   public:
-    virtual ReactObject* getReactObject(T entity) = 0;
+    virtual ReactObject<R>* getReactObject(T entity) = 0;
 };
 
 }  // namespace zbe

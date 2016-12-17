@@ -14,7 +14,8 @@
 
 namespace zbe {
 
-void CollisionEventGenerator::generate(uint64_t initTime, uint64_t endTime) {
+template <typename R>
+void CollisionEventGenerator<R>::generate(uint64_t initTime, uint64_t endTime) {
   uint64_t totalTime = endTime - initTime;
   Point2D point;
 
@@ -24,7 +25,7 @@ void CollisionEventGenerator::generate(uint64_t initTime, uint64_t endTime) {
     Collisionator* cator = (*it)->getCollisionator();
     const std::forward_list<uint64_t>& cl = cator->getCollisionablesLists();
     for(auto jt = cl.begin(); jt != cl.end(); jt++) {
-      TicketedForwardList<CollisionerEntity*>* cnl = lmcn.get(*jt);
+      TicketedForwardList<CollisionerEntity<R>*>* cnl = lmcn.get(*jt);
       for(auto kt = cnl->begin(); kt != cnl->end(); kt++) {
         Collisioner *coner = (*kt)->getCollisioner();
         if(cs.select(*cator, *coner, totalTime, point)) {

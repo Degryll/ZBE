@@ -163,6 +163,12 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="../../../include/ZBE/archetypes/Damping.h" />
+		<Unit filename="../../../include/ZBE/archetypes/Mobile2D.h" />
+		<Unit filename="../../../include/ZBE/archetypes/Position2D.h" />
+		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleDamping.h" />
+		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleMobile2D.h" />
+		<Unit filename="../../../include/ZBE/archetypes/implementations/SimplePosition2D.h" />
 		<Unit filename="../../../include/ZBE/core/archetypes/AABBCollisionable.h" />
 		<Unit filename="../../../include/ZBE/core/archetypes/AABBSphereCollisionable.h" />
 		<Unit filename="../../../include/ZBE/core/archetypes/Collisionable.h" />
@@ -209,7 +215,6 @@
 		<Unit filename="../../../include/ZBE/core/handlers/InputHandler.h" />
 		<Unit filename="../../../include/ZBE/core/handlers/TimeHandler.h" />
 		<Unit filename="../../../include/ZBE/core/handlers/collision/Actuator.h" />
-		<Unit filename="../../../include/ZBE/core/handlers/collision/Reactor.h" />
 		<Unit filename="../../../include/ZBE/core/io/FileHandler.h" />
 		<Unit filename="../../../include/ZBE/core/io/InputBuffer.h" />
 		<Unit filename="../../../include/ZBE/core/io/InputStatus.h" />
@@ -233,6 +238,7 @@
 		<Unit filename="../../../include/ZBE/core/tools/math/math.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/objects.h" />
 		<Unit filename="../../../include/ZBE/core/tools/text/utf8.h" />
+		<Unit filename="../../../include/ZBE/zombienoid/Reactor.h" />
 		<Unit filename="../../../src/ZBE/core/behaviors/UniformLinearMotion.cpp" />
 		<Unit filename="../../../src/ZBE/core/daemons/DaemonMaster.cpp" />
 		<Unit filename="../../../src/ZBE/core/drawers/SDL/SimpleSpriteSDLDrawer.cpp" />

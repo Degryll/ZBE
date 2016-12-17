@@ -18,6 +18,7 @@ class Reactor {
   public:
 
 };
-}
+
+}  // namespace
 
 #endif //CORE_HANDLERS_COLLISION_REACTOR_H

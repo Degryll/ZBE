@@ -27,7 +27,7 @@ class CollisionatorEntity {
 /** \brief Entity that can be seen as a collisionator using an adaptor.
  */
 template <typename T>
-class CollisionatorEntityAdapted : CollisionatorEntity {
+class CollisionatorEntityAdapted : public CollisionatorEntity {
   public:
     CollisionatorEntityAdapted(T* entity) : entity(entity) {}
 

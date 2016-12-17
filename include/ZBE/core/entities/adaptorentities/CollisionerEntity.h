@@ -19,6 +19,7 @@ namespace zbe {
 
 /** \brief Entity that can be seen as a collisioner.
  */
+template <typename R>
 class CollisionerEntity {
   public:
 
@@ -26,14 +27,14 @@ class CollisionerEntity {
 
     virtual Collisioner* getCollisioner() = 0;
 
-  	virtual ReactObject* getReactObject() = 0;
+  	virtual ReactObject<R>* getReactObject() = 0;
 
 };
 
 /** \brief Entity that can be seen as a collisioner using an adaptor.
  */
-template <typename T>
-class CollisionerEntityAdapted {
+template <typename T, typename R>
+class CollisionerEntityAdapted : public CollisionerEntity<R> {
   public:
     CollisionerEntityAdapted(T* entity) : entity(entity) {}
 
@@ -41,14 +42,14 @@ class CollisionerEntityAdapted {
 
     Collisioner* getCollisioner() {return (c->getCollisioner(entity));}
 
-  	void setReactObjectAdaptor(ReactObjectAdaptor<T> *adaptor) {r = adaptor;}
+  	void setReactObjectAdaptor(ReactObjectAdaptor<T, R> *adaptor) {r = adaptor;}
 
-  	ReactObject* getReactObject() {return (r->getReactObject(entity));}
+  	ReactObject<R>* getReactObject() {return (r->getReactObject(entity));}
 
   private:
     T* entity;
     CollisionerAdaptor<T> *c;
-  	ReactObjectAdaptor<T> *r;
+  	ReactObjectAdaptor<T, R> *r;
 };
 
 }  // namespace zbe

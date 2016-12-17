@@ -27,7 +27,7 @@ class DrawableEntity {
 /** \brief Entity that can be seen as a drawable using an adaptor.
  */
 template <typename T>
-class DrawableEntityAdapted {
+class DrawableEntityAdapted : public Drawable {
   public:
     DrawableEntityAdapted(T* entity) : entity(entity) {}
 

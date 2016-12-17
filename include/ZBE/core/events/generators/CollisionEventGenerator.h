@@ -23,6 +23,7 @@ namespace zbe {
 
 /** \brief Generate collision events.
  */
+template <typename R>
 class CollisionEventGenerator {
   public:
     /** \brief Parametrized Constructor.
@@ -32,7 +33,7 @@ class CollisionEventGenerator {
     CollisionEventGenerator(uint64_t list, int eventId)
     : id(list), eventId(eventId), cs(), es(EventStore::getInstance()),
       lmct(ListManager<TicketedForwardList<CollisionatorEntity*> >::getInstance()),
-      lmcn(ListManager<TicketedForwardList<CollisionerEntity*> >::getInstance()) {};
+      lmcn(ListManager<TicketedForwardList<CollisionerEntity<R>*> >::getInstance()) {};
 
     /** \brief Empty destructor.
     */
@@ -51,7 +52,7 @@ class CollisionEventGenerator {
     EventStore& es;
 
     ListManager<TicketedForwardList<CollisionatorEntity*> >& lmct;
-    ListManager<TicketedForwardList<CollisionerEntity*> >& lmcn;
+    ListManager<TicketedForwardList<CollisionerEntity<R>*> >& lmcn;
 };
 
 }  // namespace zbe

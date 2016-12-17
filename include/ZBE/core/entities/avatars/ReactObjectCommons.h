@@ -10,11 +10,9 @@
 #ifndef CORE_ENTITIES_AVATARS_REACTOBJECTCOMMONS_H
 #define CORE_ENTITIES_AVATARS_REACTOBJECTCOMMONS_H
 
-#include "ZBE/core/entities/avatars/ReactObject.h"
-
 namespace zbe {
 
-template <typename T>
+template <typename T, typename R>
 class ReactObjectCommons : public ReactObject {
   public:
     ReactObjectCommons(const ReactObjectCommons&) = delete;
@@ -22,7 +20,7 @@ class ReactObjectCommons : public ReactObject {
 
   	ReactObjectCommons(T* rObject) : rObject(rObject) {}
 
-    void act(Reactor* reactor) {
+    void act(R* reactor) {
       reactor->act(rObject);
     }
 
