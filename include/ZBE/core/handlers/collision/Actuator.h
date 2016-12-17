@@ -4,7 +4,7 @@
  * @since 2016-12-11
  * @date 2016-12-11
  * @author Batis
- * @brief First Actuator interface.
+ * @brief Actuator base functionality.
  */
 
 #ifndef CORE_HANDLERS_COLLISION_ACTUATOR_H
@@ -15,7 +15,7 @@
 
 namespace zbe {
 
-/** \brief Entity that can be seen as a collisionator using an adaptor.
+/** \brief Actuator base functionality.
  */
 template <typename T, typename R>
 class Actuator : public R {
@@ -24,6 +24,9 @@ class Actuator : public R {
   	void operator=(const Actuator&) = delete;
 
     Actuator() : collisioner(nullptr), cData(nullptr) {}
+
+  	T* getCollisioner() { return collisioner; }
+    CollisionData* getCollisionData() { return cData; }
 
     void run(T* collisioner, ReactObject* rObject, CollisionData* cData){
 			this->collisioner = collisioner;

@@ -166,8 +166,33 @@ class _VECTOR {
       return (r2);
     }
 
+    /** \brief Generate a vector with same angle and module 1.0.
+     *
+     * \return Normalized vector.
+     */
+    _VECTOR<s>&  normalize() {
+      double m = getModule();
+
+      for(unsigned i = 0; i < s; i++) {
+        data[i] /= m;
+      }
+
+      return (*this);
+    }
+
+    /**
+     * \fn _VECTOR::reflect
+     * \param normal Vector normal to the collision plane.
+     * \return Vector with the ray or object path reflected.
+     * \brief calculates the resulting path of reflection of a ray or impact of an object with a plane.
+     */
+    _VECTOR<s>& reflect(const _VECTOR<s> normal) {
+      _VECTOR<s>& d = *this;
+  		d = d - 2 * (d * normal) * normal;
+      return (*this);
+    }
+
     //double getAngle(const Vector& rhs);  // TODO espero a necesitarlo
-    //Vector& reflect(const Vector& rhs);  // TODO espero a necesitarlo
 
 ///////////////////////////////////////////////////////////////////////////////
 // Friend Functions
@@ -250,11 +275,11 @@ class _VECTOR {
       return (lhs*=rhs);
     }
 
-    /** \brief Implements Vector multiplication by a scalar.
+    /** \brief Implements dot product.
      *
-     * \param lhs The original Vector.
-     * \param rhs The scalar.
-     * \return A reference to the resulting Vector.
+     * \param lhs First vector.
+     * \param rhs Second vector.
+     * \return Doct product.
      * \sa operator+=(), operator-=() and operator-().
      */
     friend double operator*(const _VECTOR& lhs, const _VECTOR& rhs) {
@@ -267,7 +292,9 @@ class _VECTOR {
     }
 
     //friend double getAngle(Vector2D lhs, const Vector2D& rhs);  // TODO espero a necesitarlo
-    //friend Vector2D reflect(Vector2D lhs, const Vector2D &rhs);  // TODO espero a necesitarlo
+    friend _VECTOR reflect(_VECTOR ray, const _VECTOR &normal){
+        return ray.reflect(normal);
+    };
 
 ///////////////////////////////////////////////////////////////////////////////
 // END Friend Functions
