@@ -11,10 +11,11 @@
 #define ZBE_ACTUATORS_MOVABLEBOUNCER
 
 #include "ZBE/core/handlers/collision/Actuator.h"
-#include "ZBE/core/entities/avatars/Bounceable.h"
-#include "ZBE/core/entities/avatars/Movable.h"
 #include "ZBE/core/tools/math/Vector.h"
 #include "ZBE/core/tools/math/Point.h"
+
+#include "ZBE/entities/avatars/Movable.h"
+#include "ZBE/entities/avatars/Bounceable.h"
 
 namespace zbe {
 
@@ -26,8 +27,8 @@ template <typename R, unsigned s>
 class MovableBouncer: public Actuator<Movable<s>, R> {
   public:
     void act(Bounceable * b) {
-      Movable<s> * m = getCollisioner();
-      CollisionData * cd = getCollisionData();
+      Movable<s> * m = Actuator<Movable<s>, R>::getCollisioner();
+      CollisionData * cd = Actuator<Movable<s>, R>::getCollisionData();
       Vector<s> v = m->getVelocity();
       Vector<s> n = m->getPosition() - cd->getPoint();
       v*=b->getFactor();

@@ -13,7 +13,7 @@
 namespace zbe {
 
 template <typename T, typename R>
-class ReactObjectCommons : public ReactObject {
+class ReactObjectCommons : public ReactObject<R> {
   public:
     ReactObjectCommons(const ReactObjectCommons&) = delete;
     void operator=(const ReactObjectCommons&) = delete;

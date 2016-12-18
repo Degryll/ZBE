@@ -28,7 +28,7 @@ class Actuator : public R {
   	T* getCollisioner() { return collisioner; }
     CollisionData* getCollisionData() { return cData; }
 
-    void run(T* collisioner, ReactObject* rObject, CollisionData* cData){
+    void run(T* collisioner, ReactObject<R>* rObject, CollisionData* cData){
 			this->collisioner = collisioner;
       this->cData = cData;
       rObject->act(this);

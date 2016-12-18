@@ -16,7 +16,7 @@ namespace zbe {
 
 /** \brief This implements a base 1:1 avatar that can be moved.
  */
-class SimpleBounceable {
+class SimpleBounceable : public Bounceable{
   public:
     SimpleBounceable(double factor) : factor(factor) {}
     double getFactor(){return factor;}
