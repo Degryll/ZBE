@@ -56,9 +56,9 @@ class _POINT {
       }
     }
 
-//    /** \brief Virtual destructor (this class is a base class).
-//     */
-//    virtual ~_POINT() {}
+    /** \brief Virtual destructor (this class is a base class).
+     */
+    virtual ~_POINT() {}
 
 //    _POINT& operator=(_POINT rhs) {
 //      std::swap(this->data, rhs.data);

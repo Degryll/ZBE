@@ -56,7 +56,9 @@ class _VECTOR {
       }
     }
 
-//    virtual ~_VECTOR() {}
+    /** \brief Virtual destructor (this class is a base class).
+     */
+    virtual ~_VECTOR() {}
 
 //    _VECTOR& operator=(_VECTOR rhs) {
 //      std::swap(this->data, rhs.data);
