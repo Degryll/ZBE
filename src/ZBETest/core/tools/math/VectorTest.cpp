@@ -228,13 +228,13 @@ TEST(Vector, Operations) {
   zbe::Vector2D vr{0.0,1.0};
   zbe::Vector2D vn{1.0,1.0};
   vr.reflect(vn);
-  EXPECT_NEAR(1.0,vr.x,0.00001) << "reflect \".x\".";
+  EXPECT_NEAR(-1.0,vr.x,0.00001) << "reflect \".x\".";
   EXPECT_NEAR(0.0,vr.y,0.00001) << "reflect  \".y\".";
 
   vr.setCartesian(1.0,0.0);
   vn.setCartesian(0.0,1.0);
   vr.reflect(vn);
-  EXPECT_NEAR(-1.0,vr.x,0.00001) << "reflect \".x\".";
+  EXPECT_NEAR(1.0,vr.x,0.00001) << "reflect \".x\".";
   EXPECT_NEAR(0.0,vr.y,0.00001) << "reflect  \".y\".";
 
   zbe::Vector2D va{1.0,1.0};

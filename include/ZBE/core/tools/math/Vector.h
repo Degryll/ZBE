@@ -191,6 +191,7 @@ class _VECTOR {
     _VECTOR<s>& reflect(_VECTOR<s> normal) {
       _VECTOR<s>& d = *this;
       normal.normalize();
+      //d = d - (2 * ((d * normal) * normal));
       d = d - 2 * (d * normal) * normal;
       return (*this);
     }
@@ -242,16 +243,16 @@ class _VECTOR {
       return (lhs-=rhs);
     }
 
-    /** \brief Implements Vector subtraction.
-     *
-     * \param lhs Minuend.
-     * \param rhs Subtrahend.
-     * \return A reference to the Vector resultant of the subtraction.
-     * \sa operator+=(), operator-() and operator*=().
-     */
-    friend _VECTOR operator-(const _VECTOR& lhs, _VECTOR&& rhs) {
-      return (rhs-=lhs);
-    }
+//    /** \brief Implements Vector subtraction.
+//     *
+//     * \param lhs Minuend.
+//     * \param rhs Subtrahend.
+//     * \return A reference to the Vector resultant of the subtraction.
+//     * \sa operator+=(), operator-() and operator*=().
+//     */
+//    friend _VECTOR operator-(const _VECTOR& lhs, _VECTOR&& rhs) {
+//      return _VECTOR(rhs-=lhs);
+//    }
 
 //    /** \brief Changes the orientation of a vector changing the sign of its dimensions.
 //     *

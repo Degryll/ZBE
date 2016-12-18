@@ -20,7 +20,6 @@
 
 namespace zbe {
 
-static const double RECTRADS = PI/2;
 
 /** \brief Actuator capable of making a Movable bounce in a Bounceable.
  */
@@ -30,11 +29,13 @@ class MovableBouncer: public Actuator<Movable<s>, R> {
     void act(Bounceable * b) {
       Movable<s> * m = Actuator<Movable<s>, R>::getCollisioner();
       CollisionData * cd = Actuator<Movable<s>, R>::getCollisionData();
+
       Vector<s> v = m->getVelocity();
-      Vector<s> n = cd->getPoint() - m->getPosition();
-      n.setPolars(1.0, n.getRads()+RECTRADS);
+      Vector<s> n = m->getPosition() - cd->getPoint();
+      //n.setPolars(1.0, n.getRads()+RECTRADS);
+      v = v.reflect(n);
       v *= b->getFactor();
-      m->setVelocity(v.reflect(n));
+      m->setVelocity(v);
     }
 };
 
