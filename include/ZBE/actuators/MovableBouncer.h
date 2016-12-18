@@ -12,6 +12,7 @@
 
 #include "ZBE/core/handlers/collision/Actuator.h"
 #include "ZBE/core/tools/math/Vector.h"
+#include "ZBE/core/tools/math/math.h"
 #include "ZBE/core/tools/math/Point.h"
 
 #include "ZBE/entities/avatars/Movable.h"
@@ -19,7 +20,7 @@
 
 namespace zbe {
 
-    class Bounceable;
+static const double RECTRADS = PI/2;
 
 /** \brief Actuator capable of making a Movable bounce in a Bounceable.
  */
@@ -30,8 +31,9 @@ class MovableBouncer: public Actuator<Movable<s>, R> {
       Movable<s> * m = Actuator<Movable<s>, R>::getCollisioner();
       CollisionData * cd = Actuator<Movable<s>, R>::getCollisionData();
       Vector<s> v = m->getVelocity();
-      Vector<s> n = m->getPosition() - cd->getPoint();
-      v*=b->getFactor();
+      Vector<s> n = cd->getPoint() - m->getPosition();
+      n.setPolars(1.0, n.getRads()+RECTRADS);
+      v *= b->getFactor();
       m->setVelocity(v.reflect(n));
     }
 };

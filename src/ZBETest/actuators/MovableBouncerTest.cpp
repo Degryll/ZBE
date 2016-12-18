@@ -13,7 +13,7 @@
 
 class ReactorMock {
   public:
-      void act(zbe::Bounceable * b) {};
+      virtual void act(zbe::Bounceable * b) {};
 };
 
 class ReactObjectMock : public zbe::SimpleBounceable, public zbe::ReactObjectCommons<zbe::SimpleBounceable, ReactorMock> {
@@ -29,7 +29,7 @@ TEST(MovableBouncer, run) {
     zbe::MovableBouncer<ReactorMock,2> mBouncer;
     mBouncer.run(&mv, &ro, &cd);
 
-    /*EXPECT_NEAR(0.0,mb.getVelocity().x,0.00001) << "bounce velocity \".x\".";
-    EXPECT_NEAR(-1.0,mb.getVelocity().y,0.00001) << "bounce velocity \".y\".";*/
+    EXPECT_NEAR(0.0,mb.getVelocity().x,0.00001) << "bounce velocity \".x\".";
+    EXPECT_NEAR(-1.0,mb.getVelocity().y,0.00001) << "bounce velocity \".y\".";
 }
 
