@@ -168,7 +168,7 @@ class _VECTOR {
       return (r2);
     }
 
-    /** \brief Generate a vector with same angle and module 1.0.
+    /** \brief Modifies this vector setting module to 1.0.
      *
      * \return Normalized vector.
      */

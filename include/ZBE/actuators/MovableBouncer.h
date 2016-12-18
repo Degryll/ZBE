@@ -31,7 +31,7 @@ class MovableBouncer: public Actuator<Movable<s>, R> {
       Vector<s> v = m->getVelocity();
       Vector<s> n = m->getPosition() - cd->getPoint();
       v*=b->getFactor();
-      m->setVelocity(v);
+      m->setVelocity(v.reflect(n));
     }
 };
 
