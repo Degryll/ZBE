@@ -10,7 +10,7 @@
 #ifndef ZBE_ACTUATORS_MOVABLEBOUNCER
 #define ZBE_ACTUATORS_MOVABLEBOUNCER
 
-#include "ZBE/core/handlers/collision/Actuator.h"
+#include "ZBE/core/events/handlers/Actuator.h"
 #include "ZBE/core/tools/math/Vector.h"
 #include "ZBE/core/tools/math/math.h"
 #include "ZBE/core/tools/math/Point.h"

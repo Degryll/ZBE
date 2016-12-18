@@ -208,14 +208,12 @@
 		<Unit filename="../../../include/ZBE/core/events/generators/CollisionEventGenerator.h" />
 		<Unit filename="../../../include/ZBE/core/events/generators/InputEventGenerator.h" />
 		<Unit filename="../../../include/ZBE/core/events/generators/TimeEventGenerator.h" />
-		<Unit filename="../../../include/ZBE/core/events/handlers/CollisionHandler.h" />
+		<Unit filename="../../../include/ZBE/core/events/handlers/Actuator.h" />
 		<Unit filename="../../../include/ZBE/core/events/handlers/InputHandler.h" />
 		<Unit filename="../../../include/ZBE/core/events/handlers/TimeHandler.h" />
+		<Unit filename="../../../include/ZBE/core/events/managers/CollisionEventManager.h" />
+		<Unit filename="../../../include/ZBE/core/events/managers/InputEventManager.h" />
 		<Unit filename="../../../include/ZBE/core/events/managers/TimeEventManager.h" />
-		<Unit filename="../../../include/ZBE/core/handlers/CollisionHandler.h" />
-		<Unit filename="../../../include/ZBE/core/handlers/InputHandler.h" />
-		<Unit filename="../../../include/ZBE/core/handlers/TimeHandler.h" />
-		<Unit filename="../../../include/ZBE/core/handlers/collision/Actuator.h" />
 		<Unit filename="../../../include/ZBE/core/io/FileHandler.h" />
 		<Unit filename="../../../include/ZBE/core/io/InputBuffer.h" />
 		<Unit filename="../../../include/ZBE/core/io/InputStatus.h" />
