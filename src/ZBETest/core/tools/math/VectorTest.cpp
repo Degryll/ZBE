@@ -225,6 +225,34 @@ TEST(Vector, Operations) {
   EXPECT_EQ(-4.0,v2.x) << "Operator -= \".x\".";
   EXPECT_EQ( 3.0,v2.y) << "Operator -= \".y\".";
 
+  zbe::Vector2D vr{0.0,1.0};
+  zbe::Vector2D vn{1.0,1.0};
+  vr.reflect(vn);
+  EXPECT_NEAR(1.0,vr.x,0.00001) << "reflect \".x\".";
+  EXPECT_NEAR(0.0,vr.y,0.00001) << "reflect  \".y\".";
+
+  vr.setCartesian(1.0,0.0);
+  vn.setCartesian(0.0,1.0);
+  vr.reflect(vn);
+  EXPECT_NEAR(-1.0,vr.x,0.00001) << "reflect \".x\".";
+  EXPECT_NEAR(0.0,vr.y,0.00001) << "reflect  \".y\".";
+
+  zbe::Vector2D va{1.0,1.0};
+  va.normalize();
+  EXPECT_NEAR(1.0,va.getModule(),0.00001) << "normalized module";
+
+  zbe::Vector2D vb{0.0,2.0};
+  vb.normalize();
+  EXPECT_NEAR(1.0,vb.getModule(),0.00001) << "normalized module";
+
+  zbe::Vector2D vc{2.0,0.0};
+  vc.normalize();
+  EXPECT_NEAR(1.0,vc.getModule(),0.00001) << "normalized module";
+
+  zbe::Vector2D vd{2.0,50.0};
+  vd.normalize();
+  EXPECT_NEAR(1.0,vd.getModule(),0.00001) << "normalized module";
+
   zbe::SysError::clear();
 }
 

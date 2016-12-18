@@ -188,9 +188,10 @@ class _VECTOR {
      * \return Vector with the ray or object path reflected.
      * \brief calculates the resulting path of reflection of a ray or impact of an object with a plane.
      */
-    _VECTOR<s>& reflect(const _VECTOR<s> normal) {
+    _VECTOR<s>& reflect(_VECTOR<s> normal) {
       _VECTOR<s>& d = *this;
-  		d = d - 2 * (d * normal) * normal;
+      normal.normalize();
+      d = d - 2 * (d * normal) * normal;
       return (*this);
     }
 
@@ -270,11 +271,18 @@ class _VECTOR {
      * \sa operator+=(), operator-=() and operator-().
      */
     friend _VECTOR operator*(_VECTOR lhs, double rhs) {
-//      for(unsigned i = 0; i < s; i++) {
-//        lhs.data[i] *= rhs;
-//      }
-
       return (lhs*=rhs);
+    }
+
+    /** \brief Implements Vector multiplication by a scalar.
+     *
+     * \param lhs The original Vector.
+     * \param rhs The scalar.
+     * \return A reference to the resulting Vector.
+     * \sa operator+=(), operator-=() and operator-().
+     */
+    friend _VECTOR operator*(double lhs, _VECTOR rhs) {
+      return (rhs*=lhs);
     }
 
     /** \brief Implements dot product.
