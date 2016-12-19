@@ -82,7 +82,7 @@ class CollisionEvent2D : public EventCommon<CollisionEvent2D> {
 
     /** \brief Copy Constructor.
      */
-    CollisionEvent2D(const CollisionEvent2D& rhs) : EventCommon(rhs, this), c(rhs.c), cd(rhs.cd) {}
+    CollisionEvent2D(const CollisionEvent2D& rhs) : EventCommon(rhs, this), c(rhs.c), cd(rhs.cd), ro(rhs.ro) {}
 
     /** \brief Parametrized Constructor.
     *
@@ -92,7 +92,7 @@ class CollisionEvent2D : public EventCommon<CollisionEvent2D> {
     * \param entityB The second entity involved in the collision.
     * \param point Point of collision.
     */
-    CollisionEvent2D(uint64_t id, uint64_t time, Collisioner *collisioner, CollisionData collisionData) : EventCommon(id, time, this), c(collisioner), cd(collisionData) {}
+    CollisionEvent2D(uint64_t id, uint64_t time, Collisioner *collisioner, CollisionData collisionData, void * reactObject) : EventCommon(id, time, this), c(collisioner), cd(collisionData), ro(reactObject) {}
 
     /** \brief Empty destructor.
     */
@@ -117,9 +117,15 @@ class CollisionEvent2D : public EventCommon<CollisionEvent2D> {
     */
     inline CollisionData getCollisionData() {return (cd);}
 
+    /** \brief Get the point of collision.
+    * \return The point of collision.
+    */
+    inline void * getReactObject() {return (ro);}
+
   private:
-    Collisioner *c;  //!< First entitie involved.
-    CollisionData cd;             //!< Point of collision.
+    Collisioner *c;     //!< First entitie involved avatar.
+    CollisionData cd;   //!< Point of collision.
+    void * ro; //!< second entitie involved. void to avoid template.
 };
 
 /** \brief An event caused by time.

@@ -7,7 +7,7 @@
 #include "ZBE/entities/avatars/Movable.h"
 #include "ZBE/entities/avatars/implementations/SimpleBounceable.h"
 #include "ZBE/entities/avatars/implementations/BaseMovable.h"
-#include "ZBE/core/handlers/collision/Actuator.h"
+#include "ZBE/core/events/handlers/Actuator.h"
 #include "ZBE/core/entities/avatars/ReactObjectCommons.h"
 #include "ZBE/core/tools/math/collisions/CollisionData.h"
 

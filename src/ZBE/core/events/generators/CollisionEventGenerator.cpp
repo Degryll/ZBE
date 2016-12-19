@@ -29,8 +29,8 @@ void CollisionEventGenerator<R>::generate(uint64_t initTime, uint64_t endTime) {
       for(auto kt = cnl->begin(); kt != cnl->end(); kt++) {
         Collisioner *coner = (*kt)->getCollisioner();
         if(cs.select(*cator, *coner, totalTime, point)) {
-          es.storeEvent(new CollisionEvent2D(eventId, initTime+totalTime, cator, point));
-          es.storeEvent(new CollisionEvent2D(eventId, initTime+totalTime, coner, point));
+          es.storeEvent(new CollisionEvent2D(eventId, initTime+totalTime, cator, point, kt));
+          es.storeEvent(new CollisionEvent2D(eventId, initTime+totalTime, coner, point, (void *)(*kt)));
         }  // if collision
       } // for each collisionable
     }  // for collisionable list

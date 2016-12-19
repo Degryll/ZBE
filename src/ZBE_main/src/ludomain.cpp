@@ -4,6 +4,8 @@
 #include "ZBE/core/events/EventStore.h"
 #include "ZBE/core/events/EventDispatcher.h"
 #include "ZBE/core/events/generators/InputEventGenerator.h"
+#include "ZBE/core/events/generators/CollisionEventGenerator.h"
+#include "ZBE/core/events/generators/TimeEventGenerator.h"
 #include "ZBE/core/system/SysTime.h"
 #include "ZBE/core/tools/SDLTimer.h"
 #include "ZBE/core/tools/Timer.h"
@@ -38,6 +40,7 @@ int ludomain(int argc, char* argv[]) {
   printf("Event store\n");fflush(stdout);
   printf("Will store all event independently of its type\n");fflush(stdout);
   zbe::EventStore& store = zbe::EventStore::getInstance();
+  printf("|------------------------ Input ---------------------------|\n");fflush(stdout);
   printf("Building SDLEventDispatcher\n");fflush(stdout);
   printf("Will extract data from SDL and get it usable for the engine\n");fflush(stdout);
   zbe::SDLEventDispatcher & sdlEventDist = zbe::SDLEventDispatcher::getInstance();
@@ -46,14 +49,16 @@ int ludomain(int argc, char* argv[]) {
   zbe::InputBuffer * inputBuffer = sdlEventDist.getInputBuffer();
   printf("Acquiring and configuring InputEventGenerator with that InputReader\n");fflush(stdout);
   printf("Will read events from the InputReader and send them to the store\n");fflush(stdout);
-  printf("Input events will use id 1\n");fflush(stdout);
-  zbe::InputEventGenerator* ieg = new zbe::InputEventGenerator(inputBuffer,1);
+  printf("Input events will use id 0\n");fflush(stdout);
+  zbe::InputEventGenerator* ieg = new zbe::InputEventGenerator(inputBuffer,0);
+  printf("|------------------------- Time ---------------------------|\n");fflush(stdout);
   printf("Building a SDL implementation of Timer\n");fflush(stdout);
   zbe::Timer *sysTimer = new zbe::SDLTimer(true);
   printf("Acquiring and configuring SysTime with that Timer\n");fflush(stdout);
   printf("It will be the time reference for all the game context\n");fflush(stdout);
   zbe::SysTime &sysTime = zbe::SysTime::getInstance();
   sysTime.setSystemTimer(sysTimer);
+  printf("|------------------------ Phisics -------------------------|\n");fflush(stdout);
   printf("|=================== Starting up system ===================|\n");fflush(stdout);
   printf("Starting SysTimer\n");fflush(stdout);
   sysTimer->start();
@@ -116,9 +121,13 @@ int ludomain(int argc, char* argv[]) {
         printf(" -> T = 0x%" PRIx64 " ", e->getTime());fflush(stdout);
         printf("K = 0x%" PRIx32 " ", e->getKey());fflush(stdout);
         printf("S = 0x%f\n", e->getState());fflush(stdout);
+        if(e->getKey() == 0x78){
+          keep = false;
+        }
       }
-      //keep = false;
     }
+
+    store.clearStore();
 
     /* If one or more error occurs, the ammount and the first one
      * wille be stored into SysError estructure, so it can be consulted.

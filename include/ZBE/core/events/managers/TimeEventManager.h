@@ -13,7 +13,7 @@
 #include <cstdint>
 #include <map>
 
-#include "ZBE/core/handlers/TimeHandler.h"
+#include "ZBE/core/events/handlers/TimeHandler.h"
 #include "ZBE/core/events/EventDispatcher.h"
 
 namespace zbe {
