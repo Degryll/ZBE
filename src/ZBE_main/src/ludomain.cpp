@@ -12,7 +12,7 @@
 #include "ZBE/core/system/SysError.h"
 #include "ZBE/core/system/SDL/SDLEventDispatcher.h"
 
-#include <inttypes.h>
+#include <cinttypes>
 #include <iostream>
 #include <chrono>
 #include <thread>

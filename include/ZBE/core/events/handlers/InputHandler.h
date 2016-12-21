@@ -21,7 +21,7 @@ namespace zbe {
 
       /** \brief Do the Handler job.
        */
-      virtual void run(InputEvent* e) = 0;
+      virtual void run(float state) = 0;
 
       /** \brief Destructor.
        */
