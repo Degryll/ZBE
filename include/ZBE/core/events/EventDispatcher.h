@@ -13,6 +13,7 @@
 #include "ZBE/core/events/Event.h"
 #include "ZBE/core/entities/avatars/Collisioner.h"
 #include "ZBE/core/tools/math/collisions/CollisionData.h"
+#include "ZBE/core/events/handlers/TimeHandler.h"
 
 namespace zbe {
 
@@ -138,24 +139,24 @@ class TimeEvent : public EventCommon<TimeEvent> {
      *
      * \param id Represents the global id of this event.
      * \param time Exact moment in which it occurred
-     * \param timerId Id of timer that generate this event.
+     * \param handler Time handler that will be executed when the event is triggered.
      *
      */
-    TimeEvent(uint64_t id, uint64_t time, uint64_t timerId) : EventCommon(id, time, this), timerId(timerId) {}
+    TimeEvent(uint64_t id, uint64_t time, TimeHandler* handler) : EventCommon(id, time, this), handler(handler) {}
 
     ~TimeEvent() {}
 
-    /** \brief Get timerId from the timer that generates this event.
+    /** \brief Return the handler that will be executed when the event is triggered.
     *
-    * \return The identifyer of the timer.
+    * \return The TimeHandler.
     *
     */
-    uint64_t getTimerId() {
-        return timerId;
+    TimeHandler* getHandler() {
+        return (handler);
     }
 
   private:
-    uint64_t timerId;
+    TimeHandler* handler;
 };
 
 /** \brief An event caused by input devices.

@@ -28,7 +28,7 @@ void TimeEventGenerator::generate(uint64_t initTime, uint64_t endTime) {
       break;
     }
 
-    es.storeEvent(new TimeEvent(eventId, v, it->id));
+    es.storeEvent(new TimeEvent(eventId, v, it->handler));
   }  // for each timer
 }
 

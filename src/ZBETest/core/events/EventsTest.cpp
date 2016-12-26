@@ -4,13 +4,14 @@
 #include "ZBE/core/events/EventDispatcher.h"
 #include "ZBE/core/entities/avatars/Collisioner.h"
 #include "ZBE/core/tools/math/collisions/CollisionSystemSolver.h"
-
+#include "ZBE/core/events/handlers/TimeHandler.h"
 
 TEST(Event, TimeEvent) {
-  zbe::TimeEvent e(1,100, 2);
+  zbe::TimeHandler* t = nullptr;
+  zbe::TimeEvent e(1,100, t);
   EXPECT_EQ((uint64_t)1, e.getId()) << "Must store id";
   EXPECT_EQ((uint64_t)100, e.getTime()) << "Must store time";
-  EXPECT_EQ((uint64_t)2, e.getTimerId()) << "Must store the timer id";
+  EXPECT_EQ(t, e.getHandler()) << "Must store the time handler";
 }
 
 TEST(Event, InputEvent) {

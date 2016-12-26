@@ -10,8 +10,6 @@
 #ifndef CORE_HANDLERS_TIMEHANDLER_H
 #define CORE_HANDLERS_TIMEHANDLER_H
 
-#include "ZBE/core/events/EventDispatcher.h"
-
 namespace zbe {
 
   /** \brief Receives a time event and reacts to that.
@@ -21,7 +19,7 @@ namespace zbe {
 
       /** \brief Do the Handler job.
        */
-      virtual void run(TimeEvent* e) = 0;
+      virtual void run() = 0;
 
       /** \brief Destructor.
        */

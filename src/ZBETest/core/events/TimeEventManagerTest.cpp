@@ -7,46 +7,33 @@
 
 class DUMMYTimeHandler : public zbe::TimeHandler {
 public:
-  DUMMYTimeHandler(uint64_t timerId) : timerId(timerId), success(false), called(false) {}
+  DUMMYTimeHandler() : called(false) {}
 
-  void run(zbe::TimeEvent* event) {
-    success = event->getTimerId() == timerId;
+  void run() {
     called = true;
-    delete event;
   }
 
-  bool check() {return (success);}
+  bool check() {return (called);}
 
-  bool isCalled() {return (called);}
-
-  void reset(uint64_t timerId) {
-    this->timerId = timerId;
-    success = false;
+  void reset() {
     called = false;
   }
 
 private:
-  uint64_t timerId;
-  bool success;
   bool called;
 };
 
 TEST(TimeEventManager, Run) {
-  DUMMYTimeHandler t1(1);
-  DUMMYTimeHandler t2(2);
-  DUMMYTimeHandler t3(3);
-  DUMMYTimeHandler t4(4);
+  DUMMYTimeHandler t1;
+  DUMMYTimeHandler t2;
+  DUMMYTimeHandler t3;
+  DUMMYTimeHandler t4;
 
   zbe::TimeEventManager& tem = zbe::TimeEventManager::getInstance();
 
-  tem.addHandler(1, &t1);
-  tem.addHandler(2, &t2);
-  tem.addHandler(3, &t3);
-  tem.addHandler(4, &t4);
-
-  zbe::TimeEvent *te1 = new zbe::TimeEvent(1, 1, 1);
-  zbe::TimeEvent *te3 = new zbe::TimeEvent(1, 1, 3);
-  zbe::TimeEvent *te4 = new zbe::TimeEvent(1, 1, 4);
+  zbe::TimeEvent *te1 = new zbe::TimeEvent(1, 1, &t1);
+  zbe::TimeEvent *te3 = new zbe::TimeEvent(1, 1, &t3);
+  zbe::TimeEvent *te4 = new zbe::TimeEvent(1, 1, &t4);
 
   EXPECT_FALSE(t1.check()) << "Initially t1 is not true.";
   EXPECT_FALSE(t2.check()) << "Initially t2 is not true.";
@@ -60,7 +47,7 @@ TEST(TimeEventManager, Run) {
   EXPECT_FALSE(t3.check()) << "t3 is not true.";
   EXPECT_FALSE(t4.check()) << "t4 is not true.";
 
-  t1.reset(1);
+  t1.reset();
   tem.run(te3);
 
   EXPECT_FALSE(t1.check()) << "t1 is not true, anymore.";
@@ -68,7 +55,7 @@ TEST(TimeEventManager, Run) {
   EXPECT_TRUE(t3.check()) << "t3 now is true.";
   EXPECT_FALSE(t4.check()) << "t4 is not true.";
 
-  t3.reset(3);
+  t3.reset();
   tem.run(te4);
 
   EXPECT_FALSE(t1.check()) << "t1 is not true, anymore.";

@@ -14,14 +14,15 @@
 #include <set>
 
 #include "ZBE/core/events/EventStore.h"
+#include "ZBE/core/events/handlers/TimeHandler.h"
 
 namespace zbe {
 
 struct TimerData {
-  uint64_t id;    //!< id to identify what timer trigger the event.
+  TimeHandler* handler;    //!< A handler that will be executed when the event is triggered.
   uint64_t time;  //!< When time reaches 0, the time event is triggered.
 
-  TimerData(uint64_t id, uint64_t time) : id(id), time(time) {}
+  TimerData(TimeHandler* handler, uint64_t time) : handler(handler), time(time) {}
   inline bool operator<(const TimerData& rhs) const {return (this->time < rhs.time);}
 };
 
@@ -45,8 +46,8 @@ class TimeEventGenerator {
      * \return return An iterator used to erase the timer.
      * \sa eraseTimer
      */
-    inline TimerIter addTimer(uint64_t id, uint64_t start, uint64_t time) {
-      return (timers.insert(TimerData(id,start+time)));
+    inline TimerIter addTimer(TimeHandler* handler, uint64_t time) {
+      return (timers.insert(TimerData(handler,time)));
     }
 
     /** Erase a Timer.

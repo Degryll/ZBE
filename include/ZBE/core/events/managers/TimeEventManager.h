@@ -7,11 +7,8 @@
  * @brief Handle time events.
  */
 
-#ifndef CORE_EVENTS_TIMEEVENTHANDLER_H
-#define CORE_EVENTS_TIMEEVENTHANDLER_H
-
-#include <cstdint>
-#include <map>
+#ifndef ZBE_CORE_EVENTS_HANDLERS_TIMEHANDLER_H
+#define ZBE_CORE_EVENTS_HANDLERS_TIMEHANDLER_H
 
 #include "ZBE/core/events/handlers/TimeHandler.h"
 #include "ZBE/core/events/EventDispatcher.h"
@@ -37,29 +34,20 @@ class TimeEventManager {
 //    */
 //    ~TimeEventGenerator() {};
 
-    /** Add a handler to a timer event.
-     * \param id Id of the Timer
-     * \param handler Handler to run when this timer triggers
-     */
-    inline void addHandler(uint64_t id, TimeHandler* handler) {handlers[id] = handler;}
-
     /** Run the handler associated to the Timer.
      * \param id Timer id
      */
     void run(TimeEvent *event) {
-      uint64_t id = event->getTimerId();
-      handlers[id]->run(event);
-      handlers.erase(id);
+      event->getHandler()->run();
+      delete event;
     }
 
   private:
     /** \brief Empty Constructor.
      */
-    TimeEventManager() : handlers() {};
-
-    std::map<uint64_t, TimeHandler*> handlers;
+    TimeEventManager() {};
 };
 
 }  // namespace zbe
 
-#endif // CORE_EVENTS_TIMEEVENTHANDLER_H
+#endif // ZBE_CORE_EVENTS_HANDLERS_TIMEHANDLER_H

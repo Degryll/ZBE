@@ -6,10 +6,10 @@
 #include "ZBE/core/events/EventStore.h"
 
 TEST(EventStore, EventStore) {
-  zbe::TimeEvent e0(0,104, 0);
-  zbe::TimeEvent e1(1,100, 1);
-  zbe::TimeEvent e2(2,100, 2);
-  zbe::TimeEvent e3(3,101, 3);
+  zbe::TimeEvent e0(0,104, nullptr);
+  zbe::TimeEvent e1(1,100, nullptr);
+  zbe::TimeEvent e2(2,100, nullptr);
+  zbe::TimeEvent e3(3,101, nullptr);
 
   zbe::EventStore &store = zbe::EventStore::getInstance();
   store.clearStore();
