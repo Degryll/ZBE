@@ -11,12 +11,17 @@
 
 namespace zbe {
 
+static bool deleteAll(Event* e) {
+  delete e;
+  return true;
+}
+
 void EventStore::storeEvent(Event* e) {
   if(e->getTime() == bettertime){
     store.push_front(e);
   } else if (e->getTime() < bettertime){
     bettertime = e->getTime();
-    store.clear();
+    store.remove_if(deleteAll());
     store.push_front(e);
   }
 }
