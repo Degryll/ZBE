@@ -11,10 +11,10 @@
 #define ZBE_CORE_EVENTS_HANDLERS_TIMEHANDLER_H
 
 #include "ZBE/core/events/handlers/TimeHandler.h"
-#include "ZBE/core/events/EventDispatcher.h"
 
 namespace zbe {
 
+class TimeEvent;
 /** \brief Handle collision events.
  */
 class TimeEventManager {
@@ -37,10 +37,7 @@ class TimeEventManager {
     /** Run the handler associated to the Timer.
      * \param id Timer id
      */
-    void run(TimeEvent *event) {
-      event->getHandler()->run();
-      delete event;
-    }
+    void run(TimeEvent *event);
 
   private:
     /** \brief Empty Constructor.

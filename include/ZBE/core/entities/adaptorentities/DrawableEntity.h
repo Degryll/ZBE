@@ -31,6 +31,8 @@ class DrawableEntityAdapted : public Drawable {
   public:
     DrawableEntityAdapted(T* entity) : entity(entity) {}
 
+    virtual ~DrawableEntityAdapted(){delete a;};
+
     void setAdaptor(DrawableAdaptor *adaptor) {a = adaptor;}
 
     std::shared_ptr<Drawable> getDrawable() {return (a->getDrawable(entity));}

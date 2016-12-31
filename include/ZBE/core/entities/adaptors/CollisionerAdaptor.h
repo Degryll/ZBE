@@ -18,10 +18,10 @@ namespace zbe {
 
 /** \brief Template that adapts an entity to a drawable.
  */
-template <typename T>
+template <typename T, typename R>
 class CollisionerAdaptor {
   public:
-    virtual std::shared_ptr<Collisioner> getCollisioner(T* entity) = 0;
+    virtual std::shared_ptr<Collisioner<R> > getCollisioner(T* entity) = 0;
 };
 
 }  // namespace zbe

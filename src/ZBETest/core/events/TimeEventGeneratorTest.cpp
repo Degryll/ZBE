@@ -1,7 +1,7 @@
 #include "gtest/gtest.h"
 #include <vector>
 
-#include "ZBE/core/events/EventDispatcher.h"
+#include "ZBE/core/events/TimeEvent.h"
 #include "ZBE/core/events/EventStore.h"
 #include "ZBE/core/events/generators/TimeEventGenerator.h"
 

@@ -10,42 +10,48 @@
 #ifndef CORE_EVENTS_MANAGERS_TIMEEVENTHANDLER_H
 #define CORE_EVENTS_MANAGERS_TIMEEVENTHANDLER_H
 
-#include "ZBE/core/handlers/Actuator.h"
-#include "ZBE/core/events/EventDispatcher.h"
+#include "ZBE/core/entities/avatars/Collisioner.h"
+#include "ZBE/core/events/handlers/Actuator.h"
 
 namespace zbe {
 
+template<typename R>
+class CollisionEvent2D;
+
 /** \brief Handle collision events.
  */
+template<typename R>
 class CollisionEventManager {
   public:
-    CollisionEventManager(CollisionEventManager const&)  = delete;  //!< Needed for singleton.
-    void operator=(CollisionEventManager const&)    = delete;  //!< Needed for singleton.
+    CollisionEventManager(CollisionEventManager<R> const&)  = delete;  //!< Needed for singleton.
+    void operator=(CollisionEventManager<R> const&)    = delete;  //!< Needed for singleton.
+
+    ~CollisionEventManager();
 
     /** \brief Singleton implementation.
      *  \return The unique instance of the CollisionEventManager.
      */
-    static CollisionEventManager& getInstance() {
-      static CollisionEventManager instance;
+    static CollisionEventManager<R>& getInstance() {
+      static CollisionEventManager<R> instance;
       return (instance);
     }
 
     /** Run the handler associated to the Timer.
      * \param id Timer id
      */
-    /*void run(TimeEvent *event) {
-      uint64_t id = event->getTimerId();
-      handlers[id]->run(event);
-      handlers.erase(id);
-    }*/
+    void run(CollisionEvent2D<R> * event) {
+      Collisioner<R>*  c = event->getCollisioner();
+    }
 
   private:
     /** \brief Empty Constructor.
      */
-    TimeEventManager() : handlers() {};
+    CollisionEventManager() {};
 
-    std::map<uint64_t, TimeHandler*> handlers;
 };
+
+template<typename R>
+CollisionEventManager<R>::~CollisionEventManager(){}
 
 }  // namespace zbe
 

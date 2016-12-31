@@ -17,27 +17,30 @@ namespace zbe {
 
  /** \brief Entity that can be seen as a collisionator.
  */
+template <typename R>
 class CollisionatorEntity {
   public:
 
-    virtual std::shared_ptr<Collisionator> getCollisionator() = 0;
+    virtual std::shared_ptr<Collisionator<R> > getCollisionator() = 0;
 
 };
 
 /** \brief Entity that can be seen as a collisionator using an adaptor.
  */
-template <typename T>
-class CollisionatorEntityAdapted : public CollisionatorEntity {
+template <typename T, typename R>
+class CollisionatorEntityAdapted : public CollisionatorEntity<R> {
   public:
     CollisionatorEntityAdapted(T* entity) : entity(entity) {}
 
-    void setAdaptor(CollisionatorAdaptor<T> *adaptor) {a = adaptor;}
+    virtual ~CollisionatorEntityAdapted() {delete a;}
 
-    std::shared_ptr<Collisionator> getCollisionator() {return (a->getCollisionator(entity));}
+    void setAdaptor(CollisionatorAdaptor<T,R> *adaptor) {a = adaptor;}
+
+    std::shared_ptr<Collisionator<R> > getCollisionator() {return (a->getCollisionator(entity));}
 
   private:
     T* entity;
-    CollisionatorAdaptor<T> *a;
+    CollisionatorAdaptor<T,R> *a;
 };
 
 }  // namespace zbe

@@ -8,8 +8,7 @@
  */
 
 #include "ZBE/core/events/generators/TimeEventGenerator.h"
-
-#include "ZBE/core/events/EventDispatcher.h"
+#include "ZBE/core/events/TimeEvent.h"
 
 namespace zbe {
 

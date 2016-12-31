@@ -10,8 +10,9 @@
 #ifndef ZBE_CORE_TOOLS_MATH_COLLISIONS_INTERSECTIONS_H_
 #define ZBE_CORE_TOOLS_MATH_COLLISIONS_INTERSECTIONS_H_
 
-#include <cstdint>
+#include <utility>
 #include <limits>
+#include <cstdint>
 
 #include "ZBE/core/tools/math/math.h"
 #include "ZBE/core/tools/math/Point.h"

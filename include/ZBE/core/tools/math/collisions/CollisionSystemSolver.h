@@ -12,17 +12,20 @@
 
 #include <cstdint>
 
-#include "ZBE/core/entities/avatars/Collisioner.h"
 #include "ZBE/core/tools/math/objects.h"
 #include "ZBE/core/tools/math/collisions/intersections.h"
+#include "ZBE/core/entities/avatars/Collisioner.h"
 
 namespace zbe {
 
+template <typename R>
 class StaticAABB2D;
+template <typename R>
 class ConstantMovingCircle;
 
 /** \brief Apply the correct function to solve a collision.
  */
+template <typename R>
 class CollisionSelector {
   public:
     /** \brief Using the Visitor pattern select the correct collision detection function to use depending of the types of the params.
@@ -32,7 +35,7 @@ class CollisionSelector {
      *  \param point Point of collision if any.
      *  \return True if there is a collision in the timeslot set by time, false otherwise.
      */
-    inline bool select(Collisioner& param1, Collisioner& param2, uint64_t& time, Point2D& point) {
+    inline bool select(Collisioner<R>& param1, Collisioner<R>& param2, uint64_t& time, Point2D& point) {
       return (param2.getCollisionObject()->accept(*this, *(param1.getCollisionObject()), time, point));
     }
 
@@ -43,7 +46,7 @@ class CollisionSelector {
      *  \param point Point of collision if any.
      *  \return True if there is a collision in the timeslot set by time, false otherwise.
      */
-    inline bool visit(StaticAABB2D& param1, StaticAABB2D& param2, uint64_t& time, Point2D& point);
+    inline bool visit(StaticAABB2D<R>& param1, StaticAABB2D<R>& param2, uint64_t& time, Point2D& point);
     /** \brief Collision detection for an AABB and a circle.
      *  \param param1 The AABB.
      *  \param param2 The circle.
@@ -51,7 +54,7 @@ class CollisionSelector {
      *  \param point Point of collision if any.
      *  \return True if there is a collision in the timeslot set by time, false otherwise.
      */
-    inline bool visit(StaticAABB2D& param1, ConstantMovingCircle& param2, uint64_t& time, Point2D& point);
+    inline bool visit(StaticAABB2D<R>& param1, ConstantMovingCircle<R>& param2, uint64_t& time, Point2D& point);
     /** \brief Collision detection for a circle and an AABB.
      *  \param param1 The circle.
      *  \param param2 The AABB.
@@ -59,7 +62,7 @@ class CollisionSelector {
      *  \param point Point of collision if any.
      *  \return True if there is a collision in the timeslot set by time, false otherwise.
      */
-    inline bool visit(ConstantMovingCircle& param1, StaticAABB2D& param2, uint64_t& time, Point2D& point);
+    inline bool visit(ConstantMovingCircle<R>& param1, StaticAABB2D<R>& param2, uint64_t& time, Point2D& point);
 
     /** \brief Collision detection for two circles.
      *  \param param1 First circle.
@@ -68,28 +71,28 @@ class CollisionSelector {
      *  \param point Point of collision if any.
      *  \return True if there is a collision in the timeslot set by time, false otherwise.
      */
-    inline bool visit(ConstantMovingCircle& param1, ConstantMovingCircle& param2, uint64_t& time, Point2D& point);
+    inline bool visit(ConstantMovingCircle<R>& param1, ConstantMovingCircle<R>& param2, uint64_t& time, Point2D& point);
 };
 
 // You must add to this class a new "accept" function for any new derived CollisionObject
 // This class is used to avoid repeated code
-template <typename T>
-class CollisionObjectCommon : public CollisionObject {
+template <typename T, typename R>
+class CollisionObjectCommon : public CollisionObject<R> {
 public:
   CollisionObjectCommon(const CollisionObjectCommon&) = delete;
   void operator=(const CollisionObjectCommon&) = delete;
 
   CollisionObjectCommon(T* collisionObject) : c(collisionObject) {}
 
-  bool accept(CollisionSelector &visitor, CollisionObject& param1, uint64_t& time, Point2D& point) {
+  bool accept(CollisionSelector<R> &visitor, CollisionObject<R>& param1, uint64_t& time, Point2D& point) {
     return (param1.accept(visitor, *c, time, point));
   }
 
-  bool accept(CollisionSelector &visitor, StaticAABB2D& param2, uint64_t& time, Point2D& point) {
+  bool accept(CollisionSelector<R> &visitor, StaticAABB2D<R>& param2, uint64_t& time, Point2D& point) {
     return (visitor.visit(*c, param2, time, point));
   }
 
-  bool accept(CollisionSelector &visitor, ConstantMovingCircle& param2, uint64_t& time, Point2D& point) {
+  bool accept(CollisionSelector<R> &visitor, ConstantMovingCircle<R>& param2, uint64_t& time, Point2D& point) {
     return (visitor.visit(*c, param2, time, point));
   }
 
@@ -114,12 +117,13 @@ private:
 
 /** \brief A collision object defined by a 2D AABB
  */
-class StaticAABB2D: public CollisionObjectCommon<StaticAABB2D> {
+template <typename R>
+class StaticAABB2D: public CollisionObjectCommon<StaticAABB2D<R>, R> {
 public:
   //DERIVEDCOLLISIONOBJECT
 
-  StaticAABB2D() : CollisionObjectCommon(this), box() {}
-  StaticAABB2D(AABB2D box) : CollisionObjectCommon(this), box(box) {}
+  StaticAABB2D() : CollisionObjectCommon<StaticAABB2D<R>, R>(this), box() {}
+  StaticAABB2D(AABB2D box) : CollisionObjectCommon<StaticAABB2D<R>, R>(this), box(box) {}
 
   /** \brief Return the 2D AABB.
    *  \return A 2D AABB.
@@ -132,12 +136,13 @@ private:
 
 /** \brief A collision object defined by a circle moving with a constant speed.
  */
-class ConstantMovingCircle: public CollisionObjectCommon<ConstantMovingCircle> {
+template <typename R>
+class ConstantMovingCircle: public CollisionObjectCommon<ConstantMovingCircle<R>, R> {
 public:
   //DERIVEDCOLLISIONOBJECT
 
-  ConstantMovingCircle() : CollisionObjectCommon(this), circle(), direction() {}
-  ConstantMovingCircle(Circle circle, Vector2D direction) : CollisionObjectCommon(this), circle(circle), direction(direction) {}
+  ConstantMovingCircle() : CollisionObjectCommon<ConstantMovingCircle<R>, R>(this), circle(), direction() {}
+  ConstantMovingCircle(Circle circle, Vector2D direction) : CollisionObjectCommon<ConstantMovingCircle<R>, R>(this), circle(circle), direction(direction) {}
 
   /** \brief Return the circle.
    *  \return A circle.
@@ -154,21 +159,25 @@ private:
 };
 
 //bool CollisionSelector::visit(StaticAABB2D& param1, StaticAABB2D& param2, uint64_t& time, Point2D& point) {
-bool CollisionSelector::visit(StaticAABB2D& , StaticAABB2D& , uint64_t& , Point2D& ) {
+template <typename R>
+bool CollisionSelector<R>::visit(StaticAABB2D<R>& , StaticAABB2D<R>& , uint64_t& , Point2D& ) {
   // TODO Degryll implementar AABB contra AABB
   return (false);
 }
 
-bool CollisionSelector::visit(StaticAABB2D& param1, ConstantMovingCircle& param2, uint64_t& time, Point2D& point) {
+template <typename R>
+bool CollisionSelector<R>::visit(StaticAABB2D<R>& param1, ConstantMovingCircle<R>& param2, uint64_t& time, Point2D& point) {
   return(IntersectionMovingCircleAABB2D(param2.getCircle(), param2.getDirection(), param1.getAABB2D(), time, point));
 }
 
-bool CollisionSelector::visit(ConstantMovingCircle& param1, StaticAABB2D& param2, uint64_t& time, Point2D& point) {
+template <typename R>
+bool CollisionSelector<R>::visit(ConstantMovingCircle<R>& param1, StaticAABB2D<R>& param2, uint64_t& time, Point2D& point) {
   return(IntersectionMovingCircleAABB2D(param1.getCircle(), param1.getDirection(), param2.getAABB2D(), time, point));
 }
 
 //bool CollisionSelector::visit(ConstantMovingCircle& param1, ConstantMovingCircle& param2, uint64_t& time, Point2D& point) {
-bool CollisionSelector::visit(ConstantMovingCircle& , ConstantMovingCircle& , uint64_t& , Point2D& ) {
+template <typename R>
+bool CollisionSelector<R>::visit(ConstantMovingCircle<R>& , ConstantMovingCircle<R>& , uint64_t& , Point2D& ) {
   // TODO Degryll implementar ConstantMovingSphere contra ConstantMovingSphere
   return (false);
 }

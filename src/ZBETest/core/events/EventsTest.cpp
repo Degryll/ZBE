@@ -1,10 +1,21 @@
 #include "gtest/gtest.h"
 
 #include "ZBE/core/events/Event.h"
-#include "ZBE/core/events/EventDispatcher.h"
+#include "ZBE/core/events/InputEvent.h"
+#include "ZBE/core/events/TimeEvent.h"
+#include "ZBE/core/events/CollisionEvent2D.h"
 #include "ZBE/core/entities/avatars/Collisioner.h"
 #include "ZBE/core/tools/math/collisions/CollisionSystemSolver.h"
 #include "ZBE/core/events/handlers/TimeHandler.h"
+
+class R { // Reactor mock
+};
+
+class C : public zbe::Collisioner<R> {
+  public:
+    C(zbe::CollisionObject<R> * co):zbe::Collisioner<R>(co){};
+    void react(zbe::CollisionData * collisionData, zbe::ReactObject<R> * reactObject) {};
+};
 
 TEST(Event, TimeEvent) {
   zbe::TimeHandler* t = nullptr;
@@ -23,13 +34,13 @@ TEST(Event, InputEvent) {
 }
 
 TEST(Event, CollisionEvent) {
-  zbe::StaticAABB2D* coa = new zbe::StaticAABB2D();
-  zbe::Collisioner* a = new zbe::Collisioner(coa);
+  zbe::StaticAABB2D<R>* coa = new zbe::StaticAABB2D<R>();
+  C* a = new C(coa);
   zbe::Point2D p{4.0, 2.0};
-  zbe::CollisionEvent2D e(1,100, a, p, 0);
+  zbe::CollisionEvent2D<R> e(1,100, a, p, 0);
   EXPECT_EQ((uint64_t)1, e.getId()) << "Must store id";
   EXPECT_EQ((uint64_t)100, e.getTime()) << "Must store time";
-  EXPECT_EQ(a, e.getEntity()) << "Must store EntityA";
+  EXPECT_EQ(a, e.getCollisioner()) << "Must store EntityA";
   EXPECT_EQ(p.x, e.getCollisionData().getPoint().x) << "Must store Point x coordinate";
   EXPECT_EQ(p.y, e.getCollisionData().getPoint().y) << "Must store Point y coordinate";
 }

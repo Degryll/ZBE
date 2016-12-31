@@ -2,7 +2,7 @@
 
 #include <forward_list>
 
-#include "ZBE/core/events/EventDispatcher.h"
+#include "ZBE/core/events/TimeEvent.h"
 #include "ZBE/core/events/EventStore.h"
 
 TEST(EventStore, EventStore) {
@@ -25,7 +25,6 @@ TEST(EventStore, EventStore) {
   eventlist = store.getEvents();
 
   auto it = eventlist.begin();
-
   EXPECT_EQ(2u,(*it++)->getId()) << "Must find e2 first";
   EXPECT_EQ(1u,(*it++)->getId()) << "Must find e1 next";
   EXPECT_EQ(eventlist.end(),it) << "Must found no more";

@@ -8,7 +8,7 @@
 #include "ZBE/entities/avatars/implementations/SimpleBounceable.h"
 #include "ZBE/entities/avatars/implementations/BaseMovable.h"
 #include "ZBE/core/events/handlers/Actuator.h"
-#include "ZBE/core/entities/avatars/ReactObjectCommons.h"
+#include "ZBE/core/entities/avatars/ReactObject.h"
 #include "ZBE/core/tools/math/collisions/CollisionData.h"
 
 class ReactorMock {
@@ -16,9 +16,9 @@ class ReactorMock {
       virtual void act(zbe::Bounceable * b) {};
 };
 
-class ReactObjectMock : public zbe::SimpleBounceable, public zbe::ReactObjectCommons<zbe::SimpleBounceable, ReactorMock> {
+class ReactObjectMock : public zbe::SimpleBounceable, public zbe::ReactObjectCommon<zbe::SimpleBounceable, ReactorMock> {
   public:
-    ReactObjectMock(double factor) : zbe::SimpleBounceable(factor), zbe::ReactObjectCommons<zbe::SimpleBounceable, ReactorMock>(this) {}
+    ReactObjectMock(double factor) : zbe::SimpleBounceable(factor), zbe::ReactObjectCommon<zbe::SimpleBounceable, ReactorMock>(this) {}
 };
 
 TEST(MovableBouncer, run) {

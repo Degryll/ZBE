@@ -12,6 +12,7 @@
 
 #include <cstdint>
 #include <forward_list>
+
 #include "ZBE/core/events/Event.h"
 
 namespace zbe {

@@ -15,7 +15,7 @@
 
 #include "ZBE/core/io/InputBuffer.h"
 #include "ZBE/core/events/EventStore.h"
-#include "ZBE/core/events/EventDispatcher.h"
+#include "ZBE/core/events/InputEvent.h"
 
 namespace zbe {
 

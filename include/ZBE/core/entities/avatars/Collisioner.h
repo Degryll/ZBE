@@ -10,73 +10,93 @@
 #ifndef CORE_ENTITIES_AVATARS_COLLISIONER_H_
 #define CORE_ENTITIES_AVATARS_COLLISIONER_H_
 
-#include <map>
+#include <forward_list>
+
 #include "ZBE/core/tools/math/Point.h"
+#include "ZBE/core/entities/avatars/ReactObject.h"
+#include "ZBE/core/events/handlers/Actuator.h"
+#include "ZBE/core/tools/math/collisions/CollisionData.h"
 
 namespace zbe {
 
+template <typename R>
 class CollisionSelector;
+template <typename R>
 class StaticAABB2D;
+template <typename R>
 class ConstantMovingCircle;
 
+template <typename R>
 class CollisionObject {
 public:
   virtual ~CollisionObject() {}  //!< Empty destructor
 // You must add a new "accept" function for any new derived CollisionObject
-  virtual bool accept(CollisionSelector &visitor, CollisionObject& param1, uint64_t& time, Point2D& point) = 0;       //!< Collision solver using the visitor pattern
-  virtual bool accept(CollisionSelector &visitor, StaticAABB2D& param1, uint64_t& time, Point2D& point) = 0;          //!< Collision solver using the visitor pattern
-  virtual bool accept(CollisionSelector &visitor, ConstantMovingCircle& param1, uint64_t& time, Point2D& point) = 0;  //!< Collision solver using the visitor pattern
+  virtual bool accept(CollisionSelector<R> &visitor, CollisionObject& param1, uint64_t& time, Point2D& point) = 0;       //!< Collision solver using the visitor pattern
+  virtual bool accept(CollisionSelector<R> &visitor, StaticAABB2D<R>& param1, uint64_t& time, Point2D& point) = 0;          //!< Collision solver using the visitor pattern
+  virtual bool accept(CollisionSelector<R> &visitor, ConstantMovingCircle<R>& param1, uint64_t& time, Point2D& point) = 0;  //!< Collision solver using the visitor pattern
 };
 
 /** \brief Every Collisioner (an entity involved in a collision) has a collision object defining his "physical shape".
  */
+template <typename R>
 class Collisioner {
   public:
     /** \brief A collisionable entity is defined by a collision object.
-      * \param object A collision object that defines the "physical shape" of the entity.
-      */
-    Collisioner(CollisionObject* object) : o(object), al() {}
-    Collisioner(const Collisioner&) = delete;
+     * \param object A collision object that defines the "physical shape" of the entity.
+     */
+    Collisioner(CollisionObject<R>* object) : o(object) {}
+    Collisioner(const Collisioner<R>&) = delete;
 
     /** \brief Empty destructor.
-      */
-    virtual ~Collisioner() {delete o;}
+     */
+    virtual ~Collisioner() {}
 
     void operator=(const Collisioner&) = delete;
 
     /** \brief Set the collision object this entity is.
      *  \param object The collision object.
      */
-    inline void setCollisionObject(CollisionObject* object) {o = object;}
+    inline void setCollisionObject(CollisionObject<R>* object) {o = object;}
 
     /** \brief Return the collision object.
      *  \return Collision object.
      */
-    inline CollisionObject* getCollisionObject() {return (o);}
+    inline CollisionObject<R>* getCollisionObject() {return (o);}
 
-    /** \brief Register a new list of Actuators.
-     *  \param id Internal id to identify the list.
-     *  \param listId Global id of the List.
-     */
-    void addToActuatorsList(uint64_t id, uint64_t listId);
-
-    /** \brief Remove a list of Actuators.
-     *  \param id Internal id to identify the list to be removed.
-     */
-    void removeFromActuatorsList(uint64_t id);
-
-    /** \brief Returns the global id of the list of Actuators identify by the Internal id.
-     *  \param id Internal id to identify the list.
-     *  \return The global id of the list.
-     */
-    uint64_t getActuatorsList(uint64_t id);
+    virtual void react(CollisionData * collisionData, ReactObject<R> * reactObject) = 0;
 
   private:
-    CollisionObject* o;  //!< Collision object
-    std::map<uint64_t, uint64_t> al;  //!< Container that identify id with list of actuators
+    CollisionObject<R>* o;  //!< Collision object
 
 };
 
-}  // namespace zbe
+/** \brief Every Collisioner (an entity involved in a collision) has a collision object defining his "physical shape".
+ */
+template <typename T, typename R>
+class CollisionerCommon : public Collisioner<R> {
+
+    /** \brief A collisionable entity is defined by a collision object.
+      * \param object A collision object that defines the "physical shape" of the entity.
+      */
+    CollisionerCommon(T * collisioner, CollisionObject<R>* object, std::forward_list<Actuator<T,R> > * actuators) : Collisioner<R>(object), al(actuators), c(collisioner) {}
+    CollisionerCommon(const CollisionerCommon&) = delete;
+
+    void react(CollisionData * collisionData, ReactObject<R> * reactObject) {
+      for (auto& a : (*al)) {
+        a.run(c, reactObject, collisionData);
+      }
+    };
+
+    /** \brief Empty destructor.
+      */
+    virtual ~CollisionerCommon() {}
+
+  private:
+    std::forward_list<Actuator<T,R> > * al;
+    T * c;
+
+};
+
+} // namespace zbe
 
 #endif  // CORE_ENTITIES_AVATARS_COLLISIONER_H_

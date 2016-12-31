@@ -12,13 +12,24 @@
 #include "ZBE/core/entities/avatars/Collisioner.h"
 #include "ZBE/core/tools/math/collisions/CollisionSystemSolver.h"
 
-TEST(CollisionSystemSolver, MovingCircleStaticAABB) {
-  zbe::ConstantMovingCircle* cc = new zbe::ConstantMovingCircle(zbe::Circle({{2.0,3.0},1.0}),zbe::Vector2D({3.0,4.0}));
-  zbe::StaticAABB2D* sbox = new zbe::StaticAABB2D(zbe::AABB2D({{1.0,5.0},{6.0,10.0}}));
-  zbe::Collisioner a(cc);
-  zbe::Collisioner b(sbox);
+class R { // Reactor mock
+  public:
+    virtual ~R() {};
+};
 
-  zbe::CollisionSelector cs;
+class C : public zbe::Collisioner<R> {
+  public:
+    C(zbe::CollisionObject<R> * co):zbe::Collisioner<R>(co){};
+    void react(zbe::CollisionData * collisionData, zbe::ReactObject<R> * reactObject) {};
+};
+
+TEST(CollisionSystemSolver, MovingCircleStaticAABB) {
+  zbe::ConstantMovingCircle<R>* cc = new zbe::ConstantMovingCircle<R>(zbe::Circle({{2.0,3.0},1.0}),zbe::Vector2D({3.0,4.0}));
+  zbe::StaticAABB2D<R>* sbox = new zbe::StaticAABB2D<R>(zbe::AABB2D({{1.0,5.0},{6.0,10.0}}));
+  C a(cc);
+  C b(sbox);
+
+  zbe::CollisionSelector<R> cs;
 
   bool result;
   zbe::Point2D p;
@@ -34,12 +45,12 @@ TEST(CollisionSystemSolver, MovingCircleStaticAABB) {
 }
 
 TEST(CollisionSystemSolver, StaticAABBMovingCircle) {
-  zbe::ConstantMovingCircle* cc= new zbe::ConstantMovingCircle(zbe::Circle({{2.0,3.0},1.0}),zbe::Vector2D({3.0,4.0}));
-  zbe::StaticAABB2D* sbox= new zbe::StaticAABB2D(zbe::AABB2D({{1.0,5.0},{6.0,10.0}}));
-  zbe::Collisioner a(cc);
-  zbe::Collisioner b(sbox);
+  zbe::ConstantMovingCircle<R>* cc= new zbe::ConstantMovingCircle<R>(zbe::Circle({{2.0,3.0},1.0}),zbe::Vector2D({3.0,4.0}));
+  zbe::StaticAABB2D<R>* sbox= new zbe::StaticAABB2D<R>(zbe::AABB2D({{1.0,5.0},{6.0,10.0}}));
+  C a(cc);
+  C b(sbox);
 
-  zbe::CollisionSelector cs;
+  zbe::CollisionSelector<R> cs;
 
   bool result;
   zbe::Point2D p;

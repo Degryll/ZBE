@@ -7,31 +7,32 @@
  * @brief Manage input events.
  */
 
-#ifndef CORE_EVENTS_INPUTEVENTHANDLER_H
-#define CORE_EVENTS_INPUTEVENTHANDLER_H
+#ifndef CORE_EVENTS_INPUTEVENTMANAGER_H
+#define CORE_EVENTS_INPUTEVENTMANAGER_H
 
 #include <cstdint>
 #include <map>
 
-#include "ZBE/core/handlers/InputHandler.h"
-#include "ZBE/core/events/EventDispatcher.h"
+//#include "ZBE/core/events/InputEvent.h"
+#include "ZBE/core/events/handlers/InputHandler.h"
 
 namespace zbe {
 
+class InputEvent;
 /** \brief Manage input events.
  */
 class InputEventManager {
   public:
-      InputEventManager(InputEventManager const&)  = delete;  //!< Needed for singleton.
-      void operator=(InputEventManager const&)    = delete;  //!< Needed for singleton.
+    InputEventManager(InputEventManager const&)  = delete;  //!< Needed for singleton.
+    void operator=(InputEventManager const&)    = delete;  //!< Needed for singleton.
 
-       /** \brief Singleton implementation.
-       *   \return The unique instance of the InputEventManager.
-       */
-      static InputEventManager& getInstance() {
-        static InputEventManager instance;
-        return (instance);
-      }
+    /** \brief Singleton implementation.
+     *   \return The unique instance of the InputEventManager.
+     */
+    static InputEventManager& getInstance() {
+      static InputEventManager instance;
+      return (instance);
+    }
 
     /** Add a handler to an input event.
      * \param id Id of the key
@@ -47,11 +48,7 @@ class InputEventManager {
     /** Run the handler associated to the Key.
      * \param id Timer id
      */
-    void run(InputEvent *event) {
-      uint32_t id = event->getKey();
-      handlers[id]->run(event->getState());
-      delete event;
-    }
+    void run(InputEvent * event);
 
   private:
     /** \brief Empty Constructor.
@@ -63,4 +60,4 @@ class InputEventManager {
 
 }  // namespace zbe
 
-#endif // CORE_EVENTS_INPUTEVENTHANDLER_H
+#endif // CORE_EVENTS_INPUTEVENTMANAGER_H

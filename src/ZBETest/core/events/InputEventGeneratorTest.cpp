@@ -3,7 +3,7 @@
 
 #include "ZBE/core/io/InputStatus.h"
 #include "ZBE/core/io/InputBuffer.h"
-#include "ZBE/core/events/EventDispatcher.h"
+#include "ZBE/core/events/InputEvent.h"
 #include "ZBE/core/events/EventStore.h"
 #include "ZBE/core/events/generators/InputEventGenerator.h"
 

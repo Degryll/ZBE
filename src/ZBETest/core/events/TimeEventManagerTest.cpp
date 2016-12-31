@@ -2,7 +2,7 @@
 
 #include "ZBE/core/events/managers/TimeEventManager.h"
 
-#include "ZBE/core/events/EventDispatcher.h"
+#include "ZBE/core/events/TimeEvent.h"
 #include "ZBE/core/events/handlers/TimeHandler.h"
 
 class DUMMYTimeHandler : public zbe::TimeHandler {

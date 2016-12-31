@@ -1,7 +1,6 @@
 #include "gtest/gtest.h"
 #include <vector>
 
-#include "ZBE/core/events/EventDispatcher.h"
 #include "ZBE/core/events/EventStore.h"
 #include "ZBE/core/events/generators/CollisionEventGenerator.h"
 #include "ZBE/core/tools/containers/TicketedForwardList.h"
@@ -19,7 +18,7 @@ public:
   DummyCollisionable(zbe::CollisionObject* object) : zbe::CollisionerEntity(object) {}
 };*/
 
-TEST(DISABLED_CollisionEventGenerator, Generate) {
+TEST(CollisionEventGenerator, DISABLED_Generate) {
 //  zbe::TicketedForwardList<zbe::CollisionatorEntity*> ctl;
 //  zbe::TicketedForwardList<zbe::CollisionerEntity*> cbl;
 //
