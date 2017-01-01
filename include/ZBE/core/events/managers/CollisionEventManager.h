@@ -41,6 +41,9 @@ class CollisionEventManager {
      */
     void run(CollisionEvent2D<R> * event) {
       Collisioner<R>*  c = event->getCollisioner();
+      ReactObject<R>*  ro = event->getReactObject();
+      CollisionData cd = event->getCollisionData();
+      c->react(&cd,ro);
     }
 
   private:
