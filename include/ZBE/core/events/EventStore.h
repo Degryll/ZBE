@@ -39,9 +39,14 @@ namespace zbe {
        */
       void storeEvent(Event* e);
 
+      /** \brief Tell all current events to manage themselves.
+       *  Then the store will be cleared.
+       */
+      void manageCurrent();
+
       /** \brief Erase all contained events.
        */
-      void clearStore() {store.clear(); bettertime = UINT64_MAX;}
+      void clearStore();
 
       /** \brief Get the current event collection.
        *  \return A constant event list.

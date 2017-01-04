@@ -31,6 +31,4 @@ TEST(TimeEventGenerator, Event) {
   EXPECT_EQ((uint64_t)1500000, e->getTime()) << "the event in time 3 must be stored";
   EXPECT_EQ(nullptr, e->getHandler()) << "the event in time 3 must be stored";
   ASSERT_TRUE(es.getEvents().empty()) << "List must be empty.";
-
-  delete e;
 }

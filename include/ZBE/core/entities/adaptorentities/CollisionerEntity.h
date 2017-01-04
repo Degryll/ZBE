@@ -23,7 +23,7 @@ template <typename R>
 class CollisionerEntity {
   public:
 
-    virtual ~CollisionerEntity();
+    virtual ~CollisionerEntity() {};
 
     virtual std::shared_ptr<Collisioner<R> > getCollisioner() = 0;
 

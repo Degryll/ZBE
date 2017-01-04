@@ -11,6 +11,7 @@
 #define CORE_EVENTS_COLLISIONEVENTGENERATOR_H
 
 #include <cstdint>
+#include <memory>
 
 #include "ZBE/core/entities/adaptorentities/CollisionerEntity.h"
 #include "ZBE/core/entities/adaptorentities/CollisionatorEntity.h"
@@ -51,12 +52,12 @@ class CollisionEventGenerator {
       TicketedForwardList<CollisionatorEntity<R>*>* ctl = lmct.get(id);
 
       for(auto it = ctl->begin(); it != ctl->end(); it++) {
-        Collisionator<R>* cator = (*it)->getCollisionator();
+        std::shared_ptr<Collisionator<R> > cator = (*it)->getCollisionator();
         const std::forward_list<uint64_t>& cl = cator->getCollisionablesLists();
         for(auto jt = cl.begin(); jt != cl.end(); jt++) {
           TicketedForwardList<CollisionerEntity<R>*>* cnl = lmcn.get(*jt);
           for(auto kt = cnl->begin(); kt != cnl->end(); kt++) {
-            Collisioner<R> *coner = (*kt)->getCollisioner();
+            std::shared_ptr<Collisioner<R> > coner = (*kt)->getCollisioner();
             if(cs.select(*cator, *coner, totalTime, point)) {
               CollisionData cd(point);
               es.storeEvent(new CollisionEvent2D<R>(eventId, initTime+totalTime, cator, cd, (*kt)->getReactObject()));

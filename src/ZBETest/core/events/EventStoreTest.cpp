@@ -6,10 +6,10 @@
 #include "ZBE/core/events/EventStore.h"
 
 TEST(EventStore, EventStore) {
-  zbe::TimeEvent e0(0,104, nullptr);
-  zbe::TimeEvent e1(1,100, nullptr);
-  zbe::TimeEvent e2(2,100, nullptr);
-  zbe::TimeEvent e3(3,101, nullptr);
+  zbe::TimeEvent* e0 = new zbe::TimeEvent(0,104, nullptr);
+  zbe::TimeEvent* e1 = new zbe::TimeEvent(1,100, nullptr);
+  zbe::TimeEvent* e2 = new zbe::TimeEvent(2,100, nullptr);
+  zbe::TimeEvent* e3 = new zbe::TimeEvent(3,101, nullptr);
 
   zbe::EventStore &store = zbe::EventStore::getInstance();
   store.clearStore();
@@ -17,10 +17,10 @@ TEST(EventStore, EventStore) {
 
   EXPECT_EQ(true, eventlist.empty()) << "Must be empty at init";
 
-  store.storeEvent(&e0);
-  store.storeEvent(&e1);
-  store.storeEvent(&e2);
-  store.storeEvent(&e3);
+  store.storeEvent(e0);
+  store.storeEvent(e1);
+  store.storeEvent(e2);
+  store.storeEvent(e3);
 
   eventlist = store.getEvents();
 

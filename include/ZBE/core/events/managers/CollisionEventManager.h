@@ -40,10 +40,10 @@ class CollisionEventManager {
      * \param id Timer id
      */
     void run(CollisionEvent2D<R> * event) {
-      Collisioner<R>*  c = event->getCollisioner();
-      ReactObject<R>*  ro = event->getReactObject();
+      std::shared_ptr<Collisioner<R> >  c = event->getCollisioner();
+      std::shared_ptr<ReactObject<R> >  ro = event->getReactObject();
       CollisionData cd = event->getCollisionData();
-      c->react(&cd,ro);
+      c->react(&cd,&(*ro));
     }
 
   private:

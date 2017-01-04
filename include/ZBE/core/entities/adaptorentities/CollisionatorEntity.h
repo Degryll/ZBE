@@ -12,15 +12,16 @@
 
 #include "ZBE/core/entities/adaptors/CollisionatorAdaptor.h"
 #include "ZBE/core/entities/avatars/Collisionator.h"
+#include "ZBE/core/entities/adaptorentities/CollisionerEntity.h"
 
 namespace zbe {
 
  /** \brief Entity that can be seen as a collisionator.
  */
 template <typename R>
-class CollisionatorEntity {
+class CollisionatorEntity : public CollisionerEntity<R> {
   public:
-
+    virtual ~CollisionatorEntity() {};
     virtual std::shared_ptr<Collisionator<R> > getCollisionator() = 0;
 
 };
@@ -28,7 +29,7 @@ class CollisionatorEntity {
 /** \brief Entity that can be seen as a collisionator using an adaptor.
  */
 template <typename T, typename R>
-class CollisionatorEntityAdapted : public CollisionatorEntity<R> {
+class CollisionatorEntityAdapted : public CollisionatorEntity<R>, public CollisionerEntityAdapted<T, R> {
   public:
     CollisionatorEntityAdapted(T* entity) : entity(entity) {}
 

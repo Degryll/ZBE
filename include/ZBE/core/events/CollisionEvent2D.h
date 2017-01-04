@@ -10,6 +10,8 @@
 #ifndef CORE_EVENTS_COLLISIONEVENT2D_H
 #define CORE_EVENTS_COLLISIONEVENT2D_H
 
+#include <memory>
+
 #include "ZBE/core/events/Event.h"
 #include "ZBE/core/events/managers/CollisionEventManager.h"
 #include "ZBE/core/entities/avatars/Collisioner.h"
@@ -33,11 +35,11 @@ class CollisionEvent2D : public Event {
     * \param entityB The second entity involved in the collision.
     * \param point Point of collision.
     */
-    CollisionEvent2D(uint64_t id, uint64_t time, Collisioner<R> *collisioner, CollisionData collisionData, ReactObject<R> * reactObject) : Event(id, time), c(collisioner), cd(collisionData), ro(reactObject) {}
+    CollisionEvent2D(uint64_t id, uint64_t time, std::shared_ptr<Collisioner<R> > collisioner, CollisionData collisionData, std::shared_ptr<ReactObject<R> >  reactObject) : Event(id, time), c(collisioner), cd(collisionData), ro(reactObject) {}
 
     /** \brief base destructor.
     */
-    virtual ~CollisionEvent2D() {delete c; delete ro;};
+    virtual ~CollisionEvent2D() {};
 
     /** \brief Copy Operator.
      */
@@ -51,7 +53,7 @@ class CollisionEvent2D : public Event {
     /** \brief Get the entity involved in the collision.
     * \return The entity involved in the collision.
     */
-    inline Collisioner<R>* getCollisioner() {return (c);}
+    inline std::shared_ptr<Collisioner<R> > getCollisioner() {return (c);}
 
     /** \brief Get the point of collision.
     * \return The point of collision.
@@ -61,7 +63,7 @@ class CollisionEvent2D : public Event {
     /** \brief Get the point of collision.
     * \return The point of collision.
     */
-    inline ReactObject<R> * getReactObject() {return (ro);}
+    inline std::shared_ptr<ReactObject<R> > getReactObject() {return (ro);}
 
     /** \brief Manage the current event and, presumably,
      * do the actions associated with it.
@@ -72,9 +74,9 @@ class CollisionEvent2D : public Event {
     };
 
   private:
-    Collisioner<R> *c;     //!< First entitie involved avatar.
+    std::shared_ptr<Collisioner<R> > c;     //!< First entitie involved avatar.
     CollisionData cd;   //!< Point of collision.
-    ReactObject<R> * ro; //!< second entitie involved. void to avoid template.
+    std::shared_ptr<ReactObject<R> > ro; //!< second entitie involved. void to avoid template.
 };
 
 
