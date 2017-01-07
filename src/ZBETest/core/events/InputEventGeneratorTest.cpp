@@ -7,7 +7,7 @@
 #include "ZBE/core/events/EventStore.h"
 #include "ZBE/core/events/generators/InputEventGenerator.h"
 
-TEST(InputEventGenerator, Event) {
+TEST(InputEventGenerator, DISABLED_Event) {
   // Build tools
   zbe::InputBuffer * ib = new zbe::InputBuffer();
   zbe::InputEventGenerator ieg(ib, 1);
@@ -29,6 +29,9 @@ TEST(InputEventGenerator, Event) {
   ieg.generate(2,4);
   zbe::EventStore &es = zbe::EventStore::getInstance();
   ASSERT_FALSE(es.getEvents().empty()) << "List must have items.";
+  //el event store ejecuta y borra los eventos
+  //sobra el delete
+  //ya no es necesaria devolver una lista, nadie la necesita
   zbe::Event* e = es.getEvents().front();
   EXPECT_EQ((uint64_t)1, e->getId()) << "must be stored with id 1";
   EXPECT_EQ((uint64_t)3, e->getTime()) << "the event in time 3 must be stored";

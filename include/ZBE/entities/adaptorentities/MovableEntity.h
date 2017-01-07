@@ -30,7 +30,7 @@ class MovableEntity {
 /** \brief Entity that can be seen as a movable using an adaptor.
  */
 template <typename T, unsigned s>
-class MovableEntityAdapted : public Movable<s> {
+class MovableEntityAdapted : public MovableEntity {
   public:
     MovableEntityAdapted(T* entity) : entity(entity) {}
 

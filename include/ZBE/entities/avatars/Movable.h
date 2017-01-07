@@ -10,13 +10,17 @@
 #ifndef ZBE_ENTITIES_AVATARS_MOVABLE_H_
 #define ZBE_ENTITIES_AVATARS_MOVABLE_H_
 
+#include "ZBE/core/entities/avatars/collisioner.h"
+
 namespace zbe {
 
 /** \brief This define an avatar that can be moved.
  */
-template <unsigned s>
-class Movable {
+template <typename R, unsigned s>
+class Movable : public CollisionerCommon<Movable<R, s>, R> {
   public:
+    Movable(CollisionObject<R>* object, std::forward_list<Actuator<Movable, R> > * actuators) : CollisionerCommon<Movable<R, s>, R>(this, object) {}
+
     virtual void setPosition(std::initializer_list<double> l) = 0;
     virtual void setPosition(Point<s> position) = 0;
 

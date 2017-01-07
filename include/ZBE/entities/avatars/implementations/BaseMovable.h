@@ -17,10 +17,10 @@ namespace zbe {
 
 /** \brief This implements a base 1:1 avatar that can be moved.
  */
-template <unsigned s>
-class BaseMovable : public Movable<s> {
+template <typename R, unsigned s>
+class BaseMovable : public Movable<R, s> {
   public:
-    BaseMovable(Mobile<s>* mobile) : m(mobile) {}
+    BaseMovable(Mobile<s>* mobile, CollisionObject<R>* object, std::forward_list<Actuator<Movable<R, s>, R> > * actuators) : m(mobile) {}
 
     void setPosition(std::initializer_list<double> l) {m->setPosition(l);}
     void setPosition(Point<s> position)   {m->setPosition(position);}

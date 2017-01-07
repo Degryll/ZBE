@@ -29,7 +29,7 @@ class BounceableEntity {
 /** \brief Entity that can be seen as a Bounceable using an adaptor.
  */
 template <typename T>
-class BounceableEntityAdapted : public Bounceable {
+class BounceableEntityAdapted : public BounceableEntity {
   public:
     BounceableEntityAdapted(T* entity) : entity(entity) {}
 

@@ -24,11 +24,11 @@ namespace zbe {
 /** \brief Actuator capable of making a Movable bounce in a Bounceable.
  */
 template <typename R, unsigned s>
-class MovableBouncer: public Actuator<Movable<s>, R> {
+class MovableBouncer: public Actuator<Movable<R, s>, R> {
   public:
     void act(Bounceable * b) {
-      Movable<s> * m = Actuator<Movable<s>, R>::getCollisioner();
-      CollisionData * cd = Actuator<Movable<s>, R>::getCollisionData();
+      Movable<R, s> * m = Actuator<Movable<R, s>, R>::getCollisioner();
+      CollisionData * cd = Actuator<Movable<R, s>, R>::getCollisionData();
 
       Vector<s> v = m->getVelocity();
       Vector<s> n = m->getPosition() - cd->getPoint();
