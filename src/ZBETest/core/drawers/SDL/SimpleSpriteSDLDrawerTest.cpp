@@ -2,6 +2,6 @@
 
 #include "ZBE/core/drawers/SDL/SimpleSpriteSDLDrawer.h"
 
-TEST(DISABLED_SimpleSpriteSDLDrawer, Render) {
+TEST(SimpleSpriteSDLDrawer, DISABLED_Render) {
 
 }

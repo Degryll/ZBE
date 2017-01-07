@@ -1,7 +1,5 @@
 #include "gtest/gtest.h"
 
-#include <cstdio>
-
 #include "ZBE/core/events/Event.h"
 #include "ZBE/core/events/InputEvent.h"
 #include "ZBE/core/events/TimeEvent.h"
