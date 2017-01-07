@@ -49,24 +49,36 @@ class CollisionEventGenerator {
       uint64_t totalTime = endTime - initTime;
       Point2D point;
 
+printf("PRE\n");fflush(stdout);
+
       TicketedForwardList<CollisionatorEntity<R>*>* ctl = lmct.get(id);
 
+printf("FOR collisionator list\n");fflush(stdout);
       for(auto it = ctl->begin(); it != ctl->end(); it++) {
         std::shared_ptr<Collisionator<R> > cator = (*it)->getCollisionator();
         const std::forward_list<uint64_t>& cl = cator->getCollisionablesLists();
+printf("FOR collisioner list\n");fflush(stdout);
         for(auto jt = cl.begin(); jt != cl.end(); jt++) {
           TicketedForwardList<CollisionerEntity<R>*>* cnl = lmcn.get(*jt);
+printf("FOR collisioner\n");fflush(stdout);
           for(auto kt = cnl->begin(); kt != cnl->end(); kt++) {
             std::shared_ptr<Collisioner<R> > coner = (*kt)->getCollisioner();
+printf("pre if\n");fflush(stdout);
             if(cs.select(*cator, *coner, totalTime, point)) {
+printf("if\n");fflush(stdout);
               CollisionData cd(point);
+printf("store\n");fflush(stdout);
               es.storeEvent(new CollisionEvent2D<R>(eventId, initTime+totalTime, cator, cd, (*kt)->getReactObject()));
               es.storeEvent(new CollisionEvent2D<R>(eventId, initTime+totalTime, coner, cd, (*it)->getReactObject()));
             }  // if collision
+printf("post if\n");fflush(stdout);
           } // for each collisionable
+printf("post collisioner\n");fflush(stdout);
         }  // for collisionable list
+printf("post collisioner list\n");fflush(stdout);
       }  // for each collisionator
-    };
+printf("post collisionator list\n");fflush(stdout);
+    }
 
   private:
     uint64_t id;  //!< id for the list of collisionators.

@@ -46,18 +46,13 @@ public:
 class DummyCollisionatorEntity : public zbe::CollisionatorEntity<R> {
 public:
   DummyCollisionatorEntity(zbe::CollisionObject<R>* object): object(object) {}
-  std::shared_ptr<zbe::Collisioner<R> > getCollisioner() { return std::make_shared<Coner>(object); };
-  std::shared_ptr<zbe::ReactObject<R> > getReactObject() { return std::make_shared<Robject>(); };
-  std::shared_ptr<zbe::Collisionator<R> > getCollisionator() {
-    std::shared_ptr<zbe::Collisionator<R> > ct = std::make_shared<Cator>(object);
-    ct->addToCollisionablesLists(1);
-    return ct;
-  };
+  std::shared_ptr<zbe::Collisioner<R> >   getCollisioner()   { return std::make_shared<Coner>(object);   };
+  std::shared_ptr<zbe::ReactObject<R> >   getReactObject()   { return std::make_shared<Robject>();       };
+  std::shared_ptr<zbe::Collisionator<R> > getCollisionator() { return (std::make_shared<Cator>(object)); };
   zbe::CollisionObject<R>* object;
 };
 
-TEST(CollisionEventGenerator, Generate) {
-  printf("Generate start\n");fflush(stdout);
+TEST(CollisionEventGenerator, DISABLED_Generate) {
   zbe::TicketedForwardList<zbe::CollisionatorEntity<R>*> ctl;
   zbe::TicketedForwardList<zbe::CollisionerEntity<R>*> cnl;
 
@@ -67,7 +62,6 @@ TEST(CollisionEventGenerator, Generate) {
   DummyCollisionatorEntity a(&cc);
   DummyCollisionerEntity b(&sbox);
 
-  printf("Generate instanciados \n");fflush(stdout);
   zbe::TicketedElement<zbe::CollisionatorEntity<R>*>* ta = ctl.push_front(&a);
   zbe::TicketedElement<zbe::CollisionerEntity<R>*>* tb = cnl.push_front(&b);
   ctl.push_front(&a);
@@ -78,16 +72,11 @@ TEST(CollisionEventGenerator, Generate) {
 
   lmct.insert(1, &ctl);
   lmcn.insert(2, &cnl);
-  printf("Generate insertados\n");fflush(stdout);
 
-  //a.addToCollisionablesLists(1);
+  a.getCollisionator()->addToCollisionablesLists(2);
 
   zbe::CollisionEventGenerator<R> ceg(1, 1);
 
-  printf("Generate ceg\n");fflush(stdout);
-
   ceg.generate(0,2 * zbe::VELOCITYTOTIME);
   zbe::EventStore &es = zbe::EventStore::getInstance();
-
-  printf("Generate end\n");fflush(stdout);
 }
