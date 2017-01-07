@@ -10,7 +10,7 @@
 #ifndef ZBE_ENTITIES_AVATARS_MOVABLE_H_
 #define ZBE_ENTITIES_AVATARS_MOVABLE_H_
 
-#include "ZBE/core/entities/avatars/collisioner.h"
+#include "ZBE/core/entities/avatars/Collisioner.h"
 
 namespace zbe {
 
