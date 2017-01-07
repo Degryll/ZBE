@@ -11,18 +11,18 @@
 
 namespace zbe {
 
-void SimpleSpriteSDLDrawer::apply(SimpleSprite *entity) {
+void SimpleSpriteSDLDrawer::apply(Drawable *entity) {
   SDL_Rect src,dst;
   src.x = 0;
   src.y = 0;
-  src.w = entity->getWidth();
-  src.h = entity->getHeight();
+  src.w = entity->w;
+  src.h = entity->h;
 
-  dst.x = entity->getLeftX();
-  dst.y = entity->getTopY();
-  dst.w = entity->getWidth();
-  dst.h = entity->getHeight();
-  window->render(entity->getImage(), &src, &dst);
+  dst.x = entity->x;
+  dst.y = entity->y;
+  dst.w = entity->w;
+  dst.h = entity->h;
+  window->render(entity->img, &src, &dst);
 }
 
 }  // namespace zbe

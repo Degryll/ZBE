@@ -13,14 +13,14 @@
 #include <SDL2/SDL.h>
 
 #include "ZBE/core/drawers/Drawer.h"
-#include "ZBE/core/archetypes/SimpleSprite.h"
+#include "ZBE/core/entities/avatars/Drawable.h"
 #include "ZBE/core/system/SDL/Window.h"
 
 namespace zbe {
 
 /** \brief This draws a simple sprite (an image).
  */
-class SimpleSpriteSDLDrawer : public Drawer<SimpleSprite> {
+class SimpleSpriteSDLDrawer : public Drawer<Drawable> {
   public:
     SimpleSpriteSDLDrawer(const SimpleSpriteSDLDrawer&) = delete;
     /** \brief Create a new drawer in the given context.
@@ -37,7 +37,7 @@ class SimpleSpriteSDLDrawer : public Drawer<SimpleSprite> {
     /** \brief The function every punisher must have.
      *  \param entity The entity to be drawn.
      */
-    void apply(SimpleSprite *entity);
+    void apply(Drawable *entity);
 
   private:
     Window* window;  //!< A SDL window with its context.
