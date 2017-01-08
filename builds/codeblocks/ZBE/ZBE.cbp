@@ -163,6 +163,12 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="../../../include/ZBE/SDL/drawers/SimpleSpriteSDLDrawer.h" />
+		<Unit filename="../../../include/ZBE/SDL/loaders/SDLFontLoader.h" />
+		<Unit filename="../../../include/ZBE/SDL/starters/SDL_Starter.h" />
+		<Unit filename="../../../include/ZBE/SDL/system/SDLEventDispatcher.h" />
+		<Unit filename="../../../include/ZBE/SDL/system/Window.h" />
+		<Unit filename="../../../include/ZBE/SDL/tools/SDLTimer.h" />
 		<Unit filename="../../../include/ZBE/actuators/MovableBouncer.h" />
 		<Unit filename="../../../include/ZBE/archetypes/Damping.h" />
 		<Unit filename="../../../include/ZBE/archetypes/Mobile.h" />
@@ -176,7 +182,6 @@
 		<Unit filename="../../../include/ZBE/core/daemons/PunisherDaemon.h" />
 		<Unit filename="../../../include/ZBE/core/daemons/Punishers.h" />
 		<Unit filename="../../../include/ZBE/core/drawers/Drawer.h" />
-		<Unit filename="../../../include/ZBE/core/drawers/SDL/SimpleSpriteSDLDrawer.h" />
 		<Unit filename="../../../include/ZBE/core/entities/Entity.h" />
 		<Unit filename="../../../include/ZBE/core/entities/adaptorentities/CollisionatorEntity.h" />
 		<Unit filename="../../../include/ZBE/core/entities/adaptorentities/CollisionerEntity.h" />
@@ -206,14 +211,9 @@
 		<Unit filename="../../../include/ZBE/core/io/FileHandler.h" />
 		<Unit filename="../../../include/ZBE/core/io/InputBuffer.h" />
 		<Unit filename="../../../include/ZBE/core/io/InputStatus.h" />
-		<Unit filename="../../../include/ZBE/core/loaders/SDLFontLoader.h" />
-		<Unit filename="../../../include/ZBE/core/starters/SDL/SDL_Starter.h" />
 		<Unit filename="../../../include/ZBE/core/system/Logger.h" />
-		<Unit filename="../../../include/ZBE/core/system/SDL/SDLEventDispatcher.h" />
-		<Unit filename="../../../include/ZBE/core/system/SDL/Window.h" />
 		<Unit filename="../../../include/ZBE/core/system/SysError.h" />
 		<Unit filename="../../../include/ZBE/core/system/SysTime.h" />
-		<Unit filename="../../../include/ZBE/core/tools/SDLTimer.h" />
 		<Unit filename="../../../include/ZBE/core/tools/Timer.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/ListManager.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/Ticket.h" />
@@ -237,8 +237,12 @@
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/BaseMovable.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/SimpleBounceable.h" />
 		<Unit filename="../../../include/ZBE/zombienoid/ZombienoidReactor.h" />
+		<Unit filename="../../../src/ZBE/SDL/drawers/SimpleSpriteSDLDrawer.cpp" />
+		<Unit filename="../../../src/ZBE/SDL/loaders/SDLFontLoader.cpp" />
+		<Unit filename="../../../src/ZBE/SDL/system/SDLEventDispatcher.cpp" />
+		<Unit filename="../../../src/ZBE/SDL/system/Window.cpp" />
+		<Unit filename="../../../src/ZBE/SDL/tools/SDLTimer.cpp" />
 		<Unit filename="../../../src/ZBE/core/daemons/DaemonMaster.cpp" />
-		<Unit filename="../../../src/ZBE/core/drawers/SDL/SimpleSpriteSDLDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/core/entities/Entity.cpp" />
 		<Unit filename="../../../src/ZBE/core/events/EventStore.cpp" />
 		<Unit filename="../../../src/ZBE/core/events/InputEvent.cpp" />
@@ -248,12 +252,8 @@
 		<Unit filename="../../../src/ZBE/core/events/managers/TimeEventManager.cpp" />
 		<Unit filename="../../../src/ZBE/core/io/FileHandler.cpp" />
 		<Unit filename="../../../src/ZBE/core/io/InputBuffer.cpp" />
-		<Unit filename="../../../src/ZBE/core/loaders/SDLFontLoader.cpp" />
 		<Unit filename="../../../src/ZBE/core/system/Logger.cpp" />
-		<Unit filename="../../../src/ZBE/core/system/SDL/SDLEventDispatcher.cpp" />
-		<Unit filename="../../../src/ZBE/core/system/SDL/Window.cpp" />
 		<Unit filename="../../../src/ZBE/core/system/SysError.cpp" />
-		<Unit filename="../../../src/ZBE/core/tools/SDLTimer.cpp" />
 		<Unit filename="../../../src/ZBE/core/tools/text/utf8.cpp" />
 		<Extensions>
 			<code_completion />

@@ -2,7 +2,7 @@
 
 #include <cstdio>
 
-#include "ZBE/core/tools/SDLTimer.h"
+#include "ZBE/SDL/tools/SDLTimer.h"
 #include "ZBE/core/system/SysError.h"
 
 inline void halfTimeTest(zbe::SDLTimer *t1, zbe::SDLTimer *t2, zbe::SDLTimer *t3) {

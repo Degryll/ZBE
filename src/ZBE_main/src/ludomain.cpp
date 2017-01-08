@@ -9,10 +9,10 @@
 #include "ZBE/core/events/generators/CollisionEventGenerator.h"
 #include "ZBE/core/events/generators/TimeEventGenerator.h"
 #include "ZBE/core/system/SysTime.h"
-#include "ZBE/core/tools/SDLTimer.h"
+#include "ZBE/SDL/tools/SDLTimer.h"
 #include "ZBE/core/tools/Timer.h"
 #include "ZBE/core/system/SysError.h"
-#include "ZBE/core/system/SDL/SDLEventDispatcher.h"
+#include "ZBE/SDL/system/SDLEventDispatcher.h"
 
 #include <cinttypes>
 #include <iostream>

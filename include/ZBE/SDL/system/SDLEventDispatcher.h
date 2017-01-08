@@ -15,8 +15,8 @@
 
 #include <SDL2/SDL.h>
 
-#include "../../io/InputBuffer.h"
-#include "../../io/InputStatus.h"
+#include "ZBE/core/io/InputBuffer.h"
+#include "ZBE/core/io/InputStatus.h"
 
 namespace zbe {
 class SDLEventDispatcher {

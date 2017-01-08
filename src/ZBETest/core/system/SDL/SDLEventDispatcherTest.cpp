@@ -4,7 +4,7 @@
 #include <climits>
 #include "ZBE/core/io/InputBuffer.h"
 #include "ZBE/core/io/InputStatus.h"
-#include "ZBE/core/system/SDL/SDLEventDispatcher.h"
+#include "ZBE/SDL/system/SDLEventDispatcher.h"
 
 TEST(SDLEventDispatcher, SDLEventDispatcher) {
   //  SDL context initialization

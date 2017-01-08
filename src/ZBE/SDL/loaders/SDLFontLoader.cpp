@@ -5,7 +5,7 @@
  *      Author: ludo
  */
 
-#include "ZBE/core/loaders/SDLFontLoader.h"
+#include "ZBE/SDL/loaders/SDLFontLoader.h"
 
 namespace zbe {
 

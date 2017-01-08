@@ -14,7 +14,7 @@
 
 #include "ZBE/core/drawers/Drawer.h"
 #include "ZBE/core/entities/avatars/Drawable.h"
-#include "ZBE/core/system/SDL/Window.h"
+#include "ZBE/SDL/system/Window.h"
 
 namespace zbe {
 

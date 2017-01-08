@@ -8,12 +8,12 @@
  * @brief Create a windows using SDL 2.0.
  */
 
-#include "../../../../../include/ZBE/core/system/SDL/Window.h"
+#include "ZBE/SDL/system/Window.h"
 
 #include <string>
 #include <SDL2/SDL_image.h>
 
-#include "../../../../../include/ZBE/core/system/SysError.h"
+#include "ZBE/core/system/SysError.h"
 
 
 namespace zbe {

@@ -7,7 +7,7 @@
  * @brief Implements a timer that uses SDL to give times elapsed between events.
  */
 
- #include "ZBE/core/tools/SDLTimer.h"
+ #include "ZBE/SDL/tools/SDLTimer.h"
 namespace zbe {
 
 SDLTimer::SDLTimer(bool startHere): running(startHere), totalElapsedTime(0), lastTime(SDL_GetTicks()), lastLapTime(0) {}

@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 
-#include "ZBE/core/starters/SDL/SDL_Starter.h"
+#include "ZBE/SDL/starters/SDL_Starter.h"
 
 TEST(SDL_Starter, CheckSubsystems) {
   zbe::SDL_Starter &sdl1 = zbe::SDL_Starter::getInstance(SDL_INIT_VIDEO);

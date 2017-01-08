@@ -7,7 +7,7 @@
  * @brief Dispatcher for sdl events. Implementation file.
  */
 
-#include "ZBE/core/system/SDL/SDLEventDispatcher.h"
+#include "ZBE/SDL/system/SDLEventDispatcher.h"
 
 namespace zbe {
 

@@ -7,7 +7,7 @@
  * @brief Class that know how to draw SimpleSprite entities with SDL.
  */
 
-#include "ZBE/core/drawers/SDL/SimpleSpriteSDLDrawer.h"
+#include "ZBE/SDL/drawers/SimpleSpriteSDLDrawer.h"
 
 namespace zbe {
 
