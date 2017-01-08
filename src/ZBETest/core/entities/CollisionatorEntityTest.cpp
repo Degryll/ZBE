@@ -12,7 +12,7 @@ class Cator : public zbe::Collisionator<R> {
   public:
     Cator(zbe::CollisionObject<R> * co):zbe::Collisionator<R>(co){};
     ~Cator(){};
-    void react(zbe::CollisionData * collisionData, zbe::ReactObject<R> * reactObject) {};
+    void react(zbe::CollisionData*, zbe::ReactObject<R>*) {};
 };
 
 TEST(Collisionator, Collisionables) {

@@ -1,5 +1,9 @@
+
 #include "gtest/gtest.h"
 
+TEST(Punishers, DISABLED_BehaviorDaemon) {}
+
+/*
 #include "ZBE/core/tools/math/Vector.h"
 #include "ZBE/core/tools/math/Point.h"
 
@@ -49,7 +53,7 @@ class PerFrameLinearMotion : public Behavior<Movable<s> > {
 };
 
 
-TEST(Punishers, BehaviorDaemon) {
+TEST(Punishers, DISABLED_BehaviorDaemon) {
   Behavior<Movable<2> > * behav = new PerFrameLinearMotion<2>();
   std::vector<Movable<2>*> * entities = new std::vector<Movable<2>*>();
   DummyMovable * mov1 = new DummyMovable();
@@ -86,3 +90,4 @@ TEST(Punishers, BehaviorDaemon) {
   EXPECT_EQ(mov2->getPosition().y,finalPos.y);
   EXPECT_EQ(mov3->getPosition().y,finalPos.y);
 }
+*/

@@ -20,7 +20,7 @@ class R { // Reactor mock
 class C : public zbe::Collisioner<R> {
   public:
     C(zbe::CollisionObject<R> * co):zbe::Collisioner<R>(co){};
-    void react(zbe::CollisionData * collisionData, zbe::ReactObject<R> * reactObject) {};
+    void react(zbe::CollisionData*, zbe::ReactObject<R>*) {};
 };
 
 TEST(CollisionSystemSolver, MovingCircleStaticAABB) {

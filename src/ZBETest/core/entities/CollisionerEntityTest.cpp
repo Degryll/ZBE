@@ -14,7 +14,7 @@ class Coner : public zbe::Collisioner<R> {
   public:
     Coner(zbe::CollisionObject<R> * co):zbe::Collisioner<R>(co){};
     ~Coner(){};
-    void react(zbe::CollisionData * collisionData, zbe::ReactObject<R> * reactObject) {};
+    void react(zbe::CollisionData*, zbe::ReactObject<R>*) {};
 };
 
 TEST(Collisioner, Usage) {

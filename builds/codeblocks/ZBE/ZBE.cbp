@@ -170,18 +170,7 @@
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleDamping.h" />
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleMobile.h" />
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimplePosition.h" />
-		<Unit filename="../../../include/ZBE/core/archetypes/AABBCollisionable.h" />
-		<Unit filename="../../../include/ZBE/core/archetypes/AABBSphereCollisionable.h" />
-		<Unit filename="../../../include/ZBE/core/archetypes/Collisionable.h" />
-		<Unit filename="../../../include/ZBE/core/archetypes/Collisionador.h" />
-		<Unit filename="../../../include/ZBE/core/archetypes/Movable.h" />
-		<Unit filename="../../../include/ZBE/core/archetypes/Positionable.h" />
-		<Unit filename="../../../include/ZBE/core/archetypes/Runnable.h" />
-		<Unit filename="../../../include/ZBE/core/archetypes/SimpleSprite.h" />
-		<Unit filename="../../../include/ZBE/core/archetypes/SphereCollisionable.h" />
-		<Unit filename="../../../include/ZBE/core/archetypes/Timer.h" />
 		<Unit filename="../../../include/ZBE/core/behaviors/Behavior.h" />
-		<Unit filename="../../../include/ZBE/core/behaviors/UniformLinearMotion.h" />
 		<Unit filename="../../../include/ZBE/core/daemons/Daemon.h" />
 		<Unit filename="../../../include/ZBE/core/daemons/DaemonMaster.h" />
 		<Unit filename="../../../include/ZBE/core/daemons/PunisherDaemon.h" />
@@ -189,7 +178,6 @@
 		<Unit filename="../../../include/ZBE/core/drawers/Drawer.h" />
 		<Unit filename="../../../include/ZBE/core/drawers/SDL/SimpleSpriteSDLDrawer.h" />
 		<Unit filename="../../../include/ZBE/core/entities/Entity.h" />
-		<Unit filename="../../../include/ZBE/core/entities/EntityWithAttribs.h" />
 		<Unit filename="../../../include/ZBE/core/entities/adaptorentities/CollisionatorEntity.h" />
 		<Unit filename="../../../include/ZBE/core/entities/adaptorentities/CollisionerEntity.h" />
 		<Unit filename="../../../include/ZBE/core/entities/adaptorentities/DrawableEntity.h" />
@@ -249,7 +237,6 @@
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/BaseMovable.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/SimpleBounceable.h" />
 		<Unit filename="../../../include/ZBE/zombienoid/ZombienoidReactor.h" />
-		<Unit filename="../../../src/ZBE/core/behaviors/UniformLinearMotion.cpp" />
 		<Unit filename="../../../src/ZBE/core/daemons/DaemonMaster.cpp" />
 		<Unit filename="../../../src/ZBE/core/drawers/SDL/SimpleSpriteSDLDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/core/entities/Entity.cpp" />

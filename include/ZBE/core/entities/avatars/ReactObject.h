@@ -17,6 +17,7 @@ namespace zbe {
 template <typename R>
 class ReactObject {
   public:
+    virtual ~ReactObject() {}
 		virtual void act(R* reactor) = 0;
 };
 

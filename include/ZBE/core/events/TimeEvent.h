@@ -21,9 +21,8 @@ namespace zbe {
 class TimeEvent : public Event {
   public:
 
-    /** \brief Copy Constructor.
-     */
-    TimeEvent(const TimeEvent& rhs) : Event(rhs), handler(rhs.handler) {}
+    TimeEvent(const TimeEvent& rhs) = delete;       //!< Avoid copy.
+    void operator=(const TimeEvent& rhs) = delete;  //!< Avoid copy.
 
     /** \brief Basic constructor
      *

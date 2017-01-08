@@ -20,23 +20,26 @@ class R { // Reactor mock
 class Coner : public zbe::Collisioner<R> {
   public:
     Coner(zbe::CollisionObject<R> * co):zbe::Collisioner<R>(co){};
-    void react(zbe::CollisionData * collisionData, zbe::ReactObject<R> * reactObject) {};
+    void react(zbe::CollisionData*, zbe::ReactObject<R>*) {};
 };
 
 class Cator : public zbe::Collisionator<R> {
   public:
     Cator(zbe::CollisionObject<R> * co):zbe::Collisionator<R>(co){};
     ~Cator(){};
-    void react(zbe::CollisionData * collisionData, zbe::ReactObject<R> * reactObject) {};
+    void react(zbe::CollisionData*, zbe::ReactObject<R>*) {};
 };
 
 class Robject : public zbe::ReactObject<R> {
   public:
-    void act(R* reactor) {};
+    void act(R*) {};
 };
 
 class DummyCollisionerEntity : public zbe::CollisionerEntity<R> {
 public:
+  DummyCollisionerEntity(const DummyCollisionerEntity&) = delete;
+  void operator=(const DummyCollisionerEntity&) = delete;
+
   DummyCollisionerEntity(zbe::CollisionObject<R> * object): object(object) {}
   std::shared_ptr<zbe::Collisioner<R> > getCollisioner() { return std::make_shared<Coner>(object); };
   std::shared_ptr<zbe::ReactObject<R> > getReactObject() { return std::make_shared<Robject>(); };
@@ -45,6 +48,9 @@ public:
 
 class DummyCollisionatorEntity : public zbe::CollisionatorEntity<R> {
 public:
+  DummyCollisionatorEntity(const DummyCollisionatorEntity&) = delete;
+  void operator=(const DummyCollisionatorEntity&) = delete;
+
   DummyCollisionatorEntity(zbe::CollisionObject<R>* object): object(object) {}
   std::shared_ptr<zbe::Collisioner<R> >   getCollisioner()   { return std::make_shared<Coner>(object);   };
   std::shared_ptr<zbe::ReactObject<R> >   getReactObject()   { return std::make_shared<Robject>();       };
@@ -62,10 +68,11 @@ TEST(CollisionEventGenerator, DISABLED_Generate) {
   DummyCollisionatorEntity a(&cc);
   DummyCollisionerEntity b(&sbox);
 
-  zbe::TicketedElement<zbe::CollisionatorEntity<R>*>* ta = ctl.push_front(&a);
-  zbe::TicketedElement<zbe::CollisionerEntity<R>*>* tb = cnl.push_front(&b);
-  ctl.push_front(&a);
-  cnl.push_front(&b);
+  // por que hacerlo 2 veces?
+//  zbe::TicketedElement<zbe::CollisionatorEntity<R>*>* ta = ctl.push_front(&a);
+//  zbe::TicketedElement<zbe::CollisionerEntity<R>*>* tb = cnl.push_front(&b);
+//  ctl.push_front(&a);
+//  cnl.push_front(&b);
 
   zbe::ListManager< zbe::TicketedForwardList<zbe::CollisionatorEntity<R>*> >& lmct = zbe::ListManager< zbe::TicketedForwardList<zbe::CollisionatorEntity<R>*> >::getInstance();
   zbe::ListManager< zbe::TicketedForwardList<zbe::CollisionerEntity<R>*> >& lmcn = zbe::ListManager< zbe::TicketedForwardList<zbe::CollisionerEntity<R>*> >::getInstance();

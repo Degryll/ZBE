@@ -13,7 +13,8 @@
 
 class ReactorMock {
   public:
-      virtual void act(zbe::Bounceable * b) {};
+      virtual ~ReactorMock() {}
+      virtual void act(zbe::Bounceable*) {};
 };
 
 class ReactObjectMock : public zbe::SimpleBounceable, public zbe::ReactObjectCommon<zbe::SimpleBounceable, ReactorMock> {

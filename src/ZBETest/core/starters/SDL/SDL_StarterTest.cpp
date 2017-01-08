@@ -16,7 +16,8 @@ TEST(SDL_Starter, CheckSubsystems) {
   EXPECT_TRUE(ssi & SDL_INIT_EVENTS) << "EVENTS is initialized.";
   EXPECT_FALSE(ssi == SDL_INIT_EVERYTHING) << "EVERYTHING is not initialized.";
 
-  zbe::SDL_Starter &sdl2 = zbe::SDL_Starter::getInstance(SDL_INIT_AUDIO);
+  //zbe::SDL_Starter &sdl2 = zbe::SDL_Starter::getInstance(SDL_INIT_AUDIO);
+  zbe::SDL_Starter::getInstance(SDL_INIT_AUDIO);
   ssi = SDL_WasInit(SDL_INIT_EVERYTHING);
 
   EXPECT_FALSE(ssi & SDL_INIT_TIMER) << "TIMER is not initialized.";

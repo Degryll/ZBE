@@ -15,7 +15,6 @@ namespace zbe {
 
 void InputEvent::manage() {
   InputEventManager::getInstance().run(this);
-};
-
+}
 
 }

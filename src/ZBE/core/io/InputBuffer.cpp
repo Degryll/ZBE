@@ -16,6 +16,6 @@ namespace zbe {
         store.push_back((*it));
       }
     }
-  };
+  }
 
 }
