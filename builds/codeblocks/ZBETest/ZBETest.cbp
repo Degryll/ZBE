@@ -19,7 +19,7 @@
 					<Add option="-std=c++11" />
 					<Add option="-m64" />
 					<Add option="-g" />
-					<Add option="-isystem ..\..\..\extlibs\googletest\1.7.0\include -isystem ..\..\..\extlibs\googletest\1.7.0\include\internal" />
+					<Add option="-isystem ../../../extlibs/googletest/1.7.0/include" />
 					<Add directory="../../../src/ZBETest/include" />
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/googletest/1.7.0/include" />
@@ -57,7 +57,7 @@
 					<Add option="-Wall" />
 					<Add option="-std=c++11" />
 					<Add option="-m64" />
-					<Add option="-isystem ..\..\..\extlibs\googletest\1.7.0\include -isystem ..\..\..\extlibs\googletest\1.7.0\include\internal" />
+					<Add option="-isystem ../../../extlibs/googletest/1.7.0/include" />
 					<Add directory="../../../src/ZBETest/include" />
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/googletest/1.7.0/include" />
@@ -72,6 +72,10 @@
 					<Add option="-m64" />
 					<Add library="gtest" />
 					<Add library="ZBE_x64" />
+					<Add library="SDL2main" />
+					<Add library="SDL2" />
+					<Add library="SDL2_image" />
+					<Add library="SDL2_ttf" />
 					<Add directory="../../../extlibs/googletest/1.7.0/lib/linux64" />
 					<Add directory="../../../extlibs/SDL2/2.0.3/lib/linux64" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />
