@@ -58,6 +58,7 @@ class CollisionatorCommon : public Collisionator<R> {
       */
     CollisionatorCommon(T* collisionator, CollisionObject<R>* object, std::forward_list<Actuator<T,R>* > * actuators) : Collisionator<R>(object), al(actuators), c(collisionator) {}
     CollisionatorCommon(const CollisionatorCommon<T,R>&) = delete;
+    void operator=(const CollisionatorCommon<T,R>&) = delete;
 
     void react(CollisionData* collisionData, ReactObject<R> * reactObject) {
       for (auto a : (*al)) {

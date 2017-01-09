@@ -100,27 +100,12 @@ private:
   T* c;
 };
 
-// You must add to this macro a new "accept" function for any new derived CollisionObject
-// This macro is used to avoid repeated code
-//define DERIVEDCOLLISIONOBJECT \
-//  bool accept(CollisionSelector &visitor, CollisionObject& param1, uint64_t& time, Point2D& point) { \
-//    return (param1.accept(visitor, *this, time, point)); \
-//  } \
-// \
-//  bool accept(CollisionSelector &visitor, StaticAABB2D& param2, uint64_t& time, Point2D& point) { \
-//    return (visitor.visit(*this, param2, time, point)); \
-//  } \
-// \
-//  bool accept(CollisionSelector &visitor, ConstantMovingCircle& param2, uint64_t& time, Point2D& point) { \
-//    return (visitor.visit(*this, param2, time, point)); \
-//  } \
 
 /** \brief A collision object defined by a 2D AABB
  */
 template <typename R>
 class StaticAABB2D: public CollisionObjectCommon<StaticAABB2D<R>, R> {
 public:
-  //DERIVEDCOLLISIONOBJECT
 
   StaticAABB2D() : CollisionObjectCommon<StaticAABB2D<R>, R>(this), box() {}
   StaticAABB2D(AABB2D box) : CollisionObjectCommon<StaticAABB2D<R>, R>(this), box(box) {}
@@ -139,7 +124,6 @@ private:
 template <typename R>
 class ConstantMovingCircle: public CollisionObjectCommon<ConstantMovingCircle<R>, R> {
 public:
-  //DERIVEDCOLLISIONOBJECT
 
   ConstantMovingCircle() : CollisionObjectCommon<ConstantMovingCircle<R>, R>(this), circle(), direction() {}
   ConstantMovingCircle(Circle circle, Vector2D direction) : CollisionObjectCommon<ConstantMovingCircle<R>, R>(this), circle(circle), direction(direction) {}

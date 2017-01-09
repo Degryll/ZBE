@@ -22,6 +22,7 @@ class Actuator : public R {
   public:
   	Actuator(const Actuator&) = delete;
   	void operator=(const Actuator&) = delete;
+  	virtual ~Actuator(){};
 
     Actuator() : collisioner(nullptr), cData(nullptr) {}
 

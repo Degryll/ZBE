@@ -18,7 +18,8 @@ namespace CollisionEventGeneratorTest {
 class Robject;
 class R { // Reactor mock
   public:
-    virtual void act(Robject * ro) {};
+    ~R(){};
+    virtual void act(Robject *) {};
 };
 
 class Coner : public zbe::CollisionerCommon<Coner, R> {
