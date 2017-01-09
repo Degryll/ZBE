@@ -34,7 +34,7 @@ class Actuator : public R {
       rObject->act(this);
     }
 
-  private:
+  protected:
   	T* collisioner;
     CollisionData* cData;
 };

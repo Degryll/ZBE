@@ -74,16 +74,16 @@ class Collisioner {
  */
 template <typename T, typename R>
 class CollisionerCommon : public Collisioner<R> {
-
+  public:
     /** \brief A collisionable entity is defined by a collision object.
       * \param object A collision object that defines the "physical shape" of the entity.
       */
-    CollisionerCommon(T * collisioner, CollisionObject<R>* object, std::forward_list<Actuator<T,R> > * actuators) : Collisioner<R>(object), al(actuators), c(collisioner) {}
+    CollisionerCommon(T * collisioner, CollisionObject<R>* object, std::forward_list<Actuator<T,R>* > * actuators) : Collisioner<R>(object), al(actuators), c(collisioner) {}
     CollisionerCommon(const CollisionerCommon&) = delete;
 
     void react(CollisionData * collisionData, ReactObject<R> * reactObject) {
-      for (auto& a : (*al)) {
-        a.run(c, reactObject, collisionData);
+      for (auto a : (*al)) {
+        a->run(c, reactObject, collisionData);
       }
     };
 
@@ -92,7 +92,7 @@ class CollisionerCommon : public Collisioner<R> {
     virtual ~CollisionerCommon() {}
 
   private:
-    std::forward_list<Actuator<T,R> > * al;
+    std::forward_list<Actuator<T,R>* > * al;
     T * c;
 
 };

@@ -5,6 +5,7 @@
 #include "ZBE/core/system/SysError.h"
 #include "ZBE/core/tools/math/collisions/CollisionSystemSolver.h"
 
+namespace CollisionerTest {
 class R { // Reactor mock
   public:
     virtual ~R() {};
@@ -76,3 +77,4 @@ TEST(Collisioner, DISABLED_Actuators) {
 //  EXPECT_EQ(11u,e.getActuatorsList(4)) << "Add List Id for Actuator. - 4";
 //  EXPECT_EQ(13u,e.getActuatorsList(5)) << "Add List Id for Actuator. - 5";
 }
+} //namespace CollisionerTest

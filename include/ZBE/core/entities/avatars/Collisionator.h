@@ -48,6 +48,33 @@ class Collisionator : public Collisioner<R> {
 
 };
 
+/** \brief Every Collisionator (an entity involved in a collision) has a collision object defining his "physical shape".
+ */
+template <typename T, typename R>
+class CollisionatorCommon : public Collisionator<R> {
+  public:
+    /** \brief A collisionable entity is defined by a collision object.
+      * \param object A collision object that defines the "physical shape" of the entity.
+      */
+    CollisionatorCommon(T* collisionator, CollisionObject<R>* object, std::forward_list<Actuator<T,R>* > * actuators) : Collisionator<R>(object), al(actuators), c(collisionator) {}
+    CollisionatorCommon(const CollisionatorCommon<T,R>&) = delete;
+
+    void react(CollisionData* collisionData, ReactObject<R> * reactObject) {
+      for (auto a : (*al)) {
+        a->run(c, reactObject, collisionData);
+      }
+    };
+
+    /** \brief Empty destructor.
+      */
+    virtual ~CollisionatorCommon() {}
+
+  private:
+    std::forward_list<Actuator<T,R>* >* al;
+    T* c;
+
+};
+
 }  // namespace zbe
 
 #endif  // CORE_ENTITIES_AVATARS_COLLISIONATOR_H_
