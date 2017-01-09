@@ -18,7 +18,7 @@ namespace CollisionEventGeneratorTest {
 class Robject;
 class R { // Reactor mock
   public:
-    ~R(){};
+    virtual ~R(){};
     virtual void act(Robject *) {};
 };
 
