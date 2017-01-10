@@ -10,7 +10,8 @@
  #include "ZBE/SDL/tools/SDLTimer.h"
 namespace zbe {
 
-SDLTimer::SDLTimer(bool startHere): running(startHere), totalElapsedTime(0), lastTime(SDL_GetTicks()), lastLapTime(0) {}
+SDLTimer::SDLTimer(bool startHere): sdl(SDL_Starter::getInstance(SDL_INIT_TIMER)), running(startHere), totalElapsedTime(0), lastTime(SDL_GetTicks()), lastLapTime(0) {}
+SDLTimer::~SDLTimer() {sdl.quitSubSystem(SDL_INIT_TIMER);}
 
 void SDLTimer::start() {
   if (running == false) {

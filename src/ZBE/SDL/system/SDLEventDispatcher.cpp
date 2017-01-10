@@ -11,6 +11,9 @@
 
 namespace zbe {
 
+SDLEventDispatcher::SDLEventDispatcher() : sdl(SDL_Starter::getInstance(SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC | SDL_INIT_GAMECONTROLLER | SDL_INIT_EVENTS)), inputBuffer() {}
+SDLEventDispatcher::~SDLEventDispatcher() {sdl.quitSubSystem(SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC | SDL_INIT_GAMECONTROLLER | SDL_INIT_EVENTS);}
+
 void SDLEventDispatcher::run() {
   SDL_Event event;
   while (SDL_PollEvent(&event)) {

@@ -15,6 +15,7 @@
 
 #include <SDL2/SDL.h>
 
+#include "ZBE/SDL/starters/SDL_Starter.h"
 #include "ZBE/core/io/InputBuffer.h"
 #include "ZBE/core/io/InputStatus.h"
 
@@ -41,7 +42,9 @@ class SDLEventDispatcher {
      */
     void run();
   private:
-    SDLEventDispatcher() : inputBuffer() { }//!< Needed for singleton.
+    SDLEventDispatcher();
+
+    ~SDLEventDispatcher();
 
     void setState(uint32_t key, float value, uint64_t time);
 
@@ -57,6 +60,7 @@ class SDLEventDispatcher {
 
     bool tryMouseEvent(SDL_Event &event);
 
+    SDL_Starter &sdl;
     InputBuffer inputBuffer;
 };
 }

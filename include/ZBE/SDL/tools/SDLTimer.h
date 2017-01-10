@@ -10,8 +10,10 @@
 #ifndef CORE_TOOLS_SDLTIMER_H_
 #define CORE_TOOLS_SDLTIMER_H_
 
-#include "ZBE/core/tools/Timer.h"
 #include <SDL2/SDL.h>
+
+#include "ZBE/SDL/starters/SDL_Starter.h"
+#include "ZBE/core/tools/Timer.h"
 
 namespace zbe {
 
@@ -23,7 +25,7 @@ class SDLTimer : public Timer {
 
     SDLTimer(bool startHere = false);
 
-    ~SDLTimer() {}
+    ~SDLTimer();
 
     void     start();
     uint64_t stop();
@@ -35,6 +37,7 @@ class SDLTimer : public Timer {
     bool isRunning() {return (running);} //time is running out lalala
 
   protected:
+    SDL_Starter &sdl;
     bool     running;          //!< True if the timer is running.
     uint64_t totalElapsedTime; //!< Total time the timer has been active.
     uint64_t lastTime;         //!< Time elapsed from last lap.

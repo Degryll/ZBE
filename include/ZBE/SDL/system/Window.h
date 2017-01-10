@@ -126,7 +126,7 @@ class Window {
     unsigned reloadImg(const char *url, unsigned id);
 
   private:
-    zbe::SDL_Starter &sdl;                   //!< SDL instance.
+    SDL_Starter &sdl;                         //!< SDL instance.
     SDL_Window* window;                       //!< Window.
     SDL_Renderer* renderer;                   //!< Renderer associated with the window
     unsigned ntextures;                       //!< Number of texture loaded.
