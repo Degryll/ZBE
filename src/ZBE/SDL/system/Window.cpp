@@ -47,7 +47,7 @@ Window::~Window() {
   }
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
-  sdl.quit();
+  sdl.quitSubSystem(SDL_INIT_VIDEO);
 }
 
 void Window::clear() {
