@@ -1,47 +1,47 @@
 /**
  * Copyright 2012 Batis Degryll Ludo
- * @file DrawableEntity.h
+ * @file SimpleSpriteEntity.h
  * @since 2016-11-23
  * @date 2016-11-23
  * @author Degryll
- * @brief Entity that can be seen as a drawable.
+ * @brief Entity that can be seen as a simple sprite.
  */
 
-#ifndef CORE_ENTITIES_ADAPTORENTITIES_DRAWABLEENTITY_H_
-#define CORE_ENTITIES_ADAPTORENTITIES_DRAWABLEENTITY_H_
+#ifndef ZBE_CORE_ENTITIES_ADAPTORENTITIES_SIMPLESPRITEENTITY_H_
+#define ZBE_CORE_ENTITIES_ADAPTORENTITIES_SIMPLESPRITEENTITY_H_
 
-#include "ZBE/core/entities/adaptors/DrawableAdaptor.h"
-#include "ZBE/core/entities/avatars/Drawable.h"
+#include "ZBE/core/entities/adaptors/SimpleSpriteAdaptor.h"
+#include "ZBE/core/entities/avatars/SimpleSprite.h"
 
 namespace zbe {
 
-/** \brief Entity that can be seen as a drawable.
+/** \brief Entity that can be seen as a simple sprite.
  */
-class DrawableEntity {
+class SimpleSpriteEntity {
   public:
 
-    virtual std::shared_ptr<Drawable> getDrawable() = 0;
+    virtual std::shared_ptr<SimpleSprite> getSimpleSprite() = 0;
 
 };
 
-/** \brief Entity that can be seen as a drawable using an adaptor.
+/** \brief Entity that can be seen as a simple sprite using an adaptor.
  */
 template <typename T>
-class DrawableEntityAdapted : public Drawable {
+class SimpleSpriteEntityEntityAdapted : public SimpleSprite {
   public:
-    DrawableEntityAdapted(T* entity) : entity(entity) {}
+    SimpleSpriteEntityEntityAdapted(T* entity) : entity(entity) {}
 
-    virtual ~DrawableEntityAdapted(){delete a;};
+    virtual ~SimpleSpriteEntityEntityAdapted(){delete a;};
 
-    void setAdaptor(DrawableAdaptor *adaptor) {a = adaptor;}
+    void setAdaptor(SimpleSpriteAdaptor *adaptor) {a = adaptor;}
 
-    std::shared_ptr<Drawable> getDrawable() {return (a->getDrawable(entity));}
+    std::shared_ptr<SimpleSprite> getSimpleSprite() {return (a->getSimpleSprite(entity));}
 
   private:
     T* entity;
-    DrawableAdaptor *a;
+    SimpleSpriteAdaptor *a;
 };
 
 }  // namespace zbe
 
-#endif  // CORE_ENTITIES_ADAPTORENTITIES_DRAWABLEENTITY_H_
+#endif  // ZBE_CORE_ENTITIES_ADAPTORENTITIES_SIMPLESPRITEENTITY_H_

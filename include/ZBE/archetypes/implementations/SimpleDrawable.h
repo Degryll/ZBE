@@ -1,27 +1,44 @@
 /**
  * Copyright 2012 Batis Degryll Ludo
- * @file Drawable.h
+ * @file SimpleDrawable.h
  * @since 2016-11-22
  * @date 2016-11-22
  * @author Degryll
- * @brief This define an avatar that can be drawn.
+ * @brief This implements an entity that can be drawn.
  */
 
-#ifndef CORE_ENTITIES_AVATARS_DRAWABLE_H_
-#define CORE_ENTITIES_AVATARS_DRAWABLE_H_
+#ifndef ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEDRAWABLE_H_
+#define ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEDRAWABLE_H_
 
 namespace zbe {
 
-/** \brief This define an avatar that can be drawn.
+/** \brief This implements an entity that can be drawn.
  */
-struct Drawable {
+class SimpleDrawable {
+    SimpleDrawable(int x, int y, unsigned w, unsigned h, int graphics) : x(x), y(y), w(w), h(h), graphics(graphics) {}
+
+    virtual ~SimpleDrawable() {}
+
+    int      getX()        {return (x);}
+    int      getY()        {return (y);}
+    unsigned getW()        {return (w);}
+    unsigned getH()        {return (h);}
+    int      getGraphics() {return (graphics);}
+
+    void setX(int x)               {this->x = x;}
+    void setY(int y)               {this->y = y;}
+    void setW(unsigned w)          {this->w = w;}
+    void setH(unsigned h)          {this->h = h;}
+    void setGraphics(int graphics) {this->graphics = graphics;}
+
+  private:
     int x;      //!< X coordinate
     int y;      //!< Y coordinate
     unsigned w; //!< width
     unsigned h; //!< height
-    int img;    //!< Image index
+    int graphics;    //!< Image index
 };
 
 }  // namespace zbe
 
-#endif  // CORE_ENTITIES_AVATARS_DRAWABLE_H_
+#endif  // ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEDRAWABLE_H_

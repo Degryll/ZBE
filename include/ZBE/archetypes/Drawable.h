@@ -4,24 +4,26 @@
  * @since 2016-11-22
  * @date 2016-11-22
  * @author Degryll
- * @brief This define an avatar that can be drawn.
+ * @brief This define an entity that can be drawn.
  */
 
-#ifndef CORE_ENTITIES_AVATARS_DRAWABLE_H_
-#define CORE_ENTITIES_AVATARS_DRAWABLE_H_
+#ifndef ZBE_ARCHETYPES_DRAWABLE_H_
+#define ZBE_ARCHETYPES_DRAWABLE_H_
 
 namespace zbe {
 
-/** \brief This define an avatar that can be drawn.
+/** \brief This define an entity that can be drawn.
  */
-struct Drawable {
-    int x;      //!< X coordinate
-    int y;      //!< Y coordinate
-    unsigned w; //!< width
-    unsigned h; //!< height
-    int img;    //!< Image index
+class Drawable {
+  public:
+    virtual ~Drawable() {}
+    virtual int getX() = 0;
+    virtual int getY() = 0;
+    virtual unsigned getW() = 0;
+    virtual unsigned getH() = 0;
+    virtual int getGraphics() = 0;
 };
 
 }  // namespace zbe
 
-#endif  // CORE_ENTITIES_AVATARS_DRAWABLE_H_
+#endif  // ZBE_ARCHETYPES_DRAWABLE_H_

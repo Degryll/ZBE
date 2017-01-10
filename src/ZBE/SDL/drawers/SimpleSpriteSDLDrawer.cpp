@@ -11,7 +11,7 @@
 
 namespace zbe {
 
-void SimpleSpriteSDLDrawer::apply(Drawable *entity) {
+void SimpleSpriteSDLDrawer::apply(SimpleSprite *entity) {
   SDL_Rect src,dst;
   src.x = 0;
   src.y = 0;
@@ -22,7 +22,7 @@ void SimpleSpriteSDLDrawer::apply(Drawable *entity) {
   dst.y = entity->y;
   dst.w = entity->w;
   dst.h = entity->h;
-  window->render(entity->img, &src, &dst);
+  window->render(entity->graphics, &src, &dst);
 }
 
 }  // namespace zbe

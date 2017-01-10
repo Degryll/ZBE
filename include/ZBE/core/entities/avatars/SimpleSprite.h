@@ -1,27 +1,27 @@
 /**
  * Copyright 2012 Batis Degryll Ludo
- * @file Drawable.h
+ * @file SimpleSprite.h
  * @since 2016-11-22
  * @date 2016-11-22
  * @author Degryll
  * @brief This define an avatar that can be drawn.
  */
 
-#ifndef CORE_ENTITIES_AVATARS_DRAWABLE_H_
-#define CORE_ENTITIES_AVATARS_DRAWABLE_H_
+#ifndef ZBE_CORE_ENTITIES_AVATARS_SIMPLESPRITE_H_
+#define ZBE_CORE_ENTITIES_AVATARS_SIMPLESPRITE_H_
 
 namespace zbe {
 
 /** \brief This define an avatar that can be drawn.
  */
-struct Drawable {
+struct SimpleSprite {
     int x;      //!< X coordinate
     int y;      //!< Y coordinate
     unsigned w; //!< width
     unsigned h; //!< height
-    int img;    //!< Image index
+    int graphics;    //!< Image index
 };
 
 }  // namespace zbe
 
-#endif  // CORE_ENTITIES_AVATARS_DRAWABLE_H_
+#endif  // ZBE_CORE_ENTITIES_AVATARS_SIMPLESPRITE_H_
