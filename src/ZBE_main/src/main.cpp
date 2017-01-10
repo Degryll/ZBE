@@ -3,6 +3,7 @@
 #include "batismain.h"
 #include "degryllmain.h"
 #include "ludomain.h"
+#include "gamemain.h"
 
 int main(int argc, char* argv[]) {
   int option;
@@ -10,10 +11,11 @@ int main(int argc, char* argv[]) {
   printf("1 - batismain\n");
   printf("2 - degryllmain\n");
   printf("3 - ludomain\n");
+  printf("4 - gamemain\n");
   printf("0 - salir\n");
   printf("--:");
   scanf ("%d",&option);
-  while (option<0 || option>3) {
+  while (option<0 || option>4) {
     printf("Introduzca una opcion... que valga: ");
     scanf ("%d",&option);
   }
@@ -28,6 +30,9 @@ int main(int argc, char* argv[]) {
     break;
     case 3:
       out = ludomain(argc,argv);
+    break;
+    case 4:
+      out = gamemain(argc,argv);
     break;
     case 0:
       printf("¿Y para que has venido?\n");
