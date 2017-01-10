@@ -10,11 +10,14 @@
 #ifndef ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEDRAWABLE_H_
 #define ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEDRAWABLE_H_
 
+#include "ZBE/archetypes/Drawable.h"
+
 namespace zbe {
 
 /** \brief This implements an entity that can be drawn.
  */
-class SimpleDrawable {
+class SimpleDrawable : public Drawable {
+  public:
     SimpleDrawable(int x, int y, unsigned w, unsigned h, int graphics) : x(x), y(y), w(w), h(h), graphics(graphics) {}
 
     virtual ~SimpleDrawable() {}

@@ -19,27 +19,26 @@ namespace zbe {
  */
 class SimpleSpriteEntity {
   public:
-
+    virtual ~SimpleSpriteEntity() {};
     virtual std::shared_ptr<SimpleSprite> getSimpleSprite() = 0;
-
 };
 
 /** \brief Entity that can be seen as a simple sprite using an adaptor.
  */
 template <typename T>
-class SimpleSpriteEntityEntityAdapted : public SimpleSprite {
+class SimpleSpriteEntityAdapted : public SimpleSpriteEntity {
   public:
-    SimpleSpriteEntityEntityAdapted(T* entity) : entity(entity) {}
+    SimpleSpriteEntityAdapted(T* entity) : entity(entity) {}
 
-    virtual ~SimpleSpriteEntityEntityAdapted(){delete a;};
+    virtual ~SimpleSpriteEntityAdapted(){delete a;};
 
-    void setAdaptor(SimpleSpriteAdaptor *adaptor) {a = adaptor;}
+    void setAdaptor(SimpleSpriteAdaptor<T> *adaptor) {a = adaptor;}
 
     std::shared_ptr<SimpleSprite> getSimpleSprite() {return (a->getSimpleSprite(entity));}
 
   private:
     T* entity;
-    SimpleSpriteAdaptor *a;
+    SimpleSpriteAdaptor<T> *a;
 };
 
 }  // namespace zbe

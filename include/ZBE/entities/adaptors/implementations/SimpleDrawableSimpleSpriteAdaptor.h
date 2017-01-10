@@ -13,21 +13,25 @@
 #include <memory>
 
 #include "ZBE/core/entities/avatars/SimpleSprite.h"
+#include "ZBE/core/entities/adaptors/SimpleSpriteAdaptor.h"
+#include "ZBE/archetypes/Drawable.h"
 
 namespace zbe {
 
 /** \brief Implementation that adapts an Drawable to a SimpleSprite.
  */
-class SimpleDrawableSimpleSpriteAdaptor : public DrawableAdaptor<Drawable> {
+class SimpleDrawableSimpleSpriteAdaptor : public SimpleSpriteAdaptor<Drawable> {
   public:
-    virtual std::shared_ptr<Drawable> getDrawable(Drawable* entity) {
-      SimpleSprite *s = new SimpleSprite;
+    virtual std::shared_ptr<SimpleSprite> getSimpleSprite(Drawable* entity) {
+      std::shared_ptr<SimpleSprite> s = std::make_shared<SimpleSprite>();
 
       s->x = entity->getX();
       s->y = entity->getY();
       s->w = entity->getW();
       s->h = entity->getH();
       s->graphics = entity->getGraphics();
+
+      return (s);
     }
 };
 

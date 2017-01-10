@@ -1,4 +1,6 @@
 #include "gamemain.h"
+#include "game/GameReactor.h"
+#include "game/entities/GameBall.h"
 #include "ZBE/core/events/Event.h"
 #include "ZBE/core/events/EventStore.h"
 #include "ZBE/core/events/TimeEvent.h"
@@ -12,36 +14,34 @@
 #include "ZBE/core/tools/Timer.h"
 #include "ZBE/core/system/SysError.h"
 #include "ZBE/SDL/system/SDLEventDispatcher.h"
+#include "ZBE/SDL/system/Window.h"
+#include "ZBE/SDL/drawers/SimpleSpriteSDLDrawer.h"
+#include "ZBE/entities/adaptors/implementations/SimpleDrawableSimpleSpriteAdaptor.h"
 
 #include <cinttypes>
 #include <iostream>
 #include <chrono>
 #include <thread>
 
-
 int gamemain(int argc, char* argv[]) {
   printf("--- GAME main ---\n\n");
 
-  getchar();
+  enum {
+    INPUTEVENT = 0,
+    COLLISIONEVENT = 1,
+    TIMEEVENT = 2,
 
-  // Starting sdl systems.
-  if (SDL_Init(SDL_INIT_VIDEO) != 0){
-    std::cout << "SDL_Init Error: " << SDL_GetError() << std::endl;
-    return 1;
-  }
-  // Creating a sdl window
-  SDL_Window *win = SDL_CreateWindow("Hello World!", 100, 100, 640, 480, SDL_WINDOW_SHOWN);
-  if (win == nullptr){
-    std::cout << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
-    SDL_Quit();
-    return 1;
-  }
+    COLLISIONATORLIST = 1
+  };
+
+  const char ballfilename[] = "\data\images\zombieball\zomball_st_32.png";
+  unsigned ballgraphics;
 
   printf("|=================== Building up system ===================|\n");fflush(stdout);
   printf("Event store\n");fflush(stdout);
   printf("Will store all event independently of its type\n");fflush(stdout);
   zbe::EventStore& store = zbe::EventStore::getInstance();
-  printf("|------------------------ Input ---------------------------|\n");fflush(stdout);
+  printf("|------------------------ Input Event Generator-------------|\n");fflush(stdout);
   printf("Building SDLEventDispatcher\n");fflush(stdout);
   printf("Will extract data from SDL and get it usable for the engine\n");fflush(stdout);
   zbe::SDLEventDispatcher & sdlEventDist = zbe::SDLEventDispatcher::getInstance();
@@ -51,7 +51,21 @@ int gamemain(int argc, char* argv[]) {
   printf("Acquiring and configuring InputEventGenerator with that InputReader\n");fflush(stdout);
   printf("Will read events from the InputReader and send them to the store\n");fflush(stdout);
   printf("Input events will use id 0\n");fflush(stdout);
-  zbe::InputEventGenerator* ieg = new zbe::InputEventGenerator(inputBuffer,0);
+  zbe::InputEventGenerator ieg(inputBuffer,INPUTEVENT);
+  printf("|------------------- Collision Event Generator-------------|\n");fflush(stdout);
+  //zbe::TicketedForwardList<zbe::CollisionerEntity<GameReactor>*> cnl;
+  printf("Building list for collisionator entinties. Currently empty.\n");fflush(stdout);
+  printf("It will store entities that will search for a collision.\n");fflush(stdout);
+  zbe::TicketedForwardList<zbe::CollisionatorEntity<game::GameReactor>*> ctl;
+  printf("Acquiring singleton list-manager for this list (ctl).\n");fflush(stdout);
+  zbe::ListManager< zbe::TicketedForwardList<zbe::CollisionatorEntity<game::GameReactor>*> >& lmct = zbe::ListManager< zbe::TicketedForwardList<zbe::CollisionatorEntity<game::GameReactor>*> >::getInstance();
+  printf("Storing ctl in that list-manager.\n");fflush(stdout);
+  lmct.insert(COLLISIONATORLIST, &ctl);
+  printf("Building collision event generator with list id and the event id to use (1).\n");fflush(stdout);
+  zbe::CollisionEventGenerator<game::GameReactor> ceg(COLLISIONATORLIST, COLLISIONEVENT);
+  printf("|------------------- Time Event Generator -----------------|\n");fflush(stdout);
+  printf("Building time event generator with the event id to use (2)\n");fflush(stdout);
+  zbe::TimeEventGenerator teg(TIMEEVENT);
   printf("|------------------------- Time ---------------------------|\n");fflush(stdout);
   printf("Building a SDL implementation of Timer\n");fflush(stdout);
   zbe::Timer *sysTimer = new zbe::SDLTimer(true);
@@ -59,7 +73,18 @@ int gamemain(int argc, char* argv[]) {
   printf("It will be the time reference for all the game context\n");fflush(stdout);
   zbe::SysTime &sysTime = zbe::SysTime::getInstance();
   sysTime.setSystemTimer(sysTimer);
-  printf("|------------------------ Phisics -------------------------|\n");fflush(stdout);
+  printf("|-------------------- Drawing system ----------------------|\n");fflush(stdout);
+  printf("Building the window to draw on\n");fflush(stdout);
+  zbe::Window window(640,480);
+  ballgraphics = window.loadImg(ballfilename);
+  printf("Building the drawer to paint SimpleSprite's \n");fflush(stdout);
+  zbe::SimpleSpriteSDLDrawer drawer(&window);
+  printf("|------------------- Creating entities --------------------|\n");fflush(stdout);
+  printf("Creating a ball and giving it a position and size\n");fflush(stdout);
+  game::GameBall ball(320,240,32,32,ballgraphics);
+  printf("Building an sprite adaptor for the ball\n");fflush(stdout);
+  zbe::SimpleDrawableSimpleSpriteAdaptor* spriteAdaptor = new zbe::SimpleDrawableSimpleSpriteAdaptor();
+  ball.setAdaptor(spriteAdaptor);
   printf("|=================== Starting up system ===================|\n");fflush(stdout);
   printf("Starting SysTimer\n");fflush(stdout);
   sysTimer->start();
@@ -78,10 +103,6 @@ int gamemain(int argc, char* argv[]) {
   bool keep = true;
   while(keep){
 
-    /* sleeping to simulate some work.
-     */
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-
     /* Acquiring sdl info
      * Input data will be stored into the InputReader
      */
@@ -98,37 +119,20 @@ int gamemain(int argc, char* argv[]) {
     //frameTime = sysTime.getFrameTime();// frame duration
 
     //printf("frameTime = 0x%" PRIx64 " ", frameTime);fflush(stdout);
-    printf("initT = 0x%" PRIx64 " ", initT);fflush(stdout);
-    printf("endT = 0x%" PRIx64 "\n", endT);fflush(stdout);
+    //printf("initT = 0x%" PRIx64 " ", initT);fflush(stdout);
+    //printf("endT = 0x%" PRIx64 "\n", endT);fflush(stdout);
 
     /* Generating input events:
      * It will take the events that sdlEventDist has stored
      * into the InputReader and send it to the event store.
      */
-    ieg->generate(initT,endT);
+    ieg.generate(initT,endT);
+    teg.generate(initT,endT);
+    ceg.generate(initT,endT);
 
-    /* Time for look for those events!
-     * the closest input event (or events) found must be now
-     * on the event store.
-     */
-    const std::forward_list<zbe::Event*> & eventList = store.getEvents();
+    store.manageCurrent();
 
-    /* If there are event, we need to do something about it!
-     * For example... exit the program.
-     */
-    if(!eventList.empty()){
-      for ( auto it = eventList.begin(); it != eventList.end(); ++it ) {
-        zbe::InputEvent *e = (zbe::InputEvent*) (*it);
-        printf(" -> T = 0x%" PRIx64 " ", e->getTime());fflush(stdout);
-        printf("K = 0x%" PRIx32 " ", e->getKey());fflush(stdout);
-        printf("S = 0x%f\n", e->getState());fflush(stdout);
-        if(e->getKey() == 0x78){
-          keep = false;
-        }
-      }
-    }
-
-    store.clearStore();
+    drawer.apply(ball.getSimpleSprite().get());
 
     /* If one or more error occurs, the ammount and the first one
      * wille be stored into SysError estructure, so it can be consulted.
