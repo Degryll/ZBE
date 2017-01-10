@@ -134,9 +134,11 @@
 		</Compiler>
 		<Unit filename="../../../src/ZBE_main/include/batismain.h" />
 		<Unit filename="../../../src/ZBE_main/include/degryllmain.h" />
+		<Unit filename="../../../src/ZBE_main/include/gamemain.h" />
 		<Unit filename="../../../src/ZBE_main/include/ludomain.h" />
 		<Unit filename="../../../src/ZBE_main/src/batismain.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/degryllmain.cpp" />
+		<Unit filename="../../../src/ZBE_main/src/gamemain.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/ludomain.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/main.cpp" />
 		<Extensions>
