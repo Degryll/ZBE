@@ -34,7 +34,7 @@ int gamemain(int argc, char* argv[]) {
     COLLISIONATORLIST = 1
   };
 
-  const char ballfilename[] = "\data\images\zombieball\zomball_st_32.png";
+  const char ballfilename[] = "data/images/zombieball/zomball_st_32.png";
   unsigned ballgraphics;
 
   printf("|=================== Building up system ===================|\n");fflush(stdout);
@@ -143,6 +143,7 @@ int gamemain(int argc, char* argv[]) {
     if(errcount>0){
         printf("Error: %s",zbe::SysError::getFirstErrorString().c_str());fflush(stdout);
     }
+    window.present();
   }
 
   return 0;
