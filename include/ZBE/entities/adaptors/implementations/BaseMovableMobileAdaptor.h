@@ -23,7 +23,7 @@ namespace zbe {
 template <unsigned s>
 class BaseMovableMobileAdaptor : public MovableAdaptor<Mobile<s>, s> {
   public:
-    std::shared_ptr< Movable<s> > getMovable(Mobile<s>* entity) {return (new BaseMovable<s>(entity));};
+    std::shared_ptr< Movable<s> > getMovable(Mobile<s>* entity) {return (new BaseMovable<s>(entity));}
 };
 
 }  // namespace zbe

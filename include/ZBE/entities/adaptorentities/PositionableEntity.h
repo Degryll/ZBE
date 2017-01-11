@@ -22,6 +22,7 @@ namespace zbe {
 template <unsigned s>
 class PositionableEntity {
   public:
+    virtual ~PositionableEntity() {}
 
     virtual std::shared_ptr< Positionable<s> > getPositionable() = 0;
 
@@ -32,7 +33,12 @@ class PositionableEntity {
 template <typename T, unsigned s>
 class PositionableEntityAdapted : public PositionableEntity<s> {
   public:
-    PositionableEntityAdapted(T* entity) : entity(entity) {}
+    PositionableEntityAdapted(const PositionableEntityAdapted&) = delete;
+    void operator=(const PositionableEntityAdapted&) = delete;
+
+    PositionableEntityAdapted(T* entity) : entity(entity), a(nullptr) {}
+
+    virtual ~PositionableEntityAdapted() {}
 
     void setPositionableAdaptor(PositionableAdaptor<T, s> *adaptor) {a = adaptor;}
 

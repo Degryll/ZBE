@@ -21,6 +21,9 @@ namespace zbe {
 template <unsigned s>
 class BasePositionable : public Positionable<s> {
   public:
+    BasePositionable(const BasePositionable&) = delete;
+    void operator=(const BasePositionable&) = delete;
+
     BasePositionable(Position<s> *position) : p(position) {}
 
     void setPosition(std::initializer_list<double> l) { p->setPosition(l);}

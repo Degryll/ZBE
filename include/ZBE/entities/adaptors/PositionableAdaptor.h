@@ -21,6 +21,8 @@ namespace zbe {
 template <typename T, unsigned s>
 class PositionableAdaptor {
   public:
+    virtual ~PositionableAdaptor() {}
+
     virtual std::shared_ptr< Positionable<s> > getPositionable(T* entity) = 0;
 };
 

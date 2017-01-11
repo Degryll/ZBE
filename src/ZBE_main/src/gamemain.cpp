@@ -92,8 +92,8 @@ int gamemain(int, char** ) {
   ball.setPositionableAdaptor(positionableAdaptor);
   game::StepInputHandler ihright(&ball, 5);
   game::StepInputHandler ihleft(&ball, -5);
-  ieg.addHandler(zbe::ZBEK_a, &ihright);
-  ieg.addHandler(zbe::ZBEK_d, &ihleft);
+  ieg.addHandler(zbe::ZBEK_a, &ihleft);
+  ieg.addHandler(zbe::ZBEK_d, &ihright);
   printf("|=================== Starting up system ===================|\n");fflush(stdout);
   printf("Starting SysTimer\n");fflush(stdout);
   sysTimer->start();
@@ -111,6 +111,10 @@ int gamemain(int, char** ) {
 
   bool keep = true;
   while(keep){
+
+    /* Clear screen.
+     */
+    window.clear();
 
     /* Acquiring sdl info
      * Input data will be stored into the InputReader

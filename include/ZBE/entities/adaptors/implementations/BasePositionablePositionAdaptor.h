@@ -24,8 +24,16 @@ namespace zbe {
 template <unsigned s>
 class BasePositionablePositionAdaptor : public PositionableAdaptor<Position<s>, s> {
   public:
-    std::shared_ptr< Positionable<s> > getPositionable(Position<s>* entity) {return (std::make_shared<BasePositionable<s> >(entity));};
+    virtual ~BasePositionablePositionAdaptor() {}
+
+    std::shared_ptr< Positionable<s> > getPositionable(Position<s>* entity) ;
 };
+
+template <unsigned s>
+std::shared_ptr< Positionable<s> > BasePositionablePositionAdaptor<s>::getPositionable(Position<s>* entity) {
+  std::shared_ptr< Positionable<s> > p(new BasePositionable<s>(entity));
+  return (p);
+}
 
 }  // namespace zbe
 

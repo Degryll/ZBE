@@ -18,6 +18,8 @@ namespace zbe {
 template <unsigned s>
 class Positionable {
   public:
+    virtual ~Positionable() {}
+
     virtual void setPosition(std::initializer_list<double> l) = 0;
     virtual void setPosition(Point<s> position) = 0;
 

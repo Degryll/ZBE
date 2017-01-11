@@ -71,7 +71,7 @@ class Window {
      *
      *  \sa setBackgroundColor()
      */
-    inline void clear();
+    void clear();
 
     /** \brief Set the background color.
      *
