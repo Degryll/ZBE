@@ -7,8 +7,8 @@
  * @brief This implements a base 1:1 avatar that can be moved.
  */
 
-#ifndef ZBE_ENTITIES_AVATARS_BASEMOVABLE_H_
-#define ZBE_ENTITIES_AVATARS_BASEMOVABLE_H_
+#ifndef ZBE_ENTITIES_AVATARS_IMPLEMENTATIONS_BASEMOVABLE_H_
+#define ZBE_ENTITIES_AVATARS_IMPLEMENTATIONS_BASEMOVABLE_H_
 
 #include "ZBE/entities/avatars/Movable.h"
 #include "ZBE/archetypes/Mobile.h"
@@ -37,4 +37,4 @@ class BaseMovable : public Movable<R, s> {
 
 }  // namespace zbe
 
-#endif  // ZBE_ENTITIES_AVATARS_BASEMOVABLE_H_
+#endif  // ZBE_ENTITIES_AVATARS_IMPLEMENTATIONS_BASEMOVABLE_H_

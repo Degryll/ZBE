@@ -35,7 +35,7 @@ class SimpleSpriteEntityAdapted : public SimpleSpriteEntity {
 
     virtual ~SimpleSpriteEntityAdapted(){delete a;};
 
-    void setAdaptor(SimpleSpriteAdaptor<T> *adaptor) {a = adaptor;}
+    void setSimpleSpriteAdaptor(SimpleSpriteAdaptor<T> *adaptor) {a = adaptor;}
 
     std::shared_ptr<SimpleSprite> getSimpleSprite() {return (a->getSimpleSprite(entity));}
 

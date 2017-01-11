@@ -1,6 +1,8 @@
-#include "gamemain.h"
-#include "game/GameReactor.h"
-#include "game/entities/GameBall.h"
+#include <cinttypes>
+#include <iostream>
+#include <chrono>
+#include <thread>
+
 #include "ZBE/core/events/Event.h"
 #include "ZBE/core/events/EventStore.h"
 #include "ZBE/core/events/TimeEvent.h"
@@ -17,11 +19,12 @@
 #include "ZBE/SDL/system/Window.h"
 #include "ZBE/SDL/drawers/SimpleSpriteSDLDrawer.h"
 #include "ZBE/entities/adaptors/implementations/SimpleDrawableSimpleSpriteAdaptor.h"
+#include "ZBE/entities/adaptors/implementations/BasePositionablePositionAdaptor.h"
 
-#include <cinttypes>
-#include <iostream>
-#include <chrono>
-#include <thread>
+#include "gamemain.h"
+#include "game/GameReactor.h"
+#include "game/entities/GameBall.h"
+#include "game/events/handlers/StepInputHandler.h"
 
 int gamemain(int, char** ) {
   printf("--- GAME main ---\n\n");
@@ -83,8 +86,14 @@ int gamemain(int, char** ) {
   printf("Creating a ball and giving it a position and size\n");fflush(stdout);
   game::GameBall ball(320,240,32,32,ballgraphics);
   printf("Building an sprite adaptor for the ball\n");fflush(stdout);
-  zbe::SimpleDrawableSimpleSpriteAdaptor* spriteAdaptor = new zbe::SimpleDrawableSimpleSpriteAdaptor();
-  ball.setAdaptor(spriteAdaptor);
+  zbe::SimpleSpriteAdaptor<zbe::Drawable>* spriteAdaptor = new zbe::SimpleDrawableSimpleSpriteAdaptor();
+  ball.setSimpleSpriteAdaptor(spriteAdaptor);
+  zbe::BasePositionablePositionAdaptor<2> * positionableAdaptor = new zbe::BasePositionablePositionAdaptor<2>();
+  ball.setPositionableAdaptor(positionableAdaptor);
+  game::StepInputHandler ihright(&ball, 5);
+  game::StepInputHandler ihleft(&ball, -5);
+  ieg.addHandler(zbe::ZBEK_a, &ihright);
+  ieg.addHandler(zbe::ZBEK_d, &ihleft);
   printf("|=================== Starting up system ===================|\n");fflush(stdout);
   printf("Starting SysTimer\n");fflush(stdout);
   sysTimer->start();

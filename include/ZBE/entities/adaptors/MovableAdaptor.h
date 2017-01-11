@@ -12,7 +12,7 @@
 
 #include <memory>
 
-#include "ZBE/entities/avatars/Movable2D.h"
+#include "ZBE/entities/avatars/Movable.h"
 
 namespace zbe {
 
