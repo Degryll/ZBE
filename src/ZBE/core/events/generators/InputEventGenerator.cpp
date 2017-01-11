@@ -17,8 +17,11 @@ namespace zbe {
       std::vector<InputStatus> currentInput;
       inputBuffer->getRange(initTime, finalTime, currentInput);
       for(auto it = currentInput.begin(); it != currentInput.end(); it++) {
-        InputEvent* e = new InputEvent(eventId, (*it).getTime(), (*it).getId(), (*it).getStatus());
-        store.storeEvent(e);
+        auto hit = handlers.find(it->getId());
+        if (hit != handlers.end()) {
+            InputEvent* e = new InputEvent(eventId, it->getTime(), it->getId(), it->getStatus(), hit->second);
+            store.storeEvent(e);
+        }
       }
     }
 

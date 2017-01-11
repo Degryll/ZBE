@@ -13,7 +13,6 @@
 #include <memory>
 
 #include "ZBE/core/events/Event.h"
-#include "ZBE/core/events/managers/CollisionEventManager.h"
 #include "ZBE/core/entities/avatars/Collisioner.h"
 #include "ZBE/core/entities/avatars/ReactObject.h"
 #include "ZBE/core/tools/math/collisions/CollisionData.h"
@@ -69,8 +68,10 @@ class CollisionEvent2D : public Event {
      * do the actions associated with it.
      */
     void manage() {
-        CollisionEventManager<R>& cem = CollisionEventManager<R>::getInstance();
-        cem.run(this);
+      /*std::shared_ptr<Collisioner<R> >  c = event->getCollisioner();
+      std::shared_ptr<ReactObject<R> >  ro = event->getReactObject();
+      CollisionData cd = event->getCollisionData();*/
+      c->react(&cd,&(*ro));
     };
 
   private:

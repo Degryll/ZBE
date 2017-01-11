@@ -11,6 +11,7 @@
 #define CORE_EVENTS_EVENT_INPUTEVENT_H
 
 #include "ZBE/core/events/Event.h"
+#include "ZBE/core/events/handlers/InputHandler.h"
 
 namespace zbe {
 
@@ -21,7 +22,7 @@ class InputEvent : public Event {
 
     /** \brief Copy Constructor.
      */
-    InputEvent(const InputEvent& rhs) : Event(rhs), key(rhs.key), state(rhs.state) {}
+    InputEvent(const InputEvent& rhs) : Event(rhs), key(rhs.key), state(rhs.state), handler(rhs.handler) {}
 
     /** \brief Builds an InputEvent with the status and id of the associated input.
      *
@@ -31,7 +32,7 @@ class InputEvent : public Event {
      * \param state The state of the related input as a value in the range (-1.0 .. +1.0).
      *
      */
-    InputEvent(uint64_t id, uint64_t time, uint32_t key, float state) : Event(id, time), key(key), state(state) {}
+    InputEvent(uint64_t id, uint64_t time, uint32_t key, float state, InputHandler* handler) : Event(id, time), key(key), state(state), handler(handler) {}
 
     /** \brief base destructor.
     */
@@ -59,6 +60,7 @@ class InputEvent : public Event {
   private:
     uint32_t key;
     float state;
+    InputHandler* handler;
 };
 
 } // namespace zbe

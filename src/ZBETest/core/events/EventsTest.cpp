@@ -2,6 +2,7 @@
 
 #include "ZBE/core/events/Event.h"
 #include "ZBE/core/events/InputEvent.h"
+#include "ZBE/core/events/handlers/InputHandler.h"
 #include "ZBE/core/events/TimeEvent.h"
 #include "ZBE/core/events/CollisionEvent2D.h"
 #include "ZBE/core/entities/avatars/Collisioner.h"
@@ -9,6 +10,10 @@
 #include "ZBE/core/tools/math/collisions/CollisionSystemSolver.h"
 #include "ZBE/core/events/handlers/TimeHandler.h"
 
+namespace EventsTest {
+    class DummyInputHandler : public zbe::InputHandler{
+        void run(float state) {};
+    };
 class R { // Reactor mock
 };
 
@@ -32,11 +37,13 @@ TEST(Event, TimeEvent) {
 }
 
 TEST(Event, InputEvent) {
-  zbe::InputEvent e(1,100, 7, 1.0);
+  DummyInputHandler * dih = new DummyInputHandler();
+  zbe::InputEvent e(1,100, 7, 1.0, dih);
   EXPECT_EQ((uint64_t)1, e.getId()) << "Must store id";
   EXPECT_EQ((uint64_t)100, e.getTime()) << "Must store time";
   EXPECT_EQ((uint64_t)7, e.getKey()) << "Must store the key id";
   EXPECT_EQ(1.0, e.getState()) << "Must store the key state";
+  delete dih;
 }
 
 TEST(Event, CollisionEvent) {
@@ -50,4 +57,6 @@ TEST(Event, CollisionEvent) {
   //EXPECT_EQ(c, e.getCollisioner()) << "Must store EntityA";
   EXPECT_EQ(p.x, e.getCollisionData().getPoint().x) << "Must store Point x coordinate";
   EXPECT_EQ(p.y, e.getCollisionData().getPoint().y) << "Must store Point y coordinate";
+}
+
 }

@@ -10,7 +10,6 @@
 #ifndef CORE_EVENTS_TIMEEVENT_H
 #define CORE_EVENTS_TIMEEVENT_H
 
-#include "ZBE/core/events/managers/TimeEventManager.h"
 #include "ZBE/core/events/handlers/TimeHandler.h"
 #include "ZBE/core/events/Event.h"
 
@@ -50,7 +49,7 @@ class TimeEvent : public Event {
      * do the actions associated with it.
      */
     void manage() {
-        TimeEventManager::getInstance().run(this);
+        handler->run();
     };
 
   private:

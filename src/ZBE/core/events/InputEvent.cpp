@@ -8,13 +8,12 @@
  */
 
 #include "ZBE/core/events/InputEvent.h"
-#include "ZBE/core/events/managers/InputEventManager.h"
 
 namespace zbe {
 
 
 void InputEvent::manage() {
-  InputEventManager::getInstance().run(this);
+  handler->run(state);
 }
 
 }

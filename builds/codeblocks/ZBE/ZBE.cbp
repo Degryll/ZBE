@@ -207,9 +207,6 @@
 		<Unit filename="../../../include/ZBE/core/events/handlers/Actuator.h" />
 		<Unit filename="../../../include/ZBE/core/events/handlers/InputHandler.h" />
 		<Unit filename="../../../include/ZBE/core/events/handlers/TimeHandler.h" />
-		<Unit filename="../../../include/ZBE/core/events/managers/CollisionEventManager.h" />
-		<Unit filename="../../../include/ZBE/core/events/managers/InputEventManager.h" />
-		<Unit filename="../../../include/ZBE/core/events/managers/TimeEventManager.h" />
 		<Unit filename="../../../include/ZBE/core/io/FileHandler.h" />
 		<Unit filename="../../../include/ZBE/core/io/InputBuffer.h" />
 		<Unit filename="../../../include/ZBE/core/io/InputStatus.h" />
@@ -251,8 +248,6 @@
 		<Unit filename="../../../src/ZBE/core/events/InputEvent.cpp" />
 		<Unit filename="../../../src/ZBE/core/events/generators/InputEventGenerator.cpp" />
 		<Unit filename="../../../src/ZBE/core/events/generators/TimeEventGenerator.cpp" />
-		<Unit filename="../../../src/ZBE/core/events/managers/InputEventManager.cpp" />
-		<Unit filename="../../../src/ZBE/core/events/managers/TimeEventManager.cpp" />
 		<Unit filename="../../../src/ZBE/core/io/FileHandler.cpp" />
 		<Unit filename="../../../src/ZBE/core/io/InputBuffer.cpp" />
 		<Unit filename="../../../src/ZBE/core/system/Logger.cpp" />

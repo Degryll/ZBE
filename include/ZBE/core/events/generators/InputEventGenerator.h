@@ -12,6 +12,7 @@
 
 #include <cstdint>
 #include <memory>
+#include <map>
 
 #include "ZBE/core/io/InputBuffer.h"
 #include "ZBE/core/events/EventStore.h"
@@ -26,7 +27,7 @@ namespace zbe {
 
       /** \brief Default constructor.
        */
-      InputEventGenerator(InputBuffer * inputBuffer, int eventId) : inputBuffer(inputBuffer), eventId(eventId), store(EventStore::getInstance()) {};
+      InputEventGenerator(InputBuffer * inputBuffer, int eventId) : inputBuffer(inputBuffer), eventId(eventId), store(EventStore::getInstance()), handlers() {};
 
       /** \brief Empty destructor.
        */
@@ -38,10 +39,22 @@ namespace zbe {
        */
       void generate(uint64_t initTime, uint64_t endTime);
 
+      /** Add a handler to an input event.
+       * \param id Id of the key
+       * \param handler Handler to run when key pressed
+       */
+      inline void addHandler(uint32_t id, InputHandler* handler) {handlers[id] = handler;}
+
+      /** Remove a handler from an input event.
+       * \param id Id of the key
+       */
+      inline void removeHandler(uint32_t id) {handlers.erase(id);}
+
     private:
       std::shared_ptr<InputBuffer> inputBuffer;
       int eventId;
       EventStore &store;
+      std::map<uint32_t, InputHandler*> handlers;
   };
 } // namespace zbe
 
