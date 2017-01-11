@@ -12,7 +12,7 @@
 
 namespace EventsTest {
     class DummyInputHandler : public zbe::InputHandler{
-        void run(float state) {};
+        void run(float) {};
     };
 class R { // Reactor mock
 };

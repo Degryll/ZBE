@@ -23,7 +23,7 @@
 #include <chrono>
 #include <thread>
 
-int gamemain(int argc, char* argv[]) {
+int gamemain(int, char** ) {
   printf("--- GAME main ---\n\n");
 
   enum {

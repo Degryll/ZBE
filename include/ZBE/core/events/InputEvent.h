@@ -22,7 +22,8 @@ class InputEvent : public Event {
 
     /** \brief Copy Constructor.
      */
-    InputEvent(const InputEvent& rhs) : Event(rhs), key(rhs.key), state(rhs.state), handler(rhs.handler) {}
+    InputEvent(const InputEvent&) = delete;
+    void operator=(const InputEvent&) = delete;
 
     /** \brief Builds an InputEvent with the status and id of the associated input.
      *

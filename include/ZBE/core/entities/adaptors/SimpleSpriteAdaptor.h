@@ -21,6 +21,8 @@ namespace zbe {
 template <typename T>
 class SimpleSpriteAdaptor {
   public:
+    virtual ~SimpleSpriteAdaptor(){}
+
     virtual std::shared_ptr<SimpleSprite> getSimpleSprite(T* entity) = 0;
 };
 

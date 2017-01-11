@@ -28,7 +28,10 @@ class SimpleSpriteEntity {
 template <typename T>
 class SimpleSpriteEntityAdapted : public SimpleSpriteEntity {
   public:
-    SimpleSpriteEntityAdapted(T* entity) : entity(entity) {}
+    SimpleSpriteEntityAdapted(const SimpleSpriteEntityAdapted&) = delete;
+    void operator=(const SimpleSpriteEntityAdapted&) = delete;
+
+    SimpleSpriteEntityAdapted(T* entity) : entity(entity), a(nullptr) {}
 
     virtual ~SimpleSpriteEntityAdapted(){delete a;};
 

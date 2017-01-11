@@ -20,7 +20,7 @@
 #include <thread>
 
 
-int ludomain(int argc, char* argv[]) {
+int ludomain(int , char** ) {
   printf("--- Ludo main ---\n\n");
 
   getchar();

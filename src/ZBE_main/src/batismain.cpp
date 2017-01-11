@@ -1,7 +1,8 @@
-
 #include "batismain.h"
 
-int batismain(int argc, char* argv[]) {
+#include <cstdio>
+
+int batismain(int, char**) {
   printf("--- Batis main ---\n\n");
 
   getchar();
