@@ -38,7 +38,7 @@ class SimplePosition : public Position<s> {
     }
     void setPosition(Point<s> position) {p = position;}
 
-    virtual Point<s>& getPosition() {return (p);}
+    Point<s>& getPosition() {return (p);}
 
   private:
     Point<s> p;

@@ -57,7 +57,7 @@ namespace zbe {
   template<typename P, typename L>
   void PunisherDaemon<P, L>::run(){
     for(auto e : (*eList)) {
-      punish->apply(e);
+      punish->apply(e, 0);
     }
   }
 

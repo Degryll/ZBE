@@ -1,33 +1,40 @@
 /**
  * Copyright 2012 Batis Degryll Ludo
- * @file Behavior.h
- * @since 2014-09-12
- * @date 2016-04-29
- * @author Ludo and Degryll
- * @brief Define the minimal functions of every behavior.
+ * @file UniformLinearMotion.h
+ * @since 2017-01-13
+ * @date 2017-01-13
+ * @author Degryll
+ * @brief Implements an uniform linear motion behavior.
  */
 
-#ifndef CORE_BEHAVIORS_BEHAVIOR_H_
-#define CORE_BEHAVIORS_BEHAVIOR_H_
+#ifndef ZBE_BEHAVIORS_UNIFORMLINEARMOTION_H_
+#define ZBE_BEHAVIORS_UNIFORMLINEARMOTION_H_
+
+#include "zbe/core/behaviors/Behavior.h"
+#include "zbe/archetypes/Mobile.h"
+#include "ZBE/core/tools/math/math.h"
+#include "ZBE/core/tools/math/Point.h"
 
 namespace zbe {
 
-template<typename T>
-
 /** \brief Define the minimal functions of every behavior.
  */
-class Behavior {
+template<unsigned s>
+class UniformLinearMotion : public Behavior< Mobile<s> > {
   public:
 
     /** \brief Default destructor.
      */
-    virtual ~Behavior() {}
+    virtual ~UniformLinearMotion() {}
 
     /** \brief Do the behavior work over the given entity
      */
-    virtual void apply(T * entity) = 0;
+    void apply(Mobile<s>* entity, uint64_t time) {
+      Point<s>& p = entity->getPosition();
+      p += entity->getVelocity() * (time * TIMETOVELOCITY);
+    }
 };
 
 }  // namespace zbe
 
-#endif  // CORE_BEHAVIORS_BEHAVIOR_H_
+#endif  // ZBE_BEHAVIORS_UNIFORMLINEARMOTION_H_

@@ -7,15 +7,14 @@
  * @brief Define the minimal functions of every behavior.
  */
 
-#ifndef CORE_BEHAVIORS_BEHAVIOR_H_
-#define CORE_BEHAVIORS_BEHAVIOR_H_
+#ifndef ZBE_CORE_BEHAVIORS_BEHAVIOR_H_
+#define ZBE_CORE_BEHAVIORS_BEHAVIOR_H_
 
 namespace zbe {
 
-template<typename T>
-
 /** \brief Define the minimal functions of every behavior.
  */
+template<typename T>
 class Behavior {
   public:
 
@@ -25,9 +24,9 @@ class Behavior {
 
     /** \brief Do the behavior work over the given entity
      */
-    virtual void apply(T * entity) = 0;
+    virtual void apply(T * entity, uint64_t time) = 0;
 };
 
 }  // namespace zbe
 
-#endif  // CORE_BEHAVIORS_BEHAVIOR_H_
+#endif  // ZBE_CORE_BEHAVIORS_BEHAVIOR_H_
