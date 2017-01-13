@@ -1,93 +1,101 @@
-
 #include "gtest/gtest.h"
 
-TEST(Punishers, DISABLED_BehaviorDaemon) {}
-
-/*
-#include "ZBE/core/tools/math/Vector.h"
-#include "ZBE/core/tools/math/Point.h"
-
-#include "ZBE/core/archetypes/Movable.h"
+#include <forward_list>
 
 #include "ZBE/core/daemons/Daemon.h"
+#include "ZBE/core/daemons/PunisherDaemon.h"
 #include "ZBE/core/daemons/Punishers.h"
 
 #include "ZBE/core/behaviors/Behavior.h"
-//#include "ZBE/core/behaviors/PerFrameLinearMotion.h"
+#include "ZBE/core/drawers/Drawer.h"
 
-using namespace zbe;
+#include "ZBE/core/tools/containers/ListManager.h"
 
-class DummyMovable : public Movable<2> {
-public:
-  DummyMovable():vel({1.0,1.0}),pos({1.0,1.0}){}
+namespace Punishers {
 
-  void setVelocity(Vector<2> ) {}
-
-  Vector<2> getVelocity() const {
-      return vel;
-  }
-
-  Point<2> getPosition() const {
-    return pos;
-  }
-
-  void setPosition(Point<2> position) {
-    pos = position;
-  }
-private:
-  Vector2D vel;
-  Point2D pos;
-};
-
-template<unsigned s>
-class PerFrameLinearMotion : public Behavior<Movable<s> > {
+class MockEntity {
   public:
-    PerFrameLinearMotion() {}
-
-    ~PerFrameLinearMotion() {}
-
-    void apply(Movable<s> * entity){
-      Point<s> endPos = entity->getPosition() + entity->getVelocity();
-      entity->setPosition(endPos);
-    }
+    MockEntity():data(0){}
+    int data;
 };
 
+class MockPunish {
+  public:
+    void apply(MockEntity * e) { e->data = 1; };
+};
 
-TEST(Punishers, DISABLED_BehaviorDaemon) {
-  Behavior<Movable<2> > * behav = new PerFrameLinearMotion<2>();
-  std::vector<Movable<2>*> * entities = new std::vector<Movable<2>*>();
-  DummyMovable * mov1 = new DummyMovable();
-  DummyMovable * mov2 = new DummyMovable();
-  DummyMovable * mov3 = new DummyMovable();
-  entities->push_back(mov1);
-  entities->push_back(mov2);
-  entities->push_back(mov3);
-  // Expect all position to be 1.0, 1.0
-  Point<2> finalPos{1.0,1.0};
-  Daemon * master = new BehaviorDaemon<std::vector<Movable<2>*>, Movable<2> >(behav, entities);
-  EXPECT_EQ(mov1->getPosition().x,finalPos.x);
-  EXPECT_EQ(mov2->getPosition().x,finalPos.x);
-  EXPECT_EQ(mov3->getPosition().x,finalPos.x);
-  EXPECT_EQ(mov1->getPosition().y,finalPos.y);
-  EXPECT_EQ(mov2->getPosition().y,finalPos.y);
-  EXPECT_EQ(mov3->getPosition().y,finalPos.y);
-  // Expect all position to be increased to 2.0, 2.0
-  finalPos.x=2.0;finalPos.y=2.0;
-  master->run();
-  EXPECT_EQ(mov1->getPosition().x,finalPos.x);
-  EXPECT_EQ(mov2->getPosition().x,finalPos.x);
-  EXPECT_EQ(mov3->getPosition().x,finalPos.x);
-  EXPECT_EQ(mov1->getPosition().y,finalPos.y);
-  EXPECT_EQ(mov2->getPosition().y,finalPos.y);
-  EXPECT_EQ(mov3->getPosition().y,finalPos.y);
-  // Expect all position to be increased to 3.0, 3.0
-  finalPos.x=3.0;finalPos.y=3.0;
-  master->run();
-  EXPECT_EQ(mov1->getPosition().x,finalPos.x);
-  EXPECT_EQ(mov2->getPosition().x,finalPos.x);
-  EXPECT_EQ(mov3->getPosition().x,finalPos.x);
-  EXPECT_EQ(mov1->getPosition().y,finalPos.y);
-  EXPECT_EQ(mov2->getPosition().y,finalPos.y);
-  EXPECT_EQ(mov3->getPosition().y,finalPos.y);
+class MockBehavior: public zbe::Behavior<MockEntity> {
+  public:
+    void apply(MockEntity * e) { e->data = 2; };
+};
+
+class MockDrawer: public zbe::Drawer<MockEntity> {
+  public:
+    void apply(MockEntity * e) { e->data = 3; };
+};
+
+TEST(Punishers, PunisherDaemon) {
+    MockEntity a,b,c,d;
+    zbe::ListManager<std::forward_list<MockEntity*> > & lm =zbe::ListManager<std::forward_list<MockEntity*> >::getInstance();
+    lm.insert(0,new std::forward_list<MockEntity*>());
+    lm.insert(1,new std::forward_list<MockEntity*>());
+    std::forward_list<MockEntity*> * eList0 = lm.get(0);
+    std::forward_list<MockEntity*> * eList1 = lm.get(1);
+    eList0->push_front(&a);
+    eList0->push_front(&b);
+    eList1->push_front(&c);
+    eList1->push_front(&d);
+    zbe::Daemon* daemon = new zbe::PunisherDaemon<MockPunish,std::forward_list<MockEntity*> >(new MockPunish, 0);
+    daemon->run();
+    EXPECT_EQ(1, a.data) << "a must has been punished";
+    EXPECT_EQ(1, b.data) << "b must has been punished";
+    EXPECT_EQ(0, c.data) << "c must has not been punished";
+    EXPECT_EQ(0, d.data) << "d must has not been punished";
+    delete eList0;
+    delete eList1;
 }
-*/
+
+TEST(Punishers, BehaviorDaemon) {
+    MockEntity a,b,c,d;
+    zbe::ListManager<std::forward_list<MockEntity*> > & lm =zbe::ListManager<std::forward_list<MockEntity*> >::getInstance();
+    lm.insert(0,new std::forward_list<MockEntity*>());
+    lm.insert(1,new std::forward_list<MockEntity*>());
+    std::forward_list<MockEntity*> * eList0 = lm.get(0);
+    std::forward_list<MockEntity*> * eList1 = lm.get(1);
+    eList0->push_front(&a);
+    eList0->push_front(&b);
+    eList1->push_front(&c);
+    eList1->push_front(&d);
+    zbe::Daemon* daemon = new zbe::BehaviorDaemon<MockEntity, std::forward_list<MockEntity*> >(new MockBehavior, 0);
+    daemon->run();
+    EXPECT_EQ(2, a.data) << "a must has been punished";
+    EXPECT_EQ(2, b.data) << "b must has been punished";
+    EXPECT_EQ(0, c.data) << "c must has not been punished";
+    EXPECT_EQ(0, d.data) << "d must has not been punished";
+    delete eList0;
+    delete eList1;
+} //BehaviorDaemon //DrawerDaemon
+
+TEST(Punishers, DrawerDaemon) {
+    MockEntity a,b,c,d;
+    zbe::ListManager<std::forward_list<MockEntity*> > & lm =zbe::ListManager<std::forward_list<MockEntity*> >::getInstance();
+    lm.insert(0,new std::forward_list<MockEntity*>());
+    lm.insert(1,new std::forward_list<MockEntity*>());
+    std::forward_list<MockEntity*> * eList0 = lm.get(0);
+    std::forward_list<MockEntity*> * eList1 = lm.get(1);
+    eList0->push_front(&a);
+    eList0->push_front(&b);
+    eList1->push_front(&c);
+    eList1->push_front(&d);
+    zbe::Daemon* daemon = new zbe::DrawerDaemon<MockEntity, std::forward_list<MockEntity*> >(new MockDrawer, 0);
+    daemon->run();
+    EXPECT_EQ(3, a.data) << "a must has been punished";
+    EXPECT_EQ(3, b.data) << "b must has been punished";
+    EXPECT_EQ(0, c.data) << "c must has not been punished";
+    EXPECT_EQ(0, d.data) << "d must has not been punished";
+    delete eList0;
+    delete eList1;
+}
+
+}
+
