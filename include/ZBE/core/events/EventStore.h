@@ -48,6 +48,10 @@ namespace zbe {
        */
       void clearStore();
 
+      /** \brief Returns the time of the contained events.
+      */
+      uint64_t getTime();
+
       /** \brief Get the current event collection.
        *  \return A constant event list.
        */

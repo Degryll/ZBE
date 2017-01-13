@@ -40,4 +40,8 @@ void EventStore::manageCurrent() {
   clearStore();
 }
 
+uint64_t EventStore::getTime() {
+  return (bettertime);
+}
+
 }
