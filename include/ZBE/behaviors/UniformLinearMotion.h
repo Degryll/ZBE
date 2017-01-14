@@ -10,8 +10,8 @@
 #ifndef ZBE_BEHAVIORS_UNIFORMLINEARMOTION_H_
 #define ZBE_BEHAVIORS_UNIFORMLINEARMOTION_H_
 
-#include "zbe/core/behaviors/Behavior.h"
-#include "zbe/archetypes/Mobile.h"
+#include "ZBE/core/behaviors/Behavior.h"
+#include "ZBE/archetypes/Mobile.h"
 #include "ZBE/core/tools/math/math.h"
 #include "ZBE/core/tools/math/Point.h"
 
