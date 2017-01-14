@@ -8,6 +8,8 @@
  */
 
  #include "ZBE/SDL/tools/SDLTimer.h"
+ #include "ZBE/core/tools/math/math.h"
+
 namespace zbe {
 
 SDLTimer::SDLTimer(bool startHere): sdl(SDL_Starter::getInstance(SDL_INIT_TIMER)), running(startHere), totalElapsedTime(0), lastTime(SDL_GetTicks()), lastLapTime(0) {}
@@ -16,7 +18,7 @@ SDLTimer::~SDLTimer() {sdl.quitSubSystem(SDL_INIT_TIMER);}
 void SDLTimer::start() {
   if (running == false) {
     running = true;
-    lastTime = SDL_GetTicks();
+    lastTime = SDL_GetTicks()*MILITONANO;
   }
 }
 
@@ -24,7 +26,7 @@ uint64_t SDLTimer::stop() {
   int lastLap = 0;
   if (running == true) {
     running = false;
-    lastLap = SDL_GetTicks() - lastTime;
+    lastLap = SDL_GetTicks()*MILITONANO - lastTime;
     lastLapTime=lastLap;
     totalElapsedTime += lastLap;
   }
@@ -39,7 +41,7 @@ void SDLTimer::reset() {
 
 uint64_t SDLTimer::lapTime() {
   uint64_t lastLap = -1;
-  uint64_t now = SDL_GetTicks();
+  uint64_t now = SDL_GetTicks()*MILITONANO;
   if (running == true) {
     lastLap = lastLapTime + now - lastTime;
     lastTime = now;
@@ -55,7 +57,7 @@ uint64_t SDLTimer::totalTime() {
   totalElapsed = totalElapsedTime;
 
   if (running == true) {
-    totalElapsed += SDL_GetTicks() - lastTime;
+    totalElapsed += SDL_GetTicks()*MILITONANO - lastTime;
   }
   return totalElapsed;
 }

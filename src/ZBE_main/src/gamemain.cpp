@@ -12,14 +12,17 @@
 #include "ZBE/core/events/generators/CollisionEventGenerator.h"
 #include "ZBE/core/events/generators/TimeEventGenerator.h"
 #include "ZBE/core/system/SysTime.h"
-#include "ZBE/SDL/tools/SDLTimer.h"
 #include "ZBE/core/tools/Timer.h"
 #include "ZBE/core/system/SysError.h"
+#include "ZBE/core/daemons/Punishers.h"
+#include "ZBE/SDL/tools/SDLTimer.h"
 #include "ZBE/SDL/system/SDLEventDispatcher.h"
 #include "ZBE/SDL/system/Window.h"
 #include "ZBE/SDL/drawers/SimpleSpriteSDLDrawer.h"
 #include "ZBE/entities/adaptors/implementations/SimpleDrawableSimpleSpriteAdaptor.h"
 #include "ZBE/entities/adaptors/implementations/BasePositionablePositionAdaptor.h"
+#include "ZBE/behaviors/UniformLinearMotion.h"
+#include "ZBE/archetypes/Mobile.h"
 
 #include "gamemain.h"
 #include "game/GameReactor.h"
@@ -90,10 +93,15 @@ int gamemain(int, char** ) {
   ball.setSimpleSpriteAdaptor(spriteAdaptor);
   zbe::BasePositionablePositionAdaptor<2> * positionableAdaptor = new zbe::BasePositionablePositionAdaptor<2>();
   ball.setPositionableAdaptor(positionableAdaptor);
-  game::StepInputHandler ihright(&ball, 5);
-  game::StepInputHandler ihleft(&ball, -5);
+  game::StepInputHandler ihright(&ball, 5, 0);
+  game::StepInputHandler ihleft(&ball, -5, 0);
   ieg.addHandler(zbe::ZBEK_a, &ihleft);
   ieg.addHandler(zbe::ZBEK_d, &ihright);
+  std::vector<zbe::Mobile<2>*> vmobile;
+  vmobile.push_back(&ball);
+  zbe::ListManager< std::vector<zbe::Mobile<2>*> >& lmmobile = zbe::ListManager< std::vector<zbe::Mobile<2>*> >::getInstance();
+  lmmobile.insert(1, &vmobile);
+  zbe::BehaviorDaemon< zbe::Mobile<2>, std::vector<zbe::Mobile<2>*> > bball(new zbe::UniformLinearMotion<2>(), 1);
   printf("|=================== Starting up system ===================|\n");fflush(stdout);
   printf("Starting SysTimer\n");fflush(stdout);
   sysTimer->start();
@@ -135,15 +143,27 @@ int gamemain(int, char** ) {
     //printf("initT = 0x%" PRIx64 " ", initT);fflush(stdout);
     //printf("endT = 0x%" PRIx64 "\n", endT);fflush(stdout);
 
-    /* Generating input events:
-     * It will take the events that sdlEventDist has stored
-     * into the InputReader and send it to the event store.
-     */
-    ieg.generate(initT,endT);
-    teg.generate(initT,endT);
-    ceg.generate(initT,endT);
+    //printf("init: %llu, end: %llu\n", initT, endT);
+    while (initT < endT) {
+      /* Generating input events:
+       * It will take the events that sdlEventDist has stored
+       * into the InputReader and send it to the event store.
+       */
+      ieg.generate(initT,endT);
+      teg.generate(initT,endT);
+      ceg.generate(initT,endT);
 
-    store.manageCurrent();
+      uint64_t eventTime = store.getTime();
+      if (eventTime <= endT) {
+        bball.run(eventTime-initT);
+        store.manageCurrent();
+        initT = eventTime;
+      } else {
+        bball.run(endT-initT);
+        store.clearStore();
+        initT = endT;
+      }
+    }  // while frameTime
 
     drawer.apply(ball.getSimpleSprite().get());
 

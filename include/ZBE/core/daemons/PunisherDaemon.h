@@ -31,9 +31,7 @@ namespace zbe {
        * \param daemon Pointer to the daemon desired to be stored and executed.
        *
        */
-      PunisherDaemon(P * punish, uint64_t listId ):punish(punish), eList(nullptr) {
-        eList = zbe::ListManager<L>::getInstance().get(listId);
-      }
+      PunisherDaemon(P * punish, uint64_t listId ) : punish(punish), eList(zbe::ListManager<L>::getInstance().get(listId)) {}
 
       /** \brief Destroys the PunisherDaemon and the contained punisher.
        */

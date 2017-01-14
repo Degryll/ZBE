@@ -17,6 +17,7 @@ namespace zbe {
 class Drawable {
   public:
     virtual ~Drawable() {}
+
     virtual int getX() = 0;
     virtual int getY() = 0;
     virtual unsigned getW() = 0;

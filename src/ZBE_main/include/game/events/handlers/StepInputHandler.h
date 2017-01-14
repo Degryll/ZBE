@@ -2,9 +2,7 @@
 #define ZBE_MAIN_GAME_EVENTS_HANDLERS_STEPINPUTHANDLER
 
 #include "ZBE/core/events/handlers/InputHandler.h"
-#include "ZBE/archetypes/Position.h"
-
-#include <cstdio>
+#include "ZBE/core/tools/math/Vector.h"
 
 namespace game {
 
@@ -13,17 +11,21 @@ class StepInputHandler : public zbe::InputHandler {
 	  StepInputHandler(const StepInputHandler&) = delete;
 	  void operator=(const StepInputHandler&) = delete;
 
-  	StepInputHandler(zbe::Position<2>* position, int movement) : p(position), m(movement) {}
+  	StepInputHandler(zbe::Mobile<2>* entity, int movement, int dimension) : e(entity), m(movement), d(dimension) {}
 
-  	void run(float ) {
-      zbe::Point<2>& aux = p->getPosition();
-      aux[0] += m;
-      p->setPosition(aux);
+  	void run(float status) {
+      zbe::Vector<2>& aux = e->getVelocity();
+      if( status) {
+        aux[d] = m;
+      } else {
+        aux[d] = 0;
+      }
   	}
 
 	private:
-  	zbe::Position<2>* p;
+  	zbe::Mobile<2>* e;
     int m;
+    int d;
 };
 } //namespace game
 

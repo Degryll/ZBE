@@ -178,7 +178,6 @@
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleDrawable.h" />
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleMobile.h" />
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimplePosition.h" />
-		<Unit filename="../../../include/ZBE/behaviors/InputManagedMovement.h" />
 		<Unit filename="../../../include/ZBE/behaviors/UniformLinearMotion.h" />
 		<Unit filename="../../../include/ZBE/core/behaviors/Behavior.h" />
 		<Unit filename="../../../include/ZBE/core/daemons/Daemon.h" />

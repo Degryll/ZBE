@@ -16,7 +16,7 @@
 namespace zbe {
 
 template <unsigned s>
-class SimplePosition : public Position<s> {
+class SimplePosition : virtual public Position<s> {
   public:
     SimplePosition() : p() {}
     SimplePosition(std::initializer_list<double> l) : p(l) {}

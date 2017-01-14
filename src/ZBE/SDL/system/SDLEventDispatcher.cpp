@@ -8,6 +8,7 @@
  */
 
 #include "ZBE/SDL/system/SDLEventDispatcher.h"
+#include "ZBE/core/tools/math/math.h"
 
 namespace zbe {
 
@@ -52,7 +53,7 @@ inline bool SDLEventDispatcher::tryMouseEvent(SDL_Event &event){
 }
 
 inline void SDLEventDispatcher::setState(uint32_t key, float value, uint64_t time){
-  InputStatus is(key,value,time);
+  InputStatus is(key,value,time*MILITONANO);
   inputBuffer.insert(is);
 }
 

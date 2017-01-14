@@ -16,7 +16,7 @@
 namespace zbe {
 
 template <unsigned s>
-class Mobile : public Position<s> {
+class Mobile : virtual public Position<s> {
   public:
     virtual ~Mobile() {}
 
