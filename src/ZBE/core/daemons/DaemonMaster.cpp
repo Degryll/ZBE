@@ -2,9 +2,9 @@
 
 namespace zbe {
 
-void DaemonMaster::run(){
+void DaemonMaster::run(uint64_t time){
   for(auto it = daemonList.begin(); it < daemonList.end(); ++it) {
-    (*it)->run();
+    (*it)->run(time);
   }
 }
 

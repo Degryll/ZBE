@@ -41,7 +41,7 @@ namespace zbe {
 
       /** \brief It will run the Behavior over the entity list.
        */
-      void run();
+      void run(uint64_t time);
 
     private:
       P *punish;
@@ -55,13 +55,13 @@ namespace zbe {
   }
 
   template<typename P, typename L>
-  void PunisherDaemon<P, L>::run(){
+  void PunisherDaemon<P, L>::run(uint64_t time){
     for(auto e : (*eList)) {
-      punish->apply(e, 0);
+      punish->apply(e, time);
     }
   }
 
-}
+}  // namespace zbe
 
 
 #endif // CORE_DAEMONS_PUNISHERDAEMON_H_

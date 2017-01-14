@@ -18,7 +18,7 @@ namespace zbe {
 
       /** \brief Do the actual Daemon job.
        */
-      virtual void run() = 0;
+      virtual void run(uint64_t time) = 0;
 
       /** \brief Destructor.
        */

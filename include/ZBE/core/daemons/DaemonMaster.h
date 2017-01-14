@@ -31,7 +31,7 @@ class DaemonMaster : public Daemon {
 
     /** \brief It will run all Daemons added to this DaemonMaster.
      */
-    void run();
+    void run(uint64_t time);
 
     /** \brief Add a Daemon to be run by this Daemon.
      *  The given Daemon will be stored by this Daemon and destroyed with it.

@@ -14,7 +14,7 @@ class DaemonTestImp : public zbe::Daemon{
       called = false;
     }
 
-    virtual void run(){
+    virtual void run(uint64_t){
       called = true;
     }
 
@@ -22,11 +22,13 @@ class DaemonTestImp : public zbe::Daemon{
     bool &called;
 };
 
+const uint64_t dummytime = 0;
+
 TEST(Daemon, DaemonTestImpTest) {
   bool call = false;
   zbe::Daemon *d = new DaemonTestImp(call);
   EXPECT_FALSE(call) << "Nothing executed";
-  d->run();
+  d->run(dummytime);
   EXPECT_TRUE(call) << "Daemon called";
   delete d;
   EXPECT_FALSE(call) << "Daemon deleted";
@@ -40,7 +42,7 @@ TEST(Daemon, DaemonMaster) {
   master->addDaemon(std::shared_ptr<zbe::Daemon>(new DaemonTestImp(call1)));
   master->addDaemon(std::shared_ptr<zbe::Daemon>(new DaemonTestImp(call2)));
   master->addDaemon(std::shared_ptr<zbe::Daemon>(new DaemonTestImp(call3)));
-  master->run();
+  master->run(dummytime);
   EXPECT_TRUE(call1) << "daemon 1 called";
   EXPECT_TRUE(call2) << "daemon 2 called";
   EXPECT_TRUE(call3) << "daemon 3 called";
