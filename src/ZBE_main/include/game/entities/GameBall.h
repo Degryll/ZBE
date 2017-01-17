@@ -6,24 +6,36 @@
 #include "ZBE/archetypes/implementations/SimpleMobile.h"
 #include "ZBE/core/entities/adaptorentities/SimpleSpriteEntity.h"
 #include "ZBE/entities/adaptorentities/PositionableEntity.h"
+#include "ZBE/entities/adaptorentities/MovableEntity.h"
+
+#include "game/GameReactor.h"
 
 namespace game{
 
-  class GameBall: public zbe::Drawable, public zbe::SimpleMobile<2>, public  zbe::SimpleSpriteEntityAdapted<zbe::Drawable>, public zbe::PositionableEntityAdapted<zbe::Position<2>, 2> {
+  class GameBall: public zbe::Drawable, public zbe::SimpleMobile<2>,
+                  public  zbe::SimpleSpriteEntityAdapted<zbe::Drawable>,
+                  public zbe::PositionableEntityAdapted<zbe::Position<2>, 2>,
+                  public zbe::MovableEntityAdapted<zbe::Mobile<2>, 2> {
     public:
-      GameBall(int x, int y, unsigned w, unsigned h, int graphics) : SimpleMobile({(double)x,(double)y}), SimpleSpriteEntityAdapted(this), PositionableEntityAdapted(this), w(w), h(h), graphics(graphics) {}
+      GameBall(int x, int y, unsigned w, unsigned h, int graphics) :
+                  SimpleMobile({(double)x,(double)y}),
+                  SimpleSpriteEntityAdapted(this),
+                  PositionableEntityAdapted(this),
+                  MovableEntityAdapted(this),
+                  w(w), h(h), graphics(graphics) {}
+
       ~GameBall(){};
 
-    int getX() {return (SimpleMobile::getPosition()[0]);}
-    int getY() {return (SimpleMobile::getPosition()[1]);}
-    unsigned getW()        {return (w);}
-    unsigned getH()        {return (h);}
-    int      getGraphics() {return (graphics);}
+      int getX() {return (SimpleMobile::getPosition()[0]);}
+      int getY() {return (SimpleMobile::getPosition()[1]);}
+      unsigned getW()        {return (w);}
+      unsigned getH()        {return (h);}
+      int      getGraphics() {return (graphics);}
 
-  private:
-    unsigned w; //!< width
-    unsigned h; //!< height
-    int graphics;    //!< Image index
+    private:
+      unsigned w; //!< width
+      unsigned h; //!< height
+      int graphics;    //!< Image index
   };
 
 }  // namespace game

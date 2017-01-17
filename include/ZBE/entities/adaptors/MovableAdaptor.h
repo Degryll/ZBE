@@ -18,9 +18,11 @@ namespace zbe {
 
 /** \brief Template that adapts an entity to a movable.
  */
-template <typename T, usigned s>
+template <typename T, unsigned s>
 class MovableAdaptor {
   public:
+    virtual ~MovableAdaptor(){};
+
     virtual std::shared_ptr< Movable<s> > getMovable(T* entity) = 0;
 };
 

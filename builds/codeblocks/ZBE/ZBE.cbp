@@ -239,6 +239,8 @@
 		<Unit filename="../../../include/ZBE/entities/adaptors/implementations/SimpleDrawableSimpleSpriteAdaptor.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/Bounceable.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/Movable.h" />
+		<Unit filename="../../../include/ZBE/entities/avatars/MovableCollisionator.h" />
+		<Unit filename="../../../include/ZBE/entities/avatars/MovableCollisioner.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/Positionable.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/BaseMovable.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/BasePositionable.h" />

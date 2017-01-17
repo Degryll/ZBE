@@ -13,7 +13,8 @@
 #include <memory>
 
 #include "ZBE/entities/avatars/Movable.h"
-#include "ZBE/entities/avatars/BaseMovable.h"
+#include "ZBE/entities/adaptors/MovableAdaptor.h"
+#include "ZBE/entities/avatars/implementations/BaseMovable.h"
 #include "ZBE/archetypes/Mobile.h"
 
 namespace zbe {
@@ -23,7 +24,10 @@ namespace zbe {
 template <unsigned s>
 class BaseMovableMobileAdaptor : public MovableAdaptor<Mobile<s>, s> {
   public:
-    std::shared_ptr< Movable<s> > getMovable(Mobile<s>* entity) {return (new BaseMovable<s>(entity));}
+    std::shared_ptr<Movable<s> > getMovable(Mobile<s>* entity) {
+        std::shared_ptr<Movable<s> > p(new BaseMovable<s>(entity));
+        return (p);
+    }
 };
 
 }  // namespace zbe

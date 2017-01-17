@@ -22,6 +22,7 @@ namespace zbe {
 template <unsigned s>
 class MovableEntity {
   public:
+    virtual ~MovableEntity(){}
 
     virtual std::shared_ptr< Movable<s> > getMovable() = 0;
 
@@ -30,17 +31,22 @@ class MovableEntity {
 /** \brief Entity that can be seen as a movable using an adaptor.
  */
 template <typename T, unsigned s>
-class MovableEntityAdapted : public MovableEntity {
+class MovableEntityAdapted : public MovableEntity<s> {
   public:
-    MovableEntityAdapted(T* entity) : entity(entity) {}
+    MovableEntityAdapted(const MovableEntityAdapted&) = delete;
+    void operator=(const MovableEntityAdapted&) = delete;
 
-    void setAdaptor(MovableAdaptor<s> *adaptor) {a = adaptor;}
+    MovableEntityAdapted(T* entity) : entity(entity), a(nullptr) {}
+
+    virtual ~MovableEntityAdapted(){}
+
+    void setMovableAdaptor(MovableAdaptor<T, s> *adaptor) {a = adaptor;}
 
     std::shared_ptr< Movable<s> > getMovable() {return (a->getMovable(entity));}
 
   private:
     T* entity;
-    MovableAdaptor<s> *a;
+    MovableAdaptor<T, s> *a;
 };
 
 }  // namespace zbe

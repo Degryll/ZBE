@@ -3,6 +3,7 @@
 #include <chrono>
 #include <thread>
 
+#include "ZBE/core/daemons/DaemonMaster.h"
 #include "ZBE/core/events/Event.h"
 #include "ZBE/core/events/EventStore.h"
 #include "ZBE/core/events/TimeEvent.h"
@@ -21,6 +22,7 @@
 #include "ZBE/SDL/drawers/SimpleSpriteSDLDrawer.h"
 #include "ZBE/entities/adaptors/implementations/SimpleDrawableSimpleSpriteAdaptor.h"
 #include "ZBE/entities/adaptors/implementations/BasePositionablePositionAdaptor.h"
+#include "ZBE/entities/adaptors/implementations/BaseMovableMobileAdaptor.h"
 #include "ZBE/behaviors/UniformLinearMotion.h"
 #include "ZBE/archetypes/Mobile.h"
 
@@ -37,7 +39,8 @@ int gamemain(int, char** ) {
     COLLISIONEVENT = 1,
     TIMEEVENT = 2,
 
-    COLLISIONATORLIST = 1
+    COLLISIONATORLIST = 1,
+    MOBILELIST = 1
   };
 
   const char ballfilename[] = "data/images/zombieball/zomball_st_32.png";
@@ -85,6 +88,13 @@ int gamemain(int, char** ) {
   ballgraphics = window.loadImg(ballfilename);
   printf("Building the drawer to paint SimpleSprite's \n");fflush(stdout);
   zbe::SimpleSpriteSDLDrawer drawer(&window);
+  printf("|-------------------- Daemons ----------------------|\n");fflush(stdout);
+  zbe::DaemonMaster dMaster;
+  std::vector<zbe::Mobile<2>*> vmobile;
+  zbe::ListManager< std::vector<zbe::Mobile<2>*> >& lmmobile = zbe::ListManager< std::vector<zbe::Mobile<2>*> >::getInstance();
+  lmmobile.insert(MOBILELIST, &vmobile);
+  std::shared_ptr<zbe::Daemon> bball(new  zbe::BehaviorDaemon< zbe::Mobile<2>, std::vector<zbe::Mobile<2>*> >(new zbe::UniformLinearMotion<2>(), MOBILELIST));
+  dMaster.addDaemon(bball);
   printf("|------------------- Creating entities --------------------|\n");fflush(stdout);
   printf("Creating a ball and giving it a position and size\n");fflush(stdout);
   game::GameBall ball(320,240,32,32,ballgraphics);
@@ -92,16 +102,15 @@ int gamemain(int, char** ) {
   zbe::SimpleSpriteAdaptor<zbe::Drawable>* spriteAdaptor = new zbe::SimpleDrawableSimpleSpriteAdaptor();
   ball.setSimpleSpriteAdaptor(spriteAdaptor);
   zbe::BasePositionablePositionAdaptor<2> * positionableAdaptor = new zbe::BasePositionablePositionAdaptor<2>();
+  zbe::BaseMovableMobileAdaptor<2> * movableAdaptor = new zbe::BaseMovableMobileAdaptor<2>();
   ball.setPositionableAdaptor(positionableAdaptor);
+  ball.setMovableAdaptor(movableAdaptor);
   game::StepInputHandler ihright(&ball, 5, 0);
   game::StepInputHandler ihleft(&ball, -5, 0);
   ieg.addHandler(zbe::ZBEK_a, &ihleft);
   ieg.addHandler(zbe::ZBEK_d, &ihright);
-  std::vector<zbe::Mobile<2>*> vmobile;
   vmobile.push_back(&ball);
-  zbe::ListManager< std::vector<zbe::Mobile<2>*> >& lmmobile = zbe::ListManager< std::vector<zbe::Mobile<2>*> >::getInstance();
-  lmmobile.insert(1, &vmobile);
-  zbe::BehaviorDaemon< zbe::Mobile<2>, std::vector<zbe::Mobile<2>*> > bball(new zbe::UniformLinearMotion<2>(), 1);
+  /* ILL BE BACK *///ctl.insert(&ball);
   printf("|=================== Starting up system ===================|\n");fflush(stdout);
   printf("Starting SysTimer\n");fflush(stdout);
   sysTimer->start();
@@ -155,11 +164,11 @@ int gamemain(int, char** ) {
 
       uint64_t eventTime = store.getTime();
       if (eventTime <= endT) {
-        bball.run(eventTime-initT);
+        dMaster.run(eventTime-initT);
         store.manageCurrent();
         initT = eventTime;
       } else {
-        bball.run(endT-initT);
+        dMaster.run(endT-initT);
         store.clearStore();
         initT = endT;
       }

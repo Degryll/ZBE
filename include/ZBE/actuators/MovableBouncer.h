@@ -15,20 +15,20 @@
 #include "ZBE/core/tools/math/math.h"
 #include "ZBE/core/tools/math/Point.h"
 
-#include "ZBE/entities/avatars/Movable.h"
+#include "ZBE/entities/avatars/MovableCollisioner.h"
 #include "ZBE/entities/avatars/Bounceable.h"
 
 namespace zbe {
 
 
-/** \brief Actuator capable of making a Movable bounce in a Bounceable.
+/** \brief Actuator capable of making a MovableCollisioner bounce in a Bounceable.
  */
 template <typename R, unsigned s>
-class MovableBouncer: public Actuator<Movable<R, s>, R> {
+class MovableBouncer: public Actuator<MovableCollisioner<R, s>, R> {
   public:
     void act(Bounceable * b) {
-      Movable<R, s> * m = Actuator<Movable<R, s>, R>::getCollisioner();
-      CollisionData * cd = Actuator<Movable<R, s>, R>::getCollisionData();
+      MovableCollisioner<R, s> * m = Actuator<MovableCollisioner<R, s>, R>::getCollisioner();
+      CollisionData * cd = Actuator<MovableCollisioner<R, s>, R>::getCollisionData();
 
       Vector<s> v = m->getVelocity();
       Vector<s> n = m->getPosition() - cd->getPoint();
