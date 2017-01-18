@@ -2,8 +2,8 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file CollisionEventGenerator.h
  * @since 2016-06-05
- * @date 2016-08-04
- * @author Degryll
+ * @date 2017-01-18
+ * @author Degryll Ludo
  * @brief Generate collision events.
  */
 
@@ -45,28 +45,7 @@ class CollisionEventGenerator {
      * \param initTime Initial time of the frame
      * \param endTime End time of the frame
      */
-    void generate(uint64_t initTime, uint64_t endTime){
-      uint64_t totalTime = endTime - initTime;
-      Point2D point;
-
-      TicketedForwardList<CollisionatorEntity<R>*>* ctl = lmct.get(id);
-
-      for(auto it = ctl->begin(); it != ctl->end(); it++) {
-        std::shared_ptr<Collisionator<R> > cator = (*it)->getCollisionator();
-        const std::forward_list<uint64_t>& cl = cator->getCollisionablesLists();
-        for(auto jt = cl.begin(); jt != cl.end(); jt++) {
-          TicketedForwardList<CollisionerEntity<R>*>* cnl = lmcn.get(*jt);
-          for(auto kt = cnl->begin(); kt != cnl->end(); kt++) {
-            std::shared_ptr<Collisioner<R> > coner = (*kt)->getCollisioner();
-            if(cs.select(*cator, *coner, totalTime, point)) {
-              CollisionData cd(point);
-              es.storeEvent(new CollisionEvent2D<R>(eventId, initTime+totalTime, cator, cd, (*kt)->getReactObject()));
-              es.storeEvent(new CollisionEvent2D<R>(eventId, initTime+totalTime, coner, cd, (*it)->getReactObject()));
-            }  // if collision
-          } // for each collisionable
-        }  // for collisionable list
-      }  // for each collisionator
-    }
+    void generate(uint64_t initTime, uint64_t endTime);
 
   private:
     uint64_t id;  //!< id for the list of collisionators.
@@ -77,6 +56,28 @@ class CollisionEventGenerator {
     ListManager<TicketedForwardList<CollisionatorEntity<R>*> >& lmct;
     ListManager<TicketedForwardList<CollisionerEntity<R>*> >& lmcn;
 };
+
+template <typename R>
+void CollisionEventGenerator<R>::generate(uint64_t initTime, uint64_t endTime) {
+  uint64_t totalTime = endTime - initTime;
+  Point2D point;
+
+  TicketedForwardList<CollisionatorEntity<R>*>* ctl = lmct.get(id);
+
+  for(auto catorEntity : (*ctl)) {
+    std::shared_ptr<Collisionator<R> > cator = catorEntity->getCollisionator();
+    uint64_t cablesId = cator->getCollisionablesListId();
+    TicketedForwardList<CollisionerEntity<R>*>* cnl = lmcn.get(cablesId);
+    for(auto conerEntity : (*cnl)) {
+      std::shared_ptr<Collisioner<R> > coner = conerEntity->getCollisioner();
+      if(cs.select(*cator, *coner, totalTime, point)) {
+        CollisionData cd(point);
+        es.storeEvent(new CollisionEvent2D<R>(eventId, initTime+totalTime, cator, cd, conerEntity->getReactObject()));
+        es.storeEvent(new CollisionEvent2D<R>(eventId, initTime+totalTime, coner, cd, catorEntity->getReactObject()));
+      }  // if collision
+    }  // for each collisionable
+  }  // for each collisionator
+}
 
 }  // namespace zbe
 

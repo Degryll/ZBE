@@ -32,7 +32,7 @@ class Coner : public zbe::CollisionerCommon<Coner, R> {
 
 class Cator : public zbe::CollisionatorCommon<Cator, R> {
   public:
-    Cator(zbe::CollisionObject<R> * co, std::forward_list<zbe::Actuator<Cator, R>* >* actuators, int id) : zbe::CollisionatorCommon<Cator, R>(this, co, actuators),  id(id), vs(0) {}
+    Cator(zbe::CollisionObject<R> * co, std::forward_list<zbe::Actuator<Cator, R>* >* actuators, int id, uint64_t listId) : zbe::CollisionatorCommon<Cator, R>(this, co, actuators, listId),  id(id), vs(0) {}
     ~Cator(){}
     int id;
   	int vs;
@@ -81,8 +81,8 @@ public:
   DummyCollisionatorEntity(const DummyCollisionatorEntity&) = delete;
   void operator=(const DummyCollisionatorEntity&) = delete;
 
-  DummyCollisionatorEntity(zbe::CollisionObject<R>* object, std::forward_list<zbe::Actuator<Cator,R>* >* actuators)
-    : object(object), actuators(actuators), c(std::make_shared<Cator>(object, actuators, 37)), r(std::make_shared<Robject>(37)) {}
+  DummyCollisionatorEntity(zbe::CollisionObject<R>* object, std::forward_list<zbe::Actuator<Cator,R>* >* actuators, uint64_t listId)
+    : object(object), actuators(actuators), c(std::make_shared<Cator>(object, actuators, 37, listId)), r(std::make_shared<Robject>(37)) {}
 
   std::shared_ptr<zbe::ReactObject<R> >   getReactObject()   { return r;}
   std::shared_ptr<zbe::Collisioner<R> >   getCollisioner() { return c;}
@@ -112,7 +112,7 @@ TEST(CollisionEventGenerator, Generate) {
   actcator.push_front(&cta);
 
   DummyCollisionerEntity dconer(&sbox, &actconer);
-  DummyCollisionatorEntity dcator(&cc, &actcator);
+  DummyCollisionatorEntity dcator(&cc, &actcator, 1);
 
   cnl.push_front(&dconer);
   ctl.push_front(&dcator);
@@ -122,8 +122,6 @@ TEST(CollisionEventGenerator, Generate) {
 
   lmcn.insert(1, &cnl);
   lmct.insert(2, &ctl);
-
-  dcator.getCollisionator()->addToCollisionablesLists(1);
 
   zbe::CollisionEventGenerator<R> ceg(2, 1);
 

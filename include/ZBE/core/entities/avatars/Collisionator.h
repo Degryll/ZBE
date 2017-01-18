@@ -3,7 +3,7 @@
  * @file Collisionator.h
  * @since 2016-03-24
  * @date 2016-03-24
- * @author Degryll
+ * @author Degryll Ludo
  * @brief Defines a Collisioner that collide with others Collisioner.
  */
 
@@ -22,29 +22,18 @@ namespace zbe {
 template <typename R>
 class Collisionator : public Collisioner<R> {
   public:
-    Collisionator(CollisionObject<R>* object) : Collisioner<R>(object), cl() {}
+    Collisionator(CollisionObject<R>* object, uint64_t collisionablesListId) : Collisioner<R>(object), id(collisionablesListId) {}
 
     virtual ~Collisionator(){};
 
-    /** \brief Register a new list of collisionables.
-     *  \param id Internal id to identify the list.
-     *  \param listId Global id of the List.
-     */
-    inline void addToCollisionablesLists(uint64_t id) { cl.push_front(id); }
-
-    /** \brief Remove a list of collisionables.
-     *  \param id Internal id to identify the list to be removed.
-     */
-    inline void removeFromCollisionablesLists(uint64_t id) { cl.remove(id); }  // TODO not has efficient has one may expect.
-
-    /** \brief Returns the global id of the list of Collisionable identify by the Internal id.
-     *  \param id Internal id to identify the list.
+    /** \brief Returns the global id of the list of Collisionables identify by an id.
+     *  \param id Id to identify the list.
      *  \return The global id of the list.
      */
-    inline const std::forward_list<uint64_t>& getCollisionablesLists() { return (cl); }
+    inline uint64_t getCollisionablesListId() { return (id); }
 
   private:
-    std::forward_list<uint64_t> cl;  //!< Container with ids of list of collisionables
+    uint64_t id;  //!< Id of list of collisionables
 
 };
 
@@ -56,7 +45,7 @@ class CollisionatorCommon : public Collisionator<R> {
     /** \brief A collisionable entity is defined by a collision object.
       * \param object A collision object that defines the "physical shape" of the entity.
       */
-    CollisionatorCommon(T* collisionator, CollisionObject<R>* object, std::forward_list<Actuator<T,R>* > * actuators) : Collisionator<R>(object), al(actuators), c(collisionator) {}
+    CollisionatorCommon(T* collisionator, CollisionObject<R>* object, std::forward_list<Actuator<T,R>* > * actuators, uint64_t collisionablesListId) : Collisionator<R>(object, collisionablesListId), al(actuators), c(collisionator) {}
     CollisionatorCommon(const CollisionatorCommon<T,R>&) = delete;
     void operator=(const CollisionatorCommon<T,R>&) = delete;
 

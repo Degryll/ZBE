@@ -5,49 +5,23 @@
 #include "ZBE/core/tools/math/collisions/CollisionData.h"
 #include "ZBE/core/tools/math/collisions/CollisionSystemSolver.h"
 
+#include <cstdint>
+
 class R { // Reactor mock
 };
 
 class Cator : public zbe::Collisionator<R> {
   public:
-    Cator(zbe::CollisionObject<R> * co):zbe::Collisionator<R>(co){};
+    Cator(zbe::CollisionObject<R> * co, uint64_t listId):zbe::Collisionator<R>(co, listId){};
     ~Cator(){};
     void react(zbe::CollisionData*, zbe::ReactObject<R>*) {};
 };
 
 TEST(Collisionator, Collisionables) {
   zbe::StaticAABB2D<R>*  box = new zbe::StaticAABB2D<R>();
-  Cator c(box); //Collisionator
+  Cator c(box, 1); //Collisionator
 
-  c.addToCollisionablesLists(1);
-  c.addToCollisionablesLists(2);
-  c.addToCollisionablesLists(3);
-  c.addToCollisionablesLists(4);
+  uint64_t id = c.getCollisionablesListId();
 
-  const std::forward_list<uint64_t>& cl = c.getCollisionablesLists();
-  auto it = cl.begin();
-
-  EXPECT_EQ(4,*it) << "Add List Id for Collisonable. - 4";
-  ++it;
-  EXPECT_EQ(3,*it) << "Add List Id for Collisonable. - 3";
-  ++it;
-  EXPECT_EQ(2,*it) << "Add List Id for Collisonable. - 2";
-  ++it;
-  EXPECT_EQ(1,*it) << "Add List Id for Collisonable. - 1";
-  ++it;
-  EXPECT_EQ(cl.end(),it) << "End list.";
-
-  c.removeFromCollisionablesLists(2);
-  c.addToCollisionablesLists(5);
-  it = cl.begin();
-
-  EXPECT_EQ(5,*it) << "Add List Id for Collisonable. - 5";
-  ++it;
-  EXPECT_EQ(4,*it) << "Sill in List Id for Collisonable. - 4";
-  ++it;
-  EXPECT_EQ(3,*it) << "Sill in List Id for Collisonable. - 3";
-  ++it;
-  EXPECT_EQ(1,*it) << "Sill in List Id for Collisonable. - 1";
-  ++it;
-  EXPECT_EQ(cl.end(),it) << "End list.";
+  EXPECT_EQ(1, id) << "Must save list";
 }

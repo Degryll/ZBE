@@ -3,7 +3,7 @@
  * @file BaseMovable.h
  * @since 2016-12-16
  * @date 2016-12-18
- * @author Degryll
+ * @author Degryll Ludo Batis
  * @brief This implements a base 1:1 avatar that can be moved.
  */
 
@@ -20,6 +20,9 @@ namespace zbe {
 template <unsigned s>
 class BaseMovable : public Movable<s> {
   public:
+    BaseMovable(const BaseMovable&) = delete;
+    void operator=(const BaseMovable&) = delete;
+
     BaseMovable(Mobile<s>* mobile) : m(mobile) {}
 
     void setPosition(std::initializer_list<double> l) {m->setPosition(l);}
