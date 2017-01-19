@@ -14,7 +14,7 @@
 
 #include "ZBE/core/tools/math/objects.h"
 #include "ZBE/core/tools/math/collisions/intersections.h"
-#include "ZBE/core/entities/avatars/Collisioner.h"
+#include "ZBE/core/tools/math/collisions/CollisionObject.h"
 
 namespace zbe {
 
@@ -127,6 +127,7 @@ public:
 
   ConstantMovingCircle() : CollisionObjectCommon<ConstantMovingCircle<R>, R>(this), circle(), direction() {}
   ConstantMovingCircle(Circle circle, Vector2D direction) : CollisionObjectCommon<ConstantMovingCircle<R>, R>(this), circle(circle), direction(direction) {}
+  ConstantMovingCircle(ConstantMovingCircle&& rhs) : CollisionObjectCommon<ConstantMovingCircle<R>, R>(this), circle(std::move(rhs.circle)), direction(std::move(rhs.direction)) {}
 
   /** \brief Return the circle.
    *  \return A circle.

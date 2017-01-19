@@ -170,9 +170,11 @@
 		<Unit filename="../../../include/ZBE/SDL/system/Window.h" />
 		<Unit filename="../../../include/ZBE/SDL/tools/SDLTimer.h" />
 		<Unit filename="../../../include/ZBE/actuators/MovableBouncer.h" />
+		<Unit filename="../../../include/ZBE/archetypes/ActivePhysicalObject.h" />
 		<Unit filename="../../../include/ZBE/archetypes/Damping.h" />
 		<Unit filename="../../../include/ZBE/archetypes/Drawable.h" />
 		<Unit filename="../../../include/ZBE/archetypes/Mobile.h" />
+		<Unit filename="../../../include/ZBE/archetypes/PhysicalObject.h" />
 		<Unit filename="../../../include/ZBE/archetypes/Position.h" />
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleDamping.h" />
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleDrawable.h" />
@@ -222,6 +224,7 @@
 		<Unit filename="../../../include/ZBE/core/tools/math/Point.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/Vector.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/collisions/CollisionData.h" />
+		<Unit filename="../../../include/ZBE/core/tools/math/collisions/CollisionObject.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/collisions/CollisionSystemSolver.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/collisions/intersections.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/math.h" />

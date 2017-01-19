@@ -97,7 +97,8 @@ int gamemain(int, char** ) {
   dMaster.addDaemon(bball);
   printf("|------------------- Creating entities --------------------|\n");fflush(stdout);
   printf("Creating a ball and giving it a position and size\n");fflush(stdout);
-  game::GameBall ball(320,240,32,32,ballgraphics);
+  game::GameBall ball(320,240,16,10,10, 3, 42, ballgraphics);
+  //game::GameBall ball(320,240,32,32,ballgraphics);
   printf("Building an sprite adaptor for the ball\n");fflush(stdout);
   zbe::SimpleSpriteAdaptor<zbe::Drawable>* spriteAdaptor = new zbe::SimpleDrawableSimpleSpriteAdaptor();
   ball.setSimpleSpriteAdaptor(spriteAdaptor);

@@ -54,7 +54,7 @@ T* ListManager<T>::get(uint64_t id) {
   auto it = l.find(id);
   if (it == l.end()) {
     SysError::setError("List not found.");
-    return (0);
+    return (nullptr);
   } else {
     return (it->second);
   }

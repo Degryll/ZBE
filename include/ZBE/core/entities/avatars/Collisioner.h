@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file Collsioner.h
  * @since 2016-11-22
- * @date 2016-11-22
+ * @date 2017-01-19
  * @author Degryll Ludo
  * @brief Defines an element that can participate in collisions.
  */
@@ -16,26 +16,10 @@
 #include "ZBE/core/entities/avatars/ReactObject.h"
 #include "ZBE/core/events/handlers/Actuator.h"
 #include "ZBE/core/tools/math/collisions/CollisionData.h"
+#include "ZBE/core/tools/math/collisions/CollisionObject.h"
 #include "ZBE/core/tools/containers/ListManager.h"
 
 namespace zbe {
-
-template <typename R>
-class CollisionSelector;
-template <typename R>
-class StaticAABB2D;
-template <typename R>
-class ConstantMovingCircle;
-
-template <typename R>
-class CollisionObject {
-public:
-  virtual ~CollisionObject() {}  //!< Empty destructor
-// You must add a new "accept" function for any new derived CollisionObject
-  virtual bool accept(CollisionSelector<R> &visitor, CollisionObject& param1, uint64_t& time, Point2D& point) = 0;       //!< Collision solver using the visitor pattern
-  virtual bool accept(CollisionSelector<R> &visitor, StaticAABB2D<R>& param1, uint64_t& time, Point2D& point) = 0;          //!< Collision solver using the visitor pattern
-  virtual bool accept(CollisionSelector<R> &visitor, ConstantMovingCircle<R>& param1, uint64_t& time, Point2D& point) = 0;  //!< Collision solver using the visitor pattern
-};
 
 /** \brief Every Collisioner (an entity involved in a collision) has a collision object defining his "physical shape".
  */
