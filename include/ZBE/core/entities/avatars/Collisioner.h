@@ -16,6 +16,7 @@
 #include "ZBE/core/entities/avatars/ReactObject.h"
 #include "ZBE/core/events/handlers/Actuator.h"
 #include "ZBE/core/tools/math/collisions/CollisionData.h"
+#include "ZBE/core/tools/containers/ListManager.h"
 
 namespace zbe {
 
@@ -75,28 +76,34 @@ class Collisioner {
 template <typename T, typename R>
 class CollisionerCommon : public Collisioner<R> {
   public:
-    /** \brief A collisionable entity is defined by a collision object.
-      * \param object A collision object that defines the "physical shape" of the entity.
-      */
-    CollisionerCommon(T * collisioner, CollisionObject<R>* object, std::forward_list<Actuator<T,R>* > * actuators) : Collisioner<R>(object), al(actuators), c(collisioner) {}
     CollisionerCommon(const CollisionerCommon&) = delete;
     void operator=(const CollisionerCommon&) = delete;
 
-    void react(CollisionData * collisionData, ReactObject<R> * reactObject) {
-      for (auto a : (*al)) {
-        a->run(c, reactObject, collisionData);
-      }
-    };
+    /** \brief A collisionable entity is defined by a collision object.
+      * \param object A collision object that defines the "physical shape" of the entity.
+      */
+    CollisionerCommon(T * collisioner, CollisionObject<R>* object, uint64_t actuatorsList) : Collisioner<R>(object), al(actuatorsList), c(collisioner), lma(ListManager<std::forward_list<Actuator<T,R>* > >::getInstance())  {}
+
+    void react(CollisionData * collisionData, ReactObject<R> * reactObject);
 
     /** \brief Empty destructor.
       */
     virtual ~CollisionerCommon() {}
 
   private:
-    std::forward_list<Actuator<T,R>* > * al;
+    uint64_t al;
     T * c;
+    ListManager<std::forward_list<Actuator<T,R>* > >& lma;
 
 };
+
+template <typename T, typename R>
+void CollisionerCommon<T, R>::react(CollisionData * collisionData, ReactObject<R> * reactObject) {
+  for (auto a : *(lma.get(al)) ) {
+    a->run(c, reactObject, collisionData);
+  }
+};
+
 
 } // namespace zbe
 

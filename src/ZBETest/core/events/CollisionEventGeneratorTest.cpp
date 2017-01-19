@@ -24,7 +24,7 @@ class R { // Reactor mock
 
 class Coner : public zbe::CollisionerCommon<Coner, R> {
   public:
-    Coner(zbe::CollisionObject<R> * co, std::forward_list<zbe::Actuator<Coner, R>* >* actuators, int id) : zbe::CollisionerCommon<Coner, R>(this, co, actuators),  id(id), vs(0){}
+    Coner(zbe::CollisionObject<R> * co, uint64_t actuators, int id) : zbe::CollisionerCommon<Coner, R>(this, co, actuators),  id(id), vs(0){}
     ~Coner(){}
     int id;
   	int vs;
@@ -32,7 +32,7 @@ class Coner : public zbe::CollisionerCommon<Coner, R> {
 
 class Cator : public zbe::CollisionatorCommon<Cator, R> {
   public:
-    Cator(zbe::CollisionObject<R> * co, std::forward_list<zbe::Actuator<Cator, R>* >* actuators, int id, uint64_t listId) : zbe::CollisionatorCommon<Cator, R>(this, co, actuators, listId),  id(id), vs(0) {}
+    Cator(zbe::CollisionObject<R> * co, uint64_t actuators, int id, uint64_t listId) : zbe::CollisionatorCommon<Cator, R>(this, co, actuators, listId),  id(id), vs(0) {}
     ~Cator(){}
     int id;
   	int vs;
@@ -63,15 +63,14 @@ public:
   DummyCollisionerEntity(const DummyCollisionerEntity&) = delete;
   void operator=(const DummyCollisionerEntity&) = delete;
 
-  DummyCollisionerEntity(zbe::CollisionObject<R> * object, std::forward_list<zbe::Actuator<Coner,R>* >* actuators)
-    : object(object), actuators(actuators), c(std::make_shared<Coner>(object, actuators, 42)), r(std::make_shared<Robject>(42)) {}
+  DummyCollisionerEntity(zbe::CollisionObject<R> * object, uint64_t actuators)
+    : object(object), c(std::make_shared<Coner>(object, actuators, 42)), r(std::make_shared<Robject>(42)) {}
 
   std::shared_ptr<zbe::Collisioner<R> > getCollisioner() { return c;}
   std::shared_ptr<zbe::ReactObject<R> > getReactObject() { return r;}
   int getId(){return c->id;}
   int getVs(){return c->vs;}
   zbe::CollisionObject<R>* object;
-  std::forward_list<zbe::Actuator<Coner,R>* >* actuators;
   std::shared_ptr<Coner> c;
   std::shared_ptr<Robject> r;
 };
@@ -81,8 +80,8 @@ public:
   DummyCollisionatorEntity(const DummyCollisionatorEntity&) = delete;
   void operator=(const DummyCollisionatorEntity&) = delete;
 
-  DummyCollisionatorEntity(zbe::CollisionObject<R>* object, std::forward_list<zbe::Actuator<Cator,R>* >* actuators, uint64_t listId)
-    : object(object), actuators(actuators), c(std::make_shared<Cator>(object, actuators, 37, listId)), r(std::make_shared<Robject>(37)) {}
+  DummyCollisionatorEntity(zbe::CollisionObject<R>* object, uint64_t actuators, uint64_t listId)
+    : object(object), c(std::make_shared<Cator>(object, actuators, 37, listId)), r(std::make_shared<Robject>(37)) {}
 
   std::shared_ptr<zbe::ReactObject<R> >   getReactObject()   { return r;}
   std::shared_ptr<zbe::Collisioner<R> >   getCollisioner() { return c;}
@@ -90,7 +89,6 @@ public:
   int getId(){return c->id;}
   int getVs(){return c->vs;}
   zbe::CollisionObject<R>* object;
-  std::forward_list<zbe::Actuator<Cator,R>* >* actuators;
   std::shared_ptr<Cator > c;
   std::shared_ptr<Robject> r;
 };
@@ -105,14 +103,19 @@ TEST(CollisionEventGenerator, Generate) {
   std::forward_list<zbe::Actuator<Coner,R>* > actconer;
   std::forward_list<zbe::Actuator<Cator,R>* > actcator;
 
+  zbe::ListManager<std::forward_list<zbe::Actuator<Coner,R>* > >& lmaconer = zbe::ListManager<std::forward_list<zbe::Actuator<Coner,R>* > >::getInstance();
+  zbe::ListManager<std::forward_list<zbe::Actuator<Cator,R>* > >& lmacator = zbe::ListManager<std::forward_list<zbe::Actuator<Cator,R>* > >::getInstance();
+  lmaconer.insert(1, &actconer);
+  lmacator.insert(1, &actcator);
+
   ConerActuator cna;
   CatorActuator cta;
 
   actconer.push_front(&cna);
   actcator.push_front(&cta);
 
-  DummyCollisionerEntity dconer(&sbox, &actconer);
-  DummyCollisionatorEntity dcator(&cc, &actcator, 1);
+  DummyCollisionerEntity dconer(&sbox, 1);
+  DummyCollisionatorEntity dcator(&cc, 1, 1);
 
   cnl.push_front(&dconer);
   ctl.push_front(&dcator);
@@ -135,4 +138,5 @@ TEST(CollisionEventGenerator, Generate) {
   EXPECT_EQ(37, dcator.getId()) << "Cator id must be 37";
   EXPECT_EQ(42, dcator.getVs()) << "Cator is must be 42";
 }
+
 } //namespace CollisionEventGeneratorTest

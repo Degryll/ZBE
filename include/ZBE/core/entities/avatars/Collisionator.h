@@ -45,24 +45,28 @@ class CollisionatorCommon : public Collisionator<R> {
     /** \brief A collisionable entity is defined by a collision object.
       * \param object A collision object that defines the "physical shape" of the entity.
       */
-    CollisionatorCommon(T* collisionator, CollisionObject<R>* object, std::forward_list<Actuator<T,R>* > * actuators, uint64_t collisionablesListId) : Collisionator<R>(object, collisionablesListId), al(actuators), c(collisionator) {}
+    CollisionatorCommon(T* collisionator, CollisionObject<R>* object, uint64_t actuatorsList, uint64_t collisionablesListId) : Collisionator<R>(object, collisionablesListId), al(actuatorsList), c(collisionator), lma(ListManager<std::forward_list<Actuator<T,R>* > >::getInstance()) {}
     CollisionatorCommon(const CollisionatorCommon<T,R>&) = delete;
     void operator=(const CollisionatorCommon<T,R>&) = delete;
 
-    void react(CollisionData* collisionData, ReactObject<R> * reactObject) {
-      for (auto a : (*al)) {
-        a->run(c, reactObject, collisionData);
-      }
-    };
+    void react(CollisionData* collisionData, ReactObject<R> * reactObject);
 
     /** \brief Empty destructor.
       */
     virtual ~CollisionatorCommon() {}
 
   private:
-    std::forward_list<Actuator<T,R>* >* al;
+    uint64_t al;
     T* c;
+    ListManager<std::forward_list<Actuator<T,R>* > >& lma;
 
+};
+
+template <typename T, typename R>
+void CollisionatorCommon<T, R>::react(CollisionData * collisionData, ReactObject<R> * reactObject) {
+  for (auto a : *(lma.get(al)) ) {
+    a->run(c, reactObject, collisionData);
+  }
 };
 
 }  // namespace zbe
