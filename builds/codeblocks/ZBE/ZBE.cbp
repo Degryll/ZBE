@@ -174,11 +174,13 @@
 		<Unit filename="../../../include/ZBE/archetypes/Damping.h" />
 		<Unit filename="../../../include/ZBE/archetypes/Drawable.h" />
 		<Unit filename="../../../include/ZBE/archetypes/Mobile.h" />
+		<Unit filename="../../../include/ZBE/archetypes/MobileAPO.h" />
 		<Unit filename="../../../include/ZBE/archetypes/PhysicalObject.h" />
 		<Unit filename="../../../include/ZBE/archetypes/Position.h" />
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleDamping.h" />
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleDrawable.h" />
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleMobile.h" />
+		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleMobileAPO.h" />
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimplePosition.h" />
 		<Unit filename="../../../include/ZBE/behaviors/UniformLinearMotion.h" />
 		<Unit filename="../../../include/ZBE/core/behaviors/Behavior.h" />
@@ -231,11 +233,14 @@
 		<Unit filename="../../../include/ZBE/core/tools/math/objects.h" />
 		<Unit filename="../../../include/ZBE/core/tools/text/utf8.h" />
 		<Unit filename="../../../include/ZBE/entities/adaptorentities/BounceableEntity.h" />
+		<Unit filename="../../../include/ZBE/entities/adaptorentities/MovableCollisionatorEntity.h" />
 		<Unit filename="../../../include/ZBE/entities/adaptorentities/MovableEntity.h" />
 		<Unit filename="../../../include/ZBE/entities/adaptorentities/PositionableEntity.h" />
 		<Unit filename="../../../include/ZBE/entities/adaptors/BounceableAdaptor.h" />
 		<Unit filename="../../../include/ZBE/entities/adaptors/MovableAdaptor.h" />
+		<Unit filename="../../../include/ZBE/entities/adaptors/MovableCollisionatorAdaptor.h" />
 		<Unit filename="../../../include/ZBE/entities/adaptors/PositionableAdaptor.h" />
+		<Unit filename="../../../include/ZBE/entities/adaptors/implementations/BaseMovableCatorMobileAPOAdaptor.h" />
 		<Unit filename="../../../include/ZBE/entities/adaptors/implementations/BaseMovableMobileAdaptor.h" />
 		<Unit filename="../../../include/ZBE/entities/adaptors/implementations/BasePositionablePositionAdaptor.h" />
 		<Unit filename="../../../include/ZBE/entities/adaptors/implementations/SimpleDampingBounceableAdaptor.h" />
@@ -246,6 +251,7 @@
 		<Unit filename="../../../include/ZBE/entities/avatars/MovableCollisioner.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/Positionable.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/BaseMovable.h" />
+		<Unit filename="../../../include/ZBE/entities/avatars/implementations/BaseMovableCator.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/BasePositionable.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/SimpleBounceable.h" />
 		<Unit filename="../../../include/ZBE/zombienoid/ZombienoidReactor.h" />

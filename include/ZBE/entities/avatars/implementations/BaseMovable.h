@@ -18,7 +18,7 @@ namespace zbe {
 /** \brief This implements a base 1:1 avatar that can be moved.
  */
 template <unsigned s>
-class BaseMovable : public Movable<s> {
+class BaseMovable : virtual public Movable<s> {
   public:
     BaseMovable(const BaseMovable&) = delete;
     void operator=(const BaseMovable&) = delete;

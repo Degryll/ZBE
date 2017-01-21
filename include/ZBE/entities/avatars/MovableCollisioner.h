@@ -10,6 +10,8 @@
 #ifndef ZBE_ENTITIES_AVATARS_MOVABLECOLLISIONER_H_
 #define ZBE_ENTITIES_AVATARS_MOVABLECOLLISIONER_H_
 
+#include <cstdint>
+
 #include "ZBE/core/entities/avatars/Collisioner.h"
 #include "ZBE/entities/avatars/Movable.h"
 
@@ -20,8 +22,7 @@ namespace zbe {
 template <typename R, unsigned s>
 class MovableCollisioner : public Movable<s> ,public CollisionerCommon<Movable<s>, R> {
   public:
-    MovableCollisioner(CollisionObject<R>* object, std::forward_list<Actuator<Movable<s>, R> > * actuators) : CollisionerCommon<Movable<s>, R>(this, object, actuators) {}
-
+    MovableCollisioner(CollisionObject<R>* object, uint64_t actuatorsList) : CollisionerCommon<Movable<s>, R>(this, object, actuatorsList) {}
 };
 
 }  // namespace zbe

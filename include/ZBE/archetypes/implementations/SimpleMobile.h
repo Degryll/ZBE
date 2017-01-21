@@ -16,7 +16,7 @@
 namespace zbe {
 
 template <unsigned s>
-class SimpleMobile : public Mobile<s>, public SimplePosition<s> {
+class SimpleMobile : virtual public Mobile<s>, public SimplePosition<s> {
   public:
     SimpleMobile() : SimplePosition<s>(), v() {}
     SimpleMobile(std::initializer_list<double> position) : SimplePosition<s>(position), v() {}

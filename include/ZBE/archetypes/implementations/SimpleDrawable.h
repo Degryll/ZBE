@@ -16,7 +16,7 @@ namespace zbe {
 
 /** \brief This implements an entity that can be drawn.
  */
-class SimpleDrawable : public Drawable {
+class SimpleDrawable : virtual public Drawable {
   public:
     SimpleDrawable(int x, int y, unsigned w, unsigned h, int graphics) : x(x), y(y), w(w), h(h), graphics(graphics) {}
 

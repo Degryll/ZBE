@@ -5,6 +5,7 @@
  * @date 2017-01-19
  * @author Degryll Ludo Batis
  * @brief Defines the interface of an object that interacts actively physically.
+ * Please, if inherit this class, use APO for naming.
  */
 
 #ifndef ZBE_ARCHETYPES_ACTIVEPHYSICALOBJECT_H

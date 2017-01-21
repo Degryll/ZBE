@@ -10,6 +10,8 @@
 #ifndef ZBE_ENTITIES_AVATARS_MOVABLECOLLISIONATOR_H_
 #define ZBE_ENTITIES_AVATARS_MOVABLECOLLISIONATOR_H_
 
+#include <cstdint>
+
 #include "ZBE/core/entities/avatars/Collisionator.h"
 #include "ZBE/entities/avatars/Movable.h"
 
@@ -18,10 +20,9 @@ namespace zbe {
 /** \brief This define a collisionator avatar that can be moved.
  */
 template <typename R, unsigned s>
-class MovableCollisionator : public Movable<s> ,public CollisionatorCommon<Movable<s>, R> {
+class MovableCollisionator : virtual Movable<s> ,public CollisionatorCommon<Movable<s>, R> {
   public:
-    MovableCollisionator(CollisionObject<R>* object, std::forward_list<Actuator<Movable, R> > * actuators) : CollisionatorCommon<Movable<s>, R>(this, object) {}
-
+    MovableCollisionator(CollisionObject<R>* object, uint64_t actuatorsList, uint64_t collisionablesList) : CollisionatorCommon<Movable<s>, R>(this, object, actuatorsList, collisionablesList) {}
 };
 
 }  // namespace zbe

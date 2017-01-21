@@ -8,6 +8,7 @@
 #include "ZBE/core/entities/adaptorentities/SimpleSpriteEntity.h"
 #include "ZBE/entities/adaptorentities/PositionableEntity.h"
 #include "ZBE/entities/adaptorentities/MovableEntity.h"
+//#include "ZBE/entities/adaptorentities/MovableCollisionatorEntity.h"
 
 #include "game/GameReactor.h"
 
