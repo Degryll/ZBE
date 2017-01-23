@@ -15,8 +15,8 @@
 
 namespace zbe {
 
-template <unsigned s>
-class MobileAPO : public Mobile, public ActivePhysicalObject {
+template <typename R, unsigned s>
+class MobileAPO : virtual public Mobile<s>, public ActivePhysicalObject<R> {
   public:
     ~MobileAPO() {}
 

@@ -21,8 +21,7 @@
 #include "ZBE/SDL/system/Window.h"
 #include "ZBE/SDL/drawers/SimpleSpriteSDLDrawer.h"
 #include "ZBE/entities/adaptors/implementations/SimpleDrawableSimpleSpriteAdaptor.h"
-#include "ZBE/entities/adaptors/implementations/BasePositionablePositionAdaptor.h"
-#include "ZBE/entities/adaptors/implementations/BaseMovableMobileAdaptor.h"
+#include "ZBE/entities/adaptors/implementations/BaseMovableCatorMobileAPOAdaptor.h"
 #include "ZBE/behaviors/UniformLinearMotion.h"
 #include "ZBE/archetypes/Mobile.h"
 
@@ -102,10 +101,8 @@ int gamemain(int, char** ) {
   printf("Building an sprite adaptor for the ball\n");fflush(stdout);
   zbe::SimpleSpriteAdaptor<zbe::Drawable>* spriteAdaptor = new zbe::SimpleDrawableSimpleSpriteAdaptor();
   ball.setSimpleSpriteAdaptor(spriteAdaptor);
-  zbe::BasePositionablePositionAdaptor<2> * positionableAdaptor = new zbe::BasePositionablePositionAdaptor<2>();
-  zbe::BaseMovableMobileAdaptor<2> * movableAdaptor = new zbe::BaseMovableMobileAdaptor<2>();
-  ball.setPositionableAdaptor(positionableAdaptor);
-  ball.setMovableAdaptor(movableAdaptor);
+  zbe::BaseMovableCatorMobileAPOAdaptor<game::GameReactor, 2> * movableCatorAdaptor = new zbe::BaseMovableCatorMobileAPOAdaptor<game::GameReactor, 2>();
+  ball.setMovableCollisionatorAdaptor(movableCatorAdaptor);
   game::StepInputHandler ihright(&ball, 5, 0);
   game::StepInputHandler ihleft(&ball, -5, 0);
   ieg.addHandler(zbe::ZBEK_a, &ihleft);

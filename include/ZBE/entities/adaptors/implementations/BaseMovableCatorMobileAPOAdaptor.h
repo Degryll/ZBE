@@ -13,8 +13,8 @@
 #include <memory>
 
 #include "ZBE/entities/avatars/Movable.h"
-#include "ZBE/entities/adaptors/MovableAdaptor.h"
-#include "ZBE/entities/avatars/implementations/BaseMovable.h"
+#include "ZBE/entities/adaptors/MovableCollisionatorAdaptor.h"
+#include "ZBE/entities/avatars/implementations/BaseMovableCator.h"
 #include "ZBE/archetypes/MobileAPO.h"
 
 namespace zbe {
@@ -30,12 +30,12 @@ class BaseMovableCatorMobileAPOAdaptor : public MovableCollisionatorAdaptor<R, M
     }
 
     std::shared_ptr<Movable<s> > getMovable(MobileAPO<R, s>* entity) {
-        std::shared_ptr<Movable<s> > p(new BaseMovableCator<s>(entity));
+        std::shared_ptr<Movable<s> > p(new BaseMovableCator<R, s>(entity));
         return (p);
     }
 
     std::shared_ptr<Collisionator<R> > getCollisionator(MobileAPO<R, s>* entity) {
-        std::shared_ptr<Collisionator<R> > p(new BaseMovableCator<s>(entity));
+        std::shared_ptr<Collisionator<R> > p(new BaseMovableCator<R, s>(entity));
         return (p);
     }
 };

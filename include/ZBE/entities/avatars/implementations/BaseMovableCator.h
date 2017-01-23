@@ -10,6 +10,7 @@
 #ifndef ZBE_ENTITIES_AVATARS_IMPLEMENTATIONS_BASEMOVABLECOLLISIONATOR_H_
 #define ZBE_ENTITIES_AVATARS_IMPLEMENTATIONS_BASEMOVABLECOLLISIONATOR_H_
 
+#include "ZBE/entities/avatars/implementations/BaseMovable.h"
 #include "ZBE/entities/avatars/MovableCollisionator.h"
 #include "ZBE/archetypes/MobileAPO.h"
 
@@ -26,7 +27,7 @@ class BaseMovableCator : public MovableCollisionator<R, s>, BaseMovable<s> {
     BaseMovableCator(MobileAPO<R, s>* mobile) : MovableCollisionator<R, s>(mobile->getCollisionObject(), mobile->getActuatorsList(), mobile->getCollisionablesList()), BaseMovable<s>(mobile), m(mobile) {}
 
   private:
-    MobileAPO<s>* m;
+    MobileAPO<R, s>* m;
 };
 
 }  // namespace zbe

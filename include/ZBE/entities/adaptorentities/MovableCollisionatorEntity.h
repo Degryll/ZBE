@@ -22,7 +22,7 @@ namespace zbe {
 /** \brief Entity that can be seen as a movable collisionator.
  */
 template <typename R, unsigned s>
-class MovableCollisionatorEntity {
+class MovableCollisionatorEntity : public CollisionatorEntity<R> {
   public:
     virtual ~MovableCollisionatorEntity(){}
 
@@ -33,7 +33,7 @@ class MovableCollisionatorEntity {
 /** \brief Entity that can be seen as a movable collisionator using an adaptor.
  */
 template <typename R, typename T, unsigned s>
-class MovableCollisionatorEntityAdapted : public MovableCollisionatorEntity<R, s>, public CollisionatorEntity<R>  {
+class MovableCollisionatorEntityAdapted : public MovableCollisionatorEntity<R, s>  {
   public:
     MovableCollisionatorEntityAdapted(const MovableCollisionatorEntityAdapted&) = delete;
     void operator=(const MovableCollisionatorEntityAdapted&) = delete;
@@ -42,7 +42,7 @@ class MovableCollisionatorEntityAdapted : public MovableCollisionatorEntity<R, s
 
     virtual ~MovableCollisionatorEntityAdapted(){}
 
-    void setMovableCollisionatorAdaptor(MovableAdaptor<T, s> *adaptor) {a = adaptor;}
+    void setMovableCollisionatorAdaptor(MovableCollisionatorAdaptor<R, T, s> *adaptor) {a = adaptor;}
 
     std::shared_ptr< MovableCollisionator<R, s> > getMovableCollisionator() {return (a->getMovableCollisionator(entity));}
 
@@ -50,6 +50,9 @@ class MovableCollisionatorEntityAdapted : public MovableCollisionatorEntity<R, s
 
     std::shared_ptr<Collisionator<R> > getCollisionator() {return (a->getCollisionator(entity));}
 
+    std::shared_ptr<Collisioner<R> > getCollisioner() {return (a->getCollisionator(entity));}
+
+    std::shared_ptr<ReactObject<R> > getReactObject() {return (a->getCollisionator(entity));}
 
   private:
     T* entity;

@@ -19,24 +19,29 @@
 namespace zbe {
 
 template <typename R, unsigned s>
-class SimpleMobileAPO : virtual public MobileAPO<s>, public SimpleMobile<s> {
+class SimpleMobileAPO : public MobileAPO<R, s>, public SimpleMobile<s> {
   public:
-    SimpleMobileAPO(CollisionObject<R>* object, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleMobile<s>(), o(object), al(actuatorsList, cl(collisionablesList)) {}
-    SimpleMobileAPO(std::initializer_list<double> position, CollisionObject<R>* object, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleMobile<s>(position), o(object), al(actuatorsList, cl(collisionablesList) {}
-    SimpleMobileAPO(Point<s> position, CollisionObject<R>* object, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleMobile<s>(position), o(object), al(actuatorsList, cl(collisionablesList) {}
-    SimpleMobileAPO(Vector<s> velocity, CollisionObject<R>* object, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleMobile<s>(velocity), o(object), al(actuatorsList, cl(collisionablesList) {}
-    SimpleMobileAPO(std::initializer_list<double> position, std::initializer_list<double> velocity, CollisionObject<R>* object, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleMobile<s>(position, velocity), o(object), al(actuatorsList, cl(collisionablesList) {}
-    SimpleMoSimpleMobileAPObile(Point<s> position, std::initializer_list<double> velocity, CollisionObject<R>* object, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleMobile<s>(position, velocity), o(object), al(actuatorsList, cl(collisionablesList) {}
-    SimpleMobileAPO(Point<s> position, Vector<s> velocity, CollisionObject<R>* object, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleMobile<s>(position, velocity), o(object), al(actuatorsList, cl(collisionablesList) {}
-    SimpleMobileAPO(std::initializer_list<double> position, Vector<s> velocity, CollisionObject<R>* object, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleMobile<s>(position, velocity), o(object), al(actuatorsList, cl(collisionablesList) {}
+    SimpleMobileAPO(const SimpleMobileAPO&) = delete;
+    void operator=(const SimpleMobileAPO&) = delete;
 
-		CollisionObject<R>* getCollisionObject(){ return o;}
+    SimpleMobileAPO(CollisionObject<R>* object, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleMobile<s>(), o(object), al(actuatorsList), cl(collisionablesList) {}
+    SimpleMobileAPO(std::initializer_list<double> position, CollisionObject<R>* object, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleMobile<s>(position), o(object), al(actuatorsList), cl(collisionablesList) {}
+    SimpleMobileAPO(Point<s> position, CollisionObject<R>* object, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleMobile<s>(position), o(object), al(actuatorsList), cl(collisionablesList) {}
+    SimpleMobileAPO(Vector<s> velocity, CollisionObject<R>* object, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleMobile<s>(velocity), o(object), al(actuatorsList), cl(collisionablesList) {}
+    SimpleMobileAPO(std::initializer_list<double> position, std::initializer_list<double> velocity, CollisionObject<R>* object, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleMobile<s>(position, velocity), o(object), al(actuatorsList), cl(collisionablesList) {}
+    SimpleMobileAPO(Point<s> position, std::initializer_list<double> velocity, CollisionObject<R>* object, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleMobile<s>(position, velocity), o(object), al(actuatorsList), cl(collisionablesList) {}
+    SimpleMobileAPO(Point<s> position, Vector<s> velocity, CollisionObject<R>* object, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleMobile<s>(position, velocity), o(object), al(actuatorsList), cl(collisionablesList) {}
+    SimpleMobileAPO(std::initializer_list<double> position, Vector<s> velocity, CollisionObject<R>* object, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleMobile<s>(position, velocity), o(object), al(actuatorsList), cl(collisionablesList) {}
+
+    virtual ~SimpleMobileAPO(){}
+
+	CollisionObject<R>* getCollisionObject(){ return o;}
     uint64_t getActuatorsList(){ return al;}
-		uint64_t getCollisionablesList(){ return cl;}
+	uint64_t getCollisionablesList(){ return cl;}
 
   private:
     CollisionObject<R> * o;
-		uint64_t al;
+    uint64_t al;
     uint64_t cl;
 };
 
