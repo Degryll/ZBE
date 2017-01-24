@@ -1,13 +1,22 @@
+/**
+ * Copyright 2012 Batis Degryll Ludo
+ * @file GameBall.h
+ * @since 2017-01-24
+ * @date 2017-01-24
+ * @author Degryll
+ * @brief A ball for an arkanoid.
+ */
+
 #ifndef ZBE_MAIN_GAME_GAMEBALL
 #define ZBE_MAIN_GAME_GAMEBALL
 
 #include "ZBE/archetypes/Drawable.h"
 #include "ZBE/archetypes/implementations/SimpleMobileAPO.h"
 #include "ZBE/core/entities/adaptorentities/SimpleSpriteEntity.h"
-#include "ZBE/core/tools/math/collisions/CollisionObject.h"
 #include "ZBE/entities/adaptorentities/MovableCollisionatorEntity.h"
 
 #include "game/GameReactor.h"
+#include "game/reactobjects/GameReactObjects.h"
 
 namespace game{
 
@@ -20,13 +29,12 @@ namespace game{
       void operator=(const GameBall&) = delete;
 
       GameBall(double x, double y, unsigned radius, double vx, double vy, uint64_t actuators, uint64_t collisionables, int graphics) :
-                  SimpleMobileAPO({x, y}, {vx, vy}, new zbe::ConstantMovingCircle<GameReactor>(zbe::Circle({x, y}, radius), {vx, vy}), actuators, collisionables),
+                  SimpleMobileAPO({x, y}, {vx, vy}, std::make_shared<zbe::ConstantMovingCircle<GameReactor> >(zbe::ConstantMovingCircle<GameReactor>(zbe::Circle({x, y}, radius), {vx, vy})), std::make_shared<VoidReactObject>(), actuators, collisionables),
                   SimpleSpriteEntityAdapted(this),
                   MovableCollisionatorEntityAdapted(this),
-                  o(SimpleMobileAPO::getCollisionObject()),
                   g(graphics), d(2*radius) {}
 
-      ~GameBall(){delete o;};
+      ~GameBall() {}
 
       int getX() {return (SimpleMobileAPO::getPosition()[0]);}
       int getY() {return (SimpleMobileAPO::getPosition()[1]);}
@@ -35,7 +43,6 @@ namespace game{
       int      getGraphics() {return (g);}
 
     private:
-      zbe::CollisionObject<GameReactor>* o;
       int g;    //!< Image index
       unsigned d;
   };

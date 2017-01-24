@@ -17,10 +17,9 @@ class R { // Reactor mock
     virtual ~R() {};
 };
 
-class C : public zbe::Collisioner<R> {
+class C : public zbe::CollisionerCommon<C, R> {
   public:
-    C(zbe::CollisionObject<R> * co):zbe::Collisioner<R>(co){};
-    void react(zbe::CollisionData*, zbe::ReactObject<R>*) {};
+    C(zbe::CollisionObject<R> * co):zbe::CollisionerCommon<C, R>(this, co, nullptr, 1) {};
 };
 
 TEST(CollisionSystemSolver, MovingCircleStaticAABB) {

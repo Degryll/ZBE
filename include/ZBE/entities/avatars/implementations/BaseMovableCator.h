@@ -19,12 +19,12 @@ namespace zbe {
 /** \brief This implements a base 1:1 avatar that can be moved.
  */
 template <typename R, unsigned s>
-class BaseMovableCator : public MovableCollisionator<R, s>, BaseMovable<s> {
+class BaseMovableCator : public MovableCollisionator<R, s>, public BaseMovable<s> {
   public:
     BaseMovableCator(const BaseMovableCator<R, s>&) = delete;
     void operator=(const BaseMovableCator<R, s>&) = delete;
 
-    BaseMovableCator(MobileAPO<R, s>* mobile) : MovableCollisionator<R, s>(mobile->getCollisionObject(), mobile->getActuatorsList(), mobile->getCollisionablesList()), BaseMovable<s>(mobile), m(mobile) {}
+    BaseMovableCator(MobileAPO<R, s>* mobile) : MovableCollisionator<R, s>(mobile->getCollisionObject(), mobile->getReactObject(),mobile->getActuatorsList(), mobile->getCollisionablesList()), BaseMovable<s>(mobile), m(mobile) {}
 
   private:
     MobileAPO<R, s>* m;

@@ -22,9 +22,15 @@ class R { // Reactor mock
     virtual void act(Robject *) {};
 };
 
+class Robject : public zbe::ReactObjectCommon<Robject, R> {
+  public:
+  	Robject(int id) : zbe::ReactObjectCommon<Robject, R>(this), id(id) {};
+  	int id;
+};
+
 class Coner : public zbe::CollisionerCommon<Coner, R> {
   public:
-    Coner(zbe::CollisionObject<R> * co, uint64_t actuators, int id) : zbe::CollisionerCommon<Coner, R>(this, co, actuators),  id(id), vs(0){}
+    Coner(zbe::CollisionObject<R> * co, uint64_t actuators, int id) : zbe::CollisionerCommon<Coner, R>(this, co, new Robject(id), actuators),  id(id), vs(0){}
     ~Coner(){}
     int id;
   	int vs;
@@ -32,16 +38,10 @@ class Coner : public zbe::CollisionerCommon<Coner, R> {
 
 class Cator : public zbe::CollisionatorCommon<Cator, R> {
   public:
-    Cator(zbe::CollisionObject<R> * co, uint64_t actuators, int id, uint64_t listId) : zbe::CollisionatorCommon<Cator, R>(this, co, actuators, listId),  id(id), vs(0) {}
+    Cator(zbe::CollisionObject<R> * co, uint64_t actuators, int id, uint64_t listId) : zbe::CollisionatorCommon<Cator, R>(this, co, new Robject(id), actuators, listId),  id(id), vs(0) {}
     ~Cator(){}
     int id;
   	int vs;
-};
-
-class Robject : public zbe::ReactObjectCommon<Robject, R> {
-  public:
-  	Robject(int id) : zbe::ReactObjectCommon<Robject, R>(this), id(id) {};
-  	int id;
 };
 
 class ConerActuator: public zbe::Actuator<Coner, R> {
@@ -64,15 +64,12 @@ public:
   void operator=(const DummyCollisionerEntity&) = delete;
 
   DummyCollisionerEntity(zbe::CollisionObject<R> * object, uint64_t actuators)
-    : object(object), c(std::make_shared<Coner>(object, actuators, 42)), r(std::make_shared<Robject>(42)) {}
+    : c(std::make_shared<Coner>(object, actuators, 42)) {}
 
   std::shared_ptr<zbe::Collisioner<R> > getCollisioner() { return c;}
-  std::shared_ptr<zbe::ReactObject<R> > getReactObject() { return r;}
   int getId(){return c->id;}
   int getVs(){return c->vs;}
-  zbe::CollisionObject<R>* object;
   std::shared_ptr<Coner> c;
-  std::shared_ptr<Robject> r;
 };
 
 class DummyCollisionatorEntity : public zbe::CollisionatorEntity<R> {
@@ -81,16 +78,13 @@ public:
   void operator=(const DummyCollisionatorEntity&) = delete;
 
   DummyCollisionatorEntity(zbe::CollisionObject<R>* object, uint64_t actuators, uint64_t listId)
-    : object(object), c(std::make_shared<Cator>(object, actuators, 37, listId)), r(std::make_shared<Robject>(37)) {}
+    : c(std::make_shared<Cator>(object, actuators, 37, listId)) {}
 
-  std::shared_ptr<zbe::ReactObject<R> >   getReactObject()   { return r;}
   std::shared_ptr<zbe::Collisioner<R> >   getCollisioner() { return c;}
   std::shared_ptr<zbe::Collisionator<R> > getCollisionator() { return c;}
   int getId(){return c->id;}
   int getVs(){return c->vs;}
-  zbe::CollisionObject<R>* object;
   std::shared_ptr<Cator > c;
-  std::shared_ptr<Robject> r;
 };
 
 TEST(CollisionEventGenerator, Generate) {

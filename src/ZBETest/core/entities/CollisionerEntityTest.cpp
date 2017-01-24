@@ -1,50 +1,55 @@
 #include "gtest/gtest.h"
 
-#include "ZBE/core/entities/avatars/Collisioner.h"
+TEST(CollisionerCommon, DISABLED_Actuators) {}
 
-#include "ZBE/core/system/SysError.h"
-#include "ZBE/core/tools/math/collisions/CollisionSystemSolver.h"
+// este test deberia de probar el CollisionerCommon, no el collisioner que es una interfaz
+// nombre de fichero ERRONEO!!!
 
-namespace CollisionerTest {
-class R { // Reactor mock
-  public:
-    virtual ~R() {};
-};
-
-class Coner : public zbe::Collisioner<R> {
-  public:
-    Coner(zbe::CollisionObject<R> * co):zbe::Collisioner<R>(co){};
-    ~Coner(){};
-    void react(zbe::CollisionData*, zbe::ReactObject<R>*) {};
-};
-
-TEST(Collisioner, Usage) {
-  zbe::StaticAABB2D<R>* box1 = new zbe::StaticAABB2D<R>();
-  zbe::StaticAABB2D<R>* box2 = new zbe::StaticAABB2D<R>();
-  zbe::StaticAABB2D<R>* box3 = new zbe::StaticAABB2D<R>();
-
-  Coner ce(box1); //
-
-  EXPECT_EQ(box1,ce.getCollisionObject()) << "Same object.";
-  EXPECT_NE(box2,ce.getCollisionObject()) << "Not same object.";
-  EXPECT_NE(box3,ce.getCollisionObject()) << "Not same object.";
-
-  ce.setCollisionObject(box2);
-
-  EXPECT_NE(box1,ce.getCollisionObject()) << "Not same object.";
-  EXPECT_EQ(box2,ce.getCollisionObject()) << "Same object.";
-  EXPECT_NE(box3,ce.getCollisionObject()) << "Not same object.";
-
-  ce.setCollisionObject(box3);
-
-  EXPECT_NE(box1,ce.getCollisionObject()) << "Not same object.";
-  EXPECT_NE(box2,ce.getCollisionObject()) << "Not same object.";
-  EXPECT_EQ(box3,ce.getCollisionObject()) << "Same object.";
-}
-
-TEST(Collisioner, DISABLED_Actuators) {
-  zbe::StaticAABB2D<R>* box = new zbe::StaticAABB2D<R>();
-  Coner e(box);
+//#include "ZBE/core/entities/avatars/Collisioner.h"
+//
+//#include "ZBE/core/system/SysError.h"
+//#include "ZBE/core/tools/math/collisions/CollisionSystemSolver.h"
+//
+//namespace CollisionerTest {
+//class R { // Reactor mock
+//  public:
+//    virtual ~R() {};
+//};
+//
+//class Coner : public zbe::Collisioner<R> {
+//  public:
+//    Coner(zbe::CollisionObject<R> * co):zbe::Collisioner<R>(co){};
+//    ~Coner(){};
+//    void react(zbe::CollisionData*, zbe::ReactObject<R>*) {};
+//};
+//
+//TEST(Collisioner, Usage) {
+//  zbe::StaticAABB2D<R>* box1 = new zbe::StaticAABB2D<R>();
+//  zbe::StaticAABB2D<R>* box2 = new zbe::StaticAABB2D<R>();
+//  zbe::StaticAABB2D<R>* box3 = new zbe::StaticAABB2D<R>();
+//
+//  Coner ce(box1); //
+//
+//  EXPECT_EQ(box1,ce.getCollisionObject()) << "Same object.";
+//  EXPECT_NE(box2,ce.getCollisionObject()) << "Not same object.";
+//  EXPECT_NE(box3,ce.getCollisionObject()) << "Not same object.";
+//
+//  ce.setCollisionObject(box2);
+//
+//  EXPECT_NE(box1,ce.getCollisionObject()) << "Not same object.";
+//  EXPECT_EQ(box2,ce.getCollisionObject()) << "Same object.";
+//  EXPECT_NE(box3,ce.getCollisionObject()) << "Not same object.";
+//
+//  ce.setCollisionObject(box3);
+//
+//  EXPECT_NE(box1,ce.getCollisionObject()) << "Not same object.";
+//  EXPECT_NE(box2,ce.getCollisionObject()) << "Not same object.";
+//  EXPECT_EQ(box3,ce.getCollisionObject()) << "Same object.";
+//}
+//
+//TEST(Collisioner, DISABLED_Actuators) {
+//  zbe::StaticAABB2D<R>* box = new zbe::StaticAABB2D<R>();
+//  Coner e(box);
 
 //  e.addToActuatorsList(1, 3);
 //  e.addToActuatorsList(2, 5);
@@ -76,5 +81,5 @@ TEST(Collisioner, DISABLED_Actuators) {
 //  EXPECT_EQ( 7u,e.getActuatorsList(3)) << "Add List Id for Actuator. - 3";
 //  EXPECT_EQ(11u,e.getActuatorsList(4)) << "Add List Id for Actuator. - 4";
 //  EXPECT_EQ(13u,e.getActuatorsList(5)) << "Add List Id for Actuator. - 5";
-}
-} //namespace CollisionerTest
+//}
+//} //namespace CollisionerTest

@@ -12,6 +12,7 @@
 
 #include <cstdint>
 #include "ZBE/core/tools/math/collisions/CollisionObject.h"
+#include "ZBE/core/tools/math/collisions/ReactObject.h"
 
 namespace zbe {
 
@@ -20,7 +21,8 @@ class PhysicalObject {
   public:
     virtual ~PhysicalObject() {}
 
-    virtual CollisionObject<R> * getCollisionObject() = 0;
+    virtual std::shared_ptr<CollisionObject<R> > getCollisionObject() = 0;
+    virtual std::shared_ptr<ReactObject<R> > getReactObject() = 0;
     virtual uint64_t getActuatorsList() = 0;
 };
 

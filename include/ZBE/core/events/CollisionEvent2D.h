@@ -14,7 +14,7 @@
 
 #include "ZBE/core/events/Event.h"
 #include "ZBE/core/entities/avatars/Collisioner.h"
-#include "ZBE/core/entities/avatars/ReactObject.h"
+#include "ZBE/core/tools/math/collisions/ReactObject.h"
 #include "ZBE/core/tools/math/collisions/CollisionData.h"
 
 

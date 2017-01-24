@@ -11,16 +11,19 @@
 #include "ZBE/core/events/handlers/TimeHandler.h"
 
 namespace EventsTest {
-    class DummyInputHandler : public zbe::InputHandler{
-        void run(float) {};
-    };
-class R { // Reactor mock
+
+class DummyInputHandler : public zbe::InputHandler{
+    void run(float) {};
 };
 
-class C : public zbe::Collisioner<R> {
+class R { // Reactor mock
+public:
+  virtual ~R() {}
+};
+
+class C : public zbe::CollisionerCommon<C, R> {
   public:
-    C(zbe::CollisionObject<R> * co):zbe::Collisioner<R>(co){};
-    void react(zbe::CollisionData* , zbe::ReactObject<R>*) {};
+    C() : zbe::CollisionerCommon<C, R>(this, nullptr, nullptr, 1){};
 };
 
 class RO : public zbe::ReactObject<R> {
@@ -47,8 +50,7 @@ TEST(Event, InputEvent) {
 }
 
 TEST(Event, CollisionEvent) {
-  zbe::StaticAABB2D<R>* coa = new zbe::StaticAABB2D<R>();
-  C* c = new C(coa);
+  C* c = new C;
   RO * ro = new RO();
   zbe::Point2D p{4.0, 2.0};
   zbe::CollisionEvent2D<R> e(1,100, std::shared_ptr<zbe::Collisioner<R> >(c), p, std::shared_ptr<zbe::ReactObject<R> >(ro));

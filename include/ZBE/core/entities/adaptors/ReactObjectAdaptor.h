@@ -12,7 +12,7 @@
 
 #include <memory>
 
-#include "ZBE/core/entities/avatars/ReactObject.h"
+#include "ZBE/core/tools/math/collisions/ReactObject.h"
 
 namespace zbe {
 

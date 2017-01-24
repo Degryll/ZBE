@@ -72,8 +72,8 @@ void CollisionEventGenerator<R>::generate(uint64_t initTime, uint64_t endTime) {
       std::shared_ptr<Collisioner<R> > coner = conerEntity->getCollisioner();
       if(cs.select(*cator, *coner, totalTime, point)) {
         CollisionData cd(point);
-        es.storeEvent(new CollisionEvent2D<R>(eventId, initTime+totalTime, cator, cd, conerEntity->getReactObject()));
-        es.storeEvent(new CollisionEvent2D<R>(eventId, initTime+totalTime, coner, cd, catorEntity->getReactObject()));
+        es.storeEvent(new CollisionEvent2D<R>(eventId, initTime+totalTime, cator, cd, std::shared_ptr<zbe::ReactObject<R> >(coner->getReactObject())));
+        es.storeEvent(new CollisionEvent2D<R>(eventId, initTime+totalTime, coner, cd, std::shared_ptr<zbe::ReactObject<R> >(cator->getReactObject())));
       }  // if collision
     }  // for each collisionable
   }  // for each collisionator

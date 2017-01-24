@@ -3,8 +3,14 @@
 
 namespace game{
 
-  class GameReactor {
-  };
+class VoidReactObject;
+
+class GameReactor {
+public:
+  virtual ~GameReactor() {}
+
+  void act(VoidReactObject*) {}
+};
 
 }  // namespace game
 

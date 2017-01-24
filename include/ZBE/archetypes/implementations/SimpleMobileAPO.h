@@ -13,6 +13,7 @@
 #include <cstdint>
 
 #include "ZBE/core/tools/math/collisions/CollisionObject.h"
+#include "ZBE/core/tools/math/collisions/ReactObject.h"
 #include "ZBE/archetypes/MobileAPO.h"
 #include "ZBE/archetypes/implementations/SimpleMobile.h"
 
@@ -24,23 +25,25 @@ class SimpleMobileAPO : public MobileAPO<R, s>, public SimpleMobile<s> {
     SimpleMobileAPO(const SimpleMobileAPO&) = delete;
     void operator=(const SimpleMobileAPO&) = delete;
 
-    SimpleMobileAPO(CollisionObject<R>* object, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleMobile<s>(), o(object), al(actuatorsList), cl(collisionablesList) {}
-    SimpleMobileAPO(std::initializer_list<double> position, CollisionObject<R>* object, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleMobile<s>(position), o(object), al(actuatorsList), cl(collisionablesList) {}
-    SimpleMobileAPO(Point<s> position, CollisionObject<R>* object, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleMobile<s>(position), o(object), al(actuatorsList), cl(collisionablesList) {}
-    SimpleMobileAPO(Vector<s> velocity, CollisionObject<R>* object, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleMobile<s>(velocity), o(object), al(actuatorsList), cl(collisionablesList) {}
-    SimpleMobileAPO(std::initializer_list<double> position, std::initializer_list<double> velocity, CollisionObject<R>* object, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleMobile<s>(position, velocity), o(object), al(actuatorsList), cl(collisionablesList) {}
-    SimpleMobileAPO(Point<s> position, std::initializer_list<double> velocity, CollisionObject<R>* object, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleMobile<s>(position, velocity), o(object), al(actuatorsList), cl(collisionablesList) {}
-    SimpleMobileAPO(Point<s> position, Vector<s> velocity, CollisionObject<R>* object, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleMobile<s>(position, velocity), o(object), al(actuatorsList), cl(collisionablesList) {}
-    SimpleMobileAPO(std::initializer_list<double> position, Vector<s> velocity, CollisionObject<R>* object, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleMobile<s>(position, velocity), o(object), al(actuatorsList), cl(collisionablesList) {}
+    SimpleMobileAPO(std::shared_ptr<CollisionObject<R> > cObject, std::shared_ptr<ReactObject<R> > rObject, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleMobile<s>(), co(cObject), ro(rObject), al(actuatorsList), cl(collisionablesList) {}
+    SimpleMobileAPO(std::initializer_list<double> position, std::shared_ptr<CollisionObject<R> > cObject, std::shared_ptr<ReactObject<R> > rObject, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleMobile<s>(position), co(cObject), ro(rObject), al(actuatorsList), cl(collisionablesList) {}
+    SimpleMobileAPO(Point<s> position, std::shared_ptr<CollisionObject<R> > cObject, std::shared_ptr<ReactObject<R> > rObject, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleMobile<s>(position), co(cObject), ro(rObject), al(actuatorsList), cl(collisionablesList) {}
+    SimpleMobileAPO(Vector<s> velocity, std::shared_ptr<CollisionObject<R> > cObject, std::shared_ptr<ReactObject<R> > rObject, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleMobile<s>(velocity), co(cObject), ro(rObject), al(actuatorsList), cl(collisionablesList) {}
+    SimpleMobileAPO(std::initializer_list<double> position, std::initializer_list<double> velocity, std::shared_ptr<CollisionObject<R> > cObject, std::shared_ptr<ReactObject<R> > rObject, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleMobile<s>(position, velocity), co(cObject), ro(rObject), al(actuatorsList), cl(collisionablesList) {}
+    SimpleMobileAPO(Point<s> position, std::initializer_list<double> velocity, std::shared_ptr<CollisionObject<R> > cObject, std::shared_ptr<ReactObject<R> > rObject, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleMobile<s>(position, velocity), co(cObject), ro(rObject), al(actuatorsList), cl(collisionablesList) {}
+    SimpleMobileAPO(Point<s> position, Vector<s> velocity, std::shared_ptr<CollisionObject<R> > cObject, uint64_t actuatorsList, std::shared_ptr<ReactObject<R> > rObject, uint64_t collisionablesList) : SimpleMobile<s>(position, velocity), co(cObject), ro(rObject), al(actuatorsList), cl(collisionablesList) {}
+    SimpleMobileAPO(std::initializer_list<double> position, Vector<s> velocity, std::shared_ptr<CollisionObject<R> > cObject, std::shared_ptr<ReactObject<R> > rObject, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleMobile<s>(position, velocity), co(cObject), ro(rObject), al(actuatorsList), cl(collisionablesList) {}
 
     virtual ~SimpleMobileAPO(){}
 
-	CollisionObject<R>* getCollisionObject(){ return o;}
-    uint64_t getActuatorsList(){ return al;}
+	std::shared_ptr<CollisionObject<R> > getCollisionObject(){ return co;}
+	std::shared_ptr<ReactObject<R> > getReactObject(){ return ro;}
+  uint64_t getActuatorsList(){ return al;}
 	uint64_t getCollisionablesList(){ return cl;}
 
   private:
-    CollisionObject<R> * o;
+    std::shared_ptr<CollisionObject<R> > co;
+    std::shared_ptr<ReactObject<R> > ro;
     uint64_t al;
     uint64_t cl;
 };

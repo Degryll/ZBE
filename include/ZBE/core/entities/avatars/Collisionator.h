@@ -20,53 +20,45 @@ namespace zbe {
 /** \brief Define the basic functionality of every Collisionable entity.
  */
 template <typename R>
-class Collisionator : public Collisioner<R> {
+class Collisionator : virtual public Collisioner<R> {
   public:
-    Collisionator(CollisionObject<R>* object, uint64_t collisionablesListId) : Collisioner<R>(object), id(collisionablesListId) {}
 
     virtual ~Collisionator(){};
 
-    /** \brief Returns the global id of the list of Collisionables identify by an id.
-     *  \param id Id to identify the list.
-     *  \return The global id of the list.
-     */
-    inline uint64_t getCollisionablesListId() { return (id); }
-
-  private:
-    uint64_t id;  //!< Id of list of collisionables
-
+    /**  \brief Returns the global id of the list of Collisionables identify by an id.
+      *  \param id Id to identify the list.
+      *  \return The global id of the list.
+      */
+    virtual uint64_t getCollisionablesListId() = 0;
 };
 
 /** \brief Every Collisionator (an entity involved in a collision) has a collision object defining his "physical shape".
  */
 template <typename T, typename R>
-class CollisionatorCommon : public Collisionator<R> {
+class CollisionatorCommon : public Collisionator<R>, public CollisionerCommon<T, R> {
   public:
-    /** \brief A collisionable entity is defined by a collision object.
-      * \param object A collision object that defines the "physical shape" of the entity.
-      */
-    CollisionatorCommon(T* collisionator, CollisionObject<R>* object, uint64_t actuatorsList, uint64_t collisionablesListId) : Collisionator<R>(object, collisionablesListId), al(actuatorsList), c(collisionator), lma(ListManager<std::forward_list<Actuator<T,R>* > >::getInstance()) {}
     CollisionatorCommon(const CollisionatorCommon<T,R>&) = delete;
     void operator=(const CollisionatorCommon<T,R>&) = delete;
 
-    void react(CollisionData* collisionData, ReactObject<R> * reactObject);
+    /** \brief A collisionable entity is defined by a collision object.
+      * \param object A collision object that defines the "physical shape" of the entity.
+      */
+    CollisionatorCommon(T* collisionator, std::shared_ptr<CollisionObject<R> > collisionObject, std::shared_ptr<ReactObject<R> > reactObject, uint64_t actuatorsList, uint64_t collisionablesListId)
+      : CollisionerCommon<T, R>(collisionator, collisionObject, reactObject, actuatorsList), id(collisionablesListId), c(collisionator) {}
 
     /** \brief Empty destructor.
       */
     virtual ~CollisionatorCommon() {}
 
+   /**  \brief Returns the global id of the list of Collisionables identify by an id.
+     *  \param id Id to identify the list.
+     *  \return The global id of the list.
+     */
+    uint64_t getCollisionablesListId() {return (id);}
+
   private:
-    uint64_t al;
+    uint64_t id;  //!< Id of list of collisionables
     T* c;
-    ListManager<std::forward_list<Actuator<T,R>* > >& lma;
-
-};
-
-template <typename T, typename R>
-void CollisionatorCommon<T, R>::react(CollisionData * collisionData, ReactObject<R> * reactObject) {
-  for (auto a : *(lma.get(al)) ) {
-    a->run(c, reactObject, collisionData);
-  }
 };
 
 }  // namespace zbe

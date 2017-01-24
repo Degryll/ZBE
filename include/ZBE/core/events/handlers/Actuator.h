@@ -10,7 +10,7 @@
 #ifndef CORE_HANDLERS_COLLISION_ACTUATOR_H
 #define CORE_HANDLERS_COLLISION_ACTUATOR_H
 
-#include "ZBE/core/entities/avatars/ReactObject.h"
+#include "ZBE/core/tools/math/collisions/ReactObject.h"
 #include "ZBE/core/tools/math/collisions/CollisionData.h"
 
 namespace zbe {
@@ -22,7 +22,7 @@ class Actuator : public R {
   public:
   	Actuator(const Actuator&) = delete;
   	void operator=(const Actuator&) = delete;
-  	virtual ~Actuator(){};
+  	virtual ~Actuator() {};
 
     Actuator() : collisioner(nullptr), cData(nullptr) {}
 

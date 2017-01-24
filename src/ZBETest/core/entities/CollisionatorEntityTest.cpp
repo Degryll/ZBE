@@ -2,6 +2,7 @@
 
 #include "ZBE/core/entities/avatars/Collisionator.h"
 #include "ZBE/core/entities/avatars/ReactObject.h"
+#include "ZBE/core/tools/math/collisions/CollisionObject.h"
 #include "ZBE/core/tools/math/collisions/CollisionData.h"
 #include "ZBE/core/tools/math/collisions/CollisionSystemSolver.h"
 
@@ -12,14 +13,22 @@ class R { // Reactor mock
 
 class Cator : public zbe::Collisionator<R> {
   public:
-    Cator(zbe::CollisionObject<R> * co, uint64_t listId):zbe::Collisionator<R>(co, listId){};
-    ~Cator(){};
-    void react(zbe::CollisionData*, zbe::ReactObject<R>*) {};
+    Cator(uint64_t listId) : id(listId) {}
+    ~Cator() {}
+
+    zbe::CollisionObject<R>* getCollisionObject() {return (nullptr);}
+    zbe::ReactObject<R>* getReactObject() {return (nullptr);}
+
+    void react(zbe::CollisionData*, zbe::ReactObject<R>*) {}
+
+    uint64_t getCollisionablesListId() {return (id);}
+
+  private:
+    uint64_t id;
 };
 
 TEST(Collisionator, Collisionables) {
-  zbe::StaticAABB2D<R>*  box = new zbe::StaticAABB2D<R>();
-  Cator c(box, 1); //Collisionator
+  Cator c(1);
 
   uint64_t id = c.getCollisionablesListId();
 

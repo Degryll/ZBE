@@ -137,6 +137,7 @@
 		<Unit filename="../../../src/ZBE_main/include/game/GameReactor.h" />
 		<Unit filename="../../../src/ZBE_main/include/game/entities/GameBall.h" />
 		<Unit filename="../../../src/ZBE_main/include/game/events/handlers/StepInputHandler.h" />
+		<Unit filename="../../../src/ZBE_main/include/game/reactobjects/GameReactObjects.h" />
 		<Unit filename="../../../src/ZBE_main/include/gamemain.h" />
 		<Unit filename="../../../src/ZBE_main/include/ludomain.h" />
 		<Unit filename="../../../src/ZBE_main/src/batismain.cpp" />

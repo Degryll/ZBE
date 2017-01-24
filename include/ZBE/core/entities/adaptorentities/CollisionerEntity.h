@@ -13,7 +13,7 @@
 #include "ZBE/core/entities/adaptors/CollisionerAdaptor.h"
 #include "ZBE/core/entities/avatars/Collisioner.h"
 #include "ZBE/core/entities/adaptors/ReactObjectAdaptor.h"
-#include "ZBE/core/entities/avatars/ReactObject.h"
+#include "ZBE/core/tools/math/collisions/ReactObject.h"
 
 namespace zbe {
 
@@ -26,9 +26,6 @@ class CollisionerEntity {
     virtual ~CollisionerEntity() {};
 
     virtual std::shared_ptr<Collisioner<R> > getCollisioner() = 0;
-
-  	virtual std::shared_ptr<ReactObject<R> > getReactObject() = 0;
-
 };
 
 /** \brief Entity that can be seen as a collisioner using an adaptor.
@@ -38,20 +35,17 @@ class CollisionerEntityAdapted : public CollisionerEntity<R> {
   public:
     CollisionerEntityAdapted(T* entity) : entity(entity) {}
 
-    virtual ~CollisionerEntityAdapted(){delete c; delete r;};
+    virtual ~CollisionerEntityAdapted(){}
 
     void setCollisionerAdaptor(CollisionerAdaptor<T, R> *adaptor) {c = adaptor;}
 
+    CollisionerAdaptor<T, R>* getCollisionerAdaptor() {return (c);}
+
     std::shared_ptr<Collisioner<R> > getCollisioner() {return (c->getCollisioner(entity));}
-
-  	void setReactObjectAdaptor(ReactObjectAdaptor<T, R> *adaptor) {r = adaptor;}
-
-  	std::shared_ptr<ReactObject<R> > getReactObject() {return (r->getReactObject(entity));}
 
   private:
     T* entity;
     CollisionerAdaptor<T, R> *c;
-  	ReactObjectAdaptor<T, R> *r;
 };
 
 }  // namespace zbe

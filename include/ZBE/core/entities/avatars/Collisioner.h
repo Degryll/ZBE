@@ -3,7 +3,7 @@
  * @file Collsioner.h
  * @since 2016-11-22
  * @date 2017-01-19
- * @author Degryll Ludo
+ * @author Ludo Degryll
  * @brief Defines an element that can participate in collisions.
  */
 
@@ -11,12 +11,13 @@
 #define CORE_ENTITIES_AVATARS_COLLISIONER_H_
 
 #include <forward_list>
+#include <memory>
 
 #include "ZBE/core/tools/math/Point.h"
-#include "ZBE/core/entities/avatars/ReactObject.h"
 #include "ZBE/core/events/handlers/Actuator.h"
 #include "ZBE/core/tools/math/collisions/CollisionData.h"
 #include "ZBE/core/tools/math/collisions/CollisionObject.h"
+#include "ZBE/core/tools/math/collisions/ReactObject.h"
 #include "ZBE/core/tools/containers/ListManager.h"
 
 namespace zbe {
@@ -26,39 +27,27 @@ namespace zbe {
 template <typename R>
 class Collisioner {
   public:
-    /** \brief A collisionable entity is defined by a collision object.
-     * \param object A collision object that defines the "physical shape" of the entity.
-     */
-    Collisioner(CollisionObject<R>* object) : o(object) {}
-    Collisioner(const Collisioner<R>&) = delete;
-
     /** \brief Empty destructor.
      */
     virtual ~Collisioner() {}
 
-    void operator=(const Collisioner&) = delete;
-
-    /** \brief Set the collision object this entity is.
-     *  \param object The collision object.
-     */
-    inline void setCollisionObject(CollisionObject<R>* object) {o = object;}
-
     /** \brief Return the collision object.
      *  \return Collision object.
      */
-    inline CollisionObject<R>* getCollisionObject() {return (o);}
+    virtual std::shared_ptr<CollisionObject<R> > getCollisionObject() = 0;
+
+    /** \brief Return the react object.
+     *  \return React object.
+     */
+    virtual std::shared_ptr<ReactObject<R> > getReactObject() = 0;
 
     virtual void react(CollisionData * collisionData, ReactObject<R> * reactObject) = 0;
-
-  private:
-    CollisionObject<R>* o;  //!< Collision object
-
 };
 
 /** \brief Every Collisioner (an entity involved in a collision) has a collision object defining his "physical shape".
  */
 template <typename T, typename R>
-class CollisionerCommon : public Collisioner<R> {
+class CollisionerCommon : virtual public Collisioner<R> {
   public:
     CollisionerCommon(const CollisionerCommon&) = delete;
     void operator=(const CollisionerCommon&) = delete;
@@ -66,15 +55,37 @@ class CollisionerCommon : public Collisioner<R> {
     /** \brief A collisionable entity is defined by a collision object.
       * \param object A collision object that defines the "physical shape" of the entity.
       */
-    CollisionerCommon(T * collisioner, CollisionObject<R>* object, uint64_t actuatorsList) : Collisioner<R>(object), al(actuatorsList), c(collisioner), lma(ListManager<std::forward_list<Actuator<T,R>* > >::getInstance())  {}
-
-    void react(CollisionData * collisionData, ReactObject<R> * reactObject);
+    CollisionerCommon(T * collisioner, std::shared_ptr<CollisionObject<R> > collisionObject, std::shared_ptr<ReactObject<R> > reactObject, uint64_t actuatorsList) : co(collisionObject), ro(reactObject), al(actuatorsList), c(collisioner), lma(ListManager<std::forward_list<Actuator<T,R>* > >::getInstance())  {}
 
     /** \brief Empty destructor.
       */
     virtual ~CollisionerCommon() {}
 
+    /** \brief Set the collision object this entity is.
+     *  \param object The collision object.
+     */
+    inline void setCollisionObject(std::shared_ptr<CollisionObject<R> > object) {co = object;}
+
+    /** \brief Set the react object this entity is.
+     *  \param object The react object.
+     */
+    inline void setReactObject(std::shared_ptr<ReactObject<R> > object) {ro = object;}
+
+    /** \brief Return the collision object.
+     *  \return Collision object.
+     */
+    inline std::shared_ptr<CollisionObject<R> > getCollisionObject() {return (co);}
+
+    /** \brief Return the react object.
+     *  \return React object.
+     */
+    inline std::shared_ptr<ReactObject<R> > getReactObject() {return (ro);}
+
+    void react(CollisionData * collisionData, ReactObject<R> * reactObject);
+
   private:
+    std::shared_ptr<CollisionObject<R> > co;  //!< Collision object
+    std::shared_ptr<ReactObject<R> > ro;  //!< Collision object
     uint64_t al;
     T * c;
     ListManager<std::forward_list<Actuator<T,R>* > >& lma;
