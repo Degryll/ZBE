@@ -11,20 +11,28 @@
 #include "ZBE/core/tools/math/objects.h"
 #include "ZBE/core/entities/avatars/Collisioner.h"
 #include "ZBE/core/tools/math/collisions/CollisionSystemSolver.h"
+#include "ZBE/core/tools/math/collisions/ReactObject.h"
 
 class R { // Reactor mock
   public:
     virtual ~R() {};
 };
 
+class RO : public zbe::ReactObject<R> {
+  public:
+    void act(R*) {}
+};
+
 class C : public zbe::CollisionerCommon<C, R> {
   public:
-    C(zbe::CollisionObject<R> * co):zbe::CollisionerCommon<C, R>(this, co, nullptr, 1) {};
+    C(std::shared_ptr<zbe::CollisionObject<R> > co):zbe::CollisionerCommon<C, R>(this, co, std::shared_ptr<zbe::ReactObject<R> >(new RO()), 1) {};
 };
 
 TEST(CollisionSystemSolver, MovingCircleStaticAABB) {
-  zbe::ConstantMovingCircle<R>* cc = new zbe::ConstantMovingCircle<R>(zbe::Circle({{2.0,3.0},1.0}),zbe::Vector2D({3.0,4.0}));
-  zbe::StaticAABB2D<R>* sbox = new zbe::StaticAABB2D<R>(zbe::AABB2D({{1.0,5.0},{6.0,10.0}}));
+  //zbe::ConstantMovingCircle<R>* cc = new zbe::ConstantMovingCircle<R>(zbe::Circle({{2.0,3.0},1.0}),zbe::Vector2D({3.0,4.0}));
+  //zbe::StaticAABB2D<R>* sbox = new zbe::StaticAABB2D<R>(zbe::AABB2D({{1.0,5.0},{6.0,10.0}}));
+  std::shared_ptr<zbe::ConstantMovingCircle<R> > cc(new zbe::ConstantMovingCircle<R>(zbe::Circle({{2.0,3.0},1.0}), zbe::Vector2D({3.0,4.0})));
+  std::shared_ptr<zbe::StaticAABB2D<R> > sbox(new zbe::StaticAABB2D<R>({{1.0,5.0},{6.0,10.0}}));
   C a(cc);
   C b(sbox);
 
@@ -44,8 +52,10 @@ TEST(CollisionSystemSolver, MovingCircleStaticAABB) {
 }
 
 TEST(CollisionSystemSolver, StaticAABBMovingCircle) {
-  zbe::ConstantMovingCircle<R>* cc= new zbe::ConstantMovingCircle<R>(zbe::Circle({{2.0,3.0},1.0}),zbe::Vector2D({3.0,4.0}));
-  zbe::StaticAABB2D<R>* sbox= new zbe::StaticAABB2D<R>(zbe::AABB2D({{1.0,5.0},{6.0,10.0}}));
+  //zbe::ConstantMovingCircle<R>* cc= new zbe::ConstantMovingCircle<R>(zbe::Circle({{2.0,3.0},1.0}),zbe::Vector2D({3.0,4.0}));
+  //zbe::StaticAABB2D<R>* sbox= new zbe::StaticAABB2D<R>(zbe::AABB2D({{1.0,5.0},{6.0,10.0}}));
+  std::shared_ptr<zbe::ConstantMovingCircle<R> > cc(new zbe::ConstantMovingCircle<R>(zbe::Circle({{2.0,3.0},1.0}), zbe::Vector2D({3.0,4.0})));
+  std::shared_ptr<zbe::StaticAABB2D<R> > sbox(new zbe::StaticAABB2D<R>({{1.0,5.0},{6.0,10.0}}));
   C a(cc);
   C b(sbox);
 

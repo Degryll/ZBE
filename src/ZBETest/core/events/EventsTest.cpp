@@ -6,7 +6,7 @@
 #include "ZBE/core/events/TimeEvent.h"
 #include "ZBE/core/events/CollisionEvent2D.h"
 #include "ZBE/core/entities/avatars/Collisioner.h"
-#include "ZBE/core/entities/avatars/ReactObject.h"
+#include "ZBE/core/tools/math/collisions/ReactObject.h"
 #include "ZBE/core/tools/math/collisions/CollisionSystemSolver.h"
 #include "ZBE/core/events/handlers/TimeHandler.h"
 

@@ -12,6 +12,7 @@
 #include "ZBE/core/events/generators/InputEventGenerator.h"
 #include "ZBE/core/events/generators/CollisionEventGenerator.h"
 #include "ZBE/core/events/generators/TimeEventGenerator.h"
+#include "ZBE/core/events/handlers/Actuator.h"
 #include "ZBE/core/system/SysTime.h"
 #include "ZBE/core/tools/Timer.h"
 #include "ZBE/core/system/SysError.h"
@@ -24,10 +25,12 @@
 #include "ZBE/entities/adaptors/implementations/BaseMovableCatorMobileAPOAdaptor.h"
 #include "ZBE/behaviors/UniformLinearMotion.h"
 #include "ZBE/archetypes/Mobile.h"
+#include "ZBE/archetypes/MobileAPO.h"
 
 #include "gamemain.h"
 #include "game/GameReactor.h"
 #include "game/entities/GameBall.h"
+#include "game/entities/GameBoard.h"
 #include "game/events/handlers/StepInputHandler.h"
 
 int gamemain(int, char** ) {
@@ -39,7 +42,13 @@ int gamemain(int, char** ) {
     TIMEEVENT = 2,
 
     COLLISIONATORLIST = 1,
-    MOBILELIST = 1
+    MOBILELIST = 1,
+    BALLACTUATORLIST = 1,
+    COLLISIONABLELIST = 1,
+    BOARDACTUATORLIST = 1,
+
+    WIDTH = 640,
+    HEIGHT = 480
   };
 
   const char ballfilename[] = "data/images/zombieball/zomball_st_32.png";
@@ -83,7 +92,7 @@ int gamemain(int, char** ) {
   sysTime.setSystemTimer(sysTimer);
   printf("|-------------------- Drawing system ----------------------|\n");fflush(stdout);
   printf("Building the window to draw on\n");fflush(stdout);
-  zbe::Window window(640,480);
+  zbe::Window window(WIDTH,HEIGHT);
   ballgraphics = window.loadImg(ballfilename);
   printf("Building the drawer to paint SimpleSprite's \n");fflush(stdout);
   zbe::SimpleSpriteSDLDrawer drawer(&window);
@@ -96,7 +105,17 @@ int gamemain(int, char** ) {
   dMaster.addDaemon(bball);
   printf("|------------------- Creating entities --------------------|\n");fflush(stdout);
   printf("Creating a ball and giving it a position and size\n");fflush(stdout);
-  game::GameBall ball(320,240,16,10,10, 3, 42, ballgraphics);
+
+  //ball
+  std::forward_list< zbe::Actuator< zbe::MobileAPO<game::GameReactor, 2>, game::GameReactor >*> ballActuatorsList;
+  zbe::ListManager< std::forward_list< zbe::Actuator< zbe::MobileAPO<game::GameReactor, 2>, game::GameReactor >* > >& lmBallActuatorsList = zbe::ListManager< std::forward_list< zbe::Actuator< zbe::MobileAPO<game::GameReactor, 2>, game::GameReactor >* > >::getInstance();
+  lmBallActuatorsList.insert(BALLACTUATORLIST, &ballActuatorsList);
+
+  std::forward_list< zbe::CollisionerEntity<game::GameReactor>*> collisionablesList;
+  zbe::ListManager< std::forward_list< zbe::CollisionerEntity<game::GameReactor>*> >& lmCollisionablesList = zbe::ListManager< std::forward_list< zbe::CollisionerEntity<game::GameReactor>*> >::getInstance();
+  lmCollisionablesList.insert(COLLISIONABLELIST, &collisionablesList);
+
+  game::GameBall ball(WIDTH/2,HEIGHT/2,16,10,10, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
   //game::GameBall ball(320,240,32,32,ballgraphics);
   printf("Building an sprite adaptor for the ball\n");fflush(stdout);
   zbe::SimpleSpriteAdaptor<zbe::Drawable>* spriteAdaptor = new zbe::SimpleDrawableSimpleSpriteAdaptor();
@@ -108,6 +127,14 @@ int gamemain(int, char** ) {
   ieg.addHandler(zbe::ZBEK_a, &ihleft);
   ieg.addHandler(zbe::ZBEK_d, &ihright);
   vmobile.push_back(&ball);
+
+  //board
+  std::forward_list< zbe::Actuator<game::GameBoard, game::GameReactor>*> boardActuatorsList;
+  zbe::ListManager< std::forward_list< zbe::Actuator<game::GameBoard, game::GameReactor>*> >& lmBoardActuatorsList = zbe::ListManager< std::forward_list< zbe::Actuator<game::GameBoard, game::GameReactor>*> >::getInstance();
+  lmBoardActuatorsList.insert(BOARDACTUATORLIST, &boardActuatorsList);
+
+  game::GameBoard board(WIDTH, HEIGHT, BOARDACTUATORLIST);
+
   /* ILL BE BACK *///ctl.insert(&ball);
   printf("|=================== Starting up system ===================|\n");fflush(stdout);
   printf("Starting SysTimer\n");fflush(stdout);

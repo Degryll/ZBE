@@ -8,7 +8,7 @@
 #include "ZBE/entities/avatars/implementations/SimpleBounceable.h"
 #include "ZBE/entities/avatars/implementations/BaseMovable.h"
 #include "ZBE/core/events/handlers/Actuator.h"
-#include "ZBE/core/entities/avatars/ReactObject.h"
+#include "ZBE/core/tools/math/collisions/ReactObject.h"
 #include "ZBE/core/tools/math/collisions/CollisionData.h"
 
 class ReactorMock {
