@@ -26,6 +26,7 @@
 #include "ZBE/behaviors/UniformLinearMotion.h"
 #include "ZBE/archetypes/Mobile.h"
 #include "ZBE/archetypes/MobileAPO.h"
+#include "ZBE/actuators/MovableBouncer.h"
 
 #include "gamemain.h"
 #include "game/GameReactor.h"
@@ -107,15 +108,17 @@ int gamemain(int, char** ) {
   printf("Creating a ball and giving it a position and size\n");fflush(stdout);
 
   //ball
-  std::forward_list< zbe::Actuator< zbe::MobileAPO<game::GameReactor, 2>, game::GameReactor >*> ballActuatorsList;
-  zbe::ListManager< std::forward_list< zbe::Actuator< zbe::MobileAPO<game::GameReactor, 2>, game::GameReactor >* > >& lmBallActuatorsList = zbe::ListManager< std::forward_list< zbe::Actuator< zbe::MobileAPO<game::GameReactor, 2>, game::GameReactor >* > >::getInstance();
+  std::forward_list< zbe::Actuator< zbe::Movable<2>, game::GameReactor >*> ballActuatorsList;
+  zbe::ListManager< std::forward_list< zbe::Actuator< zbe::Movable<2>, game::GameReactor >* > >& lmBallActuatorsList = zbe::ListManager< std::forward_list< zbe::Actuator< zbe::Movable<2>, game::GameReactor >* > >::getInstance();
   lmBallActuatorsList.insert(BALLACTUATORLIST, &ballActuatorsList);
+  zbe::MovableBouncer<game::GameReactor, 2> mBouncer;
+  ballActuatorsList.push_front(&mBouncer);
 
   std::forward_list< zbe::CollisionerEntity<game::GameReactor>*> collisionablesList;
   zbe::ListManager< std::forward_list< zbe::CollisionerEntity<game::GameReactor>*> >& lmCollisionablesList = zbe::ListManager< std::forward_list< zbe::CollisionerEntity<game::GameReactor>*> >::getInstance();
   lmCollisionablesList.insert(COLLISIONABLELIST, &collisionablesList);
 
-  game::GameBall ball(WIDTH/2,HEIGHT/2,16,10,10, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
+  game::GameBall ball(WIDTH/2,HEIGHT/2,16,50,50, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
   //game::GameBall ball(320,240,32,32,ballgraphics);
   printf("Building an sprite adaptor for the ball\n");fflush(stdout);
   zbe::SimpleSpriteAdaptor<zbe::Drawable>* spriteAdaptor = new zbe::SimpleDrawableSimpleSpriteAdaptor();
@@ -128,6 +131,7 @@ int gamemain(int, char** ) {
   ieg.addHandler(zbe::ZBEK_d, &ihright);
   vmobile.push_back(&ball);
 
+	printf("Creating the board and giving it a size\n");fflush(stdout);
   //board
   std::forward_list< zbe::Actuator<game::GameBoard, game::GameReactor>*> boardActuatorsList;
   zbe::ListManager< std::forward_list< zbe::Actuator<game::GameBoard, game::GameReactor>*> >& lmBoardActuatorsList = zbe::ListManager< std::forward_list< zbe::Actuator<game::GameBoard, game::GameReactor>*> >::getInstance();

@@ -3,7 +3,7 @@
  * @file CollisionObject.h
  * @since 2016-11-22
  * @date 2017-01-19
- * @author Degryll Ludo
+ * @author Degryll Ludo Batis
  * @brief Defines an element that can collide.
  */
 
@@ -16,7 +16,9 @@ namespace zbe {
 template <typename R>
 class CollisionSelector;
 template <typename R>
-class StaticAABB2D;
+class StaticSolidAABB2D;
+template <typename R>
+class StaticLimiterAABB2D;
 template <typename R>
 class ConstantMovingCircle;
 
@@ -26,7 +28,8 @@ public:
   virtual ~CollisionObject() {}  //!< Empty destructor
 // You must add a new "accept" function for any new derived CollisionObject
   virtual bool accept(CollisionSelector<R> &visitor, CollisionObject& param1, uint64_t& time, Point2D& point) = 0;       //!< Collision solver using the visitor pattern
-  virtual bool accept(CollisionSelector<R> &visitor, StaticAABB2D<R>& param1, uint64_t& time, Point2D& point) = 0;          //!< Collision solver using the visitor pattern
+  virtual bool accept(CollisionSelector<R> &visitor, StaticSolidAABB2D<R>& param1, uint64_t& time, Point2D& point) = 0;          //!< Collision solver using the visitor pattern
+  virtual bool accept(CollisionSelector<R> &visitor, StaticLimiterAABB2D<R>& param1, uint64_t& time, Point2D& point) = 0;          //!< Collision solver using the visitor pattern
   virtual bool accept(CollisionSelector<R> &visitor, ConstantMovingCircle<R>& param1, uint64_t& time, Point2D& point) = 0;  //!< Collision solver using the visitor pattern
 };
 

@@ -32,7 +32,7 @@ TEST(CollisionSystemSolver, MovingCircleStaticAABB) {
   //zbe::ConstantMovingCircle<R>* cc = new zbe::ConstantMovingCircle<R>(zbe::Circle({{2.0,3.0},1.0}),zbe::Vector2D({3.0,4.0}));
   //zbe::StaticAABB2D<R>* sbox = new zbe::StaticAABB2D<R>(zbe::AABB2D({{1.0,5.0},{6.0,10.0}}));
   std::shared_ptr<zbe::ConstantMovingCircle<R> > cc(new zbe::ConstantMovingCircle<R>(zbe::Circle({{2.0,3.0},1.0}), zbe::Vector2D({3.0,4.0})));
-  std::shared_ptr<zbe::StaticAABB2D<R> > sbox(new zbe::StaticAABB2D<R>({{1.0,5.0},{6.0,10.0}}));
+  std::shared_ptr<zbe::StaticSolidAABB2D<R> > sbox(new zbe::StaticSolidAABB2D<R>({{1.0,5.0},{6.0,10.0}}));
   C a(cc);
   C b(sbox);
 
@@ -51,11 +51,9 @@ TEST(CollisionSystemSolver, MovingCircleStaticAABB) {
   // TODO mas test de colisiones y mas robustos
 }
 
-TEST(CollisionSystemSolver, StaticAABBMovingCircle) {
-  //zbe::ConstantMovingCircle<R>* cc= new zbe::ConstantMovingCircle<R>(zbe::Circle({{2.0,3.0},1.0}),zbe::Vector2D({3.0,4.0}));
-  //zbe::StaticAABB2D<R>* sbox= new zbe::StaticAABB2D<R>(zbe::AABB2D({{1.0,5.0},{6.0,10.0}}));
+TEST(CollisionSystemSolver, StaticSolidAABBMovingCircle) {
   std::shared_ptr<zbe::ConstantMovingCircle<R> > cc(new zbe::ConstantMovingCircle<R>(zbe::Circle({{2.0,3.0},1.0}), zbe::Vector2D({3.0,4.0})));
-  std::shared_ptr<zbe::StaticAABB2D<R> > sbox(new zbe::StaticAABB2D<R>({{1.0,5.0},{6.0,10.0}}));
+  std::shared_ptr<zbe::StaticSolidAABB2D<R> > sbox(new zbe::StaticSolidAABB2D<R>({{1.0,5.0},{6.0,10.0}}));
   C a(cc);
   C b(sbox);
 
@@ -70,6 +68,8 @@ TEST(CollisionSystemSolver, StaticAABBMovingCircle) {
   EXPECT_DOUBLE_EQ(0.25 * zbe::VELOCITYTOTIME,t) << "Time of collision.";
   EXPECT_DOUBLE_EQ(2.75,p[0]) << "Point of collision (x).";
   EXPECT_DOUBLE_EQ(5.0,p[1]) << "Point of collision (y).";
+}
 
-  // TODO mas test de colisiones y mas robustos
+TEST(CollisionSystemSolver, DISABLED_MoreTests) {
+  // TODO mas test de colisiones y mas robustos. No olvidar los objetos que faltan.
 }

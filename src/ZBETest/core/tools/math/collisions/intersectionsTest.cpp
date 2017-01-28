@@ -105,7 +105,7 @@ TEST(Intersections, RayAABB) {
   EXPECT_EQ(0,result) << "Second Ray vs AABB collision.";
 }
 
-TEST(Intersections, MovingCircleAABB) {
+TEST(Intersections, MovingCircleOutsideAABB) {
   zbe::Circle ball{{2.0,3.0},1.0};
   zbe::Vector2D velocity{3.0,4.0};
   zbe::AABB2D block{{1.0,5.0},{6.0,10.0}};
@@ -113,11 +113,13 @@ TEST(Intersections, MovingCircleAABB) {
   zbe::Point2D p;
   uint64_t t = 1 * zbe::VELOCITYTOTIME;
 
-  result = IntersectionMovingCircleAABB2D(ball, velocity, block, t, p);
+  result = IntersectionMovingCircleOutsideAABB2D(ball, velocity, block, t, p);
   EXPECT_EQ(1,result) << "First Moving Circle vs AABB collision.";
   EXPECT_DOUBLE_EQ(0.25 * zbe::VELOCITYTOTIME,t) << "Time of collision.";
   EXPECT_DOUBLE_EQ(2.75,p[0]) << "Point of collision (x).";
   EXPECT_DOUBLE_EQ(5.0,p[1]) << "Point of collision (y).";
+}
 
+TEST(Intersections, DISABLED_MovingCircleInsideAABB) {
   // TODO mas test de colisiones y mas robustos
 }

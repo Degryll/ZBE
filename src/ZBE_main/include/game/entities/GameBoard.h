@@ -22,7 +22,7 @@ namespace game {
 class GameBoard : public zbe::CollisionerCommon<GameBoard, GameReactor> {
 public:
   GameBoard(double width, double height, uint64_t actuatorsList)
-    : CollisionerCommon(this, std::make_shared<zbe::StaticAABB2D<GameReactor> >(zbe::AABB2D(zbe::AABB2D({0, 0}, {width, height} ))),
+    : CollisionerCommon(this, std::make_shared<zbe::StaticLimiterAABB2D<GameReactor> >(zbe::AABB2D(zbe::AABB2D({0, 0}, {width, height} ))),
          std::make_shared<VoidReactObject>(),
          actuatorsList) {}
 };
