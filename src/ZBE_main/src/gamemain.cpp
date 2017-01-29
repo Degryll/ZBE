@@ -4,6 +4,7 @@
 #include <thread>
 
 #include "ZBE/core/daemons/DaemonMaster.h"
+#include "ZBE/core/entities/avatars/implementations/SimpleCollisioner.h"
 #include "ZBE/core/events/Event.h"
 #include "ZBE/core/events/EventStore.h"
 #include "ZBE/core/events/TimeEvent.h"
@@ -135,8 +136,8 @@ int gamemain(int, char** ) {
 
 	printf("Creating the board and giving it a size\n");fflush(stdout);
   //board
-  std::forward_list< zbe::Actuator<game::GameBoard, game::GameReactor>*> boardActuatorsList;
-  zbe::ListManager< std::forward_list< zbe::Actuator<game::GameBoard, game::GameReactor>*> >& lmBoardActuatorsList = zbe::ListManager< std::forward_list< zbe::Actuator<game::GameBoard, game::GameReactor>*> >::getInstance();
+  std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> boardActuatorsList;
+  zbe::ListManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> >& lmBoardActuatorsList = zbe::ListManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> >::getInstance();
   lmBoardActuatorsList.insert(BOARDACTUATORLIST, &boardActuatorsList);
 
   game::GameBoard board(WIDTH, HEIGHT, BOARDACTUATORLIST);
