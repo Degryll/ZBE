@@ -94,7 +94,6 @@ class CollisionerCommon : virtual public Collisioner<R> {
 
 template <typename T, typename R>
 void CollisionerCommon<T, R>::react(CollisionData * collisionData, ReactObject<R> * reactObject) {
-  printf("%s\n", typeid(lma.get(al)).name());fflush(stdout);
   for (auto a : *(lma.get(al)) ) {
     a->run(c, reactObject, collisionData);
   }
