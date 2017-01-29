@@ -20,9 +20,9 @@ namespace zbe {
 /** \brief This define a collisioner avatar that can be moved.
  */
 template <typename R, unsigned s>
-class MovableCollisioner : public Movable<s> ,public CollisionerCommon<Movable<s>, R> {
+class MovableCollisioner : virtual public Movable<s>, virtual public Collisioner<R> {
   public:
-    MovableCollisioner(CollisionObject<R>* object, uint64_t actuatorsList) : CollisionerCommon<Movable<s>, R>(this, object, actuatorsList) {}
+    virtual ~MovableCollisioner() {}
 };
 
 }  // namespace zbe

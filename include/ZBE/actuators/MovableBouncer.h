@@ -10,8 +10,6 @@
 #ifndef ZBE_ACTUATORS_MOVABLEBOUNCER
 #define ZBE_ACTUATORS_MOVABLEBOUNCER
 
-#include <cstdio>
-
 #include "ZBE/core/events/handlers/Actuator.h"
 #include "ZBE/core/tools/math/Vector.h"
 #include "ZBE/core/tools/math/math.h"
@@ -29,7 +27,6 @@ template <typename R, unsigned s>
 class MovableBouncer: public Actuator<Movable<s>, R> {
   public:
     void act(Bounceable * b) {
-      printf("Bounce\n");fflush(stdout);
       Movable<s> * m = Actuator<Movable<s>, R>::getCollisioner();
       CollisionData * cd = Actuator<Movable<s>, R>::getCollisionData();
 

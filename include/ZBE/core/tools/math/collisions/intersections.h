@@ -288,7 +288,7 @@ bool intersectionMovingNSphereInsideAABB(NSphere<dim> nsphere, Vector<dim> direc
   uint64_t t = time;
 
   Ray<dim> ray(nsphere.c, direction);
-  return (intersectionRayAABB<dim>(ray, e, t, point) || t < time);
+  return (intersectionRayAABB<dim>(ray, e, t, point) && t < time);
 }
 
 /**************************************************************/

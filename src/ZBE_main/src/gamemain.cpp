@@ -33,6 +33,7 @@
 #include "game/entities/GameBall.h"
 #include "game/entities/GameBoard.h"
 #include "game/events/handlers/StepInputHandler.h"
+#include "game/events/handlers/GameBallBouncer.h"
 
 int gamemain(int, char** ) {
   printf("--- GAME main ---\n\n");
@@ -108,18 +109,19 @@ int gamemain(int, char** ) {
   printf("Creating a ball and giving it a position and size\n");fflush(stdout);
 
   //ball
-  std::forward_list< zbe::Actuator< zbe::Movable<2>, game::GameReactor >*> ballActuatorsList;
-  zbe::ListManager< std::forward_list< zbe::Actuator< zbe::Movable<2>, game::GameReactor >* > >& lmBallActuatorsList = zbe::ListManager< std::forward_list< zbe::Actuator< zbe::Movable<2>, game::GameReactor >* > >::getInstance();
+  std::forward_list< zbe::Actuator< zbe::MovableCollisioner<game::GameReactor, 2>, game::GameReactor >*> ballActuatorsList;
+  zbe::ListManager< std::forward_list< zbe::Actuator< zbe::MovableCollisioner<game::GameReactor, 2>, game::GameReactor >* > >& lmBallActuatorsList = zbe::ListManager< std::forward_list< zbe::Actuator< zbe::MovableCollisioner<game::GameReactor, 2>, game::GameReactor >* > >::getInstance();
   lmBallActuatorsList.insert(BALLACTUATORLIST, &ballActuatorsList);
-  zbe::MovableBouncer<game::GameReactor, 2> mBouncer;
-  ballActuatorsList.push_front(&mBouncer);
+  game::GameBallBouncer gbBouncer;
+  ballActuatorsList.push_front(&gbBouncer);
 
-  std::forward_list< zbe::CollisionerEntity<game::GameReactor>*> collisionablesList;
-  zbe::ListManager< std::forward_list< zbe::CollisionerEntity<game::GameReactor>*> >& lmCollisionablesList = zbe::ListManager< std::forward_list< zbe::CollisionerEntity<game::GameReactor>*> >::getInstance();
+  zbe::TicketedForwardList<zbe::CollisionerEntity<game::GameReactor>*> collisionablesList;
+  zbe::ListManager<zbe::TicketedForwardList<zbe::CollisionerEntity<game::GameReactor>*> >& lmCollisionablesList = zbe::ListManager< zbe::TicketedForwardList<zbe::CollisionerEntity<game::GameReactor>*> >::getInstance();
   lmCollisionablesList.insert(COLLISIONABLELIST, &collisionablesList);
 
   game::GameBall ball(WIDTH/2,HEIGHT/2,16,50,50, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
-  //game::GameBall ball(320,240,32,32,ballgraphics);
+  ctl.push_front(&ball);
+
   printf("Building an sprite adaptor for the ball\n");fflush(stdout);
   zbe::SimpleSpriteAdaptor<zbe::Drawable>* spriteAdaptor = new zbe::SimpleDrawableSimpleSpriteAdaptor();
   ball.setSimpleSpriteAdaptor(spriteAdaptor);
@@ -138,8 +140,7 @@ int gamemain(int, char** ) {
   lmBoardActuatorsList.insert(BOARDACTUATORLIST, &boardActuatorsList);
 
   game::GameBoard board(WIDTH, HEIGHT, BOARDACTUATORLIST);
-
-  /* ILL BE BACK *///ctl.insert(&ball);
+  collisionablesList.push_front(&board);
   printf("|=================== Starting up system ===================|\n");fflush(stdout);
   printf("Starting SysTimer\n");fflush(stdout);
   sysTimer->start();

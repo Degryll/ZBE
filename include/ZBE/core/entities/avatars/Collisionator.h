@@ -35,7 +35,7 @@ class Collisionator : virtual public Collisioner<R> {
 /** \brief Every Collisionator (an entity involved in a collision) has a collision object defining his "physical shape".
  */
 template <typename T, typename R>
-class CollisionatorCommon : public Collisionator<R>, public CollisionerCommon<T, R> {
+class CollisionatorCommon : virtual public Collisionator<R>, public CollisionerCommon<T, R> {
   public:
     CollisionatorCommon(const CollisionatorCommon<T,R>&) = delete;
     void operator=(const CollisionatorCommon<T,R>&) = delete;

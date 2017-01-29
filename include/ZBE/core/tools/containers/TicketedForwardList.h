@@ -71,6 +71,13 @@ class TicketedForwardList {
       return (TicketedForwardListIterator<T>(&l, e, e, e));
     }
 
+    /** \brief Returns an iterator referring to the past-the-end element in the forward_list container.
+     *  \return An iterator to the element past the end of the sequence.
+     */
+    bool empty() {
+      return (l.empty());
+    }
+
   private:
     std::forward_list< std::shared_ptr< TicketedElement<T> > > l;  //!< The STL forward list
 };

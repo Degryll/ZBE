@@ -200,6 +200,7 @@
 		<Unit filename="../../../include/ZBE/core/entities/avatars/Collisionator.h" />
 		<Unit filename="../../../include/ZBE/core/entities/avatars/Collisioner.h" />
 		<Unit filename="../../../include/ZBE/core/entities/avatars/SimpleSprite.h" />
+		<Unit filename="../../../include/ZBE/core/entities/avatars/implementations/SimpleCollisioner.h" />
 		<Unit filename="../../../include/ZBE/core/events/CollisionEvent2D.h" />
 		<Unit filename="../../../include/ZBE/core/events/Event.h" />
 		<Unit filename="../../../include/ZBE/core/events/EventStore.h" />

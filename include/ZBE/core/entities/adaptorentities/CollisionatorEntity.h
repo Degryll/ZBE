@@ -21,7 +21,7 @@ namespace zbe {
 template <typename R>
 class CollisionatorEntity : public CollisionerEntity<R> {
   public:
-    virtual ~CollisionatorEntity() {};
+    virtual ~CollisionatorEntity() {}
     virtual std::shared_ptr<Collisionator<R> > getCollisionator() = 0;
 
 };
