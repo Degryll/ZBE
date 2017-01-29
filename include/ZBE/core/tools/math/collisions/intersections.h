@@ -174,8 +174,8 @@ bool RayAABB(Ray<dim> ray, AABB<dim> box, uint64_t tmin, uint64_t tmax, uint64_t
 
   if(tmind > taux) {return (false);}
 
-  point = ray.o + ray.d * tmind;
-  time = tmind * VELOCITYTOTIME;
+  point = ray.o + ray.d * tmaxd;
+  time = tmaxd * VELOCITYTOTIME;
   return (true);
 }
 
@@ -288,7 +288,19 @@ bool intersectionMovingNSphereInsideAABB(NSphere<dim> nsphere, Vector<dim> direc
   uint64_t t = time;
 
   Ray<dim> ray(nsphere.c, direction);
-  return (intersectionRayAABB<dim>(ray, e, t, point) && t < time);
+
+  if(!intersectionRayAABB<dim>(ray, e, t, point) || t > time) {
+  	return (false);
+  } else {
+    for(unsigned i = 0; i < dim; i++) {
+      if (point[i] == e.minimum[i]) {
+        point[i] -= 16;
+      } else if (point[i] == e.maximum[i]) {
+        point[i] += 16;
+      }
+    }
+    return (true);
+  }
 }
 
 /**************************************************************/

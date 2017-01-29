@@ -9,7 +9,7 @@ class GameReactor {
 public:
   virtual ~GameReactor() {}
 
-  void act(VoidReactObject*) {}
+  virtual void act(VoidReactObject*) {}
 };
 
 }  // namespace game

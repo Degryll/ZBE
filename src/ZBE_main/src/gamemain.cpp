@@ -121,6 +121,7 @@ int gamemain(int, char** ) {
   lmCollisionablesList.insert(COLLISIONABLELIST, &collisionablesList);
 
   game::GameBall ball(WIDTH/2,HEIGHT/2,16,50,50, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
+  //game::GameBall ball(320,463,16,1000,1000, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
   ctl.push_front(&ball);
 
   printf("Building an sprite adaptor for the ball\n");fflush(stdout);
@@ -177,6 +178,9 @@ int gamemain(int, char** ) {
      */
     initT = endT;// init time
     endT = sysTime.getTotalTime();// instant at which the frame ends
+    if((endT - 500000000)>initT){
+      initT = endT - 500000000;
+    }
     //frameTime = sysTime.getFrameTime();// frame duration
 
     //printf("frameTime = 0x%" PRIx64 " ", frameTime);fflush(stdout);
