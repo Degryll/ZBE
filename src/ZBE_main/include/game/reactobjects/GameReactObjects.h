@@ -16,10 +16,10 @@
 
 namespace game {
 
-class VoidReactObject : public zbe::ReactObjectCommon<VoidReactObject, GameReactor> {
-public:
-  VoidReactObject() : zbe::ReactObjectCommon<VoidReactObject, GameReactor>(this) {}
-};
+//class GameReactObjects : public zbe::ReactObjectCommon<GameReactObjects, GameReactor> {
+//public:
+//  GameReactObjects() : zbe::ReactObjectCommon<GameReactObjects, GameReactor>(this) {}
+//};
 
 } //namespace game
 

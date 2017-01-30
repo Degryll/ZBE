@@ -21,7 +21,7 @@ class WideMobile : virtual public Mobile<s> {
   public:
     virtual ~WideMobile() {}
 
-    virtual setWidth(uint64_t width) = 0;
+    virtual void setWidth(uint64_t width) = 0;
     virtual uint64_t getWidth() = 0;
 };
 

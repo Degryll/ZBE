@@ -23,7 +23,7 @@ namespace game{
   class GameBall: public zbe::Drawable,
                   public zbe::SimpleWideMobileAPO<2>,
                   public zbe::SimpleSpriteEntityAdapted<zbe::Drawable>,
-                  public zbe::MovableCollisionatorEntityAdapted<GameReactor, zbe::MobileAPO<2>, 2> {
+                  public zbe::MovableCollisionatorEntityAdapted<GameReactor, zbe::SimpleWideMobileAPO<2>, 2> {
     public:
 			GameBall(const GameBall&) = delete;
       void operator=(const GameBall&) = delete;
@@ -36,8 +36,8 @@ namespace game{
 
       ~GameBall() {}
 
-      int getX() {return (SimpleMobileAPO::getPosition()[0]);}
-      int getY() {return (SimpleMobileAPO::getPosition()[1]);}
+      int getX() {return (SimpleWideMobileAPO::getPosition()[0]);}
+      int getY() {return (SimpleWideMobileAPO::getPosition()[1]);}
       unsigned getW()        {return (d);}
       unsigned getH()        {return (d);}
       int      getGraphics() {return (g);}

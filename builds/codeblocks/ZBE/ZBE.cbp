@@ -260,6 +260,7 @@
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/BasePositionable.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/BaseSphereMovableCator.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/SimpleBounceable.h" />
+		<Unit filename="../../../include/ZBE/reactobjects/VoidReactObject.h" />
 		<Unit filename="../../../include/ZBE/zombienoid/ZombienoidReactor.h" />
 		<Unit filename="../../../src/ZBE/SDL/drawers/SimpleSpriteSDLDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/loaders/SDLFontLoader.cpp" />

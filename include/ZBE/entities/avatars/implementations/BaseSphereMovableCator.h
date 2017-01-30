@@ -13,7 +13,8 @@
 #include "ZBE/core/entities/avatars/Collisionator.h"
 #include "ZBE/entities/avatars/implementations/BaseMovable.h"
 #include "ZBE/entities/avatars/MovableCollisionator.h"
-#include "ZBE/archetypes/WideMobileAPO.h"
+#include "ZBE/archetypes/implementations/SimpleWideMobileAPO.h"
+#include "ZBE/reactobjects/VoidReactObject.h"
 
 namespace zbe {
 
@@ -23,12 +24,12 @@ template <typename R, unsigned s>
 class BaseSphereMovableCator : public MovableCollisionator<R, s>, public BaseMovable<s>, public CollisionatorCommon<MovableCollisioner<R, s>, R> {
   public:
 
-    BaseMovableCator(WideMobileAPO<R, s>* mobile)
+    BaseSphereMovableCator(SimpleWideMobileAPO<s>* mobile)
       : BaseMovable<s>(mobile),
   			CollisionatorCommon<MovableCollisioner<R, s>, R>(
           this,
-       		std::make_shared<zbe::ConstantMovingCircle<GameReactor> >(zbe::ConstantMovingCircle<GameReactor>(zbe::Circle({x, y}, radius), {vx, vy})),
-          std::make_shared<VoidReactObject>(),
+       		std::make_shared<zbe::ConstantMovingCircle<R> >(zbe::ConstantMovingCircle<R>(zbe::Circle(mobile->getPosition(), mobile->getWidth()), mobile->getVelocity())),
+          std::make_shared<zbe::VoidReactObject<R> >(),
           mobile->getActuatorsList(),
           mobile->getCollisionablesList()) {}
 };
