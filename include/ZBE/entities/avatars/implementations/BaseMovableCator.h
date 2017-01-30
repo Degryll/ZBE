@@ -25,7 +25,7 @@ class BaseMovableCator : public MovableCollisionator<R, s>, public BaseMovable<s
     BaseMovableCator(const BaseMovableCator<R, s>&) = delete;
     void operator=(const BaseMovableCator<R, s>&) = delete;
 
-    BaseMovableCator(MobileAPO<R, s>* mobile)
+    BaseMovableCator(MobileAPO<s>* mobile)
       : BaseMovable<s>(mobile),
   			CollisionatorCommon<MovableCollisioner<R, s>, R>(this, mobile->getCollisionObject(), mobile->getReactObject(), mobile->getActuatorsList(), mobile->getCollisionablesList()) {}
 };

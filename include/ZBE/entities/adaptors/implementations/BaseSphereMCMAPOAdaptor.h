@@ -14,28 +14,28 @@
 
 #include "ZBE/entities/avatars/Movable.h"
 #include "ZBE/entities/adaptors/MovableCollisionatorAdaptor.h"
-#include "ZBE/entities/avatars/implementations/BaseMovableCator.h"
-#include "ZBE/archetypes/MobileAPO.h"
+#include "ZBE/entities/avatars/implementations/BaseSphereMovableCator.h"
+#include "ZBE/archetypes/WideMobileAPO.h"
 
 namespace zbe {
 
 /** \brief Implementation that adapts a mobileAPO entity to a movableCator.
  */
 template <typename R, unsigned s>
-class BaseMovableCatorMobileAPOAdaptor : public MovableCollisionatorAdaptor<R, MobileAPO<s>, s> {
+class BaseSphereMCMAPOAdaptor : public MovableCollisionatorAdaptor<R, MobileAPO<R, s>, s> {
   public:
-    std::shared_ptr<MovableCollisionator<R, s> > getMovableCollisionator(MobileAPO<s>* entity) {
-        std::shared_ptr<MovableCollisionator<R, s> > p(new BaseMovableCator<R, s>(entity));
+    std::shared_ptr<MovableCollisionator<R, s> > getMovableCollisionator(WideMobileAPO<R, s>* entity) {
+        std::shared_ptr<MovableCollisionator<R, s> > p(new BaseSphereMovableCator<R, s>(entity));
         return (p);
     }
 
-    std::shared_ptr<Movable<s> > getMovable(MobileAPO<s>* entity) {
-        std::shared_ptr<Movable<s> > p(new BaseMovableCator<R, s>(entity));
+    std::shared_ptr<Movable<s> > getMovable(WideMobileAPO<R, s>* entity) {
+        std::shared_ptr<Movable<s> > p(new BaseSphereMovableCator<R, s>(entity));
         return (p);
     }
 
-    std::shared_ptr<Collisionator<R> > getCollisionator(MobileAPO<s>* entity) {
-        std::shared_ptr<Collisionator<R> > p(new BaseMovableCator<R, s>(entity));
+    std::shared_ptr<Collisionator<R> > getCollisionator(WideMobileAPO<R, s>* entity) {
+        std::shared_ptr<Collisionator<R> > p(new BaseSphereMovableCator<R, s>(entity));
         return (p);
     }
 };

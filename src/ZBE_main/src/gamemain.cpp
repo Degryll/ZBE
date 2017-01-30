@@ -127,7 +127,7 @@ int gamemain(int, char** ) {
   printf("Building an sprite adaptor for the ball\n");fflush(stdout);
   zbe::SimpleSpriteAdaptor<zbe::Drawable>* spriteAdaptor = new zbe::SimpleDrawableSimpleSpriteAdaptor();
   ball.setSimpleSpriteAdaptor(spriteAdaptor);
-  zbe::BaseMovableCatorMobileAPOAdaptor<game::GameReactor, 2> * movableCatorAdaptor = new zbe::BaseMovableCatorMobileAPOAdaptor<game::GameReactor, 2>();
+  zbe::BaseSphereMCMAPOAdaptor<game::GameReactor, 2> * movableCatorAdaptor = new zbe::BaseSphereMCMAPOAdaptor<game::GameReactor, 2>();
   ball.setMovableCollisionatorAdaptor(movableCatorAdaptor);
   game::StepInputHandler ihright(&ball, 5, 0);
   game::StepInputHandler ihleft(&ball, -5, 0);

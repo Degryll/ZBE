@@ -15,10 +15,10 @@
 
 namespace zbe {
 
-template <typename R, unsigned s>
-class MobileAPO : virtual public Mobile<s>, public ActivePhysicalObject<R> {
+template <unsigned s>
+class MobileAPO : virtual public Mobile<s>, public ActivePhysicalObject {
   public:
-    ~MobileAPO() {}
+    virtual ~MobileAPO() {}
 
 };
 
