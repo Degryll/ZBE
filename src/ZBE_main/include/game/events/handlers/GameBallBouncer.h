@@ -18,8 +18,8 @@
 #include "ZBE/core/tools/math/Point.h"
 
 #include "ZBE/entities/avatars/MovableCollisioner.h"
+#include "ZBE/reactobjects/VoidReactObject.h"
 
-#include "game/reactobjects/GameReactObjects.h"
 #include "game/GameReactor.h"
 
 namespace game {
@@ -29,8 +29,7 @@ namespace game {
  */
 class GameBallBouncer: public zbe::Actuator<zbe::MovableCollisioner<game::GameReactor, 2>, GameReactor> {
   public:
-    void act(VoidReactObject*) {
-      printf("Bounce\n");fflush(stdout);
+    void act(zbe::VoidReactObject<game::GameReactor>*) {
       zbe::MovableCollisioner<game::GameReactor, 2> * gb = zbe::Actuator<zbe::MovableCollisioner<game::GameReactor, 2>, GameReactor>::getCollisioner();
       zbe::CollisionData * cd = zbe::Actuator<zbe::MovableCollisioner<game::GameReactor, 2>, GameReactor>::getCollisionData();
 

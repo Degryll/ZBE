@@ -32,18 +32,19 @@ namespace game{
                   SimpleWideMobileAPO({x, y}, {vx, vy}, radius, actuators, collisionables),
                   SimpleSpriteEntityAdapted(this),
                   MovableCollisionatorEntityAdapted(this),
-                  g(graphics), d(2*radius) {}
+                  g(graphics), r(radius), d(2*radius) {}
 
       ~GameBall() {}
 
-      int getX() {return (SimpleWideMobileAPO::getPosition()[0]);}
-      int getY() {return (SimpleWideMobileAPO::getPosition()[1]);}
+      int getX() {return (SimpleWideMobileAPO::getPosition()[0]-r);}
+      int getY() {return (SimpleWideMobileAPO::getPosition()[1]-r);}
       unsigned getW()        {return (d);}
       unsigned getH()        {return (d);}
       int      getGraphics() {return (g);}
 
     private:
       int g;    //!< Image index
+      unsigned r;
       unsigned d;
   };
 
