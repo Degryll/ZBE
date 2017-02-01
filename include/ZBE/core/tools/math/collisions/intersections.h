@@ -293,10 +293,10 @@ bool intersectionMovingNSphereInsideAABB(NSphere<dim> nsphere, Vector<dim> direc
   	return (false);
   } else {
     for(unsigned i = 0; i < dim; i++) {
-      if (point[i] == e.minimum[i]) {
-        point[i] -= 16;
-      } else if (point[i] == e.maximum[i]) {
-        point[i] += 16;
+      if (abs(point[i] - e.minimum[i]) < 1) {
+        point[i] -= r;
+      } else if (abs(point[i] - e.maximum[i]) < 1) {
+        point[i] += r;
       }
     }
     return (true);

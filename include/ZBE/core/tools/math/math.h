@@ -43,5 +43,7 @@ static const double VELOCITYTOTIME = 1.0e9;
  *  seconds, because the velocity is in m/s).
  */
 static const double TIMETOVELOCITY = 1.0e-9;
-}
+
+}  // namespace zbe
+
 #endif  // ZBE_CORE_TOOLS_MATH_MATH_H_
