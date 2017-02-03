@@ -32,17 +32,20 @@ static const double TODEGREE = 180.0/PI;
 /** \brief This constant is used to transform the time stored in a uint64_t (nanoseconds)to the time in a velocity (in
  *  seconds, because the velocity is in m/s).
  */
-static const double MILITONANO = 1.0e6;
+inline uint64_t MILITOZBETU(uint32_t time) {
+  return ((time << 16) / 1000);
+}
 
-/** \brief This constant is used to transform the time from a velocity (in
- *  seconds, because the velocity is in m/s) to the time stored in a uint64_t (nanoseconds).
+/** \brief This constant represent the amount of bits that will be used as precision digits.
+ * I.E. :
+ *  uint64_t v1;  // velocity in pixel / sec.
+ *  uint64_t v2;  // velocity in pixel / nanosec for collision purpouses.
+ *  ...
+ *  v2 = v1 << PRECISION_DIGITS;
+ *  ...
+ *  v1 = v2 >> PRECISION_DIGITS;
  */
-static const double VELOCITYTOTIME = 1.0e9;
-
-/** \brief This constant is used to transform the time stored in a uint64_t (nanoseconds)to the time in a velocity (in
- *  seconds, because the velocity is in m/s).
- */
-static const double TIMETOVELOCITY = 1.0e-9;
+static const int PRECISION_DIGITS = 16;
 
 }  // namespace zbe
 

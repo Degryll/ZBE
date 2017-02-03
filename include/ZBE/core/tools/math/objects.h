@@ -10,6 +10,8 @@
 #ifndef ZBE_CORE_TOOLS_MATH_OBJECTS_H_
 #define ZBE_CORE_TOOLS_MATH_OBJECTS_H_
 
+#include <cstdint>
+
 #include <initializer_list>
 
 #include "ZBE/core/tools/math/Point.h"
@@ -43,7 +45,7 @@ struct Ray {
    *
    *        Ray<N> r = {{o1, o2, ... , oN}, {d1, d2, ... , dN}}
    */
-  Ray(std::initializer_list<double> lo, std::initializer_list<double> lv) : o(lo), d(lv) {}
+  Ray(std::initializer_list<int64_t> lo, std::initializer_list<int64_t> lv) : o(lo), d(lv) {}
 
   Point<s> o;   //!< Origin data.
   Vector<s> d;  //!< Direction data.
@@ -77,7 +79,7 @@ struct Ray<2> {
    *
    *        Ray2D r = {{o1, o2}, {d1, d2}}
    */
-  Ray(std::initializer_list<double> lo, std::initializer_list<double> lv) : o(lo), d(lv) {}
+  Ray(std::initializer_list<int64_t> lo, std::initializer_list<int64_t> lv) : o(lo), d(lv) {}
 
   Point2D o;   //!< Origin data.
   Vector2D d;  //!< Direction data.
@@ -113,25 +115,13 @@ struct Ray<3> {
    *
    *        Ray3D r = {{o1, o2, o3}, {d1, d2, d3}}
    */
-  Ray(std::initializer_list<double> lo, std::initializer_list<double> lv) : o(lo), d(lv) {}
+  Ray(std::initializer_list<int64_t> lo, std::initializer_list<int64_t> lv) : o(lo), d(lv) {}
 
   Point3D o;   //!< Origin data.
   Vector3D d;  //!< Direction data.
 };
 
 using Ray3D = Ray<3>;  //!< An alias to Ray<3>.
-
-//struct Ray2D : Ray<2> {
-//  Ray2D() {}
-//  Ray2D(Point<2> p, Vector<2> v) : Ray(p,v) {}
-//  Ray2D(std::initializer_list<double> lo, std::initializer_list<double> lv) : Ray(lo,lv) {}
-//};
-//
-//struct Ray3D : Ray<3>{
-//  Ray3D() {}
-//  Ray3D(Point<3> p, Vector<3> v) : Ray(p,v) {}
-//  Ray3D(std::initializer_list<double> lo, std::initializer_list<double> lv) : Ray(lo,lv) {}
-//};
 
 /** \brief A class that represent a NSphere (a center and a radius).
  *
@@ -147,7 +137,7 @@ struct NSphere {
    *
    *  A NSphere is constructed with a point to the center and a radius.
    */
-  NSphere(Point<s> center, double radius) : c(center), r(radius) {}
+  NSphere(Point<s> center, int64_t radius) : c(center), r(radius) {}
 
   /** \brief A list initializer constructor.
    *
@@ -159,10 +149,10 @@ struct NSphere {
    *
    *        NSphere<N> s = {{c1, c2, ... , cN}, radius}
    */
-  NSphere(std::initializer_list<double> lc, double r) : c(lc), r(r) {}
+  NSphere(std::initializer_list<int64_t> lc, int64_t r) : c(lc), r(r) {}
 
   Point<s> c;  //!< Center data.
-  double r;    //!< Radius data.
+  int64_t r;    //!< Radius data.
 };
 
 /** \brief A class that represent a Circle (NSphere of 2 dimensions).
@@ -181,7 +171,7 @@ struct NSphere<2> {
    *
    *  A Circle is constructed with a 2D point to the center and a radius.
    */
-  NSphere(Point2D center, double radius) : c(center), r(radius) {}
+  NSphere(Point2D center, int64_t radius) : c(center), r(radius) {}
 
   /** \brief A list initializer constructor.
    *
@@ -193,10 +183,10 @@ struct NSphere<2> {
    *
    *        Circle c = {{c1, c2}, radius}
    */
-  NSphere(std::initializer_list<double> lc, double r) : c(lc), r(r) {}
+  NSphere(std::initializer_list<int64_t> lc, int64_t r) : c(lc), r(r) {}
 
   Point2D c;  //!< Center data.
-  double r;   //!< Radius data.
+  int64_t r;   //!< Radius data.
 };
 
 using Circle = NSphere<2>;  //!< An alias to NSphere<2>.
@@ -217,7 +207,7 @@ struct NSphere<3> {
    *
    *  A Sphere is constructed with a 3D point to the center and a radius.
    */
-  NSphere(Point3D center, double radius) : c(center), r(radius) {}
+  NSphere(Point3D center, int64_t radius) : c(center), r(radius) {}
 
   /** \brief A list initializer constructor.
    *
@@ -229,25 +219,13 @@ struct NSphere<3> {
    *
    *        Sphere c = {{c1, c2, c3}, radius}
    */
-  NSphere(std::initializer_list<double> lc, double r) : c(lc), r(r) {}
+  NSphere(std::initializer_list<int64_t> lc, int64_t r) : c(lc), r(r) {}
 
   Point3D c;  //!< Center data.
-  double r;   //!< Radius data.
+  int64_t r;   //!< Radius data.
 };
 
 using Sphere = NSphere<3>;  //!< An alias to NSphere<3>.
-
-//struct Circle : NSphere<2> {
-//  Circle() {}
-//  Circle(Point<2> center, double radius) : NSphere(center,radius) {}
-//  Circle(std::initializer_list<double> lc, double r) : NSphere(lc,r) {}
-//};
-//
-//struct Sphere : NSphere<3> {
-//  Sphere() {}
-//  Sphere(Point<3> center, double radius) : NSphere(center,radius) {}
-//  Sphere(std::initializer_list<double> lc, double r) : NSphere(lc,r) {}
-//};
 
 /** \brief A class that represent an Axis Aligned Bounding Box (AABB).
  *
@@ -277,7 +255,7 @@ struct AABB {
    *
    *        AABB<N> b = {{min1, min2, ... , minN}, {max1, max2, ... , maxN}}
    */
-  AABB(std::initializer_list<double> lmin, std::initializer_list<double> lmax) : minimum(lmin), maximum(lmax) {}
+  AABB(std::initializer_list<int64_t> lmin, std::initializer_list<int64_t> lmax) : minimum(lmin), maximum(lmax) {}
 
   Point<s> minimum;  //!< minimum corner.
   Point<s> maximum;  //!< maximum corner.
@@ -313,7 +291,7 @@ struct AABB<2> {
    *
    *        AABB2D b = {{min1, min2}, {max1, max2}}
    */
-  AABB(std::initializer_list<double> lmin, std::initializer_list<double> lmax) : minimum(lmin), maximum(lmax) {}
+  AABB(std::initializer_list<int64_t> lmin, std::initializer_list<int64_t> lmax) : minimum(lmin), maximum(lmax) {}
 
   Point2D minimum;  //!< minimum corner.
   Point2D maximum;  //!< maximum corner.
@@ -351,25 +329,13 @@ struct AABB<3> {
    *
    *        AABB2D b = {{min1, min2, min3}, {max1, max2, max3}}
    */
-  AABB(std::initializer_list<double> lmin, std::initializer_list<double> lmax) : minimum(lmin), maximum(lmax) {}
+  AABB(std::initializer_list<int64_t> lmin, std::initializer_list<int64_t> lmax) : minimum(lmin), maximum(lmax) {}
 
   Point3D minimum;  //!< minimum corner.
   Point3D maximum;  //!< maximum corner.
 };
 
 using AABB3D = AABB<3>;  //!< An alias to AABB<3>.
-
-//struct AABB2D : AABB<2> {
-//  AABB2D() {}
-//  AABB2D(Point<2> pmin, Point<2> pmax) : AABB(pmin,pmax) {}
-//  AABB2D(std::initializer_list<double> lmin, std::initializer_list<double> lmax) : AABB(lmin,lmax) {}
-//};
-//
-//struct AABB3D : AABB<3> {
-//  AABB3D() {}
-//  AABB3D(Point<3> pmin, Point<3> pmax) : AABB(pmin,pmax) {}
-//  AABB3D(std::initializer_list<double> lmin, std::initializer_list<double> lmax) : AABB(lmin,lmax) {}
-//};
 
 }  // namespace zbe
 

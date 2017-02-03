@@ -31,7 +31,9 @@ class UniformLinearMotion : public Behavior< Mobile<s> > {
      */
     void apply(Mobile<s>* entity, uint64_t time) {
       Point<s>& p = entity->getPosition();
-      p += entity->getVelocity() * (time * TIMETOVELOCITY);
+      for(int i = 0; i < s; i++) {
+      	p[i] += (entity->getVelocity()[i] * time) >> PRECISION_DIGITS;
+      }
     }
 };
 

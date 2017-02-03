@@ -20,7 +20,7 @@ template <unsigned s>
 class Movable : public Positionable<s> {
   public:
 
-    virtual void setVelocity(std::initializer_list<double> l) = 0;
+    virtual void setVelocity(std::initializer_list<int64_t> l) = 0;
     virtual void setVelocity(Vector<s> velocity) = 0;
 
     virtual Vector<s>& getVelocity() = 0;

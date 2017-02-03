@@ -10,6 +10,8 @@
 #ifndef ZBE_ARCHETYPES_MOBILE_H
 #define ZBE_ARCHETYPES_MOBILE_H
 
+#include <cstdint>
+
 #include "ZBE/archetypes/Position.h"
 #include "ZBE/core/tools/math/Vector.h"
 
@@ -20,7 +22,7 @@ class Mobile : virtual public Position<s> {
   public:
     virtual ~Mobile() {}
 
-    virtual void setVelocity(std::initializer_list<double> l) = 0;
+    virtual void setVelocity(std::initializer_list<int64_t> l) = 0;
     virtual void setVelocity(Vector<s> velocity) = 0;
 
     virtual Vector<s>& getVelocity() = 0;

@@ -68,24 +68,25 @@ template <unsigned dim>
 bool intersectionRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, uint64_t &time, Point<dim>& point) {
   Vector<dim> f = ray.o - nsphere.c;
 
-  double a = ray.d * ray.d;
-  double b = (f * ray.d) * 2;
-  double c = (f * f) - (nsphere.r * nsphere.r);
+  int64_t a = ray.d * ray.d;
+  if(a == 0) return(false);
+  int64_t b = (f * ray.d) * 2;
+  int64_t c = (f * f) - (nsphere.r * nsphere.r);
 
   if (c > 0 && b > 0) return (false);
 
-  double discr = b * b - 4 * a * c;
+  int64_t discr = b * b - 4 * a * c;
 
   if (discr < 0) return (false);
 
-  double taux = time * TIMETOVELOCITY;
-  double t = ((-b - sqrt(discr)) / (2 * a));
+  int64_t taux = (int64_t)(time);
+  int64_t t = ((-b - (int64_t)sqrt(discr)) / (2 * a));
   if (t < 0) t = 0;
   if (t > taux) return (false);
   taux = t;
 
   point = ray.o + ray.d * taux;
-  time = (uint64_t)(taux * VELOCITYTOTIME);
+  time = (uint64_t)(taux);
 
   return (true);
 }
@@ -110,22 +111,22 @@ bool intersectionNormalRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, uint64_t &
   Vector<dim> f = ray.o - nsphere.c;
 
   //  because r.d is a unit vector, r.d dot r.d  = 1
-  double b = f * ray.d;
-  double c = (f * f) - (nsphere.r * nsphere.r);
+  int64_t b = f * ray.d;
+  int64_t c = (f * f) - (nsphere.r * nsphere.r);
 
   if (c > 0 && b > 0) return (false);
 
-  double discr = b * b - c;
+  int64_t discr = b * b - c;
 
   if (discr < 0) return (false);
 
-  double taux = time * TIMETOVELOCITY;
-  double t = (-b - sqrt(discr));
+  int64_t taux = (int64_t)time;
+  int64_t t = (-b - (int64_t)sqrt(discr));
   if (t < 0) t = 0;
   if (t > taux) return (false);
   taux = t;
   point = ray.o + ray.d * taux;
-  time = (uint64_t)(taux * VELOCITYTOTIME);
+  time = (uint64_t)(taux);
 
   return (true);
 }
@@ -147,35 +148,39 @@ bool intersectionNormalRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, uint64_t &
  */
 template <unsigned dim>
 bool RayAABB(Ray<dim> ray, AABB<dim> box, uint64_t tmin, uint64_t tmax, uint64_t &time, Point<dim>& point) {
-  double tmind = tmin * TIMETOVELOCITY;
-  double tmaxd = tmax * TIMETOVELOCITY;
-  double taux  = time * TIMETOVELOCITY;
+  //double tmind = tmin * TIMETOVELOCITY;
+  //double tmaxd = tmax * TIMETOVELOCITY;
+  int64_t taux  = (int64_t)time;
 
+  bool isZero = true;  // the direction is (0,...,0)
   for(unsigned i = 0; i < dim; i++) {
-    double bmin = box.minimum[i];
-    double bmax = box.maximum[i];
-    double o    = ray.o[i];
-    double d    = ray.d[i];
-    double n1 = bmin - o;
-    double n2 = bmax - o;
+    int64_t d    = ray.d[i];
+    if (d == 0) continue;
+    isZero = false;
+    int64_t o    = ray.o[i];
+    int64_t bmin = box.minimum[i];
+    int64_t bmax = box.maximum[i];
+    int64_t n1 = bmin - o;
+    int64_t n2 = bmax - o;
 
     if((o < bmin && d < n1) || (o > bmax && d > n2)) {return (false);}
 
-    double ood = 1.0 / d;
-    double t1 = (n1 * ood);
-    double t2 = (n2 * ood);
+    //double ood = 1.0 / d;
+    int64_t t1 = (n1 / d);
+    int64_t t2 = (n2 / d);
 
     if(t1 > t2) {std::swap(t1,t2);}
-    if(t1 > tmind) {tmind = t1;}
-    if(t2 < tmaxd) {tmaxd = t2;}
+    if(t1 > tmin) {tmin = t1;}
+    if(t2 < tmax) {tmax = t2;}
 
-    if(tmind > tmaxd) {return (false);}
+    if(tmin > tmax) {return (false);}
   }  // for each dimension
 
-  if(tmind > taux) {return (false);}
+  if (isZero) return(false);
+  if(tmin > taux) {return (false);}
 
-  point = ray.o + ray.d * tmaxd;
-  time = tmaxd * VELOCITYTOTIME;
+  point = ray.o + ray.d * tmax;
+  time = tmax;
   return (true);
 }
 
@@ -216,7 +221,7 @@ bool intersectionRayAABB(Ray<dim> ray, AABB<dim> box, uint64_t &time, Point<dim>
 template <unsigned dim>
 bool intersectionSegmentAABB(Ray<dim> ray, AABB<dim> box, uint64_t &time, Point<dim>& point) {
   uint64_t tmin = 0;
-  uint64_t tmax = VELOCITYTOTIME;
+  uint64_t tmax = 1 << PRECISION_DIGITS;
 
   return (RayAABB<dim>(ray, box, tmin, tmax, time, point));
 }
@@ -232,7 +237,7 @@ bool intersectionSegmentAABB(Ray<dim> ray, AABB<dim> box, uint64_t &time, Point<
  */
 template <unsigned dim>
 bool intersectionMovingNSphereOutsideAABB(NSphere<dim> nsphere, Vector<dim> direction, AABB<dim> box, uint64_t& time, Point<dim>& point) {
-  double r = nsphere.r;
+  int64_t r = nsphere.r;
   AABB<dim> e = box;
   for(unsigned i = 0; i < dim; i++) {
     e.minimum[i] -= r;
@@ -243,8 +248,8 @@ bool intersectionMovingNSphereOutsideAABB(NSphere<dim> nsphere, Vector<dim> dire
 
   Ray<dim> ray(nsphere.c, direction);
   if (!intersectionRayAABB<dim>(ray, e, t, point) || t > time) {return (false);}
-  double bmin[dim];
-  double bmax[dim];
+  int64_t bmin[dim];
+  int64_t bmax[dim];
   for(unsigned i = 0; i < dim; i++) {
     bmin[i] = box.minimum[i];
     bmax[i] = box.maximum[i];
@@ -278,7 +283,7 @@ bool intersectionMovingNSphereOutsideAABB(NSphere<dim> nsphere, Vector<dim> dire
  */
 template <unsigned dim>
 bool intersectionMovingNSphereInsideAABB(NSphere<dim> nsphere, Vector<dim> direction, AABB<dim> box, uint64_t& time, Point<dim>& point) {
-  double r = nsphere.r;
+  int64_t r = nsphere.r;
   AABB<dim> e = box;
   for(unsigned i = 0; i < dim; i++) {
     e.minimum[i] += r;
@@ -293,124 +298,15 @@ bool intersectionMovingNSphereInsideAABB(NSphere<dim> nsphere, Vector<dim> direc
   	return (false);
   } else {
     for(unsigned i = 0; i < dim; i++) {
-      if (abs(point[i] - e.minimum[i]) < 1) {
+      if (point[i] == e.minimum[i]) {
         point[i] -= r;
-      } else if (abs(point[i] - e.maximum[i]) < 1) {
+      } else if (point[i] == e.maximum[i]) {
         point[i] += r;
       }
     }
     return (true);
   }
 }
-
-/**************************************************************/
-/*                                                            */
-/*             OLD 2D IMPLEMENTATION                          */
-/*                                                            */
-/**************************************************************/
-///** \brief Computes the collision of a moving circle with an AABB.
-// *
-// * \param Circle The moving circle.
-// * \param direction The velocity of the moving sphere.
-// * \param box The static AABB.
-// * \param time Initialy it has a limit time, if the collision happens before that time, its value is updated.
-// * \param point Stores the point of collision, if any.
-// * \return True if there is a collision before the initial value of time, false otherwise.
-// */
-//bool IntersectionMovingCircleAABB2D(Circle circle, Vector2D direction, AABB2D box, uint64_t& time, Point2D& point) {
-//  double r = circle.r;
-//  AABB2D e = box;
-//  e.minimum[0] -= r; e.minimum[1] -= r;
-//  e.maximum[0] += r; e.maximum[1] += r;
-//
-//  uint64_t t = time;
-//
-//  Ray2D ray(circle.c,direction);
-//  if (!intersectionRayAABB2D(ray, e, t, point) || t > time) {return (false);}
-//  double bmin0 = box.minimum[0];
-//  double bmax0 = box.maximum[0];
-//  double bmin1 = box.minimum[1];
-//  double bmax1 = box.maximum[1];
-//  Point2D c;
-//  int m=0;
-//  if (point.x < bmin0) {m++; c.x = bmin0; point[0] += r;}
-//  if (point.x > bmax0) {m++; c.x = bmax0; point[0] -= r;}
-//  if (point.y < bmin1) {m++; c.y = bmin1; point[1] += r;}
-//  if (point.y > bmax1) {m++; c.y = bmax1; point[1] -= r;}
-//
-//  // The collision happens at the corner of the expansion box
-//  // Check if there is an intersection with the vertex.
-//  if (m == 2) {
-//    return (intersectionRayCircle(ray, Circle(c,r), time, point));
-//  }
-//
-//  time = t;
-//  // The intersection with the expanded AABB e is the correct.
-//  return (true);
-//}
-
-
-//bool IntersectionMovingSphereAABB(Sphere s, Vector d, AABB b, float &t) {
-//  // Compute the AABB resulting from expanding b by sphere radius r
-//  AABB e = b;
-//  e.min.x -= s.r; e.min.y -= s.r; e.min.z -= s.r;
-//  e.max.x += s.r; e.max.y += s.r; e.max.z += s.r;
-//
-//  // Intersect ray against expanded AABB e. Exit with no intersection if ray
-//  // misses e, else get intersection point p and time t as result
-//  Point p;
-//  if (!IntersectRayAABB(s.c, d, e, t, p) || t > 1.0f) {return 0;}
-//
-//  // Compute which min and max faces of b the intersection point p lies
-//  // outside of. Note, u and v cannot have the same bits set and
-//  // they must have at least one bit set among them
-//  int u = 0, v = 0;
-//  if (p.x < b.min.x) u |= 1;
-//  if (p.x > b.max.x) v |= 1;
-//  if (p.y < b.min.y) u |= 2;
-//  if (p.y > b.max.y) v |= 2;
-//  if (p.z < b.min.z) u |= 4;
-//  if (p.z > b.max.z) v |= 4;
-//
-//  // ‘Or’ all set bits together into a bit mask (note: here u + v == u | v)
-//  int m = u + v;
-//
-//  // Define line segment [c, c+d] specified by the sphere movement
-//  Segment seg(s.c, s.c + d);
-//
-//  // If all 3 bits set (m == 7) then p is in a vertex region
-//  if (m == 7) {
-//    // Must now intersect segment [c, c+d] against the capsules of the three
-//    // edges meeting at the vertex and return the best time, if one or more hit
-//    float tmin = FLT_MAX;
-//    if (IntersectSegmentCapsule(seg, Corner(b, v), Corner(b, v ^ 1), s.r, &t)) {tmin = Min(t, tmin);}
-//    if (IntersectSegmentCapsule(seg, Corner(b, v), Corner(b, v ^ 2), s.r, &t)) {tmin = Min(t, tmin);}
-//    if (IntersectSegmentCapsule(seg, Corner(b, v), Corner(b, v ^ 4), s.r, &t)) {tmin = Min(t, tmin);}
-//
-//    if (tmin == FLT_MAX) {return 0;} // No intersection
-//    t = tmin;
-//    return 1; // Intersection at time t == tmin
-//  }
-//
-//  // If only one bit set in m, then p is in a face region
-//  if ((m & (m - 1)) == 0) {
-//    // Do nothing. Time t from intersection with
-//    // expanded box is correct intersection time
-//    return 1;
-//  }
-//
-//  // p is in an edge region. Intersect against the capsule at the edge
-//  return IntersectSegmentCapsule(seg, Corner(b, u ^ 7), Corner(b, v), s.r, &t);
-//}
-//
-//// Support function that returns the AABB vertex with index n
-//Point Corner(AABB b, int n) {
-//  Point p;
-//  p.x = ((n & 1) ? b.max.x : b.min.x);
-//  p.y = ((n & 2) ? b.max.y : b.min.y);
-//  p.z = ((n & 4) ? b.max.z : b.min.z);
-//  return p;
-//}
 
 }  // namespace zbe
 

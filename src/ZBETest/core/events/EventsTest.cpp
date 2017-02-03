@@ -52,7 +52,7 @@ TEST(Event, InputEvent) {
 TEST(Event, CollisionEvent) {
   C* c = new C;
   RO * ro = new RO();
-  zbe::Point2D p{4.0, 2.0};
+  zbe::Point2D p{400000, 2};
   zbe::CollisionEvent2D<R> e(1,100, std::shared_ptr<zbe::Collisioner<R> >(c), p, std::shared_ptr<zbe::ReactObject<R> >(ro));
   EXPECT_EQ((uint64_t)1, e.getId()) << "Must store id";
   EXPECT_EQ((uint64_t)100, e.getTime()) << "Must store time";

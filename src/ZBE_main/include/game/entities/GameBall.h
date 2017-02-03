@@ -28,7 +28,7 @@ namespace game{
 			GameBall(const GameBall&) = delete;
       void operator=(const GameBall&) = delete;
 
-      GameBall(double x, double y, unsigned radius, double vx, double vy, uint64_t actuators, uint64_t collisionables, int graphics) :
+      GameBall(int64_t x, int64_t y, int64_t radius, int64_t vx, int64_t vy, uint64_t actuators, uint64_t collisionables, int graphics) :
                   SimpleWideMobileAPO({x, y}, {vx, vy}, radius, actuators, collisionables),
                   SimpleSpriteEntityAdapted(this),
                   MovableCollisionatorEntityAdapted(this),
@@ -36,16 +36,16 @@ namespace game{
 
       ~GameBall() {}
 
-      int getX() {return (SimpleWideMobileAPO::getPosition()[0]-r);}
-      int getY() {return (SimpleWideMobileAPO::getPosition()[1]-r);}
-      unsigned getW()        {return (d);}
-      unsigned getH()        {return (d);}
+      int64_t getX() {return (SimpleWideMobileAPO::getPosition()[0]-r);}
+      int64_t getY() {return (SimpleWideMobileAPO::getPosition()[1]-r);}
+      int64_t getW()        {return (d);}
+      int64_t getH()        {return (d);}
       int      getGraphics() {return (g);}
 
     private:
       int g;    //!< Image index
-      unsigned r;
-      unsigned d;
+      int64_t r;
+      int64_t d;
   };
 
 }  // namespace game

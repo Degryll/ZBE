@@ -21,13 +21,13 @@ template <unsigned s>
 class SimpleWideMobile : virtual public WideMobile<s>, public SimpleMobile<s> {
   public:
     SimpleWideMobile(uint64_t width) : SimpleMobile<s>(), w(width) {}
-    SimpleWideMobile(std::initializer_list<double> position, uint64_t width) : SimpleMobile<s>(position), w(width) {}
+    SimpleWideMobile(std::initializer_list<int64_t> position, uint64_t width) : SimpleMobile<s>(position), w(width) {}
     SimpleWideMobile(Point<s> position, uint64_t width) : SimpleMobile<s>(position), w(width) {}
     SimpleWideMobile(Vector<s> velocity, uint64_t width) : SimpleMobile<s>(velocity), w(width) {}
-    SimpleWideMobile(std::initializer_list<double> position, std::initializer_list<double> velocity, uint64_t width) : SimpleMobile<s>(position, velocity), w(width) {}
-    SimpleWideMobile(Point<s> position, std::initializer_list<double> velocity, uint64_t width) : SimpleMobile<s>(position, velocity), w(width) {}
+    SimpleWideMobile(std::initializer_list<int64_t> position, std::initializer_list<int64_t> velocity, uint64_t width) : SimpleMobile<s>(position, velocity), w(width) {}
+    SimpleWideMobile(Point<s> position, std::initializer_list<int64_t> velocity, uint64_t width) : SimpleMobile<s>(position, velocity), w(width) {}
     SimpleWideMobile(Point<s> position, Vector<s> velocity, uint64_t width) : SimpleMobile<s>(position, velocity), w(width) {}
-    SimpleWideMobile(std::initializer_list<double> position, Vector<s> velocity, uint64_t width) : SimpleMobile<s>(position, velocity), w(width) {}
+    SimpleWideMobile(std::initializer_list<int64_t> position, Vector<s> velocity, uint64_t width) : SimpleMobile<s>(position, velocity), w(width) {}
 
     void setWidth(uint64_t width) {w = width;}
     uint64_t getWidth() {return (w);}

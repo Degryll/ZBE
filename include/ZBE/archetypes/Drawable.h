@@ -18,10 +18,10 @@ class Drawable {
   public:
     virtual ~Drawable() {}
 
-    virtual int getX() = 0;
-    virtual int getY() = 0;
-    virtual unsigned getW() = 0;
-    virtual unsigned getH() = 0;
+    virtual int64_t getX() = 0;
+    virtual int64_t getY() = 0;
+    virtual int64_t getW() = 0;
+    virtual int64_t getH() = 0;
     virtual int getGraphics() = 0;
 };
 

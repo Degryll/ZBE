@@ -30,6 +30,8 @@ void EventStore::storeEvent(Event* e) {
     clearStore();
     bettertime = e->getTime();
     store.push_front(e);
+  } else {
+    delete e;
   }
 }
 

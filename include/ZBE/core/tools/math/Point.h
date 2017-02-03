@@ -10,6 +10,8 @@
 #ifndef ZBE_CORE_TOOLS_MATH_POINT_H_
 #define ZBE_CORE_TOOLS_MATH_POINT_H_
 
+#include <cstdint>
+
 #include <initializer_list>
 
 #include "ZBE/core/system/SysError.h"
@@ -44,15 +46,15 @@ class _POINT {
      *        Point<N> p = {v1, v2, ... , vN}
      *
      */
-    _POINT(const std::initializer_list<double> l) {
+    _POINT(const std::initializer_list<int64_t> l) {
       if (l.size() != s) {
         SysError::setError("Point ERROR: Initializer list size is incorrect.");
         return;
       }
 
       int i = 0;
-      for(auto it = l.begin(); it != l.end(); it++) {
-        data[i++] = *it;
+      for(auto it : l) {
+        data[i++] = it;
       }
     }
 
@@ -73,7 +75,7 @@ class _POINT {
      * \param idx Index of the dimension that you want to get the value.
      * \return The value of the idx dimension.
      */
-    double& operator[](std::size_t idx)       {return (data[idx]);};
+    int64_t& operator[](std::size_t idx)       {return (data[idx]);};
 
     /** \brief Implements direct access to Point values with operator[].
      *
@@ -83,7 +85,7 @@ class _POINT {
      * \param idx Index of the dimension that you want to get the value.
      * \return The constant value of the idx dimension.
      */
-    const double& operator[](std::size_t idx) const {return (data[idx]);};
+    const int64_t& operator[](std::size_t idx) const {return (data[idx]);};
 
     /** \brief Translate this point in the direction of a Vector.
      *
@@ -113,6 +115,48 @@ class _POINT {
      * \sa operator+=()
      */
     _POINT& operator*=(double rhs) {
+      for(unsigned i = 0; i < s; i++) {
+        data[i] *= rhs;
+      }
+
+      return (*this);
+    }
+
+    /** \brief Multiply a Point by a scalar.
+     *
+     *  The resulting Point is as follows:
+     *
+     *        Point<2> p(1,2);
+     *        p *= 3;
+     *
+     *  p values are (3,6).
+     *
+     * \param rhs The scalar.
+     * \return A reference to this Point.
+     * \sa operator+=()
+     */
+    _POINT& operator*=(int64_t rhs) {
+      for(unsigned i = 0; i < s; i++) {
+        data[i] *= rhs;
+      }
+
+      return (*this);
+    }
+
+    /** \brief Multiply a Point by a scalar.
+     *
+     *  The resulting Point is as follows:
+     *
+     *        Point<2> p(1,2);
+     *        p *= 3;
+     *
+     *  p values are (3,6).
+     *
+     * \param rhs The scalar.
+     * \return A reference to this Point.
+     * \sa operator+=()
+     */
+    _POINT& operator*=(uint64_t rhs) {
       for(unsigned i = 0; i < s; i++) {
         data[i] *= rhs;
       }
@@ -168,8 +212,52 @@ class _POINT {
       return (lhs);
     }
 
+    /** \brief Multiply a Point by a scalar.
+     *
+     *  The resulting Point is as follows:
+     *
+     *        Point<2> p(1,2);
+     *        Point<2> q = p * 3;
+     *
+     *  q values are (3,6).
+     *
+     * \param lhs The initial Point.
+     * \param rhs The scalar.
+     * \return The resulting Point of multiplying the initial point by the
+     *         scalar.
+     */
+    friend _POINT operator*(_POINT lhs, int64_t rhs) {
+      for(unsigned i = 0; i < s; i++) {
+        lhs.data[i] *= rhs;
+      }
+
+      return (lhs);
+    }
+
+    /** \brief Multiply a Point by a scalar.
+     *
+     *  The resulting Point is as follows:
+     *
+     *        Point<2> p(1,2);
+     *        Point<2> q = p * 3;
+     *
+     *  q values are (3,6).
+     *
+     * \param lhs The initial Point.
+     * \param rhs The scalar.
+     * \return The resulting Point of multiplying the initial point by the
+     *         scalar.
+     */
+    friend _POINT operator*(_POINT lhs, uint64_t rhs) {
+      for(unsigned i = 0; i < s; i++) {
+        lhs.data[i] *= rhs;
+      }
+
+      return (lhs);
+    }
+
   protected:
-    double data[s];  //!< Point data.
+    int64_t data[s];  //!< Point data.
 };
 
 /** \brief A class that represent Points of any dimension.
@@ -194,7 +282,7 @@ class Point : public _POINT<s> {
      *        Point<N> p = {v1, v2, ... , vN}
      *
      */
-    Point(std::initializer_list<double> l) : _POINT<s>(l) {}
+    Point(std::initializer_list<int64_t> l) : _POINT<s>(l) {}
 };
 
 /** \brief A class that represent 2D points.
@@ -206,8 +294,8 @@ class Point : public _POINT<s> {
 template <>
 class Point<2> : public _POINT<2> {
   public:
-    double &x;  //!< An alias to access the first dimension as p.x.
-    double &y;  //!< An alias to access the second dimension as p.y.
+    int64_t &x;  //!< An alias to access the first dimension as p.x.
+    int64_t &y;  //!< An alias to access the second dimension as p.y.
 
     /** \brief Void constructor, the Point's values are unknown.
      */
@@ -232,7 +320,7 @@ class Point<2> : public _POINT<2> {
      *        Point2D p = {v1, v2}
      *
      */
-    Point(std::initializer_list<double> l) : _POINT(l), x(data[0]), y(data[1]) {}
+    Point(std::initializer_list<int64_t> l) : _POINT(l), x(data[0]), y(data[1]) {}
 
     /** \brief Assign operator.
      */
@@ -254,9 +342,9 @@ using Point2D = Point<2>;  //!< An alias to Point<2>.
 template <>
 class Point<3> : public _POINT<3> {
   public:
-    double &x;  //!< An alias to access the first dimension as p.x.
-    double &y;  //!< An alias to access the second dimension as p.y.
-    double &z;  //!< An alias to access the third dimension as p.z.
+    int64_t &x;  //!< An alias to access the first dimension as p.x.
+    int64_t &y;  //!< An alias to access the second dimension as p.y.
+    int64_t &z;  //!< An alias to access the third dimension as p.z.
 
     /** \brief Void constructor, the Point's values are unknown.
      */
@@ -281,7 +369,7 @@ class Point<3> : public _POINT<3> {
      *        Point2D p = {v1, v2, v3}
      *
      */
-    Point(std::initializer_list<double> l) : _POINT(l), x(data[0]), y(data[1]), z(data[2]) {}
+    Point(std::initializer_list<int64_t> l) : _POINT(l), x(data[0]), y(data[1]), z(data[2]) {}
 
     /** \brief Assign operator.
      */
@@ -293,86 +381,6 @@ class Point<3> : public _POINT<3> {
 };
 
 using Point3D = Point<3>;  //!< An alias to Point<3>.
-
-/*************************************/
-
-
-
-
-
-
-
-
-///** \brief An aliases of a Point<2>.
-// *
-// *  Used to implement some functionality of a 2 dimensional Point.
-// */
-//class Point2D : public Point<2> {
-//  public:
-//    double &x = data[0];  //!< An alias to access the first dimension as p.x.
-//    double &y = data[1];  //!< An alias to access the second dimension as p.y.
-//
-//    /** \brief Void constructor, the Point2D's values are unknown.
-//     */
-//    Point2D() {}
-//
-//    /** \brief A copy constructor with Point<2>.
-//     */
-//    Point2D(const Point<2>& p) : Point<2>(p) {}
-//
-//    /** \brief A list initializer constructor.
-//     *
-//     *  You can create a Point2D with a list of 2 values:
-//     *
-//     *        Point2D p(v1, v2)
-//     *
-//     *  or
-//     *
-//     *        Point2D p = {v1, v2}
-//     *
-//     */
-//    Point2D(std::initializer_list<double> l) : Point(l) {}
-//
-//    /** \brief This class let you compare Point<2> with Point2D classes.
-//     */
-//    Point2D& operator=(Point<2> rhs) {Point<2>::operator=(rhs); return (*this);}
-//};
-//
-///** \brief An aliases of a Point<3>.
-// *
-// *  Used to implement some functionality of a 3 dimensional Point.
-// */
-//class Point3D : public Point<3> {
-//  public:
-//    double &x = data[0];  //!< An alias to access the first dimension as p.x.
-//    double &y = data[1];  //!< An alias to access the second dimension as p.y.
-//    double &z = data[2];  //!< An alias to access the third dimension as p.z.
-//
-//    /** \brief Void constructor, the Point3D's values are unknown.
-//     */
-//    Point3D() {}
-//
-//    /** \brief A copy constructor with Point<3>.
-//     */
-//    Point3D(const Point<3>& p) : Point<3>(p) {}
-//
-//    /** \brief A list initializer constructor.
-//     *
-//     *  You can create a Point3D with a list of 3 values:
-//     *
-//     *        Point3D p(v1, v2, v3)
-//     *
-//     *  or
-//     *
-//     *        Point3D p = {v1, v2, v3}
-//     *
-//     */
-//    Point3D(std::initializer_list<double> l) : Point(l) {}
-//
-//    /** \brief This class let you compare Point<3> with Point3D classes.
-//     */
-//    Point3D& operator=(Point<3> rhs) {Point<3>::operator=(rhs); return (*this);}
-//};
 
 }  // namespace zbe
 

@@ -2,6 +2,7 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
+#include <cstdlib>
 
 #include "ZBE/core/daemons/DaemonMaster.h"
 #include "ZBE/core/entities/avatars/implementations/SimpleCollisioner.h"
@@ -50,12 +51,15 @@ int gamemain(int, char** ) {
     COLLISIONABLELIST = 1,
     BOARDACTUATORLIST = 1,
 
-    WIDTH = 640,
-    HEIGHT = 480
+    WIDTH = 1024,
+    HEIGHT = 768
   };
 
   const char ballfilename[] = "data/images/zombieball/zomball_st_32.png";
   unsigned ballgraphics;
+
+  printf("3 / 5 %d\n", 3/5);fflush(stdout);
+  printf("2 / 5 %d\n", 2/5);fflush(stdout);
 
   printf("|=================== Building up system ===================|\n");fflush(stdout);
   printf("Event store\n");fflush(stdout);
@@ -120,20 +124,26 @@ int gamemain(int, char** ) {
   zbe::ListManager<zbe::TicketedForwardList<zbe::CollisionerEntity<game::GameReactor>*> >& lmCollisionablesList = zbe::ListManager< zbe::TicketedForwardList<zbe::CollisionerEntity<game::GameReactor>*> >::getInstance();
   lmCollisionablesList.insert(COLLISIONABLELIST, &collisionablesList);
 
-  game::GameBall ball(WIDTH/2,HEIGHT/2,16,50,50, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
-  //game::GameBall ball(320,463,16,1000,1000, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
-  ctl.push_front(&ball);
-
   printf("Building an sprite adaptor for the ball\n");fflush(stdout);
   zbe::SimpleSpriteAdaptor<zbe::Drawable>* spriteAdaptor = new zbe::SimpleDrawableSimpleSpriteAdaptor();
-  ball.setSimpleSpriteAdaptor(spriteAdaptor);
   zbe::BaseSphereMCMAPOAdaptor<game::GameReactor, 2> * movableCatorAdaptor = new zbe::BaseSphereMCMAPOAdaptor<game::GameReactor, 2>();
-  ball.setMovableCollisionatorAdaptor(movableCatorAdaptor);
-  game::StepInputHandler ihright(&ball, 5, 0);
+  /*game::StepInputHandler ihright(&ball, 5, 0);
   game::StepInputHandler ihleft(&ball, -5, 0);
   ieg.addHandler(zbe::ZBEK_a, &ihleft);
-  ieg.addHandler(zbe::ZBEK_d, &ihright);
-  vmobile.push_back(&ball);
+  ieg.addHandler(zbe::ZBEK_d, &ihright);*/
+
+  std::forward_list<game::GameBall*> balls;
+  for(int i = 0; i<1000 ; i++){
+      //game::GameBall* ball = new game::GameBall(WIDTH/2 << zbe::PRECISION_DIGITS ,HEIGHT/2,16 << zbe::PRECISION_DIGITS,(rand()%2000+500),(rand()%2000+500) << zbe::PRECISION_DIGITS, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
+      game::GameBall* ball = new game::GameBall(WIDTH/2 << zbe::PRECISION_DIGITS ,HEIGHT/2 << zbe::PRECISION_DIGITS, 16 << zbe::PRECISION_DIGITS, 100 << zbe::PRECISION_DIGITS,100 << zbe::PRECISION_DIGITS, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
+      //game::GameBall* ball = new game::GameBall(WIDTH/2 + rand()%400 -200 ,HEIGHT/2+j,16,0,200, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
+      //game::GameBall ball(320,463,16,1000,1000, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
+      ctl.push_front(ball);
+      ball->setSimpleSpriteAdaptor(spriteAdaptor);
+      ball->setMovableCollisionatorAdaptor(movableCatorAdaptor);
+      vmobile.push_back(ball);
+      balls.push_front(ball);
+  }
 
 	printf("Creating the board and giving it a size\n");fflush(stdout);
   //board
@@ -141,7 +151,7 @@ int gamemain(int, char** ) {
   zbe::ListManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> >& lmBoardActuatorsList = zbe::ListManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> >::getInstance();
   lmBoardActuatorsList.insert(BOARDACTUATORLIST, &boardActuatorsList);
 
-  game::GameBoard board(WIDTH, HEIGHT, BOARDACTUATORLIST);
+  game::GameBoard board(WIDTH << zbe::PRECISION_DIGITS, HEIGHT << zbe::PRECISION_DIGITS, BOARDACTUATORLIST);
   collisionablesList.push_front(&board);
   printf("|=================== Starting up system ===================|\n");fflush(stdout);
   printf("Starting SysTimer\n");fflush(stdout);
@@ -178,9 +188,9 @@ int gamemain(int, char** ) {
      */
     initT = endT;// init time
     endT = sysTime.getTotalTime();// instant at which the frame ends
-    if((endT - 500000000)>initT){
+    /*if((endT - 500000000)>initT){
       initT = endT - 500000000;
-    }
+    }*/
     //frameTime = sysTime.getFrameTime();// frame duration
 
     //printf("frameTime = 0x%" PRIx64 " ", frameTime);fflush(stdout);
@@ -209,7 +219,9 @@ int gamemain(int, char** ) {
       }
     }  // while frameTime
 
-    drawer.apply(ball.getSimpleSprite().get());
+    for(auto b : balls){
+        drawer.apply(b->getSimpleSprite().get());
+    }
 
     /* If one or more error occurs, the ammount and the first one
      * wille be stored into SysError estructure, so it can be consulted.
