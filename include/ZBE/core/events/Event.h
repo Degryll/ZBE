@@ -27,7 +27,7 @@ class Event {
      * \param time Exact moment in which it occurred
      *
      */
-    Event(uint64_t id, uint64_t time) : id(id), time(time) {}
+    Event(uint64_t id, int64_t time) : id(id), time(time) {}
 
     virtual ~Event() {};  //!< Empty destructor
 
@@ -36,7 +36,7 @@ class Event {
      * \return An integer representing the time.
      *
      */
-    inline uint64_t getTime() const{
+    inline int64_t getTime() const{
       return time;
     }
 
@@ -66,7 +66,7 @@ class Event {
   private:
 
     uint64_t id;    //!< Event id
-    uint64_t time;  //!< Time when the event occurs
+    int64_t time;  //!< Time when the event occurs
 };
 
 }

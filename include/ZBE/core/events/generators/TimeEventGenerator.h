@@ -20,9 +20,9 @@ namespace zbe {
 
 struct TimerData {
   TimeHandler* handler;    //!< A handler that will be executed when the event is triggered.
-  uint64_t time;  //!< When time reaches 0, the time event is triggered.
+  int64_t time;  //!< When time reaches 0, the time event is triggered.
 
-  TimerData(TimeHandler* handler, uint64_t time) : handler(handler), time(time) {}
+  TimerData(TimeHandler* handler, int64_t time) : handler(handler), time(time) {}
   inline bool operator<(const TimerData& rhs) const {return (this->time < rhs.time);}
 };
 
@@ -46,7 +46,7 @@ class TimeEventGenerator {
      * \return return An iterator used to erase the timer.
      * \sa eraseTimer
      */
-    inline TimerIter addTimer(TimeHandler* handler, uint64_t time) {
+    inline TimerIter addTimer(TimeHandler* handler, int64_t time) {
       return (timers.insert(TimerData(handler,time)));
     }
 
@@ -62,7 +62,7 @@ class TimeEventGenerator {
      * \param initTime Initial time of the frame
      * \param endTime End time of the frame
      */
-    void generate(uint64_t initTime, uint64_t endTime);
+    void generate(int64_t initTime, int64_t endTime);
 
   private:
     int eventId;

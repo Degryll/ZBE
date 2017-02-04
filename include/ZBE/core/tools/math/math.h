@@ -29,13 +29,6 @@ static const double TORADIANS = PI/180.0;
  */
 static const double TODEGREE = 180.0/PI;
 
-/** \brief This constant is used to transform the time stored in a uint64_t (nanoseconds)to the time in a velocity (in
- *  seconds, because the velocity is in m/s).
- */
-inline uint64_t MILITOZBETU(uint32_t time) {
-  return ((time << 16) / 1000);
-}
-
 /** \brief This constant represent the amount of bits that will be used as precision digits.
  * I.E. :
  *  uint64_t v1;  // velocity in pixel / sec.
@@ -46,6 +39,28 @@ inline uint64_t MILITOZBETU(uint32_t time) {
  *  v1 = v2 >> PRECISION_DIGITS;
  */
 static const int PRECISION_DIGITS = 16;
+
+/** \brief This constant is used to transform the time stored in a uint64_t (nanoseconds)to the time in a velocity (in
+ *  seconds, because the velocity is in m/s).
+ */
+inline uint64_t MILITOZBETU(uint32_t time) {
+  return ((time << 16) / 1000);
+}
+
+inline int64_t roundPrecision(int64_t n) {
+  if ((n & 255) >= 128) {
+    n += 256;
+  }
+  n = (n >> 8) << 8;
+  return (n);
+}
+
+inline void roundPrecision(int64_t *n) {
+  if (((*n) & 255) >= 128) {
+    (*n) += 256;
+  }
+  (*n) = ((*n) >> 8) << 8;
+}
 
 }  // namespace zbe
 

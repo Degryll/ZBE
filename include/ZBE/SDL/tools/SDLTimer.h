@@ -28,20 +28,20 @@ class SDLTimer : public Timer {
     ~SDLTimer();
 
     void     start();
-    uint64_t stop();
+    int64_t stop();
     void     reset();
 
-    uint64_t lapTime();
-    uint64_t totalTime();
+    int64_t lapTime();
+    int64_t totalTime();
 
     bool isRunning() {return (running);} //time is running out lalala
 
   protected:
     SDL_Starter &sdl;
     bool     running;          //!< True if the timer is running.
-    uint64_t totalElapsedTime; //!< Total time the timer has been active.
-    uint64_t lastTime;         //!< Time elapsed from last lap.
-    uint64_t lastLapTime;      //!< Stores the partial lap time when timer stops.
+    int64_t totalElapsedTime; //!< Total time the timer has been active.
+    int64_t lastTime;         //!< Time elapsed from last lap.
+    int64_t lastLapTime;      //!< Stores the partial lap time when timer stops.
 };
 
 }  // namespace zbe

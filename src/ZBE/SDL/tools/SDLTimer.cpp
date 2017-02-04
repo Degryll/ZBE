@@ -18,15 +18,15 @@ SDLTimer::~SDLTimer() {sdl.quitSubSystem(SDL_INIT_TIMER);}
 void SDLTimer::start() {
   if (running == false) {
     running = true;
-    lastTime = MILITOZBETU(SDL_GetTicks());
+    lastTime = roundPrecision(MILITOZBETU(SDL_GetTicks()));
   }
 }
 
-uint64_t SDLTimer::stop() {
+int64_t SDLTimer::stop() {
   int lastLap = 0;
   if (running == true) {
     running = false;
-    lastLap = MILITOZBETU(SDL_GetTicks()) - lastTime;
+    lastLap = roundPrecision(MILITOZBETU(SDL_GetTicks()) - lastTime);
     lastLapTime=lastLap;
     totalElapsedTime += lastLap;
   }
@@ -39,9 +39,9 @@ void SDLTimer::reset() {
   lastLapTime = 0;
 }
 
-uint64_t SDLTimer::lapTime() {
-  uint64_t lastLap = -1;
-  uint64_t now = MILITOZBETU(SDL_GetTicks());
+int64_t SDLTimer::lapTime() {
+  int64_t lastLap = -1;
+  int64_t now = roundPrecision(MILITOZBETU(SDL_GetTicks()));
   if (running == true) {
     lastLap = lastLapTime + now - lastTime;
     lastTime = now;
@@ -51,13 +51,13 @@ uint64_t SDLTimer::lapTime() {
   return lastLap;
 }
 
-uint64_t SDLTimer::totalTime() {
-  uint64_t totalElapsed;
+int64_t SDLTimer::totalTime() {
+  int64_t totalElapsed;
 
   totalElapsed = totalElapsedTime;
 
   if (running == true) {
-    totalElapsed += MILITOZBETU(SDL_GetTicks()) - lastTime;
+    totalElapsed += roundPrecision(MILITOZBETU(SDL_GetTicks()) - lastTime);
   }
   return totalElapsed;
 }

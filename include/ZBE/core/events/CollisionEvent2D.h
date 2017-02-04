@@ -34,7 +34,7 @@ class CollisionEvent2D : public Event {
     * \param entityB The second entity involved in the collision.
     * \param point Point of collision.
     */
-    CollisionEvent2D(uint64_t id, uint64_t time, std::shared_ptr<Collisioner<R> > collisioner, CollisionData collisionData, std::shared_ptr<ReactObject<R> >  reactObject) : Event(id, time), c(collisioner), cd(collisionData), ro(reactObject) {}
+    CollisionEvent2D(uint64_t id, int64_t time, std::shared_ptr<Collisioner<R> > collisioner, CollisionData collisionData, std::shared_ptr<ReactObject<R> >  reactObject) : Event(id, time), c(collisioner), cd(collisionData), ro(reactObject) {}
 
     /** \brief base destructor.
     */

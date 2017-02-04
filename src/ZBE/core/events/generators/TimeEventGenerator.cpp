@@ -12,10 +12,10 @@
 
 namespace zbe {
 
-void TimeEventGenerator::generate(uint64_t initTime, uint64_t endTime) {
+void TimeEventGenerator::generate(int64_t initTime, int64_t endTime) {
   timers.erase(timers.begin(),timers.upper_bound(TimerData(0,initTime)));
 
-  uint64_t v = 0;
+  int64_t v = 0;
   auto it = timers.begin();
   if (timers.size() > 0) {
     v = it->time;

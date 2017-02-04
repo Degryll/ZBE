@@ -39,17 +39,17 @@ class GameBallBouncer: public zbe::Actuator<zbe::MovableCollisioner<game::GameRe
       zbe::Vector<2> n = c - p;
       //n.setPolars(1.0, n.getRads()+RECTRADS);
       zbe::Vector<2> vP = v;
-      v = v.reflect(n);
+      v.reflect(n);
       gb->setVelocity(v);
-printf("Vel antes: %lf x %lf\n", vP[0], vP[1]);fflush(stdout);
-printf("Vel despues: %lf x %lf\n", v[0], v[1]);fflush(stdout);
-printf("Colision: %lf x %lf\n", p[0], p[1]);fflush(stdout);
-printf("Centro: %lf x %lf\n", c[0], c[1]);fflush(stdout);
-printf("Normal: %lf x %lf\n", n[0], n[1]);fflush(stdout);
-      if((abs(v[0] - vP[0]) < 0.01) && (abs(v[1] - vP[1]) < 0.01)){
-getchar();
-getchar();
-printf("Malfatal!\n");
+      if( v[0] == vP[0] && v[1] == vP[1] ){
+        printf("Mal!\n");
+        printf("Vel antes: %ld x %ld\n", vP[0], vP[1]);fflush(stdout);
+        printf("Vel despues: %ld x %ld\n", v[0], v[1]);fflush(stdout);
+        printf("Colision: %ld x %ld\n", p[0], p[1]);fflush(stdout);
+        printf("Centro: %ld x %ld\n", c[0], c[1]);fflush(stdout);
+        printf("Normal: %ld x %ld\n", n[0], n[1]);fflush(stdout);
+        vP.reflect(n);
+        printf("Vel requetedespues : %ld x %ld\n", vP[0], vP[1]);fflush(stdout);
       }
     }
 };

@@ -37,7 +37,7 @@ class CollisionSelector {
      *  \param point Point of collision if any.
      *  \return True if there is a collision in the timeslot set by time, false otherwise.
      */
-    inline bool select(Collisioner<R>& param1, Collisioner<R>& param2, uint64_t& time, Point2D& point) {
+    inline bool select(Collisioner<R>& param1, Collisioner<R>& param2, int64_t& time, Point2D& point) {
       return (param2.getCollisionObject()->accept(*this, *(param1.getCollisionObject()), time, point));
     }
 
@@ -48,7 +48,7 @@ class CollisionSelector {
      *  \param point Unaltered.
      *  \return False.
      */
-    inline bool visit(StaticSolidAABB2D<R>&, StaticSolidAABB2D<R>&, uint64_t&, Point2D&) {return (false);}
+    inline bool visit(StaticSolidAABB2D<R>&, StaticSolidAABB2D<R>&, int64_t&, Point2D&) {return (false);}
 
     /** \brief Dont move, wont collide.
      *  \param param1 First AABB.
@@ -57,7 +57,7 @@ class CollisionSelector {
      *  \param point Point of collision if any.
      *  \return False.
      */
-    inline bool visit(StaticLimiterAABB2D<R>&, StaticLimiterAABB2D<R>&, uint64_t&, Point2D&) {return (false);}
+    inline bool visit(StaticLimiterAABB2D<R>&, StaticLimiterAABB2D<R>&, int64_t&, Point2D&) {return (false);}
 
     /** \brief Dont move, wont collide.
      *  \param param1 First AABB.
@@ -66,7 +66,7 @@ class CollisionSelector {
      *  \param point Point of collision if any.
      *  \return False.
      */
-    inline bool visit(StaticSolidAABB2D<R>&, StaticLimiterAABB2D<R>&, uint64_t&, Point2D&) {return (false);}
+    inline bool visit(StaticSolidAABB2D<R>&, StaticLimiterAABB2D<R>&, int64_t&, Point2D&) {return (false);}
 
     /** \brief Dont move, wont collide.
      *  \param param1 First AABB.
@@ -75,7 +75,7 @@ class CollisionSelector {
      *  \param point Point of collision if any.
      *  \return False.
      */
-    inline bool visit(StaticLimiterAABB2D<R>&, StaticSolidAABB2D<R>&, uint64_t&, Point2D&) {return (false);}
+    inline bool visit(StaticLimiterAABB2D<R>&, StaticSolidAABB2D<R>&, int64_t&, Point2D&) {return (false);}
 
     /** \brief Collision detection for an AABB and a circle.
      *  \param param1 The AABB.
@@ -84,7 +84,7 @@ class CollisionSelector {
      *  \param point Point of collision if any.
      *  \return True if there is a collision in the timeslot set by time, false otherwise.
      */
-    inline bool visit(StaticSolidAABB2D<R>& param1, ConstantMovingCircle<R>& param2, uint64_t& time, Point2D& point);
+    inline bool visit(StaticSolidAABB2D<R>& param1, ConstantMovingCircle<R>& param2, int64_t& time, Point2D& point);
 
     /** \brief Collision detection for an AABB and a circle.
      *  \param param1 The AABB.
@@ -93,7 +93,7 @@ class CollisionSelector {
      *  \param point Point of collision if any.
      *  \return True if there is a collision in the timeslot set by time, false otherwise.
      */
-    inline bool visit(StaticLimiterAABB2D<R>& param1, ConstantMovingCircle<R>& param2, uint64_t& time, Point2D& point);
+    inline bool visit(StaticLimiterAABB2D<R>& param1, ConstantMovingCircle<R>& param2, int64_t& time, Point2D& point);
 
     /** \brief Collision detection for a circle and an AABB.
      *  \param param1 The circle.
@@ -102,7 +102,7 @@ class CollisionSelector {
      *  \param point Point of collision if any.
      *  \return True if there is a collision in the timeslot set by time, false otherwise.
      */
-    inline bool visit(ConstantMovingCircle<R>& param1, StaticSolidAABB2D<R>& param2, uint64_t& time, Point2D& point);
+    inline bool visit(ConstantMovingCircle<R>& param1, StaticSolidAABB2D<R>& param2, int64_t& time, Point2D& point);
 
     /** \brief Collision detection for a circle and an AABB.
      *  \param param1 The circle.
@@ -111,7 +111,7 @@ class CollisionSelector {
      *  \param point Point of collision if any.
      *  \return True if there is a collision in the timeslot set by time, false otherwise.
      */
-    inline bool visit(ConstantMovingCircle<R>& param1, StaticLimiterAABB2D<R>& param2, uint64_t& time, Point2D& point);
+    inline bool visit(ConstantMovingCircle<R>& param1, StaticLimiterAABB2D<R>& param2, int64_t& time, Point2D& point);
 
     /** \brief Collision detection for two circles.
      *  \param param1 First circle.
@@ -120,7 +120,7 @@ class CollisionSelector {
      *  \param point Point of collision if any.
      *  \return True if there is a collision in the timeslot set by time, false otherwise.
      */
-    inline bool visit(ConstantMovingCircle<R>& param1, ConstantMovingCircle<R>& param2, uint64_t& time, Point2D& point);
+    inline bool visit(ConstantMovingCircle<R>& param1, ConstantMovingCircle<R>& param2, int64_t& time, Point2D& point);
 };
 
 // You must add to this class a new "accept" function for any new derived CollisionObject
@@ -133,19 +133,19 @@ public:
 
   CollisionObjectCommon(T* collisionObject) : c(collisionObject) {}
 
-  bool accept(CollisionSelector<R> &visitor, CollisionObject<R>& param1, uint64_t& time, Point2D& point) {
+  bool accept(CollisionSelector<R> &visitor, CollisionObject<R>& param1, int64_t& time, Point2D& point) {
     return (param1.accept(visitor, *c, time, point));
   }
 
-  bool accept(CollisionSelector<R> &visitor, StaticSolidAABB2D<R>& param2, uint64_t& time, Point2D& point) {
+  bool accept(CollisionSelector<R> &visitor, StaticSolidAABB2D<R>& param2, int64_t& time, Point2D& point) {
     return (visitor.visit(*c, param2, time, point));
   }
 
-  bool accept(CollisionSelector<R> &visitor, StaticLimiterAABB2D<R>& param2, uint64_t& time, Point2D& point) {
+  bool accept(CollisionSelector<R> &visitor, StaticLimiterAABB2D<R>& param2, int64_t& time, Point2D& point) {
     return (visitor.visit(*c, param2, time, point));
   }
 
-  bool accept(CollisionSelector<R> &visitor, ConstantMovingCircle<R>& param2, uint64_t& time, Point2D& point) {
+  bool accept(CollisionSelector<R> &visitor, ConstantMovingCircle<R>& param2, int64_t& time, Point2D& point) {
     return (visitor.visit(*c, param2, time, point));
   }
 
@@ -215,27 +215,27 @@ private:
 };
 
 template <typename R>
-bool CollisionSelector<R>::visit(StaticSolidAABB2D<R>& param1, ConstantMovingCircle<R>& param2, uint64_t& time, Point2D& point) {
+bool CollisionSelector<R>::visit(StaticSolidAABB2D<R>& param1, ConstantMovingCircle<R>& param2, int64_t& time, Point2D& point) {
   return(IntersectionMovingCircleOutsideAABB2D(param2.getCircle(), param2.getDirection(), param1.getAABB2D(), time, point));
 }
 
 template <typename R>
-bool CollisionSelector<R>::visit(StaticLimiterAABB2D<R>& param1, ConstantMovingCircle<R>& param2, uint64_t& time, Point2D& point) {
+bool CollisionSelector<R>::visit(StaticLimiterAABB2D<R>& param1, ConstantMovingCircle<R>& param2, int64_t& time, Point2D& point) {
   return(IntersectionMovingCircleInsideAABB2D(param2.getCircle(), param2.getDirection(), param1.getAABB2D(), time, point));
 }
 
 template <typename R>
-bool CollisionSelector<R>::visit(ConstantMovingCircle<R>& param1, StaticSolidAABB2D<R>& param2, uint64_t& time, Point2D& point) {
+bool CollisionSelector<R>::visit(ConstantMovingCircle<R>& param1, StaticSolidAABB2D<R>& param2, int64_t& time, Point2D& point) {
   return(IntersectionMovingCircleOutsideAABB2D(param1.getCircle(), param1.getDirection(), param2.getAABB2D(), time, point));
 }
 
 template <typename R>
-bool CollisionSelector<R>::visit(ConstantMovingCircle<R>& param1, StaticLimiterAABB2D<R>& param2, uint64_t& time, Point2D& point) {
+bool CollisionSelector<R>::visit(ConstantMovingCircle<R>& param1, StaticLimiterAABB2D<R>& param2, int64_t& time, Point2D& point) {
   return(IntersectionMovingCircleInsideAABB2D(param1.getCircle(), param1.getDirection(), param2.getAABB2D(), time, point));
 }
 
 template <typename R>
-bool CollisionSelector<R>::visit(ConstantMovingCircle<R>& , ConstantMovingCircle<R>& , uint64_t& , Point2D& ) {
+bool CollisionSelector<R>::visit(ConstantMovingCircle<R>& , ConstantMovingCircle<R>& , int64_t& , Point2D& ) {
   // TODO Degryll implementar ConstantMovingSphere contra ConstantMovingSphere
   return (false);
 }

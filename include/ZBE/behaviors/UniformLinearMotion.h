@@ -29,9 +29,9 @@ class UniformLinearMotion : public Behavior< Mobile<s> > {
 
     /** \brief Do the behavior work over the given entity
      */
-    void apply(Mobile<s>* entity, uint64_t time) {
+    void apply(Mobile<s>* entity, int64_t time) {
       Point<s>& p = entity->getPosition();
-      for(int i = 0; i < s; i++) {
+      for(unsigned i = 0; i < s; i++) {
       	p[i] += (entity->getVelocity()[i] * time) >> PRECISION_DIGITS;
       }
     }

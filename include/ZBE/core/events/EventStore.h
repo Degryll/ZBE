@@ -10,6 +10,7 @@
 #ifndef CORE_EVENTS_EVENTSTORE_H
 #define CORE_EVENTS_EVENTSTORE_H
 
+#include <limits>
 #include <cstdint>
 #include <forward_list>
 
@@ -50,7 +51,7 @@ namespace zbe {
 
       /** \brief Returns the time of the contained events.
       */
-      uint64_t getTime();
+      int64_t getTime();
 
       /** \brief Get the current event collection.
        *  \return A constant event list.
@@ -58,9 +59,9 @@ namespace zbe {
       const std::forward_list<Event*> & getEvents() {return (store);}
 
     private:
-      EventStore() :store(), bettertime(UINT64_MAX) {}
+      EventStore() :store(), bettertime(std::numeric_limits<int64_t>::max()) {}
       std::forward_list<Event*> store;
-      uint64_t bettertime;
+      int64_t bettertime;
   };
 } //namespace zbe
 #endif //CORE_EVENTS_EVENTSTORE_H

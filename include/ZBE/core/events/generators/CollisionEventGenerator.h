@@ -45,7 +45,7 @@ class CollisionEventGenerator {
      * \param initTime Initial time of the frame
      * \param endTime End time of the frame
      */
-    void generate(uint64_t initTime, uint64_t endTime);
+    void generate(int64_t initTime, int64_t endTime);
 
   private:
     uint64_t id;  //!< id for the list of collisionators.
@@ -58,8 +58,8 @@ class CollisionEventGenerator {
 };
 
 template <typename R>
-void CollisionEventGenerator<R>::generate(uint64_t initTime, uint64_t endTime) {
-  uint64_t totalTime = endTime - initTime;
+void CollisionEventGenerator<R>::generate(int64_t initTime, int64_t endTime) {
+  int64_t totalTime = endTime - initTime;
   Point2D point;
 
   TicketedForwardList<CollisionatorEntity<R>*>* ctl = lmct.get(id);

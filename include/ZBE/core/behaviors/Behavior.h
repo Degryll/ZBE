@@ -24,7 +24,7 @@ class Behavior {
 
     /** \brief Do the behavior work over the given entity
      */
-    virtual void apply(T * entity, uint64_t time) = 0;
+    virtual void apply(T * entity, int64_t time) = 0;
 };
 
 }  // namespace zbe

@@ -135,9 +135,8 @@ int gamemain(int, char** ) {
   std::forward_list<game::GameBall*> balls;
   for(int i = 0; i<1000 ; i++){
       //game::GameBall* ball = new game::GameBall(WIDTH/2 << zbe::PRECISION_DIGITS ,HEIGHT/2,16 << zbe::PRECISION_DIGITS,(rand()%2000+500),(rand()%2000+500) << zbe::PRECISION_DIGITS, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
-      game::GameBall* ball = new game::GameBall(WIDTH/2 << zbe::PRECISION_DIGITS ,HEIGHT/2 << zbe::PRECISION_DIGITS, 16 << zbe::PRECISION_DIGITS, 100 << zbe::PRECISION_DIGITS,100 << zbe::PRECISION_DIGITS, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
-      //game::GameBall* ball = new game::GameBall(WIDTH/2 + rand()%400 -200 ,HEIGHT/2+j,16,0,200, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
-      //game::GameBall ball(320,463,16,1000,1000, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
+      game::GameBall* ball = new game::GameBall((WIDTH/2 + rand()%400-200) << zbe::PRECISION_DIGITS ,(HEIGHT/2 + rand()%400-200) << zbe::PRECISION_DIGITS, 16 << zbe::PRECISION_DIGITS, 1000 << zbe::PRECISION_DIGITS,1000 << zbe::PRECISION_DIGITS, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
+
       ctl.push_front(ball);
       ball->setSimpleSpriteAdaptor(spriteAdaptor);
       ball->setMovableCollisionatorAdaptor(movableCatorAdaptor);
@@ -162,8 +161,8 @@ int gamemain(int, char** ) {
   printf("Updating system time.\n");fflush(stdout);
   sysTime.update();
   printf("Acquiring initial times.\n");fflush(stdout);
-  uint64_t endT = sysTime.getTotalTime();// instant at which the frame ends
-  uint64_t initT = 0;//Lets start
+  int64_t endT = sysTime.getTotalTime();// instant at which the frame ends
+  int64_t initT = 0;//Lets start
   printf("|==========================================================|\n");fflush(stdout);
   printf("initT = 0x%" PRIx64 " ", initT);fflush(stdout);
   printf("endT = 0x%" PRIx64 "\n", endT);fflush(stdout);
@@ -187,10 +186,11 @@ int gamemain(int, char** ) {
     /* Reading that updated time info
      */
     initT = endT;// init time
-    endT = sysTime.getTotalTime();// instant at which the frame ends
-    /*if((endT - 500000000)>initT){
-      initT = endT - 500000000;
-    }*/
+    endT = sysTime.getTotalTime(); //initT + (int64_t(1) << zbe::PRECISION_DIGITS); // instant at which the frame ends
+
+    if((endT - 32768)>initT){
+      initT = endT - 32768;
+    }
     //frameTime = sysTime.getFrameTime();// frame duration
 
     //printf("frameTime = 0x%" PRIx64 " ", frameTime);fflush(stdout);
@@ -207,7 +207,7 @@ int gamemain(int, char** ) {
       teg.generate(initT,endT);
       ceg.generate(initT,endT);
 
-      uint64_t eventTime = store.getTime();
+      int64_t eventTime = store.getTime();
       if (eventTime <= endT) {
         dMaster.run(eventTime-initT);
         store.manageCurrent();

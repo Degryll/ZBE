@@ -19,7 +19,7 @@ static bool deleteAll(Event* e) {
 
 void EventStore::clearStore() {
   store.remove_if(deleteAll);
-  bettertime = UINT64_MAX;
+  bettertime = std::numeric_limits<int64_t>::max();
 }
 
 
@@ -42,7 +42,7 @@ void EventStore::manageCurrent() {
   clearStore();
 }
 
-uint64_t EventStore::getTime() {
+int64_t EventStore::getTime() {
   return (bettertime);
 }
 

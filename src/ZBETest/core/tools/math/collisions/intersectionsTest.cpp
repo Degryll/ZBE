@@ -18,7 +18,7 @@ TEST(Intersections, RaySphere) {
   zbe::NSphere<2> nsphere{{80,90},30};
   bool result;
   zbe::Point<2> p;
-  uint64_t t = 1 << zbe::PRECISION_DIGITS;
+  int64_t t = 1 << zbe::PRECISION_DIGITS;
 
   result = intersectionRayNSphere(ray, nsphere, t, p);
   EXPECT_EQ(1,result) << "First Ray vs Nsphere collision.";
@@ -49,13 +49,13 @@ TEST(Intersections, RaySphere) {
 
 TEST(Intersections, NormalRaySphere) {
   double m = sqrt(125);
-  zbe::Ray<2> ray{{20,30},{50/m,100/m}};
+  zbe::Ray<2> ray{{20,30},{int64_t(50/m),int64_t(100/m)}};
   zbe::NSphere<2> nsphere{{80,90},30};
   bool result;
   zbe::Point<2> p;
-  uint64_t t = 100 << zbe::PRECISION_DIGITS;
+  int64_t t = 100 << zbe::PRECISION_DIGITS;
 
-  uint64_t time = (uint64_t)(6 * m) << zbe::PRECISION_DIGITS;
+  int64_t time = (int64_t)(6 * m) << zbe::PRECISION_DIGITS;
 
   result = intersectionNormalRayNSphere(ray, nsphere, t, p);
   EXPECT_EQ(1,result) << "First Normal Ray vs Nsphere collision.";
@@ -87,7 +87,7 @@ TEST(Intersections, RayAABB) {
   zbe::AABB<2> aabb{{10,90},{60,100}};
   bool result;
   zbe::Point<2> p;
-  uint64_t t = 1 << zbe::PRECISION_DIGITS;
+  int64_t t = 1 << zbe::PRECISION_DIGITS;
 
   result = intersectionRayAABB(ray, aabb, t, p);
   EXPECT_EQ(1,result) << "First Ray vs AABB collision.";
@@ -111,7 +111,7 @@ TEST(Intersections, MovingCircleOutsideAABB) {
   zbe::AABB2D block{{10,50},{60,100}};
   bool result;
   zbe::Point2D p;
-  uint64_t t = 1 << zbe::PRECISION_DIGITS;
+  int64_t t = 1 << zbe::PRECISION_DIGITS;
 
   result = IntersectionMovingCircleOutsideAABB2D(ball, velocity, block, t, p);
   EXPECT_EQ(1,result) << "First Moving Circle vs AABB collision.";

@@ -205,7 +205,7 @@ class _VECTOR {
       int64_t m = getModule();
 
       for(unsigned i = 0; i < s; i++) {
-        data[i] /= m;
+        data[i] = (data[i] << PRECISION_DIGITS) / m;
       }
 
       return (*this);
@@ -219,8 +219,15 @@ class _VECTOR {
      */
     _VECTOR<s>& reflect(_VECTOR<s> normal) {
       _VECTOR<s>& d = *this;
+      if(normal[0] == 1048576 && normal[1] == -1048576 && d[0] == 65536000 && d[1] == 65536000){
+        printf("Aqui esta el mal!\n");fflush(stdout);
+      }
       normal.normalize();
-      d = d - 2 * (d * normal) * normal;
+      int64_t dn = ((d * normal) >> PRECISION_DIGITS) >> PRECISION_DIGITS;
+      _VECTOR<s> dnn = dn * normal;
+      _VECTOR<s> dnn2 = int64_t(2) * dnn;
+      _VECTOR<s> out = d - dnn2;
+      d = out;
       return (*this);
     }
 

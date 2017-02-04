@@ -30,7 +30,7 @@ class TimeEvent : public Event {
      * \param handler Time handler that will be executed when the event is triggered.
      *
      */
-    TimeEvent(uint64_t id, uint64_t time, TimeHandler* handler) : Event(id, time), handler(handler) {}
+    TimeEvent(uint64_t id, int64_t time, TimeHandler* handler) : Event(id, time), handler(handler) {}
 
     /** \brief base destructor.
     */

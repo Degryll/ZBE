@@ -11,7 +11,7 @@ class DummyTimer : public zbe::Timer {
     void start() {
     }
 
-    uint64_t stop() {
+    int64_t stop() {
       return 0;
     }
 
@@ -20,33 +20,33 @@ class DummyTimer : public zbe::Timer {
       meter = 0;
     }
 
-    uint64_t lapTime() {
-      uint64_t local = (meter % 2)+1;
+    int64_t lapTime() {
+      int64_t local = (meter % 2)+1;
       time += local;
       meter++;
       return local;
     }
 
-    uint64_t totalTime() {
+    int64_t totalTime() {
       return time;
     }
 
     bool isRunning() {return true;}
-    uint64_t time;
-    uint64_t meter;
+    int64_t time;
+    int64_t meter;
 };
 
 TEST(SysTime, SysTime) {
   zbe::SysTime st = zbe::SysTime::getInstance();
   zbe::Timer *t = new DummyTimer();
   st.setSystemTimer(t);
-  uint64_t f1 = st.getFrameTime();
-  uint64_t t1 = st.getFrameTime();
-  uint64_t f2 = st.getFrameTime();
-  uint64_t t2 = st.getFrameTime();
+  int64_t f1 = st.getFrameTime();
+  int64_t t1 = st.getFrameTime();
+  int64_t f2 = st.getFrameTime();
+  int64_t t2 = st.getFrameTime();
   st.update();
-  uint64_t f3 = st.getFrameTime();
-  uint64_t t3 = st.getFrameTime();
+  int64_t f3 = st.getFrameTime();
+  int64_t t3 = st.getFrameTime();
 
   EXPECT_EQ(f1,t1) << "For first frame, total and frame are the same";
   EXPECT_EQ(t1,t2) << "No frame changes without update call";

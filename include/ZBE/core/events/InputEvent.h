@@ -33,7 +33,7 @@ class InputEvent : public Event {
      * \param state The state of the related input as a value in the range (-1.0 .. +1.0).
      *
      */
-    InputEvent(uint64_t id, uint64_t time, uint32_t key, float state, InputHandler* handler) : Event(id, time), key(key), state(state), handler(handler) {}
+    InputEvent(uint64_t id, int64_t time, uint32_t key, float state, InputHandler* handler) : Event(id, time), key(key), state(state), handler(handler) {}
 
     /** \brief base destructor.
     */

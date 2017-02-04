@@ -22,34 +22,34 @@
 namespace zbe {
 
 template <unsigned dim>
-bool intersectionRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, uint64_t &time, Point<dim>& point);
-inline bool intersectionRayCircle(Ray2D ray, Circle circle, uint64_t &time, Point2D& point) {return (intersectionRayNSphere<2>(ray,circle,time,point));}  //!< 2D allias of intersectionRayNSphere.
-inline bool intersectionRaySphere(Ray3D ray, Sphere sphere, uint64_t &time, Point3D& point) {return (intersectionRayNSphere<3>(ray,sphere,time,point));}  //!< 3D allias of intersectionRayNSphere.
+bool intersectionRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, int64_t &time, Point<dim>& point);
+inline bool intersectionRayCircle(Ray2D ray, Circle circle, int64_t &time, Point2D& point) {return (intersectionRayNSphere<2>(ray,circle,time,point));}  //!< 2D allias of intersectionRayNSphere.
+inline bool intersectionRaySphere(Ray3D ray, Sphere sphere, int64_t &time, Point3D& point) {return (intersectionRayNSphere<3>(ray,sphere,time,point));}  //!< 3D allias of intersectionRayNSphere.
 
 template <unsigned dim>
-bool intersectionNormalRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, uint64_t &time, Point<dim>& point);
-inline bool intersectionNormalRayCircle(Ray2D ray, Circle circle, uint64_t &time, Point2D& point) {return (intersectionNormalRayNSphere<2>(ray,circle,time,point));}  //!< 2D allias of intersectionNormalRayNSphere.
-inline bool intersectionNormalRaySphere(Ray3D ray, Sphere sphere, uint64_t &time, Point3D& point) {return (intersectionNormalRayNSphere<3>(ray,sphere,time,point));}  //!< 3D allias of intersectionNormalRayNSphere.
+bool intersectionNormalRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, int64_t &time, Point<dim>& point);
+inline bool intersectionNormalRayCircle(Ray2D ray, Circle circle, int64_t &time, Point2D& point) {return (intersectionNormalRayNSphere<2>(ray,circle,time,point));}  //!< 2D allias of intersectionNormalRayNSphere.
+inline bool intersectionNormalRaySphere(Ray3D ray, Sphere sphere, int64_t &time, Point3D& point) {return (intersectionNormalRayNSphere<3>(ray,sphere,time,point));}  //!< 3D allias of intersectionNormalRayNSphere.
 
 template <unsigned dim>
-bool intersectionRayAABB(Ray<dim> ray, AABB<dim> box, uint64_t &time, Point<dim>& point);
-inline bool intersectionRayAABB2D(Ray2D ray, AABB2D box, uint64_t &time, Point2D& point) {return (intersectionRayAABB<2>(ray,box,time,point));}  //!< 2D allias of intersectionRayAABB.
-inline bool intersectionRayAABB3D(Ray3D ray, AABB3D box, uint64_t &time, Point3D& point) {return (intersectionRayAABB<3>(ray,box,time,point));}  //!< 3D allias of intersectionRayAABB.
+bool intersectionRayAABB(Ray<dim> ray, AABB<dim> box, int64_t &time, Point<dim>& point);
+inline bool intersectionRayAABB2D(Ray2D ray, AABB2D box, int64_t &time, Point2D& point) {return (intersectionRayAABB<2>(ray,box,time,point));}  //!< 2D allias of intersectionRayAABB.
+inline bool intersectionRayAABB3D(Ray3D ray, AABB3D box, int64_t &time, Point3D& point) {return (intersectionRayAABB<3>(ray,box,time,point));}  //!< 3D allias of intersectionRayAABB.
 
 template <unsigned dim>
-bool intersectionSegmentAABB(Ray<dim> ray, AABB<dim> box, uint64_t &time, Point<dim>& point);
-inline bool intersectionSegmentAABB2D(Ray2D ray, AABB2D box, uint64_t &time, Point2D& point) {return (intersectionSegmentAABB<2>(ray,box,time,point));}  //!< 2D allias of intersectionSegmentAABB.
-inline bool intersectionSegmentAABB3D(Ray3D ray, AABB3D box, uint64_t &time, Point3D& point) {return (intersectionSegmentAABB<3>(ray,box,time,point));}  //!< 3D allias of intersectionSegmentAABB.
+bool intersectionSegmentAABB(Ray<dim> ray, AABB<dim> box, int64_t &time, Point<dim>& point);
+inline bool intersectionSegmentAABB2D(Ray2D ray, AABB2D box, int64_t &time, Point2D& point) {return (intersectionSegmentAABB<2>(ray,box,time,point));}  //!< 2D allias of intersectionSegmentAABB.
+inline bool intersectionSegmentAABB3D(Ray3D ray, AABB3D box, int64_t &time, Point3D& point) {return (intersectionSegmentAABB<3>(ray,box,time,point));}  //!< 3D allias of intersectionSegmentAABB.
 
 template <unsigned dim>
-bool intersectionMovingNSphereOutsideAABB(NSphere<dim> nsphere, Vector<dim> direction, AABB<dim> box, uint64_t& time, Point<dim>& point);
-inline bool IntersectionMovingCircleOutsideAABB2D(Circle circle, Vector2D direction, AABB2D box, uint64_t& time, Point2D& point) {return (intersectionMovingNSphereOutsideAABB<2>(circle,direction,box,time,point));}  //!< 2D allias of IntersectionMovingNSphereOutsideAABB.
-inline bool IntersectionMovingSphereOutsideAABB3D(Sphere sphere, Vector3D direction, AABB3D box, uint64_t& time, Point3D& point) {return (intersectionMovingNSphereOutsideAABB<3>(sphere,direction,box,time,point));}  //!< 3D allias of IntersectionMovingNSphereOutsideAABB.
+bool intersectionMovingNSphereOutsideAABB(NSphere<dim> nsphere, Vector<dim> direction, AABB<dim> box, int64_t& time, Point<dim>& point);
+inline bool IntersectionMovingCircleOutsideAABB2D(Circle circle, Vector2D direction, AABB2D box, int64_t& time, Point2D& point) {return (intersectionMovingNSphereOutsideAABB<2>(circle,direction,box,time,point));}  //!< 2D allias of IntersectionMovingNSphereOutsideAABB.
+inline bool IntersectionMovingSphereOutsideAABB3D(Sphere sphere, Vector3D direction, AABB3D box, int64_t& time, Point3D& point) {return (intersectionMovingNSphereOutsideAABB<3>(sphere,direction,box,time,point));}  //!< 3D allias of IntersectionMovingNSphereOutsideAABB.
 
 template <unsigned dim>
-bool intersectionMovingNSphereInsideAABB(NSphere<dim> nsphere, Vector<dim> direction, AABB<dim> box, uint64_t& time, Point<dim>& point);
-inline bool IntersectionMovingCircleInsideAABB2D(Circle circle, Vector2D direction, AABB2D box, uint64_t& time, Point2D& point) {return (intersectionMovingNSphereInsideAABB<2>(circle,direction,box,time,point));}  //!< 2D allias of IntersectionMovingNSphereInsideAABB.
-inline bool IntersectionMovingSphereInsideAABB3D(Sphere sphere, Vector3D direction, AABB3D box, uint64_t& time, Point3D& point) {return (intersectionMovingNSphereInsideAABB<3>(sphere,direction,box,time,point));}  //!< 3D allias of IntersectionMovingNSphereInsideAABB.
+bool intersectionMovingNSphereInsideAABB(NSphere<dim> nsphere, Vector<dim> direction, AABB<dim> box, int64_t& time, Point<dim>& point);
+inline bool IntersectionMovingCircleInsideAABB2D(Circle circle, Vector2D direction, AABB2D box, int64_t& time, Point2D& point) {return (intersectionMovingNSphereInsideAABB<2>(circle,direction,box,time,point));}  //!< 2D allias of IntersectionMovingNSphereInsideAABB.
+inline bool IntersectionMovingSphereInsideAABB3D(Sphere sphere, Vector3D direction, AABB3D box, int64_t& time, Point3D& point) {return (intersectionMovingNSphereInsideAABB<3>(sphere,direction,box,time,point));}  //!< 3D allias of IntersectionMovingNSphereInsideAABB.
 
 /** \brief A template function that compute the time and point of collision (if any) of an N-dimensional ray and a NSphere.
  *
@@ -65,7 +65,7 @@ inline bool IntersectionMovingSphereInsideAABB3D(Sphere sphere, Vector3D directi
  * \sa intersectionNormalRayNSphere.
  */
 template <unsigned dim>
-bool intersectionRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, uint64_t &time, Point<dim>& point) {
+bool intersectionRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, int64_t &time, Point<dim>& point) {
   Vector<dim> f = ray.o - nsphere.c;
 
   int64_t a = ray.d * ray.d;
@@ -79,14 +79,14 @@ bool intersectionRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, uint64_t &time, 
 
   if (discr < 0) return (false);
 
-  int64_t taux = (int64_t)(time);
+  int64_t taux = time;
   int64_t t = ((-b - (int64_t)sqrt(discr)) / (2 * a));
   if (t < 0) t = 0;
   if (t > taux) return (false);
   taux = t;
 
   point = ray.o + ray.d * taux;
-  time = (uint64_t)(taux);
+  time = taux;
 
   return (true);
 }
@@ -107,7 +107,7 @@ bool intersectionRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, uint64_t &time, 
  * \sa intersectionRayNSphere.
  */
 template <unsigned dim>
-bool intersectionNormalRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, uint64_t &time, Point<dim>& point) {
+bool intersectionNormalRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, int64_t &time, Point<dim>& point) {
   Vector<dim> f = ray.o - nsphere.c;
 
   //  because r.d is a unit vector, r.d dot r.d  = 1
@@ -120,13 +120,13 @@ bool intersectionNormalRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, uint64_t &
 
   if (discr < 0) return (false);
 
-  int64_t taux = (int64_t)time;
+  int64_t taux = time;
   int64_t t = (-b - (int64_t)sqrt(discr));
   if (t < 0) t = 0;
   if (t > taux) return (false);
   taux = t;
   point = ray.o + ray.d * taux;
-  time = (uint64_t)(taux);
+  time = taux;
 
   return (true);
 }
@@ -147,10 +147,10 @@ bool intersectionNormalRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, uint64_t &
  * \sa intersectionRayAABB and intersectionSegmentAABB.
  */
 template <unsigned dim>
-bool RayAABB(Ray<dim> ray, AABB<dim> box, uint64_t tmin, uint64_t tmax, uint64_t &time, Point<dim>& point) {
+bool RayAABB(Ray<dim> ray, AABB<dim> box, int64_t tmin, int64_t tmax, int64_t &time, Point<dim>& point) {
   //double tmind = tmin * TIMETOVELOCITY;
   //double tmaxd = tmax * TIMETOVELOCITY;
-  int64_t taux  = (int64_t)time;
+  int64_t taux  = time;
 
   bool isZero = true;  // the direction is (0,...,0)
   for(unsigned i = 0; i < dim; i++) {
@@ -160,8 +160,8 @@ bool RayAABB(Ray<dim> ray, AABB<dim> box, uint64_t tmin, uint64_t tmax, uint64_t
     int64_t o    = ray.o[i];
     int64_t bmin = box.minimum[i];
     int64_t bmax = box.maximum[i];
-    int64_t n1 = bmin - o;
-    int64_t n2 = bmax - o;
+    int64_t n1 = (bmin - o) << PRECISION_DIGITS;
+    int64_t n2 = (bmax - o) << PRECISION_DIGITS;
 
     if((o < bmin && d < n1) || (o > bmax && d > n2)) {return (false);}
 
@@ -179,7 +179,9 @@ bool RayAABB(Ray<dim> ray, AABB<dim> box, uint64_t tmin, uint64_t tmax, uint64_t
   if (isZero) return(false);
   if(tmin > taux) {return (false);}
 
-  point = ray.o + ray.d * tmax;
+  for(unsigned i = 0; i < dim; i++) {
+    point[i] = ray.o[i] + ((ray.d[i] * tmax) >> PRECISION_DIGITS);
+  }
   time = tmax;
   return (true);
 }
@@ -198,9 +200,9 @@ bool RayAABB(Ray<dim> ray, AABB<dim> box, uint64_t tmin, uint64_t tmax, uint64_t
  * \sa intersectionSegmentAABB.
  */
 template <unsigned dim>
-bool intersectionRayAABB(Ray<dim> ray, AABB<dim> box, uint64_t &time, Point<dim>& point) {
-  uint64_t tmin = 0;
-  uint64_t tmax = std::numeric_limits<uint64_t>::max();
+bool intersectionRayAABB(Ray<dim> ray, AABB<dim> box, int64_t &time, Point<dim>& point) {
+  int64_t tmin = 0;
+  int64_t tmax = std::numeric_limits<int64_t>::max();
 
   return (RayAABB<dim>(ray, box, tmin, tmax, time, point));
 }
@@ -219,9 +221,9 @@ bool intersectionRayAABB(Ray<dim> ray, AABB<dim> box, uint64_t &time, Point<dim>
  * \sa intersectionRayAABB.
  */
 template <unsigned dim>
-bool intersectionSegmentAABB(Ray<dim> ray, AABB<dim> box, uint64_t &time, Point<dim>& point) {
-  uint64_t tmin = 0;
-  uint64_t tmax = 1 << PRECISION_DIGITS;
+bool intersectionSegmentAABB(Ray<dim> ray, AABB<dim> box, int64_t &time, Point<dim>& point) {
+  int64_t tmin = 0;
+  int64_t tmax = 1 << PRECISION_DIGITS;
 
   return (RayAABB<dim>(ray, box, tmin, tmax, time, point));
 }
@@ -236,7 +238,7 @@ bool intersectionSegmentAABB(Ray<dim> ray, AABB<dim> box, uint64_t &time, Point<
  * \return True if there is a collision before the initial value of time, false otherwise.
  */
 template <unsigned dim>
-bool intersectionMovingNSphereOutsideAABB(NSphere<dim> nsphere, Vector<dim> direction, AABB<dim> box, uint64_t& time, Point<dim>& point) {
+bool intersectionMovingNSphereOutsideAABB(NSphere<dim> nsphere, Vector<dim> direction, AABB<dim> box, int64_t& time, Point<dim>& point) {
   int64_t r = nsphere.r;
   AABB<dim> e = box;
   for(unsigned i = 0; i < dim; i++) {
@@ -244,7 +246,7 @@ bool intersectionMovingNSphereOutsideAABB(NSphere<dim> nsphere, Vector<dim> dire
     e.maximum[i] += r;
   }
 
-  uint64_t t = time;
+  int64_t t = time;
 
   Ray<dim> ray(nsphere.c, direction);
   if (!intersectionRayAABB<dim>(ray, e, t, point) || t > time) {return (false);}
@@ -282,7 +284,7 @@ bool intersectionMovingNSphereOutsideAABB(NSphere<dim> nsphere, Vector<dim> dire
  * \return True if there is a collision before the initial value of time, false otherwise.
  */
 template <unsigned dim>
-bool intersectionMovingNSphereInsideAABB(NSphere<dim> nsphere, Vector<dim> direction, AABB<dim> box, uint64_t& time, Point<dim>& point) {
+bool intersectionMovingNSphereInsideAABB(NSphere<dim> nsphere, Vector<dim> direction, AABB<dim> box, int64_t& time, Point<dim>& point) {
   int64_t r = nsphere.r;
   AABB<dim> e = box;
   for(unsigned i = 0; i < dim; i++) {
@@ -290,7 +292,7 @@ bool intersectionMovingNSphereInsideAABB(NSphere<dim> nsphere, Vector<dim> direc
     e.maximum[i] -= r;
   }
 
-  uint64_t t = time;
+  int64_t t = time;
 
   Ray<dim> ray(nsphere.c, direction);
 
@@ -298,12 +300,14 @@ bool intersectionMovingNSphereInsideAABB(NSphere<dim> nsphere, Vector<dim> direc
   	return (false);
   } else {
     for(unsigned i = 0; i < dim; i++) {
-      if (point[i] == e.minimum[i]) {
+    	roundPrecision(&(point[i]));
+      if (abs(point[i] - e.minimum[i]) < 32768) {
         point[i] -= r;
-      } else if (point[i] == e.maximum[i]) {
+      } else if (abs(point[i] - e.maximum[i]) < 32768) {
         point[i] += r;
       }
     }
+    time = roundPrecision(t);
     return (true);
   }
 }

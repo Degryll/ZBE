@@ -29,7 +29,7 @@ class Timer {
     /** \brief Stops counting. Returns the lap time at this point.
      *
     */
-    virtual uint64_t stop() = 0;
+    virtual int64_t stop() = 0;
 
     /** \brief Stops counting and sets to 0 all the saved times.
      *
@@ -40,12 +40,12 @@ class Timer {
     /** \brief Returns the lap time: the time since the last lap time or since the beginning.
      *
     */
-    virtual uint64_t lapTime() = 0;
+    virtual int64_t lapTime() = 0;
 
     /** \brief Returns the amount of time the timer has been active from the start.
      *
     */
-    virtual uint64_t totalTime() = 0;
+    virtual int64_t totalTime() = 0;
 
     /** \brief Returns true if the timer is running, and false otherwise.
      *

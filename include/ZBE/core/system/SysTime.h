@@ -1,9 +1,9 @@
 /**
  * Copyright 2016 Batis Degryll Ludo
- * @file SystemTime.h
+ * @file SysTime.h
  * @since 2016-06-05
  * @date 2016-06-12
- * @author Ludo
+ * @author Ludo Degryll
  * @brief Tool used to ask about system time.
  */
 
@@ -13,7 +13,6 @@
 
 #include "ZBE/core/tools/Timer.h"
 #include "ZBE/core/system/SysError.h"
-#include "ZBE/core/system/SysTime.h"
 
 #include <cstdint>
 
@@ -35,14 +34,14 @@ namespace zbe {
       /** \brief Get the total time passed until the end of last frame.
        * \return Total time passed until last frame.
        */
-      inline uint64_t getTotalTime() {
+      inline int64_t getTotalTime() {
         return total;
       }
 
       /** \brief Get the last frame duration.
        * \return Last frame duration.
        */
-      inline uint64_t getFrameTime() {
+      inline int64_t getFrameTime() {
         return frame;
       }
 
@@ -68,8 +67,8 @@ namespace zbe {
       SysTime():timer(0),total(0),frame(0){}//!< Basic constructor to be used internally.
 
       Timer* timer;//!< Actual implementation of Timer to be used.
-      uint64_t total;//!< Total time passed until the end of last frame.
-      uint64_t frame;//!< Last frame duration
+      int64_t total;//!< Total time passed until the end of last frame.
+      int64_t frame;//!< Last frame duration
   };
 
 }

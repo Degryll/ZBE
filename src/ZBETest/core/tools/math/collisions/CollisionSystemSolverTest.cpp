@@ -40,7 +40,7 @@ TEST(CollisionSystemSolver, MovingCircleStaticAABB) {
 
   bool result;
   zbe::Point2D p;
-  uint64_t t = 1 << zbe::PRECISION_DIGITS;
+  int64_t t = 1 << zbe::PRECISION_DIGITS;
 
   result = cs.select(a, b, t, p);
   EXPECT_EQ(1,result) << "First Moving Circle vs AABB collision.";
@@ -61,7 +61,7 @@ TEST(CollisionSystemSolver, StaticSolidAABBMovingCircle) {
 
   bool result;
   zbe::Point2D p;
-  uint64_t t = 1 << zbe::PRECISION_DIGITS;
+  int64_t t = 1 << zbe::PRECISION_DIGITS;
 
   result = cs.select(b, a, t, p);
   EXPECT_EQ(1,result) << "First Moving Circle vs AABB collision.";

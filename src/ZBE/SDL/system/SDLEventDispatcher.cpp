@@ -53,7 +53,7 @@ inline bool SDLEventDispatcher::tryMouseEvent(SDL_Event &event){
 }
 
 inline void SDLEventDispatcher::setState(uint32_t key, float value, uint64_t time){
-  InputStatus is(key,value,MILITOZBETU(time));
+  InputStatus is(key,value,roundPrecision(MILITOZBETU(time)));
   inputBuffer.insert(is);
 }
 
