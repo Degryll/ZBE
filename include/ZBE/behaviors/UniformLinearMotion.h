@@ -31,9 +31,12 @@ class UniformLinearMotion : public Behavior< Mobile<s> > {
      */
     void apply(Mobile<s>* entity, int64_t time) {
       Point<s>& p = entity->getPosition();
+      //printf("--- Punto antes de mover: %ld x %ld\n", p[0], p[1]);fflush(stdout);
+      //printf("Tiempo: %ld \n", time);fflush(stdout);
       for(unsigned i = 0; i < s; i++) {
       	p[i] += (entity->getVelocity()[i] * time) >> PRECISION_DIGITS;
       }
+      //printf("Punto despues de mover de mover: %ld x %ld\n", p[0], p[1]);fflush(stdout);
     }
 };
 

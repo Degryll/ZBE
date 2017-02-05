@@ -32,7 +32,7 @@ inline bool intersectionNormalRayCircle(Ray2D ray, Circle circle, int64_t &time,
 inline bool intersectionNormalRaySphere(Ray3D ray, Sphere sphere, int64_t &time, Point3D& point) {return (intersectionNormalRayNSphere<3>(ray,sphere,time,point));}  //!< 3D allias of intersectionNormalRayNSphere.
 
 template <unsigned dim>
-bool intersectionRayAABB(Ray<dim> ray, AABB<dim> box, int64_t &time, Point<dim>& point);
+unsigned intersectionRayAABB(Ray<dim> ray, AABB<dim> box, int64_t &time, Point<dim>& point);
 inline bool intersectionRayAABB2D(Ray2D ray, AABB2D box, int64_t &time, Point2D& point) {return (intersectionRayAABB<2>(ray,box,time,point));}  //!< 2D allias of intersectionRayAABB.
 inline bool intersectionRayAABB3D(Ray3D ray, AABB3D box, int64_t &time, Point3D& point) {return (intersectionRayAABB<3>(ray,box,time,point));}  //!< 3D allias of intersectionRayAABB.
 
@@ -147,11 +147,11 @@ bool intersectionNormalRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, int64_t &t
  * \sa intersectionRayAABB and intersectionSegmentAABB.
  */
 template <unsigned dim>
-bool RayAABB(Ray<dim> ray, AABB<dim> box, int64_t tmin, int64_t tmax, int64_t &time, Point<dim>& point) {
+unsigned RayAABB(Ray<dim> ray, AABB<dim> box, int64_t tmin, int64_t tmax, int64_t &time, Point<dim>& point) {
   //double tmind = tmin * TIMETOVELOCITY;
   //double tmaxd = tmax * TIMETOVELOCITY;
   int64_t taux  = time;
-
+  unsigned collidedFaces = 0;
   bool isZero = true;  // the direction is (0,...,0)
   for(unsigned i = 0; i < dim; i++) {
     int64_t d    = ray.d[i];
@@ -160,18 +160,28 @@ bool RayAABB(Ray<dim> ray, AABB<dim> box, int64_t tmin, int64_t tmax, int64_t &t
     int64_t o    = ray.o[i];
     int64_t bmin = box.minimum[i];
     int64_t bmax = box.maximum[i];
-    int64_t n1 = (bmin - o) << PRECISION_DIGITS;
-    int64_t n2 = (bmax - o) << PRECISION_DIGITS;
+    int64_t n1 = (bmin - o);
+    int64_t n2 = (bmax - o);
 
     if((o < bmin && d < n1) || (o > bmax && d > n2)) {return (false);}
 
     //double ood = 1.0 / d;
-    int64_t t1 = (n1 / d);
-    int64_t t2 = (n2 / d);
+    int64_t t1 = ((n1 << PRECISION_DIGITS) / d);
+    int64_t t2 = ((n2 << PRECISION_DIGITS) / d);
+    int dimState = 0;
+    if(t1 > 0) {
+      if (t2 < t1) {
+        dimState = 1;
+      } else {
+        dimState = 2;
+      }
+    }
+    collidedFaces = collidedFaces || (dimState << 2*i);
 
     if(t1 > t2) {std::swap(t1,t2);}
     if(t1 > tmin) {tmin = t1;}
     if(t2 < tmax) {tmax = t2;}
+
 
     if(tmin > tmax) {return (false);}
   }  // for each dimension
@@ -179,11 +189,12 @@ bool RayAABB(Ray<dim> ray, AABB<dim> box, int64_t tmin, int64_t tmax, int64_t &t
   if (isZero) return(false);
   if(tmin > taux) {return (false);}
 
+  time = roundPrecision(tmax);
+
   for(unsigned i = 0; i < dim; i++) {
-    point[i] = ray.o[i] + ((ray.d[i] * tmax) >> PRECISION_DIGITS);
+    point[i] = ray.o[i] + ((ray.d[i] * time) >> PRECISION_DIGITS);
   }
-  time = tmax;
-  return (true);
+  return (collidedFaces);
 }
 
 /** \brief Computes the collision of a N-dimensional Ray and AABB.
@@ -200,7 +211,7 @@ bool RayAABB(Ray<dim> ray, AABB<dim> box, int64_t tmin, int64_t tmax, int64_t &t
  * \sa intersectionSegmentAABB.
  */
 template <unsigned dim>
-bool intersectionRayAABB(Ray<dim> ray, AABB<dim> box, int64_t &time, Point<dim>& point) {
+unsigned intersectionRayAABB(Ray<dim> ray, AABB<dim> box, int64_t &time, Point<dim>& point) {
   int64_t tmin = 0;
   int64_t tmax = std::numeric_limits<int64_t>::max();
 
@@ -296,20 +307,23 @@ bool intersectionMovingNSphereInsideAABB(NSphere<dim> nsphere, Vector<dim> direc
 
   Ray<dim> ray(nsphere.c, direction);
 
-  if(!intersectionRayAABB<dim>(ray, e, t, point) || t > time) {
-  	return (false);
-  } else {
+  unsigned collidedFaces = intersectionRayAABB<dim>(ray, e, t, point);
+  if(collidedFaces && (t <= time)) {
     for(unsigned i = 0; i < dim; i++) {
-    	roundPrecision(&(point[i]));
-      if (abs(point[i] - e.minimum[i]) < 32768) {
-        point[i] -= r;
-      } else if (abs(point[i] - e.maximum[i]) < 32768) {
-        point[i] += r;
+      unsigned faces =  collidedFaces & 0x3;  // only the last 2 bits 0x3 = 0...011
+      point[i] = roundPrecision(point[i]);
+      if(faces == 1) {
+      	point[i] -= r;
+      } else if(faces == 2) {
+      	point[i] += r;
       }
+      collidedFaces = collidedFaces << 2;
     }
-    time = roundPrecision(t);
+    time = t;
     return (true);
   }
+
+  return (false);
 }
 
 }  // namespace zbe

@@ -133,10 +133,9 @@ int gamemain(int, char** ) {
   ieg.addHandler(zbe::ZBEK_d, &ihright);*/
 
   std::forward_list<game::GameBall*> balls;
-  for(int i = 0; i<1000 ; i++){
-      //game::GameBall* ball = new game::GameBall(WIDTH/2 << zbe::PRECISION_DIGITS ,HEIGHT/2,16 << zbe::PRECISION_DIGITS,(rand()%2000+500),(rand()%2000+500) << zbe::PRECISION_DIGITS, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
-      game::GameBall* ball = new game::GameBall((WIDTH/2 + rand()%400-200) << zbe::PRECISION_DIGITS ,(HEIGHT/2 + rand()%400-200) << zbe::PRECISION_DIGITS, 16 << zbe::PRECISION_DIGITS, 1000 << zbe::PRECISION_DIGITS,1000 << zbe::PRECISION_DIGITS, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
-
+  for(int i = 0; i<1 ; i++){
+      //game::GameBall* ball = new game::GameBall((WIDTH/2 + rand()%400-200) << zbe::PRECISION_DIGITS ,(HEIGHT/2 + rand()%400-200) << zbe::PRECISION_DIGITS, 16 << zbe::PRECISION_DIGITS, 1000 << zbe::PRECISION_DIGITS,1000 << zbe::PRECISION_DIGITS, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
+      game::GameBall* ball = new game::GameBall((WIDTH-17) << zbe::PRECISION_DIGITS ,(HEIGHT-17) << zbe::PRECISION_DIGITS, 16 << zbe::PRECISION_DIGITS, 100 << zbe::PRECISION_DIGITS, 100 << zbe::PRECISION_DIGITS, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
       ctl.push_front(ball);
       ball->setSimpleSpriteAdaptor(spriteAdaptor);
       ball->setMovableCollisionatorAdaptor(movableCatorAdaptor);
@@ -191,13 +190,7 @@ int gamemain(int, char** ) {
     if((endT - 32768)>initT){
       initT = endT - 32768;
     }
-    //frameTime = sysTime.getFrameTime();// frame duration
 
-    //printf("frameTime = 0x%" PRIx64 " ", frameTime);fflush(stdout);
-    //printf("initT = 0x%" PRIx64 " ", initT);fflush(stdout);
-    //printf("endT = 0x%" PRIx64 "\n", endT);fflush(stdout);
-
-    //printf("init: %llu, end: %llu\n", initT, endT);
     while (initT < endT) {
       /* Generating input events:
        * It will take the events that sdlEventDist has stored
@@ -217,7 +210,7 @@ int gamemain(int, char** ) {
         store.clearStore();
         initT = endT;
       }
-    }  // while frameTime
+    }
 
     for(auto b : balls){
         drawer.apply(b->getSimpleSprite().get());
