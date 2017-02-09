@@ -197,6 +197,26 @@ unsigned RayAABB(Ray<dim> ray, AABB<dim> box, int64_t tmin, int64_t tmax, int64_
   return (collidedFaces);
 }
 
+template <unsigned dim>
+bool rayInsideAABB(Ray<dim> ray, AABB<dim> box, int64_t tmax, int64_t &time, Point<dim>& point) {
+  int64_t taux = std::numeric_limits<int64_t>::max();
+  for(unsigned i = 0; i < dim; i++) {
+    if (ray.d[i] == 0) continue;
+  	int64_t t1 = ((box.minimum[i] - ray.o[i]) << PRECISION_DIGITS) / ray.d[i];
+    int64_t t2 = ((box.maximum[i] - ray.o[i]) << PRECISION_DIGITS) / ray.d[i];
+
+    int64_t t = roundPrecision(std::max(t1, t2));
+    taux = std::min(taux, t);
+  }
+
+  time = taux;
+  for(unsigned i = 0; i < dim; i++) {
+    point[i] = ray.o[i] + ((ray.d[i] * time) >> PRECISION_DIGITS);
+  }
+
+  return (taux < tmax);
+}
+
 /** \brief Computes the collision of a N-dimensional Ray and AABB.
  *
  *  This function considerate the ray an infinite ray.

@@ -38,6 +38,7 @@
 #include "game/events/handlers/GameBallBouncer.h"
 
 int gamemain(int, char** ) {
+
   printf("--- GAME main ---\n\n");
 
   enum {
@@ -133,9 +134,9 @@ int gamemain(int, char** ) {
   ieg.addHandler(zbe::ZBEK_d, &ihright);*/
 
   std::forward_list<game::GameBall*> balls;
-  for(int i = 0; i<1 ; i++){
-      //game::GameBall* ball = new game::GameBall((WIDTH/2 + rand()%400-200) << zbe::PRECISION_DIGITS ,(HEIGHT/2 + rand()%400-200) << zbe::PRECISION_DIGITS, 16 << zbe::PRECISION_DIGITS, 1000 << zbe::PRECISION_DIGITS,1000 << zbe::PRECISION_DIGITS, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
-      game::GameBall* ball = new game::GameBall((WIDTH-17) << zbe::PRECISION_DIGITS ,(HEIGHT-17) << zbe::PRECISION_DIGITS, 16 << zbe::PRECISION_DIGITS, 100 << zbe::PRECISION_DIGITS, 100 << zbe::PRECISION_DIGITS, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
+  for(int i = 0; i<10 ; i++){
+      game::GameBall* ball = new game::GameBall((WIDTH/2 + rand()%400-200) << zbe::PRECISION_DIGITS ,(HEIGHT/2 + rand()%400-200) << zbe::PRECISION_DIGITS, 16 << zbe::PRECISION_DIGITS, 1000 << zbe::PRECISION_DIGITS,1000 << zbe::PRECISION_DIGITS, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
+      //game::GameBall* ball = new game::GameBall((WIDTH-17) << zbe::PRECISION_DIGITS ,(HEIGHT-17) << zbe::PRECISION_DIGITS, 16 << zbe::PRECISION_DIGITS, 100 << zbe::PRECISION_DIGITS, 100 << zbe::PRECISION_DIGITS, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
       ctl.push_front(ball);
       ball->setSimpleSpriteAdaptor(spriteAdaptor);
       ball->setMovableCollisionatorAdaptor(movableCatorAdaptor);
