@@ -1,6 +1,9 @@
 #include "gtest/gtest.h"
 
+#include <stdio.h>
+#include <stdlib.h>
 #include <cstdint>
+#include <time.h>
 
 #include "ZBE/core/tools/math/math.h"
 
@@ -84,11 +87,11 @@ TEST(Intersections, DISABLED_NormalRaySphere) {
   EXPECT_EQ(0,result) << "Third Ray vs Nsphere collision.";
 }
 
-inline void testRayInsideAABBWith(zbe::Ray<2> ray, zbe::AABB<2> aabb, zbe::Point<2> point, int64_t time, bool expected =  true){
+inline void testRayInsideAABBWith(zbe::Ray<2> ray, zbe::AABB<2> aabb, int64_t tMax, int64_t time, zbe::Point<2> point, bool expected =  true){
   zbe::Point<2> p;
-  int64_t t = 10 << zbe::PRECISION_DIGITS;
-
-  bool result = rayInsideAABB(ray, aabb, t, t, p);
+  int64_t t = tMax;
+  printf("Vel: %ld x %ld\n",ray.d[0], ray.d[1]);
+  bool result = rayInsideAABB(ray, aabb, tMax, t, p);
 
   EXPECT_EQ(expected, result) << "First Ray vs AABB collision.";
   if (expected) {
@@ -98,15 +101,139 @@ inline void testRayInsideAABBWith(zbe::Ray<2> ray, zbe::AABB<2> aabb, zbe::Point
   }
 }
 
-TEST(Intersections, RayInsideAABB) {
+TEST(Intersections, RayInsideAABB_Base) {
   zbe::Ray<2> ray{{  20 << zbe::PRECISION_DIGITS, 30 << zbe::PRECISION_DIGITS},
                   {  50 << zbe::PRECISION_DIGITS,100 << zbe::PRECISION_DIGITS}};
   zbe::AABB<2> aabb{{0 << zbe::PRECISION_DIGITS, 0 << zbe::PRECISION_DIGITS},
                     {1000 << zbe::PRECISION_DIGITS,1000 << zbe::PRECISION_DIGITS}};
-
+	int64_t tMax = 10 << zbe::PRECISION_DIGITS;
   int64_t t = zbe::roundPrecision((97 << zbe::PRECISION_DIGITS) / 10);
   zbe::Point<2> p({ray.o[0]+(ray.d[0]*t >> zbe::PRECISION_DIGITS), ray.o[1]+(ray.d[1]*t >> zbe::PRECISION_DIGITS)});
-  testRayInsideAABBWith(ray, aabb, p, t);
+  testRayInsideAABBWith(ray, aabb, tMax, t, p);
+}
+
+TEST(Intersections, RayInsideAABB_Horizontal) {
+  srand (time(NULL));
+  int64_t hvel = ((((rand() % 9000) + 1000) * ((rand() % 2)*2-1)) << zbe::PRECISION_DIGITS)/10;
+  int64_t xpos = (((rand() % 9980) + 10) << zbe::PRECISION_DIGITS)/10;
+  int64_t ypos = (((rand() % 9980) + 10) << zbe::PRECISION_DIGITS)/10;
+  zbe::Ray<2> ray{{  xpos , ypos},
+  								{  hvel, 0}};
+  zbe::AABB<2> aabb{{0 << zbe::PRECISION_DIGITS, 0 << zbe::PRECISION_DIGITS},
+                    {1000 << zbe::PRECISION_DIGITS,1000 << zbe::PRECISION_DIGITS}};
+
+  int64_t diff;
+  int64_t t;
+  if(hvel > 0) {
+		diff = aabb.maximum[0] - ray.o[0];
+    t = (diff << zbe::PRECISION_DIGITS) / ray.d[0];
+  } else {
+		diff = aabb.minimum[0] - ray.o[0];
+    t = (diff << zbe::PRECISION_DIGITS) / ray.d[0];
+  }
+  t = zbe::roundPrecision(t);
+  zbe::Point<2> p({ray.o[0]+(ray.d[0]*t >> zbe::PRECISION_DIGITS), ray.o[1]});
+
+  int64_t tMax = 10 << zbe::PRECISION_DIGITS;
+  testRayInsideAABBWith(ray, aabb, tMax, t, p);
+}
+
+TEST(Intersections, RayInsideAABB_Vertical) {
+  srand (time(NULL));
+  int64_t vvel = ((((rand() % 9000) + 1000) * ((rand() % 2)*2-1)) << zbe::PRECISION_DIGITS)/10;;
+  int64_t xpos = (((rand() % 9980) + 10) << zbe::PRECISION_DIGITS)/10;
+  int64_t ypos = (((rand() % 9980) + 10) << zbe::PRECISION_DIGITS)/10;
+  zbe::Ray<2> ray{{  xpos , ypos},
+  								{  0, vvel }};
+  zbe::AABB<2> aabb{{0 << zbe::PRECISION_DIGITS, 0 << zbe::PRECISION_DIGITS},
+                    {1000 << zbe::PRECISION_DIGITS,1000 << zbe::PRECISION_DIGITS}};
+
+  int64_t diff;
+  int64_t t;
+  if(vvel > 0) {
+		diff = aabb.maximum[1] - ray.o[1];
+    t = (diff << zbe::PRECISION_DIGITS) / ray.d[1];
+  } else {
+		diff = aabb.minimum[1] - ray.o[1];
+    t = (diff << zbe::PRECISION_DIGITS) / ray.d[1];
+  }
+  t = zbe::roundPrecision(t);
+  zbe::Point<2> p({ray.o[0], ray.o[1]+(ray.d[1]*t >> zbe::PRECISION_DIGITS)});
+
+  int64_t tMax = 10 << zbe::PRECISION_DIGITS;
+  testRayInsideAABBWith(ray, aabb, tMax, t, p);
+}
+
+TEST(Intersections, RayInsideAABB_TopLeftCorner) {
+  srand (time(NULL));
+  int64_t xpos = (((rand() % 9980) + 10)<< zbe::PRECISION_DIGITS)/10;
+  int64_t ypos = (((rand() % 9980) + 10)<< zbe::PRECISION_DIGITS)/10;
+  zbe::Ray<2> ray{{  xpos, ypos},
+  								{ -xpos, -ypos}};
+  zbe::AABB<2> aabb{{0 << zbe::PRECISION_DIGITS, 0 << zbe::PRECISION_DIGITS},
+                    {1000 << zbe::PRECISION_DIGITS,1000 << zbe::PRECISION_DIGITS}};
+
+  int64_t t = 1 << zbe::PRECISION_DIGITS;
+
+  t = zbe::roundPrecision(t);
+  zbe::Point<2> p({0, 0});
+
+  int64_t tMax = 10 << zbe::PRECISION_DIGITS;
+  testRayInsideAABBWith(ray, aabb, tMax, t, p);
+}
+
+TEST(Intersections, RayInsideAABB_TopRightCorner) {
+  srand (time(NULL));
+  int64_t xpos = (((rand() % 9980) + 10) << zbe::PRECISION_DIGITS)/10;
+  int64_t ypos = (((rand() % 9980) + 10) << zbe::PRECISION_DIGITS)/10;
+  zbe::Ray<2> ray{{ xpos, ypos},
+  								{ -xpos , (1000 << zbe::PRECISION_DIGITS) - ypos }};
+  zbe::AABB<2> aabb{{0 << zbe::PRECISION_DIGITS, 0 << zbe::PRECISION_DIGITS},
+                    {1000 << zbe::PRECISION_DIGITS,1000 << zbe::PRECISION_DIGITS}};
+
+  int64_t t = 1 << zbe::PRECISION_DIGITS;
+
+  t = zbe::roundPrecision(t);
+  zbe::Point<2> p({0, aabb.maximum[1]});
+
+  int64_t tMax = 10 << zbe::PRECISION_DIGITS;
+  testRayInsideAABBWith(ray, aabb, tMax, t, p);
+}
+
+TEST(Intersections, RayInsideAABB_BottomLeftCorner) {
+  srand (time(NULL));
+  int64_t xpos = (((rand() % 9980) + 10) << zbe::PRECISION_DIGITS)/10;
+  int64_t ypos = (((rand() % 9980) + 10) << zbe::PRECISION_DIGITS)/10;
+  zbe::Ray<2> ray{{ xpos ,  ypos },
+  								{ (1000<< zbe::PRECISION_DIGITS) -xpos, -ypos}};
+  zbe::AABB<2> aabb{{0 << zbe::PRECISION_DIGITS, 0 << zbe::PRECISION_DIGITS},
+                    {1000 << zbe::PRECISION_DIGITS,1000 << zbe::PRECISION_DIGITS}};
+
+  int64_t t = 1 << zbe::PRECISION_DIGITS;
+
+  t = zbe::roundPrecision(t);
+  zbe::Point<2> p({aabb.maximum[0], 0});
+
+  int64_t tMax = 10 << zbe::PRECISION_DIGITS;
+  testRayInsideAABBWith(ray, aabb, tMax, t, p);
+}
+
+TEST(Intersections, RayInsideAABB_BottomRightCorner) {
+  srand (time(NULL));
+  int64_t xpos = (((rand() % 9980) + 10)<< zbe::PRECISION_DIGITS)/10;
+  int64_t ypos = (((rand() % 9980) + 10)<< zbe::PRECISION_DIGITS)/10 ;
+  zbe::Ray<2> ray{{ xpos ,  ypos },
+  								{ (1000 << zbe::PRECISION_DIGITS) - xpos, (1000<< zbe::PRECISION_DIGITS) - ypos}};
+  zbe::AABB<2> aabb{{0 << zbe::PRECISION_DIGITS, 0 << zbe::PRECISION_DIGITS},
+                    {1000 << zbe::PRECISION_DIGITS,1000 << zbe::PRECISION_DIGITS}};
+
+  int64_t t = 1 << zbe::PRECISION_DIGITS;
+
+  t = zbe::roundPrecision(t);
+  zbe::Point<2> p({aabb.maximum[0], aabb.maximum[1]});
+
+  int64_t tMax = 10 << zbe::PRECISION_DIGITS;
+  testRayInsideAABBWith(ray, aabb, tMax, t, p);
 }
 
 TEST(Intersections, DISABLED_RayAABB) {
