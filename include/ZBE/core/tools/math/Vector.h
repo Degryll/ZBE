@@ -203,7 +203,7 @@ class _VECTOR {
      */
     _VECTOR<s>&  normalize() {
       int64_t m = getModule();
-
+      if(m == 0) {return (*this);}
       for(unsigned i = 0; i < s; i++) {
         data[i] = (data[i] << PRECISION_DIGITS) / m;
       }

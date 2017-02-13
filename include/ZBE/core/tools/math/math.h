@@ -10,6 +10,7 @@
 #ifndef ZBE_CORE_TOOLS_MATH_MATH_H_
 #define ZBE_CORE_TOOLS_MATH_MATH_H_
 
+#include <limits>
 #include <utility>
 #include <initializer_list>
 
@@ -40,7 +41,15 @@ static const double TODEGREE = 180.0/PI;
  */
 static const int PRECISION_DIGITS = 16;
 
-/** \brief This constant is used to transform the time stored in a uint64_t (nanoseconds)to the time in a velocity (in
+/** \brief This constant represent the minimal amount of bits that will be used as precision.
+ */
+static const int64_t TIME_QUANTUM = 255;
+
+/** \brief This constant represent the minimal amount of bits that will be used as precision.
+ */
+static const int64_t ROUND_MASK = std::numeric_limits<int64_t>::max() - 255;
+
+  /** \brief This constant is used to transform the time stored in a uint64_t (nanoseconds)to the time in a velocity (in
  *  seconds, because the velocity is in m/s).
  */
 inline uint64_t MILITOZBETU(uint32_t time) {
@@ -48,18 +57,11 @@ inline uint64_t MILITOZBETU(uint32_t time) {
 }
 
 inline int64_t roundPrecision(int64_t n) {
-  if ((n & 255) >= 128) {
-    n += 256;
-  }
-  n = (n >> 8) << 8;
-  return (n);
+  return (n & ROUND_MASK);
 }
 
 inline void roundPrecision(int64_t *n) {
-  if (((*n) & 255) >= 128) {
-    (*n) += 256;
-  }
-  (*n) = ((*n) >> 8) << 8;
+  (*n) = ((*n) & ROUND_MASK);
 }
 
 }  // namespace zbe

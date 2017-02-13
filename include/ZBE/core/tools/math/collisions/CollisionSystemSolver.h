@@ -221,7 +221,7 @@ bool CollisionSelector<R>::visit(StaticSolidAABB2D<R>& param1, ConstantMovingCir
 
 template <typename R>
 bool CollisionSelector<R>::visit(StaticLimiterAABB2D<R>& param1, ConstantMovingCircle<R>& param2, int64_t& time, Point2D& point) {
-  return(IntersectionMovingCircleInsideAABB2D(param2.getCircle(), param2.getDirection(), param1.getAABB2D(), time, point));
+  return(IntersectionMovingCircleInsideAABB2D(param2.getCircle(), param2.getDirection(), param1.getAABB2D(), time, time, point));
 }
 
 template <typename R>
@@ -231,7 +231,7 @@ bool CollisionSelector<R>::visit(ConstantMovingCircle<R>& param1, StaticSolidAAB
 
 template <typename R>
 bool CollisionSelector<R>::visit(ConstantMovingCircle<R>& param1, StaticLimiterAABB2D<R>& param2, int64_t& time, Point2D& point) {
-  return(IntersectionMovingCircleInsideAABB2D(param1.getCircle(), param1.getDirection(), param2.getAABB2D(), time, point));
+  return(IntersectionMovingCircleInsideAABB2D(param1.getCircle(), param1.getDirection(), param2.getAABB2D(), time, time, point));
 }
 
 template <typename R>
