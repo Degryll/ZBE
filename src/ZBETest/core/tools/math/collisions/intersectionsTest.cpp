@@ -16,7 +16,7 @@
 
 namespace IntersectionsTest {
 
-  static const int ITERATIONS = 1000;
+  static const int ITERATIONS = 100;
 
 TEST(Intersections, DISABLED_RaySphere) {
   EXPECT_EQ(0,zbe::SysError::getNErrors()) << "Initially no errors.";
@@ -93,9 +93,6 @@ inline void testRayInsideAABBWith(zbe::Ray<2> ray, zbe::AABB<2> aabb, int64_t tM
   zbe::Point<2> p;
   int64_t t = tMax;
   bool result = zbe::intersectionRayInsideAABB(ray, aabb, tMax, t, p);
-  if(!result){
-    printf("\n");
-  }
   EXPECT_EQ(expected, result) << "First Ray vs AABB collision.";
   if (expected) {
     EXPECT_EQ(time, t) << "Time of collision.";
@@ -277,21 +274,72 @@ TEST(Intersections, DISABLED_RayAABB) {
   EXPECT_EQ(0,result) << "Second Ray vs AABB collision.";
 }
 
+void testMovingCircleInsideABB(zbe::Circle ball, zbe::Vector2D velocity, zbe::AABB<2> block, int64_t tMax, int64_t time, zbe::Point<2> point, bool expected =  true){
+  int64_t t = tMax;
+  zbe::Point<2> p;
+  bool result = IntersectionMovingCircleInsideAABB2D(ball, velocity, block, tMax, t, p);
+  EXPECT_EQ(expected,result) << "First Moving Circle vs AABB collision.";
+  if (expected) {
+    EXPECT_EQ(time, t) << "Time of collision.";
+    EXPECT_EQ(point[0] ,p[0]) << "Point of collision (x).";
+    EXPECT_EQ(point[1] ,p[1]) << "Point of collision (y).";
+  }
+}
+
+TEST(Intersections, MovingCircleInsideAABB_BaseMod) {
+  zbe::Circle ball{{19850854,45940736},727449};
+  zbe::Vector2D velocity{52553318, 0};
+  zbe::AABB2D block{{0,0},{1000 << zbe::PRECISION_DIGITS ,1000 << zbe::PRECISION_DIGITS}};
+  int64_t tMax = 1 << zbe::PRECISION_DIGITS;
+  zbe::Point<2> p({65330737, 45940736});
+  testMovingCircleInsideABB(ball, velocity, block, tMax, 55808, p);
+}
+
 TEST(Intersections, MovingCircleInsideAABB_Base) {
   zbe::Circle ball{{42 << zbe::PRECISION_DIGITS,513 << zbe::PRECISION_DIGITS},7 << zbe::PRECISION_DIGITS};
   zbe::Vector2D velocity{-65513520, -65513520};
   zbe::AABB2D block{{0,0},{1000 << zbe::PRECISION_DIGITS ,1000 << zbe::PRECISION_DIGITS}};
-  bool result;
-  zbe::Point2D p;
-  int64_t t = 1 << zbe::PRECISION_DIGITS;
-
-  result = IntersectionMovingCircleInsideAABB2D(ball, velocity, block, t, t, p);
-  EXPECT_EQ(1,result) << "First Moving Circle vs AABB collision.";
-  EXPECT_EQ(2048, t) << "Time of collision.";
-  EXPECT_EQ(705214 ,p[0]) << "Point of collision (x).";
-  EXPECT_EQ(31572670 ,p[1]) << "Point of collision (y).";
+  int64_t tMax = 1 << zbe::PRECISION_DIGITS;
+  zbe::Point<2> p({246462, 31572670});
+  testMovingCircleInsideABB(ball, velocity, block, tMax, 2048, p);
 }
 
+TEST(Intersections, MovingCircleInsideAABB_Horizontal) {
+  srand (time(NULL));
+  for(int i = 0; i < ITERATIONS ; i++) {
+    //int64_t radius = (((rand() % 100) + 100) << zbe::PRECISION_DIGITS)/10;
+    int64_t radius = ((rand() % 100) + 100);
+    int64_t hvel = ((((rand() % 9000) + 1000) * ((rand() % 2)*2-1)) << zbe::PRECISION_DIGITS)/10;
+    int64_t xpos = ((rand() % (9980 -(radius*2)) + 10 + radius) << zbe::PRECISION_DIGITS)/10;
+    int64_t ypos = ((rand() % (9980 -(radius*2)) + 10 + radius) << zbe::PRECISION_DIGITS)/10;
+    radius = (radius << zbe::PRECISION_DIGITS)/10;
+    //printf("r: %ld hv: %ld x: %ld y: %ld\n",radius, hvel, xpos, ypos);
+
+    zbe::Circle ball({xpos, ypos}, radius);
+  	zbe::Vector2D velocity({hvel, 0});
+  	zbe::AABB2D block({0,0},{1000 << zbe::PRECISION_DIGITS ,1000 << zbe::PRECISION_DIGITS});
+  	int64_t tMax = 10 << zbe::PRECISION_DIGITS;
+
+    int64_t diff;
+    int64_t t;
+    int64_t offset;
+    if(hvel > 0) {
+      diff = block.maximum[0] - (ball.c[0] + ball.r);
+      t = (diff << zbe::PRECISION_DIGITS) / velocity[0];
+      offset = ball.r;
+    } else {
+      diff = block.minimum[0] - (ball.c[0] - ball.r);
+      t = (diff << zbe::PRECISION_DIGITS) / velocity[0];
+      offset = -ball.r;
+      //printf("diff: %ld t: %ld velocity:%ld offest: %ld \n", diff, t, velocity[0], offset);
+    }
+    t = zbe::roundPrecision(t);
+    zbe::Point<2> p({ball.c[0]+((velocity[0]*t) >> zbe::PRECISION_DIGITS) + offset, ball.c[1]});
+   	//printf("c: %ld vt %ld vtp %ld\n",ball.c[0], velocity[0]*t, (velocity[0]*t) >> zbe::PRECISION_DIGITS);
+   	//printf("P: %ld x %ld T %ld\n",p[0], p[1], t);
+    testMovingCircleInsideABB(ball, velocity, block, tMax, t, p);
+  }
+}
 
 TEST(Intersections, DISABLED_MovingCircleOutsideAABB) {
   zbe::Circle ball{{20,30},10};

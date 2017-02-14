@@ -43,7 +43,7 @@ static const int PRECISION_DIGITS = 16;
 
 /** \brief This constant represent the minimal amount of bits that will be used as precision.
  */
-static const int64_t TIME_QUANTUM = 255;
+static const int64_t TIME_QUANTUM = 256;
 
 /** \brief This constant represent the minimal amount of bits that will be used as precision.
  */
