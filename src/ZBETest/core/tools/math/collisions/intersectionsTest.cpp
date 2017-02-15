@@ -16,7 +16,7 @@
 
 namespace IntersectionsTest {
 
-  static const int ITERATIONS = 100;
+  static const int ITERATIONS = 10000000;
 
 TEST(Intersections, DISABLED_RaySphere) {
   EXPECT_EQ(0,zbe::SysError::getNErrors()) << "Initially no errors.";
@@ -113,7 +113,7 @@ TEST(Intersections, RayInsideAABB_Base) {
 }
 
 TEST(Intersections, RayInsideAABB_Horizontal) {
-  srand (time(NULL));
+  //srand (time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
     int64_t hvel = ((((rand() % 9000) + 1000) * ((rand() % 2)*2-1)) << zbe::PRECISION_DIGITS)/10;
     int64_t xpos = (((rand() % 9980) + 10) << zbe::PRECISION_DIGITS)/10;
@@ -141,7 +141,7 @@ TEST(Intersections, RayInsideAABB_Horizontal) {
 }
 
 TEST(Intersections, RayInsideAABB_Vertical) {
-  srand (time(NULL));
+  //srand (time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
     int64_t vvel = ((((rand() % 9000) + 1000) * ((rand() % 2)*2-1)) << zbe::PRECISION_DIGITS)/10;;
     int64_t xpos = (((rand() % 9980) + 10) << zbe::PRECISION_DIGITS)/10;
@@ -169,7 +169,7 @@ TEST(Intersections, RayInsideAABB_Vertical) {
 }
 
 TEST(Intersections, RayInsideAABB_TopLeftCorner) {
-  srand (time(NULL));
+  //srand (time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
     int64_t xpos = (((rand() % 9980) + 10)<< zbe::PRECISION_DIGITS)/10;
     int64_t ypos = (((rand() % 9980) + 10)<< zbe::PRECISION_DIGITS)/10;
@@ -189,7 +189,7 @@ TEST(Intersections, RayInsideAABB_TopLeftCorner) {
 }
 
 TEST(Intersections, RayInsideAABB_TopRightCorner) {
-  srand (time(NULL));
+  //srand (time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
     int64_t xpos = (((rand() % 9980) + 10) << zbe::PRECISION_DIGITS)/10;
     int64_t ypos = (((rand() % 9980) + 10) << zbe::PRECISION_DIGITS)/10;
@@ -209,7 +209,7 @@ TEST(Intersections, RayInsideAABB_TopRightCorner) {
 }
 
 TEST(Intersections, RayInsideAABB_BottomLeftCorner) {
-  srand (time(NULL));
+  //srand (time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
     int64_t xpos = (((rand() % 9980) + 10) << zbe::PRECISION_DIGITS)/10;
     int64_t ypos = (((rand() % 9980) + 10) << zbe::PRECISION_DIGITS)/10;
@@ -229,7 +229,7 @@ TEST(Intersections, RayInsideAABB_BottomLeftCorner) {
 }
 
 TEST(Intersections, RayInsideAABB_BottomRightCorner) {
-  srand (time(NULL));
+  //srand (time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
     int64_t xpos = (((rand() % 9980) + 10)<< zbe::PRECISION_DIGITS)/10;
     int64_t ypos = (((rand() % 9980) + 10)<< zbe::PRECISION_DIGITS)/10 ;
@@ -286,7 +286,7 @@ void testMovingCircleInsideABB(zbe::Circle ball, zbe::Vector2D velocity, zbe::AA
   }
 }
 
-TEST(Intersections, MovingCircleInsideAABB_BaseMod) {
+TEST(Intersections, DISABLED_MovingCircleInsideAABB_BaseMod) {
   zbe::Circle ball{{19850854,45940736},727449};
   zbe::Vector2D velocity{52553318, 0};
   zbe::AABB2D block{{0,0},{1000 << zbe::PRECISION_DIGITS ,1000 << zbe::PRECISION_DIGITS}};
@@ -295,7 +295,7 @@ TEST(Intersections, MovingCircleInsideAABB_BaseMod) {
   testMovingCircleInsideABB(ball, velocity, block, tMax, 55808, p);
 }
 
-TEST(Intersections, MovingCircleInsideAABB_Base) {
+TEST(Intersections, DISABLED_MovingCircleInsideAABB_Base) {
   zbe::Circle ball{{42 << zbe::PRECISION_DIGITS,513 << zbe::PRECISION_DIGITS},7 << zbe::PRECISION_DIGITS};
   zbe::Vector2D velocity{-65513520, -65513520};
   zbe::AABB2D block{{0,0},{1000 << zbe::PRECISION_DIGITS ,1000 << zbe::PRECISION_DIGITS}};
@@ -307,12 +307,18 @@ TEST(Intersections, MovingCircleInsideAABB_Base) {
 TEST(Intersections, MovingCircleInsideAABB_Horizontal) {
   srand (time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
-    //int64_t radius = (((rand() % 100) + 100) << zbe::PRECISION_DIGITS)/10;
+    //int randS = 27776;//i + 27000;
+    //srand(randS);//27776
+    //printf("%d\n",randS);
     int64_t radius = ((rand() % 100) + 100);
     int64_t hvel = ((((rand() % 9000) + 1000) * ((rand() % 2)*2-1)) << zbe::PRECISION_DIGITS)/10;
+    int64_t minDist = abs((hvel * zbe::TIME_QUANTUM) >> zbe::PRECISION_DIGITS) + ((radius+1) << zbe::PRECISION_DIGITS)/10;
     int64_t xpos = ((rand() % (9980 -(radius*2)) + 10 + radius) << zbe::PRECISION_DIGITS)/10;
+    xpos = std::min( (1000 << zbe::PRECISION_DIGITS) - minDist , xpos);
+    xpos = std::max(minDist, xpos);
     int64_t ypos = ((rand() % (9980 -(radius*2)) + 10 + radius) << zbe::PRECISION_DIGITS)/10;
     radius = (radius << zbe::PRECISION_DIGITS)/10;
+    //printf("minDist: %ld\n", minDist );
     //printf("r: %ld hv: %ld x: %ld y: %ld\n",radius, hvel, xpos, ypos);
 
     zbe::Circle ball({xpos, ypos}, radius);
