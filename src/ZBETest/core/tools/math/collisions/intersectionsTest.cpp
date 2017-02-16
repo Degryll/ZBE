@@ -16,7 +16,7 @@
 
 namespace IntersectionsTest {
 
-  static const int ITERATIONS = 1000000;
+  static const int ITERATIONS = 10;
 
 TEST(Intersections, DISABLED_RaySphere) {
   EXPECT_EQ(0,zbe::SysError::getNErrors()) << "Initially no errors.";
@@ -101,7 +101,7 @@ inline void testRayInsideAABBWith(zbe::Ray<2> ray, zbe::AABB<2> aabb, int64_t tM
   }
 }
 
-TEST(Intersections, RayInsideAABB_Base) {
+TEST(Intersections, DISABLED_RayInsideAABB_Base) {
   zbe::Ray<2> ray{{  20 << zbe::PRECISION_DIGITS, 30 << zbe::PRECISION_DIGITS},
                   {  50 << zbe::PRECISION_DIGITS,100 << zbe::PRECISION_DIGITS}};
   zbe::AABB<2> aabb{{0 << zbe::PRECISION_DIGITS, 0 << zbe::PRECISION_DIGITS},
@@ -112,7 +112,7 @@ TEST(Intersections, RayInsideAABB_Base) {
   testRayInsideAABBWith(ray, aabb, tMax, t, p);
 }
 
-TEST(Intersections, RayInsideAABB_Horizontal) {
+TEST(Intersections, DISABLED_RayInsideAABB_Horizontal) {
   srand (time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
     int64_t hvel = ((((rand() % 9000) + 1000) * ((rand() % 2)*2-1)) << zbe::PRECISION_DIGITS)/10;
@@ -140,7 +140,7 @@ TEST(Intersections, RayInsideAABB_Horizontal) {
   }
 }
 
-TEST(Intersections, RayInsideAABB_Vertical) {
+TEST(Intersections, DISABLED_RayInsideAABB_Vertical) {
   srand (time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
     int64_t vvel = ((((rand() % 9000) + 1000) * ((rand() % 2)*2-1)) << zbe::PRECISION_DIGITS)/10;;
@@ -168,7 +168,7 @@ TEST(Intersections, RayInsideAABB_Vertical) {
   }
 }
 
-TEST(Intersections, RayInsideAABB_TopLeftCorner) {
+TEST(Intersections, DISABLED_RayInsideAABB_TopLeftCorner) {
   srand (time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
     int64_t xpos = (((rand() % 9980) + 10)<< zbe::PRECISION_DIGITS)/10;
@@ -188,7 +188,7 @@ TEST(Intersections, RayInsideAABB_TopLeftCorner) {
   }
 }
 
-TEST(Intersections, RayInsideAABB_TopRightCorner) {
+TEST(Intersections, DISABLED_RayInsideAABB_TopRightCorner) {
   srand (time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
     int64_t xpos = (((rand() % 9980) + 10) << zbe::PRECISION_DIGITS)/10;
@@ -208,7 +208,7 @@ TEST(Intersections, RayInsideAABB_TopRightCorner) {
   }
 }
 
-TEST(Intersections, RayInsideAABB_BottomLeftCorner) {
+TEST(Intersections, DISABLED_RayInsideAABB_BottomLeftCorner) {
   srand (time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
     int64_t xpos = (((rand() % 9980) + 10) << zbe::PRECISION_DIGITS)/10;
@@ -228,7 +228,7 @@ TEST(Intersections, RayInsideAABB_BottomLeftCorner) {
   }
 }
 
-TEST(Intersections, RayInsideAABB_BottomRightCorner) {
+TEST(Intersections, DISABLED_RayInsideAABB_BottomRightCorner) {
   srand (time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
     int64_t xpos = (((rand() % 9980) + 10)<< zbe::PRECISION_DIGITS)/10;
@@ -286,7 +286,7 @@ void testMovingCircleInsideABB(zbe::Circle ball, zbe::Vector2D velocity, zbe::AA
   }
 }
 
-TEST(Intersections, MovingCircleInsideAABB_BaseMod) {
+TEST(Intersections, DISABLED_MovingCircleInsideAABB_BaseMod) {
   zbe::Circle ball{{19850854,45940736},727449};
   zbe::Vector2D velocity{52553318, 0};
   zbe::AABB2D block{{0,0},{1000 << zbe::PRECISION_DIGITS ,1000 << zbe::PRECISION_DIGITS}};
@@ -304,7 +304,7 @@ TEST(Intersections, MovingCircleInsideAABB_Base) {
   testMovingCircleInsideABB(ball, velocity, block, tMax, 2048, p);
 }
 
-TEST(Intersections, MovingCircleInsideAABB_Horizontal) {
+TEST(Intersections, DISABLED_MovingCircleInsideAABB_Horizontal) {
   srand (time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
     int64_t radius = ((rand() % 100) + 100);
@@ -339,7 +339,7 @@ TEST(Intersections, MovingCircleInsideAABB_Horizontal) {
   }
 }
 
-TEST(Intersections, MovingCircleInsideAABB_Vertical) {
+TEST(Intersections, DISABLED_MovingCircleInsideAABB_Vertical) {
   srand (time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
     int64_t radius = ((rand() % 100) + 100);
@@ -374,7 +374,7 @@ TEST(Intersections, MovingCircleInsideAABB_Vertical) {
   }
 }
 
-TEST(Intersections, MovingCircleInsideAABB_TopLeftCorner) {
+TEST(Intersections, DISABLED_MovingCircleInsideAABB_TopLeftCorner) {
   srand (time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
     int64_t radius = ((rand() % 100) + 100);
@@ -399,7 +399,7 @@ TEST(Intersections, MovingCircleInsideAABB_TopLeftCorner) {
   }
 }
 
-TEST(Intersections, MovingCircleInsideAABB_TopRightCorner) {
+TEST(Intersections, DISABLED_MovingCircleInsideAABB_TopRightCorner) {
   srand (time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
     int64_t radius = ((rand() % 100) + 100);
@@ -423,7 +423,7 @@ TEST(Intersections, MovingCircleInsideAABB_TopRightCorner) {
     testMovingCircleInsideABB(ball, velocity, block, tMax, t, p);
   }
 }
-TEST(Intersections, MovingCircleInsideAABB_BottomLeftCorner) {
+TEST(Intersections, DISABLED_MovingCircleInsideAABB_BottomLeftCorner) {
   srand (time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
     int64_t radius = ((rand() % 100) + 100);
@@ -450,7 +450,7 @@ TEST(Intersections, MovingCircleInsideAABB_BottomLeftCorner) {
   }
 }
 
-TEST(Intersections, MovingCircleInsideAABB_BottomRightCorner) {
+TEST(Intersections, DISABLED_MovingCircleInsideAABB_BottomRightCorner) {
   srand (time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
     int64_t radius = ((rand() % 100) + 100);

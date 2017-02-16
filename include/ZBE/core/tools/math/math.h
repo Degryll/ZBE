@@ -41,6 +41,13 @@ static const double TODEGREE = 180.0/PI;
  */
 static const int PRECISION_DIGITS = 16;
 
+/** \brief This constant represent the amount of bits that will be used as precision digits
+ * before (and after) make a division.
+ * I.E. :
+ * instead of : v1 / v2 do ((v1 << DIV_PRECISION_DIGITS)/v2) >> DIV_PRECISION_DIGITS)
+*/
+static const int DIV_PRECISION_DIGITS = PRECISION_DIGITS+1;
+
 /** \brief This constant represent the minimal amount of bits that will be used as precision.
  */
 static const int64_t TIME_QUANTUM = 256;
@@ -62,6 +69,25 @@ inline int64_t roundPrecision(int64_t n) {
 
 inline void roundPrecision(int64_t *n) {
   (*n) = ((*n) & ROUND_MASK);
+}
+
+inline int64_t div(int64_t lhs, int64_t rhs){
+  int64_t result = (lhs << DIV_PRECISION_DIGITS) / rhs;
+  int round = result & 1;
+  round = (result < 0) ? -round : round;
+  return ((result+round) >> 1);
+}
+
+//Redondeo distinto en negativos y positivos
+//Positivos: forazar rendondeo
+//Negatvios: evitar redonde
+inline int64_t mult(int64_t lhs, int64_t rhs){
+  int64_t result = lhs * rhs;
+  int round = (result >> (PRECISION_DIGITS-1)) & 1;
+  round = (result < 0) ? -round : round;
+  result = (result >> PRECISION_DIGITS);
+  result += round;
+  return (result);
 }
 
 }  // namespace zbe

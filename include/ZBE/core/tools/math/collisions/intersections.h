@@ -207,19 +207,21 @@ bool intersectionRayInsideAABB(Ray<dim> ray, AABB<dim> box, int64_t tmax, int64_
   int64_t taux = std::numeric_limits<int64_t>::max();
   for(unsigned i = 0; i < dim; i++) {
     if (ray.d[i] == 0) continue;
-  	int64_t t1 = ((box.minimum[i] - ray.o[i]) << PRECISION_DIGITS) / ray.d[i];
-    int64_t t2 = ((box.maximum[i] - ray.o[i]) << PRECISION_DIGITS) / ray.d[i];
+  	int64_t t1 = div((box.minimum[i] - ray.o[i]), ray.d[i]);
+    int64_t t2 = div((box.maximum[i] - ray.o[i]), ray.d[i]);
 
     int64_t t = roundPrecision(std::max(t1, t2));
     taux = std::min(taux, t);
   }
 
   time = taux;
-  for(unsigned i = 0; i < dim; i++) {
-    point[i] = ray.o[i] + ((ray.d[i] * time) >> PRECISION_DIGITS);
+  if ((taux <= tmax) && (taux != 0)) {
+    for(unsigned i = 0; i < dim; i++) {
+      point[i] = ray.o[i] + mult(ray.d[i], time);
+    }
+    return true;
   }
-
-  return ((taux <= tmax) && (taux != 0));
+  return false;
 }
 
 /** \brief Computes the collision of a N-dimensional Ray and AABB.
@@ -332,7 +334,7 @@ bool intersectionMovingNSphereInsideAABB(NSphere<dim> nsphere, Vector<dim> direc
   Ray<dim> ray(nsphere.c, direction);
   if(intersectionRayInsideAABB<dim>(ray, e, tmax, t, point) && (t <= tmax)) {
     for(unsigned i = 0; i < dim; i++) {
-      int64_t minDistance = (direction[i] * TIME_QUANTUM) >> PRECISION_DIGITS;
+      int64_t minDistance = mult(direction[i], TIME_QUANTUM);
       if((e.minimum[i] - point[i]) >= minDistance) {
       	point[i] -= r;
       } else if ((e.maximum[i] - point[i]) <= minDistance) {
