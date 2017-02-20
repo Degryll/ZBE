@@ -41,6 +41,15 @@ static const double TODEGREE = 180.0/PI;
  */
 static const int PRECISION_DIGITS = 16;
 
+/** \brief This constant represent the minimal value that will keep its value after be rounded.
+ */
+static const int64_t PRECISION_VALUE = (1 << zbe::PRECISION_DIGITS);
+
+/** \brief This constant represent half the minimal value that will keep its value after be rounded.
+ * Used to test if a value must be rounded up or down.
+ */
+static const int64_t HALF_PRECISION_VALUE = PRECISION_VALUE/2;
+
 /** \brief This constant represent the amount of bits that will be used as precision digits
  * before (and after) make a division.
  * I.E. :
@@ -56,7 +65,7 @@ static const int64_t TIME_QUANTUM = 256;
  */
 static const int64_t ROUND_MASK = std::numeric_limits<int64_t>::max() - 255;
 
-  /** \brief This constant is used to transform the time stored in a uint64_t (nanoseconds)to the time in a velocity (in
+/** \brief This constant is used to transform the time stored in a uint64_t (nanoseconds)to the time in a velocity (in
  *  seconds, because the velocity is in m/s).
  */
 inline uint64_t MILITOZBETU(uint32_t time) {
@@ -73,21 +82,17 @@ inline void roundPrecision(int64_t *n) {
 
 inline int64_t div(int64_t lhs, int64_t rhs){
   int64_t result = (lhs << DIV_PRECISION_DIGITS) / rhs;
-  int round = result & 1;
-  round = (result < 0) ? -round : round;
-  return ((result+round) >> 1);
+  int64_t absResult =  llabs(result);
+  int round = absResult & 1;
+  return ((absResult+round) >> 1) * ((result>=0)*2-1);
 }
 
-//Redondeo distinto en negativos y positivos
-//Positivos: forazar rendondeo
-//Negatvios: evitar redonde
 inline int64_t mult(int64_t lhs, int64_t rhs){
   int64_t result = lhs * rhs;
-  int round = (result >> (PRECISION_DIGITS-1)) & 1;
-  round = (result < 0) ? -round : round;
-  result = (result >> PRECISION_DIGITS);
-  result += round;
-  return (result);
+  int64_t absResult = llabs(result);
+  int round = (absResult >> (PRECISION_DIGITS-1)) & 1;
+  absResult = (absResult >> PRECISION_DIGITS);
+  return (absResult + round) * ((result>=0)*2-1);
 }
 
 }  // namespace zbe

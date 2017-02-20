@@ -195,6 +195,7 @@
 		<Unit filename="../../../src/ZBETest/core/tools/math/VectorTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/tools/math/collisions/CollisionSystemSolverTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/tools/math/collisions/intersectionsTest.cpp" />
+		<Unit filename="../../../src/ZBETest/core/tools/math/mathTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/tools/math/objectsTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/main.cpp" />
 		<Extensions>

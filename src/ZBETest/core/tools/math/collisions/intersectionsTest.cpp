@@ -309,7 +309,7 @@ TEST(Intersections, DISABLED_MovingCircleInsideAABB_Horizontal) {
   for(int i = 0; i < ITERATIONS ; i++) {
     int64_t radius = ((rand() % 100) + 100);
     int64_t hvel = ((((rand() % 9000) + 1000) * ((rand() % 2)*2-1)) << zbe::PRECISION_DIGITS)/10;
-    int64_t minDist = abs((hvel * zbe::TIME_QUANTUM) >> zbe::PRECISION_DIGITS) + ((radius+1) << zbe::PRECISION_DIGITS)/10;
+    int64_t minDist = llabs((hvel * zbe::TIME_QUANTUM) >> zbe::PRECISION_DIGITS) + ((radius+1) << zbe::PRECISION_DIGITS)/10;
     int64_t xpos = ((rand() % (9980 -(radius*2)) + 10 + radius) << zbe::PRECISION_DIGITS)/10;
     xpos = std::min( (1000 << zbe::PRECISION_DIGITS) - minDist , xpos);
     xpos = std::max(minDist, xpos);
