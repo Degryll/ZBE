@@ -134,8 +134,8 @@ int gamemain(int, char** ) {
   ieg.addHandler(zbe::ZBEK_d, &ihright);*/
 
   std::forward_list<game::GameBall*> balls;
-  for(int i = 0; i<1000 ; i++){
-      game::GameBall* ball = new game::GameBall((WIDTH/2 + rand()%100-50) << zbe::PRECISION_DIGITS ,(HEIGHT/2 + rand()%100-50) << zbe::PRECISION_DIGITS, (rand()%16 + 16) << zbe::PRECISION_DIGITS, (rand()%2000 - 1000) << zbe::PRECISION_DIGITS, (rand()%2000 - 1000) << zbe::PRECISION_DIGITS, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
+  for(int i = 0; i<5000 ; i++){
+      game::GameBall* ball = new game::GameBall((WIDTH/2 + rand()%100-50) << zbe::PRECISION_DIGITS ,(HEIGHT/2 + rand()%100-50) << zbe::PRECISION_DIGITS, 16 << zbe::PRECISION_DIGITS, (rand()%2000 - 1000) << zbe::PRECISION_DIGITS, (rand()%2000 - 1000) << zbe::PRECISION_DIGITS, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
       //game::GameBall* ball = new game::GameBall(31407009,1063841, 16 << zbe::PRECISION_DIGITS, 1000 << zbe::PRECISION_DIGITS,1000 << zbe::PRECISION_DIGITS, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
       ctl.push_front(ball);
       ball->setSimpleSpriteAdaptor(spriteAdaptor);
