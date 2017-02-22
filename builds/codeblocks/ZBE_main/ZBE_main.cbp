@@ -137,6 +137,7 @@
 		<Unit filename="../../../src/ZBE_main/include/game/GameReactor.h" />
 		<Unit filename="../../../src/ZBE_main/include/game/entities/GameBall.h" />
 		<Unit filename="../../../src/ZBE_main/include/game/entities/GameBoard.h" />
+		<Unit filename="../../../src/ZBE_main/include/game/events/handlers/ExitInputHandler.h" />
 		<Unit filename="../../../src/ZBE_main/include/game/events/handlers/GameBallBouncer.h" />
 		<Unit filename="../../../src/ZBE_main/include/game/events/handlers/StepInputHandler.h" />
 		<Unit filename="../../../src/ZBE_main/include/game/reactobjects/GameReactObjects.h" />

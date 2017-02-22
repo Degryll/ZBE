@@ -35,6 +35,7 @@
 #include "game/entities/GameBall.h"
 #include "game/entities/GameBoard.h"
 #include "game/events/handlers/StepInputHandler.h"
+#include "game/events/handlers/ExitInputHandler.h"
 #include "game/events/handlers/GameBallBouncer.h"
 
 int gamemain(int, char** ) {
@@ -132,6 +133,8 @@ int gamemain(int, char** ) {
   game::StepInputHandler ihleft(&ball, -5, 0);
   ieg.addHandler(zbe::ZBEK_a, &ihleft);
   ieg.addHandler(zbe::ZBEK_d, &ihright);*/
+  game::ExitInputHandler terminator;
+  ieg.addHandler(zbe::ZBEK_ESCAPE, &terminator);
 
   std::forward_list<game::GameBall*> balls;
   for(int i = 0; i<5000 ; i++){

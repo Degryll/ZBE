@@ -27,7 +27,7 @@ class SDL_Starter {
     /** \brief Singleton implementation to start SDL subsystems.
      *  \return The only instance of the SDL_Starter.
      */
-    static SDL_Starter& getInstance(Uint32 flags) {
+    static SDL_Starter& getInstance(Uint32 flags = 0) {
       static SDL_Starter instance;
       SDL_InitSubSystem(flags);
       return (instance);
