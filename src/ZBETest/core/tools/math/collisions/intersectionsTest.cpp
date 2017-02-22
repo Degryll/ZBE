@@ -107,7 +107,7 @@ TEST(Intersections, RayInsideAABB_Base) {
   zbe::AABB<2> aabb{{0 << zbe::PRECISION_DIGITS, 0 << zbe::PRECISION_DIGITS},
                     {1000 << zbe::PRECISION_DIGITS,1000 << zbe::PRECISION_DIGITS}};
 	int64_t tMax = 10 << zbe::PRECISION_DIGITS;
-  int64_t t = zbe::roundPrecision((97 << zbe::PRECISION_DIGITS) / 10);
+  int64_t t = zbe::quantizeTime((97 << zbe::PRECISION_DIGITS) / 10);
   zbe::Point<2> p({ray.o[0]+(ray.d[0]*t >> zbe::PRECISION_DIGITS), ray.o[1]+(ray.d[1]*t >> zbe::PRECISION_DIGITS)});
   testRayInsideAABBWith(ray, aabb, tMax, t, p);
 }
@@ -131,7 +131,7 @@ TEST(Intersections, RayInsideAABB_Horizontal) {
       diff = aabb.minimum[0] - ray.o[0];
     }
     t = (diff << zbe::PRECISION_DIGITS)/ ray.d[0];
-    t = zbe::roundPrecision(t);
+    t = zbe::quantizeTime(t);
     zbe::Point<2> p({ray.o[0] + zbe::mult(ray.d[0], t), ray.o[1]});
 
     int64_t tMax = 10 << zbe::PRECISION_DIGITS;
@@ -158,7 +158,7 @@ TEST(Intersections, RayInsideAABB_Vertical) {
       diff = aabb.minimum[1] - ray.o[1];
     }
     t = (diff << zbe::PRECISION_DIGITS)/ ray.d[1];
-    t = zbe::roundPrecision(t);
+    t = zbe::quantizeTime(t);
     zbe::Point<2> p({ray.o[0], ray.o[1]+zbe::mult(ray.d[1] ,t)});
 
     int64_t tMax = 10 << zbe::PRECISION_DIGITS;
@@ -178,7 +178,7 @@ TEST(Intersections, RayInsideAABB_TopLeftCorner) {
 
     int64_t t = 1 << zbe::PRECISION_DIGITS;
 
-    t = zbe::roundPrecision(t);
+    t = zbe::quantizeTime(t);
     zbe::Point<2> p({0, 0});
 
     int64_t tMax = 10 << zbe::PRECISION_DIGITS;
@@ -198,7 +198,7 @@ TEST(Intersections, RayInsideAABB_TopRightCorner) {
 
     int64_t t = 1 << zbe::PRECISION_DIGITS;
 
-    t = zbe::roundPrecision(t);
+    t = zbe::quantizeTime(t);
     zbe::Point<2> p({0, aabb.maximum[1]});
 
     int64_t tMax = 10 << zbe::PRECISION_DIGITS;
@@ -218,7 +218,7 @@ TEST(Intersections, RayInsideAABB_BottomLeftCorner) {
 
     int64_t t = 1 << zbe::PRECISION_DIGITS;
 
-    t = zbe::roundPrecision(t);
+    t = zbe::quantizeTime(t);
     zbe::Point<2> p({aabb.maximum[0], 0});
 
     int64_t tMax = 10 << zbe::PRECISION_DIGITS;
@@ -238,7 +238,7 @@ TEST(Intersections, DISABLED_RayInsideAABB_BottomRightCorner) {
 
     int64_t t = 1 << zbe::PRECISION_DIGITS;
 
-    t = zbe::roundPrecision(t);
+    t = zbe::quantizeTime(t);
     zbe::Point<2> p({aabb.maximum[0], aabb.maximum[1]});
 
     int64_t tMax = 10 << zbe::PRECISION_DIGITS;
@@ -330,7 +330,7 @@ TEST(Intersections, MovingCircleInsideAABB_Horizontal) {
       offset = -ball.r;
     }
     t = (diff << zbe::PRECISION_DIGITS)/velocity[0];
-    t = zbe::roundPrecision(t);
+    t = zbe::quantizeTime(t);
     zbe::Point<2> p({ball.c[0]+zbe::mult(velocity[0], t) + offset, ball.c[1]});
     testMovingCircleInsideABB(ball, velocity, block, tMax, t, p);
   }
@@ -364,7 +364,7 @@ TEST(Intersections, MovingCircleInsideAABB_Vertical) {
       offset = -ball.r;
     }
     t = (diff << zbe::PRECISION_DIGITS)/velocity[1];
-    t = zbe::roundPrecision(t);
+    t = zbe::quantizeTime(t);
     zbe::Point<2> p({ball.c[0], ball.c[1]+zbe::mult(velocity[1], t) + offset});
     testMovingCircleInsideABB(ball, velocity, block, tMax, t, p);
   }
@@ -389,7 +389,7 @@ TEST(Intersections, MovingCircleInsideAABB_TopLeftCorner) {
   	int64_t tMax = 10 << zbe::PRECISION_DIGITS;
 
     int64_t t = 1 << zbe::PRECISION_DIGITS;
-    t = zbe::roundPrecision(t);
+    t = zbe::quantizeTime(t);
     zbe::Point<2> p({0, 0});
     testMovingCircleInsideABB(ball, velocity, block, tMax, t, p);
   }
@@ -414,7 +414,7 @@ TEST(Intersections, MovingCircleInsideAABB_TopRightCorner) {
   	int64_t tMax = 10 << zbe::PRECISION_DIGITS;
 
     int64_t t = 1 << zbe::PRECISION_DIGITS;
-    t = zbe::roundPrecision(t);
+    t = zbe::quantizeTime(t);
     zbe::Point<2> p({block.maximum[0], 0});
     testMovingCircleInsideABB(ball, velocity, block, tMax, t, p);
   }
@@ -440,7 +440,7 @@ TEST(Intersections, MovingCircleInsideAABB_BottomLeftCorner) {
   	int64_t tMax = 10 << zbe::PRECISION_DIGITS;
 
     int64_t t = 1 << zbe::PRECISION_DIGITS;
-    t = zbe::roundPrecision(t);
+    t = zbe::quantizeTime(t);
     zbe::Point<2> p({0, block.maximum[1]});
     testMovingCircleInsideABB(ball, velocity, block, tMax, t, p);
   }
@@ -465,7 +465,7 @@ TEST(Intersections, MovingCircleInsideAABB_BottomRightCorner) {
   	int64_t tMax = 10 << zbe::PRECISION_DIGITS;
 
     int64_t t = 1 << zbe::PRECISION_DIGITS;
-    t = zbe::roundPrecision(t);
+    t = zbe::quantizeTime(t);
     zbe::Point<2> p({block.maximum[0], block.maximum[1]});
     testMovingCircleInsideABB(ball, velocity, block, tMax, t, p);
   }

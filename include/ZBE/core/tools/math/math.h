@@ -63,7 +63,7 @@ static const int64_t TIME_QUANTUM = 256;
 
 /** \brief This constant represent the minimal amount of bits that will be used as precision.
  */
-static const int64_t ROUND_MASK = std::numeric_limits<int64_t>::max() - 255;
+static const int64_t ROUND_MASK = -TIME_QUANTUM;
 
 /** \brief This constant is used to transform the time stored in a uint64_t (nanoseconds)to the time in a velocity (in
  *  seconds, because the velocity is in m/s).
@@ -72,12 +72,11 @@ inline uint64_t MILITOZBETU(uint32_t time) {
   return ((time << 16) / 1000);
 }
 
-inline int64_t roundPrecision(int64_t n) {
+/** \brief Used to round time values to its closer quantum.
+ * WARNING: does not work with negative times
+ */
+inline int64_t quantizeTime(int64_t n) {
   return (n & ROUND_MASK);
-}
-
-inline void roundPrecision(int64_t *n) {
-  (*n) = ((*n) & ROUND_MASK);
 }
 
 inline int64_t div(int64_t lhs, int64_t rhs){

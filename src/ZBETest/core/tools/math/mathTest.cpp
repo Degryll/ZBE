@@ -186,4 +186,14 @@ TEST(math, mult_Negative_Negative_Round) {
   EXPECT_EQ(result, zbe::mult(value1, value2));
 }
 
+TEST(math, roundPrecision_sign) {
+  EXPECT_EQ( 4352, zbe::quantizeTime( 4352)) <<  "17.00 * 256 round to  17 * 256.";
+  EXPECT_EQ( 4352, zbe::quantizeTime( 4416)) <<  "17.25 * 256 round to  17 * 256.";
+  EXPECT_EQ( 4352, zbe::quantizeTime( 4544)) <<  "17.75 * 256 round to  17 * 256.";
+  /* Negative times not supported */
+  /*EXPECT_EQ(-4352, zbe::quantizeTime(-4352)) << "-17.00 * 256 round to -17 * 256.";
+  EXPECT_EQ(-4352, zbe::quantizeTime(-4416)) << "-17.25 * 256 round to -17 * 256.";
+  EXPECT_EQ(-4352, zbe::quantizeTime(-4544)) << "-17.75 * 256 round to -17 * 256.";*/
+}
+
 } // namespace math

@@ -18,7 +18,7 @@ SDLTimer::~SDLTimer() {sdl.quitSubSystem(SDL_INIT_TIMER);}
 void SDLTimer::start() {
   if (running == false) {
     running = true;
-    lastTime = roundPrecision(MILITOZBETU(SDL_GetTicks()));
+    lastTime = quantizeTime(MILITOZBETU(SDL_GetTicks()));
   }
 }
 
@@ -26,7 +26,7 @@ int64_t SDLTimer::stop() {
   int lastLap = 0;
   if (running == true) {
     running = false;
-    lastLap = roundPrecision(MILITOZBETU(SDL_GetTicks()) - lastTime);
+    lastLap = quantizeTime(MILITOZBETU(SDL_GetTicks()) - lastTime);
     lastLapTime=lastLap;
     totalElapsedTime += lastLap;
   }
@@ -41,7 +41,7 @@ void SDLTimer::reset() {
 
 int64_t SDLTimer::lapTime() {
   int64_t lastLap = -1;
-  int64_t now = roundPrecision(MILITOZBETU(SDL_GetTicks()));
+  int64_t now = quantizeTime(MILITOZBETU(SDL_GetTicks()));
   if (running == true) {
     lastLap = lastLapTime + now - lastTime;
     lastTime = now;
@@ -57,7 +57,7 @@ int64_t SDLTimer::totalTime() {
   totalElapsed = totalElapsedTime;
 
   if (running == true) {
-    totalElapsed += roundPrecision(MILITOZBETU(SDL_GetTicks()) - lastTime);
+    totalElapsed += quantizeTime(MILITOZBETU(SDL_GetTicks()) - lastTime);
   }
   return totalElapsed;
 }

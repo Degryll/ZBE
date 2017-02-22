@@ -194,7 +194,7 @@ unsigned RayAABB(Ray<dim> ray, AABB<dim> box, int64_t tmin, int64_t tmax, int64_
   if (isZero) return(false);
   if(tmin > taux) {return (false);}
 
-  time = roundPrecision(tmax);
+  time = quantizeTime(tmax);
 
   for(unsigned i = 0; i < dim; i++) {
     point[i] = ray.o[i] + ((ray.d[i] * time) >> PRECISION_DIGITS);
@@ -210,7 +210,7 @@ bool intersectionRayInsideAABB(Ray<dim> ray, AABB<dim> box, int64_t tmax, int64_
   	int64_t t1 = ((box.minimum[i] - ray.o[i]) << PRECISION_DIGITS) / ray.d[i];
     int64_t t2 = ((box.maximum[i] - ray.o[i]) << PRECISION_DIGITS) / ray.d[i];
 
-    int64_t t = roundPrecision(std::max(t1, t2));
+    int64_t t = quantizeTime(std::max(t1, t2));
     taux = std::min(taux, t);
   }
 
