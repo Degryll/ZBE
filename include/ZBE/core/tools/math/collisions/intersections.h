@@ -37,14 +37,19 @@ inline bool intersectionRayInsideAABB2D(Ray2D ray, AABB2D box, int64_t tmax, int
 inline bool intersectionRayInsideAABB3D(Ray3D ray, AABB3D box, int64_t tmax, int64_t &time, Point3D& point) {return (intersectionRayInsideAABB<3>(ray, box, tmax, time, point));} //!< 3D allias of intersectionRayInsideAABB.
 
 template <unsigned dim>
-unsigned intersectionRayAABB(Ray<dim> ray, AABB<dim> box, int64_t &time, Point<dim>& point);
-inline bool intersectionRayAABB2D(Ray2D ray, AABB2D box, int64_t &time, Point2D& point) {return (intersectionRayAABB<2>(ray,box,time,point));}  //!< 2D allias of intersectionRayAABB.
-inline bool intersectionRayAABB3D(Ray3D ray, AABB3D box, int64_t &time, Point3D& point) {return (intersectionRayAABB<3>(ray,box,time,point));}  //!< 3D allias of intersectionRayAABB.
+unsigned intersectionRayOutsideAABB(Ray<dim> ray, AABB<dim> box, int64_t &time, Point<dim>& point);
+inline bool intersectionRayOutsideAABB2D(Ray2D ray, AABB2D box, int64_t &time, Point2D& point) {return (intersectionRayOutsideAABB<2>(ray,box,time,point));}  //!< 2D allias of intersectionRayOutsideAABB.
+inline bool intersectionRayOutsideAABB3D(Ray3D ray, AABB3D box, int64_t &time, Point3D& point) {return (intersectionRayOutsideAABB<3>(ray,box,time,point));}  //!< 3D allias of intersectionRayOutsideAABB.
 
 template <unsigned dim>
-bool intersectionSegmentAABB(Ray<dim> ray, AABB<dim> box, int64_t &time, Point<dim>& point);
-inline bool intersectionSegmentAABB2D(Ray2D ray, AABB2D box, int64_t &time, Point2D& point) {return (intersectionSegmentAABB<2>(ray,box,time,point));}  //!< 2D allias of intersectionSegmentAABB.
-inline bool intersectionSegmentAABB3D(Ray3D ray, AABB3D box, int64_t &time, Point3D& point) {return (intersectionSegmentAABB<3>(ray,box,time,point));}  //!< 3D allias of intersectionSegmentAABB.
+bool intersectionSegmentOutsideAABB(Ray<dim> ray, AABB<dim> box, int64_t &time, Point<dim>& point);
+inline bool intersectionSegmentOutsideAABB2D(Ray2D ray, AABB2D box, int64_t &time, Point2D& point) {return (intersectionSegmentOutsideAABB<2>(ray,box,time,point));}  //!< 2D allias of intersectionSegmentOutsideAABB.
+inline bool intersectionSegmentOutsideAABB3D(Ray3D ray, AABB3D box, int64_t &time, Point3D& point) {return (intersectionSegmentOutsideAABB<3>(ray,box,time,point));}  //!< 3D allias of intersectionSegmentOutsideAABB.
+
+template <unsigned dim>
+bool intersectionBeamOutsideAABB(Ray<dim> ray, AABB<dim> box, int64_t &time, Point<dim>& point);
+inline bool intersectionBeamOutsideAABB2D(Ray2D ray, AABB2D box, int64_t &time, Point2D& point) {return (intersectionBeamOutsideAABB<2>(ray,box,time,point));}  //!< 2D allias of intersectionBeamOutsideAABB.
+inline bool intersectionBeamOutsideAABB3D(Ray3D ray, AABB3D box, int64_t &time, Point3D& point) {return (intersectionBeamOutsideAABB<3>(ray,box,time,point));}  //!< 3D allias of intersectionBeamOutsideAABB.
 
 template <unsigned dim>
 bool intersectionMovingNSphereOutsideAABB(NSphere<dim> nsphere, Vector<dim> direction, AABB<dim> box, int64_t& time, Point<dim>& point);
@@ -138,68 +143,105 @@ bool intersectionNormalRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, int64_t &t
 
 /** \brief Computes the collision of a N-dimensional Ray and AABB.
  *
+ *  This function considerate the ray an infinite ray.
+ *
+ * \param ray A ray defined by its origin and a direction.
+ * \param box An AABB defined by its minimum and maximum corners.
+ * \param tmin If the collision happens before this time, is discarded.
+ * \param tmax If the collision happens after this time, is discarded.
+ * \param time Time of the collision, if any.
+ * \param point Stores the point of collision, if any.
+ * \return True if there is a collision between tmin and tmax, false otherwise.
+ * \sa intersectionBeamOutsideAABB and intersectionSegmentOutsideAABB.
+ */
+template <unsigned dim>
+inline bool intersectionRayOutsideAABB(Ray<dim> ray, AABB<dim> box, int64_t &time, Point<dim> &point) {
+  int64_t tmin = std::numeric_limits<int64_t>::min();
+  int64_t tmax = std::numeric_limits<int64_t>::max();
+  return (rayOutsideAABB(ray, box, tmin, tmax, time, point));
+}
+
+/** \brief Computes the collision of a N-dimensional Segment and AABB.
+ *
+ *  This function considerate the ray a finite segment.
+ *
+ * \param ray A ray defined by its origin and a direction.
+ * \param box An AABB defined by its minimum and maximum corners.
+ * \param tmin If the collision happens before this time, is discarded.
+ * \param tmax If the collision happens after this time, is discarded.
+ * \param time Time of the collision, if any.
+ * \param point Stores the point of collision, if any.
+ * \return True if there is a collision between tmin and tmax, false otherwise.
+ * \sa intersectionRayOutsideAABB and intersectionBeamOutsideAABB.
+ */
+template <unsigned dim>
+inline bool intersectionSegmentOutsideAABB(Ray<dim> ray, AABB<dim> box, int64_t &time, Point<dim> &point) {
+  int64_t tmin = 0;
+  int64_t tmax = PRECISION_VALUE;
+  return (rayOutsideAABB(ray, box, tmin, tmax, time, point));
+}
+
+/** \brief Computes the collision of a N-dimensional Ray and AABB.
+ *
+ *  This function considerate the ray an infinite ray with an origin.
+ *
+ * \param ray A ray defined by its origin and a direction.
+ * \param box An AABB defined by its minimum and maximum corners.
+ * \param tmin If the collision happens before this time, is discarded.
+ * \param tmax If the collision happens after this time, is discarded.
+ * \param time Time of the collision, if any.
+ * \param point Stores the point of collision, if any.
+ * \return True if there is a collision between tmin and tmax, false otherwise.
+ * \sa intersectionRayOutsideAABB and intersectionSegmentOutsideAABB.
+ */
+template <unsigned dim>
+inline bool intersectionBeamOutsideAABB(Ray<dim> ray, AABB<dim> box, int64_t &time, Point<dim> &point) {
+  int64_t tmin = 0;
+  int64_t tmax = std::numeric_limits<int64_t>::max();
+  return (rayOutsideAABB(ray, box, tmin, tmax, time, point));
+}
+
+
+/** \brief Computes the collision of a N-dimensional Ray and AABB.
+ *
  *  Don't use this function directly, use:
  *    intersectionRayAABB: to test an infinite ray with an AABB
  *    intersectionSegmentAABB: to test a finite segment with an ABB
+ *    intersectionBeamOutsideAABB: to test a beam from 0 to infinite.
  *
  * \param ray A ray defined by its origin and a direction.
- * \param nsphere An AABB defined by its minimum and maximum corners.
+ * \param box An AABB defined by its minimum and maximum corners.
  * \param tmin If the collision happens before this time, is discarded.
  * \param tmax If the collision happens after this time, is discarded.
- * \param time Initialy it has a limit time, if the collision happens before that time, its value is updated.
+ * \param time Time of the collision, if any.
  * \param point Stores the point of collision, if any.
- * \return True if there is a collision before the initial value of time, false otherwise.
- * \sa intersectionRayAABB and intersectionSegmentAABB.
+ * \return True if there is a collision between tmin and tmax, false otherwise.
+ * \sa intersectionRayOutsideAABB, intersectionSegmentOutsideAABB and intersectionBeamOutsideAABB.
  */
 template <unsigned dim>
-unsigned RayAABB(Ray<dim> ray, AABB<dim> box, int64_t tmin, int64_t tmax, int64_t &time, Point<dim>& point) {
-  //double tmind = tmin * TIMETOVELOCITY;
-  //double tmaxd = tmax * TIMETOVELOCITY;
-  int64_t taux  = time;
-  unsigned collidedFaces = 0;
-  bool isZero = true;  // the direction is (0,...,0)
-  for(unsigned i = 0; i < dim; i++) {
-    int64_t d    = ray.d[i];
-    if (d == 0) continue;
-    isZero = false;
-    int64_t o    = ray.o[i];
-    int64_t bmin = box.minimum[i];
-    int64_t bmax = box.maximum[i];
-    int64_t n1 = (bmin - o);
-    int64_t n2 = (bmax - o);
-
-    if((o < bmin && d < n1) || (o > bmax && d > n2)) {return (false);}
-
-    //double ood = 1.0 / d;
-    int64_t t1 = ((n1 << PRECISION_DIGITS) / d);
-    int64_t t2 = ((n2 << PRECISION_DIGITS) / d);
-    int dimState = 0;
-    if(t1 > 0) {
-      if (t2 < t1) {
-        dimState = 1;
-      } else {
-        dimState = 2;
-      }
+bool rayOutsideAABB(Ray<dim> ray, AABB<dim> box, int64_t tmin, int64_t tmax, int64_t &time, Point<dim> &point) {
+  for (unsigned i = 0; i < dim; i++) {
+    if (ray.d[i] == 0) {
+      // Ray is parallel to slab. No hit if origin not within slab
+      if (ray.o[i] < box.minimum[i] || ray.o[i] > box.maximum[i]) return (false);
+    } else {
+      // Compute intersection t value of ray with near and far plane of slab
+      int64_t t1 = ((box.minimum[i] - ray.o[i]) << PRECISION_DIGITS) /ray.d[i];
+      int64_t t2 = ((box.maximum[i] - ray.o[i]) << PRECISION_DIGITS) /ray.d[i];
+      // Make t1 be intersection with near plane, t2 with far plane
+      if (t1 > t2) std::swap(t1, t2);
+      // Compute the intersection of slab intersection intervals
+      if (t1 > tmin) tmin = t1;
+      if (t2 < tmax) tmax = t2;
+      // Exit with no collision as soon as slab intersection becomes empty
+      if (tmin > tmax) return (false);
     }
-    collidedFaces = collidedFaces || (dimState << 2*i);
-
-    if(t1 > t2) {std::swap(t1,t2);}
-    if(t1 > tmin) {tmin = t1;}
-    if(t2 < tmax) {tmax = t2;}
-
-
-    if(tmin > tmax) {return (false);}
-  }  // for each dimension
-
-  if (isZero) return(false);
-  if(tmin > taux) {return (false);}
-
-  time = quantizeTime(tmax);
-
-  for(unsigned i = 0; i < dim; i++) {
-    point[i] = ray.o[i] + ((ray.d[i] * time) >> PRECISION_DIGITS);
   }
-  return (collidedFaces);
+  time = tmin;
+  for(unsigned i = 0; i < dim; i++) {
+    point[i] = ray.o[i] + mult(ray.d[i], time);
+  }
+  return (true);
 }
 
 template <unsigned dim>
@@ -224,48 +266,6 @@ bool intersectionRayInsideAABB(Ray<dim> ray, AABB<dim> box, int64_t tmax, int64_
   return false;
 }
 
-/** \brief Computes the collision of a N-dimensional Ray and AABB.
- *
- *  This function considerate the ray an infinite ray.
- *
- * \param ray A ray defined by its origin and a direction.
- * \param nsphere An AABB defined by its minimum and maximum corners.
- * \param tmin If the collision happens before this time, is discarded.
- * \param tmax If the collision happens after this time, is discarded.
- * \param time Initialy it has a limit time, if the collision happens before that time, its value is updated.
- * \param point Stores the point of collision, if any.
- * \return True if there is a collision before the initial value of time, false otherwise.
- * \sa intersectionSegmentAABB.
- */
-template <unsigned dim>
-unsigned intersectionRayAABB(Ray<dim> ray, AABB<dim> box, int64_t &time, Point<dim>& point) {
-  int64_t tmin = 0;
-  int64_t tmax = std::numeric_limits<int64_t>::max();
-
-  return (RayAABB<dim>(ray, box, tmin, tmax, time, point));
-}
-
-/** \brief Computes the collision of a N-dimensional Ray and AABB.
- *
- *  This function considerate the ray a infinite segment.
- *
- * \param ray A ray defined by its origin and a direction.
- * \param nsphere An AABB defined by its minimum and maximum corners.
- * \param tmin If the collision happens before this time, is discarded.
- * \param tmax If the collision happens after this time, is discarded.
- * \param time Initialy it has a limit time, if the collision happens before that time, its value is updated.
- * \param point Stores the point of collision, if any.
- * \return True if there is a collision before the initial value of time, false otherwise.
- * \sa intersectionRayAABB.
- */
-template <unsigned dim>
-bool intersectionSegmentAABB(Ray<dim> ray, AABB<dim> box, int64_t &time, Point<dim>& point) {
-  int64_t tmin = 0;
-  int64_t tmax = 1 << PRECISION_DIGITS;
-
-  return (RayAABB<dim>(ray, box, tmin, tmax, time, point));
-}
-
 /** \brief Computes the collision of a moving circle with an AABB. Outside approaching.
  *
  * \param Circle The moving circle.
@@ -287,7 +287,7 @@ bool intersectionMovingNSphereOutsideAABB(NSphere<dim> nsphere, Vector<dim> dire
   int64_t t = time;
 
   Ray<dim> ray(nsphere.c, direction);
-  if (!intersectionRayAABB<dim>(ray, e, t, point) || t > time) {return (false);}
+  if (!intersectionBeamOutsideAABB<dim>(ray, e, t, point) || t > time) {return (false);}
   int64_t bmin[dim];
   int64_t bmax[dim];
   for(unsigned i = 0; i < dim; i++) {
