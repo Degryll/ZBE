@@ -174,7 +174,7 @@ TEST(Point, Operations) {
 
   zbe::Point3D p{30,40,50};
 
-  p *= int64_t(20);
+  p *= int64_t(2);
   EXPECT_EQ( 60,p.x) << "Operator *= \".x\".";
   EXPECT_EQ( 80,p.y) << "Operator *= \".y\".";
   EXPECT_EQ(100,p.z) << "Operator *= \".z\".";
@@ -195,7 +195,7 @@ TEST(Point, Operations) {
   EXPECT_EQ(180,q.y) << "Operator += \".y\".";
   EXPECT_EQ(120,q.z) << "Operator += \".z\".";
 
-  p = q * int64_t(-10);
+  p = q * int64_t(-1);
 
   EXPECT_EQ(-100,p.x) << "Operator * \".x\".";
   EXPECT_EQ(-180,p.y) << "Operator * \".y\".";

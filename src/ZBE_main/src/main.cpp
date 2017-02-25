@@ -14,10 +14,10 @@ int main(int argc, char* argv[]) {
   printf("4 - gamemain\n");
   printf("0 - salir\n");
   printf("--:");
-  scanf ("%d",&option);
-  while (option<0 || option>4) {
+  int readAmount = scanf ("%d",&option);
+  while (readAmount!=1 || option<0 || option>4) {
     printf("Introduzca una opcion... que valga: ");
-    scanf ("%d",&option);
+    readAmount = scanf ("%d",&option);
   }
 
   int out = 0;

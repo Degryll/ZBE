@@ -213,9 +213,9 @@ TEST(Vector, Operations) {
   EXPECT_EQ( 80,w.y) << "Operator -= \".y\".";
   EXPECT_EQ(100,w.z) << "Operator -= \".z\".";
 
-  zbe::Vector2D v2{30,40};
-  EXPECT_EQ(250,v2.getSqrModule()) << "Squared module.";
-  EXPECT_EQ( 50,v2.getModule()) << "Module.";
+  zbe::Vector2D v2{3,4};
+  EXPECT_EQ(25,v2.getSqrModule()) << "Squared module.";
+  EXPECT_EQ( 5,v2.getModule()) << "Module.";
 
   zbe::Point2D p{30,50};
   zbe::Point2D q{70,20};
@@ -225,33 +225,33 @@ TEST(Vector, Operations) {
   EXPECT_EQ(-40,v2.x) << "Operator -= \".x\".";
   EXPECT_EQ( 30,v2.y) << "Operator -= \".y\".";
 
-  zbe::Vector2D vr{0,10};
-  zbe::Vector2D vn{10,10};
+  zbe::Vector2D vr{0,-10000};
+  zbe::Vector2D vn{-65536 * 16,-65536 * 16};
   vr.reflect(vn);
-  EXPECT_EQ(-10,vr.x) << "reflect \".x\".";
+  EXPECT_EQ(10000,vr.x) << "reflect \".x\".";
   EXPECT_EQ(0,vr.y) << "reflect  \".y\".";
 
   vr.setCartesian(10,0);
-  vn.setCartesian(00,10);
+  vn.setCartesian(0,10);
   vr.reflect(vn);
   EXPECT_EQ(10,vr.x) << "reflect \".x\".";
   EXPECT_EQ(0,vr.y) << "reflect  \".y\".";
 
-  zbe::Vector2D va{10,10};
+  zbe::Vector2D va{65536,65536};
   va.normalize();
-  EXPECT_EQ(10,va.getModule()) << "normalized module";
+  EXPECT_EQ(65536,va.getModule()) << "normalized module";
 
   zbe::Vector2D vb{0,20};
   vb.normalize();
-  EXPECT_EQ(10,vb.getModule()) << "normalized module";
+  EXPECT_EQ(65536,vb.getModule()) << "normalized module";
 
   zbe::Vector2D vc{20,0};
   vc.normalize();
-  EXPECT_EQ(10,vc.getModule()) << "normalized module";
+  EXPECT_EQ(65536,vc.getModule()) << "normalized module";
 
   zbe::Vector2D vd{20,500};
   vd.normalize();
-  EXPECT_EQ(10,vd.getModule()) << "normalized module";
+  EXPECT_EQ(65536,vd.getModule()) << "normalized module";
 
   zbe::SysError::clear();
 }

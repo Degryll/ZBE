@@ -36,7 +36,6 @@ class GameBallBouncer: public zbe::Actuator<zbe::MovableCollisioner<game::GameRe
       zbe::Point<2> p = cd->getPoint();
       zbe::Point<2> c = gb->getPosition();
       zbe::Vector<2> n = c - p;
-      zbe::Vector<2> vP = v;
       v.reflect(n);
       gb->setVelocity(v);
     }
