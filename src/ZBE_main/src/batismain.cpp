@@ -3,6 +3,7 @@
 #include <chrono>
 #include <thread>
 #include <cstdlib>
+#include <cmath>
 
 #include "ZBE/core/daemons/DaemonMaster.h"
 #include "ZBE/core/entities/avatars/implementations/SimpleCollisioner.h"
@@ -38,6 +39,8 @@
 #include "game/events/handlers/ExitInputHandler.h"
 #include "game/events/handlers/GameBallBouncer.h"
 
+#define PI 3.14159265
+
 int batismain(int, char** ) {
 
   printf("--- GAME main ---\n\n");
@@ -57,7 +60,7 @@ int batismain(int, char** ) {
     HEIGHT = 768
   };
 
-  const char ballfilename[] = "data/images/zombieball/zomball_st_32.png";
+  const char ballfilename[] = "data/images/zombieball/simple_ball_32.png";
   unsigned ballgraphics;
 
   printf("3 / 5 %d\n", 3/5);fflush(stdout);
@@ -137,8 +140,26 @@ int batismain(int, char** ) {
   ieg.addHandler(zbe::ZBEK_ESCAPE, &terminator);
 
   std::forward_list<game::GameBall*> balls;
-  for(int i = 0; i<5000 ; i++){
-      game::GameBall* ball = new game::GameBall((WIDTH/2 + rand()%100-50) << zbe::PRECISION_DIGITS ,(HEIGHT/2 + rand()%100-50) << zbe::PRECISION_DIGITS, 16 << zbe::PRECISION_DIGITS, (rand()%2000 - 1000) << zbe::PRECISION_DIGITS, (rand()%2000 - 1000) << zbe::PRECISION_DIGITS, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
+  for(int i = 0; i<10000 ; i++){
+
+      /*
+      int64_t vt = 200;
+      int64_t vx = rand()%(vt+1);
+      int64_t vy = sqrt((vt*vt)-(vx*vx));
+      vx *= rand()%2?1:-1;
+      vy *= rand()%2?1:-1;
+      //poco regular
+      */
+      int64_t vt = 200;
+      double vAngleL = rand()%3600;
+      vAngleL/=10;
+      double vAngleR = rand()%10000;
+      vAngleR/=100000;
+      double vAngle = vAngleL + vAngleR;
+      int64_t vx = sin(vAngle*PI/180)*vt;
+      int64_t vy = cos(vAngle*PI/180)*vt;
+
+      game::GameBall* ball = new game::GameBall((WIDTH/2) << zbe::PRECISION_DIGITS ,(HEIGHT/2) << zbe::PRECISION_DIGITS, 16<< zbe::PRECISION_DIGITS, vx << zbe::PRECISION_DIGITS, vy << zbe::PRECISION_DIGITS, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
       //game::GameBall* ball = new game::GameBall(31407009,1063841, 16 << zbe::PRECISION_DIGITS, 1000 << zbe::PRECISION_DIGITS,1000 << zbe::PRECISION_DIGITS, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
       ctl.push_front(ball);
       ball->setSimpleSpriteAdaptor(spriteAdaptor);

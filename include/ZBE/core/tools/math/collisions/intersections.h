@@ -37,7 +37,7 @@ inline bool intersectionRayInsideAABB2D(Ray2D ray, AABB2D box, int64_t tmax, int
 inline bool intersectionRayInsideAABB3D(Ray3D ray, AABB3D box, int64_t tmax, int64_t &time, Point3D& point) {return (intersectionRayInsideAABB<3>(ray, box, tmax, time, point));} //!< 3D allias of intersectionRayInsideAABB.
 
 template <unsigned dim>
-unsigned intersectionRayOutsideAABB(Ray<dim> ray, AABB<dim> box, int64_t &time, Point<dim>& point);
+bool intersectionRayOutsideAABB(Ray<dim> ray, AABB<dim> box, int64_t &time, Point<dim>& point);
 inline bool intersectionRayOutsideAABB2D(Ray2D ray, AABB2D box, int64_t &time, Point2D& point) {return (intersectionRayOutsideAABB<2>(ray,box,time,point));}  //!< 2D allias of intersectionRayOutsideAABB.
 inline bool intersectionRayOutsideAABB3D(Ray3D ray, AABB3D box, int64_t &time, Point3D& point) {return (intersectionRayOutsideAABB<3>(ray,box,time,point));}  //!< 3D allias of intersectionRayOutsideAABB.
 
@@ -201,7 +201,6 @@ inline bool intersectionBeamOutsideAABB(Ray<dim> ray, AABB<dim> box, int64_t &ti
   return (rayOutsideAABB(ray, box, tmin, tmax, time, point));
 }
 
-
 /** \brief Computes the collision of a N-dimensional Ray and AABB.
  *
  *  Don't use this function directly, use:
@@ -218,6 +217,7 @@ inline bool intersectionBeamOutsideAABB(Ray<dim> ray, AABB<dim> box, int64_t &ti
  * \return True if there is a collision between tmin and tmax, false otherwise.
  * \sa intersectionRayOutsideAABB, intersectionSegmentOutsideAABB and intersectionBeamOutsideAABB.
  */
+
 template <unsigned dim>
 bool rayOutsideAABB(Ray<dim> ray, AABB<dim> box, int64_t tmin, int64_t tmax, int64_t &time, Point<dim> &point) {
   for (unsigned i = 0; i < dim; i++) {
@@ -237,6 +237,9 @@ bool rayOutsideAABB(Ray<dim> ray, AABB<dim> box, int64_t tmin, int64_t tmax, int
       if (tmin > tmax) return (false);
     }
   }
+
+  if (tmin > time) return (false);
+
   time = tmin;
   for(unsigned i = 0; i < dim; i++) {
     point[i] = ray.o[i] + mult(ray.d[i], time);
