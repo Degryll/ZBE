@@ -21,10 +21,24 @@
 #include "ZBE/entities/avatars/MovableCollisioner.h"
 #include "ZBE/reactobjects/VoidReactObject.h"
 
-#include "game/GameReactor.h"
-
 namespace ludo {
 
+/** \brief Actuator capable of making a MovableCollisioner bounce in a Bounceable.
+ */
+template <typename R>
+class MovableCollisionerBouncer: public zbe::Actuator<zbe::MovableCollisioner<R, 2>, R> {
+  public:
+    void act(zbe::VoidReactObject<R>*) {
+      zbe::MovableCollisioner<R, 2> * gb = zbe::Actuator<zbe::MovableCollisioner<R, 2>, R>::getCollisioner();
+      zbe::CollisionData * cd = zbe::Actuator<zbe::MovableCollisioner<R, 2>, R>::getCollisionData();
+      zbe::Vector<2> v = gb->getVelocity();
+      zbe::Point<2> p = cd->getPoint();
+      zbe::Point<2> c = gb->getPosition();
+      zbe::Vector<2> n = c - p;
+      v.reflect(n);
+      gb->setVelocity(v);
+    }
+};
 }  // namespace
 
 #endif //LUDO_EVENTS_HANDLERS_LUDOACTUATORS

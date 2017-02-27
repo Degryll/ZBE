@@ -25,10 +25,10 @@ class BaseMovable : virtual public Movable<s> {
 
     BaseMovable(Mobile<s>* mobile) : m(mobile) {}
 
-    void setPosition(std::initializer_list<int64_t> l) {m->setPosition(l);}
+    void setPosition(std::initializer_list<double> l) {m->setPosition(l);}
     void setPosition(Point<s> position)   {m->setPosition(position);}
 
-    void setVelocity(std::initializer_list<int64_t> l) {m->setVelocity(l);}
+    void setVelocity(std::initializer_list<double> l) {m->setVelocity(l);}
     void setVelocity(Vector<s> velocity)  {m->setVelocity(velocity);}
 
     Point<s>& getPosition()  {return (m->getPosition());}

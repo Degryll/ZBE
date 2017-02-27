@@ -159,7 +159,7 @@ int batismain(int, char** ) {
       int64_t vx = sin(vAngle*PI/180)*vt;
       int64_t vy = cos(vAngle*PI/180)*vt;
 
-      game::GameBall* ball = new game::GameBall((WIDTH/2) << zbe::PRECISION_DIGITS ,(HEIGHT/2) << zbe::PRECISION_DIGITS, 16<< zbe::PRECISION_DIGITS, vx << zbe::PRECISION_DIGITS, vy << zbe::PRECISION_DIGITS, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
+      game::GameBall* ball = new game::GameBall((WIDTH/2),(HEIGHT/2), 16, vx, vy, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
       //game::GameBall* ball = new game::GameBall(31407009,1063841, 16 << zbe::PRECISION_DIGITS, 1000 << zbe::PRECISION_DIGITS,1000 << zbe::PRECISION_DIGITS, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
       ctl.push_front(ball);
       ball->setSimpleSpriteAdaptor(spriteAdaptor);
@@ -174,7 +174,7 @@ int batismain(int, char** ) {
   zbe::ListManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> >& lmBoardActuatorsList = zbe::ListManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> >::getInstance();
   lmBoardActuatorsList.insert(BOARDACTUATORLIST, &boardActuatorsList);
 
-  game::GameBoard board((WIDTH) << zbe::PRECISION_DIGITS, (HEIGHT) << zbe::PRECISION_DIGITS, BOARDACTUATORLIST);
+  game::GameBoard board(WIDTH, HEIGHT, BOARDACTUATORLIST);
   collisionablesList.push_front(&board);
   printf("|=================== Starting up system ===================|\n");fflush(stdout);
   printf("Starting SysTimer\n");fflush(stdout);

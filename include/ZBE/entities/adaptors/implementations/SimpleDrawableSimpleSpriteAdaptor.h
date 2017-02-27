@@ -27,10 +27,10 @@ class SimpleDrawableSimpleSpriteAdaptor : public SimpleSpriteAdaptor<Drawable> {
     virtual std::shared_ptr<SimpleSprite> getSimpleSprite(Drawable* entity) {
       std::shared_ptr<SimpleSprite> s = std::make_shared<SimpleSprite>();
 
-      s->x = entity->getX() >> zbe::PRECISION_DIGITS;
-      s->y = entity->getY() >> zbe::PRECISION_DIGITS;
-      s->w = entity->getW() >> zbe::PRECISION_DIGITS;
-      s->h = entity->getH() >> zbe::PRECISION_DIGITS;
+      s->x = entity->getX();
+      s->y = entity->getY();
+      s->w = entity->getW();
+      s->h = entity->getH();
       s->graphics = entity->getGraphics();
 
       return (s);

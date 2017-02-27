@@ -30,21 +30,21 @@
 #include "ZBE/archetypes/MobileAPO.h"
 #include "ZBE/actuators/MovableBouncer.h"
 
-#include "gamemain.h"
-#include "game/GameReactor.h"
-#include "game/entities/GameBall.h"
-#include "game/entities/GameBoard.h"
 #include "game/events/handlers/StepInputHandler.h"
 #include "game/events/handlers/ExitInputHandler.h"
-#include "game/events/handlers/GameBallBouncer.h"
+
 #include "ludo/LudoReactor.h"
+#include "ludo/drawers/LudoDrawers.h"
 #include "ludo/entities/LudoEntities.h"
+#include "ludo/entities/LudoAvatars.h"
 #include "ludo/events/handlers/LudoHandlers.h"
 #include "ludo/events/handlers/LudoActuators.h"
 
+#include "ludomain.h"
+
 int ludomain(int, char** ) {
 
-  printf("--- GAME main ---\n\n");
+  printf("--- Ludo main ---\n\n");
 
   enum {
     INPUTEVENT = 0,
@@ -85,16 +85,15 @@ int ludomain(int, char** ) {
   printf("Input events will use id 0\n");fflush(stdout);
   zbe::InputEventGenerator ieg(inputBuffer,INPUTEVENT);
   printf("|------------------- Collision Event Generator-------------|\n");fflush(stdout);
-  //zbe::TicketedForwardList<zbe::CollisionerEntity<GameReactor>*> cnl;
   printf("Building list for collisionator entinties. Currently empty.\n");fflush(stdout);
   printf("It will store entities that will search for a collision.\n");fflush(stdout);
-  zbe::TicketedForwardList<zbe::CollisionatorEntity<game::GameReactor>*> ctl;
+  zbe::TicketedForwardList<zbe::CollisionatorEntity<ludo::LudoReactor>*> ctl;
   printf("Acquiring singleton list-manager for this list (ctl).\n");fflush(stdout);
-  zbe::ListManager< zbe::TicketedForwardList<zbe::CollisionatorEntity<game::GameReactor>*> >& lmct = zbe::ListManager< zbe::TicketedForwardList<zbe::CollisionatorEntity<game::GameReactor>*> >::getInstance();
+  zbe::ListManager< zbe::TicketedForwardList<zbe::CollisionatorEntity<ludo::LudoReactor>*> >& lmct = zbe::ListManager< zbe::TicketedForwardList<zbe::CollisionatorEntity<ludo::LudoReactor>*> >::getInstance();
   printf("Storing ctl in that list-manager.\n");fflush(stdout);
   lmct.insert(COLLISIONATORLIST, &ctl);
   printf("Building collision event generator with list id and the event id to use (1).\n");fflush(stdout);
-  zbe::CollisionEventGenerator<game::GameReactor> ceg(COLLISIONATORLIST, COLLISIONEVENT);
+  zbe::CollisionEventGenerator<ludo::LudoReactor> ceg(COLLISIONATORLIST, COLLISIONEVENT);
   printf("|------------------- Time Event Generator -----------------|\n");fflush(stdout);
   printf("Building time event generator with the event id to use (2)\n");fflush(stdout);
   zbe::TimeEventGenerator teg(TIMEEVENT);
@@ -124,48 +123,43 @@ int ludomain(int, char** ) {
   printf("Creating a ball and giving it a position and size\n");fflush(stdout);
 
   //ball
-  std::forward_list< zbe::Actuator< zbe::MovableCollisioner<game::GameReactor, 2>, game::GameReactor >*> ballActuatorsList;
-  zbe::ListManager< std::forward_list< zbe::Actuator< zbe::MovableCollisioner<game::GameReactor, 2>, game::GameReactor >* > >& lmBallActuatorsList = zbe::ListManager< std::forward_list< zbe::Actuator< zbe::MovableCollisioner<game::GameReactor, 2>, game::GameReactor >* > >::getInstance();
+  std::forward_list< zbe::Actuator< zbe::MovableCollisioner<ludo::LudoReactor, 2>, ludo::LudoReactor >*> ballActuatorsList;
+  zbe::ListManager< std::forward_list< zbe::Actuator< zbe::MovableCollisioner<ludo::LudoReactor, 2>, ludo::LudoReactor >* > >& lmBallActuatorsList = zbe::ListManager< std::forward_list< zbe::Actuator< zbe::MovableCollisioner<ludo::LudoReactor, 2>, ludo::LudoReactor >* > >::getInstance();
   lmBallActuatorsList.insert(BALLACTUATORLIST, &ballActuatorsList);
-  game::GameBallBouncer gbBouncer;
-  ballActuatorsList.push_front(&gbBouncer);
+  ludo::MovableCollisionerBouncer<ludo::LudoReactor> bBouncer;
+  ballActuatorsList.push_front(&bBouncer);
 
-  zbe::TicketedForwardList<zbe::CollisionerEntity<game::GameReactor>*> collisionablesList;
-  zbe::ListManager<zbe::TicketedForwardList<zbe::CollisionerEntity<game::GameReactor>*> >& lmCollisionablesList = zbe::ListManager< zbe::TicketedForwardList<zbe::CollisionerEntity<game::GameReactor>*> >::getInstance();
+  zbe::TicketedForwardList<zbe::CollisionerEntity<ludo::LudoReactor>*> collisionablesList;
+  zbe::ListManager<zbe::TicketedForwardList<zbe::CollisionerEntity<ludo::LudoReactor>*> >& lmCollisionablesList = zbe::ListManager< zbe::TicketedForwardList<zbe::CollisionerEntity<ludo::LudoReactor>*> >::getInstance();
   lmCollisionablesList.insert(COLLISIONABLELIST, &collisionablesList);
 
   printf("Building an sprite adaptor for the ball\n");fflush(stdout);
   zbe::SimpleSpriteAdaptor<zbe::Drawable>* spriteAdaptor = new zbe::SimpleDrawableSimpleSpriteAdaptor();
-  zbe::BaseSphereMCMAPOAdaptor<game::GameReactor, 2> * movableCatorAdaptor = new zbe::BaseSphereMCMAPOAdaptor<game::GameReactor, 2>();
-  /*game::StepInputHandler ihright(&ball, 5, 0);
-  game::StepInputHandler ihleft(&ball, -5, 0);
-  ieg.addHandler(zbe::ZBEK_a, &ihleft);
-  ieg.addHandler(zbe::ZBEK_d, &ihright);*/
+  zbe::BaseSphereMCMAPOAdaptor<ludo::LudoReactor, 2> * movableCatorAdaptor = new zbe::BaseSphereMCMAPOAdaptor<ludo::LudoReactor, 2>();
   game::ExitInputHandler terminator;
   ieg.addHandler(zbe::ZBEK_RETURN, &terminator);
 
   int ballCount = 0;
-  std::forward_list<game::GameBall*> balls;
-  for(int i = 0; i<1 ; i++){
-      unsigned graphId = ballgraphics[(rand()%3)];
-      game::GameBall* ball = new game::GameBall((WIDTH/2 + rand()%100-50) << zbe::PRECISION_DIGITS ,(HEIGHT/2 + rand()%100-50) << zbe::PRECISION_DIGITS, 8 << zbe::PRECISION_DIGITS, (rand()%2000 - 1000) << zbe::PRECISION_DIGITS, (rand()%2000 - 1000) << zbe::PRECISION_DIGITS, BALLACTUATORLIST, COLLISIONABLELIST, graphId);
-      //game::GameBall* ball = new game::GameBall(31407009,1063841, 16 << zbe::PRECISION_DIGITS, 1000 << zbe::PRECISION_DIGITS,1000 << zbe::PRECISION_DIGITS, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
-      ctl.push_front(ball);
-      ball->setSimpleSpriteAdaptor(spriteAdaptor);
-      ball->setMovableCollisionatorAdaptor(movableCatorAdaptor);
-      vmobile.push_back(ball);
-      balls.push_front(ball);
-      ballCount++;
-  }
+//  std::forward_list<ludo::LudoBall<ludo::LudoReactor>*> balls;
+//  for(int i = 0; i<1 ; i++){
+//      unsigned graphId = ballgraphics[(rand()%3)];
+//      ludo::LudoBall<ludo::LudoReactor>* ball = new ludo::LudoBall<ludo::LudoReactor>((WIDTH/2 + rand()%100-50) << zbe::PRECISION_DIGITS ,(HEIGHT/2 + rand()%100-50) << zbe::PRECISION_DIGITS, 8 << zbe::PRECISION_DIGITS, (rand()%2000 - 1000) << zbe::PRECISION_DIGITS, (rand()%2000 - 1000) << zbe::PRECISION_DIGITS, BALLACTUATORLIST, COLLISIONABLELIST, graphId);
+//      ctl.push_front(ball);
+//      ball->setSimpleSpriteAdaptor(spriteAdaptor);
+//      ball->setMovableCollisionatorAdaptor(movableCatorAdaptor);
+//      vmobile.push_back(ball);
+//      balls.push_front(ball);
+//      ballCount++;
+//  }
 
   printf("Creating the board and giving it a size\n");fflush(stdout);
   //board
-  std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> boardActuatorsList;
-  zbe::ListManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> >& lmBoardActuatorsList = zbe::ListManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> >::getInstance();
+  std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<ludo::LudoReactor>, ludo::LudoReactor>*> boardActuatorsList;
+  zbe::ListManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<ludo::LudoReactor>, ludo::LudoReactor>*> >& lmBoardActuatorsList = zbe::ListManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<ludo::LudoReactor>, ludo::LudoReactor>*> >::getInstance();
   lmBoardActuatorsList.insert(BOARDACTUATORLIST, &boardActuatorsList);
 
-  game::GameBoard board((WIDTH) << zbe::PRECISION_DIGITS, (HEIGHT) << zbe::PRECISION_DIGITS, BOARDACTUATORLIST);
-  collisionablesList.push_front(&board);
+  //ludo::LudoBoard<ludo::LudoReactor> board((WIDTH) << zbe::PRECISION_DIGITS, (HEIGHT) << zbe::PRECISION_DIGITS, BOARDACTUATORLIST);
+  //collisionablesList.push_front(&board);
   printf("|=================== Starting up system ===================|\n");fflush(stdout);
   printf("Starting SysTimer\n");fflush(stdout);
   sysTimer->start();
@@ -231,22 +225,22 @@ int ludomain(int, char** ) {
       }
     }
 
-    for(auto b : balls){
-        drawer.apply(b->getSimpleSprite().get());
-    }
-    if(!(i%100)){
-        for(int i = 0; i<10 ; i++){
-          unsigned graphId = ballgraphics[(rand()%3)];
-          game::GameBall* ball = new game::GameBall((WIDTH/2 + rand()%100-50) << zbe::PRECISION_DIGITS ,(HEIGHT/2 + rand()%100-50) << zbe::PRECISION_DIGITS, 16 << zbe::PRECISION_DIGITS, (rand()%2000 - 1000) << zbe::PRECISION_DIGITS, (rand()%2000 - 1000) << zbe::PRECISION_DIGITS, BALLACTUATORLIST, COLLISIONABLELIST, graphId);
-          //game::GameBall* ball = new game::GameBall(31407009,1063841, 16 << zbe::PRECISION_DIGITS, 1000 << zbe::PRECISION_DIGITS,1000 << zbe::PRECISION_DIGITS, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
-          ctl.push_front(ball);
-          ball->setSimpleSpriteAdaptor(spriteAdaptor);
-          ball->setMovableCollisionatorAdaptor(movableCatorAdaptor);
-          vmobile.push_back(ball);
-          balls.push_front(ball);
-          ballCount++;
-        }
-    }
+    //for(auto b : balls){
+    //    drawer.apply(b->getSimpleSprite().get());
+    //}
+//    if(!(i%100)){
+//        for(int i = 0; i<10 ; i++){
+//          unsigned graphId = ballgraphics[(rand()%3)];
+//          ludo::LudoBall<ludo::LudoReactor>* ball = new ludo::LudoBall<ludo::LudoReactor>((WIDTH/2 + rand()%100-50) << zbe::PRECISION_DIGITS ,(HEIGHT/2 + rand()%100-50) << zbe::PRECISION_DIGITS, 16 << zbe::PRECISION_DIGITS, (rand()%2000 - 1000) << zbe::PRECISION_DIGITS, (rand()%2000 - 1000) << zbe::PRECISION_DIGITS, BALLACTUATORLIST, COLLISIONABLELIST, graphId);
+//          //ludo::LudoBall<ludo::LudoReactor>* ball = new ludo::LudoBall<ludo::LudoReactor>(31407009,1063841, 16 << zbe::PRECISION_DIGITS, 1000 << zbe::PRECISION_DIGITS,1000 << zbe::PRECISION_DIGITS, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
+//          ctl.push_front(ball);
+//          ball->setSimpleSpriteAdaptor(spriteAdaptor);
+//          ball->setMovableCollisionatorAdaptor(movableCatorAdaptor);
+//          vmobile.push_back(ball);
+//          balls.push_front(ball);
+//          ballCount++;
+//        }
+//    }
     i++;
     if(!(ballCount%100)){
         printf("%d ",ballCount);

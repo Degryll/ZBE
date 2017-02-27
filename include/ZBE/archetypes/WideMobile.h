@@ -10,8 +10,6 @@
 #ifndef ZBE_ARCHETYPES_WIDEMOBILE_H
 #define ZBE_ARCHETYPES_WIDEMOBILE_H
 
-#include <cstdint>
-
 #include "ZBE/archetypes/Mobile.h"
 
 namespace zbe {
@@ -21,8 +19,8 @@ class WideMobile : virtual public Mobile<s> {
   public:
     virtual ~WideMobile() {}
 
-    virtual void setWidth(uint64_t width) = 0;
-    virtual uint64_t getWidth() = 0;
+    virtual void setWidth(double width) = 0;
+    virtual double getWidth() = 0;
 };
 
 }  // namespace

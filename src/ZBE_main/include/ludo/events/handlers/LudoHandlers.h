@@ -15,6 +15,6 @@
 
 namespace ludo {
 
-} //namespace game
+} //namespace ludo
 
 #endif //LUDO_EVENTS_HANDLERS_LUDOHANDLERS

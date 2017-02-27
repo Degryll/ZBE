@@ -2,8 +2,8 @@
  * Copyright 2011 Batis Degryll Ludo
  * @file Vector.h
  * @since 2010/07/22
- * @date 2016/01/07
- * @author Ludo and Degryll
+ * @date 2017/02/26
+ * @author Ludo Degryll Batis
  * @brief Math Vector definition
  */
 
@@ -13,7 +13,6 @@
 #include <utility>
 #include <initializer_list>
 
-#include <cstdint>
 #include <cmath>
 
 #include "ZBE/core/tools/math/math.h"
@@ -46,14 +45,14 @@ class _VECTOR {
      *        Vector<N> p = {v1, v2, ... , vN}
      *
      */
-    _VECTOR(std::initializer_list<int64_t> l) {
+    _VECTOR(std::initializer_list<double> l) {
       if (l.size() != s) {
         SysError::setError("Vector ERROR: Initializer list size is incorrect.");
         return;
       }
       int i = 0;
-      for(auto it = l.begin(); it != l.end(); it++, i++) {
-        data[i] = *it;
+      for(auto it : l) {
+        data[i++] = it;
       }
     }
 
@@ -74,7 +73,7 @@ class _VECTOR {
      * \param idx Index of the dimension that you want to get the value.
      * \return The value of the idx dimension.
      */
-    int64_t& operator[](std::size_t idx)       {return (data[idx]);}
+    double& operator[](std::size_t idx)       {return (data[idx]);}
 
     /** \brief Implements direct access to Vector values with operator[].
      *
@@ -84,7 +83,7 @@ class _VECTOR {
      * \param idx Index of the dimension that you want to get the value.
      * \return The constant value of the idx dimension.
      */
-    const int64_t& operator[](std::size_t idx) const {return (data[idx]);}
+    const double& operator[](std::size_t idx) const {return (data[idx]);}
 
     /** \brief Add a vector to this one.
      *
@@ -131,39 +130,25 @@ class _VECTOR {
      *
      * \param rhs The scalar.
      * \return A reference to this Vector after the multiplication.
-     * \sa operator+=(), operator-=() and operator-().
-     */
-    _VECTOR<s>& operator*=(int64_t rhs) {
-      for(unsigned i = 0; i < s; i++) {
-        data[i] *= rhs;
-      }
-
-      return (*this);
-    }
-
-    /** \brief Multiply this Vector by a scalar.
-     *
-     * \param rhs The scalar.
-     * \return A reference to this Vector after the multiplication.
-     * \sa operator+=(), operator-=() and operator-().
-     */
-    _VECTOR<s>& operator*=(uint64_t rhs) {
-      for(unsigned i = 0; i < s; i++) {
-        data[i] *= rhs;
-      }
-
-      return (*this);
-    }
-
-    /** \brief Multiply this Vector by a scalar.
-     *
-     * \param rhs The scalar.
-     * \return A reference to this Vector after the multiplication.
-     * \sa operator+=(), operator-=() and operator-().
+     * \sa operator+=(), operator-=(), operator-(), operator+(), operator/=().
      */
     _VECTOR<s>& operator*=(double rhs) {
       for(unsigned i = 0; i < s; i++) {
         data[i] *= rhs;
+      }
+
+      return (*this);
+    }
+
+    /** \brief Divide this Vector by a scalar.
+     *
+     * \param rhs The scalar.
+     * \return A reference to this Vector after the multiplication.
+     * \sa operator+=(), operator-=(), operator-(), operator+(), operator*=().
+     */
+    _VECTOR<s>& operator/=(double rhs) {
+      for(unsigned i = 0; i < s; i++) {
+        data[i] /= rhs;
       }
 
       return (*this);
@@ -174,7 +159,7 @@ class _VECTOR {
      * \return The Vector module.
      * \sa getSqrModule().
      */
-    int64_t getModule() {
+    double getModule() {
       double r = 0;
       for(unsigned i = 0; i < s; i++) {
         r += data[i] * data[i];
@@ -188,8 +173,8 @@ class _VECTOR {
      * \return The squared Vector module.
      * \sa getModule().
      */
-    int64_t getSqrModule() {  // to avoid square root
-      int64_t r2 = 0;
+    double getSqrModule() {  // to avoid square root
+      double r2 = 0;
       for(unsigned i = 0; i < s; i++) {
         r2 += data[i] * data[i];
       }
@@ -202,11 +187,9 @@ class _VECTOR {
      * \return Normalized vector.
      */
     _VECTOR<s>&  normalize() {
-      int64_t m = getModule();
+      double m = getModule();
       if(m == 0) {return (*this);}
-      for(unsigned i = 0; i < s; i++) {
-        data[i] = (data[i] << PRECISION_DIGITS) / m;
-      }
+      *this /= m;
 
       return (*this);
     }
@@ -220,14 +203,12 @@ class _VECTOR {
     _VECTOR<s>& reflect(_VECTOR<s> normal) {
       _VECTOR<s>& d = *this;
       normal.normalize();
-      int64_t dn = (d * normal) >> PRECISION_DIGITS;
+      double dn = (d * normal);
       _VECTOR<s> dnn = dn * normal;
-      for(unsigned i = 0; i < s; i++) {
-        dnn[i] = dnn[i] >> PRECISION_DIGITS;
-      }
-      _VECTOR<s> dnn2 = int64_t(2) * dnn;
+      _VECTOR<s> dnn2 = dnn * 2;
       _VECTOR<s> out = d - dnn2;
       d = out;
+      //*this = d - (((d * normal) * normal) * 2);
       return (*this);
     }
 
@@ -296,52 +277,8 @@ class _VECTOR {
      * \return A reference to the resulting Vector.
      * \sa operator+=(), operator-=() and operator-().
      */
-    friend _VECTOR operator*(_VECTOR lhs, int64_t rhs) {
-      return (lhs*=rhs);
-    }
-
-    /** \brief Implements Vector multiplication by a scalar.
-     *
-     * \param lhs The original Vector.
-     * \param rhs The scalar.
-     * \return A reference to the resulting Vector.
-     * \sa operator+=(), operator-=() and operator-().
-     */
-    friend _VECTOR operator*(_VECTOR lhs, uint64_t rhs) {
-      return (lhs*=rhs);
-    }
-
-    /** \brief Implements Vector multiplication by a scalar.
-     *
-     * \param lhs The original Vector.
-     * \param rhs The scalar.
-     * \return A reference to the resulting Vector.
-     * \sa operator+=(), operator-=() and operator-().
-     */
     friend _VECTOR operator*(_VECTOR lhs, double rhs) {
       return (lhs*=rhs);
-    }
-
-    /** \brief Implements Vector multiplication by a scalar.
-     *
-     * \param lhs The original Vector.
-     * \param rhs The scalar.
-     * \return A reference to the resulting Vector.
-     * \sa operator+=(), operator-=() and operator-().
-     */
-    friend _VECTOR operator*(int64_t lhs, _VECTOR rhs) {
-      return (rhs*=lhs);
-    }
-
-    /** \brief Implements Vector multiplication by a scalar.
-     *
-     * \param lhs The original Vector.
-     * \param rhs The scalar.
-     * \return A reference to the resulting Vector.
-     * \sa operator+=(), operator-=() and operator-().
-     */
-    friend _VECTOR operator*(uint64_t lhs, _VECTOR rhs) {
-      return (rhs*=lhs);
     }
 
     /** \brief Implements Vector multiplication by a scalar.
@@ -362,8 +299,8 @@ class _VECTOR {
      * \return Doct product.
      * \sa operator+=(), operator-=() and operator-().
      */
-    friend int64_t operator*(const _VECTOR& lhs, const _VECTOR& rhs) {
-      int64_t v = 0;
+    friend double operator*(const _VECTOR& lhs, const _VECTOR& rhs) {
+      double v = 0;
       for(unsigned i = 0; i < s; i++) {
         v += lhs.data[i] * rhs.data[i];
       }
@@ -371,7 +308,10 @@ class _VECTOR {
       return (v);
     }
 
-    //friend double getAngle(Vector2D lhs, const Vector2D& rhs);  // TODO espero a necesitarlo
+    /** \brief calculates the resulting path of reflection of a ray or impact of an object with a plane.
+     * \param normal Vector normal to the collision plane.
+     * \return Vector with the ray or object path reflected.
+     */
     friend _VECTOR reflect(_VECTOR ray, const _VECTOR &normal){
         return ray.reflect(normal);
     };
@@ -381,7 +321,7 @@ class _VECTOR {
 ///////////////////////////////////////////////////////////////////////////////
 
   protected:
-    int64_t data[s];  //!< Vector data.
+    double data[s];  //!< Vector data.
 };
 
 /** \brief A class that represent Vectors of any dimension.
@@ -406,7 +346,7 @@ class Vector : public _VECTOR<s> {
      *        Vector<N> p = {v1, v2, ... , vN}
      *
      */
-    Vector(std::initializer_list<int64_t> l) : _VECTOR<s>(l) {}
+    Vector(std::initializer_list<double> l) : _VECTOR<s>(l) {}
 };
 
 /** \brief A class that represent 2D Vectors.
@@ -418,8 +358,8 @@ class Vector : public _VECTOR<s> {
 template<>
 class Vector<2> : public _VECTOR<2> {
   public:
-    int64_t &x;  //!< An alias to access the first dimension as v.x.
-    int64_t &y;  //!< An alias to access the first dimension as v.y.
+    double &x;  //!< An alias to access the first dimension as v.x.
+    double &y;  //!< An alias to access the first dimension as v.y.
 
     /** \brief Void constructor, the Vector2D's values are unknown.
      */
@@ -444,7 +384,7 @@ class Vector<2> : public _VECTOR<2> {
      *        Vector2D v = {v1, v2}
      *
      */
-    Vector(std::initializer_list<int64_t> l) : _VECTOR<2>(l), x(data[0]), y(data[1]) {}
+    Vector(std::initializer_list<double> l) : _VECTOR<2>(l), x(data[0]), y(data[1]) {}
 
     /** \brief Assign operator.
      */
@@ -456,15 +396,15 @@ class Vector<2> : public _VECTOR<2> {
 
     /** \brief Set values of the vector as Cartesian coordinates (default).
      */
-    void setCartesian(int64_t x, int64_t y) {data[0] = x; data[1] = y;}
+    void setCartesian(double x, double y) {data[0] = x; data[1] = y;}
 
     /** \brief Set values of the vector as Polar coordinates in radians (transformed to Cartesian).
      */
-    void setPolars(int64_t r, double rads) {data[0] = r*cos(rads); data[1] = r*sin(rads);}
+    void setPolars(double r, double rads) {data[0] = r*cos(rads); data[1] = r*sin(rads);}
 
     /** \brief Set values of the vector as Polar coordinates in degrees (transformed to Cartesian).
      */
-    void setPolarsDegrees(int64_t r, double degree) {data[0] = r*cos(degree*TORADIANS); data[1] = r*sin(degree*TORADIANS);}
+    void setPolarsDegrees(double r, double degree) {data[0] = r*cos(degree*TORADIANS); data[1] = r*sin(degree*TORADIANS);}
 
     /** \brief Get values of the Polar angles in radians (transformed from Cartesian).
      */
@@ -487,9 +427,9 @@ using Vector2D = Vector<2>;  //!< An alias to Vector<2>.
 template<>
 class Vector<3> : public _VECTOR<3> {
   public:
-    int64_t &x;  //!< An alias to access the first dimension as v.x.
-    int64_t &y;  //!< An alias to access the first dimension as v.y.
-    int64_t &z;  //!< An alias to access the first dimension as v.z.
+    double &x;  //!< An alias to access the first dimension as v.x.
+    double &y;  //!< An alias to access the first dimension as v.y.
+    double &z;  //!< An alias to access the first dimension as v.z.
 
     /** \brief Void constructor, the Vector3D's values are unknown.
      */
@@ -514,7 +454,7 @@ class Vector<3> : public _VECTOR<3> {
      *        Vector3D v = {v1, v2, v3}
      *
      */
-    Vector(std::initializer_list<int64_t> l) : _VECTOR<3>(l), x(data[0]), y(data[1]), z(data[2]) {}
+    Vector(std::initializer_list<double> l) : _VECTOR<3>(l), x(data[0]), y(data[1]), z(data[2]) {}
 
     /** \brief Assign operator.
      */

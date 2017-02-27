@@ -143,6 +143,9 @@
 		<Unit filename="../../../src/ZBE_main/include/game/reactobjects/GameReactObjects.h" />
 		<Unit filename="../../../src/ZBE_main/include/gamemain.h" />
 		<Unit filename="../../../src/ZBE_main/include/ludo/LudoReactor.h" />
+		<Unit filename="../../../src/ZBE_main/include/ludo/drawers/LudoDrawers.h" />
+		<Unit filename="../../../src/ZBE_main/include/ludo/entities/LudoAdaptors.h" />
+		<Unit filename="../../../src/ZBE_main/include/ludo/entities/LudoAvatars.h" />
 		<Unit filename="../../../src/ZBE_main/include/ludo/entities/LudoEntities.h" />
 		<Unit filename="../../../src/ZBE_main/include/ludo/events/handlers/LudoActuators.h" />
 		<Unit filename="../../../src/ZBE_main/include/ludo/events/handlers/LudoHandlers.h" />
