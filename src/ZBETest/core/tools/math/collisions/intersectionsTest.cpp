@@ -16,7 +16,7 @@
 
 namespace IntersectionsTest {
 
-static const int ITERATIONS = 100000;
+static const int ITERATIONS = 40000000;
 
 TEST(Intersections, DISABLED_RaySphere) {
   EXPECT_EQ(0,zbe::SysError::getNErrors()) << "Initially no errors.";
@@ -91,9 +91,9 @@ TEST(Intersections, DISABLED_NormalRaySphere) {
 
 inline bool compareQuantizedMovement(double point, double p, double maxDiff){
   if(maxDiff >= 0.0) {
-  	return ((point - p) <= (maxDiff + 1e-9));
+  	return ((point - p) <= (maxDiff + zbe::PRECISION));
   } else {
-    return ((point - p) >= (maxDiff - 1e-9));
+    return ((point - p) >= (maxDiff - zbe::PRECISION));
   }
 }
 
@@ -292,6 +292,8 @@ void testMovingCircleInsideABB(zbe::Circle ball, zbe::Vector2D velocity, zbe::AA
     EXPECT_TRUE(correctP) << "Point of collision (x): " << p[0] << " instead of " << point[0];
     correctP = compareQuantizedMovement(point[1], p[1], maxYDiff);
     EXPECT_TRUE(correctP) << "Point of collision (y): " << p[1] << " instead of " << point[1];
+    t = tMax;
+    result = IntersectionMovingCircleInsideAABB2D(ball, velocity, block, t, p);
   }
 }
 
@@ -379,7 +381,7 @@ TEST(Intersections, MovingCircleInsideAABB_Vertical) {
 TEST(Intersections, MovingCircleInsideAABB_TopLeftCorner) {
   //srand(time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
-    double radius = ((rand() % 10) + 10);
+    double radius = ((rand() % 100) + 100);
     double minDist = abs(((1000) * zbe::TIME_QUANTUM_VALUE)) + (radius+1)/10.0;
     double xpos = (rand() % (9980 - zbe::roundUp(radius*2)) + 10 + zbe::roundUp(radius))/10.0;
     xpos = std::min( (1000) - minDist , xpos);
@@ -387,6 +389,7 @@ TEST(Intersections, MovingCircleInsideAABB_TopLeftCorner) {
     double ypos = (rand() % (9980 - zbe::roundUp(radius*2)) + 10 + zbe::roundUp(radius))/10.0;
     ypos = std::min(1000 - minDist, ypos);
     ypos = std::max(minDist, ypos);
+    radius /= 10.0;
 
     zbe::Circle ball({xpos, ypos}, radius);
   	zbe::Vector2D velocity({-(xpos-radius), -(ypos-radius)});
@@ -403,7 +406,7 @@ TEST(Intersections, MovingCircleInsideAABB_TopLeftCorner) {
 TEST(Intersections, MovingCircleInsideAABB_TopRightCorner) {
   //srand(time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
-    double radius = ((rand() % 10) + 10);
+    double radius = ((rand() % 100) + 100);
     double minDist = abs(1000 * zbe::TIME_QUANTUM_VALUE) + (radius+1)/10.0;
     double xpos = (rand() % (9980 - zbe::roundUp(radius*2)) + 10 + zbe::roundUp(radius))/10.0;
     xpos = std::min(1000 - minDist , xpos);
@@ -411,6 +414,7 @@ TEST(Intersections, MovingCircleInsideAABB_TopRightCorner) {
     double ypos = (rand() % (9980 - zbe::roundUp(radius*2)) + 10 + zbe::roundUp(radius))/10.0;
     ypos = std::min(1000 - minDist, ypos);
     ypos = std::max(minDist, ypos);
+    radius /= 10.0;
 
     zbe::Circle ball({xpos, ypos}, radius);
   	zbe::Vector2D velocity({1000 - (xpos+radius), -(ypos - radius)});
@@ -426,7 +430,7 @@ TEST(Intersections, MovingCircleInsideAABB_TopRightCorner) {
 TEST(Intersections, MovingCircleInsideAABB_BottomLeftCorner) {
   //srand(time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
-    double radius = ((rand() % 10) + 10);
+    double radius = ((rand() % 100) + 100);
     double minDist = abs(1000 * zbe::TIME_QUANTUM_VALUE) + (radius+1)/10.0;
     double xpos = (rand() % (9980 - zbe::roundUp(radius*2)) + 10 + zbe::roundUp(radius))/10.0;
     xpos = std::min(1000 - minDist, xpos);
@@ -434,6 +438,7 @@ TEST(Intersections, MovingCircleInsideAABB_BottomLeftCorner) {
     double ypos = (rand() % (9980 - zbe::roundUp(radius*2)) + 10 + zbe::roundUp(radius))/10.0;
     ypos = std::min(1000 - minDist , ypos);
     ypos = std::max(minDist, ypos);
+    radius /= 10.0;
 
     zbe::Circle ball({xpos, ypos}, radius);
   	zbe::Vector2D velocity({ -(xpos-radius), 1000 - (ypos+radius)});
@@ -450,7 +455,7 @@ TEST(Intersections, MovingCircleInsideAABB_BottomLeftCorner) {
 TEST(Intersections, MovingCircleInsideAABB_BottomRightCorner) {
   //srand(time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
-    double radius = ((rand() % 10) + 10);
+    double radius = ((rand() % 100) + 100);
     double minDist = abs(((1000) * zbe::TIME_QUANTUM_VALUE)) + (radius+1)/10.0;
     double xpos = (rand() % (9980 - zbe::roundUp(radius*2)) + 10 + zbe::roundUp(radius))/10.0;
     xpos = std::min(1000 - minDist , xpos);
@@ -458,6 +463,7 @@ TEST(Intersections, MovingCircleInsideAABB_BottomRightCorner) {
     double ypos = (rand() % (9980 - zbe::roundUp(radius*2)) + 10 + zbe::roundUp(radius))/10.0;
     ypos = std::min( 1000 - minDist , ypos);
     ypos = std::max(minDist, ypos);
+    radius /= 10.0;
 
     zbe::Circle ball({xpos, ypos}, radius);
   	zbe::Vector2D velocity({1000 -(xpos+radius), 1000 - (ypos+radius)});

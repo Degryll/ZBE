@@ -11,6 +11,7 @@
 #define ZBE_CORE_TOOLS_MATH_MATH_H_
 
 #include <math.h>
+#include <cstdint>
 #include <limits>
 #include <utility>
 #include <initializer_list>
@@ -57,6 +58,10 @@ static const double TODEGREE = 180.0/PI;
 // * instead of : v1 / v2 do ((v1 << DIV_PRECISION_DIGITS)/v2) >> DIV_PRECISION_DIGITS)
 //*/
 //static const int DIV_PRECISION_DIGITS = PRECISION_DIGITS+1;
+
+/** \brief Used to compare doubles.
+ */
+static const double PRECISION = 1e-9;
 
 /** \brief This constant represent the minimal value that will keep its value after be rounded.
  */

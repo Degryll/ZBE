@@ -469,6 +469,9 @@ class Vector<3> : public _VECTOR<3> {
 
 using Vector3D = Vector<3>; //!< An alias to Vector<3>.
 
+Vector<2> reflect(Vector<2> ray, const Vector<2> &normal);
+Vector<3> reflect(Vector<3> ray, const Vector<3> &normal);
+
 }  // namespace zbe
 
 #endif  // ZBE_CORE_TOOLS_MATH_VECTOR_H_

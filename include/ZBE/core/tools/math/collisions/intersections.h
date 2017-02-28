@@ -343,10 +343,10 @@ bool intersectionMovingNSphereInsideAABB(NSphere<dim> nsphere, Vector<dim> direc
   Ray<dim> ray(nsphere.c, direction);
   if(intersectionBeamInsideAABB<dim>(ray, e, t, point) && (t <= time)) {
     for(unsigned i = 0; i < dim; i++) {
-      double minDistance = direction[i] * TIME_QUANTUM;
-      if((e.minimum[i] - point[i]) >= minDistance) {
+      double minDistance = direction[i] * TIME_QUANTUM_VALUE;
+      if((e.minimum[i] - point[i]) >= (minDistance - PRECISION)) {
       	point[i] -= r;
-      } else if ((e.maximum[i] - point[i]) <= minDistance) {
+      } else if ((e.maximum[i] - point[i]) <= (minDistance + PRECISION)) {
       	point[i] += r;
       }
     }

@@ -4,7 +4,7 @@
 
 #include "ZBE/core/tools/math/Point.h"
 #include "ZBE/core/tools/math/Vector.h"
-
+namespace Vector {
 TEST(Vector, Constructors) {
   EXPECT_EQ(0.0,zbe::SysError::getNErrors()) << "Initially no errors.";
 
@@ -229,7 +229,7 @@ TEST(Vector, Operations) {
   zbe::Vector2D vn{-16,-16};
   vr.reflect(vn);
   EXPECT_DOUBLE_EQ(10000.0,vr.x) << "reflect \".x\".";
-  EXPECT_NEAR(0.0,vr.y, 1e-9) << "reflect  \".y\".";
+  EXPECT_NEAR(0.0,vr.y, zbe::PRECISION) << "reflect  \".y\".";
 
   vr.setCartesian(10.0,0.0);
   vn.setCartesian(0.0,10.0);
@@ -254,4 +254,45 @@ TEST(Vector, Operations) {
   EXPECT_DOUBLE_EQ(1.0,vd.getModule()) << "normalized module";
 
   zbe::SysError::clear();
+}
+
+TEST(Vector, Reflect) {
+  zbe::Vector2D vr{0.0, -10000.0};
+  zbe::Vector2D vn{-16.0, -16.0};
+  zbe::Vector2D result = zbe::reflect(vr, vn);
+  EXPECT_NEAR(10000.0,result.x, zbe::PRECISION) << "reflect \".x\".";
+  EXPECT_NEAR(0.0,result.y, zbe::PRECISION) << "reflect  \".y\".";
+
+  result = zbe::reflect(vr, -vn);
+  EXPECT_NEAR(10000.0,result.x, zbe::PRECISION) << "reflect \".x\".";
+  EXPECT_NEAR(0.0,result.y, zbe::PRECISION) << "reflect  \".y\".";
+
+  vn.setCartesian(16.0, -16.0);
+  result = zbe::reflect(vr, vn);
+  EXPECT_NEAR(-10000.0,result.x, zbe::PRECISION) << "reflect \".x\".";
+  EXPECT_NEAR(0.0,result.y, zbe::PRECISION) << "reflect  \".y\".";
+
+  result = zbe::reflect(vr, -vn);
+  EXPECT_NEAR(-10000.0,result.x, zbe::PRECISION) << "reflect \".x\".";
+  EXPECT_NEAR(0.0,result.y, zbe::PRECISION) << "reflect  \".y\".";
+
+  vn.setCartesian(0.0, 16.0);
+  result = zbe::reflect(vr, vn);
+  EXPECT_NEAR(0.0, result.x, zbe::PRECISION) << "reflect \".x\".";
+  EXPECT_NEAR(10000.0, result.y, zbe::PRECISION) << "reflect  \".y\".";
+
+  result = zbe::reflect(vr, -vn);
+  EXPECT_NEAR(0.0, result.x, zbe::PRECISION) << "reflect \".x\".";
+  EXPECT_NEAR(10000.0, result.y, zbe::PRECISION) << "reflect  \".y\".";
+
+  vn.setCartesian(16.0 ,0.0);
+  result = zbe::reflect(vr, vn);
+  EXPECT_NEAR(0.0, result.x, zbe::PRECISION) << "reflect \".x\".";
+  EXPECT_NEAR(-10000.0, result.y, zbe::PRECISION) << "reflect  \".y\".";
+
+  result = zbe::reflect(vr, -vn);
+  EXPECT_NEAR(0.0, result.x, zbe::PRECISION) << "reflect \".x\".";
+  EXPECT_NEAR(-10000.0, result.y, zbe::PRECISION) << "reflect  \".y\".";
+}
+
 }

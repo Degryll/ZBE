@@ -33,7 +33,7 @@ class UniformLinearMotion : public Behavior< Mobile<s> > {
       Point<s>& p = entity->getPosition();
       Point<s> pe = entity->getPosition();
       for(unsigned i = 0; i < s; i++) {
-      	p[i] += (entity->getVelocity()[i] * time);
+      	p[i] += (entity->getVelocity()[i] * time) * zbe::INVERSE_SECOND;
       }
     }
 };
