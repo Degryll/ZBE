@@ -50,8 +50,8 @@ class SimpleRotatedSpriteSDLDrawer : public zbe::Drawer<SimpleRotatedSprite> {
       dst.y = entity->y;
       dst.w = entity->w;
       dst.h = entity->h;
-      SDL_Point center = {dst.x + (dst.w / 2), dst.y + (dst.h / 2)};
-      window->render(entity->graphics, &src, &dst, entity->angle, &center, SDL_FLIP_NONE);
+      SDL_Point center = {src.w / 2, src.h/2 };
+      window->render(entity->graphics, &src, &dst, (entity->angle * -1) + 90 , &center, SDL_FLIP_NONE);
     }
 
   private:

@@ -37,6 +37,7 @@
 #include "ludo/drawers/LudoDrawers.h"
 #include "ludo/entities/LudoEntities.h"
 #include "ludo/entities/LudoAvatars.h"
+#include "ludo/entities/LudoAdaptors.h"
 #include "ludo/events/handlers/LudoHandlers.h"
 #include "ludo/events/handlers/LudoActuators.h"
 
@@ -64,7 +65,8 @@ int ludomain(int, char** ) {
   const char zomballImg[] = "data/images/zombieball/zomball_st_32.png";
   const char simpleBallImg[] = "data/images/zombieball/simple_ball_32.png";
   const char mouseImg[] = "data/images/zombieball/mouse.png";
-  unsigned ballgraphics[3];
+  const char arrowImg[] = "data/images/ludo/arrow_r_000_32.png";
+  unsigned ballgraphics[4];
 
   printf("3 / 5 %d\n", 3/5);fflush(stdout);
   printf("2 / 5 %d\n", 2/5);fflush(stdout);
@@ -110,8 +112,9 @@ int ludomain(int, char** ) {
   ballgraphics[0] = window.loadImg(zomballImg);
   ballgraphics[1] = window.loadImg(simpleBallImg);
   ballgraphics[2] = window.loadImg(mouseImg);
+  ballgraphics[3] = window.loadImg(arrowImg);
   printf("Building the drawer to paint SimpleSprite's \n");fflush(stdout);
-  zbe::SimpleSpriteSDLDrawer drawer(&window);
+  ludo::SimpleRotatedSpriteSDLDrawer drawer(&window);
   printf("|-------------------- Daemons ----------------------|\n");fflush(stdout);
   zbe::DaemonMaster dMaster;
   std::vector<zbe::Mobile<2>*> vmobile;
@@ -134,23 +137,24 @@ int ludomain(int, char** ) {
   lmCollisionablesList.insert(COLLISIONABLELIST, &collisionablesList);
 
   printf("Building an sprite adaptor for the ball\n");fflush(stdout);
-  zbe::SimpleSpriteAdaptor<zbe::Drawable>* spriteAdaptor = new zbe::SimpleDrawableSimpleSpriteAdaptor();
+  ludo::RotatedDrawableSimpleRotatedSpriteAdaptor* spriteAdaptor = new ludo::RotatedDrawableSimpleRotatedSpriteAdaptor();
   zbe::BaseSphereMCMAPOAdaptor<ludo::LudoReactor, 2> * movableCatorAdaptor = new zbe::BaseSphereMCMAPOAdaptor<ludo::LudoReactor, 2>();
   game::ExitInputHandler terminator;
   ieg.addHandler(zbe::ZBEK_RETURN, &terminator);
 
   int ballCount = 0;
-//  std::forward_list<ludo::LudoBall<ludo::LudoReactor>*> balls;
-//  for(int i = 0; i<1 ; i++){
-//      unsigned graphId = ballgraphics[(rand()%3)];
-//      ludo::LudoBall<ludo::LudoReactor>* ball = new ludo::LudoBall<ludo::LudoReactor>((WIDTH/2 + rand()%100-50) << zbe::PRECISION_DIGITS ,(HEIGHT/2 + rand()%100-50) << zbe::PRECISION_DIGITS, 8 << zbe::PRECISION_DIGITS, (rand()%2000 - 1000) << zbe::PRECISION_DIGITS, (rand()%2000 - 1000) << zbe::PRECISION_DIGITS, BALLACTUATORLIST, COLLISIONABLELIST, graphId);
-//      ctl.push_front(ball);
-//      ball->setSimpleSpriteAdaptor(spriteAdaptor);
-//      ball->setMovableCollisionatorAdaptor(movableCatorAdaptor);
-//      vmobile.push_back(ball);
-//      balls.push_front(ball);
-//      ballCount++;
-//  }
+  std::forward_list<ludo::LudoBall<ludo::LudoReactor>*> balls;
+  for(int i = 0; i<100 ; i++){
+      unsigned graphId = ballgraphics[(rand()%4)];
+      //ludo::LudoBall<ludo::LudoReactor>* ball = new ludo::LudoBall<ludo::LudoReactor>((WIDTH/2 + rand()%100-50) ,(HEIGHT/2 + rand()%100-50) , 16 , (rand()%2000 - 1000), (rand()%2000 - 1000) , BALLACTUATORLIST, COLLISIONABLELIST, graphId);
+      ludo::LudoBall<ludo::LudoReactor>* ball = new ludo::LudoBall<ludo::LudoReactor>((WIDTH/2 + rand()%100-50) ,(HEIGHT/2 + rand()%100-50) , 16 , (rand()%2000 - 1000), (rand()%2000 - 1000) , BALLACTUATORLIST, COLLISIONABLELIST, graphId);
+      ctl.push_front(ball);
+      ball->setSimpleRotatedSpriteAdaptor(spriteAdaptor);
+      ball->setMovableCollisionatorAdaptor(movableCatorAdaptor);
+      vmobile.push_back(ball);
+      balls.push_front(ball);
+      ballCount++;
+  }
 
   printf("Creating the board and giving it a size\n");fflush(stdout);
   //board
@@ -158,8 +162,8 @@ int ludomain(int, char** ) {
   zbe::ListManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<ludo::LudoReactor>, ludo::LudoReactor>*> >& lmBoardActuatorsList = zbe::ListManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<ludo::LudoReactor>, ludo::LudoReactor>*> >::getInstance();
   lmBoardActuatorsList.insert(BOARDACTUATORLIST, &boardActuatorsList);
 
-  //ludo::LudoBoard<ludo::LudoReactor> board((WIDTH) << zbe::PRECISION_DIGITS, (HEIGHT) << zbe::PRECISION_DIGITS, BOARDACTUATORLIST);
-  //collisionablesList.push_front(&board);
+  ludo::LudoBoard<ludo::LudoReactor> board((WIDTH), (HEIGHT), BOARDACTUATORLIST);
+  collisionablesList.push_front(&board);
   printf("|=================== Starting up system ===================|\n");fflush(stdout);
   printf("Starting SysTimer\n");fflush(stdout);
   sysTimer->start();
@@ -176,7 +180,6 @@ int ludomain(int, char** ) {
   printf("endT = 0x%" PRIx64 "\n", endT);fflush(stdout);
 
   bool keep = true;
-  int i = 0;
   while(keep){
 
     /* Clear screen.
@@ -225,25 +228,8 @@ int ludomain(int, char** ) {
       }
     }
 
-    //for(auto b : balls){
-    //    drawer.apply(b->getSimpleSprite().get());
-    //}
-//    if(!(i%100)){
-//        for(int i = 0; i<10 ; i++){
-//          unsigned graphId = ballgraphics[(rand()%3)];
-//          ludo::LudoBall<ludo::LudoReactor>* ball = new ludo::LudoBall<ludo::LudoReactor>((WIDTH/2 + rand()%100-50) << zbe::PRECISION_DIGITS ,(HEIGHT/2 + rand()%100-50) << zbe::PRECISION_DIGITS, 16 << zbe::PRECISION_DIGITS, (rand()%2000 - 1000) << zbe::PRECISION_DIGITS, (rand()%2000 - 1000) << zbe::PRECISION_DIGITS, BALLACTUATORLIST, COLLISIONABLELIST, graphId);
-//          //ludo::LudoBall<ludo::LudoReactor>* ball = new ludo::LudoBall<ludo::LudoReactor>(31407009,1063841, 16 << zbe::PRECISION_DIGITS, 1000 << zbe::PRECISION_DIGITS,1000 << zbe::PRECISION_DIGITS, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
-//          ctl.push_front(ball);
-//          ball->setSimpleSpriteAdaptor(spriteAdaptor);
-//          ball->setMovableCollisionatorAdaptor(movableCatorAdaptor);
-//          vmobile.push_back(ball);
-//          balls.push_front(ball);
-//          ballCount++;
-//        }
-//    }
-    i++;
-    if(!(ballCount%100)){
-        printf("%d ",ballCount);
+    for(auto b : balls){
+        drawer.apply(b->getSimpleRotatedSprite().get());
     }
 
     /* If one or more error occurs, the ammount and the first one
