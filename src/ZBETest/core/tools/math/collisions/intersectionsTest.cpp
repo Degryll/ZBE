@@ -256,20 +256,22 @@ TEST(Intersections, RayInsideAABB_BottomRightCorner) {
     testRayInsideAABBWith(ray, aabb, tMax, t, p, zbe::TIME_QUANTUM, zbe::TIME_QUANTUM_VALUE * ray.d[0], zbe::TIME_QUANTUM_VALUE * ray.d[1]);
   }
 }
-
-inline void testRayOutsideAABBWith(zbe::Ray<2> ray, zbe::AABB<2> aabb, int64_t tMax, int64_t time, zbe::Point<2> point, bool expected =  true){
+inline void testBeamOutsideAABBWith(zbe::Ray<2> ray, zbe::AABB<2> aabb, int64_t tMax, int64_t time, zbe::Point<2> point, int64_t maxTimeDiff = 0, double maxXDiff = 0.0, double maxYDiff = 0.0, bool expected =  true){
   zbe::Point<2> p;
   int64_t t = tMax;
-  bool result = zbe::intersectionRayOutsideAABB(ray, aabb, t, p);
+  bool correctP = false;
+  bool result = zbe::intersectionBeamOutsideAABB(ray, aabb, t, p);
   EXPECT_EQ(expected, result) << "First Ray vs AABB collision.";
   if (expected) {
-    EXPECT_EQ(time, t) << "Time of collision.";
-    EXPECT_DOUBLE_EQ(point[0] ,p[0]) << "Point of collision (x).";
-    EXPECT_DOUBLE_EQ(point[1] ,p[1]) << "Point of collision (y).";
+    EXPECT_GE(maxTimeDiff, time - t) << "Time of collision.";
+    correctP = compareQuantizedMovement(point[0], p[0], maxXDiff);
+    EXPECT_TRUE(correctP) << "Point of collision (x).";
+    correctP = compareQuantizedMovement(point[1], p[1], maxYDiff);
+    EXPECT_TRUE(correctP) << "Point of collision (y).";
   }
 }
 
-TEST(Intersections, RayOutsideAABB_Base) {
+TEST(Intersections, BeamOutsideAABB_Base) {
   zbe::Ray<2> ray{{  50, 150 },
                   {  100, 10 }};
   zbe::AABB<2> aabb{{100, 100},
@@ -277,7 +279,165 @@ TEST(Intersections, RayOutsideAABB_Base) {
 	int64_t tMax = 10 * zbe::SECOND;
   int64_t t = zbe::quantizeTime(zbe::SECOND / 2);
   zbe::Point<2> p = ray.o + ((ray.d * t) * zbe::INVERSE_SECOND);
-  testRayOutsideAABBWith(ray, aabb, tMax, t, p);
+  testBeamOutsideAABBWith(ray, aabb, tMax, t, p, zbe::TIME_QUANTUM, zbe::TIME_QUANTUM_VALUE * ray.d[0], zbe::TIME_QUANTUM_VALUE * ray.d[1]);
+}
+
+TEST(Intersections, BeamOutsideAABB_Horizontal) {
+  //srand(time(NULL));
+  for(int i = 0; i < ITERATIONS ; i++) {
+    double hvel = (((rand() % 9000) + 1000) * ((rand() % 2)*2-1)) / 10.0;
+    double minDist = zbe::TIME_QUANTUM_VALUE * hvel;
+    double xpos = ((rand() % (10000 - zbe::roundUp(minDist*2))) + minDist) / 10.0;
+    double ypos = ((rand() % 9980) + 10) / 10.0;
+    double dist = ((rand() % 5000) + 2000) / 10.0;
+    zbe::Ray<2> ray{{  xpos , ypos},
+                    {  hvel, 0}};
+
+    double minx, maxx;
+    if (hvel > 0) {
+      minx = xpos + dist;
+      maxx = minx + 100;
+    } else {
+      dist = -dist;
+      maxx = xpos + dist;
+      minx = maxx - 100;
+    }
+    zbe::AABB<2> aabb{{minx, ypos-50},
+                      {maxx, ypos+50}};
+
+
+    int64_t t = zbe::quantizeTime((dist * zbe::SECOND)/ ray.d[0]);
+    zbe::Point<2> p = ray.o + ((ray.d * t) * zbe::INVERSE_SECOND);
+
+    int64_t tMax = 10 * zbe::SECOND;
+    testRayInsideAABBWith(ray, aabb, tMax, t, p, zbe::TIME_QUANTUM, minDist, 0, t > 0);
+  }
+}
+
+TEST(Intersections, BeamOutsideAABB_Vertical) {
+  //srand(time(NULL));
+  for(int i = 0; i < ITERATIONS ; i++) {
+    double vvel = (((rand() % 9000) + 1000) * ((rand() % 2)*2-1)) / 10.0;
+    double minDist = zbe::TIME_QUANTUM_VALUE * vvel;
+    double xpos = ((rand() % 9980) + 10) / 10.0;
+    double ypos = ((rand() % (10000 - zbe::roundUp(minDist*2))) + minDist) / 10.0;
+    double dist = ((rand() % 5000) + 2000) / 10.0;
+    zbe::Ray<2> ray{{  xpos , ypos},
+                    {  0, vvel}};
+
+    double miny, maxy;
+    if (vvel > 0) {
+      miny = ypos + dist;
+      maxy = miny + 100;
+    } else {
+      dist = -dist;
+      maxy = ypos + dist;
+      miny = maxy - 100;
+    }
+    zbe::AABB<2> aabb{{xpos-50, miny},
+                      {xpos+50, maxy}};
+
+
+    int64_t t = zbe::quantizeTime((dist * zbe::SECOND)/ ray.d[1]);
+    zbe::Point<2> p = ray.o + ((ray.d * t) * zbe::INVERSE_SECOND);
+
+    int64_t tMax = 10 * zbe::SECOND;
+    testRayInsideAABBWith(ray, aabb, tMax, t, p, zbe::TIME_QUANTUM, 0, minDist, t > 0);
+  }
+}
+
+TEST(Intersections, BeamOutsideAABB_TopLeftCorner) {
+  //srand(time(NULL));
+  for(int i = 0; i < ITERATIONS ; i++) {
+    double hvel = ((rand() % 9000) + 1000) / 10.0;
+    double vvel = ((rand() % 9000) + 1000) / 10.0;
+    double minDistX = zbe::TIME_QUANTUM_VALUE * hvel;
+    double minDistY = zbe::TIME_QUANTUM_VALUE * vvel;
+    double xpos = ((rand() % 9980) + 10) / 10.0;
+    double ypos = ((rand() % 9980) + 10) / 10.0;
+    zbe::Ray<2> ray{{xpos, ypos},
+                    {hvel, vvel}};
+
+    zbe::AABB<2> aabb{{xpos+hvel, ypos+vvel},
+                      {xpos+hvel+50, ypos+vvel+50}};
+
+
+    int64_t t = zbe::SECOND;
+    zbe::Point<2> p = ray.o + ((ray.d * t) * zbe::INVERSE_SECOND);
+
+    int64_t tMax = 10 * zbe::SECOND;
+    testRayInsideAABBWith(ray, aabb, tMax, t, p, zbe::TIME_QUANTUM, minDistX, minDistY, t > 0);
+  }
+}
+
+TEST(Intersections, BeamOutsideAABB_TopRightCorner) {
+  //srand(time(NULL));
+  for(int i = 0; i < ITERATIONS ; i++) {
+    double hvel = -((rand() % 9000) + 1000) / 10.0;
+    double vvel = ((rand() % 9000) + 1000) / 10.0;
+    double minDistX = zbe::TIME_QUANTUM_VALUE * hvel;
+    double minDistY = zbe::TIME_QUANTUM_VALUE * vvel;
+    double xpos = ((rand() % 9980) + 10) / 10.0;
+    double ypos = ((rand() % 9980) + 10) / 10.0;
+    zbe::Ray<2> ray{{xpos, ypos},
+                    {hvel, vvel}};
+
+    zbe::AABB<2> aabb{{xpos+hvel-50, ypos+vvel},
+                      {xpos+hvel, ypos+vvel+50}};
+
+
+    int64_t t = zbe::SECOND;
+    zbe::Point<2> p = ray.o + ((ray.d * t) * zbe::INVERSE_SECOND);
+
+    int64_t tMax = 10 * zbe::SECOND;
+    testRayInsideAABBWith(ray, aabb, tMax, t, p, zbe::TIME_QUANTUM, minDistX, minDistY, t > 0);
+  }
+}
+
+TEST(Intersections, BeamOutsideAABB_BottomLeftCorner) {
+  //srand(time(NULL));
+  for(int i = 0; i < ITERATIONS ; i++) {
+    double hvel = ((rand() % 9000) + 1000) / 10.0;
+    double vvel = -((rand() % 9000) + 1000) / 10.0;
+    double minDistX = zbe::TIME_QUANTUM_VALUE * hvel;
+    double minDistY = zbe::TIME_QUANTUM_VALUE * vvel;
+    double xpos = ((rand() % 9980) + 10) / 10.0;
+    double ypos = ((rand() % 9980) + 10) / 10.0;
+    zbe::Ray<2> ray{{xpos, ypos},
+                    {hvel, vvel}};
+
+    zbe::AABB<2> aabb{{xpos+hvel, ypos+vvel-50},
+                      {xpos+hvel+50, ypos+vvel}};
+
+    int64_t t = zbe::SECOND;
+    zbe::Point<2> p = ray.o + ((ray.d * t) * zbe::INVERSE_SECOND);
+
+    int64_t tMax = 10 * zbe::SECOND;
+    testRayInsideAABBWith(ray, aabb, tMax, t, p, zbe::TIME_QUANTUM, minDistX, minDistY, t > 0);
+  }
+}
+
+TEST(Intersections, BeamOutsideAABB_BottomRightCorner) {
+  //srand(time(NULL));
+  for(int i = 0; i < ITERATIONS ; i++) {
+    double hvel = -((rand() % 9000) + 1000) / 10.0;
+    double vvel = -((rand() % 9000) + 1000) / 10.0;
+    double minDistX = zbe::TIME_QUANTUM_VALUE * hvel;
+    double minDistY = zbe::TIME_QUANTUM_VALUE * vvel;
+    double xpos = ((rand() % 9980) + 10) / 10.0;
+    double ypos = ((rand() % 9980) + 10) / 10.0;
+    zbe::Ray<2> ray{{xpos, ypos},
+                    {hvel, vvel}};
+
+    zbe::AABB<2> aabb{{xpos+hvel-50, ypos+vvel-50},
+                      {xpos+hvel, ypos+vvel}};
+
+    int64_t t = zbe::SECOND;
+    zbe::Point<2> p = ray.o + ((ray.d * t) * zbe::INVERSE_SECOND);
+
+    int64_t tMax = 10 * zbe::SECOND;
+    testRayInsideAABBWith(ray, aabb, tMax, t, p, zbe::TIME_QUANTUM, minDistX, minDistY, t > 0);
+  }
 }
 
 void testMovingCircleInsideABB(zbe::Circle ball, zbe::Vector2D velocity, zbe::AABB<2> block, int64_t tMax, int64_t time, zbe::Point<2> point, int64_t maxTimeDiff = 0, double maxXDiff = 0.0, double maxYDiff = 0.0, bool expected =  true){

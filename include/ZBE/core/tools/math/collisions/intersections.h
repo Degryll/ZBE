@@ -36,10 +36,13 @@ bool intersectionBeamInsideAABB(Ray<dim> ray, AABB<dim> box, int64_t &time, Poin
 inline bool intersectionBeamInsideAABB2D(Ray2D ray, AABB2D box, int64_t &time, Point2D& point) {return (intersectionBeamInsideAABB<2>(ray, box, time, point));} //!< 2D allias of intersectionRayInsideAABB.
 inline bool intersectionBeamInsideAABB3D(Ray3D ray, AABB3D box, int64_t &time, Point3D& point) {return (intersectionBeamInsideAABB<3>(ray, box, time, point));} //!< 3D allias of intersectionRayInsideAABB.
 
-template <unsigned dim>
-bool intersectionRayOutsideAABB(Ray<dim> ray, AABB<dim> box, int64_t &time, Point<dim>& point);
-inline bool intersectionRayOutsideAABB2D(Ray2D ray, AABB2D box, int64_t &time, Point2D& point) {return (intersectionRayOutsideAABB<2>(ray,box,time,point));}  //!< 2D allias of intersectionRayOutsideAABB.
-inline bool intersectionRayOutsideAABB3D(Ray3D ray, AABB3D box, int64_t &time, Point3D& point) {return (intersectionRayOutsideAABB<3>(ray,box,time,point));}  //!< 3D allias of intersectionRayOutsideAABB.
+/************************************/
+/* EL QUANTIZER DE TIEMPO NO FUNCIONA CON NEGATIVOS*/
+/*************************************/
+//template <unsigned dim>
+//bool intersectionRayOutsideAABB(Ray<dim> ray, AABB<dim> box, int64_t &time, Point<dim>& point);
+//inline bool intersectionRayOutsideAABB2D(Ray2D ray, AABB2D box, int64_t &time, Point2D& point) {return (intersectionRayOutsideAABB<2>(ray,box,time,point));}  //!< 2D allias of intersectionRayOutsideAABB.
+//inline bool intersectionRayOutsideAABB3D(Ray3D ray, AABB3D box, int64_t &time, Point3D& point) {return (intersectionRayOutsideAABB<3>(ray,box,time,point));}  //!< 3D allias of intersectionRayOutsideAABB.
 
 template <unsigned dim>
 bool intersectionSegmentOutsideAABB(Ray<dim> ray, AABB<dim> box, int64_t &time, Point<dim>& point);
@@ -178,17 +181,22 @@ bool intersectionBeamInsideAABB(Ray<dim> ray, AABB<dim> box, int64_t &time, Poin
  *
  * \param ray A ray defined by its origin and a direction.
  * \param box An AABB defined by its minimum and maximum corners.
- * \param time Time of the collision, if any.
+ * \param time Initialy it has a limit time, if the collision happens before that time, its value is updated.
  * \param point Stores the point of collision, if any.
  * \return True if there is a collision between tmin and tmax, false otherwise.
  * \sa intersectionBeamOutsideAABB and intersectionSegmentOutsideAABB.
  */
-template <unsigned dim>
-inline bool intersectionRayOutsideAABB(Ray<dim> ray, AABB<dim> box, int64_t &time, Point<dim> &point) {
-  int64_t tmin = std::numeric_limits<int64_t>::min();
-  int64_t tmax = std::numeric_limits<int64_t>::max();
-  return (rayOutsideAABB(ray, box, tmin, tmax, time, point));
-}
+
+/************************************/
+/* EL QUANTIZER DE TIEMPO NO FUNCIONA CON NEGATIVOS*/
+/*************************************/
+
+//template <unsigned dim>
+//inline bool intersectionRayOutsideAABB(Ray<dim> ray, AABB<dim> box, int64_t &time, Point<dim> &point) {
+//  int64_t tmin = std::numeric_limits<int64_t>::min();
+//  int64_t tmax = std::numeric_limits<int64_t>::max();
+//  return (rayOutsideAABB(ray, box, tmin, tmax, time, point));
+//}
 
 /** \brief Computes the collision of a N-dimensional Segment and AABB.
  *
@@ -198,7 +206,7 @@ inline bool intersectionRayOutsideAABB(Ray<dim> ray, AABB<dim> box, int64_t &tim
  * \param box An AABB defined by its minimum and maximum corners.
  * \param tmin If the collision happens before this time, is discarded.
  * \param tmax If the collision happens after this time, is discarded.
- * \param time Time of the collision, if any.
+ * \param time Initialy it has a limit time, if the collision happens before that time, its value is updated.
  * \param point Stores the point of collision, if any.
  * \return True if there is a collision between tmin and tmax, false otherwise.
  * \sa intersectionRayOutsideAABB and intersectionBeamOutsideAABB.
@@ -218,7 +226,7 @@ inline bool intersectionSegmentOutsideAABB(Ray<dim> ray, AABB<dim> box, int64_t 
  * \param box An AABB defined by its minimum and maximum corners.
  * \param tmin If the collision happens before this time, is discarded.
  * \param tmax If the collision happens after this time, is discarded.
- * \param time Time of the collision, if any.
+ * \param time Initialy it has a limit time, if the collision happens before that time, its value is updated.
  * \param point Stores the point of collision, if any.
  * \return True if there is a collision between tmin and tmax, false otherwise.
  * \sa intersectionRayOutsideAABB and intersectionSegmentOutsideAABB.
@@ -241,7 +249,7 @@ inline bool intersectionBeamOutsideAABB(Ray<dim> ray, AABB<dim> box, int64_t &ti
  * \param box An AABB defined by its minimum and maximum corners.
  * \param tmin If the collision happens before this time, is discarded.
  * \param tmax If the collision happens after this time, is discarded.
- * \param time Time of the collision, if any.
+ * \param time Initialy it has a limit time, if the collision happens before that time, its value is updated.
  * \param point Stores the point of collision, if any.
  * \return True if there is a collision between tmin and tmax, false otherwise.
  * \sa intersectionRayOutsideAABB, intersectionSegmentOutsideAABB and intersectionBeamOutsideAABB.
@@ -250,7 +258,7 @@ inline bool intersectionBeamOutsideAABB(Ray<dim> ray, AABB<dim> box, int64_t &ti
 template <unsigned dim>
 bool rayOutsideAABB(Ray<dim> ray, AABB<dim> box, int64_t tmin, int64_t tmax, int64_t &time, Point<dim> &point) {
   for (unsigned i = 0; i < dim; i++) {
-    if (ray.d[i] == 0) {
+    if (abs(ray.d[i]) < PRECISION) {
       // Ray is parallel to slab. No hit if origin not within slab
       if (ray.o[i] < box.minimum[i] || ray.o[i] > box.maximum[i]) return (false);
     } else {
@@ -268,7 +276,7 @@ bool rayOutsideAABB(Ray<dim> ray, AABB<dim> box, int64_t tmin, int64_t tmax, int
     }
   }
 
-  if (tmin > tmax) return (false);
+  if ((tmin > time) || (tmin == 0)) return (false);
 
   time = tmin;
   point = ray.o + ((ray.d * time) * INVERSE_SECOND);
