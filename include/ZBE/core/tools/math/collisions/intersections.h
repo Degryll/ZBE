@@ -59,10 +59,13 @@ bool intersectionMovingNSphereInsideAABB(NSphere<dim> nsphere, Vector<dim> direc
 inline bool IntersectionMovingCircleInsideAABB2D(Circle circle, Vector2D direction, AABB2D box, int64_t& time, Point2D& point) {return (intersectionMovingNSphereInsideAABB<2>(circle,direction,box, time,point));}  //!< 2D allias of IntersectionMovingNSphereInsideAABB.
 inline bool IntersectionMovingSphereInsideAABB3D(Sphere sphere, Vector3D direction, AABB3D box, int64_t& time, Point3D& point) {return (intersectionMovingNSphereInsideAABB<3>(sphere,direction,box, time,point));}  //!< 3D allias of IntersectionMovingNSphereInsideAABB.
 
+
 template <unsigned dim>
 bool intersectionMovingNSphereOutsideAABB(NSphere<dim> nsphere, Vector<dim> direction, AABB<dim> box, int64_t& time, Point<dim>& point);
-inline bool IntersectionMovingCircleOutsideAABB2D(Circle circle, Vector2D direction, AABB2D box, int64_t& time, Point2D& point) {return (intersectionMovingNSphereOutsideAABB<2>(circle,direction,box,time,point));}  //!< 2D allias of IntersectionMovingNSphereOutsideAABB.
+//inline bool IntersectionMovingCircleOutsideAABB2D(Circle circle, Vector2D direction, AABB2D box, int64_t& time, Point2D& point) {return (intersectionMovingNSphereOutsideAABB<2>(circle,direction,box,time,point));}  //!< 2D allias of IntersectionMovingNSphereOutsideAABB.
 inline bool IntersectionMovingSphereOutsideAABB3D(Sphere sphere, Vector3D direction, AABB3D box, int64_t& time, Point3D& point) {return (intersectionMovingNSphereOutsideAABB<3>(sphere,direction,box,time,point));}  //!< 3D allias of IntersectionMovingNSphereOutsideAABB.
+
+bool IntersectionMovingCircleOutsideAABB2D(NSphere<2> nsphere, Vector<2> direction, AABB<2> box, int64_t& time, Point<2>& point);
 
 /** \brief A template function that compute the time and point of collision (if any) of an N-dimensional ray and a NSphere.
  *
@@ -92,14 +95,13 @@ bool intersectionRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, int64_t &time, P
 
   if (discr < 0) return (false);
 
-  int64_t taux = time;
-  int64_t t = (int64_t)((-b - sqrt(discr)) / (2 * a));
-  if (t < 0) t = 0;
-  if (t > taux) return (false);
-  taux = t;
+  int64_t t = (int64_t)(((-b - sqrt(discr)) / (2 * a)) * zbe::SECOND);
+  t = quantizeTime(t);
+  if (t <= 0) return (false);
+  if (t > time) return (false);
 
-  point = ray.o + ray.d * taux;
-  time = taux;
+  time = t;
+  point = ray.o + (ray.d * time) * zbe::INVERSE_SECOND;
 
   return (true);
 }
@@ -133,13 +135,13 @@ bool intersectionNormalRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, int64_t &t
 
   if (discr < 0) return (false);
 
-  int64_t taux = time;
   int64_t t = (int64_t)(-b - sqrt(discr));
-  if (t < 0) t = 0;
-  if (t > taux) return (false);
-  taux = t;
-  point = ray.o + ray.d * taux;
-  time = taux;
+  t = quantizeTime(t);
+  if (t <= 0) return (false);
+  if (t > time) return (false);
+
+  time = t;
+  point = ray.o + ray.d * time;
 
   return (true);
 }
@@ -283,52 +285,6 @@ bool rayOutsideAABB(Ray<dim> ray, AABB<dim> box, int64_t tmin, int64_t tmax, int
   return (true);
 }
 
-/** \brief Computes the collision of a moving circle with an AABB. Outside approaching.
- *
- * \param Circle The moving circle.
- * \param direction The velocity of the moving sphere.
- * \param box The static AABB.
- * \param time Initialy it has a limit time, if the collision happens before that time, its value is updated.
- * \param point Stores the point of collision, if any.
- * \return True if there is a collision before the initial value of time, false otherwise.
- */
-template <unsigned dim>
-bool intersectionMovingNSphereOutsideAABB(NSphere<dim> nsphere, Vector<dim> direction, AABB<dim> box, int64_t& time, Point<dim>& point) {
-  double r = nsphere.r;
-  AABB<dim> e = box;
-  for(unsigned i = 0; i < dim; i++) {
-    e.minimum[i] -= r;
-    e.maximum[i] += r;
-  }
-
-  int64_t t = time;
-
-  Ray<dim> ray(nsphere.c, direction);
-  if (!intersectionBeamOutsideAABB<dim>(ray, e, t, point) || t > time) {return (false);}
-  double bmin[dim];
-  double bmax[dim];
-  for(unsigned i = 0; i < dim; i++) {
-    bmin[i] = box.minimum[i];
-    bmax[i] = box.maximum[i];
-  }
-  Point<dim> c;
-  int m=0;
-  for(unsigned i = 0; i < dim; i++) {
-    if (point[i] < bmin[i]) {m++; c[i] = bmin[i]; point[i] += r;}
-    if (point[i] > bmax[i]) {m++; c[i] = bmax[i]; point[i] -= r;}
-  }
-
-  // The collision happens at the corner of the expansion box
-  // Check if there is an intersection with the vertex.
-  if (m == dim) {
-    return (intersectionRayNSphere<dim>(ray, NSphere<dim>(c,r), time, point));
-  }
-
-  time = t;
-  // The intersection with the expanded AABB e is the correct.
-  return (true);
-}
-
 /** \brief Computes the collision of a moving circle with an AABB. Inside approaching.
  *
  * \param Circle The moving circle.
@@ -364,6 +320,21 @@ bool intersectionMovingNSphereInsideAABB(NSphere<dim> nsphere, Vector<dim> direc
 
   return (false);
 }
+
+///** \brief Computes the collision of a moving circle with an AABB. Outside approach.
+// *
+// * \param NSphere<2> The moving circle.
+// * \param direction The velocity of the moving sphere.
+// * \param box The static AABB.
+// * \param time Initialy it has a limit time, if the collision happens before that time, its value is updated.
+// * \param point Stores the point of collision, if any.
+// * \return True if there is a collision before the initial value of time, false otherwise.
+// */
+//template <unsigned dim>
+//bool intersectionMovingNSphereOutsideAABB(NSphere<dim> nsphere, Vector<dim> direction, AABB<dim> box, int64_t& time, Point<dim>& point) {
+//
+//  return (false);
+//}
 
 }  // namespace zbe
 

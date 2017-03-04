@@ -16,42 +16,40 @@
 
 namespace IntersectionsTest {
 
-static const int ITERATIONS = 40000000;
+static const int ITERATIONS = 1;//40000000;
 
-TEST(Intersections, DISABLED_RaySphere) {
-  EXPECT_EQ(0,zbe::SysError::getNErrors()) << "Initially no errors.";
-
-  zbe::Ray<2> ray{{20,30},{50,100}};
-  zbe::NSphere<2> nsphere{{80,90},30};
+TEST(Intersections, RaySphere) {
+  zbe::Ray<2> ray{{2.0,3.0},{5.0,10.0}};
+  zbe::NSphere<2> nsphere{{8.0,9.0},3.0};
   bool result;
   zbe::Point<2> p;
   int64_t t = zbe::SECOND;
 
+  int64_t texpected = zbe::quantizeTime(39168);
+  zbe::Point<2> q = ray.o + (ray.d * texpected) * zbe::INVERSE_SECOND;
   result = intersectionRayNSphere(ray, nsphere, t, p);
   EXPECT_TRUE(result) << "First Ray vs Nsphere collision.";
-  EXPECT_DOUBLE_EQ(6, t) << "Time of collision.";
-  EXPECT_DOUBLE_EQ(50, p[0]) << "Point of collision (x).";
-  EXPECT_DOUBLE_EQ(90, p[1]) << "Point of collision (y).";
+  EXPECT_DOUBLE_EQ(texpected, t) << "Time of collision.";
+  EXPECT_DOUBLE_EQ(q[0], p[0]) << "Point of collision (x).";
+  EXPECT_DOUBLE_EQ(q[1], p[1]) << "Point of collision (y).";
 
   t = zbe::SECOND;
-  nsphere.c[0] = 50;
-  nsphere.c[1] = 120;
+  nsphere.c[0] = 5.0;
+  nsphere.c[1] = 12.0;
 
   result = intersectionRayNSphere(ray, nsphere, t, p);
   EXPECT_TRUE(result) << "Second Ray vs Nsphere collision.";
-  EXPECT_DOUBLE_EQ(6,t) << "Time of collision.";
-  EXPECT_DOUBLE_EQ(50,p[0]) << "Point of collision (x).";
-  EXPECT_DOUBLE_EQ(90,p[1]) << "Point of collision (y).";
+  EXPECT_DOUBLE_EQ(texpected, t) << "Time of collision.";
+  EXPECT_DOUBLE_EQ(q[0], p[0]) << "Point of collision (x).";
+  EXPECT_DOUBLE_EQ(q[1], p[1]) << "Point of collision (y).";
 
   t = zbe::SECOND;
-  nsphere.c[0] = 80;
-  nsphere.c[1] = 90;
+  nsphere.c[0] = 8.0;
+  nsphere.c[1] = 9.0;
   nsphere.r = 10;
 
   result = intersectionRayNSphere(ray, nsphere, t, p);
-  EXPECT_EQ(0,result) << "Third Ray vs Nsphere collision.";
-
-  zbe::SysError::clear();
+  EXPECT_FALSE(result) << "Third Ray vs Nsphere collision.";
 }
 
 TEST(Intersections, DISABLED_NormalRaySphere) {
