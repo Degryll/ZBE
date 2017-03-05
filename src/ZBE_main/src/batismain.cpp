@@ -138,6 +138,7 @@ int batismain(int, char** ) {
   ieg.addHandler(zbe::ZBEK_d, &ihright);*/
   game::ExitInputHandler terminator;
   ieg.addHandler(zbe::ZBEK_ESCAPE, &terminator);
+  ieg.addHandler(zbe::ZBEK_RETURN, &terminator);
 
   std::forward_list<game::GameBall*> balls;
   for(int i = 0; i<10000 ; i++){
