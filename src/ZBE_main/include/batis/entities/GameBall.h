@@ -7,8 +7,8 @@
  * @brief A ball for an arkanoid.
  */
 
-#ifndef ZBE_MAIN_GAME_GAMEBALL
-#define ZBE_MAIN_GAME_GAMEBALL
+#ifndef ZBE_MAIN_BATIS_GAMEBALL
+#define ZBE_MAIN_BATIS_GAMEBALL
 
 #include "ZBE/archetypes/Drawable.h"
 #include "ZBE/archetypes/implementations/SimpleWideMobileAPO.h"
@@ -18,12 +18,12 @@
 #include "game/GameReactor.h"
 #include "game/reactobjects/GameReactObjects.h"
 
-namespace game{
+namespace batis{
 
   class GameBall: public zbe::Drawable,
                   public zbe::SimpleSpriteEntityAdapted<zbe::Drawable>,
                   public zbe::SimpleWideMobileAPO<2>,
-                  public zbe::MovableCollisionatorEntityAdapted<GameReactor, zbe::SimpleWideMobileAPO<2>, 2> {
+                  public zbe::MovableCollisionatorEntityAdapted<game::GameReactor, zbe::SimpleWideMobileAPO<2>, 2> {
     public:
 			GameBall(const GameBall&) = delete;
       void operator=(const GameBall&) = delete;
@@ -48,6 +48,6 @@ namespace game{
       int idBall;
   };
 
-}  // namespace game
+}  // namespace batis
 
-#endif // ZBE_MAIN_GAME_GAMEBALL
+#endif // ZBE_MAIN_BATIS_GAMEBALL

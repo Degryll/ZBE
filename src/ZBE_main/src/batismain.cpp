@@ -145,7 +145,7 @@ int batismain(int, char** ) {
   zbe::BaseSphereMCMAPOAdaptor<game::GameReactor, 2> * movableCatorAdaptor = new zbe::BaseSphereMCMAPOAdaptor<game::GameReactor, 2>();
 
 
-  std::forward_list<game::GameBall*> balls;
+  std::forward_list<batis::GameBall*> balls;
   for(int i = 0; i<10 ; i++){
 
       int64_t vt = 200;
@@ -164,7 +164,7 @@ int batismain(int, char** ) {
 
       printf("Ball %i: %i, %i\n", i, vx, vy);
 
-      game::GameBall* ball = new game::GameBall((WIDTH/2),(HEIGHT/2), 16, vx, vy, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics, i);
+      batis::GameBall* ball = new batis::GameBall((WIDTH/2),(HEIGHT/2), 16, vx, vy, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics, i);
       //game::GameBall* ball = new game::GameBall(31407009,1063841, 16 << zbe::PRECISION_DIGITS, 1000 << zbe::PRECISION_DIGITS,1000 << zbe::PRECISION_DIGITS, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
       ctl.push_front(ball);
       ball->setSimpleSpriteAdaptor(spriteAdaptor);
@@ -212,7 +212,7 @@ int batismain(int, char** ) {
 
     /*Finds balls inside block area.
     */
-    std::forward_list<game::GameBall*>::iterator ballIt;
+    std::forward_list<batis::GameBall*>::iterator ballIt;
     for (ballIt = balls.begin(); ballIt != balls.end(); ballIt++){
       if ((*ballIt)->getX()>50 && (*ballIt)->getX()<82 && (*ballIt)->getY()>50 && (*ballIt)->getY()<82) { printf("Bola %i, FATALMAL\n", (*ballIt)->getId());}
     }
