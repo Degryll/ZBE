@@ -141,15 +141,15 @@ int gamemain(int, char** ) {
   ieg.addHandler(zbe::ZBEK_ESCAPE, &terminator);
 
   std::forward_list<game::GameBall*> balls;
-  for(int i = 0; i<1000 ; i++){
-      game::GameBall* ball = new game::GameBall((WIDTH/2 + rand()%100-50), (HEIGHT/2 + rand()%100-50), 16 , (rand()%200 - 100), (rand()%200 - 100), BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
-      //game::GameBall* ball = new game::GameBall(151, 132, 16 , -100, -100, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
+  for(int i = 0; i<1000 ; i++){//98.623993, 85.728439
+      //game::GameBall* ball = new game::GameBall(98.623993, 85.728439, 16 , -100, -100, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
+      game::GameBall* ball = new game::GameBall((rand()%200 + 400), (rand()%200 + 400), 16 , (rand()%2000 - 1000), (rand()%2000 - 1000), BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
       ctl.push_front(ball);
       ball->setSimpleSpriteAdaptor(spriteAdaptor);
       ball->setMovableCollisionatorAdaptor(movableCatorAdaptor);
       vmobile.push_back(ball);
       balls.push_front(ball);
-    	sprites.push_front(ball);
+      sprites.push_front(ball);
   }
 
   printf("Creating the bricks\n");fflush(stdout);

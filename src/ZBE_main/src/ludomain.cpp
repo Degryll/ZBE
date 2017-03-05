@@ -33,6 +33,8 @@
 #include "game/events/handlers/StepInputHandler.h"
 #include "game/events/handlers/ExitInputHandler.h"
 
+#include "game/entities/GameBlock.h"
+
 #include "ludo/LudoReactor.h"
 #include "ludo/drawers/LudoDrawers.h"
 #include "ludo/entities/LudoEntities.h"
@@ -59,6 +61,7 @@ int ludomain(int, char** ) {
     BALLACTUATORLIST = 1,
     COLLISIONABLELIST = 1,
     BOARDACTUATORLIST = 1,
+    BRICKACTUATORLIST = 2,
 
     WIDTH = 1280,
     HEIGHT = 768
@@ -68,7 +71,9 @@ int ludomain(int, char** ) {
   const char simpleBallImg[] = "data/images/zombieball/simple_ball_32.png";
   const char mouseImg[] = "data/images/zombieball/mouse.png";
   const char arrowImg[] = "data/images/ludo/arrow_r_000_32.png";
+  const char brickfilename[] = "data/images/zombieball/braikn_32.png";
   unsigned ballgraphics[4];
+  uint64_t brickgraphics;
 
   printf("3 / 5 %d\n", 3/5);fflush(stdout);
   printf("2 / 5 %d\n", 2/5);fflush(stdout);
@@ -115,8 +120,10 @@ int ludomain(int, char** ) {
   ballgraphics[1] = window.loadImg(simpleBallImg);
   ballgraphics[2] = window.loadImg(mouseImg);
   ballgraphics[3] = window.loadImg(arrowImg);
+  brickgraphics = window.loadImg(brickfilename);
   printf("Building the drawer to paint SimpleSprite's \n");fflush(stdout);
-  ludo::SimpleRotatedSpriteSDLDrawer drawer(&window);
+  ludo::SimpleRotatedSpriteSDLDrawer rDrawer(&window);
+  zbe::SimpleSpriteSDLDrawer drawer(&window);
   printf("|-------------------- Daemons ----------------------|\n");fflush(stdout);
   zbe::DaemonMaster dMaster;
   std::vector<zbe::Mobile<2>*> vmobile;
@@ -125,8 +132,10 @@ int ludomain(int, char** ) {
   std::shared_ptr<zbe::Daemon> bball(new  zbe::BehaviorDaemon< zbe::Mobile<2>, std::vector<zbe::Mobile<2>*> >(new zbe::UniformLinearMotion<2>(), MOBILELIST));
   dMaster.addDaemon(bball);
   printf("|------------------- Creating entities --------------------|\n");fflush(stdout);
-  printf("Creating a ball and giving it a position and size\n");fflush(stdout);
+  printf("Creating drawables list\n");fflush(stdout);
+  std::forward_list<zbe::SimpleSpriteEntity*> sprites;
 
+  printf("Creating a ball and giving it a position and size\n");fflush(stdout);
   //ball
   std::forward_list< zbe::Actuator< zbe::MovableCollisioner<ludo::LudoReactor, 2>, ludo::LudoReactor >*> ballActuatorsList;
   zbe::ListManager< std::forward_list< zbe::Actuator< zbe::MovableCollisioner<ludo::LudoReactor, 2>, ludo::LudoReactor >* > >& lmBallActuatorsList = zbe::ListManager< std::forward_list< zbe::Actuator< zbe::MovableCollisioner<ludo::LudoReactor, 2>, ludo::LudoReactor >* > >::getInstance();
@@ -139,7 +148,7 @@ int ludomain(int, char** ) {
   lmCollisionablesList.insert(COLLISIONABLELIST, &collisionablesList);
 
   printf("Building an sprite adaptor for the ball\n");fflush(stdout);
-  ludo::RotatedDrawableSimpleRotatedSpriteAdaptor* spriteAdaptor = new ludo::RotatedDrawableSimpleRotatedSpriteAdaptor();
+  ludo::RotatedDrawableSimpleRotatedSpriteAdaptor* rSpriteAdaptor = new ludo::RotatedDrawableSimpleRotatedSpriteAdaptor();
   zbe::BaseSphereMCMAPOAdaptor<ludo::LudoReactor, 2> * movableCatorAdaptor = new zbe::BaseSphereMCMAPOAdaptor<ludo::LudoReactor, 2>();
   game::ExitInputHandler terminator;
   ieg.addHandler(zbe::ZBEK_RETURN, &terminator);
@@ -165,12 +174,24 @@ int ludomain(int, char** ) {
 
       ludo::LudoBall<ludo::LudoReactor>* ball = new ludo::LudoBall<ludo::LudoReactor>( xc, yc, r, vx, vy, BALLACTUATORLIST, COLLISIONABLELIST, graphId);
       ctl.push_front(ball);
-      ball->setSimpleRotatedSpriteAdaptor(spriteAdaptor);
+      ball->setSimpleRotatedSpriteAdaptor(rSpriteAdaptor );
       ball->setMovableCollisionatorAdaptor(movableCatorAdaptor);
       vmobile.push_back(ball);
       balls.push_front(ball);
       ballCount++;
   }
+
+  printf("Creating the bricks\n");fflush(stdout);
+  //bricks
+  zbe::ListManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<ludo::LudoReactor>, ludo::LudoReactor>*> >& lmSimpleConerActuatorsList = zbe::ListManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<ludo::LudoReactor>, ludo::LudoReactor>*> >::getInstance();
+  std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<ludo::LudoReactor>, ludo::LudoReactor>*> brickActuatorsList;
+  lmSimpleConerActuatorsList.insert(BRICKACTUATORLIST, &brickActuatorsList);
+  //GameBlock(double x, double y, double width, double height, uint64_t graphics, uint64_t actuatorsList)
+  game::GameBlock brick(50 ,50, 51, 32, brickgraphics, BRICKACTUATORLIST);
+  zbe::SimpleSpriteAdaptor<zbe::Drawable>* spriteAdaptor = new zbe::SimpleDrawableSimpleSpriteAdaptor();
+  brick.setSimpleSpriteAdaptor(spriteAdaptor);
+  //collisionablesList.push_front(&brick);
+  sprites.push_front(&brick);
 
   printf("Creating the board and giving it a size\n");fflush(stdout);
   //board
@@ -247,7 +268,11 @@ int ludomain(int, char** ) {
     }
 
     for(auto b : balls){
-        drawer.apply(b->getSimpleRotatedSprite().get());
+        rDrawer.apply(b->getSimpleRotatedSprite().get());
+    }
+
+    for(auto s : sprites){
+        drawer.apply(s->getSimpleSprite().get());
     }
 
     /* If one or more error occurs, the ammount and the first one

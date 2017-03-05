@@ -32,8 +32,8 @@ bool IntersectionMovingCircleOutsideAABB2D(NSphere<2> nsphere, Vector<2> directi
   Point<2> c;
   Ray<2> ray(nsphere.c, direction);
 
-  if ((nsphere.c[0] > e.minimum[0]) && (nsphere.c[0] < e.maximum[0])
-  &&  ((nsphere.c[1] > e.minimum[1]) && (nsphere.c[1] < e.maximum[1]))) {
+  if (((nsphere.c[0] + direction[0] * TIME_QUANTUM_VALUE) >= e.minimum[0]) && ((nsphere.c[0] + direction[0] * TIME_QUANTUM_VALUE) <= e.maximum[0])
+  &&  ((nsphere.c[1] + direction[1] * TIME_QUANTUM_VALUE) >= e.minimum[1]) && ((nsphere.c[1] + direction[1] * TIME_QUANTUM_VALUE) <= e.maximum[1])) {
     for(unsigned i = 0; i < 2; i++) {
       if (nsphere.c[i] < box.minimum[i]) {c[i] = box.minimum[i]; point[i] = box.minimum[i];}
       if (nsphere.c[i] > box.maximum[i]) {c[i] = box.maximum[i]; point[i] = box.maximum[i];}
