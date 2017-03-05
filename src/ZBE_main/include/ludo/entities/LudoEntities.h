@@ -82,7 +82,7 @@ public:
   int64_t getW()        {return (d);}
   int64_t getH()        {return (d);}
   double  getAngle()    {return getVelocity().getDegrees();}
-  int     getGraphics() {return (g);}
+  uint64_t getGraphics() {return (g);}
 
 private:
   int g;    //!< Image index
@@ -93,8 +93,8 @@ private:
 template<typename R>
 class LudoBoard : public zbe::CollisionerEntity<R> {
 public:
-  LudoBoard(double width, double height, uint64_t actuatorsList)
-    : c(new zbe::SimpleCollisioner<R>(std::make_shared<zbe::StaticLimiterAABB2D<R> >(zbe::AABB2D(zbe::AABB2D({0, 0}, {width, height} ))),
+  LudoBoard(double x1, double y1, double x2, double y2, uint64_t actuatorsList)
+    : c(new zbe::SimpleCollisioner<R>(std::make_shared<zbe::StaticLimiterAABB2D<R> >(zbe::AABB2D(zbe::AABB2D({x1, y1}, {x2, y2} ))),
          std::make_shared<zbe::VoidReactObject<R> >(),
          actuatorsList)) {}
 

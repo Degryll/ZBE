@@ -34,6 +34,7 @@
 #include "game/GameReactor.h"
 #include "game/entities/GameBall.h"
 #include "game/entities/GameBoard.h"
+#include "game/entities/GameBlock.h"
 #include "game/events/handlers/StepInputHandler.h"
 #include "game/events/handlers/ExitInputHandler.h"
 #include "game/events/handlers/GameBallBouncer.h"
@@ -52,13 +53,16 @@ int gamemain(int, char** ) {
     BALLACTUATORLIST = 1,
     COLLISIONABLELIST = 1,
     BOARDACTUATORLIST = 1,
+    BRICKACTUATORLIST = 2,
 
     WIDTH = 1024,
     HEIGHT = 768
   };
 
   const char ballfilename[] = "data/images/zombieball/zomball_st_32.png";
-  unsigned ballgraphics;
+  const char brickfilename[] = "data/images/zombieball/braikn_32.png";
+  uint64_t ballgraphics;
+  uint64_t brickgraphics;
 
   printf("3 / 5 %d\n", 3/5);fflush(stdout);
   printf("2 / 5 %d\n", 2/5);fflush(stdout);
@@ -103,6 +107,7 @@ int gamemain(int, char** ) {
   printf("Building the window to draw on\n");fflush(stdout);
   zbe::Window window(WIDTH,HEIGHT);
   ballgraphics = window.loadImg(ballfilename);
+  brickgraphics = window.loadImg(brickfilename);
   printf("Building the drawer to paint SimpleSprite's \n");fflush(stdout);
   zbe::SimpleSpriteSDLDrawer drawer(&window);
   printf("|-------------------- Daemons ----------------------|\n");fflush(stdout);
@@ -113,6 +118,9 @@ int gamemain(int, char** ) {
   std::shared_ptr<zbe::Daemon> bball(new  zbe::BehaviorDaemon< zbe::Mobile<2>, std::vector<zbe::Mobile<2>*> >(new zbe::UniformLinearMotion<2>(), MOBILELIST));
   dMaster.addDaemon(bball);
   printf("|------------------- Creating entities --------------------|\n");fflush(stdout);
+  printf("Creating drawables list\n");fflush(stdout);
+  std::forward_list<zbe::SimpleSpriteEntity*> sprites;
+
   printf("Creating a ball and giving it a position and size\n");fflush(stdout);
 
   //ball
@@ -129,32 +137,39 @@ int gamemain(int, char** ) {
   printf("Building an sprite adaptor for the ball\n");fflush(stdout);
   zbe::SimpleSpriteAdaptor<zbe::Drawable>* spriteAdaptor = new zbe::SimpleDrawableSimpleSpriteAdaptor();
   zbe::BaseSphereMCMAPOAdaptor<game::GameReactor, 2> * movableCatorAdaptor = new zbe::BaseSphereMCMAPOAdaptor<game::GameReactor, 2>();
-  /*game::StepInputHandler ihright(&ball, 5, 0);
-  game::StepInputHandler ihleft(&ball, -5, 0);
-  ieg.addHandler(zbe::ZBEK_a, &ihleft);
-  ieg.addHandler(zbe::ZBEK_d, &ihright);*/
   game::ExitInputHandler terminator;
   ieg.addHandler(zbe::ZBEK_ESCAPE, &terminator);
 
   std::forward_list<game::GameBall*> balls;
-  for(int i = 0; i<10000 ; i++){
-      game::GameBall* ball = new game::GameBall((WIDTH/2 + rand()%100-50), (HEIGHT/2 + rand()%100-50), 16 , (rand()%2000 - 1000), (rand()%2000 - 1000), BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
+  for(int i = 0; i<100 ; i++){
+      game::GameBall* ball = new game::GameBall((WIDTH/2 + rand()%100-50), (HEIGHT/2 + rand()%100-50), 16 , (rand()%200 - 100), (rand()%200 - 100), BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
       //game::GameBall* ball = new game::GameBall(31407009,1063841, 16 << zbe::PRECISION_DIGITS, 1000 << zbe::PRECISION_DIGITS,1000 << zbe::PRECISION_DIGITS, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
       ctl.push_front(ball);
       ball->setSimpleSpriteAdaptor(spriteAdaptor);
       ball->setMovableCollisionatorAdaptor(movableCatorAdaptor);
       vmobile.push_back(ball);
       balls.push_front(ball);
+    	sprites.push_front(ball);
   }
+
+  printf("Creating the bricks\n");fflush(stdout);
+  //bricks
+  zbe::ListManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> >& lmSimpleConerActuatorsList = zbe::ListManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> >::getInstance();
+  std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> brickActuatorsList;
+  lmSimpleConerActuatorsList.insert(BRICKACTUATORLIST, &brickActuatorsList);
+  //GameBlock(double x, double y, double width, double height, uint64_t graphics, uint64_t actuatorsList)
+  game::GameBlock brick(50 ,50, 51, 32, brickgraphics, BRICKACTUATORLIST);
+  brick.setSimpleSpriteAdaptor(spriteAdaptor);
+  collisionablesList.push_front(&brick);
+  sprites.push_front(&brick);
 
 	printf("Creating the board and giving it a size\n");fflush(stdout);
   //board
   std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> boardActuatorsList;
-  zbe::ListManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> >& lmBoardActuatorsList = zbe::ListManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> >::getInstance();
-  lmBoardActuatorsList.insert(BOARDACTUATORLIST, &boardActuatorsList);
-
+  lmSimpleConerActuatorsList.insert(BOARDACTUATORLIST, &boardActuatorsList);
   game::GameBoard board(WIDTH, HEIGHT, BOARDACTUATORLIST);
   collisionablesList.push_front(&board);
+
   printf("|=================== Starting up system ===================|\n");fflush(stdout);
   printf("Starting SysTimer\n");fflush(stdout);
   sysTimer->start();
@@ -216,8 +231,8 @@ int gamemain(int, char** ) {
       }
     }
 
-    for(auto b : balls){
-        drawer.apply(b->getSimpleSprite().get());
+    for(auto s : sprites){
+        drawer.apply(s->getSimpleSprite().get());
     }
 
     /* If one or more error occurs, the ammount and the first one

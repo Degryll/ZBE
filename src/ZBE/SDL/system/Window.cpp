@@ -74,16 +74,16 @@ void Window::render(unsigned texID, const SDL_Rect* srcrect, const SDL_Rect* dst
   }
 }
 
-unsigned Window::loadImg(const char *url) {
+uint64_t Window::loadImg(const char *url) {
   m.lock();
     imgCollection.push_back(IMG_LoadTexture(renderer, url));
-    unsigned rid = ntextures++;  // Avoid race condition
+    uint64_t rid = ntextures++;  // Avoid race condition
   m.unlock();
 
   return (rid);
 }
 
-unsigned Window::reloadImg(const char *url, unsigned id) {
+uint64_t Window::reloadImg(const char *url, uint64_t id) {
   m.lock();
     if (id >= ntextures) {
       zbe::SysError::setError(std::string("ERROR: Can't reload Texture: ") + std::to_string(id) + std::string(". Texture doesn't exist."));

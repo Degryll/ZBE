@@ -43,6 +43,8 @@
 
 #include "ludomain.h"
 
+#define PI 3.14159265
+
 int ludomain(int, char** ) {
 
   printf("--- Ludo main ---\n\n");
@@ -58,7 +60,7 @@ int ludomain(int, char** ) {
     COLLISIONABLELIST = 1,
     BOARDACTUATORLIST = 1,
 
-    WIDTH = 1024,
+    WIDTH = 1280,
     HEIGHT = 768
   };
 
@@ -144,10 +146,24 @@ int ludomain(int, char** ) {
 
   int ballCount = 0;
   std::forward_list<ludo::LudoBall<ludo::LudoReactor>*> balls;
-  for(int i = 0; i<100 ; i++){
+  for(int i = 0; i<1000 ; i++){
+      int64_t r = 16 + (rand()% 33);
+      int64_t xc =(WIDTH/2 + rand()%100-50);
+      int64_t yc = (HEIGHT/2 + rand()%100-50);
       unsigned graphId = ballgraphics[(rand()%4)];
-      //ludo::LudoBall<ludo::LudoReactor>* ball = new ludo::LudoBall<ludo::LudoReactor>((WIDTH/2 + rand()%100-50) ,(HEIGHT/2 + rand()%100-50) , 16 , (rand()%2000 - 1000), (rand()%2000 - 1000) , BALLACTUATORLIST, COLLISIONABLELIST, graphId);
-      ludo::LudoBall<ludo::LudoReactor>* ball = new ludo::LudoBall<ludo::LudoReactor>((WIDTH/2 + rand()%100-50) ,(HEIGHT/2 + rand()%100-50) , 16 , (rand()%2000 - 1000), (rand()%2000 - 1000) , BALLACTUATORLIST, COLLISIONABLELIST, graphId);
+      /*graphId = (r<25?2:graphId);
+      graphId = (r<20?:graphId);*/
+
+      int64_t vt = 50;
+      double vAngleL = rand()%3600;
+      vAngleL/=10;
+      double vAngleR = rand()%10000;
+      vAngleR/=100000;
+      double vAngle = vAngleL + vAngleR;
+      int64_t vx = sin(vAngle*PI/180)*vt;
+      int64_t vy = cos(vAngle*PI/180)*vt;
+
+      ludo::LudoBall<ludo::LudoReactor>* ball = new ludo::LudoBall<ludo::LudoReactor>( xc, yc, r, vx, vy, BALLACTUATORLIST, COLLISIONABLELIST, graphId);
       ctl.push_front(ball);
       ball->setSimpleRotatedSpriteAdaptor(spriteAdaptor);
       ball->setMovableCollisionatorAdaptor(movableCatorAdaptor);
@@ -161,8 +177,8 @@ int ludomain(int, char** ) {
   std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<ludo::LudoReactor>, ludo::LudoReactor>*> boardActuatorsList;
   zbe::ListManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<ludo::LudoReactor>, ludo::LudoReactor>*> >& lmBoardActuatorsList = zbe::ListManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<ludo::LudoReactor>, ludo::LudoReactor>*> >::getInstance();
   lmBoardActuatorsList.insert(BOARDACTUATORLIST, &boardActuatorsList);
-
-  ludo::LudoBoard<ludo::LudoReactor> board((WIDTH), (HEIGHT), BOARDACTUATORLIST);
+  double margin = 100;
+  ludo::LudoBoard<ludo::LudoReactor> board(margin, margin, WIDTH - margin, HEIGHT - margin, BOARDACTUATORLIST);
   collisionablesList.push_front(&board);
   printf("|=================== Starting up system ===================|\n");fflush(stdout);
   printf("Starting SysTimer\n");fflush(stdout);
@@ -178,6 +194,8 @@ int ludomain(int, char** ) {
   printf("|==========================================================|\n");fflush(stdout);
   printf("initT = 0x%" PRIx64 " ", initT);fflush(stdout);
   printf("endT = 0x%" PRIx64 "\n", endT);fflush(stdout);
+
+  int64_t maxFrameTime = zbe::SECOND / 32;
 
   bool keep = true;
   while(keep){
@@ -203,8 +221,8 @@ int ludomain(int, char** ) {
     if((endT-initT)==0){
       continue;
     }
-    if((endT - 32768)>initT){
-      initT = endT - 32768;
+    if((endT - maxFrameTime)>initT){
+      initT = endT - maxFrameTime;
     }
 
     while (initT < endT) {

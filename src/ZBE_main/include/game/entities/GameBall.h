@@ -21,26 +21,24 @@
 namespace game{
 
   class GameBall: public zbe::Drawable,
-                  public zbe::SimpleWideMobileAPO<2>,
                   public zbe::SimpleSpriteEntityAdapted<zbe::Drawable>,
+                  public zbe::SimpleWideMobileAPO<2>,
                   public zbe::MovableCollisionatorEntityAdapted<GameReactor, zbe::SimpleWideMobileAPO<2>, 2> {
     public:
 			GameBall(const GameBall&) = delete;
       void operator=(const GameBall&) = delete;
 
       GameBall(double x, double y, double radius, double vx, double vy, uint64_t actuators, uint64_t collisionables, int graphics) :
-                  SimpleWideMobileAPO({x, y}, {vx, vy}, radius, actuators, collisionables),
                   SimpleSpriteEntityAdapted(this),
+                  SimpleWideMobileAPO({x, y}, {vx, vy}, radius, actuators, collisionables),
                   MovableCollisionatorEntityAdapted(this),
                   g(graphics), r(radius), d(2*radius) {}
-
-      ~GameBall() {}
 
       int64_t getX() {return ((int64_t)SimpleWideMobileAPO::getPosition()[0]-r);}
       int64_t getY() {return ((int64_t)SimpleWideMobileAPO::getPosition()[1]-r);}
       int64_t getW()        {return ((int64_t)d);}
       int64_t getH()        {return ((int64_t)d);}
-      int      getGraphics() {return (g);}
+      uint64_t      getGraphics() {return (g);}
 
     private:
       int g;    //!< Image index

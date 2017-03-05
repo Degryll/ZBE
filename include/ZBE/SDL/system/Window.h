@@ -115,7 +115,7 @@ class Window {
      *  \return An id to the texture loaded. Use this id to render the texture or to change the image associated with the texture.
      *  \sa reloadImg(), render()
      */
-    unsigned loadImg(const char *url);
+    uint64_t loadImg(const char *url);
 
     /** \brief Reload an image to an already created texture.
      *
@@ -123,13 +123,13 @@ class Window {
      *  \param An id to the texture already created.
      *  \sa loadImg(), render()
      */
-    unsigned reloadImg(const char *url, unsigned id);
+    uint64_t reloadImg(const char *url, uint64_t id);
 
   private:
     SDL_Starter &sdl;                         //!< SDL instance.
     SDL_Window* window;                       //!< Window.
     SDL_Renderer* renderer;                   //!< Renderer associated with the window
-    unsigned ntextures;                       //!< Number of texture loaded.
+    uint64_t ntextures;                       //!< Number of texture loaded.
     std::vector<SDL_Texture*> imgCollection;  //!< Collection of texture loaded.
     std::mutex m;                             //!< Mutex to avoid race conditions.
 };

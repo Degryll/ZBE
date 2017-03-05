@@ -22,7 +22,7 @@ class Drawable {
     virtual int64_t getY() = 0;
     virtual int64_t getW() = 0;
     virtual int64_t getH() = 0;
-    virtual int getGraphics() = 0;
+    virtual uint64_t getGraphics() = 0;
 };
 
 }  // namespace zbe
