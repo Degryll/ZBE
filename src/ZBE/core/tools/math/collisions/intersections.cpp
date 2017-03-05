@@ -29,11 +29,24 @@ bool IntersectionMovingCircleOutsideAABB2D(NSphere<2> nsphere, Vector<2> directi
   e.maximum[1] += r;
 
   int64_t t = time;
-
+  Point<2> c;
   Ray<2> ray(nsphere.c, direction);
+
+  if ((nsphere.c[0] > e.minimum[0]) && (nsphere.c[0] < e.maximum[0])
+  &&  ((nsphere.c[1] > e.minimum[1]) && (nsphere.c[1] < e.maximum[1]))) {
+    for(unsigned i = 0; i < 2; i++) {
+      if (nsphere.c[i] < box.minimum[i]) {c[i] = box.minimum[i]; point[i] = box.minimum[i];}
+      if (nsphere.c[i] > box.maximum[i]) {c[i] = box.maximum[i]; point[i] = box.maximum[i];}
+    }
+
+    if(!intersectionRayNSphere<2>(ray, NSphere<2>(c,r), t, c) || (t > time)) {return (false);}
+
+    time = t;
+    return (true);
+  }
+
   if (!intersectionBeamOutsideAABB<2>(ray, e, t, point) || t > time) {return (false);}
 
-  Point<2> c;
   int m=0;
   for(unsigned i = 0; i < 2; i++) {
     if (point[i] < box.minimum[i]) {m++; c[i] = box.minimum[i]; point[i] += r;}
@@ -44,7 +57,8 @@ bool IntersectionMovingCircleOutsideAABB2D(NSphere<2> nsphere, Vector<2> directi
   // Check if there is an intersection with the vertex.
   if (m == 2) {
     t = time;
-    if(!intersectionRayNSphere<2>(ray, NSphere<2>(c,r), t, point) || (t > time)) return (false);
+    point = c;
+    if(!intersectionRayNSphere<2>(ray, NSphere<2>(c,r), t, c) || (t > time)) return (false);
   }
 
   time = t;

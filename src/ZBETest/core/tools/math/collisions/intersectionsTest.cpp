@@ -16,7 +16,7 @@
 
 namespace IntersectionsTest {
 
-static const int ITERATIONS = 40000000;//40000000;
+static const int ITERATIONS = 40000000;
 
 inline bool compareQuantizedMovement(double point, double p, double maxDiff){
   if(maxDiff >= 0.0) {
@@ -136,7 +136,7 @@ TEST(Intersections, RayInsideAABB_Base) {
 }
 
 TEST(Intersections, RayInsideAABB_Horizontal) {
-  srand(time(NULL));
+  //srand(time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
     double hvel = (((rand() % 9000) + 1000) * ((rand() % 2)*2-1)) / 10.0;
     double minDist = zbe::TIME_QUANTUM_VALUE * hvel;
@@ -165,7 +165,7 @@ TEST(Intersections, RayInsideAABB_Horizontal) {
 }
 
 TEST(Intersections, RayInsideAABB_Vertical) {
-  srand(time(NULL));
+  //srand(time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
     double vvel = (((rand() % 9000) + 1000) * ((rand() % 2)*2-1)) / 10.0;
     double minDist = zbe::TIME_QUANTUM_VALUE * vvel;
@@ -194,7 +194,7 @@ TEST(Intersections, RayInsideAABB_Vertical) {
 }
 
 TEST(Intersections, RayInsideAABB_TopLeftCorner) {
-  srand(time(NULL));
+  //srand(time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
     double xpos = ((rand() % 9980) + 10)/10.0;
     double ypos = ((rand() % 9980) + 10)/10.0;
@@ -214,7 +214,7 @@ TEST(Intersections, RayInsideAABB_TopLeftCorner) {
 }
 
 TEST(Intersections, RayInsideAABB_TopRightCorner) {
-  srand(time(NULL));
+  //srand(time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
     double xpos = ((rand() % 9980) + 10)/10.0;
     double ypos = ((rand() % 9980) + 10)/10.0;
@@ -234,7 +234,7 @@ TEST(Intersections, RayInsideAABB_TopRightCorner) {
 }
 
 TEST(Intersections, RayInsideAABB_BottomLeftCorner) {
-  srand(time(NULL));
+  //srand(time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
     double xpos = ((rand() % 9980) + 10)/10.0;
     double ypos = ((rand() % 9980) + 10)/10.0;
@@ -254,7 +254,7 @@ TEST(Intersections, RayInsideAABB_BottomLeftCorner) {
 }
 
 TEST(Intersections, RayInsideAABB_BottomRightCorner) {
-  srand(time(NULL));
+  //srand(time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
     double xpos = ((rand() % 9980) + 10)/10.0;
     double ypos = ((rand() % 9980) + 10)/10.0;
@@ -306,7 +306,7 @@ TEST(Intersections, BeamOutsideAABB_Base) {
 }
 
 TEST(Intersections, BeamOutsideAABB_Horizontal) {
-  srand(time(NULL));
+  //srand(time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
     double hvel = (((rand() % 9000) + 1000) * ((rand() % 2)*2-1)) / 10.0;
     double minDist = zbe::TIME_QUANTUM_VALUE * hvel;
@@ -340,7 +340,7 @@ TEST(Intersections, BeamOutsideAABB_Horizontal) {
 }
 
 TEST(Intersections, BeamOutsideAABB_Vertical) {
-  srand(time(NULL));
+  //srand(time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
     double vvel = (((rand() % 9000) + 1000) * ((rand() % 2)*2-1)) / 10.0;
     double minDist = zbe::TIME_QUANTUM_VALUE * vvel;
@@ -374,7 +374,7 @@ TEST(Intersections, BeamOutsideAABB_Vertical) {
 }
 
 TEST(Intersections, BeamOutsideAABB_TopLeftCorner) {
-  srand(time(NULL));
+  //srand(time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
     double hvel = ((rand() % 9000) + 1000) / 10.0;
     double vvel = ((rand() % 9000) + 1000) / 10.0;
@@ -398,7 +398,7 @@ TEST(Intersections, BeamOutsideAABB_TopLeftCorner) {
 }
 
 TEST(Intersections, BeamOutsideAABB_TopRightCorner) {
-  srand(time(NULL));
+  //srand(time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
     double hvel = -((rand() % 9000) + 1000) / 10.0;
     double vvel = ((rand() % 9000) + 1000) / 10.0;
@@ -422,7 +422,7 @@ TEST(Intersections, BeamOutsideAABB_TopRightCorner) {
 }
 
 TEST(Intersections, BeamOutsideAABB_BottomLeftCorner) {
-  srand(time(NULL));
+  //srand(time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
     double hvel = ((rand() % 9000) + 1000) / 10.0;
     double vvel = -((rand() % 9000) + 1000) / 10.0;
@@ -445,7 +445,7 @@ TEST(Intersections, BeamOutsideAABB_BottomLeftCorner) {
 }
 
 TEST(Intersections, BeamOutsideAABB_BottomRightCorner) {
-  srand(time(NULL));
+  //srand(time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
     double hvel = -((rand() % 9000) + 1000) / 10.0;
     double vvel = -((rand() % 9000) + 1000) / 10.0;
@@ -498,7 +498,7 @@ TEST(Intersections, MovingCircleInsideAABB_Base) {
 }
 
 TEST(Intersections, MovingCircleInsideAABB_Horizontal) {
-  srand(time(NULL));
+  //srand(time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
     double radius = ((rand() % 100) + 100);
     double hvel = (((rand() % 9000) + 1000) * ((rand() % 2)*2-1))/10.0;
@@ -536,7 +536,7 @@ TEST(Intersections, MovingCircleInsideAABB_Horizontal) {
 }
 
 TEST(Intersections, MovingCircleInsideAABB_Vertical) {
-  srand(time(NULL));
+  //srand(time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
     double radius = ((rand() % 100) + 100);
     double vvel = ((rand() % 9000) + 1000) * ((rand() % 2)*2-1)/10.0;
@@ -574,7 +574,7 @@ TEST(Intersections, MovingCircleInsideAABB_Vertical) {
 }
 
 TEST(Intersections, MovingCircleInsideAABB_TopLeftCorner) {
-  srand(time(NULL));
+  //srand(time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
     double radius = ((rand() % 100) + 100);
     double minDist = abs(((1000) * zbe::TIME_QUANTUM_VALUE)) + (radius+1)/10.0;
@@ -599,7 +599,7 @@ TEST(Intersections, MovingCircleInsideAABB_TopLeftCorner) {
 }
 
 TEST(Intersections, MovingCircleInsideAABB_TopRightCorner) {
-  srand(time(NULL));
+  //srand(time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
     double radius = ((rand() % 100) + 100);
     double minDist = abs(1000 * zbe::TIME_QUANTUM_VALUE) + (radius+1)/10.0;
@@ -623,7 +623,7 @@ TEST(Intersections, MovingCircleInsideAABB_TopRightCorner) {
   }
 }
 TEST(Intersections, MovingCircleInsideAABB_BottomLeftCorner) {
-  srand(time(NULL));
+  //srand(time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
     double radius = ((rand() % 100) + 100);
     double minDist = abs(1000 * zbe::TIME_QUANTUM_VALUE) + (radius+1)/10.0;
@@ -648,7 +648,7 @@ TEST(Intersections, MovingCircleInsideAABB_BottomLeftCorner) {
 }
 
 TEST(Intersections, MovingCircleInsideAABB_BottomRightCorner) {
-  srand(time(NULL));
+  //srand(time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
     double radius = ((rand() % 100) + 100);
     double minDist = abs(((1000) * zbe::TIME_QUANTUM_VALUE)) + (radius+1)/10.0;
@@ -681,7 +681,7 @@ void testMovingCircleOutsideABB(zbe::Circle ball, zbe::Vector2D velocity, zbe::A
   int64_t t = tMax;
   bool correctP = false;
   bool result = IntersectionMovingCircleOutsideAABB2D(ball, velocity, block, t, p);
-  EXPECT_EQ(expected,result) << "First Moving Circle vs AABB collision.";
+  EXPECT_EQ(expected,result) << "First Moving Circle vs AABB collision.\nball: (" << ball.c[0] << ", " << ball.c[1] << ") r(" << ball.r << "), velocity: (" << velocity[0] << ", " << velocity[1] << "), block: min(" << block.minimum[0] << ", " << block.minimum[1] << ") max(" << block.maximum[0] << ", " << block.maximum[1] << ").";
   if (expected) {
     int64_t diff = time - t;
     EXPECT_LE(0, diff) << "Collision too late: time(" << time << "), t(" << t << ").\nball: (" << ball.c[0] << ", " << ball.c[1] << ") r(" << ball.r << "), velocity: (" << velocity[0] << ", " << velocity[1] << "), block: min(" << block.minimum[0] << ", " << block.minimum[1] << ") max(" << block.maximum[0] << ", " << block.maximum[1] << ").";
@@ -703,8 +703,30 @@ TEST(Intersections, MovingCircleOutsideAABB_Base) {
   testMovingCircleOutsideABB(ball, velocity, block, tMax, t, p, zbe::TIME_QUANTUM, zbe::TIME_QUANTUM_VALUE * velocity[0], zbe::TIME_QUANTUM_VALUE * velocity[1]);
 }
 
+TEST(Intersections, MovingCircleOutsideAABB_Base2) {
+  zbe::Circle ball{{151.0, 132.0}, 16.0};
+  zbe::Vector2D velocity{-100.0, -100.0};
+  zbe::AABB2D block{{50.0, 50.0},{101.0, 82.0}};
+  int64_t tMax = 10 * zbe::SECOND;
+  int64_t t = 25344;
+  zbe::Point<2> p{101.0, 82.0};
+  testMovingCircleOutsideABB(ball, velocity, block, tMax, t, p, zbe::TIME_QUANTUM, zbe::TIME_QUANTUM_VALUE * velocity[0], zbe::TIME_QUANTUM_VALUE * velocity[1]);
+}
+
+TEST(Intersections, MovingCircleOutsideAABB_Base3) {
+  for(int i = 0; i < ITERATIONS ; i++) {
+    zbe::Circle ball{{114.0, 114.0}, 16.0};
+    zbe::Vector2D velocity{-((rand() %100)+10.0), -((rand() %100)+10.0)};
+    zbe::AABB2D block{{50.0, 50.0},{100.0, 100.0}};
+    int64_t tMax = 10 * zbe::SECOND;
+    int64_t t = zbe::quantizeTime(zbe::SECOND / 2);
+    zbe::Point<2> p{100.0, 100.0};
+    testMovingCircleOutsideABB(ball, velocity, block, tMax, t, p, tMax, zbe::TIME_QUANTUM_VALUE * velocity[0], zbe::TIME_QUANTUM_VALUE * velocity[1]);
+  }
+}
+
 TEST(Intersections, MovingCircleOutsideAABB_Horizontal) {
-  srand(time(NULL));
+  //srand(time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
     double radius = ((rand() % 100) + 100);
     double hvel = (((rand() % 9000) + 1000) * ((rand() % 2)*2-1)) / 10.0;
@@ -757,11 +779,11 @@ TEST(Intersections, MovingCircleOutsideAABB_Vertical) {
 
     double miny, maxy;
     if (hvel > 0) {
-      miny = xpos + dist + radius;
+      miny = ypos + dist + radius;
       maxy = miny + 100;
     } else {
       dist = -dist;
-      maxy = xpos + dist - radius;
+      maxy = ypos + dist - radius;
       miny = maxy - 100;
     }
     zbe::AABB<2> aabb{{xpos-50, miny},
@@ -778,7 +800,7 @@ TEST(Intersections, MovingCircleOutsideAABB_Vertical) {
 }
 
 TEST(Intersections, MovingCircleOutsideAABB_TopLeftCorner) {
-  srand(time(NULL));
+  //srand(time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
     double radius = ((rand() % 100) + 100);
     double hvel = ((rand() % 9000) + 1000) / 10.0;
@@ -808,7 +830,7 @@ TEST(Intersections, MovingCircleOutsideAABB_TopLeftCorner) {
 }
 
 TEST(Intersections, MovingCircleOutsideAABB_TopRightCorner) {
-  srand(time(NULL));
+  //srand(time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
     double radius = ((rand() % 100) + 100);
     double hvel = -((rand() % 9000) + 1000) / 10.0;
@@ -838,7 +860,7 @@ TEST(Intersections, MovingCircleOutsideAABB_TopRightCorner) {
 }
 
 TEST(Intersections, MovingCircleOutsideAABB_BottomLeftCorner) {
-  srand(time(NULL));
+  //srand(time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
     double radius = ((rand() % 100) + 100);
     double hvel = ((rand() % 9000) + 1000) / 10.0;
@@ -868,7 +890,7 @@ TEST(Intersections, MovingCircleOutsideAABB_BottomLeftCorner) {
 }
 
 TEST(Intersections, MovingCircleOutsideAABB_BottomRightCorner) {
-  srand(time(NULL));
+  //srand(time(NULL));
   for(int i = 0; i < ITERATIONS ; i++) {
     double radius = ((rand() % 100) + 100);
     double hvel = -((rand() % 9000) + 1000) / 10.0;
