@@ -3,7 +3,6 @@
 #include <chrono>
 #include <thread>
 #include <cstdlib>
-#include <cmath>
 
 #include "ZBE/core/daemons/DaemonMaster.h"
 #include "ZBE/core/entities/avatars/implementations/SimpleCollisioner.h"
@@ -35,6 +34,7 @@
 #include "game/GameReactor.h"
 #include "game/entities/GameBall.h"
 #include "game/entities/GameBoard.h"
+#include "game/entities/GameBlock.h"
 #include "game/events/handlers/StepInputHandler.h"
 #include "game/events/handlers/ExitInputHandler.h"
 #include "game/events/handlers/GameBallBouncer.h"
@@ -55,13 +55,16 @@ int batismain(int, char** ) {
     BALLACTUATORLIST = 1,
     COLLISIONABLELIST = 1,
     BOARDACTUATORLIST = 1,
+    BRICKACTUATORLIST = 2,
 
     WIDTH = 1024,
     HEIGHT = 768
   };
 
-  const char ballfilename[] = "data/images/zombieball/simple_ball_32.png";
-  unsigned ballgraphics;
+  const char ballfilename[] = "data/images/zombieball/zomball_st_32.png";
+  const char brickfilename[] = "data/images/zombieball/braikn_32.png";
+  uint64_t ballgraphics;
+  uint64_t brickgraphics;
 
   printf("3 / 5 %d\n", 3/5);fflush(stdout);
   printf("2 / 5 %d\n", 2/5);fflush(stdout);
@@ -106,6 +109,7 @@ int batismain(int, char** ) {
   printf("Building the window to draw on\n");fflush(stdout);
   zbe::Window window(WIDTH,HEIGHT);
   ballgraphics = window.loadImg(ballfilename);
+  brickgraphics = window.loadImg(brickfilename);
   printf("Building the drawer to paint SimpleSprite's \n");fflush(stdout);
   zbe::SimpleSpriteSDLDrawer drawer(&window);
   printf("|-------------------- Daemons ----------------------|\n");fflush(stdout);
@@ -116,6 +120,13 @@ int batismain(int, char** ) {
   std::shared_ptr<zbe::Daemon> bball(new  zbe::BehaviorDaemon< zbe::Mobile<2>, std::vector<zbe::Mobile<2>*> >(new zbe::UniformLinearMotion<2>(), MOBILELIST));
   dMaster.addDaemon(bball);
   printf("|------------------- Creating entities --------------------|\n");fflush(stdout);
+  printf("Creating drawables list\n");fflush(stdout);
+  std::forward_list<zbe::SimpleSpriteEntity*> sprites;
+
+  game::ExitInputHandler terminator;
+  ieg.addHandler(zbe::ZBEK_ESCAPE, &terminator);
+  ieg.addHandler(zbe::ZBEK_RETURN, &terminator);
+
   printf("Creating a ball and giving it a position and size\n");fflush(stdout);
 
   //ball
@@ -132,27 +143,17 @@ int batismain(int, char** ) {
   printf("Building an sprite adaptor for the ball\n");fflush(stdout);
   zbe::SimpleSpriteAdaptor<zbe::Drawable>* spriteAdaptor = new zbe::SimpleDrawableSimpleSpriteAdaptor();
   zbe::BaseSphereMCMAPOAdaptor<game::GameReactor, 2> * movableCatorAdaptor = new zbe::BaseSphereMCMAPOAdaptor<game::GameReactor, 2>();
-  /*game::StepInputHandler ihright(&ball, 5, 0);
-  game::StepInputHandler ihleft(&ball, -5, 0);
-  ieg.addHandler(zbe::ZBEK_a, &ihleft);
-  ieg.addHandler(zbe::ZBEK_d, &ihright);*/
-  game::ExitInputHandler terminator;
-  ieg.addHandler(zbe::ZBEK_ESCAPE, &terminator);
-  ieg.addHandler(zbe::ZBEK_RETURN, &terminator);
+
 
   std::forward_list<game::GameBall*> balls;
-  for(int i = 0; i<10000 ; i++){
+  for(int i = 0; i<10 ; i++){
 
-      /*
       int64_t vt = 200;
-      int64_t vx = rand()%(vt+1);
-      int64_t vy = sqrt((vt*vt)-(vx*vx));
-      vx *= rand()%2?1:-1;
-      vy *= rand()%2?1:-1;
-      //poco regular
-      */
-      int64_t vt = 200;
-      double vAngleL = rand()%3600;
+
+      int minAngle = 228;
+      int maxAngle = 237;
+
+      double vAngleL = (minAngle * 10) + rand()%((maxAngle-minAngle)*10);
       vAngleL/=10;
       double vAngleR = rand()%10000;
       vAngleR/=100000;
@@ -167,16 +168,27 @@ int batismain(int, char** ) {
       ball->setMovableCollisionatorAdaptor(movableCatorAdaptor);
       vmobile.push_back(ball);
       balls.push_front(ball);
+    	sprites.push_front(ball);
   }
+
+  printf("Creating the bricks\n");fflush(stdout);
+  //bricks
+  zbe::ListManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> >& lmSimpleConerActuatorsList = zbe::ListManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> >::getInstance();
+  std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> brickActuatorsList;
+  lmSimpleConerActuatorsList.insert(BRICKACTUATORLIST, &brickActuatorsList);
+  //GameBlock(double x, double y, double width, double height, uint64_t graphics, uint64_t actuatorsList)
+  game::GameBlock brick(50 ,50, 51, 32, brickgraphics, BRICKACTUATORLIST);
+  brick.setSimpleSpriteAdaptor(spriteAdaptor);
+  collisionablesList.push_front(&brick);
+  sprites.push_front(&brick);
 
 	printf("Creating the board and giving it a size\n");fflush(stdout);
   //board
   std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> boardActuatorsList;
-  zbe::ListManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> >& lmBoardActuatorsList = zbe::ListManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> >::getInstance();
-  lmBoardActuatorsList.insert(BOARDACTUATORLIST, &boardActuatorsList);
-
+  lmSimpleConerActuatorsList.insert(BOARDACTUATORLIST, &boardActuatorsList);
   game::GameBoard board(WIDTH, HEIGHT, BOARDACTUATORLIST);
   collisionablesList.push_front(&board);
+
   printf("|=================== Starting up system ===================|\n");fflush(stdout);
   printf("Starting SysTimer\n");fflush(stdout);
   sysTimer->start();
@@ -238,8 +250,8 @@ int batismain(int, char** ) {
       }
     }
 
-    for(auto b : balls){
-        drawer.apply(b->getSimpleSprite().get());
+    for(auto s : sprites){
+        drawer.apply(s->getSimpleSprite().get());
     }
 
     /* If one or more error occurs, the ammount and the first one
@@ -256,3 +268,4 @@ int batismain(int, char** ) {
 
   return 0;
 }
+
