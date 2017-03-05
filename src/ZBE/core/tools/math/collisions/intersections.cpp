@@ -32,23 +32,19 @@ bool IntersectionMovingCircleOutsideAABB2D(NSphere<2> nsphere, Vector<2> directi
 
   Ray<2> ray(nsphere.c, direction);
   if (!intersectionBeamOutsideAABB<2>(ray, e, t, point) || t > time) {return (false);}
-  double bmin[2];
-  double bmax[2];
-  for(unsigned i = 0; i < 2; i++) {
-    bmin[i] = box.minimum[i];
-    bmax[i] = box.maximum[i];
-  }
+
   Point<2> c;
   int m=0;
   for(unsigned i = 0; i < 2; i++) {
-    if (point[i] < bmin[i]) {m++; c[i] = bmin[i]; point[i] += r;}
-    if (point[i] > bmax[i]) {m++; c[i] = bmax[i]; point[i] -= r;}
+    if (point[i] < box.minimum[i]) {m++; c[i] = box.minimum[i]; point[i] += r;}
+    if (point[i] > box.maximum[i]) {m++; c[i] = box.maximum[i]; point[i] -= r;}
   }
 
   // The collision happens at the corner of the expansion box
   // Check if there is an intersection with the vertex.
   if (m == 2) {
-    return (intersectionRayNSphere<2>(ray, NSphere<2>(c,r), time, point));
+    t = time;
+    if(!intersectionRayNSphere<2>(ray, NSphere<2>(c,r), t, point) || (t > time)) return (false);
   }
 
   time = t;

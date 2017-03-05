@@ -97,6 +97,7 @@ bool intersectionRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, int64_t &time, P
 
   int64_t t = (int64_t)(((-b - sqrt(discr)) / (2 * a)) * zbe::SECOND);
   t = quantizeTime(t);
+
   if (t <= 0) return (false);
   if (t > time) return (false);
 

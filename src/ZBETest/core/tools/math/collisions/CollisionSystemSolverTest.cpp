@@ -31,8 +31,8 @@ class C : public zbe::CollisionerCommon<C, R> {
 TEST(CollisionSystemSolver, MovingCircleStaticSolidAABB) {
   //zbe::ConstantMovingCircle<R>* cc = new zbe::ConstantMovingCircle<R>(zbe::Circle({{2.0,3.0},1.0}),zbe::Vector2D({3.0,4.0}));
   //zbe::StaticAABB2D<R>* sbox = new zbe::StaticAABB2D<R>(zbe::AABB2D({{1.0,5.0},{6.0,10.0}}));
-  std::shared_ptr<zbe::ConstantMovingCircle<R> > cc(new zbe::ConstantMovingCircle<R>(zbe::Circle({{200,300},100}), zbe::Vector2D({300,400})));
-  std::shared_ptr<zbe::StaticSolidAABB2D<R> > sbox(new zbe::StaticSolidAABB2D<R>({{100,500},{600,1000}}));
+  std::shared_ptr<zbe::ConstantMovingCircle<R> > cc(new zbe::ConstantMovingCircle<R>(zbe::Circle({{20.0,30.0},10.0}), zbe::Vector2D({30.0,40.0})));
+  std::shared_ptr<zbe::StaticSolidAABB2D<R> > sbox(new zbe::StaticSolidAABB2D<R>({{10.0,50.0},{60.0,100.0}}));
   C a(cc);
   C b(sbox);
 
@@ -46,8 +46,8 @@ TEST(CollisionSystemSolver, MovingCircleStaticSolidAABB) {
   int64_t expectedTime = zbe::quantizeTime(zbe::SECOND / 4);
   EXPECT_TRUE(result) << "First Moving Circle vs AABB collision.";
   EXPECT_DOUBLE_EQ(expectedTime, t) << "Time of collision.";
-  EXPECT_DOUBLE_EQ(275, p[0]) << "Point of collision (x).";
-  EXPECT_DOUBLE_EQ(500, p[1]) << "Point of collision (y).";
+  EXPECT_DOUBLE_EQ(27.5, p[0]) << "Point of collision (x).";
+  EXPECT_DOUBLE_EQ(50.0, p[1]) << "Point of collision (y).";
 }
 
 TEST(CollisionSystemSolver, StaticSolidAABBMovingCircle) {
