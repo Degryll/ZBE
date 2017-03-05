@@ -32,7 +32,7 @@
 
 #include "gamemain.h"
 #include "game/GameReactor.h"
-#include "game/entities/GameBall.h"
+#include "batis/entities/GameBall.h"
 #include "game/entities/GameBoard.h"
 #include "game/entities/GameBlock.h"
 #include "game/events/handlers/StepInputHandler.h"
@@ -160,8 +160,11 @@ int batismain(int, char** ) {
       double vAngle = vAngleL + vAngleR;
       int64_t vx = sin(vAngle*PI/180)*vt;
       int64_t vy = cos(vAngle*PI/180)*vt;
+      //-162 -117 falla
 
-      game::GameBall* ball = new game::GameBall((WIDTH/2),(HEIGHT/2), 16, vx, vy, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
+      printf("Ball %i: %i, %i\n", i, vx, vy);
+
+      game::GameBall* ball = new game::GameBall((WIDTH/2),(HEIGHT/2), 16, vx, vy, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics, i);
       //game::GameBall* ball = new game::GameBall(31407009,1063841, 16 << zbe::PRECISION_DIGITS, 1000 << zbe::PRECISION_DIGITS,1000 << zbe::PRECISION_DIGITS, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
       ctl.push_front(ball);
       ball->setSimpleSpriteAdaptor(spriteAdaptor);
@@ -177,7 +180,7 @@ int batismain(int, char** ) {
   std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> brickActuatorsList;
   lmSimpleConerActuatorsList.insert(BRICKACTUATORLIST, &brickActuatorsList);
   //GameBlock(double x, double y, double width, double height, uint64_t graphics, uint64_t actuatorsList)
-  game::GameBlock brick(50 ,50, 51, 32, brickgraphics, BRICKACTUATORLIST);
+  game::GameBlock brick(50 ,50, 32, 32, brickgraphics, BRICKACTUATORLIST);
   brick.setSimpleSpriteAdaptor(spriteAdaptor);
   collisionablesList.push_front(&brick);
   sprites.push_front(&brick);
@@ -206,6 +209,15 @@ int batismain(int, char** ) {
 
   bool keep = true;
   while(keep){
+
+    /*Finds balls inside block area.
+    */
+    std::forward_list<game::GameBall*>::iterator ballIt;
+    for (ballIt = balls.begin(); ballIt != balls.end(); ballIt++){
+      if ((*ballIt)->getX()>50 && (*ballIt)->getX()<82 && (*ballIt)->getY()>50 && (*ballIt)->getY()<82) { printf("Bola %i, FATALMAL\n", (*ballIt)->getId());}
+    }
+
+
 
     /* Clear screen.
      */

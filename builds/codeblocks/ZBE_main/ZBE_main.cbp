@@ -132,6 +132,7 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="../../../src/ZBE_main/include/batis/entities/GameBall.h" />
 		<Unit filename="../../../src/ZBE_main/include/batismain.h" />
 		<Unit filename="../../../src/ZBE_main/include/degryllmain.h" />
 		<Unit filename="../../../src/ZBE_main/include/game/GameReactor.h" />
