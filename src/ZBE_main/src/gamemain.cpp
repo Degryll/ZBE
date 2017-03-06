@@ -141,8 +141,8 @@ int gamemain(int, char** ) {
   ieg.addHandler(zbe::ZBEK_ESCAPE, &terminator);
 
   std::forward_list<game::GameBall*> balls;
-  for(int i = 0; i<1000 ; i++){
-      game::GameBall* ball = new game::GameBall((WIDTH/2 + rand()%100-50), (HEIGHT/2 + rand()%100-50), 16 , (rand()%200 - 100), (rand()%200 - 100), BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
+  for(int i = 0; i<1 ; i++){
+      game::GameBall* ball = new game::GameBall(WIDTH/2, HEIGHT/2, 16 , -162, -117, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
       //game::GameBall* ball = new game::GameBall(151, 132, 16 , -100, -100, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
       ctl.push_front(ball);
       ball->setSimpleSpriteAdaptor(spriteAdaptor);
@@ -158,7 +158,7 @@ int gamemain(int, char** ) {
   std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> brickActuatorsList;
   lmSimpleConerActuatorsList.insert(BRICKACTUATORLIST, &brickActuatorsList);
   //GameBlock(double x, double y, double width, double height, uint64_t graphics, uint64_t actuatorsList)
-  game::GameBlock brick(50 ,50, 51, 32, brickgraphics, BRICKACTUATORLIST);
+  game::GameBlock brick(50 ,50, 32, 32, brickgraphics, BRICKACTUATORLIST);
   brick.setSimpleSpriteAdaptor(spriteAdaptor);
   collisionablesList.push_front(&brick);
   sprites.push_front(&brick);

@@ -162,7 +162,7 @@ int batismain(int, char** ) {
       int64_t vy = cos(vAngle*PI/180)*vt;
       //-162 -117 falla
 
-      printf("Ball %i: %i, %i\n", i, vx, vy);
+      printf("Ball %d: %lld, %lld\n", i, vx, vy);
 
       batis::GameBall* ball = new batis::GameBall((WIDTH/2),(HEIGHT/2), 16, vx, vy, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics, i);
       //game::GameBall* ball = new game::GameBall(31407009,1063841, 16 << zbe::PRECISION_DIGITS, 1000 << zbe::PRECISION_DIGITS,1000 << zbe::PRECISION_DIGITS, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
@@ -214,7 +214,9 @@ int batismain(int, char** ) {
     */
     std::forward_list<batis::GameBall*>::iterator ballIt;
     for (ballIt = balls.begin(); ballIt != balls.end(); ballIt++){
-      if ((*ballIt)->getX()>50 && (*ballIt)->getX()<82 && (*ballIt)->getY()>50 && (*ballIt)->getY()<82) { printf("Bola %i, FATALMAL\n", (*ballIt)->getId());}
+      if ((*ballIt)->getX()>35 && (*ballIt)->getX()<97 && (*ballIt)->getY()>35 && (*ballIt)->getY()<97) {
+          printf("Bola %d, FATALMAL: %lld, %lld\n", (*ballIt)->getId(), (*ballIt)->getX(), (*ballIt)->getY());
+      }
     }
 
 
