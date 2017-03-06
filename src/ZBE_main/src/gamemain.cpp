@@ -141,7 +141,7 @@ int gamemain(int, char** ) {
   ieg.addHandler(zbe::ZBEK_ESCAPE, &terminator);
 
   std::forward_list<game::GameBall*> balls;
-  for(int i = 0; i<1000 ; i++){//98.623993, 85.728439
+  for(int i = 0; i<5000 ; i++){//98.623993, 85.728439
       //game::GameBall* ball = new game::GameBall(98.623993, 85.728439, 16 , -100, -100, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
       game::GameBall* ball = new game::GameBall((rand()%200 + 400), (rand()%200 + 400), 16 , (rand()%2000 - 1000), (rand()%2000 - 1000), BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
       ctl.push_front(ball);

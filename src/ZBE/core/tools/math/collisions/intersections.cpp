@@ -32,38 +32,72 @@ bool IntersectionMovingCircleOutsideAABB2D(NSphere<2> nsphere, Vector<2> directi
   Point<2> c;
   Ray<2> ray(nsphere.c, direction);
 
-  if (((nsphere.c[0] + direction[0] * TIME_QUANTUM_VALUE) >= e.minimum[0]) && ((nsphere.c[0] + direction[0] * TIME_QUANTUM_VALUE) <= e.maximum[0])
-  &&  ((nsphere.c[1] + direction[1] * TIME_QUANTUM_VALUE) >= e.minimum[1]) && ((nsphere.c[1] + direction[1] * TIME_QUANTUM_VALUE) <= e.maximum[1])) {
+  if (intersectionBeamOutsideAABB<2>(ray, e, t, point)) {
+    if (t > time) {return (false);}
+
+    int m=0;
     for(unsigned i = 0; i < 2; i++) {
-      if (nsphere.c[i] < box.minimum[i]) {c[i] = box.minimum[i]; point[i] = box.minimum[i];}
-      if (nsphere.c[i] > box.maximum[i]) {c[i] = box.maximum[i]; point[i] = box.maximum[i];}
+      if (point[i] < box.minimum[i]) {m++; c[i] = box.minimum[i]; point[i] += r;}
+      if (point[i] > box.maximum[i]) {m++; c[i] = box.maximum[i]; point[i] -= r;}
     }
 
-    if(!intersectionRayNSphere<2>(ray, NSphere<2>(c,r), t, c) || (t > time)) {return (false);}
-
+    // The collision happens at the corner of the expansion box
+    // Check if there is an intersection with the vertex.
+    if (m == 2) {
+      t = time;
+      point = c;
+      if(!intersectionRayNSphere<2>(ray, NSphere<2>(c,r), t, c) || (t > time)) return (false);
+    }
     time = t;
+    // The intersection with the expanded AABB e is the correct.
     return (true);
-  }
 
-  if (!intersectionBeamOutsideAABB<2>(ray, e, t, point) || t > time) {return (false);}
+  } else {  // No extended box collision
+    int m=0;
+    for(unsigned i = 0; i < 2; i++) {
+      if (nsphere.c[i] < box.minimum[i]) {m++; c[i] = box.minimum[i];}
+      if (nsphere.c[i] > box.maximum[i]) {m++; c[i] = box.maximum[i];}
+    }
 
-  int m=0;
-  for(unsigned i = 0; i < 2; i++) {
-    if (point[i] < box.minimum[i]) {m++; c[i] = box.minimum[i]; point[i] += r;}
-    if (point[i] > box.maximum[i]) {m++; c[i] = box.maximum[i]; point[i] -= r;}
-  }
+    if (m == 2) {
+      t = time;
+      point = c;
+      if(!intersectionRayNSphere<2>(ray, NSphere<2>(c,r), t, c) || (t > time)) return (false);
 
-  // The collision happens at the corner of the expansion box
-  // Check if there is an intersection with the vertex.
-  if (m == 2) {
-    t = time;
-    point = c;
-    if(!intersectionRayNSphere<2>(ray, NSphere<2>(c,r), t, c) || (t > time)) return (false);
-  }
-
-  time = t;
-  // The intersection with the expanded AABB e is the correct.
-  return (true);
+      time = t;
+  	  return (true);
+    } else {  // 4 vertex collision
+      c[0] = box.minimum[0];
+      c[1] = box.minimum[1];
+      if(intersectionRayNSphere<2>(ray, NSphere<2>(c,r), t, c) && (t > time)) {
+        point = c;
+        time = t;
+        return (true);
+      }
+      c[0] = box.minimum[0];
+      c[1] = box.maximum[1];
+      if(intersectionRayNSphere<2>(ray, NSphere<2>(c,r), t, c) && (t > time)) {
+        point = c;
+        time = t;
+        return (true);
+      }
+      c[0] = box.maximum[0];
+      c[1] = box.minimum[1];
+      if(intersectionRayNSphere<2>(ray, NSphere<2>(c,r), t, c) && (t > time)) {
+        point = c;
+        time = t;
+        return (true);
+      }
+      c[0] = box.maximum[0];
+      c[1] = box.maximum[1];
+      if(intersectionRayNSphere<2>(ray, NSphere<2>(c,r), t, c) && (t > time)) {
+        point = c;
+        time = t;
+        return (true);
+      }
+    }  // if m == 2
+		return (false);
+  }  // if extended box collision
 }
 
 }  // namespace zbe
