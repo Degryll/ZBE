@@ -141,15 +141,15 @@ int gamemain(int, char** ) {
   ieg.addHandler(zbe::ZBEK_ESCAPE, &terminator);
 
   std::forward_list<game::GameBall*> balls;
-  for(int i = 0; i<1 ; i++){
-      game::GameBall* ball = new game::GameBall(WIDTH/2, HEIGHT/2, 16 , -162, -117, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
-      //game::GameBall* ball = new game::GameBall(151, 132, 16 , -100, -100, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
+  for(int i = 0; i<1000 ; i++){//98.623993, 85.728439
+      //game::GameBall* ball = new game::GameBall(98.623993, 85.728439, 16 , -100, -100, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
+      game::GameBall* ball = new game::GameBall((rand()%200 + 400), (rand()%200 + 400), 16 , (rand()%200 - 100), (rand()%200 - 100), BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
       ctl.push_front(ball);
       ball->setSimpleSpriteAdaptor(spriteAdaptor);
       ball->setMovableCollisionatorAdaptor(movableCatorAdaptor);
       vmobile.push_back(ball);
       balls.push_front(ball);
-    	sprites.push_front(ball);
+      sprites.push_front(ball);
   }
 
   printf("Creating the bricks\n");fflush(stdout);
@@ -157,13 +157,16 @@ int gamemain(int, char** ) {
   zbe::ListManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> >& lmSimpleConerActuatorsList = zbe::ListManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> >::getInstance();
   std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> brickActuatorsList;
   lmSimpleConerActuatorsList.insert(BRICKACTUATORLIST, &brickActuatorsList);
-  //GameBlock(double x, double y, double width, double height, uint64_t graphics, uint64_t actuatorsList)
-  game::GameBlock brick(50 ,50, 32, 32, brickgraphics, BRICKACTUATORLIST);
-  brick.setSimpleSpriteAdaptor(spriteAdaptor);
-  collisionablesList.push_front(&brick);
-  sprites.push_front(&brick);
+  for(int i = 0; i<8 ; i++){
+      for(int j = 0; j<8 ; j++){
+          game::GameBlock *brick = new game::GameBlock(i*51+ 100, j*32 + 100, 51, 32, brickgraphics, BRICKACTUATORLIST);
+          brick->setSimpleSpriteAdaptor(spriteAdaptor);
+          collisionablesList.push_front(brick);
+          sprites.push_front(brick);
+      }
+  }
 
-	printf("Creating the board and giving it a size\n");fflush(stdout);
+  printf("Creating the board and giving it a size\n");fflush(stdout);
   //board
   std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> boardActuatorsList;
   lmSimpleConerActuatorsList.insert(BOARDACTUATORLIST, &boardActuatorsList);
@@ -184,6 +187,8 @@ int gamemain(int, char** ) {
   printf("|==========================================================|\n");fflush(stdout);
   printf("initT = 0x%" PRIx64 " ", initT);fflush(stdout);
   printf("endT = 0x%" PRIx64 "\n", endT);fflush(stdout);
+
+  int64_t maxFrameTime = zbe::SECOND / 64;
 
   bool keep = true;
   while(keep){
@@ -206,8 +211,8 @@ int gamemain(int, char** ) {
     initT = endT;// init time
     endT = sysTime.getTotalTime(); //initT + (int64_t(1) << zbe::PRECISION_DIGITS); // instant at which the frame ends
 
-    if((endT - 32768)>initT){
-      initT = endT - 32768;
+    if((endT - maxFrameTime)>initT){
+      initT = endT - maxFrameTime;
     }
 
     while (initT < endT) {
