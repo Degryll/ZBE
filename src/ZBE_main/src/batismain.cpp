@@ -128,6 +128,7 @@ int batismain(int, char** ) {
   ieg.addHandler(zbe::ZBEK_RETURN, &terminator);
 
   printf("Creating a ball and giving it a position and size\n");fflush(stdout);
+  srand(time(NULL));
 
   //ball
   std::forward_list< zbe::Actuator< zbe::MovableCollisioner<game::GameReactor, 2>, game::GameReactor >*> ballActuatorsList;
@@ -146,12 +147,12 @@ int batismain(int, char** ) {
 
 
   std::forward_list<batis::GameBall*> balls;
-  for(int i = 0; i<10 ; i++){
+  for(int i = 0; i<100 ; i++){
 
       int64_t vt = 200;
 
-      int minAngle = 228;
-      int maxAngle = 237;
+      int minAngle = 0;
+      int maxAngle = 360;
 
       double vAngleL = (minAngle * 10) + rand()%((maxAngle-minAngle)*10);
       vAngleL/=10;
@@ -162,7 +163,7 @@ int batismain(int, char** ) {
       int64_t vy = cos(vAngle*PI/180)*vt;
       //-162 -117 falla
 
-      printf("Ball %d: %lld, %lld\n", i, vx, vy);
+      //printf("Ball %d: %lld, %lld\n", i, vx, vy);
 
       batis::GameBall* ball = new batis::GameBall((WIDTH/2),(HEIGHT/2), 16, vx, vy, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics, i);
       //game::GameBall* ball = new game::GameBall(31407009,1063841, 16 << zbe::PRECISION_DIGITS, 1000 << zbe::PRECISION_DIGITS,1000 << zbe::PRECISION_DIGITS, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
@@ -180,10 +181,29 @@ int batismain(int, char** ) {
   std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> brickActuatorsList;
   lmSimpleConerActuatorsList.insert(BRICKACTUATORLIST, &brickActuatorsList);
   //GameBlock(double x, double y, double width, double height, uint64_t graphics, uint64_t actuatorsList)
-  game::GameBlock brick(50 ,50, 32, 32, brickgraphics, BRICKACTUATORLIST);
-  brick.setSimpleSpriteAdaptor(spriteAdaptor);
-  collisionablesList.push_front(&brick);
-  sprites.push_front(&brick);
+
+  std::forward_list<game::GameBlock*> bricks;
+
+  int margin = 2;
+  int space = 9;
+  int brickWidth = 51;
+  int brickHeight = 32;
+  int cols = (WIDTH - margin - margin) / (brickWidth + space);
+  int rows = 2 * (HEIGHT - margin - margin) / (3 * (brickHeight + space));
+  margin += (WIDTH - ((margin * 2) + (cols*(brickWidth + space)) - space))/2;
+  int brickProb = 30;
+
+  for (int i = 0; i < cols; i++){
+    for (int j = 0; j < rows; j++){
+      if (rand()%100 < brickProb) {
+        game::GameBlock* brick = new game::GameBlock(margin + ((space+brickWidth)*i), margin + ((space+brickHeight)*j), brickWidth, brickHeight, brickgraphics, BRICKACTUATORLIST);
+        brick->setSimpleSpriteAdaptor(spriteAdaptor);
+        collisionablesList.push_front(brick);
+        sprites.push_front(brick);
+        bricks.push_front(brick);
+      }
+    }
+  }
 
 	printf("Creating the board and giving it a size\n");fflush(stdout);
   //board
@@ -207,17 +227,18 @@ int batismain(int, char** ) {
   printf("initT = 0x%" PRIx64 " ", initT);fflush(stdout);
   printf("endT = 0x%" PRIx64 "\n", endT);fflush(stdout);
 
+  int64_t maxFrameTime = zbe::SECOND / 32;
   bool keep = true;
   while(keep){
 
     /*Finds balls inside block area.
-    */
+
     std::forward_list<batis::GameBall*>::iterator ballIt;
     for (ballIt = balls.begin(); ballIt != balls.end(); ballIt++){
       if ((*ballIt)->getX()>35 && (*ballIt)->getX()<97 && (*ballIt)->getY()>35 && (*ballIt)->getY()<97) {
           printf("Bola %d, FATALMAL: %lld, %lld\n", (*ballIt)->getId(), (*ballIt)->getX(), (*ballIt)->getY());
       }
-    }
+    }*/
 
 
 
@@ -239,8 +260,8 @@ int batismain(int, char** ) {
     initT = endT;// init time
     endT = sysTime.getTotalTime(); //initT + (int64_t(1) << zbe::PRECISION_DIGITS); // instant at which the frame ends
 
-    if((endT - 32768)>initT){
-      initT = endT - 32768;
+    if((endT - maxFrameTime)>initT){
+      initT = endT - maxFrameTime;
     }
 
     while (initT < endT) {
