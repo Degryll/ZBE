@@ -24,7 +24,7 @@ namespace zbe {
  */
 class SimpleDrawableSimpleSpriteAdaptor : public SimpleSpriteAdaptor<Drawable> {
   public:
-    virtual std::shared_ptr<SimpleSprite> getSimpleSprite(Drawable* entity) {
+    std::shared_ptr<SimpleSprite> getSimpleSprite(Drawable* entity) {
       std::shared_ptr<SimpleSprite> s = std::make_shared<SimpleSprite>();
 
       s->x = entity->getX();

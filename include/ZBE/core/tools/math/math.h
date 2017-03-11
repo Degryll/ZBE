@@ -86,7 +86,7 @@ static const int64_t ROUND_MASK = -TIME_QUANTUM;
 /** \brief This constant is used to transform the time stored in a uint64_t (nanoseconds)to the time in a velocity (in
  *  seconds, because the velocity is in m/s).
  */
-inline uint64_t MILITOZBETU(uint32_t time) {
+inline uint64_t MILITOZBETU(uint64_t time) {
   return ((time << 16) / 1000);
 }
 

@@ -38,19 +38,19 @@ class TicketedForwardList {
     /** \brief Inserts a new element at the beginning of the forward_list, right before its current first element. The content of val is copied (or moved) to the inserted element.
      *  \param val Value to be copied (or moved) to the inserted element.
      */
-    TicketedElement<T>* push_front(const T& val) {
+    std::shared_ptr< TicketedElement<T> > push_front(const T& val) {
       std::shared_ptr< TicketedElement<T> > t (new TicketedElement<T>(val));
       l.push_front(t);
-      return (t.get());
+      return (t);
     }
 
     /** \brief Inserts a new element at the beginning of the forward_list, right before its current first element. The content of val is copied (or moved) to the inserted element.
      *  \param val Value to be copied (or moved) to the inserted element.
      */
-    TicketedElement<T>* push_front(T& val) {
+    std::shared_ptr< TicketedElement<T> > push_front(T& val) {
       std::shared_ptr< TicketedElement<T> > t (new TicketedElement<T>(val));
       l.push_front(t);
-      return (t.get());
+      return (t);
     }
 
     /** \brief Returns an iterator pointing to the first element in the forward_list container.

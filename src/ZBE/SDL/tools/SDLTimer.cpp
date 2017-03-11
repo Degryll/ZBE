@@ -23,7 +23,7 @@ void SDLTimer::start() {
 }
 
 int64_t SDLTimer::stop() {
-  int lastLap = 0;
+  int64_t lastLap = 0;
   if (running == true) {
     running = false;
     lastLap = quantizeTime(MILITOZBETU(SDL_GetTicks()) - lastTime);
