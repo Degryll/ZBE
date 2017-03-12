@@ -154,6 +154,28 @@ class _VECTOR {
       return (*this);
     }
 
+    /** \brief Creates an all-zero vector
+     * \return An all-zero vector
+     */
+    _VECTOR<s>& setZeros() {
+      for(unsigned i = 0; i < s; i++) {
+        data[i] = 0;
+      }
+
+      return (*this);
+    }
+
+    /** \brief Creates an all-zero vector
+     * \return An all-zero vector
+     */
+    static _VECTOR<s> zeros() {
+      _VECTOR<s> out;
+      out.setZeros();
+
+      return (out);
+    }
+
+
     /** \brief Compute the Vector Module.
      *
      * \return The Vector module.

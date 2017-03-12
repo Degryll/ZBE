@@ -22,7 +22,7 @@ namespace zbe {
 /** \brief Template that adapts an entity to a movable collisionator.
  */
 template <typename R, typename T, unsigned s>
-class MovableCollisionatorAdaptor : public MovableAdaptor<T, s>, public CollisionatorAdaptor<T, R> {
+class MovableCollisionatorAdaptor : virtual public MovableAdaptor<T, s>, virtual public CollisionatorAdaptor<T, R> {
   public:
     virtual ~MovableCollisionatorAdaptor(){};
 

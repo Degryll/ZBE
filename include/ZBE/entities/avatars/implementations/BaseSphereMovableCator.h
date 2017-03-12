@@ -21,7 +21,7 @@ namespace zbe {
 /** \brief This implements a base 1:1 avatar that can be moved.
  */
 template <typename R, unsigned s>
-class BaseSphereMovableCator : public MovableCollisionator<R, s>, public BaseMovable<s>, public CollisionatorCommon<MovableCollisioner<R, s>, R> {
+class BaseSphereMovableCator : virtual public MovableCollisionator<R, s>, public BaseMovable<s>, public CollisionatorCommon<MovableCollisioner<R, s>, R> {
   public:
 
     BaseSphereMovableCator(SimpleWideMobileAPO<s>* mobile)

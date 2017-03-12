@@ -8,7 +8,7 @@
  */
 
 #ifndef ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEWIDEMOBILE_H
-#define ZBE_ARCHETYPES_IMPLEENTATIONS_SIMPLEWIDEMOBILE_H
+#define ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEWIDEMOBILE_H
 
 #include "ZBE/archetypes/WideMobile.h"
 #include "ZBE/archetypes/implementations/SimpleMobile.h"

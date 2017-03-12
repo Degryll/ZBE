@@ -567,7 +567,7 @@ int degryllmain(int, char**) {
     HEIGHT = 768
   };
 
-  const char blockfilename[] = "data/images/zombieball/braikn_32.png";
+  const char blockfilename[] = "data/images/ludo/stone_001_32.png";
   uint64_t blockgraphics;
 
 

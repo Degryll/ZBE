@@ -22,7 +22,7 @@ namespace zbe {
 /** \brief Entity that can be seen as a movable collisionator.
  */
 template <typename R, unsigned s>
-class MovableCollisionatorEntity : public CollisionatorEntity<R> {
+class MovableCollisionatorEntity : virtual public CollisionatorEntity<R> {
   public:
     virtual ~MovableCollisionatorEntity(){}
 

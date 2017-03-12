@@ -24,7 +24,7 @@
 #include "ZBE/SDL/system/Window.h"
 #include "ZBE/SDL/drawers/SimpleSpriteSDLDrawer.h"
 #include "ZBE/entities/adaptors/implementations/SimpleDrawableSimpleSpriteAdaptor.h"
-#include "ZBE/entities/adaptors/implementations/BaseSphereMCMAPOAdaptor.h"
+#include "ZBE/entities/adaptors/implementations/BaseSphereBouncerMCMAPOAdaptor.h"
 #include "ZBE/behaviors/UniformLinearMotion.h"
 #include "ZBE/archetypes/Mobile.h"
 #include "ZBE/archetypes/MobileAPO.h"
@@ -136,7 +136,7 @@ int gamemain(int, char** ) {
 
   printf("Building an sprite adaptor for the ball\n");fflush(stdout);
   zbe::SimpleSpriteAdaptor<zbe::Drawable>* spriteAdaptor = new zbe::SimpleDrawableSimpleSpriteAdaptor();
-  zbe::BaseSphereMCMAPOAdaptor<game::GameReactor, 2> * movableCatorAdaptor = new zbe::BaseSphereMCMAPOAdaptor<game::GameReactor, 2>();
+  zbe::BaseSphereBouncerMCMAPOAdaptor<game::GameReactor, 2> * bouncerMovableCatorAdaptor = new zbe::BaseSphereBouncerMCMAPOAdaptor<game::GameReactor, 2>();
   game::ExitInputHandler terminator;
   ieg.addHandler(zbe::ZBEK_ESCAPE, &terminator);
 
@@ -146,7 +146,7 @@ int gamemain(int, char** ) {
       game::GameBall* ball = new game::GameBall((rand()%200 + 400), (rand()%200 + 400), 16 , (rand()%200 - 100), (rand()%200 - 100), BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
       ctl.push_front(ball);
       ball->setSimpleSpriteAdaptor(spriteAdaptor);
-      ball->setMovableCollisionatorAdaptor(movableCatorAdaptor);
+      ball->setBouncerMovableCollisionatorAdaptor(bouncerMovableCatorAdaptor);
       vmobile.push_back(ball);
       balls.push_front(ball);
       sprites.push_front(ball);
