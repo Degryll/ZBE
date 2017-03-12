@@ -36,6 +36,9 @@
 #include "game/entities/GameBoard.h"
 #include "game/entities/GameBlock.h"
 #include "game/events/handlers/StepInputHandler.h"
+#include "batis/events/handlers/MkBallInputHandler.h"
+#include "batis/events/handlers/MouseXKeepInputHandler.h"
+#include "batis/events/handlers/MouseYKeepInputHandler.h"
 #include "game/events/handlers/ExitInputHandler.h"
 #include "game/events/handlers/GameBallBouncer.h"
 
@@ -126,6 +129,14 @@ int batismain(int, char** ) {
   game::ExitInputHandler terminator;
   ieg.addHandler(zbe::ZBEK_ESCAPE, &terminator);
   ieg.addHandler(zbe::ZBEK_RETURN, &terminator);
+
+  batis::MouseXKeepInputHandler xKeep;
+  batis::MouseYKeepInputHandler yKeep;
+  ieg.addHandler(zbe::ZBEK_MOUSE_OFFSET_X, &xKeep);
+  ieg.addHandler(zbe::ZBEK_MOUSE_OFFSET_Y, &yKeep);
+
+  batis::MKBallInputHandler ballMaker;
+  ieg.addHandler(zbe::ZBEK_MOUSE_LEFT, &ballMaker);
 
   printf("Creating a ball and giving it a position and size\n");fflush(stdout);
   srand(time(NULL));

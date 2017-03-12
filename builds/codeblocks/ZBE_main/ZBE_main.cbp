@@ -133,6 +133,10 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="../../../src/ZBE_main/include/batis/entities/GameBall.h" />
+		<Unit filename="../../../src/ZBE_main/include/batis/events/MouseKeeper.h" />
+		<Unit filename="../../../src/ZBE_main/include/batis/events/handlers/MKBallInputHandler.h" />
+		<Unit filename="../../../src/ZBE_main/include/batis/events/handlers/MouseXKeepInputHandler.h" />
+		<Unit filename="../../../src/ZBE_main/include/batis/events/handlers/MouseYKeepInputHandler.h" />
 		<Unit filename="../../../src/ZBE_main/include/batismain.h" />
 		<Unit filename="../../../src/ZBE_main/include/degryllmain.h" />
 		<Unit filename="../../../src/ZBE_main/include/game/GameReactor.h" />
