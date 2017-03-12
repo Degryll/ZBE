@@ -36,7 +36,7 @@
 #include "game/entities/GameBoard.h"
 #include "game/entities/GameBlock.h"
 #include "game/events/handlers/StepInputHandler.h"
-#include "batis/events/handlers/MkBallInputHandler.h"
+#include "batis/events/handlers/MKBallInputHandler.h"
 #include "batis/events/handlers/MouseXKeepInputHandler.h"
 #include "batis/events/handlers/MouseYKeepInputHandler.h"
 #include "game/events/handlers/ExitInputHandler.h"
@@ -76,45 +76,58 @@ int batismain(int, char** ) {
   printf("Event store\n");fflush(stdout);
   printf("Will store all event independently of its type\n");fflush(stdout);
   zbe::EventStore& store = zbe::EventStore::getInstance();
+
   printf("|------------------------ Input Event Generator-------------|\n");fflush(stdout);
   printf("Building SDLEventDispatcher\n");fflush(stdout);
   printf("Will extract data from SDL and get it usable for the engine\n");fflush(stdout);
   zbe::SDLEventDispatcher & sdlEventDist = zbe::SDLEventDispatcher::getInstance();
+
   printf("Acquiring InputBuffer\n");fflush(stdout);
   printf("SDLEventDispatcher Will store input changes for a frame into it\n");fflush(stdout);
   zbe::InputBuffer * inputBuffer = sdlEventDist.getInputBuffer();
+
   printf("Acquiring and configuring InputEventGenerator with that InputReader\n");fflush(stdout);
   printf("Will read events from the InputReader and send them to the store\n");fflush(stdout);
   printf("Input events will use id 0\n");fflush(stdout);
   zbe::InputEventGenerator ieg(inputBuffer,INPUTEVENT);
+
   printf("|------------------- Collision Event Generator-------------|\n");fflush(stdout);
   //zbe::TicketedForwardList<zbe::CollisionerEntity<GameReactor>*> cnl;
   printf("Building list for collisionator entinties. Currently empty.\n");fflush(stdout);
   printf("It will store entities that will search for a collision.\n");fflush(stdout);
   zbe::TicketedForwardList<zbe::CollisionatorEntity<game::GameReactor>*> ctl;
+
   printf("Acquiring singleton list-manager for this list (ctl).\n");fflush(stdout);
   zbe::ListManager< zbe::TicketedForwardList<zbe::CollisionatorEntity<game::GameReactor>*> >& lmct = zbe::ListManager< zbe::TicketedForwardList<zbe::CollisionatorEntity<game::GameReactor>*> >::getInstance();
+
   printf("Storing ctl in that list-manager.\n");fflush(stdout);
   lmct.insert(COLLISIONATORLIST, &ctl);
+
   printf("Building collision event generator with list id and the event id to use (1).\n");fflush(stdout);
   zbe::CollisionEventGenerator<game::GameReactor> ceg(COLLISIONATORLIST, COLLISIONEVENT);
+
   printf("|------------------- Time Event Generator -----------------|\n");fflush(stdout);
   printf("Building time event generator with the event id to use (2)\n");fflush(stdout);
   zbe::TimeEventGenerator teg(TIMEEVENT);
+
   printf("|------------------------- Time ---------------------------|\n");fflush(stdout);
   printf("Building a SDL implementation of Timer\n");fflush(stdout);
   zbe::Timer *sysTimer = new zbe::SDLTimer(true);
+
   printf("Acquiring and configuring SysTime with that Timer\n");fflush(stdout);
   printf("It will be the time reference for all the game context\n");fflush(stdout);
   zbe::SysTime &sysTime = zbe::SysTime::getInstance();
   sysTime.setSystemTimer(sysTimer);
+
   printf("|-------------------- Drawing system ----------------------|\n");fflush(stdout);
   printf("Building the window to draw on\n");fflush(stdout);
   zbe::Window window(WIDTH,HEIGHT);
   ballgraphics = window.loadImg(ballfilename);
   brickgraphics = window.loadImg(brickfilename);
+
   printf("Building the drawer to paint SimpleSprite's \n");fflush(stdout);
   zbe::SimpleSpriteSDLDrawer drawer(&window);
+
   printf("|-------------------- Daemons ----------------------|\n");fflush(stdout);
   zbe::DaemonMaster dMaster;
   std::vector<zbe::Mobile<2>*> vmobile;
@@ -122,6 +135,7 @@ int batismain(int, char** ) {
   lmmobile.insert(MOBILELIST, &vmobile);
   std::shared_ptr<zbe::Daemon> bball(new  zbe::BehaviorDaemon< zbe::Mobile<2>, std::vector<zbe::Mobile<2>*> >(new zbe::UniformLinearMotion<2>(), MOBILELIST));
   dMaster.addDaemon(bball);
+
   printf("|------------------- Creating entities --------------------|\n");fflush(stdout);
   printf("Creating drawables list\n");fflush(stdout);
   std::forward_list<zbe::SimpleSpriteEntity*> sprites;
@@ -156,8 +170,9 @@ int batismain(int, char** ) {
   zbe::SimpleSpriteAdaptor<zbe::Drawable>* spriteAdaptor = new zbe::SimpleDrawableSimpleSpriteAdaptor();
   zbe::BaseSphereMCMAPOAdaptor<game::GameReactor, 2> * movableCatorAdaptor = new zbe::BaseSphereMCMAPOAdaptor<game::GameReactor, 2>();
 
-
+  //zbe::ListManager<std::forward_list<batis::GameBall*>> balls;
   std::forward_list<batis::GameBall*> balls;
+
   for(int i = 0; i<100 ; i++){
 
       int64_t vt = 200;

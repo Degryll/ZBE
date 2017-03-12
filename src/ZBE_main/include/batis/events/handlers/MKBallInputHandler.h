@@ -38,6 +38,8 @@ class MKBallInputHandler : public zbe::InputHandler {
 	private:
     MouseKeeper& keeper;
     bool mouseEven;
+    //ballList
+    //
 };
 } //namespace batis
 
