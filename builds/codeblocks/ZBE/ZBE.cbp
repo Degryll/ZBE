@@ -198,9 +198,11 @@
 		<Unit filename="../../../include/ZBE/core/daemons/Punishers.h" />
 		<Unit filename="../../../include/ZBE/core/drawers/Drawer.h" />
 		<Unit filename="../../../include/ZBE/core/entities/Entity.h" />
+		<Unit filename="../../../include/ZBE/core/entities/adaptorentities/AvatarEntity.h" />
 		<Unit filename="../../../include/ZBE/core/entities/adaptorentities/CollisionatorEntity.h" />
 		<Unit filename="../../../include/ZBE/core/entities/adaptorentities/CollisionerEntity.h" />
 		<Unit filename="../../../include/ZBE/core/entities/adaptorentities/SimpleSpriteEntity.h" />
+		<Unit filename="../../../include/ZBE/core/entities/adaptors/Adaptor.h" />
 		<Unit filename="../../../include/ZBE/core/entities/adaptors/CollisionatorAdaptor.h" />
 		<Unit filename="../../../include/ZBE/core/entities/adaptors/CollisionerAdaptor.h" />
 		<Unit filename="../../../include/ZBE/core/entities/adaptors/ReactObjectAdaptor.h" />

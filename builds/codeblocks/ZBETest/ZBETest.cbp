@@ -171,6 +171,7 @@
 		<Unit filename="../../../src/ZBETest/core/daemons/PunishersTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/daemons/daemonsTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/drawers/SDL/SimpleSpriteSDLDrawerTest.cpp" />
+		<Unit filename="../../../src/ZBETest/core/entities/AvatarEntityTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/entities/CollisionatorEntityTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/entities/CollisionerEntityTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/entities/EntityTest.cpp" />

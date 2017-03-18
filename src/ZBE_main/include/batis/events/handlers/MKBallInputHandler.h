@@ -31,7 +31,7 @@ class MKBallInputHandler : public zbe::InputHandler {
         if (mouseEven) {
 
         }
-        printf("Posición %f, %f\n", keeper.getX(), keeper.getY());
+        printf("Posicion %f, %f\n", keeper.getX(), keeper.getY());
       }
   	}
 
