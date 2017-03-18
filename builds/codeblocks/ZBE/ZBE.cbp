@@ -229,6 +229,7 @@
 		<Unit filename="../../../include/ZBE/core/system/SysError.h" />
 		<Unit filename="../../../include/ZBE/core/system/SysTime.h" />
 		<Unit filename="../../../include/ZBE/core/tools/Timer.h" />
+		<Unit filename="../../../include/ZBE/core/tools/Tools.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/ListManager.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/ListofLists.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/Ticket.h" />
