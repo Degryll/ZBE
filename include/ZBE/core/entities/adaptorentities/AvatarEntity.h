@@ -10,8 +10,13 @@
 #ifndef ZBE_CORE_ENTITIES_AVATARENTITY_H_
 #define ZBE_CORE_ENTITIES_AVATARENTITY_H_
 
-#include <memory>
+#include <iostream>
 
+#include <memory>
+#include <type_traits>
+#include <typeinfo>
+
+#include "ZBE/core/tools/tools.h"
 #include "ZBE/core/entities/adaptors/Adaptor.h"
 
 namespace zbe{
@@ -20,47 +25,65 @@ template<typename T>
 class AvatarEntity;
 
 template<typename T>
-struct AvatarEntity_Traits {
-  virtual ~AvatarEntity_Traits(){}
-  using Type = AvatarEntity<T>;
-};
-
-template<>
-struct AvatarEntity_Traits<void> {
-  virtual ~AvatarEntity_Traits() {}
-  struct Type {virtual ~Type() {}};
-};
-
-template<typename T>
-class AvatarEntity : virtual public AvatarEntity_Traits<typename T::Base>::Type {
+class AvatarEntity : virtual public Covariance_Traits<AvatarEntity<typename T::Base>,  typename T::Base>::Type {
 public:
   virtual ~AvatarEntity(){}
-  virtual T* getAvatar() = 0;
+  virtual void assignAvatar(T**) = 0;
 };
 
 template<typename T>
-class AvatarEntityAdapted : virtual public AvatarEntity<T> {
+class AvatarEntityAdapted :
+  			virtual public AvatarEntity<T>,
+  			public Covariance_Traits<AvatarEntityAdapted<typename T::Base>,  typename T::Base>::Type {
 public:
   AvatarEntityAdapted() : a() {}
   virtual ~AvatarEntityAdapted(){}
-  virtual T* getAvatar() {
-  	return (a->getAvatar());
+  void assignAvatar(T** avatarPtr) {
+  	(*avatarPtr) = a->getAvatar();
   }
 
-  virtual void setAdaptor(std::shared_ptr< Adaptor<T> > adaptor) {this->a = adaptor;}
+  virtual void setAdaptor(std::shared_ptr< Adaptor<T> > adaptor){
+    this->a = adaptor;
+    this->template _setAdaptor<typename T::Base>();
+  }
 
 private:
+
+  template <typename B>
+  void _setAdaptor() {_setAdaptor(TypeGimmick<B>());}
+
+  template<typename B>
+  void _setAdaptor(TypeGimmick<B>) {AvatarEntityAdapted<B>::setAdaptor(a);}
+
+  void _setAdaptor(TypeGimmick<void>) {}
+
   std::shared_ptr< Adaptor<T> > a;
 };
 
 template<typename T>
-class AvatarEntityFixed : virtual public AvatarEntity<T> {
+class AvatarEntityFixed :
+  				virtual public AvatarEntity<T>,
+  				virtual public Covariance_Traits<AvatarEntityFixed<typename T::Base>,  typename T::Base>::Type{
 public:
   virtual ~AvatarEntityFixed(){}
-  virtual T* getAvatar() {return (a);}
-  virtual void setAvatar(T* avatar) {this->a = avatar;}
+  void assignAvatar(T** avatarPtr) {
+    (*avatarPtr) = a;
+  }
+  void setAvatar(T* avatar) {
+    this->a = avatar;
+    this->template _setAvatar<typename T::Base>();
+  }
 
 private:
+
+  template <typename B>
+  void _setAvatar() {_setAvatar(TypeGimmick<B>());}
+
+  template<typename B>
+  void _setAvatar(TypeGimmick<B>) {AvatarEntityFixed<B>::setAvatar(a);}
+
+  void _setAvatar(TypeGimmick<void>) {}
+
   T* a = nullptr;
 };
 

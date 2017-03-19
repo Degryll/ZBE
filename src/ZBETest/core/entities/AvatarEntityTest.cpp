@@ -11,21 +11,21 @@ class DummyAvatarA {
 public:
 	using Base = void;
   virtual ~DummyAvatarA() {}
-  virtual int getValue() = 0;
+  int getValueA() {return (17);}
 };
 
 class DummyAvatarB : public DummyAvatarA {
 public:
 	using Base = DummyAvatarA;
   virtual ~DummyAvatarB() {}
-  virtual int getValue() {return (37);}
+  int getValueB() {return (37);}
 };
 
 class DummyAvatarC : public DummyAvatarB {
 public:
 	using Base = DummyAvatarB;
   virtual ~DummyAvatarC() {}
-  int getValue() {return (42);}
+  int getValueC() {return (42);}
 };
 
 class DummyAdaptor : public zbe::Adaptor<DummyAvatarC> {
@@ -44,12 +44,12 @@ TEST (AvatarEntity, AvatarEntity) {
     zbe::AvatarEntityAdapted<DummyAvatarC> aeab;
     zbe::AvatarEntityFixed<DummyAvatarC> aefb;
 
-  	DummyAvatarC* b(new DummyAvatarC);
+  	DummyAvatarC dacOriginal;
 
     std::shared_ptr<DummyAdaptor> a(new DummyAdaptor);
-    a->setAvatar(b);
+    a->setAvatar(&dacOriginal);
     aeab.setAdaptor(a);
-    aefb.setAvatar(b);
+    aefb.setAvatar(&dacOriginal);
 
     std::forward_list<zbe::AvatarEntity<DummyAvatarA>*> DAList;
 
@@ -58,10 +58,49 @@ TEST (AvatarEntity, AvatarEntity) {
 
   	auto it = DAList.begin();
 
-    EXPECT_EQ(42, (*it)->getAvatar()->getValue()) << "Must return 42";
+  	DummyAvatarA* daa;
+  	DummyAvatarB* dab;
+  	DummyAvatarC* dac;
+
+  	(*it)->assignAvatar(&daa);
+
+    EXPECT_EQ(17, daa->getValueA()) << "Must return 17";
 
   	it++;
+		(*it)->assignAvatar(&daa);
+  	EXPECT_EQ(17, daa->getValueA()) << "Must return 17";
 
-  	EXPECT_EQ(42, (*it)->getAvatar()->getValue()) << "Must return 42";
+    zbe::AvatarEntity<DummyAvatarA>* pA_aeb = &aeab;
+  	zbe::AvatarEntity<DummyAvatarB>* pB_aeb = &aeab;
+  	zbe::AvatarEntity<DummyAvatarC>* pC_aeb = &aeab;
+
+  	pA_aeb->assignAvatar(&daa);
+    pB_aeb->assignAvatar(&dab);
+    pC_aeb->assignAvatar(&dac);
+  	EXPECT_EQ(17, daa->getValueA()) << "Must return 17";
+  	EXPECT_EQ(37, dab->getValueB()) << "Must return 37";
+  	EXPECT_EQ(42, dac->getValueC()) << "Must return 42";
+
+
+    zbe::AvatarEntityAdapted<DummyAvatarA>* pA_aeab = &aeab;
+  	zbe::AvatarEntityAdapted<DummyAvatarB>* pB_aeab = &aeab;
+  	zbe::AvatarEntityAdapted<DummyAvatarC>* pC_aeab = &aeab;
+
+  	pA_aeab->assignAvatar(&daa);
+    pB_aeab->assignAvatar(&dab);
+    pC_aeab->assignAvatar(&dac);
+  	EXPECT_EQ(17, daa->getValueA()) << "Must return 17";
+  	EXPECT_EQ(37, dab->getValueB()) << "Must return 37";
+  	EXPECT_EQ(42, dac->getValueC()) << "Must return 42";
+
+    zbe::AvatarEntityFixed<DummyAvatarA>* pA_aefb = &aefb;
+  	zbe::AvatarEntityFixed<DummyAvatarB>* pB_aefb = &aefb;
+  	zbe::AvatarEntityFixed<DummyAvatarC>* pC_aefb = &aefb;
+
+  	pA_aefb->assignAvatar(&daa);
+    pB_aefb->assignAvatar(&dab);
+    pC_aefb->assignAvatar(&dac);
+  	EXPECT_EQ(17, daa->getValueA()) << "Must return 17";
+  	EXPECT_EQ(37, dab->getValueB()) << "Must return 37";
+  	EXPECT_EQ(42, dac->getValueC()) << "Must return 42";
 }
-

@@ -229,7 +229,6 @@
 		<Unit filename="../../../include/ZBE/core/system/SysError.h" />
 		<Unit filename="../../../include/ZBE/core/system/SysTime.h" />
 		<Unit filename="../../../include/ZBE/core/tools/Timer.h" />
-		<Unit filename="../../../include/ZBE/core/tools/Tools.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/ListManager.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/ListofLists.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/Ticket.h" />
@@ -244,6 +243,7 @@
 		<Unit filename="../../../include/ZBE/core/tools/math/math.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/objects.h" />
 		<Unit filename="../../../include/ZBE/core/tools/text/utf8.h" />
+		<Unit filename="../../../include/ZBE/core/tools/tools.h" />
 		<Unit filename="../../../include/ZBE/entities/adaptorentities/BounceableEntity.h" />
 		<Unit filename="../../../include/ZBE/entities/adaptorentities/BouncerCollisionatorEntity.h" />
 		<Unit filename="../../../include/ZBE/entities/adaptorentities/BouncerEntity.h" />

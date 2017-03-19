@@ -1,4 +1,4 @@
-/**
+  /**
  * Copyright 2012 Batis Degryll Ludo
  * @file Adaptor.h
  * @since 2017-03-15
@@ -9,13 +9,15 @@
 
 #include <memory>
 
+#include "ZBE/core/tools/tools.h"
+
 #ifndef ZBE_CORE_ENTITIES_ADAPTOR_H_
 #define ZBE_CORE_ENTITIES_ADAPTOR_H_
 
 namespace zbe{
 
 template<typename T>
-class Adaptor {
+class Adaptor : virtual public Covariance_Traits<Adaptor<typename T::Base>,  typename T::Base>::Type {
 public:
   virtual ~Adaptor() {}
   virtual T* getAvatar() = 0;

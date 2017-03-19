@@ -6,6 +6,8 @@
  * @author Batis Degryll Ludo
  * @brief ZBE coding tools
  */
+#ifndef ZBE_CORE_TOOLS_TOOLS_H_
+#define ZBE_CORE_TOOLS_TOOLS_H_
 
 /* \brief Used when a template need to know the bases classes of "T".
  *
@@ -32,4 +34,13 @@ struct Covariance_Traits {
 };
 
 template<typename T>
-struct Covariance_Traits<T, void> {struct Type {};};
+struct Covariance_Traits<T, void> {
+  struct Type { virtual ~Type(){} };
+};
+
+/* \brief A gimmick class used to specialize a member function without the need to specialized the main class
+ */
+template <typename T>
+struct TypeGimmick { typedef T type; };
+
+#endif  // ZBE_CORE_TOOLS_TOOLS_H_
