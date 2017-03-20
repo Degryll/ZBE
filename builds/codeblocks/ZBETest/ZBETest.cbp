@@ -136,6 +136,7 @@
 					<Add option="-std=c++11" />
 					<Add option="-m64" />
 					<Add option="-isystem ..\..\..\extlibs\googletest\1.7.0\include -isystem ..\..\..\extlibs\googletest\1.7.0\include\internal" />
+					<Add option="-fno-devirtualize" />
 					<Add directory="../../../src/ZBETest/include" />
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/googletest/1.7.0/include" />
