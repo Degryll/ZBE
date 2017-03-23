@@ -14,9 +14,10 @@
 #include <memory>
 
 #include "ZBE/core/tools/math/objects.h"
-#include "ZBE/core/entities/adaptorentities/CollisionerEntity.h"
+#include "ZBE/core/entities/adaptorentities/AvatarEntity.h"
+#include "ZBE/core/entities/avatars/Collisioner.h"
+#include "ZBE/core/entities/avatars/SimpleSprite.h"
 #include "ZBE/core/entities/avatars/implementations/SimpleCollisioner.h"
-#include "ZBE/core/entities/adaptorentities/SimpleSpriteEntity.h"
 #include "ZBE/reactobjects/VoidReactObject.h"
 #include "ZBE/archetypes/Drawable.h"
 
@@ -25,17 +26,14 @@
 namespace game {
 
 class GameBlock :  public zbe::Drawable,
-                   public zbe::SimpleSpriteEntityAdapted<zbe::Drawable>,
-  								 public zbe::CollisionerEntity<GameReactor> {
+                   public zbe::AvatarEntityAdapted<zbe::SimpleSprite>,
+                   public zbe::AvatarEntityFixed<zbe::Collisioner<GameReactor> > {
 public:
-  GameBlock(double x, double y, double width, double height, uint64_t graphics, uint64_t actuatorsList)
-    : SimpleSpriteEntityAdapted(this),
-      c(new zbe::SimpleCollisioner<GameReactor>(std::make_shared<zbe::StaticSolidAABB2D<GameReactor> >(zbe::AABB2D({x, y}, {x + width, y + height} )),
-         std::make_shared<zbe::VoidReactObject<GameReactor> >(),
-         actuatorsList)),
+  GameBlock(double x, double y, double width, double height, uint64_t graphics, uint64_t actuatorsList) :
+     zbe::AvatarEntityFixed<zbe::Collisioner<GameReactor> >(new zbe::SimpleCollisioner<GameReactor>(std::make_shared<zbe::StaticSolidAABB2D<GameReactor> >(zbe::AABB2D({x, y}, {x + width, y + height} )),
+                                                            std::make_shared<zbe::VoidReactObject<GameReactor> >(),
+                                                            actuatorsList)),
       x(x), y(y), w(width), h(height), g(graphics) {}
-
-  std::shared_ptr<zbe::Collisioner<GameReactor> > getCollisioner() {return (c);}
 
   int64_t getX()    {return (x);}
   int64_t getY()    {return (y);}
@@ -44,7 +42,6 @@ public:
   uint64_t getGraphics() {return (g);}
 
 private:
-  std::shared_ptr<zbe::Collisioner<GameReactor> > c;
   int64_t x;
   int64_t y;
   int64_t w;

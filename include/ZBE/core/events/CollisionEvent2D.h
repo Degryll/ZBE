@@ -25,6 +25,11 @@ namespace zbe {
 template<typename R>
 class CollisionEvent2D : public Event {
   public:
+    CollisionEvent2D(const CollisionEvent2D& rhs) {
+      Event::operator=(rhs);
+      c = rhs.c;
+      cd = rhs.cd;
+    }
 
     /** \brief Parametrized Constructor.
     *
@@ -34,7 +39,7 @@ class CollisionEvent2D : public Event {
     * \param entityB The second entity involved in the collision.
     * \param point Point of collision.
     */
-    CollisionEvent2D(uint64_t id, int64_t time, std::shared_ptr<Collisioner<R> > collisioner, CollisionData collisionData, std::shared_ptr<ReactObject<R> >  reactObject) : Event(id, time), c(collisioner), cd(collisionData), ro(reactObject) {}
+    CollisionEvent2D(uint64_t id, int64_t time, Collisioner<R>* collisioner, CollisionData collisionData, std::shared_ptr<ReactObject<R> >  reactObject) : Event(id, time), c(collisioner), cd(collisionData), ro(reactObject) {}
 
     /** \brief base destructor.
     */
@@ -52,7 +57,7 @@ class CollisionEvent2D : public Event {
     /** \brief Get the entity involved in the collision.
     * \return The entity involved in the collision.
     */
-    inline std::shared_ptr<Collisioner<R> > getCollisioner() {return (c);}
+    inline Collisioner<R>* getCollisioner() {return (c);}
 
     /** \brief Get the point of collision.
     * \return The point of collision.
@@ -75,7 +80,7 @@ class CollisionEvent2D : public Event {
     };
 
   private:
-    std::shared_ptr<Collisioner<R> > c;     //!< First entitie involved avatar.
+    Collisioner<R>* c;     //!< First entitie involved avatar.
     CollisionData cd;   //!< Point of collision.
     std::shared_ptr<ReactObject<R> > ro; //!< second entitie involved. void to avoid template.
 };

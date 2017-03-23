@@ -16,6 +16,7 @@ namespace zbe {
  */
 class Bounceable {
   public:
+    using Base = void;
     virtual ~Bounceable() {};
     virtual double getFactor() = 0;
 };

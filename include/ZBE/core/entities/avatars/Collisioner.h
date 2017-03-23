@@ -27,6 +27,9 @@ namespace zbe {
 template <typename R>
 class Collisioner {
   public:
+
+    using Base = void;
+
     /** \brief Empty destructor.
      */
     virtual ~Collisioner() {}

@@ -12,18 +12,19 @@
 
 #include "ZBE/archetypes/Bouncing.h"
 #include "ZBE/entities/avatars/Bouncer.h"
+#include "ZBE/entities/avatars/implementations/BaseMovable.h"
 
 namespace zbe {
 
 /** \brief This implements a base 1:1 avatar that can bounce.
  */
 template <unsigned s>
-class BaseBouncer : virtual public Bouncer<s> {
+class BaseBouncer : virtual public Bouncer<s>, public BaseMovable<s> {
   public:
     BaseBouncer(const BaseBouncer<s>&) = delete;
     void operator=(const BaseBouncer<s>&) = delete;
 
-    BaseBouncer(Bouncing<s>* bouncing) : b(bouncing) {}
+    BaseBouncer(Bouncing<s>* bouncing): BaseMovable<s>(bouncing), b(bouncing) {}
 
     void addNormal(const Vector<s>& normal) {b->addNormal(normal);}
   	Vector<s> getNormalSum() {return b->getNormalSum();}

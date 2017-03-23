@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file CollisionEventGenerator.h
  * @since 2016-06-05
- * @date 2017-01-18
+ * @date 2017-03-20
  * @author Degryll Ludo
  * @brief Generate collision events.
  */
@@ -13,8 +13,9 @@
 #include <cstdint>
 #include <memory>
 
-#include "ZBE/core/entities/adaptorentities/CollisionerEntity.h"
-#include "ZBE/core/entities/adaptorentities/CollisionatorEntity.h"
+#include "ZBE/core/entities/adaptorentities/AvatarEntity.h"
+#include "ZBE/core/entities/avatars/Collisioner.h"
+#include "ZBE/core/entities/avatars/Collisionator.h"
 #include "ZBE/core/tools/math/collisions/CollisionSystemSolver.h"
 #include "ZBE/core/events/EventStore.h"
 #include "ZBE/core/events/CollisionEvent2D.h"
@@ -34,8 +35,8 @@ class CollisionEventGenerator {
      */
     CollisionEventGenerator(uint64_t list, int eventId)
     : id(list), eventId(eventId), cs(), es(EventStore::getInstance()),
-      lmct(ListManager<TicketedForwardList<CollisionatorEntity<R>*> >::getInstance()),
-      lmcn(ListManager<TicketedForwardList<CollisionerEntity<R>*> >::getInstance()) {};
+      lmct(ListManager<TicketedForwardList<AvatarEntity<Collisionator<R> >* > >::getInstance()),
+      lmcn(ListManager<TicketedForwardList<AvatarEntity<Collisioner<R> >* > >::getInstance()) {};
 
     /** \brief Empty destructor.
     */
@@ -53,8 +54,8 @@ class CollisionEventGenerator {
     CollisionSelector<R> cs;  //!< Use to select the type of the collision.
     EventStore& es;
 
-    ListManager<TicketedForwardList<CollisionatorEntity<R>*> >& lmct;
-    ListManager<TicketedForwardList<CollisionerEntity<R>*> >& lmcn;
+    ListManager<TicketedForwardList<AvatarEntity<Collisionator<R> >* > >& lmct;
+    ListManager<TicketedForwardList<AvatarEntity<Collisioner<R> >* > >& lmcn;
 };
 
 template <typename R>
@@ -62,14 +63,16 @@ void CollisionEventGenerator<R>::generate(int64_t initTime, int64_t endTime) {
   int64_t totalTime = endTime - initTime;
   Point2D point;
 
-  TicketedForwardList<CollisionatorEntity<R>*>* ctl = lmct.get(id);
+  TicketedForwardList<AvatarEntity<Collisionator<R> >* >* ctl = lmct.get(id);
 
   for(auto catorEntity : (*ctl)) {
-    std::shared_ptr<Collisionator<R> > cator = catorEntity->getCollisionator();
+    Collisionator<R>* cator;
+    catorEntity->assignAvatar(&cator);
     uint64_t cablesId = cator->getCollisionablesListId();
-    TicketedForwardList<CollisionerEntity<R>*>* cnl = lmcn.get(cablesId);
+    TicketedForwardList<AvatarEntity<Collisioner<R> >* >* cnl = lmcn.get(cablesId);
     for(auto conerEntity : (*cnl)) {
-      std::shared_ptr<Collisioner<R> > coner = conerEntity->getCollisioner();
+      Collisioner<R>* coner;
+      conerEntity->assignAvatar(&coner);
       if(cs.select(*cator, *coner, totalTime, point)) {
         CollisionData cd(point);
         es.storeEvent(new CollisionEvent2D<R>(eventId, initTime+totalTime, cator, cd, std::shared_ptr<zbe::ReactObject<R> >(coner->getReactObject())));

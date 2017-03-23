@@ -145,6 +145,7 @@
 		<Unit filename="../../../src/ZBE_main/include/game/entities/GameBall.h" />
 		<Unit filename="../../../src/ZBE_main/include/game/entities/GameBlock.h" />
 		<Unit filename="../../../src/ZBE_main/include/game/entities/GameBoard.h" />
+		<Unit filename="../../../src/ZBE_main/include/game/entities/adaptors/GameBallCollisionatorAdaptor.h" />
 		<Unit filename="../../../src/ZBE_main/include/game/events/handlers/ExitInputHandler.h" />
 		<Unit filename="../../../src/ZBE_main/include/game/events/handlers/GameBallBouncer.h" />
 		<Unit filename="../../../src/ZBE_main/include/game/events/handlers/StepInputHandler.h" />

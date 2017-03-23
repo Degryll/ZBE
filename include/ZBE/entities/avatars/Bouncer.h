@@ -11,14 +11,16 @@
 #define ZBE_ENTITIES_AVATARS_BOUNCER_H_
 
 #include "ZBE/core/tools/math/Vector.h"
+#include "ZBE/entities/avatars/Movable.h"
 
 namespace zbe {
 
 /** \brief This define an avatar of an entity that can bounce with multiple normals.
  */
 template <unsigned s>
-class Bouncer {
+class Bouncer : virtual public Movable<s> {
   public:
+    using Base = Movable<s>;
     virtual ~Bouncer() {}
   	virtual void addNormal(const Vector<s>& normal) = 0;
   	virtual Vector<s> getNormalSum() = 0;

@@ -11,16 +11,17 @@
 #define ZBE_BEHAVIORS_UNIFORMLINEARMOTION_H_
 
 #include "ZBE/core/behaviors/Behavior.h"
-#include "ZBE/archetypes/Mobile.h"
+#include "ZBE/entities/avatars/Movable.h"
 #include "ZBE/core/tools/math/math.h"
 #include "ZBE/core/tools/math/Point.h"
+#include "ZBE/core/entities/adaptorentities/AvatarEntity.h"
 
 namespace zbe {
 
 /** \brief Define the minimal functions of every behavior.
  */
 template<unsigned s>
-class UniformLinearMotion : public Behavior< Mobile<s> > {
+class UniformLinearMotion : public Behavior<Movable<s>  > {
   public:
 
     /** \brief Default destructor.
@@ -29,12 +30,11 @@ class UniformLinearMotion : public Behavior< Mobile<s> > {
 
     /** \brief Do the behavior work over the given entity
      */
-    void apply(Mobile<s>* entity, int64_t time) {
-      Point<s>& p = entity->getPosition();
-      Point<s> pe = entity->getPosition();
-      for(unsigned i = 0; i < s; i++) {
-      	p[i] += (entity->getVelocity()[i] * time) * zbe::INVERSE_SECOND;
-      }
+    void apply(AvatarEntity<Movable<s> >* entity, int64_t time) {
+      Movable<s>* avatar;
+      entity->assignAvatar(&avatar);
+      Point<s>& p = avatar->getPosition();
+      p += (avatar->getVelocity() * time) * zbe::INVERSE_SECOND;
     }
 };
 

@@ -23,6 +23,8 @@ template <typename R>
 class Collisionator : virtual public Collisioner<R> {
   public:
 
+    using Base = void;
+
     virtual ~Collisionator(){};
 
     /**  \brief Returns the global id of the list of Collisionables identify by an id.

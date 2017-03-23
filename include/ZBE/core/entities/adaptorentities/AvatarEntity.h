@@ -37,6 +37,9 @@ class AvatarEntityAdapted :
   			public Covariance_Traits<AvatarEntityAdapted<typename T::Base>,  typename T::Base>::Type {
 public:
   AvatarEntityAdapted() : a() {}
+  AvatarEntityAdapted(std::shared_ptr< Adaptor<T> > adaptor) : a(adaptor) {
+    this->template _setAdaptor<typename T::Base>();
+  }
   virtual ~AvatarEntityAdapted(){}
   void assignAvatar(T** avatarPtr) {
   	(*avatarPtr) = a->getAvatar();
@@ -65,11 +68,24 @@ class AvatarEntityFixed :
   				virtual public AvatarEntity<T>,
   				virtual public Covariance_Traits<AvatarEntityFixed<typename T::Base>,  typename T::Base>::Type{
 public:
-  virtual ~AvatarEntityFixed(){}
+  AvatarEntityFixed(const AvatarEntityFixed&) = delete;
+  void operator=(const AvatarEntityFixed&) = delete;
+
+  AvatarEntityFixed() : a(nullptr) { }
+  AvatarEntityFixed(T* avatar) : a(avatar) {
+    this->template _setAvatar<typename T::Base>();
+  }
+
+  virtual ~AvatarEntityFixed(){
+    delete a;
+  }
+
   void assignAvatar(T** avatarPtr) {
     (*avatarPtr) = a;
   }
+
   void setAvatar(T* avatar) {
+    delete a;
     this->a = avatar;
     this->template _setAvatar<typename T::Base>();
   }

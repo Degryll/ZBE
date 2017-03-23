@@ -10,6 +10,7 @@
 #ifndef ZBE_ENTITIES_AVATARS_IMPLEMENTATIONS_BASEMOVABLE_H_
 #define ZBE_ENTITIES_AVATARS_IMPLEMENTATIONS_BASEMOVABLE_H_
 
+#include "ZBE/entities/avatars/implementations/BasePositionable.h"
 #include "ZBE/entities/avatars/Movable.h"
 #include "ZBE/archetypes/Mobile.h"
 
@@ -18,12 +19,12 @@ namespace zbe {
 /** \brief This implements a base 1:1 avatar that can be moved.
  */
 template <unsigned s>
-class BaseMovable : virtual public Movable<s> {
+class BaseMovable : virtual public Movable<s>, public BasePositionable<s> {
   public:
     BaseMovable(const BaseMovable&) = delete;
     void operator=(const BaseMovable&) = delete;
 
-    BaseMovable(Mobile<s>* mobile) : m(mobile) {}
+    BaseMovable(Mobile<s>* mobile) : BasePositionable<s>(mobile), m(mobile) {}
 
     void setPosition(std::initializer_list<double> l) {m->setPosition(l);}
     void setPosition(Point<s> position)   {m->setPosition(position);}

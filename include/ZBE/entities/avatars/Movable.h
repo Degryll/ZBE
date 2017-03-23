@@ -19,6 +19,7 @@ namespace zbe {
 template <unsigned s>
 class Movable : public Positionable<s> {
   public:
+    using Base = Positionable<s>;
 
     virtual void setVelocity(std::initializer_list<double> l) = 0;
     virtual void setVelocity(Vector<s> velocity) = 0;

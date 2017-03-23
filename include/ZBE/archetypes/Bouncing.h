@@ -10,10 +10,12 @@
 #ifndef ZBE_ARCHETYPES_BOUNCING_H
 #define ZBE_ARCHETYPES_BOUNCING_H
 
+#include "ZBE/archetypes/Mobile.h"
+
 namespace zbe {
 
 template <unsigned s>
-class Bouncing {
+class Bouncing : virtual public Mobile<s> {
   public:
     ~Bouncing() {}
   	virtual void addNormal(const Vector<s>& normal) = 0;

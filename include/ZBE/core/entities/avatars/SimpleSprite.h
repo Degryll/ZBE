@@ -15,6 +15,7 @@ namespace zbe {
 /** \brief This define an avatar that can be drawn.
  */
 struct SimpleSprite {
+    using Base = void;
     int x;      //!< X coordinate
     int y;      //!< Y coordinate
     unsigned w; //!< width

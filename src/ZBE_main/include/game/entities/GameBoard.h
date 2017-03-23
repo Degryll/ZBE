@@ -14,25 +14,21 @@
 #include <memory>
 
 #include "ZBE/core/tools/math/objects.h"
-#include "ZBE/core/entities/adaptorentities/CollisionerEntity.h"
+#include "ZBE/core/entities/avatars/Collisioner.h"
 #include "ZBE/core/entities/avatars/implementations/SimpleCollisioner.h"
+#include "ZBE/core/entities/adaptorentities/AvatarEntity.h"
 #include "ZBE/reactobjects/VoidReactObject.h"
 
 #include "game/GameReactor.h"
 
 namespace game {
 
-class GameBoard : public zbe::CollisionerEntity<GameReactor> {
+class GameBoard : public zbe::AvatarEntityFixed<zbe::Collisioner<GameReactor> > {
 public:
-  GameBoard(double width, double height, uint64_t actuatorsList)
-    : c(new zbe::SimpleCollisioner<GameReactor>(std::make_shared<zbe::StaticLimiterAABB2D<GameReactor> >(zbe::AABB2D({0.0, 0.0}, {width, height} )),
+  GameBoard(double x, double y, double width, double height, uint64_t actuatorsList) :
+    zbe::AvatarEntityFixed<zbe::Collisioner<GameReactor> >(new zbe::SimpleCollisioner<GameReactor>(std::make_shared<zbe::StaticLimiterAABB2D<GameReactor> >(zbe::AABB2D({x, y}, {width, height} )),
          std::make_shared<zbe::VoidReactObject<GameReactor> >(),
          actuatorsList)) {}
-
-  std::shared_ptr<zbe::Collisioner<GameReactor> > getCollisioner() {return (c);}
-
-private:
-  std::shared_ptr<zbe::Collisioner<GameReactor> > c;
 };
 
 } // namespace game

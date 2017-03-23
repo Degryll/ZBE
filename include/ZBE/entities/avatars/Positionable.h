@@ -10,6 +10,9 @@
 #ifndef ZBE_ENTITIES_AVATARS_POSITIONABLE_H_
 #define ZBE_ENTITIES_AVATARS_POSITIONABLE_H_
 
+#include <initializer_list>
+
+#include "ZBE/core/tools/math/Vector.h"
 
 namespace zbe {
 
@@ -18,6 +21,7 @@ namespace zbe {
 template <unsigned s>
 class Positionable {
   public:
+    using Base = void;
     virtual ~Positionable() {}
 
     virtual void setPosition(std::initializer_list<double> l) = 0;

@@ -20,7 +20,7 @@
 namespace zbe {
 
 template <typename R, unsigned s>
-class SimpleBouncingMobileAPO : virtual public BouncingMovileAPO<R, s>, public SimpleMobileAPO<R, s>, public SimpleBouncing<s> {
+class SimpleBouncingAPO : virtual public BouncingAPO<R, s>, public SimpleMobileAPO<R, s>, public SimpleBouncing<s> {
   public:
     virtual ~SimpleBouncingMobileAPO(){}
 };
