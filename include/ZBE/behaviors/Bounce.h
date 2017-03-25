@@ -30,7 +30,7 @@ class Bounce : public Behavior<Bouncer<s>  > {
 
     /** \brief Do the behavior work over the given entity
      */
-    void apply(AvatarEntity<Bouncer<s> >* entity, int64_t time) {
+    void apply(AvatarEntity<Bouncer<s> >* entity, int64_t) {
       Bouncer<s>* avatar;
       entity->assignAvatar(&avatar);
       if(avatar->hasNormals()){

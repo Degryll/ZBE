@@ -123,8 +123,8 @@ int gamemain(int, char** ) {
   lmAEBouncer.insert(BOUNCERLIST, &vAEBouncer);//Bounce
   std::shared_ptr<zbe::Daemon> ballBounce(new  zbe::BehaviorDaemon<zbe::Bouncer<2>, std::vector<zbe::AvatarEntity<zbe::Bouncer<2> >*> >(new zbe::Bounce<2>(), BOUNCERLIST));
   std::shared_ptr<zbe::Daemon> ballULM(new  zbe::BehaviorDaemon<zbe::Movable<2>, std::vector<zbe::AvatarEntity<zbe::Movable<2> >*> >(new zbe::UniformLinearMotion<2>(), MOVABLELIST));
-  dMaster.addDaemon(ballBounce);
   dMaster.addDaemon(ballULM);
+  dMaster.addDaemon(ballBounce);
   printf("|------------------- Creating entities --------------------|\n");fflush(stdout);
   printf("Creating drawables list\n");fflush(stdout);
   std::forward_list<zbe::AvatarEntity<zbe::SimpleSprite>*> sprites;
@@ -148,16 +148,16 @@ int gamemain(int, char** ) {
 
   std::forward_list<game::GameBall*> balls;
   for(int i = 0; i<1000 ; i++){//98.623993, 85.728439
-      game::GameBall* ball = new game::GameBall((rand()%200 + 400), (rand()%200 + 400), 16 , (rand()%200 - 100), (rand()%200 - 100), BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
-      std::shared_ptr<zbe::Adaptor<zbe::SimpleSprite> > spriteAdaptor = std::make_shared<zbe::SimpleDrawableSimpleSpriteAdaptor>(ball);
-      ((zbe::AvatarEntityAdapted<zbe::SimpleSprite>*)ball)->setAdaptor(spriteAdaptor);
-      std::shared_ptr<zbe::Adaptor<zbe::Collisionator<game::GameReactor> > > gbca = std::make_shared<game::GameBallCollisionatorAdaptor>(ball);
-      ((zbe::AvatarEntityAdapted<zbe::Collisionator<game::GameReactor> >*)ball)->setAdaptor(gbca);
-    	ctl.push_front(ball);
-      vAEMovable.push_back(ball);
-      vAEBouncer.push_back(ball);
-      balls.push_front(ball);
-      sprites.push_front(ball);
+    game::GameBall* ball = new game::GameBall((rand()%200 + 400), (rand()%200 + 400), 16 , (rand()%200 - 100), (rand()%200 - 100), BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
+    std::shared_ptr<zbe::Adaptor<zbe::SimpleSprite> > spriteAdaptor = std::make_shared<zbe::SimpleDrawableSimpleSpriteAdaptor>(ball);
+    ((zbe::AvatarEntityAdapted<zbe::SimpleSprite>*)ball)->setAdaptor(spriteAdaptor);
+    std::shared_ptr<zbe::Adaptor<zbe::Collisionator<game::GameReactor> > > gbca = std::make_shared<game::GameBallCollisionatorAdaptor>(ball);
+    ((zbe::AvatarEntityAdapted<zbe::Collisionator<game::GameReactor> >*)ball)->setAdaptor(gbca);
+    ctl.push_front(ball);
+    vAEMovable.push_back(ball);
+    vAEBouncer.push_back(ball);
+    balls.push_front(ball);
+    sprites.push_front(ball);
   }
 
   printf("Creating the bricks\n");fflush(stdout);
@@ -235,8 +235,8 @@ int gamemain(int, char** ) {
 
       int64_t eventTime = store.getTime();
       if (eventTime <= endT) {
-        dMaster.run(eventTime-initT);
         store.manageCurrent();
+        dMaster.run(eventTime-initT);
         initT = eventTime;
       } else {
         dMaster.run(endT-initT);

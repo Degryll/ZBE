@@ -307,5 +307,4 @@ TEST (AvatarEntity, TwoBranches) {
     EXPECT_EQ(71, daz->getValueX()) << "Must return 71";
     EXPECT_EQ(73, daz->getValueY()) << "Must return 73";
     EXPECT_EQ(24, daz->getValueZ()) << "Must return 24";
-
 }
