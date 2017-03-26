@@ -37,7 +37,7 @@ class SimpleSpriteSDLDrawer : public Drawer<SimpleSprite> {
     /** \brief The function every punisher must have.
      *  \param entity The entity to be drawn.
      */
-    void apply(SimpleSprite *entity);
+    void apply(AvatarEntity<SimpleSprite> *entity);
 
   private:
     Window* window;  //!< A SDL window with its context.

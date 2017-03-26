@@ -11,18 +11,20 @@
 
 namespace zbe {
 
-void SimpleSpriteSDLDrawer::apply(SimpleSprite *entity) {
+void SimpleSpriteSDLDrawer::apply(AvatarEntity<SimpleSprite> *entity) {
+  SimpleSprite* avatar;
+  entity->assignAvatar(&avatar);
   SDL_Rect src,dst;
   src.x = 0;
   src.y = 0;
-  src.w = entity->w;
-  src.h = entity->h;
+  src.w = avatar->w;
+  src.h = avatar->h;
 
-  dst.x = entity->x;
-  dst.y = entity->y;
-  dst.w = entity->w;
-  dst.h = entity->h;
-  window->render(entity->graphics, &src, &dst);
+  dst.x = avatar->x;
+  dst.y = avatar->y;
+  dst.w = avatar->w;
+  dst.h = avatar->h;
+  window->render(avatar->graphics, &src, &dst);
 }
 
 }  // namespace zbe

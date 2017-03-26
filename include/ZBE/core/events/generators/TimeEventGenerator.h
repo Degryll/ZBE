@@ -15,6 +15,7 @@
 
 #include "ZBE/core/events/EventStore.h"
 #include "ZBE/core/events/handlers/TimeHandler.h"
+#include "ZBE/core/events/generators/Generator.h"
 
 namespace zbe {
 
@@ -30,7 +31,7 @@ typedef std::multiset<TimerData>::iterator TimerIter;
 
 /** \brief Generate collision events.
  */
-class TimeEventGenerator {
+class TimeEventGenerator : virtual public Generator {
   public:
     /** \brief Empty Constructor.
      */

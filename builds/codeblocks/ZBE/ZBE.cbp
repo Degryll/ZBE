@@ -178,6 +178,7 @@
 		<Unit filename="../../../include/ZBE/archetypes/MobileAPO.h" />
 		<Unit filename="../../../include/ZBE/archetypes/PhysicalObject.h" />
 		<Unit filename="../../../include/ZBE/archetypes/Position.h" />
+		<Unit filename="../../../include/ZBE/archetypes/Wide.h" />
 		<Unit filename="../../../include/ZBE/archetypes/WideMobile.h" />
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleBouncing.h" />
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleBouncingAPO.h" />
@@ -186,6 +187,7 @@
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleMobile.h" />
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleMobileAPO.h" />
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimplePosition.h" />
+		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleWide.h" />
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleWideBouncingAPO.h" />
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleWideMobile.h" />
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleWideMobileAPO.h" />
@@ -210,6 +212,8 @@
 		<Unit filename="../../../include/ZBE/core/events/InputEvent.h" />
 		<Unit filename="../../../include/ZBE/core/events/TimeEvent.h" />
 		<Unit filename="../../../include/ZBE/core/events/generators/CollisionEventGenerator.h" />
+		<Unit filename="../../../include/ZBE/core/events/generators/Generator.h" />
+		<Unit filename="../../../include/ZBE/core/events/generators/GeneratorMaster.h" />
 		<Unit filename="../../../include/ZBE/core/events/generators/InputEventGenerator.h" />
 		<Unit filename="../../../include/ZBE/core/events/generators/TimeEventGenerator.h" />
 		<Unit filename="../../../include/ZBE/core/events/handlers/Actuator.h" />

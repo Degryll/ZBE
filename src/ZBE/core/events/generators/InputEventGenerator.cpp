@@ -13,7 +13,7 @@
 
 namespace zbe {
 
-    void InputEventGenerator::generate(uint64_t initTime, uint64_t finalTime) {
+    void InputEventGenerator::generate(int64_t initTime, int64_t finalTime) {
       std::vector<InputStatus> currentInput;
       inputBuffer->getRange(initTime, finalTime, currentInput);
       for(auto it = currentInput.begin(); it != currentInput.end(); it++) {

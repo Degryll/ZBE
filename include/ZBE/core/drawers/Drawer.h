@@ -10,6 +10,8 @@
 #ifndef CORE_DRAWERS_DRAWER_H_
 #define CORE_DRAWERS_DRAWER_H_
 
+#include "ZBE/core/entities/adaptorentities/AvatarEntity.h"
+
 namespace zbe {
 
 /** \brief Define the minimal functions of every Drawer.
@@ -24,7 +26,7 @@ class Drawer {
     /** \brief The function every punisher must have.
      *  \param entity The entity to be drawn.
      */
-    virtual void apply(T * entity) = 0;
+    virtual void apply(AvatarEntity<T> * entity) = 0;
 };
 
 }  // namespace zbe

@@ -17,6 +17,7 @@
 #include "ZBE/core/entities/avatars/Collisioner.h"
 #include "ZBE/core/entities/avatars/Collisionator.h"
 #include "ZBE/core/tools/math/collisions/CollisionSystemSolver.h"
+#include "ZBE/core/events/generators/Generator.h"
 #include "ZBE/core/events/EventStore.h"
 #include "ZBE/core/events/CollisionEvent2D.h"
 #include "ZBE/core/tools/containers/ListManager.h"
@@ -27,7 +28,7 @@ namespace zbe {
 /** \brief Generate collision events.
  */
 template <typename R>
-class CollisionEventGenerator {
+class CollisionEventGenerator : virtual public Generator {
   public:
     /** \brief Parametrized Constructor.
      *  \param list The list id of collisionators

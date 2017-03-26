@@ -11,16 +11,14 @@
 #define ZBE_ARCHETYPES_WIDEMOBILE_H
 
 #include "ZBE/archetypes/Mobile.h"
+#include "ZBE/archetypes/Wide.h"
 
 namespace zbe {
 
 template <unsigned s>
-class WideMobile : virtual public Mobile<s> {
+class WideMobile : virtual public Mobile<s>, virtual public Wide {
   public:
     virtual ~WideMobile() {}
-
-    virtual void setWidth(double width) = 0;
-    virtual double getWidth() = 0;
 };
 
 }  // namespace

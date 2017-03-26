@@ -11,9 +11,24 @@
 #define CORE_DAEMONS_DAEMON_H
 
 namespace zbe {
+
   /** \brief Interface for all daemons. Daemons are responsible for execute automated processes. Basically Daemons rules the world.
    */
   class Daemon {
+    public:
+
+      /** \brief Do the actual Daemon job.
+       */
+      virtual void run() = 0;
+
+      /** \brief Destructor.
+       */
+      virtual ~Daemon(){};
+  };
+
+  /** \brief Interface for all daemons with time-dependant behavior. Daemons are responsible for execute automated processes. Basically Daemons rules the world.
+   */
+  class TimedDaemon {
     public:
 
       /** \brief Do the actual Daemon job.
@@ -22,7 +37,7 @@ namespace zbe {
 
       /** \brief Destructor.
        */
-      virtual ~Daemon(){};
+      virtual ~TimedDaemon(){};
   };
 }
 

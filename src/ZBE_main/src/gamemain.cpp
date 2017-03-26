@@ -8,6 +8,8 @@
 #include "ZBE/core/entities/avatars/Collisioner.h"
 #include "ZBE/core/entities/avatars/Collisionator.h"
 #include "ZBE/core/entities/avatars/implementations/SimpleCollisioner.h"
+#include "ZBE/core/events/generators/GeneratorMaster.h"
+#include "ZBE/core/events/generators/Generator.h"
 #include "ZBE/core/events/Event.h"
 #include "ZBE/core/events/EventStore.h"
 #include "ZBE/core/events/TimeEvent.h"
@@ -46,6 +48,8 @@ int gamemain(int, char** ) {
   printf("--- GAME main ---\n\n");
 
   enum {
+    GENERATORLIST = 1,
+
     INPUTEVENT = 0,
     COLLISIONEVENT = 1,
     TIMEEVENT = 2,
@@ -57,6 +61,7 @@ int gamemain(int, char** ) {
     COLLISIONABLELIST = 1,
     BOARDACTUATORLIST = 1,
     BRICKACTUATORLIST = 2,
+    SPRITELIST = 1,
 
     WIDTH = 1024,
     HEIGHT = 768
@@ -74,6 +79,10 @@ int gamemain(int, char** ) {
   printf("Event store\n");fflush(stdout);
   printf("Will store all event independently of its type\n");fflush(stdout);
   zbe::EventStore& store = zbe::EventStore::getInstance();
+  printf("Building generator master\n");fflush(stdout);
+  std::vector<zbe::Generator*> vGenetators;
+  zbe::ListManager<std::vector<zbe::Generator*> >::getInstance().insert(GENERATORLIST, &vGenetators);
+  zbe::GeneratorMaster gema(GENERATORLIST);
   printf("|------------------------ Input Event Generator-------------|\n");fflush(stdout);
   printf("Building SDLEventDispatcher\n");fflush(stdout);
   printf("Will extract data from SDL and get it usable for the engine\n");fflush(stdout);
@@ -85,6 +94,7 @@ int gamemain(int, char** ) {
   printf("Will read events from the InputReader and send them to the store\n");fflush(stdout);
   printf("Input events will use id 0\n");fflush(stdout);
   zbe::InputEventGenerator ieg(inputBuffer,INPUTEVENT);
+  vGenetators.push_back(&ieg);
   printf("|------------------- Collision Event Generator-------------|\n");fflush(stdout);
   printf("Building list for collisionator entinties. Currently empty.\n");fflush(stdout);
   printf("It will store entities that will search for a collision.\n");fflush(stdout);
@@ -95,9 +105,11 @@ int gamemain(int, char** ) {
   lmct.insert(COLLISIONATORLIST, &ctl);
   printf("Building collision event generator with list id and the event id to use (1).\n");fflush(stdout);
   zbe::CollisionEventGenerator<game::GameReactor> ceg(COLLISIONATORLIST, COLLISIONEVENT);
+  vGenetators.push_back(&ceg);
   printf("|------------------- Time Event Generator -----------------|\n");fflush(stdout);
   printf("Building time event generator with the event id to use (2)\n");fflush(stdout);
   zbe::TimeEventGenerator teg(TIMEEVENT);
+  vGenetators.push_back(&teg);
   printf("|------------------------- Time ---------------------------|\n");fflush(stdout);
   printf("Building a SDL implementation of Timer\n");fflush(stdout);
   zbe::Timer *sysTimer = new zbe::SDLTimer(true);
@@ -108,26 +120,31 @@ int gamemain(int, char** ) {
   printf("|-------------------- Drawing system ----------------------|\n");fflush(stdout);
   printf("Building the window to draw on\n");fflush(stdout);
   zbe::Window window(WIDTH,HEIGHT);
+  printf("Creating draw master list\n");fflush(stdout);
+  zbe::DaemonMaster drawMaster;
+  printf("Creating drawables list\n");fflush(stdout);
+  std::forward_list<zbe::AvatarEntity<zbe::SimpleSprite>*> sprites;
+  zbe::ListManager< std::forward_list<zbe::AvatarEntity<zbe::SimpleSprite >*> >& lmAESimpleSprite = zbe::ListManager<std::forward_list<zbe::AvatarEntity<zbe::SimpleSprite >*> >::getInstance();
+  lmAESimpleSprite.insert(SPRITELIST, &sprites);
+  printf("Loading imgs\n");fflush(stdout);
   ballgraphics = window.loadImg(ballfilename);
   brickgraphics = window.loadImg(brickfilename);
   printf("Building the drawer to paint SimpleSprite's \n");fflush(stdout);
-  zbe::SimpleSpriteSDLDrawer drawer(&window);
+  std::shared_ptr<zbe::Daemon> drawerDaemon(new  zbe::DrawerDaemon<zbe::SimpleSprite, std::forward_list<zbe::AvatarEntity<zbe::SimpleSprite >*> >(new zbe::SimpleSpriteSDLDrawer(&window), SPRITELIST));
+  drawMaster.addDaemon(drawerDaemon);
   printf("|-------------------- Daemons ----------------------|\n");fflush(stdout);
-  zbe::DaemonMaster dMaster;
+  zbe::TimedDaemonMaster behavMaster;
   std::vector<zbe::AvatarEntity<zbe::Movable<2> >*> vAEMovable;
   zbe::ListManager< std::vector<zbe::AvatarEntity<zbe::Movable<2> >*> >& lmAEMovable = zbe::ListManager< std::vector<zbe::AvatarEntity<zbe::Movable<2> >*> >::getInstance();
-  lmAEMovable.insert(MOVABLELIST, &vAEMovable);//Bounce
+  lmAEMovable.insert(MOVABLELIST, &vAEMovable);
   std::vector<zbe::AvatarEntity<zbe::Bouncer<2> >*> vAEBouncer;
   zbe::ListManager< std::vector<zbe::AvatarEntity<zbe::Bouncer<2> >*> >& lmAEBouncer = zbe::ListManager< std::vector<zbe::AvatarEntity<zbe::Bouncer<2> >*> >::getInstance();
-  lmAEBouncer.insert(BOUNCERLIST, &vAEBouncer);//Bounce
-  std::shared_ptr<zbe::Daemon> ballBounce(new  zbe::BehaviorDaemon<zbe::Bouncer<2>, std::vector<zbe::AvatarEntity<zbe::Bouncer<2> >*> >(new zbe::Bounce<2>(), BOUNCERLIST));
-  std::shared_ptr<zbe::Daemon> ballULM(new  zbe::BehaviorDaemon<zbe::Movable<2>, std::vector<zbe::AvatarEntity<zbe::Movable<2> >*> >(new zbe::UniformLinearMotion<2>(), MOVABLELIST));
-  dMaster.addDaemon(ballULM);
-  dMaster.addDaemon(ballBounce);
+  lmAEBouncer.insert(BOUNCERLIST, &vAEBouncer);
+  std::shared_ptr<zbe::TimedDaemon> ballBounce(new  zbe::BehaviorDaemon<zbe::Bouncer<2>, std::vector<zbe::AvatarEntity<zbe::Bouncer<2> >*> >(new zbe::Bounce<2>(), BOUNCERLIST));
+  std::shared_ptr<zbe::TimedDaemon> ballULM(new  zbe::BehaviorDaemon<zbe::Movable<2>, std::vector<zbe::AvatarEntity<zbe::Movable<2> >*> >(new zbe::UniformLinearMotion<2>(), MOVABLELIST));
+  behavMaster.addDaemon(ballULM);
+  behavMaster.addDaemon(ballBounce);
   printf("|------------------- Creating entities --------------------|\n");fflush(stdout);
-  printf("Creating drawables list\n");fflush(stdout);
-  std::forward_list<zbe::AvatarEntity<zbe::SimpleSprite>*> sprites;
-
   printf("Creating a ball and giving it a position and size\n");fflush(stdout);
 
   //ball
@@ -224,31 +241,23 @@ int gamemain(int, char** ) {
     }
 
     while (initT < endT) {
-      /* Generating input events:
-       * It will take the events that sdlEventDist has stored
-       * into the InputReader and send it to the event store.
+      /* Generating events
        */
-      ieg.generate(initT,endT);
-      teg.generate(initT,endT);
-      ceg.generate(initT,endT);
+      gema.generate(initT,endT);
 
       int64_t eventTime = store.getTime();
       if (eventTime <= endT) {
         store.manageCurrent();
-        dMaster.run(eventTime-initT);
+        behavMaster.run(eventTime-initT);
         initT = eventTime;
       } else {
-        dMaster.run(endT-initT);
+        behavMaster.run(endT-initT);
         store.clearStore();
         initT = endT;
       }
     }
 
-    for(auto s : sprites){
-      	zbe::SimpleSprite* spriteToDraw;
-      	s->assignAvatar(&spriteToDraw);
-        drawer.apply(spriteToDraw);
-    }
+    drawMaster.run();
 
     /* If one or more error occurs, the ammount and the first one
      * wille be stored into SysError estructure, so it can be consulted.
