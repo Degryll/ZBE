@@ -37,7 +37,7 @@ public:
       std::shared_ptr<zbe::ReactObject<GameReactor> > ro = std::make_shared<zbe::VoidReactObject<GameReactor> >();
       zbe::Bouncer<2>* bouncer;
       ((zbe::AvatarEntity<zbe::Bouncer<2> >*)b)->assignAvatar(&bouncer);
-      zbe::Collisionator<GameReactor>* c = new zbe::CollisionatorCommon<zbe::Bouncer<2>, GameReactor>(bouncer, co, ro, b->getActuatorsList() ,b->getCollisionablesList());
+      c = new zbe::CollisionatorCommon<zbe::Bouncer<2>, GameReactor>(bouncer, co, ro, b->getActuatorsList() ,b->getCollisionablesList());
       return (c);
     }
 

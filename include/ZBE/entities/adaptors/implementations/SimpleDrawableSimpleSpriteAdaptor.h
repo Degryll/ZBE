@@ -31,7 +31,7 @@ public:
   ~SimpleDrawableSimpleSpriteAdaptor() {delete s;}
     SimpleSprite* getAvatar() {
       delete s;
-      SimpleSprite* s = new SimpleSprite();
+      s = new SimpleSprite();
 
       s->x = e->getX();
       s->y = e->getY();
