@@ -169,7 +169,6 @@
 		<Unit filename="../../../include/ZBE/SDL/system/SDLEventDispatcher.h" />
 		<Unit filename="../../../include/ZBE/SDL/system/Window.h" />
 		<Unit filename="../../../include/ZBE/SDL/tools/SDLTimer.h" />
-		<Unit filename="../../../include/ZBE/actuators/MovableBouncer.h" />
 		<Unit filename="../../../include/ZBE/archetypes/ActivePhysicalObject.h" />
 		<Unit filename="../../../include/ZBE/archetypes/Bouncing.h" />
 		<Unit filename="../../../include/ZBE/archetypes/BouncingAPO.h" />
@@ -200,14 +199,7 @@
 		<Unit filename="../../../include/ZBE/core/drawers/Drawer.h" />
 		<Unit filename="../../../include/ZBE/core/entities/Entity.h" />
 		<Unit filename="../../../include/ZBE/core/entities/adaptorentities/AvatarEntity.h" />
-		<Unit filename="../../../include/ZBE/core/entities/adaptorentities/CollisionatorEntity.h" />
-		<Unit filename="../../../include/ZBE/core/entities/adaptorentities/CollisionerEntity.h" />
-		<Unit filename="../../../include/ZBE/core/entities/adaptorentities/SimpleSpriteEntity.h" />
 		<Unit filename="../../../include/ZBE/core/entities/adaptors/Adaptor.h" />
-		<Unit filename="../../../include/ZBE/core/entities/adaptors/CollisionatorAdaptor.h" />
-		<Unit filename="../../../include/ZBE/core/entities/adaptors/CollisionerAdaptor.h" />
-		<Unit filename="../../../include/ZBE/core/entities/adaptors/ReactObjectAdaptor.h" />
-		<Unit filename="../../../include/ZBE/core/entities/adaptors/SimpleSpriteAdaptor.h" />
 		<Unit filename="../../../include/ZBE/core/entities/avatars/Collisionator.h" />
 		<Unit filename="../../../include/ZBE/core/entities/avatars/Collisioner.h" />
 		<Unit filename="../../../include/ZBE/core/entities/avatars/SimpleSprite.h" />

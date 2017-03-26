@@ -30,7 +30,6 @@
 #include "ZBE/behaviors/Bounce.h"
 #include "ZBE/archetypes/Mobile.h"
 #include "ZBE/archetypes/MobileAPO.h"
-#include "ZBE/actuators/MovableBouncer.h"
 
 #include "gamemain.h"
 #include "game/GameReactor.h"

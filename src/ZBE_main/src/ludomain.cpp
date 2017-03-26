@@ -24,11 +24,10 @@
 #include "ZBE/SDL/system/Window.h"
 #include "ZBE/SDL/drawers/SimpleSpriteSDLDrawer.h"
 #include "ZBE/entities/adaptors/implementations/SimpleDrawableSimpleSpriteAdaptor.h"
-#include "ZBE/entities/adaptors/implementations/BaseSphereMCMAPOAdaptor.h"
+//#include "ZBE/entities/adaptors/implementations/BaseSphereMCMAPOAdaptor.h"
 #include "ZBE/behaviors/UniformLinearMotion.h"
 #include "ZBE/archetypes/Mobile.h"
 #include "ZBE/archetypes/MobileAPO.h"
-#include "ZBE/actuators/MovableBouncer.h"
 
 #include "game/events/handlers/StepInputHandler.h"
 #include "game/events/handlers/ExitInputHandler.h"

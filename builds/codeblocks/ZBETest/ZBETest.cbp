@@ -167,7 +167,6 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="../../../src/ZBETest/actuators/MovableBouncerTest.cpp" />
 		<Unit filename="../../../src/ZBETest/behavior/UniformLinearMotionTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/daemons/PunishersTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/daemons/daemonsTest.cpp" />

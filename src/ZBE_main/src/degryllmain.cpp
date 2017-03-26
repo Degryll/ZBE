@@ -3,11 +3,11 @@
 #include <cstdio>
 
 #include "ZBE/archetypes/Drawable.h"
-#include "ZBE/core/entities/adaptorentities/SimpleSpriteEntity.h"
+//#include "ZBE/core/entities/adaptorentities/SimpleSpriteEntity.h"
 #include "ZBE/core/tools/containers/ListManager.h"
 #include "ZBE/core/tools/containers/Ticket.h"
 #include "ZBE/core/tools/containers/TicketedForwardList.h"
-#include "ZBE/core/entities/adaptors/SimpleSpriteAdaptor.h"
+//#include "ZBE/core/entities/adaptors/SimpleSpriteAdaptor.h"
 #include "ZBE/core/events/EventStore.h"
 #include "ZBE/core/events/generators/InputEventGenerator.h"
 #include "ZBE/core/events/generators/CollisionEventGenerator.h"
