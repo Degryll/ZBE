@@ -16,7 +16,7 @@
 
 namespace IntersectionsTest {
 
-static const int ITERATIONS = 40000000;
+static const int ITERATIONS = 400;
 
 inline bool compareQuantizedMovement(double point, double p, double maxDiff){
   if(maxDiff >= 0.0) {

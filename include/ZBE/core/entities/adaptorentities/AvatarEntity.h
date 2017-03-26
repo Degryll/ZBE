@@ -77,7 +77,7 @@ public:
   }
 
   virtual ~AvatarEntityFixed(){
-    delete a;
+    this->template _deleteAvatar<typename T::Base>();
   }
 
   void assignAvatar(T** avatarPtr) {
@@ -85,7 +85,7 @@ public:
   }
 
   void setAvatar(T* avatar) {
-    delete a;
+    this->template _deleteAvatar<typename T::Base>();
     this->a = avatar;
     this->template _setAvatar<typename T::Base>();
   }
@@ -99,6 +99,14 @@ private:
   void _setAvatar(TypeGimmick<B>) {AvatarEntityFixed<B>::setAvatar(a);}
 
   void _setAvatar(TypeGimmick<void>) {}
+
+  template <typename B>
+  void _deleteAvatar() {_setAvatar(TypeGimmick<B>());}
+
+  template<typename B>
+  void _deleteAvatar(TypeGimmick<B>) {}
+
+  void _deleteAvatar(TypeGimmick<void>) {delete a;}
 
   T* a = nullptr;
 };
