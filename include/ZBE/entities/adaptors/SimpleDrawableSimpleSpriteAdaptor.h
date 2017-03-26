@@ -15,7 +15,7 @@
 #include "ZBE/core/tools/math/math.h"
 
 #include "ZBE/core/entities/avatars/SimpleSprite.h"
-#include "ZBE/core/entities/adaptors/Adaptor.h"
+#include "ZBE/core/entities/Adaptor.h"
 #include "ZBE/archetypes/Drawable.h"
 
 namespace zbe {

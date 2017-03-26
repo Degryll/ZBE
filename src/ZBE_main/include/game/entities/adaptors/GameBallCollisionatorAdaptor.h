@@ -15,9 +15,9 @@
 #include "ZBE/core/tools/math/math.h"
 #include "ZBE/core/tools/math/collisions/CollisionSystemSolver.h"
 
-#include "ZBE/core/entities/adaptorentities/AvatarEntity.h"
+#include "ZBE/core/entities/AvatarEntity.h"
 #include "ZBE/core/entities/avatars/Collisionator.h"
-#include "ZBE/core/entities/adaptors/Adaptor.h"
+#include "ZBE/core/entities/Adaptor.h"
 #include "ZBE/archetypes/Drawable.h"
 
 namespace game {

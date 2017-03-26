@@ -14,7 +14,7 @@
 #include "ZBE/entities/avatars/Bouncer.h"
 #include "ZBE/core/tools/math/math.h"
 #include "ZBE/core/tools/math/Point.h"
-#include "ZBE/core/entities/adaptorentities/AvatarEntity.h"
+#include "ZBE/core/entities/AvatarEntity.h"
 
 namespace zbe {
 

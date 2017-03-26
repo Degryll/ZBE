@@ -10,7 +10,7 @@
 #ifndef CORE_DRAWERS_DRAWER_H_
 #define CORE_DRAWERS_DRAWER_H_
 
-#include "ZBE/core/entities/adaptorentities/AvatarEntity.h"
+#include "ZBE/core/entities/AvatarEntity.h"
 
 namespace zbe {
 

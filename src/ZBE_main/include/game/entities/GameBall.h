@@ -16,7 +16,7 @@
 #include "ZBE/entities/avatars/implementations/BaseBouncer.h"
 #include "ZBE/core/entities/avatars/SimpleSprite.h"
 #include "ZBE/core/entities/avatars/Collisionator.h"
-#include "ZBE/core/entities/adaptorentities/AvatarEntity.h"
+#include "ZBE/core/entities/AvatarEntity.h"
 
 #include "game/GameReactor.h"
 #include "game/reactobjects/GameReactObjects.h"

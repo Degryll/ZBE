@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 
-#include "ZBE/core/entities/adaptorentities/AvatarEntity.h"
+#include "ZBE/core/entities/AvatarEntity.h"
 #include "ZBE/entities/avatars/implementations/BaseMovable.h"
 #include "ZBE/archetypes/implementations/SimpleMobile.h"
 #include "ZBE/behaviors/UniformLinearMotion.h"

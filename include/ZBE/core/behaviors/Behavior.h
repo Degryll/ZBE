@@ -10,7 +10,7 @@
 #ifndef ZBE_CORE_BEHAVIORS_BEHAVIOR_H_
 #define ZBE_CORE_BEHAVIORS_BEHAVIOR_H_
 
-#include "ZBE/core/entities/adaptorentities/AvatarEntity.h"
+#include "ZBE/core/entities/AvatarEntity.h"
 
 namespace zbe {
 

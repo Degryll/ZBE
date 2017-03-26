@@ -17,7 +17,7 @@
 #include <typeinfo>
 
 #include "ZBE/core/tools/tools.h"
-#include "ZBE/core/entities/adaptors/Adaptor.h"
+#include "ZBE/core/entities/Adaptor.h"
 
 namespace zbe{
 

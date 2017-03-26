@@ -13,7 +13,7 @@
 #include <cstdint>
 #include <memory>
 
-#include "ZBE/core/entities/adaptorentities/AvatarEntity.h"
+#include "ZBE/core/entities/AvatarEntity.h"
 #include "ZBE/core/entities/avatars/Collisioner.h"
 #include "ZBE/core/entities/avatars/Collisionator.h"
 #include "ZBE/core/tools/math/collisions/CollisionSystemSolver.h"
