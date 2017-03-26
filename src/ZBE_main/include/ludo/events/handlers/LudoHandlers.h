@@ -14,7 +14,18 @@
 #include "ZBE/SDL/starters/SDL_Starter.h"
 
 namespace ludo {
-
+/** \brief Actuator capable of making a BouncerCollisioner bounce in a Bounceable.
+ */
+template <typename R>
+class LudoBallBouncer: public zbe::Actuator<zbe::Bouncer<2>, R> {
+  public:
+    void act(zbe::VoidReactObject<R>*) {
+      zbe::Bouncer<2> * gb = zbe::Actuator<zbe::Bouncer<2>, R>::getCollisioner();
+      zbe::CollisionData * cd = zbe::Actuator<zbe::Bouncer<2>, R>::getCollisionData();
+      zbe::Vector<2> n = gb->getPosition() - cd->getPoint();
+      gb->addNormal(n);
+    }
+};
 } //namespace ludo
 
 #endif //LUDO_EVENTS_HANDLERS_LUDOHANDLERS

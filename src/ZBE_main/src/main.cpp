@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) {
       out = degryllmain(argc,argv);
     break;
     case 3:
-      out = ludomain(argc,argv);
+      out = ludo::ludomain(argc,argv);
     break;
     case 4:
       out = gamemain(argc,argv);

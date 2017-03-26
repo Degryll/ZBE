@@ -13,32 +13,62 @@
 #include <cstdint>
 #include <memory>
 
+#include "ZBE/core/entities/Adaptor.h"
+
 #include "ludo/entities/LudoAvatars.h"
 #include "ludo/entities/LudoEntities.h"
 #include "ludo/archetypes/LudoArchetypes.h"
 
 namespace ludo {
-template<typename T>
-class SimpleRotatedSpriteAdaptor {
-    public:
-        virtual ~SimpleRotatedSpriteAdaptor(){}
-        virtual std::shared_ptr<SimpleRotatedSprite> getSimpleRotatedSprite(T * entity) = 0;
+
+class RotatedDrawableSimpleRotatedSpriteAdaptor : public zbe::Adaptor<SimpleRotatedSprite> {
+public:
+  RotatedDrawableSimpleRotatedSpriteAdaptor(const RotatedDrawableSimpleRotatedSpriteAdaptor&) = delete;
+  void operator=(const RotatedDrawableSimpleRotatedSpriteAdaptor&) = delete;
+
+  RotatedDrawableSimpleRotatedSpriteAdaptor(RotatedDrawable* archetype):archetype(archetype), s(nullptr){}
+  SimpleRotatedSprite* getAvatar() {
+    delete s;
+    s = new SimpleRotatedSprite();
+    s->x = archetype->getX();
+    s->y = archetype->getY();
+    s->w = archetype->getW();
+    s->h = archetype->getH();
+    s->graphics = archetype->getGraphics();
+    s->angle = archetype->getAngle();
+    s->angle = (s->angle < 0 ? 360.0 + s->angle : s->angle );
+    return (s);
+  };
+
+private:
+  RotatedDrawable* archetype;
+  SimpleRotatedSprite* s;
 };
 
-class RotatedDrawableSimpleRotatedSpriteAdaptor : public SimpleRotatedSpriteAdaptor<RotatedDrawable> {
-  public:
-    virtual std::shared_ptr<SimpleRotatedSprite> getSimpleRotatedSprite(RotatedDrawable * entity) {
-      std::shared_ptr<SimpleRotatedSprite> s = std::make_shared<SimpleRotatedSprite>();
+/** \brief Adapts a Ludoball to a Collisionator.
+ */
+template <typename R>
+class LudoBallCollisionatorAdaptor : public zbe::Adaptor<zbe::Collisionator<R> > {
+public:
+  LudoBallCollisionatorAdaptor(const LudoBallCollisionatorAdaptor&) = delete;
+  void operator=(const LudoBallCollisionatorAdaptor&) = delete;
 
-      s->x = entity->getX();
-      s->y = entity->getY();
-      s->w = entity->getW();
-      s->h = entity->getH();
-      s->graphics = entity->getGraphics();
-      s->angle = entity->getAngle();
-      s->angle = (s->angle < 0 ? 360.0 + s->angle : s->angle );
-      return (s);
-    };
+  LudoBallCollisionatorAdaptor(LudoBall<R>* ball): b(ball), c(nullptr) {}
+
+  ~LudoBallCollisionatorAdaptor() {delete c;}
+  zbe::Collisionator<R>* getAvatar() {
+      delete c;
+      std::shared_ptr<zbe::CollisionObject<R> > co = std::make_shared<zbe::ConstantMovingCircle<R> >(zbe::ConstantMovingCircle<R>(zbe::Circle(b->getPosition(), b->getWidth()), b->getVelocity()));
+      std::shared_ptr<zbe::ReactObject<R> > ro = std::make_shared<zbe::VoidReactObject<R> >();
+      zbe::Bouncer<2>* bouncer;
+      ((zbe::AvatarEntity<zbe::Bouncer<2> >*)b)->assignAvatar(&bouncer);
+      c = new zbe::CollisionatorCommon<zbe::Bouncer<2>, R>(bouncer, co, ro, b->getActuatorsList() ,b->getCollisionablesList());
+      return (c);
+    }
+
+private:
+	LudoBall<R>* b;
+	zbe::Collisionator<R>* c;
 };
 
 } // namespace

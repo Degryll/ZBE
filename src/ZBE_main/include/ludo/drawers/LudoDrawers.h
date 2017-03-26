@@ -13,6 +13,7 @@
 #include <SDL2/SDL.h>
 
 #include "ZBE/core/drawers/Drawer.h"
+#include "ZBE/core/entities/AvatarEntity.h"
 #include "ZBE/core/entities/avatars/SimpleSprite.h"
 #include "ZBE/SDL/system/Window.h"
 
@@ -39,19 +40,21 @@ class SimpleRotatedSpriteSDLDrawer : public zbe::Drawer<SimpleRotatedSprite> {
     /** \brief The function every punisher must have.
      *  \param entity The entity to be drawn.
      */
-    void apply(SimpleRotatedSprite *entity) {
+    void apply(zbe::AvatarEntity<SimpleRotatedSprite> *entity) {
+      SimpleRotatedSprite* avatar;
+      entity->assignAvatar(&avatar);
       SDL_Rect src,dst;
       src.x = 0;
       src.y = 0;
-      src.w = entity->w;
-      src.h = entity->h;
+      src.w = avatar->w;
+      src.h = avatar->h;
 
-      dst.x = entity->x;
-      dst.y = entity->y;
-      dst.w = entity->w;
-      dst.h = entity->h;
+      dst.x = avatar->x;
+      dst.y = avatar->y;
+      dst.w = avatar->w;
+      dst.h = avatar->h;
       SDL_Point center = {src.w / 2, src.h/2 };
-      window->render(entity->graphics, &src, &dst, (entity->angle * -1) + 90 , &center, SDL_FLIP_NONE);
+      window->render(avatar->graphics, &src, &dst, (avatar->angle * -1) + 90 , &center, SDL_FLIP_NONE);
     }
 
   private:

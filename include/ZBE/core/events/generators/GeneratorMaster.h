@@ -20,6 +20,8 @@ namespace zbe {
  */
 class GeneratorMaster : virtual public Generator {
 public:
+  GeneratorMaster(const GeneratorMaster&) = delete;
+  void operator=(const GeneratorMaster&) = delete;
 
   GeneratorMaster(uint64_t listId ) : gList(ListManager<std::vector<Generator*> >::getInstance().get(listId)) {}
 
