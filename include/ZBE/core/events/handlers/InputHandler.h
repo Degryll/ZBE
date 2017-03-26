@@ -7,10 +7,8 @@
  * @brief Receives a input(keyboard, mouse, etc) event and reacts to that.
  */
 
-#ifndef CORE_GUARDS_INPUTGUARD_H
-#define CORE_GUARDS_INPUTGUARD_H
-
-#include "ZBE/core/events/InputEvent.h"
+#ifndef CORE_GUARDS_INPUTHANDLER_H
+#define CORE_GUARDS_INPUTHANDLER_H
 
 namespace zbe {
 
@@ -30,4 +28,4 @@ namespace zbe {
 
 }  // namespace zbe
 
-#endif // CORE_GUARDS_INPUTGUARD_H
+#endif // CORE_GUARDS_INPUTHANDLER_H
