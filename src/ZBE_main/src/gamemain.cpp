@@ -130,7 +130,7 @@ int gamemain(int, char** ) {
   ballgraphics = window.loadImg(ballfilename);
   brickgraphics = window.loadImg(brickfilename);
   printf("Building the drawer to paint SimpleSprite's \n");fflush(stdout);
-  std::shared_ptr<zbe::Daemon> drawerDaemon(new  zbe::DrawerDaemon<zbe::SimpleSprite, std::forward_list<zbe::AvatarEntity<zbe::SimpleSprite >*> >(new zbe::SimpleSpriteSDLDrawer(&window), SPRITELIST));
+  std::shared_ptr<zbe::Daemon> drawerDaemon(new  zbe::DrawerDaemon<zbe::SimpleSprite, std::forward_list<zbe::AvatarEntity<zbe::SimpleSprite >*> >(std::make_shared<zbe::SimpleSpriteSDLDrawer>(&window), SPRITELIST));
   drawMaster.addDaemon(drawerDaemon);
   printf("|-------------------- Daemons ----------------------|\n");fflush(stdout);
   zbe::TimedDaemonMaster behavMaster;
@@ -140,8 +140,8 @@ int gamemain(int, char** ) {
   std::vector<zbe::AvatarEntity<zbe::Bouncer<2> >*> vAEBouncer;
   zbe::ListManager< std::vector<zbe::AvatarEntity<zbe::Bouncer<2> >*> >& lmAEBouncer = zbe::ListManager< std::vector<zbe::AvatarEntity<zbe::Bouncer<2> >*> >::getInstance();
   lmAEBouncer.insert(BOUNCERLIST, &vAEBouncer);
-  std::shared_ptr<zbe::TimedDaemon> ballBounce(new  zbe::BehaviorDaemon<zbe::Bouncer<2>, std::vector<zbe::AvatarEntity<zbe::Bouncer<2> >*> >(new zbe::Bounce<2>(), BOUNCERLIST));
-  std::shared_ptr<zbe::TimedDaemon> ballULM(new  zbe::BehaviorDaemon<zbe::Movable<2>, std::vector<zbe::AvatarEntity<zbe::Movable<2> >*> >(new zbe::UniformLinearMotion<2>(), MOVABLELIST));
+  std::shared_ptr<zbe::TimedDaemon> ballBounce(new  zbe::BehaviorDaemon<zbe::Bouncer<2>, std::vector<zbe::AvatarEntity<zbe::Bouncer<2> >*> >(std::make_shared<zbe::Bounce<2> >(), BOUNCERLIST));
+  std::shared_ptr<zbe::TimedDaemon> ballULM(new  zbe::BehaviorDaemon<zbe::Movable<2>, std::vector<zbe::AvatarEntity<zbe::Movable<2> >*> >(std::make_shared<zbe::UniformLinearMotion<2> >(), MOVABLELIST));
   behavMaster.addDaemon(ballULM);
   behavMaster.addDaemon(ballBounce);
   printf("|------------------- Creating entities --------------------|\n");fflush(stdout);

@@ -10,8 +10,9 @@
 #ifndef CORE_DAEMONS_PUNISHERDAEMON_H_
 #define CORE_DAEMONS_PUNISHERDAEMON_H_
 
-
 #include <vector>
+#include <memory>
+
 #include "ZBE/core/daemons/Daemon.h"
 #include "ZBE/core/tools/containers/ListManager.h"
 
@@ -31,26 +32,20 @@ namespace zbe {
        * \param daemon Pointer to the daemon desired to be stored and executed.
        *
        */
-      PunisherDaemon(P * punish, uint64_t listId) : punish(punish), eList(zbe::ListManager<L>::getInstance().get(listId)) {}
+      PunisherDaemon(std::shared_ptr<P> punish, uint64_t listId) : punish(punish), eList( ListManager<L>::getInstance().get(listId) ) {}
 
       /** \brief Destroys the PunisherDaemon and the contained punisher.
        */
-      virtual ~PunisherDaemon();
+      virtual ~PunisherDaemon() {}
 
       /** \brief It will run the Behavior over the entity list.
        */
       void run();
 
     private:
-      P *punish;
+      std::shared_ptr<P> punish;
       L *eList;
   };
-
-
-  template<typename P, typename L>
-  PunisherDaemon<P, L>::~PunisherDaemon() {
-    delete punish;
-  }
 
   template<typename P, typename L>
   void PunisherDaemon<P, L>::run(){
@@ -73,26 +68,20 @@ namespace zbe {
        * \param daemon Pointer to the daemon desired to be stored and executed.
        *
        */
-      TimedPunisherDaemon(P * punish, uint64_t listId ) : punish(punish), eList(zbe::ListManager<L>::getInstance().get(listId)) {}
+      TimedPunisherDaemon(std::shared_ptr<P>  punish, uint64_t listId ) : punish(punish), eList(zbe::ListManager<L>::getInstance().get(listId)) {}
 
       /** \brief Destroys the PunisherDaemon and the contained punisher.
        */
-      virtual ~TimedPunisherDaemon();
+      virtual ~TimedPunisherDaemon() {}
 
       /** \brief It will run the Behavior over the entity list.
        */
       void run(uint64_t time);
 
     private:
-      P *punish;
+      std::shared_ptr<P> punish;
       L *eList;
   };
-
-
-  template<typename P, typename L>
-  TimedPunisherDaemon<P, L>::~TimedPunisherDaemon() {
-    delete punish;
-  }
 
   template<typename P, typename L>
   void TimedPunisherDaemon<P, L>::run(uint64_t time){
