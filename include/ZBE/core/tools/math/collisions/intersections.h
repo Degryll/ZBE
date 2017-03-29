@@ -162,7 +162,7 @@ template <unsigned dim>
 bool intersectionBeamInsideAABB(Ray<dim> ray, AABB<dim> box, int64_t &time, Point<dim>& point) {
   int64_t taux = std::numeric_limits<int64_t>::max();
   for(unsigned i = 0; i < dim; i++) {
-    if (ray.d[i] == 0) continue;
+    if (abs(ray.d[i]) < PRECISION) continue;
     double d = (SECOND / ray.d[i]);
   	int64_t t1 = (box.minimum[i] - ray.o[i]) * d;
     int64_t t2 = (box.maximum[i] - ray.o[i]) * d;
