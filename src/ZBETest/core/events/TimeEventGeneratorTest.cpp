@@ -18,7 +18,7 @@ TEST(TimeEventGenerator, Event) {
   zbe::TimeEvent* e = (zbe::TimeEvent*)(es.getEvents().front());
   es.clearStore();
   EXPECT_EQ((uint64_t)3, e->getId()) << "must be stored with id 1";
-  EXPECT_EQ((uint64_t)1000000, e->getTime()) << "the event in time 3 must be stored";
+  EXPECT_EQ((uint64_t)zbe::quantizeTime(1000000), e->getTime()) << "the event in time 3 must be stored";
   EXPECT_EQ(nullptr, e->getHandler()) << "the event in time 3 must be stored";
   ASSERT_TRUE(es.getEvents().empty()) << "List must be empty.";
 
@@ -28,7 +28,7 @@ TEST(TimeEventGenerator, Event) {
   e = (zbe::TimeEvent*)(es.getEvents().front());
   es.clearStore();
   EXPECT_EQ((uint64_t)3, e->getId()) << "must be stored with id 1";
-  EXPECT_EQ((uint64_t)1500000, e->getTime()) << "the event in time 3 must be stored";
+  EXPECT_EQ((uint64_t)zbe::quantizeTime(1500000), e->getTime()) << "the event in time 3 must be stored";
   EXPECT_EQ(nullptr, e->getHandler()) << "the event in time 3 must be stored";
   ASSERT_TRUE(es.getEvents().empty()) << "List must be empty.";
 }

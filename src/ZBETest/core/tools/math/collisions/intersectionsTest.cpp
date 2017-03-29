@@ -502,8 +502,17 @@ TEST(Intersections, MovingCircleInsideAABB_Base2) {
   zbe::Vector2D velocity{1.5670643136206702e-13, -1999.3769029375121};
   zbe::AABB2D block{{100.0, 100.0},{600.0, 600}};
   int64_t tMax = 10 * zbe::SECOND;
-  zbe::Point<2> p({209.30362970899679, 82.0});
-  testMovingCircleInsideABB(ball, velocity, block, tMax, 2048, p);
+  zbe::Point<2> p({209.30362970899679, 107.01619007879026});
+  testMovingCircleInsideABB(ball, velocity, block, tMax, 256, p, zbe::TIME_QUANTUM, velocity[0] * zbe::TIME_QUANTUM_VALUE, velocity[1] * zbe::TIME_QUANTUM_VALUE);
+}
+
+TEST(Intersections, MovingCircleInsideAABB_Base3) {
+  zbe::Circle ball{{209.30362970899679, 133.82625610588991}, 19.0};
+  zbe::Vector2D velocity{zbe::PRECISION, -1999.3769029375121};
+  zbe::AABB2D block{{100.0, 100.0},{600.0, 600}};
+  int64_t tMax = 10 * zbe::SECOND;
+  zbe::Point<2> p({209.30362970899679, 107.01619007879026});
+  testMovingCircleInsideABB(ball, velocity, block, tMax, 256, p, zbe::TIME_QUANTUM, velocity[0] * zbe::TIME_QUANTUM_VALUE, velocity[1] * zbe::TIME_QUANTUM_VALUE);
 }
 
 TEST(Intersections, MovingCircleInsideAABB_Horizontal) {

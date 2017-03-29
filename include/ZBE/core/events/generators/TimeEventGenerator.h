@@ -13,6 +13,7 @@
 #include <cstdint>
 #include <set>
 
+#include "ZBE/core/tools/math/math.h"
 #include "ZBE/core/events/EventStore.h"
 #include "ZBE/core/events/handlers/TimeHandler.h"
 #include "ZBE/core/events/generators/Generator.h"
@@ -48,7 +49,7 @@ class TimeEventGenerator : virtual public Generator {
      * \sa eraseTimer
      */
     inline TimerIter addTimer(TimeHandler* handler, int64_t time) {
-      return (timers.insert(TimerData(handler,time)));
+      return (timers.insert(TimerData(handler,quantizeTime(time))));
     }
 
     /** Erase a Timer.
