@@ -19,6 +19,7 @@
 #include "ZBE/core/entities/avatars/Collisionator.h"
 #include "ZBE/core/entities/Adaptor.h"
 #include "ZBE/archetypes/Drawable.h"
+#include "game/entities/GameBall.h"
 
 namespace game {
 

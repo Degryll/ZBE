@@ -146,9 +146,11 @@
 		<Unit filename="../../../src/ZBE_main/include/game/entities/GameBlock.h" />
 		<Unit filename="../../../src/ZBE_main/include/game/entities/GameBoard.h" />
 		<Unit filename="../../../src/ZBE_main/include/game/entities/adaptors/GameBallCollisionatorAdaptor.h" />
+		<Unit filename="../../../src/ZBE_main/include/game/entities/adaptors/GameBlockCollisionerAdaptor.h" />
 		<Unit filename="../../../src/ZBE_main/include/game/events/handlers/ExitInputHandler.h" />
 		<Unit filename="../../../src/ZBE_main/include/game/events/handlers/GameBallBouncer.h" />
 		<Unit filename="../../../src/ZBE_main/include/game/events/handlers/StepInputHandler.h" />
+		<Unit filename="../../../src/ZBE_main/include/game/events/handlers/TtpHandler.h" />
 		<Unit filename="../../../src/ZBE_main/include/game/reactobjects/GameReactObjects.h" />
 		<Unit filename="../../../src/ZBE_main/include/gamemain.h" />
 		<Unit filename="../../../src/ZBE_main/include/ludo/LudoReactor.h" />

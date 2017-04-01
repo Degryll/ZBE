@@ -20,30 +20,32 @@
 #include "ZBE/core/entities/avatars/implementations/SimpleCollisioner.h"
 #include "ZBE/reactobjects/VoidReactObject.h"
 #include "ZBE/archetypes/Drawable.h"
+#include "ZBE/archetypes/implementations/SimplePositionPO.h"
+#include "ZBE/entities/avatars/implementations/BasePositionable.h"
+#include "ZBE/entities/avatars/Positionable.h"
 
 #include "game/GameReactor.h"
 
 namespace game {
 
 class GameBlock :  public zbe::Drawable,
+  								 public zbe::SimplePositionPO<2>,
                    public zbe::AvatarEntityAdapted<zbe::SimpleSprite>,
-                   public zbe::AvatarEntityFixed<zbe::Collisioner<GameReactor> > {
+                   public zbe::AvatarEntityAdapted<zbe::Collisioner<GameReactor> >,
+                   public zbe::AvatarEntityFixed<zbe::Positionable<2> >{
 public:
   GameBlock(double x, double y, double width, double height, uint64_t graphics, uint64_t actuatorsList) :
-     zbe::AvatarEntityFixed<zbe::Collisioner<GameReactor> >(new zbe::SimpleCollisioner<GameReactor>(std::make_shared<zbe::StaticSolidAABB2D<GameReactor> >(zbe::AABB2D({x, y}, {x + width, y + height} )),
-                                                            std::make_shared<zbe::VoidReactObject<GameReactor> >(),
-                                                            actuatorsList)),
-      x(x), y(y), w(width), h(height), g(graphics) {}
+    SimplePositionPO<2>(actuatorsList, {x, y}), w(width), h(height), g(graphics) {
+      zbe::AvatarEntityFixed<zbe::Positionable<2> >::setAvatar(new zbe::BasePositionable<2>(this));
+    }
 
-  int64_t getX()    {return (x);}
-  int64_t getY()    {return (y);}
+  int64_t getX()    {return (int64_t)SimplePositionPO::getPosition()[0];}
+  int64_t getY()    {return (int64_t)SimplePositionPO::getPosition()[1];}
   int64_t getW()    {return (w);}
   int64_t getH()    {return (h);}
   uint64_t getGraphics() {return (g);}
 
 private:
-  int64_t x;
-  int64_t y;
   int64_t w;
   int64_t h;
   uint64_t g;

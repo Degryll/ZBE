@@ -39,9 +39,11 @@
 #include "game/entities/GameBoard.h"
 #include "game/entities/GameBlock.h"
 #include "game/entities/adaptors/GameBallCollisionatorAdaptor.h"
+#include "game/entities/adaptors/GameBlockCollisionerAdaptor.h"
 #include "game/events/handlers/StepInputHandler.h"
 #include "game/events/handlers/ExitInputHandler.h"
 #include "game/events/handlers/GameBallBouncer.h"
+#include "game/events/handlers/TtpHandler.h"
 
 int gamemain(int, char** ) {
 
@@ -181,15 +183,23 @@ int gamemain(int, char** ) {
   zbe::ListManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> >& lmSimpleConerActuatorsList = zbe::ListManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> >::getInstance();
   std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> brickActuatorsList;
   lmSimpleConerActuatorsList.insert(BRICKACTUATORLIST, &brickActuatorsList);
-  for(int i = 0; i<8 ; i++){
-      for(int j = 0; j<8 ; j++){
-          game::GameBlock *brick = new game::GameBlock(i*51+ 100, j*32 + 100, 51, 32, brickgraphics, BRICKACTUATORLIST);
+//  for(int i = 0; i<8 ; i++){
+//      for(int j = 0; j<8 ; j++){
+          game::GameBlock *brick = new game::GameBlock(100, 100, 51, 32, brickgraphics, BRICKACTUATORLIST);
+
           std::shared_ptr<zbe::Adaptor<zbe::SimpleSprite> > spriteAdaptor = std::make_shared<zbe::SimpleDrawableSimpleSpriteAdaptor>(brick);
           ((zbe::AvatarEntityAdapted<zbe::SimpleSprite>*)brick)->setAdaptor(spriteAdaptor);
+
+          //std::shared_ptr<zbe::Adaptor<zbe::Collisioner<game::GameReactor> > >gBrCA = std::make_shared<game::GameBlockCollisionerAdaptor>(brick);
+  				//((zbe::AvatarEntityAdapted<zbe::Collisioner<game::GameReactor> >*)brick)->setAdaptor(gBrCA);
+
           collisionablesList.push_front(brick);
           sprites.push_front(brick);
-      }
-  }
+
+    			game::TtpHandler teleporter(brick, teg);
+  				//teg.addTimer(&teleporter, zbe::SECOND);
+//      }
+//  }
 
   printf("Creating the board and giving it a size\n");fflush(stdout);
   //board
@@ -244,7 +254,6 @@ int gamemain(int, char** ) {
       /* Generating events
        */
       gema.generate(initT,endT);
-
       int64_t eventTime = store.getTime();
       if (eventTime <= endT) {
         store.manageCurrent();

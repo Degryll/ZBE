@@ -178,6 +178,7 @@
 		<Unit filename="../../../include/ZBE/archetypes/MobileAPO.h" />
 		<Unit filename="../../../include/ZBE/archetypes/PhysicalObject.h" />
 		<Unit filename="../../../include/ZBE/archetypes/Position.h" />
+		<Unit filename="../../../include/ZBE/archetypes/PositionPO.h" />
 		<Unit filename="../../../include/ZBE/archetypes/Wide.h" />
 		<Unit filename="../../../include/ZBE/archetypes/WideMobile.h" />
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleBouncing.h" />
@@ -187,6 +188,7 @@
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleMobile.h" />
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleMobileAPO.h" />
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimplePosition.h" />
+		<Unit filename="../../../include/ZBE/archetypes/implementations/SimplePositionPO.h" />
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleWide.h" />
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleWideBouncingAPO.h" />
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleWideMobile.h" />
@@ -241,6 +243,7 @@
 		<Unit filename="../../../include/ZBE/core/tools/math/objects.h" />
 		<Unit filename="../../../include/ZBE/core/tools/text/utf8.h" />
 		<Unit filename="../../../include/ZBE/core/tools/tools.h" />
+		<Unit filename="../../../include/ZBE/entities/adaptors/SimpleDrawableSimpleSpriteAdaptor.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/Bounceable.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/Bouncer.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/Movable.h" />
