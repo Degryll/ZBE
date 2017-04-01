@@ -16,7 +16,7 @@ class TtpHandler : public zbe::TimeHandler {
 
   	TtpHandler(zbe::AvatarEntity<zbe::Positionable<2> >* entity, zbe::TimeEventGenerator &teg) : e(entity), teg(teg) {}
 
-  	void run() {
+  	void run(uint64_t time) {
       zbe::Positionable<2>* avatar;
       e->assignAvatar(&avatar);
 
@@ -33,7 +33,7 @@ class TtpHandler : public zbe::TimeHandler {
       }
       avatar->setPosition(position);
 
-      teg.addTimer(new TtpHandler(e, teg),zbe::SECOND);
+      teg.addTimer(new TtpHandler(e, teg),time + (zbe::SECOND/10));
   	}
 
 	private:

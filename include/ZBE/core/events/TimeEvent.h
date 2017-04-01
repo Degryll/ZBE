@@ -49,7 +49,7 @@ class TimeEvent : public Event {
      * do the actions associated with it.
      */
     void manage() {
-        handler->run();
+        handler->run(getTime());
     };
 
   private:
