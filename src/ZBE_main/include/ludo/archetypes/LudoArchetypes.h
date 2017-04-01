@@ -23,6 +23,15 @@ class RotatedDrawable : virtual public zbe::Drawable {
     virtual double getAngle() = 0;
 };
 
+/** \brief This define a Drawable entity with an angle.
+ */
+class SetableGraphics {
+  public:
+    virtual ~SetableGraphics() {}
+
+    virtual void setGraphics(unsigned) = 0;
+};
+
 }  // namespace zbe
 
 #endif  // ZBE_MAIN_LUDO_LUDOARCHETYPES

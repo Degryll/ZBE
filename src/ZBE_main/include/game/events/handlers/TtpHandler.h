@@ -31,7 +31,9 @@ class TtpHandler : public zbe::TimeHandler {
       } else {
         position[0] += 50;
       }
-      teg.addTimer(this, zbe::SECOND);
+      avatar->setPosition(position);
+
+      teg.addTimer(new TtpHandler(e, teg),zbe::SECOND);
   	}
 
 	private:

@@ -35,9 +35,8 @@ public:
   ~GameBlockCollisionerAdaptor() {delete c;}
   zbe::Collisioner<GameReactor>* getAvatar() {
       delete c;
-    	zbe::Point<2> min {b->getPosition()[0] - b->getW()/2, b->getPosition()[1] - b->getH()/2};
-    	zbe::Point<2> max {b->getPosition()[0] + b->getW()/2, b->getPosition()[1] + b->getH()/2};
-      std::shared_ptr<zbe::CollisionObject<GameReactor> > co = std::make_shared<zbe::StaticSolidAABB2D<GameReactor> >(zbe::AABB2D(min, max));
+    	zbe::Point<2> max {b->getPosition()[0] + b->getW(), b->getPosition()[1] + b->getH()};
+      std::shared_ptr<zbe::CollisionObject<GameReactor> > co = std::make_shared<zbe::StaticSolidAABB2D<GameReactor> >(zbe::AABB2D(b->getPosition(), max));
       std::shared_ptr<zbe::ReactObject<GameReactor> > ro = std::make_shared<zbe::VoidReactObject<GameReactor> >();
       c = new zbe::SimpleCollisioner<GameReactor>(co, ro, b->getActuatorsList());
       return (c);

@@ -35,6 +35,7 @@ namespace ludo {
 
 template<typename R>
 class LudoBall: public RotatedDrawable,
+                public SetableGraphics,
                 public zbe::SimpleWideBouncingAPO<2>,
                 public zbe::AvatarEntityAdapted<SimpleRotatedSprite>,
                 public zbe::AvatarEntityFixed<zbe::Bouncer<2> >,
@@ -43,7 +44,7 @@ public:
   LudoBall(const LudoBall&) = delete;
   void operator=(const LudoBall&) = delete;
 
-  LudoBall(double x, double y, double radius, double vx, double vy, uint64_t actuators, uint64_t collisionables, int graphics) :
+  LudoBall(double x, double y, double radius, double vx, double vy, uint64_t actuators, uint64_t collisionables, uint64_t graphics) :
       SimpleWideBouncingAPO({x, y}, {vx, vy}, radius, actuators, collisionables),
       g(graphics), r(radius), d(2*radius) {
       AvatarEntityFixed<zbe::Bouncer<2> >::setAvatar(new zbe::BaseBouncer<2>(this));
@@ -55,9 +56,10 @@ public:
   int64_t getH() {return ((int64_t)d);}
   double  getAngle() {return getVelocity().getDegrees();}
   uint64_t getGraphics() {return (g);}
+  void setGraphics(unsigned graphics) {g = graphics;}
 
 private:
-  int g;    //!< Image index
+  uint64_t g;    //!< Image index
   double r;
   double d;
 };

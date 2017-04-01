@@ -29,7 +29,7 @@
 namespace game {
 
 class GameBlock :  public zbe::Drawable,
-  								 public zbe::SimplePositionPO<2>,
+                   public zbe::SimplePositionPO<2>,
                    public zbe::AvatarEntityAdapted<zbe::SimpleSprite>,
                    public zbe::AvatarEntityAdapted<zbe::Collisioner<GameReactor> >,
                    public zbe::AvatarEntityFixed<zbe::Positionable<2> >{

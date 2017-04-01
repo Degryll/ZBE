@@ -190,14 +190,14 @@ int gamemain(int, char** ) {
           std::shared_ptr<zbe::Adaptor<zbe::SimpleSprite> > spriteAdaptor = std::make_shared<zbe::SimpleDrawableSimpleSpriteAdaptor>(brick);
           ((zbe::AvatarEntityAdapted<zbe::SimpleSprite>*)brick)->setAdaptor(spriteAdaptor);
 
-          //std::shared_ptr<zbe::Adaptor<zbe::Collisioner<game::GameReactor> > >gBrCA = std::make_shared<game::GameBlockCollisionerAdaptor>(brick);
-  				//((zbe::AvatarEntityAdapted<zbe::Collisioner<game::GameReactor> >*)brick)->setAdaptor(gBrCA);
+          std::shared_ptr<zbe::Adaptor<zbe::Collisioner<game::GameReactor> > >gBrCA = std::make_shared<game::GameBlockCollisionerAdaptor>(brick);
+          ((zbe::AvatarEntityAdapted<zbe::Collisioner<game::GameReactor> >*)brick)->setAdaptor(gBrCA);
 
           collisionablesList.push_front(brick);
           sprites.push_front(brick);
 
-    			game::TtpHandler teleporter(brick, teg);
-  				//teg.addTimer(&teleporter, zbe::SECOND);
+          game::TtpHandler* teleporter = new game::TtpHandler(brick, teg);
+          teg.addTimer(teleporter, zbe::SECOND);
 //      }
 //  }
 

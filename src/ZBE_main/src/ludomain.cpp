@@ -29,6 +29,7 @@
 #include "ZBE/core/events/handlers/Actuator.h"
 #include "ZBE/core/system/SysTime.h"
 #include "ZBE/core/tools/Timer.h"
+#include "ZBE/core/tools/math/math.h"
 #include "ZBE/core/system/SysError.h"
 #include "ZBE/core/daemons/Punishers.h"
 #include "ZBE/SDL/tools/SDLTimer.h"
@@ -79,6 +80,7 @@ int ludomain(int, char** ) {
     BRICKACTUATORLIST = 2,
     SPRITELIST = 1,
     RSPRITELIST = 2,
+    SETABLEGRAPHSLIST = 1,
 
     WIDTH = 1024,
     HEIGHT = 768
@@ -188,24 +190,37 @@ int ludomain(int, char** ) {
   zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<LudoReactor> >* > >& lmCollisionablesList = zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<LudoReactor> >* > >::getInstance();
   lmCollisionablesList.insert(COLLISIONABLELIST, &collisionablesList);
 
+  zbe::ListManager<std::forward_list<SetableGraphics*> >& lmSG = zbe::ListManager<std::forward_list<SetableGraphics*> >::getInstance();
+  std::forward_list<SetableGraphics*> setableGs;
+  lmSG.insert(SETABLEGRAPHSLIST, &setableGs);
+
+  GraphicsSet gSet0(ballgraphics[0],SETABLEGRAPHSLIST);
+  GraphicsSet gSet1(ballgraphics[1],SETABLEGRAPHSLIST);
+  GraphicsSet gSet2(ballgraphics[2],SETABLEGRAPHSLIST);
+  GraphicsSet gSet3(ballgraphics[3],SETABLEGRAPHSLIST);
+  ieg.addHandler(zbe::ZBEK_z, &gSet0);
+  ieg.addHandler(zbe::ZBEK_x, &gSet1);
+  ieg.addHandler(zbe::ZBEK_c, &gSet2);
+  ieg.addHandler(zbe::ZBEK_v, &gSet3);
+
   std::forward_list<LudoBall<LudoReactor> *> balls;
-  for(int i = 0; i<1000 ; i++){
-    int64_t r = 16 + (rand()% 33);
+  for(int i = 0; i<500 ; i++){
+    int64_t r = 16 + (rand()% 8);
     int64_t xc =(WIDTH/2 + rand()%100-50);
     int64_t yc = (HEIGHT/2 + rand()%100-50);
-    unsigned graphId = ballgraphics[(rand()%4)];
-    /*graphId = (r<25?2:graphId);
-    graphId = (r<20?:graphId);*/
+    unsigned graphId = ballgraphics[3];//ballgraphics[(rand()%4)];
 
-    int64_t vt = 50;
-    double vAngleL = rand()%3600;
-    vAngleL/=10;
-    double vAngleR = rand()%10000;
-    vAngleR/=100000;
+    int64_t vt = 500;
+    double vAngleL = rand()%3600000;
+    vAngleL/=10000;
+    double vAngleR = rand()%100000;
+    vAngleR/=1000000;
     double vAngle = vAngleL + vAngleR;
     int64_t vx = sin(vAngle*PI/180)*vt;
     int64_t vy = cos(vAngle*PI/180)*vt;
+    //209.30362970899679 x 592.21001414171906, V:1.5670643136206702e-13 x -1999.3769029375121
     LudoBall<LudoReactor>* ball = new LudoBall<ludo::LudoReactor>( xc, yc, r, vx, vy, BALLACTUATORLIST, COLLISIONABLELIST, graphId);
+    //LudoBall<LudoReactor>* ball = new LudoBall<ludo::LudoReactor>( 209.30362970899679, 133.82625610588991, 19, 1.5670643136206702e-13, -1999.3769029375121, BALLACTUATORLIST, COLLISIONABLELIST, graphId);
     std::shared_ptr<zbe::Adaptor<SimpleRotatedSprite> > spriteAdaptor = std::make_shared<RotatedDrawableSimpleRotatedSpriteAdaptor>(ball);
     ((zbe::AvatarEntityAdapted<SimpleRotatedSprite>*)ball)->setAdaptor(spriteAdaptor);
     std::shared_ptr<zbe::Adaptor<zbe::Collisionator<LudoReactor> > > lbca = std::make_shared<LudoBallCollisionatorAdaptor<LudoReactor> >(ball);
@@ -215,6 +230,7 @@ int ludomain(int, char** ) {
     vAEBouncer.push_back(ball);
     balls.push_front(ball);
     rsprites.push_front(ball);
+    setableGs.push_front(ball);
   }
 
   printf("Pasive enities\n");fflush(stdout);
@@ -237,8 +253,10 @@ int ludomain(int, char** ) {
   //board
   std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<LudoReactor>, LudoReactor>*> boardActuatorsList;
   lmSimpleConerActuatorsList.insert(BOARDACTUATORLIST, &boardActuatorsList);
-  LudoBoard<LudoReactor> board(0, 0, WIDTH, HEIGHT, BOARDACTUATORLIST);
+  LudoBoard<LudoReactor> board(150, 150, WIDTH - 150, HEIGHT - 150, BOARDACTUATORLIST);
   collisionablesList.push_front(&board);
+  LudoBoard<LudoReactor> board2(0, 0, WIDTH , HEIGHT , BOARDACTUATORLIST);
+  collisionablesList.push_front(&board2);
 
   printf("|=================== Starting up system ===================|\n");fflush(stdout);
   printf("Starting SysTimer\n");fflush(stdout);
@@ -276,7 +294,7 @@ int ludomain(int, char** ) {
     /* Reading that updated time info
      */
     initT = endT;// init time
-    endT = sysTime.getTotalTime(); //initT + (int64_t(1) << zbe::PRECISION_DIGITS); // instant at which the frame ends
+    endT = sysTime.getTotalTime(); //initT + (int64_t(1) << zbe::PRECISION_DIGITS); // instant at which the frame ends//
 
     if((endT - maxFrameTime)>initT){
       initT = endT - maxFrameTime;
@@ -300,6 +318,16 @@ int ludomain(int, char** ) {
     }
 
     drawMaster.run();
+//    for(auto b :vAEBouncer) {
+//        zbe::Bouncer<2>* bncr;
+//        b->assignAvatar(&bncr);
+//        printf("Pos:%.17g x %.17g, Vel:%.17g x %.17g\n",bncr->getPosition().x, bncr->getPosition().y,bncr->getVelocity().x, bncr->getVelocity().y);fflush(stdout);
+//        if(bncr->getPosition().y<=119){
+//            getchar();
+//            getchar();
+//            getchar();
+//        }
+//    }
 
     /* If one or more error occurs, the ammount and the first one
      * wille be stored into SysError estructure, so it can be consulted.
