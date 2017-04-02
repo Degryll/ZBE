@@ -18,6 +18,7 @@
 #include "ZBE/SDL/starters/SDL_Starter.h"
 #include "ZBE/core/io/InputBuffer.h"
 #include "ZBE/core/io/InputStatus.h"
+#include "ZBE/core/system/SysTime.h"
 
 namespace zbe {
 class SDLEventDispatcher {
@@ -42,7 +43,7 @@ class SDLEventDispatcher {
      */
     void run();
   private:
-    SDLEventDispatcher();
+    SDLEventDispatcher() : sdl(SDL_Starter::getInstance(SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC | SDL_INIT_GAMECONTROLLER | SDL_INIT_EVENTS)), inputBuffer(), st(zbe::SysTime::getInstance()) {}
 
     ~SDLEventDispatcher();
 
@@ -62,6 +63,7 @@ class SDLEventDispatcher {
 
     SDL_Starter &sdl;
     InputBuffer inputBuffer;
+    zbe::SysTime& st;
 };
 }
 #endif // SDLEVENTDISPATCHER_H
