@@ -10,7 +10,7 @@
 #ifndef CORE_EVENTS_TIMEEVENTGENERATOR_H
 #define CORE_EVENTS_TIMEEVENTGENERATOR_H
 
-#include <cstdint>
+#include <memory>
 #include <set>
 
 #include "ZBE/core/tools/math/math.h"
@@ -21,10 +21,10 @@
 namespace zbe {
 
 struct TimerData {
-  TimeHandler* handler;    //!< A handler that will be executed when the event is triggered.
+  std::shared_ptr<TimeHandler> handler;    //!< A handler that will be executed when the event is triggered.
   int64_t time;  //!< When time reaches 0, the time event is triggered.
 
-  TimerData(TimeHandler* handler, int64_t time) : handler(handler), time(time) {}
+  TimerData(std::shared_ptr<TimeHandler> handler, int64_t time) : handler(handler), time(time) {}
   inline bool operator<(const TimerData& rhs) const {return (this->time < rhs.time);}
 };
 
@@ -48,7 +48,7 @@ class TimeEventGenerator : virtual public Generator {
      * \return return An iterator used to erase the timer.
      * \sa eraseTimer
      */
-    inline TimerIter addTimer(TimeHandler* handler, int64_t time) {
+    inline TimerIter addTimer(std::shared_ptr<TimeHandler> handler, int64_t time) {
       return (timers.insert(TimerData(handler,quantizeTime(time))));
     }
 

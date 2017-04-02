@@ -1,6 +1,8 @@
 #ifndef ZBE_MAIN_GAME_EVENTS_HANDLERS_TTPHANDLER
 #define ZBE_MAIN_GAME_EVENTS_HANDLERS_TTPHANDLER
 
+#include <cstdio>
+
 #include "ZBE/core/events/handlers/TimeHandler.h"
 #include "ZBE/core/tools/math/Point.h"
 #include "ZBE/core/entities/AvatarEntity.h"
@@ -32,8 +34,8 @@ class TtpHandler : public zbe::TimeHandler {
         position[0] += 50;
       }
       avatar->setPosition(position);
-
-      teg.addTimer(new TtpHandler(e, teg),time + (zbe::SECOND/10));
+      std::shared_ptr<zbe::TimeHandler> t = std::make_shared<TtpHandler>(e, teg);
+      teg.addTimer(t,time + (zbe::SECOND*2));
   	}
 
 	private:

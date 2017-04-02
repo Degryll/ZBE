@@ -195,9 +195,8 @@ int gamemain(int, char** ) {
 
           collisionablesList.push_front(brick);
           sprites.push_front(brick);
-
-          game::TtpHandler* teleporter = new game::TtpHandler(brick, teg);
-          teg.addTimer(teleporter, zbe::SECOND);
+          std::shared_ptr<zbe::TimeHandler> teleporter = std::make_shared<game::TtpHandler>(brick, teg);
+          teg.addTimer(teleporter, zbe::SECOND*2);
 //      }
 //  }
 

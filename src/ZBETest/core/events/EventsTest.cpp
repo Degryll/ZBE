@@ -28,11 +28,15 @@ class C : public zbe::CollisionerCommon<C, R> {
 
 class RO : public zbe::ReactObject<R> {
   public:
-    void act(R*) {};
+    void act(R*) {}
+};
+
+class DummyTHandler : public zbe::TimeHandler{
+  void run(uint64_t) {}
 };
 
 TEST(Event, TimeEvent) {
-  zbe::TimeHandler* t = nullptr;
+  std::shared_ptr<zbe::TimeHandler> t(new DummyTHandler());
   zbe::TimeEvent e(1,100, t);
   EXPECT_EQ((uint64_t)1, e.getId()) << "Must store id";
   EXPECT_EQ((uint64_t)100, e.getTime()) << "Must store time";

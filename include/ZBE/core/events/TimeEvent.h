@@ -10,6 +10,8 @@
 #ifndef CORE_EVENTS_TIMEEVENT_H
 #define CORE_EVENTS_TIMEEVENT_H
 
+#include <memory>
+
 #include "ZBE/core/events/handlers/TimeHandler.h"
 #include "ZBE/core/events/Event.h"
 
@@ -30,18 +32,18 @@ class TimeEvent : public Event {
      * \param handler Time handler that will be executed when the event is triggered.
      *
      */
-    TimeEvent(uint64_t id, int64_t time, TimeHandler* handler) : Event(id, time), handler(handler) {}
+    TimeEvent(uint64_t id, int64_t time, std::shared_ptr<TimeHandler> handler) : Event(id, time), handler(handler) {}
 
     /** \brief base destructor.
     */
-    ~TimeEvent() {delete handler;}
+    ~TimeEvent() {}
 
     /** \brief Return the handler that will be executed when the event is triggered.
     *
     * \return The TimeHandler.
     *
     */
-    TimeHandler* getHandler() {
+    std::shared_ptr<TimeHandler> getHandler() {
         return (handler);
     }
 
@@ -53,7 +55,7 @@ class TimeEvent : public Event {
     };
 
   private:
-    TimeHandler* handler;
+    std::shared_ptr<TimeHandler> handler;
 };
 
 } // namespace zbe
