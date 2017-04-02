@@ -138,6 +138,7 @@
 		<Unit filename="../../../src/ZBE_main/include/batis/events/handlers/MKBallInputHandler.h" />
 		<Unit filename="../../../src/ZBE_main/include/batis/events/handlers/MouseXKeepInputHandler.h" />
 		<Unit filename="../../../src/ZBE_main/include/batis/events/handlers/MouseYKeepInputHandler.h" />
+		<Unit filename="../../../src/ZBE_main/include/batis/events/handlers/TtpHandler.h" />
 		<Unit filename="../../../src/ZBE_main/include/batis/starters/SDL_ttf_Starter.h" />
 		<Unit filename="../../../src/ZBE_main/include/batismain.h" />
 		<Unit filename="../../../src/ZBE_main/include/degryllmain.h" />
