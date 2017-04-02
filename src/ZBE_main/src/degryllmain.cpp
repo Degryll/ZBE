@@ -874,7 +874,7 @@ int degryllmain(int, char**) {
 
   int *m;
   int w, h, l;
-  loadMap("D:/projectos/isometrico/mapa.txt", &m,  w, h, l);
+  loadMap("data/images/degryll/isotetris/mapa.txt", &m,  w, h, l);
   //printMap(m, w, h, l);
 
   const char blockfilename[] = "data/images/batis/bloque_32.png";
