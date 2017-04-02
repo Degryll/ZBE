@@ -4,14 +4,6 @@
 #include <thread>
 #include <cstdlib>
 
-#include <cinttypes>
-#include <iostream>
-#include <chrono>
-#include <thread>
-#include <cstdlib>
-
-
-
 #include "ZBE/core/daemons/DaemonMaster.h"
 #include "ZBE/core/entities/avatars/Collisioner.h"
 #include "ZBE/core/entities/avatars/Collisionator.h"
@@ -42,13 +34,11 @@
 #include "ZBE/archetypes/Mobile.h"
 #include "ZBE/archetypes/MobileAPO.h"
 
-//#include "game/GameReactor.h"
-//#include "game/events/handlers/GameBallBouncer.h"
-//#include "game/entities/adaptors/GameBallCollisionatorAdaptor.h"
 #include "game/events/handlers/ExitInputHandler.h"
 
 #include "ludo/LudoReactor.h"
 #include "ludo/drawers/LudoDrawers.h"
+#include "ludo/behaviors/LudoBehaviors.h"
 #include "ludo/entities/LudoEntities.h"
 #include "ludo/entities/LudoAvatars.h"
 #include "ludo/entities/LudoAdaptors.h"
@@ -74,6 +64,8 @@ int ludomain(int, char** ) {
     COLLISIONATORLIST = 1,
     MOVABLELIST = 1,
     BOUNCERLIST = MOVABLELIST,
+    LROTATORS = 1,
+    RROTATORS = 2,
     BALLACTUATORLIST = 1,
     COLLISIONABLELIST = 1,
     BOARDACTUATORLIST = 1,
@@ -92,7 +84,6 @@ int ludomain(int, char** ) {
   const char arrowImg[] = "data/images/ludo/arrow_r_000_32.png";
 //  const char brickfilename[] = "data/images/zombieball/braikn_32.png";
   unsigned ballgraphics[4];
-//  uint64_t brickgraphics;
 
   printf("|=================== Building up system ===================|\n");fflush(stdout);
   printf("Event store\n");fflush(stdout);
@@ -166,14 +157,14 @@ int ludomain(int, char** ) {
   drawMaster.addDaemon(rDrawerDaemon);
   printf("|-------------------- Daemons ----------------------|\n");fflush(stdout);
   zbe::TimedDaemonMaster behavMaster;
-  std::vector<zbe::AvatarEntity<zbe::Movable<2> >*> vAEMovable;
-  zbe::ListManager< std::vector<zbe::AvatarEntity<zbe::Movable<2> >*> >& lmAEMovable = zbe::ListManager< std::vector<zbe::AvatarEntity<zbe::Movable<2> >*> >::getInstance();
+  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> >*> vAEMovable;
+  auto& lmAEMovable = zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> >*> >::getInstance();
   lmAEMovable.insert(MOVABLELIST, &vAEMovable);
-  std::vector<zbe::AvatarEntity<zbe::Bouncer<2> >*> vAEBouncer;
-  zbe::ListManager< std::vector<zbe::AvatarEntity<zbe::Bouncer<2> >*> >& lmAEBouncer = zbe::ListManager< std::vector<zbe::AvatarEntity<zbe::Bouncer<2> >*> >::getInstance();
+  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Bouncer<2> >*> vAEBouncer;
+  auto& lmAEBouncer = zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Bouncer<2> >*> >::getInstance();
   lmAEBouncer.insert(BOUNCERLIST, &vAEBouncer);
-  std::shared_ptr<zbe::TimedDaemon> ballBounce(new  zbe::BehaviorDaemon<zbe::Bouncer<2>, std::vector<zbe::AvatarEntity<zbe::Bouncer<2> >*> >(std::make_shared<zbe::Bounce<2> >(), BOUNCERLIST));
-  std::shared_ptr<zbe::TimedDaemon> ballULM(new  zbe::BehaviorDaemon<zbe::Movable<2>, std::vector<zbe::AvatarEntity<zbe::Movable<2> >*> >(std::make_shared<zbe::UniformLinearMotion<2> >(), MOVABLELIST));
+  std::shared_ptr<zbe::TimedDaemon> ballBounce(new  zbe::BehaviorDaemon<zbe::Bouncer<2>, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Bouncer<2> >*> >(std::make_shared<zbe::Bounce<2> >(), BOUNCERLIST));
+  std::shared_ptr<zbe::TimedDaemon> ballULM(new  zbe::BehaviorDaemon<zbe::Movable<2>, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> >*> >(std::make_shared<zbe::UniformLinearMotion<2> >(), MOVABLELIST));
   behavMaster.addDaemon(ballULM);
   behavMaster.addDaemon(ballBounce);
   printf("|------------------- Creating entities --------------------|\n");fflush(stdout);
@@ -205,11 +196,11 @@ int ludomain(int, char** ) {
 
   srand(time(0));
   std::forward_list<LudoBall<LudoReactor> *> balls;
-  for(int i = 0; i<500 ; i++){
+  for(int i = 0; i<10 ; i++){
     int64_t r = 16 + (rand()% 8);
     int64_t xc =(WIDTH/2 + rand()%100-50);
     int64_t yc = (HEIGHT/2 + rand()%100-50);
-    unsigned graphId = ballgraphics[3];//ballgraphics[(rand()%4)];
+    unsigned graphId = ballgraphics[0];
 
     int64_t vt = 500;
     double vAngleL = rand()%3600;
@@ -219,42 +210,57 @@ int ludomain(int, char** ) {
     double vAngle = vAngleL + vAngleR;
     int64_t vx = sin(vAngle*PI/180)*vt;
     int64_t vy = cos(vAngle*PI/180)*vt;
-    //209.30362970899679 x 592.21001414171906, V:1.5670643136206702e-13 x -1999.3769029375121
     LudoBall<LudoReactor>* ball = new LudoBall<ludo::LudoReactor>( xc, yc, r, vx, vy, BALLACTUATORLIST, COLLISIONABLELIST, graphId);
-    //LudoBall<LudoReactor>* ball = new LudoBall<ludo::LudoReactor>( 209.30362970899679, 133.82625610588991, 19, 1.5670643136206702e-13, -1999.3769029375121, BALLACTUATORLIST, COLLISIONABLELIST, graphId);
     std::shared_ptr<zbe::Adaptor<SimpleRotatedSprite> > spriteAdaptor = std::make_shared<RotatedDrawableSimpleRotatedSpriteAdaptor>(ball);
     ((zbe::AvatarEntityAdapted<SimpleRotatedSprite>*)ball)->setAdaptor(spriteAdaptor);
     std::shared_ptr<zbe::Adaptor<zbe::Collisionator<LudoReactor> > > lbca = std::make_shared<LudoBallCollisionatorAdaptor<LudoReactor> >(ball);
     ((zbe::AvatarEntityAdapted<zbe::Collisionator<LudoReactor> >*)ball)->setAdaptor(lbca);
     ctl.push_front(ball);
-    vAEMovable.push_back(ball);
-    vAEBouncer.push_back(ball);
+    vAEMovable.push_front(ball);
+    vAEBouncer.push_front(ball);
     balls.push_front(ball);
     rsprites.push_front(ball);
     setableGs.push_front(ball);
   }
 
+  printf("Creating a rotator\n");fflush(stdout);
+  auto& lmTflAEMovable = zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> >*> >::getInstance();
+  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> >*> tflRAEMovable;
+  lmTflAEMovable.insert(LROTATORS, &tflRAEMovable);
+  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> >*> tflLAEMovable;
+  lmTflAEMovable.insert(RROTATORS, &tflLAEMovable);
+
+  LudoBall<LudoReactor>* rotator = new LudoBall<ludo::LudoReactor>( WIDTH/2, HEIGHT/2, 16, 200, 100, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics[3]);
+  std::shared_ptr<zbe::Adaptor<SimpleRotatedSprite> > spriteAdaptor = std::make_shared<RotatedDrawableSimpleRotatedSpriteAdaptor>(rotator);
+  ((zbe::AvatarEntityAdapted<SimpleRotatedSprite>*)rotator)->setAdaptor(spriteAdaptor);
+  std::shared_ptr<zbe::Adaptor<zbe::Collisionator<LudoReactor> > > lbca = std::make_shared<LudoBallCollisionatorAdaptor<LudoReactor> >(rotator);
+  ((zbe::AvatarEntityAdapted<zbe::Collisionator<LudoReactor> >*)rotator)->setAdaptor(lbca);
+  ctl.push_front(rotator);
+  vAEBouncer.push_front(rotator);
+  rsprites.push_front(rotator);
+
+
+  auto fticket = vAEMovable.push_front(rotator);
+  fticket->setINACTIVE();
+  TicketToggler ftoggler(fticket);
+  ieg.addHandler(zbe::ZBEK_UP, &ftoggler);
+  auto lticket = tflLAEMovable.push_front(rotator);
+  lticket->setINACTIVE();
+  TicketToggler ltoggler(lticket);
+  ieg.addHandler(zbe::ZBEK_LEFT, &ltoggler);
+  auto rticket = tflRAEMovable.push_front(rotator);
+  rticket->setINACTIVE();
+  TicketToggler rtoggler(rticket);
+  ieg.addHandler(zbe::ZBEK_RIGHT, &rtoggler);
+
   printf("Pasive enities\n");fflush(stdout);
   zbe::ListManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<LudoReactor>, LudoReactor>*> >& lmSimpleConerActuatorsList = zbe::ListManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<LudoReactor>, LudoReactor>*> >::getInstance();
   printf("Creating the bricks\n");fflush(stdout);
-  //bricks
-//  std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<LudoReactor>, LudoReactor>*> brickActuatorsList;
-//  lmSimpleConerActuatorsList.insert(BRICKACTUATORLIST, &brickActuatorsList);
-//  for(int i = 0; i<8 ; i++){
-//      for(int j = 0; j<8 ; j++){
-//          game::GameBlock *brick = new game::GameBlock(i*51+ 100, j*32 + 100, 51, 32, brickgraphics, BRICKACTUATORLIST);
-//          std::shared_ptr<zbe::Adaptor<zbe::SimpleSprite> > spriteAdaptor = std::make_shared<zbe::SimpleDrawableSimpleSpriteAdaptor>(brick);
-//          ((zbe::AvatarEntityAdapted<zbe::SimpleSprite>*)brick)->setAdaptor(spriteAdaptor);
-//          collisionablesList.push_front(brick);
-//          sprites.push_front(brick);
-//      }
-//  }
 
   printf("Creating the board and giving it a size\n");fflush(stdout);
-  //board
   std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<LudoReactor>, LudoReactor>*> boardActuatorsList;
   lmSimpleConerActuatorsList.insert(BOARDACTUATORLIST, &boardActuatorsList);
-  LudoBoard<LudoReactor> board(150, 150, WIDTH - 150, HEIGHT - 150, BOARDACTUATORLIST);
+  LudoBoard<LudoReactor> board(50, 50, WIDTH - 50, HEIGHT - 50, BOARDACTUATORLIST);
   collisionablesList.push_front(&board);
   LudoBoard<LudoReactor> board2(0, 0, WIDTH , HEIGHT , BOARDACTUATORLIST);
   collisionablesList.push_front(&board2);
@@ -268,40 +274,32 @@ int ludomain(int, char** ) {
   printf("Updating system time.\n");fflush(stdout);
   sysTime.update();
   printf("Acquiring initial times.\n");fflush(stdout);
-  int64_t endT = sysTime.getTotalTime();// instant at which the frame ends
-  int64_t initT = 0;//Lets start
-  printf("|==========================================================|\n");fflush(stdout);
+  int64_t endT = sysTime.getTotalTime();
+  int64_t initT = 0;
+  printf("|=================== adding some timers ===================|\n");fflush(stdout);
+  std::shared_ptr<zbe::TimedDaemon> leftRotator(new  zbe::BehaviorDaemon<zbe::Movable<2>, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> >*> >(std::make_shared<Rotator<2> >(-0.4f), LROTATORS));
+  std::shared_ptr<zbe::TimeHandler> rotatorL = std::make_shared<TimedDemonRecurrentTimeHandler>(leftRotator, teg, zbe::SECOND/8);
+  teg.addTimer(rotatorL, zbe::SECOND);
+
+  std::shared_ptr<zbe::TimedDaemon> rightRotator(new  zbe::BehaviorDaemon<zbe::Movable<2>, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> >*> >(std::make_shared<Rotator<2> >(0.4f), RROTATORS));
+  std::shared_ptr<zbe::TimeHandler> rotatorR = std::make_shared<TimedDemonRecurrentTimeHandler>(rightRotator, teg, zbe::SECOND/8);
+  teg.addTimer(rotatorR, zbe::SECOND);
+
+
   printf("initT = 0x%" PRIx64 " ", initT);fflush(stdout);
   printf("endT = 0x%" PRIx64 "\n", endT);fflush(stdout);
-
-  int64_t maxFrameTime = zbe::SECOND / 64;
-
+  printf("|==========================================================|\n");fflush(stdout);
   bool keep = true;
   while(keep){
-
-    /* Clear screen.
-     */
+    //Pre
     window.clear();
-
-    /* Acquiring sdl info
-     * Input data will be stored into the InputReader
-     */
     sdlEventDist.run();
-
-    /* Updating system time.
-     */
     sysTime.update();
-
-    /* Reading that updated time info
-     */
-    initT = endT;// init time
-    endT = sysTime.getTotalTime(); //initT + (int64_t(1) << zbe::PRECISION_DIGITS); // instant at which the frame ends//
-
+    initT = endT;
+    endT = sysTime.getTotalTime();
+    // Inner loop
     while (initT < endT) {
-      /* Generating events
-       */
       gema.generate(initT,endT);
-
       int64_t eventTime = store.getTime();
       if (eventTime <= endT) {
         store.manageCurrent();
@@ -313,24 +311,8 @@ int ludomain(int, char** ) {
         initT = endT;
       }
     }
-
+    //Post
     drawMaster.run();
-//    for(auto b :vAEBouncer) {
-//        zbe::Bouncer<2>* bncr;
-//        b->assignAvatar(&bncr);
-//        printf("Pos:%.17g x %.17g, Vel:%.17g x %.17g\n",bncr->getPosition().x, bncr->getPosition().y,bncr->getVelocity().x, bncr->getVelocity().y);fflush(stdout);
-//        if(bncr->getPosition().y<=119){
-//            getchar();
-//            getchar();
-//            getchar();
-//        }
-//    }
-
-    /* If one or more error occurs, the ammount and the first one
-     * wille be stored into SysError estructure, so it can be consulted.
-     *
-     * If there are errors, the first one will be prompted.
-     */
     int errcount = zbe::SysError::getNErrors();
     if(errcount>0){
         printf("Error: %s",zbe::SysError::getFirstErrorString().c_str());fflush(stdout);
