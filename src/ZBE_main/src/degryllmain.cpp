@@ -878,16 +878,16 @@ int degryllmain(int, char**) {
   //printMap(m, w, h, l);
 
   const char blockfilename[] = "data/images/batis/bloque_32.png";
-  const char floorfilename[] = "D:/projectos/isometrico/sueloT.png";
-  const char izqfilename[] = "D:/projectos/isometrico/izqT.png";
-  const char derfilename[] = "D:/projectos/isometrico/derT.png";
-  const char charufilename[] = "D:/projectos/isometrico/charUT.png";
-  const char chardfilename[] = "D:/projectos/isometrico/charDT.png";
-  const char charlfilename[] = "D:/projectos/isometrico/charLT.png";
-  const char charrfilename[] = "D:/projectos/isometrico/charRT.png";
-  const char arcfilename[] = "D:/projectos/isometrico/arcadeT.png";
-  const char musicafilename[] = "D:/projectos/isometrico/musica.png";
-  const char murosfilename[] = "D:/projectos/isometrico/muros.png";
+  const char floorfilename[] = "data/images/degryll/isotetris/sueloT.png";
+  const char izqfilename[] = "data/images/degryll/isotetris/izqT.png";
+  const char derfilename[] = "data/images/degryll/isotetris/derT.png";
+  const char charufilename[] = "data/images/degryll/isotetris/charUT.png";
+  const char chardfilename[] = "data/images/degryll/isotetris/charDT.png";
+  const char charlfilename[] = "data/images/degryll/isotetris/charLT.png";
+  const char charrfilename[] = "data/images/degryll/isotetris/charRT.png";
+  const char arcfilename[] = "data/images/degryll/isotetris/arcadeT.png";
+  const char musicafilename[] = "data/images/degryll/isotetris/musica.png";
+  const char murosfilename[] = "data/images/degryll/isotetris/muros.png";
   uint64_t blockgraphics;
   uint64_t floortile;
   uint64_t izqtile;
