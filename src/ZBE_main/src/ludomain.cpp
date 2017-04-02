@@ -203,6 +203,7 @@ int ludomain(int, char** ) {
   ieg.addHandler(zbe::ZBEK_c, &gSet2);
   ieg.addHandler(zbe::ZBEK_v, &gSet3);
 
+  srand(time(0));
   std::forward_list<LudoBall<LudoReactor> *> balls;
   for(int i = 0; i<500 ; i++){
     int64_t r = 16 + (rand()% 8);
@@ -211,10 +212,10 @@ int ludomain(int, char** ) {
     unsigned graphId = ballgraphics[3];//ballgraphics[(rand()%4)];
 
     int64_t vt = 500;
-    double vAngleL = rand()%3600000;
-    vAngleL/=10000;
-    double vAngleR = rand()%100000;
-    vAngleR/=1000000;
+    double vAngleL = rand()%3600;
+    vAngleL/=10;
+    double vAngleR = rand()%100;
+    vAngleR/=1000;
     double vAngle = vAngleL + vAngleR;
     int64_t vx = sin(vAngle*PI/180)*vt;
     int64_t vy = cos(vAngle*PI/180)*vt;
@@ -295,10 +296,6 @@ int ludomain(int, char** ) {
      */
     initT = endT;// init time
     endT = sysTime.getTotalTime(); //initT + (int64_t(1) << zbe::PRECISION_DIGITS); // instant at which the frame ends//
-
-    if((endT - maxFrameTime)>initT){
-      initT = endT - maxFrameTime;
-    }
 
     while (initT < endT) {
       /* Generating events

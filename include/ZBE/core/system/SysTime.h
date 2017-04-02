@@ -46,6 +46,13 @@ namespace zbe {
         return frame;
       }
 
+      /** \brief Get the time lost by performance issues.
+       * \return lost time.
+       */
+      inline int64_t getLostTime() {
+        return lostTime;
+      }
+
       /** \brief Set the Timer to be used by SystemTime.
        * \param timer Actual implementation of Timer to be used.
        */

@@ -8,6 +8,7 @@
  */
 
 #include "ZBE/SDL/system/SDLEventDispatcher.h"
+#include "ZBE/core/system/SysTime.h"
 #include "ZBE/core/tools/math/math.h"
 
 namespace zbe {
@@ -52,8 +53,11 @@ inline bool SDLEventDispatcher::tryMouseEvent(SDL_Event &event){
     return false;
 }
 
-inline void SDLEventDispatcher::setState(uint32_t key, float value, uint64_t time){
-  InputStatus is(key,value,quantizeTime(MILITOZBETU(time)));
+inline void SDLEventDispatcher::setState(uint32_t key, float value, int64_t time){
+  int64_t zbeTime = MILITOZBETU(time);
+  int64_t gameTime = zbeTime - zbe::SysTime::getInstance().getLostTime();
+  int64_t storeTime = quantizeTime(gameTime) + zbe::TIME_QUANTUM;
+  InputStatus is(key, value, storeTime);
   inputBuffer.insert(is);
 }
 

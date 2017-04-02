@@ -46,7 +46,7 @@ class SDLEventDispatcher {
 
     ~SDLEventDispatcher();
 
-    void setState(uint32_t key, float value, uint64_t time);
+    void setState(uint32_t key, float value, int64_t time);
 
     void setMouseButtonState(SDL_Event &event, float value);
 
