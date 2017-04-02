@@ -3,14 +3,14 @@
  * @file SysTime.h
  * @since 2016-06-05
  * @date 2016-06-12
- * @author Ludo Degryll
+ * @author Ludo Degryll Batis
  * @brief Tool used to ask about system time.
  */
-
 
 #ifndef SYSTEMTIME_H
 #define SYSTEMTIME_H
 
+#include "ZBE/core/tools/math/math.h"
 #include "ZBE/core/tools/Timer.h"
 #include "ZBE/core/system/SysError.h"
 
@@ -22,6 +22,7 @@ namespace zbe {
    */
   class SysTime {
     public:
+      static const int64_t maxFrameTime = zbe::SECOND/32;
 
       /** \brief Get the singleton instance of the SystemTime.
        * \return Singleton instance of the SystemTime.
@@ -59,16 +60,26 @@ namespace zbe {
       /** \brief Refreshes the SystemTime info using given Timer.
        */
       inline void update(){
-        this->total = this->timer->totalTime();
-        this->frame = this->timer->lapTime();
-      }
+        int64_t actual = timer->totalTime();
+        int64_t finalTime = actual - lostTime;
+        int64_t realFrameTime = finalTime - total;
+        if (realFrameTime < maxFrameTime){
+          total = finalTime;
+          frame = realFrameTime;
+        } else {
+          total += maxFrameTime;
+          lostTime += (realFrameTime - maxFrameTime);
+          frame = maxFrameTime;
+        }
+     }
 
     private:
-      SysTime():timer(0),total(0),frame(0){}//!< Basic constructor to be used internally.
+      SysTime():timer(0),total(0),frame(0), lostTime(0){}//!< Basic constructor to be used internally.
 
       Timer* timer;//!< Actual implementation of Timer to be used.
       int64_t total;//!< Total time passed until the end of last frame.
       int64_t frame;//!< Last frame duration
+      int64_t lostTime;//!< Accumulated Total Time - Max frame time
   };
 
 }

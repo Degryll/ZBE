@@ -222,8 +222,6 @@ int gamemain(int, char** ) {
   printf("initT = 0x%" PRIx64 " ", initT);fflush(stdout);
   printf("endT = 0x%" PRIx64 "\n", endT);fflush(stdout);
 
-  int64_t maxFrameTime = zbe::SECOND / 64;
-
   bool keep = true;
   while(keep){
 
@@ -244,10 +242,6 @@ int gamemain(int, char** ) {
      */
     initT = endT;// init time
     endT = sysTime.getTotalTime(); //initT + (int64_t(1) << zbe::PRECISION_DIGITS); // instant at which the frame ends
-
-    if((endT - maxFrameTime)>initT){
-      initT = endT - maxFrameTime;
-    }
 
     while (initT < endT) {
       /* Generating events
