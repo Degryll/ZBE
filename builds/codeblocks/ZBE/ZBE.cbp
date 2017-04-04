@@ -163,13 +163,16 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="../../../include/ZBE/SDL/drawers/AnimatedSpriteSDLDrawer.h" />
 		<Unit filename="../../../include/ZBE/SDL/drawers/SimpleSpriteSDLDrawer.h" />
+		<Unit filename="../../../include/ZBE/SDL/drawers/StatedSpriteSDLDrawer.h" />
 		<Unit filename="../../../include/ZBE/SDL/loaders/SDLFontLoader.h" />
 		<Unit filename="../../../include/ZBE/SDL/starters/SDL_Starter.h" />
 		<Unit filename="../../../include/ZBE/SDL/system/SDLEventDispatcher.h" />
 		<Unit filename="../../../include/ZBE/SDL/system/Window.h" />
 		<Unit filename="../../../include/ZBE/SDL/tools/SDLTimer.h" />
 		<Unit filename="../../../include/ZBE/archetypes/ActivePhysicalObject.h" />
+		<Unit filename="../../../include/ZBE/archetypes/AnimatedDrawable.h" />
 		<Unit filename="../../../include/ZBE/archetypes/Bouncing.h" />
 		<Unit filename="../../../include/ZBE/archetypes/BouncingAPO.h" />
 		<Unit filename="../../../include/ZBE/archetypes/Damping.h" />
@@ -179,6 +182,7 @@
 		<Unit filename="../../../include/ZBE/archetypes/PhysicalObject.h" />
 		<Unit filename="../../../include/ZBE/archetypes/Position.h" />
 		<Unit filename="../../../include/ZBE/archetypes/PositionPO.h" />
+		<Unit filename="../../../include/ZBE/archetypes/StatedDrawable.h" />
 		<Unit filename="../../../include/ZBE/archetypes/Wide.h" />
 		<Unit filename="../../../include/ZBE/archetypes/WideMobile.h" />
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleBouncing.h" />
@@ -204,9 +208,11 @@
 		<Unit filename="../../../include/ZBE/core/entities/Adaptor.h" />
 		<Unit filename="../../../include/ZBE/core/entities/AvatarEntity.h" />
 		<Unit filename="../../../include/ZBE/core/entities/Entity.h" />
+		<Unit filename="../../../include/ZBE/core/entities/avatars/AnimatedSprite.h" />
 		<Unit filename="../../../include/ZBE/core/entities/avatars/Collisionator.h" />
 		<Unit filename="../../../include/ZBE/core/entities/avatars/Collisioner.h" />
 		<Unit filename="../../../include/ZBE/core/entities/avatars/SimpleSprite.h" />
+		<Unit filename="../../../include/ZBE/core/entities/avatars/StatedSprite.h" />
 		<Unit filename="../../../include/ZBE/core/entities/avatars/implementations/SimpleCollisioner.h" />
 		<Unit filename="../../../include/ZBE/core/events/CollisionEvent2D.h" />
 		<Unit filename="../../../include/ZBE/core/events/Event.h" />
