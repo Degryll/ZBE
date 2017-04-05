@@ -36,14 +36,13 @@
 #include "gamemain.h"
 #include "game/GameReactor.h"
 #include "game/entities/GameBall.h"
-#include "game/entities/GameBoard.h"
 #include "game/entities/GameBlock.h"
+#include "batis/entities/GameBoard.h"
 #include "game/entities/adaptors/GameBallCollisionatorAdaptor.h"
 #include "game/entities/adaptors/GameBlockCollisionerAdaptor.h"
 #include "game/events/handlers/StepInputHandler.h"
 #include "game/events/handlers/ExitInputHandler.h"
 #include "game/events/handlers/GameBallBouncer.h"
-#include "game/events/handlers/TtpHandler.h"
 #include "batis/events/handlers/MKBallInputHandler.h"
 #include "batis/events/handlers/MouseXKeepInputHandler.h"
 #include "batis/events/handlers/MouseYKeepInputHandler.h"
@@ -133,8 +132,8 @@ int batismain(int, char** ) {
   zbe::DaemonMaster drawMaster;
   printf("Creating drawables list\n");fflush(stdout);
   std::forward_list<zbe::AvatarEntity<zbe::SingleSprite>*> sprites;
-  zbe::ListManager< std::forward_list<zbe::AvatarEntity<zbe::SingleSprite >*> >& lmAESimpleSprite = zbe::ListManager<std::forward_list<zbe::AvatarEntity<zbe::SingleSprite >*> >::getInstance();
-  lmAESimpleSprite.insert(SPRITELIST, &sprites);
+  zbe::ListManager< std::forward_list<zbe::AvatarEntity<zbe::SingleSprite >*> >& lmAESingleSprite = zbe::ListManager<std::forward_list<zbe::AvatarEntity<zbe::SingleSprite >*> >::getInstance();
+  lmAESingleSprite.insert(SPRITELIST, &sprites);
   printf("Loading imgs\n");fflush(stdout);
   ballgraphics = window.loadImg(ballfilename);
   brickgraphics = window.loadImg(brickfilename);
@@ -156,6 +155,28 @@ int batismain(int, char** ) {
   printf("|------------------- Creating entities --------------------|\n");fflush(stdout);
   printf("Creating a ball and giving it a position and size\n");fflush(stdout);
 
+
+  printf("Creating the board and giving it a size\n");fflush(stdout);
+  //board
+  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<game::GameReactor> >* > collisionablesList;
+  zbe::ListManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> >& lmSimpleConerActuatorsList = zbe::ListManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> >::getInstance();
+  std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> boardActuatorsList;
+  lmSimpleConerActuatorsList.insert(BOARDACTUATORLIST, &boardActuatorsList);
+  batis::Board boardCfg;
+
+  boardCfg.margin = 2;
+  boardCfg.space = 9;
+  boardCfg.brickWidth = 51;
+  boardCfg.brickHeight = 32;
+  boardCfg.brickAreaWidth = WIDTH;
+  boardCfg.brickAreaHeight = HEIGHT*2/3;
+  boardCfg.cols = (boardCfg.brickAreaWidth - boardCfg.margin - boardCfg.margin) / (boardCfg.brickWidth + boardCfg.space);
+  boardCfg.rows = (boardCfg.brickAreaHeight - boardCfg.margin - boardCfg.margin) / (boardCfg.brickHeight + boardCfg.space);
+  boardCfg.margin += (boardCfg.brickAreaWidth - ((boardCfg.margin * 2) + (boardCfg.cols*(boardCfg.brickWidth + boardCfg.space)) - boardCfg.space))/2;
+
+  batis::GameBoard board(0, 0, WIDTH, HEIGHT, BOARDACTUATORLIST, boardCfg);
+  collisionablesList.push_front(&board);
+
   //ball
   std::forward_list< zbe::Actuator< zbe::Bouncer<2>, game::GameReactor >*> ballActuatorsList;
   zbe::ListManager< std::forward_list< zbe::Actuator< zbe::Bouncer<2>, game::GameReactor >* > >& lmBallActuatorsList = zbe::ListManager< std::forward_list< zbe::Actuator< zbe::Bouncer<2>, game::GameReactor >* > >::getInstance();
@@ -163,7 +184,6 @@ int batismain(int, char** ) {
   game::GameBallBouncer gbBouncer;
   ballActuatorsList.push_front(&gbBouncer);
 
-  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<game::GameReactor> >* > collisionablesList;
   zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<game::GameReactor> >* > >& lmCollisionablesList = zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<game::GameReactor> >* > >::getInstance();
   lmCollisionablesList.insert(COLLISIONABLELIST, &collisionablesList);
 
@@ -211,26 +231,19 @@ int batismain(int, char** ) {
 
   printf("Creating the bricks\n");fflush(stdout);
   //bricks
-  zbe::ListManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> >& lmSimpleConerActuatorsList = zbe::ListManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> >::getInstance();
   std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> brickActuatorsList;
   lmSimpleConerActuatorsList.insert(BRICKACTUATORLIST, &brickActuatorsList);
 
-
   std::forward_list<game::GameBlock*> bricks;
 
-  int margin = 2;
-  int space = 9;
-  int brickWidth = 51;
-  int brickHeight = 32;
-  int cols = (WIDTH - margin - margin) / (brickWidth + space);
-  int rows = 2 * (HEIGHT - margin - margin) / (3 * (brickHeight + space));
-  margin += (WIDTH - ((margin * 2) + (cols*(brickWidth + space)) - space))/2;
   int brickProb = 30;
 
-  for (int i = 0; i < cols; i++){
-    for (int j = 0; j < rows; j++){
+  for (int i = 0; i < boardCfg.cols; i++){
+    for (int j = 0; j < boardCfg.rows; j++){
       if (rand()%100 < brickProb) {
-        game::GameBlock* brick = new game::GameBlock(margin + ((space+brickWidth)*i), margin + ((space+brickHeight)*j), brickWidth, brickHeight, brickgraphics, BRICKACTUATORLIST);
+        game::GameBlock* brick = new game::GameBlock(boardCfg.margin + ((boardCfg.space+boardCfg.brickWidth)*i),
+            boardCfg.margin + ((boardCfg.space+boardCfg.brickHeight)*j), boardCfg.brickWidth, boardCfg.brickHeight,
+            brickgraphics, BRICKACTUATORLIST);
 
         std::shared_ptr<zbe::Adaptor<zbe::SingleSprite> > spriteAdaptor = std::make_shared<zbe::SimpleDrawableSingleSpriteAdaptor>(brick);
         ((zbe::AvatarEntityAdapted<zbe::SingleSprite>*)brick)->setAdaptor(spriteAdaptor);
@@ -241,39 +254,12 @@ int batismain(int, char** ) {
         collisionablesList.push_front(brick);
         sprites.push_front(brick);
         bricks.push_front(brick);
-        std::shared_ptr<zbe::TimeHandler> teleporter = std::make_shared<game::TtpHandler>(brick, teg);
+        std::shared_ptr<zbe::TimeHandler> teleporter = std::make_shared<batis::TtpHandler>(brick, teg, board);
 
-        teg.addTimer(teleporter, zbe::SECOND*2);
+        teg.addTimer(teleporter, zbe::SECOND);
       }
     }
   }
-
-
-
-
-//  for(int i = 0; i<8 ; i++){
-//      for(int j = 0; j<8 ; j++){
-//          game::GameBlock *brick = new game::GameBlock(100, 100, 51, 32, brickgraphics, BRICKACTUATORLIST);
-//
-//          std::shared_ptr<zbe::Adaptor<zbe::SingleSprite> > spriteAdaptor = std::make_shared<zbe::SimpleDrawableSimpleSpriteAdaptor>(brick);
-//          ((zbe::AvatarEntityAdapted<zbe::SingleSprite>*)brick)->setAdaptor(spriteAdaptor);
-//
-//          std::shared_ptr<zbe::Adaptor<zbe::Collisioner<game::GameReactor> > >gBrCA = std::make_shared<game::GameBlockCollisionerAdaptor>(brick);
-//          ((zbe::AvatarEntityAdapted<zbe::Collisioner<game::GameReactor> >*)brick)->setAdaptor(gBrCA);
-//
-//          collisionablesList.push_front(brick);
-//          sprites.push_front(brick);
-//          std::shared_ptr<zbe::TimeHandler> teleporter = std::make_shared<game::TtpHandler>(brick, teg);
-//          teg.addTimer(teleporter, zbe::SECOND*2);
-//      }
-//  }
-
-  printf("Creating the board and giving it a size\n");fflush(stdout);
-  //board
-  std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> boardActuatorsList;
-  lmSimpleConerActuatorsList.insert(BOARDACTUATORLIST, &boardActuatorsList);
-  game::GameBoard board(0, 0, WIDTH, HEIGHT, BOARDACTUATORLIST);
-  collisionablesList.push_front(&board);
 
   printf("|=================== Starting up system ===================|\n");fflush(stdout);
   printf("Starting SysTimer\n");fflush(stdout);
