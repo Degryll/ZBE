@@ -1,30 +1,28 @@
 /**
  * Copyright 2012 Batis Degryll Ludo
- * @file Drawable.h
- * @since 2016-11-22
- * @date 2016-11-22
+ * @file RotatedDrawable.h
+ * @since 2017-04-05
+ * @date 2017-04-05
  * @author Degryll
- * @brief This define an entity that can be drawn.
+ * @brief This define an entity that can be drawn in any direction.
  */
 
-#ifndef ZBE_ARCHETYPES_DRAWABLE_H_
-#define ZBE_ARCHETYPES_DRAWABLE_H_
+#ifndef ZBE_ARCHETYPES_ROTATEDDRAWABLE_H_
+#define ZBE_ARCHETYPES_ROTATEDDRAWABLE_H_
+
+#include "ZBE/archetypes/Drawable.h"
 
 namespace zbe {
 
-/** \brief This define an entity that can be drawn.
+/** \brief This define an entity that can be drawn in any direction.
  */
-class RotatedDrawable {
+class RotatedDrawable : virtual public Drawable {
   public:
     virtual ~AnimatedDrawable() {}
 
-    virtual int64_t getX() = 0;
-    virtual int64_t getY() = 0;
-    virtual int64_t getW() = 0;
-    virtual int64_t getH() = 0;
-    virtual uint64_t getGraphics() = 0;
+    virtual double getDegrees() = 0;
 };
 
 }  // namespace zbe
 
-#endif  // ZBE_ARCHETYPES_DRAWABLE_H_
+#endif  // ZBE_ARCHETYPES_ROTATEDDRAWABLE_H_

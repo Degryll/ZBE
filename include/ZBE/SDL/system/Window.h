@@ -3,7 +3,7 @@
  * @file SDL_Window.h
  *
  * @since 2015/05/30
- * @date 2015/05/30
+ * @date 2017/04/05
  * @author Degryll
  * @brief Create a windows using SDL 2.0.
  */
@@ -101,9 +101,9 @@ class Window {
      *  \param dstrect Portion of the window where the texture is going to be drawn.
      *  \param angle Angle to rotate the texture.
      *  \param center A SDL_Point pointer that represents the center of rotation of the texture. if null, the center of dstrect will be used.
-     *  \param flip A SDL_RendererFlip with be values SDL_FLIP_NONE (do not flip), SDL_FLIP_HORIZONTAL, SDL_FLIP_VERTICAL or diagonal flip (both horizontal and vertical), use bitwise or ('|' operator).
+     *  \param flip A SDL_RendererFlip with the values SDL_FLIP_NONE (do not flip), SDL_FLIP_HORIZONTAL, SDL_FLIP_VERTICAL or diagonal flip (both horizontal and vertical), use bitwise or ('|' operator).
      */
-    void render(unsigned texID,const SDL_Rect* srcrect,const SDL_Rect* dstrect,const double angle,const SDL_Point* center,const SDL_RendererFlip flip);
+    void render(unsigned texID,const SDL_Rect* srcrect,const SDL_Rect* dstrect,const double angle,const SDL_Point* center,const SDL_RendererFlip flip = SDL_FLIP_NONE);
 
     /** \brief Update the window. Similar to swapbuffers in a double buffer rendering.
      */

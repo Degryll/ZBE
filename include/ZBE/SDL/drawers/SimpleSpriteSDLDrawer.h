@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file SimpleSpriteSDLDrawer.h
  * @since 2012-02-01
- * @date 2016-03-29
+ * @date 2017-04-05
  * @author degryll
  * @brief Class that know how to draw SimpleSprite entities with SDL.
  */
@@ -23,6 +23,8 @@ namespace zbe {
 class SimpleSpriteSDLDrawer : public Drawer<SimpleSprite> {
   public:
     SimpleSpriteSDLDrawer(const SimpleSpriteSDLDrawer&) = delete;
+    void operator=(const SimpleSpriteSDLDrawer&) = delete;
+
     /** \brief Create a new drawer in the given context.
      *  \param window A SDL window with its context.
      */
@@ -31,8 +33,6 @@ class SimpleSpriteSDLDrawer : public Drawer<SimpleSprite> {
     /** \brief Destructor.
      */
     ~SimpleSpriteSDLDrawer() {}
-
-    void operator=(const SimpleSpriteSDLDrawer&) = delete;
 
     /** \brief The function every punisher must have.
      *  \param entity The entity to be drawn.

@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file SimpleSprite.h
  * @since 2016-11-22
- * @date 2016-11-22
+ * @date 2017-04-05
  * @author Degryll
  * @brief This define an avatar that can be drawn.
  */
@@ -16,11 +16,11 @@ namespace zbe {
  */
 struct SimpleSprite {
     using Base = void;
-    int x;      //!< X coordinate
-    int y;      //!< Y coordinate
-    unsigned w; //!< width
-    unsigned h; //!< height
-    int graphics;    //!< Image index
+    int64_t x; //!< X coordinate
+    int64_t y; //!< Y coordinate
+    int64_t w; //!< width
+    int64_t h; //!< height
+    uint64_t graphics;    //!< Image index
 };
 
 }  // namespace zbe

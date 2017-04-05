@@ -1,28 +1,26 @@
 /**
  * Copyright 2012 Batis Degryll Ludo
- * @file AnimatedSprite.h
- * @since 2016-11-22
- * @date 2016-11-22
+ * @file RotatedSprite.h
+ * @since 2017-04-05
+ * @date 2017-04-05
  * @author Degryll
- * @brief This define an avatar that can be drawn.
+ * @brief This define an avatar that can be drawn in any direction.
  */
 
-#ifndef ZBE_CORE_ENTITIES_AVATARS_SIMPLESPRITE_H_
-#define ZBE_CORE_ENTITIES_AVATARS_SIMPLESPRITE_H_
+#ifndef ZBE_CORE_ENTITIES_AVATARS_ROTATEDSPRITE_H_
+#define ZBE_CORE_ENTITIES_AVATARS_ROTATEDSPRITE_H_
+
+#include "ZBE/core/entities/avatars/SimpleSprite.h"
 
 namespace zbe {
 
-/** \brief This define an avatar that can be drawn.
+/** \brief This define an avatar that can be drawn in any direction.
  */
-struct RotatedSprite {
-    using Base = void;
-    int x;      //!< X coordinate
-    int y;      //!< Y coordinate
-    unsigned w; //!< width
-    unsigned h; //!< height
-    int graphics;    //!< Image index
+struct RotatedSprite : virtual public SimpleSprite {
+    using Base = SimpleSprite;
+    double degrees; //!< rotation degrees
 };
 
 }  // namespace zbe
 
-#endif  // ZBE_CORE_ENTITIES_AVATARS_SIMPLESPRITE_H_
+#endif  // ZBE_CORE_ENTITIES_AVATARS_ROTATEDSPRITE_H_

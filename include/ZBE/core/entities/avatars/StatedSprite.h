@@ -1,28 +1,27 @@
 /**
  * Copyright 2012 Batis Degryll Ludo
  * @file StatedSprite.h
- * @since 2016-11-22
- * @date 2016-11-22
+ * @since 2017-04-05
+ * @date 2017-04-05
  * @author Degryll
- * @brief This define an avatar that can be drawn.
+ * @brief This define an avatar that can be drawn in any direction with different sprites.
  */
 
-#ifndef ZBE_CORE_ENTITIES_AVATARS_SIMPLESPRITE_H_
-#define ZBE_CORE_ENTITIES_AVATARS_SIMPLESPRITE_H_
+#ifndef ZBE_CORE_ENTITIES_AVATARS_STATEDSPRITE_H_
+#define ZBE_CORE_ENTITIES_AVATARS_STATEDSPRITE_H_
+
+#include "ZBE/core/entities/avatars/RotatedSprite.h"
 
 namespace zbe {
 
-/** \brief This define an avatar that can be drawn.
+/** \brief This define an avatar that can be drawn in any direction with different sprites.
  */
-struct StatedSprite {
-    using Base = void;
-    int x;      //!< X coordinate
-    int y;      //!< Y coordinate
-    unsigned w; //!< width
-    unsigned h; //!< height
-    int graphics;    //!< Image index
+struct StatedSprite : virtual public RotatedSprite {
+    using Base = RotatedSprite;
+    uint64_t state;   //!< state
+    uint64_t nstates; //!< Number of states
 };
 
 }  // namespace zbe
 
-#endif  // ZBE_CORE_ENTITIES_AVATARS_SIMPLESPRITE_H_
+#endif  // ZBE_CORE_ENTITIES_AVATARS_STATEDSPRITE_H_
