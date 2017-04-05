@@ -165,7 +165,7 @@
 		</Compiler>
 		<Unit filename="../../../include/ZBE/SDL/drawers/AnimatedSpriteSDLDrawer.h" />
 		<Unit filename="../../../include/ZBE/SDL/drawers/RotatedSpriteSDLDrawer.h" />
-		<Unit filename="../../../include/ZBE/SDL/drawers/SimpleSpriteSDLDrawer.h" />
+		<Unit filename="../../../include/ZBE/SDL/drawers/SingleSpriteSDLDrawer.h" />
 		<Unit filename="../../../include/ZBE/SDL/drawers/StatedSpriteSDLDrawer.h" />
 		<Unit filename="../../../include/ZBE/SDL/loaders/SDLFontLoader.h" />
 		<Unit filename="../../../include/ZBE/SDL/starters/SDL_Starter.h" />
@@ -214,7 +214,7 @@
 		<Unit filename="../../../include/ZBE/core/entities/avatars/Collisionator.h" />
 		<Unit filename="../../../include/ZBE/core/entities/avatars/Collisioner.h" />
 		<Unit filename="../../../include/ZBE/core/entities/avatars/RotatedSprite.h" />
-		<Unit filename="../../../include/ZBE/core/entities/avatars/SimpleSprite.h" />
+		<Unit filename="../../../include/ZBE/core/entities/avatars/SingleSprite.h" />
 		<Unit filename="../../../include/ZBE/core/entities/avatars/StatedSprite.h" />
 		<Unit filename="../../../include/ZBE/core/entities/avatars/implementations/SimpleCollisioner.h" />
 		<Unit filename="../../../include/ZBE/core/events/CollisionEvent2D.h" />
@@ -252,7 +252,7 @@
 		<Unit filename="../../../include/ZBE/core/tools/math/objects.h" />
 		<Unit filename="../../../include/ZBE/core/tools/text/utf8.h" />
 		<Unit filename="../../../include/ZBE/core/tools/tools.h" />
-		<Unit filename="../../../include/ZBE/entities/adaptors/SimpleDrawableSimpleSpriteAdaptor.h" />
+		<Unit filename="../../../include/ZBE/entities/adaptors/SimpleDrawableSingleSpriteAdaptor.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/Bounceable.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/Bouncer.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/Movable.h" />

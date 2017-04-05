@@ -19,7 +19,6 @@
 #include "ZBE/entities/avatars/implementations/BaseBouncer.h"
 #include "ZBE/reactobjects/VoidReactObject.h"
 #include "ZBE/core/entities/avatars/Collisioner.h"
-#include "ZBE/core/entities/avatars/SimpleSprite.h"
 #include "ZBE/core/entities/avatars/Collisionator.h"
 #include "ZBE/core/entities/avatars/implementations/SimpleCollisioner.h"
 #include "ZBE/core/entities/AvatarEntity.h"

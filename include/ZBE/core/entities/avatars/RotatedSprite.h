@@ -10,14 +10,14 @@
 #ifndef ZBE_CORE_ENTITIES_AVATARS_ROTATEDSPRITE_H_
 #define ZBE_CORE_ENTITIES_AVATARS_ROTATEDSPRITE_H_
 
-#include "ZBE/core/entities/avatars/SimpleSprite.h"
+#include "ZBE/core/entities/avatars/SingleSprite.h"
 
 namespace zbe {
 
 /** \brief This define an avatar that can be drawn in any direction.
  */
-struct RotatedSprite : virtual public SimpleSprite {
-    using Base = SimpleSprite;
+struct RotatedSprite : virtual public SingleSprite {
+    using Base = SingleSprite;
     double degrees; //!< rotation degrees
 };
 

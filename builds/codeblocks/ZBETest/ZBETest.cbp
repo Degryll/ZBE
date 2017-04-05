@@ -169,7 +169,7 @@
 		</Compiler>
 		<Unit filename="../../../src/ZBETest/SDL/AnimatedSpriteSDLDrawerTest.cpp" />
 		<Unit filename="../../../src/ZBETest/SDL/RotatedSpriteSDLDrawerTest.cpp" />
-		<Unit filename="../../../src/ZBETest/SDL/SimpleSpriteSDLDrawerTest.cpp" />
+		<Unit filename="../../../src/ZBETest/SDL/SingleSpriteSDLDrawerTest.cpp" />
 		<Unit filename="../../../src/ZBETest/SDL/StatedSpriteSDLDrawerTest.cpp" />
 		<Unit filename="../../../src/ZBETest/behavior/UniformLinearMotionTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/daemons/PunishersTest.cpp" />

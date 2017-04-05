@@ -26,8 +26,8 @@
 #include "ZBE/SDL/tools/SDLTimer.h"
 #include "ZBE/SDL/system/SDLEventDispatcher.h"
 #include "ZBE/SDL/system/Window.h"
-#include "ZBE/SDL/drawers/SimpleSpriteSDLDrawer.h"
-#include "ZBE/entities/adaptors/SimpleDrawableSimpleSpriteAdaptor.h"
+#include "ZBE/SDL/drawers/SingleSpriteSDLDrawer.h"
+#include "ZBE/entities/adaptors/SimpleDrawableSingleSpriteAdaptor.h"
 #include "ZBE/behaviors/UniformLinearMotion.h"
 #include "ZBE/behaviors/Bounce.h"
 #include "ZBE/archetypes/Mobile.h"
@@ -132,14 +132,14 @@ int batismain(int, char** ) {
   printf("Creating draw master list\n");fflush(stdout);
   zbe::DaemonMaster drawMaster;
   printf("Creating drawables list\n");fflush(stdout);
-  std::forward_list<zbe::AvatarEntity<zbe::SimpleSprite>*> sprites;
-  zbe::ListManager< std::forward_list<zbe::AvatarEntity<zbe::SimpleSprite >*> >& lmAESimpleSprite = zbe::ListManager<std::forward_list<zbe::AvatarEntity<zbe::SimpleSprite >*> >::getInstance();
+  std::forward_list<zbe::AvatarEntity<zbe::SingleSprite>*> sprites;
+  zbe::ListManager< std::forward_list<zbe::AvatarEntity<zbe::SingleSprite >*> >& lmAESimpleSprite = zbe::ListManager<std::forward_list<zbe::AvatarEntity<zbe::SingleSprite >*> >::getInstance();
   lmAESimpleSprite.insert(SPRITELIST, &sprites);
   printf("Loading imgs\n");fflush(stdout);
   ballgraphics = window.loadImg(ballfilename);
   brickgraphics = window.loadImg(brickfilename);
-  printf("Building the drawer to paint SimpleSprite's \n");fflush(stdout);
-  std::shared_ptr<zbe::Daemon> drawerDaemon(new  zbe::DrawerDaemon<zbe::SimpleSprite, std::forward_list<zbe::AvatarEntity<zbe::SimpleSprite >*> >(std::make_shared<zbe::SimpleSpriteSDLDrawer>(&window), SPRITELIST));
+  printf("Building the drawer to paint SingleSprite's \n");fflush(stdout);
+  std::shared_ptr<zbe::Daemon> drawerDaemon(new  zbe::DrawerDaemon<zbe::SingleSprite, std::forward_list<zbe::AvatarEntity<zbe::SingleSprite >*> >(std::make_shared<zbe::SingleSpriteSDLDrawer>(&window), SPRITELIST));
   drawMaster.addDaemon(drawerDaemon);
   printf("|-------------------- Daemons ----------------------|\n");fflush(stdout);
   zbe::TimedDaemonMaster behavMaster;
@@ -196,8 +196,8 @@ int batismain(int, char** ) {
     int64_t vy = cos(vAngle*PI/180)*vt;
 
     game::GameBall* ball = new game::GameBall(WIDTH/2, HEIGHT/2, 16 , vx, vy, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
-    std::shared_ptr<zbe::Adaptor<zbe::SimpleSprite> > spriteAdaptor = std::make_shared<zbe::SimpleDrawableSimpleSpriteAdaptor>(ball);
-    ((zbe::AvatarEntityAdapted<zbe::SimpleSprite>*)ball)->setAdaptor(spriteAdaptor);
+    std::shared_ptr<zbe::Adaptor<zbe::SingleSprite> > spriteAdaptor = std::make_shared<zbe::SimpleDrawableSingleSpriteAdaptor>(ball);
+    ((zbe::AvatarEntityAdapted<zbe::SingleSprite>*)ball)->setAdaptor(spriteAdaptor);
 
     std::shared_ptr<zbe::Adaptor<zbe::Collisionator<game::GameReactor> > > gbca = std::make_shared<game::GameBallCollisionatorAdaptor>(ball);
     ((zbe::AvatarEntityAdapted<zbe::Collisionator<game::GameReactor> >*)ball)->setAdaptor(gbca);
@@ -232,8 +232,8 @@ int batismain(int, char** ) {
       if (rand()%100 < brickProb) {
         game::GameBlock* brick = new game::GameBlock(margin + ((space+brickWidth)*i), margin + ((space+brickHeight)*j), brickWidth, brickHeight, brickgraphics, BRICKACTUATORLIST);
 
-        std::shared_ptr<zbe::Adaptor<zbe::SimpleSprite> > spriteAdaptor = std::make_shared<zbe::SimpleDrawableSimpleSpriteAdaptor>(brick);
-        ((zbe::AvatarEntityAdapted<zbe::SimpleSprite>*)brick)->setAdaptor(spriteAdaptor);
+        std::shared_ptr<zbe::Adaptor<zbe::SingleSprite> > spriteAdaptor = std::make_shared<zbe::SimpleDrawableSingleSpriteAdaptor>(brick);
+        ((zbe::AvatarEntityAdapted<zbe::SingleSprite>*)brick)->setAdaptor(spriteAdaptor);
 
         std::shared_ptr<zbe::Adaptor<zbe::Collisioner<game::GameReactor> > >gBrCA = std::make_shared<game::GameBlockCollisionerAdaptor>(brick);
         ((zbe::AvatarEntityAdapted<zbe::Collisioner<game::GameReactor> >*)brick)->setAdaptor(gBrCA);
@@ -255,8 +255,8 @@ int batismain(int, char** ) {
 //      for(int j = 0; j<8 ; j++){
 //          game::GameBlock *brick = new game::GameBlock(100, 100, 51, 32, brickgraphics, BRICKACTUATORLIST);
 //
-//          std::shared_ptr<zbe::Adaptor<zbe::SimpleSprite> > spriteAdaptor = std::make_shared<zbe::SimpleDrawableSimpleSpriteAdaptor>(brick);
-//          ((zbe::AvatarEntityAdapted<zbe::SimpleSprite>*)brick)->setAdaptor(spriteAdaptor);
+//          std::shared_ptr<zbe::Adaptor<zbe::SingleSprite> > spriteAdaptor = std::make_shared<zbe::SimpleDrawableSimpleSpriteAdaptor>(brick);
+//          ((zbe::AvatarEntityAdapted<zbe::SingleSprite>*)brick)->setAdaptor(spriteAdaptor);
 //
 //          std::shared_ptr<zbe::Adaptor<zbe::Collisioner<game::GameReactor> > >gBrCA = std::make_shared<game::GameBlockCollisionerAdaptor>(brick);
 //          ((zbe::AvatarEntityAdapted<zbe::Collisioner<game::GameReactor> >*)brick)->setAdaptor(gBrCA);

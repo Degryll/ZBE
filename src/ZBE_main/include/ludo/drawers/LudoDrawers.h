@@ -14,7 +14,7 @@
 
 #include "ZBE/core/drawers/Drawer.h"
 #include "ZBE/core/entities/AvatarEntity.h"
-#include "ZBE/core/entities/avatars/SimpleSprite.h"
+#include "ZBE/core/entities/avatars/SingleSprite.h"
 #include "ZBE/SDL/system/Window.h"
 
 #include "ludo/entities/LudoAvatars.h"

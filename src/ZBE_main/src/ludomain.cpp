@@ -27,8 +27,8 @@
 #include "ZBE/SDL/tools/SDLTimer.h"
 #include "ZBE/SDL/system/SDLEventDispatcher.h"
 #include "ZBE/SDL/system/Window.h"
-#include "ZBE/SDL/drawers/SimpleSpriteSDLDrawer.h"
-#include "ZBE/entities/adaptors/SimpleDrawableSimpleSpriteAdaptor.h"
+#include "ZBE/SDL/drawers/SingleSpriteSDLDrawer.h"
+#include "ZBE/entities/adaptors/SimpleDrawableSingleSpriteAdaptor.h"
 #include "ZBE/behaviors/UniformLinearMotion.h"
 #include "ZBE/behaviors/Bounce.h"
 #include "ZBE/archetypes/Mobile.h"
@@ -138,8 +138,8 @@ int ludomain(int, char** ) {
   printf("Creating draw master list\n");fflush(stdout);
   zbe::DaemonMaster drawMaster;
   printf("Creating drawables list\n");fflush(stdout);
-  std::forward_list<zbe::AvatarEntity<zbe::SimpleSprite>*> sprites;
-  zbe::ListManager< std::forward_list<zbe::AvatarEntity<zbe::SimpleSprite >*> >& lmAESimpleSprite = zbe::ListManager<std::forward_list<zbe::AvatarEntity<zbe::SimpleSprite>*> >::getInstance();
+  std::forward_list<zbe::AvatarEntity<zbe::SingleSprite>*> sprites;
+  zbe::ListManager< std::forward_list<zbe::AvatarEntity<zbe::SingleSprite >*> >& lmAESimpleSprite = zbe::ListManager<std::forward_list<zbe::AvatarEntity<zbe::SingleSprite>*> >::getInstance();
   lmAESimpleSprite.insert(SPRITELIST, &sprites);
   std::forward_list<zbe::AvatarEntity<SimpleRotatedSprite>*> rsprites;
   zbe::ListManager< std::forward_list<zbe::AvatarEntity<SimpleRotatedSprite >*> >& lmAESimpleRotatedSprite = zbe::ListManager<std::forward_list<zbe::AvatarEntity<SimpleRotatedSprite>*> >::getInstance();
@@ -151,7 +151,7 @@ int ludomain(int, char** ) {
   ballgraphics[3] = window.loadImg(arrowImg);
   //brickgraphics = window.loadImg(brickfilename);
   printf("Building the drawer to paint SimpleRotatedSprite's \n");fflush(stdout);
-  std::shared_ptr<zbe::Daemon> drawerDaemon(new  zbe::DrawerDaemon<zbe::SimpleSprite, std::forward_list<zbe::AvatarEntity<zbe::SimpleSprite >*> >(std::make_shared<zbe::SimpleSpriteSDLDrawer>(&window), SPRITELIST));
+  std::shared_ptr<zbe::Daemon> drawerDaemon(new  zbe::DrawerDaemon<zbe::SingleSprite, std::forward_list<zbe::AvatarEntity<zbe::SingleSprite >*> >(std::make_shared<zbe::SingleSpriteSDLDrawer>(&window), SPRITELIST));
   drawMaster.addDaemon(drawerDaemon);
   std::shared_ptr<zbe::Daemon> rDrawerDaemon(new  zbe::DrawerDaemon<SimpleRotatedSprite, std::forward_list<zbe::AvatarEntity<SimpleRotatedSprite >*> >(std::make_shared<SimpleRotatedSpriteSDLDrawer>(&window), RSPRITELIST));
   drawMaster.addDaemon(rDrawerDaemon);

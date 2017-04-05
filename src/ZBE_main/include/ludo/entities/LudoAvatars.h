@@ -10,14 +10,14 @@
 #ifndef ZBE_MAIN_LUDO_ENTITIES_LUDOAVATARS
 #define ZBE_MAIN_LUDO_ENTITIES_LUDOAVATARS
 
-#include "ZBE/core/entities/avatars/SimpleSprite.h"
+#include "ZBE/core/entities/avatars/SingleSprite.h"
 
 namespace ludo {
 
 /** \brief This define an avatar that can be drawn and has a rotation.
  */
-struct SimpleRotatedSprite : public zbe::SimpleSprite {
-    using Base = SimpleSprite;
+struct SimpleRotatedSprite : public zbe::SingleSprite {
+    using Base = SingleSprite;
     double angle; //!< rotation in degrees
 };
 

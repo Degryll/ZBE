@@ -1,18 +1,18 @@
 /**
  * Copyright 2012 Batis Degryll Ludo
- * @file SimpleSpriteSDLDrawer.h
+ * @file SingleSpriteSDLDrawer.cpp
  * @since 2012-02-01
  * @date 2016-03-29
  * @author degryll
  * @brief Class that know how to draw SimpleSprite entities with SDL.
  */
 
-#include "ZBE/SDL/drawers/SimpleSpriteSDLDrawer.h"
+#include "ZBE/SDL/drawers/SingleSpriteSDLDrawer.h"
 
 namespace zbe {
 
-void SimpleSpriteSDLDrawer::apply(AvatarEntity<SimpleSprite> *entity) {
-  SimpleSprite* avatar;
+void SingleSpriteSDLDrawer::apply(AvatarEntity<SingleSprite> *entity) {
+  SingleSprite* avatar;
   entity->assignAvatar(&avatar);
   SDL_Rect src,dst;
   src.x = 0;

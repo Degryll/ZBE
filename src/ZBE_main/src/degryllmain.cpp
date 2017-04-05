@@ -17,10 +17,10 @@
 #include "ZBE/SDL/system/SDLEventDispatcher.h"
 #include "ZBE/core/system/SysTime.h"
 #include "ZBE/SDL/system/Window.h"
-#include "ZBE/SDL/drawers/SimpleSpriteSDLDrawer.h"
+#include "ZBE/SDL/drawers/SingleSpriteSDLDrawer.h"
 #include "ZBE/core/daemons/DaemonMaster.h"
 #include "ZBE/core/daemons/Punishers.h"
-#include "ZBE/entities/adaptors/SimpleDrawableSimpleSpriteAdaptor.h"
+#include "ZBE/entities/adaptors/SimpleDrawableSingleSpriteAdaptor.h"
 
 #include "game/events/handlers/ExitInputHandler.h"
 
@@ -29,10 +29,10 @@ class GameReactor {};
 namespace zbetris {
 
 class Block: public zbe::Drawable,
-             public zbe::AvatarEntityAdapted<zbe::SimpleSprite> {
+             public zbe::AvatarEntityAdapted<zbe::SingleSprite> {
 public:
-  Block() : x(0), y(0), t(0), lm(zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SimpleSprite >*> >::getInstance()), ticket(nullptr) {}
-  Block(int64_t x, int64_t y, uint64_t t, uint64_t id) : x(x), y(y), t(t), lm(zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SimpleSprite>*> >::getInstance()), ticket(lm.get(id)->push_front(this)) {}
+  Block() : x(0), y(0), t(0), lm(zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite >*> >::getInstance()), ticket(nullptr) {}
+  Block(int64_t x, int64_t y, uint64_t t, uint64_t id) : x(x), y(y), t(t), lm(zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite>*> >::getInstance()), ticket(lm.get(id)->push_front(this)) {}
 
   void addTo(uint64_t id) {
     ticket = lm.get(id)->push_front(this);
@@ -57,11 +57,11 @@ private:
   int64_t x;
   int64_t y;
   uint64_t t;
-  zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SimpleSprite>*> >& lm;
-  std::shared_ptr<zbe::TicketedElement<zbe::AvatarEntity<zbe::SimpleSprite>*> > ticket;
+  zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite>*> >& lm;
+  std::shared_ptr<zbe::TicketedElement<zbe::AvatarEntity<zbe::SingleSprite>*> > ticket;
 };
 
-class SimpleDrawableBoardSpriteAdaptor : public zbe::Adaptor<zbe::SimpleSprite> {
+class SimpleDrawableBoardSpriteAdaptor : public zbe::Adaptor<zbe::SingleSprite> {
 public:
   SimpleDrawableBoardSpriteAdaptor(const SimpleDrawableBoardSpriteAdaptor&) = delete;
   void operator=(const SimpleDrawableBoardSpriteAdaptor&) = delete;
@@ -72,9 +72,9 @@ public:
     delete s;
   }
 
-  zbe::SimpleSprite* getAvatar() {
+  zbe::SingleSprite* getAvatar() {
     delete s;
-    s = new zbe::SimpleSprite();
+    s = new zbe::SingleSprite();
 
     s->x = e->getX() * w + x;
     s->y = e->getY() * w + y;
@@ -91,7 +91,7 @@ private:
   int64_t w;
   int64_t h;
   zbe::Drawable* e;
-  zbe::SimpleSprite* s;
+  zbe::SingleSprite* s;
 };
 
 class Board {
@@ -107,8 +107,8 @@ public:
         bb[i*width+j].setInvisible();
 
 
-        std::shared_ptr<zbe::Adaptor<zbe::SimpleSprite> > spriteAdaptor = std::make_shared<zbetris::SimpleDrawableBoardSpriteAdaptor>(100, 100, 32, 32, bb + (i*width+j));
-        ((zbe::AvatarEntityAdapted<zbe::SimpleSprite>*)(bb + (i*width+j)))->setAdaptor(spriteAdaptor);
+        std::shared_ptr<zbe::Adaptor<zbe::SingleSprite> > spriteAdaptor = std::make_shared<zbetris::SimpleDrawableBoardSpriteAdaptor>(100, 100, 32, 32, bb + (i*width+j));
+        ((zbe::AvatarEntityAdapted<zbe::SingleSprite>*)(bb + (i*width+j)))->setAdaptor(spriteAdaptor);
       }
     }
   }
@@ -194,8 +194,8 @@ public:
     for(uint64_t i = 0; i < 4; i++) {
       b[i].addTo(id);
       //b[i].setType(type);
-      std::shared_ptr<zbe::Adaptor<zbe::SimpleSprite> > spriteAdaptor = std::make_shared<zbetris::SimpleDrawableBoardSpriteAdaptor>(100, 100, 32, 32, b + i);
-      ((zbe::AvatarEntityAdapted<zbe::SimpleSprite>*)(b + i))->setAdaptor(spriteAdaptor);
+      std::shared_ptr<zbe::Adaptor<zbe::SingleSprite> > spriteAdaptor = std::make_shared<zbetris::SimpleDrawableBoardSpriteAdaptor>(100, 100, 32, 32, b + i);
+      ((zbe::AvatarEntityAdapted<zbe::SingleSprite>*)(b + i))->setAdaptor(spriteAdaptor);
       b[i].setType(img);
 
       if(t) b[i].setVisible();
@@ -369,11 +369,11 @@ class RotateLeftInputHandler : public zbe::InputHandler {
 namespace isolux {
 
 class Mitil : public zbe::Drawable,
-              public zbe::AvatarEntityAdapted<zbe::SimpleSprite> {
+              public zbe::AvatarEntityAdapted<zbe::SingleSprite> {
 public:
   Mitil(int x, int y, int width, int height, int graphics, uint64_t id)
   : x(x), y(y), w(width), h(height), g(graphics),
-    lm(zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SimpleSprite>*> >::getInstance()),
+    lm(zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite>*> >::getInstance()),
     ticket(lm.get(id)->push_front(this)) {}
 
 //  void setData(int x, int y, int width, int height, int graphics) {
@@ -406,8 +406,8 @@ private:
   int w;
   int h;
   int g;
-  zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SimpleSprite>*> >& lm;
-  std::shared_ptr<zbe::TicketedElement<zbe::AvatarEntity<zbe::SimpleSprite>*> > ticket;
+  zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite>*> >& lm;
+  std::shared_ptr<zbe::TicketedElement<zbe::AvatarEntity<zbe::SingleSprite>*> > ticket;
 };
 
 class MiMap {
@@ -422,33 +422,34 @@ public:
     i1(width * height, nullptr), d1(width * height, nullptr), s1(width * height, nullptr),
     i2(width * height, nullptr), d2(width * height, nullptr), s2(width * height, nullptr),
     i3(width * height, nullptr), d3(width * height, nullptr), s3(width * height, nullptr),
-    i4(width * height, nullptr), d4(width * height, nullptr), s4(width * height, nullptr) {
+    i4(width * height, nullptr), d4(width * height, nullptr), s4(width * height, nullptr),
+    arcade(nullptr), character(nullptr), musica(nullptr), muros(nullptr) {
 
     create();
   }
 
   void create() {
     arcade = new Mitil(x + 31 * tileWidth - 7, y + 21 * hh - 38, 26, 47, g+7, id);
-    std::shared_ptr<zbe::Adaptor<zbe::SimpleSprite> > spriteAdaptorArcade = std::make_shared<zbe::SimpleDrawableSimpleSpriteAdaptor>(arcade);
-    ((zbe::AvatarEntityAdapted<zbe::SimpleSprite>*)(arcade))->setAdaptor(spriteAdaptorArcade);
+    std::shared_ptr<zbe::Adaptor<zbe::SingleSprite> > spriteAdaptorArcade = std::make_shared<zbe::SimpleDrawableSingleSpriteAdaptor>(arcade);
+    ((zbe::AvatarEntityAdapted<zbe::SingleSprite>*)(arcade))->setAdaptor(spriteAdaptorArcade);
 
     arcade->setInvisible();
 
     character = new Mitil(x + cx * tileWidth + 4, y + cy * hh - 31, 11, 38, g+3, id);
-    std::shared_ptr<zbe::Adaptor<zbe::SimpleSprite> > spriteAdaptorChar = std::make_shared<zbe::SimpleDrawableSimpleSpriteAdaptor>(character);
-    ((zbe::AvatarEntityAdapted<zbe::SimpleSprite>*)(character))->setAdaptor(spriteAdaptorChar);
+    std::shared_ptr<zbe::Adaptor<zbe::SingleSprite> > spriteAdaptorChar = std::make_shared<zbe::SimpleDrawableSingleSpriteAdaptor>(character);
+    ((zbe::AvatarEntityAdapted<zbe::SingleSprite>*)(character))->setAdaptor(spriteAdaptorChar);
 
     character->setInvisible();
 
     musica = new Mitil(x, y + 300, 673, 271, g+8, id);
-    std::shared_ptr<zbe::Adaptor<zbe::SimpleSprite> > spriteAdaptormusica = std::make_shared<zbe::SimpleDrawableSimpleSpriteAdaptor>(musica);
-    ((zbe::AvatarEntityAdapted<zbe::SimpleSprite>*)(musica))->setAdaptor(spriteAdaptormusica);
+    std::shared_ptr<zbe::Adaptor<zbe::SingleSprite> > spriteAdaptormusica = std::make_shared<zbe::SimpleDrawableSingleSpriteAdaptor>(musica);
+    ((zbe::AvatarEntityAdapted<zbe::SingleSprite>*)(musica))->setAdaptor(spriteAdaptormusica);
 
     musica->setInvisible();
 
     muros = new Mitil(x, y + 300, 673, 271, g+9, id);
-    std::shared_ptr<zbe::Adaptor<zbe::SimpleSprite> > spriteAdaptormuros = std::make_shared<zbe::SimpleDrawableSimpleSpriteAdaptor>(muros);
-    ((zbe::AvatarEntityAdapted<zbe::SimpleSprite>*)(muros))->setAdaptor(spriteAdaptormuros);
+    std::shared_ptr<zbe::Adaptor<zbe::SingleSprite> > spriteAdaptormuros = std::make_shared<zbe::SimpleDrawableSingleSpriteAdaptor>(muros);
+    ((zbe::AvatarEntityAdapted<zbe::SingleSprite>*)(muros))->setAdaptor(spriteAdaptormuros);
 
     muros->setInvisible();
 
@@ -457,8 +458,8 @@ public:
       int offset = (i % 2) ? hw : 0;
       for(int j = 0; j < width; j++) {
         s4[i * width + j] = new Mitil(x + j * tileWidth + offset, y + i * hh - 9 - 9 - 9 - 9, tileWidth, tileHeight, g, id);
-        std::shared_ptr<zbe::Adaptor<zbe::SimpleSprite> > spriteAdaptor14 = std::make_shared<zbe::SimpleDrawableSimpleSpriteAdaptor>(s4[i*width+j]);
-        ((zbe::AvatarEntityAdapted<zbe::SimpleSprite>*)(s4[i*width+j]))->setAdaptor(spriteAdaptor14);
+        std::shared_ptr<zbe::Adaptor<zbe::SingleSprite> > spriteAdaptor14 = std::make_shared<zbe::SimpleDrawableSingleSpriteAdaptor>(s4[i*width+j]);
+        ((zbe::AvatarEntityAdapted<zbe::SingleSprite>*)(s4[i*width+j]))->setAdaptor(spriteAdaptor14);
         s4[i * width + j]->setInvisible();
       }
     }
@@ -467,12 +468,12 @@ public:
       int offset = (i % 2) ? hw : 0;
       for(int j = width-1; j >= 0; j--) {
         d4[i * width + j] = new Mitil(x + j * tileWidth + offset, y + i * hh - 5 - 9 - 9 - 9, 8, 14, g+1, id);
-        std::shared_ptr<zbe::Adaptor<zbe::SimpleSprite> > spriteAdaptor13 = std::make_shared<zbe::SimpleDrawableSimpleSpriteAdaptor>(d4[i*width+j]);
-        ((zbe::AvatarEntityAdapted<zbe::SimpleSprite>*)(d4[i*width+j]))->setAdaptor(spriteAdaptor13);
+        std::shared_ptr<zbe::Adaptor<zbe::SingleSprite> > spriteAdaptor13 = std::make_shared<zbe::SimpleDrawableSingleSpriteAdaptor>(d4[i*width+j]);
+        ((zbe::AvatarEntityAdapted<zbe::SingleSprite>*)(d4[i*width+j]))->setAdaptor(spriteAdaptor13);
 
         i4[i * width + j] = new Mitil(x + j * tileWidth + offset+8, y + i * hh - 5 - 9 - 9 - 9, 8, 14, g+2, id);
-        std::shared_ptr<zbe::Adaptor<zbe::SimpleSprite> > spriteAdaptor12 = std::make_shared<zbe::SimpleDrawableSimpleSpriteAdaptor>(i4[i*width+j]);
-        ((zbe::AvatarEntityAdapted<zbe::SimpleSprite>*)(i4[i*width+j]))->setAdaptor(spriteAdaptor12);
+        std::shared_ptr<zbe::Adaptor<zbe::SingleSprite> > spriteAdaptor12 = std::make_shared<zbe::SimpleDrawableSingleSpriteAdaptor>(i4[i*width+j]);
+        ((zbe::AvatarEntityAdapted<zbe::SingleSprite>*)(i4[i*width+j]))->setAdaptor(spriteAdaptor12);
         d4[i * width + j]->setInvisible();
         i4[i * width + j]->setInvisible();
       }
@@ -482,8 +483,8 @@ public:
       int offset = (i % 2) ? hw : 0;
       for(int j = 0; j < width; j++) {
         s3[i * width + j] = new Mitil(x + j * tileWidth + offset, y + i * hh - 9 - 9 - 9, tileWidth, tileHeight, g, id);
-        std::shared_ptr<zbe::Adaptor<zbe::SimpleSprite> > spriteAdaptor11 = std::make_shared<zbe::SimpleDrawableSimpleSpriteAdaptor>(s3[i*width+j]);
-        ((zbe::AvatarEntityAdapted<zbe::SimpleSprite>*)(s3[i*width+j]))->setAdaptor(spriteAdaptor11);
+        std::shared_ptr<zbe::Adaptor<zbe::SingleSprite> > spriteAdaptor11 = std::make_shared<zbe::SimpleDrawableSingleSpriteAdaptor>(s3[i*width+j]);
+        ((zbe::AvatarEntityAdapted<zbe::SingleSprite>*)(s3[i*width+j]))->setAdaptor(spriteAdaptor11);
         s3[i * width + j]->setInvisible();
       }
     }
@@ -492,12 +493,12 @@ public:
       int offset = (i % 2) ? hw : 0;
       for(int j = width-1; j >= 0; j--) {
         d3[i * width + j] = new Mitil(x + j * tileWidth + offset, y + i * hh - 5 - 9 - 9, 8, 14, g+1, id);
-        std::shared_ptr<zbe::Adaptor<zbe::SimpleSprite> > spriteAdaptor10 = std::make_shared<zbe::SimpleDrawableSimpleSpriteAdaptor>(d3[i*width+j]);
-        ((zbe::AvatarEntityAdapted<zbe::SimpleSprite>*)(d3[i*width+j]))->setAdaptor(spriteAdaptor10);
+        std::shared_ptr<zbe::Adaptor<zbe::SingleSprite> > spriteAdaptor10 = std::make_shared<zbe::SimpleDrawableSingleSpriteAdaptor>(d3[i*width+j]);
+        ((zbe::AvatarEntityAdapted<zbe::SingleSprite>*)(d3[i*width+j]))->setAdaptor(spriteAdaptor10);
 
         i3[i * width + j] = new Mitil(x + j * tileWidth + offset+8, y + i * hh - 5 - 9 - 9, 8, 14, g+2, id);
-        std::shared_ptr<zbe::Adaptor<zbe::SimpleSprite> > spriteAdaptor9 = std::make_shared<zbe::SimpleDrawableSimpleSpriteAdaptor>(i3[i*width+j]);
-        ((zbe::AvatarEntityAdapted<zbe::SimpleSprite>*)(i3[i*width+j]))->setAdaptor(spriteAdaptor9);
+        std::shared_ptr<zbe::Adaptor<zbe::SingleSprite> > spriteAdaptor9 = std::make_shared<zbe::SimpleDrawableSingleSpriteAdaptor>(i3[i*width+j]);
+        ((zbe::AvatarEntityAdapted<zbe::SingleSprite>*)(i3[i*width+j]))->setAdaptor(spriteAdaptor9);
         d3[i * width + j]->setInvisible();
         i3[i * width + j]->setInvisible();
       }
@@ -507,8 +508,8 @@ public:
       int offset = (i % 2) ? hw : 0;
       for(int j = 0; j < width; j++) {
         s2[i * width + j] = new Mitil(x + j * tileWidth + offset, y + i * hh - 9 - 9, tileWidth, tileHeight, g, id);
-        std::shared_ptr<zbe::Adaptor<zbe::SimpleSprite> > spriteAdaptor8 = std::make_shared<zbe::SimpleDrawableSimpleSpriteAdaptor>(s2[i*width+j]);
-        ((zbe::AvatarEntityAdapted<zbe::SimpleSprite>*)(s2[i*width+j]))->setAdaptor(spriteAdaptor8);
+        std::shared_ptr<zbe::Adaptor<zbe::SingleSprite> > spriteAdaptor8 = std::make_shared<zbe::SimpleDrawableSingleSpriteAdaptor>(s2[i*width+j]);
+        ((zbe::AvatarEntityAdapted<zbe::SingleSprite>*)(s2[i*width+j]))->setAdaptor(spriteAdaptor8);
         s2[i * width + j]->setInvisible();
       }
     }
@@ -517,12 +518,12 @@ public:
       int offset = (i % 2) ? hw : 0;
       for(int j = width-1; j >= 0; j--) {
         d2[i * width + j] = new Mitil(x + j * tileWidth + offset, y + i * hh - 5 - 9, 8, 14, g+1, id);
-        std::shared_ptr<zbe::Adaptor<zbe::SimpleSprite> > spriteAdaptor7 = std::make_shared<zbe::SimpleDrawableSimpleSpriteAdaptor>(d2[i*width+j]);
-        ((zbe::AvatarEntityAdapted<zbe::SimpleSprite>*)(d2[i*width+j]))->setAdaptor(spriteAdaptor7);
+        std::shared_ptr<zbe::Adaptor<zbe::SingleSprite> > spriteAdaptor7 = std::make_shared<zbe::SimpleDrawableSingleSpriteAdaptor>(d2[i*width+j]);
+        ((zbe::AvatarEntityAdapted<zbe::SingleSprite>*)(d2[i*width+j]))->setAdaptor(spriteAdaptor7);
 
         i2[i * width + j] = new Mitil(x + j * tileWidth + offset+8, y + i * hh - 5 - 9, 8, 14, g+2, id);
-        std::shared_ptr<zbe::Adaptor<zbe::SimpleSprite> > spriteAdaptor6 = std::make_shared<zbe::SimpleDrawableSimpleSpriteAdaptor>(i2[i*width+j]);
-        ((zbe::AvatarEntityAdapted<zbe::SimpleSprite>*)(i2[i*width+j]))->setAdaptor(spriteAdaptor6);
+        std::shared_ptr<zbe::Adaptor<zbe::SingleSprite> > spriteAdaptor6 = std::make_shared<zbe::SimpleDrawableSingleSpriteAdaptor>(i2[i*width+j]);
+        ((zbe::AvatarEntityAdapted<zbe::SingleSprite>*)(i2[i*width+j]))->setAdaptor(spriteAdaptor6);
         d2[i * width + j]->setInvisible();
         i2[i * width + j]->setInvisible();
       }
@@ -532,8 +533,8 @@ public:
       int offset = (i % 2) ? hw : 0;
       for(int j = 0; j < width; j++) {
         s1[i * width + j] = new Mitil(x + j * tileWidth + offset, y + i * hh - 9, tileWidth, tileHeight, g, id);
-        std::shared_ptr<zbe::Adaptor<zbe::SimpleSprite> > spriteAdaptor5 = std::make_shared<zbe::SimpleDrawableSimpleSpriteAdaptor>(s1[i*width+j]);
-        ((zbe::AvatarEntityAdapted<zbe::SimpleSprite>*)(s1[i*width+j]))->setAdaptor(spriteAdaptor5);
+        std::shared_ptr<zbe::Adaptor<zbe::SingleSprite> > spriteAdaptor5 = std::make_shared<zbe::SimpleDrawableSingleSpriteAdaptor>(s1[i*width+j]);
+        ((zbe::AvatarEntityAdapted<zbe::SingleSprite>*)(s1[i*width+j]))->setAdaptor(spriteAdaptor5);
         s1[i * width + j]->setInvisible();
       }
     }
@@ -542,12 +543,12 @@ public:
       int offset = (i % 2) ? hw : 0;
       for(int j = width-1; j >= 0; j--) {
         d1[i * width + j] = new Mitil(x + j * tileWidth + offset, y + i * hh - 5, 8, 14, g+1, id);
-        std::shared_ptr<zbe::Adaptor<zbe::SimpleSprite> > spriteAdaptor4 = std::make_shared<zbe::SimpleDrawableSimpleSpriteAdaptor>(d1[i*width+j]);
-        ((zbe::AvatarEntityAdapted<zbe::SimpleSprite>*)(d1[i*width+j]))->setAdaptor(spriteAdaptor4);
+        std::shared_ptr<zbe::Adaptor<zbe::SingleSprite> > spriteAdaptor4 = std::make_shared<zbe::SimpleDrawableSingleSpriteAdaptor>(d1[i*width+j]);
+        ((zbe::AvatarEntityAdapted<zbe::SingleSprite>*)(d1[i*width+j]))->setAdaptor(spriteAdaptor4);
 
         i1[i * width + j] = new Mitil(x + j * tileWidth + offset+8, y + i * hh - 5, 8, 14, g+2, id);
-        std::shared_ptr<zbe::Adaptor<zbe::SimpleSprite> > spriteAdaptor3 = std::make_shared<zbe::SimpleDrawableSimpleSpriteAdaptor>(i1[i*width+j]);
-        ((zbe::AvatarEntityAdapted<zbe::SimpleSprite>*)(i1[i*width+j]))->setAdaptor(spriteAdaptor3);
+        std::shared_ptr<zbe::Adaptor<zbe::SingleSprite> > spriteAdaptor3 = std::make_shared<zbe::SimpleDrawableSingleSpriteAdaptor>(i1[i*width+j]);
+        ((zbe::AvatarEntityAdapted<zbe::SingleSprite>*)(i1[i*width+j]))->setAdaptor(spriteAdaptor3);
         d1[i * width + j]->setInvisible();
         i1[i * width + j]->setInvisible();
       }
@@ -557,8 +558,8 @@ public:
       int offset = (i % 2) ? hw : 0;
       for(int j = 0; j < width; j++) {
         s0[i * width + j] = new Mitil(x + j * tileWidth + offset, y + i * hh, tileWidth, tileHeight, g, id);
-        std::shared_ptr<zbe::Adaptor<zbe::SimpleSprite> > spriteAdaptor2 = std::make_shared<zbe::SimpleDrawableSimpleSpriteAdaptor>(s0[i*width+j]);
-        ((zbe::AvatarEntityAdapted<zbe::SimpleSprite>*)(s0[i*width+j]))->setAdaptor(spriteAdaptor2);
+        std::shared_ptr<zbe::Adaptor<zbe::SingleSprite> > spriteAdaptor2 = std::make_shared<zbe::SimpleDrawableSingleSpriteAdaptor>(s0[i*width+j]);
+        ((zbe::AvatarEntityAdapted<zbe::SingleSprite>*)(s0[i*width+j]))->setAdaptor(spriteAdaptor2);
         s0[i * width + j]->setInvisible();
       }
     }
@@ -890,15 +891,15 @@ int degryllmain(int, char**) {
   const char murosfilename[] = "data/images/degryll/isotetris/muros.png";
   uint64_t blockgraphics;
   uint64_t floortile;
-  uint64_t izqtile;
-  uint64_t dertile;
-  uint64_t charutile;
-  uint64_t chardtile;
-  uint64_t charltile;
-  uint64_t charrtile;
-  uint64_t arctile;
-  uint64_t musicatile;
-  uint64_t murostile;
+//  uint64_t izqtile;
+//  uint64_t dertile;
+//  uint64_t charutile;
+//  uint64_t chardtile;
+//  uint64_t charltile;
+//  uint64_t charrtile;
+//  uint64_t arctile;
+//  uint64_t musicatile;
+//  uint64_t murostile;
 
   zbe::EventStore& store = zbe::EventStore::getInstance();
 
@@ -920,23 +921,32 @@ int degryllmain(int, char**) {
   zbe::Window window(WIDTH,HEIGHT);
   blockgraphics = window.loadImg(blockfilename);
   floortile     = window.loadImg(floorfilename);
-  izqtile       = window.loadImg(izqfilename);
-  dertile       = window.loadImg(derfilename);
-  charutile     = window.loadImg(charufilename);
-  chardtile     = window.loadImg(chardfilename);
-  charltile     = window.loadImg(charlfilename);
-  charrtile     = window.loadImg(charrfilename);
-  arctile       = window.loadImg(arcfilename);
-  musicatile       = window.loadImg(musicafilename);
-  murostile       = window.loadImg(murosfilename);
+//  izqtile       = window.loadImg(izqfilename);
+//  dertile       = window.loadImg(derfilename);
+//  charutile     = window.loadImg(charufilename);
+//  chardtile     = window.loadImg(chardfilename);
+//  charltile     = window.loadImg(charlfilename);
+//  charrtile     = window.loadImg(charrfilename);
+//  arctile       = window.loadImg(arcfilename);
+//  musicatile    = window.loadImg(musicafilename);
+//  murostile     = window.loadImg(murosfilename);
+  window.loadImg(izqfilename);
+  window.loadImg(derfilename);
+  window.loadImg(charufilename);
+  window.loadImg(chardfilename);
+  window.loadImg(charlfilename);
+  window.loadImg(charrfilename);
+  window.loadImg(arcfilename);
+  window.loadImg(musicafilename);
+  window.loadImg(murosfilename);
 
 //  zbe::SimpleSpriteSDLDrawer drawer(&window);
   zbe::DaemonMaster drawMaster;
-  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SimpleSprite >*> sprites;
-  zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SimpleSprite >*> >& lmdraw = zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SimpleSprite >*> >::getInstance();
+  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite >*> sprites;
+  zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite >*> >& lmdraw = zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite >*> >::getInstance();
   lmdraw.insert(DRAWLIST, &sprites);
 
-  std::shared_ptr<zbe::Daemon> drawerDaemon(new  zbe::DrawerDaemon<zbe::SimpleSprite, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SimpleSprite >*> >(std::make_shared<zbe::SimpleSpriteSDLDrawer>(&window), DRAWLIST));
+  std::shared_ptr<zbe::Daemon> drawerDaemon(new  zbe::DrawerDaemon<zbe::SingleSprite, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite >*> >(std::make_shared<zbe::SingleSpriteSDLDrawer>(&window), DRAWLIST));
   drawMaster.addDaemon(drawerDaemon);
 
   zbe::TimedDaemonMaster behavMaster;
