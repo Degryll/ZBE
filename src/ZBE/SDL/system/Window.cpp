@@ -62,13 +62,13 @@ void Window::setBackgroundColor(Uint8 red, Uint8 green, Uint8 blue, Uint8 alpha)
   }
 }
 
-void Window::render(unsigned texID, const SDL_Rect* srcrect, const SDL_Rect* dstrect) {
+void Window::render(uint64_t texID, const SDL_Rect* srcrect, const SDL_Rect* dstrect) {
   if(SDL_RenderCopy(renderer, imgCollection[texID], srcrect, dstrect)) {
     zbe::SysError::setError(std::string("ERROR: SDL could not render the texture! SDL ERROR: ") + SDL_GetError());
   }
 }
 
-void Window::render(unsigned texID, const SDL_Rect* srcrect, const SDL_Rect* dstrect, const double angle, const SDL_Point* center, const SDL_RendererFlip flip) {
+void Window::render(uint64_t texID, const SDL_Rect* srcrect, const SDL_Rect* dstrect, const double angle, const SDL_Point* center, const SDL_RendererFlip flip) {
   if(SDL_RenderCopyEx(renderer, imgCollection[texID], srcrect, dstrect, angle, center, flip)) {
     zbe::SysError::setError(std::string("ERROR: SDL could not render the texture! SDL ERROR: ") + SDL_GetError());
   }

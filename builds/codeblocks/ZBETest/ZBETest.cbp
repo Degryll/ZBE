@@ -167,10 +167,13 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="../../../src/ZBETest/SDL/AnimatedSpriteSDLDrawerTest.cpp" />
+		<Unit filename="../../../src/ZBETest/SDL/RotatedSpriteSDLDrawerTest.cpp" />
+		<Unit filename="../../../src/ZBETest/SDL/SimpleSpriteSDLDrawerTest.cpp" />
+		<Unit filename="../../../src/ZBETest/SDL/StatedSpriteSDLDrawerTest.cpp" />
 		<Unit filename="../../../src/ZBETest/behavior/UniformLinearMotionTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/daemons/PunishersTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/daemons/daemonsTest.cpp" />
-		<Unit filename="../../../src/ZBETest/core/drawers/SDL/SimpleSpriteSDLDrawerTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/entities/AvatarEntityTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/entities/EntityTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/events/CollisionEventGeneratorTest.cpp" />

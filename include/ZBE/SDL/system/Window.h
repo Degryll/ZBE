@@ -90,7 +90,7 @@ class Window {
      *  \param srcrect Portion of the texture to be drawn.
      *  \param dstrect Portion of the window where the texture is going to be drawn.
      */
-    void render(unsigned texID,const SDL_Rect* srcrect,const SDL_Rect* dstrect);
+    void render(uint64_t texID,const SDL_Rect* srcrect,const SDL_Rect* dstrect);
 
     /** \brief Draw the portion of the texture specified by srcrect in the portion of the window specified by dstrect.
      *
@@ -103,7 +103,7 @@ class Window {
      *  \param center A SDL_Point pointer that represents the center of rotation of the texture. if null, the center of dstrect will be used.
      *  \param flip A SDL_RendererFlip with the values SDL_FLIP_NONE (do not flip), SDL_FLIP_HORIZONTAL, SDL_FLIP_VERTICAL or diagonal flip (both horizontal and vertical), use bitwise or ('|' operator).
      */
-    void render(unsigned texID,const SDL_Rect* srcrect,const SDL_Rect* dstrect,const double angle,const SDL_Point* center,const SDL_RendererFlip flip = SDL_FLIP_NONE);
+    void render(uint64_t texID,const SDL_Rect* srcrect,const SDL_Rect* dstrect,const double angle,const SDL_Point* center,const SDL_RendererFlip flip = SDL_FLIP_NONE);
 
     /** \brief Update the window. Similar to swapbuffers in a double buffer rendering.
      */
