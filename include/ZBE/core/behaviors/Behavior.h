@@ -10,6 +10,8 @@
 #ifndef ZBE_CORE_BEHAVIORS_BEHAVIOR_H_
 #define ZBE_CORE_BEHAVIORS_BEHAVIOR_H_
 
+#include <memory>
+
 #include "ZBE/core/entities/AvatarEntity.h"
 
 namespace zbe {
@@ -26,7 +28,7 @@ class Behavior {
 
     /** \brief Do the behavior work over the given entity
      */
-    virtual void apply(AvatarEntity<T> * entity, int64_t time) = 0;
+    virtual void apply(std::shared_ptr<AvatarEntity<T> > entity, int64_t time) = 0;
 };
 
 }  // namespace zbe

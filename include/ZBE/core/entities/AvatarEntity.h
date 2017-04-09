@@ -111,6 +111,24 @@ private:
   T* a = nullptr;
 };
 
+template <typename T, typename A>
+void setAdaptor(std::shared_ptr<T> t, std::shared_ptr<zbe::Adaptor<A> > a) {
+    std::shared_ptr<zbe::AvatarEntityAdapted<A> > aeaA = t;
+    aeaA->setAdaptor(a);
+}
+
+template <typename T, typename A>
+void setAvatar(std::shared_ptr<T> t, A* a) {
+    std::shared_ptr<zbe::AvatarEntityFixed<A> > aefA = t;
+    aefA->setAvatar(a);
+}
+
+template <typename T, typename A>
+void assignAvatar(std::shared_ptr<T> t, A **a) {
+    std::shared_ptr<zbe::AvatarEntity<A> > aeA = t;
+    aeA->assignAvatar(a);
+}
+
 }  // namespace ZBE
 
 #endif  // ZBE_CORE_ENTITIES_AVATARENTITY_H_

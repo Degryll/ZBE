@@ -16,7 +16,7 @@ class TtpHandler : public zbe::TimeHandler {
 	  TtpHandler(const TtpHandler&) = delete;
 	  void operator=(const TtpHandler&) = delete;
 
-  	TtpHandler(zbe::AvatarEntity<zbe::Positionable<2> >* entity, zbe::TimeEventGenerator &teg) : e(entity), teg(teg) {}
+  	TtpHandler(std::shared_ptr<zbe::AvatarEntity<zbe::Positionable<2> >> entity, zbe::TimeEventGenerator &teg) : e(entity), teg(teg) {}
 
   	void run(uint64_t time) {
       zbe::Positionable<2>* avatar;
@@ -39,7 +39,7 @@ class TtpHandler : public zbe::TimeHandler {
   	}
 
 	private:
-  	zbe::AvatarEntity<zbe::Positionable<2> >* e;
+  	std::shared_ptr<zbe::AvatarEntity<zbe::Positionable<2> > > e;
   	zbe::TimeEventGenerator &teg;
 };
 

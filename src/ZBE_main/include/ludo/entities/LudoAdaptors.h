@@ -26,7 +26,7 @@ public:
   RotatedDrawableSimpleRotatedSpriteAdaptor(const RotatedDrawableSimpleRotatedSpriteAdaptor&) = delete;
   void operator=(const RotatedDrawableSimpleRotatedSpriteAdaptor&) = delete;
 
-  RotatedDrawableSimpleRotatedSpriteAdaptor(RotatedDrawable* archetype):archetype(archetype), s(nullptr){}
+  RotatedDrawableSimpleRotatedSpriteAdaptor(std::shared_ptr<RotatedDrawable> archetype):archetype(archetype), s(nullptr){}
   SimpleRotatedSprite* getAvatar() {
     delete s;
     s = new SimpleRotatedSprite();
@@ -41,7 +41,7 @@ public:
   };
 
 private:
-  RotatedDrawable* archetype;
+  std::shared_ptr<RotatedDrawable> archetype;
   SimpleRotatedSprite* s;
 };
 
@@ -53,7 +53,7 @@ public:
   LudoBallCollisionatorAdaptor(const LudoBallCollisionatorAdaptor&) = delete;
   void operator=(const LudoBallCollisionatorAdaptor&) = delete;
 
-  LudoBallCollisionatorAdaptor(LudoBall<R>* ball): b(ball), c(nullptr) {}
+  LudoBallCollisionatorAdaptor(std::shared_ptr<LudoBall<R> > ball): b(ball), c(nullptr) {}
 
   ~LudoBallCollisionatorAdaptor() {delete c;}
   zbe::Collisionator<R>* getAvatar() {
@@ -61,13 +61,13 @@ public:
       std::shared_ptr<zbe::CollisionObject<R> > co = std::make_shared<zbe::ConstantMovingCircle<R> >(zbe::ConstantMovingCircle<R>(zbe::Circle(b->getPosition(), b->getWidth()), b->getVelocity()));
       std::shared_ptr<zbe::ReactObject<R> > ro = std::make_shared<zbe::VoidReactObject<R> >();
       zbe::Bouncer<2>* bouncer;
-      ((zbe::AvatarEntity<zbe::Bouncer<2> >*)b)->assignAvatar(&bouncer);
+      zbe::assignAvatar(b, &bouncer);
       c = new zbe::CollisionatorCommon<zbe::Bouncer<2>, R>(bouncer, co, ro, b->getActuatorsList() ,b->getCollisionablesList());
       return (c);
     }
 
 private:
-	LudoBall<R>* b;
+	std::shared_ptr<LudoBall<R> > b;
 	zbe::Collisionator<R>* c;
 };
 

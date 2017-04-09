@@ -11,10 +11,10 @@ class EntityTest : public zbe::Entity {
 TEST(Entity, Usage) {
   EntityTest *e = new EntityTest;
 
-  zbe::TicketedElement<int> t1(1);
-  zbe::TicketedElement<int> t2(2);
-  zbe::TicketedElement<int> t3(3);
-  zbe::TicketedElement<int> t4(4);
+  zbe::TicketedElement<int> t1(std::make_shared<int>(1));
+  zbe::TicketedElement<int> t2(std::make_shared<int>(2));
+  zbe::TicketedElement<int> t3(std::make_shared<int>(3));
+  zbe::TicketedElement<int> t4(std::make_shared<int>(4));
 
   e->addToList(1, &t1);
   e->addToList(2, &t2);
@@ -63,7 +63,7 @@ TEST(Entity, MissUsage) {
 
   zbe::SysError::clear();
 
-  zbe::TicketedElement<int> t1(1);
+  zbe::TicketedElement<int> t1(std::make_shared<int>(1));
   e->addToList(42, &t1);
 
   EXPECT_EQ(0,zbe::SysError::getNErrors()) << "Access a valid Ticket.";

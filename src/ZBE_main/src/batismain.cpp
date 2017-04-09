@@ -106,9 +106,9 @@ int batismain(int, char** ) {
   printf("|------------------- Collision Event Generator-------------|\n");fflush(stdout);
   printf("Building list for collisionator entinties. Currently empty.\n");fflush(stdout);
   printf("It will store entities that will search for a collision.\n");fflush(stdout);
-  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<game::GameReactor> >*> ctl;
+  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<game::GameReactor> > > ctl;
   printf("Acquiring singleton list-manager for this list (ctl).\n");fflush(stdout);
-  zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<game::GameReactor> >*> >& lmct = zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<game::GameReactor> >*> >::getInstance();
+  zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<game::GameReactor> > > >& lmct = zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<game::GameReactor> > > >::getInstance();
   printf("Storing ctl in that list-manager.\n");fflush(stdout);
   lmct.insert(COLLISIONATORLIST, &ctl);
   printf("Building collision event generator with list id and the event id to use (1).\n");fflush(stdout);
@@ -131,25 +131,25 @@ int batismain(int, char** ) {
   printf("Creating draw master list\n");fflush(stdout);
   zbe::DaemonMaster drawMaster;
   printf("Creating drawables list\n");fflush(stdout);
-  std::forward_list<zbe::AvatarEntity<zbe::SingleSprite>*> sprites;
-  zbe::ListManager< std::forward_list<zbe::AvatarEntity<zbe::SingleSprite >*> >& lmAESingleSprite = zbe::ListManager<std::forward_list<zbe::AvatarEntity<zbe::SingleSprite >*> >::getInstance();
+  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite> > sprites;
+  zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite > > >& lmAESingleSprite = zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite> > >::getInstance();
   lmAESingleSprite.insert(SPRITELIST, &sprites);
   printf("Loading imgs\n");fflush(stdout);
   ballgraphics = window.loadImg(ballfilename);
   brickgraphics = window.loadImg(brickfilename);
   printf("Building the drawer to paint SingleSprite's \n");fflush(stdout);
-  std::shared_ptr<zbe::Daemon> drawerDaemon(new  zbe::DrawerDaemon<zbe::SingleSprite, std::forward_list<zbe::AvatarEntity<zbe::SingleSprite >*> >(std::make_shared<zbe::SingleSpriteSDLDrawer>(&window), SPRITELIST));
+  std::shared_ptr<zbe::Daemon> drawerDaemon(new  zbe::DrawerDaemon<zbe::SingleSprite, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite> > >(std::make_shared<zbe::SingleSpriteSDLDrawer>(&window), SPRITELIST));
   drawMaster.addDaemon(drawerDaemon);
   printf("|-------------------- Daemons ----------------------|\n");fflush(stdout);
   zbe::TimedDaemonMaster behavMaster;
-  std::vector<zbe::AvatarEntity<zbe::Movable<2> >*> vAEMovable;
-  zbe::ListManager< std::vector<zbe::AvatarEntity<zbe::Movable<2> >*> >& lmAEMovable = zbe::ListManager< std::vector<zbe::AvatarEntity<zbe::Movable<2> >*> >::getInstance();
+  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > > vAEMovable;
+  auto& lmAEMovable = zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > > >::getInstance();
   lmAEMovable.insert(MOVABLELIST, &vAEMovable);
-  std::vector<zbe::AvatarEntity<zbe::Bouncer<2> >*> vAEBouncer;
-  zbe::ListManager< std::vector<zbe::AvatarEntity<zbe::Bouncer<2> >*> >& lmAEBouncer = zbe::ListManager< std::vector<zbe::AvatarEntity<zbe::Bouncer<2> >*> >::getInstance();
+  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Bouncer<2> > > vAEBouncer;
+  auto& lmAEBouncer = zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Bouncer<2> > > >::getInstance();
   lmAEBouncer.insert(BOUNCERLIST, &vAEBouncer);
-  std::shared_ptr<zbe::TimedDaemon> ballBounce(new  zbe::BehaviorDaemon<zbe::Bouncer<2>, std::vector<zbe::AvatarEntity<zbe::Bouncer<2> >*> >(std::make_shared<zbe::Bounce<2> >(), BOUNCERLIST));
-  std::shared_ptr<zbe::TimedDaemon> ballULM(new  zbe::BehaviorDaemon<zbe::Movable<2>, std::vector<zbe::AvatarEntity<zbe::Movable<2> >*> >(std::make_shared<zbe::UniformLinearMotion<2> >(), MOVABLELIST));
+  std::shared_ptr<zbe::TimedDaemon> ballBounce(new  zbe::BehaviorDaemon<zbe::Bouncer<2>, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Bouncer<2> > > >(std::make_shared<zbe::Bounce<2> >(), BOUNCERLIST));
+  std::shared_ptr<zbe::TimedDaemon> ballULM(new  zbe::BehaviorDaemon<zbe::Movable<2>, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > > >(std::make_shared<zbe::UniformLinearMotion<2> >(), MOVABLELIST));
   behavMaster.addDaemon(ballULM);
   behavMaster.addDaemon(ballBounce);
   printf("|------------------- Creating entities --------------------|\n");fflush(stdout);
@@ -158,7 +158,7 @@ int batismain(int, char** ) {
 
   printf("Creating the board and giving it a size\n");fflush(stdout);
   //board
-  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<game::GameReactor> >* > collisionablesList;
+  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<game::GameReactor> > > collisionablesList;
   zbe::ListManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> >& lmSimpleConerActuatorsList = zbe::ListManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> >::getInstance();
   std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> boardActuatorsList;
   lmSimpleConerActuatorsList.insert(BOARDACTUATORLIST, &boardActuatorsList);
@@ -174,8 +174,8 @@ int batismain(int, char** ) {
   boardCfg.rows = (boardCfg.brickAreaHeight - boardCfg.margin - boardCfg.margin) / (boardCfg.brickHeight + boardCfg.space);
   boardCfg.margin += (boardCfg.brickAreaWidth - ((boardCfg.margin * 2) + (boardCfg.cols*(boardCfg.brickWidth + boardCfg.space)) - boardCfg.space))/2;
 
-  batis::GameBoard board(0, 0, WIDTH, HEIGHT, BOARDACTUATORLIST, boardCfg);
-  collisionablesList.push_front(&board);
+  std::shared_ptr<batis::GameBoard> board = std::make_shared<batis::GameBoard>(0, 0, WIDTH, HEIGHT, BOARDACTUATORLIST, boardCfg);
+  collisionablesList.push_front(board);
 
   //ball
   std::forward_list< zbe::Actuator< zbe::Bouncer<2>, game::GameReactor >*> ballActuatorsList;
@@ -184,7 +184,7 @@ int batismain(int, char** ) {
   game::GameBallBouncer gbBouncer;
   ballActuatorsList.push_front(&gbBouncer);
 
-  zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<game::GameReactor> >* > >& lmCollisionablesList = zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<game::GameReactor> >* > >::getInstance();
+  zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<game::GameReactor> > > >& lmCollisionablesList = zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<game::GameReactor> > > >::getInstance();
   lmCollisionablesList.insert(COLLISIONABLELIST, &collisionablesList);
 
   printf("Building an sprite adaptor for the ball\n");fflush(stdout);
@@ -200,7 +200,6 @@ int batismain(int, char** ) {
   batis::MKBallInputHandler ballMaker;
   ieg.addHandler(zbe::ZBEK_MOUSE_LEFT, &ballMaker);
 
-  std::forward_list<game::GameBall*> balls;
   for(int i = 0; i<100 ; i++){//98.623993, 85.728439
     int64_t vt = 200;
 
@@ -215,17 +214,16 @@ int batismain(int, char** ) {
     int64_t vx = sin(vAngle*PI/180)*vt;
     int64_t vy = cos(vAngle*PI/180)*vt;
 
-    game::GameBall* ball = new game::GameBall(WIDTH/2, HEIGHT/2, 16 , vx, vy, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
-    std::shared_ptr<zbe::Adaptor<zbe::SingleSprite> > spriteAdaptor = std::make_shared<zbe::SimpleDrawableSingleSpriteAdaptor>(ball);
-    ((zbe::AvatarEntityAdapted<zbe::SingleSprite>*)ball)->setAdaptor(spriteAdaptor);
+    std::shared_ptr<game::GameBall> ball = std::make_shared<game::GameBall>(WIDTH/2, HEIGHT/2, 16 , vx, vy, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
+    std::shared_ptr<zbe::Adaptor<zbe::SingleSprite> > spriteAdaptor = std::make_shared<zbe::SimpleDrawableSingleSpriteAdaptor>(&(*ball));
+    zbe::setAdaptor(ball,spriteAdaptor);
 
-    std::shared_ptr<zbe::Adaptor<zbe::Collisionator<game::GameReactor> > > gbca = std::make_shared<game::GameBallCollisionatorAdaptor>(ball);
-    ((zbe::AvatarEntityAdapted<zbe::Collisionator<game::GameReactor> >*)ball)->setAdaptor(gbca);
+    std::shared_ptr<zbe::Adaptor<zbe::Collisionator<game::GameReactor> > > gbca = std::make_shared<game::GameBallCollisionatorAdaptor>(&(*ball));
+    zbe::setAdaptor(ball,gbca);
 
     ctl.push_front(ball);
-    vAEMovable.push_back(ball);
-    vAEBouncer.push_back(ball);
-    balls.push_front(ball);
+    vAEMovable.push_front(ball);
+    vAEBouncer.push_front(ball);
     sprites.push_front(ball);
   }
 
@@ -234,26 +232,23 @@ int batismain(int, char** ) {
   std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> brickActuatorsList;
   lmSimpleConerActuatorsList.insert(BRICKACTUATORLIST, &brickActuatorsList);
 
-  std::forward_list<game::GameBlock*> bricks;
-
   int brickProb = 30;
 
   for (int i = 0; i < boardCfg.cols; i++){
     for (int j = 0; j < boardCfg.rows; j++){
       if (rand()%100 < brickProb) {
-        game::GameBlock* brick = new game::GameBlock(boardCfg.margin + ((boardCfg.space+boardCfg.brickWidth)*i),
-            boardCfg.margin + ((boardCfg.space+boardCfg.brickHeight)*j), boardCfg.brickWidth, boardCfg.brickHeight,
-            brickgraphics, BRICKACTUATORLIST);
+        std::shared_ptr<game::GameBlock> brick = std::make_shared<game::GameBlock>(boardCfg.margin + ((boardCfg.space+boardCfg.brickWidth)*i),
+                    boardCfg.margin + ((boardCfg.space+boardCfg.brickHeight)*j), boardCfg.brickWidth, boardCfg.brickHeight,
+                    brickgraphics, BRICKACTUATORLIST);
 
-        std::shared_ptr<zbe::Adaptor<zbe::SingleSprite> > spriteAdaptor = std::make_shared<zbe::SimpleDrawableSingleSpriteAdaptor>(brick);
-        ((zbe::AvatarEntityAdapted<zbe::SingleSprite>*)brick)->setAdaptor(spriteAdaptor);
+        std::shared_ptr<zbe::Adaptor<zbe::SingleSprite> > spriteAdaptor = std::make_shared<zbe::SimpleDrawableSingleSpriteAdaptor>(&(*brick));
+        zbe::setAdaptor(brick, spriteAdaptor);
 
-        std::shared_ptr<zbe::Adaptor<zbe::Collisioner<game::GameReactor> > >gBrCA = std::make_shared<game::GameBlockCollisionerAdaptor>(brick);
-        ((zbe::AvatarEntityAdapted<zbe::Collisioner<game::GameReactor> >*)brick)->setAdaptor(gBrCA);
+        std::shared_ptr<zbe::Adaptor<zbe::Collisioner<game::GameReactor> > >gBrCA = std::make_shared<game::GameBlockCollisionerAdaptor>(&(*brick));
+        zbe::setAdaptor(brick, gBrCA);
 
         collisionablesList.push_front(brick);
         sprites.push_front(brick);
-        bricks.push_front(brick);
         std::shared_ptr<zbe::TimeHandler> teleporter = std::make_shared<batis::TtpHandler>(brick, teg, board);
 
         teg.addTimer(teleporter, zbe::SECOND);

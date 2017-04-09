@@ -15,7 +15,9 @@
 
 #include "ZBE/archetypes/Drawable.h"
 #include "ZBE/archetypes/implementations/SimpleWideBouncingAPO.h"
+#include "ZBE/archetypes/implementations/SimpleMobile.h"
 #include "ZBE/entities/avatars/Bouncer.h"
+#include "ZBE/entities/avatars/Movable.h"
 #include "ZBE/entities/avatars/implementations/BaseBouncer.h"
 #include "ZBE/reactobjects/VoidReactObject.h"
 #include "ZBE/core/entities/avatars/Collisioner.h"
@@ -70,6 +72,33 @@ public:
     zbe::AvatarEntityFixed<zbe::Collisioner<R> >(new zbe::SimpleCollisioner<R>(std::make_shared<zbe::StaticLimiterAABB2D<R> >(zbe::AABB2D({x, y}, {width, height} )),
          std::make_shared<zbe::VoidReactObject<R> >(),
          actuatorsList)) {}
+};
+
+class BallParticle :    public RotatedDrawable,
+                        public State,
+                        public zbe::AvatarEntityFixed<Stated>,
+                        public zbe::AvatarEntityAdapted<SimpleRotatedSprite> {
+public:
+  BallParticle(double x, double y, double radius, uint64_t graphics, double angle):
+       s(), g(graphics),
+       x(x-radius),y(y-radius),
+       d(2*radius), a(angle) {
+    zbe::AvatarEntityFixed<Stated>::setAvatar(&s);
+  };
+
+  int64_t getX() {return ((int64_t)x);}
+  int64_t getY() {return ((int64_t)y);}
+  int64_t getW() {return ((int64_t)d);}
+  int64_t getH() {return ((int64_t)d);}
+  double  getAngle() {return a;}
+  uint64_t getGraphics() {return (g);}
+  uint64_t getState(){return s.getState();}
+
+private:
+  SimpleStated s;
+  uint64_t g;    //!< Image index
+  double x, y;
+  double d, a;
 };
 
 } // namespace

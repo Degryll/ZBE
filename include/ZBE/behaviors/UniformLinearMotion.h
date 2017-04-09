@@ -10,6 +10,8 @@
 #ifndef ZBE_BEHAVIORS_UNIFORMLINEARMOTION_H_
 #define ZBE_BEHAVIORS_UNIFORMLINEARMOTION_H_
 
+#include <memory>
+
 #include "ZBE/core/behaviors/Behavior.h"
 #include "ZBE/entities/avatars/Movable.h"
 #include "ZBE/core/tools/math/math.h"
@@ -30,7 +32,7 @@ class UniformLinearMotion : public Behavior<Movable<s>  > {
 
     /** \brief Do the behavior work over the given entity
      */
-    void apply(AvatarEntity<Movable<s> >* entity, int64_t time) {
+    void apply(std::shared_ptr<AvatarEntity<Movable<s> > > entity, int64_t time) {
       Movable<s>* avatar;
       entity->assignAvatar(&avatar);
       Point<s>& p = avatar->getPosition();

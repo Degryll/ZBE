@@ -15,6 +15,9 @@
 #include "ZBE/core/events/handlers/InputHandler.h"
 #include "ZBE/core/events/handlers/TimeHandler.h"
 
+#include "ludo/archetypes/LudoArchetypes.h"
+#include "ludo/entities/LudoAvatars.h"
+
 namespace ludo {
 /** \brief Actuator capable of making a BouncerCollisioner bounce in a Bounceable.
  */
@@ -67,6 +70,22 @@ class TicketToggler : public zbe::InputHandler {
       } else {
         t->setINACTIVE();
       }
+  	}
+
+  private:
+    std::shared_ptr<zbe::Ticket> t;
+};
+
+class TicketEraser : public zbe::TimeHandler {
+  public:
+	TicketEraser(const TicketEraser&) = delete;
+	void operator=(const TicketEraser&) = delete;
+
+  	TicketEraser(std::shared_ptr<zbe::Ticket> ticket): t(ticket){
+  	}
+
+  	void run(uint64_t) {
+        t->setERASED();
   	}
 
   private:

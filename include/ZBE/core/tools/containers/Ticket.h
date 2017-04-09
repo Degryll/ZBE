@@ -11,6 +11,8 @@
 #ifndef CORE_TOOLS_CONTAINERS_TICKET_H_
 #define CORE_TOOLS_CONTAINERS_TICKET_H_
 
+#include <memory>
+
 namespace zbe {
 
 /** \brief Ticket to send to and entities so it can mark itself as active, inactive and erased in the related list.
@@ -49,7 +51,7 @@ class TicketedElement : public Ticket {
      *  \param element The element
      *  \param state The initial state of the element
      */
-    TicketedElement(T element, State state = ACTIVE) : Ticket(state), e(element) {}
+    TicketedElement(std::shared_ptr<T> element, State state = ACTIVE) : Ticket(state), e(element) {}
 
     /** \brief Getter to the element.
      *  \return The element
@@ -59,10 +61,10 @@ class TicketedElement : public Ticket {
     /** \brief Getter to the element.
      *  \return The element
      */
-    inline T& getElement() {return (e);}
+    inline std::shared_ptr<T> getElement() {return (e);}
 
   private:
-    T e;      //!< Element
+    std::shared_ptr<T> e;      //!< Element
 };
 
 }  // namespace zbe

@@ -40,7 +40,7 @@ class SimpleRotatedSpriteSDLDrawer : public zbe::Drawer<SimpleRotatedSprite> {
     /** \brief The function every punisher must have.
      *  \param entity The entity to be drawn.
      */
-    void apply(zbe::AvatarEntity<SimpleRotatedSprite> *entity) {
+    void apply(std::shared_ptr<zbe::AvatarEntity<SimpleRotatedSprite> > entity) {
       SimpleRotatedSprite* avatar;
       entity->assignAvatar(&avatar);
       SDL_Rect src,dst;

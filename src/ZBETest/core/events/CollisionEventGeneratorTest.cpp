@@ -87,8 +87,8 @@ public:
 };
 
 TEST(CollisionEventGenerator, Generate) {
-  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> >* > cnl;
-  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> >* > ctl;
+  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > > cnl;
+  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > ctl;
 
   std::shared_ptr<zbe::CollisionObject<R> > sbox = std::make_shared<zbe::StaticSolidAABB2D<R> >(zbe::AABB2D({{1.0,5.0},{6.0,10.0}}));
   std::shared_ptr<zbe::CollisionObject<R> > cc = std::make_shared<zbe::ConstantMovingCircle<R> >(zbe::Circle({{2.0,3.0},1.0}),zbe::Vector2D({3.0,4.0}));
@@ -107,17 +107,17 @@ TEST(CollisionEventGenerator, Generate) {
   actconer.push_front(&cna);
   actcator.push_front(&cta);
 
-  zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> >*> >& lmcn = zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> >*> >::getInstance();
-  zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> >*> >& lmct = zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> >*> >::getInstance();
+  zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > > >& lmcn = zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > > >::getInstance();
+  zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > >& lmct = zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > >::getInstance();
 
   lmcn.insert(1, &cnl);
   lmct.insert(2, &ctl);
 
-  DummyCollisionerEntity dconer(sbox, 1);
-  DummyCollisionatorEntity dcator(cc, 1, 1);
+  std::shared_ptr<DummyCollisionerEntity > dconer= std::make_shared<DummyCollisionerEntity>(sbox, 1);
+  std::shared_ptr<DummyCollisionatorEntity> dcator= std::make_shared<DummyCollisionatorEntity>(cc, 1, 1);
 
-  cnl.push_front(&dconer);
-  ctl.push_front(&dcator);
+  cnl.push_front(dconer);
+  ctl.push_front(dcator);
 
   zbe::CollisionEventGenerator<R> ceg(2, 1);
 
@@ -125,10 +125,10 @@ TEST(CollisionEventGenerator, Generate) {
   ceg.generate(0, 2 * zbe::SECOND);
   es.manageCurrent();
 
-  EXPECT_EQ(42, dconer.getId()) << "Coner id must be 42";
-  EXPECT_EQ(37, dconer.getVs()) << "Coner is must be 37";
-  EXPECT_EQ(37, dcator.getId()) << "Cator id must be 37";
-  EXPECT_EQ(42, dcator.getVs()) << "Cator is must be 42";
+  EXPECT_EQ(42, dconer->getId()) << "Coner id must be 42";
+  EXPECT_EQ(37, dconer->getVs()) << "Coner is must be 37";
+  EXPECT_EQ(37, dcator->getId()) << "Cator id must be 37";
+  EXPECT_EQ(42, dcator->getVs()) << "Cator is must be 42";
 }
 
 } //namespace CollisionEventGeneratorTest

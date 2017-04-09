@@ -3,7 +3,7 @@
 #include "ZBE/core/tools/containers/Ticket.h"
 
 TEST(Ticket, Usage) {
-  zbe::TicketedElement<int> te(42);
+  zbe::TicketedElement<int> te(std::make_shared<int>(42));
   EXPECT_EQ(zbe::Ticket::ACTIVE,te.getState()) << "Create TicketedElement, ACTIVE by default. - getState";
   EXPECT_TRUE(te.isACTIVE()) << "Create TicketedElement, ACTIVE by default. - isACTIVE";
   EXPECT_FALSE(te.isNotACTIVE()) << "Create TicketedElement, ACTIVE by default. - isNotACTIVE";

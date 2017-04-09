@@ -36,8 +36,8 @@ class CollisionEventGenerator : virtual public Generator {
      */
     CollisionEventGenerator(uint64_t list, int eventId)
     : id(list), eventId(eventId), cs(), es(EventStore::getInstance()),
-      lmct(ListManager<TicketedForwardList<AvatarEntity<Collisionator<R> >* > >::getInstance()),
-      lmcn(ListManager<TicketedForwardList<AvatarEntity<Collisioner<R> >* > >::getInstance()) {};
+      lmct(ListManager<TicketedForwardList<AvatarEntity<Collisionator<R> > > >::getInstance()),
+      lmcn(ListManager<TicketedForwardList<AvatarEntity<Collisioner<R> > > >::getInstance()) {};
 
     /** \brief Empty destructor.
     */
@@ -55,8 +55,8 @@ class CollisionEventGenerator : virtual public Generator {
     CollisionSelector<R> cs;  //!< Use to select the type of the collision.
     EventStore& es;
 
-    ListManager<TicketedForwardList<AvatarEntity<Collisionator<R> >* > >& lmct;
-    ListManager<TicketedForwardList<AvatarEntity<Collisioner<R> >* > >& lmcn;
+    ListManager<TicketedForwardList<AvatarEntity<Collisionator<R> > > >& lmct;
+    ListManager<TicketedForwardList<AvatarEntity<Collisioner<R> > > >& lmcn;
 };
 
 template <typename R>
@@ -64,13 +64,13 @@ void CollisionEventGenerator<R>::generate(int64_t initTime, int64_t endTime) {
   int64_t totalTime = endTime - initTime;
   Point2D point;
 
-  TicketedForwardList<AvatarEntity<Collisionator<R> >* >* ctl = lmct.get(id);
+  TicketedForwardList<AvatarEntity<Collisionator<R> > >* ctl = lmct.get(id);
 
   for(auto catorEntity : (*ctl)) {
     Collisionator<R>* cator;
     catorEntity->assignAvatar(&cator);
     uint64_t cablesId = cator->getCollisionablesListId();
-    TicketedForwardList<AvatarEntity<Collisioner<R> >* >* cnl = lmcn.get(cablesId);
+    TicketedForwardList<AvatarEntity<Collisioner<R> > >* cnl = lmcn.get(cablesId);
     for(auto conerEntity : (*cnl)) {
       Collisioner<R>* coner;
       conerEntity->assignAvatar(&coner);

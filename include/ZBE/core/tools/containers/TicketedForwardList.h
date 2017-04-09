@@ -38,17 +38,8 @@ class TicketedForwardList {
     /** \brief Inserts a new element at the beginning of the forward_list, right before its current first element. The content of val is copied (or moved) to the inserted element.
      *  \param val Value to be copied (or moved) to the inserted element.
      */
-    std::shared_ptr< TicketedElement<T> > push_front(const T& val) {
-      std::shared_ptr< TicketedElement<T> > t (new TicketedElement<T>(val));
-      l.push_front(t);
-      return (t);
-    }
-
-    /** \brief Inserts a new element at the beginning of the forward_list, right before its current first element. The content of val is copied (or moved) to the inserted element.
-     *  \param val Value to be copied (or moved) to the inserted element.
-     */
-    std::shared_ptr< TicketedElement<T> > push_front(T& val) {
-      std::shared_ptr< TicketedElement<T> > t (new TicketedElement<T>(val));
+    std::shared_ptr< TicketedElement<T> > push_front(std::shared_ptr<T> val) {
+      std::shared_ptr< TicketedElement<T> > t =std::make_shared<TicketedElement<T> >(val);
       l.push_front(t);
       return (t);
     }
@@ -146,7 +137,7 @@ class TicketedForwardListIterator : public std::iterator<std::forward_iterator_t
     /** \brief Dereference the iterator.
      *  \return The element pointed by the iterator.
      */
-    T& operator* () {
+    std::shared_ptr<T> operator* () {
       checkForACTIVE();
       return (i->get()->getElement());
     }
@@ -154,7 +145,7 @@ class TicketedForwardListIterator : public std::iterator<std::forward_iterator_t
     /** \brief Dereference the iterator.
      *  \return The element pointed by the iterator.
      */
-    T& operator-> () {
+    std::shared_ptr<T> operator-> () {
       checkForACTIVE();
       return (i->get()->getElement());
     }

@@ -10,6 +10,8 @@
 #ifndef CORE_DRAWERS_DRAWER_H_
 #define CORE_DRAWERS_DRAWER_H_
 
+#include <memory>
+
 #include "ZBE/core/entities/AvatarEntity.h"
 
 namespace zbe {
@@ -26,7 +28,7 @@ class Drawer {
     /** \brief The function every punisher must have.
      *  \param entity The entity to be drawn.
      */
-    virtual void apply(AvatarEntity<T> * entity) = 0;
+    virtual void apply(std::shared_ptr<AvatarEntity<T> > entity) = 0;
 };
 
 }  // namespace zbe
