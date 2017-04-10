@@ -124,8 +124,8 @@ void setAvatar(std::shared_ptr<T> t, A* a) {
 }
 
 template <typename T, typename A>
-void assignAvatar(std::shared_ptr<T> t, A **a) {
-    std::shared_ptr<zbe::AvatarEntity<A> > aeA = t;
+void assignAvatar(T* t, A **a) {
+    zbe::AvatarEntity<A>* aeA = t;
     aeA->assignAvatar(a);
 }
 

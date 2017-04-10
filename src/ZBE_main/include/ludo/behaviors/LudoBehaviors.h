@@ -76,9 +76,7 @@ class BackBallParticlesLauncher : public zbe::Behavior<zbe::Movable<2> > {
       double rads = v.getRads();
       rads += zbe::PI;
       std::shared_ptr<BallParticle> bp = std::make_shared<BallParticle>(p[0], p[1], r, g, rads * zbe::TODEGREE);
-      std::shared_ptr<zbe::Adaptor<SimpleRotatedSprite> > sAdaptor = std::make_shared<RotatedDrawableSimpleRotatedSpriteAdaptor>(bp);
-      //std::shared_ptr<zbe::AvatarEntityAdapted<SimpleRotatedSprite> > bps = bp;
-      //bps->setAdaptor(sAdaptor);
+      std::shared_ptr<zbe::Adaptor<SimpleRotatedSprite> > sAdaptor = std::make_shared<RotatedDrawableSimpleRotatedSpriteAdaptor>(&(*bp));
       zbe::setAdaptor(bp, sAdaptor);
       auto ticket = zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<SimpleRotatedSprite> > >::getInstance().get(sList)->push_front(bp);
       std::shared_ptr<zbe::TimeHandler> eraser = std::make_shared<TicketEraser>(ticket);

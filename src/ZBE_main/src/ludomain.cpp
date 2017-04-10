@@ -201,8 +201,8 @@ int ludomain(int, char** ) {
   ieg.addHandler(zbe::ZBEK_v, &gSet3);
 
   srand(time(0));
-  for(int i = 0; i<50 ; i++){
-    int64_t r = 16 + (rand()% 8);
+  for(int i = 0; i<100 ; i++){
+    int64_t r = 16 + (rand()% 4);
     int64_t xc =(WIDTH/2 + rand()%100-50);
     int64_t yc = (HEIGHT/2 + rand()%100-50);
     unsigned graphId = ballgraphics[0];
@@ -216,9 +216,9 @@ int ludomain(int, char** ) {
     int64_t vx = sin(vAngle*PI/180)*vt;
     int64_t vy = cos(vAngle*PI/180)*vt;
     std::shared_ptr<LudoBall<LudoReactor> > ball = std::make_shared<LudoBall<ludo::LudoReactor> >( xc, yc, r, vx, vy, BALLACTUATORLIST, COLLISIONABLELIST, graphId);
-    std::shared_ptr<zbe::Adaptor<SimpleRotatedSprite> > spriteAdaptor = std::make_shared<RotatedDrawableSimpleRotatedSpriteAdaptor>(ball);
+    std::shared_ptr<zbe::Adaptor<SimpleRotatedSprite> > spriteAdaptor = std::make_shared<RotatedDrawableSimpleRotatedSpriteAdaptor>(&(*ball));
     zbe::setAdaptor(ball, spriteAdaptor);
-    std::shared_ptr<zbe::Adaptor<zbe::Collisionator<LudoReactor> > > lbca = std::make_shared<LudoBallCollisionatorAdaptor<LudoReactor> >(ball);
+    std::shared_ptr<zbe::Adaptor<zbe::Collisionator<LudoReactor> > > lbca = std::make_shared<LudoBallCollisionatorAdaptor<LudoReactor> >(&(*ball));
     zbe::setAdaptor(ball, lbca);
     ctl.push_front(ball);
     vAEMovable.push_front(ball);
@@ -235,9 +235,9 @@ int ludomain(int, char** ) {
   lmTflAEMovable.insert(RROTATORS, &tflLAEMovable);
 
   std::shared_ptr<LudoBall<LudoReactor> > rotator = std::make_shared<LudoBall<ludo::LudoReactor> >( WIDTH/2, HEIGHT/2, 16, 200, 100, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics[3]);
-  std::shared_ptr<zbe::Adaptor<SimpleRotatedSprite> > spriteAdaptor = std::make_shared<RotatedDrawableSimpleRotatedSpriteAdaptor>(rotator);
+  std::shared_ptr<zbe::Adaptor<SimpleRotatedSprite> > spriteAdaptor = std::make_shared<RotatedDrawableSimpleRotatedSpriteAdaptor>(&(*rotator));
   zbe::setAdaptor(rotator, spriteAdaptor);
-  std::shared_ptr<zbe::Adaptor<zbe::Collisionator<LudoReactor> > > lbca = std::make_shared<LudoBallCollisionatorAdaptor<LudoReactor> >(rotator);
+  std::shared_ptr<zbe::Adaptor<zbe::Collisionator<LudoReactor> > > lbca = std::make_shared<LudoBallCollisionatorAdaptor<LudoReactor> >(&(*rotator));
   zbe::setAdaptor(rotator, lbca);
   ctl.push_front(rotator);
   vAEBouncer.push_front(rotator);
