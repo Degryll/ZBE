@@ -28,18 +28,18 @@ TEST(Entity, Usage) {
   EXPECT_EQ(zbe::Ticket::ACTIVE,t3->getState()) << "Add ticket, state ACTIVE by default. - 3";
   EXPECT_EQ(zbe::Ticket::ACTIVE,t4->getState()) << "Add ticket, state ACTIVE by default. - 4";
 
-  e->setState(2, zbe::Ticket::INACTIVE);
-  e->setState(3, zbe::Ticket::ACTIVE);
-  e->setState(4, zbe::Ticket::ERASED);
+  e->setINACTIVE(2);
+  e->setACTIVE(3);
+  e->setERASED(4);
 
   EXPECT_EQ(zbe::Ticket::ACTIVE,t1->getState())   << "Unmodified, still ACTIVE. - 1";
   EXPECT_EQ(zbe::Ticket::INACTIVE,t2->getState()) << "Changed to INACTIVE. - 2";
   EXPECT_EQ(zbe::Ticket::ACTIVE,t3->getState())   << "Unmodified, changed to the same state, ACTIVE. - 3";
   EXPECT_EQ(zbe::Ticket::ERASED,t4->getState())   << "Changed to ERASED. - 4";
 
-  e->setState(1, zbe::Ticket::ERASED);
-  e->setState(2, zbe::Ticket::ACTIVE);
-  e->setState(3, zbe::Ticket::INACTIVE);
+  e->setERASED(1);
+  e->setACTIVE(2);
+  e->setINACTIVE(3);
 
   EXPECT_EQ(zbe::Ticket::ERASED,t1->getState())   << "Changed to ERASED. - 1";
   EXPECT_EQ(zbe::Ticket::ACTIVE,t2->getState())   << "Changed to ACTIVE. - 2";
@@ -59,7 +59,7 @@ TEST(Entity, MissUsage) {
 
   EntityTest *e = new EntityTest;
 
-  e->setState(42, zbe::Ticket::ACTIVE);
+  e->setACTIVE(42);
 
   EXPECT_EQ(1,zbe::SysError::getNErrors()) << "Try to change the state of a missing ticket.";
 
@@ -70,7 +70,7 @@ TEST(Entity, MissUsage) {
 
   EXPECT_EQ(0,zbe::SysError::getNErrors()) << "Access a valid Ticket.";
 
-  e->setState(1, zbe::Ticket::ACTIVE);
+  e->setACTIVE(1);
 
   EXPECT_EQ(1,zbe::SysError::getNErrors()) << "Access an invalid Ticket.";
 

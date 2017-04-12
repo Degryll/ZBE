@@ -33,18 +33,36 @@ class Entity {
      */
     void addToList(uint64_t id, std::shared_ptr<Ticket> ticket);
 
-    /** \brief Change the state of this entity in the list identified by id.
+    /** \brief Change the state of this entity in the list identified by id to ACTIVE.
      *  \param id Id to identify the list.
-     *  \param state New state of the entity in the list.
      */
-    void setState(uint64_t id, zbe::Ticket::State state);
+    void setACTIVE(uint64_t id);
 
-    /** \brief Change the state of this entity for all list.
-     *  \param state New state of the entity for all list.
+    /** \brief Change the state of this entity in the list identified by id to INACTIVE.
+     *  \param id Id to identify the list.
      */
-    void setState(zbe::Ticket::State state);
+    void setINACTIVE(uint64_t id);
+
+    /** \brief Change the state of this entity in the list identified by id to ACTIVE.
+     *  \param id Id to identify the list.
+     */
+    void setERASED(uint64_t id);
+
+    /** \brief Change the state of this entity for all list to ACTIVE.
+     */
+    void setACTIVE();
+
+    /** \brief Change the state of this entity for all list to INACTIVE.
+     */
+    void setINACTIVE();
+
+    /** \brief Change the state of this entity for all list to ERASED.
+     */
+    void setERASED();
 
   private:
+    inline void _setState(zbe::Ticket::State state);
+    inline void _setState(uint64_t id, zbe::Ticket::State state);
     std::map<uint64_t, std::shared_ptr<Ticket> > tl;  //!< Container that identify id with tickets
 };
 
