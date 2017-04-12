@@ -132,8 +132,9 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="../../../src/ZBE_main/include/batis/drawers/SimpleTextDrawer.h" />
+		<Unit filename="../../../src/ZBE_main/include/batis/drawers/SimpleTextSDLDrawer.h" />
 		<Unit filename="../../../src/ZBE_main/include/batis/entities/GameBoard.h" />
+		<Unit filename="../../../src/ZBE_main/include/batis/entities/avatars/SimpleTextSprite.h" />
 		<Unit filename="../../../src/ZBE_main/include/batis/events/MouseKeeper.h" />
 		<Unit filename="../../../src/ZBE_main/include/batis/events/handlers/MKBallInputHandler.h" />
 		<Unit filename="../../../src/ZBE_main/include/batis/events/handlers/MouseXKeepInputHandler.h" />
