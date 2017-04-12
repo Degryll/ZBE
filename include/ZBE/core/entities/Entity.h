@@ -10,6 +10,7 @@
 #ifndef CORE_ENTITIES_ENTITY_H_
 #define CORE_ENTITIES_ENTITY_H_
 
+#include <memory>
 #include <map>
 #include "ZBE/core/tools/containers/Ticket.h"
 
@@ -30,7 +31,7 @@ class Entity {
      *  \param id Id to identify the list.
      *  \param ticket The ticket to be stored.
      */
-    void addToList(uint64_t id, Ticket *ticket);
+    void addToList(uint64_t id, std::shared_ptr<Ticket> ticket);
 
     /** \brief Change the state of this entity in the list identified by id.
      *  \param id Id to identify the list.
@@ -38,8 +39,13 @@ class Entity {
      */
     void setState(uint64_t id, zbe::Ticket::State state);
 
+    /** \brief Change the state of this entity for all list.
+     *  \param state New state of the entity for all list.
+     */
+    void setState(zbe::Ticket::State state);
+
   private:
-    std::map<uint64_t, Ticket*> tl;  //!< Container that identify id with tickets
+    std::map<uint64_t, std::shared_ptr<Ticket> > tl;  //!< Container that identify id with tickets
 };
 
 }  // namespace zbe

@@ -18,7 +18,7 @@ Entity::~Entity() {
   }
 }
 
-void Entity::addToList(uint64_t id, Ticket *ticket) {
+void Entity::addToList(uint64_t id, std::shared_ptr<Ticket> ticket) {
   tl[id] = ticket;
 }
 
@@ -28,6 +28,15 @@ void Entity::setState(uint64_t id, zbe::Ticket::State state) {
     SysError::setError("Ticket in Entity list is not found.");
   } else {
     it->second->setState(state);
+  }
+}
+
+void Entity::setState(zbe::Ticket::State state) {
+  for(auto& t : tl){
+    t.second->setState(state);
+  }
+  if(state == zbe::Ticket::State::ERASED){
+    tl.clear();
   }
 }
 
