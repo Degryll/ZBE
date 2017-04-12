@@ -7,8 +7,8 @@
  * @brief Class that know how to draw text boxes as SingleTextSprite entities with SDL.
  */
 
-#ifndef CORE_DRAWERS_SIMPLESPRITESDLDRAWER_H_
-#define CORE_DRAWERS_SIMPLESPRITESDLDRAWER_H_
+#ifndef CORE_DRAWERS_SIMPLETEXTSDLDRAWER_H_
+#define CORE_DRAWERS_SIMPLETEXTSDLDRAWER_H_
 
 #include <SDL2/SDL.h>
 
@@ -20,19 +20,19 @@ namespace zbe {
 
 /** \brief This draws a simple sprite (an image).
  */
-class SingleTextSpriteSDLDrawer : public Drawer<SingleTextSprite> {
+class SingleTextSDLDrawer : public Drawer<SingleTextSprite> {
   public:
-    SingleTextSpriteSDLDrawer(const SingleTextSpriteSDLDrawer&) = delete;
-    void operator=(const SingleTextSpriteSDLDrawer&) = delete;
+    SingleTextSDLDrawer(const SingleTextSDLDrawer&) = delete;
+    void operator=(const SingleTextSDLDrawer&) = delete;
 
     /** \brief Create a new drawer in the given context.
      *  \param window A SDL window with its context.
      */
-    SingleTextSpriteSDLDrawer(Window* window) : window(window) {}
+    SingleTextSDLDrawer(Window* window) : window(window) {}
 
     /** \brief Destructor.
      */
-    ~SingleTextSpriteSDLDrawer() {}
+    ~SingleTextSDLDrawer() {}
 
     /** \brief The function every punisher must have.
      *  \param entity The entity to be drawn.
@@ -45,4 +45,4 @@ class SingleTextSpriteSDLDrawer : public Drawer<SingleTextSprite> {
 
 }  // namespace zbe
 
-#endif  // CORE_DRAWERS_SIMPLESPRITESDLDRAWER_H_
+#endif  // CORE_DRAWERS_SIMPLETEXTSDLDRAWER_H_
