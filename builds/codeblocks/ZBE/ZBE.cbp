@@ -233,6 +233,7 @@
 		<Unit filename="../../../include/ZBE/core/events/handlers/InputHandler.h" />
 		<Unit filename="../../../include/ZBE/core/events/handlers/TimeHandler.h" />
 		<Unit filename="../../../include/ZBE/core/io/FileHandler.h" />
+		<Unit filename="../../../include/ZBE/core/io/Input.h" />
 		<Unit filename="../../../include/ZBE/core/io/InputBuffer.h" />
 		<Unit filename="../../../include/ZBE/core/io/InputStatus.h" />
 		<Unit filename="../../../include/ZBE/core/system/Logger.h" />

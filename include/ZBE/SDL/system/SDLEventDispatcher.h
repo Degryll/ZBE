@@ -16,6 +16,7 @@
 #include <SDL2/SDL.h>
 
 #include "ZBE/SDL/starters/SDL_Starter.h"
+#include "ZBE/core/io/Input.h"
 #include "ZBE/core/io/InputBuffer.h"
 #include "ZBE/core/io/InputStatus.h"
 #include "ZBE/core/system/SysTime.h"
