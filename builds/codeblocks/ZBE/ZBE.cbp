@@ -211,11 +211,13 @@
 		<Unit filename="../../../include/ZBE/core/entities/AvatarEntity.h" />
 		<Unit filename="../../../include/ZBE/core/entities/Entity.h" />
 		<Unit filename="../../../include/ZBE/core/entities/avatars/AnimatedSprite.h" />
+		<Unit filename="../../../include/ZBE/core/entities/avatars/Avatar.h" />
 		<Unit filename="../../../include/ZBE/core/entities/avatars/Collisionator.h" />
 		<Unit filename="../../../include/ZBE/core/entities/avatars/Collisioner.h" />
 		<Unit filename="../../../include/ZBE/core/entities/avatars/RotatedSprite.h" />
 		<Unit filename="../../../include/ZBE/core/entities/avatars/SingleSprite.h" />
 		<Unit filename="../../../include/ZBE/core/entities/avatars/StatedSprite.h" />
+		<Unit filename="../../../include/ZBE/core/entities/avatars/implementations/BaseAvatar.h" />
 		<Unit filename="../../../include/ZBE/core/entities/avatars/implementations/SimpleCollisioner.h" />
 		<Unit filename="../../../include/ZBE/core/events/CollisionEvent2D.h" />
 		<Unit filename="../../../include/ZBE/core/events/Event.h" />
