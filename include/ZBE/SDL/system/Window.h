@@ -3,7 +3,7 @@
  * @file SDL_Window.h
  *
  * @since 2015/05/30
- * @date 2017/04/05
+ * @date 2017/04/13
  * @author Degryll
  * @brief Create a windows using SDL 2.0.
  */
@@ -15,10 +15,17 @@
 #include <mutex>
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
 
 #include "ZBE/SDL/starters/SDL_Starter.h"
 
 namespace zbe {
+
+
+struct ZBE_Font {
+  TTF_Font* font;
+  SDL_Color color;
+};
 
 /**
  * @class Window
@@ -105,6 +112,70 @@ class Window {
      */
     void render(uint64_t texID,const SDL_Rect* srcrect,const SDL_Rect* dstrect,const double angle,const SDL_Point* center,const SDL_RendererFlip flip = SDL_FLIP_NONE);
 
+    /** \brief Draw the portion of the texture received by srcrect in the portion of the window specified by dstrect.
+     *
+     *  \param tex Texture.
+     *  \param srcrect Portion of the texture to be drawn.
+     *  \param dstrect Portion of the window where the texture is going to be drawn.
+     */
+    void render(SDL_Texture* tex, const SDL_Rect* srcrect, const SDL_Rect* dstrect);
+
+    /** \brief Draw the portion of the texture received in the portion of the window specified by dstrect.
+     *
+     *  This version can add some transformation to the drawing. Can rotate and flip the texture.
+     *
+     *  \param tex Texture.
+     *  \param srcrect Portion of the texture to be drawn.
+     *  \param dstrect Portion of the window where the texture is going to be drawn.
+     *  \param angle Angle to rotate the texture.
+     *  \param center A SDL_Point pointer that represents the center of rotation of the texture. if null, the center of dstrect will be used.
+     *  \param flip A SDL_RendererFlip with the values SDL_FLIP_NONE (do not flip), SDL_FLIP_HORIZONTAL, SDL_FLIP_VERTICAL or diagonal flip (both horizontal and vertical), use bitwise or ('|' operator).
+     */
+    void render(SDL_Texture* tex, const SDL_Rect* srcrect,const SDL_Rect* dstrect,const double angle,const SDL_Point* center,const SDL_RendererFlip flip = SDL_FLIP_NONE);
+
+        /** \brief Draw the portion of the texture received (as a surface) by srcrect in the portion of the window specified by dstrect.
+     *
+     *  \param surf Surface.
+     *  \param srcrect Portion of the texture to be drawn.
+     *  \param dstrect Portion of the window where the texture is going to be drawn.
+     */
+    void render(SDL_Surface* surf, const SDL_Rect* srcrect, const SDL_Rect* dstrect);
+
+    /** \brief Draw the portion of the texture received (as a surface) in the portion of the window specified by dstrect.
+     *
+     *  This version can add some transformation to the drawing. Can rotate and flip the texture.
+     *
+     *  \param surf Surface.
+     *  \param srcrect Portion of the texture to be drawn.
+     *  \param dstrect Portion of the window where the texture is going to be drawn.
+     *  \param angle Angle to rotate the texture.
+     *  \param center A SDL_Point pointer that represents the center of rotation of the texture. if null, the center of dstrect will be used.
+     *  \param flip A SDL_RendererFlip with the values SDL_FLIP_NONE (do not flip), SDL_FLIP_HORIZONTAL, SDL_FLIP_VERTICAL or diagonal flip (both horizontal and vertical), use bitwise or ('|' operator).
+     */
+    void render(SDL_Surface* surf, const SDL_Rect* srcrect,const SDL_Rect* dstrect,const double angle,const SDL_Point* center,const SDL_RendererFlip flip = SDL_FLIP_NONE);
+
+    /** \brief Creates a texture from a text and a font. Draw the portion of this texture specified by srcrect in the portion of the window specified by dstrect.
+     *  \param fontID The ID of the font.
+     *  \param text The text.
+     *  \param srcrect Portion of the texture to be drawn.
+     *  \param dstrect Portion of the window where the texture is going to be drawn.
+     */
+    void render(uint64_t fontID, const char *text, const SDL_Rect* srcrect, const SDL_Rect* dstrect);
+
+     /** \brief Draw the portion of the texture received (as a surface) in the portion of the window specified by dstrect.
+     *
+     *  This version can add some transformation to the drawing. Can rotate and flip the texture.
+     *
+     *  \param fontID The ID of the font.
+     *  \param text The text.
+     *  \param srcrect Portion of the texture to be drawn.
+     *  \param dstrect Portion of the window where the texture is going to be drawn.
+     *  \param angle Angle to rotate the texture.
+     *  \param center A SDL_Point pointer that represents the center of rotation of the texture. if null, the center of dstrect will be used.
+     *  \param flip A SDL_RendererFlip with the values SDL_FLIP_NONE (do not flip), SDL_FLIP_HORIZONTAL, SDL_FLIP_VERTICAL or diagonal flip (both horizontal and vertical), use bitwise or ('|' operator).
+     */
+    void render(uint64_t fontID, const char *text, const SDL_Rect* srcrect, const SDL_Rect* dstrect, const double angle, const SDL_Point* center, const SDL_RendererFlip flip);
+
     /** \brief Update the window. Similar to swapbuffers in a double buffer rendering.
      */
     void present() {SDL_RenderPresent(renderer);}
@@ -125,13 +196,34 @@ class Window {
      */
     uint64_t reloadImg(const char *url, uint64_t id);
 
+      /** \brief Load a text with a font and a color to create a texture in this renderer.
+     *
+     *  \param url Image file to be loaded.
+     *  \return An id to the texture loaded. Use this id to render the texture or to change the image associated with the texture.
+     *  \sa loadImg(), render()
+     */
+    uint64_t loadText(char *text, TTF_Font *font, SDL_Color color);
+
+      /** \brief Adds a font to the font collection.
+     *
+     *  \param font Font type file.
+     *  \param size Font size.
+     *  \param Font Color.
+     *  \return An id to the font loaded.
+     *  \sa loadImg(), render()
+     */
+    uint64_t loadFont(const char *fontName, int size, SDL_Color color);
+
   private:
     SDL_Starter &sdl;                         //!< SDL instance.
     SDL_Window* window;                       //!< Window.
     SDL_Renderer* renderer;                   //!< Renderer associated with the window
-    uint64_t ntextures;                       //!< Number of texture loaded.
-    std::vector<SDL_Texture*> imgCollection;  //!< Collection of texture loaded.
+    uint64_t ntextures;                       //!< Number of loaded textures.
+    std::vector<SDL_Texture*> imgCollection;  //!< Collection of textures.
+    uint64_t nfonts;                          //!< Number of loaded fonts.
+    std::vector<ZBE_Font> fontCollection;     //!< Collection of fonts.
     std::mutex m;                             //!< Mutex to avoid race conditions.
+    std::mutex mf;                            //!< Another mutex to avoid race conditions.
 };
 
 }  // namespace zbe

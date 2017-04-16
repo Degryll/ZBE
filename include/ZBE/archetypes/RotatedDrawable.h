@@ -18,7 +18,7 @@ namespace zbe {
  */
 class RotatedDrawable : virtual public Drawable {
   public:
-    virtual ~AnimatedDrawable() {}
+    virtual ~RotatedDrawable() {}
 
     virtual double getDegrees() = 0;
 };

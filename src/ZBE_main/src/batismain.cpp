@@ -3,6 +3,7 @@
 #include <chrono>
 #include <thread>
 #include <cstdlib>
+#include <SDL2/SDL_ttf.h>
 
 #include "ZBE/core/daemons/DaemonMaster.h"
 #include "ZBE/core/entities/avatars/Collisioner.h"
@@ -27,6 +28,7 @@
 #include "ZBE/SDL/system/SDLEventDispatcher.h"
 #include "ZBE/SDL/system/Window.h"
 #include "ZBE/SDL/drawers/SingleSpriteSDLDrawer.h"
+#include "batis/drawers/SingleTextSDLDrawer.h"
 #include "ZBE/entities/adaptors/SimpleDrawableSingleSpriteAdaptor.h"
 #include "ZBE/behaviors/UniformLinearMotion.h"
 #include "ZBE/behaviors/Bounce.h"
@@ -38,8 +40,11 @@
 #include "game/entities/GameBall.h"
 #include "game/entities/GameBlock.h"
 #include "batis/entities/GameBoard.h"
+#include "batis/entities/Sign.h"
 #include "game/entities/adaptors/GameBallCollisionatorAdaptor.h"
 #include "game/entities/adaptors/GameBlockCollisionerAdaptor.h"
+#include "batis/entities/adaptors/TextDrawableSingleTextSpriteAdaptor.h"
+#include "batis/entities/avatars/singleTextSprite.h"
 #include "game/events/handlers/StepInputHandler.h"
 #include "game/events/handlers/ExitInputHandler.h"
 #include "game/events/handlers/GameBallBouncer.h"
@@ -70,6 +75,7 @@ int batismain(int, char** ) {
     BOARDACTUATORLIST = 1,
     BRICKACTUATORLIST = 2,
     SPRITELIST = 1,
+    TEXTSPRITELIST = 2,
 
     WIDTH = 1024,
     HEIGHT = 768
@@ -77,13 +83,26 @@ int batismain(int, char** ) {
 
   const char ballfilename[] = "data/images/zombieball/zomball_st_32.png";
   const char brickfilename[] = "data/images/zombieball/braikn_32.png";
+  const char fontFileName[] = "data/fonts/PublicEnemyNF.ttf";
+
   uint64_t ballgraphics;
   uint64_t brickgraphics;
+  uint64_t signfont;
+
+  SDL_Color lejia;
+  lejia.r = 255;
+  lejia.g = 128;
+  lejia.b = 0;
+  lejia.a = 255;
 
   printf("3 / 5 %d\n", 3/5);fflush(stdout);
   printf("2 / 5 %d\n", 2/5);fflush(stdout);
 
   printf("|=================== Building up system ===================|\n");fflush(stdout);
+  printf("TTF INIT\n");fflush(stdout);
+  if (TTF_Init() < 0) {
+    printf("Cannot TTF INIT\n");
+  }
   printf("Event store\n");fflush(stdout);
   printf("Will store all event independently of its type\n");fflush(stdout);
   zbe::EventStore& store = zbe::EventStore::getInstance();
@@ -134,12 +153,23 @@ int batismain(int, char** ) {
   zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite> > sprites;
   zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite > > >& lmAESingleSprite = zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite> > >::getInstance();
   lmAESingleSprite.insert(SPRITELIST, &sprites);
+
+  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleTextSprite> > textSprites;
+  zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleTextSprite > > >& lmAESingleTextSprite = zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleTextSprite> > >::getInstance();
+  lmAESingleTextSprite.insert(TEXTSPRITELIST, &textSprites);
+
   printf("Loading imgs\n");fflush(stdout);
+
   ballgraphics = window.loadImg(ballfilename);
   brickgraphics = window.loadImg(brickfilename);
+  signfont = window.loadFont(fontFileName, 20, lejia);
+
   printf("Building the drawer to paint SingleSprite's \n");fflush(stdout);
   std::shared_ptr<zbe::Daemon> drawerDaemon(new  zbe::DrawerDaemon<zbe::SingleSprite, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite> > >(std::make_shared<zbe::SingleSpriteSDLDrawer>(&window), SPRITELIST));
   drawMaster.addDaemon(drawerDaemon);
+
+  std::shared_ptr<zbe::Daemon> textDrawerDaemon(new  zbe::DrawerDaemon<zbe::SingleTextSprite, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleTextSprite> > >(std::make_shared<zbe::SingleTextSDLDrawer>(&window), TEXTSPRITELIST));
+  drawMaster.addDaemon(textDrawerDaemon);
   printf("|-------------------- Daemons ----------------------|\n");fflush(stdout);
   zbe::TimedDaemonMaster behavMaster;
   zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > > vAEMovable;
@@ -153,8 +183,6 @@ int batismain(int, char** ) {
   behavMaster.addDaemon(ballULM);
   behavMaster.addDaemon(ballBounce);
   printf("|------------------- Creating entities --------------------|\n");fflush(stdout);
-  printf("Creating a ball and giving it a position and size\n");fflush(stdout);
-
 
   printf("Creating the board and giving it a size\n");fflush(stdout);
   //board
@@ -177,6 +205,7 @@ int batismain(int, char** ) {
   std::shared_ptr<batis::GameBoard> board = std::make_shared<batis::GameBoard>(0, 0, WIDTH, HEIGHT, BOARDACTUATORLIST, boardCfg);
   collisionablesList.push_front(board);
 
+  printf("Creating a ball and giving it a position and size\n");fflush(stdout);
   //ball
   std::forward_list< zbe::Actuator< zbe::Bouncer<2>, game::GameReactor >*> ballActuatorsList;
   zbe::ListManager< std::forward_list< zbe::Actuator< zbe::Bouncer<2>, game::GameReactor >* > >& lmBallActuatorsList = zbe::ListManager< std::forward_list< zbe::Actuator< zbe::Bouncer<2>, game::GameReactor >* > >::getInstance();
@@ -256,6 +285,13 @@ int batismain(int, char** ) {
     }
   }
 
+  printf("Creating a sign\n");
+
+  std::shared_ptr<batis::Sign> sign = std::make_shared<batis::Sign>(0, 0, 200, 20, signfont,"Esto funciona");
+  std::shared_ptr<zbe::Adaptor<zbe::SingleTextSprite> > textSpriteAdaptor = std::make_shared<zbe::TextDrawableSingleTextSpriteAdaptor>(&(*sign));
+  zbe::setAdaptor(sign, textSpriteAdaptor);
+  textSprites.push_front(sign);
+
   printf("|=================== Starting up system ===================|\n");fflush(stdout);
   printf("Starting SysTimer\n");fflush(stdout);
   sysTimer->start();
@@ -273,6 +309,8 @@ int batismain(int, char** ) {
 
   bool keep = true;
   while(keep){
+
+
 
     /* Clear screen.
      */
@@ -322,5 +360,6 @@ int batismain(int, char** ) {
     window.present();
   }
 
+  TTF_Quit();
   return 0;
 }

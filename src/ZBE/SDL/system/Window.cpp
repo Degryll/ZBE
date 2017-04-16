@@ -3,7 +3,7 @@
  * @file SDL_Window.cpp
  *
  * @since 2015/05/30
- * @date 2016-08-04
+ * @date 2017/04/13
  * @author Degryll
  * @brief Create a windows using SDL 2.0.
  */
@@ -74,6 +74,50 @@ void Window::render(uint64_t texID, const SDL_Rect* srcrect, const SDL_Rect* dst
   }
 }
 
+void Window::render(SDL_Texture *tex, const SDL_Rect* srcrect, const SDL_Rect* dstrect) {
+  if(SDL_RenderCopy(renderer, tex, srcrect, dstrect)) {
+    zbe::SysError::setError(std::string("ERROR: SDL could not render the texture! SDL ERROR: ") + SDL_GetError());
+  }
+}
+
+void Window::render(SDL_Texture *tex, const SDL_Rect* srcrect, const SDL_Rect* dstrect, const double angle, const SDL_Point* center, const SDL_RendererFlip flip) {
+  if(SDL_RenderCopyEx(renderer, tex, srcrect, dstrect, angle, center, flip)) {
+    zbe::SysError::setError(std::string("ERROR: SDL could not render the texture! SDL ERROR: ") + SDL_GetError());
+  }
+}
+
+void Window::render(SDL_Surface *surf, const SDL_Rect* srcrect, const SDL_Rect* dstrect) {
+  if(SDL_RenderCopy(renderer, SDL_CreateTextureFromSurface(renderer, surf), srcrect, dstrect)) {
+    zbe::SysError::setError(std::string("ERROR: SDL could not render the texture! SDL ERROR: ") + SDL_GetError());
+  }
+}
+
+void Window::render(SDL_Surface *surf, const SDL_Rect* srcrect, const SDL_Rect* dstrect, const double angle, const SDL_Point* center, const SDL_RendererFlip flip) {
+  if(SDL_RenderCopyEx(renderer, SDL_CreateTextureFromSurface(renderer, surf), srcrect, dstrect, angle, center, flip)) {
+    zbe::SysError::setError(std::string("ERROR: SDL could not render the texture! SDL ERROR: ") + SDL_GetError());
+  }
+}
+
+void Window::render(uint64_t fontID, const char *text, const SDL_Rect* srcrect, const SDL_Rect* dstrect) {
+  ZBE_Font font = fontCollection[fontID];
+  SDL_Surface * s = TTF_RenderUTF8_Solid(font.font, text, font.color);
+  if(!s) {
+    zbe::SysError::setError(std::string("ERROR: SDL could not render the surface! SDL ERROR: ") + SDL_GetError());
+    return;
+  }
+  if(SDL_RenderCopy(renderer, SDL_CreateTextureFromSurface(renderer, s), srcrect, dstrect)) {
+    zbe::SysError::setError(std::string("ERROR: SDL could not render the text! SDL ERROR: ") + SDL_GetError());
+  }
+}
+
+void Window::render(uint64_t fontID, const char *text, const SDL_Rect* srcrect, const SDL_Rect* dstrect, const double angle, const SDL_Point* center, const SDL_RendererFlip flip) {
+  ZBE_Font font = fontCollection[fontID];
+  SDL_Surface * s = TTF_RenderUTF8_Solid(font.font, text, font.color);
+  if(SDL_RenderCopyEx(renderer, SDL_CreateTextureFromSurface(renderer, s), srcrect, dstrect, angle, center, flip)) {
+    zbe::SysError::setError(std::string("ERROR: SDL could not render the text! SDL ERROR: ") + SDL_GetError());
+  }
+}
+
 uint64_t Window::loadImg(const char *url) {
   m.lock();
     imgCollection.push_back(IMG_LoadTexture(renderer, url));
@@ -93,6 +137,30 @@ uint64_t Window::reloadImg(const char *url, uint64_t id) {
   m.unlock();
 
   return (id);
+}
+
+uint64_t Window::loadText(char *text, TTF_Font *font, SDL_Color color) {
+  m.lock();
+    SDL_Surface* surface;
+    surface = TTF_RenderUTF8_Solid(font, text, color);
+    imgCollection.push_back(SDL_CreateTextureFromSurface(renderer, surface));
+    uint64_t rid = ntextures++;  // Avoid race condition
+  m.unlock();
+
+  return (rid);
+}
+
+uint64_t Window::loadFont(const char *fontName, int size, SDL_Color color) {
+  mf.lock();
+  	ZBE_Font font;
+  	font.font = TTF_OpenFont(fontName, size);
+  	font.color = color;
+
+    fontCollection.push_back(font);
+    uint64_t rid = nfonts++;  // Avoid race condition
+  mf.unlock();
+
+  return (rid);
 }
 
 }  // namespace zbe
