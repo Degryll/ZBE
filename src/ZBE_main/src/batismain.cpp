@@ -44,7 +44,7 @@
 #include "game/entities/adaptors/GameBallCollisionatorAdaptor.h"
 #include "game/entities/adaptors/GameBlockCollisionerAdaptor.h"
 #include "batis/entities/adaptors/TextDrawableSingleTextSpriteAdaptor.h"
-#include "batis/entities/avatars/singleTextSprite.h"
+#include "batis/entities/avatars/SingleTextSprite.h"
 #include "game/events/handlers/StepInputHandler.h"
 #include "game/events/handlers/ExitInputHandler.h"
 #include "game/events/handlers/GameBallBouncer.h"
