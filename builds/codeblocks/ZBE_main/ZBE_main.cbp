@@ -50,6 +50,8 @@
 					<Add directory="../../../extlibs/IteratorTypeErasure/IteratorTypeErasure/any_iterator" />
 					<Add directory="../../../extlibs/SDL2/2.0.3/x86_64-w64-mingw32/include" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-w64-mingw32/include" />
+					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-w64-mingw32/include" />
+					<Add directory="../../../extlibs/SDL2/2.0.3/x86_64-w64-mingw32/include/SDL2" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -57,9 +59,11 @@
 					<Add library="SDL2main" />
 					<Add library="SDL2" />
 					<Add library="SDL2_image" />
+					<Add library="SDL2_ttf" />
 					<Add directory="../../../lib" />
 					<Add directory="../../../extlibs/SDL2/2.0.3/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-w64-mingw32/lib" />
+					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-w64-mingw32/lib" />
 				</Linker>
 			</Target>
 			<Target title="Debug-Linux64">
@@ -132,8 +136,12 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="../../../src/ZBE_main/include/batis/archetypes/TextDrawable.h" />
+		<Unit filename="../../../src/ZBE_main/include/batis/archetypes/implementations/SimpleTextDrawable.h" />
 		<Unit filename="../../../src/ZBE_main/include/batis/drawers/SingleTextSDLDrawer.h" />
 		<Unit filename="../../../src/ZBE_main/include/batis/entities/GameBoard.h" />
+		<Unit filename="../../../src/ZBE_main/include/batis/entities/Sign.h" />
+		<Unit filename="../../../src/ZBE_main/include/batis/entities/adaptors/TextDrawableSingleTextSpriteAdaptor.h" />
 		<Unit filename="../../../src/ZBE_main/include/batis/entities/avatars/SingleTextSprite.h" />
 		<Unit filename="../../../src/ZBE_main/include/batis/events/MouseKeeper.h" />
 		<Unit filename="../../../src/ZBE_main/include/batis/events/handlers/MKBallInputHandler.h" />
@@ -165,6 +173,7 @@
 		<Unit filename="../../../src/ZBE_main/include/ludo/events/handlers/LudoActuators.h" />
 		<Unit filename="../../../src/ZBE_main/include/ludo/events/handlers/LudoHandlers.h" />
 		<Unit filename="../../../src/ZBE_main/include/ludomain.h" />
+		<Unit filename="../../../src/ZBE_main/src/batis/drawers/SingleTextSDLDrawer.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/batismain.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/degryllmain.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/gamemain.cpp" />
