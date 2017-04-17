@@ -18,7 +18,7 @@ namespace zbe {
  */
 struct SingleTextSprite : virtual public SingleSprite {
     using Base = SingleSprite;
-    const char* text;
+    const char* text = "";
 };
 
 }  // namespace zbe

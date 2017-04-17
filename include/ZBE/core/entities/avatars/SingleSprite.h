@@ -16,11 +16,11 @@ namespace zbe {
  */
 struct SingleSprite {
     using Base = void;
-    int64_t x; //!< X coordinate
-    int64_t y; //!< Y coordinate
-    int64_t w; //!< width
-    int64_t h; //!< height
-    uint64_t graphics;    //!< Image index
+    int64_t x = 0; //!< X coordinate
+    int64_t y = 0; //!< Y coordinate
+    int64_t w = 0; //!< width
+    int64_t h = 0; //!< height
+    uint64_t graphics = 0;    //!< Image index
 };
 
 }  // namespace zbe
