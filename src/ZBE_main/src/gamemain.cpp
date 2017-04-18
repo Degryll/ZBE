@@ -135,7 +135,8 @@ int gamemain(int, char** ) {
   std::shared_ptr<zbe::Daemon> drawerDaemon(new  zbe::DrawerDaemon<zbe::SingleSprite, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite > > >(std::make_shared<zbe::SingleSpriteSDLDrawer>(&window), SPRITELIST));
   drawMaster.addDaemon(drawerDaemon);
   printf("|-------------------- Daemons ----------------------|\n");fflush(stdout);
-  zbe::TimedDaemonMaster behavMaster;
+  zbe::TimedDaemonMaster commonBehaviorMaster;
+  zbe::TimedDaemonMaster reactBehaviorMaster;
   zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > > vAEMovable;
   auto& lmAEMovable = zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > > >::getInstance();
   lmAEMovable.insert(MOVABLELIST, &vAEMovable);
@@ -144,8 +145,8 @@ int gamemain(int, char** ) {
   lmAEBouncer.insert(BOUNCERLIST, &vAEBouncer);
   std::shared_ptr<zbe::TimedDaemon> ballBounce(new  zbe::BehaviorDaemon<zbe::Bouncer<2>, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Bouncer<2> > > >(std::make_shared<zbe::Bounce<2> >(), BOUNCERLIST));
   std::shared_ptr<zbe::TimedDaemon> ballULM(new  zbe::BehaviorDaemon<zbe::Movable<2>, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > > >(std::make_shared<zbe::UniformLinearMotion<2> >(), MOVABLELIST));
-  behavMaster.addDaemon(ballULM);
-  behavMaster.addDaemon(ballBounce);
+  commonBehaviorMaster.addDaemon(ballULM);
+  reactBehaviorMaster.addDaemon(ballBounce);
   printf("|------------------- Creating entities --------------------|\n");fflush(stdout);
   printf("Creating a ball and giving it a position and size\n");fflush(stdout);
 
@@ -247,11 +248,12 @@ int gamemain(int, char** ) {
       gema.generate(initT,endT);
       int64_t eventTime = store.getTime();
       if (eventTime <= endT) {
+        commonBehaviorMaster.run(eventTime-initT);
         store.manageCurrent();
-        behavMaster.run(eventTime-initT);
+        reactBehaviorMaster.run(eventTime-initT);
         initT = eventTime;
       } else {
-        behavMaster.run(endT-initT);
+        commonBehaviorMaster.run(endT-initT);
         store.clearStore();
         initT = endT;
       }
