@@ -12,9 +12,9 @@
 
 #include <memory>
 
-#include "batis/entities/avatars/SingleTextSprite.h"
+#include "ZBE/entities/avatars/SingleTextSprite.h"
 #include "ZBE/core/entities/Adaptor.h"
-#include "batis/archetypes/TextDrawable.h"
+#include "ZBE/archetypes/TextDrawable.h"
 
 namespace zbe {
 

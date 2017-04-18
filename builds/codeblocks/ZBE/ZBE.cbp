@@ -166,6 +166,7 @@
 		<Unit filename="../../../include/ZBE/SDL/drawers/AnimatedSpriteSDLDrawer.h" />
 		<Unit filename="../../../include/ZBE/SDL/drawers/RotatedSpriteSDLDrawer.h" />
 		<Unit filename="../../../include/ZBE/SDL/drawers/SingleSpriteSDLDrawer.h" />
+		<Unit filename="../../../include/ZBE/SDL/drawers/SingleTextSDLDrawer.h" />
 		<Unit filename="../../../include/ZBE/SDL/drawers/StatedSpriteSDLDrawer.h" />
 		<Unit filename="../../../include/ZBE/SDL/loaders/SDLFontLoader.h" />
 		<Unit filename="../../../include/ZBE/SDL/starters/SDL_Starter.h" />
@@ -185,6 +186,7 @@
 		<Unit filename="../../../include/ZBE/archetypes/PositionPO.h" />
 		<Unit filename="../../../include/ZBE/archetypes/RotatedDrawable.h" />
 		<Unit filename="../../../include/ZBE/archetypes/StatedDrawable.h" />
+		<Unit filename="../../../include/ZBE/archetypes/TextDrawable.h" />
 		<Unit filename="../../../include/ZBE/archetypes/Wide.h" />
 		<Unit filename="../../../include/ZBE/archetypes/WideMobile.h" />
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleBouncing.h" />
@@ -195,6 +197,7 @@
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleMobileAPO.h" />
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimplePosition.h" />
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimplePositionPO.h" />
+		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleTextDrawable.h" />
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleWide.h" />
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleWideBouncingAPO.h" />
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleWideMobile.h" />
@@ -256,10 +259,12 @@
 		<Unit filename="../../../include/ZBE/core/tools/text/utf8.h" />
 		<Unit filename="../../../include/ZBE/core/tools/tools.h" />
 		<Unit filename="../../../include/ZBE/entities/adaptors/SimpleDrawableSingleSpriteAdaptor.h" />
+		<Unit filename="../../../include/ZBE/entities/adaptors/TextDrawableSingleTextSpriteAdaptor.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/Bounceable.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/Bouncer.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/Movable.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/Positionable.h" />
+		<Unit filename="../../../include/ZBE/entities/avatars/SingleTextSprite.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/BaseBouncer.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/BaseMovable.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/BasePositionable.h" />
@@ -269,6 +274,7 @@
 		<Unit filename="../../../src/ZBE/SDL/drawers/AnimatedSpriteSDLDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/drawers/RotatedSpriteSDLDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/drawers/SimpleSpriteSDLDrawer.cpp" />
+		<Unit filename="../../../src/ZBE/SDL/drawers/SingleTextSDLDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/drawers/StatedSpriteSDLDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/loaders/SDLFontLoader.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/system/SDLEventDispatcher.cpp" />

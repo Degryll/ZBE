@@ -14,7 +14,7 @@
 #include <SDL2/SDL_ttf.h>
 
 #include "ZBE/core/drawers/Drawer.h"
-#include "batis/entities/avatars/SingleTextSprite.h"
+#include "ZBE/entities/avatars/SingleTextSprite.h"
 #include "ZBE/SDL/system/Window.h"
 
 namespace zbe {

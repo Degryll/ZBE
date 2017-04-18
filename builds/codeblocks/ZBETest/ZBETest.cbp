@@ -145,6 +145,7 @@
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-w64-mingw32/include" />
 					<Add directory="../../../extlibs/boost_1_57_0" />
 					<Add directory="include" />
+					<Add directory="../../../extlibs/SDL2/2.0.3/x86_64-w64-mingw32/include/SDL2" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
