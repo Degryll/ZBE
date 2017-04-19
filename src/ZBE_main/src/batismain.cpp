@@ -171,17 +171,18 @@ int batismain(int, char** ) {
   std::shared_ptr<zbe::Daemon> textDrawerDaemon(new  zbe::DrawerDaemon<zbe::SingleTextSprite, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleTextSprite> > >(std::make_shared<zbe::SingleTextSDLDrawer>(&window), TEXTSPRITELIST));
   drawMaster.addDaemon(textDrawerDaemon);
   printf("|-------------------- Daemons ----------------------|\n");fflush(stdout);
-  zbe::TimedDaemonMaster behavMaster;
+  zbe::DaemonMaster commonBehaviorMaster;
+  zbe::DaemonMaster reactBehaviorMaster;
   zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > > vAEMovable;
   auto& lmAEMovable = zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > > >::getInstance();
   lmAEMovable.insert(MOVABLELIST, &vAEMovable);
   zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Bouncer<2> > > vAEBouncer;
   auto& lmAEBouncer = zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Bouncer<2> > > >::getInstance();
   lmAEBouncer.insert(BOUNCERLIST, &vAEBouncer);
-  std::shared_ptr<zbe::TimedDaemon> ballBounce(new  zbe::BehaviorDaemon<zbe::Bouncer<2>, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Bouncer<2> > > >(std::make_shared<zbe::Bounce<2> >(), BOUNCERLIST));
-  std::shared_ptr<zbe::TimedDaemon> ballULM(new  zbe::BehaviorDaemon<zbe::Movable<2>, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > > >(std::make_shared<zbe::UniformLinearMotion<2> >(), MOVABLELIST));
-  behavMaster.addDaemon(ballULM);
-  behavMaster.addDaemon(ballBounce);
+  std::shared_ptr<zbe::Daemon> ballBounce(new  zbe::BehaviorDaemon<zbe::Bouncer<2>, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Bouncer<2> > > >(std::make_shared<zbe::Bounce<2> >(), BOUNCERLIST));
+  std::shared_ptr<zbe::Daemon> ballULM(new  zbe::BehaviorDaemon<zbe::Movable<2>, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > > >(std::make_shared<zbe::UniformLinearMotion<2> >(), MOVABLELIST));
+  commonBehaviorMaster.addDaemon(ballULM);
+  reactBehaviorMaster.addDaemon(ballBounce);
   printf("|------------------- Creating entities --------------------|\n");fflush(stdout);
 
   printf("Creating the board and giving it a size\n");fflush(stdout);
@@ -300,12 +301,6 @@ int batismain(int, char** ) {
   sdlEventDist.run();
   printf("Updating system time.\n");fflush(stdout);
   sysTime.update();
-  printf("Acquiring initial times.\n");fflush(stdout);
-  int64_t endT = sysTime.getTotalTime();// instant at which the frame ends
-  int64_t initT = 0;//Lets start
-  printf("|==========================================================|\n");fflush(stdout);
-  printf("initT = 0x%" PRIx64 " ", initT);fflush(stdout);
-  printf("endT = 0x%" PRIx64 "\n", endT);fflush(stdout);
 
   bool keep = true;
   while(keep){
@@ -325,24 +320,18 @@ int batismain(int, char** ) {
      */
     sysTime.update();
 
-    /* Reading that updated time info
-     */
-    initT = endT;// init time
-    endT = sysTime.getTotalTime(); //initT + (int64_t(1) << zbe::PRECISION_DIGITS); // instant at which the frame ends
-
-    while (initT < endT) {
+    while (sysTime.isFrameRemaining()) {
       /* Generating events
        */
-      gema.generate(initT,endT);
-      int64_t eventTime = store.getTime();
-      if (eventTime <= endT) {
+      gema.generate();
+      sysTime.setPartialFrameTime(store.getTime());
+      if (sysTime.isPartialFrame()) {
+        commonBehaviorMaster.run();
         store.manageCurrent();
-        behavMaster.run(eventTime-initT);
-        initT = eventTime;
+        reactBehaviorMaster.run();
       } else {
-        behavMaster.run(endT-initT);
+        commonBehaviorMaster.run();
         store.clearStore();
-        initT = endT;
       }
     }
 

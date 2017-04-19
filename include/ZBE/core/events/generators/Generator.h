@@ -23,7 +23,7 @@ class Generator {
     */
     virtual ~Generator() {};
 
-    virtual void generate(int64_t initTime, int64_t endTime) = 0;
+    virtual void generate() = 0;
 };
 
 

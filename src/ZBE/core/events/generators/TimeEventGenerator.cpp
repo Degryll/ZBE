@@ -12,8 +12,8 @@
 
 namespace zbe {
 
-void TimeEventGenerator::generate(int64_t initTime, int64_t endTime) {
-  timers.erase(timers.begin(),timers.upper_bound(TimerData(0,initTime)));
+void TimeEventGenerator::generate() {
+  timers.erase(timers.begin(),timers.upper_bound(TimerData(0,sysTime.getInitFrameTime())));
 
   int64_t v = 0;
   auto it = timers.begin();
@@ -22,7 +22,7 @@ void TimeEventGenerator::generate(int64_t initTime, int64_t endTime) {
   }
 
   for(; it != timers.end(); ++it) {
-    if((it->time > endTime)
+    if((it->time > sysTime.getEndFrameTime())
     || (it->time != v)) {
       break;
     }

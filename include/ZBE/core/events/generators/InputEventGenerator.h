@@ -18,6 +18,7 @@
 #include "ZBE/core/events/EventStore.h"
 #include "ZBE/core/events/InputEvent.h"
 #include "ZBE/core/events/generators/Generator.h"
+#include "ZBE/core/system/SysTime.h"
 
 namespace zbe {
 
@@ -28,7 +29,7 @@ namespace zbe {
 
       /** \brief Default constructor.
        */
-      InputEventGenerator(InputBuffer * inputBuffer, int eventId) : inputBuffer(inputBuffer), eventId(eventId), store(EventStore::getInstance()), handlers() {};
+      InputEventGenerator(InputBuffer * inputBuffer, int eventId) : inputBuffer(inputBuffer), eventId(eventId), store(EventStore::getInstance()), handlers(), sysTime(zbe::SysTime::getInstance()) {};
 
       /** \brief Empty destructor.
        */
@@ -38,7 +39,7 @@ namespace zbe {
        * \param initTime Time from which events are generated
        * \param endTime Time until the events are generated
        */
-      void generate(int64_t initTime, int64_t endTime);
+      void generate();
 
       /** Add a handler to an input event.
        * \param id Id of the key
@@ -56,6 +57,7 @@ namespace zbe {
       int eventId;
       EventStore &store;
       std::map<uint32_t, InputHandler*> handlers;
+      zbe::SysTime &sysTime;
   };
 } // namespace zbe
 

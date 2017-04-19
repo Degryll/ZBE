@@ -17,6 +17,7 @@
 #include "ZBE/core/events/EventStore.h"
 #include "ZBE/core/events/handlers/TimeHandler.h"
 #include "ZBE/core/events/generators/Generator.h"
+#include "ZBE/core/system/SysTime.h"
 
 namespace zbe {
 
@@ -36,7 +37,7 @@ class TimeEventGenerator : virtual public Generator {
   public:
     /** \brief Empty Constructor.
      */
-    TimeEventGenerator(int eventId) : eventId(eventId), es(EventStore::getInstance()), timers() {};
+    TimeEventGenerator(int eventId) : eventId(eventId), es(EventStore::getInstance()), timers(), sysTime(zbe::SysTime::getInstance()) {};
 
 //    /** \brief Empty destructor.
 //    */
@@ -64,12 +65,13 @@ class TimeEventGenerator : virtual public Generator {
      * \param initTime Initial time of the frame
      * \param endTime End time of the frame
      */
-    void generate(int64_t initTime, int64_t endTime);
+    void generate();
 
   private:
     int eventId;
     EventStore& es;
     std::multiset<TimerData> timers;
+    zbe::SysTime &sysTime;
 };
 
 }  // namespace zbe

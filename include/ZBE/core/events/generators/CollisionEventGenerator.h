@@ -22,6 +22,7 @@
 #include "ZBE/core/events/CollisionEvent2D.h"
 #include "ZBE/core/tools/containers/ListManager.h"
 #include "ZBE/core/tools/containers/TicketedForwardList.h"
+#include "ZBE/core/system/SysTime.h"
 
 namespace zbe {
 
@@ -37,7 +38,8 @@ class CollisionEventGenerator : virtual public Generator {
     CollisionEventGenerator(uint64_t list, int eventId)
     : id(list), eventId(eventId), cs(), es(EventStore::getInstance()),
       lmct(ListManager<TicketedForwardList<AvatarEntity<Collisionator<R> > > >::getInstance()),
-      lmcn(ListManager<TicketedForwardList<AvatarEntity<Collisioner<R> > > >::getInstance()) {};
+      lmcn(ListManager<TicketedForwardList<AvatarEntity<Collisioner<R> > > >::getInstance()),
+      sysTime(zbe::SysTime::getInstance()) {};
 
     /** \brief Empty destructor.
     */
@@ -47,7 +49,7 @@ class CollisionEventGenerator : virtual public Generator {
      * \param initTime Initial time of the frame
      * \param endTime End time of the frame
      */
-    void generate(int64_t initTime, int64_t endTime);
+    void generate();
 
   private:
     uint64_t id;  //!< id for the list of collisionators.
@@ -57,11 +59,12 @@ class CollisionEventGenerator : virtual public Generator {
 
     ListManager<TicketedForwardList<AvatarEntity<Collisionator<R> > > >& lmct;
     ListManager<TicketedForwardList<AvatarEntity<Collisioner<R> > > >& lmcn;
+    zbe::SysTime &sysTime;
 };
 
 template <typename R>
-void CollisionEventGenerator<R>::generate(int64_t initTime, int64_t endTime) {
-  int64_t totalTime = endTime - initTime;
+void CollisionEventGenerator<R>::generate() {
+  int64_t totalTime = sysTime.getEndFrameTime() - sysTime.getInitFrameTime();
   Point2D point;
 
   TicketedForwardList<AvatarEntity<Collisionator<R> > >* ctl = lmct.get(id);
@@ -76,8 +79,8 @@ void CollisionEventGenerator<R>::generate(int64_t initTime, int64_t endTime) {
       conerEntity->assignAvatar(&coner);
       if(cs.select(*cator, *coner, totalTime, point)) {
         CollisionData cd(point);
-        es.storeEvent(new CollisionEvent2D<R>(eventId, initTime+totalTime, cator, cd, std::shared_ptr<zbe::ReactObject<R> >(coner->getReactObject())));
-        es.storeEvent(new CollisionEvent2D<R>(eventId, initTime+totalTime, coner, cd, std::shared_ptr<zbe::ReactObject<R> >(cator->getReactObject())));
+        es.storeEvent(new CollisionEvent2D<R>(eventId, sysTime.getEndFrameTime(), cator, cd, std::shared_ptr<zbe::ReactObject<R> >(coner->getReactObject())));
+        es.storeEvent(new CollisionEvent2D<R>(eventId, sysTime.getEndFrameTime(), coner, cd, std::shared_ptr<zbe::ReactObject<R> >(cator->getReactObject())));
       }  // if collision
     }  // for each collisionable
   }  // for each collisionator

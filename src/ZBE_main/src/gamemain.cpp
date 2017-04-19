@@ -135,16 +135,16 @@ int gamemain(int, char** ) {
   std::shared_ptr<zbe::Daemon> drawerDaemon(new  zbe::DrawerDaemon<zbe::SingleSprite, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite > > >(std::make_shared<zbe::SingleSpriteSDLDrawer>(&window), SPRITELIST));
   drawMaster.addDaemon(drawerDaemon);
   printf("|-------------------- Daemons ----------------------|\n");fflush(stdout);
-  zbe::TimedDaemonMaster commonBehaviorMaster;
-  zbe::TimedDaemonMaster reactBehaviorMaster;
+  zbe::DaemonMaster commonBehaviorMaster;
+  zbe::DaemonMaster reactBehaviorMaster;
   zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > > vAEMovable;
   auto& lmAEMovable = zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > > >::getInstance();
   lmAEMovable.insert(MOVABLELIST, &vAEMovable);
   zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Bouncer<2> > > vAEBouncer;
   auto& lmAEBouncer = zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Bouncer<2> > > >::getInstance();
   lmAEBouncer.insert(BOUNCERLIST, &vAEBouncer);
-  std::shared_ptr<zbe::TimedDaemon> ballBounce(new  zbe::BehaviorDaemon<zbe::Bouncer<2>, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Bouncer<2> > > >(std::make_shared<zbe::Bounce<2> >(), BOUNCERLIST));
-  std::shared_ptr<zbe::TimedDaemon> ballULM(new  zbe::BehaviorDaemon<zbe::Movable<2>, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > > >(std::make_shared<zbe::UniformLinearMotion<2> >(), MOVABLELIST));
+  std::shared_ptr<zbe::Daemon> ballBounce(new  zbe::BehaviorDaemon<zbe::Bouncer<2>, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Bouncer<2> > > >(std::make_shared<zbe::Bounce<2> >(), BOUNCERLIST));
+  std::shared_ptr<zbe::Daemon> ballULM(new  zbe::BehaviorDaemon<zbe::Movable<2>, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > > >(std::make_shared<zbe::UniformLinearMotion<2> >(), MOVABLELIST));
   commonBehaviorMaster.addDaemon(ballULM);
   reactBehaviorMaster.addDaemon(ballBounce);
   printf("|------------------- Creating entities --------------------|\n");fflush(stdout);
@@ -214,12 +214,6 @@ int gamemain(int, char** ) {
   sdlEventDist.run();
   printf("Updating system time.\n");fflush(stdout);
   sysTime.update();
-  printf("Acquiring initial times.\n");fflush(stdout);
-  int64_t endT = sysTime.getTotalTime();// instant at which the frame ends
-  int64_t initT = 0;//Lets start
-  printf("|==========================================================|\n");fflush(stdout);
-  printf("initT = 0x%" PRIx64 " ", initT);fflush(stdout);
-  printf("endT = 0x%" PRIx64 "\n", endT);fflush(stdout);
 
   bool keep = true;
   while(keep){
@@ -237,25 +231,19 @@ int gamemain(int, char** ) {
      */
     sysTime.update();
 
-    /* Reading that updated time info
-     */
-    initT = endT;// init time
-    endT = sysTime.getTotalTime(); //initT + (int64_t(1) << zbe::PRECISION_DIGITS); // instant at which the frame ends
-
-    while (initT < endT) {
+    while (sysTime.isFrameRemaining()) {
       /* Generating events
        */
-      gema.generate(initT,endT);
-      int64_t eventTime = store.getTime();
-      if (eventTime <= endT) {
-        commonBehaviorMaster.run(eventTime-initT);
+      gema.generate();
+
+      sysTime.setPartialFrameTime(store.getTime());
+      if (sysTime.isPartialFrame()) {
+        commonBehaviorMaster.run();
         store.manageCurrent();
-        reactBehaviorMaster.run(eventTime-initT);
-        initT = eventTime;
+        reactBehaviorMaster.run();
       } else {
-        commonBehaviorMaster.run(endT-initT);
+        commonBehaviorMaster.run();
         store.clearStore();
-        initT = endT;
       }
     }
 
