@@ -15,6 +15,20 @@
 #include "ZBE/core/tools/math/collisions/ReactObject.h"
 
 namespace CollisionEventGeneratorTest {
+
+class DummyTimer : public zbe::Timer {
+  public:
+    void start() {}
+    int64_t stop() {return (0);}
+    void reset() {}
+    int64_t lapTime() {return (0);}
+    int64_t totalTime() {return ((i++)*zbe::SECOND);}
+    bool isRunning() {return (true);}
+
+  private:
+    int i = 0;
+};
+
 class Robject;
 class R { // Reactor mock
   public:
@@ -87,6 +101,12 @@ public:
 };
 
 TEST(CollisionEventGenerator, Generate) {
+  zbe::SysTime &sysTime = zbe::SysTime::getInstance();
+  sysTime.setMaxFrameTime(zbe::SECOND*2);
+
+  DummyTimer* sysTimer = new DummyTimer;
+  sysTime.setSystemTimer(sysTimer);
+
   zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > > cnl;
   zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > ctl;
 
@@ -121,8 +141,12 @@ TEST(CollisionEventGenerator, Generate) {
 
   zbe::CollisionEventGenerator<R> ceg(2, 1);
 
+  sysTime.update();
+  sysTime.update();
+  sysTime.setPartialFrameTime(zbe::SECOND*2);
+
   zbe::EventStore &es = zbe::EventStore::getInstance();
-  ceg.generate(0, 2 * zbe::SECOND);
+  ceg.generate();
   es.manageCurrent();
 
   EXPECT_EQ(42, dconer->getId()) << "Coner id must be 42";

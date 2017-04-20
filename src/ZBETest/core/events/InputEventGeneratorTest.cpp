@@ -10,6 +10,19 @@
 
 namespace InputEventGeneratorTest {
 
+class DummyTimer : public zbe::Timer {
+  public:
+    void start() {}
+    int64_t stop() {return (0);}
+    void reset() {}
+    int64_t lapTime() {return (0);}
+    int64_t totalTime() {return ((i++*2));}
+    bool isRunning() {return (true);}
+
+  private:
+    int i = 0;
+};
+
 class MockInputHandler : public zbe::InputHandler {
 	public:
 	  MockInputHandler(const MockInputHandler&) = delete;
@@ -25,6 +38,12 @@ class MockInputHandler : public zbe::InputHandler {
 };
 
 TEST(InputEventGenerator, Event) {
+  zbe::SysTime &sysTime = zbe::SysTime::getInstance();
+  sysTime.setMaxFrameTime(zbe::SECOND*2);
+
+  DummyTimer* sysTimer = new DummyTimer;
+  sysTime.setSystemTimer(sysTimer);
+
   // Build tools
   zbe::InputBuffer * ib = new zbe::InputBuffer();
   MockInputHandler ha;
@@ -54,7 +73,14 @@ TEST(InputEventGenerator, Event) {
   ib->insert(ise);
   ib->insert(isf);
 
-  ieg.generate(2,4);
+  sysTime.update();
+  sysTime.update();
+  sysTime.setPartialFrameTime(2);
+
+  sysTime.update();
+  sysTime.setPartialFrameTime(4);
+
+  ieg.generate();
   zbe::EventStore::getInstance().manageCurrent();
 
   EXPECT_FALSE(ha.b) << "a must be false";

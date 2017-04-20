@@ -22,14 +22,16 @@ namespace zbe {
    */
   class SysTime {
     public:
-      static const int64_t maxFrameTime = zbe::SECOND/32;
-
       /** \brief Get the singleton instance of the SystemTime.
        * \return Singleton instance of the SystemTime.
        */
       static SysTime& getInstance() {
         static SysTime instance;
         return (instance);
+      }
+
+      static void setMaxFrameTime(int64_t time) {
+        maxFrameTime = time;
       }
 
       /** \brief Get the total time passed until the end of last frame.
@@ -142,7 +144,7 @@ namespace zbe {
      }
 
     private:
-      SysTime():timer(0),total(0),frame(0), lostTime(0),
+      SysTime() : timer(0), total(0), frame(0), lostTime(0),
                 initT(0), endT(0), partT(0), is_partFrame(false), subframe(0) {}//!< Basic constructor to be used internally.
 
       Timer* timer;      //!< Actual implementation of Timer to be used.
@@ -154,6 +156,8 @@ namespace zbe {
       int64_t partT;     //!< Partial frame time.
       bool is_partFrame; //!< Is partial frame?
       int64_t subframe;  //!< Ask ludo.
+
+      static int64_t maxFrameTime;  //!< No frame will be longer than this.
   };
 
 }
