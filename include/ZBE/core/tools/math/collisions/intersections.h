@@ -22,9 +22,9 @@
 namespace zbe {
 
 template <unsigned dim>
-bool intersectionNPshereAABB(NSphere<dim> sphere, AABB<dim> box);
-inline bool intersectionCircleAABB2D(Circle circle, AABB<2> box) {return intersectionNPshereAABB<2>(circle, box);}
-inline bool intersectionSphereAABB3D(Sphere sphere, AABB<3> box) {return intersectionNPshereAABB<3>(sphere, box);}
+bool intersectionNSphereAABB(NSphere<dim> sphere, AABB<dim> box);
+inline bool intersectionCircleAABB2D(Circle circle, AABB<2> box) {return intersectionNSphereAABB<2>(circle, box);}
+inline bool intersectionSphereAABB3D(Sphere sphere, AABB<3> box) {return intersectionNSphereAABB<3>(sphere, box);}
 
 template <unsigned dim>
 bool intersectionPointAABB(Point<dim> point, AABB<dim> box);
@@ -89,10 +89,10 @@ bool IntersectionMovingCircleOutsideAABB2D(NSphere<2> nsphere, Vector<2> directi
  * \param sphere The sphere.
  * \param box The AABB to test intersection.
  * \return True if the sphere intersects the AABB, false otherwise.
- * \sa intersectionNPshereAABB.
+ * \sa intersectionNSphereAABB.
  */
 template <unsigned dim>
-bool intersectionNPshereAABB(NSphere<dim> sphere, AABB<dim> box) {
+bool intersectionNSphereAABB(NSphere<dim> sphere, AABB<dim> box) {
   double r2 = sphere.r * sphere.r;
   double mins_dist = 0;
   for(unsigned i = 0; i < dim; i++ ) {

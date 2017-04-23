@@ -35,7 +35,7 @@ TEST(Intersections, NSphereAABB_Base) {
     double ypos = 0;
     zbe::NSphere<2> nsphere{{xpos , ypos},10};
     zbe::AABB<2> aabb{{-50, -50},{50, 50}};
-    EXPECT_TRUE(zbe::intersectionNPshereAABB(nsphere, aabb));
+    EXPECT_TRUE(zbe::intersectionNSphereAABB(nsphere, aabb));
 }
 
 TEST(Intersections, NSphereAABB_Base_1) {
@@ -43,7 +43,7 @@ TEST(Intersections, NSphereAABB_Base_1) {
     double ypos = -60;
     zbe::NSphere<2> nsphere{{xpos , ypos},10};
     zbe::AABB<2> aabb{{-50, -50},{50, 50}};
-    EXPECT_FALSE(zbe::intersectionNPshereAABB(nsphere, aabb));
+    EXPECT_FALSE(zbe::intersectionNSphereAABB(nsphere, aabb));
 }
 
 TEST(Intersections, NSphereAABB_Base_2) {
@@ -51,7 +51,7 @@ TEST(Intersections, NSphereAABB_Base_2) {
     double ypos = 60;
     zbe::NSphere<2> nsphere{{xpos , ypos},10};
     zbe::AABB<2> aabb{{-50, -50},{50, 50}};
-    EXPECT_FALSE(zbe::intersectionNPshereAABB(nsphere, aabb));
+    EXPECT_FALSE(zbe::intersectionNSphereAABB(nsphere, aabb));
 }
 
 TEST(Intersections, NSphereAABB_Base_3) {
@@ -59,7 +59,7 @@ TEST(Intersections, NSphereAABB_Base_3) {
     double ypos = 60;
     zbe::NSphere<2> nsphere{{xpos , ypos},10};
     zbe::AABB<2> aabb{{-50, -50},{50, 50}};
-    EXPECT_FALSE(zbe::intersectionNPshereAABB(nsphere, aabb));
+    EXPECT_FALSE(zbe::intersectionNSphereAABB(nsphere, aabb));
 }
 
 TEST(Intersections, NSphereAABB_Base_4) {
@@ -67,7 +67,7 @@ TEST(Intersections, NSphereAABB_Base_4) {
     double ypos = -60;
     zbe::NSphere<2> nsphere{{xpos , ypos},10};
     zbe::AABB<2> aabb{{-50, -50},{50, 50}};
-    EXPECT_FALSE(zbe::intersectionNPshereAABB(nsphere, aabb));
+    EXPECT_FALSE(zbe::intersectionNSphereAABB(nsphere, aabb));
 }
 
 TEST(Intersections, NSphereAABB_Base_5) {
@@ -75,7 +75,7 @@ TEST(Intersections, NSphereAABB_Base_5) {
     double ypos = -63.5;
     zbe::NSphere<2> nsphere{{xpos , ypos},10};
     zbe::AABB<2> aabb{{-50, -50},{50, 50}};
-    EXPECT_FALSE(zbe::intersectionNPshereAABB(nsphere, aabb));
+    EXPECT_FALSE(zbe::intersectionNSphereAABB(nsphere, aabb));
 }
 
 TEST(Intersections, NSphereAABB_Base_6) {
@@ -83,7 +83,7 @@ TEST(Intersections, NSphereAABB_Base_6) {
     double ypos = 63.5;
     zbe::NSphere<2> nsphere{{xpos , ypos},10};
     zbe::AABB<2> aabb{{-50, -50},{50, 50}};
-    EXPECT_FALSE(zbe::intersectionNPshereAABB(nsphere, aabb));
+    EXPECT_FALSE(zbe::intersectionNSphereAABB(nsphere, aabb));
 }
 
 TEST(Intersections, NSphereAABB_Base_7) {
@@ -91,7 +91,7 @@ TEST(Intersections, NSphereAABB_Base_7) {
     double ypos = 63.5;
     zbe::NSphere<2> nsphere{{xpos , ypos},10};
     zbe::AABB<2> aabb{{-50, -50},{50, 50}};
-    EXPECT_FALSE(zbe::intersectionNPshereAABB(nsphere, aabb));
+    EXPECT_FALSE(zbe::intersectionNSphereAABB(nsphere, aabb));
 }
 
 TEST(Intersections, NSphereAABB_Base_8) {
@@ -99,14 +99,14 @@ TEST(Intersections, NSphereAABB_Base_8) {
     double ypos = -63.5;
     zbe::NSphere<2> nsphere{{xpos , ypos},10};
     zbe::AABB<2> aabb{{-50, -50},{50, 50}};
-    EXPECT_FALSE(zbe::intersectionNPshereAABB(nsphere, aabb));
+    EXPECT_FALSE(zbe::intersectionNSphereAABB(nsphere, aabb));
 }
 TEST(Intersections, NSphereAABB_Base_9) {
     double xpos = -63;
     double ypos = -63;
     zbe::NSphere<2> nsphere{{xpos , ypos},10};
     zbe::AABB<2> aabb{{-50, -50},{50, 50}};
-    EXPECT_FALSE(zbe::intersectionNPshereAABB(nsphere, aabb));
+    EXPECT_FALSE(zbe::intersectionNSphereAABB(nsphere, aabb));
 }
 
 TEST(Intersections, NSphereAABB_Base_10) {
@@ -114,7 +114,7 @@ TEST(Intersections, NSphereAABB_Base_10) {
     double ypos = 63;
     zbe::NSphere<2> nsphere{{xpos , ypos},10};
     zbe::AABB<2> aabb{{-50, -50},{50, 50}};
-    EXPECT_FALSE(zbe::intersectionNPshereAABB(nsphere, aabb));
+    EXPECT_FALSE(zbe::intersectionNSphereAABB(nsphere, aabb));
 }
 
 TEST(Intersections, NSphereAABB_Base_11) {
@@ -122,7 +122,7 @@ TEST(Intersections, NSphereAABB_Base_11) {
     double ypos = 63;
     zbe::NSphere<2> nsphere{{xpos , ypos},10};
     zbe::AABB<2> aabb{{-50, -50},{50, 50}};
-    EXPECT_FALSE(zbe::intersectionNPshereAABB(nsphere, aabb));
+    EXPECT_FALSE(zbe::intersectionNSphereAABB(nsphere, aabb));
 }
 
 TEST(Intersections, NSphereAABB_Base_12) {
@@ -130,7 +130,7 @@ TEST(Intersections, NSphereAABB_Base_12) {
     double ypos = -63;
     zbe::NSphere<2> nsphere{{xpos , ypos},10};
     zbe::AABB<2> aabb{{-50, -50},{50, 50}};
-    EXPECT_FALSE(zbe::intersectionNPshereAABB(nsphere, aabb));
+    EXPECT_FALSE(zbe::intersectionNSphereAABB(nsphere, aabb));
 }
 
 TEST(Intersections, NSphereAABB_Base_LF) {
@@ -138,7 +138,7 @@ TEST(Intersections, NSphereAABB_Base_LF) {
     double ypos = 0;
     zbe::NSphere<2> nsphere{{xpos , ypos},10};
     zbe::AABB<2> aabb{{-50, -50},{50, 50}};
-    EXPECT_FALSE(zbe::intersectionNPshereAABB(nsphere, aabb));
+    EXPECT_FALSE(zbe::intersectionNSphereAABB(nsphere, aabb));
 }
 
 TEST(Intersections, NSphereAABB_Base_LT) {
@@ -146,7 +146,7 @@ TEST(Intersections, NSphereAABB_Base_LT) {
     double ypos = 0;
     zbe::NSphere<2> nsphere{{xpos , ypos},10};
     zbe::AABB<2> aabb{{-50, -50},{50, 50}};
-    EXPECT_TRUE(zbe::intersectionNPshereAABB(nsphere, aabb));
+    EXPECT_TRUE(zbe::intersectionNSphereAABB(nsphere, aabb));
 }
 
 TEST(Intersections, NSphereAABB_Base_TF) {
@@ -154,7 +154,7 @@ TEST(Intersections, NSphereAABB_Base_TF) {
     double ypos = -60.0001;
     zbe::NSphere<2> nsphere{{xpos , ypos},10};
     zbe::AABB<2> aabb{{-50, -50},{50, 50}};
-    EXPECT_FALSE(zbe::intersectionNPshereAABB(nsphere, aabb));
+    EXPECT_FALSE(zbe::intersectionNSphereAABB(nsphere, aabb));
 }
 
 TEST(Intersections, NSphereAABB_Base_TT) {
@@ -162,7 +162,7 @@ TEST(Intersections, NSphereAABB_Base_TT) {
     double ypos = -60;
     zbe::NSphere<2> nsphere{{xpos , ypos},10};
     zbe::AABB<2> aabb{{-50, -50},{50, 50}};
-    EXPECT_TRUE(zbe::intersectionNPshereAABB(nsphere, aabb));
+    EXPECT_TRUE(zbe::intersectionNSphereAABB(nsphere, aabb));
 }
 
 TEST(Intersections, NSphereAABB_Base_BF) {
@@ -170,7 +170,7 @@ TEST(Intersections, NSphereAABB_Base_BF) {
     double ypos = 60.0001;
     zbe::NSphere<2> nsphere{{xpos , ypos},10};
     zbe::AABB<2> aabb{{-50, -50},{50, 50}};
-    EXPECT_FALSE(zbe::intersectionNPshereAABB(nsphere, aabb));
+    EXPECT_FALSE(zbe::intersectionNSphereAABB(nsphere, aabb));
 }
 
 TEST(Intersections, NSphereAABB_Base_BT) {
@@ -178,7 +178,7 @@ TEST(Intersections, NSphereAABB_Base_BT) {
     double ypos = 60;
     zbe::NSphere<2> nsphere{{xpos , ypos},10};
     zbe::AABB<2> aabb{{-50, -50},{50, 50}};
-    EXPECT_TRUE(zbe::intersectionNPshereAABB(nsphere, aabb));
+    EXPECT_TRUE(zbe::intersectionNSphereAABB(nsphere, aabb));
 }
 
 TEST(Intersections, NSphereAABB_Base_RF) {
@@ -186,7 +186,7 @@ TEST(Intersections, NSphereAABB_Base_RF) {
     double ypos = 0;
     zbe::NSphere<2> nsphere{{xpos , ypos},10};
     zbe::AABB<2> aabb{{-50, -50},{50, 50}};
-    EXPECT_FALSE(zbe::intersectionNPshereAABB(nsphere, aabb));
+    EXPECT_FALSE(zbe::intersectionNSphereAABB(nsphere, aabb));
 }
 
 TEST(Intersections, NSphereAABB_Base_RT) {
@@ -194,7 +194,7 @@ TEST(Intersections, NSphereAABB_Base_RT) {
     double ypos = 0;
     zbe::NSphere<2> nsphere{{xpos , ypos},10};
     zbe::AABB<2> aabb{{-50, -50},{50, 50}};
-    EXPECT_TRUE(zbe::intersectionNPshereAABB(nsphere, aabb));
+    EXPECT_TRUE(zbe::intersectionNSphereAABB(nsphere, aabb));
 }
 
 /******************************************************************************/

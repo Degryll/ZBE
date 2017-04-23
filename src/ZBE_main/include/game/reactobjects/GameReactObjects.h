@@ -10,7 +10,7 @@
 #ifndef ZBE_MAIN_GAME_REACTOBJECTS_GAMEREACTOBJECTS
 #define ZBE_MAIN_GAME_REACTOBJECTS_GAMEREACTOBJECTS
 
-#include "ZBE/core/tools/math/collisions/ReactObject.h"
+#include "ZBE/core/events/generators/util/ReactObject.h"
 
 #include "game/GameReactor.h"
 

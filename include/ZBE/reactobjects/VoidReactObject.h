@@ -10,7 +10,7 @@
 #ifndef ZBE_REACTOBJECTS_VOIDREACTOBJECT
 #define ZBE_REACTOBJECTS_VOIDREACTOBJECT
 
-#include "ZBE/core/tools/math/collisions/ReactObject.h"
+#include "ZBE/core/events/generators/util/ReactObject.h"
 
 namespace zbe {
 

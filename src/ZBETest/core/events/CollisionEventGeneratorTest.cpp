@@ -4,15 +4,16 @@
 
 #include "ZBE/core/events/EventStore.h"
 #include "ZBE/core/events/generators/CollisionEventGenerator.h"
+#include "ZBE/core/events/generators/util/CollisionSelector.h"
+#include "ZBE/core/events/generators/util/BaseCollisionSelector.h"
+#include "ZBE/core/events/generators/util/ReactObject.h"
 #include "ZBE/core/events/handlers/Actuator.h"
 #include "ZBE/core/tools/containers/TicketedForwardList.h"
-#include "ZBE/core/tools/math/collisions/CollisionSystemSolver.h"
 #include "ZBE/core/tools/math/math.h"
 #include "ZBE/core/entities/Entity.h"
 #include "ZBE/core/entities/AvatarEntity.h"
 #include "ZBE/core/entities/avatars/Collisioner.h"
 #include "ZBE/core/entities/avatars/Collisionator.h"
-#include "ZBE/core/tools/math/collisions/ReactObject.h"
 
 namespace CollisionEventGeneratorTest {
 
@@ -138,8 +139,9 @@ TEST(CollisionEventGenerator, Generate) {
 
   cnl.push_front(dconer);
   ctl.push_front(dcator);
+  zbe::CollisionSelector<R>* cs = new zbe::BaseCollisionSelector<R>();
 
-  zbe::CollisionEventGenerator<R> ceg(2, 1);
+  zbe::CollisionEventGenerator<R> ceg(2, 1, cs);
 
   sysTime.update();
   sysTime.update();

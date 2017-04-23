@@ -7,8 +7,8 @@
  * @brief Object against which to react.
  */
 
-#ifndef CORE_ENTITIES_AVATARS_REACTOBJECT_H
-#define CORE_ENTITIES_AVATARS_REACTOBJECT_H
+#ifndef CORE_EVENTS_GENERATORS_UTIL_REACTOBJECT_H
+#define CORE_EVENTS_GENERATORS_UTIL_REACTOBJECT_H
 
 namespace zbe {
 
@@ -44,4 +44,4 @@ class ReactObjectCommon : public ReactObject<R> {
 
 }  // namespace
 
-#endif //CORE_ENTITIES_AVATARS_REACTOBJECT_H
+#endif //CORE_EVENTS_GENERATORS_UTIL_REACTOBJECT_H

@@ -232,6 +232,13 @@
 		<Unit filename="../../../include/ZBE/core/events/generators/GeneratorMaster.h" />
 		<Unit filename="../../../include/ZBE/core/events/generators/InputEventGenerator.h" />
 		<Unit filename="../../../include/ZBE/core/events/generators/TimeEventGenerator.h" />
+		<Unit filename="../../../include/ZBE/core/events/generators/util/BaseCollisionSelector.h" />
+		<Unit filename="../../../include/ZBE/core/events/generators/util/CollisionBodies.h" />
+		<Unit filename="../../../include/ZBE/core/events/generators/util/CollisionData.h" />
+		<Unit filename="../../../include/ZBE/core/events/generators/util/CollisionObject.h" />
+		<Unit filename="../../../include/ZBE/core/events/generators/util/CollisionSelector.h" />
+		<Unit filename="../../../include/ZBE/core/events/generators/util/IntersectionCollisionSelector.h" />
+		<Unit filename="../../../include/ZBE/core/events/generators/util/ReactObject.h" />
 		<Unit filename="../../../include/ZBE/core/events/handlers/Actuator.h" />
 		<Unit filename="../../../include/ZBE/core/events/handlers/InputHandler.h" />
 		<Unit filename="../../../include/ZBE/core/events/handlers/TimeHandler.h" />
@@ -249,10 +256,6 @@
 		<Unit filename="../../../include/ZBE/core/tools/containers/TicketedForwardList.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/Point.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/Vector.h" />
-		<Unit filename="../../../include/ZBE/core/tools/math/collisions/CollisionData.h" />
-		<Unit filename="../../../include/ZBE/core/tools/math/collisions/CollisionObject.h" />
-		<Unit filename="../../../include/ZBE/core/tools/math/collisions/CollisionSystemSolver.h" />
-		<Unit filename="../../../include/ZBE/core/tools/math/collisions/ReactObject.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/collisions/intersections.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/math.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/objects.h" />

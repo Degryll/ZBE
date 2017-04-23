@@ -13,7 +13,7 @@
 #include <memory>
 
 #include "ZBE/core/entities/avatars/Collisioner.h"
-#include "ZBE/core/tools/math/collisions/CollisionObject.h"
+#include "ZBE/core/events/generators/util/CollisionObject.h"
 
 namespace zbe {
 

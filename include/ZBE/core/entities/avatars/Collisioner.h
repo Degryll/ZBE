@@ -15,9 +15,9 @@
 
 #include "ZBE/core/tools/math/Point.h"
 #include "ZBE/core/events/handlers/Actuator.h"
-#include "ZBE/core/tools/math/collisions/CollisionData.h"
-#include "ZBE/core/tools/math/collisions/CollisionObject.h"
-#include "ZBE/core/tools/math/collisions/ReactObject.h"
+#include "ZBE/core/events/generators/util/CollisionData.h"
+#include "ZBE/core/events/generators/util/CollisionObject.h"
+#include "ZBE/core/events/generators/util/ReactObject.h"
 #include "ZBE/core/tools/containers/ListManager.h"
 
 namespace zbe {

@@ -13,7 +13,7 @@
 #include <memory>
 
 #include "ZBE/core/tools/math/math.h"
-#include "ZBE/core/tools/math/collisions/CollisionSystemSolver.h"
+#include "ZBE/core/events/generators/util/CollisionSelector.h"
 
 #include "ZBE/core/entities/AvatarEntity.h"
 #include "ZBE/core/entities/avatars/Collisionator.h"

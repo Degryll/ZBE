@@ -10,8 +10,9 @@
 #include "ZBE/core/tools/math/Vector.h"
 #include "ZBE/core/tools/math/objects.h"
 #include "ZBE/core/entities/avatars/Collisioner.h"
-#include "ZBE/core/tools/math/collisions/CollisionSystemSolver.h"
-#include "ZBE/core/tools/math/collisions/ReactObject.h"
+#include "ZBE/core/events/generators/util/CollisionSelector.h"
+#include "ZBE/core/events/generators/util/BaseCollisionSelector.h"
+#include "ZBE/core/events/generators/util/ReactObject.h"
 
 class R { // Reactor mock
   public:
@@ -36,13 +37,13 @@ TEST(CollisionSystemSolver, MovingCircleStaticSolidAABB) {
   C a(cc);
   C b(sbox);
 
-  zbe::CollisionSelector<R> cs;
+  zbe::CollisionSelector<R>* cs = new zbe::BaseCollisionSelector<R>();
 
   bool result;
   zbe::Point2D p;
   int64_t t = zbe::SECOND;
 
-  result = cs.select(a, b, t, p);
+  result = cs->select(a, b, t, p);
   int64_t expectedTime = zbe::quantizeTime(zbe::SECOND / 4);
   EXPECT_TRUE(result) << "First Moving Circle vs AABB collision.";
   EXPECT_DOUBLE_EQ(expectedTime, t) << "Time of collision.";
@@ -56,13 +57,13 @@ TEST(CollisionSystemSolver, StaticSolidAABBMovingCircle) {
   C a(cc);
   C b(sbox);
 
-  zbe::CollisionSelector<R> cs;
+  zbe::CollisionSelector<R>* cs = new zbe::BaseCollisionSelector<R>();
 
   bool result;
   zbe::Point2D p;
   int64_t t = zbe::SECOND;
 
-  result = cs.select(b, a, t, p);
+  result = cs->select(b, a, t, p);
   int64_t expectedTime = zbe::quantizeTime(zbe::SECOND / 4);
   EXPECT_TRUE(result) << "First Moving Circle vs AABB collision.";
   EXPECT_DOUBLE_EQ(expectedTime, t) << "Time of collision.";

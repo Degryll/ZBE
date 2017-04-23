@@ -15,6 +15,8 @@
 #include "ZBE/core/events/TimeEvent.h"
 #include "ZBE/core/events/InputEvent.h"
 #include "ZBE/core/events/CollisionEvent2D.h"
+#include "ZBE/core/events/generators/util/CollisionSelector.h"
+#include "ZBE/core/events/generators/util/BaseCollisionSelector.h"
 #include "ZBE/core/events/generators/InputEventGenerator.h"
 #include "ZBE/core/events/generators/CollisionEventGenerator.h"
 #include "ZBE/core/events/generators/TimeEventGenerator.h"
@@ -106,7 +108,7 @@ int gamemain(int, char** ) {
   printf("Storing ctl in that list-manager.\n");fflush(stdout);
   lmct.insert(COLLISIONATORLIST, &ctl);
   printf("Building collision event generator with list id and the event id to use (1).\n");fflush(stdout);
-  zbe::CollisionEventGenerator<game::GameReactor> ceg(COLLISIONATORLIST, COLLISIONEVENT);
+  zbe::CollisionEventGenerator<game::GameReactor> ceg(COLLISIONATORLIST, COLLISIONEVENT, new zbe::BaseCollisionSelector<game::GameReactor>());
   vGenetators.push_back(&ceg);
   printf("|------------------- Time Event Generator -----------------|\n");fflush(stdout);
   printf("Building time event generator with the event id to use (2)\n");fflush(stdout);
