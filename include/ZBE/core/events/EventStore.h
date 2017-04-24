@@ -40,14 +40,27 @@ namespace zbe {
        */
       void storeEvent(Event* e);
 
-      /** \brief Tell all current events to manage themselves.
-       *  Then the store will be cleared.
+      /** \brief Store an instant event
+       * \param e The event to be stored
+       */
+      void storeInstantEvent(Event* e);
+
+      /** \brief Tell all stored events to manage themselves.
+       *  Then the stores will be cleared.
        */
       void manageCurrent();
 
       /** \brief Erase all contained events.
        */
       void clearStore();
+
+      /** \brief Erase all contained timed events.
+       */
+      void clearTimedStore();
+
+      /** \brief Erase all contained instant events.
+       */
+      void clearInstantStore();
 
       /** \brief Returns the time of the contained events.
       */
@@ -56,12 +69,23 @@ namespace zbe {
       /** \brief Get the current event collection.
        *  \return A constant event list.
        */
-      const std::forward_list<Event*> & getEvents() {return (store);}
+      //const std::forward_list<Event*> & getEvents() {return (store);}
 
     private:
-      EventStore() :store(), bettertime(std::numeric_limits<int64_t>::max()) {}
-      std::forward_list<Event*> store;
+      EventStore() :timedStore(), instantStore(), bettertime(std::numeric_limits<int64_t>::max()) {}
+      std::forward_list<Event*> timedStore;
+      std::forward_list<Event*> instantStore;
       int64_t bettertime;
+
+    protected:
+      /** \brief Erase all contained events in a store.
+       */
+      void clearStore(std::forward_list<Event*>&);
+
+      /** \brief Tell all stored events in one store to manage themselves.
+       *  Then the store will be cleared.
+       */
+      void manageStore(std::forward_list<Event*>&);
   };
 } //namespace zbe
 #endif //CORE_EVENTS_EVENTSTORE_H
