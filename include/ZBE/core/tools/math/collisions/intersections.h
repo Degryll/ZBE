@@ -22,6 +22,21 @@
 namespace zbe {
 
 template <unsigned dim>
+bool intersectionNSphereAABB(NSphere<dim> sphere, AABB<dim> box);
+inline bool intersectionCircleAABB2D(Circle circle, AABB<2> box) {return intersectionNSphereAABB<2>(circle, box);}
+inline bool intersectionSphereAABB3D(Sphere sphere, AABB<3> box) {return intersectionNSphereAABB<3>(sphere, box);}
+
+template <unsigned dim>
+bool intersectionPointAABB(Point<dim> point, AABB<dim> box);
+inline bool intersectionPoint2DAABB2D(Point2D point, AABB<2> box) {return intersectionPointAABB<2>(point, box);}
+inline bool intersectionPoint3DAABB3D(Point3D point, AABB<3> box) {return intersectionPointAABB<3>(point, box);}
+
+template <unsigned dim>
+bool intersectionPointNSphere(Point<dim> point, NSphere<dim> nsphere);
+inline bool intersectionPoint2DCircle(Point2D point, Circle circle) {return intersectionPointNSphere<2>(point, circle);}
+inline bool intersectionPoint3DSphere(Point3D point, Sphere sphere) {return intersectionPointNSphere<3>(point, sphere);}
+
+template <unsigned dim>
 bool intersectionRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, int64_t &time, Point<dim>& point);
 inline bool intersectionRayCircle(Ray2D ray, Circle circle, int64_t &time, Point2D& point) {return (intersectionRayNSphere<2>(ray,circle,time,point));}  //!< 2D allias of intersectionRayNSphere.
 inline bool intersectionRaySphere(Ray3D ray, Sphere sphere, int64_t &time, Point3D& point) {return (intersectionRayNSphere<3>(ray,sphere,time,point));}  //!< 3D allias of intersectionRayNSphere.
@@ -66,6 +81,61 @@ bool intersectionMovingNSphereOutsideAABB(NSphere<dim> nsphere, Vector<dim> dire
 inline bool IntersectionMovingSphereOutsideAABB3D(Sphere sphere, Vector3D direction, AABB3D box, int64_t& time, Point3D& point) {return (intersectionMovingNSphereOutsideAABB<3>(sphere,direction,box,time,point));}  //!< 3D allias of IntersectionMovingNSphereOutsideAABB.
 
 bool IntersectionMovingCircleOutsideAABB2D(NSphere<2> nsphere, Vector<2> direction, AABB<2> box, int64_t& time, Point<2>& point);
+
+
+
+/** \brief A template function that tell if an N-dimensional Sphere intersects an AABB.
+ *
+ * \param sphere The sphere.
+ * \param box The AABB to test intersection.
+ * \return True if the sphere intersects the AABB, false otherwise.
+ * \sa intersectionNSphereAABB.
+ */
+template <unsigned dim>
+bool intersectionNSphereAABB(NSphere<dim> sphere, AABB<dim> box) {
+  double r2 = sphere.r * sphere.r;
+  double mins_dist = 0;
+  for(unsigned i = 0; i < dim; i++ ) {
+    if( sphere.c[i] < box.minimum[i] ) {
+      double dist = sphere.c[i] - box.minimum[i];
+      mins_dist += (dist * dist);
+    } else if( sphere.c[i] > box.maximum[i] ) {
+      double dist = sphere.c[i] - box.maximum[i];
+      mins_dist += (dist * dist);
+    }
+  }
+  return mins_dist <= r2;
+}
+
+
+/** \brief A template function that tell if an N-dimensional Point is inside an AABB.
+ *
+ * \param point The point.
+ * \param box The AABB to test intersection.
+ * \return True if the point is inside the AABB, false otherwise.
+ * \sa intersectionPointAABB.
+ */
+template <unsigned dim>
+bool intersectionPointAABB(Point<dim> point, AABB<dim> box) {
+  for(unsigned i = 0; i < dim; i++) {
+    if (point[i]<box.minimum[i] || point[i]>box.maximum[i]){
+      return false;
+    }
+  }
+}
+
+/** \brief A template function that tell if an N-dimensional Point is inside an NSphere.
+ *
+ * \param point The point.
+ * \param nsphere The nsphere (a circle in 2D or a sphere in 3D) to test intersection.
+ * \return True if the point is inside the NSphere, false otherwise.
+ * \sa intersectionPointNSphere.
+ */
+template <unsigned dim>
+bool intersectionPointNSphere(Point<dim> point, NSphere<dim> nsphere) {
+    double sqrRadius = nsphere.r * nsphere.r;
+    return sqrPointDist(point, nsphere.c) < sqrRadius;
+}
 
 /** \brief A template function that compute the time and point of collision (if any) of an N-dimensional ray and a NSphere.
  *

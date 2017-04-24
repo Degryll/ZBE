@@ -22,14 +22,16 @@ namespace zbe {
    */
   class SysTime {
     public:
-      static const int64_t maxFrameTime = zbe::SECOND/32;
-
       /** \brief Get the singleton instance of the SystemTime.
        * \return Singleton instance of the SystemTime.
        */
       static SysTime& getInstance() {
         static SysTime instance;
         return (instance);
+      }
+
+      static void setMaxFrameTime(int64_t time) {
+        maxFrameTime = time;
       }
 
       /** \brief Get the total time passed until the end of last frame.
@@ -51,6 +53,62 @@ namespace zbe {
        */
       inline int64_t getLostTime() {
         return lostTime;
+      }
+
+      /** \brief Return true if remains time to finish the actual frame.
+       * \return True if the actual frame is not finished yet.
+       */
+      inline bool isFrameRemaining() {
+        initT = partT;
+        return (initT < endT);
+      }
+
+      /** \brief Set the time of the first interrupt, probably an event.
+       */
+      inline void setPartialFrameTime(int64_t partialFrameTime) {
+        if (partialFrameTime <= endT) {
+          partT = partialFrameTime;
+          is_partFrame = true;
+        } else {
+          partT = endT;
+          is_partFrame = false;
+        }
+        subframe = partT - initT;
+      }
+
+      /** \brief Return true if we're resolving a partial frame.
+       * \return True if the actual frame is partial.
+       */
+      inline bool isPartialFrame() {
+        return (is_partFrame);
+      }
+
+      /** \brief Get the initial frame time.
+       * \return Sub frame time.
+       */
+      inline int64_t getInitFrameTime() {
+        return initT;
+      }
+
+      /** \brief Get the end frame time.
+       * \return Sub frame time.
+       */
+      inline int64_t getEndFrameTime() {
+        return endT;
+      }
+
+      /** \brief Get the available frame time.
+       * \return Sub frame time.
+       */
+      inline int64_t getSubFrameTime() {
+        return subframe;
+      }
+
+      /** \brief Get the partial frame time.
+       * \return Partial frame time.
+       */
+      inline int64_t getPartialFrameTime() {
+        return partT;
       }
 
       /** \brief Set the Timer to be used by SystemTime.
@@ -78,15 +136,28 @@ namespace zbe {
           lostTime += (realFrameTime - maxFrameTime);
           frame = maxFrameTime;
         }
+
+        initT = endT;
+        endT = total;
+        subframe = endT - initT;
+        partT = initT;
      }
 
     private:
-      SysTime():timer(0),total(0),frame(0), lostTime(0){}//!< Basic constructor to be used internally.
+      SysTime() : timer(0), total(0), frame(0), lostTime(0),
+                initT(0), endT(0), partT(0), is_partFrame(false), subframe(0) {}//!< Basic constructor to be used internally.
 
-      Timer* timer;//!< Actual implementation of Timer to be used.
-      int64_t total;//!< Total time passed until the end of last frame.
-      int64_t frame;//!< Last frame duration
-      int64_t lostTime;//!< Accumulated Total Time - Max frame time
+      Timer* timer;      //!< Actual implementation of Timer to be used.
+      int64_t total;     //!< Total time passed until the end of last frame.
+      int64_t frame;     //!< Last frame duration
+      int64_t lostTime;  //!< Accumulated Total Time - Max frame time
+      int64_t initT;     //!< Initial frame time.
+      int64_t endT;      //!< End frame time.
+      int64_t partT;     //!< Partial frame time.
+      bool is_partFrame; //!< Is partial frame?
+      int64_t subframe;  //!< Ask ludo.
+
+      static int64_t maxFrameTime;  //!< No frame will be longer than this.
   };
 
 }

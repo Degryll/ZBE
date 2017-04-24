@@ -32,7 +32,7 @@ class Bounce : public Behavior<Bouncer<s>  > {
 
     /** \brief Do the behavior work over the given entity
      */
-    void apply(std::shared_ptr<AvatarEntity<Bouncer<s> > > entity, int64_t) {
+    void apply(std::shared_ptr<AvatarEntity<Bouncer<s> > > entity) {
       Bouncer<s>* avatar;
       entity->assignAvatar(&avatar);
       if(avatar->hasNormals()){

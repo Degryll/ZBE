@@ -8,10 +8,4 @@ void DaemonMaster::run(){
   }
 }
 
-void TimedDaemonMaster::run(uint64_t time){
-  for(auto it = daemonList.begin(); it < daemonList.end(); ++it) {
-    (*it)->run(time);
-  }
-}
-
 }

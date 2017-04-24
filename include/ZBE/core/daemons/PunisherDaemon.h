@@ -54,42 +54,6 @@ namespace zbe {
     }
   }
 
-  /** \brief A Daemon capable of execute a specific Behavior over a list of entities.
-   */
-  template<typename P, typename L>
-  class TimedPunisherDaemon : public TimedDaemon {
-    public:
-
-      TimedPunisherDaemon(const TimedPunisherDaemon&) = delete;
-      void operator=(const TimedPunisherDaemon&) = delete;
-
-      /** \brief Build the Daemon with a punish and a .
-       * The given Behavior will be stored by this Daemon and destroyed with it. It will be executed when run method is called.
-       * \param daemon Pointer to the daemon desired to be stored and executed.
-       *
-       */
-      TimedPunisherDaemon(std::shared_ptr<P>  punish, uint64_t listId ) : punish(punish), eList(zbe::ListManager<L>::getInstance().get(listId)) {}
-
-      /** \brief Destroys the PunisherDaemon and the contained punisher.
-       */
-      virtual ~TimedPunisherDaemon() {}
-
-      /** \brief It will run the Behavior over the entity list.
-       */
-      void run(uint64_t time);
-
-    private:
-      std::shared_ptr<P> punish;
-      L *eList;
-  };
-
-  template<typename P, typename L>
-  void TimedPunisherDaemon<P, L>::run(uint64_t time){
-    for(auto e : (*eList)) {
-      punish->apply(e, time);
-    }
-  }
-
 }  // namespace zbe
 
 

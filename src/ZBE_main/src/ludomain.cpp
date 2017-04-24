@@ -15,6 +15,9 @@
 #include "ZBE/core/events/TimeEvent.h"
 #include "ZBE/core/events/InputEvent.h"
 #include "ZBE/core/events/CollisionEvent2D.h"
+#include "ZBE/core/events/generators/util/CollisionSelector.h"
+#include "ZBE/core/events/generators/util/BaseCollisionSelector.h"
+#include "ZBE/core/events/generators/util/IntersectionCollisionSelector.h"
 #include "ZBE/core/events/generators/InputEventGenerator.h"
 #include "ZBE/core/events/generators/CollisionEventGenerator.h"
 #include "ZBE/core/events/generators/TimeEventGenerator.h"
@@ -48,6 +51,7 @@
 #include "ludomain.h"
 
 #define PI 3.14159265
+
 namespace ludo {
 
 int ludomain(int, char** ) {
@@ -121,7 +125,7 @@ int ludomain(int, char** ) {
   printf("Storing ctl in that list-manager.\n");fflush(stdout);
   lmct.insert(COLLISIONATORLIST, &ctl);
   printf("Building collision event generator with list id and the event id to use (1).\n");fflush(stdout);
-  zbe::CollisionEventGenerator<LudoReactor> ceg(COLLISIONATORLIST, COLLISIONEVENT);
+  zbe::CollisionEventGenerator<LudoReactor> ceg(COLLISIONATORLIST, COLLISIONEVENT, new zbe::IntersectionCollisionSelector<LudoReactor>());
   vGenetators.push_back(&ceg);
   printf("|------------------- Time Event Generator -----------------|\n");fflush(stdout);
   printf("Building time event generator with the event id to use (2)\n");fflush(stdout);
@@ -159,7 +163,8 @@ int ludomain(int, char** ) {
   std::shared_ptr<zbe::Daemon> rDrawerDaemon(new  zbe::DrawerDaemon<SimpleRotatedSprite, zbe::TicketedForwardList<zbe::AvatarEntity<SimpleRotatedSprite > > >(std::make_shared<SimpleRotatedSpriteSDLDrawer>(&window), RSPRITELIST));
   drawMaster.addDaemon(rDrawerDaemon);
   printf("|-------------------- Daemons ----------------------|\n");fflush(stdout);
-  zbe::TimedDaemonMaster behavMaster;
+  zbe::DaemonMaster commonBehaviorMaster;
+  zbe::DaemonMaster reactBehaviorMaster;
   zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > > vAEMovable;
   auto& lmAEMovable = zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > > >::getInstance();
   lmAEMovable.insert(MOVABLELIST, &vAEMovable);
@@ -169,10 +174,10 @@ int ludomain(int, char** ) {
   zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Bouncer<2> > > vAEBouncer;
   auto& lmAEBouncer = zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Bouncer<2> > > >::getInstance();
   lmAEBouncer.insert(BOUNCERLIST, &vAEBouncer);
-  std::shared_ptr<zbe::TimedDaemon> ballBounce(new  zbe::BehaviorDaemon<zbe::Bouncer<2>, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Bouncer<2> > > >(std::make_shared<zbe::Bounce<2> >(), BOUNCERLIST));
-  std::shared_ptr<zbe::TimedDaemon> ballULM(new  zbe::BehaviorDaemon<zbe::Movable<2>, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > > >(std::make_shared<zbe::UniformLinearMotion<2> >(), MOVABLELIST));
-  behavMaster.addDaemon(ballULM);
-  behavMaster.addDaemon(ballBounce);
+  std::shared_ptr<zbe::Daemon> ballBounce(new  zbe::BehaviorDaemon<zbe::Bouncer<2>, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Bouncer<2> > > >(std::make_shared<zbe::Bounce<2> >(), BOUNCERLIST));
+  std::shared_ptr<zbe::Daemon> ballULM(new  zbe::BehaviorDaemon<zbe::Movable<2>, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > > >(std::make_shared<zbe::UniformLinearMotion<2> >(), MOVABLELIST));
+  commonBehaviorMaster.addDaemon(ballULM);
+  reactBehaviorMaster.addDaemon(ballBounce);
   printf("|------------------- Creating entities --------------------|\n");fflush(stdout);
   printf("Creating a ball and giving it a position and size\n");fflush(stdout);
 
@@ -277,25 +282,18 @@ int ludomain(int, char** ) {
   sdlEventDist.run();
   printf("Updating system time.\n");fflush(stdout);
   sysTime.update();
-  printf("Acquiring initial times.\n");fflush(stdout);
-  int64_t endT = sysTime.getTotalTime();
-  int64_t initT = 0;
   printf("|=================== adding some timers ===================|\n");fflush(stdout);
-  std::shared_ptr<zbe::TimedDaemon> leftRotator(new  zbe::BehaviorDaemon<zbe::Movable<2>, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > > >(std::make_shared<Rotator>(-0.1f), LROTATORS));
-  std::shared_ptr<zbe::TimeHandler> rotatorL = std::make_shared<TimedDemonRecurrentTimeHandler>(leftRotator, teg, zbe::SECOND/8);
+  std::shared_ptr<zbe::Daemon> leftRotator(new  zbe::BehaviorDaemon<zbe::Movable<2>, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > > >(std::make_shared<Rotator>(-0.1f), LROTATORS));
+  std::shared_ptr<zbe::TimeHandler> rotatorL = std::make_shared<DemonRecurrentTimeHandler>(leftRotator, teg, zbe::SECOND/8);
   teg.addTimer(rotatorL, zbe::SECOND);
 
-  std::shared_ptr<zbe::TimedDaemon> rightRotator(new  zbe::BehaviorDaemon<zbe::Movable<2>, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > > >(std::make_shared<Rotator>(0.1f), RROTATORS));
-  std::shared_ptr<zbe::TimeHandler> rotatorR = std::make_shared<TimedDemonRecurrentTimeHandler>(rightRotator, teg, zbe::SECOND/8);
+  std::shared_ptr<zbe::Daemon> rightRotator(new  zbe::BehaviorDaemon<zbe::Movable<2>, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > > >(std::make_shared<Rotator>(0.1f), RROTATORS));
+  std::shared_ptr<zbe::TimeHandler> rotatorR = std::make_shared<DemonRecurrentTimeHandler>(rightRotator, teg, zbe::SECOND/8);
   teg.addTimer(rotatorR, zbe::SECOND);
 
-  std::shared_ptr<zbe::TimedDaemon> ballParticles(new  zbe::BehaviorDaemon<zbe::Movable<2>, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > > >(std::make_shared<BackBallParticlesLauncher>(8, ballgraphics[4], RSPRITELIST, &teg), MOVABLELIST));
-  std::shared_ptr<zbe::TimeHandler> expeller = std::make_shared<TimedDemonRecurrentTimeHandler>(ballParticles, teg, zbe::SECOND/16);
+  std::shared_ptr<zbe::Daemon> ballParticles(new  zbe::BehaviorDaemon<zbe::Movable<2>, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > > >(std::make_shared<BackBallParticlesLauncher>(8, ballgraphics[4], RSPRITELIST, &teg), MOVABLELIST));
+  std::shared_ptr<zbe::TimeHandler> expeller = std::make_shared<DemonRecurrentTimeHandler>(ballParticles, teg, zbe::SECOND/16);
   teg.addTimer(expeller, zbe::SECOND/16);
-
-
-  printf("initT = 0x%" PRIx64 " ", initT);fflush(stdout);
-  printf("endT = 0x%" PRIx64 "\n", endT);fflush(stdout);
   printf("|==========================================================|\n");fflush(stdout);
 
   bool keep = true;
@@ -304,20 +302,19 @@ int ludomain(int, char** ) {
     window.clear();
     sdlEventDist.run();
     sysTime.update();
-    initT = endT;
-    endT = sysTime.getTotalTime();
     // Inner loop
-    while (initT < endT) {
-      gema.generate(initT,endT);
-      int64_t eventTime = store.getTime();
-      if (eventTime <= endT) {
+    while (sysTime.isFrameRemaining()) {
+      /* Generating events
+       */
+      gema.generate();
+      sysTime.setPartialFrameTime(store.getTime());
+      if (sysTime.isPartialFrame()) {
+        commonBehaviorMaster.run();
         store.manageCurrent();
-        behavMaster.run(eventTime-initT);
-        initT = eventTime;
+        reactBehaviorMaster.run();
       } else {
-        behavMaster.run(endT-initT);
+        commonBehaviorMaster.run();
         store.clearStore();
-        initT = endT;
       }
     }
     //Post

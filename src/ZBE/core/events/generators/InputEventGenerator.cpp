@@ -13,9 +13,9 @@
 
 namespace zbe {
 
-    void InputEventGenerator::generate(int64_t initTime, int64_t finalTime) {
+    void InputEventGenerator::generate() {
       std::vector<InputStatus> currentInput;
-      inputBuffer->getRange(initTime, finalTime, currentInput);
+      inputBuffer->getRange(sysTime.getInitFrameTime(), sysTime.getEndFrameTime(), currentInput);
       for(auto it = currentInput.begin(); it != currentInput.end(); it++) {
         auto hit = handlers.find(it->getId());
         if (hit != handlers.end()) {

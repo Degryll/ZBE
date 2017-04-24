@@ -27,6 +27,196 @@ inline bool compareQuantizedMovement(double point, double p, double maxDiff){
 }
 
 /******************************************************************************/
+/** AABB NSPHERE INTERSECTION ************************************************/
+/******************************************************************************/
+
+TEST(Intersections, NSphereAABB_Base) {
+    double xpos = 0;
+    double ypos = 0;
+    zbe::NSphere<2> nsphere{{xpos , ypos},10};
+    zbe::AABB<2> aabb{{-50, -50},{50, 50}};
+    EXPECT_TRUE(zbe::intersectionNSphereAABB(nsphere, aabb));
+}
+
+TEST(Intersections, NSphereAABB_Base_1) {
+    double xpos = -60;
+    double ypos = -60;
+    zbe::NSphere<2> nsphere{{xpos , ypos},10};
+    zbe::AABB<2> aabb{{-50, -50},{50, 50}};
+    EXPECT_FALSE(zbe::intersectionNSphereAABB(nsphere, aabb));
+}
+
+TEST(Intersections, NSphereAABB_Base_2) {
+    double xpos = 60;
+    double ypos = 60;
+    zbe::NSphere<2> nsphere{{xpos , ypos},10};
+    zbe::AABB<2> aabb{{-50, -50},{50, 50}};
+    EXPECT_FALSE(zbe::intersectionNSphereAABB(nsphere, aabb));
+}
+
+TEST(Intersections, NSphereAABB_Base_3) {
+    double xpos = -60;
+    double ypos = 60;
+    zbe::NSphere<2> nsphere{{xpos , ypos},10};
+    zbe::AABB<2> aabb{{-50, -50},{50, 50}};
+    EXPECT_FALSE(zbe::intersectionNSphereAABB(nsphere, aabb));
+}
+
+TEST(Intersections, NSphereAABB_Base_4) {
+    double xpos = 60;
+    double ypos = -60;
+    zbe::NSphere<2> nsphere{{xpos , ypos},10};
+    zbe::AABB<2> aabb{{-50, -50},{50, 50}};
+    EXPECT_FALSE(zbe::intersectionNSphereAABB(nsphere, aabb));
+}
+
+TEST(Intersections, NSphereAABB_Base_5) {
+    double xpos = -63.5;
+    double ypos = -63.5;
+    zbe::NSphere<2> nsphere{{xpos , ypos},10};
+    zbe::AABB<2> aabb{{-50, -50},{50, 50}};
+    EXPECT_FALSE(zbe::intersectionNSphereAABB(nsphere, aabb));
+}
+
+TEST(Intersections, NSphereAABB_Base_6) {
+    double xpos = 63.5;
+    double ypos = 63.5;
+    zbe::NSphere<2> nsphere{{xpos , ypos},10};
+    zbe::AABB<2> aabb{{-50, -50},{50, 50}};
+    EXPECT_FALSE(zbe::intersectionNSphereAABB(nsphere, aabb));
+}
+
+TEST(Intersections, NSphereAABB_Base_7) {
+    double xpos = -63.5;
+    double ypos = 63.5;
+    zbe::NSphere<2> nsphere{{xpos , ypos},10};
+    zbe::AABB<2> aabb{{-50, -50},{50, 50}};
+    EXPECT_FALSE(zbe::intersectionNSphereAABB(nsphere, aabb));
+}
+
+TEST(Intersections, NSphereAABB_Base_8) {
+    double xpos = 63.5;
+    double ypos = -63.5;
+    zbe::NSphere<2> nsphere{{xpos , ypos},10};
+    zbe::AABB<2> aabb{{-50, -50},{50, 50}};
+    EXPECT_FALSE(zbe::intersectionNSphereAABB(nsphere, aabb));
+}
+TEST(Intersections, NSphereAABB_Base_9) {
+    double xpos = -63;
+    double ypos = -63;
+    zbe::NSphere<2> nsphere{{xpos , ypos},10};
+    zbe::AABB<2> aabb{{-50, -50},{50, 50}};
+    EXPECT_FALSE(zbe::intersectionNSphereAABB(nsphere, aabb));
+}
+
+TEST(Intersections, NSphereAABB_Base_10) {
+    double xpos = 63;
+    double ypos = 63;
+    zbe::NSphere<2> nsphere{{xpos , ypos},10};
+    zbe::AABB<2> aabb{{-50, -50},{50, 50}};
+    EXPECT_FALSE(zbe::intersectionNSphereAABB(nsphere, aabb));
+}
+
+TEST(Intersections, NSphereAABB_Base_11) {
+    double xpos = -63;
+    double ypos = 63;
+    zbe::NSphere<2> nsphere{{xpos , ypos},10};
+    zbe::AABB<2> aabb{{-50, -50},{50, 50}};
+    EXPECT_FALSE(zbe::intersectionNSphereAABB(nsphere, aabb));
+}
+
+TEST(Intersections, NSphereAABB_Base_12) {
+    double xpos = 63;
+    double ypos = -63;
+    zbe::NSphere<2> nsphere{{xpos , ypos},10};
+    zbe::AABB<2> aabb{{-50, -50},{50, 50}};
+    EXPECT_FALSE(zbe::intersectionNSphereAABB(nsphere, aabb));
+}
+
+TEST(Intersections, NSphereAABB_Base_LF) {
+    double xpos = -60.0001;
+    double ypos = 0;
+    zbe::NSphere<2> nsphere{{xpos , ypos},10};
+    zbe::AABB<2> aabb{{-50, -50},{50, 50}};
+    EXPECT_FALSE(zbe::intersectionNSphereAABB(nsphere, aabb));
+}
+
+TEST(Intersections, NSphereAABB_Base_LT) {
+    double xpos = -60;
+    double ypos = 0;
+    zbe::NSphere<2> nsphere{{xpos , ypos},10};
+    zbe::AABB<2> aabb{{-50, -50},{50, 50}};
+    EXPECT_TRUE(zbe::intersectionNSphereAABB(nsphere, aabb));
+}
+
+TEST(Intersections, NSphereAABB_Base_TF) {
+    double xpos = 0;
+    double ypos = -60.0001;
+    zbe::NSphere<2> nsphere{{xpos , ypos},10};
+    zbe::AABB<2> aabb{{-50, -50},{50, 50}};
+    EXPECT_FALSE(zbe::intersectionNSphereAABB(nsphere, aabb));
+}
+
+TEST(Intersections, NSphereAABB_Base_TT) {
+    double xpos = 0;
+    double ypos = -60;
+    zbe::NSphere<2> nsphere{{xpos , ypos},10};
+    zbe::AABB<2> aabb{{-50, -50},{50, 50}};
+    EXPECT_TRUE(zbe::intersectionNSphereAABB(nsphere, aabb));
+}
+
+TEST(Intersections, NSphereAABB_Base_BF) {
+    double xpos = 0;
+    double ypos = 60.0001;
+    zbe::NSphere<2> nsphere{{xpos , ypos},10};
+    zbe::AABB<2> aabb{{-50, -50},{50, 50}};
+    EXPECT_FALSE(zbe::intersectionNSphereAABB(nsphere, aabb));
+}
+
+TEST(Intersections, NSphereAABB_Base_BT) {
+    double xpos = 0;
+    double ypos = 60;
+    zbe::NSphere<2> nsphere{{xpos , ypos},10};
+    zbe::AABB<2> aabb{{-50, -50},{50, 50}};
+    EXPECT_TRUE(zbe::intersectionNSphereAABB(nsphere, aabb));
+}
+
+TEST(Intersections, NSphereAABB_Base_RF) {
+    double xpos = 60.0001;
+    double ypos = 0;
+    zbe::NSphere<2> nsphere{{xpos , ypos},10};
+    zbe::AABB<2> aabb{{-50, -50},{50, 50}};
+    EXPECT_FALSE(zbe::intersectionNSphereAABB(nsphere, aabb));
+}
+
+TEST(Intersections, NSphereAABB_Base_RT) {
+    double xpos = 60;
+    double ypos = 0;
+    zbe::NSphere<2> nsphere{{xpos , ypos},10};
+    zbe::AABB<2> aabb{{-50, -50},{50, 50}};
+    EXPECT_TRUE(zbe::intersectionNSphereAABB(nsphere, aabb));
+}
+
+/******************************************************************************/
+/** POINT NSPHERE INTERSECTION ************************************************/
+/******************************************************************************/
+
+TEST(Intersections, PointNSphere) {
+  for(int i = 0; i < ITERATIONS ; i++) {
+    double xpos1 = (rand() % (10000) - 500) / 10.0;
+    double ypos1 = (rand() % (10000) - 500) / 10.0;
+    double xpos2 = (rand() % (10000) - 500) / 10.0;
+    double ypos2 = (rand() % (10000) - 500) / 10.0;
+    zbe::Point<2> p1{xpos1 , ypos1};
+    zbe::NSphere<2> nsphere{{xpos2 , ypos2},100};
+    double xd = xpos1 - xpos2;
+    double yd = ypos1 - ypos2;
+    bool expected = (xd*xd + yd*yd)<10000;
+    EXPECT_EQ(expected, zbe::intersectionPointNSphere(p1, nsphere));
+  }
+}
+
+/******************************************************************************/
 /** RAY AGAINST NSPHERE *******************************************************/
 /******************************************************************************/
 

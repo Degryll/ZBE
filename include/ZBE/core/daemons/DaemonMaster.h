@@ -45,34 +45,6 @@ class DaemonMaster : public Daemon {
     std::vector<std::shared_ptr<Daemon> > daemonList;
 };
 
-/** \brief DaemonMaster is a Daemon responsible for run others Daemons. This is necessary to build the Daemons tree.
- */
-class TimedDaemonMaster : public TimedDaemon {
-  public:
-
-    /** \brief Empty constructor.
-     */
-    TimedDaemonMaster() : daemonList() {}
-
-    /** \brief Destructor and the contained Daemons.
-     */
-    ~TimedDaemonMaster() {}
-
-    /** \brief It will run all Daemons added to this DaemonMaster.
-     */
-    void run(uint64_t time);
-
-    /** \brief Add a Daemon to be run by this Daemon.
-     *  The given Daemon will be stored by this Daemon and destroyed with it.
-     * \param daemon Pointer to the Daemon desired to be stored and executed.
-     * \return void
-     *
-     */
-    void addDaemon(std::shared_ptr<TimedDaemon> daemon) {daemonList.push_back(daemon);}
-
-  private:
-    std::vector<std::shared_ptr<TimedDaemon> > daemonList;
-};
 
 }  // namespace zbe
 

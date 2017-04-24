@@ -29,9 +29,9 @@ public:
    */
   ~GeneratorMaster() {}
 
-  void generate(int64_t initTime, int64_t endTime) {
+  void generate() {
     for(auto g : (*gList)) {
-      g->generate(initTime, endTime);
+      g->generate();
     }
   }
 

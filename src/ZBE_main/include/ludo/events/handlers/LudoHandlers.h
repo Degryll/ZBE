@@ -112,25 +112,6 @@ class DemonRecurrentTimeHandler : public zbe::TimeHandler {
   	uint64_t p;
 };
 
-class TimedDemonRecurrentTimeHandler : public zbe::TimeHandler {
-  public:
-	TimedDemonRecurrentTimeHandler(const TimedDemonRecurrentTimeHandler&) = delete;
-	void operator=(const TimedDemonRecurrentTimeHandler&) = delete;
-
-  	TimedDemonRecurrentTimeHandler(std::shared_ptr<zbe::TimedDaemon> daemon, zbe::TimeEventGenerator &teg, uint64_t period):d(daemon), teg(teg), p(period) {}
-
-  	void run(uint64_t time) {
-      d->run(0);
-      std::shared_ptr<zbe::TimeHandler> t = std::make_shared<TimedDemonRecurrentTimeHandler>(d, teg, p);
-      teg.addTimer(t,time + p);
-  	}
-
-  private:
-  	std::shared_ptr<zbe::TimedDaemon> d;
-  	zbe::TimeEventGenerator &teg;
-  	uint64_t p;
-};
-
 } //namespace ludo
 
 #endif //LUDO_EVENTS_HANDLERS_LUDOHANDLERS_H

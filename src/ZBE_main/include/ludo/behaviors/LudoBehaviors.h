@@ -38,7 +38,7 @@ class Rotator : public zbe::Behavior<zbe::Movable<2> > {
     Rotator(double angle): a(angle){}
     virtual ~Rotator() {}
 
-    void apply(std::shared_ptr<zbe::AvatarEntity<zbe::Movable<2> > > entity, int64_t) {
+    void apply(std::shared_ptr<zbe::AvatarEntity<zbe::Movable<2> > > entity) {
       zbe::Movable<2>* avatar;
       entity->assignAvatar(&avatar);
       zbe::Vector<2>& v = avatar->getVelocity();
@@ -68,7 +68,7 @@ class BackBallParticlesLauncher : public zbe::Behavior<zbe::Movable<2> > {
 
     virtual ~BackBallParticlesLauncher() {}
 
-    void apply(std::shared_ptr<zbe::AvatarEntity<zbe::Movable<2> > > entity, int64_t) {
+    void apply(std::shared_ptr<zbe::AvatarEntity<zbe::Movable<2> > > entity) {
       zbe::Movable<2>* avatar;
       entity->assignAvatar(&avatar);
       zbe::Vector<2>& v = avatar->getVelocity();

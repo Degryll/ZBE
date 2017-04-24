@@ -17,6 +17,7 @@
 #include "ZBE/core/tools/math/math.h"
 #include "ZBE/core/tools/math/Point.h"
 #include "ZBE/core/entities/AvatarEntity.h"
+#include "ZBE/core/system/SysTime.h"
 
 namespace zbe {
 
@@ -25,6 +26,10 @@ namespace zbe {
 template<unsigned s>
 class UniformLinearMotion : public Behavior<Movable<s>  > {
   public:
+    UniformLinearMotion(const UniformLinearMotion&) = delete;
+    void operator=(const UniformLinearMotion&) = delete;
+
+    UniformLinearMotion() : sysTime(zbe::SysTime::getInstance()) {}
 
     /** \brief Default destructor.
      */
@@ -32,12 +37,15 @@ class UniformLinearMotion : public Behavior<Movable<s>  > {
 
     /** \brief Do the behavior work over the given entity
      */
-    void apply(std::shared_ptr<AvatarEntity<Movable<s> > > entity, int64_t time) {
+    void apply(std::shared_ptr<AvatarEntity<Movable<s> > > entity) {
       Movable<s>* avatar;
       entity->assignAvatar(&avatar);
       Point<s>& p = avatar->getPosition();
-      p += (avatar->getVelocity() * time) * zbe::INVERSE_SECOND;
+      p += (avatar->getVelocity() * sysTime.getSubFrameTime()) * zbe::INVERSE_SECOND;
     }
+
+  private:
+    zbe::SysTime &sysTime;
 };
 
 }  // namespace zbe

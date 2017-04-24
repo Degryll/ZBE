@@ -10,8 +10,8 @@
 #ifndef CORE_HANDLERS_COLLISION_ACTUATOR_H
 #define CORE_HANDLERS_COLLISION_ACTUATOR_H
 
-#include "ZBE/core/tools/math/collisions/ReactObject.h"
-#include "ZBE/core/tools/math/collisions/CollisionData.h"
+#include "ZBE/core/events/generators/util/ReactObject.h"
+#include "ZBE/core/events/generators/util/CollisionData.h"
 
 namespace zbe {
 
