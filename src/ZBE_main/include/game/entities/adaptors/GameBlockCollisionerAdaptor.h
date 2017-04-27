@@ -17,7 +17,7 @@
 
 #include "ZBE/core/entities/AvatarEntity.h"
 #include "ZBE/core/entities/avatars/Collisioner.h"
-#include "ZBE/core/entities/avatars/implementations/SimpleCollisioner.h"
+#include "ZBE/core/entities/avatars/implementations/VoidCollisioner.h"
 #include "ZBE/core/entities/Adaptor.h"
 #include "ZBE/archetypes/Drawable.h"
 #include "game/entities/GameBlock.h"
@@ -38,7 +38,7 @@ public:
     	zbe::Point<2> max {b->getPosition()[0] + b->getW(), b->getPosition()[1] + b->getH()};
       std::shared_ptr<zbe::CollisionObject<GameReactor> > co = std::make_shared<zbe::StaticSolidAABB2D<GameReactor> >(zbe::AABB2D(b->getPosition(), max));
       std::shared_ptr<zbe::ReactObject<GameReactor> > ro = std::make_shared<zbe::VoidReactObject<GameReactor> >();
-      c = new zbe::SimpleCollisioner<GameReactor>(co, ro, b->getActuatorsList());
+      c = new zbe::VoidCollisioner<GameReactor>(co, ro, b->getActuatorsList());
       return (c);
     }
 

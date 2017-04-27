@@ -7,7 +7,7 @@
 #include "ZBE/core/daemons/DaemonMaster.h"
 #include "ZBE/core/entities/avatars/Collisioner.h"
 #include "ZBE/core/entities/avatars/Collisionator.h"
-#include "ZBE/core/entities/avatars/implementations/SimpleCollisioner.h"
+#include "ZBE/core/entities/avatars/implementations/VoidCollisioner.h"
 #include "ZBE/core/events/generators/GeneratorMaster.h"
 #include "ZBE/core/events/generators/Generator.h"
 #include "ZBE/core/events/Event.h"
@@ -181,8 +181,8 @@ int gamemain(int, char** ) {
 
   printf("Creating the bricks\n");fflush(stdout);
   //bricks
-  zbe::ListManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> >& lmSimpleConerActuatorsList = zbe::ListManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> >::getInstance();
-  std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> brickActuatorsList;
+  zbe::ListManager< std::forward_list< zbe::Actuator<zbe::VoidCollisioner<game::GameReactor>, game::GameReactor>*> >& lmSimpleConerActuatorsList = zbe::ListManager< std::forward_list< zbe::Actuator<zbe::VoidCollisioner<game::GameReactor>, game::GameReactor>*> >::getInstance();
+  std::forward_list< zbe::Actuator<zbe::VoidCollisioner<game::GameReactor>, game::GameReactor>*> brickActuatorsList;
   lmSimpleConerActuatorsList.insert(BRICKACTUATORLIST, &brickActuatorsList);
 //  for(int i = 0; i<8 ; i++){
 //      for(int j = 0; j<8 ; j++){
@@ -203,7 +203,7 @@ int gamemain(int, char** ) {
 
   printf("Creating the board and giving it a size\n");fflush(stdout);
   //board
-  std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> boardActuatorsList;
+  std::forward_list< zbe::Actuator<zbe::VoidCollisioner<game::GameReactor>, game::GameReactor>*> boardActuatorsList;
   lmSimpleConerActuatorsList.insert(BOARDACTUATORLIST, &boardActuatorsList);
   std::shared_ptr<game::GameBoard> board = std::make_shared<game::GameBoard>(0, 0, WIDTH, HEIGHT, BOARDACTUATORLIST);
   collisionablesList.push_front(board);

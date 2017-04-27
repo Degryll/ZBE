@@ -22,7 +22,8 @@
 #include "ZBE/reactobjects/VoidReactObject.h"
 #include "ZBE/core/entities/avatars/Collisioner.h"
 #include "ZBE/core/entities/avatars/Collisionator.h"
-#include "ZBE/core/entities/avatars/implementations/SimpleCollisioner.h"
+#include "ZBE/core/entities/avatars/implementations/VoidCollisioner.h"
+#include "ZBE/core/entities/avatars/implementations/VoidCollisionator.h"
 #include "ZBE/core/entities/AvatarEntity.h"
 #include "ZBE/core/tools/math/objects.h"
 
@@ -31,8 +32,17 @@
 
 namespace ludo {
 
+/****  ReactObjects ****/
 
-/* Final entities */
+template <typename R>
+class DestroyerReactObject : public zbe::ReactObjectCommon<DestroyerReactObject<R>, R> {
+public:
+  DestroyerReactObject() : zbe::ReactObjectCommon<DestroyerReactObject<R>, R>(this) {}
+  virtual ~DestroyerReactObject() {}
+};
+
+
+/**** Final entities ****/
 
 template<typename R>
 class LudoBall: public RotatedDrawable,
@@ -69,8 +79,17 @@ template<typename R>
 class LudoBoard : public zbe::AvatarEntityFixed<zbe::Collisioner<R> > {
 public:
   LudoBoard(double x, double y, double width, double height, uint64_t actuatorsList) :
-    zbe::AvatarEntityFixed<zbe::Collisioner<R> >(new zbe::SimpleCollisioner<R>(std::make_shared<zbe::StaticLimiterAABB2D<R> >(zbe::AABB2D({x, y}, {width, height} )),
+    zbe::AvatarEntityFixed<zbe::Collisioner<R> >(new zbe::VoidCollisioner<R>(std::make_shared<zbe::StaticLimiterAABB2D<R> >(zbe::AABB2D({x, y}, {width, height} )),
          std::make_shared<zbe::VoidReactObject<R> >(),
+         actuatorsList)) {}
+};
+
+template<typename R>
+class LudoCircleArea : public zbe::AvatarEntityFixed<zbe::Collisionator<R> > {
+public:
+  LudoCircleArea(double x, double y, double radius, uint64_t actuatorsList) :
+    zbe::AvatarEntityFixed<zbe::Collisionator<R> >(new zbe::VoidCollisionator<R>(std::make_shared<zbe::ConstantMovingCircle<R> >(zbe::ConstantMovingCircle<R>(zbe::Circle({x, y}, radius), {0, 0})),
+         std::make_shared<DestroyerReactObject<R> >(),
          actuatorsList)) {}
 };
 
@@ -100,6 +119,7 @@ private:
   double x, y;
   double d, a;
 };
+
 
 } // namespace
 

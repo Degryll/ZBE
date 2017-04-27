@@ -7,7 +7,7 @@
 #include "ZBE/core/daemons/DaemonMaster.h"
 #include "ZBE/core/entities/avatars/Collisioner.h"
 #include "ZBE/core/entities/avatars/Collisionator.h"
-#include "ZBE/core/entities/avatars/implementations/SimpleCollisioner.h"
+#include "ZBE/core/entities/avatars/implementations/VoidCollisioner.h"
 #include "ZBE/core/events/generators/GeneratorMaster.h"
 #include "ZBE/core/events/generators/Generator.h"
 #include "ZBE/core/events/Event.h"
@@ -125,7 +125,7 @@ int ludomain(int, char** ) {
   printf("Storing ctl in that list-manager.\n");fflush(stdout);
   lmct.insert(COLLISIONATORLIST, &ctl);
   printf("Building collision event generator with list id and the event id to use (1).\n");fflush(stdout);
-  zbe::CollisionEventGenerator<LudoReactor> ceg(COLLISIONATORLIST, COLLISIONEVENT, new zbe::IntersectionCollisionSelector<LudoReactor>());
+  zbe::CollisionEventGenerator<LudoReactor> ceg(COLLISIONATORLIST, COLLISIONEVENT, new zbe::BaseCollisionSelector<LudoReactor>());
   vGenetators.push_back(&ceg);
   printf("|------------------- Time Event Generator -----------------|\n");fflush(stdout);
   printf("Building time event generator with the event id to use (2)\n");fflush(stdout);
@@ -263,11 +263,11 @@ int ludomain(int, char** ) {
   ieg.addHandler(zbe::ZBEK_RIGHT, &rtoggler);
 
   printf("Pasive enities\n");fflush(stdout);
-  zbe::ListManager<std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<LudoReactor>, LudoReactor>*> >& lmSimpleConerActuatorsList = zbe::ListManager<std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<LudoReactor>, LudoReactor>*> >::getInstance();
+  zbe::ListManager<std::forward_list< zbe::Actuator<zbe::VoidCollisioner<LudoReactor>, LudoReactor>*> >& lmSimpleConerActuatorsList = zbe::ListManager<std::forward_list< zbe::Actuator<zbe::VoidCollisioner<LudoReactor>, LudoReactor>*> >::getInstance();
   printf("Creating the bricks\n");fflush(stdout);
 
   printf("Creating the board and giving it a size\n");fflush(stdout);
-  std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<LudoReactor>, LudoReactor>*> boardActuatorsList;
+  std::forward_list< zbe::Actuator<zbe::VoidCollisioner<LudoReactor>, LudoReactor>*> boardActuatorsList;
   lmSimpleConerActuatorsList.insert(BOARDACTUATORLIST, &boardActuatorsList);
   std::shared_ptr<LudoBoard<LudoReactor> > board = std::make_shared<LudoBoard<LudoReactor> >(50, 50, WIDTH - 50, HEIGHT - 50, BOARDACTUATORLIST);
   collisionablesList.push_front(board);

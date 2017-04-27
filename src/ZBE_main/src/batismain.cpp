@@ -8,7 +8,7 @@
 #include "ZBE/core/daemons/DaemonMaster.h"
 #include "ZBE/core/entities/avatars/Collisioner.h"
 #include "ZBE/core/entities/avatars/Collisionator.h"
-#include "ZBE/core/entities/avatars/implementations/SimpleCollisioner.h"
+#include "ZBE/core/entities/avatars/implementations/VoidCollisioner.h"
 #include "ZBE/core/events/generators/GeneratorMaster.h"
 #include "ZBE/core/events/generators/Generator.h"
 #include "ZBE/core/events/Event.h"
@@ -190,8 +190,8 @@ int batismain(int, char** ) {
   printf("Creating the board and giving it a size\n");fflush(stdout);
   //board
   zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<game::GameReactor> > > collisionablesList;
-  zbe::ListManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> >& lmSimpleConerActuatorsList = zbe::ListManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> >::getInstance();
-  std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> boardActuatorsList;
+  zbe::ListManager< std::forward_list< zbe::Actuator<zbe::VoidCollisioner<game::GameReactor>, game::GameReactor>*> >& lmSimpleConerActuatorsList = zbe::ListManager< std::forward_list< zbe::Actuator<zbe::VoidCollisioner<game::GameReactor>, game::GameReactor>*> >::getInstance();
+  std::forward_list< zbe::Actuator<zbe::VoidCollisioner<game::GameReactor>, game::GameReactor>*> boardActuatorsList;
   lmSimpleConerActuatorsList.insert(BOARDACTUATORLIST, &boardActuatorsList);
   batis::Board boardCfg;
 
@@ -261,7 +261,7 @@ int batismain(int, char** ) {
 
   printf("Creating the bricks\n");fflush(stdout);
   //bricks
-  std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> brickActuatorsList;
+  std::forward_list< zbe::Actuator<zbe::VoidCollisioner<game::GameReactor>, game::GameReactor>*> brickActuatorsList;
   lmSimpleConerActuatorsList.insert(BRICKACTUATORLIST, &brickActuatorsList);
 
   int brickProb = 30;

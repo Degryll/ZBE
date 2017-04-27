@@ -221,7 +221,8 @@
 		<Unit filename="../../../include/ZBE/core/entities/avatars/SingleSprite.h" />
 		<Unit filename="../../../include/ZBE/core/entities/avatars/StatedSprite.h" />
 		<Unit filename="../../../include/ZBE/core/entities/avatars/implementations/BaseAvatar.h" />
-		<Unit filename="../../../include/ZBE/core/entities/avatars/implementations/SimpleCollisioner.h" />
+		<Unit filename="../../../include/ZBE/core/entities/avatars/implementations/VoidCollisionator.h" />
+		<Unit filename="../../../include/ZBE/core/entities/avatars/implementations/VoidCollisioner.h" />
 		<Unit filename="../../../include/ZBE/core/events/CollisionEvent2D.h" />
 		<Unit filename="../../../include/ZBE/core/events/Event.h" />
 		<Unit filename="../../../include/ZBE/core/events/EventStore.h" />

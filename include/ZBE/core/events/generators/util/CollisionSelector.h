@@ -51,7 +51,7 @@ class CollisionSelector {
      *  \param point Unaltered.
      *  \return False.
      */
-    virtual bool visit(StaticSolidAABB2D<R>&, StaticSolidAABB2D<R>&, int64_t&, Point2D&) = 0;
+    virtual bool visit(StaticSolidAABB2D<R>& param1, StaticSolidAABB2D<R>& param2, int64_t&, Point2D&) = 0;
 
     /** \brief Dont move, wont collide.
      *  \param param1 First AABB.
@@ -60,7 +60,7 @@ class CollisionSelector {
      *  \param point Point of collision if any.
      *  \return False.
      */
-    virtual bool visit(StaticLimiterAABB2D<R>&, StaticLimiterAABB2D<R>&, int64_t&, Point2D&) = 0;
+    virtual bool visit(StaticLimiterAABB2D<R>& param1, StaticLimiterAABB2D<R>& param2, int64_t&, Point2D&) = 0;
 
     /** \brief Dont move, wont collide.
      *  \param param1 First AABB.
@@ -69,7 +69,7 @@ class CollisionSelector {
      *  \param point Point of collision if any.
      *  \return False.
      */
-    virtual bool visit(StaticSolidAABB2D<R>&, StaticLimiterAABB2D<R>&, int64_t&, Point2D&) = 0;
+    virtual bool visit(StaticSolidAABB2D<R>& param1, StaticLimiterAABB2D<R>& param2, int64_t&, Point2D&) = 0;
 
     /** \brief Dont move, wont collide.
      *  \param param1 First AABB.
@@ -78,7 +78,7 @@ class CollisionSelector {
      *  \param point Point of collision if any.
      *  \return False.
      */
-    virtual bool visit(StaticLimiterAABB2D<R>&, StaticSolidAABB2D<R>&, int64_t&, Point2D&) = 0;
+    virtual bool visit(StaticLimiterAABB2D<R>& param1, StaticSolidAABB2D<R>& param2, int64_t&, Point2D&) = 0;
 
     /** \brief Collision detection for an AABB and a circle.
      *  \param param1 The AABB.

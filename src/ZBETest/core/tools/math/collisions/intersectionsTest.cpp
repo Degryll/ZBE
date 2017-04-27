@@ -27,6 +27,34 @@ inline bool compareQuantizedMovement(double point, double p, double maxDiff){
 }
 
 /******************************************************************************/
+/** AABB'S INTERSECTION ************************************************/
+/******************************************************************************/
+
+TEST(Intersections, AABBAABB_Base) {
+    zbe::AABB<2> aabba{{-50, -50},{50, 50}};
+    zbe::AABB<2> aabbb{{-50, -50},{50, 50}};
+    EXPECT_TRUE(zbe::intersectionAABBAABB(aabba, aabbb));
+}
+
+TEST(Intersections, AABBAABB_Base_1) {
+    zbe::AABB<2> aabba{{0, 0},{50, 50}};
+    zbe::AABB<2> aabbb{{-50, -50},{0, 0}};
+    EXPECT_FALSE(zbe::intersectionAABBAABB(aabba, aabbb));
+}
+
+TEST(Intersections, AABBAABB_Base_2) {
+    zbe::AABB<2> aabba{{0, 0},{50, 50}};
+    zbe::AABB<2> aabbb{{-50, -50},{1, 1}};
+    EXPECT_TRUE(zbe::intersectionAABBAABB(aabba, aabbb));
+}
+
+TEST(Intersections, AABBAABB_Base_3) {
+    zbe::AABB<2> aabba{{0, 0},{50, 50}};
+    zbe::AABB<2> aabbb{{10, -10},{20, 10}};
+    EXPECT_TRUE(zbe::intersectionAABBAABB(aabba, aabbb));
+}
+
+/******************************************************************************/
 /** AABB NSPHERE INTERSECTION ************************************************/
 /******************************************************************************/
 

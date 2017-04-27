@@ -22,6 +22,14 @@
 namespace zbe {
 
 template <unsigned dim>
+bool intersectionAABBAABB(AABB<dim> boxa, AABB<dim> boxb);
+
+template <unsigned dim>
+bool intersectionNSphereNSphere(NSphere<dim> nspherea, NSphere<dim> nsphereb);
+inline bool intersectionCircleCircle(Circle circlea, Circle circleb) {return intersectionNSphereNSphere<2>(circlea, circleb);}
+inline bool intersectionSphereSphere(Sphere spherea, Sphere sphereb) {return intersectionNSphereNSphere<3>(spherea, sphereb);}
+
+template <unsigned dim>
 bool intersectionNSphereAABB(NSphere<dim> sphere, AABB<dim> box);
 inline bool intersectionCircleAABB2D(Circle circle, AABB<2> box) {return intersectionNSphereAABB<2>(circle, box);}
 inline bool intersectionSphereAABB3D(Sphere sphere, AABB<3> box) {return intersectionNSphereAABB<3>(sphere, box);}
@@ -82,7 +90,36 @@ inline bool IntersectionMovingSphereOutsideAABB3D(Sphere sphere, Vector3D direct
 
 bool IntersectionMovingCircleOutsideAABB2D(NSphere<2> nsphere, Vector<2> direction, AABB<2> box, int64_t& time, Point<2>& point);
 
+/** \brief A template function that tell if two AABB boxes intersects.
+ *
+ * \param boxa The box A.
+ * \param boxb The box B.
+ * \return True if the boxes intersects, false otherwise.
+ * \sa intersectionAABBAABB.
+ */
+template <unsigned dim>
+bool intersectionAABBAABB(AABB<dim> boxa, AABB<dim> boxb) {
+  for(unsigned i = 0; i < dim; i++) {//a.width + b.width)
+    if(abs(boxa.minimum[i] - boxb.minimum[i]) * 2 >= ((boxa.maximum[i] - boxa.minimum[i]) + (boxb.maximum[i] - boxb.minimum[i]))) {
+        return false;
+    }
+  }
+  return true;
+}
 
+/** \brief A template function that tell if two N-dimensional Spheres intersects.
+ *
+ * \param spherea The sphere A.
+ * \param sphereb The sphere B.
+ * \return True if the spheres intersects, false otherwise.
+ * \sa intersectionNSphereNSphere.
+ */
+template <unsigned dim>
+bool intersectionNSphereNSphere(NSphere<dim> nspherea, NSphere<dim> nsphereb){
+  double rsum = nspherea.r + nsphereb.r;
+  double r2 = rsum * rsum;
+  return sqrPointDist(nspherea.c, nsphereb.c) < r2;
+}
 
 /** \brief A template function that tell if an N-dimensional Sphere intersects an AABB.
  *
@@ -95,7 +132,7 @@ template <unsigned dim>
 bool intersectionNSphereAABB(NSphere<dim> sphere, AABB<dim> box) {
   double r2 = sphere.r * sphere.r;
   double mins_dist = 0;
-  for(unsigned i = 0; i < dim; i++ ) {
+  for(unsigned i = 0; i < dim; i++) {
     if( sphere.c[i] < box.minimum[i] ) {
       double dist = sphere.c[i] - box.minimum[i];
       mins_dist += (dist * dist);

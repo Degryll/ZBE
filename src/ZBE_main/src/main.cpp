@@ -42,9 +42,25 @@ int main(int argc, char* argv[]) {
     break;
   }
 
-  printf("\n\n");
-  printf("¿Esta muerto?\n ...Terminado\ncon salida %d\n",out);
-  getchar();
+printf("                     ______ \n");
+printf("                   <((((((\\\\\\ \n");
+printf("                   /      . }\\ \n");
+printf("                   ;--..--._|} \n");
+printf("(\\                 '--/\\--'  ) \n");
+printf(" \\\\                | '-'  :'| \n");
+printf("  \\\\               . -==- .-| \n");
+printf("   \\\\               \\.__.'   \\--._ \n");
+printf("   [\\\\          __.--|       //  _/'--. \n");
+printf("   \\ \\\\       .'-._ ('-----'/ __/      \\ \n");
+printf("    \\ \\\\     /   __>|      | '--.       | \n");
+printf("     \\ \\\\   |   \\   |     /    /       / \n");
+printf("      \\ '\\ /     \\  |     |  _/       / \n");
+printf("       \\  \\       \\ |     | /        / \n");
+printf("---------------------------------------\n");
+printf("|             Esta muerto?             |\n|             ...Terminado             |\n");
+printf("---------------------------------------\n");
+printf("\n\ncon salida %d\n",out);
+getchar();
 
   return (out);
 }

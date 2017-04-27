@@ -3,6 +3,8 @@
 
 #include "ZBE/reactobjects/VoidReactObject.h"
 
+#include "ludo/entities/LudoEntities.h"
+
 namespace ludo {
 
 class VoidReactObject;
@@ -12,6 +14,9 @@ public:
   virtual ~LudoReactor() {}
 
   virtual void act(zbe::VoidReactObject<LudoReactor>*) {}
+
+  virtual void act(DestroyerReactObject<LudoReactor>*) {}
+
 };
 
 }  // namespace

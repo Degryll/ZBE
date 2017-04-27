@@ -15,7 +15,7 @@
 
 #include "ZBE/core/tools/math/objects.h"
 #include "ZBE/core/entities/avatars/Collisioner.h"
-#include "ZBE/core/entities/avatars/implementations/SimpleCollisioner.h"
+#include "ZBE/core/entities/avatars/implementations/VoidCollisioner.h"
 #include "ZBE/core/entities/AvatarEntity.h"
 #include "ZBE/reactobjects/VoidReactObject.h"
 
@@ -38,7 +38,7 @@ class GameBoard : public zbe::AvatarEntityFixed<zbe::Collisioner<game::GameReact
 public:
   Board board;
   GameBoard(double x, double y, double width, double height, uint64_t actuatorsList, Board board) :
-    zbe::AvatarEntityFixed<zbe::Collisioner<game::GameReactor> >(new zbe::SimpleCollisioner<game::GameReactor>(std::make_shared<zbe::StaticLimiterAABB2D<game::GameReactor> >(zbe::AABB2D({x, y}, {width, height} )),
+    zbe::AvatarEntityFixed<zbe::Collisioner<game::GameReactor> >(new zbe::VoidCollisioner<game::GameReactor>(std::make_shared<zbe::StaticLimiterAABB2D<game::GameReactor> >(zbe::AABB2D({x, y}, {width, height} )),
          std::make_shared<zbe::VoidReactObject<game::GameReactor> >(),
          actuatorsList)), board(board){}
 

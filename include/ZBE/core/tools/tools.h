@@ -43,4 +43,22 @@ struct Covariance_Traits<T, void> {
 template <typename T>
 struct TypeGimmick { typedef T type; };
 
+/* \brief Agroupation of an undetermined number of types
+ */
+template <typename T, typename... Bases>
+struct TypeContainer : public TypeContainer<T>, public TypeContainer<Bases...> {
+  TypeContainer(T* t, Bases*...bases): TypeContainer<T>(t), TypeContainer<Bases...>(bases...) {}
+  ~TypeContainer(){}
+};
+
+template <typename T>
+struct TypeContainer<T> {
+  TypeContainer(T* t): t(t){}
+  ~TypeContainer(){}
+
+  T* get() {return t;}
+
+  T* t;
+};
+
 #endif  // ZBE_CORE_TOOLS_TOOLS_H_

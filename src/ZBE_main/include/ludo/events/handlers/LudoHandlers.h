@@ -16,10 +16,15 @@
 #include "ZBE/core/events/handlers/TimeHandler.h"
 
 #include "ludo/archetypes/LudoArchetypes.h"
+#include "ludo/entities/LudoEntities.h"
 #include "ludo/entities/LudoAvatars.h"
 
 namespace ludo {
-/** \brief Actuator capable of making a BouncerCollisioner bounce in a Bounceable.
+
+template <typename R>
+class DestroyerReactObject;
+
+/** \brief Actuator capable of making a Bouncer bounce in a Bounceable.
  */
 template <typename R>
 class LudoBallBouncer: public zbe::Actuator<zbe::Bouncer<2>, R> {
@@ -32,6 +37,18 @@ class LudoBallBouncer: public zbe::Actuator<zbe::Bouncer<2>, R> {
     }
 };
 
+/** \brief Actuator capable of making a Bouncer get Annoyed by a Destroyer.
+ */
+template <typename R>
+class BouncerAnnoyer: public zbe::Actuator< zbe::Bouncer<2>, R> {
+  public:
+    void act(DestroyerReactObject<R>*) {
+      zbe::Bouncer<2> * gb = zbe::Actuator<zbe::Bouncer<2>, R>::getCollisioner();
+      zbe::Vector<2> v = gb->getVelocity();
+      v.setCartesian(100,100);
+      gb->setVelocity(v);
+    }
+};
 
 class GraphicsSet : public zbe::InputHandler {
   public:

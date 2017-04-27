@@ -18,7 +18,6 @@
 //#include "ZBE/core/tools/math/math.h"
 //#include "ZBE/core/tools/math/Point.h"
 //
-//#include "ZBE/entities/avatars/MovableCollisioner.h"
 //#include "ZBE/reactobjects/VoidReactObject.h"
 //
 //namespace ludo {
@@ -26,17 +25,10 @@
 ///** \brief Actuator capable of making a MovableCollisioner bounce in a Bounceable.
 // */
 //template <typename R>
-//class MovableCollisionerBouncer: public zbe::Actuator<zbe::MovableCollisioner<R, 2>, R> {
+//class BouncerAnnoyer: public zbe::Actuator< zbe::Bouncer<2>, R> {
 //  public:
-//    void act(zbe::VoidReactObject<R>*) {
-//      zbe::MovableCollisioner<R, 2> * gb = zbe::Actuator<zbe::MovableCollisioner<R, 2>, R>::getCollisioner();
-//      zbe::CollisionData * cd = zbe::Actuator<zbe::MovableCollisioner<R, 2>, R>::getCollisionData();
-//      zbe::Vector<2> v = gb->getVelocity();
-//      zbe::Point<2> p = cd->getPoint();
-//      zbe::Point<2> c = gb->getPosition();
-//      zbe::Vector<2> n = c - p;
-//      v.reflect(n);
-//      gb->setVelocity(v);
+//    void act(zbe::DestroyerReactObject<R>*) {
+//      Bouncer
 //    }
 //};
 //}  // namespace
