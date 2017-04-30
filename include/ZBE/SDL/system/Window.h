@@ -18,6 +18,7 @@
 #include <SDL2/SDL_ttf.h>
 
 #include "ZBE/SDL/starters/SDL_Starter.h"
+#include "ZBE/core/system/SysError.h"
 
 namespace zbe {
 
@@ -89,7 +90,11 @@ class Window {
      *
      *  \sa clear()
      */
-    inline void setBackgroundColor(Uint8 red, Uint8 green, Uint8 blue, Uint8 alpha);
+    inline void setBackgroundColor(Uint8 red, Uint8 green, Uint8 blue, Uint8 alpha) {
+      if(SDL_SetRenderDrawColor(renderer, red, green, blue, alpha)) {
+        zbe::SysError::setError(std::string("ERROR: SDL could not set the background color! SDL ERROR: ") + SDL_GetError());
+      }
+    }
 
     /** \brief Draw the portion of the texture specified by srcrect in the portion of the window specified by dstrect.
      *
@@ -133,7 +138,7 @@ class Window {
      */
     void render(SDL_Texture* tex, const SDL_Rect* srcrect,const SDL_Rect* dstrect,const double angle,const SDL_Point* center,const SDL_RendererFlip flip = SDL_FLIP_NONE);
 
-        /** \brief Draw the portion of the texture received (as a surface) by srcrect in the portion of the window specified by dstrect.
+    /** \brief Draw the portion of the texture received (as a surface) by srcrect in the portion of the window specified by dstrect.
      *
      *  \param surf Surface.
      *  \param srcrect Portion of the texture to be drawn.
@@ -188,6 +193,18 @@ class Window {
      */
     uint64_t loadImg(const char *url);
 
+    /** \brief Load an image from an array to create a texture in this renderer.
+     *
+     *  \param data Pixel data in bytes.
+     *  \param width Width of the image.
+     *  \param height Height of the image.
+     *  \param depth Depth of color bits.
+     *  \param pitch Rows in bytes of the image.
+     *  \return An id to the texture loaded. Use this id to render the texture or to change the image associated with the texture.
+     *  \sa reloadImg(), render()
+     */
+    uint64_t loadImg(const char *data, int width, int height, int depth, int pitch);
+
     /** \brief Reload an image to an already created texture.
      *
      *  \param url Image file to be reloaded.
@@ -196,7 +213,7 @@ class Window {
      */
     uint64_t reloadImg(const char *url, uint64_t id);
 
-      /** \brief Load a text with a font and a color to create a texture in this renderer.
+    /** \brief Load a text with a font and a color to create a texture in this renderer.
      *
      *  \param url Image file to be loaded.
      *  \return An id to the texture loaded. Use this id to render the texture or to change the image associated with the texture.
@@ -204,7 +221,7 @@ class Window {
      */
     uint64_t loadText(char *text, TTF_Font *font, SDL_Color color);
 
-      /** \brief Adds a font to the font collection.
+    /** \brief Adds a font to the font collection.
      *
      *  \param font Font type file.
      *  \param size Font size.
@@ -214,10 +231,23 @@ class Window {
      */
     uint64_t loadFont(const char *fontName, int size, SDL_Color color);
 
+    void render2Texture() {
+      SDL_SetRenderTarget(renderer, output);
+    }
+
+    void render2Screen() {
+      SDL_SetRenderTarget(renderer, nullptr);
+    }
+
+    void readPixels(char* data, int pitch) {
+      SDL_RenderReadPixels(renderer, nullptr, SDL_PIXELFORMAT_BGR888, data, pitch);
+    }
+
   private:
     SDL_Starter &sdl;                         //!< SDL instance.
     SDL_Window* window;                       //!< Window.
     SDL_Renderer* renderer;                   //!< Renderer associated with the window
+    SDL_Texture* output;                      //!< Output texture.
     uint64_t ntextures;                       //!< Number of loaded textures.
     std::vector<SDL_Texture*> imgCollection;  //!< Collection of textures.
     uint64_t nfonts;                          //!< Number of loaded fonts.

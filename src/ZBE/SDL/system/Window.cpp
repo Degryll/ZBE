@@ -13,12 +13,9 @@
 #include <string>
 #include <SDL2/SDL_image.h>
 
-#include "ZBE/core/system/SysError.h"
-
-
 namespace zbe {
 
-Window::Window(int width, int height, Uint32 window_flags) : sdl(SDL_Starter::getInstance(SDL_INIT_VIDEO)), window(0), renderer(0), ntextures(0), imgCollection(), nfonts(0), fontCollection(), m(), mf() {
+Window::Window(int width, int height, Uint32 window_flags) : sdl(SDL_Starter::getInstance(SDL_INIT_VIDEO)), window(0), renderer(0), output(SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, width, height)), ntextures(0), imgCollection(), nfonts(0), fontCollection(), m(), mf() {
   if(SDL_CreateWindowAndRenderer(width, height, window_flags, &window, &renderer)) {
     zbe::SysError::setError(std::string("ERROR: SDL could not create a window and/or a renderer! SDL ERROR: ") + SDL_GetError());
   }
@@ -30,6 +27,7 @@ Window::Window(const char* title, int width, int height, Uint32 window_flags, Ui
 Window::Window(const char* title, int x, int y, int width, int height, Uint32 window_flags, Uint32 rederer_flags)
        : sdl(SDL_Starter::getInstance(SDL_INIT_VIDEO)), window(SDL_CreateWindow(title, x, y, width, height, window_flags)),
          renderer(SDL_CreateRenderer(window, -1, rederer_flags)),
+         output(SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, width, height)),
          ntextures(0), imgCollection(), nfonts(0), fontCollection(), m(), mf() {
 
   if (window == nullptr){
@@ -53,12 +51,6 @@ Window::~Window() {
 void Window::clear() {
   if(SDL_RenderClear(renderer)) {
     zbe::SysError::setError(std::string("ERROR: SDL could not clear the window! SDL ERROR: ") + SDL_GetError());
-  }
-}
-
-void Window::setBackgroundColor(Uint8 red, Uint8 green, Uint8 blue, Uint8 alpha) {
-  if(SDL_SetRenderDrawColor(renderer, red, green, blue, alpha)) {
-    zbe::SysError::setError(std::string("ERROR: SDL could not set the background color! SDL ERROR: ") + SDL_GetError());
   }
 }
 
@@ -127,6 +119,32 @@ void Window::render(uint64_t fontID, const char *text, const SDL_Rect* srcrect, 
 uint64_t Window::loadImg(const char *url) {
   m.lock();
     imgCollection.push_back(IMG_LoadTexture(renderer, url));
+    uint64_t rid = ntextures++;  // Avoid race condition
+  m.unlock();
+
+  return (rid);
+}
+
+uint64_t Window::loadImg(const char *data, int width, int height, int depth, int pitch) {
+  Uint32 rmask, gmask, bmask;
+  #if SDL_BYTEORDER == SDL_BIG_ENDIAN
+    rmask = 0x00ff0000;
+    gmask = 0x0000ff00;
+    bmask = 0x000000ff;
+  #else // little endian, like x86
+    rmask = 0x000000ff;
+    gmask = 0x0000ff00;
+    bmask = 0x00ff0000;
+  #endif
+
+  SDL_Surface* s = SDL_CreateRGBSurfaceFrom((void*)data, width, height, depth, pitch, rmask, gmask, bmask, 0xff);
+
+  SDL_Texture *t = SDL_CreateTextureFromSurface(renderer, s);
+
+  SDL_FreeSurface(s);
+
+  m.lock();
+    imgCollection.push_back(t);
     uint64_t rid = ntextures++;  // Avoid race condition
   m.unlock();
 
