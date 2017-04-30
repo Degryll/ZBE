@@ -18,10 +18,10 @@
 namespace zbe {
 
 template <typename R>
-class VoidCollisioner : public zbe::CollisionerCommon<VoidCollisioner<R>, R> {
+class VoidCollisioner : public zbe::CollisionerCommon<R, void> {
 public:
   VoidCollisioner(std::shared_ptr<CollisionObject<R> > collisionObject, std::shared_ptr<ReactObject<R> > reactObject, uint64_t actuatorsList)
-    : CollisionerCommon<VoidCollisioner<R>, R>(this, collisionObject, reactObject, actuatorsList) {}
+    : CollisionerCommon<R, void>(new AvatarEntityContainer<void>(nullptr), collisionObject, reactObject, actuatorsList) {}
 };
 
 } // namespace zbe

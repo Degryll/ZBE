@@ -1,5 +1,7 @@
 #include "gtest/gtest.h"
 
+#include "ZBE/core/tools/tools.h"
+
 #include "ZBE/core/events/Event.h"
 #include "ZBE/core/events/InputEvent.h"
 #include "ZBE/core/events/handlers/InputHandler.h"
@@ -21,9 +23,9 @@ public:
   virtual ~R() {}
 };
 
-class C : public zbe::CollisionerCommon<C, R> {
+class C : public zbe::CollisionerCommon<R, void> {
   public:
-    C() : zbe::CollisionerCommon<C, R>(this, nullptr, nullptr, 1){};
+    C() : zbe::CollisionerCommon<R, void>(new zbe::AvatarEntityContainer<void>(nullptr), nullptr, nullptr, 1){};
 };
 
 class RO : public zbe::ReactObject<R> {

@@ -22,6 +22,7 @@
 #include "ZBE/core/events/generators/CollisionEventGenerator.h"
 #include "ZBE/core/events/generators/TimeEventGenerator.h"
 #include "ZBE/core/events/handlers/Actuator.h"
+#include "ZBE/core/events/handlers/ActuatorWrapper.h"
 #include "ZBE/core/system/SysTime.h"
 #include "ZBE/core/tools/Timer.h"
 #include "ZBE/core/tools/math/math.h"
@@ -53,6 +54,8 @@
 #define PI 3.14159265
 
 namespace ludo {
+
+using namespace zbe;
 
 int ludomain(int, char** ) {
 
@@ -94,61 +97,61 @@ int ludomain(int, char** ) {
   printf("|=================== Building up system ===================|\n");fflush(stdout);
   printf("Event store\n");fflush(stdout);
   printf("Will store all event independently of its type\n");fflush(stdout);
-  zbe::EventStore& store = zbe::EventStore::getInstance();
+  EventStore& store = EventStore::getInstance();
   printf("Building generator master\n");fflush(stdout);
-  std::vector<zbe::Generator*> vGenetators;
-  zbe::ListManager<std::vector<zbe::Generator*> >::getInstance().insert(GENERATORLIST, &vGenetators);
-  zbe::GeneratorMaster gema(GENERATORLIST);
+  std::vector<Generator*> vGenetators;
+  ListManager<std::vector<Generator*> >::getInstance().insert(GENERATORLIST, &vGenetators);
+  GeneratorMaster gema(GENERATORLIST);
   printf("|------------------------ Input Event Generator-------------|\n");fflush(stdout);
   printf("Building SDLEventDispatcher\n");fflush(stdout);
   printf("Will extract data from SDL and get it usable for the engine\n");fflush(stdout);
-  zbe::SDLEventDispatcher & sdlEventDist = zbe::SDLEventDispatcher::getInstance();
+  SDLEventDispatcher & sdlEventDist = SDLEventDispatcher::getInstance();
   printf("Acquiring InputBuffer\n");fflush(stdout);
   printf("SDLEventDispatcher Will store input changes for a frame into it\n");fflush(stdout);
-  zbe::InputBuffer * inputBuffer = sdlEventDist.getInputBuffer();
+  InputBuffer * inputBuffer = sdlEventDist.getInputBuffer();
   printf("Acquiring and configuring InputEventGenerator with that InputReader\n");fflush(stdout);
   printf("Will read events from the InputReader and send them to the store\n");fflush(stdout);
   printf("Input events will use id 0\n");fflush(stdout);
-  zbe::InputEventGenerator ieg(inputBuffer,INPUTEVENT);
+  InputEventGenerator ieg(inputBuffer,INPUTEVENT);
   vGenetators.push_back(&ieg);
   printf("|-------------------- Input keys config -------------------|\n");fflush(stdout);
   printf("Building an sprite adaptor for the ball\n");fflush(stdout);
   game::ExitInputHandler terminator;
-  ieg.addHandler(zbe::ZBEK_ESCAPE, &terminator);
-  ieg.addHandler(zbe::ZBEK_RETURN, &terminator);
+  ieg.addHandler(ZBEK_ESCAPE, &terminator);
+  ieg.addHandler(ZBEK_RETURN, &terminator);
   printf("|------------------- Collision Event Generator-------------|\n");fflush(stdout);
   printf("Building list for collisionator entinties. Currently empty.\n");fflush(stdout);
   printf("It will store entities that will search for a collision.\n");fflush(stdout);
-  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<LudoReactor> > > ctl;
+  TicketedForwardList<AvatarEntity<Collisionator<LudoReactor> > > ctl;
   printf("Acquiring singleton list-manager for this list (ctl).\n");fflush(stdout);
-  zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<LudoReactor> > > >& lmct = zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<LudoReactor> > > >::getInstance();
+  ListManager< TicketedForwardList<AvatarEntity<Collisionator<LudoReactor> > > >& lmct = ListManager< TicketedForwardList<AvatarEntity<Collisionator<LudoReactor> > > >::getInstance();
   printf("Storing ctl in that list-manager.\n");fflush(stdout);
   lmct.insert(COLLISIONATORLIST, &ctl);
   printf("Building collision event generator with list id and the event id to use (1).\n");fflush(stdout);
-  zbe::CollisionEventGenerator<LudoReactor> ceg(COLLISIONATORLIST, COLLISIONEVENT, new zbe::BaseCollisionSelector<LudoReactor>());
+  CollisionEventGenerator<LudoReactor> ceg(COLLISIONATORLIST, COLLISIONEVENT, new BaseCollisionSelector<LudoReactor>());
   vGenetators.push_back(&ceg);
   printf("|------------------- Time Event Generator -----------------|\n");fflush(stdout);
   printf("Building time event generator with the event id to use (2)\n");fflush(stdout);
-  zbe::TimeEventGenerator teg(TIMEEVENT);
+  TimeEventGenerator teg(TIMEEVENT);
   vGenetators.push_back(&teg);
   printf("|------------------------- Time ---------------------------|\n");fflush(stdout);
   printf("Building a SDL implementation of Timer\n");fflush(stdout);
-  zbe::Timer *sysTimer = new zbe::SDLTimer(true);
+  Timer *sysTimer = new SDLTimer(true);
   printf("Acquiring and configuring SysTime with that Timer\n");fflush(stdout);
   printf("It will be the time reference for all the game context\n");fflush(stdout);
-  zbe::SysTime &sysTime = zbe::SysTime::getInstance();
+  SysTime &sysTime = SysTime::getInstance();
   sysTime.setSystemTimer(sysTimer);
   printf("|-------------------- Drawing system ----------------------|\n");fflush(stdout);
   printf("Building the window to draw on\n");fflush(stdout);
-  zbe::Window window(WIDTH,HEIGHT);
+  Window window(WIDTH,HEIGHT);
   printf("Creating draw master list\n");fflush(stdout);
-  zbe::DaemonMaster drawMaster;
+  DaemonMaster drawMaster;
   printf("Creating drawables list\n");fflush(stdout);
-  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite> > sprites;
-  zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite > > >& lmAESingleSprite = zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite> > >::getInstance();
+  TicketedForwardList<AvatarEntity<SingleSprite> > sprites;
+  ListManager<TicketedForwardList<AvatarEntity<SingleSprite > > >& lmAESingleSprite = ListManager<TicketedForwardList<AvatarEntity<SingleSprite> > >::getInstance();
   lmAESingleSprite.insert(SPRITELIST, &sprites);
-  zbe::TicketedForwardList<zbe::AvatarEntity<SimpleRotatedSprite> > rsprites;
-  zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<SimpleRotatedSprite > > >& lmAESimpleRotatedSprite = zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<SimpleRotatedSprite> > >::getInstance();
+  TicketedForwardList<AvatarEntity<SimpleRotatedSprite> > rsprites;
+  ListManager< TicketedForwardList<AvatarEntity<SimpleRotatedSprite > > >& lmAESimpleRotatedSprite = ListManager<TicketedForwardList<AvatarEntity<SimpleRotatedSprite> > >::getInstance();
   lmAESimpleRotatedSprite .insert(RSPRITELIST, &rsprites);
   printf("Loading imgs\n");fflush(stdout);
   ballgraphics[0] = window.loadImg(zomballImg);
@@ -158,52 +161,52 @@ int ludomain(int, char** ) {
   ballgraphics[4] = window.loadImg(bulletImg);
   //brickgraphics = window.loadImg(brickfilename);
   printf("Building the drawer to paint SimpleRotatedSprite's \n");fflush(stdout);
-  std::shared_ptr<zbe::Daemon> drawerDaemon(new  zbe::DrawerDaemon<zbe::SingleSprite, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite > > >(std::make_shared<zbe::SingleSpriteSDLDrawer>(&window), SPRITELIST));
+  std::shared_ptr<Daemon> drawerDaemon(new  DrawerDaemon<SingleSprite, TicketedForwardList<AvatarEntity<SingleSprite > > >(std::make_shared<SingleSpriteSDLDrawer>(&window), SPRITELIST));
   drawMaster.addDaemon(drawerDaemon);
-  std::shared_ptr<zbe::Daemon> rDrawerDaemon(new  zbe::DrawerDaemon<SimpleRotatedSprite, zbe::TicketedForwardList<zbe::AvatarEntity<SimpleRotatedSprite > > >(std::make_shared<SimpleRotatedSpriteSDLDrawer>(&window), RSPRITELIST));
+  std::shared_ptr<Daemon> rDrawerDaemon(new  DrawerDaemon<SimpleRotatedSprite, TicketedForwardList<AvatarEntity<SimpleRotatedSprite > > >(std::make_shared<SimpleRotatedSpriteSDLDrawer>(&window), RSPRITELIST));
   drawMaster.addDaemon(rDrawerDaemon);
   printf("|-------------------- Daemons ----------------------|\n");fflush(stdout);
-  zbe::DaemonMaster commonBehaviorMaster;
-  zbe::DaemonMaster reactBehaviorMaster;
-  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > > vAEMovable;
-  auto& lmAEMovable = zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > > >::getInstance();
+  DaemonMaster commonBehaviorMaster;
+  DaemonMaster reactBehaviorMaster;
+  TicketedForwardList<AvatarEntity<Movable<2> > > vAEMovable;
+  auto& lmAEMovable = ListManager<TicketedForwardList<AvatarEntity<Movable<2> > > >::getInstance();
   lmAEMovable.insert(MOVABLELIST, &vAEMovable);
-  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Positionable<2> > > vAEPositionable;
-  auto& lmAEPositionable = zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Positionable<2> > > >::getInstance();
+  TicketedForwardList<AvatarEntity<Positionable<2> > > vAEPositionable;
+  auto& lmAEPositionable = ListManager<TicketedForwardList<AvatarEntity<Positionable<2> > > >::getInstance();
   lmAEPositionable.insert(PARTICLES, &vAEPositionable);
-  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Bouncer<2> > > vAEBouncer;
-  auto& lmAEBouncer = zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Bouncer<2> > > >::getInstance();
+  TicketedForwardList<AvatarEntity<Bouncer<2> > > vAEBouncer;
+  auto& lmAEBouncer = ListManager<TicketedForwardList<AvatarEntity<Bouncer<2> > > >::getInstance();
   lmAEBouncer.insert(BOUNCERLIST, &vAEBouncer);
-  std::shared_ptr<zbe::Daemon> ballBounce(new  zbe::BehaviorDaemon<zbe::Bouncer<2>, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Bouncer<2> > > >(std::make_shared<zbe::Bounce<2> >(), BOUNCERLIST));
-  std::shared_ptr<zbe::Daemon> ballULM(new  zbe::BehaviorDaemon<zbe::Movable<2>, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > > >(std::make_shared<zbe::UniformLinearMotion<2> >(), MOVABLELIST));
+  std::shared_ptr<Daemon> ballBounce(new  BehaviorDaemon<Bouncer<2>, TicketedForwardList<AvatarEntity<Bouncer<2> > > >(std::make_shared<Bounce<2> >(), BOUNCERLIST));
+  std::shared_ptr<Daemon> ballULM(new  BehaviorDaemon<Movable<2>, TicketedForwardList<AvatarEntity<Movable<2> > > >(std::make_shared<UniformLinearMotion<2> >(), MOVABLELIST));
   commonBehaviorMaster.addDaemon(ballULM);
   reactBehaviorMaster.addDaemon(ballBounce);
   printf("|------------------- Creating entities --------------------|\n");fflush(stdout);
   printf("Creating a ball and giving it a position and size\n");fflush(stdout);
 
   //ball
-  std::forward_list< zbe::Actuator< zbe::Bouncer<2>, LudoReactor >*> ballActuatorsList;
-  zbe::ListManager< std::forward_list< zbe::Actuator< zbe::Bouncer<2>, LudoReactor >* > >& lmBallActuatorsList = zbe::ListManager< std::forward_list< zbe::Actuator< zbe::Bouncer<2>, LudoReactor >* > >::getInstance();
+  std::forward_list<ActuatorWrapper<LudoReactor, Bouncer<2> >* > ballActuatorsList;
+  ListManager< std::forward_list<ActuatorWrapper<LudoReactor, Bouncer<2> >* > >& lmBallActuatorsList = ListManager< std::forward_list<ActuatorWrapper<LudoReactor, Bouncer<2> >* > >::getInstance();
   lmBallActuatorsList.insert(BALLACTUATORLIST, &ballActuatorsList);
-  LudoBallBouncer<LudoReactor> gbBouncer;
-  ballActuatorsList.push_front(&gbBouncer);
+  ActuatorWrapper<LudoReactor, Bouncer<2> >* bouncerWrapper = new  ActuatorWrapperCommon<LudoReactor, Bouncer<2>, Bouncer<2> >(new LudoBallBouncer<LudoReactor>());
+  ballActuatorsList.push_front(bouncerWrapper);
 
-  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<LudoReactor> > > collisionablesList;
-  zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<LudoReactor> > > >& lmCollisionablesList = zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<LudoReactor> > > >::getInstance();
+  TicketedForwardList<AvatarEntity<Collisioner<LudoReactor> > > collisionablesList;
+  ListManager<TicketedForwardList<AvatarEntity<Collisioner<LudoReactor> > > >& lmCollisionablesList = ListManager< TicketedForwardList<AvatarEntity<Collisioner<LudoReactor> > > >::getInstance();
   lmCollisionablesList.insert(COLLISIONABLELIST, &collisionablesList);
 
-  zbe::ListManager<zbe::TicketedForwardList<SetableGraphics> >& lmSG = zbe::ListManager<zbe::TicketedForwardList<SetableGraphics> >::getInstance();
-  zbe::TicketedForwardList<SetableGraphics> setableGs;
+  ListManager<TicketedForwardList<SetableGraphics> >& lmSG = ListManager<TicketedForwardList<SetableGraphics> >::getInstance();
+  TicketedForwardList<SetableGraphics> setableGs;
   lmSG.insert(SETABLEGRAPHSLIST, &setableGs);
 
   GraphicsSet gSet0(ballgraphics[0],SETABLEGRAPHSLIST);
   GraphicsSet gSet1(ballgraphics[1],SETABLEGRAPHSLIST);
   GraphicsSet gSet2(ballgraphics[2],SETABLEGRAPHSLIST);
   GraphicsSet gSet3(ballgraphics[3],SETABLEGRAPHSLIST);
-  ieg.addHandler(zbe::ZBEK_z, &gSet0);
-  ieg.addHandler(zbe::ZBEK_x, &gSet1);
-  ieg.addHandler(zbe::ZBEK_c, &gSet2);
-  ieg.addHandler(zbe::ZBEK_v, &gSet3);
+  ieg.addHandler(ZBEK_z, &gSet0);
+  ieg.addHandler(ZBEK_x, &gSet1);
+  ieg.addHandler(ZBEK_c, &gSet2);
+  ieg.addHandler(ZBEK_v, &gSet3);
 
   srand(time(0));
   for(int i = 0; i<100 ; i++){
@@ -221,10 +224,10 @@ int ludomain(int, char** ) {
     int64_t vx = sin(vAngle*PI/180)*vt;
     int64_t vy = cos(vAngle*PI/180)*vt;
     std::shared_ptr<LudoBall<LudoReactor> > ball = std::make_shared<LudoBall<ludo::LudoReactor> >( xc, yc, r, vx, vy, BALLACTUATORLIST, COLLISIONABLELIST, graphId);
-    std::shared_ptr<zbe::Adaptor<SimpleRotatedSprite> > spriteAdaptor = std::make_shared<RotatedDrawableSimpleRotatedSpriteAdaptor>(&(*ball));
-    zbe::setAdaptor(ball, spriteAdaptor);
-    std::shared_ptr<zbe::Adaptor<zbe::Collisionator<LudoReactor> > > lbca = std::make_shared<LudoBallCollisionatorAdaptor<LudoReactor> >(&(*ball));
-    zbe::setAdaptor(ball, lbca);
+    std::shared_ptr<Adaptor<SimpleRotatedSprite> > spriteAdaptor = std::make_shared<RotatedDrawableSimpleRotatedSpriteAdaptor>(&(*ball));
+    setAdaptor(ball, spriteAdaptor);
+    std::shared_ptr<Adaptor<Collisionator<LudoReactor> > > lbca = std::make_shared<LudoBallCollisionatorAdaptor<LudoReactor> >(&(*ball));
+    setAdaptor(ball, lbca);
     ctl.push_front(ball);
     vAEMovable.push_front(ball);
     vAEBouncer.push_front(ball);
@@ -233,17 +236,17 @@ int ludomain(int, char** ) {
   }
 
   printf("Creating a rotator\n");fflush(stdout);
-  auto& lmTflAEMovable = zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > > >::getInstance();
-  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > > tflRAEMovable;
+  auto& lmTflAEMovable = ListManager<TicketedForwardList<AvatarEntity<Movable<2> > > >::getInstance();
+  TicketedForwardList<AvatarEntity<Movable<2> > > tflRAEMovable;
   lmTflAEMovable.insert(LROTATORS, &tflRAEMovable);
-  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > > tflLAEMovable;
+  TicketedForwardList<AvatarEntity<Movable<2> > > tflLAEMovable;
   lmTflAEMovable.insert(RROTATORS, &tflLAEMovable);
 
   std::shared_ptr<LudoBall<LudoReactor> > rotator = std::make_shared<LudoBall<ludo::LudoReactor> >( WIDTH/2, HEIGHT/2, 16, 200, 100, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics[3]);
-  std::shared_ptr<zbe::Adaptor<SimpleRotatedSprite> > spriteAdaptor = std::make_shared<RotatedDrawableSimpleRotatedSpriteAdaptor>(&(*rotator));
-  zbe::setAdaptor(rotator, spriteAdaptor);
-  std::shared_ptr<zbe::Adaptor<zbe::Collisionator<LudoReactor> > > lbca = std::make_shared<LudoBallCollisionatorAdaptor<LudoReactor> >(&(*rotator));
-  zbe::setAdaptor(rotator, lbca);
+  std::shared_ptr<Adaptor<SimpleRotatedSprite> > spriteAdaptor = std::make_shared<RotatedDrawableSimpleRotatedSpriteAdaptor>(&(*rotator));
+  setAdaptor(rotator, spriteAdaptor);
+  std::shared_ptr<Adaptor<Collisionator<LudoReactor> > > lbca = std::make_shared<LudoBallCollisionatorAdaptor<LudoReactor> >(&(*rotator));
+  setAdaptor(rotator, lbca);
   ctl.push_front(rotator);
   vAEBouncer.push_front(rotator);
   rsprites.push_front(rotator);
@@ -252,22 +255,22 @@ int ludomain(int, char** ) {
   auto fticket = vAEMovable.push_front(rotator);
   fticket->setINACTIVE();
   TicketToggler ftoggler(fticket);
-  ieg.addHandler(zbe::ZBEK_UP, &ftoggler);
+  ieg.addHandler(ZBEK_UP, &ftoggler);
   auto lticket = tflLAEMovable.push_front(rotator);
   lticket->setINACTIVE();
   TicketToggler ltoggler(lticket);
-  ieg.addHandler(zbe::ZBEK_LEFT, &ltoggler);
+  ieg.addHandler(ZBEK_LEFT, &ltoggler);
   auto rticket = tflRAEMovable.push_front(rotator);
   rticket->setINACTIVE();
   TicketToggler rtoggler(rticket);
-  ieg.addHandler(zbe::ZBEK_RIGHT, &rtoggler);
+  ieg.addHandler(ZBEK_RIGHT, &rtoggler);
 
   printf("Pasive enities\n");fflush(stdout);
-  zbe::ListManager<std::forward_list< zbe::Actuator<zbe::VoidCollisioner<LudoReactor>, LudoReactor>*> >& lmSimpleConerActuatorsList = zbe::ListManager<std::forward_list< zbe::Actuator<zbe::VoidCollisioner<LudoReactor>, LudoReactor>*> >::getInstance();
+  ListManager<std::forward_list<ActuatorWrapper<LudoReactor, void >*> >& lmSimpleConerActuatorsList = ListManager<std::forward_list<ActuatorWrapper<LudoReactor, void>*> >::getInstance();
   printf("Creating the bricks\n");fflush(stdout);
 
   printf("Creating the board and giving it a size\n");fflush(stdout);
-  std::forward_list< zbe::Actuator<zbe::VoidCollisioner<LudoReactor>, LudoReactor>*> boardActuatorsList;
+  std::forward_list<ActuatorWrapper<LudoReactor, void>*> boardActuatorsList;
   lmSimpleConerActuatorsList.insert(BOARDACTUATORLIST, &boardActuatorsList);
   std::shared_ptr<LudoBoard<LudoReactor> > board = std::make_shared<LudoBoard<LudoReactor> >(50, 50, WIDTH - 50, HEIGHT - 50, BOARDACTUATORLIST);
   collisionablesList.push_front(board);
@@ -283,17 +286,17 @@ int ludomain(int, char** ) {
   printf("Updating system time.\n");fflush(stdout);
   sysTime.update();
   printf("|=================== adding some timers ===================|\n");fflush(stdout);
-  std::shared_ptr<zbe::Daemon> leftRotator(new  zbe::BehaviorDaemon<zbe::Movable<2>, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > > >(std::make_shared<Rotator>(-0.1f), LROTATORS));
-  std::shared_ptr<zbe::TimeHandler> rotatorL = std::make_shared<DemonRecurrentTimeHandler>(leftRotator, teg, zbe::SECOND/8);
-  teg.addTimer(rotatorL, zbe::SECOND);
+  std::shared_ptr<Daemon> leftRotator(new  BehaviorDaemon<Movable<2>, TicketedForwardList<AvatarEntity<Movable<2> > > >(std::make_shared<Rotator>(-0.1f), LROTATORS));
+  std::shared_ptr<TimeHandler> rotatorL = std::make_shared<DemonRecurrentTimeHandler>(leftRotator, teg, SECOND/8);
+  teg.addTimer(rotatorL, SECOND);
 
-  std::shared_ptr<zbe::Daemon> rightRotator(new  zbe::BehaviorDaemon<zbe::Movable<2>, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > > >(std::make_shared<Rotator>(0.1f), RROTATORS));
-  std::shared_ptr<zbe::TimeHandler> rotatorR = std::make_shared<DemonRecurrentTimeHandler>(rightRotator, teg, zbe::SECOND/8);
-  teg.addTimer(rotatorR, zbe::SECOND);
+  std::shared_ptr<Daemon> rightRotator(new  BehaviorDaemon<Movable<2>, TicketedForwardList<AvatarEntity<Movable<2> > > >(std::make_shared<Rotator>(0.1f), RROTATORS));
+  std::shared_ptr<TimeHandler> rotatorR = std::make_shared<DemonRecurrentTimeHandler>(rightRotator, teg, SECOND/8);
+  teg.addTimer(rotatorR, SECOND);
 
-  std::shared_ptr<zbe::Daemon> ballParticles(new  zbe::BehaviorDaemon<zbe::Movable<2>, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > > >(std::make_shared<BackBallParticlesLauncher>(8, ballgraphics[4], RSPRITELIST, &teg), MOVABLELIST));
-  std::shared_ptr<zbe::TimeHandler> expeller = std::make_shared<DemonRecurrentTimeHandler>(ballParticles, teg, zbe::SECOND/16);
-  teg.addTimer(expeller, zbe::SECOND/16);
+  std::shared_ptr<Daemon> ballParticles(new  BehaviorDaemon<Movable<2>, TicketedForwardList<AvatarEntity<Movable<2> > > >(std::make_shared<BackBallParticlesLauncher>(8, ballgraphics[4], RSPRITELIST, &teg), MOVABLELIST));
+  std::shared_ptr<TimeHandler> expeller = std::make_shared<DemonRecurrentTimeHandler>(ballParticles, teg, SECOND/16);
+  teg.addTimer(expeller, SECOND/16);
   printf("|==========================================================|\n");fflush(stdout);
 
   bool keep = true;
@@ -319,9 +322,9 @@ int ludomain(int, char** ) {
     }
     //Post
     drawMaster.run();
-    int errcount = zbe::SysError::getNErrors();
+    int errcount = SysError::getNErrors();
     if(errcount>0){
-        printf("Error: %s",zbe::SysError::getFirstErrorString().c_str());fflush(stdout);
+        printf("Error: %s",SysError::getFirstErrorString().c_str());fflush(stdout);
     }
     window.present();
   }

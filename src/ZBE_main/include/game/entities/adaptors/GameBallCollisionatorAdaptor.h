@@ -36,9 +36,9 @@ public:
       delete c;
       std::shared_ptr<zbe::CollisionObject<GameReactor> > co = std::make_shared<zbe::ConstantMovingCircle<GameReactor> >(zbe::ConstantMovingCircle<GameReactor>(zbe::Circle(b->getPosition(), b->getWidth()), b->getVelocity()));
       std::shared_ptr<zbe::ReactObject<GameReactor> > ro = std::make_shared<zbe::VoidReactObject<GameReactor> >();
-      zbe::Bouncer<2>* bouncer;
-      ((zbe::AvatarEntity<zbe::Bouncer<2> >*)b)->assignAvatar(&bouncer);
-      c = new zbe::CollisionatorCommon<zbe::Bouncer<2>, GameReactor>(bouncer, co, ro, b->getActuatorsList() ,b->getCollisionablesList());
+      //zbe::Bouncer<2>* bouncer;
+      //((zbe::AvatarEntity<zbe::Bouncer<2> >*)b)->assignAvatar(&bouncer);
+      c = new zbe::CollisionatorCommon<GameReactor, zbe::Bouncer<2> >(new zbe::AvatarEntityContainer<zbe::Bouncer<2> >(b), co, ro, b->getActuatorsList() ,b->getCollisionablesList());
       return (c);
     }
 

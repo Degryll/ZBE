@@ -200,6 +200,7 @@
 		<Unit filename="../../../src/ZBETest/core/tools/math/collisions/intersectionsTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/tools/math/mathTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/tools/math/objectsTest.cpp" />
+		<Unit filename="../../../src/ZBETest/core/tools/toolsTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/main.cpp" />
 		<Extensions>
 			<code_completion />

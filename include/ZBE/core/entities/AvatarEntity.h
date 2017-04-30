@@ -129,6 +129,27 @@ void assignAvatar(T* t, A **a) {
     aeA->assignAvatar(a);
 }
 
+/* \brief Agroupation of an undetermined number of types
+ */
+template <typename T, typename... Bases>
+struct AvatarEntityContainer : public AvatarEntityContainer<T>, public AvatarEntityContainer<Bases...> {
+  AvatarEntityContainer(AvatarEntity<T>* aet, AvatarEntity<Bases>*...bases): AvatarEntityContainer<T>(aet), AvatarEntityContainer<Bases...>(bases...) {}
+  ~AvatarEntityContainer(){}
+};
+
+template <typename T>
+struct AvatarEntityContainer<T> {
+  AvatarEntityContainer<T>(const AvatarEntityContainer<T>&) = delete;
+  void operator=(const AvatarEntityContainer<T>&) = delete;
+
+  AvatarEntityContainer(AvatarEntity<T>* aet): aet(aet){}
+  ~AvatarEntityContainer(){}
+
+  AvatarEntity<T>* get() {return aet;}
+
+  AvatarEntity<T>* aet;
+};
+
 }  // namespace ZBE
 
 #endif  // ZBE_CORE_ENTITIES_AVATARENTITY_H_

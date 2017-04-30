@@ -190,8 +190,8 @@ int batismain(int, char** ) {
   printf("Creating the board and giving it a size\n");fflush(stdout);
   //board
   zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<game::GameReactor> > > collisionablesList;
-  zbe::ListManager< std::forward_list< zbe::Actuator<zbe::VoidCollisioner<game::GameReactor>, game::GameReactor>*> >& lmSimpleConerActuatorsList = zbe::ListManager< std::forward_list< zbe::Actuator<zbe::VoidCollisioner<game::GameReactor>, game::GameReactor>*> >::getInstance();
-  std::forward_list< zbe::Actuator<zbe::VoidCollisioner<game::GameReactor>, game::GameReactor>*> boardActuatorsList;
+  zbe::ListManager< std::forward_list<zbe::ActuatorWrapper<game::GameReactor, void>*> >& lmSimpleConerActuatorsList = zbe::ListManager< std::forward_list< zbe::ActuatorWrapper<game::GameReactor, void>*> >::getInstance();
+  std::forward_list<zbe::ActuatorWrapper<game::GameReactor, void>*> boardActuatorsList;
   lmSimpleConerActuatorsList.insert(BOARDACTUATORLIST, &boardActuatorsList);
   batis::Board boardCfg;
 
@@ -210,11 +210,11 @@ int batismain(int, char** ) {
 
   printf("Creating a ball and giving it a position and size\n");fflush(stdout);
   //ball
-  std::forward_list< zbe::Actuator< zbe::Bouncer<2>, game::GameReactor >*> ballActuatorsList;
-  zbe::ListManager< std::forward_list< zbe::Actuator< zbe::Bouncer<2>, game::GameReactor >* > >& lmBallActuatorsList = zbe::ListManager< std::forward_list< zbe::Actuator< zbe::Bouncer<2>, game::GameReactor >* > >::getInstance();
+  std::forward_list< zbe::ActuatorWrapper<game::GameReactor , zbe::Bouncer<2>>*> ballActuatorsList;
+  zbe::ListManager< std::forward_list< zbe::ActuatorWrapper<game::GameReactor, zbe::Bouncer<2> >* > >& lmBallActuatorsList = zbe::ListManager< std::forward_list< zbe::ActuatorWrapper<game::GameReactor, zbe::Bouncer<2> >* > >::getInstance();
   lmBallActuatorsList.insert(BALLACTUATORLIST, &ballActuatorsList);
-  game::GameBallBouncer gbBouncer;
-  ballActuatorsList.push_front(&gbBouncer);
+  zbe::ActuatorWrapper<game::GameReactor, zbe::Bouncer<2> >* bouncerWrapper = new  zbe::ActuatorWrapperCommon<game::GameReactor, zbe::Bouncer<2>, zbe::Bouncer<2> >(new game::GameBallBouncer());
+  ballActuatorsList.push_front(bouncerWrapper);
 
   zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<game::GameReactor> > > >& lmCollisionablesList = zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<game::GameReactor> > > >::getInstance();
   lmCollisionablesList.insert(COLLISIONABLELIST, &collisionablesList);
@@ -261,7 +261,7 @@ int batismain(int, char** ) {
 
   printf("Creating the bricks\n");fflush(stdout);
   //bricks
-  std::forward_list< zbe::Actuator<zbe::VoidCollisioner<game::GameReactor>, game::GameReactor>*> brickActuatorsList;
+  std::forward_list<zbe::ActuatorWrapper<game::GameReactor, void>*> brickActuatorsList;
   lmSimpleConerActuatorsList.insert(BRICKACTUATORLIST, &brickActuatorsList);
 
   int brickProb = 30;

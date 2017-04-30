@@ -36,17 +36,17 @@ class Collisionator : virtual public Collisioner<R> {
 
 /** \brief Every Collisionator (an entity involved in a collision) has a collision object defining his "physical shape".
  */
-template <typename T, typename R>
-class CollisionatorCommon : virtual public Collisionator<R>, public CollisionerCommon<T, R> {
+template <typename R, typename ...Bases>
+class CollisionatorCommon : virtual public Collisionator<R>, public CollisionerCommon<R, Bases...> {
   public:
-    CollisionatorCommon(const CollisionatorCommon<T,R>&) = delete;
-    void operator=(const CollisionatorCommon<T,R>&) = delete;
+    CollisionatorCommon(const CollisionatorCommon<R, Bases...>&) = delete;
+    void operator=(const CollisionatorCommon<R, Bases...>&) = delete;
 
     /** \brief A collisionable entity is defined by a collision object.
       * \param object A collision object that defines the "physical shape" of the entity.
       */
-    CollisionatorCommon(T* collisionator, std::shared_ptr<CollisionObject<R> > collisionObject, std::shared_ptr<ReactObject<R> > reactObject, uint64_t actuatorsList, uint64_t collisionablesListId)
-      : CollisionerCommon<T, R>(collisionator, collisionObject, reactObject, actuatorsList), id(collisionablesListId), c(collisionator) {}
+    CollisionatorCommon(AvatarEntityContainer<Bases...>* collisionator, std::shared_ptr<CollisionObject<R> > collisionObject, std::shared_ptr<ReactObject<R> > reactObject, uint64_t actuatorsList, uint64_t collisionablesListId)
+      : CollisionerCommon<R, Bases...>(collisionator, collisionObject, reactObject, actuatorsList), id(collisionablesListId) {}
 
     /** \brief Empty destructor.
       */
@@ -60,7 +60,6 @@ class CollisionatorCommon : virtual public Collisionator<R>, public CollisionerC
 
   private:
     uint64_t id;  //!< Id of list of collisionables
-    T* c;
 };
 
 }  // namespace zbe

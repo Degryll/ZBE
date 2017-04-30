@@ -241,6 +241,7 @@
 		<Unit filename="../../../include/ZBE/core/events/generators/util/IntersectionCollisionSelector.h" />
 		<Unit filename="../../../include/ZBE/core/events/generators/util/ReactObject.h" />
 		<Unit filename="../../../include/ZBE/core/events/handlers/Actuator.h" />
+		<Unit filename="../../../include/ZBE/core/events/handlers/ActuatorWrapper.h" />
 		<Unit filename="../../../include/ZBE/core/events/handlers/InputHandler.h" />
 		<Unit filename="../../../include/ZBE/core/events/handlers/TimeHandler.h" />
 		<Unit filename="../../../include/ZBE/core/io/FileHandler.h" />

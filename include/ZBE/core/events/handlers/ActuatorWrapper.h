@@ -10,6 +10,9 @@
 #ifndef CORE_HANDLERS_COLLISION_ACTUATORWRAPPER_H
 #define CORE_HANDLERS_COLLISION_ACTUATORWRAPPER_H
 
+#include "ZBE/core/entities/AvatarEntity.h"
+
+#include "ZBE/core/events/handlers/Actuator.h"
 #include "ZBE/core/events/generators/util/ReactObject.h"
 #include "ZBE/core/events/generators/util/CollisionData.h"
 
@@ -20,32 +23,32 @@ namespace zbe {
 template <typename R, typename... Bases>
 class ActuatorWrapper {
   public:
-  
-  	virtual ~ActuatorWrapper() {};
 
-    void run(TypeContainer<Bases...> * container, ReactObject<R>* rObject, CollisionData* cData);
+    virtual ~ActuatorWrapper() {};
+
+    virtual void run(AvatarEntityContainer<Bases...> * container, ReactObject<R>* rObject, CollisionData* cData) = 0;
 
 };
-  
+
 /** \brief Actuator base functionality.
  */
 template <typename R, typename T, typename... Bases>
-class ActuatorWrapperCommon: virtual public {
+class ActuatorWrapperCommon: virtual public ActuatorWrapper<R, Bases...>{
 public:
-	ActuatorWrapperCommon(const ActuatorWrapperCommon&) = delete;
-	void operator=(const ActuatorWrapperCommon&) = delete;
-  
-  ActuatorWrapperCommon(Actuator<T> * actuator):a(actuator){};
- 	virtual ~ActuatorWrapperCommon() {};
-  
-  void run(TypeContainer<Bases...> * container, ReactObject<R>* rObject, CollisionData* cData) {
+  ActuatorWrapperCommon(const ActuatorWrapperCommon&) = delete;
+  void operator=(const ActuatorWrapperCommon&) = delete;
+
+  ActuatorWrapperCommon(Actuator<T, R> * actuator):a(actuator){};
+  virtual ~ActuatorWrapperCommon() {};
+
+  void run(AvatarEntityContainer<Bases...> * container, ReactObject<R>* rObject, CollisionData* cData) {
     T* t;
-    TypeContainer<AvatarEntity<T> >* tcont = container;
+    AvatarEntityContainer<T>* tcont = container;
     assignAvatar(tcont->get(), &t);
     a->run(t,rObject,cData);
   }
 private:
-	Actuator<T>* a;
+  Actuator<T, R>* a;
 };
 
 }  // namespace

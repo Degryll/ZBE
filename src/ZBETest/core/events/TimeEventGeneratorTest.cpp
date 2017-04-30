@@ -6,13 +6,13 @@
 #include "ZBE/core/events/generators/TimeEventGenerator.h"
 
 TEST(TimeEventGenerator, DISABLED_Event) {
-  zbe::TimeEventGenerator teg(3);
-  teg.addTimer(nullptr, 1000000);
-  teg.addTimer(nullptr, 1500000);
-  teg.addTimer(nullptr, 2500000);
-  zbe::EventStore &es = zbe::EventStore::getInstance();
+//  zbe::TimeEventGenerator teg(3);
+//  teg.addTimer(nullptr, 1000000);
+//  teg.addTimer(nullptr, 1500000);
+//  teg.addTimer(nullptr, 2500000);
+//  zbe::EventStore &es = zbe::EventStore::getInstance();
 
-  teg.generate(0, 2000000);
+//  teg.generate(0, 2000000);
 
 //  ASSERT_FALSE(es.getEvents().empty()) << "List must have items.";
 //  zbe::TimeEvent* e = (zbe::TimeEvent*)(es.getEvents().front());

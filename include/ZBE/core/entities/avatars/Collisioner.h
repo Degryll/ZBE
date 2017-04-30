@@ -14,7 +14,9 @@
 #include <memory>
 
 #include "ZBE/core/tools/math/Point.h"
+#include "ZBE/core/tools/tools.h"
 #include "ZBE/core/events/handlers/Actuator.h"
+#include "ZBE/core/events/handlers/ActuatorWrapper.h"
 #include "ZBE/core/events/generators/util/CollisionData.h"
 #include "ZBE/core/events/generators/util/CollisionObject.h"
 #include "ZBE/core/events/generators/util/ReactObject.h"
@@ -49,7 +51,7 @@ class Collisioner {
 
 /** \brief Every Collisioner (an entity involved in a collision) has a collision object defining his "physical shape".
  */
-template <typename T, typename R>
+template <typename R, typename ...Bases>
 class CollisionerCommon : virtual public Collisioner<R> {
   public:
     CollisionerCommon(const CollisionerCommon&) = delete;
@@ -58,11 +60,11 @@ class CollisionerCommon : virtual public Collisioner<R> {
     /** \brief A collisionable entity is defined by a collision object.
       * \param object A collision object that defines the "physical shape" of the entity.
       */
-    CollisionerCommon(T * collisioner, std::shared_ptr<CollisionObject<R> > collisionObject, std::shared_ptr<ReactObject<R> > reactObject, uint64_t actuatorsList) : co(collisionObject), ro(reactObject), al(actuatorsList), c(collisioner), lma(ListManager<std::forward_list<Actuator<T,R>* > >::getInstance())  {}
+    CollisionerCommon(AvatarEntityContainer<Bases...>* collisioner, std::shared_ptr<CollisionObject<R> > collisionObject, std::shared_ptr<ReactObject<R> > reactObject, uint64_t actuatorsList) : co(collisionObject), ro(reactObject), al(actuatorsList), c(collisioner), lma(ListManager<std::forward_list<ActuatorWrapper<R, Bases...>* > >::getInstance())  {}
 
     /** \brief Empty destructor.
       */
-    virtual ~CollisionerCommon() {}
+    virtual ~CollisionerCommon() {delete c;}
 
     /** \brief Set the collision object this entity is.
      *  \param object The collision object.
@@ -90,13 +92,13 @@ class CollisionerCommon : virtual public Collisioner<R> {
     std::shared_ptr<CollisionObject<R> > co;  //!< Collision object
     std::shared_ptr<ReactObject<R> > ro;  //!< Collision object
     uint64_t al;
-    T * c;
-    ListManager<std::forward_list<Actuator<T,R>* > >& lma;
+    AvatarEntityContainer<Bases...>* c;
+    ListManager<std::forward_list<ActuatorWrapper<R, Bases...>* > >& lma;
 
 };
 
-template <typename T, typename R>
-void CollisionerCommon<T, R>::react(CollisionData * collisionData, ReactObject<R> * reactObject) {
+template <typename R, typename ...Bases>
+void CollisionerCommon<R, Bases...>::react(CollisionData * collisionData, ReactObject<R> * reactObject) {
   for (auto a : *(lma.get(al)) ) {
     a->run(c, reactObject, collisionData);
   }
