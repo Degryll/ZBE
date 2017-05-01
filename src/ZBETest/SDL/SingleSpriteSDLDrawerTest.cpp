@@ -2,12 +2,17 @@
 
 #include "ZBE/SDL/drawers/SingleSpriteSDLDrawer.h"
 
+#include <cstdlib>
+#include <ctime>
+
 #include "ZBE/SDL/system/Window.h"
 #include "ZBE/core/tools/containers/ListManager.h"
 #include "ZBE/core/tools/containers/TicketedForwardList.h"
 #include "ZBE/core/entities/AvatarEntity.h"
 #include "ZBE/archetypes/Drawable.h"
 #include "ZBE/entities/adaptors/SimpleDrawableSingleSpriteAdaptor.h"
+
+namespace SingleSpriteSDLDrawerTest {
 
 class DrawerMock: public zbe::Drawable,
                   public zbe::AvatarEntityAdapted<zbe::SingleSprite> {
@@ -35,6 +40,7 @@ private:
 };
 
 TEST(SingleSpriteSDLDrawer, Render) {
+  srand(time(nullptr));
   zbe::Window window(100, 100);
 
   zbe::SingleSpriteSDLDrawer drawer(&window);
@@ -96,3 +102,5 @@ TEST(SingleSpriteSDLDrawer, Render) {
 
   delete[] p;
 }
+
+}  // namespace SingleSpriteSDLDrawerTest

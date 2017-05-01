@@ -18,8 +18,8 @@ namespace zbe {
  */
 struct StatedSprite : virtual public RotatedSprite {
     using Base = RotatedSprite;
-    uint64_t state;   //!< state
-    uint64_t nstates; //!< Number of states
+    uint64_t state = 0;   //!< state
+    uint64_t nstates = 0; //!< Number of states
 };
 
 }  // namespace zbe

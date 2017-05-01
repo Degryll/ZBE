@@ -263,7 +263,10 @@
 		<Unit filename="../../../include/ZBE/core/tools/math/objects.h" />
 		<Unit filename="../../../include/ZBE/core/tools/text/utf8.h" />
 		<Unit filename="../../../include/ZBE/core/tools/tools.h" />
+		<Unit filename="../../../include/ZBE/entities/adaptors/AnimatedDrawableAnimatedSpriteAdaptor.h" />
+		<Unit filename="../../../include/ZBE/entities/adaptors/RotatedDrawableRotatedSpriteAdaptor.h" />
 		<Unit filename="../../../include/ZBE/entities/adaptors/SimpleDrawableSingleSpriteAdaptor.h" />
+		<Unit filename="../../../include/ZBE/entities/adaptors/StatedDrawableStatedSpriteAdaptor.h" />
 		<Unit filename="../../../include/ZBE/entities/adaptors/TextDrawableSingleTextSpriteAdaptor.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/Bounceable.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/Bouncer.h" />

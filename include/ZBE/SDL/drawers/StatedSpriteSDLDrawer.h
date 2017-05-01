@@ -37,7 +37,7 @@ class StatedSpriteSDLDrawer : public Drawer<StatedSprite> {
     /** \brief The function every punisher must have.
      *  \param entity The entity to be drawn.
      */
-    void apply(AvatarEntity<StatedSprite> *entity);
+    void apply(std::shared_ptr<AvatarEntity<StatedSprite> > entity);
 
   private:
     Window* window;  //!< A SDL window with its context.

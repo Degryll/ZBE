@@ -18,7 +18,7 @@ namespace zbe {
  */
 struct RotatedSprite : virtual public SingleSprite {
     using Base = SingleSprite;
-    double degrees; //!< rotation degrees
+    double degrees = 0.0; //!< rotation degrees
 };
 
 }  // namespace zbe
