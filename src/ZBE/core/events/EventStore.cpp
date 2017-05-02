@@ -48,7 +48,7 @@ void EventStore::storeEvent(Event* e) {
 }
 
 void EventStore::storeInstantEvent(Event* e) {
-  timedStore.push_front(e);
+  instantStore.push_front(e);
 }
 
 void EventStore::manageCurrent() {

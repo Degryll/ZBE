@@ -13,8 +13,8 @@ public:
 	bool& b;
 };
 
-
-TEST(EventStore, EventStore) {
+// WARNING: No delete because EventStore frees them.
+TEST(EventStore, TimedEvents) {
   bool a,b,c,d;
   EventMock* e0 = new EventMock(0,104, a);
   EventMock* e1 = new EventMock(1,100, b);
@@ -36,4 +36,48 @@ TEST(EventStore, EventStore) {
   EXPECT_FALSE(d) << "d must be false";
 }
 
-} //namespace eventtest
+TEST(EventStore, InstantEvents) {
+  bool a,b,c,d;
+  EventMock* e0 = new EventMock(0,104, a);
+  EventMock* e1 = new EventMock(1,100, b);
+  EventMock* e2 = new EventMock(2,100, c);
+  EventMock* e3 = new EventMock(3,101, d);
+
+  zbe::EventStore &store = zbe::EventStore::getInstance();
+
+  store.storeInstantEvent(e0);
+  store.storeInstantEvent(e1);
+  store.storeInstantEvent(e2);
+  store.storeInstantEvent(e3);
+
+  store.manageCurrent();
+
+  EXPECT_TRUE(a)  << "a must be true";
+  EXPECT_TRUE(b)  << "b must be true";
+  EXPECT_TRUE(c)  << "c must be true";
+  EXPECT_TRUE(d)  << "d must be true";
+}
+
+TEST(EventStore, AllEvents) {
+  bool a,b,c,d;
+  EventMock* e0 = new EventMock(0,104, a);
+  EventMock* e1 = new EventMock(1,100, b);
+  EventMock* e2 = new EventMock(2,100, c);
+  EventMock* e3 = new EventMock(3,101, d);
+
+  zbe::EventStore &store = zbe::EventStore::getInstance();
+
+  store.storeInstantEvent(e0);
+  store.storeEvent(e1);
+  store.storeEvent(e2);
+  store.storeEvent(e3);
+
+  store.manageCurrent();
+
+  EXPECT_TRUE(a)  << "a must be true";
+  EXPECT_TRUE(b)  << "b must be true";
+  EXPECT_TRUE(c)  << "c must be true";
+  EXPECT_FALSE(d) << "d must be false";
+}
+
+} //namespace eventte
