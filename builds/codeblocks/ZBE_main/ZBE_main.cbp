@@ -160,6 +160,7 @@
 		<Unit filename="../../../src/ZBE_main/include/ludo/LudoReactor.h" />
 		<Unit filename="../../../src/ZBE_main/include/ludo/archetypes/LudoArchetypes.h" />
 		<Unit filename="../../../src/ZBE_main/include/ludo/behaviors/LudoBehaviors.h" />
+		<Unit filename="../../../src/ZBE_main/include/ludo/daemons/LudoDaemons.h" />
 		<Unit filename="../../../src/ZBE_main/include/ludo/drawers/LudoDrawers.h" />
 		<Unit filename="../../../src/ZBE_main/include/ludo/entities/LudoAdaptors.h" />
 		<Unit filename="../../../src/ZBE_main/include/ludo/entities/LudoAvatars.h" />

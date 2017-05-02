@@ -21,35 +21,6 @@
 
 namespace ludo {
 
-template <typename R>
-class DestroyerReactObject;
-
-/** \brief Actuator capable of making a Bouncer bounce in a Bounceable.
- */
-template <typename R>
-class LudoBallBouncer: public zbe::Actuator<zbe::Bouncer<2>, R> {
-  public:
-    void act(zbe::VoidReactObject<R>*) {
-      zbe::Bouncer<2> * gb = zbe::Actuator<zbe::Bouncer<2>, R>::getCollisioner();
-      zbe::CollisionData * cd = zbe::Actuator<zbe::Bouncer<2>, R>::getCollisionData();
-      zbe::Vector<2> n = gb->getPosition() - cd->getPoint();
-      gb->addNormal(n);
-    }
-};
-
-/** \brief Actuator capable of making a Bouncer get Annoyed by a Destroyer.
- */
-template <typename R>
-class BouncerAnnoyer: public zbe::Actuator< zbe::Bouncer<2>, R> {
-  public:
-    void act(DestroyerReactObject<R>*) {
-      zbe::Bouncer<2> * gb = zbe::Actuator<zbe::Bouncer<2>, R>::getCollisioner();
-      zbe::Vector<2> v = gb->getVelocity();
-      v.setCartesian(100,100);
-      gb->setVelocity(v);
-    }
-};
-
 class GraphicsSet : public zbe::InputHandler {
   public:
 	GraphicsSet(const GraphicsSet&) = delete;
@@ -91,6 +62,24 @@ class TicketToggler : public zbe::InputHandler {
 
   private:
     std::shared_ptr<zbe::Ticket> t;
+};
+
+class DaemonInputHandler : public zbe::InputHandler {
+  public:
+	DaemonInputHandler(const DaemonInputHandler&) = delete;
+	void operator=(const DaemonInputHandler&) = delete;
+
+  	DaemonInputHandler(std::shared_ptr<zbe::Daemon> daemon): d(daemon){
+  	}
+
+  	void run(float status) {
+      if( status > 0.5f) {
+        d->run();
+      }
+  	}
+
+  private:
+    std::shared_ptr<zbe::Daemon> d;
 };
 
 class TicketEraser : public zbe::TimeHandler {

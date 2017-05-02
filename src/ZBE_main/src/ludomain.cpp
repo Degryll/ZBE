@@ -18,6 +18,7 @@
 #include "ZBE/core/events/generators/util/IntersectionCollisionSelector.h"
 #include "ZBE/core/events/generators/InputEventGenerator.h"
 #include "ZBE/core/events/generators/CollisionEventGenerator.h"
+#include "ZBE/core/events/generators/IntersectionEventGenerator.h"
 #include "ZBE/core/events/generators/TimeEventGenerator.h"
 #include "ZBE/core/events/handlers/Actuator.h"
 #include "ZBE/core/events/handlers/ActuatorWrapper.h"
@@ -39,6 +40,7 @@
 #include "game/events/handlers/ExitInputHandler.h"
 
 #include "ludo/LudoReactor.h"
+#include "ludo/daemons/LudoDaemons.h"
 #include "ludo/drawers/LudoDrawers.h"
 #include "ludo/behaviors/LudoBehaviors.h"
 #include "ludo/entities/LudoEntities.h"
@@ -72,8 +74,11 @@ int ludomain(int, char** ) {
     LROTATORS = 4,
     RROTATORS = 5,
     PARTICLES = 6,
+    ROTATORS = 7,
     BALLACTUATORLIST = 1,
     COLLISIONABLELIST = 1,
+    INTERSECTCNRLIST = 2,
+    INTERSECTCTRLIST = 3,
     BOARDACTUATORLIST = 1,
     BRICKACTUATORLIST = 2,
     SPRITELIST = 1,
@@ -116,13 +121,15 @@ int ludomain(int, char** ) {
   ieg->addHandler(ZBEK_ESCAPE, &terminator);
   ieg->addHandler(ZBEK_RETURN, &terminator);
   printf("|------------------- Collision Event Generator-------------|\n");fflush(stdout);
-  printf("Building list for collisionator entinties. Currently empty.\n");fflush(stdout);
+  printf("Building lists for collisionator entinties. Currently empty.\n");fflush(stdout);
   printf("It will store entities that will search for a collision.\n");fflush(stdout);
   TicketedForwardList<AvatarEntity<Collisionator<LudoReactor> > > ctl;
-  printf("Acquiring singleton list-manager for this list (ctl).\n");fflush(stdout);
+  TicketedForwardList<AvatarEntity<Collisionator<LudoReactor> > > ctl2;
+  printf("Acquiring singleton list-manager for those lists .\n");fflush(stdout);
   ListManager< TicketedForwardList<AvatarEntity<Collisionator<LudoReactor> > > >& lmct = ListManager< TicketedForwardList<AvatarEntity<Collisionator<LudoReactor> > > >::getInstance();
-  printf("Storing ctl in that list-manager.\n");fflush(stdout);
+  printf("Storing those in that list-manager.\n");fflush(stdout);
   lmct.insert(COLLISIONATORLIST, &ctl);
+  lmct.insert(INTERSECTCTRLIST, &ctl2);
   printf("Building collision event generator with list id and the event id to use (1).\n");fflush(stdout);
   std::shared_ptr<CollisionEventGenerator<LudoReactor> > ceg(new CollisionEventGenerator<LudoReactor>(COLLISIONATORLIST, COLLISIONEVENT, new BaseCollisionSelector<LudoReactor>()));
   gema.addDaemon(ceg);
@@ -161,7 +168,7 @@ int ludomain(int, char** ) {
   drawMaster.addDaemon(drawerDaemon);
   std::shared_ptr<Daemon> rDrawerDaemon(new  DrawerDaemon<SimpleRotatedSprite, TicketedForwardList<AvatarEntity<SimpleRotatedSprite > > >(std::make_shared<SimpleRotatedSpriteSDLDrawer>(&window), RSPRITELIST));
   drawMaster.addDaemon(rDrawerDaemon);
-  printf("|-------------------- Daemons ----------------------|\n");fflush(stdout);
+  printf("|-------------------- General Daemons ---------------------|\n");fflush(stdout);
   DaemonMaster commonBehaviorMaster;
   DaemonMaster reactBehaviorMaster;
   TicketedForwardList<AvatarEntity<Movable<2> > > vAEMovable;
@@ -181,15 +188,21 @@ int ludomain(int, char** ) {
   printf("Creating a ball and giving it a position and size\n");fflush(stdout);
 
   //ball
-  std::forward_list<ActuatorWrapper<LudoReactor, Bouncer<2> >* > ballActuatorsList;
-  ListManager< std::forward_list<ActuatorWrapper<LudoReactor, Bouncer<2> >* > >& lmBallActuatorsList = ListManager< std::forward_list<ActuatorWrapper<LudoReactor, Bouncer<2> >* > >::getInstance();
+  std::forward_list<ActuatorWrapper<LudoReactor, Avatar, Bouncer<2> >* > ballActuatorsList;
+  ListManager< std::forward_list<ActuatorWrapper<LudoReactor, Avatar, Bouncer<2> >* > >& lmBallActuatorsList = ListManager< std::forward_list<ActuatorWrapper<LudoReactor, Avatar, Bouncer<2> >* > >::getInstance();
   lmBallActuatorsList.insert(BALLACTUATORLIST, &ballActuatorsList);
-  ActuatorWrapper<LudoReactor, Bouncer<2> >* bouncerWrapper = new  ActuatorWrapperCommon<LudoReactor, Bouncer<2>, Bouncer<2> >(new LudoBallBouncer<LudoReactor>());
+  ActuatorWrapper<LudoReactor, Avatar, Bouncer<2> >* bouncerWrapper = new  ActuatorWrapperCommon<LudoReactor, Bouncer<2>, Avatar, Bouncer<2> >(new LudoBallBouncer<LudoReactor>());
+  ActuatorWrapper<LudoReactor, Avatar, Bouncer<2> >* eraserWrapper = new  ActuatorWrapperCommon<LudoReactor, Avatar, Avatar, Bouncer<2> >(new AvatarEraser<LudoReactor>());
   ballActuatorsList.push_front(bouncerWrapper);
+  ballActuatorsList.push_front(eraserWrapper);
+
+  ListManager<TicketedForwardList<AvatarEntity<Collisioner<LudoReactor> > > >& lmCollisionablesList = ListManager< TicketedForwardList<AvatarEntity<Collisioner<LudoReactor> > > >::getInstance();
 
   TicketedForwardList<AvatarEntity<Collisioner<LudoReactor> > > collisionablesList;
-  ListManager<TicketedForwardList<AvatarEntity<Collisioner<LudoReactor> > > >& lmCollisionablesList = ListManager< TicketedForwardList<AvatarEntity<Collisioner<LudoReactor> > > >::getInstance();
   lmCollisionablesList.insert(COLLISIONABLELIST, &collisionablesList);
+
+  TicketedForwardList<AvatarEntity<Collisioner<LudoReactor> > > intersectionablesList;
+  lmCollisionablesList.insert(INTERSECTCNRLIST, &intersectionablesList);
 
   ListManager<TicketedForwardList<SetableGraphics> >& lmSG = ListManager<TicketedForwardList<SetableGraphics> >::getInstance();
   TicketedForwardList<SetableGraphics> setableGs;
@@ -205,7 +218,7 @@ int ludomain(int, char** ) {
   ieg->addHandler(ZBEK_v, &gSet3);
 
   srand(time(0));
-  for(int i = 0; i<100 ; i++){
+  for(int i = 0; i<200 ; i++){
     int64_t r = 16 + (rand()% 4);
     int64_t xc =(WIDTH/2 + rand()%100-50);
     int64_t yc = (HEIGHT/2 + rand()%100-50);
@@ -224,14 +237,19 @@ int ludomain(int, char** ) {
     setAdaptor(ball, spriteAdaptor);
     std::shared_ptr<Adaptor<Collisionator<LudoReactor> > > lbca = std::make_shared<LudoBallCollisionatorAdaptor<LudoReactor> >(&(*ball));
     setAdaptor(ball, lbca);
-    ctl.push_front(ball);
-    vAEMovable.push_front(ball);
-    vAEBouncer.push_front(ball);
-    rsprites.push_front(ball);
-    setableGs.push_front(ball);
+    ball->addToList(0, ctl.push_front(ball));
+    ball->addToList(1, vAEMovable.push_front(ball));
+    ball->addToList(2, vAEBouncer.push_front(ball));
+    ball->addToList(3, rsprites.push_front(ball));
+    ball->addToList(4, setableGs.push_front(ball));
+    ball->addToList(5, intersectionablesList.push_front(ball));
   }
 
   printf("Creating a rotator\n");fflush(stdout);
+  auto& lmTflAEPositionable = ListManager<TicketedForwardList<AvatarEntity<Positionable<2> > > >::getInstance();
+  TicketedForwardList<AvatarEntity<Positionable<2> > > tflAEPositionable;
+  lmTflAEPositionable.insert(ROTATORS, &tflAEPositionable);
+
   auto& lmTflAEMovable = ListManager<TicketedForwardList<AvatarEntity<Movable<2> > > >::getInstance();
   TicketedForwardList<AvatarEntity<Movable<2> > > tflRAEMovable;
   lmTflAEMovable.insert(LROTATORS, &tflRAEMovable);
@@ -246,6 +264,31 @@ int ludomain(int, char** ) {
   ctl.push_front(rotator);
   vAEBouncer.push_front(rotator);
   rsprites.push_front(rotator);
+  tflAEPositionable.push_front(rotator);
+
+  printf("Giving the rotator the ability of KILL ...press K...\n");fflush(stdout);
+
+  std::shared_ptr<DaemonMaster> killMaster = std::make_shared<DaemonMaster>();
+  //Creating areas
+  std::shared_ptr<DestroyerCircleAreaCreator<LudoReactor> > dcac(new DestroyerCircleAreaCreator<LudoReactor>(64, INTERSECTCTRLIST, INTERSECTCNRLIST, BOARDACTUATORLIST));
+  std::shared_ptr<Daemon> areaCreatorDaemon(new  BehaviorDaemon<Positionable<2>, TicketedForwardList<AvatarEntity<Positionable<2> > > >(dcac, ROTATORS));
+
+  //Calculating intersections
+  std::shared_ptr<IntersectionEventGenerator<LudoReactor> > iceg(new IntersectionEventGenerator<LudoReactor>(INTERSECTCTRLIST, COLLISIONEVENT, new IntersectionCollisionSelector<LudoReactor>()));
+
+
+  //Cleaning areas
+  std::shared_ptr<ListEraser<AvatarEntity<Collisionator<LudoReactor> > > > eraser(new ListEraser<AvatarEntity<Collisionator<LudoReactor> > >(INTERSECTCTRLIST));
+
+  //Adding daemons
+  killMaster->addDaemon(areaCreatorDaemon);
+  killMaster->addDaemon(iceg);
+  killMaster->addDaemon(eraser);
+
+  DaemonInputHandler dih(killMaster);
+
+  ieg->addHandler(ZBEK_k, &dih);
+  //** kill end
 
   auto fticket = vAEMovable.push_front(rotator);
   fticket->setINACTIVE();

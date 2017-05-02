@@ -17,34 +17,37 @@ namespace zbe {
 /** \brief This define an avatar that can be used to deactivate/activate or erase the corresponding entity.
  */
 struct Avatar {
+
     using Base = void;
+
+    virtual ~Avatar(){}
 
     /** \brief Change the state of this avatar in the list identified by id to ACTIVE.
      *  \param id Id to identify the list.
      */
-    void setACTIVE(uint64_t id);
+    virtual void setACTIVE(uint64_t id) = 0;
 
     /** \brief Change the state of this avatar in the list identified by id to INACTIVE.
      *  \param id Id to identify the list.
      */
-    void setINACTIVE(uint64_t id);
+    virtual void setINACTIVE(uint64_t id) = 0;
 
     /** \brief Change the state of this avatar in the list identified by id to ACTIVE.
      *  \param id Id to identify the list.
      */
-    void setERASED(uint64_t id);
+    virtual void setERASED(uint64_t id) = 0;
 
     /** \brief Change the state of this avatar for all list to ACTIVE.
      */
-    void setACTIVE();
+    virtual void setACTIVE() = 0;
 
     /** \brief Change the state of this avatar for all list to INACTIVE.
      */
-    void setINACTIVE();
+    virtual void setINACTIVE() = 0;
 
     /** \brief Change the state of this avatar for all list to ERASED.
      */
-    void setERASED();
+    virtual void setERASED() = 0;
 
 };
 

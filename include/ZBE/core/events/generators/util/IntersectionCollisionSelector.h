@@ -42,56 +42,56 @@ class IntersectionCollisionSelector : public CollisionSelector<R> {
 
 template <typename R>
 bool IntersectionCollisionSelector<R>::visit(StaticSolidAABB2D<R>& param1, StaticSolidAABB2D<R>& param2, int64_t& time, Point2D& point) {
-  time=0; point = {0,0};
+  time=0; point = Point2D{0,0};
   return (intersectionAABBAABB<2>(param1.getAABB2D(),param2.getAABB2D()));
 }
 
 template <typename R>
 bool IntersectionCollisionSelector<R>::visit(StaticLimiterAABB2D<R>& param1, StaticLimiterAABB2D<R>& param2, int64_t& time, Point2D& point) {
-  time=0; point = {0,0};
+  time=0; point = Point2D{0,0};
   return (intersectionAABBAABB<2>(param1.getAABB2D(),param2.getAABB2D()));
 }
 
 template <typename R>
 bool IntersectionCollisionSelector<R>::visit(StaticSolidAABB2D<R>& param1, StaticLimiterAABB2D<R>& param2, int64_t& time, Point2D& point) {
-  time=0; point = {0,0};
+  time=0; point = Point2D{0,0};
   return (intersectionAABBAABB<2>(param1.getAABB2D(),param2.getAABB2D()));
 }
 
 template <typename R>
 bool IntersectionCollisionSelector<R>::visit(StaticLimiterAABB2D<R>& param1, StaticSolidAABB2D<R>& param2, int64_t& time, Point2D& point) {
-  time=0; point = {0,0};
+  time=0; point = Point2D{0,0};
   return intersectionAABBAABB<2>(param1.getAABB2D(),param2.getAABB2D());
 }
 
 template <typename R>
 bool IntersectionCollisionSelector<R>::visit(StaticSolidAABB2D<R>& param1, ConstantMovingCircle<R>& param2, int64_t& time, Point2D& point) {
-  time=0; point = {0,0};
+  time=0; point = Point2D{0,0};
   return(intersectionCircleAABB2D(param2.getCircle(), param1.getAABB2D()));
 }
 
 template <typename R>
 bool IntersectionCollisionSelector<R>::visit(StaticLimiterAABB2D<R>& param1, ConstantMovingCircle<R>& param2, int64_t& time, Point2D& point) {
-  time=0; point = {0,0};
-  return(intersectionCircleAABB2D(param2.getCircle(), param2.getAABB2D()));
+  time=0; point = Point2D{0,0};
+  return(intersectionCircleAABB2D(param2.getCircle(), param1.getAABB2D()));
 }
 
 template <typename R>
 bool IntersectionCollisionSelector<R>::visit(ConstantMovingCircle<R>& param1, StaticSolidAABB2D<R>& param2, int64_t& time, Point2D& point) {
-  time=0; point = {0,0};
-  return(intersectionCircleAABB2D(param2.getCircle(), param2.getAABB2D()));
+  time=0; point = Point2D{0,0};
+  return(intersectionCircleAABB2D(param1.getCircle(), param2.getAABB2D()));
 }
 
 template <typename R>
 bool IntersectionCollisionSelector<R>::visit(ConstantMovingCircle<R>& param1, StaticLimiterAABB2D<R>& param2, int64_t& time, Point2D& point) {
-  time=0; point = {0,0};
-  return(intersectionCircleAABB2D(param2.getCircle(), param2.getAABB2D()));
+  time=0; point = Point2D{0,0};
+  return(intersectionCircleAABB2D(param1.getCircle(), param2.getAABB2D()));
 }
 
 template <typename R>
 bool IntersectionCollisionSelector<R>::visit(ConstantMovingCircle<R>& param1, ConstantMovingCircle<R>& param2, int64_t& time, Point2D& point) {
-  time=0; point = {0,0};
-  return(intersectionCircleCircle(param2.getCircle(), param2.getCircle()));
+  time=0; point = Point2D{0,0};
+  return(intersectionCircleCircle(param1.getCircle(), param2.getCircle()));
 }
 
 }  // namespace zbe

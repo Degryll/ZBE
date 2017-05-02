@@ -17,7 +17,6 @@
 #include "ZBE/core/entities/avatars/Collisioner.h"
 #include "ZBE/core/entities/avatars/Collisionator.h"
 #include "ZBE/core/events/generators/util/CollisionSelector.h"
-#include "ZBE/core/events/generators/Generator.h"
 #include "ZBE/core/events/EventStore.h"
 #include "ZBE/core/events/CollisionEvent2D.h"
 #include "ZBE/core/tools/containers/ListManager.h"

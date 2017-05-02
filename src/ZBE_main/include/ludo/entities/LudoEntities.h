@@ -20,8 +20,12 @@
 #include "ZBE/entities/avatars/Movable.h"
 #include "ZBE/entities/avatars/implementations/BaseBouncer.h"
 #include "ZBE/reactobjects/VoidReactObject.h"
+#include "ZBE/core/entities/Entity.h"
+#include "ZBE/core/entities/avatars/Avatar.h"
+#include "ZBE/core/entities/avatars/SingleSprite.h"
 #include "ZBE/core/entities/avatars/Collisioner.h"
 #include "ZBE/core/entities/avatars/Collisionator.h"
+#include "ZBE/core/entities/avatars/implementations/BaseAvatar.h"
 #include "ZBE/core/entities/avatars/implementations/VoidCollisioner.h"
 #include "ZBE/core/entities/avatars/implementations/VoidCollisionator.h"
 #include "ZBE/core/entities/AvatarEntity.h"
@@ -47,7 +51,9 @@ public:
 template<typename R>
 class LudoBall: public RotatedDrawable,
                 public SetableGraphics,
+                public zbe::Entity,
                 public zbe::SimpleWideBouncingAPO<2>,
+                public zbe::AvatarEntityFixed<zbe::Avatar>,
                 public zbe::AvatarEntityAdapted<SimpleRotatedSprite>,
                 public zbe::AvatarEntityFixed<zbe::Bouncer<2> >,
                 public zbe::AvatarEntityAdapted<zbe::Collisionator<R> > {
@@ -58,7 +64,10 @@ public:
   LudoBall(double x, double y, double radius, double vx, double vy, uint64_t actuators, uint64_t collisionables, uint64_t graphics) :
       SimpleWideBouncingAPO({x, y}, {vx, vy}, radius, actuators, collisionables),
       g(graphics), r(radius), d(2*radius) {
-      AvatarEntityFixed<zbe::Bouncer<2> >::setAvatar(new zbe::BaseBouncer<2>(this));
+      zbe::Avatar* a;
+      a = new zbe::BaseAvatar(this);
+      zbe::AvatarEntityFixed<zbe::Avatar>::setAvatar(a);
+      zbe::AvatarEntityFixed<zbe::Bouncer<2> >::setAvatar(new zbe::BaseBouncer<2>(this));
   }
 
   int64_t getX() {return ((int64_t)SimpleWideBouncingAPO::getPosition()[0]-r);}
@@ -84,14 +93,6 @@ public:
          actuatorsList)) {}
 };
 
-template<typename R>
-class LudoCircleArea : public zbe::AvatarEntityFixed<zbe::Collisionator<R> > {
-public:
-  LudoCircleArea(double x, double y, double radius, uint64_t actuatorsList) :
-    zbe::AvatarEntityFixed<zbe::Collisionator<R> >(new zbe::VoidCollisionator<R>(std::make_shared<zbe::ConstantMovingCircle<R> >(zbe::ConstantMovingCircle<R>(zbe::Circle({x, y}, radius), {0, 0})),
-         std::make_shared<DestroyerReactObject<R> >(),
-         actuatorsList)) {}
-};
 
 class BallParticle :    public RotatedDrawable,
                         public State,
@@ -118,6 +119,18 @@ private:
   uint64_t g;    //!< Image index
   double x, y;
   double d, a;
+};
+
+template<typename R>
+class LudoCircleArea :  public zbe::AvatarEntityFixed<zbe::Collisionator<R> > {
+public:
+  LudoCircleArea(double x, double y, double radius, uint64_t actuatorsList, uint64_t collisionablesList, std::shared_ptr<zbe::ReactObject<R> > ro):
+        zbe::AvatarEntityFixed<zbe::Collisionator<R> >(
+          new zbe::VoidCollisionator<R>(
+            std::make_shared<zbe::ConstantMovingCircle<R> >(zbe::ConstantMovingCircle<R>(zbe::Circle({x, y}, radius), {0, 0})),
+            ro,
+            actuatorsList, collisionablesList)){
+  };
 };
 
 

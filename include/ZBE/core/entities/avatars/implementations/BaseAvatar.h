@@ -7,8 +7,8 @@
  * @brief Base implementation of avatar that uses an Entity.
  */
 
-#ifndef ZBE_CORE_ENTITIES_AVATARS_AVATAR_H_
-#define ZBE_CORE_ENTITIES_AVATARS_AVATAR_H_
+#ifndef ZBE_CORE_ENTITIES_AVATARS_BASEAVATAR_H_
+#define ZBE_CORE_ENTITIES_AVATARS_BASEAVATAR_H_
 
 #include "ZBE/core/entities/Entity.h"
 #include "ZBE/core/entities/avatars/Avatar.h"
@@ -17,7 +17,10 @@ namespace zbe {
 
 /** \brief Base implementation of avatar that uses an Entity.
  */
-struct BaseAvatar : public Avatar{
+struct BaseAvatar : virtual public Avatar{
+
+    BaseAvatar(const BaseAvatar&) = delete;
+    void operator=(const BaseAvatar&) = delete;
 
     BaseAvatar(Entity * entity): e(entity) {}
 
@@ -66,4 +69,4 @@ struct BaseAvatar : public Avatar{
 
 }  // namespace zbe
 
-#endif  // ZBE_CORE_ENTITIES_AVATARS_AVATAR_H_
+#endif  // ZBE_CORE_ENTITIES_AVATARS_BASEAVATAR_H_

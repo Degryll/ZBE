@@ -69,6 +69,12 @@ class TicketedForwardList {
       return (l.empty());
     }
 
+    /** \brief Removes all elements from the container (which are destroyed), and leaving the container with a size of 0.
+     */
+    void clear() {
+      l.clear();
+    }
+
   private:
     std::forward_list< std::shared_ptr< TicketedElement<T> > > l;  //!< The STL forward list
 };

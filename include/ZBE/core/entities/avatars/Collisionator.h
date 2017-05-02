@@ -23,7 +23,7 @@ template <typename R>
 class Collisionator : virtual public Collisioner<R> {
   public:
 
-    using Base = void;
+    using Base = Collisioner<R>;
 
     virtual ~Collisionator(){};
 
