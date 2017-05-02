@@ -22,8 +22,11 @@ class AnimatedDrawable : virtual public StatedDrawable {
 
     virtual uint64_t getFrame() = 0;
     virtual uint64_t getNumFrames(uint64_t state) = 0;
-    virtual int64_t getW(uint64_t state) = 0;
-    virtual int64_t getH(uint64_t state) = 0;
+    virtual int64_t getGW(uint64_t state) = 0;
+    virtual int64_t getGH(uint64_t state) = 0;
+    virtual const int64_t* getWArray() = 0;
+    virtual const int64_t* getHArray() = 0;
+    virtual const uint64_t* getFArray() = 0;
 };
 
 }  // namespace zbe

@@ -18,10 +18,10 @@ namespace zbe {
  */
 struct AnimatedSprite : virtual public StatedSprite {
     using Base = StatedSprite;
-    uint64_t frame;    //!< Frame of the animation
-    uint64_t *nframes; //!< Number of frames per animation
-    int64_t *width;    //!< Pixel width of the animation
-    int64_t *height;   //!< Pixel height of the animation
+    uint64_t frame = 0;    //!< Frame of the animation
+    const uint64_t *nframes = nullptr; //!< Number of frames per animation
+    const int64_t  *width   = nullptr; //!< Pixel width of the animation
+    const int64_t  *height  = nullptr; //!< Pixel height of the animation
 };
 
 }  // namespace zbe

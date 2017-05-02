@@ -14,6 +14,8 @@
 
 namespace StatedSpriteSDLDrawerTest {
 
+static const int WINDOW_W = 100;
+static const int WINDOW_H = 100;
 static const int NSTATES = 4;
 
 class DrawerMock: public zbe::StatedDrawable,
@@ -46,9 +48,9 @@ private:
   uint64_t s;
 };
 
-TEST(StatedSpriteSDLDrawer, Render) {
+TEST(StatedSpriteSDLDrawer, DISABLED_Render) {
   srand(time(nullptr));
-  zbe::Window window(100, 100);
+  zbe::Window window(WINDOW_W, WINDOW_H);
 
   zbe::StatedSpriteSDLDrawer drawer(&window);
 
@@ -59,17 +61,19 @@ TEST(StatedSpriteSDLDrawer, Render) {
   int w = rand() % 20 + 20;
   int h = rand() % 20 + 20;
 
-  char *m = new char[w*h*3*NSTATES];
+  const int IMG_W = w*NSTATES;
+
+  char *m = new char[IMG_W*h*3];
 
   for(int i = 0; i < h; i++) {
-    for(int j = 0; j < w*NSTATES; j++) {
+    for(int j = 0; j < IMG_W; j++) {
       for(int k = 0; k < 3; k++) {
-        m[(i*w+j)*3+k] = rand() % 256;
+        m[(i*IMG_W+j)*3+k] = rand() % 256;
       }
     }
   }
 
-  uint64_t texture = window.loadImg(m, w*NSTATES, h, 24, w*3*NSTATES);
+  uint64_t texture = window.loadImg(m, w*NSTATES, h, 24, IMG_W*3);
 
   delete[] m;
 
@@ -84,26 +88,26 @@ TEST(StatedSpriteSDLDrawer, Render) {
   int s = rand() % NSTATES;
 
   dm->setX(x);
-  dm->setX(y);
-  dm->setX(w);
-  dm->setX(h);
-  dm->setX(texture);
+  dm->setY(y);
+  dm->setW(w);
+  dm->setH(h);
+  dm->setG(texture);
   dm->setS(s);
 
   drawer.apply(dm);
 
-  char *p = new char[100*100*4];
+  char *p = new char[WINDOW_W*WINDOW_H*4];
 
   window.readPixels(p, w*4);
 
-  for(int i = 0; i < 100; i++) {
-    for(int j = 0; j < 100; j++) {
+  for(int i = 0; i < WINDOW_H; i++) {
+    for(int j = 0; j < WINDOW_W; j++) {
       for(int k = 0; k < 4; k++) {
         if((j < x) || (j > (x+w))
         || (i < y) || (i > (y+h))) {
-          ASSERT_EQ(bgcolor[k], p[(i*w+j)*4+k]) << "Background pixel is equal to background color. I, j, k, w: " << i << ", " << j << ", " << k << ", " << w << ".";
+          ASSERT_EQ(bgcolor[k], p[(i*WINDOW_W+j)*4+k]) << "Background pixel is equal to background color. I, j, k, w: " << i << ", " << j << ", " << k << ", " << w << ".";
         } else {
-          ASSERT_EQ(m[((i-y)*w+(w*s+j-x))*4+k], p[(i*w+j)*4+k]) << "Foreground pixel is equal to random image. I, j, k, w: " << i << ", " << j << ", " << k << ", " << w << ".";
+          ASSERT_EQ(m[((i-y)*IMG_W+(w*s+j-x))*4+k], p[(i*WINDOW_W+j)*4+k]) << "Foreground pixel is equal to random image. I, j, k, w: " << i << ", " << j << ", " << k << ", " << w << ".";
         }
       }
     }

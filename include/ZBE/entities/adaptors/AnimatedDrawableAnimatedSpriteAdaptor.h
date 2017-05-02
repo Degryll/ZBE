@@ -35,16 +35,16 @@ public:
 
       s->x = e->getX();
       s->y = e->getY();
-      s->w = e->getW();
-      s->h = e->getH();
+//      s->w = e->getW();
+//      s->h = e->getH();
       s->graphics = e->getGraphics();
       s->degrees  = e->getDegrees();
       s->state    = e->getState();
       s->nstates  = e->getNumStates();
       s->frame    = e->getFrame();
-      s->nframes  = e->getNumFrames(uint64_t state);
-      s->width    = e->getW(uint64_t state);
-      s->height   = e->getH(uint64_t state);
+      s->nframes  = e->getFArray();
+      s->width    = e->getWArray();
+      s->height   = e->getHArray();
 
       return (s);
     }
