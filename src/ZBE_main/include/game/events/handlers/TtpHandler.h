@@ -16,7 +16,7 @@ class TtpHandler : public zbe::TimeHandler {
 	  TtpHandler(const TtpHandler&) = delete;
 	  void operator=(const TtpHandler&) = delete;
 
-  	TtpHandler(std::shared_ptr<zbe::AvatarEntity<zbe::Positionable<2> >> entity, zbe::TimeEventGenerator &teg) : e(entity), teg(teg) {}
+  	TtpHandler(std::shared_ptr<zbe::AvatarEntity<zbe::Positionable<2> >> entity, std::shared_ptr<zbe::TimeEventGenerator> teg) : e(entity), teg(teg) {}
 
   	void run(uint64_t time) {
       zbe::Positionable<2>* avatar;
@@ -35,12 +35,12 @@ class TtpHandler : public zbe::TimeHandler {
       }
       avatar->setPosition(position);
       std::shared_ptr<zbe::TimeHandler> t = std::make_shared<TtpHandler>(e, teg);
-      teg.addTimer(t,time + (zbe::SECOND*2));
+      teg->addTimer(t,time + (zbe::SECOND*2));
   	}
 
 	private:
   	std::shared_ptr<zbe::AvatarEntity<zbe::Positionable<2> > > e;
-  	zbe::TimeEventGenerator &teg;
+  	std::shared_ptr<zbe::TimeEventGenerator> teg;
 };
 
 } //namespace game

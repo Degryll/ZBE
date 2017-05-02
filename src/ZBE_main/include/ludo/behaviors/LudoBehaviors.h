@@ -62,7 +62,7 @@ class BackBallParticlesLauncher : public zbe::Behavior<zbe::Movable<2> > {
     BackBallParticlesLauncher(const BackBallParticlesLauncher&) = delete;
     void operator=(const BackBallParticlesLauncher&) = delete;
 
-    BackBallParticlesLauncher(double radius, uint64_t graphics, uint64_t spriteList, zbe::TimeEventGenerator* teg) :
+    BackBallParticlesLauncher(double radius, uint64_t graphics, uint64_t spriteList, std::shared_ptr<zbe::TimeEventGenerator> teg) :
         r(radius), g(graphics), sList(spriteList), teg(teg), store(zbe::EventStore::getInstance()) {
     }
 
@@ -87,7 +87,7 @@ class BackBallParticlesLauncher : public zbe::Behavior<zbe::Movable<2> > {
     double r;
     uint64_t g;
     uint64_t sList;
-    zbe::TimeEventGenerator* teg;
+    std::shared_ptr<zbe::TimeEventGenerator> teg;
     zbe::EventStore& store;
 };
 

@@ -115,17 +115,17 @@ class DemonRecurrentTimeHandler : public zbe::TimeHandler {
 	DemonRecurrentTimeHandler(const DemonRecurrentTimeHandler&) = delete;
 	void operator=(const DemonRecurrentTimeHandler&) = delete;
 
-  	DemonRecurrentTimeHandler(std::shared_ptr<zbe::Daemon> daemon, zbe::TimeEventGenerator &teg, uint64_t period):d(daemon), teg(teg), p(period) {}
+  	DemonRecurrentTimeHandler(std::shared_ptr<zbe::Daemon> daemon, std::shared_ptr<zbe::TimeEventGenerator> teg, uint64_t period):d(daemon), teg(teg), p(period) {}
 
   	void run(uint64_t time) {
       d->run();
       std::shared_ptr<zbe::TimeHandler> t = std::make_shared<DemonRecurrentTimeHandler>(d, teg, p);
-      teg.addTimer(t,time + p);
+      teg->addTimer(t,time + p);
   	}
 
   private:
   	std::shared_ptr<zbe::Daemon> d;
-  	zbe::TimeEventGenerator &teg;
+    std::shared_ptr<zbe::TimeEventGenerator> teg;
   	uint64_t p;
 };
 

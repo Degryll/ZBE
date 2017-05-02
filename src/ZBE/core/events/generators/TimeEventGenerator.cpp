@@ -12,7 +12,7 @@
 
 namespace zbe {
 
-void TimeEventGenerator::generate() {
+void TimeEventGenerator::run() {
   timers.erase(timers.begin(),timers.upper_bound(TimerData(0,sysTime.getInitFrameTime())));
 
   int64_t v = 0;

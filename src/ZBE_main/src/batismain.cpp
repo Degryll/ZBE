@@ -5,12 +5,12 @@
 #include <cstdlib>
 #include <SDL2/SDL_ttf.h>
 
+#include "ZBE/core/daemons/Daemon.h"
 #include "ZBE/core/daemons/DaemonMaster.h"
+
 #include "ZBE/core/entities/avatars/Collisioner.h"
 #include "ZBE/core/entities/avatars/Collisionator.h"
 #include "ZBE/core/entities/avatars/implementations/VoidCollisioner.h"
-#include "ZBE/core/events/generators/GeneratorMaster.h"
-#include "ZBE/core/events/generators/Generator.h"
 #include "ZBE/core/events/Event.h"
 #include "ZBE/core/events/EventStore.h"
 #include "ZBE/core/events/TimeEvent.h"
@@ -109,9 +109,7 @@ int batismain(int, char** ) {
   printf("Will store all event independently of its type\n");fflush(stdout);
   zbe::EventStore& store = zbe::EventStore::getInstance();
   printf("Building generator master\n");fflush(stdout);
-  std::vector<zbe::Generator*> vGenetators;
-  zbe::ListManager<std::vector<zbe::Generator*> >::getInstance().insert(GENERATORLIST, &vGenetators);
-  zbe::GeneratorMaster gema(GENERATORLIST);
+  zbe::DaemonMaster gema;
   printf("|------------------------ Input Event Generator-------------|\n");fflush(stdout);
   printf("Building SDLEventDispatcher\n");fflush(stdout);
   printf("Will extract data from SDL and get it usable for the engine\n");fflush(stdout);
@@ -122,8 +120,8 @@ int batismain(int, char** ) {
   printf("Acquiring and configuring InputEventGenerator with that InputReader\n");fflush(stdout);
   printf("Will read events from the InputReader and send them to the store\n");fflush(stdout);
   printf("Input events will use id 0\n");fflush(stdout);
-  zbe::InputEventGenerator ieg(inputBuffer,INPUTEVENT);
-  vGenetators.push_back(&ieg);
+  std::shared_ptr<zbe::InputEventGenerator> ieg(new zbe::InputEventGenerator(inputBuffer,INPUTEVENT));
+  gema.addDaemon(ieg);
   printf("|------------------- Collision Event Generator-------------|\n");fflush(stdout);
   printf("Building list for collisionator entinties. Currently empty.\n");fflush(stdout);
   printf("It will store entities that will search for a collision.\n");fflush(stdout);
@@ -133,12 +131,12 @@ int batismain(int, char** ) {
   printf("Storing ctl in that list-manager.\n");fflush(stdout);
   lmct.insert(COLLISIONATORLIST, &ctl);
   printf("Building collision event generator with list id and the event id to use (1).\n");fflush(stdout);
-  zbe::CollisionEventGenerator<game::GameReactor> ceg(COLLISIONATORLIST, COLLISIONEVENT, new zbe::BaseCollisionSelector<game::GameReactor>());
-  vGenetators.push_back(&ceg);
+  std::shared_ptr<zbe::CollisionEventGenerator<game::GameReactor> > ceg(new zbe::CollisionEventGenerator<game::GameReactor>(COLLISIONATORLIST, COLLISIONEVENT, new zbe::BaseCollisionSelector<game::GameReactor>()));
+  gema.addDaemon(ceg);
   printf("|------------------- Time Event Generator -----------------|\n");fflush(stdout);
   printf("Building time event generator with the event id to use (2)\n");fflush(stdout);
-  zbe::TimeEventGenerator teg(TIMEEVENT);
-  vGenetators.push_back(&teg);
+  std::shared_ptr<zbe::TimeEventGenerator> teg(new zbe::TimeEventGenerator(TIMEEVENT));
+  gema.addDaemon(teg);
   printf("|------------------------- Time ---------------------------|\n");fflush(stdout);
   printf("Building a SDL implementation of Timer\n");fflush(stdout);
   zbe::Timer *sysTimer = new zbe::SDLTimer(true);
@@ -221,16 +219,16 @@ int batismain(int, char** ) {
 
   printf("Building an sprite adaptor for the ball\n");fflush(stdout);
   game::ExitInputHandler terminator;
-  ieg.addHandler(zbe::ZBEK_ESCAPE, &terminator);
-  ieg.addHandler(zbe::ZBEK_RETURN, &terminator);
+  ieg->addHandler(zbe::ZBEK_ESCAPE, &terminator);
+  ieg->addHandler(zbe::ZBEK_RETURN, &terminator);
 
   batis::MouseXKeepInputHandler xKeep;
   batis::MouseYKeepInputHandler yKeep;
-  ieg.addHandler(zbe::ZBEK_MOUSE_OFFSET_X, &xKeep);
-  ieg.addHandler(zbe::ZBEK_MOUSE_OFFSET_Y, &yKeep);
+  ieg->addHandler(zbe::ZBEK_MOUSE_OFFSET_X, &xKeep);
+  ieg->addHandler(zbe::ZBEK_MOUSE_OFFSET_Y, &yKeep);
 
   batis::MKBallInputHandler ballMaker;
-  ieg.addHandler(zbe::ZBEK_MOUSE_LEFT, &ballMaker);
+  ieg->addHandler(zbe::ZBEK_MOUSE_LEFT, &ballMaker);
 
   for(int i = 0; i<100 ; i++){//98.623993, 85.728439
     int64_t vt = 200;
@@ -283,7 +281,7 @@ int batismain(int, char** ) {
         sprites.push_front(brick);
         std::shared_ptr<zbe::TimeHandler> teleporter = std::make_shared<batis::TtpHandler>(brick, teg, board);
 
-        teg.addTimer(teleporter, zbe::SECOND);
+        teg->addTimer(teleporter, zbe::SECOND);
       }
     }
   }
@@ -325,7 +323,7 @@ int batismain(int, char** ) {
     while (sysTime.isFrameRemaining()) {
       /* Generating events
        */
-      gema.generate();
+      gema.run();
       sysTime.setPartialFrameTime(store.getTime());
       if (sysTime.isPartialFrame()) {
         commonBehaviorMaster.run();

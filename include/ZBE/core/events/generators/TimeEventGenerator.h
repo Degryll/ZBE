@@ -13,10 +13,11 @@
 #include <memory>
 #include <set>
 
+#include "ZBE/core/daemons/Daemon.h"
+
 #include "ZBE/core/tools/math/math.h"
 #include "ZBE/core/events/EventStore.h"
 #include "ZBE/core/events/handlers/TimeHandler.h"
-#include "ZBE/core/events/generators/Generator.h"
 #include "ZBE/core/system/SysTime.h"
 
 namespace zbe {
@@ -33,7 +34,7 @@ typedef std::multiset<TimerData>::iterator TimerIter;
 
 /** \brief Generate collision events.
  */
-class TimeEventGenerator : virtual public Generator {
+class TimeEventGenerator : virtual public Daemon {
   public:
     /** \brief Empty Constructor.
      */
@@ -65,7 +66,7 @@ class TimeEventGenerator : virtual public Generator {
      * \param initTime Initial time of the frame
      * \param endTime End time of the frame
      */
-    void generate();
+    void run();
 
   private:
     int eventId;

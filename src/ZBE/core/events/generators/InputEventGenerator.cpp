@@ -13,7 +13,7 @@
 
 namespace zbe {
 
-    void InputEventGenerator::generate() {
+    void InputEventGenerator::run() {
       std::vector<InputStatus> currentInput;
       inputBuffer->getRange(sysTime.getInitFrameTime(), sysTime.getEndFrameTime(), currentInput);
       for(auto it = currentInput.begin(); it != currentInput.end(); it++) {

@@ -1,24 +1,23 @@
 /**
  * Copyright 2012 Batis Degryll Ludo
- * @file CollisionEventGenerator.h
- * @since 2016-06-05
- * @date 2017-03-20
+ * @file IntersectionEventGenerator.h
+ * @since 2017-05-01
+ * @date 2017-05-01
  * @author Degryll Ludo
- * @brief Generate collision events.
+ * @brief Generate intersection events.
  */
 
-#ifndef CORE_EVENTS_COLLISIONEVENTGENERATOR_H
-#define CORE_EVENTS_COLLISIONEVENTGENERATOR_H
+#ifndef CORE_EVENTS_INTERSECTIONEVENTGENERATOR_H
+#define CORE_EVENTS_INTERSECTIONEVENTGENERATOR_H
 
 #include <cstdint>
 #include <memory>
-
-#include "ZBE/core/daemons/Daemon.h"
 
 #include "ZBE/core/entities/AvatarEntity.h"
 #include "ZBE/core/entities/avatars/Collisioner.h"
 #include "ZBE/core/entities/avatars/Collisionator.h"
 #include "ZBE/core/events/generators/util/CollisionSelector.h"
+#include "ZBE/core/events/generators/Generator.h"
 #include "ZBE/core/events/EventStore.h"
 #include "ZBE/core/events/CollisionEvent2D.h"
 #include "ZBE/core/tools/containers/ListManager.h"
@@ -27,19 +26,19 @@
 
 namespace zbe {
 
-/** \brief Generate collision events.
+/** \brief Generate intersection events.
  */
 template <typename R>
-class CollisionEventGenerator : virtual public Daemon {
+class IntersectionEventGenerator : virtual public Daemon {
   public:
-    CollisionEventGenerator(const CollisionEventGenerator&) = delete;
-    void operator=(const CollisionEventGenerator&) = delete;
+    IntersectionEventGenerator(const IntersectionEventGenerator&) = delete;
+    void operator=(const IntersectionEventGenerator&) = delete;
 
     /** \brief Parametrized Constructor.
      *  \param list The list id of collisionators
      *  \param Id for the collision events.
      */
-    CollisionEventGenerator(uint64_t list, int eventId, CollisionSelector<R>* cs)
+    IntersectionEventGenerator(uint64_t list, int eventId, CollisionSelector<R>* cs)
     : id(list), eventId(eventId), cs(cs), es(EventStore::getInstance()),
       lmct(ListManager<TicketedForwardList<AvatarEntity<Collisionator<R> > > >::getInstance()),
       lmcn(ListManager<TicketedForwardList<AvatarEntity<Collisioner<R> > > >::getInstance()),
@@ -47,7 +46,7 @@ class CollisionEventGenerator : virtual public Daemon {
 
     /** \brief Empty destructor.
     */
-    ~CollisionEventGenerator() {delete cs;};
+    ~IntersectionEventGenerator() {delete cs;};
 
     /** Will search for collision events occurred between initTime and finalTime and send it to the EventStore.
      * \param initTime Initial time of the frame
@@ -67,8 +66,8 @@ class CollisionEventGenerator : virtual public Daemon {
 };
 
 template <typename R>
-void CollisionEventGenerator<R>::run() {
-  int64_t totalTime = sysTime.getEndFrameTime() - sysTime.getInitFrameTime();
+void IntersectionEventGenerator<R>::run() {
+  int64_t totalTime = 0;
   Point2D point;
 
   TicketedForwardList<AvatarEntity<Collisionator<R> > >* ctl = lmct.get(id);
@@ -83,8 +82,8 @@ void CollisionEventGenerator<R>::run() {
       conerEntity->assignAvatar(&coner);
       if(cs->select(*cator, *coner, totalTime, point)) {
         CollisionData cd(point);
-        es.storeEvent(new CollisionEvent2D<R>(eventId, sysTime.getEndFrameTime(), cator, cd, std::shared_ptr<zbe::ReactObject<R> >(coner->getReactObject())));
-        es.storeEvent(new CollisionEvent2D<R>(eventId, sysTime.getEndFrameTime(), coner, cd, std::shared_ptr<zbe::ReactObject<R> >(cator->getReactObject())));
+        es.storeInstantEvent(new CollisionEvent2D<R>(eventId, sysTime.getEndFrameTime(), cator, cd, std::shared_ptr<zbe::ReactObject<R> >(coner->getReactObject())));
+        es.storeInstantEvent(new CollisionEvent2D<R>(eventId, sysTime.getEndFrameTime(), coner, cd, std::shared_ptr<zbe::ReactObject<R> >(cator->getReactObject())));
       }  // if collision
     }  // for each collisionable
   }  // for each collisionator
@@ -92,4 +91,4 @@ void CollisionEventGenerator<R>::run() {
 
 }  // namespace zbe
 
-#endif // CORE_EVENTS_COLLISIONEVENTGENERATOR_H
+#endif // CORE_EVENTS_INTERSECTIONEVENTGENERATOR_H

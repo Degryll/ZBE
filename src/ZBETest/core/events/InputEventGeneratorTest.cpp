@@ -80,7 +80,7 @@ TEST(InputEventGenerator, Event) {
   sysTime.update();
   sysTime.setPartialFrameTime(4);
 
-  ieg.generate();
+  ieg.run();
   zbe::EventStore::getInstance().manageCurrent();
 
   EXPECT_FALSE(ha.b) << "a must be false";

@@ -8,8 +8,6 @@
 #include "ZBE/core/entities/avatars/Collisioner.h"
 #include "ZBE/core/entities/avatars/Collisionator.h"
 #include "ZBE/core/entities/avatars/implementations/VoidCollisioner.h"
-#include "ZBE/core/events/generators/GeneratorMaster.h"
-#include "ZBE/core/events/generators/Generator.h"
 #include "ZBE/core/events/Event.h"
 #include "ZBE/core/events/EventStore.h"
 #include "ZBE/core/events/TimeEvent.h"
@@ -99,9 +97,7 @@ int ludomain(int, char** ) {
   printf("Will store all event independently of its type\n");fflush(stdout);
   EventStore& store = EventStore::getInstance();
   printf("Building generator master\n");fflush(stdout);
-  std::vector<Generator*> vGenetators;
-  ListManager<std::vector<Generator*> >::getInstance().insert(GENERATORLIST, &vGenetators);
-  GeneratorMaster gema(GENERATORLIST);
+  DaemonMaster gema;
   printf("|------------------------ Input Event Generator-------------|\n");fflush(stdout);
   printf("Building SDLEventDispatcher\n");fflush(stdout);
   printf("Will extract data from SDL and get it usable for the engine\n");fflush(stdout);
@@ -112,13 +108,13 @@ int ludomain(int, char** ) {
   printf("Acquiring and configuring InputEventGenerator with that InputReader\n");fflush(stdout);
   printf("Will read events from the InputReader and send them to the store\n");fflush(stdout);
   printf("Input events will use id 0\n");fflush(stdout);
-  InputEventGenerator ieg(inputBuffer,INPUTEVENT);
-  vGenetators.push_back(&ieg);
+  std::shared_ptr<InputEventGenerator> ieg(new InputEventGenerator(inputBuffer,INPUTEVENT));
+  gema.addDaemon(ieg);
   printf("|-------------------- Input keys config -------------------|\n");fflush(stdout);
   printf("Building an sprite adaptor for the ball\n");fflush(stdout);
   game::ExitInputHandler terminator;
-  ieg.addHandler(ZBEK_ESCAPE, &terminator);
-  ieg.addHandler(ZBEK_RETURN, &terminator);
+  ieg->addHandler(ZBEK_ESCAPE, &terminator);
+  ieg->addHandler(ZBEK_RETURN, &terminator);
   printf("|------------------- Collision Event Generator-------------|\n");fflush(stdout);
   printf("Building list for collisionator entinties. Currently empty.\n");fflush(stdout);
   printf("It will store entities that will search for a collision.\n");fflush(stdout);
@@ -128,12 +124,12 @@ int ludomain(int, char** ) {
   printf("Storing ctl in that list-manager.\n");fflush(stdout);
   lmct.insert(COLLISIONATORLIST, &ctl);
   printf("Building collision event generator with list id and the event id to use (1).\n");fflush(stdout);
-  CollisionEventGenerator<LudoReactor> ceg(COLLISIONATORLIST, COLLISIONEVENT, new BaseCollisionSelector<LudoReactor>());
-  vGenetators.push_back(&ceg);
+  std::shared_ptr<CollisionEventGenerator<LudoReactor> > ceg(new CollisionEventGenerator<LudoReactor>(COLLISIONATORLIST, COLLISIONEVENT, new BaseCollisionSelector<LudoReactor>()));
+  gema.addDaemon(ceg);
   printf("|------------------- Time Event Generator -----------------|\n");fflush(stdout);
   printf("Building time event generator with the event id to use (2)\n");fflush(stdout);
-  TimeEventGenerator teg(TIMEEVENT);
-  vGenetators.push_back(&teg);
+  std::shared_ptr<TimeEventGenerator> teg(new TimeEventGenerator(TIMEEVENT));
+  gema.addDaemon(teg);
   printf("|------------------------- Time ---------------------------|\n");fflush(stdout);
   printf("Building a SDL implementation of Timer\n");fflush(stdout);
   Timer *sysTimer = new SDLTimer(true);
@@ -203,10 +199,10 @@ int ludomain(int, char** ) {
   GraphicsSet gSet1(ballgraphics[1],SETABLEGRAPHSLIST);
   GraphicsSet gSet2(ballgraphics[2],SETABLEGRAPHSLIST);
   GraphicsSet gSet3(ballgraphics[3],SETABLEGRAPHSLIST);
-  ieg.addHandler(ZBEK_z, &gSet0);
-  ieg.addHandler(ZBEK_x, &gSet1);
-  ieg.addHandler(ZBEK_c, &gSet2);
-  ieg.addHandler(ZBEK_v, &gSet3);
+  ieg->addHandler(ZBEK_z, &gSet0);
+  ieg->addHandler(ZBEK_x, &gSet1);
+  ieg->addHandler(ZBEK_c, &gSet2);
+  ieg->addHandler(ZBEK_v, &gSet3);
 
   srand(time(0));
   for(int i = 0; i<100 ; i++){
@@ -251,19 +247,18 @@ int ludomain(int, char** ) {
   vAEBouncer.push_front(rotator);
   rsprites.push_front(rotator);
 
-
   auto fticket = vAEMovable.push_front(rotator);
   fticket->setINACTIVE();
   TicketToggler ftoggler(fticket);
-  ieg.addHandler(ZBEK_UP, &ftoggler);
+  ieg->addHandler(ZBEK_UP, &ftoggler);
   auto lticket = tflLAEMovable.push_front(rotator);
   lticket->setINACTIVE();
   TicketToggler ltoggler(lticket);
-  ieg.addHandler(ZBEK_LEFT, &ltoggler);
+  ieg->addHandler(ZBEK_LEFT, &ltoggler);
   auto rticket = tflRAEMovable.push_front(rotator);
   rticket->setINACTIVE();
   TicketToggler rtoggler(rticket);
-  ieg.addHandler(ZBEK_RIGHT, &rtoggler);
+  ieg->addHandler(ZBEK_RIGHT, &rtoggler);
 
   printf("Pasive enities\n");fflush(stdout);
   ListManager<std::forward_list<ActuatorWrapper<LudoReactor, void >*> >& lmSimpleConerActuatorsList = ListManager<std::forward_list<ActuatorWrapper<LudoReactor, void>*> >::getInstance();
@@ -288,15 +283,15 @@ int ludomain(int, char** ) {
   printf("|=================== adding some timers ===================|\n");fflush(stdout);
   std::shared_ptr<Daemon> leftRotator(new  BehaviorDaemon<Movable<2>, TicketedForwardList<AvatarEntity<Movable<2> > > >(std::make_shared<Rotator>(-0.1f), LROTATORS));
   std::shared_ptr<TimeHandler> rotatorL = std::make_shared<DemonRecurrentTimeHandler>(leftRotator, teg, SECOND/8);
-  teg.addTimer(rotatorL, SECOND);
+  teg->addTimer(rotatorL, SECOND);
 
   std::shared_ptr<Daemon> rightRotator(new  BehaviorDaemon<Movable<2>, TicketedForwardList<AvatarEntity<Movable<2> > > >(std::make_shared<Rotator>(0.1f), RROTATORS));
   std::shared_ptr<TimeHandler> rotatorR = std::make_shared<DemonRecurrentTimeHandler>(rightRotator, teg, SECOND/8);
-  teg.addTimer(rotatorR, SECOND);
+  teg->addTimer(rotatorR, SECOND);
 
-  std::shared_ptr<Daemon> ballParticles(new  BehaviorDaemon<Movable<2>, TicketedForwardList<AvatarEntity<Movable<2> > > >(std::make_shared<BackBallParticlesLauncher>(8, ballgraphics[4], RSPRITELIST, &teg), MOVABLELIST));
+  std::shared_ptr<Daemon> ballParticles(new  BehaviorDaemon<Movable<2>, TicketedForwardList<AvatarEntity<Movable<2> > > >(std::make_shared<BackBallParticlesLauncher>(8, ballgraphics[4], RSPRITELIST, teg), MOVABLELIST));
   std::shared_ptr<TimeHandler> expeller = std::make_shared<DemonRecurrentTimeHandler>(ballParticles, teg, SECOND/16);
-  teg.addTimer(expeller, SECOND/16);
+  teg->addTimer(expeller, SECOND/16);
   printf("|==========================================================|\n");fflush(stdout);
 
   bool keep = true;
@@ -309,7 +304,7 @@ int ludomain(int, char** ) {
     while (sysTime.isFrameRemaining()) {
       /* Generating events
        */
-      gema.generate();
+      gema.run();
       sysTime.setPartialFrameTime(store.getTime());
       if (sysTime.isPartialFrame()) {
         commonBehaviorMaster.run();

@@ -14,17 +14,18 @@
 #include <memory>
 #include <map>
 
+#include "ZBE/core/daemons/Daemon.h"
+
 #include "ZBE/core/io/InputBuffer.h"
 #include "ZBE/core/events/EventStore.h"
 #include "ZBE/core/events/InputEvent.h"
-#include "ZBE/core/events/generators/Generator.h"
 #include "ZBE/core/system/SysTime.h"
 
 namespace zbe {
 
   /** \brief This class will search for input event occurred between two given times and send it to the EventStore.
    */
-  class InputEventGenerator : virtual public Generator {
+  class InputEventGenerator : virtual public Daemon {
     public:
 
       /** \brief Default constructor.
@@ -39,7 +40,7 @@ namespace zbe {
        * \param initTime Time from which events are generated
        * \param endTime Time until the events are generated
        */
-      void generate();
+      void run();
 
       /** Add a handler to an input event.
        * \param id Id of the key
