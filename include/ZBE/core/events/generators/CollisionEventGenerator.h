@@ -68,9 +68,8 @@ class CollisionEventGenerator : virtual public Daemon {
 
 template <typename R>
 void CollisionEventGenerator<R>::run() {
-  int64_t totalTime = sysTime.getEndFrameTime() - sysTime.getInitFrameTime();
+  int64_t totalTime = sysTime.getRemainTime();
   Point2D point;
-
   TicketedForwardList<AvatarEntity<Collisionator<R> > >* ctl = lmct.get(id);
 
   for(auto catorEntity : (*ctl)) {
@@ -83,8 +82,8 @@ void CollisionEventGenerator<R>::run() {
       conerEntity->assignAvatar(&coner);
       if(cs->select(*cator, *coner, totalTime, point)) {
         CollisionData cd(point);
-        es.storeEvent(new CollisionEvent2D<R>(eventId, sysTime.getEndFrameTime(), cator, cd, std::shared_ptr<zbe::ReactObject<R> >(coner->getReactObject())));
-        es.storeEvent(new CollisionEvent2D<R>(eventId, sysTime.getEndFrameTime(), coner, cd, std::shared_ptr<zbe::ReactObject<R> >(cator->getReactObject())));
+        es.storeEvent(new CollisionEvent2D<R>(eventId, sysTime.getInitFrameTime() + totalTime, cator, cd, std::shared_ptr<zbe::ReactObject<R> >(coner->getReactObject())));
+        es.storeEvent(new CollisionEvent2D<R>(eventId, sysTime.getInitFrameTime() + totalTime, coner, cd, std::shared_ptr<zbe::ReactObject<R> >(cator->getReactObject())));
       }  // if collision
     }  // for each collisionable
   }  // for each collisionator

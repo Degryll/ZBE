@@ -41,7 +41,7 @@ class UniformLinearMotion : public Behavior<Movable<s>  > {
       Movable<s>* avatar;
       entity->assignAvatar(&avatar);
       Point<s>& p = avatar->getPosition();
-      p += (avatar->getVelocity() * sysTime.getSubFrameTime()) * zbe::INVERSE_SECOND;
+      p += (avatar->getVelocity() * sysTime.getCurrentTime()) * zbe::INVERSE_SECOND;
     }
 
   private:

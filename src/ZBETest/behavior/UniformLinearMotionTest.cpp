@@ -44,7 +44,7 @@ TEST(UniformLinearMotion, apply) {
 
     sysTime.update();
     sysTime.update();
-    sysTime.setPartialFrameTime(zbe::SECOND);
+    sysTime.setEventTime(zbe::SECOND);
 
     bulma.apply(memock);
 
@@ -52,7 +52,7 @@ TEST(UniformLinearMotion, apply) {
     EXPECT_EQ(16.0,m.getPosition()[1]) << "Position Y.";
 
     sysTime.update();
-    sysTime.setPartialFrameTime(1.5*zbe::SECOND);
+    sysTime.setEventTime(1.5*zbe::SECOND);
 
     bulma.apply(memock);
 

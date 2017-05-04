@@ -304,27 +304,15 @@ int batismain(int, char** ) {
 
   bool keep = true;
   while(keep){
-
-
-
-    /* Clear screen.
-     */
+    //Pre
     window.clear();
-
-    /* Acquiring sdl info
-     * Input data will be stored into the InputReader
-     */
     sdlEventDist.run();
-
-    /* Updating system time.
-     */
     sysTime.update();
-
+    // Inner loop
     while (sysTime.isFrameRemaining()) {
-      /* Generating events
-       */
+      // Generating events
       gema.run();
-      sysTime.setPartialFrameTime(store.getTime());
+      sysTime.setEventTime(store.getTime());
       if (sysTime.isPartialFrame()) {
         commonBehaviorMaster.run();
         store.manageCurrent();
@@ -333,15 +321,10 @@ int batismain(int, char** ) {
         commonBehaviorMaster.run();
         store.clearStore();
       }
+      sysTime.updateInitTime();
     }
-
+    //Post
     drawMaster.run();
-
-    /* If one or more error occurs, the ammount and the first one
-     * wille be stored into SysError estructure, so it can be consulted.
-     *
-     * If there are errors, the first one will be prompted.
-     */
     int errcount = zbe::SysError::getNErrors();
     if(errcount>0){
         printf("Error: %s",zbe::SysError::getFirstErrorString().c_str());fflush(stdout);

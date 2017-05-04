@@ -218,7 +218,7 @@ int ludomain(int, char** ) {
   ieg->addHandler(ZBEK_v, &gSet3);
 
   srand(time(0));
-  for(int i = 0; i<200 ; i++){
+  for(int i = 0; i<2000 ; i++){
     int64_t r = 16 + (rand()% 4);
     int64_t xc =(WIDTH/2 + rand()%100-50);
     int64_t yc = (HEIGHT/2 + rand()%100-50);
@@ -345,10 +345,9 @@ int ludomain(int, char** ) {
     sysTime.update();
     // Inner loop
     while (sysTime.isFrameRemaining()) {
-      /* Generating events
-       */
+      // Generating events
       gema.run();
-      sysTime.setPartialFrameTime(store.getTime());
+      sysTime.setEventTime(store.getTime());
       if (sysTime.isPartialFrame()) {
         commonBehaviorMaster.run();
         store.manageCurrent();
@@ -357,6 +356,7 @@ int ludomain(int, char** ) {
         commonBehaviorMaster.run();
         store.clearStore();
       }
+      sysTime.updateInitTime();
     }
     //Post
     drawMaster.run();

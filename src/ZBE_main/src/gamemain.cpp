@@ -164,7 +164,7 @@ int gamemain(int, char** ) {
   ieg->addHandler(zbe::ZBEK_ESCAPE, &terminator);
 
   for(int i = 0; i<1000 ; i++){//98.623993, 85.728439
-    std::shared_ptr<game::GameBall> ball = std::make_shared<game::GameBall>((rand()%200 + 400), (rand()%200 + 400), 16 , (rand()%200 - 100), (rand()%200 - 100), BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
+    std::shared_ptr<game::GameBall> ball = std::make_shared<game::GameBall>((rand()%200 + 400), (rand()%200 + 400), 16 , (rand()%2000 - 1000), (rand()%2000 - 100), BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
     std::shared_ptr<zbe::Adaptor<zbe::SingleSprite> > spriteAdaptor = std::make_shared<zbe::SimpleDrawableSingleSpriteAdaptor>(&(*ball));
     zbe::setAdaptor(ball,spriteAdaptor);
     std::shared_ptr<zbe::Adaptor<zbe::Collisionator<game::GameReactor> > > gbca = std::make_shared<game::GameBallCollisionatorAdaptor>(&(*ball));
@@ -215,26 +215,15 @@ int gamemain(int, char** ) {
 
   bool keep = true;
   while(keep){
-
-    /* Clear screen.
-     */
+    //Pre
     window.clear();
-
-    /* Acquiring sdl info
-     * Input data will be stored into the InputReader
-     */
     sdlEventDist.run();
-
-    /* Updating system time.
-     */
     sysTime.update();
-
+    // Inner loop
     while (sysTime.isFrameRemaining()) {
-      /* Generating events
-       */
+      // Generating events
       gema.run();
-
-      sysTime.setPartialFrameTime(store.getTime());
+      sysTime.setEventTime(store.getTime());
       if (sysTime.isPartialFrame()) {
         commonBehaviorMaster.run();
         store.manageCurrent();
@@ -243,15 +232,10 @@ int gamemain(int, char** ) {
         commonBehaviorMaster.run();
         store.clearStore();
       }
+      sysTime.updateInitTime();
     }
-
+    //Post
     drawMaster.run();
-
-    /* If one or more error occurs, the ammount and the first one
-     * wille be stored into SysError estructure, so it can be consulted.
-     *
-     * If there are errors, the first one will be prompted.
-     */
     int errcount = zbe::SysError::getNErrors();
     if(errcount>0){
         printf("Error: %s",zbe::SysError::getFirstErrorString().c_str());fflush(stdout);

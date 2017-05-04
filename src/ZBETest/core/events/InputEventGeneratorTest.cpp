@@ -75,10 +75,10 @@ TEST(InputEventGenerator, Event) {
 
   sysTime.update();
   sysTime.update();
-  sysTime.setPartialFrameTime(2);
+  sysTime.setEventTime(2);
 
   sysTime.update();
-  sysTime.setPartialFrameTime(4);
+  sysTime.setEventTime(4);
 
   ieg.run();
   zbe::EventStore::getInstance().manageCurrent();
