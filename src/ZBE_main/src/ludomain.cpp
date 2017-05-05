@@ -95,7 +95,8 @@ int ludomain(int, char** ) {
   const char arrowImg[] = "data/images/ludo/arrow_r_000_32.png";
 //  const char brickfilename[] = "data/images/zombieball/braikn_32.png";
   const char bulletImg[] = "data/images/zombieball/bullet001.png";
-  unsigned ballgraphics[5];
+  const char orb[] = "data/images/ludo/orb_001_128.png";
+  unsigned ballgraphics[6];
 
   printf("|=================== Building up system ===================|\n");fflush(stdout);
   printf("Event store\n");fflush(stdout);
@@ -162,6 +163,7 @@ int ludomain(int, char** ) {
   ballgraphics[2] = window.loadImg(mouseImg);
   ballgraphics[3] = window.loadImg(arrowImg);
   ballgraphics[4] = window.loadImg(bulletImg);
+  ballgraphics[5] = window.loadImg(orb);
   //brickgraphics = window.loadImg(brickfilename);
   printf("Building the drawer to paint SimpleRotatedSprite's \n");fflush(stdout);
   std::shared_ptr<Daemon> drawerDaemon(new  DrawerDaemon<SingleSprite, TicketedForwardList<AvatarEntity<SingleSprite > > >(std::make_shared<SingleSpriteSDLDrawer>(&window), SPRITELIST));
@@ -218,7 +220,7 @@ int ludomain(int, char** ) {
   ieg->addHandler(ZBEK_v, &gSet3);
 
   srand(time(0));
-  for(int i = 0; i<2000 ; i++){
+  for(int i = 0; i<1000 ; i++){
     int64_t r = 16 + (rand()% 4);
     int64_t xc =(WIDTH/2 + rand()%100-50);
     int64_t yc = (HEIGHT/2 + rand()%100-50);
@@ -251,6 +253,9 @@ int ludomain(int, char** ) {
   lmTflAEPositionable.insert(ROTATORS, &tflAEPositionable);
 
   auto& lmTflAEMovable = ListManager<TicketedForwardList<AvatarEntity<Movable<2> > > >::getInstance();
+  TicketedForwardList<AvatarEntity<Movable<2> > > tflAEMovable;
+  lmTflAEMovable.insert(ROTATORS, &tflAEMovable);
+
   TicketedForwardList<AvatarEntity<Movable<2> > > tflRAEMovable;
   lmTflAEMovable.insert(LROTATORS, &tflRAEMovable);
   TicketedForwardList<AvatarEntity<Movable<2> > > tflLAEMovable;
@@ -265,6 +270,7 @@ int ludomain(int, char** ) {
   vAEBouncer.push_front(rotator);
   rsprites.push_front(rotator);
   tflAEPositionable.push_front(rotator);
+  tflAEMovable.push_front(rotator);
 
   printf("Giving the rotator the ability of KILL ...press K...\n");fflush(stdout);
 
@@ -280,10 +286,15 @@ int ludomain(int, char** ) {
   //Cleaning areas
   std::shared_ptr<ListEraser<AvatarEntity<Collisionator<LudoReactor> > > > eraser(new ListEraser<AvatarEntity<Collisionator<LudoReactor> > >(INTERSECTCTRLIST));
 
+  //Doing cute stuff
+  std::shared_ptr<Daemon> explodParticle(new  BehaviorDaemon<Movable<2>, TicketedForwardList<AvatarEntity<Movable<2> > > >(std::make_shared<BackBallParticlesLauncher>(64, ballgraphics[5], RSPRITELIST, teg), ROTATORS));
+
+
   //Adding daemons
   killMaster->addDaemon(areaCreatorDaemon);
   killMaster->addDaemon(iceg);
   killMaster->addDaemon(eraser);
+  killMaster->addDaemon(explodParticle);
 
   DaemonInputHandler dih(killMaster);
 
