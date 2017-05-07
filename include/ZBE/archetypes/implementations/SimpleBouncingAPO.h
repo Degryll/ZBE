@@ -1,26 +1,58 @@
 /**
  * Copyright 2012 Batis Degryll Ludo
- * @file SimpleBouncingMobileAPO.h
+ * @file SimpleBouncingAPO.h
  * @since 2017-03-07
- * @date 2017-05-06
+ * @date 2017-05-07
  * @author Degryll Ludo Batis
  * @brief Simple implementation of the Bouncing Mobile active physical object interface.
  */
 
-#ifndef ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEBOUNCINGMOBILEAPO_H
-#define ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEBOUNCINGMOBILEAPO_H
+#ifndef ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEBOUNCINGAPO_H
+#define ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEBOUNCINGAPO_H
 
 #include "ZBE/archetypes/BouncingMobileAPO.h"
-#include "ZBE/archetypes/implementations/SimpleMobileAPO.h"
 #include "ZBE/archetypes/implementations/SimpleBouncing.h"
+#include "ZBE/archetypes/implementations/SimpleActivePhysicalObject.h"
 
 namespace zbe {
 
 /** \brief Simple implementation of the Bouncing Mobile active physical object interface.
  */
-template <typename R, unsigned s>
-class SimpleBouncingAPO : virtual public BouncingAPO<R, s>, public SimpleMobileAPO<R, s>, public SimpleBouncing<s> {
+template <unsigned s>
+class SimpleBouncingAPO : virtual public BouncingAPO<s>, public SimpleBouncing<s>, public SimpleActivePhysicalObject {
 public:
+  /** \brief Constructs a BouncingAPO with position and velocity set to 0.
+   */
+  SimpleBouncingAPO(uint64_t actuatorsList, uint64_t collisionablesList) : SimpleBouncing(), SimpleActivePhysicalObject(actuatorsList, collisionablesList) {}
+
+  /** \brief Constructor with position data as an initializer list. Velocity will be 0.
+   */
+  SimpleBouncingAPO(std::initializer_list<double> position, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleBouncing(position), SimpleActivePhysicalObject(actuatorsList, collisionablesList) {}
+
+  /** \brief Constructor with position data as a Point. Velocity will be 0.
+   */
+  SimpleBouncingAPO(Point<s> position, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleMobile<s>(position), SimpleActivePhysicalObject(actuatorsList, collisionablesList) {}
+
+  /** \brief Constructor with velocity data as a Vector. Position will be 0.
+   */
+  SimpleBouncingAPO(Vector<s> velocity, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleMobile<s>(velocity), SimpleActivePhysicalObject(actuatorsList, collisionablesList) {}
+
+  /** \brief Constructor with position and velocity data as an initializer list.
+   */
+  SimpleBouncingAPO(std::initializer_list<double> position, std::initializer_list<double> velocity, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleMobile<s>(position, velocity), SimpleActivePhysicalObject(actuatorsList, collisionablesList) {}
+
+  /** \brief Constructor with position data as a Point, and velocity data as an initializer list.
+   */
+  SimpleBouncingAPO(Point<s> position, std::initializer_list<double> velocity, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleMobile<s>(position, velocity), SimpleActivePhysicalObject(actuatorsList, collisionablesList) {}
+
+  /** \brief Constructor with position data as a Point, and velocity data as a Vector.
+   */
+  SimpleBouncingAPO(Point<s> position, Vector<s> velocity, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleMobile<s>(position, velocity), SimpleActivePhysicalObject(actuatorsList, collisionablesList) {}
+
+  /** \brief Constructor with position data as an initializer list, and velocity data as a Vector.
+   */
+  SimpleBouncingAPO(std::initializer_list<double> position, Vector<s> velocity, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleMobile<s>(position, velocity), SimpleActivePhysicalObject(actuatorsList, collisionablesList) {}
+
   /** \brief Virtual destructor.
    */
   virtual ~SimpleBouncingMobileAPO(){}
@@ -28,4 +60,4 @@ public:
 
 }  // namespace
 
-#endif //ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEBOUNCINGMOBILEAPO_H
+#endif //ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEBOUNCINGAPO_H

@@ -38,6 +38,7 @@ class SimpleMobile : virtual public Mobile<s>, public SimplePosition<s> {
         v[i++] = *it;
       }
     }
+
     void setVelocity(Vector<s> velocity) {v = velocity;}
 
     Vector<s>& getVelocity() {return (v);}

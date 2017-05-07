@@ -10,6 +10,7 @@
 #ifndef ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEBOUNCING_H
 #define ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEBOUNCING_H
 
+#include "ZBE/core/tools/math/Point.h"
 #include "ZBE/core/tools/math/Vector.h"
 #include "ZBE/archetypes/Bouncing.h"
 #include "ZBE/archetypes/implementations/SimpleMobile.h"

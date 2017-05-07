@@ -1,10 +1,10 @@
 /**
  * Copyright 2012 Batis Degryll Ludo
- * @file ActivePhysicalObject.h
- * @since 2016-12-16
+ * @file SimpleActivePhysicalObject.h
+ * @since 2017-05-07
  * @date 2017-05-07
  * @author Degryll Ludo Batis
- * @brief Defines the interface of an object that interacts actively physically.
+ * @brief Implements the interface of an object that interacts actively with other objects.
  * Please, if inherit from this class, use APO for naming.
  */
 
@@ -18,7 +18,7 @@
 
 namespace zbe {
 
-/** \brief Defines the interface of an object that interacts actively physically.
+/** \brief Implements the interface of an object that interacts actively with other objects.
  *  Please, if inherit from this class, use APO for naming.
  */
 class SimpleActivePhysicalObject : virtual public ActivePhysicalObject, public SimplePhysicalObject {

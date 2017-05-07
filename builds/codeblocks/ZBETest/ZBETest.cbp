@@ -173,6 +173,7 @@
 		<Unit filename="../../../src/ZBETest/SDL/RotatedSpriteSDLDrawerTest.cpp" />
 		<Unit filename="../../../src/ZBETest/SDL/SingleSpriteSDLDrawerTest.cpp" />
 		<Unit filename="../../../src/ZBETest/SDL/StatedSpriteSDLDrawerTest.cpp" />
+		<Unit filename="../../../src/ZBETest/archetypes/SimpleActivePhysicalObjectTest.cpp" />
 		<Unit filename="../../../src/ZBETest/archetypes/SimpleBouncingTest.cpp" />
 		<Unit filename="../../../src/ZBETest/archetypes/SimpleDampingTest.cpp" />
 		<Unit filename="../../../src/ZBETest/archetypes/SimpleDrawableTest.cpp" />
