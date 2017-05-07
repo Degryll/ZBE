@@ -14,7 +14,7 @@ namespace zbe {
 
 class Damping {
   public:
-    ~Damping() {}
+    virtual ~Damping() {}
 
     virtual void setFactor(double factor) = 0;
     virtual double getFactor() = 0;

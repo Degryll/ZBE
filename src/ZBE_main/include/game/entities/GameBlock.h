@@ -34,8 +34,9 @@ class GameBlock :  public zbe::Drawable,
                    public zbe::AvatarEntityAdapted<zbe::Collisioner<GameReactor> >,
                    public zbe::AvatarEntityFixed<zbe::Positionable<2> >{
 public:
-  GameBlock(double x, double y, double width, double height, uint64_t graphics, uint64_t actuatorsList) :
-    SimplePositionPO<2>(actuatorsList, {x, y}), w(width), h(height), g(graphics) {
+  GameBlock(double x, double y, double width, double height, uint64_t graphics, uint64_t actuatorsList)
+  : SimplePositionPO<2>(actuatorsList, {x, y}),
+    w(width), h(height), g(graphics) {
       zbe::AvatarEntityFixed<zbe::Positionable<2> >::setAvatar(new zbe::BasePositionable<2>(this));
     }
 

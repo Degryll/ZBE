@@ -16,16 +16,9 @@ namespace zbe {
 
 class PhysicalObject {
 public:
-
-  PhysicalObject (uint64_t actuatorsList) : al(actuatorsList) {}
-
   virtual ~PhysicalObject() {}
 
-  void setActuatorsList(uint64_t actuatorsList) {al = actuatorsList;}
-  uint64_t getActuatorsList() {return (al);}
-
-private:
-  uint64_t al;
+  virtual uint64_t getActuatorsList() = 0;
 };
 
 }  // namespace

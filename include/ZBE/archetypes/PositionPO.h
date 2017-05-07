@@ -11,20 +11,16 @@
 #define ZBE_ARCHETYPES_POSITIONPO_H
 
 #include <cstdint>
-#include "ZBE/archetypes/PhysicalObject.h"
-#include "ZBE/core/tools/math/Point.h"
+
 #include "ZBE/archetypes/Position.h"
+#include "ZBE/archetypes/PhysicalObject.h"
 
 namespace zbe {
 
 template <unsigned s>
-class PositionPO : virtual public Position<s>, public PhysicalObject {
+class PositionPO : virtual public Position<s>, virtual public PhysicalObject {
 public:
-
-  PositionPO (uint64_t actuatorsList) : PhysicalObject(actuatorsList) {}
-
   virtual ~PositionPO() {}
-
 };
 
 }  // namespace

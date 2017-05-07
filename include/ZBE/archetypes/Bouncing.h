@@ -11,13 +11,14 @@
 #define ZBE_ARCHETYPES_BOUNCING_H
 
 #include "ZBE/archetypes/Mobile.h"
+#include "ZBE/core/tools/math/Vector.h"
 
 namespace zbe {
 
 template <unsigned s>
 class Bouncing : virtual public Mobile<s> {
   public:
-    ~Bouncing() {}
+    virtual ~Bouncing() {}
   	virtual void addNormal(const Vector<s>& normal) = 0;
   	virtual Vector<s> getNormalSum() = 0;
   	virtual bool hasNormals() = 0;

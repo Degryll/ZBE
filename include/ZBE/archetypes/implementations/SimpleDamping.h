@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file SimpleDamping.h
  * @since 2016-12-16
- * @date 2016-12-16
+ * @date 2017-05-07
  * @author Degryll
  * @brief Simple implementation of the Damping interface.
  */
@@ -14,16 +14,35 @@
 
 namespace zbe {
 
-class SimpleDamping : public Damping {
-  public:
-    SimpleDamping() : df(.0) {}
-    SimpleDamping(double factor) : df(factor) {}
+/** \brief Simple implementation of the Damping interface.
+ */
+class SimpleDamping : virtual public Damping {
+public:
+  /** \brief Empty constructor. Set the damping factor to 1.0.
+   */
+  SimpleDamping() : df(1.0) {}
 
-    void setFactor(double factor) {df = factor;}
-    double getFactor() {return (df);}
+  /** \brief Parametrized constructor. Sets the damping factor to factor.
+   *  \param factor The damping factor.
+   */
+  SimpleDamping(const double factor) : df(factor) {}
 
-  private:
-    double df;
+  /** \brief Virtual destructor.
+   */
+  virtual ~SimpleDamping() {}
+
+  /** \brief Sets the damping factor to factor.
+   *  \param factor The damping factor.
+   */
+  void setFactor(const double factor) {df = factor;}
+
+  /** \brief Return the damping factor.
+   *  \return The damping factor.
+   */
+  double getFactor() {return (df);}
+
+private:
+  double df;
 };
 
 }  // namespace

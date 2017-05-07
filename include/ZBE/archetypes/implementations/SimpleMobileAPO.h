@@ -36,16 +36,6 @@ class SimpleMobileAPO : public MobileAPO<R, s>, public SimpleMobile<s> {
 
     virtual ~SimpleMobileAPO(){}
 
-	std::shared_ptr<CollisionObject<R> > getCollisionObject(){ return co;}
-	std::shared_ptr<ReactObject<R> > getReactObject(){ return ro;}
-  uint64_t getActuatorsList(){ return al;}
-	uint64_t getCollisionablesList(){ return cl;}
-
-  private:
-    std::shared_ptr<CollisionObject<R> > co;
-    std::shared_ptr<ReactObject<R> > ro;
-    uint64_t al;
-    uint64_t cl;
 };
 
 }  // namespace

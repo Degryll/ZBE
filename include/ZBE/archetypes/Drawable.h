@@ -10,6 +10,8 @@
 #ifndef ZBE_ARCHETYPES_DRAWABLE_H_
 #define ZBE_ARCHETYPES_DRAWABLE_H_
 
+#include <cstdint>
+
 namespace zbe {
 
 /** \brief This define an entity that can be drawn.

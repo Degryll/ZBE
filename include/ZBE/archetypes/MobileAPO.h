@@ -1,6 +1,6 @@
 /**
  * Copyright 2012 Batis Degryll Ludo
- * @file Mobile.h
+ * @file MobileAPO.h
  * @since 2016-12-16
  * @date 2017-01-21
  * @author Degryll
@@ -10,15 +10,17 @@
 #ifndef ZBE_ARCHETYPES_MOBILEAPO_H
 #define ZBE_ARCHETYPES_MOBILEAPO_H
 
-#include "ZBE/archetypes/ActivePhysicalObject.h"
-#include "ZBE/archetypes/Mobile.h"
+#include <cstdint>
+
+#include "ZBE/archetypes/MobilePO.h"
+#include "ZBE/archetypes/PositionAPO.h"
 
 namespace zbe {
 
 template <unsigned s>
-class MobileAPO : virtual public Mobile<s>, public ActivePhysicalObject {
-  public:
-    virtual ~MobileAPO() {}
+class MobileAPO : virtual public MobilePO<s>, virtual public PositionAPO<s> {
+public:
+  virtual ~MobileAPO() {}
 
 };
 

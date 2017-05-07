@@ -17,9 +17,9 @@
 namespace zbe {
 
 template <unsigned s>
-class BouncingAPO : virtual public Bouncing, virtual public MobileAPO {
-  public:
-    virtual ~BouncingMobileAPO() {}
+class BouncingAPO : virtual public Bouncing<s>, virtual public MobileAPO<s> {
+public:
+  virtual ~BouncingAPO() {}
 };
 
 }  // namespace

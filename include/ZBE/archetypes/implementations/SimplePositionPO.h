@@ -11,15 +11,16 @@
 #define ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEPOSITIONPO_H
 
 #include "ZBE/archetypes/implementations/SimplePosition.h"
+#include "ZBE/archetypes/implementations/SimplePhysicalObject.h"
 #include "ZBE/core/tools/math/Point.h"
 #include "ZBE/archetypes/PositionPO.h"
 namespace zbe {
 
 template <unsigned s>
-class SimplePositionPO : public PositionPO<s>, public SimplePosition<s> {
+class SimplePositionPO : virtual public PositionPO<s>, public SimplePosition<s>, public SimplePhysicalObject {
   public:
 
-    SimplePositionPO(uint64_t actuatorsList, Point<s> position) : PositionPO<s>(actuatorsList), SimplePosition<s>(position) {}
+    SimplePositionPO(uint64_t actuatorsList, Point<s> position) : SimplePosition<s>(position), SimplePhysicalObject(actuatorsList) {}
 
     virtual ~SimplePositionPO() {}
 };

@@ -2,9 +2,9 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file SimpleMobile.h
  * @since 2016-12-16
- * @date 2016-12-18
+ * @date 2017-05-07
  * @author Degryll Ludo
- * @brief Simple implementation of the Mobile2D interface.
+ * @brief Simple implementation of the Mobile<s> interface.
  */
 
 #ifndef ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEMOBILE_H
@@ -48,7 +48,7 @@ class SimpleMobile : virtual public Mobile<s>, public SimplePosition<s> {
     Point<s>& getPosition() {return SimplePosition<s>::getPosition();};
 
   private:
-    Vector2D v;
+    Vector<s> v;
 };
 
 }  // namespace

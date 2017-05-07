@@ -101,6 +101,7 @@
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/googletest/1.7.0/include" />
 					<Add directory="../../../extlibs/SDL2/2.0.3/x86_64-w64-mingw32/include" />
+					<Add directory="../../../extlibs/SDL2/2.0.3/x86_64-w64-mingw32/include/SDL2" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-w64-mingw32/include" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-w64-mingw32/include" />
 					<Add directory="../../../extlibs/boost_1_57_0" />
@@ -172,6 +173,10 @@
 		<Unit filename="../../../src/ZBETest/SDL/RotatedSpriteSDLDrawerTest.cpp" />
 		<Unit filename="../../../src/ZBETest/SDL/SingleSpriteSDLDrawerTest.cpp" />
 		<Unit filename="../../../src/ZBETest/SDL/StatedSpriteSDLDrawerTest.cpp" />
+		<Unit filename="../../../src/ZBETest/archetypes/SimpleBouncingTest.cpp" />
+		<Unit filename="../../../src/ZBETest/archetypes/SimpleDampingTest.cpp" />
+		<Unit filename="../../../src/ZBETest/archetypes/SimpleDrawableTest.cpp" />
+		<Unit filename="../../../src/ZBETest/archetypes/SimpleWideTest.cpp" />
 		<Unit filename="../../../src/ZBETest/behavior/UniformLinearMotionTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/daemons/PunishersTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/daemons/daemonsTest.cpp" />

@@ -33,7 +33,7 @@ public:
   void operator=(const GameBall&) = delete;
 
   GameBall(double x, double y, double radius, double vx, double vy, uint64_t actuators, uint64_t collisionables, int graphics) :
-      SimpleWideBouncingAPO({x, y}, {vx, vy}, radius, actuators, collisionables),
+      SimpleWideBouncingAPO<2>({x, y}, {vx, vy}, radius, actuators, collisionables),
       g(graphics), r(radius), d(2*radius) {
       AvatarEntityFixed<zbe::Bouncer<2> >::setAvatar(new zbe::BaseBouncer<2>(this));
   }

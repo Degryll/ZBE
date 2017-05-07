@@ -14,24 +14,29 @@
 				<Option compiler="mingw_64-bit_compiler" />
 				<Compiler>
 					<Add option="-std=c++11" />
-					<Add option="-g" />
 					<Add option="-m64" />
+					<Add option="-g" />
 					<Add directory="../../../src/ZBE_main/include" />
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/utf8cpp/source" />
 					<Add directory="../../../extlibs/boost_1_57_0" />
 					<Add directory="../../../extlibs/IteratorTypeErasure/IteratorTypeErasure/any_iterator" />
 					<Add directory="../../../extlibs/SDL2/2.0.3/x86_64-w64-mingw32/include" />
+					<Add directory="../../../extlibs/SDL2/2.0.3/x86_64-w64-mingw32/include/SDL2" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-w64-mingw32/include" />
+					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-w64-mingw32/include" />
 				</Compiler>
 				<Linker>
+					<Add option="-m64" />
 					<Add library="ZBE_x64d" />
 					<Add library="SDL2main" />
 					<Add library="SDL2" />
 					<Add library="SDL2_image" />
+					<Add library="SDL2_ttf" />
 					<Add directory="../../../lib" />
 					<Add directory="../../../extlibs/SDL2/2.0.3/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-w64-mingw32/lib" />
+					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-w64-mingw32/lib" />
 				</Linker>
 			</Target>
 			<Target title="Release-Win64">

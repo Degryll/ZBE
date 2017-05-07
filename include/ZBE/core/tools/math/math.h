@@ -94,12 +94,12 @@ inline double sqrPointDist(Point<dim> a, Point<dim> b) {
         accum += localDist * localDist;
     }
     return accum;
-};
+}
 
 template <unsigned dim>
 inline double pointDist(Point<dim> a, Point<dim> b) {
     return sqrt(sqrPointDist(a,b));
-};
+}
 
 }  // namespace zbe
 

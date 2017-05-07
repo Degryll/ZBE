@@ -2,10 +2,10 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file ActivePhysicalObject.h
  * @since 2016-12-16
- * @date 2017-01-30
+ * @date 2017-05-07
  * @author Degryll Ludo Batis
  * @brief Defines the interface of an object that interacts actively physically.
- * Please, if inherit this class, use APO for naming.
+ * Please, if inherit from this class, use APO for naming.
  */
 
 #ifndef ZBE_ARCHETYPES_ACTIVEPHYSICALOBJECT_H
@@ -17,17 +17,26 @@
 
 namespace zbe {
 
-class ActivePhysicalObject : public PhysicalObject {
+/** \brief Defines the interface of an object that interacts actively physically.
+ *  Please, if inherit from this class, use APO for naming.
+ */
+class ActivePhysicalObject : virtual public PhysicalObject {
 public:
-  ActivePhysicalObject(uint64_t actuatorsList, uint64_t collisionablesList) : PhysicalObject(actuatorsList), cl(collisionablesList) {}
-
+  /** \brief Virtual destructor.
+   */
   virtual ~ActivePhysicalObject() {}
 
-  void setCollisionablesList(uint64_t collisionablesList) {cl = collisionablesList;}
-  uint64_t getCollisionablesList() {return (cl);}
+  /** \brief Set the collisionables list.
+   *  \param collisionablesList The collisionables list index.
+   *  \sa getColliionablesList
+   */
+  virtual void setCollisionablesList(uint64_t collisionablesList) = 0;
 
-private:
-  uint64_t cl;
+  /** \brief Return the collisionables list index.
+   *  \return The collisionables list index.
+   *  \sa setColliionablesList
+   */
+  virtual uint64_t getCollisionablesList() = 0;
 };
 
 }  // namespace
