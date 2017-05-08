@@ -45,6 +45,6 @@ private:
   double df;
 };
 
-}  // namespace
+}  // namespace zbe
 
 #endif //ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEDAMPING_H

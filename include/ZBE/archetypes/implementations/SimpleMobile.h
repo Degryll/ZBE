@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file SimpleMobile.h
  * @since 2016-12-16
- * @date 2017-05-07
+ * @date 2017-05-08
  * @author Degryll Ludo
  * @brief Simple implementation of the Mobile<s> interface.
  */
@@ -15,43 +15,69 @@
 
 namespace zbe {
 
+/** \brief Simple implementation of the Mobile<s> interface.
+ */
 template <unsigned s>
 class SimpleMobile : virtual public Mobile<s>, public SimplePosition<s> {
-  public:
-    SimpleMobile() : SimplePosition<s>(), v() {}
-    SimpleMobile(std::initializer_list<double> position) : SimplePosition<s>(position), v() {}
-    SimpleMobile(Point<s> position) : SimplePosition<s>(position), v() {}
-    SimpleMobile(Vector<s> velocity) : SimplePosition<s>(), v(velocity) {}
-    SimpleMobile(std::initializer_list<double> position, std::initializer_list<double> velocity) : SimplePosition<s>(position), v(velocity) {}
-    SimpleMobile(Point<s> position, std::initializer_list<double> velocity) : SimplePosition<s>(position), v(velocity) {}
-    SimpleMobile(Point<s> position, Vector<s> velocity) : SimplePosition<s>(position), v(velocity) {}
-    SimpleMobile(std::initializer_list<double> position, Vector<s> velocity) : SimplePosition<s>(position), v(velocity) {}
+public:
+  /** \brief Empty constructor. Position and velocity are set to 0.
+   */
+  SimpleMobile() : SimplePosition<s>(), v() {}
 
-    void setVelocity(std::initializer_list<double> l) {
-      if (l.size() != s) {
-        SysError::setError("SimpleMobile ERROR: Initializer list size is incorrect.");
-        return;
-      }
+  /** \brief Position is set by an initilizer list, velocity is set to 0.
+   */
+  SimpleMobile(std::initializer_list<double> position) : SimplePosition<s>(position), v() {}
 
-      int i = 0;
-      for(auto it = l.begin(); it != l.end(); it++) {
-        v[i++] = *it;
-      }
-    }
+  /** \brief Position is set by a Point, velocity will be set to 0.
+   */
+  SimpleMobile(Point<s> position) : SimplePosition<s>(position), v() {}
 
-    void setVelocity(Vector<s> velocity) {v = velocity;}
+  /** \brief Position is set to 0, velocity is set by a vector.
+   */
+  SimpleMobile(Vector<s> velocity) : SimplePosition<s>(), v(velocity) {}
 
-    Vector<s>& getVelocity() {return (v);}
+  /** \brief Position and velocity are set by an initializer list.
+   */
+  SimpleMobile(std::initializer_list<double> position, std::initializer_list<double> velocity) : SimplePosition<s>(position), v(velocity) {}
 
-    void setPosition(std::initializer_list<double> l) {SimplePosition<s>::setPosition(l);};
-    void setPosition(Point<s> position) {SimplePosition<s>::setPosition(position);};
+  /** \brief Position is set by a Point, velocity is set by an initializer list.
+   */
+  SimpleMobile(Point<s> position, std::initializer_list<double> velocity) : SimplePosition<s>(position), v(velocity) {}
 
-    Point<s>& getPosition() {return SimplePosition<s>::getPosition();};
+  /** \brief Position is set by a Point, velocity is set by a Vector.
+   */
+  SimpleMobile(Point<s> position, Vector<s> velocity) : SimplePosition<s>(position), v(velocity) {}
 
-  private:
-    Vector<s> v;
+  /** \brief Position is set by an initializer list, velocity is set by a Vector.
+   */
+  SimpleMobile(std::initializer_list<double> position, Vector<s> velocity) : SimplePosition<s>(position), v(velocity) {}
+
+  /** \brief Virtual destructor.
+   */
+  virtual ~SimpleMobile() {}
+
+  /** \brief Sets velocity using a Vector.
+   *  \param velocity Vector with the values of the velocity.
+   *  \sa setVelocity, getVelocity
+   */
+  void setVelocity(Vector<s> velocity) {v = velocity;}
+
+  /** \brief Sets velocity using an initializer list.
+   *  \param l Initializer list with the values of the velocity.
+   *  \sa setVelocity, getVelocity
+   */
+  void setVelocity(std::initializer_list<double> l) {v = l;}
+
+  /** \brief Gets the velocity.
+   *  \return Return a reference to the actual velocity in a vector.
+   *  \sa setVelocity
+   */
+  Vector<s>& getVelocity() {return (v);}
+
+private:
+  Vector<s> v;
 };
 
-}  // namespace
+}  // namespace zbe
 
 #endif //ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEMOBILE_H

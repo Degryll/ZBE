@@ -82,6 +82,6 @@ private:
   bool hasN;
 };
 
-}  // namespace
+}  // namespace zbe
 
 #endif //ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEBOUNCING_H

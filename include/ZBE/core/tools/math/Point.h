@@ -65,6 +65,20 @@ class _POINT {
 //      return (*this);
 //    }
 
+    _POINT& operator=(const std::initializer_list<double> l) {
+      if (l.size() != s) {
+        SysError::setError("Point ERROR: Initializer list size is incorrect.");
+        return (*this);
+      }
+
+      int i = 0;
+      for(auto it : l) {
+        data[i++] = it;
+      }
+
+      return (*this);
+    }
+
     /** \brief Implements direct access to Point values with operator[].
      *
      *  No bound checking is performed, the behavior accessing an out of bound
@@ -237,6 +251,10 @@ class Point<2> : public _POINT<2> {
     /** \brief This class let you assign _POINT<2> classes to Point<2>.
      */
     Point& operator=(_POINT<2> rhs) {_POINT<2>::operator=(rhs); return (*this);}
+
+    /** \brief This class let you assign initializer lists to Point<2>.
+     */
+    Point& operator=(std::initializer_list<double> l) {_POINT<2>::operator=(l); return (*this);}
 };
 
 using Point2D = Point<2>;  //!< An alias to Point<2>.
@@ -286,6 +304,10 @@ class Point<3> : public _POINT<3> {
     /** \brief This class let you assign _POINT<3> classes to Point<3>.
      */
     Point& operator=(_POINT<3> rhs) {_POINT<3>::operator=(rhs); return (*this);}
+
+    /** \brief This class let you assign initializer lists to Point<3>.
+     */
+    Point& operator=(std::initializer_list<double> l) {_POINT<3>::operator=(l); return (*this);}
 };
 
 using Point3D = Point<3>;  //!< An alias to Point<3>.

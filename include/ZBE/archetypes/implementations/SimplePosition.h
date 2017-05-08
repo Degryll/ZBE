@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file SimplePosition.h
  * @since 2016-12-16
- * @date 2016-12-18
+ * @date 2017-05-08
  * @author Degryll
  * @brief Simple implementation of the Position interface.
  */
@@ -15,35 +15,49 @@
 
 namespace zbe {
 
+/** \brief Simple implementation of the Position interface.
+ */
 template <unsigned s>
 class SimplePosition : virtual public Position<s> {
-  public:
-    SimplePosition() : p() {}
-    SimplePosition(std::initializer_list<double> l) : p(l) {}
+public:
+  /** \brief Empty constructor. Position is set to 0.
+   */
+  SimplePosition() : p() {}
 
-    SimplePosition(Point<s> position) : p(position) {}
+  /** \brief Position is set by an initilizer list.
+   */
+  SimplePosition(std::initializer_list<double> l) : p(l) {}
 
-    virtual ~SimplePosition() {}
+  /** \brief Position is set by a Point.
+   */
+  SimplePosition(Point<s> position) : p(position) {}
 
-    void setPosition(std::initializer_list<double> l) {
-      if (l.size() != s) {
-        SysError::setError("SimplePosition ERROR: Initializer list size is incorrect.");
-        return;
-      }
+  /** \brief Virtual destructor.
+   */
+  virtual ~SimplePosition() {}
 
-      int i = 0;
-      for(auto it = l.begin(); it != l.end(); it++) {
-        p[i++] = *it;
-      }
-    }
-    void setPosition(Point<s> position) {p = position;}
+  /** \brief Sets the position using a Point.
+   *  \param position Position with the values of the position.
+   *  \sa setPosition, getPosition
+   */
+  void setPosition(Point<s> position) {p = position;}
 
-    Point<s>& getPosition() {return (p);}
+  /** \brief Sets position using an initializer list.
+   *  \param l Initializer list with the values of the position.
+   *  \sa setPosition, getPosition
+   */
+  void setPosition(std::initializer_list<double> l) {p = l;}
 
-  private:
-    Point<s> p;
+  /** \brief Gets the position.
+   *  \return Return a reference to the actual position in a point.
+   *  \sa setPosition
+   */
+  Point<s>& getPosition() {return (p);}
+
+private:
+  Point<s> p;
 };
 
-}  // namespace
+}  // namespace zbe
 
 #endif //ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEPOSITION_H

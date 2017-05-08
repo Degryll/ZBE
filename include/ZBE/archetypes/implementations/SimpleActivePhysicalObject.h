@@ -49,6 +49,6 @@ private:
   uint64_t cl;
 };
 
-}  // namespace
+}  // namespace zbe
 
 #endif //ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEACTIVEPHYSICALOBJECT_H

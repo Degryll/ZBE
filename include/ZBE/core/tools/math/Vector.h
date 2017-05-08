@@ -50,6 +50,7 @@ class _VECTOR {
         SysError::setError("Vector ERROR: Initializer list size is incorrect.");
         return;
       }
+
       int i = 0;
       for(auto it : l) {
         data[i++] = it;
@@ -64,6 +65,20 @@ class _VECTOR {
 //      std::swap(this->data, rhs.data);
 //      return (*this);
 //    }
+
+    _VECTOR& operator=(std::initializer_list<double> l) {
+      if (l.size() != s) {
+        SysError::setError("Vector ERROR: Initializer list size is incorrect.");
+        return (*this);
+      }
+
+      int i = 0;
+      for(auto it : l) {
+        data[i++] = it;
+      }
+
+      return (*this);
+    }
 
     /** \brief Implements direct access to Vector values with operator[].
      *
@@ -416,6 +431,10 @@ class Vector<2> : public _VECTOR<2> {
      */
     Vector& operator=(_VECTOR<2> rhs) {_VECTOR<2>::operator=(rhs); return (*this);}
 
+    /** \brief This class let you assign initializer lists to Vector<2>.
+     */
+    Vector& operator=(std::initializer_list<double> l) {_VECTOR<2>::operator=(l); return (*this);}
+
     /** \brief Set values of the vector as Cartesian coordinates (default).
      */
     void setCartesian(double x, double y) {data[0] = x; data[1] = y;}
@@ -485,6 +504,10 @@ class Vector<3> : public _VECTOR<3> {
     /** \brief This class let you assign _VECTOR<3> classes to Vector<3>.
      */
     Vector& operator=(_VECTOR<3> rhs) {_VECTOR<3>::operator=(rhs); return (*this);}
+
+    /** \brief This class let you assign _VECTOR<3> classes to Vector<3>.
+     */
+    Vector& operator=(std::initializer_list<double> l) {_VECTOR<3>::operator=(l); return (*this);}
 
     //vectorial multiplication
 };
