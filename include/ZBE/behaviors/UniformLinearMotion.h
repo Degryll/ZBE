@@ -2,8 +2,8 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file UniformLinearMotion.h
  * @since 2017-01-13
- * @date 2017-01-13
- * @author Degryll
+ * @date 2017-05-08
+ * @author Degryll Ludo
  * @brief Implements an uniform linear motion behavior.
  */
 
@@ -13,11 +13,12 @@
 #include <memory>
 
 #include "ZBE/core/behaviors/Behavior.h"
-#include "ZBE/entities/avatars/Movable.h"
 #include "ZBE/core/tools/math/math.h"
 #include "ZBE/core/tools/math/Point.h"
 #include "ZBE/core/entities/AvatarEntity.h"
 #include "ZBE/core/system/SysTime.h"
+
+#include "ZBE/entities/avatars/Movable.h"
 
 namespace zbe {
 

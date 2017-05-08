@@ -1,3 +1,5 @@
+#include "ludomain.h"
+
 #include <cinttypes>
 #include <iostream>
 #include <chrono>
@@ -27,29 +29,27 @@
 #include "ZBE/core/tools/math/math.h"
 #include "ZBE/core/system/SysError.h"
 #include "ZBE/core/daemons/Punishers.h"
+#include "ZBE/archetypes/Mobile.h"
+#include "ZBE/archetypes/MobileAPO.h"
+#include "ZBE/behaviors/UniformLinearMotion.h"
+#include "ZBE/behaviors/Bounce.h"
+#include "ZBE/entities/adaptors/SimpleDrawableSingleSpriteAdaptor.h"
 #include "ZBE/SDL/tools/SDLTimer.h"
 #include "ZBE/SDL/system/SDLEventDispatcher.h"
 #include "ZBE/SDL/system/Window.h"
 #include "ZBE/SDL/drawers/SingleSpriteSDLDrawer.h"
-#include "ZBE/entities/adaptors/SimpleDrawableSingleSpriteAdaptor.h"
-#include "ZBE/behaviors/UniformLinearMotion.h"
-#include "ZBE/behaviors/Bounce.h"
-#include "ZBE/archetypes/Mobile.h"
-#include "ZBE/archetypes/MobileAPO.h"
 
 #include "game/events/handlers/ExitInputHandler.h"
 
 #include "ludo/LudoReactor.h"
+#include "ludo/behaviors/LudoBehaviors.h"
 #include "ludo/daemons/LudoDaemons.h"
 #include "ludo/drawers/LudoDrawers.h"
-#include "ludo/behaviors/LudoBehaviors.h"
 #include "ludo/entities/LudoEntities.h"
 #include "ludo/entities/LudoAvatars.h"
 #include "ludo/entities/LudoAdaptors.h"
-#include "ludo/events/handlers/LudoHandlers.h"
 #include "ludo/events/handlers/LudoActuators.h"
-
-#include "ludomain.h"
+#include "ludo/events/handlers/LudoHandlers.h"
 
 #define PI 3.14159265
 

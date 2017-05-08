@@ -2,8 +2,8 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file Bounce.h
  * @since 2017-01-13
- * @date 2017-01-13
- * @author Degryll
+ * @date 2017-05-08
+ * @author Degryll Ludo
  * @brief Implements a bounce behavior.
  */
 
@@ -13,10 +13,9 @@
 #include <memory>
 
 #include "ZBE/core/behaviors/Behavior.h"
-#include "ZBE/entities/avatars/Bouncer.h"
-#include "ZBE/core/tools/math/math.h"
-#include "ZBE/core/tools/math/Point.h"
 #include "ZBE/core/entities/AvatarEntity.h"
+
+#include "ZBE/entities/avatars/Bouncer.h"
 
 namespace zbe {
 

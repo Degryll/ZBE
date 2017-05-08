@@ -178,6 +178,7 @@
 		<Unit filename="../../../src/ZBETest/archetypes/SimpleDampingTest.cpp" />
 		<Unit filename="../../../src/ZBETest/archetypes/SimpleDrawableTest.cpp" />
 		<Unit filename="../../../src/ZBETest/archetypes/SimpleWideTest.cpp" />
+		<Unit filename="../../../src/ZBETest/behavior/BounceTest.cpp" />
 		<Unit filename="../../../src/ZBETest/behavior/UniformLinearMotionTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/daemons/PunishersTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/daemons/daemonsTest.cpp" />
