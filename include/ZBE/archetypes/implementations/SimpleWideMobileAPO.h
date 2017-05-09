@@ -2,34 +2,65 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file SimpleWideMobileAPO.h
  * @since 2017-01-30
- * @date 2017-01-30
+ * @date 2017-05-09
  * @author Degryll Batis Ludo
- * @brief Defines the interface of a class with a position, a velocity and a width.
+ * @brief Implements the interface of a class with a position, velocity, width and interacts actively with other objects.
  */
 
-#ifndef ZBE_ARCHETYPES_SIMPLEWIDEMOBILEAPO_H
-#define ZBE_ARCHETYPES_SIMPLEWIDEMOBILEAPO_H
+#ifndef ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEWIDEMOBILEAPO_H
+#define ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEWIDEMOBILEAPO_H
 
-#include "ZBE/archetypes/implementations/SimpleWideMobile.h"
-#include "ZBE/archetypes/ActivePhysicalObject.h"
+#include <cstdint>
+
+#include "ZBE/archetypes/WideMobileAPO.h"
+#include "ZBE/archetypes/implementations/SimpleWide.h"
+#include "ZBE/archetypes/implementations/SimpleMobile.h"
+#include "ZBE/archetypes/implementations/SimpleActivePhysicalObject.h"
 
 namespace zbe {
 
+/** \brief Implements the interface of a class with a position, velocity, width and interacts actively with other objects.
+ */
 template <unsigned s>
-class SimpleWideMobileAPO : public SimpleWideMobile<s>, public ActivePhysicalObject {
-  public:
-    SimpleWideMobileAPO(double width, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleWideMobile<s>(width), ActivePhysicalObject(actuatorsList, collisionablesList) {}
-    SimpleWideMobileAPO(std::initializer_list<double> position, double width, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleWideMobile<s>(position, width), ActivePhysicalObject(actuatorsList, collisionablesList) {}
-    SimpleWideMobileAPO(Point<s> position, double width, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleWideMobile<s>(position, width), ActivePhysicalObject(actuatorsList, collisionablesList) {}
-    SimpleWideMobileAPO(Vector<s> velocity, double width, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleWideMobile<s>(velocity ,width), ActivePhysicalObject(actuatorsList, collisionablesList) {}
-    SimpleWideMobileAPO(std::initializer_list<double> position, std::initializer_list<double> velocity, double width, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleWideMobile<s>(position, velocity, width), ActivePhysicalObject(actuatorsList, collisionablesList) {}
-    SimpleWideMobileAPO(Point<s> position, std::initializer_list<double> velocity, double width, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleWideMobile<s>(position, velocity, width), ActivePhysicalObject(actuatorsList, collisionablesList) {}
-    SimpleWideMobileAPO(Point<s> position, Vector<s> velocity, double width, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleWideMobile<s>(position, velocity, width), ActivePhysicalObject(actuatorsList, collisionablesList) {}
-    SimpleWideMobileAPO(std::initializer_list<double> position, Vector<s> velocity, double width, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleWideMobile<s>(position, velocity ,width), ActivePhysicalObject(actuatorsList, collisionablesList) {}
+class SimpleWideMobileAPO : virtual public WideMobileAPO<s>, public SimpleWide, public SimpleMobile<s> public SimpleActivePhysicalObject {
+public:
+  /** \brief Constructor with position and velocity set to 0.
+   */
+  SimpleWideMobileAPO(double width, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleWide(width), SimpleMobile<s>(), SimpleActivePhysicalObject(actuatorsList, collisionablesList) {}
 
-    virtual ~SimpleWideMobileAPO() {}
+  /** \brief Constructor with position set by an initializer list and velocity set to 0.
+   */
+  SimpleWideMobileAPO(std::initializer_list<double> position, double width, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleWide(width), SimpleMobile<s>(position), SimpleActivePhysicalObject(actuatorsList, collisionablesList) {}
+
+  /** \brief Constructor with position set by a Point and velocity set to 0.
+   */
+  SimpleWideMobileAPO(Point<s> position, double width, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleWide(width), SimpleMobile<s>(position), SimpleActivePhysicalObject(actuatorsList, collisionablesList) {}
+
+  /** \brief Constructor with position set to 0 and velocity set by a Vector.
+   */
+  SimpleWideMobileAPO(Vector<s> velocity, double width, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleWide(width), SimpleMobile<s>(velocity), SimpleActivePhysicalObject(actuatorsList, collisionablesList) {}
+
+  /** \brief Constructor with position and velocity set by an initializer list.
+   */
+  SimpleWideMobileAPO(std::initializer_list<double> position, std::initializer_list<double> velocity, double width, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleWide(width), SimpleMobile<s>(position, velocity), SimpleActivePhysicalObject(actuatorsList, collisionablesList) {}
+
+  /** \brief Constructor with position set by a Point and velocity set by an initializer list.
+   */
+  SimpleWideMobileAPO(Point<s> position, std::initializer_list<double> velocity, double width, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleWide(width), SimpleMobile<s>(position, velocity), SimpleActivePhysicalObject(actuatorsList, collisionablesList) {}
+
+  /** \brief Constructor with position set by a Point and velocity set by a Vector.
+   */
+  SimpleWideMobileAPO(Point<s> position, Vector<s> velocity, double width, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleWide(width), SimpleMobile<s>(position, velocity), SimpleActivePhysicalObject(actuatorsList, collisionablesList) {}
+
+  /** \brief Constructor with position set by an initializer list and velocity set by a Vector.
+   */
+  SimpleWideMobileAPO(std::initializer_list<double> position, Vector<s> velocity, double width, uint64_t actuatorsList, uint64_t collisionablesList) : SimpleWide(width), SimpleMobile<s>(position, velocity), SimpleActivePhysicalObject(actuatorsList, collisionablesList) {}
+
+  /** \brief Virtual destructor.
+   */
+  virtual ~SimpleWideMobileAPO() {}
 };
 
-}  // namespace
+}  // namespace zbe
 
-#endif //ZBE_ARCHETYPES_SIMPLEWIDEMOBILEAPO_H
+#endif //ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEWIDEMOBILEAPO_H
