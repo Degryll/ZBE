@@ -254,6 +254,7 @@
 		<Unit filename="../../../include/ZBE/core/io/InputBuffer.h" />
 		<Unit filename="../../../include/ZBE/core/io/InputStatus.h" />
 		<Unit filename="../../../include/ZBE/core/system/Logger.h" />
+		<Unit filename="../../../include/ZBE/core/system/MainLoop.h" />
 		<Unit filename="../../../include/ZBE/core/system/SysError.h" />
 		<Unit filename="../../../include/ZBE/core/system/SysTime.h" />
 		<Unit filename="../../../include/ZBE/core/tools/Timer.h" />
@@ -302,6 +303,7 @@
 		<Unit filename="../../../src/ZBE/core/io/FileHandler.cpp" />
 		<Unit filename="../../../src/ZBE/core/io/InputBuffer.cpp" />
 		<Unit filename="../../../src/ZBE/core/system/Logger.cpp" />
+		<Unit filename="../../../src/ZBE/core/system/MainLoop.cpp" />
 		<Unit filename="../../../src/ZBE/core/system/SysError.cpp" />
 		<Unit filename="../../../src/ZBE/core/system/SysTime.cpp" />
 		<Unit filename="../../../src/ZBE/core/tools/math/Vector.cpp" />
