@@ -18,6 +18,12 @@ class PhysicalObject {
 public:
   virtual ~PhysicalObject() {}
 
+  /** \brief Set the actuators list.
+   *  \param actuatorsList The actuators list index.
+   *  \sa getActuatorsList
+   */
+  virtual void setActuatorsList(uint64_t actuatorsList) = 0;
+
   virtual uint64_t getActuatorsList() = 0;
 };
 

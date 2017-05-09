@@ -30,9 +30,13 @@ template<unsigned s>
 class _VECTOR {
   public:
 
-    /** \brief Void constructor, the vector's values are unknown.
+    /** \brief Void constructor, the vector's values are set to 0.
      */
-    _VECTOR() {}
+    _VECTOR() {
+      for(unsigned i = 0; i < s; i++) {
+        data[i] = 0;
+      }
+    }
 
     /** \brief A list initializer constructor.
      *

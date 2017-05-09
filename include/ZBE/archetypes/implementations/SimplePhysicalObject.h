@@ -31,6 +31,12 @@ public:
    */
   virtual ~SimplePhysicalObject() {}
 
+  /** \brief Set the actuators list.
+   *  \param actuatorsList The actuators list index.
+   *  \sa getActuatorsList
+   */
+  void setActuatorsList(uint64_t actuatorsList) {al = actuatorsList;}
+
   /** \brief Get the actuators list index.
    *  \return The index of the actuators list.
    */

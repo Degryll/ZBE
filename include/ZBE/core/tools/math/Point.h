@@ -29,9 +29,13 @@ template<unsigned s>
 class _POINT {
   public:
 
-    /** \brief Void constructor, the point's values are unknown.
+    /** \brief Void constructor, the point's values are set to 0.
      */
-    _POINT() {}
+    _POINT() {
+      for(unsigned i = 0; i < s; i++) {
+        data[i] = 0;
+      }
+    }
 
     /** \brief A list initializer constructor.
      *
