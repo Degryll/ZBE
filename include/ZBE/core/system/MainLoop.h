@@ -12,6 +12,7 @@
 
 #include <memory>
 #include "ZBE/core/daemons/Daemon.h"
+#include "ZBE/core/daemons/Daemon.h"
 
 namespace zbe {
 
@@ -20,14 +21,19 @@ namespace zbe {
 class MainLoop {
   public:
 
-    /** \brief Empty constructor.
+    /** \brief Constructor.
+     * \param Pre loop Daemon.
+     * \param Post Loop Daemon.
+     * \param Timed Events Daemon.
+     * \param Common Behavior Daemon Master.
+     * \param React Behavior Daemon Master.
      */
-    MainLoop(std::shared_ptr<Daemon> pre, std::shared_ptr<Daemon> post, std::shared_ptr<Daemon> timedEventsDaemon, std::shared_ptr<Daemon> commonBehaviorMaster, std::shared_ptr<Daemon> reactBehaviorMaster) :
+    MainLoop(std::shared_ptr<Daemon> pre, std::shared_ptr<Daemon> post, std::shared_ptr<Daemon> event, std::shared_ptr<Daemon> common, std::shared_ptr<Daemon> react) :
                 dPre(pre),
                 dPost(post),
-                dTE(timedEventsDaemon),
-                dCBM(commonBehaviorMaster),
-                dRBM(reactBehaviorMaster){}
+                dTE(event),
+                dCBM(common),
+                dRBM(react){}
 
     /** \brief Destructor.
      */
@@ -56,21 +62,21 @@ class MainLoop {
      * \return void
      *
      */
-    void setTEDaemon(std::shared_ptr<Daemon> daemon) {dTE = daemon;}
+    void setEvent(std::shared_ptr<Daemon> daemon) {dTE = daemon;}
 
     /** \brief Setter for the Common Behavior Daemon Master.
      * \param daemon Pointer to the Daemon desired to be used.
      * \return void
      *
      */
-    void setCommonBehaviorMaster(std::shared_ptr<Daemon> daemon) {dCBM = daemon;}
+    void setCommon(std::shared_ptr<Daemon> daemon) {dCBM = daemon;}
 
     /** \brief Setter for the React Behavior Daemon Master.
      * \param daemon Pointer to the Daemon desired to be used.
      * \return void
      *
      */
-    void setReactBehaviorMaster(std::shared_ptr<Daemon> daemon) {dRBM = daemon;}
+    void setReact(std::shared_ptr<Daemon> daemon) {dRBM = daemon;}
 
   private:
     std::shared_ptr<Daemon>  dPre;
