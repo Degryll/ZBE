@@ -18,7 +18,18 @@ namespace zbe {
  */
 class SimpleBounceable : public Bounceable{
   public:
+
+    /** \brief Builds this SimpleBounceable with a factor.
+     */
     SimpleBounceable(double factor) : factor(factor) {}
+
+    /** \brief Virtual destructor.
+     */
+    virtual ~SimpleBounceable() {}
+
+    /** \brief Return the bounce factor.
+     * \return The bounce factor.
+     */
     double getFactor(){return factor;}
 
   private:

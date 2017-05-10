@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file UniformLinearMotion.h
  * @since 2017-01-13
- * @date 2017-05-08
+ * @date 2017-05-10
  * @author Degryll Ludo
  * @brief Implements an uniform linear motion behavior.
  */
@@ -30,13 +30,15 @@ class UniformLinearMotion : public Behavior<Movable<s>  > {
     UniformLinearMotion(const UniformLinearMotion&) = delete;
     void operator=(const UniformLinearMotion&) = delete;
 
+    /** \brief Default constructor.
+     */
     UniformLinearMotion() : sysTime(zbe::SysTime::getInstance()) {}
 
-    /** \brief Default destructor.
+    /** \brief Virtual destructor.
      */
     virtual ~UniformLinearMotion() {}
 
-    /** \brief Do the behavior work over the given entity
+    /** \brief Makes the entity move in a straight line
      */
     void apply(std::shared_ptr<AvatarEntity<Movable<s> > > entity) {
       Movable<s>* avatar;

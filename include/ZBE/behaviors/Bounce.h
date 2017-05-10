@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file Bounce.h
  * @since 2017-01-13
- * @date 2017-05-08
+ * @date 2017-05-10
  * @author Degryll Ludo
  * @brief Implements a bounce behavior.
  */
@@ -25,11 +25,11 @@ template<unsigned s>
 class Bounce : public Behavior<Bouncer<s>  > {
   public:
 
-    /** \brief Default destructor.
+    /** \brief Virtual destructor.
      */
     virtual ~Bounce() {}
 
-    /** \brief Do the behavior work over the given entity
+    /** \brief Changes the entity velocity with the accumulated normals.
      */
     void apply(std::shared_ptr<AvatarEntity<Bouncer<s> > > entity) {
       Bouncer<s>* avatar;

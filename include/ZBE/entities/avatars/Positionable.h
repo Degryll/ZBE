@@ -21,12 +21,25 @@ namespace zbe {
 template <unsigned s>
 class Positionable {
   public:
-    using Base = void;
+    using Base = void;//!< inheritance info
+
+    /** \brief Virtual destructor.
+     */
     virtual ~Positionable() {}
 
+    /** \brief Sets the position for this Positionable.
+     * \param List of values for the position..
+     */
     virtual void setPosition(std::initializer_list<double> l) = 0;
+
+    /** \brief Sets the position for this Positionable.
+     * \param The position.
+     */
     virtual void setPosition(Point<s> position) = 0;
 
+    /** \brief Retunrs the position of this Positionable.
+     * \return The position.
+     */
     virtual Point<s>& getPosition() = 0;
 };
 

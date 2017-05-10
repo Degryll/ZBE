@@ -24,11 +24,27 @@ class BaseBouncer : virtual public Bouncer<s>, public BaseMovable<s> {
     BaseBouncer(const BaseBouncer<s>&) = delete;
     void operator=(const BaseBouncer<s>&) = delete;
 
+    /** \brief Builds this BaseBouncer with a Bouncing.
+     */
     BaseBouncer(Bouncing<s>* bouncing): BaseMovable<s>(bouncing), b(bouncing) {}
 
+    /** \brief Adds a normal to current bounce measurement
+     * \param normal Normal value to add
+     */
     void addNormal(const Vector<s>& normal) {b->addNormal(normal);}
+
+    /** \brief Return the current normal sum.
+     * \return The current normal sum.
+     */
   	Vector<s> getNormalSum() {return b->getNormalSum();}
+
+    /** \brief Tells if there is normals added.
+     * \return True if there is normals added.
+     */
   	bool hasNormals() {return b->hasNormals();}
+
+    /** \brief Clean the current normal measurement.
+     */
   	void clearNormals() {b->clearNormals();}
 
   private:

@@ -17,7 +17,10 @@ namespace zbe {
 /** \brief This define an avatar that can be drawn as text.
  */
 struct SingleTextSprite : virtual public SingleSprite {
-    using Base = SingleSprite;
+    using Base = SingleSprite;//!< inheritance info
+
+    /** \brief Text value for this sprite.
+     */
     const char* text = "";
 };
 

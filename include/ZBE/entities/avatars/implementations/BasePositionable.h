@@ -19,17 +19,34 @@ namespace zbe {
 /** \brief This define an avatar that can be moved.
  */
 template <unsigned s>
-class BasePositionable : public Positionable<s> {
+class BasePositionable : virtual public Positionable<s> {
   public:
     BasePositionable(const BasePositionable&) = delete;
     void operator=(const BasePositionable&) = delete;
 
+    /** \brief Virtual destructor.
+     */
+    virtual ~BasePositionable(){}
+
+    /** \brief Builds this BasePositionable with a Position.
+     */
     BasePositionable(Position<s> *position) : p(position) {}
 
+    /** \brief Sets the position for this Positionable.
+     * \param List of values for the position..
+     */
     void setPosition(std::initializer_list<double> l) { p->setPosition(l);}
+
+    /** \brief Sets the position for this Positionable.
+     * \param The position.
+     */
     void setPosition(Point<s> position) {p->setPosition(position);}
 
-  Point<s>& getPosition() {return (p->getPosition());}
+    /** \brief Retunrs the position of this Positionable.
+     * \return The position.
+     */
+    Point<s>& getPosition() {return (p->getPosition());}
+
   private:
     Position<s> *p;
 };

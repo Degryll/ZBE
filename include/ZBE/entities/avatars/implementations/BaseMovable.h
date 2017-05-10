@@ -24,15 +24,23 @@ class BaseMovable : virtual public Movable<s>, public BasePositionable<s> {
     BaseMovable(const BaseMovable&) = delete;
     void operator=(const BaseMovable&) = delete;
 
+    /** \brief Builds this BaseMovable with a Mobile.
+     */
     BaseMovable(Mobile<s>* mobile) : BasePositionable<s>(mobile), m(mobile) {}
 
-    void setPosition(std::initializer_list<double> l) {m->setPosition(l);}
-    void setPosition(Point<s> position)   {m->setPosition(position);}
-
+    /** \brief Sets the velocity for this movable.
+     * \param List of values for the velocity.
+     */
     void setVelocity(std::initializer_list<double> l) {m->setVelocity(l);}
+
+    /** \brief Sets the velocity for this movable.
+     * \param The velocity.
+     */
     void setVelocity(Vector<s> velocity)  {m->setVelocity(velocity);}
 
-    Point<s>& getPosition()  {return (m->getPosition());}
+    /** \brief Returns actual velocity of this movable.
+     * \return Actual velocity.
+     */
     Vector<s>& getVelocity() {return (m->getVelocity());}
 
   private:
