@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file Position.h
  * @since 2016-12-16
- * @date 2016-12-18
+ * @date 2017-05-10
  * @author Degryll
  * @brief Defines the interface of a class with a position.
  */
@@ -14,17 +14,34 @@
 
 namespace zbe {
 
+/** \brief Defines the interface of a class with a position.
+ */
 template <unsigned s>
 class Position {
-  public:
-    virtual ~Position() {}
+public:
+  /** \brief Virtual destructor.
+   */
+  virtual ~Position() {}
 
-    virtual void setPosition(std::initializer_list<double> l) = 0;
-    virtual void setPosition(Point<s> position) = 0;
+  /** \brief Sets the position using a Point.
+   *  \param position Position with the values of the position.
+   *  \sa setPosition, getPosition
+   */
+  virtual void setPosition(std::initializer_list<double> l) = 0;
 
-    virtual Point<s>& getPosition() = 0;
+  /** \brief Sets position using an initializer list.
+   *  \param l Initializer list with the values of the position.
+   *  \sa setPosition, getPosition
+   */
+  virtual void setPosition(Point<s> position) = 0;
+
+  /** \brief Gets the position.
+   *  \return Return a reference to the actual position in a point.
+   *  \sa setPosition
+   */
+  virtual Point<s>& getPosition() = 0;
 };
 
-}  // namespace
+}  // namespace zbe
 
 #endif //ZBE_ARCHETYPES_POSITION_H

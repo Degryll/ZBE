@@ -17,14 +17,40 @@ namespace zbe {
 /** \brief This define an entity that can be drawn.
  */
 class Drawable {
-  public:
-    virtual ~Drawable() {}
+public:
+  /** \brief Virtual destructor.
+   */
+  virtual ~Drawable() {}
 
-    virtual int64_t getX() = 0;
-    virtual int64_t getY() = 0;
-    virtual int64_t getW() = 0;
-    virtual int64_t getH() = 0;
-    virtual uint64_t getGraphics() = 0;
+  /** \brief Gets the left coordinate.
+   *  \return The left coordinate.
+   *  \sa setX, getY, getW, getH, getGraphics
+   */
+  virtual int64_t getX() = 0;
+
+  /** \brief Gets the top coordinate.
+   *  \return The top coordinate.
+   *  \sa setY, getX, getW, getH, getGraphics
+   */
+  virtual int64_t getY() = 0;
+
+  /** \brief Gets the width of the image.
+   *  \return The width of the image.
+   *  \sa setW, getX, getY, getH, getGraphics
+   */
+  virtual int64_t getW() = 0;
+
+  /** \brief Gets the height of the image.
+   *  \return The height of the image.
+   *  \sa setH, getX, getY, getW, getGraphics
+   */
+  virtual int64_t getH() = 0;
+
+  /** \brief Gets the graphics resource.
+   *  \return The graphics resource. It could be and image index, text index, a complex 3D model.
+   *  \sa setGraphics, getX, getY, getW, getH
+   */
+  virtual uint64_t getGraphics() = 0;
 };
 
 }  // namespace zbe

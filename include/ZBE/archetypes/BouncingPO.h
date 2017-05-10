@@ -1,31 +1,32 @@
 /**
  * Copyright 2012 Batis Degryll Ludo
- * @file BouncingMobilePO.h
+ * @file BouncingPO.h
  * @since 2017-03-07
- * @date 2017-03-07
+ * @date 2017-05-10
  * @author Batis Degryll Ludo
- * @brief Defines the interface for a Bouncing Mobile Physical Object.
+ * @brief Defines the interface for a Bouncing Physical Object.
  */
 
-#ifndef ZBE_ARCHETYPES_BOUNCINGMOBILEPO_H
-#define ZBE_ARCHETYPES_BOUNCINGMOBILEPO_H
+#ifndef ZBE_ARCHETYPES_BOUNCINGPO_H
+#define ZBE_ARCHETYPES_BOUNCINGPO_H
 
 #include <cstdint>
 
+#include "ZBE/archetypes/PhysicalObject.h"
 #include "ZBE/archetypes/Bouncing.h"
-#include "ZBE/archetypes/MobilePO.h"
 
 namespace zbe {
 
-template <unsigned s, typename R>
-class BouncingPO : virtual public Bouncing<s>, virtual public MobilePO<s, R> {
+/** \brief Defines the interface for a Bouncing Physical Object.
+ */
+template <unsigned s>
+class BouncingPO : virtual public Bouncing<s>, virtual public PhysicalObject {
 public:
-  BouncingPO(std::shared_ptr<CollisionObject<R> > collisionObject, std::shared_ptr<ReactObject<R> > reactObject, uint64_t actuatorsList)
-  : PhysicalObject(collisionObject, reactObject, actuatorsList) {}
-
-  virtual ~BouncingMobilePO() {}
+  /** \brief Virtual destructor.
+   */
+  virtual ~BouncingPO() {}
 };
 
-}  // namespace
+}  // namespace zbe
 
-#endif //ZBE_ARCHETYPES_BOUNCINGMOBILEPO_H
+#endif //ZBE_ARCHETYPES_BOUNCINGPO_H

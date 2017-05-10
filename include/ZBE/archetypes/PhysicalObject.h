@@ -2,9 +2,9 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file PhysicalObject.h
  * @since 2016-12-16
- * @date 2017-01-30
+ * @date 2017-05-10
  * @author Degryll Ludo Batis
- * @brief Defines the interface of an object that interacts physically.
+ * @brief Defines the interface of an object that interacts with other objects.
  */
 
 #ifndef ZBE_ARCHETYPES_PHYSICALOBJECT_H
@@ -14,8 +14,13 @@
 
 namespace zbe {
 
+/** \brief Defines the interface of an object that interacts with other objects.
+ *  Please, if inherit from this class, use PO for naming.
+ */
 class PhysicalObject {
 public:
+  /** \brief Virtual destructor.
+   */
   virtual ~PhysicalObject() {}
 
   /** \brief Set the actuators list.
@@ -24,9 +29,12 @@ public:
    */
   virtual void setActuatorsList(uint64_t actuatorsList) = 0;
 
+  /** \brief Get the actuators list index.
+   *  \return The index of the actuators list.
+   */
   virtual uint64_t getActuatorsList() = 0;
 };
 
-}  // namespace
+}  // namespace zbe
 
 #endif //ZBE_ARCHETYPES_PHYSICALOBJECT_H

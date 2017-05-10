@@ -39,6 +39,6 @@ public:
   virtual uint64_t getCollisionablesList() = 0;
 };
 
-}  // namespace
+}  // namespace zbe
 
 #endif //ZBE_ARCHETYPES_ACTIVEPHYSICALOBJECT_H
