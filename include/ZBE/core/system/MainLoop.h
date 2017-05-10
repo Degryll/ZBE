@@ -12,11 +12,11 @@
 
 #include <memory>
 #include "ZBE/core/daemons/Daemon.h"
-#include "ZBE/core/daemons/BassicCommonBehaviorMaster.h"
-#include "ZBE/core/daemons/BassicPreLoopDaemon.h"
-#include "ZBE/core/daemons/BassicPostLoopSDLDaemon.h"
-#include "ZBE/core/daemons/BassicReactBehaviorMaster.h"
-#include "ZBE/core/daemons/BassicTimedEventsDaemon.h"
+#include "ZBE/core/daemons/BasicCommonBehaviorMaster.h"
+#include "ZBE/SDL/daemons/BasicPreLoopDaemon.h"
+#include "ZBE/SDL/daemons/BasicPostLoopSDLDaemon.h"
+#include "ZBE/core/daemons/BasicReactBehaviorMaster.h"
+#include "ZBE/core/daemons/BasicTimedEventsDaemon.h"
 
 namespace zbe {
 
