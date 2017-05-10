@@ -2,15 +2,13 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file TextDrawableSingleTextSpriteAdaptor.h
  * @since 2017-04-16
- * @date 2017-04-16
+ * @date 2017-05-10
  * @author Batis Degryll Ludo
- * @brief Template that adapts an entity to a textDrawable.
+ * @brief Template that adapts an entity to a SingleTextSprite.
  */
 
 #ifndef ZBE_ENTITIES_ADAPTORS_IMPLEMENTATIONS_TEXTDRAWABLESINGLETEXTSPRITEADAPTOR_H_
 #define ZBE_ENTITIES_ADAPTORS_IMPLEMENTATIONS_TEXTDRAWABLESINGLETEXTSPRITEADAPTOR_H_
-
-#include <memory>
 
 #include "ZBE/entities/avatars/SingleTextSprite.h"
 #include "ZBE/core/entities/Adaptor.h"
@@ -25,21 +23,27 @@ public:
   TextDrawableSingleTextSpriteAdaptor(const TextDrawableSingleTextSpriteAdaptor&) = delete;
   void operator=(const TextDrawableSingleTextSpriteAdaptor&) = delete;
 
+  /** \brief Builds this adaptor with a TextDrawable archetype.
+   */
   TextDrawableSingleTextSpriteAdaptor(TextDrawable* entity): e(entity), s(nullptr) {}
+
+  /** \brief Destroy this adaptor and the last alive avatar.
+   */
   ~TextDrawableSingleTextSpriteAdaptor() {delete s;}
-    SingleTextSprite* getAvatar() {
-      delete s;
-      s = new SingleTextSprite();
 
-      s->x = e->getX();
-      s->y = e->getY();
-      s->w = e->getW();
-      s->h = e->getH();
-      s->graphics = e->getGraphics();
-      s->text = e->getText();
-
-      return (s);
-    }
+  /** \brief Builds an SingleTextSprite a destroys the previous one.
+   */
+  SingleTextSprite* getAvatar() {
+    delete s;
+    s = new SingleTextSprite();
+    s->x = e->getX();
+    s->y = e->getY();
+    s->w = e->getW();
+    s->h = e->getH();
+    s->graphics = e->getGraphics();
+    s->text = e->getText();
+    return (s);
+  }
 
 private:
     TextDrawable* e;

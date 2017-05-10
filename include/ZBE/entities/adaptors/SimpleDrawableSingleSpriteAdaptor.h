@@ -2,17 +2,13 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file SimpleDrawableSingleSpriteAdaptor.h
  * @since 2017-03-22
- * @date 2017-03-22
+ * @date 2017-05-10
  * @author Batis Degryll Ludo
  * @brief Template that adapts an entity to a drawable.
  */
 
 #ifndef ZBE_ENTITIES_ADAPTORS_IMPLEMENTATIONS_SIMPLEDRAWABLESINGLESPRITEADAPTOR_H_
 #define ZBE_ENTITIES_ADAPTORS_IMPLEMENTATIONS_SIMPLEDRAWABLESINGLESPRITEADAPTOR_H_
-
-#include <memory>
-
-#include "ZBE/core/tools/math/math.h"
 
 #include "ZBE/core/entities/avatars/SingleSprite.h"
 #include "ZBE/core/entities/Adaptor.h"
