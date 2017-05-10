@@ -163,6 +163,9 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="../../../include/ZBE/SDL/daemons/BasicPostLoopSDLDaemon.h" />
+		<Unit filename="../../../include/ZBE/SDL/daemons/BasicPreLoopDaemon.h" />
+		<Unit filename="../../../include/ZBE/SDL/daemons/BasicPreLoopSDLDaemon.h" />
 		<Unit filename="../../../include/ZBE/SDL/drawers/AnimatedSpriteSDLDrawer.h" />
 		<Unit filename="../../../include/ZBE/SDL/drawers/RotatedSpriteSDLDrawer.h" />
 		<Unit filename="../../../include/ZBE/SDL/drawers/SingleSpriteSDLDrawer.h" />
@@ -212,9 +215,8 @@
 		<Unit filename="../../../include/ZBE/behaviors/UniformLinearMotion.h" />
 		<Unit filename="../../../include/ZBE/core/behaviors/Behavior.h" />
 		<Unit filename="../../../include/ZBE/core/daemons/BasicCommonBehaviorMaster.h" />
-		<Unit filename="../../../include/ZBE/core/daemons/BasicPostLoopDaemon.h" />
+		<Unit filename="../../../include/ZBE/core/daemons/BasicPostLoopSDLDaemon.h" />
 		<Unit filename="../../../include/ZBE/core/daemons/BasicPreLoopDaemon.h" />
-		<Unit filename="../../../include/ZBE/core/daemons/BasicPreLoopSDLDaemon.h" />
 		<Unit filename="../../../include/ZBE/core/daemons/BasicPreLoopTimeDaemon.h" />
 		<Unit filename="../../../include/ZBE/core/daemons/BasicReactBehaviorMaster.h" />
 		<Unit filename="../../../include/ZBE/core/daemons/BasicTimedEventsDaemon.h" />
@@ -292,6 +294,9 @@
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/SimpleBounceable.h" />
 		<Unit filename="../../../include/ZBE/reactobjects/VoidReactObject.h" />
 		<Unit filename="../../../include/ZBE/zombienoid/ZombienoidReactor.h" />
+		<Unit filename="../../../src/ZBE/SDL/daemons/BasicPostLoopSDLDaemon.cpp" />
+		<Unit filename="../../../src/ZBE/SDL/daemons/BasicPreLoopDaemon.cpp" />
+		<Unit filename="../../../src/ZBE/SDL/daemons/BasicPreLoopSDLDaemon.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/drawers/AnimatedSpriteSDLDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/drawers/RotatedSpriteSDLDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/drawers/SimpleSpriteSDLDrawer.cpp" />
@@ -302,9 +307,8 @@
 		<Unit filename="../../../src/ZBE/SDL/system/Window.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/tools/SDLTimer.cpp" />
 		<Unit filename="../../../src/ZBE/core/daemons/BasicCommonBehaviorMaster.cpp" />
-		<Unit filename="../../../src/ZBE/core/daemons/BasicPostLoopDaemon.cpp" />
+		<Unit filename="../../../src/ZBE/core/daemons/BasicPostLoopSDLDaemon.cpp" />
 		<Unit filename="../../../src/ZBE/core/daemons/BasicPreLoopDaemon.cpp" />
-		<Unit filename="../../../src/ZBE/core/daemons/BasicPreLoopSDLDaemon.cpp" />
 		<Unit filename="../../../src/ZBE/core/daemons/BasicPreLoopTimeDaemon.cpp" />
 		<Unit filename="../../../src/ZBE/core/daemons/BasicReactBehaviorMaster.cpp" />
 		<Unit filename="../../../src/ZBE/core/daemons/BasicTimedEventsDaemon.cpp" />

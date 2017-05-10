@@ -12,11 +12,15 @@
 
 #include <memory>
 #include "ZBE/core/daemons/Daemon.h"
-#include "ZBE/core/daemons/Daemon.h"
+#include "ZBE/core/daemons/BassicCommonBehaviorMaster.h"
+#include "ZBE/core/daemons/BassicPreLoopDaemon.h"
+#include "ZBE/core/daemons/BassicPostLoopSDLDaemon.h"
+#include "ZBE/core/daemons/BassicReactBehaviorMaster.h"
+#include "ZBE/core/daemons/BassicTimedEventsDaemon.h"
 
 namespace zbe {
 
-/** \brief Calls the daemons and daemon masters that makes magic possible 0_0.
+/** \brief The Main Loop of the game.
  */
 class MainLoop {
   public:
