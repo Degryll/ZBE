@@ -212,8 +212,8 @@
 		<Unit filename="../../../include/ZBE/behaviors/UniformLinearMotion.h" />
 		<Unit filename="../../../include/ZBE/core/behaviors/Behavior.h" />
 		<Unit filename="../../../include/ZBE/core/daemons/BasicCommonBehaviorMaster.h" />
-		<Unit filename="../../../include/ZBE/core/daemons/BasicLoopBasicDaemon.h" />
 		<Unit filename="../../../include/ZBE/core/daemons/BasicPostLoopDaemon.h" />
+		<Unit filename="../../../include/ZBE/core/daemons/BasicPreLoopDaemon.h" />
 		<Unit filename="../../../include/ZBE/core/daemons/BasicPreLoopSDLDaemon.h" />
 		<Unit filename="../../../include/ZBE/core/daemons/BasicPreLoopTimeDaemon.h" />
 		<Unit filename="../../../include/ZBE/core/daemons/BasicReactBehaviorMaster.h" />
@@ -302,8 +302,8 @@
 		<Unit filename="../../../src/ZBE/SDL/system/Window.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/tools/SDLTimer.cpp" />
 		<Unit filename="../../../src/ZBE/core/daemons/BasicCommonBehaviorMaster.cpp" />
-		<Unit filename="../../../src/ZBE/core/daemons/BasicLoopBasicDaemon.cpp" />
 		<Unit filename="../../../src/ZBE/core/daemons/BasicPostLoopDaemon.cpp" />
+		<Unit filename="../../../src/ZBE/core/daemons/BasicPreLoopDaemon.cpp" />
 		<Unit filename="../../../src/ZBE/core/daemons/BasicPreLoopSDLDaemon.cpp" />
 		<Unit filename="../../../src/ZBE/core/daemons/BasicPreLoopTimeDaemon.cpp" />
 		<Unit filename="../../../src/ZBE/core/daemons/BasicReactBehaviorMaster.cpp" />
