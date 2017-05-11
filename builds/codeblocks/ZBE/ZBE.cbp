@@ -291,7 +291,6 @@
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/BasePositionable.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/SimpleBounceable.h" />
 		<Unit filename="../../../include/ZBE/reactobjects/VoidReactObject.h" />
-		<Unit filename="../../../include/ZBE/zombienoid/ZombienoidReactor.h" />
 		<Unit filename="../../../src/ZBE/SDL/daemons/BasicPostLoopSDLDaemon.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/daemons/BasicPreLoopDaemon.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/daemons/BasicPreLoopSDLDaemon.cpp" />
