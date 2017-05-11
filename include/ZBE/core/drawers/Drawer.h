@@ -7,8 +7,8 @@
  * @brief Define the minimal functions of every Drawer.
  */
 
-#ifndef CORE_DRAWERS_DRAWER_H_
-#define CORE_DRAWERS_DRAWER_H_
+#ifndef ZBE_CORE_DRAWERS_DRAWER_H_
+#define ZBE_CORE_DRAWERS_DRAWER_H_
 
 #include <memory>
 
@@ -20,17 +20,17 @@ namespace zbe {
  */
 template<typename T>
 class Drawer {
-  public:
-    /** \brief Virtual destructor.
-     */
-    virtual ~Drawer() {}
+public:
+  /** \brief Virtual destructor.
+   */
+  virtual ~Drawer() {}
 
-    /** \brief The function every punisher must have.
-     *  \param entity The entity to be drawn.
-     */
-    virtual void apply(std::shared_ptr<AvatarEntity<T> > entity) = 0;
+  /** \brief The function every punisher must have.
+   *  \param entity The entity to be drawn.
+   */
+  virtual void apply(std::shared_ptr<AvatarEntity<T> > entity) = 0;
 };
 
 }  // namespace zbe
 
-#endif  // CORE_DRAWERS_DRAWER_H_
+#endif  // ZBE_CORE_DRAWERS_DRAWER_H_

@@ -20,15 +20,15 @@ namespace zbe {
  */
 template<typename T>
 class Behavior {
-  public:
+public:
+  /** \brief Virtual destructor.
+   */
+  virtual ~Behavior() {}
 
-    /** \brief Default destructor.
-     */
-    virtual ~Behavior() {}
-
-    /** \brief Do the behavior work over the given entity
-     */
-    virtual void apply(std::shared_ptr<AvatarEntity<T> > entity) = 0;
+  /** \brief Do the behavior work over the given entity
+   *  \param entity The entity to behave.
+   */
+  virtual void apply(std::shared_ptr<AvatarEntity<T> > entity) = 0;
 };
 
 }  // namespace zbe
