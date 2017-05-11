@@ -24,10 +24,10 @@ struct All : public A, public B, public C, public D{
 
 TEST (tools, TypeContainerTest) {
     All all;
-    TypeContainer<A,B,C,D> tcABCD(&all,&all,&all,&all);
-    TypeContainer<A>* tcA= &tcABCD;
+    zbe::TypeContainer<A,B,C,D> tcABCD(&all,&all,&all,&all);
+    zbe::TypeContainer<A>* tcA= &tcABCD;
     A* tempA = tcA->get();
     tempA->getA();
 
-    TypeContainer<void> tcVoid(nullptr);
+    zbe::TypeContainer<void> tcVoid(nullptr);
 }

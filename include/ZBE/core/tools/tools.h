@@ -6,10 +6,13 @@
  * @author Batis Degryll Ludo
  * @brief ZBE coding tools
  */
+
 #ifndef ZBE_CORE_TOOLS_TOOLS_H_
 #define ZBE_CORE_TOOLS_TOOLS_H_
 
-/* \brief Used when a template need to know the bases classes of "T".
+namespace zbe {
+
+/** \brief Used when a template need to know the bases classes of "T".
  *
  * In the case you have:
  * class A { ... };
@@ -38,12 +41,12 @@ struct Covariance_Traits<T, void> {
   struct Type { virtual ~Type(){} };
 };
 
-/* \brief A gimmick class used to specialize a member function without the need to specialized the main class
+/** \brief A gimmick class used to specialize a member function without the need to specialized the main class
  */
 template <typename T>
 struct TypeGimmick { typedef T type; };
 
-/* \brief Agroupation of an undetermined number of types
+/** \brief Grouping of an undetermined number of types
  */
 template <typename T, typename... Bases>
 struct TypeContainer : public TypeContainer<T>, public TypeContainer<Bases...> {
@@ -63,5 +66,7 @@ struct TypeContainer<T> {
 
   T* t;
 };
+
+}  // namespace zbe
 
 #endif  // ZBE_CORE_TOOLS_TOOLS_H_
