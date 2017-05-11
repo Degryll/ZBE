@@ -1,49 +1,73 @@
 /**
  * Copyright 2012 Batis Degryll Ludo
- * @file Timer.h
+ * @file SDLTimer.h
  * @since 2016-03-24
- * @date 2016-04-04
+ * @date 2017-05-11
  * @author Batis
- * @brief Define a timer that uses SDL to give elapsed times between events.
+ * @brief Implements a timer that uses SDL to give elapsed times between events.
  */
 
-#ifndef CORE_TOOLS_SDLTIMER_H_
-#define CORE_TOOLS_SDLTIMER_H_
+#ifndef ZBE_SDL_TOOLS_SDLTIMER_H_
+#define ZBE_SDL_TOOLS_SDLTIMER_H_
+
+#include <cstdint>
 
 #include <SDL2/SDL.h>
 
-#include "ZBE/SDL/starters/SDL_Starter.h"
 #include "ZBE/core/tools/Timer.h"
+#include "ZBE/SDL/starters/SDL_Starter.h"
 
 namespace zbe {
 
-/** \brief SDL implementation of Timer. Initially stopped.
- *
-*/
+/** \brief Implements a timer that uses SDL to give elapsed times between events.
+ */
 class SDLTimer : public Timer {
-  public:
+public:
+  /** \brief Construct the timer.
+   *  \param startHere If true, once constructed, the timer start counting. Default false.
+   */
+  SDLTimer(bool startHere = false);
 
-    SDLTimer(bool startHere = false);
+  /** \brief Destructor.
+   */
+  ~SDLTimer();
 
-    ~SDLTimer();
+  /** \brief Start the timer.
+   */
+  void     start();
 
-    void     start();
-    int64_t stop();
-    void     reset();
+  /** \brief Stop the timer, the current count holds.
+   *  \return The current time.
+   */
+  int64_t stop();
 
-    int64_t lapTime();
-    int64_t totalTime();
+  /** \brief Stop the timer and reset to 0.
+   */
+  void     reset();
 
-    bool isRunning() {return (running);} //time is running out lalala
+  /** \brief Return the lap time.
+   *  \return The time since the last call to start, stop or lapTime.
+   */
+  int64_t lapTime();
 
-  protected:
-    SDL_Starter &sdl;
-    bool     running;          //!< True if the timer is running.
-    int64_t totalElapsedTime; //!< Total time the timer has been active.
-    int64_t lastTime;         //!< Time elapsed from last lap.
-    int64_t lastLapTime;      //!< Stores the partial lap time when timer stops.
+  /** \brief Return the total time, it doesn't stop the timer.
+   *  \return The time since start.
+   */
+  int64_t totalTime();
+
+  /** \brief Return True if the timer is counting.
+   *  \return True if the timer is running, false otherwise.
+   */
+  bool isRunning() {return (running);} //time is running out lalala
+
+protected:
+  SDL_Starter &sdl;         //!< Singleton to init SDL subsystems.
+  bool     running;         //!< True if the timer is running.
+  int64_t totalElapsedTime; //!< Total time the timer has been active.
+  int64_t lastTime;         //!< Time elapsed from last lap.
+  int64_t lastLapTime;      //!< Stores the partial lap time when timer stops.
 };
 
 }  // namespace zbe
 
-#endif  // CORE_TOOLS_SDLTIMER_H_
+#endif  // ZBE_SDL_TOOLS_SDLTIMER_H_
