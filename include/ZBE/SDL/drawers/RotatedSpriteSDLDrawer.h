@@ -2,13 +2,13 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file RotatedSpriteSDLDrawer.h
  * @since 2017-04-05
- * @date 2017-04-05
- * @author degryll
+ * @date 2017-05-11
+ * @author Degryll Ludo
  * @brief Class that know how to draw RotatedSprite entities with SDL.
  */
 
-#ifndef CORE_DRAWERS_ROTATEDPRITESDLDRAWER_H_
-#define CORE_DRAWERS_ROTATEDPRITESDLDRAWER_H_
+#ifndef SDL_DRAWERS_ROTATEDPRITESDLDRAWER_H_
+#define SDL_DRAWERS_ROTATEDPRITESDLDRAWER_H_
 
 #include <SDL2/SDL.h>
 
@@ -34,8 +34,8 @@ class RotatedSpriteSDLDrawer : public Drawer<RotatedSprite> {
      */
     ~RotatedSpriteSDLDrawer() {}
 
-    /** \brief The function every punisher must have.
-     *  \param entity The entity to be drawn.
+    /** \brief Draws the given entity.
+     *  \param The entity to be drawn.
      */
     void apply(AvatarEntity<RotatedSprite> *entity);
 
@@ -45,4 +45,4 @@ class RotatedSpriteSDLDrawer : public Drawer<RotatedSprite> {
 
 }  // namespace zbe
 
-#endif  // CORE_DRAWERS_ROTATEDPRITESDLDRAWER_H_
+#endif  // SDL_DRAWERS_ROTATEDPRITESDLDRAWER_H_

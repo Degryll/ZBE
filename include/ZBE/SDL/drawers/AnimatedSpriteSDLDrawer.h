@@ -2,13 +2,13 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file AnimatedSpriteSDLDrawer.h
  * @since 2017-04-05
- * @date 2017-04-05
- * @author degryll
+ * @date 2017-05-11
+ * @author Degryll Ludo
  * @brief Class that know how to draw AnimatedSprite entities with SDL.
  */
 
-#ifndef CORE_DRAWERS_SIMPLESPRITESDLDRAWER_H_
-#define CORE_DRAWERS_SIMPLESPRITESDLDRAWER_H_
+#ifndef SDL_DRAWERS_ANIMATEDSPRITESDLDRAWER_H_
+#define SDL_DRAWERS_ANIMATEDSPRITESDLDRAWER_H_
 
 #include <SDL2/SDL.h>
 
@@ -34,8 +34,8 @@ class AnimatedSpriteSDLDrawer : public Drawer<AnimatedSprite> {
      */
     ~AnimatedSpriteSDLDrawer() {}
 
-    /** \brief The function every punisher must have.
-     *  \param entity The entity to be drawn.
+    /** \brief Draws the given entity.
+     *  \param The entity to be drawn.
      */
     void apply(std::shared_ptr<AvatarEntity<AnimatedSprite> > entity);
 
@@ -45,4 +45,4 @@ class AnimatedSpriteSDLDrawer : public Drawer<AnimatedSprite> {
 
 }  // namespace zbe
 
-#endif  // CORE_DRAWERS_SIMPLESPRITESDLDRAWER_H_
+#endif  // SDL_DRAWERS_ANIMATEDSPRITESDLDRAWER_H_

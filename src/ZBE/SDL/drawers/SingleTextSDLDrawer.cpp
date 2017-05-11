@@ -2,8 +2,8 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file StatedSpriteSDLDrawer.h
  * @since 2017-04-12
- * @date 2017-04-12
- * @author batis
+ * @date 2017-10-11
+ * @author batis ludo
  * @brief Class that know how to draw text boxes as SingleTextSprite entities with SDL.
  */
 
@@ -24,9 +24,7 @@ void SingleTextSDLDrawer::apply(std::shared_ptr<AvatarEntity<SingleTextSprite> >
   dst.y = avatar->y;
   dst.w = avatar->w;
   dst.h = avatar->h;
-
   window->render(avatar->graphics, avatar->text, &src, &dst);
-    //window->render((uint64_t)0, &src, &dst);
 }
 
 }  // namespace zbe

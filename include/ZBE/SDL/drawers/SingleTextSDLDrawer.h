@@ -2,13 +2,13 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file SingleTextDrawer.h
  * @since 2017-04-12
- * @date 2017-04-13
- * @author Batis
+ * @date 2017-05-11
+ * @author Batis Ludo
  * @brief Class that know how to draw text boxes as SingleTextSprite entities with SDL.
  */
 
-#ifndef CORE_DRAWERS_SIMPLETEXTSDLDRAWER_H_
-#define CORE_DRAWERS_SIMPLETEXTSDLDRAWER_H_
+#ifndef SDL_DRAWERS_SIMPLETEXTSDLDRAWER_H_
+#define SDL_DRAWERS_SIMPLETEXTSDLDRAWER_H_
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
@@ -35,8 +35,8 @@ class SingleTextSDLDrawer : public Drawer<SingleTextSprite> {
      */
     ~SingleTextSDLDrawer() {}
 
-    /** \brief The function every punisher must have.
-     *  \param entity The entity to be drawn.
+    /** \brief Draws the given entity.
+     *  \param The entity to be drawn.
      */
     void apply(std::shared_ptr<AvatarEntity<SingleTextSprite> > entity);
 
@@ -46,4 +46,4 @@ class SingleTextSDLDrawer : public Drawer<SingleTextSprite> {
 
 }  // namespace zbe
 
-#endif  // CORE_DRAWERS_SIMPLETEXTSDLDRAWER_H_
+#endif  // SDL_DRAWERS_SIMPLETEXTSDLDRAWER_H_

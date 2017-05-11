@@ -8,7 +8,6 @@
  */
 
 #include "ZBE/SDL/system/SDLEventDispatcher.h"
-#include "ZBE/core/tools/math/math.h"
 
 namespace zbe {
 

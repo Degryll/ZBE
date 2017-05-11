@@ -1,15 +1,15 @@
-/*
+/**
  * Copyright 2010 Batis Degryll Ludo
  * @file SDL_Starter.h
  *
- * @since 2010/07/06
- * @date 2015/05/28
- * @author Degryll
+ * @since 2010-07-06
+ * @date 2017-05-10
+ * @author Degryll Ludo
  * @brief Implements SDL_Starter class.
  */
 
-#ifndef SRC_SDL_SDL_STARTER_H_
-#define SRC_SDL_SDL_STARTER_H_
+#ifndef SDL_STARTERS_STARTER_H_
+#define SDL_STARTERS_STARTER_H_
 
 #include <SDL2/SDL.h>
 
@@ -33,8 +33,12 @@ class SDL_Starter {
       return (instance);
     }
 
+    /** \brief Shutdowns all SDL subsystems.
+     */
     void quit() {SDL_Quit();}  //!< Call SDL_Quit.
 
+    /** \brief Shutdowns given SDL subsystem.
+     */
     void quitSubSystem(Uint32 flags) {
       SDL_QuitSubSystem(flags);
     }
@@ -45,4 +49,4 @@ class SDL_Starter {
 
 }  // namespace zbe
 
-#endif  // SRC_SDL_SDL_STARTER_H_
+#endif  // SDL_STARTERS_STARTER_H_

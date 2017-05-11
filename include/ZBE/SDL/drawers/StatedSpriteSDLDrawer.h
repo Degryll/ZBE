@@ -34,8 +34,8 @@ class StatedSpriteSDLDrawer : public Drawer<StatedSprite> {
      */
     ~StatedSpriteSDLDrawer() {}
 
-    /** \brief The function every punisher must have.
-     *  \param entity The entity to be drawn.
+    /** \brief Draws the given entity.
+     *  \param The entity to be drawn.
      */
     void apply(std::shared_ptr<AvatarEntity<StatedSprite> > entity);
 
