@@ -22,7 +22,6 @@
 
 namespace zbe {
 
-
 struct ZBE_Font {
   TTF_Font* font;
   SDL_Color color;
@@ -35,6 +34,7 @@ struct ZBE_Font {
 class Window {
   public:
     Window(const Window&) = delete;  //!< Does not make sense to "copy" a Window.
+    void operator=(const Window&) = delete;  //!< Does not make sense to "copy" a Window.
 
     /** \brief Creates a new Window and a default Renderer.
      *
@@ -72,8 +72,6 @@ class Window {
     /** \brief Free resources and destroy the Renderer and the Window.
      */
     ~Window();
-
-    void operator=(const Window&) = delete;  //!< Does not make sense to "copy" a Window.
 
     /** \brief Clear the Renderer with the background color.
      *
