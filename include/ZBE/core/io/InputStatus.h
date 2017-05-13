@@ -4,48 +4,54 @@
  * @since 2016-08-21
  * @date 2016-08-21
  * @author Ludo
- * @brief Single imput status representation.
+ * @brief Single input status representation.
  */
 
-#ifndef CORE_IO_INPUTSTATUS_H
-#define CORE_IO_INPUTSTATUS_H
+#ifndef ZBE_CORE_IO_INPUTSTATUS_H
+#define ZBE_CORE_IO_INPUTSTATUS_H
 
 #include <cstdint>
 
 namespace zbe {
 
+/** \brief Single input status representation.
+ */
 class InputStatus {
-  public:
+public:
+  /** \brief Construct an input status.
+   *  \param id Id of the input (key, button, mouse move, etc.).
+   *  \param status Status of the input (pressed, moved, etc.).
+   *  \param time When the input was changed.
+   */
+  InputStatus(uint32_t id, float status, uint64_t time) : id(id), status(status), time(time) {}
 
-    InputStatus(uint32_t id,float status,uint64_t time):id(id),status(status),time(time){};
+  /** \brief Returns the id of the input element.
+   *  \return Id of the input element (key, button, mouse move, etc.).
+   */
+  uint32_t getId() const { return id;}
 
-    /** \brief Returns the id of the input element.
-     *  \return Id of the input element.
-     */
-    uint32_t getId() const { return id;} ;
+  /** \brief Returns the status of the input source.
+   *  \return Status of the input source (pressed, moved, etc.).
+   */
+  float getStatus() const { return status;}
 
-    /** \brief Returns the status of the input source.
-     *  \return Status of the input source.
-     */
-    float getStatus() const { return status;};
+  /** \brief Returns the timestamp in which this state is reached.
+   *  \return Timestamp in which this state is reached.
+   */
+  uint64_t getTime() const { return time;}
 
-    /** \brief Returns the timestamp in which this state is reached.
-     *  \return Timestamp in which this state is reached.
-     */
-    uint64_t getTime() const { return time;};
+  /** \brief "Less than" operator overloading.
+   *  \return true if left hand element is less than right hand one.
+   */
+  bool operator<(const InputStatus& rhs) const {return time<rhs.getTime();}
 
-    /** \brief "Less than" operator overloading.
-     *  \return true if left hand element is less than right hand one
-     */
-    bool operator<(const InputStatus& rhs) const {return time<rhs.getTime();}
+private:
 
-  private:
-
-    uint32_t id;
-    float status;
-    uint64_t time;
+  uint32_t id;
+  float status;
+  uint64_t time;
 };
 
-}
+}  // namespace zbe
 
-#endif //CORE_IO_INPUTSTATUS_H
+#endif //ZBE_CORE_IO_INPUTSTATUS_H

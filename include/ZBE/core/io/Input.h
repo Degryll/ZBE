@@ -4,13 +4,13 @@
 namespace zbe {
 
 // Input status
-const float ZBE_KEYDOWN = 1.0;
-const float ZBE_KEYUP = 0.0;
+const float ZBE_KEYDOWN = 1.0; //!< Key is pressed.
+const float ZBE_KEYUP = 0.0;   //!< Key is released.
 
-const float ZBE_TRIGGERED = 0.1;
-const float ZBE_FULL = 1.0;
-const float ZBE_HARD = 0.75;
-const float ZBE_SOFT = 0.25;
+const float ZBE_TRIGGERED = 0.1; //!< Minimal value an analog input is considered triggered.
+const float ZBE_FULL = 1.0;      //!< The analog input is fully pressed.
+const float ZBE_HARD = 0.75;     //!< The analog input is almost fully pressed.
+const float ZBE_SOFT = 0.25;     //!< The analog input is barely pressed.
 
 // Printable characters keys
 const uint32_t ZBEK_UNKNOWN = 0;
