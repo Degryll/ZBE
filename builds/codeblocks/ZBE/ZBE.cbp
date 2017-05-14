@@ -85,22 +85,22 @@
 				<Option working_dir="../../../../ZBE" />
 				<Option object_output="obj/Debug/" />
 				<Option type="3" />
-				<Option compiler="mingw_64-bit_compiler" />
+				<Option compiler="mingw_64-bit_compiler-710" />
 				<Option createStaticLib="1" />
 				<Compiler>
 					<Add option="-pedantic" />
-					<Add option="-std=c++11" />
 					<Add option="-Wall" />
-					<Add option="-g" />
+					<Add option="-std=c++11" />
 					<Add option="-m64" />
-					<Add option="-static-libstdc++" />
+					<Add option="-g" />
+					<Add option="-static-libstdc++ -D_GLIBCXX_USE_CXX11_ABI=0" />
 					<Add directory="../../../include" />
 					<Add directory="../../../src" />
 					<Add directory="include/ZBE/core/io" />
-					<Add directory="../../../extlibs/SDL2/2.0.3/x86_64-w64-mingw32/include" />
-					<Add directory="../../../extlibs/SDL2/2.0.3/x86_64-w64-mingw32/include/SDL2" />
-					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-w64-mingw32/include" />
-					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-w64-mingw32/include" />
+					<Add directory="../../../extlibs/SDL2/2.0.5/x86_64-w64-mingw32/include" />
+					<Add directory="../../../extlibs/SDL2/2.0.5/x86_64-w64-mingw32/include/SDL2" />
+					<Add directory="../../../extlibs/SDL2_image/2.0.1/x86_64-w64-mingw32/include" />
+					<Add directory="../../../extlibs/SDL2_ttf/2.0.14/x86_64-w64-mingw32/include" />
 					<Add directory="../../../extlibs/utf8cpp/source" />
 					<Add directory="../../../extlibs/boost_1_57_0" />
 					<Add directory="../../../extlibs/IteratorTypeErasure/IteratorTypeErasure/any_iterator" />
@@ -110,14 +110,15 @@
 					<Add directory="include/ZBE/core/system/SDL" />
 				</Compiler>
 				<Linker>
+					<Add option="-m64" />
 					<Add library="mingw32" />
 					<Add library="SDL2main" />
 					<Add library="SDL2" />
 					<Add library="SDL2_image" />
 					<Add library="SDL2_ttf" />
-					<Add directory="../../../extlibs/SDL2/2.0.3/x86_64-w64-mingw32/lib" />
-					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-w64-mingw32/lib" />
-					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-w64-mingw32/lib" />
+					<Add directory="../../../extlibs/SDL2/2.0.5/x86_64-w64-mingw32/lib" />
+					<Add directory="../../../extlibs/SDL2_image/2.0.1/x86_64-w64-mingw32/lib" />
+					<Add directory="../../../extlibs/SDL2_ttf/2.0.14/x86_64-w64-mingw32/lib" />
 				</Linker>
 			</Target>
 			<Target title="Release-Win64">
@@ -125,19 +126,20 @@
 				<Option working_dir="../../../../ZBE" />
 				<Option object_output="obj/Release/" />
 				<Option type="3" />
-				<Option compiler="mingw_64-bit_compiler" />
+				<Option compiler="mingw_64-bit_compiler-710" />
 				<Option createStaticLib="1" />
 				<Compiler>
 					<Add option="-O2" />
 					<Add option="-std=c++11" />
 					<Add option="-m64" />
+					<Add option="-D_GLIBCXX_USE_CXX11_ABI=0" />
 					<Add directory="../../../include" />
 					<Add directory="../../../src" />
 					<Add directory="include/ZBE/core/io" />
-					<Add directory="../../../extlibs/SDL2/2.0.3/x86_64-w64-mingw32/include" />
-					<Add directory="../../../extlibs/SDL2/2.0.3/x86_64-w64-mingw32/include/SDL2" />
-					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-w64-mingw32/include" />
-					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-w64-mingw32/include" />
+					<Add directory="../../../extlibs/SDL2/2.0.5/x86_64-w64-mingw32/include" />
+					<Add directory="../../../extlibs/SDL2/2.0.5/x86_64-w64-mingw32/include/SDL2" />
+					<Add directory="../../../extlibs/SDL2_image/2.0.1/x86_64-w64-mingw32/include" />
+					<Add directory="../../../extlibs/SDL2_ttf/2.0.14/x86_64-w64-mingw32/include" />
 					<Add directory="../../../extlibs/utf8cpp/source" />
 					<Add directory="../../../extlibs/boost_1_57_0" />
 					<Add directory="../../../extlibs/IteratorTypeErasure/IteratorTypeErasure/any_iterator" />
@@ -148,14 +150,15 @@
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add option="-m64" />
 					<Add library="mingw32" />
 					<Add library="SDL2main" />
 					<Add library="SDL2" />
 					<Add library="SDL2_image" />
 					<Add library="SDL2_ttf" />
-					<Add directory="../../../extlibs/SDL2/2.0.3/x86_64-w64-mingw32/lib" />
-					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-w64-mingw32/lib" />
-					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-w64-mingw32/lib" />
+					<Add directory="../../../extlibs/SDL2/2.0.5/x86_64-w64-mingw32/lib" />
+					<Add directory="../../../extlibs/SDL2_image/2.0.1/x86_64-w64-mingw32/lib" />
+					<Add directory="../../../extlibs/SDL2_ttf/2.0.14/x86_64-w64-mingw32/lib" />
 				</Linker>
 			</Target>
 		</Build>

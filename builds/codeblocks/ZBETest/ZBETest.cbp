@@ -88,7 +88,7 @@
 				<Option working_dir="../../../../ZBE" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
-				<Option compiler="mingw_64-bit_compiler" />
+				<Option compiler="mingw_64-bit_compiler-710" />
 				<Compiler>
 					<Add option="-Weffc++" />
 					<Add option="-Wextra" />
@@ -96,14 +96,14 @@
 					<Add option="-std=c++11" />
 					<Add option="-m64" />
 					<Add option="-g" />
-					<Add option="-isystem ..\..\..\extlibs\googletest\1.7.0\include -isystem ..\..\..\extlibs\googletest\1.7.0\include\internal" />
+					<Add option="-isystem ..\..\..\extlibs\googletest\2017-05-14\include -D_GLIBCXX_USE_CXX11_ABI=0" />
 					<Add directory="../../../src/ZBETest/include" />
 					<Add directory="../../../include" />
-					<Add directory="../../../extlibs/googletest/1.7.0/include" />
-					<Add directory="../../../extlibs/SDL2/2.0.3/x86_64-w64-mingw32/include" />
-					<Add directory="../../../extlibs/SDL2/2.0.3/x86_64-w64-mingw32/include/SDL2" />
-					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-w64-mingw32/include" />
-					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-w64-mingw32/include" />
+					<Add directory="../../../extlibs/googletest/2017-05-14/include" />
+					<Add directory="../../../extlibs/SDL2/2.0.5/x86_64-w64-mingw32/include" />
+					<Add directory="../../../extlibs/SDL2/2.0.5/x86_64-w64-mingw32/include/SDL2" />
+					<Add directory="../../../extlibs/SDL2_image/2.0.1/x86_64-w64-mingw32/include" />
+					<Add directory="../../../extlibs/SDL2_ttf/2.0.14/x86_64-w64-mingw32/include" />
 					<Add directory="../../../extlibs/boost_1_57_0" />
 					<Add directory="include" />
 				</Compiler>
@@ -116,10 +116,10 @@
 					<Add library="SDL2" />
 					<Add library="SDL2_image" />
 					<Add library="SDL2_ttf" />
-					<Add directory="../../../extlibs/googletest/1.7.0/lib/win64" />
-					<Add directory="../../../extlibs/SDL2/2.0.3/x86_64-w64-mingw32/lib" />
-					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-w64-mingw32/lib" />
-					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-w64-mingw32/lib" />
+					<Add directory="../../../extlibs/googletest/2017-05-14/lib/win64" />
+					<Add directory="../../../extlibs/SDL2/2.0.5/x86_64-w64-mingw32/lib" />
+					<Add directory="../../../extlibs/SDL2_image/2.0.1/x86_64-w64-mingw32/lib" />
+					<Add directory="../../../extlibs/SDL2_ttf/2.0.14/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../lib" />
 				</Linker>
 			</Target>
@@ -128,7 +128,7 @@
 				<Option working_dir="../../../../ZBE" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
-				<Option compiler="mingw_64-bit_compiler" />
+				<Option compiler="mingw_64-bit_compiler-710" />
 				<Compiler>
 					<Add option="-O2" />
 					<Add option="-Weffc++" />
@@ -136,17 +136,16 @@
 					<Add option="-Wall" />
 					<Add option="-std=c++11" />
 					<Add option="-m64" />
-					<Add option="-isystem ..\..\..\extlibs\googletest\1.7.0\include -isystem ..\..\..\extlibs\googletest\1.7.0\include\internal" />
-					<Add option="-fno-devirtualize" />
+					<Add option="-isystem ..\..\..\extlibs\googletest\2017-05-14\include -D_GLIBCXX_USE_CXX11_ABI=0" />
 					<Add directory="../../../src/ZBETest/include" />
 					<Add directory="../../../include" />
-					<Add directory="../../../extlibs/googletest/1.7.0/include" />
-					<Add directory="../../../extlibs/SDL2/2.0.3/x86_64-w64-mingw32/include" />
-					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-w64-mingw32/include" />
-					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-w64-mingw32/include" />
+					<Add directory="../../../extlibs/googletest/2017-05-14/include" />
+					<Add directory="../../../extlibs/SDL2/2.0.5/x86_64-w64-mingw32/include" />
+					<Add directory="../../../extlibs/SDL2/2.0.5/x86_64-w64-mingw32/include/SDL2" />
+					<Add directory="../../../extlibs/SDL2_image/2.0.1/x86_64-w64-mingw32/include" />
+					<Add directory="../../../extlibs/SDL2_ttf/2.0.14/x86_64-w64-mingw32/include" />
 					<Add directory="../../../extlibs/boost_1_57_0" />
 					<Add directory="include" />
-					<Add directory="../../../extlibs/SDL2/2.0.3/x86_64-w64-mingw32/include/SDL2" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -157,10 +156,10 @@
 					<Add library="SDL2" />
 					<Add library="SDL2_image" />
 					<Add library="SDL2_ttf" />
-					<Add directory="../../../extlibs/googletest/1.7.0/lib/win64" />
-					<Add directory="../../../extlibs/SDL2/2.0.3/x86_64-w64-mingw32/lib" />
-					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-w64-mingw32/lib" />
-					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-w64-mingw32/lib" />
+					<Add directory="../../../extlibs/googletest/2017-05-14/lib/win64" />
+					<Add directory="../../../extlibs/SDL2/2.0.5/x86_64-w64-mingw32/lib" />
+					<Add directory="../../../extlibs/SDL2_image/2.0.1/x86_64-w64-mingw32/lib" />
+					<Add directory="../../../extlibs/SDL2_ttf/2.0.14/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../lib" />
 				</Linker>
 			</Target>
