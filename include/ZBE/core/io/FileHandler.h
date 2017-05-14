@@ -2,13 +2,13 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file FileHandler.h
  * @since 2014-05-25
- * @date 2014-08-23
+ * @date 2017-05-14
  * @author Degryll
- * @brief To handle files.
+ * @brief Class capable of handle files in UTF8.
  */
 
-#ifndef CORE_IO_FILEHANDLER_H
-#define CORE_IO_FILEHANDLER_H
+#ifndef ZBE_CORE_IO_FILEHANDLER_H
+#define ZBE_CORE_IO_FILEHANDLER_H
 
 #ifdef __linux__
   #include <errno.h>
@@ -23,7 +23,7 @@
 
 namespace zbe {
 
-/** \brief To manage files in UTF8.
+/** \brief Class capable of handle files in UTF8.
  */
 class FileHandler {
   public:
@@ -34,6 +34,30 @@ class FileHandler {
   static const std::wstring SEPARATORS;  //!< Directory separators "\" and "/"
 
 #endif // OS
+
+    /** \brief Copy constructor. It builds another FileHandler over the same file as given one.
+     *  \param rhs Instance to copy.
+     */
+    FileHandler(const FileHandler& rhs) : f(rhs.f) {}
+
+    /** \brief Parametrized constructor.
+     *  \param filename File path and name to open.
+     *  \param mode Open mode (see fopen).
+     *  \param createPath If the path should be created (default false).
+     */
+    FileHandler(const char* filename, const char* mode, bool createPath = false);
+
+    /** \brief Destroys this FileHandler and closes the file.
+     */
+    ~FileHandler();
+
+    /** \brief Copy operator. Makes current instance work over the same file as given one.
+     *  \param rhs Instance to copy.
+     */
+    FileHandler& operator=(const FileHandler& rhs) {
+      f = rhs.f;
+      return (*this);
+    }
 
     /** \brief Test if a filename is a normal file.
      *  \param filename The path to test.
@@ -62,21 +86,6 @@ class FileHandler {
      *  \sa rm
      */
     static bool rmdir(const char* dirname);
-
-    FileHandler(const FileHandler& rhs) : f(rhs.f) {}
-
-    /** \brief Parametrized constructor.
-     *  \param filename File path and name to open.
-     *  \param mode Open mode (see fopen).
-     *  \param createPath If the path should be created (default false).
-     */
-    FileHandler(const char* filename, const char* mode, bool createPath = false);
-    ~FileHandler();
-
-    FileHandler& operator=(const FileHandler& rhs) {
-      f = rhs.f;
-      return (*this);
-    }
 
     /** \brief Read elements from the file.
      *  \param buffer Buffer to store the data read.
@@ -174,14 +183,8 @@ class FileHandler {
 
   private:
     FILE *f;  //!< File object.
-    // [TODO] Degryll puede ser interesante
-    // [TODO] Degryll que el path use DirHandler
-//    const char* filename;
-//    const char* name;
-//    const char* ext;
-//    const char* abspath;
 };
 
 }  // namespace zbe
 
-#endif // CORE_IO_FILEHANDLER_H
+#endif // ZBE_CORE_IO_FILEHANDLER_H

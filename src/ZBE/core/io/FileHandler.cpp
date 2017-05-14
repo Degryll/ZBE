@@ -2,16 +2,18 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file FileHandler.cpp
  * @since 2014-05-25
- * @date 2014-05-25
+ * @date 2017-05-14
  * @author Degryll
  * @brief To handle files and directories.
  */
 
 #include "ZBE/core/io/FileHandler.h"
+
+#include <stdio.h>
+#include "sys/stat.h"
+
 #include "ZBE/core/system/SysError.h"
 #include "ZBE/core/tools/text/utf8.h"
-#include "sys/stat.h"
-#include <stdio.h>
 
 namespace zbe {
 
