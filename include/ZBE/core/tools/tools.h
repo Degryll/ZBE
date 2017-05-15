@@ -36,6 +36,9 @@ struct Covariance_Traits {
   using Type = T;
 };
 
+/** \brief Base case of.
+ *  \sa Covariance_Traits
+ */
 template<typename T>
 struct Covariance_Traits<T, void> {
   struct Type { virtual ~Type(){} };
@@ -54,6 +57,9 @@ struct TypeContainer : public TypeContainer<T>, public TypeContainer<Bases...> {
   ~TypeContainer(){}
 };
 
+/** \brief Base case of.
+ *  \sa TypeContainer
+ */
 template <typename T>
 struct TypeContainer<T> {
   TypeContainer<T>(const TypeContainer<T>&) = delete;
@@ -62,6 +68,9 @@ struct TypeContainer<T> {
   TypeContainer(T* t): t(t){}
   ~TypeContainer(){}
 
+  /** \brief Return the stored instance.
+   *
+   */
   T* get() {return t;}
 
   T* t;

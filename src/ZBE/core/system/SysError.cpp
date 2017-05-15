@@ -2,14 +2,14 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file SysError.cpp
  * @since 2013-11-23
- * @date 2014-03-16
+ * @date 2017-05-15
  * @author Degryll
  * @brief System to inform about errors.
  */
 
-#include <string>
-
 #include "ZBE/core/system/SysError.h"
+
+#include <string>
 
 namespace zbe {
 

@@ -2,8 +2,8 @@
  * Copyright 2011 Batis Degryll Ludo
  * @file Point.h
  * @since 2015/05/16
- * @date 2017/02/26
- * @author Degryll
+ * @date 2017/05/15
+ * @author Degryll Ludo
  * @brief Math Point definitions
  */
 
@@ -64,11 +64,9 @@ class _POINT {
      */
     virtual ~_POINT() {}
 
-//    _POINT& operator=(_POINT rhs) {
-//      std::swap(this->data, rhs.data);
-//      return (*this);
-//    }
-
+    /** \brief This class let you assign initializer lists to _POINT.
+     *  \param l initializer list
+     */
     _POINT& operator=(const std::initializer_list<double> l) {
       if (l.size() != s) {
         SysError::setError("Point ERROR: Initializer list size is incorrect.");

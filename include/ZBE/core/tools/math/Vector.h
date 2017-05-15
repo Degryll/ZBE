@@ -2,7 +2,7 @@
  * Copyright 2011 Batis Degryll Ludo
  * @file Vector.h
  * @since 2010/07/22
- * @date 2017/02/26
+ * @date 2017/05/15
  * @author Ludo Degryll Batis
  * @brief Math Vector definition
  */
@@ -65,11 +65,9 @@ class _VECTOR {
      */
     virtual ~_VECTOR() {}
 
-//    _VECTOR& operator=(_VECTOR rhs) {
-//      std::swap(this->data, rhs.data);
-//      return (*this);
-//    }
-
+    /** \brief This class let you assign initializer lists to _VECTOR.
+     *  \param l initializer list
+     */
     _VECTOR& operator=(std::initializer_list<double> l) {
       if (l.size() != s) {
         SysError::setError("Vector ERROR: Initializer list size is incorrect.");
@@ -290,27 +288,6 @@ class _VECTOR {
       return (lhs-=rhs);
     }
 
-//    /** \brief Implements Vector subtraction.
-//     *
-//     * \param lhs Minuend.
-//     * \param rhs Subtrahend.
-//     * \return A reference to the Vector resultant of the subtraction.
-//     * \sa operator+=(), operator-() and operator*=().
-//     */
-//    friend _VECTOR operator-(const _VECTOR& lhs, _VECTOR&& rhs) {
-//      return _VECTOR(rhs-=lhs);
-//    }
-
-//    /** \brief Changes the orientation of a vector changing the sign of its dimensions.
-//     *
-//     * \param lhs The original Vector.
-//     * \return A reference to the resulting Vector.
-//     * \sa operator+(), operator-() and operator*=().
-//     */
-//    friend Vector<s>& operator-(Vector lhs) {
-//      return (-lhs);
-//    }
-
     /** \brief Implements Vector multiplication by a scalar.
      *
      * \param lhs The original Vector.
@@ -512,8 +489,6 @@ class Vector<3> : public _VECTOR<3> {
     /** \brief This class let you assign _VECTOR<3> classes to Vector<3>.
      */
     Vector& operator=(std::initializer_list<double> l) {_VECTOR<3>::operator=(l); return (*this);}
-
-    //vectorial multiplication
 };
 
 using Vector3D = Vector<3>; //!< An alias to Vector<3>.

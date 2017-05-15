@@ -129,7 +129,7 @@ void assignAvatar(T* t, A **a) {
     aeA->assignAvatar(a);
 }
 
-/* \brief Agroupation of an undetermined number of types
+/** \brief Agroupation of an undetermined number of types
  */
 template <typename T, typename... Bases>
 struct AvatarEntityContainer : public AvatarEntityContainer<T>, public AvatarEntityContainer<Bases...> {

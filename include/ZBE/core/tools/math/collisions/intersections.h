@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file intersection.h
  * @since 2015-05-17
- * @date 2015-05-22
+ * @date 2017-05-15
  * @author Degryll Ludo Batis
  * @brief Functions for detect time and point of collision.
  */
@@ -301,13 +301,6 @@ bool intersectionBeamInsideAABB(Ray<dim> ray, AABB<dim> box, int64_t &time, Poin
 /* EL QUANTIZER DE TIEMPO NO FUNCIONA CON NEGATIVOS*/
 /*************************************/
 
-//template <unsigned dim>
-//inline bool intersectionRayOutsideAABB(Ray<dim> ray, AABB<dim> box, int64_t &time, Point<dim> &point) {
-//  int64_t tmin = std::numeric_limits<int64_t>::min();
-//  int64_t tmax = std::numeric_limits<int64_t>::max();
-//  return (rayOutsideAABB(ray, box, tmin, tmax, time, point));
-//}
-
 /** \brief Computes the collision of a N-dimensional Segment and AABB.
  *
  *  This function considerate the ray a finite segment.
@@ -369,19 +362,14 @@ template <unsigned dim>
 bool rayOutsideAABB(Ray<dim> ray, AABB<dim> box, int64_t tmin, int64_t tmax, int64_t &time, Point<dim> &point) {
   for (unsigned i = 0; i < dim; i++) {
     if (abs(ray.d[i]) < PRECISION) {
-      // Ray is parallel to slab. No hit if origin not within slab
       if (ray.o[i] < box.minimum[i] || ray.o[i] > box.maximum[i]) return (false);
     } else {
       double d = (SECOND / ray.d[i]);
-      // Compute intersection t value of ray with near and far plane of slab
       int64_t t1 = quantizeTime((int64_t)((box.minimum[i] - ray.o[i]) * d));
       int64_t t2 = quantizeTime((int64_t)((box.maximum[i] - ray.o[i]) * d));
-      // Make t1 be intersection with near plane, t2 with far plane
       if (t1 > t2) std::swap(t1, t2);
-      // Compute the intersection of slab intersection intervals
       if (t1 > tmin) tmin = t1;
       if (t2 < tmax) tmax = t2;
-      // Exit with no collision as soon as slab intersection becomes empty
       if (tmin > tmax) return (false);
     }
   }
@@ -428,21 +416,6 @@ bool intersectionMovingNSphereInsideAABB(NSphere<dim> nsphere, Vector<dim> direc
 
   return (false);
 }
-
-///** \brief Computes the collision of a moving circle with an AABB. Outside approach.
-// *
-// * \param NSphere<2> The moving circle.
-// * \param direction The velocity of the moving sphere.
-// * \param box The static AABB.
-// * \param time Initialy it has a limit time, if the collision happens before that time, its value is updated.
-// * \param point Stores the point of collision, if any.
-// * \return True if there is a collision before the initial value of time, false otherwise.
-// */
-//template <unsigned dim>
-//bool intersectionMovingNSphereOutsideAABB(NSphere<dim> nsphere, Vector<dim> direction, AABB<dim> box, int64_t& time, Point<dim>& point) {
-//
-//  return (false);
-//}
 
 }  // namespace zbe
 

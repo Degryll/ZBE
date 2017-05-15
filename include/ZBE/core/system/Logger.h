@@ -2,13 +2,13 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file Logger.h
  * @since 2014-05-16
- * @date 2015-10-24
- * @author Degryll
+ * @date 2017-05-15
+ * @author Degryll Ludo
  * @brief To create Logs.
  */
 
-#ifndef CORE_SYSTEM_LOGGER_H
-#define CORE_SYSTEM_LOGGER_H
+#ifndef ZBE_CORE_SYSTEM_LOGGER_H
+#define ZBE_CORE_SYSTEM_LOGGER_H
 
 #include <vector>
 #include <forward_list>
@@ -247,4 +247,4 @@ private:
 
 }  // namespace zbe
 
-#endif  // CORE_SYSTEM_LOGGER_H
+#endif  // ZBE_CORE_SYSTEM_LOGGER_H

@@ -2,13 +2,13 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file SysError.h
  * @since 2013-11-23
- * @date 2015-10-21
+ * @date 2017-05-15
  * @author Degryll
  * @brief A system class to inform about errors.
  */
 
-#ifndef CORE_SYSTEM_SYSERROR_H_
-#define CORE_SYSTEM_SYSERROR_H_
+#ifndef ZBE_CORE_SYSTEM_SYSERROR_H_
+#define ZBE_CORE_SYSTEM_SYSERROR_H_
 
 #include <string>
 
@@ -54,10 +54,12 @@ public:
   static void clear();
 
 private:
-        static int nerrors;
-        static std::string errorString;
+
+  static int nerrors;
+  static std::string errorString;
+
 };
 
 }  // namespace zbe
 
-#endif  // CORE_SYSTEM_SYSERROR_H_
+#endif  // ZBE_CORE_SYSTEM_SYSERROR_H_

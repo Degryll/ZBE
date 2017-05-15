@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file utf8.h
  * @since 2014-08-23
- * @date 2016-01-07
+ * @date 2017-05-15
  * @author Degryll
  * @brief To work with UTF-8.
  * Based on the work of Nemanja Trifunovic.
@@ -34,8 +34,8 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef CORE_UTF8_H_
-#define CORE_UTF8_H_
+#ifndef ZBE_CORE_TOOLS_TEXT_UTF8_H_
+#define ZBE_CORE_TOOLS_TEXT_UTF8_H_
 
 #include <string>
 
@@ -94,4 +94,4 @@ int utf8to16 (u16bit_iterator result, const char* src) {
 
 }  // namespace zbe
 
-#endif  // CORE_SYSTEM_SYSERROR_H_
+#endif  // ZBE_CORE_TOOLS_TEXT_UTF8_H_

@@ -7,10 +7,11 @@
  * @brief A class that relates an id with a list.
  */
 
-#ifndef CORE_TOOLS_CONTAINERS_LISTMANAGER_H_
-#define CORE_TOOLS_CONTAINERS_LISTMANAGER_H_
+#ifndef ZBE_CORE_TOOLS_CONTAINERS_LISTMANAGER_H_
+#define ZBE_CORE_TOOLS_CONTAINERS_LISTMANAGER_H_
 
 #include <map>
+
 #include "ZBE/core/system/SysError.h"
 
 namespace zbe {
@@ -62,4 +63,4 @@ T* ListManager<T>::get(uint64_t id) {
 
 }  // namespace zbe
 
-#endif  // CORE_TOOLS_CONTAINERS_LISTMANAGER_H_
+#endif  // ZBE_CORE_TOOLS_CONTAINERS_LISTMANAGER_H_

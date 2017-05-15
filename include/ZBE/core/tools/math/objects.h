@@ -2,7 +2,7 @@
  * Copyright 2011 Batis Degryll Ludo
  * @file objects.h
  * @since 2015/05/19
- * @date 2015/05/19
+ * @date 2017/05/15
  * @author Degryll
  * @brief Math objects definitions
  */
