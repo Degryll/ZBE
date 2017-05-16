@@ -45,6 +45,11 @@
 #include "game/events/handlers/GameBallBouncer.h"
 #include "game/events/handlers/TtpHandler.h"
 
+#include "ZBE/core/system/MainLoop.h"
+#include "ZBE/core/daemons/BasicPreLoopTimeDaemon.h"
+#include "ZBE/SDL/daemons/BasicPreLoopSDLDaemon.h"
+#include "ZBE/SDL/daemons/BasicPostLoopSDLDaemon.h"
+
 int gamemain(int, char** ) {
 
   printf("--- GAME main ---\n\n");
@@ -82,7 +87,7 @@ int gamemain(int, char** ) {
   printf("Will store all event independently of its type\n");fflush(stdout);
   zbe::EventStore& store = zbe::EventStore::getInstance();
   printf("Building generator master\n");fflush(stdout);
-  zbe::DaemonMaster gema;
+  std::shared_ptr<zbe::DaemonMaster> gema(new zbe::DaemonMaster());
   printf("|------------------------ Input Event Generator-------------|\n");fflush(stdout);
   printf("Building SDLEventDispatcher\n");fflush(stdout);
   printf("Will extract data from SDL and get it usable for the engine\n");fflush(stdout);
@@ -94,7 +99,7 @@ int gamemain(int, char** ) {
   printf("Will read events from the InputReader and send them to the store\n");fflush(stdout);
   printf("Input events will use id 0\n");fflush(stdout);
   std::shared_ptr<zbe::InputEventGenerator> ieg(new zbe::InputEventGenerator(inputBuffer,INPUTEVENT));
-  gema.addDaemon(ieg);
+  gema->addDaemon(ieg);
   printf("|------------------- Collision Event Generator-------------|\n");fflush(stdout);
   printf("Building list for collisionator entinties. Currently empty.\n");fflush(stdout);
   printf("It will store entities that will search for a collision.\n");fflush(stdout);
@@ -105,11 +110,11 @@ int gamemain(int, char** ) {
   lmct.insert(COLLISIONATORLIST, &ctl);
   printf("Building collision event generator with list id and the event id to use (1).\n");fflush(stdout);
   std::shared_ptr<zbe::CollisionEventGenerator<game::GameReactor> > ceg(new zbe::CollisionEventGenerator<game::GameReactor>(COLLISIONATORLIST, COLLISIONEVENT, new zbe::BaseCollisionSelector<game::GameReactor>()));
-  gema.addDaemon(ceg);
+  gema->addDaemon(ceg);
   printf("|------------------- Time Event Generator -----------------|\n");fflush(stdout);
   printf("Building time event generator with the event id to use (2)\n");fflush(stdout);
   std::shared_ptr<zbe::TimeEventGenerator> teg(new zbe::TimeEventGenerator(TIMEEVENT));
-  gema.addDaemon(teg);
+  gema->addDaemon(teg);
   printf("|------------------------- Time ---------------------------|\n");fflush(stdout);
   printf("Building a SDL implementation of Timer\n");fflush(stdout);
   zbe::Timer *sysTimer = new zbe::SDLTimer(true);
@@ -121,7 +126,7 @@ int gamemain(int, char** ) {
   printf("Building the window to draw on\n");fflush(stdout);
   zbe::Window window(WIDTH,HEIGHT);
   printf("Creating draw master list\n");fflush(stdout);
-  zbe::DaemonMaster drawMaster;
+  std::shared_ptr<zbe::DaemonMaster> drawMaster(new zbe::DaemonMaster());
   printf("Creating drawables list\n");fflush(stdout);
   zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite> > sprites;
   zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite > > >& lmAESimpleSprite = zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite > > >::getInstance();
@@ -131,10 +136,10 @@ int gamemain(int, char** ) {
   brickgraphics = window.loadImg(brickfilename);
   printf("Building the drawer to paint SingleSprite's \n");fflush(stdout);
   std::shared_ptr<zbe::Daemon> drawerDaemon(new  zbe::DrawerDaemon<zbe::SingleSprite, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite > > >(std::make_shared<zbe::SingleSpriteSDLDrawer>(&window), SPRITELIST));
-  drawMaster.addDaemon(drawerDaemon);
+  drawMaster->addDaemon(drawerDaemon);
   printf("|-------------------- Daemons ----------------------|\n");fflush(stdout);
-  zbe::DaemonMaster commonBehaviorMaster;
-  zbe::DaemonMaster reactBehaviorMaster;
+  std::shared_ptr<zbe::DaemonMaster> commonBehaviorMaster(new zbe::DaemonMaster());
+  std::shared_ptr<zbe::DaemonMaster> reactBehaviorMaster(new zbe::DaemonMaster());
   zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > > vAEMovable;
   auto& lmAEMovable = zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > > >::getInstance();
   lmAEMovable.insert(MOVABLELIST, &vAEMovable);
@@ -143,8 +148,8 @@ int gamemain(int, char** ) {
   lmAEBouncer.insert(BOUNCERLIST, &vAEBouncer);
   std::shared_ptr<zbe::Daemon> ballBounce(new  zbe::BehaviorDaemon<zbe::Bouncer<2>, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Bouncer<2> > > >(std::make_shared<zbe::Bounce<2> >(), BOUNCERLIST));
   std::shared_ptr<zbe::Daemon> ballULM(new  zbe::BehaviorDaemon<zbe::Movable<2>, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > > >(std::make_shared<zbe::UniformLinearMotion<2> >(), MOVABLELIST));
-  commonBehaviorMaster.addDaemon(ballULM);
-  reactBehaviorMaster.addDaemon(ballBounce);
+  commonBehaviorMaster->addDaemon(ballULM);
+  reactBehaviorMaster->addDaemon(ballBounce);
   printf("|------------------- Creating entities --------------------|\n");fflush(stdout);
   printf("Creating a ball and giving it a position and size\n");fflush(stdout);
 
@@ -213,35 +218,16 @@ int gamemain(int, char** ) {
   printf("Updating system time.\n");fflush(stdout);
   sysTime.update();
 
-  bool keep = true;
-  while(keep){
-    //Pre
-    window.clear();
-    sdlEventDist.run();
-    sysTime.update();
-    // Inner loop
-    while (sysTime.isFrameRemaining()) {
-      // Generating events
-      gema.run();
-      sysTime.setEventTime(store.getTime());
-      if (sysTime.isPartialFrame()) {
-        commonBehaviorMaster.run();
-        store.manageCurrent();
-        reactBehaviorMaster.run();
-      } else {
-        commonBehaviorMaster.run();
-        store.clearStore();
-      }
-      sysTime.updateInitTime();
-    }
-    //Post
-    drawMaster.run();
-    int errcount = zbe::SysError::getNErrors();
-    if(errcount>0){
-        printf("Error: %s",zbe::SysError::getFirstErrorString().c_str());fflush(stdout);
-    }
-    window.present();
-  }
+  std::shared_ptr<zbe::Daemon> prltd = std::make_shared<zbe::BasicPreLoopTimeDaemon>();
+  std::shared_ptr<zbe::Daemon> prlsdl = std::make_shared<zbe::BasicPreLoopSDLDaemon>(&window);
+  std::shared_ptr<zbe::Daemon> postLoop = std::make_shared<zbe::BasicPostLoopSDLDaemon>(&window);
+  std::shared_ptr<zbe::DaemonMaster> preLoop(new zbe::DaemonMaster());
+
+  preLoop->addDaemon(prlsdl);
+  preLoop->addDaemon(prltd);
+
+  zbe::MainLoop mainLoop(preLoop, postLoop, gema, commonBehaviorMaster, reactBehaviorMaster, drawMaster);
+  mainLoop.loop();
 
   return 0;
 }

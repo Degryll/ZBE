@@ -12,11 +12,8 @@
 
 #include <memory>
 #include "ZBE/core/daemons/Daemon.h"
-#include "ZBE/core/daemons/BasicCommonBehaviorMaster.h"
-#include "ZBE/SDL/daemons/BasicPreLoopDaemon.h"
-#include "ZBE/SDL/daemons/BasicPostLoopSDLDaemon.h"
-#include "ZBE/core/daemons/BasicReactBehaviorMaster.h"
-#include "ZBE/core/daemons/BasicTimedEventsDaemon.h"
+#include "ZBE/core/system/SysTime.h"
+#include "ZBE/core/events/EventStore.h"
 
 namespace zbe {
 
@@ -32,12 +29,15 @@ class MainLoop {
      * \param Common Behavior Daemon Master.
      * \param React Behavior Daemon Master.
      */
-    MainLoop(std::shared_ptr<Daemon> pre, std::shared_ptr<Daemon> post, std::shared_ptr<Daemon> event, std::shared_ptr<Daemon> common, std::shared_ptr<Daemon> react) :
+    MainLoop(std::shared_ptr<Daemon> pre, std::shared_ptr<Daemon> post, std::shared_ptr<Daemon> event, std::shared_ptr<Daemon> common, std::shared_ptr<Daemon> react, std::shared_ptr<Daemon> draw) :
                 dPre(pre),
                 dPost(post),
                 dTE(event),
                 dCBM(common),
-                dRBM(react){}
+                dRBM(react),
+                dDM(draw),
+                sysTime(zbe::SysTime::getInstance()),
+                store(zbe::EventStore::getInstance()) {}
 
     /** \brief Destructor.
      */
@@ -70,7 +70,7 @@ class MainLoop {
 
     /** \brief Setter for the Common Behavior Daemon Master.
      * \param daemon Pointer to the Daemon desired to be used.
-     * \return void
+     * \return voidsince
      *
      */
     void setCommon(std::shared_ptr<Daemon> daemon) {dCBM = daemon;}
@@ -82,14 +82,25 @@ class MainLoop {
      */
     void setReact(std::shared_ptr<Daemon> daemon) {dRBM = daemon;}
 
-  private:
-    std::shared_ptr<Daemon>  dPre;
-    std::shared_ptr<Daemon>  dPost;
-    std::shared_ptr<Daemon>  dTE;
-    std::shared_ptr<Daemon>  dCBM;
-    std::shared_ptr<Daemon>  dRBM;
-};
+    /** \brief Setter for the Drawlo  Master.
+     * \param daemon Pointer to the Daemon desired to be used.
+     * \return void
+     *
+     */
+    void setDraw(std::shared_ptr<Daemon> daemon) {dDM = daemon;}
 
+  private:
+    std::shared_ptr<Daemon> dPre;
+    std::shared_ptr<Daemon> dPost;
+    std::shared_ptr<Daemon> dTE;
+    std::shared_ptr<Daemon> dCBM;
+    std::shared_ptr<Daemon> dRBM;
+    std::shared_ptr<Daemon> dDM;
+
+    zbe::SysTime &sysTime;
+    zbe::EventStore &store;
+
+};
 
 }  // namespace zbe
 

@@ -1,37 +1,38 @@
 #include "ZBE/core/system/MainLoop.h"
+//lo que si tendré que recibir por algún sitio, será:
+  //window (bueno, la recibiran el pre y el post)
+
 
 namespace zbe {
-/*
+
 void MainLoop::loop() {
   bool keep = true;
   while(keep){
     //Pre daemon
-    window.clear();
-    sdlEventDist.run();
-    sysTime.update();
+    dPre->run();
     // Inner loop
     while (sysTime.isFrameRemaining()) {
-      // Predictable events daemon
-      gema.run();
+      // Timed events daemon (gema)
+      dTE->run();
       sysTime.setEventTime(store.getTime());
       if (sysTime.isPartialFrame()) {
         // commonBehaviorMaster
-        commonBehaviorMaster.run();
-        store.
+        dCBM->run();
+        store.manageCurrent();
         // reactBehaviorMaster
-        reactBehaviorMaster.run();
+        dRBM->run();
       } else {
         // commonBehaviorMaster
-        commonBehaviorMaster.run();
+        dCBM->run();
         store.clearStore();
       }
       sysTime.updateInitTime();
     }
     //Post daemon
-    drawMaster.run();
-    window.present();
+    dDM->run();
+    dPost->run();
     // end
   }
 }
-*/
+
 }

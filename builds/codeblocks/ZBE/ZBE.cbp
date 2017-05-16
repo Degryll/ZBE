@@ -167,7 +167,6 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="../../../include/ZBE/SDL/daemons/BasicPostLoopSDLDaemon.h" />
-		<Unit filename="../../../include/ZBE/SDL/daemons/BasicPreLoopDaemon.h" />
 		<Unit filename="../../../include/ZBE/SDL/daemons/BasicPreLoopSDLDaemon.h" />
 		<Unit filename="../../../include/ZBE/SDL/drawers/AnimatedSpriteSDLDrawer.h" />
 		<Unit filename="../../../include/ZBE/SDL/drawers/RotatedSpriteSDLDrawer.h" />
@@ -216,10 +215,7 @@
 		<Unit filename="../../../include/ZBE/behaviors/Bounce.h" />
 		<Unit filename="../../../include/ZBE/behaviors/UniformLinearMotion.h" />
 		<Unit filename="../../../include/ZBE/core/behaviors/Behavior.h" />
-		<Unit filename="../../../include/ZBE/core/daemons/BasicCommonBehaviorMaster.h" />
 		<Unit filename="../../../include/ZBE/core/daemons/BasicPreLoopTimeDaemon.h" />
-		<Unit filename="../../../include/ZBE/core/daemons/BasicReactBehaviorMaster.h" />
-		<Unit filename="../../../include/ZBE/core/daemons/BasicTimedEventsDaemon.h" />
 		<Unit filename="../../../include/ZBE/core/daemons/Daemon.h" />
 		<Unit filename="../../../include/ZBE/core/daemons/DaemonMaster.h" />
 		<Unit filename="../../../include/ZBE/core/daemons/PunisherDaemon.h" />
@@ -294,7 +290,6 @@
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/SimpleBounceable.h" />
 		<Unit filename="../../../include/ZBE/reactobjects/VoidReactObject.h" />
 		<Unit filename="../../../src/ZBE/SDL/daemons/BasicPostLoopSDLDaemon.cpp" />
-		<Unit filename="../../../src/ZBE/SDL/daemons/BasicPreLoopDaemon.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/daemons/BasicPreLoopSDLDaemon.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/drawers/AnimatedSpriteSDLDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/drawers/RotatedSpriteSDLDrawer.cpp" />
@@ -304,10 +299,7 @@
 		<Unit filename="../../../src/ZBE/SDL/system/SDLEventDispatcher.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/system/Window.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/tools/SDLTimer.cpp" />
-		<Unit filename="../../../src/ZBE/core/daemons/BasicCommonBehaviorMaster.cpp" />
 		<Unit filename="../../../src/ZBE/core/daemons/BasicPreLoopTimeDaemon.cpp" />
-		<Unit filename="../../../src/ZBE/core/daemons/BasicReactBehaviorMaster.cpp" />
-		<Unit filename="../../../src/ZBE/core/daemons/BasicTimedEventsDaemon.cpp" />
 		<Unit filename="../../../src/ZBE/core/daemons/DaemonMaster.cpp" />
 		<Unit filename="../../../src/ZBE/core/entities/Entity.cpp" />
 		<Unit filename="../../../src/ZBE/core/events/EventStore.cpp" />
