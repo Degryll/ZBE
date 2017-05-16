@@ -198,6 +198,7 @@
 		<Unit filename="../../../src/ZBETest/core/system/LoggerTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/system/SDL/SDLEventDispatcherTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/system/SysErrorTest.cpp" />
+		<Unit filename="../../../src/ZBETest/core/system/SysIdGenerator.cpp" />
 		<Unit filename="../../../src/ZBETest/core/system/SysTimeTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/tools/SDLTimerTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/tools/containers/ListManagerTest.cpp" />
