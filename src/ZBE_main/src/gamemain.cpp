@@ -83,9 +83,7 @@ int gamemain(int, char** ) {
   printf("2 / 5 %d\n", 2/5);fflush(stdout);
 
   printf("|=================== Building up system ===================|\n");fflush(stdout);
-  printf("Event store\n");fflush(stdout);
-  printf("Will store all event independently of its type\n");fflush(stdout);
-  zbe::EventStore& store = zbe::EventStore::getInstance();
+
   printf("Building generator master\n");fflush(stdout);
   std::shared_ptr<zbe::DaemonMaster> gema(new zbe::DaemonMaster());
   printf("|------------------------ Input Event Generator-------------|\n");fflush(stdout);

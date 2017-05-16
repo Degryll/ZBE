@@ -104,9 +104,7 @@ int ludomain(int, char** ) {
   unsigned ballgraphics[6];
 
   printf("|=================== Building up system ===================|\n");fflush(stdout);
-  printf("Event store\n");fflush(stdout);
-  printf("Will store all event independently of its type\n");fflush(stdout);
-  EventStore& store = EventStore::getInstance();
+
   printf("Building generator master\n");fflush(stdout);
   //DaemonMaster gema;
   std::shared_ptr<zbe::DaemonMaster> gema(new zbe::DaemonMaster());
