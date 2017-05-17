@@ -1,27 +1,23 @@
 /**
  * Copyright 2011 Batis Degryll Ludo
- * @file TicketedForwardList.h
- * @since 2015/02/08
- * @date 2016/03/22
- * @author Degryll
- * @brief A wrapper for c++ forward_list using Tickets.
+ * @file TicketedContainer.h
+ * @since 2017/05/16
+ * @date 2017/05/16
+ * @author Ludo
+ * @brief Interface for containers that use tickets.
  */
 
-#ifndef ZBE_CORE_TOOLS_CONTAINERS_TICKETEDFORWARDLIST_H_
-#define ZBE_CORE_TOOLS_CONTAINERS_TICKETEDFORWARDLIST_H_
+#ifndef ZBE_CORE_TOOLS_CONTAINERS_TICKETEDCONTAINER_H_
+#define ZBE_CORE_TOOLS_CONTAINERS_TICKETEDCONTAINER_H_
 
-#include <type_traits>
 #include <memory>
-#include <forward_list>
-
-#include "ZBE/core/system/SysError.h"
 
 #include "ZBE/core/tools/containers/Ticket.h"
 
 namespace zbe {
 
 template <typename T, typename UnqualifiedType = std::remove_cv<T> >
-class TicketedForwardListIterator;
+class TicketedContainer;
 
 /** \brief A wrapper for c++ forward_list using Tickets.
  *
@@ -192,4 +188,4 @@ private:
   using TicketedFLConstIterator = TicketedForwardListIterator<T const>;
 }  // namespace zbe
 
-#endif  // ZBE_CORE_TOOLS_CONTAINERS_TICKETEDFORWARDLIST_H_
+#endif  // ZBE_CORE_TOOLS_CONTAINERS_TICKETEDCONTAINER_H_

@@ -14,11 +14,11 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-Weffc++" />
-					<Add option="-std=c++11" />
 					<Add option="-Wextra" />
 					<Add option="-Wall" />
-					<Add option="-g" />
+					<Add option="-std=c++11" />
 					<Add option="-m64" />
+					<Add option="-g" />
 					<Add option="-fPIC" />
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/SDL2/2.0.3/include" />
@@ -35,10 +35,12 @@
 					<Add directory="include/ZBE/core/system/SDL" />
 				</Compiler>
 				<Linker>
+					<Add option="-m64" />
 					<Add library="SDL2main" />
 					<Add library="SDL2" />
 					<Add library="SDL2_image" />
 					<Add library="SDL2_ttf" />
+					<Add library="pthread" />
 					<Add directory="../../../extlibs/SDL2/2.0.3/lib/linux64" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/lib" />
@@ -71,10 +73,12 @@
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add option="-m64" />
 					<Add library="SDL2main" />
 					<Add library="SDL2" />
 					<Add library="SDL2_image" />
 					<Add library="SDL2_ttf" />
+					<Add library="pthread" />
 					<Add directory="../../../extlibs/SDL2/2.0.3/lib/linux64" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/lib" />
@@ -267,7 +271,9 @@
 		<Unit filename="../../../include/ZBE/core/tools/containers/ListManager.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/ListofLists.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/Ticket.h" />
+		<Unit filename="../../../include/ZBE/core/tools/containers/TicketedContainer.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/TicketedForwardList.h" />
+		<Unit filename="../../../include/ZBE/core/tools/containers/TicketedJoint.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/Point.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/Vector.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/collisions/intersections.h" />

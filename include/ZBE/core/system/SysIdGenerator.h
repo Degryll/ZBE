@@ -28,7 +28,7 @@ public:
 private:
     SysIdGenerator() {};
 
-    static std::atomic_uint64_t id;
+    static std::atomic<uint64_t> id;
 };
 
 }  // namespace zbe

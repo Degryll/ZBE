@@ -37,6 +37,7 @@
 					<Add library="SDL2" />
 					<Add library="SDL2_image" />
 					<Add library="SDL2_ttf" />
+					<Add library="pthread" />
 					<Add directory="../../../extlibs/googletest/1.7.0/lib/linux64" />
 					<Add directory="../../../extlibs/SDL2/2.0.3/lib/linux64" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />
@@ -76,6 +77,7 @@
 					<Add library="SDL2" />
 					<Add library="SDL2_image" />
 					<Add library="SDL2_ttf" />
+					<Add library="pthread" />
 					<Add directory="../../../extlibs/googletest/1.7.0/lib/linux64" />
 					<Add directory="../../../extlibs/SDL2/2.0.3/lib/linux64" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />
