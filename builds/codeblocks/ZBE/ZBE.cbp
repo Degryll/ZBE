@@ -271,7 +271,6 @@
 		<Unit filename="../../../include/ZBE/core/tools/containers/ListManager.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/ListofLists.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/Ticket.h" />
-		<Unit filename="../../../include/ZBE/core/tools/containers/TicketedContainer.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/TicketedForwardList.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/TicketedJoint.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/Point.h" />
