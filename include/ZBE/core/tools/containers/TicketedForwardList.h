@@ -34,6 +34,8 @@ public:
   TicketedForwardList(const TicketedForwardList&) = delete;
   void operator=(const TicketedForwardList&) = delete;
 
+  using iterator = TicketedForwardListIterator<T>; //!< Definition of iterator used.
+
   /** \brief Empty constructor.
    */
   TicketedForwardList() : l() {}
@@ -50,19 +52,19 @@ public:
   /** \brief Returns an iterator pointing to the first element in the forward_list container.
    *  \return An iterator to the beginning of the sequence container.
    */
-  TicketedForwardListIterator<T> begin() {
+  iterator begin() {
     auto p = l.before_begin();
     auto i = l.begin();
     auto e = l.end();
-    return (TicketedForwardListIterator<T>(&l, p, i, e));
+    return (iterator(&l, p, i, e));
   }
 
   /** \brief Returns an iterator referring to the past-the-end element in the forward_list container.
    *  \return An iterator to the element past the end of the sequence.
    */
-  TicketedForwardListIterator<T> end() {
+  iterator end() {
     auto e = l.end();
-    return (TicketedForwardListIterator<T>(&l, e, e, e));
+    return (iterator(&l, e, e, e));
   }
 
   /** \brief Returns an iterator referring to the past-the-end element in the forward_list container.
