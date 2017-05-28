@@ -7,8 +7,8 @@
  * @brief A system class to get unique Ids.
  */
 
-#ifndef ZBE_CORE_SYSTEM_SYSERROR_H_
-#define ZBE_CORE_SYSTEM_SYSERROR_H_
+#ifndef ZBE_CORE_SYSTEM_SYSIDGENERATOR_H_
+#define ZBE_CORE_SYSTEM_SYSIDGENERATOR_H_
 
 #include <cstdint>
 #include <atomic>
@@ -33,4 +33,4 @@ private:
 
 }  // namespace zbe
 
-#endif  // ZBE_CORE_SYSTEM_SYSERROR_H_
+#endif  // ZBE_CORE_SYSTEM_SYSIDGENERATOR_H_

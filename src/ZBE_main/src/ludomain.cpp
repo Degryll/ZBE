@@ -25,6 +25,7 @@
 #include "ZBE/core/events/handlers/Actuator.h"
 #include "ZBE/core/events/handlers/ActuatorWrapper.h"
 #include "ZBE/core/system/SysTime.h"
+#include "ZBE/core/system/SysIdGenerator.h"
 #include "ZBE/core/tools/Timer.h"
 #include "ZBE/core/tools/math/math.h"
 #include "ZBE/core/system/SysError.h"
@@ -67,32 +68,32 @@ int ludomain(int, char** ) {
   printf("--- Ludo main ---\n\n");
 
   enum {
-    GENERATORLIST = 1,
-
-    INPUTEVENT = 0,
-    COLLISIONEVENT = 1,
-    TIMEEVENT = 2,
-
-    COLLISIONATORLIST = 1,
-    MOVABLELIST = 1,
-    BOUNCERLIST = MOVABLELIST,
-    LROTATORS = 4,
-    RROTATORS = 5,
-    PARTICLES = 6,
-    ROTATORS = 7,
-    BALLACTUATORLIST = 1,
-    COLLISIONABLELIST = 1,
-    INTERSECTCNRLIST = 2,
-    INTERSECTCTRLIST = 3,
-    BOARDACTUATORLIST = 1,
-    BRICKACTUATORLIST = 2,
-    SPRITELIST = 1,
-    RSPRITELIST = 2,
-    SETABLEGRAPHSLIST = 1,
-
     WIDTH = 1024,
     HEIGHT = 768
   };
+
+  //int GENERATORLIST = zbe::SysIdGenerator::getId();
+
+  const int INPUTEVENT = SysIdGenerator::getId();
+  const int COLLISIONEVENT = SysIdGenerator::getId();
+  const int TIMEEVENT = SysIdGenerator::getId();
+
+  const int COLLISIONATORLIST = SysIdGenerator::getId();
+  const int MOVABLELIST = SysIdGenerator::getId();
+  const int BOUNCERLIST = MOVABLELIST;
+  const int LROTATORS = SysIdGenerator::getId();
+  const int RROTATORS = SysIdGenerator::getId();
+  const int PARTICLES = SysIdGenerator::getId();
+  const int ROTATORS = SysIdGenerator::getId();
+  const int BALLACTUATORLIST = SysIdGenerator::getId();
+  const int COLLISIONABLELIST = SysIdGenerator::getId();
+  const int INTERSECTCNRLIST = SysIdGenerator::getId();
+  const int INTERSECTCTRLIST = SysIdGenerator::getId();
+  const int BOARDACTUATORLIST = SysIdGenerator::getId();
+  //int BRICKACTUATORLIST = SysIdGenerator::getId();
+  const int SPRITELIST = SysIdGenerator::getId();
+  const int RSPRITELIST = SysIdGenerator::getId();
+  const int SETABLEGRAPHSLIST = SysIdGenerator::getId();
 
   const char zomballImg[] = "data/images/zombieball/zomball_st_32.png";
   const char simpleBallImg[] = "data/images/zombieball/simple_ball_32.png";
