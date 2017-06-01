@@ -6,6 +6,7 @@
 #include "ZBE/core/events/generators/InteractionEventGenerator.h"
 #include "ZBE/core/events/generators/util/CollisionSelector.h"
 #include "ZBE/core/events/generators/util/BaseCollisionSelector.h"
+#include "ZBE/core/events/generators/util/IntersectionCollisionSelector.h"
 #include "ZBE/core/events/generators/util/ReactObject.h"
 #include "ZBE/core/events/handlers/Actuator.h"
 #include "ZBE/core/tools/containers/TicketedForwardList.h"
@@ -107,13 +108,115 @@ TEST(IntersectionEventGenerator, run) {
   ctl.push_front(dcator);
   zbe::CollisionSelector<R>* cs = new zbe::BaseCollisionSelector<R>();
 
-  zbe::InteractionEventGenerator<R, zbe::CollisionSelector<R> , zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > >,  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > > ceg(2, 1, cs);
+  zbe::InteractionEventGenerator<R, zbe::CollisionSelector<R> , zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > >,  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > > ieg(2, 1, cs);
 
   sysTime.update();
   sysTime.update();
 
   zbe::EventStore &es = zbe::EventStore::getInstance();
-  ceg.run();
+  ieg.run();
+  es.manageCurrent();
+
+  EXPECT_EQ(42, dconer->a.id) << "Coner id must be 42";
+  EXPECT_EQ(37, dconer->a.vs) << "Coner is must be 37";
+  EXPECT_EQ(37, dcator->a.id) << "Cator id must be 37";
+  EXPECT_EQ(42, dcator->a.vs) << "Cator is must be 42";
+
+  delete actwrap;
+}
+
+TEST(InstantIntersectionEventGenerator, run_no_collision) {
+  zbe::SysTime &sysTime = zbe::SysTime::getInstance();
+  sysTime.setMaxFrameTime(zbe::SECOND*2);
+
+  DummyTimer* sysTimer = new DummyTimer;
+  sysTime.setSystemTimer(sysTimer);
+
+  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > > cnl;
+  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > ctl;
+
+  std::shared_ptr<zbe::CollisionObject<R> > sbox = std::make_shared<zbe::StaticSolidAABB2D<R> >(zbe::AABB2D({{1.0,5.0},{6.0,10.0}}));
+  std::shared_ptr<zbe::CollisionObject<R> > cc = std::make_shared<zbe::ConstantMovingCircle<R> >(zbe::Circle({{2.0,3.0},1.0}),zbe::Vector2D({3.0,4.0}));
+
+  zbe::ListManager<std::forward_list<zbe::ActuatorWrapper<R, A>* > >& lma = zbe::ListManager<std::forward_list<zbe::ActuatorWrapper<R, A>* > >::getInstance();
+
+  std::forward_list<zbe::ActuatorWrapper<R, A>* > act;
+  lma.insert(1, &act);
+
+  zbe::ActuatorWrapper<R, A>* actwrap = new  zbe::ActuatorWrapperCommon<R, A, A>(new AActuator());
+  act.push_front(actwrap);
+
+  zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > > >& lmcn = zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > > >::getInstance();
+  zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > >& lmct = zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > >::getInstance();
+
+  lmcn.insert(1, &cnl);
+  lmct.insert(2, &ctl);
+
+  std::shared_ptr<Coner> dconer= std::make_shared<Coner>(sbox, 1, 42);
+  std::shared_ptr<Cator> dcator= std::make_shared<Cator>(cc, 1, 1, 37);
+
+  cnl.push_front(dconer);
+  ctl.push_front(dcator);
+  zbe::CollisionSelector<R>* cs = new zbe::IntersectionCollisionSelector<R>();
+
+  zbe::InstantInteractionEventGenerator<R, zbe::CollisionSelector<R> , zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > >,  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > > iieg(2, 1, cs);
+
+  sysTime.update();
+  sysTime.update();
+
+  zbe::EventStore &es = zbe::EventStore::getInstance();
+  iieg.run();
+  es.manageCurrent();
+
+  EXPECT_EQ(42, dconer->a.id) << "Coner id must be 42";
+  EXPECT_EQ(0, dconer->a.vs) << "Coner is must be 37";
+  EXPECT_EQ(37, dcator->a.id) << "Cator id must be 37";
+  EXPECT_EQ(0, dcator->a.vs) << "Cator is must be 42";
+
+  delete actwrap;
+}
+
+TEST(InstantIntersectionEventGenerator, run) {
+  zbe::SysTime &sysTime = zbe::SysTime::getInstance();
+  sysTime.setMaxFrameTime(zbe::SECOND*2);
+
+  DummyTimer* sysTimer = new DummyTimer;
+  sysTime.setSystemTimer(sysTimer);
+
+  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > > cnl;
+  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > ctl;
+
+  std::shared_ptr<zbe::CollisionObject<R> > sbox = std::make_shared<zbe::StaticSolidAABB2D<R> >(zbe::AABB2D({{0.0,0.0},{10.0,10.0}}));
+  std::shared_ptr<zbe::CollisionObject<R> > cc = std::make_shared<zbe::ConstantMovingCircle<R> >(zbe::Circle({{5.0,5.0},1.0}),zbe::Vector2D({3.0,4.0}));
+
+  zbe::ListManager<std::forward_list<zbe::ActuatorWrapper<R, A>* > >& lma = zbe::ListManager<std::forward_list<zbe::ActuatorWrapper<R, A>* > >::getInstance();
+
+  std::forward_list<zbe::ActuatorWrapper<R, A>* > act;
+  lma.insert(1, &act);
+
+  zbe::ActuatorWrapper<R, A>* actwrap = new  zbe::ActuatorWrapperCommon<R, A, A>(new AActuator());
+  act.push_front(actwrap);
+
+  zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > > >& lmcn = zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > > >::getInstance();
+  zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > >& lmct = zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > >::getInstance();
+
+  lmcn.insert(1, &cnl);
+  lmct.insert(2, &ctl);
+
+  std::shared_ptr<Coner> dconer= std::make_shared<Coner>(sbox, 1, 42);
+  std::shared_ptr<Cator> dcator= std::make_shared<Cator>(cc, 1, 1, 37);
+
+  cnl.push_front(dconer);
+  ctl.push_front(dcator);
+  zbe::CollisionSelector<R>* cs = new zbe::IntersectionCollisionSelector<R>();
+
+  zbe::InstantInteractionEventGenerator<R, zbe::CollisionSelector<R> , zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > >,  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > > iieg(2, 1, cs);
+
+  sysTime.update();
+  sysTime.update();
+
+  zbe::EventStore &es = zbe::EventStore::getInstance();
+  iieg.run();
   es.manageCurrent();
 
   EXPECT_EQ(42, dconer->a.id) << "Coner id must be 42";
