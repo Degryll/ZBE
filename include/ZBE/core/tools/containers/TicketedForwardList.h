@@ -93,6 +93,15 @@ class TicketedForwardListIterator : public std::iterator<std::forward_iterator_t
                                            T*,
                                            T&> {
 public:
+
+  /** \brief Empty constructor.
+   */
+  TicketedForwardListIterator()
+  : fl(nullptr),
+    p(std::forward_list< std::shared_ptr< TicketedElement<T> > >::iterator()),
+    i(std::forward_list< std::shared_ptr< TicketedElement<T> > >::iterator()),
+    e(std::forward_list< std::shared_ptr< TicketedElement<T> > >::iterator()) {}
+
   /** \brief Parametrized constructor.
    *  \param fl The STL forward list.
    *  \param pre An iterator before it.

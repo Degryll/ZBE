@@ -57,11 +57,11 @@ public:
     return (!((*this)==rhs));
   }
 
-  E& operator*(){
+  E operator*(){
     return (*lit);
   }
 
-  E& operator->(){
+  E operator->(){
     return (*lit);
   }
 
