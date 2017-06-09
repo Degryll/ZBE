@@ -80,10 +80,8 @@ private:
 
 template <typename R, typename IS, typename LN, typename LT>
 void InteractionEventGenerator<R, IS, LN, LT>::run() {
-
   int64_t totalTime = getTotalTime();
   Point2D point;
-
   LT* ctl = lmct.get(id);
 
   for(auto catorEntity : (*ctl)) {
@@ -96,8 +94,8 @@ void InteractionEventGenerator<R, IS, LN, LT>::run() {
       conerEntity->assignAvatar(&coner);
       if(is->select(*cator, *coner, totalTime, point)) {
         CollisionData cd(point);
-        CollisionEvent2D<R>* a = new CollisionEvent2D<R>(eventId, sysTime.getEndFrameTime() + totalTime, cator, cd, std::shared_ptr<zbe::ReactObject<R> >(coner->getReactObject()));
-        CollisionEvent2D<R>* b = new CollisionEvent2D<R>(eventId, sysTime.getEndFrameTime() + totalTime, coner, cd, std::shared_ptr<zbe::ReactObject<R> >(cator->getReactObject()));
+        CollisionEvent2D<R>* a = new CollisionEvent2D<R>(eventId, sysTime.getInitFrameTime() + totalTime, cator, cd, std::shared_ptr<zbe::ReactObject<R> >(coner->getReactObject()));
+        CollisionEvent2D<R>* b = new CollisionEvent2D<R>(eventId, sysTime.getInitFrameTime() + totalTime, coner, cd, std::shared_ptr<zbe::ReactObject<R> >(cator->getReactObject()));
         storeEvents(a,b);
       }  // if collision
     }  // for each collisionable

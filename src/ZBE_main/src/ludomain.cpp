@@ -20,6 +20,7 @@
 #include "ZBE/core/events/generators/util/IntersectionCollisionSelector.h"
 #include "ZBE/core/events/generators/InputEventGenerator.h"
 #include "ZBE/core/events/generators/CollisionEventGenerator.h"
+#include "ZBE/core/events/generators/InteractionEventGenerator.h"
 #include "ZBE/core/events/generators/IntersectionEventGenerator.h"
 #include "ZBE/core/events/generators/TimeEventGenerator.h"
 #include "ZBE/core/events/handlers/Actuator.h"
@@ -62,6 +63,9 @@
 namespace ludo {
 
 using namespace zbe;
+
+template<typename T>
+using TicketedAE = TicketedForwardList<AvatarEntity<T> >;
 
 int ludomain(int, char** ) {
 
@@ -138,7 +142,8 @@ int ludomain(int, char** ) {
   lmct.insert(COLLISIONATORLIST, &ctl);
   lmct.insert(INTERSECTCTRLIST, &ctl2);
   printf("Building collision event generator with list id and the event id to use (1).\n");fflush(stdout);
-  std::shared_ptr<CollisionEventGenerator<LudoReactor> > ceg(new CollisionEventGenerator<LudoReactor>(COLLISIONATORLIST, COLLISIONEVENT, new BaseCollisionSelector<LudoReactor>()));
+  //std::shared_ptr<CollisionEventGenerator<LudoReactor> > ceg(new CollisionEventGenerator<LudoReactor>(COLLISIONATORLIST, COLLISIONEVENT, new BaseCollisionSelector<LudoReactor>()));
+  std::shared_ptr<InteractionEventGenerator<LudoReactor, CollisionSelector<LudoReactor>, TicketedAE<Collisioner<LudoReactor>  >, TicketedAE<Collisionator<LudoReactor> > > > ceg(new InteractionEventGenerator<LudoReactor, CollisionSelector<LudoReactor>, TicketedAE<Collisioner<LudoReactor>  >, TicketedAE<Collisionator<LudoReactor> > >(COLLISIONATORLIST, COLLISIONEVENT, new BaseCollisionSelector<LudoReactor>()));
   gema->addDaemon(ceg);
   printf("|------------------- Time Event Generator -----------------|\n");fflush(stdout);
   printf("Building time event generator with the event id to use (2)\n");fflush(stdout);
@@ -232,7 +237,7 @@ int ludomain(int, char** ) {
   ieg->addHandler(ZBEK_v, &gSet3);
 
   srand(time(0));
-  for(int i = 0; i<1000 ; i++){
+  for(int i = 0; i<1000; i++){
     int64_t r = 16 + (rand()% 4);
     int64_t xc =(WIDTH/2 + rand()%100-50);
     int64_t yc = (HEIGHT/2 + rand()%100-50);

@@ -21,8 +21,8 @@ namespace zbe {
 template <unsigned s>
 class BaseBouncer : virtual public Bouncer<s>, public BaseMovable<s> {
   public:
-    BaseBouncer(const BaseBouncer<s>&) = delete;
-    void operator=(const BaseBouncer<s>&) = delete;
+    BaseBouncer(const BaseBouncer<s>&) = delete; //<! Avoid copy
+    void operator=(const BaseBouncer<s>&) = delete; //<! Avoid copy
 
     /** \brief Builds this BaseBouncer with a Bouncing.
      */

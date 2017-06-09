@@ -21,8 +21,8 @@ namespace zbe {
 template <unsigned s>
 class BasePositionable : virtual public Positionable<s> {
   public:
-    BasePositionable(const BasePositionable&) = delete;
-    void operator=(const BasePositionable&) = delete;
+    BasePositionable(const BasePositionable&) = delete; //<! Avoid copy
+    void operator=(const BasePositionable&) = delete; //<! Avoid copy
 
     /** \brief Virtual destructor.
      */

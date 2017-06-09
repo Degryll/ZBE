@@ -21,8 +21,8 @@ namespace zbe {
 template <unsigned s>
 class BaseMovable : virtual public Movable<s>, public BasePositionable<s> {
   public:
-    BaseMovable(const BaseMovable&) = delete;
-    void operator=(const BaseMovable&) = delete;
+    BaseMovable(const BaseMovable&) = delete; //<! Avoid copy
+    void operator=(const BaseMovable&) = delete; //<! Avoid copy
 
     /** \brief Builds this BaseMovable with a Mobile.
      */
