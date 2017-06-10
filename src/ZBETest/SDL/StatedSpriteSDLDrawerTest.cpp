@@ -9,8 +9,6 @@
 #include "ZBE/core/tools/containers/ListManager.h"
 #include "ZBE/core/tools/containers/TicketedForwardList.h"
 #include "ZBE/core/entities/AvatarEntity.h"
-#include "ZBE/archetypes/StatedDrawable.h"
-#include "ZBE/entities/adaptors/StatedDrawableStatedSpriteAdaptor.h"
 
 namespace StatedSpriteSDLDrawerTest {
 
@@ -18,8 +16,7 @@ static const int WINDOW_W = 100;
 static const int WINDOW_H = 100;
 static const int NSTATES = 4;
 
-class DrawerMock: public zbe::StatedDrawable,
-                  public zbe::AvatarEntityAdapted<zbe::StatedSprite> {
+class DrawerMock: public zbe::AvatarEntityAdapted<zbe::StatedSprite> {
 public:
   DrawerMock() : x(0), y(0), w(0), h(0), g(0), s(0) {}
 
@@ -48,7 +45,7 @@ private:
   uint64_t s;
 };
 
-TEST(StatedSpriteSDLDrawer, DISABLED_Render) {
+TEST(StatedSpriteSDLDrawer, DISABLED_Render) {/*
   srand(time(nullptr));
   zbe::Window window(WINDOW_W, WINDOW_H);
 
@@ -113,7 +110,7 @@ TEST(StatedSpriteSDLDrawer, DISABLED_Render) {
     }
   }
 
-  delete[] p;
+  delete[] p;*/
 }
 
 }  // namespace StatedSpriteSDLDrawerTest

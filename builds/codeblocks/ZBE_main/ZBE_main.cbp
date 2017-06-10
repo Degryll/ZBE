@@ -176,11 +176,13 @@
 		<Unit filename="../../../src/ZBE_main/include/ludo/events/handlers/LudoActuators.h" />
 		<Unit filename="../../../src/ZBE_main/include/ludo/events/handlers/LudoHandlers.h" />
 		<Unit filename="../../../src/ZBE_main/include/ludomain.h" />
+		<Unit filename="../../../src/ZBE_main/include/zombienoid.h" />
 		<Unit filename="../../../src/ZBE_main/src/batismain.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/degryllmain.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/gamemain.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/ludomain.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/main.cpp" />
+		<Unit filename="../../../src/ZBE_main/src/zombienoid.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

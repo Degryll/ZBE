@@ -98,9 +98,9 @@ public:
    */
   TicketedForwardListIterator()
   : fl(nullptr),
-    p(std::forward_list< std::shared_ptr< TicketedElement<T> > >::iterator()),
-    i(std::forward_list< std::shared_ptr< TicketedElement<T> > >::iterator()),
-    e(std::forward_list< std::shared_ptr< TicketedElement<T> > >::iterator()) {}
+    p(typename std::forward_list< std::shared_ptr< TicketedElement<T> > >::iterator()),
+    i(typename std::forward_list< std::shared_ptr< TicketedElement<T> > >::iterator()),
+    e(typename std::forward_list< std::shared_ptr< TicketedElement<T> > >::iterator()) {}
 
   /** \brief Parametrized constructor.
    *  \param fl The STL forward list.

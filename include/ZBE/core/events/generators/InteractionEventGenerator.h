@@ -82,13 +82,13 @@ template <typename R, typename IS, typename LN, typename LT>
 void InteractionEventGenerator<R, IS, LN, LT>::run() {
   int64_t totalTime = getTotalTime();
   Point2D point;
-  LT* ctl = lmct.get(id);
+  std::shared_ptr<LT> ctl = lmct.get(id);
 
   for(auto catorEntity : (*ctl)) {
     Collisionator<R>* cator;
     catorEntity->assignAvatar(&cator);
     uint64_t cablesId = cator->getCollisionablesListId();
-    LN* cnl = lmcn.get(cablesId);
+    std::shared_ptr<LN> cnl = lmcn.get(cablesId);
     for(auto conerEntity : (*cnl)) {
       Collisioner<R>* coner;
       conerEntity->assignAvatar(&coner);

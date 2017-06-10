@@ -134,13 +134,13 @@ int ludomain(int, char** ) {
   printf("|------------------- Collision Event Generator-------------|\n");fflush(stdout);
   printf("Building lists for collisionator entinties. Currently empty.\n");fflush(stdout);
   printf("It will store entities that will search for a collision.\n");fflush(stdout);
-  TicketedForwardList<AvatarEntity<Collisionator<LudoReactor> > > ctl;
-  TicketedForwardList<AvatarEntity<Collisionator<LudoReactor> > > ctl2;
+  std::shared_ptr<TicketedForwardList<AvatarEntity<Collisionator<LudoReactor> > > > ctl(new TicketedForwardList<AvatarEntity<Collisionator<LudoReactor> > >());
+  std::shared_ptr<TicketedForwardList<AvatarEntity<Collisionator<LudoReactor> > > > ctl2(new TicketedForwardList<AvatarEntity<Collisionator<LudoReactor> > >());
   printf("Acquiring singleton list-manager for those lists .\n");fflush(stdout);
   ListManager< TicketedForwardList<AvatarEntity<Collisionator<LudoReactor> > > >& lmct = ListManager< TicketedForwardList<AvatarEntity<Collisionator<LudoReactor> > > >::getInstance();
   printf("Storing those in that list-manager.\n");fflush(stdout);
-  lmct.insert(COLLISIONATORLIST, &ctl);
-  lmct.insert(INTERSECTCTRLIST, &ctl2);
+  lmct.insert(COLLISIONATORLIST, ctl);
+  lmct.insert(INTERSECTCTRLIST, ctl2);
   printf("Building collision event generator with list id and the event id to use (1).\n");fflush(stdout);
   //std::shared_ptr<CollisionEventGenerator<LudoReactor> > ceg(new CollisionEventGenerator<LudoReactor>(COLLISIONATORLIST, COLLISIONEVENT, new BaseCollisionSelector<LudoReactor>()));
   std::shared_ptr<InteractionEventGenerator<LudoReactor, CollisionSelector<LudoReactor>, TicketedAE<Collisioner<LudoReactor>  >, TicketedAE<Collisionator<LudoReactor> > > > ceg(new InteractionEventGenerator<LudoReactor, CollisionSelector<LudoReactor>, TicketedAE<Collisioner<LudoReactor>  >, TicketedAE<Collisionator<LudoReactor> > >(COLLISIONATORLIST, COLLISIONEVENT, new BaseCollisionSelector<LudoReactor>()));
@@ -164,12 +164,12 @@ int ludomain(int, char** ) {
   //DaemonMaster drawMaster;
   std::shared_ptr<zbe::DaemonMaster> drawMaster(new zbe::DaemonMaster());
   printf("Creating drawables list\n");fflush(stdout);
-  TicketedForwardList<AvatarEntity<SingleSprite> > sprites;
+  std::shared_ptr<TicketedForwardList<AvatarEntity<SingleSprite> > > sprites(new TicketedForwardList<AvatarEntity<SingleSprite> >());
   ListManager<TicketedForwardList<AvatarEntity<SingleSprite > > >& lmAESingleSprite = ListManager<TicketedForwardList<AvatarEntity<SingleSprite> > >::getInstance();
-  lmAESingleSprite.insert(SPRITELIST, &sprites);
-  TicketedForwardList<AvatarEntity<SimpleRotatedSprite> > rsprites;
+  lmAESingleSprite.insert(SPRITELIST, sprites);
+  std::shared_ptr<TicketedForwardList<AvatarEntity<SimpleRotatedSprite> > > rsprites(new TicketedForwardList<AvatarEntity<SimpleRotatedSprite> >());
   ListManager< TicketedForwardList<AvatarEntity<SimpleRotatedSprite > > >& lmAESimpleRotatedSprite = ListManager<TicketedForwardList<AvatarEntity<SimpleRotatedSprite> > >::getInstance();
-  lmAESimpleRotatedSprite .insert(RSPRITELIST, &rsprites);
+  lmAESimpleRotatedSprite .insert(RSPRITELIST, rsprites);
   printf("Loading imgs\n");fflush(stdout);
   ballgraphics[0] = window.loadImg(zomballImg);
   ballgraphics[1] = window.loadImg(simpleBallImg);
@@ -190,15 +190,15 @@ int ludomain(int, char** ) {
   std::shared_ptr<zbe::DaemonMaster> commonBehaviorMaster(new zbe::DaemonMaster());
   //DaemonMaster reactBehaviorMaster;
   std::shared_ptr<zbe::DaemonMaster> reactBehaviorMaster(new zbe::DaemonMaster());
-  TicketedForwardList<AvatarEntity<Movable<2> > > vAEMovable;
+  std::shared_ptr<TicketedForwardList<AvatarEntity<Movable<2> > > > vAEMovable(new TicketedForwardList<AvatarEntity<Movable<2> > >());
   auto& lmAEMovable = ListManager<TicketedForwardList<AvatarEntity<Movable<2> > > >::getInstance();
-  lmAEMovable.insert(MOVABLELIST, &vAEMovable);
-  TicketedForwardList<AvatarEntity<Positionable<2> > > vAEPositionable;
+  lmAEMovable.insert(MOVABLELIST, vAEMovable);
+  std::shared_ptr<TicketedForwardList<AvatarEntity<Positionable<2> > > > vAEPositionable(new TicketedForwardList<AvatarEntity<Positionable<2> > >());
   auto& lmAEPositionable = ListManager<TicketedForwardList<AvatarEntity<Positionable<2> > > >::getInstance();
-  lmAEPositionable.insert(PARTICLES, &vAEPositionable);
-  TicketedForwardList<AvatarEntity<Bouncer<2> > > vAEBouncer;
+  lmAEPositionable.insert(PARTICLES, vAEPositionable);
+  std::shared_ptr<TicketedForwardList<AvatarEntity<Bouncer<2> > > > vAEBouncer(new TicketedForwardList<AvatarEntity<Bouncer<2> > >());
   auto& lmAEBouncer = ListManager<TicketedForwardList<AvatarEntity<Bouncer<2> > > >::getInstance();
-  lmAEBouncer.insert(BOUNCERLIST, &vAEBouncer);
+  lmAEBouncer.insert(BOUNCERLIST, vAEBouncer);
   std::shared_ptr<Daemon> ballBounce(new  BehaviorDaemon<Bouncer<2>, TicketedForwardList<AvatarEntity<Bouncer<2> > > >(std::make_shared<Bounce<2> >(), BOUNCERLIST));
   std::shared_ptr<Daemon> ballULM(new  BehaviorDaemon<Movable<2>, TicketedForwardList<AvatarEntity<Movable<2> > > >(std::make_shared<UniformLinearMotion<2> >(), MOVABLELIST));
   commonBehaviorMaster->addDaemon(ballULM);
@@ -207,25 +207,25 @@ int ludomain(int, char** ) {
   printf("Creating a ball and giving it a position and size\n");fflush(stdout);
 
   //ball
-  std::forward_list<ActuatorWrapper<LudoReactor, Avatar, Bouncer<2> >* > ballActuatorsList;
+  std::shared_ptr<std::forward_list<ActuatorWrapper<LudoReactor, Avatar, Bouncer<2> >* > > ballActuatorsList(new std::forward_list<ActuatorWrapper<LudoReactor, Avatar, Bouncer<2> >* >());
   ListManager< std::forward_list<ActuatorWrapper<LudoReactor, Avatar, Bouncer<2> >* > >& lmBallActuatorsList = ListManager< std::forward_list<ActuatorWrapper<LudoReactor, Avatar, Bouncer<2> >* > >::getInstance();
-  lmBallActuatorsList.insert(BALLACTUATORLIST, &ballActuatorsList);
+  lmBallActuatorsList.insert(BALLACTUATORLIST, ballActuatorsList);
   ActuatorWrapper<LudoReactor, Avatar, Bouncer<2> >* bouncerWrapper = new  ActuatorWrapperCommon<LudoReactor, Bouncer<2>, Avatar, Bouncer<2> >(new LudoBallBouncer<LudoReactor>());
   ActuatorWrapper<LudoReactor, Avatar, Bouncer<2> >* eraserWrapper = new  ActuatorWrapperCommon<LudoReactor, Avatar, Avatar, Bouncer<2> >(new AvatarEraser<LudoReactor>());
-  ballActuatorsList.push_front(bouncerWrapper);
-  ballActuatorsList.push_front(eraserWrapper);
+  ballActuatorsList->push_front(bouncerWrapper);
+  ballActuatorsList->push_front(eraserWrapper);
 
   ListManager<TicketedForwardList<AvatarEntity<Collisioner<LudoReactor> > > >& lmCollisionablesList = ListManager< TicketedForwardList<AvatarEntity<Collisioner<LudoReactor> > > >::getInstance();
 
-  TicketedForwardList<AvatarEntity<Collisioner<LudoReactor> > > collisionablesList;
-  lmCollisionablesList.insert(COLLISIONABLELIST, &collisionablesList);
+  std::shared_ptr<TicketedForwardList<AvatarEntity<Collisioner<LudoReactor> > > > collisionablesList(new TicketedForwardList<AvatarEntity<Collisioner<LudoReactor> > >());
+  lmCollisionablesList.insert(COLLISIONABLELIST, collisionablesList);
 
-  TicketedForwardList<AvatarEntity<Collisioner<LudoReactor> > > intersectionablesList;
-  lmCollisionablesList.insert(INTERSECTCNRLIST, &intersectionablesList);
+  std::shared_ptr<TicketedForwardList<AvatarEntity<Collisioner<LudoReactor> > > > intersectionablesList(new TicketedForwardList<AvatarEntity<Collisioner<LudoReactor> > >());
+  lmCollisionablesList.insert(INTERSECTCNRLIST, intersectionablesList);
 
   ListManager<TicketedForwardList<SetableGraphics> >& lmSG = ListManager<TicketedForwardList<SetableGraphics> >::getInstance();
-  TicketedForwardList<SetableGraphics> setableGs;
-  lmSG.insert(SETABLEGRAPHSLIST, &setableGs);
+  std::shared_ptr<TicketedForwardList<SetableGraphics> > setableGs(new TicketedForwardList<SetableGraphics>());
+  lmSG.insert(SETABLEGRAPHSLIST, setableGs);
 
   GraphicsSet gSet0(ballgraphics[0],SETABLEGRAPHSLIST);
   GraphicsSet gSet1(ballgraphics[1],SETABLEGRAPHSLIST);
@@ -256,38 +256,38 @@ int ludomain(int, char** ) {
     setAdaptor(ball, spriteAdaptor);
     std::shared_ptr<Adaptor<Collisionator<LudoReactor> > > lbca = std::make_shared<LudoBallCollisionatorAdaptor<LudoReactor> >(&(*ball));
     setAdaptor(ball, lbca);
-    ball->addToList(0, ctl.push_front(ball));
-    ball->addToList(1, vAEMovable.push_front(ball));
-    ball->addToList(2, vAEBouncer.push_front(ball));
-    ball->addToList(3, rsprites.push_front(ball));
-    ball->addToList(4, setableGs.push_front(ball));
-    ball->addToList(5, intersectionablesList.push_front(ball));
+    ball->addToList(0, ctl->push_front(ball));
+    ball->addToList(1, vAEMovable->push_front(ball));
+    ball->addToList(2, vAEBouncer->push_front(ball));
+    ball->addToList(3, rsprites->push_front(ball));
+    ball->addToList(4, setableGs->push_front(ball));
+    ball->addToList(5, intersectionablesList->push_front(ball));
   }
 
   printf("Creating a rotator\n");fflush(stdout);
   auto& lmTflAEPositionable = ListManager<TicketedForwardList<AvatarEntity<Positionable<2> > > >::getInstance();
-  TicketedForwardList<AvatarEntity<Positionable<2> > > tflAEPositionable;
-  lmTflAEPositionable.insert(ROTATORS, &tflAEPositionable);
+  std::shared_ptr<TicketedForwardList<AvatarEntity<Positionable<2> > > > tflAEPositionable(new TicketedForwardList<AvatarEntity<Positionable<2> > >());
+  lmTflAEPositionable.insert(ROTATORS, tflAEPositionable);
 
   auto& lmTflAEMovable = ListManager<TicketedForwardList<AvatarEntity<Movable<2> > > >::getInstance();
-  TicketedForwardList<AvatarEntity<Movable<2> > > tflAEMovable;
-  lmTflAEMovable.insert(ROTATORS, &tflAEMovable);
+  std::shared_ptr<TicketedForwardList<AvatarEntity<Movable<2> > > > tflAEMovable(new TicketedForwardList<AvatarEntity<Movable<2> > >());
+  lmTflAEMovable.insert(ROTATORS, tflAEMovable);
 
-  TicketedForwardList<AvatarEntity<Movable<2> > > tflRAEMovable;
-  lmTflAEMovable.insert(LROTATORS, &tflRAEMovable);
-  TicketedForwardList<AvatarEntity<Movable<2> > > tflLAEMovable;
-  lmTflAEMovable.insert(RROTATORS, &tflLAEMovable);
+  std::shared_ptr<TicketedForwardList<AvatarEntity<Movable<2> > > > tflRAEMovable(new TicketedForwardList<AvatarEntity<Movable<2> > >());
+  lmTflAEMovable.insert(LROTATORS, tflRAEMovable);
+  std::shared_ptr<TicketedForwardList<AvatarEntity<Movable<2> > > > tflLAEMovable(new TicketedForwardList<AvatarEntity<Movable<2> > >());
+  lmTflAEMovable.insert(RROTATORS, tflLAEMovable);
 
   std::shared_ptr<LudoBall<LudoReactor> > rotator = std::make_shared<LudoBall<ludo::LudoReactor> >( WIDTH/2, HEIGHT/2, 16, 200, 100, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics[3]);
   std::shared_ptr<Adaptor<SimpleRotatedSprite> > spriteAdaptor = std::make_shared<RotatedDrawableSimpleRotatedSpriteAdaptor>(&(*rotator));
   setAdaptor(rotator, spriteAdaptor);
   std::shared_ptr<Adaptor<Collisionator<LudoReactor> > > lbca = std::make_shared<LudoBallCollisionatorAdaptor<LudoReactor> >(&(*rotator));
   setAdaptor(rotator, lbca);
-  ctl.push_front(rotator);
-  vAEBouncer.push_front(rotator);
-  rsprites.push_front(rotator);
-  tflAEPositionable.push_front(rotator);
-  tflAEMovable.push_front(rotator);
+  ctl->push_front(rotator);
+  vAEBouncer->push_front(rotator);
+  rsprites->push_front(rotator);
+  tflAEPositionable->push_front(rotator);
+  tflAEMovable->push_front(rotator);
 
   printf("Giving the rotator the ability of KILL ...press K...\n");fflush(stdout);
 
@@ -318,15 +318,15 @@ int ludomain(int, char** ) {
   ieg->addHandler(ZBEK_k, &dih);
   //** kill end
 
-  auto fticket = vAEMovable.push_front(rotator);
+  auto fticket = vAEMovable->push_front(rotator);
   fticket->setINACTIVE();
   TicketToggler ftoggler(fticket);
   ieg->addHandler(ZBEK_UP, &ftoggler);
-  auto lticket = tflLAEMovable.push_front(rotator);
+  auto lticket = tflLAEMovable->push_front(rotator);
   lticket->setINACTIVE();
   TicketToggler ltoggler(lticket);
   ieg->addHandler(ZBEK_LEFT, &ltoggler);
-  auto rticket = tflRAEMovable.push_front(rotator);
+  auto rticket = tflRAEMovable->push_front(rotator);
   rticket->setINACTIVE();
   TicketToggler rtoggler(rticket);
   ieg->addHandler(ZBEK_RIGHT, &rtoggler);
@@ -336,12 +336,12 @@ int ludomain(int, char** ) {
   printf("Creating the bricks\n");fflush(stdout);
 
   printf("Creating the board and giving it a size\n");fflush(stdout);
-  std::forward_list<ActuatorWrapper<LudoReactor, void>*> boardActuatorsList;
-  lmSimpleConerActuatorsList.insert(BOARDACTUATORLIST, &boardActuatorsList);
+  std::shared_ptr<std::forward_list<ActuatorWrapper<LudoReactor, void>*> > boardActuatorsList(new std::forward_list<ActuatorWrapper<LudoReactor, void>*>());
+  lmSimpleConerActuatorsList.insert(BOARDACTUATORLIST, boardActuatorsList);
   std::shared_ptr<LudoBoard<LudoReactor> > board = std::make_shared<LudoBoard<LudoReactor> >(50, 50, WIDTH - 50, HEIGHT - 50, BOARDACTUATORLIST);
-  collisionablesList.push_front(board);
+  collisionablesList->push_front(board);
   std::shared_ptr<LudoBoard<LudoReactor> > board2 = std::make_shared<LudoBoard<LudoReactor> >(0, 0, WIDTH , HEIGHT , BOARDACTUATORLIST);
-  collisionablesList.push_front(board2);
+  collisionablesList->push_front(board2);
 
   printf("|=================== Starting up system ===================|\n");fflush(stdout);
   printf("Starting SysTimer\n");fflush(stdout);

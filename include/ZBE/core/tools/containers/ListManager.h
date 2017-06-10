@@ -10,6 +10,8 @@
 #ifndef ZBE_CORE_TOOLS_CONTAINERS_LISTMANAGER_H_
 #define ZBE_CORE_TOOLS_CONTAINERS_LISTMANAGER_H_
 
+#include <memory>
+
 #include <map>
 
 #include "ZBE/core/system/SysError.h"
@@ -36,26 +38,26 @@ class ListManager {
      *  \param id Id to identify the list.
      *  \param list The list.
      */
-    void insert(uint64_t id, T *list) {l[id] = list;}
+    void insert(uint64_t id, std::shared_ptr<T> list) {l[id] = list;}
 
     /** \brief Returns the list identify by the id.
      *  \param id Id to identify the list.
      *  \return The list.
      */
-    T* get(uint64_t id);
+    std::shared_ptr<T> get(uint64_t id);
 
   private:
     ListManager() : l() {};  //!< Needed for singleton.
 
-    std::map<uint64_t, T*> l;  //!< Map that associates list with ids.
+    std::map<uint64_t, std::shared_ptr<T> > l;  //!< Map that associates list with ids.
 };
 
 template <typename T>
-T* ListManager<T>::get(uint64_t id) {
+std::shared_ptr<T> ListManager<T>::get(uint64_t id) {
   auto it = l.find(id);
   if (it == l.end()) {
     SysError::setError("List not found.");
-    return (nullptr);
+    return (std::shared_ptr<T>());
   } else {
     return (it->second);
   }

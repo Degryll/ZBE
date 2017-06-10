@@ -70,13 +70,13 @@ template <typename R>
 void CollisionEventGenerator<R>::run() {
   int64_t totalTime = sysTime.getRemainTime();
   Point2D point;
-  TicketedForwardList<AvatarEntity<Collisionator<R> > >* ctl = lmct.get(id);
+  std::shared_ptr<TicketedForwardList<AvatarEntity<Collisionator<R> > > > ctl = lmct.get(id);
 
   for(auto catorEntity : (*ctl)) {
     Collisionator<R>* cator;
     catorEntity->assignAvatar(&cator);
     uint64_t cablesId = cator->getCollisionablesListId();
-    TicketedForwardList<AvatarEntity<Collisioner<R> > >* cnl = lmcn.get(cablesId);
+    std::shared_ptr<TicketedForwardList<AvatarEntity<Collisioner<R> > > > cnl = lmcn.get(cablesId);
     for(auto conerEntity : (*cnl)) {
       Collisioner<R>* coner;
       conerEntity->assignAvatar(&coner);

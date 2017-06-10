@@ -37,7 +37,8 @@ class MainLoop {
                 dRBM(react),
                 dDM(draw),
                 sysTime(zbe::SysTime::getInstance()),
-                store(zbe::EventStore::getInstance()) {}
+                store(zbe::EventStore::getInstance()),
+                keep(true){}
 
     /** \brief Destructor.
      */
@@ -99,6 +100,8 @@ class MainLoop {
 
     zbe::SysTime &sysTime;
     zbe::EventStore &store;
+
+    bool keep;
 
 };
 

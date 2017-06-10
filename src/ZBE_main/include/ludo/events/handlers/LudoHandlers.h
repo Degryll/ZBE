@@ -32,7 +32,7 @@ class GraphicsSet : public zbe::InputHandler {
   	void run(float status) {
       if( status > 0.5f) {
         zbe::ListManager<zbe::TicketedForwardList<SetableGraphics> >& lmSG = zbe::ListManager<zbe::TicketedForwardList<SetableGraphics> >::getInstance();
-        zbe::TicketedForwardList<SetableGraphics>* setableGs = lmSG.get(id);
+        std::shared_ptr<zbe::TicketedForwardList<SetableGraphics> > setableGs = lmSG.get(id);
         for(auto sg : (*setableGs)){
             sg->setGraphics(graphics);
         }

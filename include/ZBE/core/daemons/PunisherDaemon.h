@@ -44,7 +44,7 @@ namespace zbe {
 
     private:
       std::shared_ptr<P> punish;
-      L *eList;
+      std::shared_ptr<L> eList;
   };
 
   template<typename P, typename L>

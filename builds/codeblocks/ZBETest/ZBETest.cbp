@@ -170,7 +170,6 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="../../../src/ZBETest/SDL/AnimatedSpriteSDLDrawerTest.cpp" />
 		<Unit filename="../../../src/ZBETest/SDL/RotatedSpriteSDLDrawerTest.cpp" />
 		<Unit filename="../../../src/ZBETest/SDL/SingleSpriteSDLDrawerTest.cpp" />
 		<Unit filename="../../../src/ZBETest/SDL/StatedSpriteSDLDrawerTest.cpp" />
