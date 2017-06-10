@@ -117,8 +117,8 @@ TEST(CollisionEventGenerator, DISABLED_Generate) {
 //  std::forward_list<zbe::Actuator<Coner,R>* > actconer;
 //  std::forward_list<zbe::Actuator<Cator,R>* > actcator;
 //
-//  zbe::ListManager<std::forward_list<zbe::Actuator<Coner,R>* > >& lmaconer = zbe::ListManager<std::forward_list<zbe::Actuator<Coner,R>* > >::getInstance();
-//  zbe::ListManager<std::forward_list<zbe::Actuator<Cator,R>* > >& lmacator = zbe::ListManager<std::forward_list<zbe::Actuator<Cator,R>* > >::getInstance();
+//  zbe::ResourceManager<std::forward_list<zbe::Actuator<Coner,R>* > >& lmaconer = zbe::ResourceManager<std::forward_list<zbe::Actuator<Coner,R>* > >::getInstance();
+//  zbe::ResourceManager<std::forward_list<zbe::Actuator<Cator,R>* > >& lmacator = zbe::ResourceManager<std::forward_list<zbe::Actuator<Cator,R>* > >::getInstance();
 //  lmaconer.insert(1, &actconer);
 //  lmacator.insert(1, &actcator);
 //
@@ -128,8 +128,8 @@ TEST(CollisionEventGenerator, DISABLED_Generate) {
 //  actconer.push_front(&cna);
 //  actcator.push_front(&cta);
 //
-//  zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > > >& lmcn = zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > > >::getInstance();
-//  zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > >& lmct = zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > >::getInstance();
+//  zbe::ResourceManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > > >& lmcn = zbe::ResourceManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > > >::getInstance();
+//  zbe::ResourceManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > >& lmct = zbe::ResourceManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > >::getInstance();
 //
 //  lmcn.insert(1, &cnl);
 //  lmct.insert(2, &ctl);

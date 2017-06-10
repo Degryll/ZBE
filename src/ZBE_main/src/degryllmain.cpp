@@ -1,11 +1,12 @@
 #include "degryllmain.h"
 
 #include <cstdio>
+#include <algorithm>
 
 #include "ZBE/archetypes/Drawable.h"
 //#include "ZBE/core/entities/adaptorentities/SimpleSpriteEntity.h"
 #include "ZBE/core/entities/AvatarEntity.h"
-#include "ZBE/core/tools/containers/ListManager.h"
+#include "ZBE/core/tools/containers/ResourceManager.h"
 #include "ZBE/core/tools/containers/Ticket.h"
 #include "ZBE/core/tools/containers/TicketedForwardList.h"
 #include "ZBE/core/entities/Adaptor.h"
@@ -31,8 +32,8 @@ class GameReactor {};
 //class Block: public zbe::Drawable,
 //             public zbe::AvatarEntityAdapted<zbe::SingleSprite> {
 //public:
-//  Block() : x(0), y(0), t(0), lm(zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite >*> >::getInstance()), ticket(nullptr) {}
-//  Block(int64_t x, int64_t y, uint64_t t, uint64_t id) : x(x), y(y), t(t), lm(zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite>*> >::getInstance()), ticket(lm.get(id)->push_front(this)) {}
+//  Block() : x(0), y(0), t(0), lm(zbe::ResourceManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite >*> >::getInstance()), ticket(nullptr) {}
+//  Block(int64_t x, int64_t y, uint64_t t, uint64_t id) : x(x), y(y), t(t), lm(zbe::ResourceManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite>*> >::getInstance()), ticket(lm.get(id)->push_front(this)) {}
 //
 //  void addTo(uint64_t id) {
 //    ticket = lm.get(id)->push_front(this);
@@ -57,7 +58,7 @@ class GameReactor {};
 //  int64_t x;
 //  int64_t y;
 //  uint64_t t;
-//  zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite>*> >& lm;
+//  zbe::ResourceManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite>*> >& lm;
 //  std::shared_ptr<zbe::TicketedElement<zbe::AvatarEntity<zbe::SingleSprite>*> > ticket;
 //};
 //
@@ -373,7 +374,7 @@ class GameReactor {};
 //public:
 //  Mitil(int x, int y, int width, int height, int graphics, uint64_t id)
 //  : x(x), y(y), w(width), h(height), g(graphics),
-//    lm(zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite>*> >::getInstance()),
+//    lm(zbe::ResourceManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite>*> >::getInstance()),
 //    ticket(lm.get(id)->push_front(this)) {}
 //
 ////  void setData(int x, int y, int width, int height, int graphics) {
@@ -406,7 +407,7 @@ class GameReactor {};
 //  int w;
 //  int h;
 //  int g;
-//  zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite>*> >& lm;
+//  zbe::ResourceManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite>*> >& lm;
 //  std::shared_ptr<zbe::TicketedElement<zbe::AvatarEntity<zbe::SingleSprite>*> > ticket;
 //};
 //
@@ -814,28 +815,28 @@ class GameReactor {};
 //
 //}  // namespace isolux
 //
-//void loadMap(const char* filename, int** m, int& w, int& h, int& l) {
-//  FILE *f = fopen(filename, "r");
-//  fscanf(f, "%d %d %d", &w, &h, &l);
-//  printf("mapa: %d %d %d\n", w, h, l);
-//  *m = (int*)malloc(sizeof(int) * w * h * l);
-//  int *p = *m;
-//  int idx = 0;
-//  int aux;
-//  for(int k = 0; k < l; k++) {
-//    for(int i = 0; i < h; i++) {
-//      for(int j = 0; j < w; j++) {
-//        fscanf(f, "%d ", &aux);
-//        idx++;
-//        p[0] = aux;
-//        p++;
-//      }
-//    }
-//  }
-//
-//  fclose(f);
-//}
-//
+void loadMap(const char* filename, int** m, int& w, int& h, int& l) {
+  FILE *f = fopen(filename, "r");
+  fscanf(f, "%d %d %d", &w, &h, &l);
+  printf("mapa: %d %d %d\n", w, h, l);
+  *m = (int*)malloc(sizeof(int) * w * h * l);
+  int *p = *m;
+  int idx = 0;
+  int aux;
+  for(int k = 0; k < l; k++) {
+    for(int i = 0; i < h; i++) {
+      for(int j = 0; j < w; j++) {
+        fscanf(f, "%d ", &aux);
+        idx++;
+        p[0] = aux;
+        p++;
+      }
+    }
+  }
+
+  fclose(f);
+}
+
 //void printMap(int* m, int w, int h, int l) {
 //  int *p = m;
 //  for(int k = 0; k < l; k++) {
@@ -850,7 +851,335 @@ class GameReactor {};
 //  }
 //}
 
+class MultiLevelMap {
+public:
+  MultiLevelMap(const MultiLevelMap&) = delete;
+  void operator=(const MultiLevelMap&) = delete;
+
+  MultiLevelMap(int width, int height, int depth) : m(new int[width*height*depth]), w(width), h(height), d(depth), hw(w/2), hh(h/2), hd(d/2) {}
+  MultiLevelMap(int width, int height, int depth, int* map) : m(new int[width*height*depth]), w(width), h(height), d(depth), hw(w/2), hh(h/2), hd(d/2) {
+    std::copy(map, map + (w*h*d), m);
+  }
+
+  void setTile(int width, int height, int depth, int value) {m[(height * w + width) * d + depth] = value;}
+
+  int getTile(int width, int height, int depth) {return (m[(height * w + width) * d + depth]);}
+  int getTile(int position) {return (m[position]);}
+
+  int getW() {return (w);}
+  int getH() {return (h);}
+  int getD() {return (d);}
+  int getHW() {return (hw);}
+  int getHH() {return (hh);}
+  int getHD() {return (hd);}
+
+private:
+  int *m;
+  int w, h, d;
+  int hw, hh, hd;
+};
+
+struct TileComparator {
+  bool operator() (const zbe::Point<3>& lhs, const zbe::Point<3>& rhs) const {
+    if (lhs[3] < rhs[3]) {return true;}
+    else if (lhs[3] > rhs[3]) {return false;}
+
+    if (lhs[2] < rhs[2]) {return true;}
+    else if (lhs[2] > rhs[2]) {return false;}
+
+    if (lhs[1] < rhs[1]) {return true;}
+    else if (lhs[1] > rhs[1]) {return false;}
+
+    return false;
+  }
+};
+
+
+class IsometricDrawer {
+public:
+  IsometricDrawer(const IsometricDrawer&) = delete;
+  void operator=(const IsometricDrawer&) = delete;
+
+  IsometricDrawer(MultiLevelMap* map, uint64_t groundImage, uint64_t lWallImage, uint64_t rWallImage, zbe::Window* window)
+  : m(map), grimage(groundImage), lwimage(lWallImage), rwimage(rWallImage), ground(), leftWall(), rightWall(), window(window) {}
+
+  void setMap(MultiLevelMap* map) {m = map;}
+
+  void draw();
+
+private:
+  MultiLevelMap* m;
+  uint64_t grimage;
+  uint64_t lwimage;
+  uint64_t rwimage;
+  std::set<zbe::Point<3>, TileComparator> ground;
+  std::set<zbe::Point<3>, TileComparator> leftWall;
+  std::set<zbe::Point<3>, TileComparator> rightWall;
+  zbe::Window* window;
+};
+
+//void draw() {
+//  int x = m->getHW();
+//  int y = m->getHH();
+//  int z = m->getHD();
+//
+//  int k = z;
+//
+//  while((k > 0) && m->getTile(x, y, k) == 0) k--;
+//  while((k < (m->getD()-1)) && m->getTile(x, y, k) == 1) k++;
+//  int ground = k;
+//
+//  floors.insert({(double)x, (double)y, (double)k});
+//
+//  while((k < (m->getD()-1)) && m->getTile(x, y, k) == 0) k++;
+//  int ceiling = k;
+//
+//  walkUp();
+//  walkUpRight();
+//  walkRight();
+//  walkDownRight();
+//  walkDonw();
+//  walkDownLeft();
+//  walkLeft();
+//  walkUpLeft();
+//}
+//
+//findWalls(int x, int y, int z) {
+//  if((y % 2) == 0) {
+//    // leftWall only if (X , Y) is at the right:
+//    //   - Take Y and go up to a even number, ie. (3 -> 2) or (-3 -> 4)
+//    //   - subtract X - (Y/2) if thats is greater or equals to 1, draw the wall.
+//    if (m->getTile(x-1, y+1, k) == 0) {leftWall.insert({(double)x, (double)y, (double)z});}
+//    if (m->getTile(x,   y+1, k) == 0) {rightWall.insert({(double)x, (double)y, (double)z});}
+//  } else {
+//    if (m->getTile(x,   y+1, k) == 0) {leftWall.insert({(double)x, (double)y, (double)z});}
+//    if (m->getTile(x+1, y+1, k) == 0) {rightWall.insert({(double)x, (double)y, (double)z});}
+//  }
+//}
+//
+//int findFloors(int x, int y, int z, int ceiling) {
+//  int k = z;
+//  while((k > 0) && m->getTile(x, y, k) == 0) k--;
+//  while((k < ceiling) && m->getTile(x, y, k) == 1) findWalls(x, y, k++);
+//  int ground = k;
+//  if(ground < ceiling) {
+//    floors.insert({(double)x, (double)y, (double)k});
+//  }
+//
+//  while (k < ceiling) {
+//    while((k < ceiling) && m->getTile(j, i, k) == 0) k++;
+//    while((k < ceiling) && m->getTile(x, y, k) == 1) findWalls(x, y, k++);
+//    if (k < ceiling) {floors.insert({(double)x, (double)y, (double)k});}
+//  }
+//  return ground;
+//}
+//
+//void walkUp(int x, int y, int z, int ceiling) {
+//  y++;
+//  // if inside map
+//  int ground = findFloors(x, y, z, ceiling);
+//
+//  walkUp(x, y, ground, ceiling);
+//  walkUpRight(x, y, ground, ceiling);
+//  walkUpLeft(x, y, ground, ceiling);
+//}
+
+/*
+
+- Partir de la posicion del personaje (centro de la cámara)
+- buscar suelo (si el personaje está sobre el suelo, ese, si está al aire, descender por niveles hasta encontrarlo).
+- Recorrer el mapa primero hacia atras (izq y arriba) y luego hacia adelante (der y abajo).
+- Por cada nueva casilla se busca el suelo a partir del suelo contiguo.
+  - Si al nivel actual la nueva casilla es aire, se desciende hasta encontrar el suelo.
+  - Si hay un bloque solido, se asciende hasta encontrar el nuevo nivel de suelo.
+
+*/
+
+void IsometricDrawer::draw() {
+  // - Partir de la posicion del personaje (centro de la cámara)
+  // POR AHORA el centro del mapa
+  int x = m->getHW();
+  int y = m->getHH();
+  int z = m->getHD();
+
+  // buscar suelo (si el personaje está sobre el suelo, ese, si está al aire, descender por niveles hasta encontrarlo).
+  // POR AHORA siempre esta en el suelo
+
+  // - Recorrer el mapa primero hacia atras (izq y arriba) y luego hacia adelante (der y abajo).
+  // POR AHORA 0 es aire y 1 es tierra
+  int idx = x;
+  int idy = y;
+  int idz = z;
+  int k = idz;
+  // backward from center
+  for(int i = idy; i >= 0; i--) {
+    for(int j = idx; j >= 0; j--) {
+      //printf("x: %d, y: %d, d: %d\n", j, i, k); fflush(stdout);
+      // - Por cada nueva casilla se busca el suelo a partir del suelo contiguo.
+      //   - Si al nivel actual la nueva casilla es aire, se desciende hasta encontrar el suelo.
+      //   - Si hay un bloque solido, se asciende hasta encontrar el nuevo nivel de suelo.
+      while((k > 0) && m->getTile(j, i, k) == 0) k--;
+      while((k < (m->getD()-1)) && m->getTile(j, i, k) == 1) k++;
+      ground.insert({(double)j, (double)i, (double)k});
+      //  TODO insertar muros
+    }
+    idx = m->getW() - 1;
+  }
+
+  idx = x + 1;
+  k = idz;
+  // forward from center
+  for(int i = idy; i < m->getH(); i++) {
+    for(int j = idx; j < m->getW(); j++) {
+      //printf("x: %d, y: %d, d: %d\n", j, i, k); fflush(stdout);
+      // - Por cada nueva casilla se busca el suelo a partir del suelo contiguo.
+      //   - Si al nivel actual la nueva casilla es aire, se desciende hasta encontrar el suelo.
+      //   - Si hay un bloque solido, se asciende hasta encontrar el nuevo nivel de suelo.
+      while((k > 0) && m->getTile(j, i, k) == 0) k--;
+      while((k < (m->getD()-1)) && m->getTile(j, i, k) == 1) k++;
+      ground.insert({(double)j, (double)i, (double)k});
+      //  TODO insertar muros
+    }
+    idx = 0;
+  }
+
+  SDL_Rect src,dst;
+  for (auto &point : ground) {
+    //printf("x: %.1lf, y: %.1lf, d: %.1lf\n", point[0], point[1], point[2]); fflush(stdout);
+    const int iw = 16;
+    const int ih = 9;
+    const int ihw = iw / 2;
+    const int ihh = ih / 2;
+    src.x = 0;
+    src.y = 0;
+    src.w = 16;
+    src.h = 9;
+
+    int offset = ((int)(point[1]) % 2) ? ihw : 0;
+
+    dst.x = 100 + point[0] * iw + offset;
+    dst.y = 100 + point[1] * ihh - ih * point[2];
+    dst.w = 16;
+    dst.h = 9;
+    //printf("x: %d, y: %d\n", dst.x, dst.y); fflush(stdout);
+    window->render(grimage, &src, &dst);
+  }
+
+}
+
 int degryllmain(int, char**) {
+  printf("--- Degryll main ---\n\n");
+
+  const int WIDTH = 1024;
+  const int HEIGHT = 768;
+
+  const char floorfilename[] = "data/images/degryll/isotetris/sueloT.png";
+  const char izqfilename[] = "data/images/degryll/isotetris/izqT.png";
+  const char derfilename[] = "data/images/degryll/isotetris/derT.png";
+
+  zbe::Window window(WIDTH,HEIGHT);
+  uint64_t floortile     = window.loadImg(floorfilename);
+  uint64_t izqtile       = window.loadImg(izqfilename);
+  uint64_t dertile       = window.loadImg(derfilename);
+//  window.loadImg(izqfilename);
+//  window.loadImg(derfilename);
+
+  const int mapW = 51;
+  const int mapH = 51;
+  const int mapD = 5;
+  int *map = new int[mapW * mapH * mapD];
+  for(int i = 0; i < mapH; i++) {
+    for(int j = 0; j < mapW; j++) {
+      for(int k = 0; k < mapD; k++) {
+//          if( k < 2) map[(i * mapW + j) * mapD + k] = 1;//(i < 50);
+//          else map[(i * mapW + j) * mapD + k] = 0;
+          map[(i * mapW + j) * mapD + k] = 1;
+      }
+    }
+  }
+  int value = 0;
+  for(int i = 0; i < mapH; i++) {
+    for(int j = 0; j < mapW; j++) {
+      if((i > 45) || (j > 45)) {
+        value = 0;
+      } else {
+        value = 1;
+      }
+      map[(i * mapW + j) * mapD + 4] = value;
+    }
+  }
+
+  for(int i = 0; i < mapH; i++) {
+    for(int j = 0; j < mapW; j++) {
+      if((i > 46) || (j > 46)) {
+        value = 0;
+      } else {
+        value = 1;
+      }
+      map[(i * mapW + j) * mapD + 3] = value;
+    }
+  }
+
+  for(int i = 0; i < mapH; i++) {
+    for(int j = 0; j < mapW; j++) {
+      if((i > 47) || (j > 47)) {
+        value = 0;
+      } else {
+        value = 1;
+      }
+      map[(i * mapW + j) * mapD + 2] = value;
+    }
+  }
+
+  for(int i = 0; i < mapH; i++) {
+    for(int j = 0; j < mapW; j++) {
+      if((i > 48) || (j > 48)) {
+        value = 0;
+      } else {
+        value = 1;
+      }
+      map[(i * mapW + j) * mapD + 1] = value;
+    }
+  }
+
+  for(int i = 0; i < mapH; i++) {
+    for(int j = 0; j < mapW; j++) {
+      if((i > 49) || (j > 49)) {
+        value = 0;
+      } else {
+        value = 1;
+      }
+      map[(i * mapW + j) * mapD + 0] = value;
+    }
+  }
+//  map[(50 * mapW + 50) * mapD + 0] = 1;
+//  map[(50 * mapW + 50) * mapD + 1] = 0;
+//  map[(50 * mapW + 50) * mapD + 2] = 0;
+//  map[(50 * mapW + 50) * mapD + 3] = 0;
+//  map[(50 * mapW + 50) * mapD + 4] = 0;
+
+  MultiLevelMap isomap(mapW, mapH, mapD, map);
+  IsometricDrawer isodrawer(&isomap, floortile, izqtile, dertile, &window);
+
+  bool keep = true;
+  while(keep){
+
+    window.clear();
+    isodrawer.draw();
+    window.present();
+
+    getchar();
+    getchar();
+    getchar();
+    getchar();
+    getchar();
+    getchar();
+  }
+
+  return (0);
+}
+
+//int degryllmain(int, char**) {
 //  printf("--- Degryll main ---\n\n");
 //
 //  srand(time(nullptr));
@@ -908,7 +1237,7 @@ int degryllmain(int, char**) {
 //  zbe::InputEventGenerator ieg(inputBuffer,INPUTEVENT);
 //
 //  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<GameReactor> >*> ctl;
-//  zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<GameReactor> >*> >& lmct = zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<GameReactor> >*> >::getInstance();
+//  zbe::ResourceManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<GameReactor> >*> >& lmct = zbe::ResourceManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<GameReactor> >*> >::getInstance();
 //  lmct.insert(COLLISIONATORLIST, &ctl);
 //  zbe::CollisionEventGenerator<GameReactor> ceg(COLLISIONATORLIST, COLLISIONEVENT);
 //
@@ -943,7 +1272,7 @@ int degryllmain(int, char**) {
 ////  zbe::SimpleSpriteSDLDrawer drawer(&window);
 //  zbe::DaemonMaster drawMaster;
 //  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite >*> sprites;
-//  zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite >*> >& lmdraw = zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite >*> >::getInstance();
+//  zbe::ResourceManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite >*> >& lmdraw = zbe::ResourceManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite >*> >::getInstance();
 //  lmdraw.insert(DRAWLIST, &sprites);
 //
 //  std::shared_ptr<zbe::Daemon> drawerDaemon(new  zbe::DrawerDaemon<zbe::SingleSprite, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite >*> >(std::make_shared<zbe::SingleSpriteSDLDrawer>(&window), DRAWLIST));
@@ -951,7 +1280,7 @@ int degryllmain(int, char**) {
 //
 //  zbe::TimedDaemonMaster behavMaster;
 ////  std::vector<zbe::Mobile<2>*> vmobile;
-////  zbe::ListManager< std::vector<zbe::Mobile<2>*> >& lmmobile = zbe::ListManager< std::vector<zbe::Mobile<2>*> >::getInstance();
+////  zbe::ResourceManager< std::vector<zbe::Mobile<2>*> >& lmmobile = zbe::ResourceManager< std::vector<zbe::Mobile<2>*> >::getInstance();
 ////  lmmobile.insert(MOBILELIST, &vmobile);
 ////  std::shared_ptr<zbe::Daemon> bball(new  zbe::BehaviorDaemon< zbe::Mobile<2>, std::vector<zbe::Mobile<2>*> >(new zbe::UniformLinearMotion<2>(), MOBILELIST));
 ////  dMaster.addDaemon(bball);
@@ -967,13 +1296,13 @@ int degryllmain(int, char**) {
 //  zbetris::Tetromino tetromino(blockgraphics, DRAWLIST, board, 1);
 ////  //ball
 ////  std::forward_list< zbe::Actuator< zbe::MovableCollisioner<game::GameReactor, 2>, game::GameReactor >*> ballActuatorsList;
-////  zbe::ListManager< std::forward_list< zbe::Actuator< zbe::MovableCollisioner<game::GameReactor, 2>, game::GameReactor >* > >& lmBallActuatorsList = zbe::ListManager< std::forward_list< zbe::Actuator< zbe::MovableCollisioner<game::GameReactor, 2>, game::GameReactor >* > >::getInstance();
+////  zbe::ResourceManager< std::forward_list< zbe::Actuator< zbe::MovableCollisioner<game::GameReactor, 2>, game::GameReactor >* > >& lmBallActuatorsList = zbe::ResourceManager< std::forward_list< zbe::Actuator< zbe::MovableCollisioner<game::GameReactor, 2>, game::GameReactor >* > >::getInstance();
 ////  lmBallActuatorsList.insert(BALLACTUATORLIST, &ballActuatorsList);
 ////  game::GameBallBouncer gbBouncer;
 ////  ballActuatorsList.push_front(&gbBouncer);
 ////
 ////  zbe::TicketedForwardList<zbe::CollisionerEntity<game::GameReactor>*> collisionablesList;
-////  zbe::ListManager<zbe::TicketedForwardList<zbe::CollisionerEntity<game::GameReactor>*> >& lmCollisionablesList = zbe::ListManager< zbe::TicketedForwardList<zbe::CollisionerEntity<game::GameReactor>*> >::getInstance();
+////  zbe::ResourceManager<zbe::TicketedForwardList<zbe::CollisionerEntity<game::GameReactor>*> >& lmCollisionablesList = zbe::ResourceManager< zbe::TicketedForwardList<zbe::CollisionerEntity<game::GameReactor>*> >::getInstance();
 ////  lmCollisionablesList.insert(COLLISIONABLELIST, &collisionablesList);
 //
 //
@@ -1017,7 +1346,7 @@ int degryllmain(int, char**) {
 ////  }
 //
 //  //bricks
-////  zbe::ListManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> >& lmSimpleConerActuatorsList = zbe::ListManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> >::getInstance();
+////  zbe::ResourceManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> >& lmSimpleConerActuatorsList = zbe::ResourceManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> >::getInstance();
 ////  std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> brickActuatorsList;
 ////  lmSimpleConerActuatorsList.insert(BRICKACTUATORLIST, &brickActuatorsList);
 ////  for(int i = 0; i<8 ; i++){
@@ -1125,6 +1454,6 @@ int degryllmain(int, char**) {
 //    }
 //    window.present();
 //  }
-
-  return (0);
-}
+//
+//  return (0);
+//}

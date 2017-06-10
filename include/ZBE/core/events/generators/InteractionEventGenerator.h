@@ -20,7 +20,7 @@
 #include "ZBE/core/entities/avatars/Collisionator.h"
 #include "ZBE/core/events/EventStore.h"
 #include "ZBE/core/events/CollisionEvent2D.h"
-#include "ZBE/core/tools/containers/ListManager.h"
+#include "ZBE/core/tools/containers/ResourceManager.h"
 #include "ZBE/core/system/SysTime.h"
 
 namespace zbe {
@@ -39,8 +39,8 @@ public:
    */
   InteractionEventGenerator(uint64_t list, int eventId, IS* is)
   : es(EventStore::getInstance()), id(list), eventId(eventId), is(is),
-    lmct(ListManager<LT>::getInstance()),
-    lmcn(ListManager<LN>::getInstance()),
+    lmct(ResourceManager<LT>::getInstance()),
+    lmcn(ResourceManager<LN>::getInstance()),
     sysTime(zbe::SysTime::getInstance()) {}
 
   /** \brief Empty destructor.
@@ -72,8 +72,8 @@ private:
   int eventId;  //!< id for the events of this type.
   IS* is;  //!< Use to select the type of the interaction.
 
-  ListManager<LT>& lmct;
-  ListManager<LN>& lmcn;
+  ResourceManager<LT>& lmct;
+  ResourceManager<LN>& lmcn;
   zbe::SysTime &sysTime;
 
 };

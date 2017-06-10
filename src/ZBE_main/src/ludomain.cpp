@@ -137,7 +137,7 @@ int ludomain(int, char** ) {
   std::shared_ptr<TicketedForwardList<AvatarEntity<Collisionator<LudoReactor> > > > ctl(new TicketedForwardList<AvatarEntity<Collisionator<LudoReactor> > >());
   std::shared_ptr<TicketedForwardList<AvatarEntity<Collisionator<LudoReactor> > > > ctl2(new TicketedForwardList<AvatarEntity<Collisionator<LudoReactor> > >());
   printf("Acquiring singleton list-manager for those lists .\n");fflush(stdout);
-  ListManager< TicketedForwardList<AvatarEntity<Collisionator<LudoReactor> > > >& lmct = ListManager< TicketedForwardList<AvatarEntity<Collisionator<LudoReactor> > > >::getInstance();
+  ResourceManager< TicketedForwardList<AvatarEntity<Collisionator<LudoReactor> > > >& lmct = ResourceManager< TicketedForwardList<AvatarEntity<Collisionator<LudoReactor> > > >::getInstance();
   printf("Storing those in that list-manager.\n");fflush(stdout);
   lmct.insert(COLLISIONATORLIST, ctl);
   lmct.insert(INTERSECTCTRLIST, ctl2);
@@ -165,10 +165,10 @@ int ludomain(int, char** ) {
   std::shared_ptr<zbe::DaemonMaster> drawMaster(new zbe::DaemonMaster());
   printf("Creating drawables list\n");fflush(stdout);
   std::shared_ptr<TicketedForwardList<AvatarEntity<SingleSprite> > > sprites(new TicketedForwardList<AvatarEntity<SingleSprite> >());
-  ListManager<TicketedForwardList<AvatarEntity<SingleSprite > > >& lmAESingleSprite = ListManager<TicketedForwardList<AvatarEntity<SingleSprite> > >::getInstance();
+  ResourceManager<TicketedForwardList<AvatarEntity<SingleSprite > > >& lmAESingleSprite = ResourceManager<TicketedForwardList<AvatarEntity<SingleSprite> > >::getInstance();
   lmAESingleSprite.insert(SPRITELIST, sprites);
   std::shared_ptr<TicketedForwardList<AvatarEntity<SimpleRotatedSprite> > > rsprites(new TicketedForwardList<AvatarEntity<SimpleRotatedSprite> >());
-  ListManager< TicketedForwardList<AvatarEntity<SimpleRotatedSprite > > >& lmAESimpleRotatedSprite = ListManager<TicketedForwardList<AvatarEntity<SimpleRotatedSprite> > >::getInstance();
+  ResourceManager< TicketedForwardList<AvatarEntity<SimpleRotatedSprite > > >& lmAESimpleRotatedSprite = ResourceManager<TicketedForwardList<AvatarEntity<SimpleRotatedSprite> > >::getInstance();
   lmAESimpleRotatedSprite .insert(RSPRITELIST, rsprites);
   printf("Loading imgs\n");fflush(stdout);
   ballgraphics[0] = window.loadImg(zomballImg);
@@ -191,13 +191,13 @@ int ludomain(int, char** ) {
   //DaemonMaster reactBehaviorMaster;
   std::shared_ptr<zbe::DaemonMaster> reactBehaviorMaster(new zbe::DaemonMaster());
   std::shared_ptr<TicketedForwardList<AvatarEntity<Movable<2> > > > vAEMovable(new TicketedForwardList<AvatarEntity<Movable<2> > >());
-  auto& lmAEMovable = ListManager<TicketedForwardList<AvatarEntity<Movable<2> > > >::getInstance();
+  auto& lmAEMovable = ResourceManager<TicketedForwardList<AvatarEntity<Movable<2> > > >::getInstance();
   lmAEMovable.insert(MOVABLELIST, vAEMovable);
   std::shared_ptr<TicketedForwardList<AvatarEntity<Positionable<2> > > > vAEPositionable(new TicketedForwardList<AvatarEntity<Positionable<2> > >());
-  auto& lmAEPositionable = ListManager<TicketedForwardList<AvatarEntity<Positionable<2> > > >::getInstance();
+  auto& lmAEPositionable = ResourceManager<TicketedForwardList<AvatarEntity<Positionable<2> > > >::getInstance();
   lmAEPositionable.insert(PARTICLES, vAEPositionable);
   std::shared_ptr<TicketedForwardList<AvatarEntity<Bouncer<2> > > > vAEBouncer(new TicketedForwardList<AvatarEntity<Bouncer<2> > >());
-  auto& lmAEBouncer = ListManager<TicketedForwardList<AvatarEntity<Bouncer<2> > > >::getInstance();
+  auto& lmAEBouncer = ResourceManager<TicketedForwardList<AvatarEntity<Bouncer<2> > > >::getInstance();
   lmAEBouncer.insert(BOUNCERLIST, vAEBouncer);
   std::shared_ptr<Daemon> ballBounce(new  BehaviorDaemon<Bouncer<2>, TicketedForwardList<AvatarEntity<Bouncer<2> > > >(std::make_shared<Bounce<2> >(), BOUNCERLIST));
   std::shared_ptr<Daemon> ballULM(new  BehaviorDaemon<Movable<2>, TicketedForwardList<AvatarEntity<Movable<2> > > >(std::make_shared<UniformLinearMotion<2> >(), MOVABLELIST));
@@ -208,14 +208,14 @@ int ludomain(int, char** ) {
 
   //ball
   std::shared_ptr<std::forward_list<ActuatorWrapper<LudoReactor, Avatar, Bouncer<2> >* > > ballActuatorsList(new std::forward_list<ActuatorWrapper<LudoReactor, Avatar, Bouncer<2> >* >());
-  ListManager< std::forward_list<ActuatorWrapper<LudoReactor, Avatar, Bouncer<2> >* > >& lmBallActuatorsList = ListManager< std::forward_list<ActuatorWrapper<LudoReactor, Avatar, Bouncer<2> >* > >::getInstance();
+  ResourceManager< std::forward_list<ActuatorWrapper<LudoReactor, Avatar, Bouncer<2> >* > >& lmBallActuatorsList = ResourceManager< std::forward_list<ActuatorWrapper<LudoReactor, Avatar, Bouncer<2> >* > >::getInstance();
   lmBallActuatorsList.insert(BALLACTUATORLIST, ballActuatorsList);
   ActuatorWrapper<LudoReactor, Avatar, Bouncer<2> >* bouncerWrapper = new  ActuatorWrapperCommon<LudoReactor, Bouncer<2>, Avatar, Bouncer<2> >(new LudoBallBouncer<LudoReactor>());
   ActuatorWrapper<LudoReactor, Avatar, Bouncer<2> >* eraserWrapper = new  ActuatorWrapperCommon<LudoReactor, Avatar, Avatar, Bouncer<2> >(new AvatarEraser<LudoReactor>());
   ballActuatorsList->push_front(bouncerWrapper);
   ballActuatorsList->push_front(eraserWrapper);
 
-  ListManager<TicketedForwardList<AvatarEntity<Collisioner<LudoReactor> > > >& lmCollisionablesList = ListManager< TicketedForwardList<AvatarEntity<Collisioner<LudoReactor> > > >::getInstance();
+  ResourceManager<TicketedForwardList<AvatarEntity<Collisioner<LudoReactor> > > >& lmCollisionablesList = ResourceManager< TicketedForwardList<AvatarEntity<Collisioner<LudoReactor> > > >::getInstance();
 
   std::shared_ptr<TicketedForwardList<AvatarEntity<Collisioner<LudoReactor> > > > collisionablesList(new TicketedForwardList<AvatarEntity<Collisioner<LudoReactor> > >());
   lmCollisionablesList.insert(COLLISIONABLELIST, collisionablesList);
@@ -223,7 +223,7 @@ int ludomain(int, char** ) {
   std::shared_ptr<TicketedForwardList<AvatarEntity<Collisioner<LudoReactor> > > > intersectionablesList(new TicketedForwardList<AvatarEntity<Collisioner<LudoReactor> > >());
   lmCollisionablesList.insert(INTERSECTCNRLIST, intersectionablesList);
 
-  ListManager<TicketedForwardList<SetableGraphics> >& lmSG = ListManager<TicketedForwardList<SetableGraphics> >::getInstance();
+  ResourceManager<TicketedForwardList<SetableGraphics> >& lmSG = ResourceManager<TicketedForwardList<SetableGraphics> >::getInstance();
   std::shared_ptr<TicketedForwardList<SetableGraphics> > setableGs(new TicketedForwardList<SetableGraphics>());
   lmSG.insert(SETABLEGRAPHSLIST, setableGs);
 
@@ -265,11 +265,11 @@ int ludomain(int, char** ) {
   }
 
   printf("Creating a rotator\n");fflush(stdout);
-  auto& lmTflAEPositionable = ListManager<TicketedForwardList<AvatarEntity<Positionable<2> > > >::getInstance();
+  auto& lmTflAEPositionable = ResourceManager<TicketedForwardList<AvatarEntity<Positionable<2> > > >::getInstance();
   std::shared_ptr<TicketedForwardList<AvatarEntity<Positionable<2> > > > tflAEPositionable(new TicketedForwardList<AvatarEntity<Positionable<2> > >());
   lmTflAEPositionable.insert(ROTATORS, tflAEPositionable);
 
-  auto& lmTflAEMovable = ListManager<TicketedForwardList<AvatarEntity<Movable<2> > > >::getInstance();
+  auto& lmTflAEMovable = ResourceManager<TicketedForwardList<AvatarEntity<Movable<2> > > >::getInstance();
   std::shared_ptr<TicketedForwardList<AvatarEntity<Movable<2> > > > tflAEMovable(new TicketedForwardList<AvatarEntity<Movable<2> > >());
   lmTflAEMovable.insert(ROTATORS, tflAEMovable);
 
@@ -332,7 +332,7 @@ int ludomain(int, char** ) {
   ieg->addHandler(ZBEK_RIGHT, &rtoggler);
 
   printf("Pasive enities\n");fflush(stdout);
-  ListManager<std::forward_list<ActuatorWrapper<LudoReactor, void >*> >& lmSimpleConerActuatorsList = ListManager<std::forward_list<ActuatorWrapper<LudoReactor, void>*> >::getInstance();
+  ResourceManager<std::forward_list<ActuatorWrapper<LudoReactor, void >*> >& lmSimpleConerActuatorsList = ResourceManager<std::forward_list<ActuatorWrapper<LudoReactor, void>*> >::getInstance();
   printf("Creating the bricks\n");fflush(stdout);
 
   printf("Creating the board and giving it a size\n");fflush(stdout);

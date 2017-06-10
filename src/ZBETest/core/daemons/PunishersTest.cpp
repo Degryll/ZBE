@@ -9,7 +9,7 @@
 #include "ZBE/core/behaviors/Behavior.h"
 #include "ZBE/core/drawers/Drawer.h"
 
-#include "ZBE/core/tools/containers/ListManager.h"
+#include "ZBE/core/tools/containers/ResourceManager.h"
 
 namespace Punishers {
 
@@ -32,7 +32,7 @@ class MockTimedPunish {
 
 TEST(PunisherDaemon, PunisherDaemon) {
     MockEntity a,b,c,d;
-    zbe::ListManager<std::forward_list<MockEntity*> > & lm =zbe::ListManager<std::forward_list<MockEntity*> >::getInstance();
+    zbe::ResourceManager<std::forward_list<MockEntity*> > & lm =zbe::ResourceManager<std::forward_list<MockEntity*> >::getInstance();
     lm.insert(0, std::make_shared<std::forward_list<MockEntity*> >());
     lm.insert(1, std::make_shared<std::forward_list<MockEntity*> >());
     std::shared_ptr<std::forward_list<MockEntity*> > eList0 = lm.get(0);

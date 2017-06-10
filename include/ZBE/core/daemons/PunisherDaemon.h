@@ -14,7 +14,7 @@
 #include <memory>
 
 #include "ZBE/core/daemons/Daemon.h"
-#include "ZBE/core/tools/containers/ListManager.h"
+#include "ZBE/core/tools/containers/ResourceManager.h"
 
 
 namespace zbe {
@@ -32,7 +32,7 @@ namespace zbe {
        * \param daemon Pointer to the daemon desired to be stored and executed.
        *
        */
-      PunisherDaemon(std::shared_ptr<P> punish, uint64_t listId) : punish(punish), eList( ListManager<L>::getInstance().get(listId) ) {}
+      PunisherDaemon(std::shared_ptr<P> punish, uint64_t listId) : punish(punish), eList( ResourceManager<L>::getInstance().get(listId) ) {}
 
       /** \brief Destroys the PunisherDaemon and the contained punisher.
        */

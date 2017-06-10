@@ -45,7 +45,7 @@ using InteractionGenerator = InteractionEventGenerator<
   		JointAE<Collisionator<ZombieBallReactor> >
     >;
 
-int zombienoidmain(int argc, char* argv[]) {
+int zombienoidmain(int, char*[]) {
   enum {
     WIDTH = 1024,
     HEIGHT = 768
@@ -72,7 +72,7 @@ int zombienoidmain(int argc, char* argv[]) {
   eventGenerator->addDaemon(teg);
   eventGenerator->addDaemon(iaeg);
 
-  ListManager<JointAE<Collisionator<ZombieBallReactor> > >& lmjctz = ListManager<JointAE<Collisionator<ZombieBallReactor> > >::getInstance();
+  ResourceManager<JointAE<Collisionator<ZombieBallReactor> > >& lmjctz = ResourceManager<JointAE<Collisionator<ZombieBallReactor> > >::getInstance();
   //std::shared_ptr<JointAE<Collisionator<ZombieBallReactor> > > ctJoint(new JointAE<Collisionator<ZombieBallReactor> >());
   std::shared_ptr<JointAE<Collisionator<ZombieBallReactor> > > ctJoint (new JointAE<Collisionator<ZombieBallReactor> >());
   lmjctz.insert(CTJOINT, ctJoint);

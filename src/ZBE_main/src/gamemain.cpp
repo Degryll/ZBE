@@ -104,7 +104,7 @@ int gamemain(int, char** ) {
   std::shared_ptr<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<game::GameReactor> > > > ctl(new zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<game::GameReactor> > >());
   //zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<game::GameReactor> > > ctl;
   printf("Acquiring singleton list-manager for this list (ctl).\n");fflush(stdout);
-  zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<game::GameReactor> > > >& lmct = zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<game::GameReactor> > > >::getInstance();
+  zbe::ResourceManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<game::GameReactor> > > >& lmct = zbe::ResourceManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<game::GameReactor> > > >::getInstance();
   printf("Storing ctl in that list-manager.\n");fflush(stdout);
   lmct.insert(COLLISIONATORLIST, ctl);
   printf("Building collision event generator with list id and the event id to use (1).\n");fflush(stdout);
@@ -128,7 +128,7 @@ int gamemain(int, char** ) {
   std::shared_ptr<zbe::DaemonMaster> drawMaster(new zbe::DaemonMaster());
   printf("Creating drawables list\n");fflush(stdout);
   std::shared_ptr<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite> > > sprites(new zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite> >());
-  zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite > > >& lmAESimpleSprite = zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite > > >::getInstance();
+  zbe::ResourceManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite > > >& lmAESimpleSprite = zbe::ResourceManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite > > >::getInstance();
   lmAESimpleSprite.insert(SPRITELIST, sprites);
   printf("Loading imgs\n");fflush(stdout);
   ballgraphics = window.loadImg(ballfilename);
@@ -140,10 +140,10 @@ int gamemain(int, char** ) {
   std::shared_ptr<zbe::DaemonMaster> commonBehaviorMaster(new zbe::DaemonMaster());
   std::shared_ptr<zbe::DaemonMaster> reactBehaviorMaster(new zbe::DaemonMaster());
   std::shared_ptr<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > > > vAEMovable(new zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > >());
-  auto& lmAEMovable = zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > > >::getInstance();
+  auto& lmAEMovable = zbe::ResourceManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > > >::getInstance();
   lmAEMovable.insert(MOVABLELIST, vAEMovable);
   std::shared_ptr<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Bouncer<2> > > > vAEBouncer(new zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Bouncer<2> > >());
-  auto& lmAEBouncer = zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Bouncer<2> > > >::getInstance();
+  auto& lmAEBouncer = zbe::ResourceManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Bouncer<2> > > >::getInstance();
   lmAEBouncer.insert(BOUNCERLIST, vAEBouncer);
   std::shared_ptr<zbe::Daemon> ballBounce(new  zbe::BehaviorDaemon<zbe::Bouncer<2>, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Bouncer<2> > > >(std::make_shared<zbe::Bounce<2> >(), BOUNCERLIST));
   std::shared_ptr<zbe::Daemon> ballULM(new  zbe::BehaviorDaemon<zbe::Movable<2>, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > > >(std::make_shared<zbe::UniformLinearMotion<2> >(), MOVABLELIST));
@@ -154,13 +154,13 @@ int gamemain(int, char** ) {
 
   //ball
   std::shared_ptr<std::forward_list< zbe::ActuatorWrapper<game::GameReactor , zbe::Bouncer<2> >*> > ballActuatorsList(new std::forward_list< zbe::ActuatorWrapper<game::GameReactor , zbe::Bouncer<2> >*>());
-  zbe::ListManager< std::forward_list< zbe::ActuatorWrapper<game::GameReactor, zbe::Bouncer<2> >* > >& lmBallActuatorsList = zbe::ListManager< std::forward_list< zbe::ActuatorWrapper<game::GameReactor, zbe::Bouncer<2> >* > >::getInstance();
+  zbe::ResourceManager< std::forward_list< zbe::ActuatorWrapper<game::GameReactor, zbe::Bouncer<2> >* > >& lmBallActuatorsList = zbe::ResourceManager< std::forward_list< zbe::ActuatorWrapper<game::GameReactor, zbe::Bouncer<2> >* > >::getInstance();
   lmBallActuatorsList.insert(BALLACTUATORLIST, ballActuatorsList);
   zbe::ActuatorWrapper<game::GameReactor, zbe::Bouncer<2> >* bouncerWrapper = new  zbe::ActuatorWrapperCommon<game::GameReactor, zbe::Bouncer<2>, zbe::Bouncer<2> >(new game::GameBallBouncer());
   ballActuatorsList->push_front(bouncerWrapper);
 
   std::shared_ptr<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<game::GameReactor> > > > collisionablesList(new zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<game::GameReactor> > >());
-  zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<game::GameReactor> > > >& lmCollisionablesList = zbe::ListManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<game::GameReactor> > > >::getInstance();
+  zbe::ResourceManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<game::GameReactor> > > >& lmCollisionablesList = zbe::ResourceManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<game::GameReactor> > > >::getInstance();
   lmCollisionablesList.insert(COLLISIONABLELIST, collisionablesList);
 
   printf("Building an sprite adaptor for the ball\n");fflush(stdout);
@@ -181,7 +181,7 @@ int gamemain(int, char** ) {
 
   printf("Creating the bricks\n");fflush(stdout);
   //bricks
-  zbe::ListManager< std::forward_list<zbe::ActuatorWrapper<game::GameReactor, void>*> >& lmSimpleConerActuatorsList = zbe::ListManager< std::forward_list< zbe::ActuatorWrapper<game::GameReactor, void>*> >::getInstance();
+  zbe::ResourceManager< std::forward_list<zbe::ActuatorWrapper<game::GameReactor, void>*> >& lmSimpleConerActuatorsList = zbe::ResourceManager< std::forward_list< zbe::ActuatorWrapper<game::GameReactor, void>*> >::getInstance();
   std::shared_ptr<std::forward_list<zbe::ActuatorWrapper<game::GameReactor, void>*> > brickActuatorsList(new std::forward_list<zbe::ActuatorWrapper<game::GameReactor, void>*>());
   lmSimpleConerActuatorsList.insert(BRICKACTUATORLIST, brickActuatorsList);
 //  for(int i = 0; i<8 ; i++){

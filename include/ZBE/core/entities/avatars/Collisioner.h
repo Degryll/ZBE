@@ -20,7 +20,7 @@
 #include "ZBE/core/events/generators/util/CollisionData.h"
 #include "ZBE/core/events/generators/util/CollisionObject.h"
 #include "ZBE/core/events/generators/util/ReactObject.h"
-#include "ZBE/core/tools/containers/ListManager.h"
+#include "ZBE/core/tools/containers/ResourceManager.h"
 
 namespace zbe {
 
@@ -60,7 +60,7 @@ class CollisionerCommon : virtual public Collisioner<R> {
     /** \brief A collisionable entity is defined by a collision object.
       * \param object A collision object that defines the "physical shape" of the entity.
       */
-    CollisionerCommon(AvatarEntityContainer<Bases...>* collisioner, std::shared_ptr<CollisionObject<R> > collisionObject, std::shared_ptr<ReactObject<R> > reactObject, uint64_t actuatorsList) : co(collisionObject), ro(reactObject), al(actuatorsList), c(collisioner), lma(ListManager<std::forward_list<ActuatorWrapper<R, Bases...>* > >::getInstance())  {}
+    CollisionerCommon(AvatarEntityContainer<Bases...>* collisioner, std::shared_ptr<CollisionObject<R> > collisionObject, std::shared_ptr<ReactObject<R> > reactObject, uint64_t actuatorsList) : co(collisionObject), ro(reactObject), al(actuatorsList), c(collisioner), lma(ResourceManager<std::forward_list<ActuatorWrapper<R, Bases...>* > >::getInstance())  {}
 
     /** \brief Empty destructor.
       */
@@ -93,7 +93,7 @@ class CollisionerCommon : virtual public Collisioner<R> {
     std::shared_ptr<ReactObject<R> > ro;  //!< Collision object
     uint64_t al;
     AvatarEntityContainer<Bases...>* c;
-    ListManager<std::forward_list<ActuatorWrapper<R, Bases...>* > >& lma;
+    ResourceManager<std::forward_list<ActuatorWrapper<R, Bases...>* > >& lma;
 
 };
 

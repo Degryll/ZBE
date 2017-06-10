@@ -10,7 +10,7 @@
 #define LUDO_EVENTS_HANDLERS_LUDOHANDLERS_H
 
 #include "ZBE/core/daemons/Daemon.h"
-#include "ZBE/core/tools/containers/ListManager.h"
+#include "ZBE/core/tools/containers/ResourceManager.h"
 #include "ZBE/core/tools/containers/Ticket.h"
 #include "ZBE/core/events/handlers/InputHandler.h"
 #include "ZBE/core/events/handlers/TimeHandler.h"
@@ -31,7 +31,7 @@ class GraphicsSet : public zbe::InputHandler {
 
   	void run(float status) {
       if( status > 0.5f) {
-        zbe::ListManager<zbe::TicketedForwardList<SetableGraphics> >& lmSG = zbe::ListManager<zbe::TicketedForwardList<SetableGraphics> >::getInstance();
+        zbe::ResourceManager<zbe::TicketedForwardList<SetableGraphics> >& lmSG = zbe::ResourceManager<zbe::TicketedForwardList<SetableGraphics> >::getInstance();
         std::shared_ptr<zbe::TicketedForwardList<SetableGraphics> > setableGs = lmSG.get(id);
         for(auto sg : (*setableGs)){
             sg->setGraphics(graphics);

@@ -15,7 +15,7 @@
 #include "ZBE/core/system/SysTime.h"
 #include "ZBE/core/tools/math/Vector.h"
 #include "ZBE/core/tools/math/math.h"
-#include "ZBE/core/tools/containers/ListManager.h"
+#include "ZBE/core/tools/containers/ResourceManager.h"
 #include "ZBE/core/behaviors/Behavior.h"
 #include "ZBE/core/events/generators/TimeEventGenerator.h"
 #include "ZBE/core/entities/AvatarEntity.h"
@@ -51,7 +51,7 @@ template<typename R>
 class DestroyerCircleAreaCreator : public zbe::Behavior<zbe::Positionable<2> > {
 public:
   DestroyerCircleAreaCreator(double radius, uint64_t catorListId, uint64_t conerListId, uint64_t actuatorsList)
-    : lmAEC(zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > >::getInstance()),
+    : lmAEC(zbe::ResourceManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > >::getInstance()),
       r(radius), ctLId(catorListId), cnLId(conerListId), aLId(actuatorsList) {
   }
 
@@ -64,7 +64,7 @@ public:
     lmAEC.get(ctLId)->push_front(lca);
   }
 private:
-    zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > >& lmAEC;
+    zbe::ResourceManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > >& lmAEC;
     double r;
     uint64_t ctLId;
     uint64_t cnLId;
@@ -105,7 +105,7 @@ class BackBallParticlesLauncher : public zbe::Behavior<zbe::Movable<2> > {
 
     BackBallParticlesLauncher(double radius, uint64_t graphics, uint64_t spriteList, std::shared_ptr<zbe::TimeEventGenerator> teg)
         : r(radius), g(graphics), sList(spriteList),
-          lmAESRS(zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<SimpleRotatedSprite> > >::getInstance()),
+          lmAESRS(zbe::ResourceManager<zbe::TicketedForwardList<zbe::AvatarEntity<SimpleRotatedSprite> > >::getInstance()),
           teg(teg), store(zbe::EventStore::getInstance()) {
     }
 
@@ -130,7 +130,7 @@ class BackBallParticlesLauncher : public zbe::Behavior<zbe::Movable<2> > {
     double r;
     uint64_t g;
     uint64_t sList;
-    zbe::ListManager<zbe::TicketedForwardList<zbe::AvatarEntity<SimpleRotatedSprite> > >& lmAESRS;
+    zbe::ResourceManager<zbe::TicketedForwardList<zbe::AvatarEntity<SimpleRotatedSprite> > >& lmAESRS;
     std::shared_ptr<zbe::TimeEventGenerator> teg;
     zbe::EventStore& store;
 };

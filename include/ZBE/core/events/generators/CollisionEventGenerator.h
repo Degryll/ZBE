@@ -21,7 +21,7 @@
 #include "ZBE/core/events/generators/util/CollisionSelector.h"
 #include "ZBE/core/events/EventStore.h"
 #include "ZBE/core/events/CollisionEvent2D.h"
-#include "ZBE/core/tools/containers/ListManager.h"
+#include "ZBE/core/tools/containers/ResourceManager.h"
 #include "ZBE/core/tools/containers/TicketedForwardList.h"
 #include "ZBE/core/system/SysTime.h"
 
@@ -41,8 +41,8 @@ class CollisionEventGenerator : virtual public Daemon {
      */
     CollisionEventGenerator(uint64_t list, int eventId, CollisionSelector<R>* cs)
     : id(list), eventId(eventId), cs(cs), es(EventStore::getInstance()),
-      lmct(ListManager<TicketedForwardList<AvatarEntity<Collisionator<R> > > >::getInstance()),
-      lmcn(ListManager<TicketedForwardList<AvatarEntity<Collisioner<R> > > >::getInstance()),
+      lmct(ResourceManager<TicketedForwardList<AvatarEntity<Collisionator<R> > > >::getInstance()),
+      lmcn(ResourceManager<TicketedForwardList<AvatarEntity<Collisioner<R> > > >::getInstance()),
       sysTime(zbe::SysTime::getInstance()) {};
 
     /** \brief Empty destructor.
@@ -61,8 +61,8 @@ class CollisionEventGenerator : virtual public Daemon {
     CollisionSelector<R>* cs;  //!< Use to select the type of the collision.
     EventStore& es;
 
-    ListManager<TicketedForwardList<AvatarEntity<Collisionator<R> > > >& lmct;
-    ListManager<TicketedForwardList<AvatarEntity<Collisioner<R> > > >& lmcn;
+    ResourceManager<TicketedForwardList<AvatarEntity<Collisionator<R> > > >& lmct;
+    ResourceManager<TicketedForwardList<AvatarEntity<Collisioner<R> > > >& lmcn;
     zbe::SysTime &sysTime;
 };
 

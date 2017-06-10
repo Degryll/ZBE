@@ -272,7 +272,7 @@
 		<Unit filename="../../../include/ZBE/core/system/SysTime.h" />
 		<Unit filename="../../../include/ZBE/core/tools/Timer.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/ListJoint.h" />
-		<Unit filename="../../../include/ZBE/core/tools/containers/ListManager.h" />
+		<Unit filename="../../../include/ZBE/core/tools/containers/ResourceManager.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/Ticket.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/TicketedForwardList.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/Point.h" />

@@ -1,11 +1,11 @@
 #include "gtest/gtest.h"
 
-#include "ZBE/core/tools/containers/ListManager.h"
+#include "ZBE/core/tools/containers/ResourceManager.h"
 #include "ZBE/core/system/SysError.h"
 #include "ZBE/core/tools/containers/TicketedForwardList.h"
 
-TEST(ListManager, Usage) {
-  zbe::ListManager< zbe::TicketedForwardList<int> >& lm = zbe::ListManager< zbe::TicketedForwardList<int> >::getInstance();
+TEST(ResourceManager, Usage) {
+  zbe::ResourceManager< zbe::TicketedForwardList<int> >& lm = zbe::ResourceManager< zbe::TicketedForwardList<int> >::getInstance();
 
   std::shared_ptr<zbe::TicketedForwardList<int> > l1(new zbe::TicketedForwardList<int>());
   std::shared_ptr<zbe::TicketedForwardList<int> > l2(new zbe::TicketedForwardList<int>());
