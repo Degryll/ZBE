@@ -11,7 +11,7 @@
 #define CORE_DAEMONS_BASICPRELOOPSLDDAEMON_H_
 
 #include "ZBE/core/daemons/Daemon.h"
-#include "ZBE/SDL/system/Window.h"
+#include "ZBE/SDL/system/SDLWindow.h"
 #include "ZBE/SDL/system/SDLEventDispatcher.h"
 
 namespace zbe {
@@ -23,7 +23,7 @@ namespace zbe {
       BasicPreLoopSDLDaemon(const BasicPreLoopSDLDaemon&) = delete;
       void operator=(const BasicPreLoopSDLDaemon&) = delete;
 
-      BasicPreLoopSDLDaemon(zbe::Window* window): window(window), sdlEventDist(zbe::SDLEventDispatcher::getInstance()) {}
+      BasicPreLoopSDLDaemon(zbe::SDLWindow* window): window(window), sdlEventDist(zbe::SDLEventDispatcher::getInstance()) {}
 
       /** \brief Destroys the BasicPreLoopSDLDaemon
        */
@@ -33,7 +33,7 @@ namespace zbe {
        */
       void run();
     private:
-      zbe::Window* window;
+      zbe::SDLWindow* window;
       zbe::SDLEventDispatcher& sdlEventDist;
   };
 }  // namespace zbe

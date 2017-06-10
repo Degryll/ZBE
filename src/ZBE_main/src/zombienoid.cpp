@@ -21,7 +21,7 @@
 
 #include "ZBE/core/io/InputBuffer.h"
 
-#include "ZBE/SDL/system/Window.h"
+#include "ZBE/SDL/system/SDLWindow.h"
 #include "ZBE/SDL/system/SDLEventDispatcher.h"
 
 #include "ZBE/SDL/tools/SDLTimer.h"
@@ -56,7 +56,7 @@ int zombienoidmain(int, char*[]) {
   const int COLLISIONEVENT = SysIdGenerator::getId();
   const int CTJOINT = SysIdGenerator::getId();
 
-  Window window(WIDTH, HEIGHT);
+  SDLWindow window(WIDTH, HEIGHT);
 
   std::shared_ptr<DaemonMaster> eventGenerator(new DaemonMaster());
 

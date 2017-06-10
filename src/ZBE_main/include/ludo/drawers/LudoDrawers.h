@@ -15,7 +15,7 @@
 #include "ZBE/core/drawers/Drawer.h"
 #include "ZBE/core/entities/AvatarEntity.h"
 #include "ZBE/core/entities/avatars/SingleSprite.h"
-#include "ZBE/SDL/system/Window.h"
+#include "ZBE/SDL/system/SDLWindow.h"
 
 #include "ludo/entities/LudoAvatars.h"
 
@@ -29,7 +29,7 @@ class SimpleRotatedSpriteSDLDrawer : public zbe::Drawer<SimpleRotatedSprite> {
     /** \brief Create a new drawer in the given context.
      *  \param window A SDL window with its context.
      */
-    SimpleRotatedSpriteSDLDrawer(zbe::Window* window) : window(window) {}
+    SimpleRotatedSpriteSDLDrawer(zbe::SDLWindow* window) : window(window) {}
 
     /** \brief Destructor.
      */
@@ -58,7 +58,7 @@ class SimpleRotatedSpriteSDLDrawer : public zbe::Drawer<SimpleRotatedSprite> {
     }
 
   private:
-    zbe::Window* window;  //!< A SDL window with its context.
+    zbe::SDLWindow* window;  //!< A SDL window with its context.
 };
 
 }  // namespace

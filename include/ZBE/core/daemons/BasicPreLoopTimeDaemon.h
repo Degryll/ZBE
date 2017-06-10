@@ -11,7 +11,7 @@
 #define CORE_DAEMONS_BASICPRELOOPTIMEDAEMON_H_
 
 #include "ZBE/core/daemons/Daemon.h"
-#include "ZBE/SDL/system/Window.h"
+#include "ZBE/SDL/system/SDLWindow.h"
 #include "ZBE/core/system/SysTime.h"
 
 namespace zbe {

@@ -14,7 +14,7 @@
 
 #include "ZBE/core/drawers/Drawer.h"
 #include "ZBE/core/entities/avatars/SingleSprite.h"
-#include "ZBE/SDL/system/Window.h"
+#include "ZBE/SDL/system/SDLWindow.h"
 
 namespace zbe {
 
@@ -26,9 +26,9 @@ class SingleSpriteSDLDrawer : public Drawer<SingleSprite> {
     void operator=(const SingleSpriteSDLDrawer&) = delete;
 
     /** \brief Create a new drawer in the given context.
-     *  \param window A SDL window with its context.
+     *  \param window A SDLwindow with its context.
      */
-    SingleSpriteSDLDrawer(Window* window) : window(window) {}
+    SingleSpriteSDLDrawer(SDLWindow* window) : window(window) {}
 
     /** \brief Destructor.
      */
@@ -40,7 +40,7 @@ class SingleSpriteSDLDrawer : public Drawer<SingleSprite> {
     void apply(std::shared_ptr<AvatarEntity<SingleSprite> > entity);
 
   private:
-    Window* window;  //!< A SDL window with its context.
+    SDLWindow* window;  //!< A SDL window with its context.
 };
 
 }  // namespace zbe

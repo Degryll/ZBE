@@ -5,7 +5,7 @@
 #include <cstdlib>
 #include <ctime>
 
-#include "ZBE/SDL/system/Window.h"
+#include "ZBE/SDL/system/SDLWindow.h"
 #include "ZBE/core/tools/containers/ResourceManager.h"
 #include "ZBE/core/tools/containers/TicketedForwardList.h"
 #include "ZBE/core/entities/AvatarEntity.h"
@@ -44,7 +44,7 @@ private:
 
 TEST(SingleSpriteSDLDrawer, DISABLED_Render) {
   //srand(time(nullptr));
-  zbe::Window window(WINDOW_W, WINDOW_H);
+  zbe::SDLWindow window(WINDOW_W, WINDOW_H);
 
   zbe::SingleSpriteSDLDrawer drawer(&window);
 

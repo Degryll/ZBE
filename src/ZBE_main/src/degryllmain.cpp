@@ -17,7 +17,7 @@
 #include "ZBE/SDL/tools/SDLTimer.h"
 #include "ZBE/SDL/system/SDLEventDispatcher.h"
 #include "ZBE/core/system/SysTime.h"
-#include "ZBE/SDL/system/Window.h"
+#include "ZBE/SDL/system/SDLWindow.h"
 #include "ZBE/SDL/drawers/SingleSpriteSDLDrawer.h"
 #include "ZBE/core/daemons/DaemonMaster.h"
 #include "ZBE/core/daemons/Punishers.h"
@@ -900,7 +900,7 @@ public:
   IsometricDrawer(const IsometricDrawer&) = delete;
   void operator=(const IsometricDrawer&) = delete;
 
-  IsometricDrawer(MultiLevelMap* map, uint64_t groundImage, uint64_t lWallImage, uint64_t rWallImage, zbe::Window* window)
+  IsometricDrawer(MultiLevelMap* map, uint64_t groundImage, uint64_t lWallImage, uint64_t rWallImage, zbe::SDLWindow* window)
   : m(map), grimage(groundImage), lwimage(lWallImage), rwimage(rWallImage), ground(), leftWall(), rightWall(), window(window) {}
 
   void setMap(MultiLevelMap* map) {m = map;}
@@ -915,7 +915,7 @@ private:
   std::set<zbe::Point<3>, TileComparator> ground;
   std::set<zbe::Point<3>, TileComparator> leftWall;
   std::set<zbe::Point<3>, TileComparator> rightWall;
-  zbe::Window* window;
+  zbe::SDLWindow* window;
 };
 
 //void draw() {
@@ -1077,7 +1077,7 @@ int degryllmain(int, char**) {
   const char izqfilename[] = "data/images/degryll/isotetris/izqT.png";
   const char derfilename[] = "data/images/degryll/isotetris/derT.png";
 
-  zbe::Window window(WIDTH,HEIGHT);
+  zbe::SDLWindow window(WIDTH,HEIGHT);
   uint64_t floortile     = window.loadImg(floorfilename);
   uint64_t izqtile       = window.loadImg(izqfilename);
   uint64_t dertile       = window.loadImg(derfilename);

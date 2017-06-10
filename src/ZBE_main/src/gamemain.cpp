@@ -25,7 +25,7 @@
 #include "ZBE/core/daemons/Punishers.h"
 #include "ZBE/SDL/tools/SDLTimer.h"
 #include "ZBE/SDL/system/SDLEventDispatcher.h"
-#include "ZBE/SDL/system/Window.h"
+#include "ZBE/SDL/system/SDLWindow.h"
 #include "ZBE/SDL/drawers/SingleSpriteSDLDrawer.h"
 #include "ZBE/entities/adaptors/SimpleDrawableSingleSpriteAdaptor.h"
 #include "ZBE/behaviors/UniformLinearMotion.h"
@@ -123,7 +123,7 @@ int gamemain(int, char** ) {
   sysTime.setSystemTimer(sysTimer);
   printf("|-------------------- Drawing system ----------------------|\n");fflush(stdout);
   printf("Building the window to draw on\n");fflush(stdout);
-  zbe::Window window(WIDTH,HEIGHT);
+  zbe::SDLWindow window(WIDTH,HEIGHT);
   printf("Creating draw master list\n");fflush(stdout);
   std::shared_ptr<zbe::DaemonMaster> drawMaster(new zbe::DaemonMaster());
   printf("Creating drawables list\n");fflush(stdout);
