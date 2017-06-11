@@ -15,6 +15,7 @@
 #include "ZBE/core/drawers/Drawer.h"
 #include "ZBE/core/entities/avatars/SingleSprite.h"
 #include "ZBE/SDL/system/SDLWindow.h"
+#include "ZBE/SDL/system/SDLImageStore.h"
 
 namespace zbe {
 
@@ -28,7 +29,7 @@ class SingleSpriteSDLDrawer : public Drawer<SingleSprite> {
     /** \brief Create a new drawer in the given context.
      *  \param window A SDLwindow with its context.
      */
-    SingleSpriteSDLDrawer(SDLWindow* window) : window(window) {}
+    SingleSpriteSDLDrawer(SDLWindow* window, SDLImageStore* imgStore) : window(window), imgStore(imgStore) {}
 
     /** \brief Destructor.
      */
@@ -41,6 +42,7 @@ class SingleSpriteSDLDrawer : public Drawer<SingleSprite> {
 
   private:
     SDLWindow* window;  //!< A SDL window with its context.
+    SDLImageStore* imgStore; //!< Where the images are stored.
 };
 
 }  // namespace zbe

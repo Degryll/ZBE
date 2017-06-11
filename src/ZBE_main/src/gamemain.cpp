@@ -124,6 +124,7 @@ int gamemain(int, char** ) {
   printf("|-------------------- Drawing system ----------------------|\n");fflush(stdout);
   printf("Building the window to draw on\n");fflush(stdout);
   zbe::SDLWindow window(WIDTH,HEIGHT);
+  zbe::SDLImageStore imgStore(window.getRenderer());
   printf("Creating draw master list\n");fflush(stdout);
   std::shared_ptr<zbe::DaemonMaster> drawMaster(new zbe::DaemonMaster());
   printf("Creating drawables list\n");fflush(stdout);
@@ -131,10 +132,10 @@ int gamemain(int, char** ) {
   zbe::ResourceManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite > > >& lmAESimpleSprite = zbe::ResourceManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite > > >::getInstance();
   lmAESimpleSprite.insert(SPRITELIST, sprites);
   printf("Loading imgs\n");fflush(stdout);
-  ballgraphics = window.loadImg(ballfilename);
-  brickgraphics = window.loadImg(brickfilename);
+  ballgraphics = imgStore.loadImg(ballfilename);
+  brickgraphics = imgStore.loadImg(brickfilename);
   printf("Building the drawer to paint SingleSprite's \n");fflush(stdout);
-  std::shared_ptr<zbe::Daemon> drawerDaemon(new  zbe::DrawerDaemon<zbe::SingleSprite, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite > > >(std::make_shared<zbe::SingleSpriteSDLDrawer>(&window), SPRITELIST));
+  std::shared_ptr<zbe::Daemon> drawerDaemon(new  zbe::DrawerDaemon<zbe::SingleSprite, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite > > >(std::make_shared<zbe::SingleSpriteSDLDrawer>(&window, &imgStore), SPRITELIST));
   drawMaster->addDaemon(drawerDaemon);
   printf("|-------------------- Daemons ----------------------|\n");fflush(stdout);
   std::shared_ptr<zbe::DaemonMaster> commonBehaviorMaster(new zbe::DaemonMaster());

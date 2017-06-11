@@ -13,11 +13,11 @@ int main(int argc, char* argv[]) {
   printf("2 - degryllmain\n");
   printf("3 - ludomain\n");
   printf("4 - zombienoid\n");
-  printf("4 - gamemain\n");
+  printf("5 - gamemain\n");
   printf("0 - salir\n");
   printf("--:");
   int readAmount = scanf ("%d",&option);
-  while (readAmount!=1 || option<0 || option>4) {
+  while (readAmount!=1 || option<0 || option>5) {
     printf("Introduzca una opcion... que valga: ");
     readAmount = scanf ("%d",&option);
   }

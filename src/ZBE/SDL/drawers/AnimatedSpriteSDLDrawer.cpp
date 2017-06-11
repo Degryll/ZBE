@@ -30,7 +30,7 @@ void AnimatedSpriteSDLDrawer::apply(std::shared_ptr<AvatarEntity<AnimatedSprite>
   SDL_Point p;
   p.x = avatar->x + w / 2;
   p.y = avatar->y + h / 2;
-  window->render(avatar->graphics, &src, &dst, avatar->degrees, &p);
+  window->render(imgStore->getTexture(avatar->graphics), &src, &dst, avatar->degrees, &p);
 }
 
 }  // namespace zbe

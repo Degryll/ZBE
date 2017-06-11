@@ -16,6 +16,7 @@
 #include "ZBE/core/entities/AvatarEntity.h"
 #include "ZBE/core/entities/avatars/SingleSprite.h"
 #include "ZBE/SDL/system/SDLWindow.h"
+#include "ZBE/SDL/system/SDLImageStore.h"
 
 #include "ludo/entities/LudoAvatars.h"
 
@@ -29,7 +30,7 @@ class SimpleRotatedSpriteSDLDrawer : public zbe::Drawer<SimpleRotatedSprite> {
     /** \brief Create a new drawer in the given context.
      *  \param window A SDL window with its context.
      */
-    SimpleRotatedSpriteSDLDrawer(zbe::SDLWindow* window) : window(window) {}
+    SimpleRotatedSpriteSDLDrawer(zbe::SDLWindow* window, zbe::SDLImageStore* imgStore) : window(window), imgStore(imgStore) {}
 
     /** \brief Destructor.
      */
@@ -54,11 +55,12 @@ class SimpleRotatedSpriteSDLDrawer : public zbe::Drawer<SimpleRotatedSprite> {
       dst.w = avatar->w;
       dst.h = avatar->h;
       SDL_Point center = {src.w / 2, src.h/2 };
-      window->render(avatar->graphics, &src, &dst, (avatar->angle * -1) + 90 , &center, SDL_FLIP_NONE);
+      window->render(imgStore->getTexture(avatar->graphics), &src, &dst, (avatar->angle * -1) + 90 , &center, SDL_FLIP_NONE);
     }
 
   private:
     zbe::SDLWindow* window;  //!< A SDL window with its context.
+    zbe::SDLImageStore* imgStore; //!< Where the images are stored.
 };
 
 }  // namespace

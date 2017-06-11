@@ -16,6 +16,7 @@
 #include "ZBE/core/drawers/Drawer.h"
 #include "ZBE/entities/avatars/SingleTextSprite.h"
 #include "ZBE/SDL/system/SDLWindow.h"
+#include "ZBE/SDL/system/SDLTextFontStore.h"
 
 namespace zbe {
 
@@ -29,7 +30,7 @@ class SingleTextSDLDrawer : public Drawer<SingleTextSprite> {
     /** \brief Create a new drawer in the given context.
      *  \param window A SDLwindow with its context.
      */
-    SingleTextSDLDrawer(SDLWindow* window) : window(window) {}
+    SingleTextSDLDrawer(SDLWindow* window, SDLTextFontStore* textFontStore) : window(window), textFontStore(textFontStore) {}
 
     /** \brief Destructor.
      */
@@ -42,6 +43,7 @@ class SingleTextSDLDrawer : public Drawer<SingleTextSprite> {
 
   private:
     SDLWindow* window;  //!< A SDL window with its context.
+    SDLTextFontStore* textFontStore; //!< Where the images are stored.
 };
 
 }  // namespace zbe

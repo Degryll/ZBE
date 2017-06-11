@@ -6,6 +6,7 @@
 #include <ctime>
 
 #include "ZBE/SDL/system/SDLWindow.h"
+#include "ZBE/SDL/system/SDLImageStore.h"
 #include "ZBE/core/tools/containers/ResourceManager.h"
 #include "ZBE/core/tools/containers/TicketedForwardList.h"
 #include "ZBE/core/entities/AvatarEntity.h"
@@ -45,8 +46,9 @@ private:
 TEST(SingleSpriteSDLDrawer, DISABLED_Render) {
   //srand(time(nullptr));
   zbe::SDLWindow window(WINDOW_W, WINDOW_H);
+  zbe::SDLImageStore imgStore(window.getRenderer());
 
-  zbe::SingleSpriteSDLDrawer drawer(&window);
+  zbe::SingleSpriteSDLDrawer drawer(&window, &imgStore);
 
   std::shared_ptr<DrawerMock> dm = std::make_shared<DrawerMock>();
   std::shared_ptr<zbe::Adaptor<zbe::SingleSprite> > spriteAdaptor = std::make_shared<zbe::SimpleDrawableSingleSpriteAdaptor>(&(*dm));
@@ -69,7 +71,7 @@ TEST(SingleSpriteSDLDrawer, DISABLED_Render) {
     }
   }
 
-  uint64_t texture = window.loadImg(m, w, h, 32, w*4);
+  uint64_t texture = 7;//window.loadImg(m, w, h, 32, w*4);
 
   delete[] m;
 

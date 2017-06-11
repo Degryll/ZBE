@@ -27,6 +27,8 @@ namespace zbe {
    */
   class InputEventGenerator : virtual public Daemon {
     public:
+      InputEventGenerator(const InputEventGenerator&) = delete; //!< Deleted copy constructor.
+      void operator=(const InputEventGenerator&) = delete; //!< Deleted operator.
 
       /** \brief Default constructor.
        */
@@ -54,7 +56,7 @@ namespace zbe {
       inline void removeHandler(uint32_t id) {handlers.erase(id);}
 
     private:
-      std::shared_ptr<InputBuffer> inputBuffer;
+      InputBuffer* inputBuffer;
       int eventId;
       EventStore &store;
       std::map<uint32_t, InputHandler*> handlers;

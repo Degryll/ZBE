@@ -24,7 +24,7 @@ void SingleSpriteSDLDrawer::apply(std::shared_ptr<AvatarEntity<SingleSprite> > e
   dst.y = avatar->y;
   dst.w = avatar->w;
   dst.h = avatar->h;
-  window->render(avatar->graphics, &src, &dst);
+  window->render(imgStore->getTexture(avatar->graphics), &src, &dst);
 }
 
 }  // namespace zbe

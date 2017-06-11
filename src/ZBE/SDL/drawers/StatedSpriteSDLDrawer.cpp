@@ -27,7 +27,7 @@ void StatedSpriteSDLDrawer::apply(std::shared_ptr<AvatarEntity<StatedSprite> > e
   SDL_Point p;
   p.x = avatar->x + avatar->w / 2;
   p.y = avatar->y + avatar->h / 2;
-  window->render(avatar->graphics, &src, &dst, avatar->degrees, &p);
+  window->render(imgStore->getTexture(avatar->graphics), &src, &dst, avatar->degrees, &p);
 }
 
 }  // namespace zbe

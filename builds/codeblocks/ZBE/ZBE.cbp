@@ -308,7 +308,9 @@
 		<Unit filename="../../../src/ZBE/SDL/drawers/SingleTextSDLDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/drawers/StatedSpriteSDLDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/system/SDLEventDispatcher.cpp" />
-		<Unit filename="../../../src/ZBE/SDL/system/Window.cpp" />
+		<Unit filename="../../../src/ZBE/SDL/system/SDLImageStore.cpp" />
+		<Unit filename="../../../src/ZBE/SDL/system/SDLTextFontStore.cpp" />
+		<Unit filename="../../../src/ZBE/SDL/system/SDLWindow.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/tools/SDLTimer.cpp" />
 		<Unit filename="../../../src/ZBE/core/daemons/BasicPreLoopTimeDaemon.cpp" />
 		<Unit filename="../../../src/ZBE/core/daemons/DaemonMaster.cpp" />

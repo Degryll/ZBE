@@ -7,6 +7,8 @@
  * @brief Class that know how to draw text boxes as SingleTextSprite entities with SDL.
  */
 
+#include <SDL2/SDL.h>
+
 #include "ZBE/SDL/drawers/SingleTextSDLDrawer.h"
 
 namespace zbe {
@@ -24,7 +26,9 @@ void SingleTextSDLDrawer::apply(std::shared_ptr<AvatarEntity<SingleTextSprite> >
   dst.y = avatar->y;
   dst.w = avatar->w;
   dst.h = avatar->h;
-  window->render(avatar->graphics, avatar->text, &src, &dst);
+  SDL_Texture* t = textFontStore->renderText(avatar->graphics, avatar->text);
+  window->render(t, &src, &dst);
+  SDL_DestroyTexture(t);
 }
 
 }  // namespace zbe
