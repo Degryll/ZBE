@@ -27,13 +27,7 @@ public:
   ~SimpleDrawableSingleSpriteAdaptor() {delete s;}
     SingleSprite* getAvatar() {
       delete s;
-      s = new SingleSprite();
-
-      s->x = e->getX();
-      s->y = e->getY();
-      s->w = e->getW();
-      s->h = e->getH();
-      s->graphics = e->getGraphics();
+      s = new SingleSprite(e->getX(),e->getY(),e->getW(),e->getH(),e->getGraphics());
 
       return (s);
     }

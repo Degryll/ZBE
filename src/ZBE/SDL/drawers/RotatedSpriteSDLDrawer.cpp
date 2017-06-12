@@ -17,17 +17,17 @@ void RotatedSpriteSDLDrawer::apply(AvatarEntity<RotatedSprite> *entity) {
   SDL_Rect src,dst;
   src.x = 0;
   src.y = 0;
-  src.w = avatar->w;
-  src.h = avatar->h;
+  src.w = avatar->getW();
+  src.h = avatar->getH();
 
-  dst.x = avatar->x;
-  dst.y = avatar->y;
-  dst.w = avatar->w;
-  dst.h = avatar->h;
+  dst.x = avatar->getX();
+  dst.y = avatar->getY();
+  dst.w = avatar->getW();
+  dst.h = avatar->getH();
   SDL_Point p;
-  p.x = avatar->x + avatar->w / 2;
-  p.y = avatar->y + avatar->h / 2;
-  window->render(imgStore->getTexture(avatar->graphics), &src, &dst, avatar->degrees, &p);
+  p.x = avatar->getX() + avatar->getW() / 2;
+  p.y = avatar->getY() + avatar->getH() / 2;
+  window->render(imgStore->getTexture(avatar->getGraphics()), &src, &dst, avatar->getDegrees(), &p);
 }
 
 }  // namespace zbe

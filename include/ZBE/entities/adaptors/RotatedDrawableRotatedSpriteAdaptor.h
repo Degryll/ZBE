@@ -35,14 +35,7 @@ public:
    */
   RotatedSprite* getAvatar() {
     delete s;
-    s = new RotatedSprite();
-
-    s->x = e->getX();
-    s->y = e->getY();
-    s->w = e->getW();
-    s->h = e->getH();
-    s->graphics = e->getGraphics();
-    s->degrees  = e->getDegrees();
+    s = new RotatedSprite(e->getX(), e->getY(), e->getW(), e->getH(), e->getGraphics(), e->getDegrees());
 
     return (s);
   }

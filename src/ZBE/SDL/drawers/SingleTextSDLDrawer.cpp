@@ -19,14 +19,14 @@ void SingleTextSDLDrawer::apply(std::shared_ptr<AvatarEntity<SingleTextSprite> >
   SDL_Rect src,dst;
   src.x = 0;
   src.y = 0;
-  src.w = avatar->w;
-  src.h = avatar->h;
+  src.w = avatar->getW();
+  src.h = avatar->getH();
 
-  dst.x = avatar->x;
-  dst.y = avatar->y;
-  dst.w = avatar->w;
-  dst.h = avatar->h;
-  SDL_Texture* t = textFontStore->renderText(avatar->graphics, avatar->text);
+  dst.x = avatar->getX();
+  dst.y = avatar->getY();
+  dst.w = avatar->getW();
+  dst.h = avatar->getH();
+  SDL_Texture* t = textFontStore->renderText(avatar->getGraphics(), avatar->text);
   window->render(t, &src, &dst);
   SDL_DestroyTexture(t);
 }

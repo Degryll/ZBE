@@ -16,9 +16,26 @@ namespace zbe {
 
 /** \brief This define an avatar that can be drawn in any direction.
  */
-struct RotatedSprite : virtual public SingleSprite {
-    using Base = SingleSprite;
-    double degrees = 0.0; //!< rotation degrees
+class RotatedSprite : virtual public SingleSprite {
+
+public:
+
+  using Base = SingleSprite;
+
+  /** \brief Parametrized Constructor.
+   *  \param degrees Rotation degrees.
+   */
+  RotatedSprite(int64_t x = 0, int64_t y = 0, int64_t w = 0, int64_t h = 0, uint64_t graphics = 0, double degrees  = 0.0) :
+  SingleSprite(x, y, w, h, graphics), degrees(degrees) {}
+
+  /** \brief Returns degrees.
+   *  \return degrees.
+   */
+  double getDegrees() {return degrees;}
+
+private:
+  double degrees; //!< rotation degrees
+
 };
 
 }  // namespace zbe

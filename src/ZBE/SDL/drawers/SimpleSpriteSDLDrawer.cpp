@@ -17,14 +17,14 @@ void SingleSpriteSDLDrawer::apply(std::shared_ptr<AvatarEntity<SingleSprite> > e
   SDL_Rect src,dst;
   src.x = 0;
   src.y = 0;
-  src.w = avatar->w;
-  src.h = avatar->h;
+  src.w = avatar->getW();
+  src.h = avatar->getH();
 
-  dst.x = avatar->x;
-  dst.y = avatar->y;
-  dst.w = avatar->w;
-  dst.h = avatar->h;
-  window->render(imgStore->getTexture(avatar->graphics), &src, &dst);
+  dst.x = avatar->getX();
+  dst.y = avatar->getY();
+  dst.w = avatar->getW();
+  dst.h = avatar->getH();
+  window->render(imgStore->getTexture(avatar->getGraphics()), &src, &dst);
 }
 
 }  // namespace zbe

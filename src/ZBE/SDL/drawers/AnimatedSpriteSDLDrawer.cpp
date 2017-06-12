@@ -11,11 +11,11 @@
 
 namespace zbe {
 
-void AnimatedSpriteSDLDrawer::apply(std::shared_ptr<AvatarEntity<AnimatedSprite> > entity) {
+void AnimatedSpriteSDLDrawer::apply(std::shared_ptr<AvatarEntity<AnimatedSprite> > entity) {/*
   AnimatedSprite* avatar;
   entity->assignAvatar(&avatar);
-  int64_t w = avatar->width[avatar->state];
-  int64_t h = avatar->height[avatar->state];
+  int64_t w = avatar->getW()[avatar->getState()];
+  int64_t h = avatar->getH()[avatar->getState()];
 
   SDL_Rect src,dst;
   src.x = w * avatar->frame;
@@ -30,7 +30,7 @@ void AnimatedSpriteSDLDrawer::apply(std::shared_ptr<AvatarEntity<AnimatedSprite>
   SDL_Point p;
   p.x = avatar->x + w / 2;
   p.y = avatar->y + h / 2;
-  window->render(imgStore->getTexture(avatar->graphics), &src, &dst, avatar->degrees, &p);
+  window->render(imgStore->getTexture(avatar->graphics), &src, &dst, avatar->degrees, &p);*/
 }
 
 }  // namespace zbe

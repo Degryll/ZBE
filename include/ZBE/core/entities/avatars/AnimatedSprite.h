@@ -16,12 +16,28 @@ namespace zbe {
 
 /** \brief This define an avatar that can be drawn in any direction with different animations.
  */
-struct AnimatedSprite : virtual public StatedSprite {
-    using Base = StatedSprite;
-    uint64_t frame = 0;    //!< Frame of the animation
-    const uint64_t *nframes = nullptr; //!< Number of frames per animation
-    const int64_t  *width   = nullptr; //!< Pixel width of the animation
-    const int64_t  *height  = nullptr; //!< Pixel height of the animation
+class AnimatedSprite : virtual public StatedSprite {
+
+public:
+
+  using Base = StatedSprite;
+
+  //AnimatedSprite() {}
+
+  /** \brief Parametrized Constructor.
+   *  \param time Current time of the animated sprite.
+   */
+  AnimatedSprite(int64_t x = 0, int64_t y = 0, int64_t w = 0, int64_t h = 0, uint64_t graphics = 0, double degrees  = 0.0, uint64_t state = 0, uint64_t time = 0) :
+  StatedSprite(x, y, w, h, graphics, degrees, state), time(time) {}
+
+  /** \brief Returns time.
+   *  \return time.
+   */
+  uint64_t getTime() {return time;}
+
+
+private:
+  uint64_t time;    //!< Frame of the animation
 };
 
 }  // namespace zbe
