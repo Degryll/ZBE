@@ -24,7 +24,7 @@ namespace ludo {
 
 /** \brief This draws a simple sprite (an image).
  */
-class SimpleRotatedSpriteSDLDrawer : public zbe::Drawer<SimpleRotatedSprite> {
+class SimpleRotatedSpriteSDLDrawer : public zbe::Drawer<zbe::RotatedSprite> {
   public:
     SimpleRotatedSpriteSDLDrawer(const SimpleRotatedSpriteSDLDrawer&) = delete;
     /** \brief Create a new drawer in the given context.
@@ -41,21 +41,21 @@ class SimpleRotatedSpriteSDLDrawer : public zbe::Drawer<SimpleRotatedSprite> {
     /** \brief The function every punisher must have.
      *  \param entity The entity to be drawn.
      */
-    void apply(std::shared_ptr<zbe::AvatarEntity<SimpleRotatedSprite> > entity) {
-      SimpleRotatedSprite* avatar;
+    void apply(std::shared_ptr<zbe::AvatarEntity<zbe::RotatedSprite> > entity) {
+      zbe::RotatedSprite* avatar;
       entity->assignAvatar(&avatar);
       SDL_Rect src,dst;
       src.x = 0;
       src.y = 0;
-      src.w = avatar->w;
-      src.h = avatar->h;
+      src.w = avatar->getW();
+      src.h = avatar->getH();
 
-      dst.x = avatar->x;
-      dst.y = avatar->y;
-      dst.w = avatar->w;
-      dst.h = avatar->h;
+      dst.x = avatar->getX();
+      dst.y = avatar->getY();
+      dst.w = avatar->getW();
+      dst.h = avatar->getH();
       SDL_Point center = {src.w / 2, src.h/2 };
-      window->render(imgStore->getTexture(avatar->graphics), &src, &dst, (avatar->angle * -1) + 90 , &center, SDL_FLIP_NONE);
+      window->render(imgStore->getTexture(avatar->getGraphics()), &src, &dst, (avatar->getDegrees() * -1) + 90 , &center, SDL_FLIP_NONE);
     }
 
   private:

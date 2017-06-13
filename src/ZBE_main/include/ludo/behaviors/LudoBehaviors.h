@@ -20,6 +20,7 @@
 #include "ZBE/core/events/generators/TimeEventGenerator.h"
 #include "ZBE/core/entities/AvatarEntity.h"
 #include "ZBE/core/entities/avatars/Collisionator.h"
+#include "ZBE/core/entities/avatars/RotatedSprite.h"
 
 
 #include "ZBE/entities/avatars/Movable.h"
@@ -105,7 +106,7 @@ class BackBallParticlesLauncher : public zbe::Behavior<zbe::Movable<2> > {
 
     BackBallParticlesLauncher(double radius, uint64_t graphics, uint64_t spriteList, std::shared_ptr<zbe::TimeEventGenerator> teg)
         : r(radius), g(graphics), sList(spriteList),
-          lmAESRS(zbe::ResourceManager<zbe::TicketedForwardList<zbe::AvatarEntity<SimpleRotatedSprite> > >::getInstance()),
+          lmAESRS(zbe::ResourceManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::RotatedSprite> > >::getInstance()),
           teg(teg), store(zbe::EventStore::getInstance()) {
     }
 
@@ -119,7 +120,7 @@ class BackBallParticlesLauncher : public zbe::Behavior<zbe::Movable<2> > {
       double rads = v.getRads();
       rads += zbe::PI;
       std::shared_ptr<BallParticle> bp = std::make_shared<BallParticle>(p[0], p[1], r, g, rads * zbe::TODEGREE);
-      std::shared_ptr<zbe::Adaptor<SimpleRotatedSprite> > sAdaptor = std::make_shared<RotatedDrawableSimpleRotatedSpriteAdaptor>(&(*bp));
+      std::shared_ptr<zbe::Adaptor<zbe::RotatedSprite> > sAdaptor = std::make_shared<RotatedDrawableSimpleRotatedSpriteAdaptor>(&(*bp));
       zbe::setAdaptor(bp, sAdaptor);
       auto ticket = lmAESRS.get(sList)->push_front(bp);
       std::shared_ptr<zbe::TimeHandler> eraser = std::make_shared<TicketEraser>(ticket);
@@ -130,7 +131,7 @@ class BackBallParticlesLauncher : public zbe::Behavior<zbe::Movable<2> > {
     double r;
     uint64_t g;
     uint64_t sList;
-    zbe::ResourceManager<zbe::TicketedForwardList<zbe::AvatarEntity<SimpleRotatedSprite> > >& lmAESRS;
+    zbe::ResourceManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::RotatedSprite> > >& lmAESRS;
     std::shared_ptr<zbe::TimeEventGenerator> teg;
     zbe::EventStore& store;
 };

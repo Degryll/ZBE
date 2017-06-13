@@ -16,13 +16,6 @@ namespace ludo {
 
 /** \brief This define an avatar that can be drawn and has a rotation.
  */
-struct SimpleRotatedSprite : public zbe::SingleSprite {
-    using Base = SingleSprite;
-    double angle = 0.0; //!< rotation in degrees
-};
-
-/** \brief This define an avatar that can be drawn and has a rotation.
- */
 class Stated {
 public:
     virtual ~Stated(){}

@@ -16,6 +16,7 @@
 #include "ZBE/core/entities/Adaptor.h"
 #include "ZBE/core/entities/Entity.h"
 #include "ZBE/core/entities/avatars/Avatar.h"
+#include "ZBE/core/entities/avatars/RotatedSprite.h"
 
 #include "ludo/entities/LudoAvatars.h"
 #include "ludo/entities/LudoEntities.h"
@@ -23,7 +24,7 @@
 
 namespace ludo {
 
-class RotatedDrawableSimpleRotatedSpriteAdaptor : public zbe::Adaptor<SimpleRotatedSprite> {
+class RotatedDrawableSimpleRotatedSpriteAdaptor : public zbe::Adaptor<zbe::RotatedSprite> {
 public:
   RotatedDrawableSimpleRotatedSpriteAdaptor(const RotatedDrawableSimpleRotatedSpriteAdaptor&) = delete;
   void operator=(const RotatedDrawableSimpleRotatedSpriteAdaptor&) = delete;
@@ -32,22 +33,16 @@ public:
 
   ~RotatedDrawableSimpleRotatedSpriteAdaptor() {delete s;}
 
-  SimpleRotatedSprite* getAvatar() {
+  zbe::RotatedSprite* getAvatar() {
     delete s;
-    s = new SimpleRotatedSprite();
-    s->x = archetype->getX();
-    s->y = archetype->getY();
-    s->w = archetype->getW();
-    s->h = archetype->getH();
-    s->graphics = archetype->getGraphics();
-    s->angle = archetype->getAngle();
-    s->angle = (s->angle < 0 ? 360.0 + s->angle : s->angle );
+    double angle = (archetype->getAngle() < 0 ? 360.0 + archetype->getAngle() : archetype->getAngle());
+    s = new zbe::RotatedSprite(archetype->getX(), archetype->getY(), archetype->getW(), archetype->getH(),archetype->getGraphics(), angle);
     return (s);
   };
 
 private:
   RotatedDrawable* archetype;
-  SimpleRotatedSprite* s;
+  zbe::RotatedSprite* s;
 };
 
 /** \brief Adapts a Ludoball to a Collisionator.

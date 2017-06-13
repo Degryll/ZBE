@@ -23,6 +23,7 @@
 #include "ZBE/core/entities/Entity.h"
 #include "ZBE/core/entities/avatars/Avatar.h"
 #include "ZBE/core/entities/avatars/SingleSprite.h"
+#include "ZBE/core/entities/avatars/RotatedSprite.h"
 #include "ZBE/core/entities/avatars/Collisioner.h"
 #include "ZBE/core/entities/avatars/Collisionator.h"
 #include "ZBE/core/entities/avatars/implementations/BaseAvatar.h"
@@ -54,7 +55,7 @@ class LudoBall: public RotatedDrawable,
                 public zbe::Entity,
                 public zbe::SimpleWideBouncingAPO<2>,
                 public zbe::AvatarEntityFixed<zbe::Avatar>,
-                public zbe::AvatarEntityAdapted<SimpleRotatedSprite>,
+                public zbe::AvatarEntityAdapted<zbe::RotatedSprite>,
                 public zbe::AvatarEntityFixed<zbe::Bouncer<2> >,
                 public zbe::AvatarEntityAdapted<zbe::Collisionator<R> > {
 public:
@@ -97,7 +98,7 @@ public:
 class BallParticle :    public RotatedDrawable,
                         public State,
                         public zbe::AvatarEntityFixed<Stated>,
-                        public zbe::AvatarEntityAdapted<SimpleRotatedSprite> {
+                        public zbe::AvatarEntityAdapted<zbe::RotatedSprite> {
 public:
   BallParticle(double x, double y, double radius, uint64_t graphics, double angle):
        s(), g(graphics),
