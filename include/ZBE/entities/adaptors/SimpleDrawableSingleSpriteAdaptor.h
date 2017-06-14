@@ -10,7 +10,7 @@
 #ifndef ZBE_ENTITIES_ADAPTORS_IMPLEMENTATIONS_SIMPLEDRAWABLESINGLESPRITEADAPTOR_H_
 #define ZBE_ENTITIES_ADAPTORS_IMPLEMENTATIONS_SIMPLEDRAWABLESINGLESPRITEADAPTOR_H_
 
-#include "ZBE/core/entities/avatars/SingleSprite.h"
+#include "ZBE/core/entities/avatars/Implementations/SimpleSingleSprite.h"
 #include "ZBE/core/entities/Adaptor.h"
 #include "ZBE/archetypes/Drawable.h"
 
@@ -27,7 +27,7 @@ public:
   ~SimpleDrawableSingleSpriteAdaptor() {delete s;}
     SingleSprite* getAvatar() {
       delete s;
-      s = new SingleSprite(e->getX(),e->getY(),e->getW(),e->getH(),e->getGraphics());
+      s = new SimpleSingleSprite(e->getX(),e->getY(),e->getW(),e->getH(),e->getGraphics());
 
       return (s);
     }

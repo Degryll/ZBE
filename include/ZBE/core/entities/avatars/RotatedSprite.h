@@ -22,19 +22,14 @@ public:
 
   using Base = SingleSprite;
 
-  /** \brief Parametrized Constructor.
-   *  \param degrees Rotation degrees.
+  /** \brief Virtual Destructor.
    */
-  RotatedSprite(int64_t x = 0, int64_t y = 0, int64_t w = 0, int64_t h = 0, uint64_t graphics = 0, double degrees  = 0.0) :
-  SingleSprite(x, y, w, h, graphics), degrees(degrees) {}
+  virtual ~RotatedSprite() {};
 
   /** \brief Returns degrees.
    *  \return degrees.
    */
-  double getDegrees() {return degrees;}
-
-private:
-  double degrees; //!< rotation degrees
+  virtual double getDegrees() = 0;
 
 };
 

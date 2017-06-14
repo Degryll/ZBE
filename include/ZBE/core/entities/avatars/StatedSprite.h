@@ -22,21 +22,14 @@ public:
 
   using Base = RotatedSprite;
 
-  //StatedSprite() {}
-
-  /** \brief Parametrized Constructor.
-   *  \param state Current state of the stated sprite.
+  /** \brief Virtual Destructor.
    */
-  StatedSprite(int64_t x = 0, int64_t y = 0, int64_t w = 0, int64_t h = 0, uint64_t graphics = 0, double degrees  = 0.0, uint64_t state = 0) :
-  RotatedSprite(x, y, w, h, graphics, degrees), state(state) {}
+  virtual ~StatedSprite() {};
 
   /** \brief Returns state.
    *  \return state.
    */
-  uint64_t getState() {return state;}
-
-private:
-  uint64_t state;   //!< state
+  virtual uint64_t getState() = 0;
 
 };
 

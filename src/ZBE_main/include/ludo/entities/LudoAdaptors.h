@@ -17,6 +17,7 @@
 #include "ZBE/core/entities/Entity.h"
 #include "ZBE/core/entities/avatars/Avatar.h"
 #include "ZBE/core/entities/avatars/RotatedSprite.h"
+#include "ZBE/core/entities/avatars/implementations/SimpleRotatedSprite.h"
 
 #include "ludo/entities/LudoAvatars.h"
 #include "ludo/entities/LudoEntities.h"
@@ -36,7 +37,7 @@ public:
   zbe::RotatedSprite* getAvatar() {
     delete s;
     double angle = (archetype->getAngle() < 0 ? 360.0 + archetype->getAngle() : archetype->getAngle());
-    s = new zbe::RotatedSprite(archetype->getX(), archetype->getY(), archetype->getW(), archetype->getH(),archetype->getGraphics(), angle);
+    s = new zbe::SimpleRotatedSprite(archetype->getX(), archetype->getY(), archetype->getW(), archetype->getH(),archetype->getGraphics(), angle);
     return (s);
   };
 
