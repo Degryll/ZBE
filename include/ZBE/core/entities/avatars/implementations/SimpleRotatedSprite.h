@@ -11,7 +11,7 @@
 #define ZBE_CORE_ENTITIES_AVATARS_IMPLEMENTATIONS_SIMPLEROTATEDSPRITE_H_
 
 #include "ZBE/core/entities/avatars/RotatedSprite.h"
-#include "ZBE/core/entities/avatars/Implementations/SimpleSingleSprite.h"
+#include "ZBE/core/entities/avatars/implementations/SimpleSingleSprite.h"
 
 namespace zbe {
 

@@ -208,6 +208,8 @@
 		<Unit filename="../../../src/ZBETest/core/tools/containers/TicketTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/tools/containers/TicketedForwardListTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/tools/math/PointTest.cpp" />
+		<Unit filename="../../../src/ZBETest/core/tools/math/RegionTest.cpp" />
+		<Unit filename="../../../src/ZBETest/core/tools/math/RegionTest.h" />
 		<Unit filename="../../../src/ZBETest/core/tools/math/VectorTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/tools/math/collisions/CollisionSystemSolverTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/tools/math/collisions/intersectionsTest.cpp" />

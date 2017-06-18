@@ -5,6 +5,8 @@
 #include "ZBE/core/tools/math/Point.h"
 #include "ZBE/core/tools/math/Vector.h"
 
+namespace pointtest {
+
 TEST(Point, Constructors) {
   EXPECT_EQ(0,zbe::SysError::getNErrors()) << "Initially no errors.";
 
@@ -203,3 +205,5 @@ TEST(Point, Operations) {
 
   zbe::SysError::clear();
 }
+  
+} //namespace pointtest

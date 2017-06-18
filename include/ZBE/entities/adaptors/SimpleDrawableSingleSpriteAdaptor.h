@@ -10,7 +10,7 @@
 #ifndef ZBE_ENTITIES_ADAPTORS_IMPLEMENTATIONS_SIMPLEDRAWABLESINGLESPRITEADAPTOR_H_
 #define ZBE_ENTITIES_ADAPTORS_IMPLEMENTATIONS_SIMPLEDRAWABLESINGLESPRITEADAPTOR_H_
 
-#include "ZBE/core/entities/avatars/Implementations/SimpleSingleSprite.h"
+#include "ZBE/core/entities/avatars/implementations/SimpleSingleSprite.h"
 #include "ZBE/core/entities/Adaptor.h"
 #include "ZBE/archetypes/Drawable.h"
 

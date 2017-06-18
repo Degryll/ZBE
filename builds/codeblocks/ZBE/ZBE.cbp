@@ -176,6 +176,7 @@
 		<Unit filename="../../../include/ZBE/SDL/drawers/RotatedSpriteSDLDrawer.h" />
 		<Unit filename="../../../include/ZBE/SDL/drawers/SingleSpriteSDLDrawer.h" />
 		<Unit filename="../../../include/ZBE/SDL/drawers/SingleTextSDLDrawer.h" />
+		<Unit filename="../../../include/ZBE/SDL/drawers/SpriteSheetSDLDrawer.h" />
 		<Unit filename="../../../include/ZBE/SDL/drawers/StatedSpriteSDLDrawer.h" />
 		<Unit filename="../../../include/ZBE/SDL/starters/SDL_Starter.h" />
 		<Unit filename="../../../include/ZBE/SDL/system/SDLEventDispatcher.h" />
@@ -281,7 +282,10 @@
 		<Unit filename="../../../include/ZBE/core/tools/containers/ResourceManager.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/Ticket.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/TicketedForwardList.h" />
+		<Unit filename="../../../include/ZBE/core/tools/graphics/Sprite.h" />
+		<Unit filename="../../../include/ZBE/core/tools/graphics/SpriteSheet.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/Point.h" />
+		<Unit filename="../../../include/ZBE/core/tools/math/Region.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/Vector.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/collisions/intersections.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/math.h" />
@@ -310,6 +314,7 @@
 		<Unit filename="../../../src/ZBE/SDL/drawers/RotatedSpriteSDLDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/drawers/SimpleSpriteSDLDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/drawers/SingleTextSDLDrawer.cpp" />
+		<Unit filename="../../../src/ZBE/SDL/drawers/SpriteSheetSDLDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/drawers/StatedSpriteSDLDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/system/SDLEventDispatcher.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/system/SDLImageStore.cpp" />
