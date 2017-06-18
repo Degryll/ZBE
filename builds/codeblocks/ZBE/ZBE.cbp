@@ -184,6 +184,7 @@
 		<Unit filename="../../../include/ZBE/SDL/system/SDLTextFontStore.h" />
 		<Unit filename="../../../include/ZBE/SDL/system/SDLWindow.h" />
 		<Unit filename="../../../include/ZBE/SDL/tools/SDLTimer.h" />
+		<Unit filename="../../../include/ZBE/SDL/tools/SDLUtils.h" />
 		<Unit filename="../../../include/ZBE/archetypes/ActivePhysicalObject.h" />
 		<Unit filename="../../../include/ZBE/archetypes/Bouncing.h" />
 		<Unit filename="../../../include/ZBE/archetypes/BouncingAPO.h" />

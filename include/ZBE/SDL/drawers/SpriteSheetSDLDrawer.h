@@ -48,7 +48,7 @@ class SpriteSheetSDLDrawer : public Drawer<T> {
   private:
     SDLWindow* window;  //!< A SDL window with its context.
     SDLImageStore* imgStore; //!< Where the images are stored.
-    ResourceManager<SpriteSheet<T> >& rmss;
+    ResourceManager<SpriteSheet<T> >& rmss; //!< Resource manager instance.
 };
 
 }  // namespace zbe

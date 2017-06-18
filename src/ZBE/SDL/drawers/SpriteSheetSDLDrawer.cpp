@@ -1,40 +1,34 @@
 /**
  * Copyright 2012 Batis Degryll Ludo
  * @file SpriteSheetSDLDrawer.h
- * @since 2017-04-05
- * @date 2017-04-05
- * @author degryll
+ * @since 2017-06-18
+ * @date 2017-06-18
+ * @author Ludo Degryll Batis
  * @brief Class that know how to draw AnimatedSprite entities with SDL.
  */
 
 #include "ZBE/SDL/drawers/SpriteSheetSDLDrawer.h"
 
-#include "ZBE/core/tools/containers/ResourceManager.h"
+#include <memory>
+
+#include "ZBE/SDL/tools/SDLUtils.h"
 
 namespace zbe {
 
 template <typename T>
 void SpriteSheetSDLDrawer<T>::apply(AvatarEntity<T> *entity) {
-//  AnimatedSprite* avatar;
-//  entity->assignAvatar(&avatar);
-//  rmss
-//  int64_t w = avatar->getW()[avatar->getState()];
-//  int64_t h = avatar->getH()[avatar->getState()];
-//
-//  SDL_Rect src,dst;
-//  src.x = w * avatar->frame;
-//  src.y = h * avatar->frame;
-//  src.w = w;
-//  src.h = h;
-//
-//  dst.x = avatar->x;
-//  dst.y = avatar->y;
-//  dst.w = w;
-//  dst.h = h;
-//  SDL_Point p;
-//  p.x = avatar->x + w / 2;
-//  p.y = avatar->y + h / 2;
-//  window->render(imgStore->getTexture(avatar->graphics), &src, &dst, avatar->degrees, &p);
+  T* avatar;
+  entity->assignAvatar(&avatar);
+  std::shared_ptr<SpriteSheet<T> > sst = rmss.get(avatar->getGraphics());
+  Sprite s = sst->generateSprite(avatar);
+
+  SDL_Rect src = convert2SDLRect(s.src);
+  SDL_Rect dst = convert2SDLRect(s.dst);
+
+  SDL_Point p;
+  p.x = s.dst.p.x + (s.dst.v.x / 2);
+  p.y = s.dst.p.y + (s.dst.v.y / 2);
+  window->render(imgStore->getTexture(s.g), &src, &dst, s.a, &p);
 }
 
 }  // namespace zbe
