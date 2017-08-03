@@ -7,8 +7,8 @@
  * @brief Define the basic functionality of every entity.
  */
 
-#ifndef CORE_ENTITIES_ENTITY_H_
-#define CORE_ENTITIES_ENTITY_H_
+#ifndef ZBE_CORE_ENTITIES_ENTITY_H_
+#define ZBE_CORE_ENTITIES_ENTITY_H_
 
 #include <memory>
 #include <map>
@@ -68,4 +68,4 @@ class Entity {
 
 }  // namespace zbe
 
-#endif  // CORE_ENTITIES_ENTITY_H_
+#endif  // ZBE_CORE_ENTITIES_ENTITY_H_

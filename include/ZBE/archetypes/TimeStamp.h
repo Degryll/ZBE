@@ -28,7 +28,7 @@ public:
   /** \brief Set the time stamp.
    *  \param timeStamp The value of the time stamp.
    */
-  void setTimeStamp(int64_t timeStamp) = 0;
+  virtual void setTimeStamp(int64_t timeStamp) = 0;
 
 };
 

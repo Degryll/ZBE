@@ -21,7 +21,7 @@ class VoidReactObject : public ReactObjectCommon<VoidReactObject<R>, R> {
 public:
   /** \brief Empty constructor.
    */
-  VoidReactObject() : zbe::ReactObjectCommon<VoidReactObject<R>, R>(this) {}
+  VoidReactObject() : ReactObjectCommon<VoidReactObject<R>, R>(this) {}
 
   /** \brief Virtual destructor.
    */

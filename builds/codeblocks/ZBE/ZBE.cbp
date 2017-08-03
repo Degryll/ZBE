@@ -189,6 +189,7 @@
 		<Unit filename="../../../include/ZBE/archetypes/Bouncing.h" />
 		<Unit filename="../../../include/ZBE/archetypes/BouncingAPO.h" />
 		<Unit filename="../../../include/ZBE/archetypes/BouncingPO.h" />
+		<Unit filename="../../../include/ZBE/archetypes/Countable.h" />
 		<Unit filename="../../../include/ZBE/archetypes/Damping.h" />
 		<Unit filename="../../../include/ZBE/archetypes/Drawable.h" />
 		<Unit filename="../../../include/ZBE/archetypes/Mobile.h" />
@@ -291,9 +292,14 @@
 		<Unit filename="../../../include/ZBE/core/tools/math/collisions/intersections.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/math.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/objects.h" />
+		<Unit filename="../../../include/ZBE/core/tools/shared/Value.h" />
+		<Unit filename="../../../include/ZBE/core/tools/shared/implementations/SimpleValue.h" />
 		<Unit filename="../../../include/ZBE/core/tools/text/utf8.h" />
 		<Unit filename="../../../include/ZBE/core/tools/tools.h" />
+		<Unit filename="../../../include/ZBE/entities/ActiveElement2D.h" />
 		<Unit filename="../../../include/ZBE/entities/Element2D.h" />
+		<Unit filename="../../../include/ZBE/entities/adaptors/ActiveElement2DAnimatedSpriteAdaptor.h" />
+		<Unit filename="../../../include/ZBE/entities/adaptors/Element2DAnimatedSpriteAdaptor.h" />
 		<Unit filename="../../../include/ZBE/entities/adaptors/RotatedDrawableRotatedSpriteAdaptor.h" />
 		<Unit filename="../../../include/ZBE/entities/adaptors/SimpleDrawableSingleSpriteAdaptor.h" />
 		<Unit filename="../../../include/ZBE/entities/adaptors/TextDrawableSingleTextSpriteAdaptor.h" />
@@ -308,6 +314,11 @@
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/BasePositionable.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/BaseStated.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/SimpleBounceable.h" />
+		<Unit filename="../../../include/ZBE/events/handlers/MouseXIH.h" />
+		<Unit filename="../../../include/ZBE/events/handlers/actuators/BouncerActuator.h" />
+		<Unit filename="../../../include/ZBE/events/handlers/actuators/ConditionalEraserActuator.h" />
+		<Unit filename="../../../include/ZBE/events/handlers/actuators/EraserActuator.h" />
+		<Unit filename="../../../include/ZBE/events/reactobjects/InteractionTesterRO.h" />
 		<Unit filename="../../../include/ZBE/reactobjects/VoidReactObject.h" />
 		<Unit filename="../../../src/ZBE/SDL/daemons/BasicPostLoopSDLDaemon.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/daemons/BasicPreLoopSDLDaemon.cpp" />
@@ -315,7 +326,6 @@
 		<Unit filename="../../../src/ZBE/SDL/drawers/RotatedSpriteSDLDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/drawers/SimpleSpriteSDLDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/drawers/SingleTextSDLDrawer.cpp" />
-		<Unit filename="../../../src/ZBE/SDL/drawers/SpriteSheetSDLDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/drawers/StatedSpriteSDLDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/system/SDLEventDispatcher.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/system/SDLImageStore.cpp" />

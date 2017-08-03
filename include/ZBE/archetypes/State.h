@@ -27,7 +27,7 @@ public:
    *  \return The integer value of the state.
    */
   virtual uint64_t getState() = 0;
-}
+};
 
 } // namespace zbe
 

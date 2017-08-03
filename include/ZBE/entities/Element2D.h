@@ -16,40 +16,49 @@
 #include "ZBE/core/entities/AvatarEntity.h"
 #include "ZBE/core/entities/Entity.h"
 
+#include "ZBE/core/tools/shared/value.h"
+
 #include "ZBE/archetypes/implementations/SimplePositionPO.h"
 #include "ZBE/archetypes/implementations/SimpleState.h"
 #include "ZBE/archetypes/implementations/SimpleTimeStamp.h"
 #include "ZBE/archetypes/PositionPO.h"
-#include "ZBE/archetypes/SimpleState.h"
+#include "ZBE/archetypes/State.h"
 #include "ZBE/archetypes/TimeStamp.h"
+#include "ZBE/archetypes/Countable.h"
+#include "ZBE/archetypes/Drawable.h"
+
 #include "ZBE/entities/avatars/Positionable.h"
 #include "ZBE/entities/avatars/Stated.h"
 #include "ZBE/entities/avatars/implementations/BaseStated.h"
+#include "ZBE/entities/avatars/implementations/BasePositionable.h"
 
 namespace zbe {
 
 template<typename R>
-class Element2D: public zbe::Entity,
-  							 public zbe::SimpleTimeStamp,
-  							 public zbe::Drawable,
-  							 public zbe::SimplePositionPO<2>,
-  							 public zbe::SimpleState,
-  							 public zbe::AvatarEntityFixed<zbe::Avatar>,
-  							 public zbe::AvatarEntityAdapted<zbe::AnimatedSprite>,
-  							 public zbe::AvatarEntityAdapted<zbe::Collisioner<R> >,
-  							 public zbe::AvatarEntityFixed<zbe::Positionable<2> >,
-  							 public zbe::AvatarEntityFixed<zbe::Stated> {
+class Element2D: public Entity,
+                 public SimpleTimeStamp,
+                 public Drawable,
+                 public SimplePositionPO<2>,
+                 public SimpleState,
+                 public AvatarEntityFixed<Avatar>,
+                 public AvatarEntityAdapted<AnimatedSprite>,
+                 public AvatarEntityAdapted<Collisioner<R> >,
+                 public AvatarEntityFixed<Positionable<2> >,
+                 public AvatarEntityFixed<Stated> {
 public:
 
-  Element2D(Pont2D position, uint64_t actuatorsList, int64_t width, int64_t height, uint64_t graphics)
-    : zbe::SimpleMobilePO<2>(position, actuatorList), w(width), h(height), g(graphics), ea(0) {
-    zbe::AvatarEntityFixed<zbe::Avatar>::setAvatar(new zbe::BaseAvatar(this));
-    zbe::AvatarEntityFixed<zbe::Positionable<2> >::setAvatar(new zbe::SimplePositionable<2>(this));
-    zbe::AvatarEntityFixed<zbe::Stated>::setAvatar(new zbe::BaseStated(this));
+  //using Avatars = std::tuple<Avatar, Positionable<2>, Stated>;
+
+  Element2D(Point2D position, uint64_t actuatorsList, int64_t width, int64_t height, uint64_t graphics)
+    : SimpleTimeStamp(0),
+    SimplePositionPO<2>(position, actuatorsList), w(width), h(height), g(graphics), ea(0) {
+    AvatarEntityFixed<Avatar>::setAvatar(new BaseAvatar(this));
+    AvatarEntityFixed<Positionable<2> >::setAvatar(new BasePositionable<2>(this));
+    AvatarEntityFixed<Stated>::setAvatar(new BaseStated(this));
   }
 
-  int64_t getX() {return (PositionPO::getPosition()[0]);}
-  int64_t getY() {return (PositionPO::getPosition()[1]);}
+  int64_t getX() {return (SimplePositionPO::getPosition()[0]);}
+  int64_t getY() {return (SimplePositionPO::getPosition()[1]);}
   int64_t getW() {return (w);}
   int64_t getH() {return (h);}
   uint64_t getGraphics() {return (g);}
@@ -60,7 +69,14 @@ private:
   int64_t h;
   uint64_t g;
   int64_t ea;
-}
+};
+
+template<typename R>
+class CElement2D: public Countable<int64_t>, public Element2D<R> {
+public:
+  CElement2D (std::shared_ptr<Value<int64_t> > ninstaces, Point2D position, uint64_t actuatorsList, int64_t width, int64_t height, uint64_t graphics)
+  : Countable<int64_t>(ninstances), Element2D<R>(position, actuatorsList, width, height, graphics) {}
+};
 
 } // namespace zbe
 

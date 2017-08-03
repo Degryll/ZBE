@@ -405,9 +405,9 @@ bool intersectionMovingNSphereInsideAABB(NSphere<dim> nsphere, Vector<dim> direc
     for(unsigned i = 0; i < dim; i++) {
       double minDistance = direction[i] * TIME_QUANTUM_VALUE;
       if((e.minimum[i] - point[i]) >= (minDistance - PRECISION)) {
-      	point[i] -= r;
+      	point[i] = box.minimum[i];
       } else if ((e.maximum[i] - point[i]) <= (minDistance + PRECISION)) {
-      	point[i] += r;
+      	point[i] = box.maximum[i];
       }
     }
     time = t;

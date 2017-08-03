@@ -21,13 +21,14 @@ namespace zbe {
  */
 template<typename T>
 class SpriteSheet {
+public:
 
-    virtual ~SpriteSheet(){} //!< Virtual destrutor.
+  virtual ~SpriteSheet(){} //!< Virtual destrutor.
 
-    /** \brief Generate a sprite from a given entity.
-     *  \return generated sprite
-     **/
-    virtual Sprite generateSprite(AvatarEntity<T>* e) = 0;
+  /** \brief Generate a sprite from a given entity.
+   *  \return generated sprite
+   **/
+  virtual Sprite generateSprite(T* a) = 0;
 
 };
 

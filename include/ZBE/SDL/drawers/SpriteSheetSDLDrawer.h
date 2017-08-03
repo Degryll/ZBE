@@ -20,6 +20,8 @@
 #include "ZBE/SDL/system/SDLWindow.h"
 #include "ZBE/SDL/system/SDLImageStore.h"
 
+#include "ZBE/SDL/tools/SDLUtils.h"
+
 namespace zbe {
 
 /** \brief Class that know how to draw using SpriteSheets.
@@ -43,7 +45,20 @@ class SpriteSheetSDLDrawer : public Drawer<T> {
     /** \brief Draws the given entity.
      *  \param The entity to be drawn.
      */
-    void apply(AvatarEntity<T> *entity);
+    void apply(std::shared_ptr<AvatarEntity<T> > entity) {
+      T* avatar;
+      entity->assignAvatar(&avatar);
+      std::shared_ptr<SpriteSheet<T> > sst = rmss.get(avatar->getGraphics());
+      Sprite s = sst->generateSprite(avatar);
+
+      SDL_Rect src = convert2SDLRect(s.src);
+      SDL_Rect dst = convert2SDLRect(s.dst);
+
+      SDL_Point p;
+      p.x = s.dst.p.x + (s.dst.v.x / 2);
+      p.y = s.dst.p.y + (s.dst.v.y / 2);
+      window->render(imgStore->getTexture(s.g), &src, &dst, s.a, &p);
+    }
 
   private:
     SDLWindow* window;  //!< A SDL window with its context.

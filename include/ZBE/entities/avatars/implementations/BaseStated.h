@@ -12,13 +12,13 @@
 
 #include <cstdint>
 
-#include "ZBE/archetypes/State.h"
+#include "ZBE/entities/avatars/Stated.h"
 
 namespace zbe {
 
 /** \brief Base implementation of a state.
  */
-class BaseStated {
+class BaseStated : public Stated {
 public:
   BaseStated(const BaseStated&) = delete; //<! Avoid copy
   void operator=(const BaseStated&) = delete; //<! Avoid copy
@@ -31,15 +31,15 @@ public:
   /** \brief Setter for the state attribute.
    *  \param state The integer value for the state.
    */
-  void setState(uint64_t state) {state->setState(state)}
+  void setState(uint64_t state) {s->setState(state);}
 
   /** \brief Getter for the state attribute.
    *  \return The integer value of the state.
    */
-  uint64_t getState() {return state->getState()}
+  uint64_t getState() {return s->getState();}
 
 private:
-  State* state;
+  State* s;
 };
 
 }  // namespace zbe

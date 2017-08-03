@@ -83,7 +83,7 @@ class SDLWindow {
      */
     inline void setBackgroundColor(Uint8 red, Uint8 green, Uint8 blue, Uint8 alpha) {
       if(SDL_SetRenderDrawColor(renderer, red, green, blue, alpha)) {
-        zbe::SysError::setError(std::string("ERROR: SDL could not set the background color! SDL ERROR: ") + SDL_GetError());
+        SysError::setError(std::string("ERROR: SDL could not set the background color! SDL ERROR: ") + SDL_GetError());
       }
     }
 

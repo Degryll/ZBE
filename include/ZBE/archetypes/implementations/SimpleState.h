@@ -10,9 +10,11 @@
 #ifndef ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLESTATE_H
 #define ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLESTATE_H
 
+#include "ZBE/archetypes/State.h"
+
 namespace zbe {
 
-class SimpleState {
+class SimpleState : public State {
 public:
   SimpleState(uint64_t state = 0) : s(state) {}
 
@@ -21,7 +23,7 @@ public:
 
 private:
 	uint64_t s;
-}
+};
 
 }  // namespace zbe
 # endif //ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLESTATE_H
