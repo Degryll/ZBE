@@ -27,7 +27,7 @@ public:
   *  \param h height.
   *  \param graphics Index for the image in the store.
   */
-  SimpleSingleSprite (int64_t x = 0, int64_t y = 0, int64_t w = 0, int64_t h = 0, uint64_t graphics = 0) :
+  SimpleSingleSprite (int64_t x, int64_t y , int64_t w , int64_t h , uint64_t graphics ) :
   x(x), y(y), w(w), h(h), graphics(graphics) {}
 
   /** \brief Returns x.

@@ -16,7 +16,7 @@
 #include "ZBE/core/entities/AvatarEntity.h"
 #include "ZBE/core/entities/Entity.h"
 
-#include "ZBE/core/tools/shared/value.h"
+#include "ZBE/core/tools/shared/Value.h"
 
 #include "ZBE/archetypes/implementations/SimplePositionPO.h"
 #include "ZBE/archetypes/implementations/SimpleState.h"

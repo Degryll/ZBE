@@ -33,7 +33,7 @@ public:
     delete s;
 
     AvatarEntityContainer<Avatar, Positionable<2>, Stated>* aeContainer (new AvatarEntityContainer<Avatar, Positionable<2>, Stated>(e, e, e));
-    zbe::AABB2D aabb({e->getX(), e->getY()}, {e->getX()+e->getW(), e->getY()+e->getH()});
+    zbe::AABB2D aabb({(double)e->getX(), (double)e->getY()}, {(double)e->getX()+e->getW(), (double)e->getY()+e->getH()});
     std::shared_ptr<StaticLimiterAABB2D<R> > cObject(new zbe::StaticLimiterAABB2D<R>(aabb));
     std::shared_ptr<BoardInteractionTesterRO<R> > it(new zbe::BoardInteractionTesterRO<R>(aabb));//{e->getX(), e->getY()}, {e->getX()+e->getW(), e->getY()+e->getH()})
 

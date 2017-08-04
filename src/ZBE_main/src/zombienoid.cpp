@@ -33,7 +33,7 @@
 #include "ZBE/events/handlers/actuators/BouncerActuator.h"
 #include "ZBE/events/handlers/actuators/EraserActuator.h"
 
-#include "ZBE/behaviors/bounce.h"
+#include "ZBE/behaviors/Bounce.h"
 #include "ZBE/behaviors/UniformLinearMotion.h"
 
 #include "ZBE/events/handlers/actuators/ConditionalEraserActuator.h"
@@ -103,9 +103,6 @@ int zombienoidmain(int, char*[]) {
   const int BEHAVE_TICKET = SysIdGenerator::getId();
 
   const int BOARD_GRAPHICS = SysIdGenerator::getId();
-  const int BRICK_GRAPHICS = SysIdGenerator::getId();
-  const int BALL_GRAPHICS = SysIdGenerator::getId();
-  const int BAR_GRAPHICS = SysIdGenerator::getId();
 
   const int INPUTEVENT = SysIdGenerator::getId();
   const int TIMEEVENT = SysIdGenerator::getId();
@@ -119,20 +116,19 @@ int zombienoidmain(int, char*[]) {
   const int BALL_ACTUATORS_LIST = SysIdGenerator::getId();
   const int BAR_ACTUATORS_LIST = SysIdGenerator::getId();
 
-  const int BOARD_AS_COLLISIONER_LIST = SysIdGenerator::getId();
-  //const int BOARD_AS_ANIMATED_SPRITE_LIST = SysIdGenerator::getId();
+  //const int BOARD_AS_COLLISIONER_LIST = SysIdGenerator::getId();
 
-  const int BRICK_AS_COLLISIONER_LIST = SysIdGenerator::getId();
-  const int BRICK_AS_ANIMATED_SPRITE_LIST = SysIdGenerator::getId();
-  const int BRICK_LIST = SysIdGenerator::getId();
+  //const int BRICK_AS_COLLISIONER_LIST = SysIdGenerator::getId();
+  //const int BRICK_AS_ANIMATED_SPRITE_LIST = SysIdGenerator::getId();
+  //const int BRICK_LIST = SysIdGenerator::getId();
 
-  const int BALL_CNR_JOINT = SysIdGenerator::getId();
-  const int BALL_AS_ANIMATED_SPRITE_LIST = SysIdGenerator::getId();
+  const int BALL_CBS_JOINT = SysIdGenerator::getId();
+  //const int BALL_AS_ANIMATED_SPRITE_LIST = SysIdGenerator::getId();
   const int BALL_LIST = SysIdGenerator::getId();
 
-  const int BAR_AS_COLLISIONER_LIST = SysIdGenerator::getId();
-  const int BAR_AS_ANIMATED_SPRITE_LIST = SysIdGenerator::getId();
-  const int BAR_LIST = SysIdGenerator::getId();
+  //const int BAR_AS_COLLISIONER_LIST = SysIdGenerator::getId();
+  //const int BAR_AS_ANIMATED_SPRITE_LIST = SysIdGenerator::getId();
+  //const int BAR_LIST = SysIdGenerator::getId();
 
   const int BRICK_SS = SysIdGenerator::getId();
   const int BALL_SS = SysIdGenerator::getId();
@@ -168,6 +164,10 @@ int zombienoidmain(int, char*[]) {
   std::shared_ptr<JointAE<Collisionator<ZombienoidReactor> > > ctsJoint(new JointAE<Collisionator<ZombienoidReactor> >());
   rmct.insert(CTS_JOINT, ctsJoint);
 
+  ResourceManager<JointAE<Collisioner<ZombienoidReactor> > >& rmcn = ResourceManager<JointAE<Collisioner<ZombienoidReactor> > >::getInstance();
+  std::shared_ptr<JointAE<Collisioner<ZombienoidReactor> > > cbsJoint(new JointAE<Collisioner<ZombienoidReactor> >());
+  rmcn.insert(BALL_CBS_JOINT, cbsJoint);
+
   ResourceManager<JointAE<AnimatedSprite> >& rmas = ResourceManager<JointAE<AnimatedSprite> >::getInstance();
   std::shared_ptr<JointAE<AnimatedSprite> > asJoint (new JointAE<AnimatedSprite>());
   rmas.insert(AS_JOINT, asJoint);
@@ -178,16 +178,11 @@ int zombienoidmain(int, char*[]) {
 
   ResourceManager<std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* > >& rmaact = ResourceManager<std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* > >::getInstance();
 
-  ResourceManager<std::forward_list<ActiveElement2D<ZombienoidReactor> > >& rmAE2d = ResourceManager<std::forward_list<ActiveElement2D<ZombienoidReactor> > >::getInstance();
-
   zombienoid::ExitInputHandler terminator;
   ieg->addHandler(zbe::ZBEK_ESCAPE, &terminator);
 
-
-
-//drawing----------------------------------------------------------------------------------------------------
-  std::shared_ptr<Daemon> drawerDaemon(new  DrawerDaemon<AnimatedSprite, TicketedForwardList<AvatarEntity<AnimatedSprite > > >(std::make_shared<SpriteSheetSDLDrawer<AnimatedSprite> >(&window, &imgStore), AS_JOINT));
-
+  //drawing----------------------------------------------------------------------------------------------------
+  std::shared_ptr<Daemon> drawerDaemon(new  DrawerDaemon<AnimatedSprite, JointAE<AnimatedSprite> >(std::make_shared<SpriteSheetSDLDrawer<AnimatedSprite> >(&window, &imgStore), AS_JOINT));
   drawMaster->addDaemon(drawerDaemon);
 
   //board----------------------------------------------------------------------------------------------------
@@ -197,18 +192,14 @@ int zombienoidmain(int, char*[]) {
 
   std::shared_ptr<Element2D<ZombienoidReactor> > board(new Element2D<ZombienoidReactor>({MARGIN, MARGIN}, BOARD_ACTUATORS_LIST, WIDTH - (MARGIN * 2), HEIGHT - (MARGIN * 2), BOARD_GRAPHICS));
 
-  //std::shared_ptr<Adaptor<AnimatedSprite> > boardSpriteAdaptor(new Element2DAnimatedSpriteAdaptor(&(*board)));
-  //setAdaptor(board, boardSpriteAdaptor);
-
   std::shared_ptr<Adaptor<Collisioner<ZombienoidReactor> > > boardCollisionerAdaptor(new BoardConerAdaptor<ZombienoidReactor>(&(*board)));
   setAdaptor(board, boardCollisionerAdaptor);
 
   std::shared_ptr<TicketedFAE<Collisioner<ZombienoidReactor> > > boardCollisionerList(new TicketedFAE<Collisioner<ZombienoidReactor> >());
 
-  //std::shared_ptr<TicketedFAE<AnimatedSprite> > boardAnimatedSpriteList(new TicketedFAE<AnimatedSprite>());
-
   board->addToList(COLLISION_TICKET, boardCollisionerList->push_front(board));
-  //board->storeTicket(DRAW_TICKET, boardAnimatedSpriteList->insert(board));
+
+  cbsJoint->add(boardCollisionerList);
 
   //bricks---------------------------------------------------------------------------------------------------
 
@@ -220,27 +211,29 @@ int zombienoidmain(int, char*[]) {
   rmact.insert(BRICK_ACTUATORS_LIST, brickActuatorsList);
 
   int BRICK_GRAHPICS = imgStore.loadImg(brickImg);
-  std::shared_ptr<SpriteSheet<AnimatedSprite> > brickSS(new SimpleSpriteSheet(BRICK_GRAPHICS));
+  std::shared_ptr<SpriteSheet<AnimatedSprite> > brickSS(new SimpleSpriteSheet(BRICK_GRAHPICS));
   rmss.insert(BRICK_SS, brickSS);
+
+  std::shared_ptr<TicketedFAE<Collisioner<ZombienoidReactor> > > brickCollisionerList(new TicketedForwardList<AvatarEntity<Collisioner<ZombienoidReactor> > >());
+  std::shared_ptr<TicketedFAE<AnimatedSprite> > brickAnimatedSpriteList(new TicketedFAE<AnimatedSprite>());
+  //std::shared_ptr<TicketedForwardList<Element2D<ZombienoidReactor> > > brickList(new TicketedForwardList<Element2D<ZombienoidReactor> >());
+
+  cbsJoint->add(brickCollisionerList);
+  asJoint->add(brickAnimatedSpriteList);
+  //add BRICK_LIST to its behave joint
 
   for(int i = 0; i < NBRICKS; i++) {
 
-    std::shared_ptr<Element2D<ZombienoidReactor> > brick(new Element2D<ZombienoidReactor>({(BRICK_WIDTH*i)+MARGIN, MARGIN}, BRICK_ACTUATORS_LIST, BRICK_WIDTH, BRICK_HEIGHT, BRICK_SS));
+    std::shared_ptr<Element2D<ZombienoidReactor> > brick(new Element2D<ZombienoidReactor>({(double)(BRICK_WIDTH*i)+MARGIN, (double)MARGIN}, BRICK_ACTUATORS_LIST, (double)BRICK_WIDTH, (double)BRICK_HEIGHT, BRICK_SS));
     std::shared_ptr<Adaptor<AnimatedSprite> > brickSpriteAdaptor(new Element2DAnimatedSpriteAdaptor<ZombienoidReactor>(&(*brick)));
     setAdaptor(brick, brickSpriteAdaptor);
 
     std::shared_ptr<Adaptor<Collisioner<ZombienoidReactor> > > brickCollisionerAdaptor(new BlockConerAdaptor<ZombienoidReactor>(&(*brick)));
     setAdaptor(brick, brickCollisionerAdaptor);
 
-    std::shared_ptr<TicketedFAE<Collisioner<ZombienoidReactor> > > brickCollisionerList(new TicketedForwardList<AvatarEntity<Collisioner<ZombienoidReactor> > >());
-
-    std::shared_ptr<TicketedFAE<AnimatedSprite> > brickAnimatedSpriteList(new TicketedFAE<AnimatedSprite>());
-
-    std::shared_ptr<TicketedForwardList<Element2D<ZombienoidReactor> > > brickList(new TicketedForwardList<Element2D<ZombienoidReactor> >());
-
     brick->addToList(COLLISION_TICKET, brickCollisionerList->push_front(brick));
     brick->addToList(DRAW_TICKET, brickAnimatedSpriteList->push_front(brick));
-    brick->addToList(BEHAVE_TICKET, brickList->push_front(brick));
+    //brick->addToList(BEHAVE_TICKET, brickList->push_front(brick));
   }
 
   //ball-----------------------------------------------------------------------------------------------------
@@ -249,16 +242,32 @@ int zombienoidmain(int, char*[]) {
 
   ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* ballBouncerWrapper = new  ActuatorWrapperCommon<ZombienoidReactor, Bouncer<2>, Avatar, Bouncer<2>, Stated>(new BouncerActuator<ZombienoidReactor>());
   ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* ballEraserWrapper = new  ActuatorWrapperCommon<ZombienoidReactor, Avatar, Avatar, Bouncer<2>, Stated>(new ConditionalEraserActuator<ZombienoidReactor>());
-  ballActuatorsList->push_front(ballBouncerWrapper);
   ballActuatorsList->push_front(ballEraserWrapper);
+  ballActuatorsList->push_front(ballBouncerWrapper);
 
   rmaact.insert(BALL_ACTUATORS_LIST, ballActuatorsList);
 
-  int BALL_GRAHPICS = imgStore.loadImg(ballImg);
+  uint64_t BALL_GRAPHICS = imgStore.loadImg(ballImg);
   std::shared_ptr<SpriteSheet<AnimatedSprite> > ballSS(new SimpleSpriteSheet(BALL_GRAPHICS));
   rmss.insert(BALL_SS, ballSS);
 
-  std::shared_ptr<ActiveElement2D<ZombienoidReactor> > ball(new ActiveElement2D<ZombienoidReactor>({WIDTH/2, HEIGHT/2}, {BALL_V_X, BALL_V_Y}, BALL_ACTUATORS_LIST, BALL_CNR_JOINT, BALL_SIZE, BALL_SIZE, BALL_SS));
+  std::shared_ptr<TicketedFAE<Collisionator<ZombienoidReactor> > > ballCollisionatorsList(new TicketedFAE<Collisionator<ZombienoidReactor> >());
+  ctsJoint->add(ballCollisionatorsList);
+
+  std::shared_ptr<TicketedFAE<AnimatedSprite> > ballAnimatedSpriteList(new TicketedFAE<AnimatedSprite>());
+  asJoint->add(ballAnimatedSpriteList);
+
+  ResourceManager<TicketedForwardList<ActiveElement2D<ZombienoidReactor> > > & rmae2d = ResourceManager<TicketedForwardList<ActiveElement2D<ZombienoidReactor> > >::getInstance();
+  std::shared_ptr<TicketedForwardList<ActiveElement2D<ZombienoidReactor> > > ballList(new TicketedForwardList<ActiveElement2D<ZombienoidReactor> >());
+  rmae2d.insert(BALL_LIST, ballList);
+
+  std::shared_ptr<Daemon> ballBounce(new BehaviorDaemon<Bouncer<2>, TicketedForwardList<ActiveElement2D<ZombienoidReactor> > >(std::make_shared<Bounce<2> >(), BALL_LIST));
+  std::shared_ptr<Daemon> ballULM(new BehaviorDaemon<Movable<2>, TicketedForwardList<ActiveElement2D<ZombienoidReactor> > >(std::make_shared<UniformLinearMotion<2> >(), BALL_LIST));
+
+  commonBehaviorMaster->addDaemon(ballBounce);
+  commonBehaviorMaster->addDaemon(ballULM);
+
+  std::shared_ptr<ActiveElement2D<ZombienoidReactor> > ball(new ActiveElement2D<ZombienoidReactor>({WIDTH/2, HEIGHT/2}, {BALL_V_X, BALL_V_Y}, BALL_ACTUATORS_LIST, BALL_CBS_JOINT, BALL_SIZE, BALL_SIZE, BALL_SS));
 
   std::shared_ptr<Adaptor<AnimatedSprite> > ballSpriteAdaptor(new ActiveElement2DAnimatedSpriteAdaptor<ZombienoidReactor>(&(*ball)));
   setAdaptor(ball, ballSpriteAdaptor);
@@ -266,27 +275,25 @@ int zombienoidmain(int, char*[]) {
   std::shared_ptr<Adaptor<Collisionator<ZombienoidReactor> > > ballCollisionatorAdaptor(new BallCatorAdaptor<ZombienoidReactor>(&(*ball)));
   setAdaptor(ball, ballCollisionatorAdaptor);
 
-  std::shared_ptr<TicketedFAE<Collisionator<ZombienoidReactor> > > ballCollisionatorsList(new TicketedFAE<Collisionator<ZombienoidReactor> >());
-  std::shared_ptr<TicketedFAE<AnimatedSprite> > ballAnimatedSpriteList(new TicketedFAE<AnimatedSprite>());
-
-  std::shared_ptr<TicketedForwardList<ActiveElement2D<ZombienoidReactor> > > ballList(new TicketedForwardList<ActiveElement2D<ZombienoidReactor> >());
-
   ball->addToList(COLLISION_TICKET, ballCollisionatorsList->push_front(ball));
   ball->addToList(DRAW_TICKET, ballAnimatedSpriteList->push_front(ball));
   ball->addToList(BEHAVE_TICKET, ballList->push_front(ball));
-  ctsJoint->add(ballCollisionatorsList);
-
-  std::shared_ptr<Daemon> ballBounce(new BehaviorDaemon<Bouncer<2>, TicketedForwardList<ActiveElement2D<ZombienoidReactor> > >(std::make_shared<Bounce<2> >(), BALL_LIST));
-  std::shared_ptr<Daemon> ballULM(new BehaviorDaemon<Movable<2>, TicketedForwardList<ActiveElement2D<ZombienoidReactor> > >(std::make_shared<UniformLinearMotion<2> >(), BALL_LIST));
 
   //bar------------------------------------------------------------------------------------------------------
   std::shared_ptr<std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Positionable<2>, Stated >* > > barActuatorsList(new std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Positionable<2>, Stated >* >());
+  rmact.insert(BAR_ACTUATORS_LIST, barActuatorsList);
   //ActuatorWrapper<ZombienoidReactor, Avatar, Positionable<2>, Stated >* itemCatchWrapper = new  ActuatorWrapperCommon<ZombienoidReactor, void, Avatar, Positionable<2>, Stated >(new ItemCatcher<ZombienoidReactor>());
   //barActuatorsList->push_front(itemCatchWrapper);
 
-  rmact.insert(BAR_ACTUATORS_LIST, barActuatorsList);
+  std::shared_ptr<TicketedFAE<Collisioner<ZombienoidReactor> > > barCollisionerList(new TicketedFAE<Collisioner<ZombienoidReactor> >());
+  cbsJoint->add(barCollisionerList);
 
-  int BAR_GRAHPICS = imgStore.loadImg(barImg);
+  std::shared_ptr<TicketedFAE<AnimatedSprite> > barAnimatedSpriteList(new TicketedFAE<AnimatedSprite>());
+  asJoint->add(barAnimatedSpriteList);
+
+  //std::shared_ptr<TicketedForwardList<Element2D<ZombienoidReactor> > > barList(new TicketedForwardList<Element2D<ZombienoidReactor> >());
+
+  uint64_t BAR_GRAPHICS = imgStore.loadImg(barImg);
 
   std::shared_ptr<SpriteSheet<AnimatedSprite> > barSS(new SimpleSpriteSheet(BAR_GRAPHICS));
   rmss.insert(BAR_SS, barSS);
@@ -299,17 +306,9 @@ int zombienoidmain(int, char*[]) {
   std::shared_ptr<Adaptor<Collisioner<ZombienoidReactor> > > barCollisionerAdaptor(new BlockConerAdaptor<ZombienoidReactor>(&(*bar)));
   setAdaptor(bar, barCollisionerAdaptor);
 
-  std::shared_ptr<TicketedFAE<Collisioner<ZombienoidReactor> > > barCollisionerList(new TicketedFAE<Collisioner<ZombienoidReactor> >());
-
-  std::shared_ptr<TicketedFAE<AnimatedSprite> > barAnimatedSpriteList(new TicketedFAE<AnimatedSprite>());
-
-  std::shared_ptr<TicketedForwardList<Element2D<ZombienoidReactor> > > barList(new TicketedForwardList<Element2D<ZombienoidReactor> >());
-
   bar->addToList(COLLISION_TICKET, barCollisionerList->push_front(bar));
   bar->addToList(DRAW_TICKET, barAnimatedSpriteList->push_front(bar));
-  bar->addToList(BEHAVE_TICKET, barList->push_front(bar));
-
-  //std::shared_ptr<Daemon> barMouseFollow(new BehaviorDaemon<Positionable<2>, TicketedForwardList<ActiveElement2D<ZombienoidReactor> > >(std::make_shared<MouseXIH>(bar), BAR_LIST));
+  //bar->addToList(BEHAVE_TICKET, barList->push_front(bar));
 
   MouseXIH mouseX(bar);
   ieg->addHandler(ZBEK_MOUSE_OFFSET_X, &mouseX);

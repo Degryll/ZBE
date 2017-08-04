@@ -17,14 +17,14 @@ namespace zbe {
 
 /** \brief This define an avatar that can be drawn in any direction.
  */
-class SimpleRotatedSprite : virtual public RotatedSprite, virtual public SimpleSingleSprite {
+class SimpleRotatedSprite : virtual public RotatedSprite, public SimpleSingleSprite {
 
 public:
 
   /** \brief Parametrized Constructor.
    *  \param degrees Rotation degrees.
    */
-  SimpleRotatedSprite(int64_t x = 0, int64_t y = 0, int64_t w = 0, int64_t h = 0, uint64_t graphics = 0, double degrees  = 0.0) :
+  SimpleRotatedSprite(int64_t x, int64_t y, int64_t w, int64_t h, uint64_t graphics, double degrees) :
   SimpleSingleSprite(x, y, w, h, graphics), degrees(degrees) {}
 
   /** \brief Returns degrees.

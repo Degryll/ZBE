@@ -33,7 +33,7 @@ public:
 
     delete s;
 
-    s = new SimpleAnimatedSprite(e->getX(), e->getY(), e->getW(), e->getH(), e->getGraphics(), e->getVelocity().getDegrees(), e->getState(), e->getTimeStamp());
+    s = new SimpleAnimatedSprite(e->getX(), e->getY(), e->getW(), e->getH(), e->getGraphics(), 0, e->getState(), e->getTimeStamp());
 
 
     return (s);

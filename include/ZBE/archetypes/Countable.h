@@ -10,7 +10,7 @@
 #ifndef ZBE_ARCHETYPES_COUNTABLE_H
 #define ZBE_ARCHETYPES_COUNTABLE_H
 
-#include "ZBE/core/tools/shared/value.h"
+#include "ZBE/core/tools/shared/Value.h"
 
 namespace zbe {
 

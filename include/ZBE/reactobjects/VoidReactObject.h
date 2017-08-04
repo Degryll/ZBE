@@ -17,11 +17,11 @@ namespace zbe {
 /** \brief Simple implementations of null react objects.
  */
 template <typename R>
-class VoidReactObject : public ReactObjectCommon<VoidReactObject<R>, R> {
+class VoidReactObject : public ReactObjectCommon<R, VoidReactObject<R> > {
 public:
   /** \brief Empty constructor.
    */
-  VoidReactObject() : ReactObjectCommon<VoidReactObject<R>, R>(this) {}
+  VoidReactObject() : ReactObjectCommon<R, VoidReactObject<R> >(this) {}
 
   /** \brief Virtual destructor.
    */

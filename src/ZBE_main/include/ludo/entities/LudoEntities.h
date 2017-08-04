@@ -40,9 +40,9 @@ namespace ludo {
 /****  ReactObjects ****/
 
 template <typename R>
-class DestroyerReactObject : public zbe::ReactObjectCommon<DestroyerReactObject<R>, R> {
+class DestroyerReactObject : public zbe::ReactObjectCommon<R, DestroyerReactObject<R> > {
 public:
-  DestroyerReactObject() : zbe::ReactObjectCommon<DestroyerReactObject<R>, R>(this) {}
+  DestroyerReactObject() : zbe::ReactObjectCommon<R, DestroyerReactObject<R> >(this) {}
   virtual ~DestroyerReactObject() {}
 };
 

@@ -150,6 +150,19 @@ struct AvatarEntityContainer<T> {
   AvatarEntity<T>* aet;
 };
 
+template <typename ...A>
+class Avatarable {
+public:
+    using AECBases = AvatarEntityContainer<A...>;
+    Avatarable(AvatarEntity<A>*... a) : aec(a...){}
+    const AECBases& getAvatarEntityContainer(){
+        return aec;
+    }
+private:
+    AvatarEntityContainer<A...> aec;
+};
+
+
 }  // namespace ZBE
 
 #endif  // ZBE_CORE_ENTITIES_AVATARENTITY_H_

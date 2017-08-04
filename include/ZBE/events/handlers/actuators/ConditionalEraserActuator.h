@@ -13,7 +13,7 @@
 #include "ZBE/core/events/handlers/Actuator.h"
 #include "ZBE/core/entities/avatars/Avatar.h"
 
-#include "ZBE/events/ReactObjects/InteractionTesterRO.h"
+#include "ZBE/events/reactobjects/InteractionTesterRO.h"
 
 namespace zbe {
 

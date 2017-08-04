@@ -33,11 +33,11 @@ public:
 
     delete s;
 
-    AvatarEntityContainer<Avatar, Positionable<2>, Stated >* aeContainer (new AvatarEntityContainer<Avatar, Positionable<2>, Stated >(e, e, e));
-    std::shared_ptr<StaticLimiterAABB2D<R> > cObject(new StaticLimiterAABB2D<R>(AABB2D({e->getX(), e->getY()}, {e->getX()+e->getW(), e->getY()+e->getH()})));
+    AvatarEntityContainer<Avatar, Bouncer<2>, Stated >* aeContainer (new AvatarEntityContainer<Avatar, Bouncer<2>, Stated >(e, e, e));
+    std::shared_ptr<ConstantMovingCircle<R> > cObject(new ConstantMovingCircle<R>(Circle(e->getPosition(), e->getWidth()/2.0), e->getVelocity()));
     std::shared_ptr<VoidReactObject<R> > vro(new VoidReactObject<R>());
 
-    s = new CollisionatorCommon<R,Avatar, Positionable<2>, Stated >(aeContainer, cObject, vro, e->getActuatorsList(), e->getCollisionablesList());
+    s = new CollisionatorCommon<R,Avatar, Bouncer<2>, Stated >(aeContainer, cObject, vro, e->getActuatorsList(), e->getCollisionablesList());
 
     return (s);
   }

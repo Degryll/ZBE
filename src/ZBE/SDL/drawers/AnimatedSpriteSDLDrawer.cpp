@@ -11,7 +11,7 @@
 
 namespace zbe {
 
-void AnimatedSpriteSDLDrawer::apply(std::shared_ptr<AvatarEntity<AnimatedSprite> > entity) {/*
+void AnimatedSpriteSDLDrawer::apply(std::shared_ptr<AvatarEntity<AnimatedSprite> > /*entity*/) {/*
   AnimatedSprite* avatar;
   entity->assignAvatar(&avatar);
   int64_t w = avatar->getW()[avatar->getState()];

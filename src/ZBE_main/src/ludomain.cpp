@@ -76,7 +76,7 @@ int ludomain(int, char** ) {
     HEIGHT = 768
   };
 
-  //int GENERATORLIST = zbe::SysIdGenerator::getId();
+  //int GENERATORLIST = SysIdGenerator::getId();
 
   const int INPUTEVENT = SysIdGenerator::getId();
   const int COLLISIONEVENT = SysIdGenerator::getId();
@@ -112,7 +112,7 @@ int ludomain(int, char** ) {
 
   printf("Building generator master\n");fflush(stdout);
   //DaemonMaster gema;
-  std::shared_ptr<zbe::DaemonMaster> gema(new zbe::DaemonMaster());
+  std::shared_ptr<DaemonMaster> gema(new DaemonMaster());
   printf("|------------------------ Input Event Generator-------------|\n");fflush(stdout);
   printf("Building SDLEventDispatcher\n");fflush(stdout);
   printf("Will extract data from SDL and get it usable for the engine\n");fflush(stdout);
@@ -160,10 +160,10 @@ int ludomain(int, char** ) {
   printf("|-------------------- Drawing system ----------------------|\n");fflush(stdout);
   printf("Building the window to draw on\n");fflush(stdout);
   SDLWindow window(WIDTH,HEIGHT);
-  zbe::SDLImageStore imgStore(window.getRenderer());
+  SDLImageStore imgStore(window.getRenderer());
   printf("Creating draw master list\n");fflush(stdout);
   //DaemonMaster drawMaster;
-  std::shared_ptr<zbe::DaemonMaster> drawMaster(new zbe::DaemonMaster());
+  std::shared_ptr<DaemonMaster> drawMaster(new DaemonMaster());
   printf("Creating drawables list\n");fflush(stdout);
   std::shared_ptr<TicketedForwardList<AvatarEntity<SingleSprite> > > sprites(new TicketedForwardList<AvatarEntity<SingleSprite> >());
   ResourceManager<TicketedForwardList<AvatarEntity<SingleSprite > > >& lmAESingleSprite = ResourceManager<TicketedForwardList<AvatarEntity<SingleSprite> > >::getInstance();
@@ -188,9 +188,9 @@ int ludomain(int, char** ) {
   drawMaster->addDaemon(rDrawerDaemon);
   printf("|-------------------- General Daemons ---------------------|\n");fflush(stdout);
   //DaemonMaster commonBehaviorMaster;
-  std::shared_ptr<zbe::DaemonMaster> commonBehaviorMaster(new zbe::DaemonMaster());
+  std::shared_ptr<DaemonMaster> commonBehaviorMaster(new DaemonMaster());
   //DaemonMaster reactBehaviorMaster;
-  std::shared_ptr<zbe::DaemonMaster> reactBehaviorMaster(new zbe::DaemonMaster());
+  std::shared_ptr<DaemonMaster> reactBehaviorMaster(new DaemonMaster());
   std::shared_ptr<TicketedForwardList<AvatarEntity<Movable<2> > > > vAEMovable(new TicketedForwardList<AvatarEntity<Movable<2> > >());
   auto& lmAEMovable = ResourceManager<TicketedForwardList<AvatarEntity<Movable<2> > > >::getInstance();
   lmAEMovable.insert(MOVABLELIST, vAEMovable);
@@ -366,15 +366,15 @@ int ludomain(int, char** ) {
   teg->addTimer(expeller, SECOND/16);
   printf("|==========================================================|\n");fflush(stdout);
 
-  std::shared_ptr<zbe::Daemon> prltd = std::make_shared<zbe::BasicPreLoopTimeDaemon>();
-  std::shared_ptr<zbe::Daemon> prlsdl = std::make_shared<zbe::BasicPreLoopSDLDaemon>(&window);
-  std::shared_ptr<zbe::Daemon> postLoop = std::make_shared<zbe::BasicPostLoopSDLDaemon>(&window);
-  std::shared_ptr<zbe::DaemonMaster> preLoop(new zbe::DaemonMaster());
+  std::shared_ptr<Daemon> prltd = std::make_shared<BasicPreLoopTimeDaemon>();
+  std::shared_ptr<Daemon> prlsdl = std::make_shared<BasicPreLoopSDLDaemon>(&window);
+  std::shared_ptr<Daemon> postLoop = std::make_shared<BasicPostLoopSDLDaemon>(&window);
+  std::shared_ptr<DaemonMaster> preLoop(new DaemonMaster());
 
   preLoop->addDaemon(prlsdl);
   preLoop->addDaemon(prltd);
 
-  zbe::MainLoop mainLoop(preLoop, postLoop, gema, commonBehaviorMaster, reactBehaviorMaster, drawMaster);
+  MainLoop mainLoop(preLoop, postLoop, gema, commonBehaviorMaster, reactBehaviorMaster, drawMaster);
   mainLoop.loop();
 
   return 0;

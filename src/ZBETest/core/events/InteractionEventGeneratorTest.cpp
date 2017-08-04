@@ -50,7 +50,7 @@ class Coner : public zbe::AvatarEntityFixed<A>, public zbe::AvatarEntityFixed<zb
     Coner(std::shared_ptr<zbe::CollisionObject<R> > co, uint64_t actuators, int id)
         : a(id) {
           zbe::AvatarEntityFixed<A >::setAvatar(&a);
-          zbe::AvatarEntityFixed<zbe::Collisioner<R> >::setAvatar(new zbe::CollisionerCommon<R, A>(new zbe::AvatarEntityContainer<A>(this), co, std::make_shared<zbe::ReactObjectCommon<A, R> >(&a), actuators));
+          zbe::AvatarEntityFixed<zbe::Collisioner<R> >::setAvatar(new zbe::CollisionerCommon<R, A>(new zbe::AvatarEntityContainer<A>(this), co, std::make_shared<zbe::ReactObjectCommon<R, A> >(&a), actuators));
         }
     ~Coner(){}
     A a;
@@ -61,7 +61,7 @@ class Cator :  public zbe::AvatarEntityFixed<A>, public zbe::AvatarEntityFixed<z
     Cator(std::shared_ptr<zbe::CollisionObject<R> > co, uint64_t actuators, uint64_t listId, int id)
       : a(id) {
         zbe::AvatarEntityFixed<A >::setAvatar(&a);
-        zbe::AvatarEntityFixed<zbe::Collisionator<R> >::setAvatar(new  zbe::CollisionatorCommon<R, A>(new zbe::AvatarEntityContainer<A>(this), co, std::make_shared<zbe::ReactObjectCommon<A, R> >(&a), actuators, listId));
+        zbe::AvatarEntityFixed<zbe::Collisionator<R> >::setAvatar(new  zbe::CollisionatorCommon<R, A>(new zbe::AvatarEntityContainer<A>(this), co, std::make_shared<zbe::ReactObjectCommon<R, A> >(&a), actuators, listId));
       }
     ~Cator(){}
     A a;

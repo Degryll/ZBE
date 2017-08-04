@@ -24,7 +24,7 @@ public:
   /** \brief Parametrized Constructor.
    *  \param time Current time of the animated sprite.
    */
-  SimpleAnimatedSprite(int64_t x = 0, int64_t y = 0, int64_t w = 0, int64_t h = 0, uint64_t graphics = 0, double degrees  = 0.0, uint64_t state = 0, uint64_t time = 0) :
+  SimpleAnimatedSprite(int64_t x, int64_t y, int64_t w, int64_t h, uint64_t graphics, double degrees, uint64_t state, uint64_t time) :
   SimpleStatedSprite(x, y, w, h, graphics, degrees, state), time(time) {}
 
   /** \brief Returns time.

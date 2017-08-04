@@ -21,10 +21,9 @@ class ReactObject {
 		virtual void act(R* reactor) = 0;
 };
 
-
 /** \brief Object against which to react. Common code. Implementers should use this Class instead of ReactObject.
  */
-template <typename T, typename R>
+template <typename R, typename T>
 class ReactObjectCommon : public ReactObject<R> {
   public:
     ReactObjectCommon(const ReactObjectCommon&) = delete;

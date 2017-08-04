@@ -18,10 +18,10 @@ namespace zbe {
 /** @brief Interface for a ReactObject capable of test if a collisionData meets a given condition.
  */
 template<typename R>
-class InteractionTesterRO : public ReactObjectCommon<InteractionTesterRO<R>, R> {
+class InteractionTesterRO : public ReactObjectCommon<R, InteractionTesterRO<R> > {
 public:
   InteractionTesterRO(InteractionTesterRO* itRO)
-    : ReactObjectCommon<InteractionTesterRO<R>, R>(itRO) {}
+    : ReactObjectCommon<R, InteractionTesterRO<R> >(itRO) {}
 
   virtual bool test(CollisionData *data) = 0;
 };
