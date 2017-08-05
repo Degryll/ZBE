@@ -87,13 +87,13 @@ int zombienoidmain(int, char*[]) {
     HEIGHT = 768,
     MARGIN = 32,
     NBRICKS = 10,
-    BRICK_WIDTH = 52,
+    BRICK_WIDTH = 51,
     BRICK_HEIGHT = 32,
     BRICK_COLS = 12,
     BRICK_ROWS = 8,
     BALL_SIZE = 32,
-    BALL_V_X = 500,
-    BALL_V_Y = 500,
+    BALL_V_X = -500,
+    BALL_V_Y = -500,
     BAR_I_WIDTH = 161,
     BAR_HEIGHT = 32,
     BAR_MARGIN = 32
@@ -227,6 +227,7 @@ int zombienoidmain(int, char*[]) {
     std::shared_ptr<Element2D<ZombienoidReactor> > brick(new Element2D<ZombienoidReactor>({(double)(BRICK_WIDTH*i)+MARGIN, (double)MARGIN}, BRICK_ACTUATORS_LIST, (double)BRICK_WIDTH, (double)BRICK_HEIGHT, BRICK_SS));
     std::shared_ptr<Adaptor<AnimatedSprite> > brickSpriteAdaptor(new Element2DAnimatedSpriteAdaptor<ZombienoidReactor>(&(*brick)));
     setAdaptor(brick, brickSpriteAdaptor);
+    brick->setState(rand() % 16);
 
     std::shared_ptr<Adaptor<Collisioner<ZombienoidReactor> > > brickCollisionerAdaptor(new BlockConerAdaptor<ZombienoidReactor>(&(*brick)));
     setAdaptor(brick, brickCollisionerAdaptor);

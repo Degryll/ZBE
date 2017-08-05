@@ -34,7 +34,7 @@ public:
    **/
   Sprite generateSprite(AnimatedSprite* a) {
     //Sprite(Region2D src, Region2D dst, double angle, uint64_t graphics)
-    Sprite s(Region<2>({0.0,0.0},{(double)a->getW(), (double)a->getH()}),Region<2>({(double)a->getX(), (double)a->getY()}, {(double)a->getW(), (double)a->getH()}), a->getDegrees(), id);
+    Sprite s(Region<2>({(double)a->getState()*a->getW(),0.0},{(double)a->getW(), (double)a->getH()}),Region<2>({(double)a->getX(), (double)a->getY()}, {(double)a->getW(), (double)a->getH()}), a->getDegrees(), id);
     return s;
   }
 private:
