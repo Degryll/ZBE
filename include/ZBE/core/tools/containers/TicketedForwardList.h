@@ -71,7 +71,7 @@ public:
    *  \return An iterator to the element past the end of the sequence.
    */
   bool empty() {
-    return (l.empty());
+    return (this->begin() == this->end());
   }
 
   /** \brief Removes all elements from the container (which are destroyed), and leaving the container with a size of 0.

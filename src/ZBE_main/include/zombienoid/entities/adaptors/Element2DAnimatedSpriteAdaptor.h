@@ -29,11 +29,8 @@ public:
   ~Element2DAnimatedSpriteAdaptor() {delete s;}
 
   AnimatedSprite* getAvatar() {
-
     delete s;
-
     s = new SimpleAnimatedSprite(e->getX(), e->getY(), e->getW(), e->getH(), e->getGraphics(), 0, e->getState(), e->getTimeStamp());
-
     return (s);
   }
 

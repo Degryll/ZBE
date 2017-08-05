@@ -19,10 +19,8 @@ namespace zbe {
 template<typename J, typename L, typename E> //!< Joint type, List type, Element type.
 class JointIterator : public std::iterator<std::forward_iterator_tag, E>{
 public:
-
-  JointIterator(J *l) : l(l), jit(l->begin()), lit((*jit)->begin()) {}
+  JointIterator(J *l) : l(l), jit(firstNonEmptyL()), lit(firstElement()) {}
   JointIterator(J *l, typename J::iterator jit) : l(l), jit(jit), lit() {}
-  JointIterator(J *l, typename J::iterator jit, typename  L::iterator lit) : l(l), jit(jit), lit(lit) {}
   JointIterator(const JointIterator& rhs) : l(rhs.l), jit(rhs.jit), lit(rhs.lit) {}
 
   JointIterator& operator=(const JointIterator& rhs){
@@ -35,7 +33,7 @@ public:
   JointIterator& operator++() {
     lit++;
     if(lit == (*jit)->end()){
-      jit++;
+      jit = nextNonEmptyL(++jit);
       if(jit != l->end()){
         lit = (*jit)->begin();
       }
@@ -66,6 +64,20 @@ public:
   }
 
 private:
+  typename J::iterator nextNonEmptyL(typename J::iterator nextJit) {
+      while(nextJit != l->end() && (*nextJit)->empty()) ++nextJit;
+      return (nextJit);
+  }
+
+  typename J::iterator firstNonEmptyL() {
+      return (nextNonEmptyL(l->begin()));
+  }
+
+  typename L::iterator firstElement() {
+      if(jit != l->end()) return ((*jit)->begin());
+      else return typename L::iterator();
+  }
+
   J *l;
   typename J::iterator jit;
   typename L::iterator lit;

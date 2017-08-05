@@ -92,9 +92,9 @@ int zombienoidmain(int, char*[]) {
     BRICK_COLS = 12,
     BRICK_ROWS = 8,
     BALL_SIZE = 32,
-    BALL_V_X = 100,
-    BALL_V_Y = 100,
-    BAR_I_WIDTH = 128,
+    BALL_V_X = 500,
+    BALL_V_Y = 500,
+    BAR_I_WIDTH = 161,
     BAR_HEIGHT = 32,
     BAR_MARGIN = 32
   };
@@ -240,10 +240,12 @@ int zombienoidmain(int, char*[]) {
 
   std::shared_ptr<std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated >* > > ballActuatorsList(new std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated >* >());
 
-  ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* ballBouncerWrapper = new  ActuatorWrapperCommon<ZombienoidReactor, Bouncer<2>, Avatar, Bouncer<2>, Stated>(new BouncerActuator<ZombienoidReactor>());
+  ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* ballBouncerVoidWrapper = new  ActuatorWrapperCommon<ZombienoidReactor, Bouncer<2>, Avatar, Bouncer<2>, Stated>(new BouncerActuator<ZombienoidReactor, zbe::VoidReactObject<ZombienoidReactor> >());
+  ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* ballBouncerITWrapper = new  ActuatorWrapperCommon<ZombienoidReactor, Bouncer<2>, Avatar, Bouncer<2>, Stated>(new BouncerActuator<ZombienoidReactor, zbe::InteractionTesterRO<ZombienoidReactor>>());
   ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* ballEraserWrapper = new  ActuatorWrapperCommon<ZombienoidReactor, Avatar, Avatar, Bouncer<2>, Stated>(new ConditionalEraserActuator<ZombienoidReactor>());
+  ballActuatorsList->push_front(ballBouncerVoidWrapper);
+  ballActuatorsList->push_front(ballBouncerITWrapper);
   ballActuatorsList->push_front(ballEraserWrapper);
-  ballActuatorsList->push_front(ballBouncerWrapper);
 
   rmaact.insert(BALL_ACTUATORS_LIST, ballActuatorsList);
 
@@ -266,7 +268,6 @@ int zombienoidmain(int, char*[]) {
 
   commonBehaviorMaster->addDaemon(ballBounce);
   commonBehaviorMaster->addDaemon(ballULM);
-
   std::shared_ptr<ActiveElement2D<ZombienoidReactor> > ball(new ActiveElement2D<ZombienoidReactor>({WIDTH/2, HEIGHT/2}, {BALL_V_X, BALL_V_Y}, BALL_ACTUATORS_LIST, BALL_CBS_JOINT, BALL_SIZE, BALL_SIZE, BALL_SS));
 
   std::shared_ptr<Adaptor<AnimatedSprite> > ballSpriteAdaptor(new ActiveElement2DAnimatedSpriteAdaptor<ZombienoidReactor>(&(*ball)));

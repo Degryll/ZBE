@@ -23,10 +23,10 @@ namespace zbe {
 
 /** \brief Actuator capable of making a entity bounce.
  */
-template <typename R>
+template <typename R, typename RO>
 class BouncerActuator: public Actuator<Bouncer<2>, R> {
   public:
-    void act(VoidReactObject<R>*) {
+    void act(RO*) {
       Bouncer<2> * gb = Actuator<Bouncer<2>, R>::getCollisioner();
       CollisionData * cd = Actuator<Bouncer<2>, R>::getCollisionData();
       Vector<2> n = gb->getPosition() - cd->getPoint();

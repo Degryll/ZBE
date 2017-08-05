@@ -30,12 +30,10 @@ public:
   ~ActiveElement2DAnimatedSpriteAdaptor() {delete s;}
 
   AnimatedSprite* getAvatar() {
-
     delete s;
-
-    s = new SimpleAnimatedSprite(e->getX(), e->getY(), e->getW(), e->getH(), e->getGraphics(), 0, e->getState(), e->getTimeStamp());
-
-
+    double hw = e->getW()/2.0;
+    double hh = e->getH()/2.0;
+    s = new SimpleAnimatedSprite(e->getX()-hw, e->getY()-hh, e->getW(), e->getH(), e->getGraphics(), 0, e->getState(), e->getTimeStamp());
     return (s);
   }
 
