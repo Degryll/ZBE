@@ -88,14 +88,18 @@ int zombienoidmain(int, char*[]) {
     WIDTH = 1024,
     HEIGHT = 768,
     MARGIN = 32,
-    NBRICKS = 10,
+    NBALLS = 3,
+    BRICKS_X_MARGIN = 123,
+    BRICKS_Y_MARGIN = 128,
+    NBRICKS_X = 14,
+    NBRICKS_Y = 5,
     BRICK_WIDTH = 51,
     BRICK_HEIGHT = 32,
     BRICK_COLS = 12,
     BRICK_ROWS = 8,
     BALL_SIZE = 32,
-    BALL_V_X = -500,
-    BALL_V_Y = -500,
+    BALL_V_X = -300,
+    BALL_V_Y = -300,
     BAR_I_WIDTH = 161,
     BAR_HEIGHT = 32,
     BAR_MARGIN = 32
@@ -229,19 +233,21 @@ int zombienoidmain(int, char*[]) {
   std::shared_ptr<Daemon> brickEraserLT(new PunisherDaemon<StateLTEraser<Element2D<ZombienoidReactor> >, TicketedForwardList<Element2D<ZombienoidReactor> > >(std::make_shared<StateLTEraser<Element2D<ZombienoidReactor> > >(0), BRICK_LIST));
   reactBehaviorMaster->addDaemon(brickEraserLT);
 
-  for(int i = 0; i < NBRICKS; i++) {
+  srand(time(0));
+  for(int i = 0; i < NBRICKS_X; i++) {
+    for(int j = 0; j < NBRICKS_Y; j++) {
+        std::shared_ptr<Element2D<ZombienoidReactor> > brick(new Element2D<ZombienoidReactor>({(double)(BRICK_WIDTH*i)+MARGIN + BRICKS_X_MARGIN, (double)BRICKS_Y_MARGIN+(double)(BRICK_HEIGHT*j)+MARGIN}, BRICK_ACTUATORS_LIST, (double)BRICK_WIDTH, (double)BRICK_HEIGHT, BRICK_SS));
+        std::shared_ptr<Adaptor<AnimatedSprite> > brickSpriteAdaptor(new Element2DAnimatedSpriteAdaptor<ZombienoidReactor>(&(*brick)));
+        setAdaptor(brick, brickSpriteAdaptor);
+        brick->setState(rand() % 4);
 
-    std::shared_ptr<Element2D<ZombienoidReactor> > brick(new Element2D<ZombienoidReactor>({(double)(BRICK_WIDTH*i)+MARGIN, (double)MARGIN}, BRICK_ACTUATORS_LIST, (double)BRICK_WIDTH, (double)BRICK_HEIGHT, BRICK_SS));
-    std::shared_ptr<Adaptor<AnimatedSprite> > brickSpriteAdaptor(new Element2DAnimatedSpriteAdaptor<ZombienoidReactor>(&(*brick)));
-    setAdaptor(brick, brickSpriteAdaptor);
-    brick->setState(rand() % 16);
+        std::shared_ptr<Adaptor<Collisioner<ZombienoidReactor> > > brickCollisionerAdaptor(new BlockConerAdaptor<ZombienoidReactor>(&(*brick)));
+        setAdaptor(brick, brickCollisionerAdaptor);
 
-    std::shared_ptr<Adaptor<Collisioner<ZombienoidReactor> > > brickCollisionerAdaptor(new BlockConerAdaptor<ZombienoidReactor>(&(*brick)));
-    setAdaptor(brick, brickCollisionerAdaptor);
-
-    brick->addToList(COLLISION_TICKET, brickCollisionerList->push_front(brick));
-    brick->addToList(DRAW_TICKET, brickAnimatedSpriteList->push_front(brick));
-    brick->addToList(BEHAVE_TICKET, brickList->push_front(brick));
+        brick->addToList(COLLISION_TICKET, brickCollisionerList->push_front(brick));
+        brick->addToList(DRAW_TICKET, brickAnimatedSpriteList->push_front(brick));
+        brick->addToList(BEHAVE_TICKET, brickList->push_front(brick));
+    }
   }
 
   //ball-----------------------------------------------------------------------------------------------------
@@ -276,17 +282,29 @@ int zombienoidmain(int, char*[]) {
 
   commonBehaviorMaster->addDaemon(ballBounce);
   commonBehaviorMaster->addDaemon(ballULM);
-  std::shared_ptr<ActiveElement2D<ZombienoidReactor> > ball(new ActiveElement2D<ZombienoidReactor>({WIDTH/2, HEIGHT/2}, {BALL_V_X, BALL_V_Y}, BALL_ACTUATORS_LIST, BALL_CBS_JOINT, BALL_SIZE, BALL_SIZE, BALL_SS));
 
-  std::shared_ptr<Adaptor<AnimatedSprite> > ballSpriteAdaptor(new ActiveElement2DAnimatedSpriteAdaptor<ZombienoidReactor>(&(*ball)));
-  setAdaptor(ball, ballSpriteAdaptor);
+  for(int i = 0; i < NBALLS; i++) {
+    int64_t vt = 400;
+    double vAngleL = rand()%3600;
+    vAngleL/=10;
+    double vAngleR = rand()%100;
+    vAngleR/=1000;
+    double vAngle = vAngleL + vAngleR;
+    int64_t vx = sin(vAngle*PI/180)*vt;
+    int64_t vy = cos(vAngle*PI/180)*vt;
 
-  std::shared_ptr<Adaptor<Collisionator<ZombienoidReactor> > > ballCollisionatorAdaptor(new BallCatorAdaptor<ZombienoidReactor>(&(*ball)));
-  setAdaptor(ball, ballCollisionatorAdaptor);
+    std::shared_ptr<ActiveElement2D<ZombienoidReactor> > ball(new ActiveElement2D<ZombienoidReactor>({WIDTH/2.0, HEIGHT/2.0}, {vx+(2.0*i), (double)vy}, BALL_ACTUATORS_LIST, BALL_CBS_JOINT, BALL_SIZE, BALL_SIZE, BALL_SS));
 
-  ball->addToList(COLLISION_TICKET, ballCollisionatorsList->push_front(ball));
-  ball->addToList(DRAW_TICKET, ballAnimatedSpriteList->push_front(ball));
-  ball->addToList(BEHAVE_TICKET, ballList->push_front(ball));
+    std::shared_ptr<Adaptor<AnimatedSprite> > ballSpriteAdaptor(new ActiveElement2DAnimatedSpriteAdaptor<ZombienoidReactor>(&(*ball)));
+    setAdaptor(ball, ballSpriteAdaptor);
+
+    std::shared_ptr<Adaptor<Collisionator<ZombienoidReactor> > > ballCollisionatorAdaptor(new BallCatorAdaptor<ZombienoidReactor>(&(*ball)));
+    setAdaptor(ball, ballCollisionatorAdaptor);
+
+    ball->addToList(COLLISION_TICKET, ballCollisionatorsList->push_front(ball));
+    ball->addToList(DRAW_TICKET, ballAnimatedSpriteList->push_front(ball));
+    ball->addToList(BEHAVE_TICKET, ballList->push_front(ball));
+  }
 
   //bar------------------------------------------------------------------------------------------------------
   std::shared_ptr<std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Positionable<2>, Stated >* > > barActuatorsList(new std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Positionable<2>, Stated >* >());
