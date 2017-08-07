@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file Stated.h
  * @since 2017-06-05
- * @date 2017-06-06
+ * @date 2017-08-05
  * @author Batis Degryll Ludo
  * @brief This defines an avatar that will have a state.
  */
@@ -24,9 +24,11 @@ class Stated {
      */
     virtual ~Stated() {}
 
-    virtual void setState(uint64_t state) = 0;
+    virtual void setState(int64_t state) = 0;
 
-    virtual uint64_t getState() = 0;
+    virtual void add(int64_t value) = 0;
+
+    virtual int64_t getState() = 0;
 };
 
 }  // namespace zbe

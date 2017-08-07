@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file SimpleState.h
  * @since 2017-06-04
- * @date 2017-06-04
+ * @date 2017-08-05
  * @author Degryll Ludo Batis
  * @brief Simple implementation of the State interface.
  */
@@ -16,13 +16,21 @@ namespace zbe {
 
 class SimpleState : public State {
 public:
-  SimpleState(uint64_t state = 0) : s(state) {}
+  SimpleState(int64_t state = 0) : s(state) {}
 
-  void setState(uint64_t state) {s = state;}
-  uint64_t getState() {return s;}
+  void setState(int64_t state) {s = state;}
+
+  void add(int64_t value) {s += value;}
+
+  /** \brief
+   *
+   * \return int64_t
+   *
+   */
+  int64_t getState() {return s;}
 
 private:
-	uint64_t s;
+	int64_t s;
 };
 
 }  // namespace zbe

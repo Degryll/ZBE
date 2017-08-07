@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file BaseStated.h
  * @since 2017-06-05
- * @date 2017-06-06
+ * @date 2017-08-05
  * @author Batis Degryll Ludo
  * @brief Base implementation of a state.
  */
@@ -31,12 +31,17 @@ public:
   /** \brief Setter for the state attribute.
    *  \param state The integer value for the state.
    */
-  void setState(uint64_t state) {s->setState(state);}
+  void setState(int64_t state) {s->setState(state);}
+
+    /** \brief Adds a value to the state attribute.
+   *  \param value The integer value to add to the state.
+   */
+  void add(int64_t value) {s->add(value);}
 
   /** \brief Getter for the state attribute.
    *  \return The integer value of the state.
    */
-  uint64_t getState() {return s->getState();}
+  int64_t getState() {return s->getState();}
 
 private:
   State* s;
