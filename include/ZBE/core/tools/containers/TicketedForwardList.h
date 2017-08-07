@@ -119,7 +119,6 @@ public:
    *  \return The forwarded iterator.
    */
   TicketedForwardListIterator& operator++ () {
-    checkForACTIVE();
     ++p;
     ++i;
     checkForACTIVE();
