@@ -88,11 +88,11 @@ int zombienoidmain(int, char*[]) {
     WIDTH = 1024,
     HEIGHT = 768,
     MARGIN = 32,
-    NBALLS = 5,
+    NBALLS = 2,
     BRICKS_X_MARGIN = 123,
     BRICKS_Y_MARGIN = 128,
     NBRICKS_X = 14,
-    NBRICKS_Y = 5,
+    NBRICKS_Y = 8,
     BRICK_WIDTH = 51,
     BRICK_HEIGHT = 32,
     BRICK_COLS = 12,
@@ -100,7 +100,7 @@ int zombienoidmain(int, char*[]) {
     BALL_SIZE = 32,
     BALL_V_X = -300,
     BALL_V_Y = -300,
-    BAR_I_WIDTH = 161,
+    BAR_I_WIDTH = 1024,
     BAR_HEIGHT = 32,
     BAR_MARGIN = 32
   };
@@ -145,6 +145,7 @@ int zombienoidmain(int, char*[]) {
   const char brickImg[] = "data/images/zombieball/braikn_32.png";
   const char ballImg[]  = "data/images/zombieball/zomball_st_32.png";
   const char barImg[]   = "data/images/zombieball/zombar_color_32.png";
+
 
   SDLWindow window(WIDTH, HEIGHT);
   SDLImageStore imgStore(window.getRenderer());
@@ -284,7 +285,7 @@ int zombienoidmain(int, char*[]) {
   commonBehaviorMaster->addDaemon(ballULM);
 
   for(int i = 0; i < NBALLS; i++) {
-    int64_t vt = 400;
+    int64_t vt = 2000;
     double vAngleL = rand()%3600;
     vAngleL/=10;
     double vAngleR = rand()%100;
@@ -292,8 +293,12 @@ int zombienoidmain(int, char*[]) {
     double vAngle = vAngleL + vAngleR;
     int64_t vx = sin(vAngle*PI/180)*vt;
     int64_t vy = cos(vAngle*PI/180)*vt;
+    if (i == -1){
+      vx = 0;
+      vy = 0;
+    }
 
-    std::shared_ptr<ActiveElement2D<ZombienoidReactor> > ball(new ActiveElement2D<ZombienoidReactor>({WIDTH/2.0, HEIGHT/2.0}, {vx+(2.0*i), (double)vy}, BALL_ACTUATORS_LIST, BALL_CBS_JOINT, BALL_SIZE, BALL_SIZE, BALL_SS));
+    std::shared_ptr<ActiveElement2D<ZombienoidReactor> > ball(new ActiveElement2D<ZombienoidReactor>({WIDTH/2.0, HEIGHT*5.0/6.0}, {(double)vx, (double)vy}, BALL_ACTUATORS_LIST, BALL_CBS_JOINT, BALL_SIZE, BALL_SIZE, BALL_SS));
 
     std::shared_ptr<Adaptor<AnimatedSprite> > ballSpriteAdaptor(new ActiveElement2DAnimatedSpriteAdaptor<ZombienoidReactor>(&(*ball)));
     setAdaptor(ball, ballSpriteAdaptor);

@@ -24,27 +24,28 @@ public:
   BoardConerAdaptor(const BoardConerAdaptor&) = delete;
   void operator=(const BoardConerAdaptor&) = delete;
 
-  BoardConerAdaptor(Element2D<R>* entity): e(entity), s(nullptr) {}
-
-  ~BoardConerAdaptor() {delete s;}
-
-  Collisioner<R>* getAvatar() {
-
-    delete s;
-
+  BoardConerAdaptor(Element2D<R>* entity): e(entity), s(nullptr) {
     AvatarEntityContainer<Avatar, Positionable<2>, Stated>* aeContainer (new AvatarEntityContainer<Avatar, Positionable<2>, Stated>(e, e, e));
     zbe::AABB2D aabb({(double)e->getX(), (double)e->getY()}, {(double)e->getX()+e->getW(), (double)e->getY()+e->getH()});
     std::shared_ptr<StaticLimiterAABB2D<R> > cObject(new zbe::StaticLimiterAABB2D<R>(aabb));
     std::shared_ptr<BoardInteractionTesterRO<R> > it(new zbe::BoardInteractionTesterRO<R>(aabb));//{e->getX(), e->getY()}, {e->getX()+e->getW(), e->getY()+e->getH()})
 
     s = new CollisionerCommon<R,Avatar, Positionable<2>, Stated>(aeContainer, cObject, it, e->getActuatorsList());
+  }
 
+  ~BoardConerAdaptor() {delete s;}
+
+  Collisioner<R>* getAvatar() {
+    zbe::AABB2D aabb({(double)e->getX(), (double)e->getY()}, {(double)e->getX()+e->getW(), (double)e->getY()+e->getH()});
+    std::shared_ptr<StaticLimiterAABB2D<R> > cObject(new zbe::StaticLimiterAABB2D<R>(aabb));
+
+    s->setCollisionObject(cObject);
     return (s);
   }
 
 private:
     Element2D<R>* e;
-    Collisioner<R>* s;
+    CollisionerCommon<R,Avatar, Positionable<2>, Stated>* s;
 };
 
 }  // namespace zbe

@@ -25,21 +25,25 @@ public:
   ActiveElement2DAnimatedSpriteAdaptor(const ActiveElement2DAnimatedSpriteAdaptor&) = delete;
   void operator=(const ActiveElement2DAnimatedSpriteAdaptor&) = delete;
 
-  ActiveElement2DAnimatedSpriteAdaptor(ActiveElement2D<R>* entity): e(entity), s(nullptr) {}
+  ActiveElement2DAnimatedSpriteAdaptor(ActiveElement2D<R>* entity): e(entity), s(nullptr) {
+    double hw = e->getW()/2.0;
+    double hh = e->getH()/2.0;
+    s = new SimpleAnimatedSprite(e->getX()-hw, e->getY()-hh, e->getW(), e->getH(), e->getGraphics(), 0, e->getState(), e->getTimeStamp());
+  }
 
   ~ActiveElement2DAnimatedSpriteAdaptor() {delete s;}
 
   AnimatedSprite* getAvatar() {
-    delete s;
-    double hw = e->getW()/2.0;
-    double hh = e->getH()/2.0;
-    s = new SimpleAnimatedSprite(e->getX()-hw, e->getY()-hh, e->getW(), e->getH(), e->getGraphics(), 0, e->getState(), e->getTimeStamp());
+    s->setW(e->getW());
+    s->setH(e->getH());
+    s->setX(e->getX() - e->getW()/2.0);
+    s->setY(e->getY() - e->getH()/2.0);
     return (s);
   }
 
 private:
     ActiveElement2D<R>* e;
-    AnimatedSprite* s;
+    SimpleAnimatedSprite* s;
 };
 
 }  // namespace zbe

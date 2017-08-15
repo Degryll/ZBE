@@ -32,6 +32,11 @@ public:
    */
   uint64_t getState() {return state;}
 
+  /** \brief Sets state.
+   *  \param state value for State attribute
+   */
+  virtual void setState(uint64_t state) {this->state = state;}
+
 private:
   uint64_t state;   //!< state
 

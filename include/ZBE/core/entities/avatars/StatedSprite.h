@@ -31,6 +31,11 @@ public:
    */
   virtual uint64_t getState() = 0;
 
+  /** \brief Sets state.
+   *  \param state
+   */
+  virtual void setState(uint64_t state) = 0;
+
 };
 
 }  // namespace zbe

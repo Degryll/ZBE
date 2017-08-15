@@ -55,6 +55,32 @@ public:
    */
   int64_t getGraphics() {return graphics;}
 
+  /** \brief Sets x.
+   *  \param x value for the x attribute
+   */
+  void setX(int64_t x) {this->x = x;}
+
+  /** \brief Sets y.
+   *  \param y value for the y attribute
+   */
+  void setY(int64_t y) {this->y = y;}
+
+  /** \brief Sets w.
+   *  \param w value for the w attribute
+   */
+  void setW(int64_t w) {this->w = w;}
+
+  /** \brief Sets h.
+   *  \param h value for the h attribute
+   */
+  void setH(int64_t h) {this->h = h;}
+
+  /** \brief Sets graphics.
+   *  \param graphics value for the graphics attribute
+   */
+  void setGraphics(uint64_t graphics) {this->graphics = graphics;}
+
+
 private:
   int64_t x; //!< X coordinate
   int64_t y; //!< Y coordinate
