@@ -101,7 +101,7 @@ private:
   void _setAvatar(TypeGimmick<void>) {}
 
   template <typename B>
-  void _deleteAvatar() {_setAvatar(TypeGimmick<B>());}
+  void _deleteAvatar() {_deleteAvatar(TypeGimmick<B>());}
 
   template<typename B>
   void _deleteAvatar(TypeGimmick<B>) {}

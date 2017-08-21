@@ -3,7 +3,7 @@
 namespace zbe {
 
 void DaemonMaster::run(){
-  for(auto it = daemonList.begin(); it < daemonList.end(); ++it) {
+  for(auto it = daemonList.begin(); it != daemonList.end(); ++it) {
     (*it)->run();
   }
 }
