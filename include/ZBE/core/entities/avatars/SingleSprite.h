@@ -49,31 +49,6 @@ public:
    */
   virtual int64_t getGraphics() = 0;
 
-  /** \brief Sets x.
-   *  \param x value for the x attribute
-   */
-  virtual void setX(int64_t x) = 0;
-
-  /** \brief Sets y.
-   *  \param y value for the y attribute
-   */
-  virtual void setY(int64_t y) = 0;
-
-  /** \brief Sets w.
-   *  \param w value for the w attribute
-   */
-  virtual void setW(int64_t w) = 0;
-
-  /** \brief Sets h.
-   *  \param h value for the h attribute
-   */
-  virtual void setH(int64_t h) = 0;
-
-  /** \brief Sets graphics.
-    *  \param graphics value for the graphics attribute
-   */
-  virtual void setGraphics(uint64_t graphics) = 0;
-
 };
 
 }  // namespace zbe

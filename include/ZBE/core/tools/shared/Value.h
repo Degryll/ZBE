@@ -17,6 +17,9 @@ namespace zbe {
 template <typename T>
 class Value {
 public:
+
+  virtual ~Value(){} //<! Virtual destructor
+
   /** brief Sets the value.
    *  param value Value to store.
    */

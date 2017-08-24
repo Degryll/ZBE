@@ -10,6 +10,8 @@
 #ifndef ZBE_MAIN_BATIS_TEXTDRAWABLE_H_
 #define ZBE_MAIN_BATIS_TEXTDRAWABLE_H_
 
+#include <string>
+
 #include <SDL2/SDL_ttf.h>
 
 #include "ZBE/archetypes/Drawable.h"
@@ -22,7 +24,7 @@ class TextDrawable : virtual public Drawable {
   public:
     virtual ~TextDrawable() {}
 
-    virtual const char* getText() = 0;
+    virtual const std::string& getText() = 0;
 };
 
 }  // namespace zbe

@@ -26,7 +26,7 @@ void SingleTextSDLDrawer::apply(std::shared_ptr<AvatarEntity<SingleTextSprite> >
   dst.y = avatar->getY();
   dst.w = avatar->getW();
   dst.h = avatar->getH();
-  SDL_Texture* t = textFontStore->renderText(avatar->getGraphics(), avatar->text);
+  SDL_Texture* t = textFontStore->renderText(avatar->getGraphics(), avatar->getText().c_str());
   window->render(t, &src, &dst);
   SDL_DestroyTexture(t);
 }

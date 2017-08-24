@@ -178,6 +178,7 @@
 		<Unit filename="../../../src/ZBE_main/include/ludomain.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/ZombienoidReactor.h" />
+		<Unit filename="../../../src/ZBE_main/include/zombienoid/entities/LifeCounter.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/entities/adaptors/ActiveElement2DAnimatedSpriteAdaptor.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/entities/adaptors/BallCatorAdaptor.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/entities/adaptors/BlockConerAdaptor.h" />

@@ -26,7 +26,7 @@ public:
 
   /** \brief Desctructor
   */
-  ~Countable() {
+  virtual ~Countable() {
     ninstances->add(-1);
   }
 

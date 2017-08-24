@@ -15,12 +15,14 @@
 
 namespace zbe {
 
-SDLTextFontStore::SDLTextFontStore(SDLImageStore* imageStore, SDL_Renderer* renderer) : nfonts(0), fontCollection(), m(), mf(), imageStore(imageStore), renderer(renderer) {}
+SDLTextFontStore::SDLTextFontStore(SDLImageStore* imageStore, SDL_Renderer* renderer) : nfonts(0), fontCollection(), m(), mf(), imageStore(imageStore), renderer(renderer) {
+    TTF_Init();
+}
 
 uint64_t SDLTextFontStore::loadText(char *text, TTF_Font *font, SDL_Color color) {
   m.lock();
     SDL_Surface* surface;
-    surface = TTF_RenderUTF8_Solid(font, text, color);
+    surface = TTF_RenderUTF8_Blended(font, text, color);
     uint64_t rid = imageStore->storeTexture(SDL_CreateTextureFromSurface(renderer, surface));
   m.unlock();
 
@@ -41,7 +43,7 @@ uint64_t SDLTextFontStore::loadFont(const char *fontName, int size, SDL_Color co
 
 SDL_Texture* SDLTextFontStore::renderText(uint64_t fontID, const char *text) {
   ZBE_Font font = fontCollection[fontID];
-  SDL_Surface * s = TTF_RenderUTF8_Solid(font.font, text, font.color);
+  SDL_Surface * s = TTF_RenderUTF8_Blended(font.font, text, font.color);
   if(!s) {
     zbe::SysError::setError(std::string("ERROR: SDL could not render the surface! SDL ERROR: ") + SDL_GetError());
     return nullptr;

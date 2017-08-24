@@ -10,6 +10,8 @@
 #ifndef ZBE_CORE_TOOLS_SHARED_IMPLEMENTATIONS_SIMPLEVALUE_H_
 #define ZBE_CORE_TOOLS_SHARED_IMPLEMENTATIONS_SIMPLEVALUE_H_
 
+#include "ZBE/core/tools/shared/Value.h"
+
 namespace zbe {
 
 /** Stores a value that can be modified.

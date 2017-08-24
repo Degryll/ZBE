@@ -206,6 +206,7 @@
 		<Unit filename="../../../include/ZBE/archetypes/Wide.h" />
 		<Unit filename="../../../include/ZBE/archetypes/WideBouncingAPO.h" />
 		<Unit filename="../../../include/ZBE/archetypes/WideMobile.h" />
+		<Unit filename="../../../include/ZBE/archetypes/implementations/BaseState.h" />
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleActivePhysicalObject.h" />
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleBouncing.h" />
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleBouncingAPO.h" />
@@ -299,6 +300,7 @@
 		<Unit filename="../../../include/ZBE/core/tools/tools.h" />
 		<Unit filename="../../../include/ZBE/entities/ActiveElement2D.h" />
 		<Unit filename="../../../include/ZBE/entities/Element2D.h" />
+		<Unit filename="../../../include/ZBE/entities/TextBox.h" />
 		<Unit filename="../../../include/ZBE/entities/adaptors/ActiveElement2DAnimatedSpriteAdaptor.h" />
 		<Unit filename="../../../include/ZBE/entities/adaptors/Element2DAnimatedSpriteAdaptor.h" />
 		<Unit filename="../../../include/ZBE/entities/adaptors/RotatedDrawableRotatedSpriteAdaptor.h" />
@@ -313,6 +315,7 @@
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/BaseBouncer.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/BaseMovable.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/BasePositionable.h" />
+		<Unit filename="../../../include/ZBE/entities/avatars/implementations/BaseSingleTextSprite.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/BaseStated.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/SimpleBounceable.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/MouseXIH.h" />

@@ -16,12 +16,16 @@ namespace zbe {
 
 /** \brief This define an avatar that can be drawn as text.
  */
-struct SingleTextSprite : virtual public SingleSprite {
+class SingleTextSprite : virtual public SingleSprite {
+public:
     using Base = SingleSprite;//!< inheritance info
 
+    virtual ~SingleTextSprite(){}//!< Virtual destructor
+
     /** \brief Text value for this sprite.
+     *  \return the text value
      */
-    const char* text = "";
+    virtual const std::string& getText() = 0;
 };
 
 }  // namespace zbe

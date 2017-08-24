@@ -1,6 +1,7 @@
 #include "zombienoid.h"
 
 #include <memory>
+#include <cstdio>
 
 #include "ZBE/core/daemons/Daemon.h"
 #include "ZBE/core/daemons/DaemonMaster.h"
@@ -21,6 +22,9 @@
 
 #include "ZBE/core/tools/graphics/SpriteSheet.h"
 
+#include "ZBE/core/tools/shared/implementations/SimpleValue.h"
+#include "ZBE/core/tools/shared/Value.h"
+
 #include "ZBE/core/system/SysTime.h"
 #include "ZBE/core/system/SysIdGenerator.h"
 #include "ZBE/core/system/MainLoop.h"
@@ -31,7 +35,6 @@
 #include "ZBE/entities/ActiveElement2D.h"
 
 #include "ZBE/events/handlers/actuators/BouncerActuator.h"
-//#include "ZBE/events/handlers/actuators/EraserActuator.h"
 #include "ZBE/events/handlers/actuators/StateChangerActuator.h"
 
 #include "ZBE/behaviors/Bounce.h"
@@ -47,11 +50,13 @@
 #include "ZBE/SDL/daemons/BasicPreLoopSDLDaemon.h"
 
 #include "ZBE/SDL/drawers/SpriteSheetSDLDrawer.h"
+#include "ZBE/SDL/drawers/SingleTextSDLDrawer.h"
 
 #include "ZBE/SDL/system/SDLWindow.h"
 #include "ZBE/SDL/system/SDLEventDispatcher.h"
 
 #include "ZBE/SDL/system/SDLImageStore.h"
+#include "ZBE/SDL/system/SDLTextFontStore.h"
 
 #include "ZBE/SDL/tools/SDLTimer.h"
 
@@ -62,6 +67,8 @@
 #include "zombienoid/entities/adaptors/BlockConerAdaptor.h"
 #include "zombienoid/entities/adaptors/BoardConerAdaptor.h"
 #include "zombienoid/entities/adaptors/Element2DAnimatedSpriteAdaptor.h"
+
+#include "zombienoid/entities/LifeCounter.h"
 
 #include "zombienoid/ZombienoidReactor.h"
 
@@ -88,7 +95,7 @@ int zombienoidmain(int, char*[]) {
     WIDTH = 1024,
     HEIGHT = 768,
     MARGIN = 32,
-    NBALLS = 2,
+    NBALLS = 50,
     BRICKS_X_MARGIN = 123,
     BRICKS_Y_MARGIN = 128,
     NBRICKS_X = 14,
@@ -100,9 +107,10 @@ int zombienoidmain(int, char*[]) {
     BALL_SIZE = 32,
     BALL_V_X = -300,
     BALL_V_Y = -300,
-    BAR_I_WIDTH = 1024,
+    BAR_I_WIDTH = 322,
     BAR_HEIGHT = 32,
-    BAR_MARGIN = 32
+    BAR_MARGIN = 32,
+    LIFE_COUNTER_F_SIZE = 64
   };
   const int COLLISION_TICKET = SysIdGenerator::getId();
   const int DRAW_TICKET = SysIdGenerator::getId();
@@ -116,6 +124,7 @@ int zombienoidmain(int, char*[]) {
   const int COLLISIONEVENT = SysIdGenerator::getId();
   const int CTS_JOINT = SysIdGenerator::getId();
   const int AS_JOINT = SysIdGenerator::getId();
+  const int ATS_JOINT = SysIdGenerator::getId();
 
   const int BOARD_ACTUATORS_LIST = SysIdGenerator::getId();
   const int BRICK_ACTUATORS_LIST = SysIdGenerator::getId();
@@ -141,14 +150,16 @@ int zombienoidmain(int, char*[]) {
   const int BAR_SS = SysIdGenerator::getId();
 
 
-  //const char boardImg[] = "escriba su anuncio aqui";
+  //const char boardImg[] = "escriba su anuncio aqui, por favor";
   const char brickImg[] = "data/images/zombieball/braikn_32.png";
   const char ballImg[]  = "data/images/zombieball/zomball_st_32.png";
   const char barImg[]   = "data/images/zombieball/zombar_color_32.png";
+  const char fontFileName[] = "data/fonts/PublicEnemyNF.ttf";
 
 
   SDLWindow window(WIDTH, HEIGHT);
   SDLImageStore imgStore(window.getRenderer());
+  SDLTextFontStore textFontStore(&imgStore, window.getRenderer());
 
   std::shared_ptr<DaemonMaster> eventGenerator(new DaemonMaster());
   std::shared_ptr<DaemonMaster> commonBehaviorMaster(new DaemonMaster());
@@ -179,6 +190,10 @@ int zombienoidmain(int, char*[]) {
   std::shared_ptr<JointAE<AnimatedSprite> > asJoint (new JointAE<AnimatedSprite>());
   rmas.insert(AS_JOINT, asJoint);
 
+  ResourceManager<JointAE<SingleTextSprite> >& rmats = ResourceManager<JointAE<SingleTextSprite> >::getInstance();
+  std::shared_ptr<JointAE<SingleTextSprite> > atsJoint (new JointAE<SingleTextSprite>());
+  rmats.insert(ATS_JOINT, atsJoint);
+
   ResourceManager<SpriteSheet<AnimatedSprite> >& rmss = ResourceManager<SpriteSheet<AnimatedSprite> >::getInstance();
 
   ResourceManager<std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Positionable<2>, Stated >* > >& rmact = ResourceManager<std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Positionable<2>, Stated >* > >::getInstance();
@@ -190,7 +205,9 @@ int zombienoidmain(int, char*[]) {
 
   //drawing----------------------------------------------------------------------------------------------------
   std::shared_ptr<Daemon> drawerDaemon(new  DrawerDaemon<AnimatedSprite, JointAE<AnimatedSprite> >(std::make_shared<SpriteSheetSDLDrawer<AnimatedSprite> >(&window, &imgStore), AS_JOINT));
+  std::shared_ptr<Daemon> writerDaemon(new  DrawerDaemon<SingleTextSprite, JointAE<SingleTextSprite> >(std::make_shared<SingleTextSDLDrawer>(&window, &textFontStore), ATS_JOINT));
   drawMaster->addDaemon(drawerDaemon);
+  drawMaster->addDaemon(writerDaemon);
 
   //board----------------------------------------------------------------------------------------------------
   std::shared_ptr<std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Positionable<2>, Stated >* > > boardActuatorsList(new std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Positionable<2>, Stated >* >());
@@ -251,8 +268,23 @@ int zombienoidmain(int, char*[]) {
     }
   }
 
-  //ball-----------------------------------------------------------------------------------------------------
+  //ball counter-----------------------------------------------------------------------------------------------------
+  std::shared_ptr<TicketedFAE<SingleTextSprite> > lifeCountersSingleTextSpriteList(new TicketedFAE<SingleTextSprite>());
+  atsJoint->add(lifeCountersSingleTextSpriteList);
 
+  SDL_Color aColor;
+  aColor.r = 255;
+  aColor.g = 128;
+  aColor.b = 0;
+  aColor.a = 255;
+
+  int TEXT_FONT = textFontStore.loadFont(fontFileName, LIFE_COUNTER_F_SIZE, aColor);
+  std::shared_ptr<Value<int64_t> > ballCount(new SimpleValue<int64_t>());
+  //LifeCounter(int64_t x, int64_t y, int64_t width, int64_t height, uint64_t graphics, std::shared_ptr<Value<int64_t> > lifes)
+  std::shared_ptr<LifeCounter> lc(new LifeCounter(0, 0, 64, 64, TEXT_FONT, ballCount));
+  lifeCountersSingleTextSpriteList->push_front(lc);
+
+  //ball-----------------------------------------------------------------------------------------------------
   std::shared_ptr<std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated >* > > ballActuatorsList(new std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated >* >());
 
   ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* ballBouncerVoidWrapper = new  ActuatorWrapperCommon<ZombienoidReactor, Bouncer<2>, Avatar, Bouncer<2>, Stated>(new BouncerActuator<ZombienoidReactor, zbe::VoidReactObject<ZombienoidReactor> >());
@@ -285,7 +317,7 @@ int zombienoidmain(int, char*[]) {
   commonBehaviorMaster->addDaemon(ballULM);
 
   for(int i = 0; i < NBALLS; i++) {
-    int64_t vt = 2000;
+    int64_t vt = 400;
     double vAngleL = rand()%3600;
     vAngleL/=10;
     double vAngleR = rand()%100;
@@ -293,12 +325,8 @@ int zombienoidmain(int, char*[]) {
     double vAngle = vAngleL + vAngleR;
     int64_t vx = sin(vAngle*PI/180)*vt;
     int64_t vy = cos(vAngle*PI/180)*vt;
-    if (i == -1){
-      vx = 0;
-      vy = 0;
-    }
 
-    std::shared_ptr<ActiveElement2D<ZombienoidReactor> > ball(new ActiveElement2D<ZombienoidReactor>({WIDTH/2.0, HEIGHT*5.0/6.0}, {(double)vx, (double)vy}, BALL_ACTUATORS_LIST, BALL_CBS_JOINT, BALL_SIZE, BALL_SIZE, BALL_SS));
+    std::shared_ptr<ActiveElement2D<ZombienoidReactor> > ball(new CActiveElement2D<ZombienoidReactor>(ballCount, {WIDTH/2.0, HEIGHT*5.0/6.0}, {(double)vx, (double)vy}, BALL_ACTUATORS_LIST, BALL_CBS_JOINT, BALL_SIZE, BALL_SIZE, BALL_SS));
 
     std::shared_ptr<Adaptor<AnimatedSprite> > ballSpriteAdaptor(new ActiveElement2DAnimatedSpriteAdaptor<ZombienoidReactor>(&(*ball)));
     setAdaptor(ball, ballSpriteAdaptor);
@@ -310,6 +338,9 @@ int zombienoidmain(int, char*[]) {
     ball->addToList(DRAW_TICKET, ballAnimatedSpriteList->push_front(ball));
     ball->addToList(BEHAVE_TICKET, ballList->push_front(ball));
   }
+
+  printf("%ld", ballCount->getValue());
+  fflush(stdout);
 
   //bar------------------------------------------------------------------------------------------------------
   std::shared_ptr<std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Positionable<2>, Stated >* > > barActuatorsList(new std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Positionable<2>, Stated >* >());
