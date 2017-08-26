@@ -90,6 +90,10 @@ class MainLoop {
      */
     void setDraw(std::shared_ptr<Daemon> daemon) {dDM = daemon;}
 
+    /** \brief Stops current loop.
+     */
+    void stop() {keep = false;}
+
   private:
     std::shared_ptr<Daemon> dPre;
     std::shared_ptr<Daemon> dPost;

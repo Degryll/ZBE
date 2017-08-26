@@ -7,6 +7,7 @@ namespace zbe {
 
 void MainLoop::loop() {
 
+  keep = true;
   while(keep){
     //Pre daemon
     dPre->run();

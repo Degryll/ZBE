@@ -1,7 +1,6 @@
 #include "zombienoid.h"
 
 #include <memory>
-#include <cstdio>
 
 #include "ZBE/core/daemons/Daemon.h"
 #include "ZBE/core/daemons/DaemonMaster.h"
@@ -70,6 +69,9 @@
 
 #include "zombienoid/entities/LifeCounter.h"
 
+#include "zombienoid/daemons/ZombienoidDeathTester.h"
+#include "zombienoid/daemons/ZombienoidLifeSubstractor.h"
+
 #include "zombienoid/ZombienoidReactor.h"
 
 #include "zombienoid/graphics/SimpleSpriteSheet.h"
@@ -95,7 +97,7 @@ int zombienoidmain(int, char*[]) {
     WIDTH = 1024,
     HEIGHT = 768,
     MARGIN = 32,
-    NBALLS = 50,
+    NBALLS = 5,
     BRICKS_X_MARGIN = 123,
     BRICKS_Y_MARGIN = 128,
     NBRICKS_X = 14,
@@ -156,6 +158,7 @@ int zombienoidmain(int, char*[]) {
   const char barImg[]   = "data/images/zombieball/zombar_color_32.png";
   const char fontFileName[] = "data/fonts/PublicEnemyNF.ttf";
 
+  const int64_t INITIAL_LIFES = 3;
 
   SDLWindow window(WIDTH, HEIGHT);
   SDLImageStore imgStore(window.getRenderer());
@@ -269,20 +272,7 @@ int zombienoidmain(int, char*[]) {
   }
 
   //ball counter-----------------------------------------------------------------------------------------------------
-  std::shared_ptr<TicketedFAE<SingleTextSprite> > lifeCountersSingleTextSpriteList(new TicketedFAE<SingleTextSprite>());
-  atsJoint->add(lifeCountersSingleTextSpriteList);
-
-  SDL_Color aColor;
-  aColor.r = 255;
-  aColor.g = 128;
-  aColor.b = 0;
-  aColor.a = 255;
-
-  int TEXT_FONT = textFontStore.loadFont(fontFileName, LIFE_COUNTER_F_SIZE, aColor);
   std::shared_ptr<Value<int64_t> > ballCount(new SimpleValue<int64_t>());
-  //LifeCounter(int64_t x, int64_t y, int64_t width, int64_t height, uint64_t graphics, std::shared_ptr<Value<int64_t> > lifes)
-  std::shared_ptr<LifeCounter> lc(new LifeCounter(0, 0, 64, 64, TEXT_FONT, ballCount));
-  lifeCountersSingleTextSpriteList->push_front(lc);
 
   //ball-----------------------------------------------------------------------------------------------------
   std::shared_ptr<std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated >* > > ballActuatorsList(new std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated >* >());
@@ -339,9 +329,6 @@ int zombienoidmain(int, char*[]) {
     ball->addToList(BEHAVE_TICKET, ballList->push_front(ball));
   }
 
-  printf("%ld", ballCount->getValue());
-  fflush(stdout);
-
   //bar------------------------------------------------------------------------------------------------------
   std::shared_ptr<std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Positionable<2>, Stated >* > > barActuatorsList(new std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Positionable<2>, Stated >* >());
   rmact.insert(BAR_ACTUATORS_LIST, barActuatorsList);
@@ -373,6 +360,24 @@ int zombienoidmain(int, char*[]) {
   bar->addToList(DRAW_TICKET, barAnimatedSpriteList->push_front(bar));
   //bar->addToList(BEHAVE_TICKET, barList->push_front(bar));
 
+  //Life counter-----------------------------------------------------------------------------------------------------
+  std::shared_ptr<TicketedFAE<SingleTextSprite> > lifeCountersSingleTextSpriteList(new TicketedFAE<SingleTextSprite>());
+  atsJoint->add(lifeCountersSingleTextSpriteList);
+
+  SDL_Color aColor;
+  aColor.r = 255;
+  aColor.g = 128;
+  aColor.b = 0;
+  aColor.a = 255;
+
+  int TEXT_FONT = textFontStore.loadFont(fontFileName, LIFE_COUNTER_F_SIZE, aColor);
+  std::shared_ptr<Value<int64_t> > lifeCount(new SimpleValue<int64_t>(INITIAL_LIFES));
+  std::shared_ptr<LifeCounter> lc(new LifeCounter(0, 0, 64, 64, TEXT_FONT, lifeCount));
+  lifeCountersSingleTextSpriteList->push_front(lc);
+
+  std::shared_ptr<Daemon> lifeDaemon = std::make_shared<ZombienoidLifeSubstractor>(ballCount, lifeCount);
+  reactBehaviorMaster->addDaemon(lifeDaemon);
+
   MouseXIH mouseX(bar);
   ieg->addHandler(ZBEK_MOUSE_OFFSET_X, &mouseX);
 
@@ -394,6 +399,10 @@ int zombienoidmain(int, char*[]) {
   preLoop->addDaemon(prltd);
 
   MainLoop mainLoop(preLoop, postLoop, eventGenerator, commonBehaviorMaster, reactBehaviorMaster, drawMaster);
+
+  std::shared_ptr<Daemon> failDaemon = std::make_shared<ZombienoidDeathTester>(lifeCount, &mainLoop);
+  reactBehaviorMaster->addDaemon(failDaemon);
+
   mainLoop.loop();
 
   return 0;
