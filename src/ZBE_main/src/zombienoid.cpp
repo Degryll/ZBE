@@ -30,6 +30,8 @@
 
 #include "ZBE/core/io/InputBuffer.h"
 
+#include "ZBE/entities/avatars/Movable.h"
+
 #include "ZBE/entities/Element2D.h"
 #include "ZBE/entities/ActiveElement2D.h"
 
@@ -71,6 +73,8 @@
 
 #include "zombienoid/daemons/ZombienoidDeathTester.h"
 #include "zombienoid/daemons/ZombienoidLifeSubstractor.h"
+
+#include "zombienoid/tools/BallBuilder.h"
 
 #include "zombienoid/ZombienoidReactor.h"
 
@@ -306,6 +310,14 @@ int zombienoidmain(int, char*[]) {
   commonBehaviorMaster->addDaemon(ballBounce);
   commonBehaviorMaster->addDaemon(ballULM);
 
+  BallBuilder<TicketedFAE<Collisionator<ZombienoidReactor> >,
+              TicketedFAE<AnimatedSprite>,
+              TicketedForwardList<ActiveElement2D<ZombienoidReactor> > > ballBuilder(BALL_ACTUATORS_LIST, BALL_CBS_JOINT, BALL_SS, BALL_SIZE, ballCount, COLLISION_TICKET,
+                          DRAW_TICKET, BEHAVE_TICKET, ballCollisionatorsList,ballAnimatedSpriteList, ballList);
+
+  SimpleMobile<2> ballMobile;
+  BaseMovable<2> ballData(&ballMobile);
+
   for(int i = 0; i < NBALLS; i++) {
     int64_t vt = 400;
     double vAngleL = rand()%3600;
@@ -316,17 +328,10 @@ int zombienoidmain(int, char*[]) {
     int64_t vx = sin(vAngle*PI/180)*vt;
     int64_t vy = cos(vAngle*PI/180)*vt;
 
-    std::shared_ptr<ActiveElement2D<ZombienoidReactor> > ball(new CActiveElement2D<ZombienoidReactor>(ballCount, {WIDTH/2.0, HEIGHT*5.0/6.0}, {(double)vx, (double)vy}, BALL_ACTUATORS_LIST, BALL_CBS_JOINT, BALL_SIZE, BALL_SIZE, BALL_SS));
+    ballMobile.setPosition({WIDTH/2.0, HEIGHT*5.0/6.0});
+    ballMobile.setVelocity({(double)vx, (double)vy});
 
-    std::shared_ptr<Adaptor<AnimatedSprite> > ballSpriteAdaptor(new ActiveElement2DAnimatedSpriteAdaptor<ZombienoidReactor>(&(*ball)));
-    setAdaptor(ball, ballSpriteAdaptor);
-
-    std::shared_ptr<Adaptor<Collisionator<ZombienoidReactor> > > ballCollisionatorAdaptor(new BallCatorAdaptor<ZombienoidReactor>(&(*ball)));
-    setAdaptor(ball, ballCollisionatorAdaptor);
-
-    ball->addToList(COLLISION_TICKET, ballCollisionatorsList->push_front(ball));
-    ball->addToList(DRAW_TICKET, ballAnimatedSpriteList->push_front(ball));
-    ball->addToList(BEHAVE_TICKET, ballList->push_front(ball));
+    ballBuilder.build(&ballData);
   }
 
   //bar------------------------------------------------------------------------------------------------------
@@ -375,7 +380,7 @@ int zombienoidmain(int, char*[]) {
   std::shared_ptr<LifeCounter> lc(new LifeCounter(0, 0, 64, 64, TEXT_FONT, lifeCount));
   lifeCountersSingleTextSpriteList->push_front(lc);
 
-  std::shared_ptr<Daemon> lifeDaemon = std::make_shared<ZombienoidLifeSubstractor>(ballCount, lifeCount);
+  std::shared_ptr<Daemon> lifeDaemon = std::make_shared<ZombienoidLifeSubstractor>(ballCount, lifeCount, &ballBuilder);
   reactBehaviorMaster->addDaemon(lifeDaemon);
 
   MouseXIH mouseX(bar);

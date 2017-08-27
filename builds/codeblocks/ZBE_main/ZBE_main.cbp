@@ -189,6 +189,7 @@
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/events/handlers/ExitInputHandler.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/events/reactobjects/BoardInteractionTesterRO.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/graphics/SimpleSpriteSheet.h" />
+		<Unit filename="../../../src/ZBE_main/include/zombienoid/tools/BallBuilder.h" />
 		<Unit filename="../../../src/ZBE_main/src/batismain.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/degryllmain.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/gamemain.cpp" />

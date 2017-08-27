@@ -15,38 +15,38 @@
 #include "ZBE/core/entities/Adaptor.h"
 #include "ZBE/entities/ActiveElement2D.h"
 
-namespace zbe {
+namespace zombienoid {
 
 /** \brief Implementation that adapts a Drawable to a AnimatedSprite.
  */
 template <typename R>
-class BallCatorAdaptor : public Adaptor<Collisionator<R> > {
+class BallCatorAdaptor : public zbe::Adaptor<zbe::Collisionator<R> > {
 public:
   BallCatorAdaptor(const BallCatorAdaptor&) = delete;
   void operator=(const BallCatorAdaptor&) = delete;
 
-  BallCatorAdaptor(ActiveElement2D<R>* entity): e(entity), s(nullptr) {
-    AvatarEntityContainer<Avatar, Bouncer<2>, Stated >* aeContainer (new AvatarEntityContainer<Avatar, Bouncer<2>, Stated >(e, e, e));
-    std::shared_ptr<ConstantMovingCircle<R> > cObject(new ConstantMovingCircle<R>(Circle(Point2D({(e->getPosition().x), e->getPosition().y}), e->getWidth()/2.0), e->getVelocity()));
-    std::shared_ptr<VoidReactObject<R> > vro(new VoidReactObject<R>());
+  BallCatorAdaptor(zbe::ActiveElement2D<R>* entity): e(entity), s(nullptr) {
+    zbe::AvatarEntityContainer<zbe::Avatar, zbe::Bouncer<2>, zbe::Stated >* aeContainer (new zbe::AvatarEntityContainer<zbe::Avatar, zbe::Bouncer<2>, zbe::Stated >(e, e, e));
+    std::shared_ptr<zbe::ConstantMovingCircle<R> > cObject(new zbe::ConstantMovingCircle<R>(zbe::Circle(zbe::Point2D({(e->getPosition().x), e->getPosition().y}), e->getWidth()/2.0), e->getVelocity()));
+    std::shared_ptr<zbe::VoidReactObject<R> > vro(new zbe::VoidReactObject<R>());
 
-    s = new CollisionatorCommon<R,Avatar, Bouncer<2>, Stated >(aeContainer, cObject, vro, e->getActuatorsList(), e->getCollisionablesList());
+    s = new zbe::CollisionatorCommon<R,zbe::Avatar, zbe::Bouncer<2>, zbe::Stated >(aeContainer, cObject, vro, e->getActuatorsList(), e->getCollisionablesList());
   }
 
   ~BallCatorAdaptor() {delete s;}
 
-  Collisionator<R>* getAvatar() {
-    std::shared_ptr<ConstantMovingCircle<R> > cObject(new ConstantMovingCircle<R>(Circle(Point2D({(e->getPosition().x), e->getPosition().y}), e->getWidth()/2.0), e->getVelocity()));
+  zbe::Collisionator<R>* getAvatar() {
+    std::shared_ptr<zbe::ConstantMovingCircle<R> > cObject(new zbe::ConstantMovingCircle<R>(zbe::Circle(zbe::Point2D({(e->getPosition().x), e->getPosition().y}), e->getWidth()/2.0), e->getVelocity()));
 
     s->setCollisionObject(cObject);
     return (s);
   }
 
 private:
-    ActiveElement2D<R>* e;
-    CollisionatorCommon<R,Avatar, Bouncer<2>, Stated >* s;
+    zbe::ActiveElement2D<R>* e;
+    zbe::CollisionatorCommon<R,zbe::Avatar, zbe::Bouncer<2>, zbe::Stated >* s;
 };
 
-}  // namespace zbe
+}  // namespace zombienoid
 
 #endif  // ZBE_ENTITIES_ADAPTORS_BALLCATORADAPTOR_H_
