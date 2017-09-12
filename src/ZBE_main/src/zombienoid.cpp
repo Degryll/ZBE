@@ -101,7 +101,7 @@ int zombienoidmain(int, char*[]) {
     WIDTH = 1024,
     HEIGHT = 768,
     MARGIN = 32,
-    NBALLS = 5,
+    NBALLS = 500,
     BRICKS_X_MARGIN = 123,
     BRICKS_Y_MARGIN = 128,
     NBRICKS_X = 14,

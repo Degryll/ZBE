@@ -26,11 +26,16 @@ namespace zombienoid {
   class ZombienoidDeathTester : public zbe::Daemon {
     public:
 
+      ZombienoidDeathTester(const ZombienoidDeathTester&) = delete;
+      void operator=(const ZombienoidDeathTester&) = delete;
+
       /** \brief Parametrized constructor.
        *  \param nballs Current number of balls
        *  \param nlifes Current number of lifes
        */
       ZombienoidDeathTester(std::shared_ptr<zbe::Value<int64_t> > nlifes, zbe::MainLoop* mainloop) : nl(nlifes), ml(mainloop) {}
+
+      ~ZombienoidDeathTester(){}
 
       /** \brief It will finish the game if the number of lifes reaches 0
        */

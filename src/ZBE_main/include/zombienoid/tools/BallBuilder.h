@@ -36,11 +36,12 @@ namespace zombienoid {
 template<typename T>
 class Builder {
   public:
+    virtual ~Builder(){};
     virtual void build(T* t) = 0;
 };
 
 template<typename CTL,typename ASL, typename BL>
-class BallBuilder : public Builder<zbe::Movable<2> > {
+class BallBuilder : virtual public Builder<zbe::Movable<2> > {
 public:
 
   /** \brief Parametrized constructor.

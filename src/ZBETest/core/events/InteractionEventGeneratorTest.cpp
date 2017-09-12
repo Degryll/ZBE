@@ -47,24 +47,22 @@ class R { // Reactor mock
 
 class Coner : public zbe::AvatarEntityFixed<A>, public zbe::AvatarEntityFixed<zbe::Collisioner<R> > {
   public:
-    Coner(std::shared_ptr<zbe::CollisionObject<R> > co, uint64_t actuators, int id)
-        : a(id) {
-          zbe::AvatarEntityFixed<A >::setAvatar(&a);
-          zbe::AvatarEntityFixed<zbe::Collisioner<R> >::setAvatar(new zbe::CollisionerCommon<R, A>(new zbe::AvatarEntityContainer<A>(this), co, std::make_shared<zbe::ReactObjectCommon<R, A> >(&a), actuators));
+    Coner(std::shared_ptr<zbe::CollisionObject<R> > co, uint64_t actuators, int id) {
+          A* a = new A(id);
+          zbe::AvatarEntityFixed<A >::setAvatar(a);
+          zbe::AvatarEntityFixed<zbe::Collisioner<R> >::setAvatar(new zbe::CollisionerCommon<R, A>(new zbe::AvatarEntityContainer<A>(this), co, std::make_shared<zbe::ReactObjectCommon<R, A> >(a), actuators));
         }
     ~Coner(){}
-    A a;
 };
 
 class Cator :  public zbe::AvatarEntityFixed<A>, public zbe::AvatarEntityFixed<zbe::Collisionator<R> > {
   public:
-    Cator(std::shared_ptr<zbe::CollisionObject<R> > co, uint64_t actuators, uint64_t listId, int id)
-      : a(id) {
-        zbe::AvatarEntityFixed<A >::setAvatar(&a);
-        zbe::AvatarEntityFixed<zbe::Collisionator<R> >::setAvatar(new  zbe::CollisionatorCommon<R, A>(new zbe::AvatarEntityContainer<A>(this), co, std::make_shared<zbe::ReactObjectCommon<R, A> >(&a), actuators, listId));
+    Cator(std::shared_ptr<zbe::CollisionObject<R> > co, uint64_t actuators, uint64_t listId, int id) {
+        A* a = new A(id);
+        zbe::AvatarEntityFixed<A >::setAvatar(a);
+        zbe::AvatarEntityFixed<zbe::Collisionator<R> >::setAvatar(new  zbe::CollisionatorCommon<R, A>(new zbe::AvatarEntityContainer<A>(this), co, std::make_shared<zbe::ReactObjectCommon<R, A> >(a), actuators, listId));
       }
     ~Cator(){}
-    A a;
 };
 
 class AActuator: public zbe::Actuator<A, R> {
@@ -116,11 +114,13 @@ TEST(IntersectionEventGenerator, run) {
   zbe::EventStore &es = zbe::EventStore::getInstance();
   ieg.run();
   es.manageCurrent();
-
-  EXPECT_EQ(42, dconer->a.id) << "Coner id must be 42";
-  EXPECT_EQ(37, dconer->a.vs) << "Coner is must be 37";
-  EXPECT_EQ(37, dcator->a.id) << "Cator id must be 37";
-  EXPECT_EQ(42, dcator->a.vs) << "Cator is must be 42";
+  A* a;
+  zbe::assignAvatar(&(*dconer), &a);
+  EXPECT_EQ(42, a->id) << "Coner id must be 42";
+  EXPECT_EQ(37, a->vs) << "Coner is must be 37";
+  zbe::assignAvatar(&(*dcator), &a);
+  EXPECT_EQ(37, a->id) << "Cator id must be 37";
+  EXPECT_EQ(42, a->vs) << "Cator is must be 42";
 
   delete actwrap;
 }
@@ -168,10 +168,13 @@ TEST(InstantIntersectionEventGenerator, run_no_collision) {
   iieg.run();
   es.manageCurrent();
 
-  EXPECT_EQ(42, dconer->a.id) << "Coner id must be 42";
-  EXPECT_EQ(0, dconer->a.vs) << "Coner is must be 37";
-  EXPECT_EQ(37, dcator->a.id) << "Cator id must be 37";
-  EXPECT_EQ(0, dcator->a.vs) << "Cator is must be 42";
+  A* a;
+  zbe::assignAvatar(&(*dconer), &a);
+  EXPECT_EQ(42, a->id) << "Coner id must be 42";
+  EXPECT_EQ(0, a->vs) << "Coner is must be 37";
+  zbe::assignAvatar(&(*dcator), &a);
+  EXPECT_EQ(37, a->id) << "Cator id must be 37";
+  EXPECT_EQ(0, a->vs) << "Cator is must be 42";
 
   delete actwrap;
 }
@@ -219,10 +222,13 @@ TEST(InstantIntersectionEventGenerator, run) {
   iieg.run();
   es.manageCurrent();
 
-  EXPECT_EQ(42, dconer->a.id) << "Coner id must be 42";
-  EXPECT_EQ(37, dconer->a.vs) << "Coner is must be 37";
-  EXPECT_EQ(37, dcator->a.id) << "Cator id must be 37";
-  EXPECT_EQ(42, dcator->a.vs) << "Cator is must be 42";
+  A* a;
+  zbe::assignAvatar(&(*dconer), &a);
+  EXPECT_EQ(42, a->id) << "Coner id must be 42";
+  EXPECT_EQ(37, a->vs) << "Coner is must be 37";
+  zbe::assignAvatar(&(*dcator), &a);
+  EXPECT_EQ(37, a->id) << "Cator id must be 37";
+  EXPECT_EQ(42, a->vs) << "Cator is must be 42";
 
   delete actwrap;
 }

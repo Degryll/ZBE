@@ -711,7 +711,8 @@ TEST(Intersections, MovingCircleInsideAABB_Base) {
   zbe::Vector2D velocity{-999.65, -999.65};
   zbe::AABB2D block{{0,0},{1000, 1000}};
   int64_t tMax = zbe::SECOND;
-  zbe::Point<2> p({3.7609375, 474.7609375});
+  //zbe::Point<2> p({3.7609375, 474.7609375});
+  zbe::Point<2> p({0.0, 481.7609375});
   testMovingCircleInsideABB(ball, velocity, block, tMax, 2048, p);
 }
 

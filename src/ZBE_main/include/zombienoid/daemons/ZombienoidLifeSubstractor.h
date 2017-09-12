@@ -28,6 +28,9 @@ namespace zombienoid {
   class ZombienoidLifeSubstractor : public zbe::Daemon {
     public:
 
+      ZombienoidLifeSubstractor(const ZombienoidLifeSubstractor&) = delete;
+      void operator=(const ZombienoidLifeSubstractor&) = delete;
+
       /** \brief Parametrized constructor.
        *  \param nballs Current number of balls
        *  \param nlifes Current number of lifes

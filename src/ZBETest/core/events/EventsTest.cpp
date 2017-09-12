@@ -14,6 +14,10 @@
 
 namespace EventsTest {
 
+struct A{
+    using Base = void;
+};
+
 class DummyInputHandler : public zbe::InputHandler{
     void run(float) {};
 };
@@ -23,9 +27,9 @@ public:
   virtual ~R() {}
 };
 
-class C : public zbe::CollisionerCommon<R, void> {
+class C : public zbe::CollisionerCommon<R, A> {
   public:
-    C() : zbe::CollisionerCommon<R, void>(new zbe::AvatarEntityContainer<void>(nullptr), nullptr, nullptr, 1){};
+    C(zbe::AvatarEntityContainer<A>* aeca) : zbe::CollisionerCommon<R, A>(aeca, nullptr, nullptr, 1){};
 };
 
 class RO : public zbe::ReactObject<R> {
@@ -56,7 +60,9 @@ TEST(Event, InputEvent) {
 }
 
 TEST(Event, CollisionEvent) {
-  C* c = new C;
+  zbe::AvatarEntityFixed<A> aea(new A());
+  zbe::AvatarEntityContainer<A> aeca(&aea);
+  C* c = new C(&aeca);
   RO * ro = new RO();
   zbe::Point2D p{400000, 2};
   zbe::CollisionEvent2D<R> e(1,100, c, p, std::shared_ptr<zbe::ReactObject<R> >(ro));

@@ -86,12 +86,12 @@ TEST (AvatarEntity, Usage) {
     zbe::AvatarEntityAdapted<DummyAvatarC> aeab;
     zbe::AvatarEntityFixed<DummyAvatarC> aefb;
 
-    DummyAvatarC dacOriginal;
+    DummyAvatarC* dacOriginal = new DummyAvatarC();
 
     std::shared_ptr<DummyAdaptorC> a(new DummyAdaptorC);
-    a->setAvatar(&dacOriginal);
+    a->setAvatar(dacOriginal);
     aeab.setAdaptor(a);
-    aefb.setAvatar(&dacOriginal);
+    aefb.setAvatar(dacOriginal);
 
     std::forward_list<zbe::AvatarEntity<DummyAvatarA>*> DAList;
 
@@ -171,20 +171,23 @@ TEST (AvatarEntity, Usage) {
 }
 
 TEST (AvatarEntity, TwoBranches) {
-    DummyAvatarC originalC;
-    DummyAvatarZ originalZ;
+    DummyAvatarC* originalC = new DummyAvatarC();
+    DummyAvatarC* originalC2 = new DummyAvatarC();
+    DummyAvatarZ* originalZ = new DummyAvatarZ();
+    DummyAvatarZ* originalZ2 = new DummyAvatarZ();
+    DummyAvatarZ* originalZ3 = new DummyAvatarZ();
 
     std::shared_ptr<DummyAdaptorC> ac(new DummyAdaptorC);
-    ac->setAvatar(&originalC);
+    ac->setAvatar(originalC2);
 
     std::shared_ptr<DummyAdaptorZ> az(new DummyAdaptorZ);
-    az->setAvatar(&originalZ);
+    az->setAvatar(originalZ2);
 
     CZAdaptedFixedEntity czafe;
     zbe::AvatarEntityAdapted<DummyAvatarC>* aeap = &czafe;
     zbe::AvatarEntityFixed<DummyAvatarZ>*   aefp = &czafe;
     aeap->setAdaptor(ac);
-    aefp->setAvatar(&originalZ);
+    aefp->setAvatar(originalZ);
 
     CZAdaptedAdaptedEntity czaae;
     zbe::AvatarEntityAdapted<DummyAvatarC>* aeacp = &czaae;
@@ -195,8 +198,8 @@ TEST (AvatarEntity, TwoBranches) {
     CZFixedFixedEntity czffe;
     zbe::AvatarEntityFixed<DummyAvatarC>* aefcp = &czffe;
     zbe::AvatarEntityFixed<DummyAvatarZ>* aefzp = &czffe;
-    aefcp->setAvatar(&originalC);
-    aefzp->setAvatar(&originalZ);
+    aefcp->setAvatar(originalC);
+    aefzp->setAvatar(originalZ3);
 
     DummyAvatarA* daa;
     DummyAvatarB* dab;
