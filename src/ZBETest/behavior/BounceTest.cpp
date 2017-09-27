@@ -25,7 +25,9 @@ TEST(Bounce, apply) {
     bm->addNormal({1.0,-1.0});
     EXPECT_TRUE(b.hasNormals()) << "Then it should have normals.";
 
-    bounce.apply(bemock);
+    std::shared_ptr<zbe::AvatarEntityContainer<zbe::Bouncer<2> > > aec;
+    wrapAEC(&aec,bemock);
+    bounce.apply(aec);
 
     EXPECT_FALSE(b.hasNormals()) << "Normals should be cleaned.";
 

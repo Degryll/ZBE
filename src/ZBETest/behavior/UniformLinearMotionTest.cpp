@@ -46,7 +46,9 @@ TEST(UniformLinearMotion, apply) {
     sysTime.update();
     sysTime.setEventTime(zbe::SECOND);
 
-    bulma.apply(memock);
+    std::shared_ptr<zbe::AvatarEntityContainer<zbe::Movable<2> > > aec;
+    wrapAEC(&aec, memock);
+    bulma.apply(aec);
 
     EXPECT_EQ(10.0,m.getPosition()[0]) << "Position X.";
     EXPECT_EQ(16.0,m.getPosition()[1]) << "Position Y.";
@@ -54,7 +56,7 @@ TEST(UniformLinearMotion, apply) {
     sysTime.update();
     sysTime.setEventTime(1.5*zbe::SECOND);
 
-    bulma.apply(memock);
+    bulma.apply(aec);
 
     EXPECT_EQ(13.5,m.getPosition()[0]) << "Position X.";
     EXPECT_EQ(21.5,m.getPosition()[1]) << "Position Y.";

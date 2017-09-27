@@ -25,7 +25,7 @@ public:
   BallCatorAdaptor(const BallCatorAdaptor&) = delete;
   void operator=(const BallCatorAdaptor&) = delete;
 
-  BallCatorAdaptor(zbe::ActiveElement2D<R>* entity): e(entity), s(nullptr) {
+  BallCatorAdaptor(std::shared_ptr<zbe::ActiveElement2D<R> > entity): e(entity), s(nullptr) {
     zbe::AvatarEntityContainer<zbe::Avatar, zbe::Bouncer<2>, zbe::Stated >* aeContainer (new zbe::AvatarEntityContainer<zbe::Avatar, zbe::Bouncer<2>, zbe::Stated >(e));
     std::shared_ptr<zbe::ConstantMovingCircle<R> > cObject(new zbe::ConstantMovingCircle<R>(zbe::Circle(zbe::Point2D({(e->getPosition().x), e->getPosition().y}), e->getWidth()/2.0), e->getVelocity()));
     std::shared_ptr<zbe::VoidReactObject<R> > vro(new zbe::VoidReactObject<R>());
@@ -43,7 +43,7 @@ public:
   }
 
 private:
-    zbe::ActiveElement2D<R>* e;
+    std::shared_ptr<zbe::ActiveElement2D<R> > e;
     zbe::CollisionatorCommon<R,zbe::Avatar, zbe::Bouncer<2>, zbe::Stated >* s;
 };
 

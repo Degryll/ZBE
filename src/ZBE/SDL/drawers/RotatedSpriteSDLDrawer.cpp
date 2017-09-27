@@ -11,9 +11,9 @@
 
 namespace zbe {
 
-void RotatedSpriteSDLDrawer::apply(AvatarEntity<RotatedSprite> *entity) {
+void RotatedSpriteSDLDrawer::apply(AvatarEntityContainer<RotatedSprite> *entity) {
   RotatedSprite* avatar;
-  entity->assignAvatar(&avatar);
+  assignAvatar(entity, &avatar);
   SDL_Rect src,dst;
   src.x = 0;
   src.y = 0;

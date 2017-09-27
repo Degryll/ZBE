@@ -51,7 +51,7 @@ TEST(SingleSpriteSDLDrawer, DISABLED_Render) {
   zbe::SingleSpriteSDLDrawer drawer(&window, &imgStore);
 
   std::shared_ptr<DrawerMock> dm = std::make_shared<DrawerMock>();
-  std::shared_ptr<zbe::Adaptor<zbe::SingleSprite> > spriteAdaptor = std::make_shared<zbe::SimpleDrawableSingleSpriteAdaptor>(&(*dm));
+  std::shared_ptr<zbe::Adaptor<zbe::SingleSprite> > spriteAdaptor = std::make_shared<zbe::SimpleDrawableSingleSpriteAdaptor>(dm);
   zbe::setAdaptor(dm,spriteAdaptor);
 
   int w = rand() % 20 + 20;
@@ -94,7 +94,9 @@ printf("IMG: x: %d, y: %d, w: %d, h: %d\n", x, y, w, h);
   dm->setH(h);
   dm->setG(texture);
 
-  drawer.apply(dm);
+  std::shared_ptr<zbe::AvatarEntityContainer<zbe::SingleSprite> > aecss;
+  wrapAEC(&aecss, dm);
+  drawer.apply(aecss);
 
   char *p = new char[WINDOW_W*WINDOW_H*4];
 

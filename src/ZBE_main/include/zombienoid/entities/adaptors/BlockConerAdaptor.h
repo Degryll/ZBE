@@ -26,7 +26,7 @@ public:
   BlockConerAdaptor(const BlockConerAdaptor&) = delete;
   void operator=(const BlockConerAdaptor&) = delete;
 
-  BlockConerAdaptor(zbe::Element2D<R>* entity): e(entity), s(nullptr) {
+  BlockConerAdaptor(std::shared_ptr<zbe::Element2D<R> > entity): e(entity), s(nullptr) {
     zbe::AvatarEntityContainer<zbe::Avatar, zbe::Positionable<2>, zbe::Stated>* aeContainer (new zbe::AvatarEntityContainer<zbe::Avatar, zbe::Positionable<2>, zbe::Stated>(e));
     zbe::AABB2D aabb({(double)e->getX(), (double)e->getY()},{(double)e->getX()+e->getW(), (double)e->getY()+e->getH()});
     std::shared_ptr<zbe::StaticSolidAABB2D<R> > cObject(new zbe::StaticSolidAABB2D<R>(aabb));
@@ -46,7 +46,7 @@ public:
   }
 
 private:
-    zbe::Element2D<R>* e;
+    std::shared_ptr<zbe::Element2D<R> > e;
     zbe::CollisionerCommon<R,zbe::Avatar, zbe::Positionable<2>, zbe::Stated>* s;
 };
 

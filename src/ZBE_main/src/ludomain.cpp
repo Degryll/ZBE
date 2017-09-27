@@ -165,11 +165,11 @@ int ludomain(int, char** ) {
   //DaemonMaster drawMaster;
   std::shared_ptr<DaemonMaster> drawMaster(new DaemonMaster());
   printf("Creating drawables list\n");fflush(stdout);
-  std::shared_ptr<TicketedForwardList<AvatarEntity<SingleSprite> > > sprites(new TicketedForwardList<AvatarEntity<SingleSprite> >());
-  ResourceManager<TicketedForwardList<AvatarEntity<SingleSprite > > >& lmAESingleSprite = ResourceManager<TicketedForwardList<AvatarEntity<SingleSprite> > >::getInstance();
+  std::shared_ptr<TicketedForwardList<AvatarEntityContainer<SingleSprite> > > sprites(new TicketedForwardList<AvatarEntityContainer<SingleSprite> >());
+  ResourceManager<TicketedForwardList<AvatarEntityContainer<SingleSprite > > >& lmAESingleSprite = ResourceManager<TicketedForwardList<AvatarEntityContainer<SingleSprite> > >::getInstance();
   lmAESingleSprite.insert(SPRITELIST, sprites);
-  std::shared_ptr<TicketedForwardList<AvatarEntity<RotatedSprite> > > rsprites(new TicketedForwardList<AvatarEntity<RotatedSprite> >());
-  ResourceManager< TicketedForwardList<AvatarEntity<RotatedSprite > > >& lmAESimpleRotatedSprite = ResourceManager<TicketedForwardList<AvatarEntity<RotatedSprite> > >::getInstance();
+  std::shared_ptr<TicketedForwardList<AvatarEntityContainer<RotatedSprite> > > rsprites(new TicketedForwardList<AvatarEntityContainer<RotatedSprite> >());
+  ResourceManager< TicketedForwardList<AvatarEntityContainer<RotatedSprite > > >& lmAESimpleRotatedSprite = ResourceManager<TicketedForwardList<AvatarEntityContainer<RotatedSprite> > >::getInstance();
   lmAESimpleRotatedSprite .insert(RSPRITELIST, rsprites);
   printf("Loading imgs\n");fflush(stdout);
   ballgraphics[0] = imgStore.loadImg(zomballImg);
@@ -180,10 +180,10 @@ int ludomain(int, char** ) {
   ballgraphics[5] = imgStore.loadImg(orb);
   //brickgraphics = window.loadImg(brickfilename);
   printf("Building the drawer to paint RotatedSprite's \n");fflush(stdout);
-  std::shared_ptr<Daemon> drawerDaemon(new  DrawerDaemon<SingleSprite, TicketedForwardList<AvatarEntity<SingleSprite > > >(std::make_shared<SingleSpriteSDLDrawer>(&window, &imgStore), SPRITELIST));
+  std::shared_ptr<Daemon> drawerDaemon(new  BehaviorDaemon<SingleSprite, TicketedForwardList<AvatarEntityContainer<SingleSprite > > >(std::make_shared<SingleSpriteSDLDrawer>(&window, &imgStore), SPRITELIST));
   //drawMaster.addDaemon(drawerDaemon);
   drawMaster->addDaemon(drawerDaemon);
-  std::shared_ptr<Daemon> rDrawerDaemon(new  DrawerDaemon<RotatedSprite, TicketedForwardList<AvatarEntity<RotatedSprite > > >(std::make_shared<SimpleRotatedSpriteSDLDrawer>(&window, &imgStore), RSPRITELIST));
+  std::shared_ptr<Daemon> rDrawerDaemon(new  BehaviorDaemon<RotatedSprite, TicketedForwardList<AvatarEntityContainer<RotatedSprite > > >(std::make_shared<SimpleRotatedSpriteSDLDrawer>(&window, &imgStore), RSPRITELIST));
   //drawMaster.addDaemon(rDrawerDaemon);
   drawMaster->addDaemon(rDrawerDaemon);
   printf("|-------------------- General Daemons ---------------------|\n");fflush(stdout);
@@ -191,17 +191,17 @@ int ludomain(int, char** ) {
   std::shared_ptr<DaemonMaster> commonBehaviorMaster(new DaemonMaster());
   //DaemonMaster reactBehaviorMaster;
   std::shared_ptr<DaemonMaster> reactBehaviorMaster(new DaemonMaster());
-  std::shared_ptr<TicketedForwardList<AvatarEntity<Movable<2> > > > vAEMovable(new TicketedForwardList<AvatarEntity<Movable<2> > >());
-  auto& lmAEMovable = ResourceManager<TicketedForwardList<AvatarEntity<Movable<2> > > >::getInstance();
+  std::shared_ptr<TicketedForwardList<AvatarEntityContainer<Movable<2> > > > vAEMovable(new TicketedForwardList<AvatarEntityContainer<Movable<2> > >());
+  auto& lmAEMovable = ResourceManager<TicketedForwardList<AvatarEntityContainer<Movable<2> > > >::getInstance();
   lmAEMovable.insert(MOVABLELIST, vAEMovable);
-  std::shared_ptr<TicketedForwardList<AvatarEntity<Positionable<2> > > > vAEPositionable(new TicketedForwardList<AvatarEntity<Positionable<2> > >());
-  auto& lmAEPositionable = ResourceManager<TicketedForwardList<AvatarEntity<Positionable<2> > > >::getInstance();
+  std::shared_ptr<TicketedForwardList<AvatarEntityContainer<Positionable<2> > > > vAEPositionable(new TicketedForwardList<AvatarEntityContainer<Positionable<2> > >());
+  auto& lmAEPositionable = ResourceManager<TicketedForwardList<AvatarEntityContainer<Positionable<2> > > >::getInstance();
   lmAEPositionable.insert(PARTICLES, vAEPositionable);
-  std::shared_ptr<TicketedForwardList<AvatarEntity<Bouncer<2> > > > vAEBouncer(new TicketedForwardList<AvatarEntity<Bouncer<2> > >());
-  auto& lmAEBouncer = ResourceManager<TicketedForwardList<AvatarEntity<Bouncer<2> > > >::getInstance();
+  std::shared_ptr<TicketedForwardList<AvatarEntityContainer<Bouncer<2> > > > vAEBouncer(new TicketedForwardList<AvatarEntityContainer<Bouncer<2> > >());
+  auto& lmAEBouncer = ResourceManager<TicketedForwardList<AvatarEntityContainer<Bouncer<2> > > >::getInstance();
   lmAEBouncer.insert(BOUNCERLIST, vAEBouncer);
-  std::shared_ptr<Daemon> ballBounce(new  BehaviorDaemon<Bouncer<2>, TicketedForwardList<AvatarEntity<Bouncer<2> > > >(std::make_shared<Bounce<2> >(), BOUNCERLIST));
-  std::shared_ptr<Daemon> ballULM(new  BehaviorDaemon<Movable<2>, TicketedForwardList<AvatarEntity<Movable<2> > > >(std::make_shared<UniformLinearMotion<2> >(), MOVABLELIST));
+  std::shared_ptr<Daemon> ballBounce(new  BehaviorDaemon<Bouncer<2>, TicketedForwardList<AvatarEntityContainer<Bouncer<2> > > >(std::make_shared<Bounce<2> >(), BOUNCERLIST));
+  std::shared_ptr<Daemon> ballULM(new  BehaviorDaemon<Movable<2>, TicketedForwardList<AvatarEntityContainer<Movable<2> > > >(std::make_shared<UniformLinearMotion<2> >(), MOVABLELIST));
   commonBehaviorMaster->addDaemon(ballULM);
   reactBehaviorMaster->addDaemon(ballBounce);
   printf("|------------------- Creating entities --------------------|\n");fflush(stdout);
@@ -238,6 +238,12 @@ int ludomain(int, char** ) {
   ieg->addHandler(ZBEK_v, &gSet3);
 
   srand(time(0));
+
+  std::shared_ptr<zbe::AvatarEntityContainer<zbe::Movable<2> > > aecm2;
+  std::shared_ptr<zbe::AvatarEntityContainer<zbe::Bouncer<2> > > aecb2;
+  std::shared_ptr<zbe::AvatarEntityContainer<zbe::RotatedSprite> > aecrs;
+  std::shared_ptr<zbe::AvatarEntityContainer<zbe::Positionable<2> > > aecp2;
+
   for(int i = 0; i<1000; i++){
     int64_t r = 16 + (rand()% 4);
     int64_t xc =(WIDTH/2 + rand()%100-50);
@@ -253,49 +259,60 @@ int ludomain(int, char** ) {
     int64_t vx = sin(vAngle*PI/180)*vt;
     int64_t vy = cos(vAngle*PI/180)*vt;
     std::shared_ptr<LudoBall<LudoReactor> > ball = std::make_shared<LudoBall<ludo::LudoReactor> >( xc, yc, r, vx, vy, BALLACTUATORLIST, COLLISIONABLELIST, graphId);
-    std::shared_ptr<Adaptor<RotatedSprite> > spriteAdaptor = std::make_shared<RotatedDrawableSimpleRotatedSpriteAdaptor>(&(*ball));
+    std::shared_ptr<Adaptor<RotatedSprite> > spriteAdaptor = std::make_shared<RotatedDrawableSimpleRotatedSpriteAdaptor>(ball);
     setAdaptor(ball, spriteAdaptor);
-    std::shared_ptr<Adaptor<Collisionator<LudoReactor> > > lbca = std::make_shared<LudoBallCollisionatorAdaptor<LudoReactor> >(&(*ball));
+    std::shared_ptr<Adaptor<Collisionator<LudoReactor> > > lbca = std::make_shared<LudoBallCollisionatorAdaptor<LudoReactor> >(ball);
     setAdaptor(ball, lbca);
+
+    zbe::wrapAEC(&aecm2, ball);
+    zbe::wrapAEC(&aecb2, ball);
+    zbe::wrapAEC(&aecrs, ball);
+
     ball->addToList(0, ctl->push_front(ball));
-    ball->addToList(1, vAEMovable->push_front(ball));
-    ball->addToList(2, vAEBouncer->push_front(ball));
-    ball->addToList(3, rsprites->push_front(ball));
+    ball->addToList(1, vAEMovable->push_front(aecm2));
+    ball->addToList(2, vAEBouncer->push_front(aecb2));
+    ball->addToList(3, rsprites->push_front(aecrs));
     ball->addToList(4, setableGs->push_front(ball));
     ball->addToList(5, intersectionablesList->push_front(ball));
   }
 
   printf("Creating a rotator\n");fflush(stdout);
-  auto& lmTflAEPositionable = ResourceManager<TicketedForwardList<AvatarEntity<Positionable<2> > > >::getInstance();
-  std::shared_ptr<TicketedForwardList<AvatarEntity<Positionable<2> > > > tflAEPositionable(new TicketedForwardList<AvatarEntity<Positionable<2> > >());
+  auto& lmTflAEPositionable = ResourceManager<TicketedForwardList<AvatarEntityContainer<Positionable<2> > > >::getInstance();
+  std::shared_ptr<TicketedForwardList<AvatarEntityContainer<Positionable<2> > > > tflAEPositionable(new TicketedForwardList<AvatarEntityContainer<Positionable<2> > >());
   lmTflAEPositionable.insert(ROTATORS, tflAEPositionable);
 
-  auto& lmTflAEMovable = ResourceManager<TicketedForwardList<AvatarEntity<Movable<2> > > >::getInstance();
-  std::shared_ptr<TicketedForwardList<AvatarEntity<Movable<2> > > > tflAEMovable(new TicketedForwardList<AvatarEntity<Movable<2> > >());
+  auto& lmTflAEMovable = ResourceManager<TicketedForwardList<AvatarEntityContainer<Movable<2> > > >::getInstance();
+  std::shared_ptr<TicketedForwardList<AvatarEntityContainer<Movable<2> > > > tflAEMovable(new TicketedForwardList<AvatarEntityContainer<Movable<2> > >());
   lmTflAEMovable.insert(ROTATORS, tflAEMovable);
 
-  std::shared_ptr<TicketedForwardList<AvatarEntity<Movable<2> > > > tflRAEMovable(new TicketedForwardList<AvatarEntity<Movable<2> > >());
+  std::shared_ptr<TicketedForwardList<AvatarEntityContainer<Movable<2> > > > tflRAEMovable(new TicketedForwardList<AvatarEntityContainer<Movable<2> > >());
   lmTflAEMovable.insert(LROTATORS, tflRAEMovable);
-  std::shared_ptr<TicketedForwardList<AvatarEntity<Movable<2> > > > tflLAEMovable(new TicketedForwardList<AvatarEntity<Movable<2> > >());
+  std::shared_ptr<TicketedForwardList<AvatarEntityContainer<Movable<2> > > > tflLAEMovable(new TicketedForwardList<AvatarEntityContainer<Movable<2> > >());
   lmTflAEMovable.insert(RROTATORS, tflLAEMovable);
 
   std::shared_ptr<LudoBall<LudoReactor> > rotator = std::make_shared<LudoBall<ludo::LudoReactor> >( WIDTH/2, HEIGHT/2, 16, 200, 100, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics[3]);
-  std::shared_ptr<Adaptor<RotatedSprite> > spriteAdaptor = std::make_shared<RotatedDrawableSimpleRotatedSpriteAdaptor>(&(*rotator));
+  std::shared_ptr<Adaptor<RotatedSprite> > spriteAdaptor = std::make_shared<RotatedDrawableSimpleRotatedSpriteAdaptor>(rotator);
   setAdaptor(rotator, spriteAdaptor);
-  std::shared_ptr<Adaptor<Collisionator<LudoReactor> > > lbca = std::make_shared<LudoBallCollisionatorAdaptor<LudoReactor> >(&(*rotator));
+  std::shared_ptr<Adaptor<Collisionator<LudoReactor> > > lbca = std::make_shared<LudoBallCollisionatorAdaptor<LudoReactor> >(rotator);
   setAdaptor(rotator, lbca);
+
+  zbe::wrapAEC(&aecb2, rotator);
+  zbe::wrapAEC(&aecm2, rotator);
+  zbe::wrapAEC(&aecp2, rotator);
+  zbe::wrapAEC(&aecrs, rotator);
+
   ctl->push_front(rotator);
-  vAEBouncer->push_front(rotator);
-  rsprites->push_front(rotator);
-  tflAEPositionable->push_front(rotator);
-  tflAEMovable->push_front(rotator);
+  vAEBouncer->push_front(aecb2);
+  rsprites->push_front(aecrs);
+  tflAEPositionable->push_front(aecp2);
+  tflAEMovable->push_front(aecm2);
 
   printf("Giving the rotator the ability of KILL ...press K...\n");fflush(stdout);
 
   std::shared_ptr<DaemonMaster> killMaster = std::make_shared<DaemonMaster>();
   //Creating areas
   std::shared_ptr<DestroyerCircleAreaCreator<LudoReactor> > dcac(new DestroyerCircleAreaCreator<LudoReactor>(64, INTERSECTCTRLIST, INTERSECTCNRLIST, BOARDACTUATORLIST));
-  std::shared_ptr<Daemon> areaCreatorDaemon(new  BehaviorDaemon<Positionable<2>, TicketedForwardList<AvatarEntity<Positionable<2> > > >(dcac, ROTATORS));
+  std::shared_ptr<Daemon> areaCreatorDaemon(new  BehaviorDaemon<Positionable<2>, TicketedForwardList<AvatarEntityContainer<Positionable<2> > > >(dcac, ROTATORS));
 
   //Calculating intersections
   std::shared_ptr<IntersectionEventGenerator<LudoReactor> > iceg(new IntersectionEventGenerator<LudoReactor>(INTERSECTCTRLIST, COLLISIONEVENT, new IntersectionCollisionSelector<LudoReactor>()));
@@ -305,7 +322,7 @@ int ludomain(int, char** ) {
   std::shared_ptr<ListEraser<AvatarEntity<Collisionator<LudoReactor> > > > eraser(new ListEraser<AvatarEntity<Collisionator<LudoReactor> > >(INTERSECTCTRLIST));
 
   //Doing cute stuff
-  std::shared_ptr<Daemon> explodParticle(new  BehaviorDaemon<Movable<2>, TicketedForwardList<AvatarEntity<Movable<2> > > >(std::make_shared<BackBallParticlesLauncher>(64, ballgraphics[5], RSPRITELIST, teg), ROTATORS));
+  std::shared_ptr<Daemon> explodParticle(new  BehaviorDaemon<Movable<2>, TicketedForwardList<AvatarEntityContainer<Movable<2> > > >(std::make_shared<BackBallParticlesLauncher>(64, ballgraphics[5], RSPRITELIST, teg), ROTATORS));
 
 
   //Adding daemons
@@ -319,15 +336,15 @@ int ludomain(int, char** ) {
   ieg->addHandler(ZBEK_k, &dih);
   //** kill end
 
-  auto fticket = vAEMovable->push_front(rotator);
+  auto fticket = vAEMovable->push_front(aecm2);
   fticket->setINACTIVE();
   TicketToggler ftoggler(fticket);
   ieg->addHandler(ZBEK_UP, &ftoggler);
-  auto lticket = tflLAEMovable->push_front(rotator);
+  auto lticket = tflLAEMovable->push_front(aecm2);
   lticket->setINACTIVE();
   TicketToggler ltoggler(lticket);
   ieg->addHandler(ZBEK_LEFT, &ltoggler);
-  auto rticket = tflRAEMovable->push_front(rotator);
+  auto rticket = tflRAEMovable->push_front(aecm2);
   rticket->setINACTIVE();
   TicketToggler rtoggler(rticket);
   ieg->addHandler(ZBEK_RIGHT, &rtoggler);
@@ -353,15 +370,15 @@ int ludomain(int, char** ) {
   printf("Updating system time.\n");fflush(stdout);
   sysTime.update();
   printf("|=================== adding some timers ===================|\n");fflush(stdout);
-  std::shared_ptr<Daemon> leftRotator(new  BehaviorDaemon<Movable<2>, TicketedForwardList<AvatarEntity<Movable<2> > > >(std::make_shared<Rotator>(-0.1f), LROTATORS));
+  std::shared_ptr<Daemon> leftRotator(new  BehaviorDaemon<Movable<2>, TicketedForwardList<AvatarEntityContainer<Movable<2> > > >(std::make_shared<Rotator>(-0.1f), LROTATORS));
   std::shared_ptr<TimeHandler> rotatorL = std::make_shared<DemonRecurrentTimeHandler>(leftRotator, teg, SECOND/8);
   teg->addTimer(rotatorL, SECOND);
 
-  std::shared_ptr<Daemon> rightRotator(new  BehaviorDaemon<Movable<2>, TicketedForwardList<AvatarEntity<Movable<2> > > >(std::make_shared<Rotator>(0.1f), RROTATORS));
+  std::shared_ptr<Daemon> rightRotator(new  BehaviorDaemon<Movable<2>, TicketedForwardList<AvatarEntityContainer<Movable<2> > > >(std::make_shared<Rotator>(0.1f), RROTATORS));
   std::shared_ptr<TimeHandler> rotatorR = std::make_shared<DemonRecurrentTimeHandler>(rightRotator, teg, SECOND/8);
   teg->addTimer(rotatorR, SECOND);
 
-  std::shared_ptr<Daemon> ballParticles(new  BehaviorDaemon<Movable<2>, TicketedForwardList<AvatarEntity<Movable<2> > > >(std::make_shared<BackBallParticlesLauncher>(8, ballgraphics[4], RSPRITELIST, teg), MOVABLELIST));
+  std::shared_ptr<Daemon> ballParticles(new  BehaviorDaemon<Movable<2>, TicketedForwardList<AvatarEntityContainer<Movable<2> > > >(std::make_shared<BackBallParticlesLauncher>(8, ballgraphics[4], RSPRITELIST, teg), MOVABLELIST));
   std::shared_ptr<TimeHandler> expeller = std::make_shared<DemonRecurrentTimeHandler>(ballParticles, teg, SECOND/16);
   teg->addTimer(expeller, SECOND/16);
   printf("|==========================================================|\n");fflush(stdout);

@@ -24,7 +24,7 @@ public:
   BoardConerAdaptor(const BoardConerAdaptor&) = delete;
   void operator=(const BoardConerAdaptor&) = delete;
 
-  BoardConerAdaptor(Element2D<R>* entity): e(entity), s(nullptr) {
+  BoardConerAdaptor(std::shared_ptr<Element2D<R> > entity): e(entity), s(nullptr) {
     AvatarEntityContainer<Avatar, Positionable<2>, Stated>* aeContainer (new AvatarEntityContainer<Avatar, Positionable<2>, Stated>(e));
     zbe::AABB2D aabb({(double)e->getX(), (double)e->getY()}, {(double)e->getX()+e->getW(), (double)e->getY()+e->getH()});
     std::shared_ptr<StaticLimiterAABB2D<R> > cObject(new zbe::StaticLimiterAABB2D<R>(aabb));
@@ -44,7 +44,7 @@ public:
   }
 
 private:
-    Element2D<R>* e;
+    std::shared_ptr<Element2D<R> > e;
     CollisionerCommon<R,Avatar, Positionable<2>, Stated>* s;
 };
 

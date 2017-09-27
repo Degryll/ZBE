@@ -1,6 +1,7 @@
 #include "ZBE/core/system/MainLoop.h"
-//lo que si tendré que recibir por algún sitio, será:
-  //window (bueno, la recibiran el pre y el post)
+
+
+#include <iostream>//--------------------
 
 
 namespace zbe {

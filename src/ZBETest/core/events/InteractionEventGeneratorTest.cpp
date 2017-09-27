@@ -47,21 +47,13 @@ class R { // Reactor mock
 
 class Coner : public zbe::AvatarEntityFixed<A>, public zbe::AvatarEntityFixed<zbe::Collisioner<R> > {
   public:
-    Coner(std::shared_ptr<zbe::CollisionObject<R> > co, uint64_t actuators, int id) {
-          A* a = new A(id);
-          zbe::AvatarEntityFixed<A >::setAvatar(a);
-          zbe::AvatarEntityFixed<zbe::Collisioner<R> >::setAvatar(new zbe::CollisionerCommon<R, A>(new zbe::AvatarEntityContainer<A>(this), co, std::make_shared<zbe::ReactObjectCommon<R, A> >(a), actuators));
-        }
+    Coner() {}
     ~Coner(){}
 };
 
 class Cator :  public zbe::AvatarEntityFixed<A>, public zbe::AvatarEntityFixed<zbe::Collisionator<R> > {
   public:
-    Cator(std::shared_ptr<zbe::CollisionObject<R> > co, uint64_t actuators, uint64_t listId, int id) {
-        A* a = new A(id);
-        zbe::AvatarEntityFixed<A >::setAvatar(a);
-        zbe::AvatarEntityFixed<zbe::Collisionator<R> >::setAvatar(new  zbe::CollisionatorCommon<R, A>(new zbe::AvatarEntityContainer<A>(this), co, std::make_shared<zbe::ReactObjectCommon<R, A> >(a), actuators, listId));
-      }
+    Cator() {}
     ~Cator(){}
 };
 
@@ -99,8 +91,17 @@ TEST(IntersectionEventGenerator, run) {
   lmcn.insert(1, cnl);
   lmct.insert(2, ctl);
 
-  std::shared_ptr<Coner> dconer= std::make_shared<Coner>(sbox, 1, 42);
-  std::shared_ptr<Cator> dcator= std::make_shared<Cator>(cc, 1, 1, 37);
+  std::shared_ptr<Coner> dconer= std::make_shared<Coner>();
+  A* aner = new A(42);
+  zbe::Collisioner<R> *collisioner = new zbe::CollisionerCommon<R, A>(new zbe::AvatarEntityContainer<A>(dconer), sbox, std::make_shared<zbe::ReactObjectCommon<R, A> >(aner), 1);
+  setAvatar(dconer, aner);
+  setAvatar(dconer, collisioner);
+
+  std::shared_ptr<Cator> dcator= std::make_shared<Cator>();
+  A* ator = new A(37);
+  zbe::Collisionator<R> *collisionator = new  zbe::CollisionatorCommon<R, A>(new zbe::AvatarEntityContainer<A>(dcator), cc, std::make_shared<zbe::ReactObjectCommon<R, A> >(ator), 1, 1);
+  setAvatar(dcator, ator);
+  setAvatar(dcator, collisionator);
 
   cnl->push_front(dconer);
   ctl->push_front(dcator);
@@ -152,8 +153,17 @@ TEST(InstantIntersectionEventGenerator, run_no_collision) {
   lmcn.insert(1, cnl);
   lmct.insert(2, ctl);
 
-  std::shared_ptr<Coner> dconer= std::make_shared<Coner>(sbox, 1, 42);
-  std::shared_ptr<Cator> dcator= std::make_shared<Cator>(cc, 1, 1, 37);
+  std::shared_ptr<Coner> dconer= std::make_shared<Coner>();
+  A* aner = new A(42);
+  zbe::Collisioner<R> *collisioner = new zbe::CollisionerCommon<R, A>(new zbe::AvatarEntityContainer<A>(dconer), sbox, std::make_shared<zbe::ReactObjectCommon<R, A> >(aner), 1);
+  setAvatar(dconer, aner);
+  setAvatar(dconer, collisioner);
+
+  std::shared_ptr<Cator> dcator= std::make_shared<Cator>();
+  A* ator = new A(37);
+  zbe::Collisionator<R> *collisionator = new  zbe::CollisionatorCommon<R, A>(new zbe::AvatarEntityContainer<A>(dcator), cc, std::make_shared<zbe::ReactObjectCommon<R, A> >(ator), 1, 1);
+  setAvatar(dcator, ator);
+  setAvatar(dcator, collisionator);
 
   cnl->push_front(dconer);
   ctl->push_front(dcator);
@@ -206,8 +216,17 @@ TEST(InstantIntersectionEventGenerator, run) {
   lmcn.insert(1, cnl);
   lmct.insert(2, ctl);
 
-  std::shared_ptr<Coner> dconer= std::make_shared<Coner>(sbox, 1, 42);
-  std::shared_ptr<Cator> dcator= std::make_shared<Cator>(cc, 1, 1, 37);
+  std::shared_ptr<Coner> dconer= std::make_shared<Coner>();
+  A* aner = new A(42);
+  zbe::Collisioner<R> *collisioner = new zbe::CollisionerCommon<R, A>(new zbe::AvatarEntityContainer<A>(dconer), sbox, std::make_shared<zbe::ReactObjectCommon<R, A> >(aner), 1);
+  setAvatar(dconer, aner);
+  setAvatar(dconer, collisioner);
+
+  std::shared_ptr<Cator> dcator= std::make_shared<Cator>();
+  A* ator = new A(37);
+  zbe::Collisionator<R> *collisionator = new  zbe::CollisionatorCommon<R, A>(new zbe::AvatarEntityContainer<A>(dcator), cc, std::make_shared<zbe::ReactObjectCommon<R, A> >(ator), 1, 1);
+  setAvatar(dcator, ator);
+  setAvatar(dcator, collisionator);
 
   cnl->push_front(dconer);
   ctl->push_front(dcator);
@@ -233,4 +252,4 @@ TEST(InstantIntersectionEventGenerator, run) {
   delete actwrap;
 }
 
-} //namespace CollisionEventGeneratorTest
+} //namespace InteractionEventGeneratorTest

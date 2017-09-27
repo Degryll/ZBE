@@ -12,7 +12,7 @@
 
 #include <SDL2/SDL.h>
 
-#include "ZBE/core/drawers/Drawer.h"
+#include "ZBE/core/behaviors/Behavior.h"
 #include "ZBE/core/entities/AvatarEntity.h"
 #include "ZBE/core/entities/avatars/SingleSprite.h"
 #include "ZBE/SDL/system/SDLWindow.h"
@@ -24,7 +24,7 @@ namespace ludo {
 
 /** \brief This draws a simple sprite (an image).
  */
-class SimpleRotatedSpriteSDLDrawer : public zbe::Drawer<zbe::RotatedSprite> {
+class SimpleRotatedSpriteSDLDrawer : public zbe::Behavior<zbe::RotatedSprite> {
   public:
     SimpleRotatedSpriteSDLDrawer(const SimpleRotatedSpriteSDLDrawer&) = delete;
     /** \brief Create a new drawer in the given context.
@@ -41,9 +41,9 @@ class SimpleRotatedSpriteSDLDrawer : public zbe::Drawer<zbe::RotatedSprite> {
     /** \brief The function every punisher must have.
      *  \param entity The entity to be drawn.
      */
-    void apply(std::shared_ptr<zbe::AvatarEntity<zbe::RotatedSprite> > entity) {
+    void apply(std::shared_ptr<zbe::AvatarEntityContainer<zbe::RotatedSprite> > entity) {
       zbe::RotatedSprite* avatar;
-      entity->assignAvatar(&avatar);
+      assignAvatar(entity, &avatar);
       SDL_Rect src,dst;
       src.x = 0;
       src.y = 0;

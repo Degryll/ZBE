@@ -31,7 +31,7 @@ public:
   GameBlockCollisionerAdaptor(const GameBlockCollisionerAdaptor&) = delete;
   void operator=(const GameBlockCollisionerAdaptor&) = delete;
 
-  GameBlockCollisionerAdaptor(GameBlock* block): b(block), c(nullptr) {}
+  GameBlockCollisionerAdaptor(std::shared_ptr<GameBlock> block): b(block), c(nullptr) {}
   ~GameBlockCollisionerAdaptor() {delete c;}
   zbe::Collisioner<GameReactor>* getAvatar() {
       delete c;
@@ -43,7 +43,7 @@ public:
     }
 
 private:
-	GameBlock* b;
+	std::shared_ptr<GameBlock> b;
 	zbe::Collisioner<GameReactor>* c;
 };
 

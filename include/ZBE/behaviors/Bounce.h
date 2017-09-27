@@ -31,12 +31,12 @@ class Bounce : public Behavior<Bouncer<s>  > {
 
     /** \brief Changes the entity velocity with the accumulated normals.
      */
-    void apply(std::shared_ptr<AvatarEntity<Bouncer<s> > > entity) {
+    void apply(std::shared_ptr<AvatarEntityContainer<Bouncer<s> > > aec) {
       Bouncer<s>* avatar;
-      entity->assignAvatar(&avatar);
+      assignAvatar(aec, &avatar);
       if(avatar->hasNormals()){
-      	avatar->setVelocity(avatar->getVelocity().reflect(avatar->getNormalSum()));
-      	avatar->clearNormals();
+        avatar->setVelocity(avatar->getVelocity().reflect(avatar->getNormalSum()));
+        avatar->clearNormals();
       }
     }
 };

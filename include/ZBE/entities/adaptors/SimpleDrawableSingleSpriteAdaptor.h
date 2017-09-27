@@ -23,7 +23,7 @@ public:
   SimpleDrawableSingleSpriteAdaptor(const SimpleDrawableSingleSpriteAdaptor&) = delete;
   void operator=(const SimpleDrawableSingleSpriteAdaptor&) = delete;
 
-  SimpleDrawableSingleSpriteAdaptor(Drawable* entity): e(entity), s(nullptr) {}
+  SimpleDrawableSingleSpriteAdaptor(std::shared_ptr<Drawable> entity): e(entity), s(nullptr) {}
   ~SimpleDrawableSingleSpriteAdaptor() {delete s;}
     SingleSprite* getAvatar() {
       delete s;
@@ -33,7 +33,7 @@ public:
     }
 
 private:
-	Drawable* e;
+	std::shared_ptr<Drawable> e;
 	SingleSprite* s;
 };
 

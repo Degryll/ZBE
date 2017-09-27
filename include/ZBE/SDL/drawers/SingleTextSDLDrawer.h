@@ -13,8 +13,9 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 
-#include "ZBE/core/drawers/Drawer.h"
+#include "ZBE/core/behaviors/Behavior.h"
 #include "ZBE/entities/avatars/SingleTextSprite.h"
+#include "ZBE/core/entities/AvatarEntity.h"
 #include "ZBE/SDL/system/SDLWindow.h"
 #include "ZBE/SDL/system/SDLTextFontStore.h"
 
@@ -22,7 +23,7 @@ namespace zbe {
 
 /** \brief This draws a simple sprite (an image).
  */
-class SingleTextSDLDrawer : public Drawer<SingleTextSprite> {
+class SingleTextSDLDrawer : public Behavior<SingleTextSprite> {
   public:
     SingleTextSDLDrawer(const SingleTextSDLDrawer&) = delete;
     void operator=(const SingleTextSDLDrawer&) = delete;
@@ -39,7 +40,7 @@ class SingleTextSDLDrawer : public Drawer<SingleTextSprite> {
     /** \brief Draws the given entity.
      *  \param The entity to be drawn.
      */
-    void apply(std::shared_ptr<AvatarEntity<SingleTextSprite> > entity);
+    void apply(std::shared_ptr<AvatarEntityContainer<SingleTextSprite> > entity);
 
   private:
     SDLWindow* window;  //!< A SDL window with its context.

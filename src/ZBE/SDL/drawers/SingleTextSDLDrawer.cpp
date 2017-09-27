@@ -13,9 +13,9 @@
 
 namespace zbe {
 
-void SingleTextSDLDrawer::apply(std::shared_ptr<AvatarEntity<SingleTextSprite> > entity) {
+void SingleTextSDLDrawer::apply(std::shared_ptr<AvatarEntityContainer<SingleTextSprite> > entity) {
   SingleTextSprite* avatar;
-  entity->assignAvatar(&avatar);
+  assignAvatar(entity, &avatar);
   SDL_Rect src,dst;
   src.x = 0;
   src.y = 0;

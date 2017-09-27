@@ -11,9 +11,9 @@
 
 namespace zbe {
 
-void StatedSpriteSDLDrawer::apply(std::shared_ptr<AvatarEntity<StatedSprite> > entity) {
+void StatedSpriteSDLDrawer::apply(std::shared_ptr<AvatarEntityContainer<StatedSprite> > entity) {
   StatedSprite* avatar;
-  entity->assignAvatar(&avatar);
+  assignAvatar(entity, &avatar);
   SDL_Rect src,dst;
   src.x = avatar->getW() * avatar->getState();
   src.y = avatar->getH() * avatar->getState();

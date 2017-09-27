@@ -30,7 +30,7 @@ public:
   RotatedDrawableSimpleRotatedSpriteAdaptor(const RotatedDrawableSimpleRotatedSpriteAdaptor&) = delete;
   void operator=(const RotatedDrawableSimpleRotatedSpriteAdaptor&) = delete;
 
-  RotatedDrawableSimpleRotatedSpriteAdaptor(RotatedDrawable* archetype):archetype(archetype), s(nullptr){}
+  RotatedDrawableSimpleRotatedSpriteAdaptor(std::shared_ptr<RotatedDrawable> archetype):archetype(archetype), s(nullptr){}
 
   ~RotatedDrawableSimpleRotatedSpriteAdaptor() {delete s;}
 
@@ -42,7 +42,7 @@ public:
   };
 
 private:
-  RotatedDrawable* archetype;
+  std::shared_ptr<RotatedDrawable> archetype;
   zbe::RotatedSprite* s;
 };
 
@@ -54,7 +54,7 @@ public:
   LudoBallCollisionatorAdaptor(const LudoBallCollisionatorAdaptor&) = delete;
   void operator=(const LudoBallCollisionatorAdaptor&) = delete;
 
-  LudoBallCollisionatorAdaptor(LudoBall<R>* ball): b(ball), c(nullptr) {}
+  LudoBallCollisionatorAdaptor(std::shared_ptr<LudoBall<R> > ball): b(ball), c(nullptr) {}
 
   ~LudoBallCollisionatorAdaptor() {delete c;}
 
@@ -67,7 +67,7 @@ public:
     }
 
 private:
-	LudoBall<R>* b;
+	std::shared_ptr<LudoBall<R> > b;
 	zbe::Collisionator<R>* c;
 };
 

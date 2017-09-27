@@ -45,8 +45,20 @@ class BallBuilder : virtual public Builder<zbe::Movable<2> > {
 public:
 
   /** \brief Parametrized constructor.
-   *  \param
-   *     ...
+   *  \param alId:   actuator list id
+   *  \param cbslId: colisionables list id
+   *  \param g:      graphics id
+
+   *  \param s:      ball size
+   *  \param nballs: ball count
+
+   *  \param ctId:   collision ticket id
+   *  \param dtId:   draw ticket id
+   *  \param btId:   behavior ticket id
+
+   *  \param ctl;    collisionator list
+   *  \param asl;    animated sprite list
+   *  \param bl;     ball list
    */
   BallBuilder( uint64_t alId, uint64_t cbslId, uint64_t g, int64_t s, std::shared_ptr<zbe::Value<int64_t> > nballs,
                uint64_t ctId, uint64_t dtId, uint64_t btId, std::shared_ptr<CTL> ctl,
@@ -61,15 +73,21 @@ public:
 
     std::shared_ptr<zbe::ActiveElement2D<ZombienoidReactor> > ball(new zbe::CActiveElement2D<ZombienoidReactor>(nballs, movable->getPosition(), movable->getVelocity(), alId, cbslId, s, s, g));
 
-    std::shared_ptr<zbe::Adaptor<zbe::AnimatedSprite> > ballSpriteAdaptor(new zbe::ActiveElement2DAnimatedSpriteAdaptor<ZombienoidReactor>(&(*ball)));
+    std::shared_ptr<zbe::Adaptor<zbe::AnimatedSprite> > ballSpriteAdaptor(new zbe::ActiveElement2DAnimatedSpriteAdaptor<ZombienoidReactor>(ball));
     setAdaptor(ball, ballSpriteAdaptor);
 
-    std::shared_ptr<zbe::Adaptor<zbe::Collisionator<ZombienoidReactor> > > ballCollisionatorAdaptor(new BallCatorAdaptor<ZombienoidReactor>(&(*ball)));
+    std::shared_ptr<zbe::Adaptor<zbe::Collisionator<ZombienoidReactor> > > ballCollisionatorAdaptor(new BallCatorAdaptor<ZombienoidReactor>(ball));
     setAdaptor(ball, ballCollisionatorAdaptor);
 
+    std::shared_ptr<zbe::AvatarEntityContainer<zbe::AnimatedSprite> > aecas;
+    std::shared_ptr<zbe::AvatarEntityContainer<zbe::Bouncer<2>, zbe::Movable<2> > > aecb2;
+
+    zbe::wrapAEC(&aecas, ball);
+    zbe::wrapAEC(&aecb2, ball);
+
     ball->addToList(ctId, ctl->push_front(ball));
-    ball->addToList(dtId, asl->push_front(ball));
-    ball->addToList(btId, bl->push_front(ball));
+    ball->addToList(dtId, asl->push_front(aecas));
+    ball->addToList(btId, bl->push_front(aecb2));
   }
 
 private:

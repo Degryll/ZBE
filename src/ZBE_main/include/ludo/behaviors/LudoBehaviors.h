@@ -56,9 +56,9 @@ public:
       r(radius), ctLId(catorListId), cnLId(conerListId), aLId(actuatorsList) {
   }
 
-  void apply(std::shared_ptr<zbe::AvatarEntity<zbe::Positionable<2> > > entity){
+  void apply(std::shared_ptr<zbe::AvatarEntityContainer<zbe::Positionable<2> > > entity){
     zbe::Positionable<2>* a;
-    entity->assignAvatar(&a);
+    assignAvatar(entity, &a);
     std::shared_ptr<zbe::ReactObject<R> > ro = std::make_shared<DestroyerReactObject<R> >();
     //double x, double y, double radius, uint64_t actuatorsList, uint64_t collisionablesList, std::shared_ptr<zbe::ReactObject<R> > ro
     std::shared_ptr<LudoCircleArea<R> > lca(new LudoCircleArea<R>(a->getPosition().x, a->getPosition().y, r, aLId, cnLId, ro));
@@ -80,9 +80,9 @@ class Rotator : public zbe::Behavior<zbe::Movable<2> > {
     Rotator(double angle): a(angle){}
     virtual ~Rotator() {}
 
-    void apply(std::shared_ptr<zbe::AvatarEntity<zbe::Movable<2> > > entity) {
+    void apply(std::shared_ptr<zbe::AvatarEntityContainer<zbe::Movable<2> > > entity) {
       zbe::Movable<2>* avatar;
-      entity->assignAvatar(&avatar);
+      assignAvatar(entity, &avatar);
       zbe::Vector<2>& v = avatar->getVelocity();
       double rads = v.getRads();
       double mod = v.getModule();
@@ -112,15 +112,15 @@ class BackBallParticlesLauncher : public zbe::Behavior<zbe::Movable<2> > {
 
     virtual ~BackBallParticlesLauncher() {}
 
-    void apply(std::shared_ptr<zbe::AvatarEntity<zbe::Movable<2> > > entity) {
+    void apply(std::shared_ptr<zbe::AvatarEntityContainer<zbe::Movable<2> > > entity) {
       zbe::Movable<2>* avatar;
-      entity->assignAvatar(&avatar);
+      assignAvatar(entity, &avatar);
       zbe::Vector<2>& v = avatar->getVelocity();
       zbe::Point<2>& p = avatar->getPosition();
       double rads = v.getRads();
       rads += zbe::PI;
       std::shared_ptr<BallParticle> bp = std::make_shared<BallParticle>(p[0], p[1], r, g, rads * zbe::TODEGREE);
-      std::shared_ptr<zbe::Adaptor<zbe::RotatedSprite> > sAdaptor = std::make_shared<RotatedDrawableSimpleRotatedSpriteAdaptor>(&(*bp));
+      std::shared_ptr<zbe::Adaptor<zbe::RotatedSprite> > sAdaptor = std::make_shared<RotatedDrawableSimpleRotatedSpriteAdaptor>(bp);
       zbe::setAdaptor(bp, sAdaptor);
       auto ticket = lmAESRS.get(sList)->push_front(bp);
       std::shared_ptr<zbe::TimeHandler> eraser = std::make_shared<TicketEraser>(ticket);

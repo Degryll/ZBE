@@ -128,26 +128,26 @@ int gamemain(int, char** ) {
   printf("Creating draw master list\n");fflush(stdout);
   std::shared_ptr<zbe::DaemonMaster> drawMaster(new zbe::DaemonMaster());
   printf("Creating drawables list\n");fflush(stdout);
-  std::shared_ptr<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite> > > sprites(new zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite> >());
-  zbe::ResourceManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite > > >& lmAESimpleSprite = zbe::ResourceManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite > > >::getInstance();
+  std::shared_ptr<zbe::TicketedForwardList<zbe::AvatarEntityContainer<zbe::SingleSprite> > > sprites(new zbe::TicketedForwardList<zbe::AvatarEntityContainer<zbe::SingleSprite> >());
+  zbe::ResourceManager< zbe::TicketedForwardList<zbe::AvatarEntityContainer<zbe::SingleSprite > > >& lmAESimpleSprite = zbe::ResourceManager<zbe::TicketedForwardList<zbe::AvatarEntityContainer<zbe::SingleSprite > > >::getInstance();
   lmAESimpleSprite.insert(SPRITELIST, sprites);
   printf("Loading imgs\n");fflush(stdout);
   ballgraphics = imgStore.loadImg(ballfilename);
   brickgraphics = imgStore.loadImg(brickfilename);
   printf("Building the drawer to paint SingleSprite's \n");fflush(stdout);
-  std::shared_ptr<zbe::Daemon> drawerDaemon(new  zbe::DrawerDaemon<zbe::SingleSprite, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite > > >(std::make_shared<zbe::SingleSpriteSDLDrawer>(&window, &imgStore), SPRITELIST));
+  std::shared_ptr<zbe::Daemon> drawerDaemon(new  zbe::BehaviorDaemon<zbe::SingleSprite, zbe::TicketedForwardList<zbe::AvatarEntityContainer<zbe::SingleSprite > > >(std::make_shared<zbe::SingleSpriteSDLDrawer>(&window, &imgStore), SPRITELIST));
   drawMaster->addDaemon(drawerDaemon);
   printf("|-------------------- Daemons ----------------------|\n");fflush(stdout);
   std::shared_ptr<zbe::DaemonMaster> commonBehaviorMaster(new zbe::DaemonMaster());
   std::shared_ptr<zbe::DaemonMaster> reactBehaviorMaster(new zbe::DaemonMaster());
-  std::shared_ptr<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > > > vAEMovable(new zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > >());
-  auto& lmAEMovable = zbe::ResourceManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > > >::getInstance();
+  std::shared_ptr<zbe::TicketedForwardList<zbe::AvatarEntityContainer<zbe::Movable<2> > > > vAEMovable(new zbe::TicketedForwardList<zbe::AvatarEntityContainer<zbe::Movable<2> > >());
+  auto& lmAEMovable = zbe::ResourceManager<zbe::TicketedForwardList<zbe::AvatarEntityContainer<zbe::Movable<2> > > >::getInstance();
   lmAEMovable.insert(MOVABLELIST, vAEMovable);
-  std::shared_ptr<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Bouncer<2> > > > vAEBouncer(new zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Bouncer<2> > >());
-  auto& lmAEBouncer = zbe::ResourceManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Bouncer<2> > > >::getInstance();
+  std::shared_ptr<zbe::TicketedForwardList<zbe::AvatarEntityContainer<zbe::Bouncer<2> > > > vAEBouncer(new zbe::TicketedForwardList<zbe::AvatarEntityContainer<zbe::Bouncer<2> > >());
+  auto& lmAEBouncer = zbe::ResourceManager<zbe::TicketedForwardList<zbe::AvatarEntityContainer<zbe::Bouncer<2> > > >::getInstance();
   lmAEBouncer.insert(BOUNCERLIST, vAEBouncer);
-  std::shared_ptr<zbe::Daemon> ballBounce(new  zbe::BehaviorDaemon<zbe::Bouncer<2>, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Bouncer<2> > > >(std::make_shared<zbe::Bounce<2> >(), BOUNCERLIST));
-  std::shared_ptr<zbe::Daemon> ballULM(new  zbe::BehaviorDaemon<zbe::Movable<2>, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Movable<2> > > >(std::make_shared<zbe::UniformLinearMotion<2> >(), MOVABLELIST));
+  std::shared_ptr<zbe::Daemon> ballBounce(new  zbe::BehaviorDaemon<zbe::Bouncer<2>, zbe::TicketedForwardList<zbe::AvatarEntityContainer<zbe::Bouncer<2> > > >(std::make_shared<zbe::Bounce<2> >(), BOUNCERLIST));
+  std::shared_ptr<zbe::Daemon> ballULM(new  zbe::BehaviorDaemon<zbe::Movable<2>, zbe::TicketedForwardList<zbe::AvatarEntityContainer<zbe::Movable<2> > > >(std::make_shared<zbe::UniformLinearMotion<2> >(), MOVABLELIST));
   commonBehaviorMaster->addDaemon(ballULM);
   reactBehaviorMaster->addDaemon(ballBounce);
   printf("|------------------- Creating entities --------------------|\n");fflush(stdout);
@@ -168,16 +168,26 @@ int gamemain(int, char** ) {
   game::ExitInputHandler terminator;
   ieg->addHandler(zbe::ZBEK_ESCAPE, &terminator);
 
+  std::shared_ptr<zbe::AvatarEntityContainer<zbe::SingleSprite> > aecss;
+
   for(int i = 0; i<1000 ; i++){//98.623993, 85.728439
     std::shared_ptr<game::GameBall> ball = std::make_shared<game::GameBall>((rand()%200 + 400), (rand()%200 + 400), 16 , (rand()%2000 - 1000), (rand()%2000 - 100), BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics);
-    std::shared_ptr<zbe::Adaptor<zbe::SingleSprite> > spriteAdaptor = std::make_shared<zbe::SimpleDrawableSingleSpriteAdaptor>(&(*ball));
+    std::shared_ptr<zbe::Adaptor<zbe::SingleSprite> > spriteAdaptor = std::make_shared<zbe::SimpleDrawableSingleSpriteAdaptor>(ball);
     zbe::setAdaptor(ball,spriteAdaptor);
-    std::shared_ptr<zbe::Adaptor<zbe::Collisionator<game::GameReactor> > > gbca = std::make_shared<game::GameBallCollisionatorAdaptor>(&(*ball));
+    std::shared_ptr<zbe::Adaptor<zbe::Collisionator<game::GameReactor> > > gbca = std::make_shared<game::GameBallCollisionatorAdaptor>(ball);
     zbe::setAdaptor(ball,gbca);
+
+    std::shared_ptr<zbe::AvatarEntityContainer<zbe::Movable<2> > > aecm2;
+    std::shared_ptr<zbe::AvatarEntityContainer<zbe::Bouncer<2> > > aecb2;
+
+    zbe::wrapAEC(&aecm2, ball);
+    zbe::wrapAEC(&aecb2, ball);
+    zbe::wrapAEC(&aecss, ball);
+
     ctl->push_front(ball);
-    vAEMovable->push_front(ball);
-    vAEBouncer->push_front(ball);
-    sprites->push_front(ball);
+    vAEMovable->push_front(aecm2);
+    vAEBouncer->push_front(aecb2);
+    sprites->push_front(aecss);
   }
 
   printf("Creating the bricks\n");fflush(stdout);
@@ -189,14 +199,16 @@ int gamemain(int, char** ) {
 //      for(int j = 0; j<8 ; j++){
           std::shared_ptr<game::GameBlock> brick = std::make_shared<game::GameBlock>(100, 100, 51, 32, brickgraphics, BRICKACTUATORLIST);
 
-          std::shared_ptr<zbe::Adaptor<zbe::SingleSprite> > spriteAdaptor = std::make_shared<zbe::SimpleDrawableSingleSpriteAdaptor>(&(*brick));
+          std::shared_ptr<zbe::Adaptor<zbe::SingleSprite> > spriteAdaptor = std::make_shared<zbe::SimpleDrawableSingleSpriteAdaptor>(brick);
           zbe::setAdaptor(brick, spriteAdaptor);
 
-          std::shared_ptr<zbe::Adaptor<zbe::Collisioner<game::GameReactor> > >gBrCA = std::make_shared<game::GameBlockCollisionerAdaptor>(&(*brick));
+          std::shared_ptr<zbe::Adaptor<zbe::Collisioner<game::GameReactor> > >gBrCA = std::make_shared<game::GameBlockCollisionerAdaptor>(brick);
           zbe::setAdaptor(brick, gBrCA);
 
+          zbe::wrapAEC(&aecss, brick);
+
           collisionablesList->push_front(brick);
-          sprites->push_front(brick);
+          sprites->push_front(aecss);
           std::shared_ptr<zbe::TimeHandler> teleporter = std::make_shared<game::TtpHandler>(brick, teg);
           teg->addTimer(teleporter, zbe::SECOND*2);
 //      }

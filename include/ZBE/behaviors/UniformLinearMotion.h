@@ -40,9 +40,9 @@ class UniformLinearMotion : public Behavior<Movable<s>  > {
 
     /** \brief Makes the entity move in a straight line
      */
-    void apply(std::shared_ptr<AvatarEntity<Movable<s> > > entity) {
+    void apply(std::shared_ptr<AvatarEntityContainer<Movable<s> > > aec) {
       Movable<s>* avatar;
-      entity->assignAvatar(&avatar);
+      assignAvatar(aec, &avatar);
       Point<s>& p = avatar->getPosition();
       p += (avatar->getVelocity() * sysTime.getCurrentTime()) * zbe::INVERSE_SECOND;
     }

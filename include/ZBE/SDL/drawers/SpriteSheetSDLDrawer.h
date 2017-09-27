@@ -12,7 +12,9 @@
 
 #include <SDL2/SDL.h>
 
-#include "ZBE/core/drawers/Drawer.h"
+#include "ZBE/core/behaviors/Behavior.h"
+
+#include "ZBE/core/entities/AvatarEntity.h"
 
 #include "ZBE/core/tools/containers/ResourceManager.h"
 #include "ZBE/core/tools/graphics/SpriteSheet.h"
@@ -27,7 +29,7 @@ namespace zbe {
 /** \brief Class that know how to draw using SpriteSheets.
  */
 template<typename T>
-class SpriteSheetSDLDrawer : public Drawer<T> {
+class SpriteSheetSDLDrawer : public Behavior<T> {
   public:
     SpriteSheetSDLDrawer(const SpriteSheetSDLDrawer&) = delete;
     void operator=(const SpriteSheetSDLDrawer&) = delete;
@@ -45,9 +47,9 @@ class SpriteSheetSDLDrawer : public Drawer<T> {
     /** \brief Draws the given entity.
      *  \param The entity to be drawn.
      */
-    void apply(std::shared_ptr<AvatarEntity<T> > entity) {
+    void apply(std::shared_ptr<AvatarEntityContainer<T> > entity) {
       T* avatar;
-      entity->assignAvatar(&avatar);
+      assignAvatar(entity, &avatar);
       std::shared_ptr<SpriteSheet<T> > sst = rmss.get(avatar->getGraphics());
       Sprite s = sst->generateSprite(avatar);
 

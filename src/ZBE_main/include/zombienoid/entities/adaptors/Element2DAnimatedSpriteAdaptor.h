@@ -24,7 +24,7 @@ public:
   Element2DAnimatedSpriteAdaptor(const Element2DAnimatedSpriteAdaptor&) = delete;
   void operator=(const Element2DAnimatedSpriteAdaptor&) = delete;
 
-  Element2DAnimatedSpriteAdaptor(Element2D<R>* entity): e(entity), s(nullptr) {
+  Element2DAnimatedSpriteAdaptor(std::shared_ptr<Element2D<R> > entity): e(entity), s(nullptr) {
     s = new SimpleAnimatedSprite(e->getX(), e->getY(), e->getW(), e->getH(), e->getGraphics(), 0, e->getState(), e->getTimeStamp());
   }
 
@@ -40,7 +40,7 @@ public:
   }
 
 private:
-    Element2D<R>* e;
+    std::shared_ptr<Element2D<R> > e;
     SimpleAnimatedSprite* s;
 };
 

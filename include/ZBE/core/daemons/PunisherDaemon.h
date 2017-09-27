@@ -53,8 +53,8 @@ namespace zbe {
       punish->apply(e);
     }
   }
-
 }  // namespace zbe
+
 
 
 #endif // CORE_DAEMONS_PUNISHERDAEMON_H_

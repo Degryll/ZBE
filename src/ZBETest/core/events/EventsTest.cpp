@@ -60,8 +60,8 @@ TEST(Event, InputEvent) {
 }
 
 TEST(Event, CollisionEvent) {
-  zbe::AvatarEntityFixed<A> aea(new A());
-  zbe::AvatarEntityContainer<A> aeca(&aea);
+  std::shared_ptr<zbe::AvatarEntityFixed<A> > aea = std::make_shared<zbe::AvatarEntityFixed<A> >(new A());
+  zbe::AvatarEntityContainer<A> aeca(aea);
   C* c = new C(&aeca);
   RO * ro = new RO();
   zbe::Point2D p{400000, 2};

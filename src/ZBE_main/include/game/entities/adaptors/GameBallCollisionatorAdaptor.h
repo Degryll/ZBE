@@ -30,7 +30,7 @@ public:
   GameBallCollisionatorAdaptor(const GameBallCollisionatorAdaptor&) = delete;
   void operator=(const GameBallCollisionatorAdaptor&) = delete;
 
-  GameBallCollisionatorAdaptor(GameBall* ball): b(ball), c(nullptr) {}
+  GameBallCollisionatorAdaptor(std::shared_ptr<GameBall> ball): b(ball), c(nullptr) {}
   ~GameBallCollisionatorAdaptor() {delete c;}
   zbe::Collisionator<GameReactor>* getAvatar() {
       delete c;
@@ -43,7 +43,7 @@ public:
     }
 
 private:
-	GameBall* b;
+	std::shared_ptr<GameBall> b;
 	zbe::Collisionator<GameReactor>* c;
 };
 

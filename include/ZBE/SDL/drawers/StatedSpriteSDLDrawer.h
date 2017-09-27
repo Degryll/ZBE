@@ -12,8 +12,9 @@
 
 #include <SDL2/SDL.h>
 
-#include "ZBE/core/drawers/Drawer.h"
+#include "ZBE/core/behaviors/Behavior.h"
 #include "ZBE/core/entities/avatars/StatedSprite.h"
+#include "ZBE/core/entities/AvatarEntity.h"
 #include "ZBE/SDL/system/SDLWindow.h"
 #include "ZBE/SDL/system/SDLImageStore.h"
 
@@ -21,7 +22,7 @@ namespace zbe {
 
 /** \brief This draws a sprite in any direction using different images.
  */
-class StatedSpriteSDLDrawer : public Drawer<StatedSprite> {
+class StatedSpriteSDLDrawer : public Behavior<StatedSprite> {
   public:
     StatedSpriteSDLDrawer(const StatedSpriteSDLDrawer&) = delete;
     void operator=(const StatedSpriteSDLDrawer&) = delete;
@@ -38,7 +39,7 @@ class StatedSpriteSDLDrawer : public Drawer<StatedSprite> {
     /** \brief Draws the given entity.
      *  \param The entity to be drawn.
      */
-    void apply(std::shared_ptr<AvatarEntity<StatedSprite> > entity);
+    void apply(std::shared_ptr<AvatarEntityContainer<StatedSprite> > entity);
 
   private:
     SDLWindow* window;  //!< A SDL window with its context.

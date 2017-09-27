@@ -33,8 +33,8 @@ public:
 
 template<typename T>
 class AvatarEntityAdapted :
-  			virtual public AvatarEntity<T>,
-  			public Covariance_Traits<AvatarEntityAdapted<typename T::Base>,  typename T::Base>::Type {
+            virtual public AvatarEntity<T>,
+            public Covariance_Traits<AvatarEntityAdapted<typename T::Base>,  typename T::Base>::Type {
 public:
   AvatarEntityAdapted() : a() {}
   AvatarEntityAdapted(std::shared_ptr< Adaptor<T> > adaptor) : a(adaptor) {
@@ -42,7 +42,7 @@ public:
   }
   virtual ~AvatarEntityAdapted(){}
   void assignAvatar(T** avatarPtr) {
-  	(*avatarPtr) = a->getAvatar();
+    (*avatarPtr) = a->getAvatar();
   }
 
   virtual void setAdaptor(std::shared_ptr< Adaptor<T> > adaptor){
@@ -65,8 +65,8 @@ private:
 
 template<typename T>
 class AvatarEntityFixed :
-  				virtual public AvatarEntity<T>,
-  				virtual public Covariance_Traits<AvatarEntityFixed<typename T::Base>,  typename T::Base>::Type{
+                virtual public AvatarEntity<T>,
+                virtual public Covariance_Traits<AvatarEntityFixed<typename T::Base>,  typename T::Base>::Type{
 public:
   AvatarEntityFixed(const AvatarEntityFixed&) = delete;
   void operator=(const AvatarEntityFixed&) = delete;
@@ -123,50 +123,83 @@ void setAvatar(std::shared_ptr<T> t, A* a) {
     aefA->setAvatar(a);
 }
 
+/** \brief Agroupation of an undetermined number of types
+ */
+template <typename... Bases>
+class AvatarEntityContainer : public AvatarEntityContainer<Bases>... {
+public:
+  template<typename T>
+  AvatarEntityContainer(T aet): AvatarEntityContainer<Bases>(aet)... {}
+
+  ~AvatarEntityContainer(){}
+};
+
+template <typename T>
+class AvatarEntityContainer<T> {
+public:
+  //AvatarEntityContainer<T>(const AvatarEntityContainer<T>&) = delete;
+  //void operator=(const AvatarEntityContainer<T>&) = delete;
+
+  AvatarEntityContainer(AvatarEntityContainer<T>* aec): aet(aec->get()){}
+  //AvatarEntityContainer(AvatarEntity<T>* aet): aet(aet){}
+  AvatarEntityContainer(std::shared_ptr<AvatarEntityContainer<T> > aec): aet(aec->get()){}
+  AvatarEntityContainer(std::shared_ptr<AvatarEntity<T> > aet): aet(aet){}
+
+  ~AvatarEntityContainer(){}
+
+  std::shared_ptr<AvatarEntity<T> > get() {return aet;}
+
+private:
+  std::shared_ptr<AvatarEntity<T> > aet;
+};
+
+template <>
+class AvatarEntityContainer<void> {
+public:
+  AvatarEntityContainer() {}
+  ~AvatarEntityContainer(){}
+
+};
+
 template <typename T, typename A>
 void assignAvatar(T* t, A **a) {
     zbe::AvatarEntity<A>* aeA = t;
     aeA->assignAvatar(a);
 }
 
-/** \brief Agroupation of an undetermined number of types
- */
-template <typename... Bases>
-struct AvatarEntityContainer : public AvatarEntityContainer<Bases>... {
-  template<typename T>
-  AvatarEntityContainer(T* aet): AvatarEntityContainer<Bases>(aet)... {}
-  ~AvatarEntityContainer(){}
-};
+template <typename T, typename A>
+void assignAvatar(std::shared_ptr<T> t, A **a) {
+    std::shared_ptr<zbe::AvatarEntity<A> > aeA = t;
+    aeA->assignAvatar(a);
+}
 
-template <typename T>
-struct AvatarEntityContainer<T> {
-  AvatarEntityContainer<T>(const AvatarEntityContainer<T>&) = delete;
-  void operator=(const AvatarEntityContainer<T>&) = delete;
+template <typename A>
+void assignAvatar(AvatarEntityContainer<A>* aec, A **a) {
+    std::shared_ptr<zbe::AvatarEntity<A> > aeA = aec->get();
+    aeA->assignAvatar(a);
+}
 
-  AvatarEntityContainer(AvatarEntityContainer<T>* aec): aet(aec->get()){}
-  AvatarEntityContainer(AvatarEntity<T>* aet): aet(aet){}
-  ~AvatarEntityContainer(){}
+template <typename A>
+void assignAvatar(std::shared_ptr<AvatarEntityContainer<A> > aec, A **a) {
+    std::shared_ptr<zbe::AvatarEntity<A> > aeA = aec->get();
+    aeA->assignAvatar(a);
+}
 
-  AvatarEntity<T>* get() {return aet;}
-
-  AvatarEntity<T>* aet;
-};
-
-template <typename ...A>
-class Avatarable {
-public:
-    using AECBases = AvatarEntityContainer<A...>;
-    Avatarable(AvatarEntity<A>*... a) : aec(a...){}
-    const AECBases& getAvatarEntityContainer(){
-        return aec;
-    }
-private:
-    AvatarEntityContainer<A...> aec;
-};
+//template <typename ...A>
+//class Avatarable {
+//public:
+//    using AECBases = AvatarEntityContainer<A...>;
+//    Avatarable(AvatarEntity<A>*... a) : aec(a...){}
+//    const AECBases& getAvatarEntityContainer(){
+//        return aec;
+//    }
+//private:
+//    AvatarEntityContainer<A...> aec;
+//};
 
 template <typename T, typename ...Bases>
-AvatarEntityContainer<Bases...>* wrapAEC(T* src) {
-    return new AvatarEntityContainer<Bases...>(src);
+void wrapAEC(std::shared_ptr<AvatarEntityContainer<Bases...> >* aec, std::shared_ptr<T> src) {
+    *aec = std::make_shared<AvatarEntityContainer<Bases...> >(src);
 }
 
 

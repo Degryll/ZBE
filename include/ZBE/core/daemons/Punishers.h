@@ -3,15 +3,14 @@
 
 #include "ZBE/core/daemons/PunisherDaemon.h"
 #include "ZBE/core/behaviors/Behavior.h"
-#include "ZBE/core/drawers/Drawer.h"
 
 namespace zbe{
 
   template<typename E, typename L>
   using BehaviorDaemon = PunisherDaemon<Behavior<E>, L>;
 
-  template<typename E, typename L>
-  using DrawerDaemon = PunisherDaemon<Drawer<E>, L>;
 }
 
 #endif // CORE_DAEMONS_PUNISHERS_H_INCLUDED
+
+//          revisar nombres
