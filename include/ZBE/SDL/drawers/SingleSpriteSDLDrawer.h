@@ -12,7 +12,7 @@
 
 #include <SDL2/SDL.h>
 
-#include "ZBE/core/Behaviors/Behavior.h"
+#include "ZBE/core/behaviors/Behavior.h"
 #include "ZBE/core/entities/avatars/SingleSprite.h"
 #include "ZBE/core/entities/AvatarEntity.h"
 #include "ZBE/SDL/system/SDLWindow.h"

@@ -126,7 +126,7 @@ void setAvatar(std::shared_ptr<T> t, A* a) {
 /** \brief Agroupation of an undetermined number of types
  */
 template <typename... Bases>
-class AvatarEntityContainer : public AvatarEntityContainer<Bases>... {
+class AvatarEntityContainer : virtual public AvatarEntityContainer<Bases>... {
 public:
   template<typename T>
   AvatarEntityContainer(T aet): AvatarEntityContainer<Bases>(aet)... {}
@@ -134,29 +134,45 @@ public:
   ~AvatarEntityContainer(){}
 };
 
-template <typename T>
-class AvatarEntityContainer<T> {
-public:
-  //AvatarEntityContainer<T>(const AvatarEntityContainer<T>&) = delete;
-  //void operator=(const AvatarEntityContainer<T>&) = delete;
 
-  AvatarEntityContainer(AvatarEntityContainer<T>* aec): aet(aec->get()){}
-  //AvatarEntityContainer(AvatarEntity<T>* aet): aet(aet){}
-  AvatarEntityContainer(std::shared_ptr<AvatarEntityContainer<T> > aec): aet(aec->get()){}
-  AvatarEntityContainer(std::shared_ptr<AvatarEntity<T> > aet): aet(aet){}
+template <typename T>
+class AvatarEntityContainer<T> : virtual public AvatarEntityContainer<typename T::Base> {
+protected:
+    AvatarEntityContainer() : aet() {}
+    void _setAE(std::shared_ptr<AvatarEntity<T> > _aet) {
+        aet = _aet;
+        AvatarEntityContainer<typename T::Base>::_setAE(_aet);
+    }
+public:
+
+  AvatarEntityContainer(AvatarEntityContainer<T>* aec) : AvatarEntityContainer<typename T::Base>(aec), aet(aec->get()) {}
+  AvatarEntityContainer(std::shared_ptr<AvatarEntityContainer<T> > aec) : AvatarEntityContainer<typename T::Base>(aec), aet(aec->get()){}
+
+  template <typename U = T>
+  AvatarEntityContainer(std::shared_ptr<AvatarEntity<T> > aet, typename std::enable_if<!std::is_void<typename U::Base>::value>::type * = nullptr ) : aet(aet){
+    _setAE(aet);
+  }
+
+  template <typename U = T>
+  AvatarEntityContainer(std::shared_ptr<AvatarEntity<T> > aet, typename std::enable_if<std::is_void<typename U::Base>::value, int>::type * = nullptr) : aet(aet){}
 
   ~AvatarEntityContainer(){}
 
   std::shared_ptr<AvatarEntity<T> > get() {return aet;}
 
-private:
+protected:
   std::shared_ptr<AvatarEntity<T> > aet;
 };
 
 template <>
 class AvatarEntityContainer<void> {
+protected:
+    template<typename T>
+    void _setAE(T) {}
 public:
   AvatarEntityContainer() {}
+  AvatarEntityContainer(AvatarEntityContainer<void>*) {}
+  AvatarEntityContainer(std::shared_ptr<AvatarEntityContainer<void> >) {}
   ~AvatarEntityContainer(){}
 
 };

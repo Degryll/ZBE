@@ -41,7 +41,12 @@ struct Covariance_Traits {
  */
 template<typename T>
 struct Covariance_Traits<T, void> {
-  struct Type { virtual ~Type(){} };
+  struct Type {
+    Type(){}
+    template<typename ...Ts>
+    Type(Ts...){}
+    virtual ~Type(){}
+  };
 };
 
 /** \brief A gimmick class used to specialize a member function without the need to specialized the main class

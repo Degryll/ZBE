@@ -227,7 +227,6 @@ int zombienoidmain(int, char*[]) {
 
   std::shared_ptr<zbe::AvatarEntityContainer<zbe::Bouncer<2> > > aecb2;
   std::shared_ptr<zbe::AvatarEntityContainer<zbe::Stated, zbe::Avatar> > aecsa;
-  std::shared_ptr<zbe::AvatarEntityContainer<zbe::Movable<2> > > aecm2;
   std::shared_ptr<zbe::AvatarEntityContainer<zbe::AnimatedSprite> > aecas;
   std::shared_ptr<zbe::AvatarEntityContainer<zbe::SingleTextSprite> > aecsts;
   //?
@@ -318,19 +317,19 @@ int zombienoidmain(int, char*[]) {
   std::shared_ptr<TicketedFAEC<AnimatedSprite> > ballAnimatedSpriteList(new TicketedFAEC<AnimatedSprite>());
   asJoint->add(ballAnimatedSpriteList);
 
-  ResourceManager<TicketedFAEC<Bouncer<2>, Movable<2> > > & rmae2d = ResourceManager<TicketedFAEC<Bouncer<2>, Movable<2> > >::getInstance();
-  std::shared_ptr<TicketedFAEC<Bouncer<2>, Movable<2> > > ballList(new TicketedFAEC<Bouncer<2>, Movable<2> >());
+  ResourceManager<TicketedFAEC<Bouncer<2> > > & rmae2d = ResourceManager<TicketedFAEC<Bouncer<2> > >::getInstance();
+  std::shared_ptr<TicketedFAEC<Bouncer<2> > > ballList(new TicketedFAEC<Bouncer<2> >());
   rmae2d.insert(BALL_LIST, ballList);
 
-  std::shared_ptr<Daemon> ballBounce(new BehaviorDaemon<Bouncer<2>, TicketedFAEC<Bouncer<2>, Movable<2> > >(std::make_shared<Bounce<2> >(), BALL_LIST));
-  std::shared_ptr<Daemon> ballULM(new BehaviorDaemon<Movable<2>, TicketedFAEC<Bouncer<2>, Movable<2> > >(std::make_shared<UniformLinearMotion<2> >(), BALL_LIST));
+  std::shared_ptr<Daemon> ballBounce(new BehaviorDaemon<Bouncer<2>, TicketedFAEC<Bouncer<2> > >(std::make_shared<Bounce<2> >(), BALL_LIST));
+  std::shared_ptr<Daemon> ballULM(new BehaviorDaemon<Movable<2>, TicketedFAEC<Bouncer<2> > >(std::make_shared<UniformLinearMotion<2> >(), BALL_LIST));
 
   commonBehaviorMaster->addDaemon(ballBounce);
   commonBehaviorMaster->addDaemon(ballULM);
 
   BallBuilder<TicketedFAE<Collisionator<ZombienoidReactor> >,
               TicketedFAEC<AnimatedSprite>,
-              TicketedFAEC<Bouncer<2>, Movable<2> > > ballBuilder(BALL_ACTUATORS_LIST, BALL_CBS_JOINT, BALL_SS, BALL_SIZE, ballCount, COLLISION_TICKET,
+              TicketedFAEC<Bouncer<2> > > ballBuilder(BALL_ACTUATORS_LIST, BALL_CBS_JOINT, BALL_SS, BALL_SIZE, ballCount, COLLISION_TICKET,
                           DRAW_TICKET, BEHAVE_TICKET, ballCollisionatorsList,ballAnimatedSpriteList, ballList);
 
   SimpleMobile<2> ballMobile;

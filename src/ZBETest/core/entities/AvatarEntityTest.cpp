@@ -82,6 +82,9 @@ private:
   DummyAvatarZ* z;
 };
 
+TEST (AvatarEntity, AvatarEntityContainer_usage) {
+}
+
 TEST (AvatarEntity, Usage) {
     zbe::AvatarEntityAdapted<DummyAvatarC> aeab;
     zbe::AvatarEntityFixed<DummyAvatarC> aefb;

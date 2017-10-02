@@ -80,7 +80,7 @@ public:
     setAdaptor(ball, ballCollisionatorAdaptor);
 
     std::shared_ptr<zbe::AvatarEntityContainer<zbe::AnimatedSprite> > aecas;
-    std::shared_ptr<zbe::AvatarEntityContainer<zbe::Bouncer<2>, zbe::Movable<2> > > aecb2;
+    std::shared_ptr<zbe::AvatarEntityContainer<zbe::Movable<2>, zbe::Bouncer<2> > > aecb2;
 
     zbe::wrapAEC(&aecas, ball);
     zbe::wrapAEC(&aecb2, ball);
