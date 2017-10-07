@@ -31,19 +31,20 @@ public:
   GameBlockCollisionerAdaptor(const GameBlockCollisionerAdaptor&) = delete;
   void operator=(const GameBlockCollisionerAdaptor&) = delete;
 
-  GameBlockCollisionerAdaptor(std::shared_ptr<GameBlock> block): b(block), c(nullptr) {}
+  GameBlockCollisionerAdaptor(std::weak_ptr<GameBlock> block): b(block), c(nullptr) {}
   ~GameBlockCollisionerAdaptor() {delete c;}
   zbe::Collisioner<GameReactor>* getAvatar() {
       delete c;
-    	zbe::Point<2> max {b->getPosition()[0] + b->getW(), b->getPosition()[1] + b->getH()};
-      std::shared_ptr<zbe::CollisionObject<GameReactor> > co = std::make_shared<zbe::StaticSolidAABB2D<GameReactor> >(zbe::AABB2D(b->getPosition(), max));
+      std::shared_ptr<GameBlock> ball = b.lock();
+      zbe::Point<2> max {ball->getPosition()[0] + ball->getW(), ball->getPosition()[1] + ball->getH()};
+      std::shared_ptr<zbe::CollisionObject<GameReactor> > co = std::make_shared<zbe::StaticSolidAABB2D<GameReactor> >(zbe::AABB2D(ball->getPosition(), max));
       std::shared_ptr<zbe::ReactObject<GameReactor> > ro = std::make_shared<zbe::VoidReactObject<GameReactor> >();
-      c = new zbe::VoidCollisioner<GameReactor>(co, ro, b->getActuatorsList());
+      c = new zbe::VoidCollisioner<GameReactor>(co, ro, ball->getActuatorsList());
       return (c);
     }
 
 private:
-	std::shared_ptr<GameBlock> b;
+	std::weak_ptr<GameBlock> b;
 	zbe::Collisioner<GameReactor>* c;
 };
 

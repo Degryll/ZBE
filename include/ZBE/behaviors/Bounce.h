@@ -22,7 +22,7 @@ namespace zbe {
 /** \brief Implements a bounce behavior.
  */
 template<unsigned s>
-class Bounce : public Behavior<Bouncer<s>  > {
+class Bounce : virtual public Behavior<Bouncer<s>  > {
   public:
 
     /** \brief Virtual destructor.

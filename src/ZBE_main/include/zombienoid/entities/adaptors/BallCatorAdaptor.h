@@ -25,25 +25,27 @@ public:
   BallCatorAdaptor(const BallCatorAdaptor&) = delete;
   void operator=(const BallCatorAdaptor&) = delete;
 
-  BallCatorAdaptor(std::shared_ptr<zbe::ActiveElement2D<R> > entity): e(entity), s(nullptr) {
-    zbe::AvatarEntityContainer<zbe::Avatar, zbe::Bouncer<2>, zbe::Stated >* aeContainer (new zbe::AvatarEntityContainer<zbe::Avatar, zbe::Bouncer<2>, zbe::Stated >(e));
-    std::shared_ptr<zbe::ConstantMovingCircle<R> > cObject(new zbe::ConstantMovingCircle<R>(zbe::Circle(zbe::Point2D({(e->getPosition().x), e->getPosition().y}), e->getWidth()/2.0), e->getVelocity()));
+  BallCatorAdaptor(std::weak_ptr<zbe::ActiveElement2D<R> > entity): e(entity), s(nullptr) {
+    std::shared_ptr<zbe::ActiveElement2D<R> > ent = e.lock();
+    std::shared_ptr<zbe::WeakAvatarEntityContainer<zbe::Avatar, zbe::Bouncer<2>, zbe::Stated > > aeContainer = std::make_shared<zbe::WeakAvatarEntityContainer<zbe::Avatar, zbe::Bouncer<2>, zbe::Stated > >(ent);
+    std::shared_ptr<zbe::ConstantMovingCircle<R> > cObject(new zbe::ConstantMovingCircle<R>(zbe::Circle(zbe::Point2D({(ent->getPosition().x), ent->getPosition().y}), ent->getWidth()/2.0), ent->getVelocity()));
     std::shared_ptr<zbe::VoidReactObject<R> > vro(new zbe::VoidReactObject<R>());
 
-    s = new zbe::CollisionatorCommon<R,zbe::Avatar, zbe::Bouncer<2>, zbe::Stated >(aeContainer, cObject, vro, e->getActuatorsList(), e->getCollisionablesList());
+    s = new zbe::CollisionatorCommon<R,zbe::Avatar, zbe::Bouncer<2>, zbe::Stated >(aeContainer, cObject, vro, ent->getActuatorsList(), ent->getCollisionablesList());
   }
 
   ~BallCatorAdaptor() {delete s;}
 
   zbe::Collisionator<R>* getAvatar() {
-    std::shared_ptr<zbe::ConstantMovingCircle<R> > cObject(new zbe::ConstantMovingCircle<R>(zbe::Circle(zbe::Point2D({(e->getPosition().x), e->getPosition().y}), e->getWidth()/2.0), e->getVelocity()));
+    std::shared_ptr<zbe::ActiveElement2D<R> > ent = e.lock();
+    std::shared_ptr<zbe::ConstantMovingCircle<R> > cObject(new zbe::ConstantMovingCircle<R>(zbe::Circle(zbe::Point2D({(ent->getPosition().x), ent->getPosition().y}), ent->getWidth()/2.0), ent->getVelocity()));
 
     s->setCollisionObject(cObject);
     return (s);
   }
 
 private:
-    std::shared_ptr<zbe::ActiveElement2D<R> > e;
+    std::weak_ptr<zbe::ActiveElement2D<R> > e;
     zbe::CollisionatorCommon<R,zbe::Avatar, zbe::Bouncer<2>, zbe::Stated >* s;
 };
 

@@ -11,6 +11,7 @@
 #define CORE_ENTITIES_AVATARS_COLLISIONATOR_H_
 
 #include <cstdint>
+#include <memory>
 #include <forward_list>
 
 #include "ZBE/core/entities/avatars/Collisioner.h"
@@ -45,7 +46,7 @@ class CollisionatorCommon : virtual public Collisionator<R>, public CollisionerC
     /** \brief A collisionable entity is defined by a collision object.
       * \param object A collision object that defines the "physical shape" of the entity.
       */
-    CollisionatorCommon(AvatarEntityContainer<Bases...>* collisionator, std::shared_ptr<CollisionObject<R> > collisionObject, std::shared_ptr<ReactObject<R> > reactObject, uint64_t actuatorsList, uint64_t collisionablesListId)
+    CollisionatorCommon(std::shared_ptr<WeakAvatarEntityContainer<Bases...> > collisionator, std::shared_ptr<CollisionObject<R> > collisionObject, std::shared_ptr<ReactObject<R> > reactObject, uint64_t actuatorsList, uint64_t collisionablesListId)
       : CollisionerCommon<R, Bases...>(collisionator, collisionObject, reactObject, actuatorsList), id(collisionablesListId) {}
 
     /** \brief Empty destructor.

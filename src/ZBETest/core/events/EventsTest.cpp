@@ -1,5 +1,7 @@
 #include "gtest/gtest.h"
 
+#include <memory>
+
 #include "ZBE/core/tools/tools.h"
 
 #include "ZBE/core/events/Event.h"
@@ -29,7 +31,7 @@ public:
 
 class C : public zbe::CollisionerCommon<R, A> {
   public:
-    C(zbe::AvatarEntityContainer<A>* aeca) : zbe::CollisionerCommon<R, A>(aeca, nullptr, nullptr, 1){};
+    C(std::shared_ptr<zbe::WeakAvatarEntityContainer<A> > waeca) : zbe::CollisionerCommon<R, A>(waeca, nullptr, nullptr, 1){};
 };
 
 class RO : public zbe::ReactObject<R> {
@@ -61,8 +63,9 @@ TEST(Event, InputEvent) {
 
 TEST(Event, CollisionEvent) {
   std::shared_ptr<zbe::AvatarEntityFixed<A> > aea = std::make_shared<zbe::AvatarEntityFixed<A> >(new A());
-  zbe::AvatarEntityContainer<A> aeca(aea);
-  C* c = new C(&aeca);
+  std::shared_ptr<zbe::AvatarEntityContainer<A> > aeca = std::make_shared<zbe::AvatarEntityContainer<A> >(aea);
+  std::shared_ptr<zbe::WeakAvatarEntityContainer<A> > waeca = std::make_shared<zbe::WeakAvatarEntityContainer<A> >(aeca);
+  C* c = new C(waeca);
   RO * ro = new RO();
   zbe::Point2D p{400000, 2};
   zbe::CollisionEvent2D<R> e(1,100, c, p, std::shared_ptr<zbe::ReactObject<R> >(ro));

@@ -23,7 +23,7 @@ public:
   VoidCollisionator(std::shared_ptr<CollisionObject<R> > collisionObject, std::shared_ptr<ReactObject<R> > reactObject, uint64_t actuatorsList, uint64_t collisionablesListId)
   //AvatarEntityContainer<Bases...>* collisionator, std::shared_ptr<CollisionObject<R> > collisionObject, std::shared_ptr<ReactObject<R> > reactObject, uint64_t actuatorsList, uint64_t collisionablesListId
     //: CollisionatorCommon<R, void>(new AvatarEntityContainer<void>((AvatarEntityContainer<void>*)nullptr), collisionObject, reactObject, actuatorsList, collisionablesListId) {}
-    : CollisionatorCommon<R, void>((AvatarEntityContainer<void>*)nullptr, collisionObject, reactObject, actuatorsList, collisionablesListId) {}
+    : CollisionatorCommon<R, void>(std::make_shared<WeakAvatarEntityContainer<void> >((WeakAvatarEntityContainer<void>*)nullptr), collisionObject, reactObject, actuatorsList, collisionablesListId) {}
 };
 
 } // namespace zbe

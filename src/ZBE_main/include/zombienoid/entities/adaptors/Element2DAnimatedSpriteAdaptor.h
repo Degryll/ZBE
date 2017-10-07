@@ -24,23 +24,25 @@ public:
   Element2DAnimatedSpriteAdaptor(const Element2DAnimatedSpriteAdaptor&) = delete;
   void operator=(const Element2DAnimatedSpriteAdaptor&) = delete;
 
-  Element2DAnimatedSpriteAdaptor(std::shared_ptr<Element2D<R> > entity): e(entity), s(nullptr) {
-    s = new SimpleAnimatedSprite(e->getX(), e->getY(), e->getW(), e->getH(), e->getGraphics(), 0, e->getState(), e->getTimeStamp());
+  Element2DAnimatedSpriteAdaptor(std::weak_ptr<Element2D<R> > entity): e(entity), s(nullptr) {
+    std::shared_ptr<Element2D<R> > ent = e.lock();
+    s = new SimpleAnimatedSprite(ent->getX(), ent->getY(), ent->getW(), ent->getH(), ent->getGraphics(), 0, ent->getState(), ent->getTimeStamp());
   }
 
   ~Element2DAnimatedSpriteAdaptor() {delete s;}
 
   AnimatedSprite* getAvatar() {
-    s->setW(e->getW());
-    s->setH(e->getH());
-    s->setX(e->getX());
-    s->setY(e->getY());
-    s->setState(e->getState());
+    std::shared_ptr<Element2D<R> > ent = e.lock();
+    s->setW(ent->getW());
+    s->setH(ent->getH());
+    s->setX(ent->getX());
+    s->setY(ent->getY());
+    s->setState(ent->getState());
     return (s);
   }
 
 private:
-    std::shared_ptr<Element2D<R> > e;
+    std::weak_ptr<Element2D<R> > e;
     SimpleAnimatedSprite* s;
 };
 

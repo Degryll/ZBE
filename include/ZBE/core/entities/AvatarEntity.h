@@ -130,6 +130,7 @@ class AvatarEntityContainer : virtual public AvatarEntityContainer<Bases>... {
 public:
   template<typename T>
   AvatarEntityContainer(T aet): AvatarEntityContainer<Bases>(aet)... {}
+  //TODO Para el uso que queremos hacer, necesitamos un constructor con ae separados.
 
   ~AvatarEntityContainer(){}
 };
@@ -158,9 +159,9 @@ public:
 
   ~AvatarEntityContainer(){}
 
-  std::shared_ptr<AvatarEntity<T> > get() {return aet;}
+  std::shared_ptr<AvatarEntity<T> > const get() {return aet;}
 
-protected:
+private:
   std::shared_ptr<AvatarEntity<T> > aet;
 };
 
@@ -176,6 +177,69 @@ public:
   ~AvatarEntityContainer(){}
 
 };
+
+//------------------------------------------------/////////
+
+/** \brief Agroupation of an undetermined number of types
+ */
+template <typename... Bases>
+class WeakAvatarEntityContainer : virtual public WeakAvatarEntityContainer<Bases>... {
+public:
+  template<typename T>
+  WeakAvatarEntityContainer(const T aet): WeakAvatarEntityContainer<Bases>(aet)... {}
+
+  ~WeakAvatarEntityContainer(){}
+};
+
+
+template <typename T>
+class WeakAvatarEntityContainer<T> : virtual public WeakAvatarEntityContainer<typename T::Base> {
+protected:
+    WeakAvatarEntityContainer() : aet() {}
+    void _setAE(std::weak_ptr<AvatarEntity<T> > _aet) {
+        aet = _aet;
+        WeakAvatarEntityContainer<typename T::Base>::_setAE(_aet);
+    }
+public:
+
+  void operator=(const WeakAvatarEntityContainer<T>&) = delete;
+  WeakAvatarEntityContainer(const WeakAvatarEntityContainer<T>& waec) = delete;
+
+  WeakAvatarEntityContainer(std::shared_ptr<WeakAvatarEntityContainer<T> > waec) : WeakAvatarEntityContainer<typename T::Base>(waec), aet(waec->get()) {}
+  WeakAvatarEntityContainer(std::shared_ptr<AvatarEntityContainer<T> > waec) : WeakAvatarEntityContainer<typename T::Base>(waec), aet(waec->get()) {}
+
+  template <typename U = T>
+  WeakAvatarEntityContainer(std::weak_ptr<AvatarEntity<T> > aet, typename std::enable_if<!std::is_void<typename U::Base>::value>::type * = nullptr ) : aet(aet){
+    _setAE(aet);
+  }
+
+  template <typename U = T>
+  WeakAvatarEntityContainer(std::weak_ptr<AvatarEntity<T> > aet, typename std::enable_if<std::is_void<typename U::Base>::value, int>::type * = nullptr) : aet(aet){}
+
+  ~WeakAvatarEntityContainer(){}
+
+  std::shared_ptr<AvatarEntity<T> > get() {return aet.lock();}
+
+private:
+  std::weak_ptr<AvatarEntity<T> > aet;
+};
+
+template <>
+class WeakAvatarEntityContainer<void> {
+protected:
+    template<typename T>
+    void _setAE(T) {}
+public:
+  WeakAvatarEntityContainer() {}
+  WeakAvatarEntityContainer(const WeakAvatarEntityContainer<void>&) {}
+  WeakAvatarEntityContainer(WeakAvatarEntityContainer<void>*) {}
+  WeakAvatarEntityContainer(std::shared_ptr<WeakAvatarEntityContainer<void> >) {}
+  WeakAvatarEntityContainer(std::shared_ptr<AvatarEntityContainer<void> >) {}
+  ~WeakAvatarEntityContainer(){}
+
+};
+
+//------------------------------------------------/////////
 
 template <typename T, typename A>
 void assignAvatar(T* t, A **a) {

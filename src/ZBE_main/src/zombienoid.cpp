@@ -30,10 +30,13 @@
 
 #include "ZBE/core/io/InputBuffer.h"
 
+#include "ZBE/archetypes/implementations/SimpleMobile.h"
+#include "ZBE/archetypes/Mobile.h"
+
 #include "ZBE/entities/avatars/Movable.h"
+#include "ZBE/entities/avatars/implementations/BaseMovable.h"
 
 #include "ZBE/entities/Element2D.h"
-#include "ZBE/entities/ActiveElement2D.h"
 
 #include "ZBE/events/handlers/actuators/BouncerActuator.h"
 #include "ZBE/events/handlers/actuators/StateChangerActuator.h"
@@ -74,7 +77,7 @@
 #include "zombienoid/daemons/ZombienoidDeathTester.h"
 #include "zombienoid/daemons/ZombienoidLifeSubstractor.h"
 
-#include "zombienoid/tools/BallBuilder.h"
+#include "zombienoid/behaviors/builders/BallBuilder.h"
 
 #include "zombienoid/ZombienoidReactor.h"
 
@@ -103,16 +106,20 @@ using InteractionGenerator = InteractionEventGenerator<
         JointAE<Collisionator<ZombienoidReactor> >
     >;
 
+using CustomBallBuilder = BallBuilder<TicketedFAE<Collisionator<ZombienoidReactor> >,
+              TicketedFAEC<AnimatedSprite>,
+              TicketedFAEC<Bouncer<2> > >;
+
 int zombienoidmain(int, char*[]) {
   enum {
     WIDTH = 1024,
     HEIGHT = 768,
     MARGIN = 32,
-    NBALLS = 500,
+    NBALLS = 5,
     BRICKS_X_MARGIN = 123,
     BRICKS_Y_MARGIN = 128,
-    NBRICKS_X = 14,
-    NBRICKS_Y = 8,
+    NBRICKS_X = 2,//14
+    NBRICKS_Y = 2,//8
     BRICK_WIDTH = 51,
     BRICK_HEIGHT = 32,
     BRICK_COLS = 12,
@@ -154,6 +161,8 @@ int zombienoidmain(int, char*[]) {
   //const int BALL_AS_ANIMATED_SPRITE_LIST = SysIdGenerator::getId();
   const int BALL_LIST = SysIdGenerator::getId();
 
+  const int BALLSPAWN_LIST = SysIdGenerator::getId();
+
   //const int BAR_AS_COLLISIONER_LIST = SysIdGenerator::getId();
   //const int BAR_AS_ANIMATED_SPRITE_LIST = SysIdGenerator::getId();
   //const int BAR_LIST = SysIdGenerator::getId();
@@ -170,6 +179,8 @@ int zombienoidmain(int, char*[]) {
   const char fontFileName[] = "data/fonts/PublicEnemyNF.ttf";
 
   const int64_t INITIAL_LIFES = 3;
+
+  srand(time(0));
 
   SDLWindow window(WIDTH, HEIGHT);
   SDLImageStore imgStore(window.getRenderer());
@@ -226,6 +237,7 @@ int zombienoidmain(int, char*[]) {
   //wrappers--------------------------------------------------------------------------------------------------
 
   std::shared_ptr<zbe::AvatarEntityContainer<zbe::Bouncer<2> > > aecb2;
+  std::shared_ptr<zbe::AvatarEntityContainer<zbe::Movable<2> > > aecm2;
   std::shared_ptr<zbe::AvatarEntityContainer<zbe::Stated, zbe::Avatar> > aecsa;
   std::shared_ptr<zbe::AvatarEntityContainer<zbe::AnimatedSprite> > aecas;
   std::shared_ptr<zbe::AvatarEntityContainer<zbe::SingleTextSprite> > aecsts;
@@ -273,7 +285,6 @@ int zombienoidmain(int, char*[]) {
   std::shared_ptr<Daemon> brickEraserLT(new PunisherDaemon<StateLTEraser<Element2D<ZombienoidReactor> >, TicketedForwardList<Element2D<ZombienoidReactor> > >(std::make_shared<StateLTEraser<Element2D<ZombienoidReactor> > >(0), BRICK_LIST));
   reactBehaviorMaster->addDaemon(brickEraserLT);
 
-  srand(time(0));
   for(int i = 0; i < NBRICKS_X; i++) {
     for(int j = 0; j < NBRICKS_Y; j++) {
         std::shared_ptr<Element2D<ZombienoidReactor> > brick(new Element2D<ZombienoidReactor>({(double)(BRICK_WIDTH*i)+MARGIN + BRICKS_X_MARGIN, (double)BRICKS_Y_MARGIN+(double)(BRICK_HEIGHT*j)+MARGIN}, BRICK_ACTUATORS_LIST, (double)BRICK_WIDTH, (double)BRICK_HEIGHT, BRICK_SS));
@@ -292,7 +303,31 @@ int zombienoidmain(int, char*[]) {
     }
   }
 
-  //ball counter-----------------------------------------------------------------------------------------------------
+  //ball spawner---------------------------------------------------------------------------------------------
+  ResourceManager<TicketedFAEC<Movable<2> > > & rmaecM2d = ResourceManager<TicketedFAEC<Movable<2> > >::getInstance();
+  std::shared_ptr<TicketedFAEC<Movable<2> > > spawnList(new TicketedFAEC<Movable<2> >());
+  rmaecM2d.insert(BALLSPAWN_LIST, spawnList);
+
+  for(int i = 0; i < NBALLS; i++) {
+    int64_t vt = 400;
+    double vAngleL = (rand()%1800)+900;
+    vAngleL/=10;
+    double vAngleR = rand()%100;
+    vAngleR/=1000;
+    double vAngle = vAngleL + vAngleR;
+    int64_t vx = sin(vAngle*PI/180)*vt;
+    int64_t vy = cos(vAngle*PI/180)*vt;
+
+    Mobile<2>* spawnData = new SimpleMobile<2>();
+    spawnData->setPosition({WIDTH/2.0, HEIGHT*5.0/6.0});
+    spawnData->setVelocity({(double)vx, (double)vy});
+    Movable<2>* spawnAvatar = new BaseMovable<2>(spawnData);
+    std::shared_ptr<AvatarEntityFixed<Movable<2> > > spawner = std::make_shared<AvatarEntityFixed<Movable<2> > >(spawnAvatar);
+    wrapAEC(&aecm2, spawner);
+    spawnList->push_front(aecm2);
+  }
+
+  //ball counter---------------------------------------------------------------------------------------------
   std::shared_ptr<Value<int64_t> > ballCount(new SimpleValue<int64_t>());
 
   //ball-----------------------------------------------------------------------------------------------------
@@ -317,9 +352,9 @@ int zombienoidmain(int, char*[]) {
   std::shared_ptr<TicketedFAEC<AnimatedSprite> > ballAnimatedSpriteList(new TicketedFAEC<AnimatedSprite>());
   asJoint->add(ballAnimatedSpriteList);
 
-  ResourceManager<TicketedFAEC<Bouncer<2> > > & rmae2d = ResourceManager<TicketedFAEC<Bouncer<2> > >::getInstance();
+  ResourceManager<TicketedFAEC<Bouncer<2> > > & rmb2 = ResourceManager<TicketedFAEC<Bouncer<2> > >::getInstance();
   std::shared_ptr<TicketedFAEC<Bouncer<2> > > ballList(new TicketedFAEC<Bouncer<2> >());
-  rmae2d.insert(BALL_LIST, ballList);
+  rmb2.insert(BALL_LIST, ballList);
 
   std::shared_ptr<Daemon> ballBounce(new BehaviorDaemon<Bouncer<2>, TicketedFAEC<Bouncer<2> > >(std::make_shared<Bounce<2> >(), BALL_LIST));
   std::shared_ptr<Daemon> ballULM(new BehaviorDaemon<Movable<2>, TicketedFAEC<Bouncer<2> > >(std::make_shared<UniformLinearMotion<2> >(), BALL_LIST));
@@ -327,29 +362,12 @@ int zombienoidmain(int, char*[]) {
   commonBehaviorMaster->addDaemon(ballBounce);
   commonBehaviorMaster->addDaemon(ballULM);
 
-  BallBuilder<TicketedFAE<Collisionator<ZombienoidReactor> >,
-              TicketedFAEC<AnimatedSprite>,
-              TicketedFAEC<Bouncer<2> > > ballBuilder(BALL_ACTUATORS_LIST, BALL_CBS_JOINT, BALL_SS, BALL_SIZE, ballCount, COLLISION_TICKET,
+  std::shared_ptr<CustomBallBuilder> ballBuilder= std::make_shared<CustomBallBuilder>(BALL_ACTUATORS_LIST, BALL_CBS_JOINT, BALL_SS, BALL_SIZE, ballCount, COLLISION_TICKET,
                           DRAW_TICKET, BEHAVE_TICKET, ballCollisionatorsList,ballAnimatedSpriteList, ballList);
 
-  SimpleMobile<2> ballMobile;
-  BaseMovable<2> ballData(&ballMobile);
+  std::shared_ptr<Daemon> ballCreatorDaemon(new  BehaviorDaemon<Movable<2>, TicketedFAEC<Movable<2>> >(ballBuilder, BALLSPAWN_LIST ));
 
-  for(int i = 0; i < NBALLS; i++) {
-    int64_t vt = 400;
-    double vAngleL = rand()%3600;
-    vAngleL/=10;
-    double vAngleR = rand()%100;
-    vAngleR/=1000;
-    double vAngle = vAngleL + vAngleR;
-    int64_t vx = sin(vAngle*PI/180)*vt;
-    int64_t vy = cos(vAngle*PI/180)*vt;
-
-    ballMobile.setPosition({WIDTH/2.0, HEIGHT*5.0/6.0});
-    ballMobile.setVelocity({(double)vx, (double)vy});
-
-    ballBuilder.build(&ballData);
-  }
+  ballCreatorDaemon->run();
 
   //bar------------------------------------------------------------------------------------------------------
   std::shared_ptr<std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Positionable<2>, Stated >* > > barActuatorsList(new std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Positionable<2>, Stated >* >());
@@ -402,7 +420,7 @@ int zombienoidmain(int, char*[]) {
 
   lifeCountersSingleTextSpriteList->push_front(aecsts);
 
-  std::shared_ptr<Daemon> lifeDaemon = std::make_shared<ZombienoidLifeSubstractor>(ballCount, lifeCount, &ballBuilder);
+  std::shared_ptr<Daemon> lifeDaemon = std::make_shared<ZombienoidLifeSubstractor>(ballCount, lifeCount, ballCreatorDaemon);
   reactBehaviorMaster->addDaemon(lifeDaemon);
 
   MouseXIH mouseX(bar);

@@ -20,6 +20,8 @@
 #include "ZBE/core/entities/avatars/AnimatedSprite.h"
 #include "ZBE/core/entities/avatars/AnimatedSprite.h"
 
+#include "ZBE/core/behaviors/Behavior.h"
+
 #include "ZBE/entities/avatars/Movable.h"
 #include "ZBE/entities/ActiveElement2D.h"
 
@@ -30,18 +32,11 @@
 
 
 namespace zombienoid {
+
 /** \brief A tool capable of build a ball with the same position an velocity as a given movable
 */
-
-template<typename T>
-class Builder {
-  public:
-    virtual ~Builder(){};
-    virtual void build(T* t) = 0;
-};
-
 template<typename CTL,typename ASL, typename BL>
-class BallBuilder : virtual public Builder<zbe::Movable<2> > {
+class BallBuilder : virtual public zbe::Behavior<zbe::Movable<2> > {
 public:
 
   /** \brief Parametrized constructor.
@@ -69,7 +64,9 @@ public:
 
   /** \brief It will build a ball with the same position an velocity as the given movable
    */
-  void build(zbe::Movable<2>* movable){
+  void apply(std::shared_ptr<zbe::AvatarEntityContainer<zbe::Movable<2> > > aecm) {
+    zbe::Movable<2>* movable;
+    assignAvatar(aecm->get(), &movable);
 
     std::shared_ptr<zbe::ActiveElement2D<ZombienoidReactor> > ball(new zbe::CActiveElement2D<ZombienoidReactor>(nballs, movable->getPosition(), movable->getVelocity(), alId, cbslId, s, s, g));
 
@@ -79,11 +76,11 @@ public:
     std::shared_ptr<zbe::Adaptor<zbe::Collisionator<ZombienoidReactor> > > ballCollisionatorAdaptor(new BallCatorAdaptor<ZombienoidReactor>(ball));
     setAdaptor(ball, ballCollisionatorAdaptor);
 
-    std::shared_ptr<zbe::AvatarEntityContainer<zbe::AnimatedSprite> > aecas;
-    std::shared_ptr<zbe::AvatarEntityContainer<zbe::Movable<2>, zbe::Bouncer<2> > > aecb2;
+    std::shared_ptr<zbe::AvatarEntityContainer<zbe::AnimatedSprite> > aecas = std::make_shared<zbe::AvatarEntityContainer<zbe::AnimatedSprite> >(ball);
+    std::shared_ptr<zbe::AvatarEntityContainer<zbe::Bouncer<2> > > aecb2 = std::make_shared<zbe::AvatarEntityContainer<zbe::Bouncer<2> > >(ball);
 
-    zbe::wrapAEC(&aecas, ball);
-    zbe::wrapAEC(&aecb2, ball);
+//    zbe::wrapAEC(&aecas, ball);
+//    zbe::wrapAEC(&aecb2, ball);
 
     ball->addToList(ctId, ctl->push_front(ball));
     ball->addToList(dtId, asl->push_front(aecas));

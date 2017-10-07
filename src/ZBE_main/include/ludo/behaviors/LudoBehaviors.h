@@ -106,7 +106,7 @@ class BackBallParticlesLauncher : public zbe::Behavior<zbe::Movable<2> > {
 
     BackBallParticlesLauncher(double radius, uint64_t graphics, uint64_t spriteList, std::shared_ptr<zbe::TimeEventGenerator> teg)
         : r(radius), g(graphics), sList(spriteList),
-          lmAESRS(zbe::ResourceManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::RotatedSprite> > >::getInstance()),
+          lmAESRS(zbe::ResourceManager<zbe::TicketedForwardList<zbe::AvatarEntityContainer<zbe::RotatedSprite> > >::getInstance()),
           teg(teg), store(zbe::EventStore::getInstance()) {
     }
 
@@ -122,7 +122,9 @@ class BackBallParticlesLauncher : public zbe::Behavior<zbe::Movable<2> > {
       std::shared_ptr<BallParticle> bp = std::make_shared<BallParticle>(p[0], p[1], r, g, rads * zbe::TODEGREE);
       std::shared_ptr<zbe::Adaptor<zbe::RotatedSprite> > sAdaptor = std::make_shared<RotatedDrawableSimpleRotatedSpriteAdaptor>(bp);
       zbe::setAdaptor(bp, sAdaptor);
-      auto ticket = lmAESRS.get(sList)->push_front(bp);
+      std::shared_ptr<zbe::AvatarEntityContainer<zbe::RotatedSprite> > aecrs;
+      zbe::wrapAEC(&aecrs, bp);
+      auto ticket = lmAESRS.get(sList)->push_front(aecrs);
       std::shared_ptr<zbe::TimeHandler> eraser = std::make_shared<TicketEraser>(ticket);
       teg->addTimer(eraser, store.getTime() + zbe::SECOND/4);
     }
@@ -131,7 +133,7 @@ class BackBallParticlesLauncher : public zbe::Behavior<zbe::Movable<2> > {
     double r;
     uint64_t g;
     uint64_t sList;
-    zbe::ResourceManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::RotatedSprite> > >& lmAESRS;
+    zbe::ResourceManager<zbe::TicketedForwardList<zbe::AvatarEntityContainer<zbe::RotatedSprite> > >& lmAESRS;
     std::shared_ptr<zbe::TimeEventGenerator> teg;
     zbe::EventStore& store;
 };

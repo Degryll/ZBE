@@ -26,19 +26,21 @@ public:
   BlockConerAdaptor(const BlockConerAdaptor&) = delete;
   void operator=(const BlockConerAdaptor&) = delete;
 
-  BlockConerAdaptor(std::shared_ptr<zbe::Element2D<R> > entity): e(entity), s(nullptr) {
-    zbe::AvatarEntityContainer<zbe::Avatar, zbe::Positionable<2>, zbe::Stated>* aeContainer (new zbe::AvatarEntityContainer<zbe::Avatar, zbe::Positionable<2>, zbe::Stated>(e));
-    zbe::AABB2D aabb({(double)e->getX(), (double)e->getY()},{(double)e->getX()+e->getW(), (double)e->getY()+e->getH()});
+  BlockConerAdaptor(std::weak_ptr<zbe::Element2D<R> > entity): e(entity), s(nullptr) {
+    std::shared_ptr<zbe::Element2D<R> > ent = e.lock();
+    std::shared_ptr<zbe::WeakAvatarEntityContainer<zbe::Avatar, zbe::Positionable<2>, zbe::Stated> > aeContainer = std::make_shared<zbe::WeakAvatarEntityContainer<zbe::Avatar, zbe::Positionable<2>, zbe::Stated> >(ent);
+    zbe::AABB2D aabb({(double)ent->getX(), (double)ent->getY()},{(double)ent->getX()+ent->getW(), (double)ent->getY()+ent->getH()});
     std::shared_ptr<zbe::StaticSolidAABB2D<R> > cObject(new zbe::StaticSolidAABB2D<R>(aabb));
     std::shared_ptr<zbe::VoidReactObject<R> > vro(new zbe::VoidReactObject<R>());
 
-    s = new zbe::CollisionerCommon<R,zbe::Avatar, zbe::Positionable<2>, zbe::Stated>(aeContainer, cObject, vro, e->getActuatorsList());
+    s = new zbe::CollisionerCommon<R,zbe::Avatar, zbe::Positionable<2>, zbe::Stated>(aeContainer, cObject, vro, ent->getActuatorsList());
   }
 
   ~BlockConerAdaptor() {delete s;}
 
   zbe::Collisioner<R>* getAvatar() {
-    zbe::AABB2D aabb({(double)e->getX(), (double)e->getY()},{(double)e->getX()+e->getW(), (double)e->getY()+e->getH()});
+    std::shared_ptr<zbe::Element2D<R> > ent = e.lock();
+    zbe::AABB2D aabb({(double)ent->getX(), (double)ent->getY()},{(double)ent->getX()+ent->getW(), (double)ent->getY()+ent->getH()});
     std::shared_ptr<zbe::StaticSolidAABB2D<R> > cObject(new zbe::StaticSolidAABB2D<R>(aabb));
 
     s->setCollisionObject(cObject);
@@ -46,7 +48,7 @@ public:
   }
 
 private:
-    std::shared_ptr<zbe::Element2D<R> > e;
+    std::weak_ptr<zbe::Element2D<R> > e;
     zbe::CollisionerCommon<R,zbe::Avatar, zbe::Positionable<2>, zbe::Stated>* s;
 };
 

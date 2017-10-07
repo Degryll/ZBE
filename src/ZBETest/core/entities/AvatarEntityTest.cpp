@@ -82,7 +82,16 @@ private:
   DummyAvatarZ* z;
 };
 
-TEST (AvatarEntity, AvatarEntityContainer_usage) {
+TEST (AvatarEntity, DISABLED_AvatarEntityContainer_usage) {
+}
+
+TEST (AvatarEntity, DISABLED_WeakAvatarEntityContainer_usage) {
+    std::shared_ptr<zbe::AvatarEntityFixed<DummyAvatarC> > aefb = std::make_shared<zbe::AvatarEntityFixed<DummyAvatarC> >();
+    DummyAvatarC* dacOriginal = new DummyAvatarC();
+    aefb->setAvatar(dacOriginal);
+
+    std::shared_ptr<zbe::AvatarEntityContainer<DummyAvatarC> >  aecDac = std::make_shared<zbe::AvatarEntityContainer<DummyAvatarC> >(aefb);
+    zbe::WeakAvatarEntityContainer<DummyAvatarC> waecDac(aecDac);
 }
 
 TEST (AvatarEntity, Usage) {

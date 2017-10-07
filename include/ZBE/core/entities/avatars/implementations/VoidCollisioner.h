@@ -21,7 +21,7 @@ template <typename R>
 class VoidCollisioner : public zbe::CollisionerCommon<R, void> {
 public:
   VoidCollisioner(std::shared_ptr<CollisionObject<R> > collisionObject, std::shared_ptr<ReactObject<R> > reactObject, uint64_t actuatorsList)
-    : CollisionerCommon<R, void>((AvatarEntityContainer<void>*)nullptr, collisionObject, reactObject, actuatorsList) {}
+    : CollisionerCommon<R, void>(std::make_shared<WeakAvatarEntityContainer<void> >((WeakAvatarEntityContainer<void>*)nullptr), collisionObject, reactObject, actuatorsList) {}
 };
 
 } // namespace zbe

@@ -25,24 +25,26 @@ public:
   ActiveElement2DAnimatedSpriteAdaptor(const ActiveElement2DAnimatedSpriteAdaptor&) = delete;
   void operator=(const ActiveElement2DAnimatedSpriteAdaptor&) = delete;
 
-  ActiveElement2DAnimatedSpriteAdaptor(std::shared_ptr<ActiveElement2D<R> > entity): e(entity), s(nullptr) {
-    double hw = e->getW()/2.0;
-    double hh = e->getH()/2.0;
-    s = new SimpleAnimatedSprite(e->getX()-hw, e->getY()-hh, e->getW(), e->getH(), e->getGraphics(), 0, e->getState(), e->getTimeStamp());
+  ActiveElement2DAnimatedSpriteAdaptor(std::weak_ptr<ActiveElement2D<R> > entity): e(entity), s(nullptr) {
+    std::shared_ptr<ActiveElement2D<R> > ent = e.lock();
+    double hw = ent->getW()/2.0;
+    double hh = ent->getH()/2.0;
+    s = new SimpleAnimatedSprite(ent->getX()-hw, ent->getY()-hh, ent->getW(), ent->getH(), ent->getGraphics(), 0, ent->getState(), ent->getTimeStamp());
   }
 
   ~ActiveElement2DAnimatedSpriteAdaptor() {delete s;}
 
   AnimatedSprite* getAvatar() {
-    s->setW(e->getW());
-    s->setH(e->getH());
-    s->setX(e->getX() - e->getW()/2.0);
-    s->setY(e->getY() - e->getH()/2.0);
+    std::shared_ptr<ActiveElement2D<R> > ent = e.lock();
+    s->setW(ent->getW());
+    s->setH(ent->getH());
+    s->setX(ent->getX() - ent->getW()/2.0);
+    s->setY(ent->getY() - ent->getH()/2.0);
     return (s);
   }
 
 private:
-    std::shared_ptr<ActiveElement2D<R> > e;
+    std::weak_ptr<ActiveElement2D<R> > e;
     SimpleAnimatedSprite* s;
 };
 

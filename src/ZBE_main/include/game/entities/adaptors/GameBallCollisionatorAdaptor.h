@@ -30,20 +30,21 @@ public:
   GameBallCollisionatorAdaptor(const GameBallCollisionatorAdaptor&) = delete;
   void operator=(const GameBallCollisionatorAdaptor&) = delete;
 
-  GameBallCollisionatorAdaptor(std::shared_ptr<GameBall> ball): b(ball), c(nullptr) {}
+  GameBallCollisionatorAdaptor(std::weak_ptr<GameBall> ball): b(ball), c(nullptr) {}
   ~GameBallCollisionatorAdaptor() {delete c;}
   zbe::Collisionator<GameReactor>* getAvatar() {
       delete c;
-      std::shared_ptr<zbe::CollisionObject<GameReactor> > co = std::make_shared<zbe::ConstantMovingCircle<GameReactor> >(zbe::ConstantMovingCircle<GameReactor>(zbe::Circle(b->getPosition(), b->getWidth()), b->getVelocity()));
+      std::shared_ptr<GameBall> ball = b.lock();
+      std::shared_ptr<zbe::CollisionObject<GameReactor> > co = std::make_shared<zbe::ConstantMovingCircle<GameReactor> >(zbe::ConstantMovingCircle<GameReactor>(zbe::Circle(ball->getPosition(), ball->getWidth()), ball->getVelocity()));
       std::shared_ptr<zbe::ReactObject<GameReactor> > ro = std::make_shared<zbe::VoidReactObject<GameReactor> >();
       //zbe::Bouncer<2>* bouncer;
       //((zbe::AvatarEntity<zbe::Bouncer<2> >*)b)->assignAvatar(&bouncer);
-      c = new zbe::CollisionatorCommon<GameReactor, zbe::Bouncer<2> >(new zbe::AvatarEntityContainer<zbe::Bouncer<2> >(b), co, ro, b->getActuatorsList() ,b->getCollisionablesList());
+      c = new zbe::CollisionatorCommon<GameReactor, zbe::Bouncer<2> >(std::make_shared<zbe::WeakAvatarEntityContainer<zbe::Bouncer<2> > >(ball), co, ro, ball->getActuatorsList() ,ball->getCollisionablesList());
       return (c);
     }
 
 private:
-	std::shared_ptr<GameBall> b;
+	std::weak_ptr<GameBall> b;
 	zbe::Collisionator<GameReactor>* c;
 };
 

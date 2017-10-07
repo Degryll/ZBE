@@ -30,19 +30,20 @@ public:
   RotatedDrawableSimpleRotatedSpriteAdaptor(const RotatedDrawableSimpleRotatedSpriteAdaptor&) = delete;
   void operator=(const RotatedDrawableSimpleRotatedSpriteAdaptor&) = delete;
 
-  RotatedDrawableSimpleRotatedSpriteAdaptor(std::shared_ptr<RotatedDrawable> archetype):archetype(archetype), s(nullptr){}
+  RotatedDrawableSimpleRotatedSpriteAdaptor(std::weak_ptr<RotatedDrawable> archetype):a(archetype), s(nullptr){}
 
   ~RotatedDrawableSimpleRotatedSpriteAdaptor() {delete s;}
 
   zbe::RotatedSprite* getAvatar() {
     delete s;
+    std::shared_ptr<RotatedDrawable> archetype = a.lock();
     double angle = (archetype->getAngle() < 0 ? 360.0 + archetype->getAngle() : archetype->getAngle());
     s = new zbe::SimpleRotatedSprite(archetype->getX(), archetype->getY(), archetype->getW(), archetype->getH(),archetype->getGraphics(), angle);
     return (s);
   };
 
 private:
-  std::shared_ptr<RotatedDrawable> archetype;
+  std::weak_ptr<RotatedDrawable> a;
   zbe::RotatedSprite* s;
 };
 
@@ -54,20 +55,21 @@ public:
   LudoBallCollisionatorAdaptor(const LudoBallCollisionatorAdaptor&) = delete;
   void operator=(const LudoBallCollisionatorAdaptor&) = delete;
 
-  LudoBallCollisionatorAdaptor(std::shared_ptr<LudoBall<R> > ball): b(ball), c(nullptr) {}
+  LudoBallCollisionatorAdaptor(std::weak_ptr<LudoBall<R> > ball): b(ball), c(nullptr) {}
 
   ~LudoBallCollisionatorAdaptor() {delete c;}
 
   zbe::Collisionator<R>* getAvatar() {
       delete c;
-      std::shared_ptr<zbe::CollisionObject<R> > co = std::make_shared<zbe::ConstantMovingCircle<R> >(zbe::ConstantMovingCircle<R>(zbe::Circle(b->getPosition(), b->getWidth()), b->getVelocity()));
+      std::shared_ptr<LudoBall<R> > ball = b.lock();
+      std::shared_ptr<zbe::CollisionObject<R> > co = std::make_shared<zbe::ConstantMovingCircle<R> >(zbe::ConstantMovingCircle<R>(zbe::Circle(ball->getPosition(), ball->getWidth()), ball->getVelocity()));
       std::shared_ptr<zbe::ReactObject<R> > ro = std::make_shared<zbe::VoidReactObject<R> >();
-      c = new zbe::CollisionatorCommon<R, zbe::Avatar, zbe::Bouncer<2> >(new zbe::AvatarEntityContainer<zbe::Avatar, zbe::Bouncer<2> >(b), co, ro, b->getActuatorsList() ,b->getCollisionablesList());
+      c = new zbe::CollisionatorCommon<R, zbe::Avatar, zbe::Bouncer<2> >(std::make_shared<zbe::WeakAvatarEntityContainer<zbe::Avatar, zbe::Bouncer<2> > >(ball), co, ro, ball->getActuatorsList() ,ball->getCollisionablesList());
       return (c);
     }
 
 private:
-	std::shared_ptr<LudoBall<R> > b;
+	std::weak_ptr<LudoBall<R> > b;
 	zbe::Collisionator<R>* c;
 };
 

@@ -24,19 +24,21 @@ public:
   BoardConerAdaptor(const BoardConerAdaptor&) = delete;
   void operator=(const BoardConerAdaptor&) = delete;
 
-  BoardConerAdaptor(std::shared_ptr<Element2D<R> > entity): e(entity), s(nullptr) {
-    AvatarEntityContainer<Avatar, Positionable<2>, Stated>* aeContainer (new AvatarEntityContainer<Avatar, Positionable<2>, Stated>(e));
-    zbe::AABB2D aabb({(double)e->getX(), (double)e->getY()}, {(double)e->getX()+e->getW(), (double)e->getY()+e->getH()});
+  BoardConerAdaptor(std::weak_ptr<Element2D<R> > entity): e(entity), s(nullptr) {
+    std::shared_ptr<Element2D<R> > ent = e.lock();
+    std::shared_ptr<WeakAvatarEntityContainer<Avatar, Positionable<2>, Stated> > aeContainer = std::make_shared<WeakAvatarEntityContainer<Avatar, Positionable<2>, Stated> >(ent);
+    zbe::AABB2D aabb({(double)ent->getX(), (double)ent->getY()}, {(double)ent->getX()+ent->getW(), (double)ent->getY()+ent->getH()});
     std::shared_ptr<StaticLimiterAABB2D<R> > cObject(new zbe::StaticLimiterAABB2D<R>(aabb));
-    std::shared_ptr<BoardInteractionTesterRO<R> > it(new zbe::BoardInteractionTesterRO<R>(aabb));//{e->getX(), e->getY()}, {e->getX()+e->getW(), e->getY()+e->getH()})
+    std::shared_ptr<BoardInteractionTesterRO<R> > it(new zbe::BoardInteractionTesterRO<R>(aabb));//{ent->getX(), ent->getY()}, {ent->getX()+ent->getW(), ent->getY()+ent->getH()})
 
-    s = new CollisionerCommon<R,Avatar, Positionable<2>, Stated>(aeContainer, cObject, it, e->getActuatorsList());
+    s = new CollisionerCommon<R,Avatar, Positionable<2>, Stated>(aeContainer, cObject, it, ent->getActuatorsList());
   }
 
   ~BoardConerAdaptor() {delete s;}
 
   Collisioner<R>* getAvatar() {
-    zbe::AABB2D aabb({(double)e->getX(), (double)e->getY()}, {(double)e->getX()+e->getW(), (double)e->getY()+e->getH()});
+    std::shared_ptr<Element2D<R> > ent = e.lock();
+    zbe::AABB2D aabb({(double)ent->getX(), (double)ent->getY()}, {(double)ent->getX()+ent->getW(), (double)ent->getY()+ent->getH()});
     std::shared_ptr<StaticLimiterAABB2D<R> > cObject(new zbe::StaticLimiterAABB2D<R>(aabb));
 
     s->setCollisionObject(cObject);
@@ -44,7 +46,7 @@ public:
   }
 
 private:
-    std::shared_ptr<Element2D<R> > e;
+    std::weak_ptr<Element2D<R> > e;
     CollisionerCommon<R,Avatar, Positionable<2>, Stated>* s;
 };
 

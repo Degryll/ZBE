@@ -104,7 +104,7 @@ public:
        s(), g(graphics),
        x(x-radius),y(y-radius),
        d(2*radius), a(angle) {
-    zbe::AvatarEntityFixed<Stated>::setAvatar(&s);
+    //zbe::AvatarEntityFixed<Stated>::setAvatar(&s);
   };
 
   int64_t getX() {return ((int64_t)x);}
