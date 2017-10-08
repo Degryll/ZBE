@@ -125,12 +125,12 @@ void setAvatar(std::shared_ptr<T> t, A* a) {
 
 /** \brief Agroupation of an undetermined number of types
  */
-template <typename... Bases>
-class AvatarEntityContainer : virtual public AvatarEntityContainer<Bases>... {
+template <typename T, typename... Bases>
+class AvatarEntityContainer : virtual public AvatarEntityContainer<T>,  virtual public AvatarEntityContainer<Bases>... {
 public:
-  template<typename T>
-  AvatarEntityContainer(T aet): AvatarEntityContainer<Bases>(aet)... {}
-  //TODO Para el uso que queremos hacer, necesitamos un constructor con ae separados.
+  template<typename U>
+  AvatarEntityContainer(U aet) : AvatarEntityContainer<T>(aet), AvatarEntityContainer<Bases>(aet)... {}
+  AvatarEntityContainer(std::shared_ptr<AvatarEntity<T> > aet, std::shared_ptr<AvatarEntity<Bases> >... aes): AvatarEntityContainer<T>(aet), AvatarEntityContainer<Bases>(aes)... {}
 
   ~AvatarEntityContainer(){}
 };

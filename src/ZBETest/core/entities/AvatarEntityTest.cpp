@@ -82,16 +82,16 @@ private:
   DummyAvatarZ* z;
 };
 
-TEST (AvatarEntity, DISABLED_AvatarEntityContainer_usage) {
-}
-
-TEST (AvatarEntity, DISABLED_WeakAvatarEntityContainer_usage) {
-    std::shared_ptr<zbe::AvatarEntityFixed<DummyAvatarC> > aefb = std::make_shared<zbe::AvatarEntityFixed<DummyAvatarC> >();
+TEST (AvatarEntity, AvatarEntityContainer_usage) {
+    std::shared_ptr<zbe::AvatarEntityFixed<DummyAvatarC> > aefc = std::make_shared<zbe::AvatarEntityFixed<DummyAvatarC> >();
+    std::shared_ptr<zbe::AvatarEntityFixed<DummyAvatarZ> > aefz = std::make_shared<zbe::AvatarEntityFixed<DummyAvatarZ> >();
     DummyAvatarC* dacOriginal = new DummyAvatarC();
-    aefb->setAvatar(dacOriginal);
+    aefc->setAvatar(dacOriginal);
+    DummyAvatarZ* dazOriginal = new DummyAvatarZ();
+    aefz->setAvatar(dazOriginal);
 
-    std::shared_ptr<zbe::AvatarEntityContainer<DummyAvatarC> >  aecDac = std::make_shared<zbe::AvatarEntityContainer<DummyAvatarC> >(aefb);
-    zbe::WeakAvatarEntityContainer<DummyAvatarC> waecDac(aecDac);
+    std::shared_ptr<zbe::AvatarEntityContainer<DummyAvatarC, DummyAvatarZ> >  aeccz = std::make_shared<zbe::AvatarEntityContainer<DummyAvatarC, DummyAvatarZ> >(aefc, aefz);
+    zbe::WeakAvatarEntityContainer<DummyAvatarC, DummyAvatarZ> waecDac(aeccz);
 }
 
 TEST (AvatarEntity, Usage) {

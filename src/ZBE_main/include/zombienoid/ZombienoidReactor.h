@@ -16,6 +16,8 @@ public:
 
   virtual void act(zbe::InteractionTesterRO<ZombienoidReactor>*) {}
 
+  virtual void act(zbe::Stated*) {}
+
 };
 
 }  // zombienoid

@@ -18,7 +18,6 @@
 
 #include "ZBE/core/entities/Adaptor.h"
 #include "ZBE/core/entities/avatars/AnimatedSprite.h"
-#include "ZBE/core/entities/avatars/AnimatedSprite.h"
 
 #include "ZBE/core/behaviors/Behavior.h"
 
@@ -28,14 +27,12 @@
 #include "zombienoid/entities/adaptors/ActiveElement2DAnimatedSpriteAdaptor.h"
 #include "zombienoid/entities/adaptors/BallCatorAdaptor.h"
 
-#include "zombienoid/ZombienoidReactor.h"
-
 
 namespace zombienoid {
 
 /** \brief A tool capable of build a ball with the same position an velocity as a given movable
 */
-template<typename CTL,typename ASL, typename BL>
+template<typename R, typename CTL,typename ASL, typename BL>
 class BallBuilder : virtual public zbe::Behavior<zbe::Movable<2> > {
 public:
 
@@ -68,12 +65,12 @@ public:
     zbe::Movable<2>* movable;
     assignAvatar(aecm->get(), &movable);
 
-    std::shared_ptr<zbe::ActiveElement2D<ZombienoidReactor> > ball(new zbe::CActiveElement2D<ZombienoidReactor>(nballs, movable->getPosition(), movable->getVelocity(), alId, cbslId, s, s, g));
+    std::shared_ptr<zbe::ActiveElement2D<R> > ball(new zbe::CActiveElement2D<R>(nballs, movable->getPosition(), movable->getVelocity(), alId, cbslId, s, s, g));
 
-    std::shared_ptr<zbe::Adaptor<zbe::AnimatedSprite> > ballSpriteAdaptor(new zbe::ActiveElement2DAnimatedSpriteAdaptor<ZombienoidReactor>(ball));
+    std::shared_ptr<zbe::Adaptor<zbe::AnimatedSprite> > ballSpriteAdaptor(new zbe::ActiveElement2DAnimatedSpriteAdaptor<R>(ball));
     setAdaptor(ball, ballSpriteAdaptor);
 
-    std::shared_ptr<zbe::Adaptor<zbe::Collisionator<ZombienoidReactor> > > ballCollisionatorAdaptor(new BallCatorAdaptor<ZombienoidReactor>(ball));
+    std::shared_ptr<zbe::Adaptor<zbe::Collisionator<R> > > ballCollisionatorAdaptor(new BallCatorAdaptor<R>(ball));
     setAdaptor(ball, ballCollisionatorAdaptor);
 
     std::shared_ptr<zbe::AvatarEntityContainer<zbe::AnimatedSprite> > aecas = std::make_shared<zbe::AvatarEntityContainer<zbe::AnimatedSprite> >(ball);
