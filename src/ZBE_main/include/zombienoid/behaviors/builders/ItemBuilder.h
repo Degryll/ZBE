@@ -52,10 +52,10 @@ public:
    *  \param iteml;  item list
    */
 
-  ItemBuilder( uint64_t alId, uint64_t cbslId, uint64_t g, int64_t size, int64_t maxState, double vel,
+  ItemBuilder( uint64_t alId, uint64_t cbslId, uint64_t g, int64_t width, int64_t height, int64_t maxState, double vel,
                uint64_t ctId, uint64_t dtId, uint64_t btId, std::shared_ptr<CTL> ctl,
                std::shared_ptr<ASL> asl,  std::shared_ptr<BL> iteml)
-               : alId(alId), cbslId(cbslId),g(g), size(size), maxState(maxState), velocity({0,vel}),
+               : alId(alId), cbslId(cbslId),g(g), width(width), height(height), maxState(maxState), velocity({0,vel}),
                ctId(ctId), dtId(dtId), btId(btId), ctl(ctl),
                asl(asl), iteml(iteml){}
 
@@ -65,7 +65,7 @@ public:
     zbe::Positionable<2>* pable;
     assignAvatar(aecm->get(), &pable);
 
-    std::shared_ptr<zbe::ActiveElement2D<R> > item(new zbe::ActiveElement2D<R>(pable->getPosition(), velocity, alId, cbslId, size, size, g));
+    std::shared_ptr<zbe::ActiveElement2D<R> > item(new zbe::ActiveElement2D<R>(pable->getPosition(), velocity, alId, cbslId, width, height, g));
     int64_t state = (rand() % maxState);
     item->setState(state);
 
@@ -88,7 +88,8 @@ private:
   uint64_t cbslId; //<! colisionables list id
   uint64_t g; //<! graphics id
 
-  int64_t size; //<! ball size
+  int64_t width; //<! ball size
+  int64_t height; //<! ball size
   int64_t maxState;
   zbe::Vector<2> velocity;
 

@@ -25,13 +25,20 @@ template <typename R>
 class ItemCatcher: public zbe::Actuator<Stated, R> {
 public:
 
-  ItemCatcher(std::shared_ptr<Value<int64_t> > lifes): l(lifes){}
-  void act(zbe::Stated*) {
-      l->add(1);
+  ItemCatcher(): items(){}
+  void act(zbe::Stated* stated) {
+      uint64_t state = stated->getState();
+      if (state>=0 && state<items.size()) {
+        items[state]->run();
+      }
+  }
+
+  void addItem(std::shared_ptr<zbe::Daemon> d){
+      items.push_back(d);
   }
 
 private:
-  std::shared_ptr<Value<int64_t> > l;
+  std::vector<std::shared_ptr<zbe::Daemon> > items;
 };
 
 }  // namespace zbe

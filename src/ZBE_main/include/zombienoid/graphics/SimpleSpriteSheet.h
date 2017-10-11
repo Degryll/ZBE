@@ -1,6 +1,6 @@
 /**
  * Copyright 2012 Batis Degryll Ludo
- * @file SpriteSheet.h
+ * @file SimpleSpriteSheet.h
  * @since 2017-06-14
  * @date 2017-06-14
  * @author Degryll Ludo Batis
@@ -17,11 +17,11 @@
 #include "ZBE/core/entities/AvatarEntity.h"
 #include "zombienoid/graphics/SimpleSpriteSheet.h"
 
-namespace zbe {
+namespace zombienoid {
 
 /** \brief Interface capable of generate a sprite from a given entity.
  */
-class SimpleSpriteSheet : public SpriteSheet<AnimatedSprite> {
+class SimpleSpriteSheet : public zbe::SpriteSheet<zbe::AnimatedSprite> {
 public:
 
   /** \brief Parametriced constructor
@@ -32,15 +32,15 @@ public:
   /** \brief Generate a sprite from a given entity.
    *  \return generated sprite
    **/
-  Sprite generateSprite(AnimatedSprite* a) {
+  zbe::Sprite generateSprite(zbe::AnimatedSprite* a) {
     //Sprite(Region2D src, Region2D dst, double angle, uint64_t graphics)
-    Sprite s(Region<2>({(double)a->getState()*a->getW(),0.0},{(double)a->getW(), (double)a->getH()}),Region<2>({(double)a->getX(), (double)a->getY()}, {(double)a->getW(), (double)a->getH()}), a->getDegrees(), id);
+    zbe::Sprite s(zbe::Region<2>({(double)a->getState()*a->getW(),0.0},{(double)a->getW(), (double)a->getH()}),zbe::Region<2>({(double)a->getX(), (double)a->getY()}, {(double)a->getW(), (double)a->getH()}), a->getDegrees(), id);
     return s;
   }
 private:
   uint64_t id;
 };
 
-}  // namespace zbe
+}  // namespace zombienoid
 
 #endif  // ZOMBIENOID_GRAPHICS_SIMPLESPRITESHEET_H_

@@ -183,6 +183,18 @@
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/behaviors/builders/ItemBuilder.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/daemons/ZombienoidDeathTester.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/daemons/ZombienoidLifeSubstractor.h" />
+		<Unit filename="../../../src/ZBE_main/include/zombienoid/daemons/items/BallAcceleratorItem.h" />
+		<Unit filename="../../../src/ZBE_main/include/zombienoid/daemons/items/BallBombItem.h" />
+		<Unit filename="../../../src/ZBE_main/include/zombienoid/daemons/items/BallMultiplierItem.h" />
+		<Unit filename="../../../src/ZBE_main/include/zombienoid/daemons/items/BallRadiusItem.h" />
+		<Unit filename="../../../src/ZBE_main/include/zombienoid/daemons/items/BarSizeItem.h" />
+		<Unit filename="../../../src/ZBE_main/include/zombienoid/daemons/items/EtherBallsItem.h" />
+		<Unit filename="../../../src/ZBE_main/include/zombienoid/daemons/items/GunsItem.h" />
+		<Unit filename="../../../src/ZBE_main/include/zombienoid/daemons/items/HarmlessBallsItem.h" />
+		<Unit filename="../../../src/ZBE_main/include/zombienoid/daemons/items/LifeItem.h" />
+		<Unit filename="../../../src/ZBE_main/include/zombienoid/daemons/items/PointItem.h" />
+		<Unit filename="../../../src/ZBE_main/include/zombienoid/daemons/items/StickyBarItem.h" />
+		<Unit filename="../../../src/ZBE_main/include/zombienoid/daemons/items/UnstoppableBallsItem.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/entities/LifeCounter.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/entities/adaptors/ActiveElement2DAnimatedSpriteAdaptor.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/entities/adaptors/BallCatorAdaptor.h" />
@@ -193,6 +205,7 @@
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/events/handlers/ExitInputHandler.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/events/handlers/actuators/ItemCatcher.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/events/reactobjects/BoardInteractionTesterRO.h" />
+		<Unit filename="../../../src/ZBE_main/include/zombienoid/graphics/MultiSpriteSheet.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/graphics/SimpleSpriteSheet.h" />
 		<Unit filename="../../../src/ZBE_main/src/batismain.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/degryllmain.cpp" />
