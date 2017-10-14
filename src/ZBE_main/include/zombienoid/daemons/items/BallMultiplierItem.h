@@ -31,7 +31,7 @@
 #include "ZBE/entities/avatars/Movable.h"
 #include "ZBE/entities/avatars/implementations/BaseMovable.h"
 
-namespace zbe {
+namespace zombienoid {
 
 /** \brief Daemon capable of increase an value.
  */
@@ -43,7 +43,7 @@ public:
   void operator=(const BallMultiplierItem&) = delete;
 
   BallMultiplierItem(std::shared_ptr<zbe::Behavior<zbe::Movable<2> > > builder, uint64_t listId, double* angles, unsigned amount)
-    : builder(builder), ballList(ResourceManager<BL>::getInstance().get(listId)),
+    : builder(builder), ballList(zbe::ResourceManager<BL>::getInstance().get(listId)),
       archetype(new zbe::SimpleMobile<2>()), avatar(new zbe::BaseMovable<2>(archetype)),
       aem2(new zbe::AvatarEntityFixed<zbe::Movable<2> >(avatar)), model(new zbe::AvatarEntityContainer<zbe::Movable<2> >(aem2)),
       angles(angles), amount(amount) {
@@ -56,7 +56,7 @@ public:
   void run(){
     for(auto ball : (*ballList)) {
       zbe::Movable<2>* sample;
-      assignAvatar((std::shared_ptr<AvatarEntityContainer<zbe::Movable<2> > >)ball,&sample);
+      assignAvatar((std::shared_ptr<zbe::AvatarEntityContainer<zbe::Movable<2> > >)ball,&sample);
       double degrees = sample->getVelocity().getDegrees();
       double radious = sample->getVelocity().getModule();
       zbe::Point2D p = sample->getPosition();
@@ -76,12 +76,12 @@ private:
   std::shared_ptr<BL> ballList;
   zbe::SimpleMobile<2>* archetype;
   zbe::BaseMovable<2>* avatar;
-  std::shared_ptr<AvatarEntity<zbe::Movable<2> > > aem2;
-  std::shared_ptr<AvatarEntityContainer<zbe::Movable<2> > > model;
+  std::shared_ptr<zbe::AvatarEntity<zbe::Movable<2> > > aem2;
+  std::shared_ptr<zbe::AvatarEntityContainer<zbe::Movable<2> > > model;
   double* angles;
   unsigned amount;
 };
 
-}  // namespace zbe
+}  // namespace zombienoid
 
 #endif // ZBE_MAIN_ZMBIENOID_DAEMONS_ITEMS_BALLMULTIPLIERITEM

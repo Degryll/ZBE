@@ -7,8 +7,8 @@
  * @brief Daemon capable of increase an value.
  */
 
-#ifndef ZBE_MAIN_ZMBIENOID_DAEMONS_ITEMS_BallAcceleratorItem
-#define ZBE_MAIN_ZMBIENOID_DAEMONS_ITEMS_BallAcceleratorItem
+#ifndef ZBE_MAIN_ZMBIENOID_DAEMONS_ITEMS_BALLACELERATORITEM
+#define ZBE_MAIN_ZMBIENOID_DAEMONS_ITEMS_BALLACELERATORITEM
 
 #include <memory>
 #include <cstdint>
@@ -17,21 +17,11 @@
 
 #include "ZBE/core/daemons/Daemon.h"
 
-#include "ZBE/core/behaviors/Behavior.h"
-
-#include "ZBE/core/tools/shared/Value.h"
-
-#include "ZBE/core/tools/math/Vector.h"
-
 #include "ZBE/core/tools/containers/ResourceManager.h"
 
-#include "ZBE/archetypes/Mobile.h"
-#include "ZBE/archetypes/implementations/SimpleMobile.h"
-
 #include "ZBE/entities/avatars/Movable.h"
-#include "ZBE/entities/avatars/implementations/BaseMovable.h"
 
-namespace zbe {
+namespace zombienoid {
 
 /** \brief Daemon capable of increase an value.
  */
@@ -43,7 +33,7 @@ public:
   void operator=(const BallAcceleratorItem&) = delete;
 
   BallAcceleratorItem(uint64_t listId, double ratio)
-    : ballList(ResourceManager<BL>::getInstance().get(listId)), ratio(ratio) {
+    : ballList(zbe::ResourceManager<BL>::getInstance().get(listId)), ratio(ratio) {
   }
 
   ~BallAcceleratorItem(){}
@@ -51,7 +41,7 @@ public:
   void run(){
     for(auto ball : (*ballList)) {
       zbe::Movable<2>* movable;
-      assignAvatar((std::shared_ptr<AvatarEntityContainer<zbe::Movable<2> > >)ball,&movable);
+      assignAvatar((std::shared_ptr<zbe::AvatarEntityContainer<zbe::Movable<2> > >)ball,&movable);
       movable->setVelocity(movable->getVelocity() * ratio);
     }
   }
@@ -61,6 +51,6 @@ private:
   double ratio;
 };
 
-}  // namespace zbe
+}  // namespace zombienoid
 
-#endif // ZBE_MAIN_ZMBIENOID_DAEMONS_ITEMS_BallAcceleratorItem
+#endif // ZBE_MAIN_ZMBIENOID_DAEMONS_ITEMS_BALLACELERATORITEM

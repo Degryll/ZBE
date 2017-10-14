@@ -4,7 +4,7 @@
  * @since 2016-12-16
  * @date 2017-01-11
  * @author Batis Degryll Ludo
- * @brief This defines an avatar that can be posicioned.
+ * @brief Defines an avatar that can be posicioned.
  */
 
 #ifndef ZBE_ENTITIES_AVATARS_POSITIONABLE_H_
@@ -16,7 +16,7 @@
 
 namespace zbe {
 
-/** \brief This define an avatar that can be moved.
+/** \brief Defines an avatar that can be posicioned.
  */
 template <unsigned s>
 class Positionable {

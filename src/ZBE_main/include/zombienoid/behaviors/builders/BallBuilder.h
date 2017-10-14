@@ -21,12 +21,16 @@
 
 #include "ZBE/core/behaviors/Behavior.h"
 
+#include "ZBE/archetypes/Area.h"
+
+#include "ZBE/entities/avatars/implementations/BaseResizableArea.h"
+#include "ZBE/entities/avatars/Resizable.h"
+
 #include "ZBE/entities/avatars/Movable.h"
 #include "ZBE/entities/ActiveElement2D.h"
 
 #include "zombienoid/entities/adaptors/ActiveElement2DAnimatedSpriteAdaptor.h"
 #include "zombienoid/entities/adaptors/BallCatorAdaptor.h"
-
 
 namespace zombienoid {
 
@@ -73,15 +77,16 @@ public:
     std::shared_ptr<zbe::Adaptor<zbe::Collisionator<R> > > ballCollisionatorAdaptor(new BallCatorAdaptor<R>(ball));
     setAdaptor(ball, ballCollisionatorAdaptor);
 
-    std::shared_ptr<zbe::AvatarEntityContainer<zbe::AnimatedSprite> > aecas = std::make_shared<zbe::AvatarEntityContainer<zbe::AnimatedSprite> >(ball);
-    std::shared_ptr<zbe::AvatarEntityContainer<zbe::Bouncer<2> > > aecb2 = std::make_shared<zbe::AvatarEntityContainer<zbe::Bouncer<2> > >(ball);
+    zbe::BaseResizableArea* resizableArea = new zbe::BaseResizableArea(&(*ball), s, s);
 
-//    zbe::wrapAEC(&aecas, ball);
-//    zbe::wrapAEC(&aecb2, ball);
+    std::shared_ptr<zbe::AvatarEntity<zbe::Resizable> > resizableAE = std::make_shared<zbe::AvatarEntityFixed<zbe::Resizable> >(resizableArea);
+
+    std::shared_ptr<zbe::AvatarEntityContainer<zbe::AnimatedSprite> > aecas = std::make_shared<zbe::AvatarEntityContainer<zbe::AnimatedSprite> >(ball);
+    std::shared_ptr<zbe::AvatarEntityContainer<zbe::Bouncer<2>, zbe::Resizable> > aecb2w = std::make_shared<zbe::AvatarEntityContainer<zbe::Bouncer<2>, zbe::Resizable> >(ball, resizableAE);
 
     ball->addToList(ctId, ctl->push_front(ball));
     ball->addToList(dtId, asl->push_front(aecas));
-    ball->addToList(btId, bl->push_front(aecb2));
+    ball->addToList(btId, bl->push_front(aecb2w));
   }
 
 private:

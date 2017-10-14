@@ -33,10 +33,12 @@ public:
 
   AnimatedSprite* getAvatar() {
     std::shared_ptr<Element2D<R> > ent = e.lock();
+    double halfW = ent->getW() / 2.0;
+    double halfH = ent->getH() / 2.0;
     s->setW(ent->getW());
     s->setH(ent->getH());
-    s->setX(ent->getX());
-    s->setY(ent->getY());
+    s->setX(ent->getX() - halfW);
+    s->setY(ent->getY() - halfH);
     s->setState(ent->getState());
     return (s);
   }

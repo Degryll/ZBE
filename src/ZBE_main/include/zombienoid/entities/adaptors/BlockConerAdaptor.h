@@ -40,7 +40,9 @@ public:
 
   zbe::Collisioner<R>* getAvatar() {
     std::shared_ptr<zbe::Element2D<R> > ent = e.lock();
-    zbe::AABB2D aabb({(double)ent->getX(), (double)ent->getY()},{(double)ent->getX()+ent->getW(), (double)ent->getY()+ent->getH()});
+    double halfW = ent->getW() / 2.0;
+    double halfH = ent->getH() / 2.0;
+    zbe::AABB2D aabb({(double)ent->getX() - halfW, (double)ent->getY() - halfH},{(double)ent->getX() + halfW, (double)ent->getY() + halfH});
     std::shared_ptr<zbe::StaticSolidAABB2D<R> > cObject(new zbe::StaticSolidAABB2D<R>(aabb));
 
     s->setCollisionObject(cObject);

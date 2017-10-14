@@ -18,10 +18,12 @@
 
 #include "ZBE/core/tools/shared/Value.h"
 
-#include "ZBE/archetypes/implementations/SimpleWideBouncingAPO.h"
+#include "ZBE/archetypes/implementations/SimpleBouncingAPO.h"
 #include "ZBE/archetypes/implementations/SimpleState.h"
 #include "ZBE/archetypes/implementations/SimpleTimeStamp.h"
-#include "ZBE/archetypes/WideBouncingAPO.h"
+#include "ZBE/archetypes/implementations/SimpleArea.h"
+#include "ZBE/archetypes/Area.h"
+#include "ZBE/archetypes/BouncingAPO.h"
 #include "ZBE/archetypes/State.h"
 #include "ZBE/archetypes/TimeStamp.h"
 #include "ZBE/archetypes/Countable.h"
@@ -37,7 +39,8 @@ template<typename R>
 class ActiveElement2D: public Entity,
                        public SimpleTimeStamp,
                        public Drawable,
-                       public SimpleWideBouncingAPO<2>,
+                       public SimpleBouncingAPO<2>,
+                       public SimpleArea,
                        public SimpleState,
                        public AvatarEntityFixed<Avatar>,
                        public AvatarEntityAdapted<AnimatedSprite>,
@@ -50,22 +53,20 @@ public:
 
   ActiveElement2D(Point2D position, Vector2D velocity, uint64_t actuatorsList, uint64_t collisionersList, int64_t width, int64_t height, uint64_t graphics)
     : SimpleTimeStamp(0),
-    SimpleWideBouncingAPO<2>(position, velocity, width, actuatorsList, collisionersList), w(width), h(height), g(graphics) {
+    SimpleBouncingAPO<2>(position, velocity, actuatorsList, collisionersList), SimpleArea(width, height), g(graphics) {
     AvatarEntityFixed<Avatar>::setAvatar(new BaseAvatar(this));
     AvatarEntityFixed<Bouncer<2> >::setAvatar(new BaseBouncer<2>(this));
     AvatarEntityFixed<Stated>::setAvatar(new BaseStated(this));
   }
 
-  int64_t getX() {return (SimpleWideBouncingAPO<2>::getPosition()[0]);}
-  int64_t getY() {return (SimpleWideBouncingAPO<2>::getPosition()[1]);}
-  int64_t getW() {return (w);}
-  int64_t getH() {return (h);}
+  int64_t getX() {return (SimpleBouncingAPO<2>::getPosition()[0]);}
+  int64_t getY() {return (SimpleBouncingAPO<2>::getPosition()[1]);}
+  int64_t getW() {return (SimpleArea::getWidth());}
+  int64_t getH() {return (SimpleArea::getHeight());}
   uint64_t getGraphics() {return (g);}
 
 private:
 
-  int64_t w;
-  int64_t h;
   uint64_t g;
 };
 

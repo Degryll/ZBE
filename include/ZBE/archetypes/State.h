@@ -38,10 +38,3 @@ public:
 
 #endif  // ZBE_ARCHETYPES_STATE_H
 
-
-
-  /** \brief Setter for the state attribute.
-   *  \param state The integer value for the state.
-   */
-
-

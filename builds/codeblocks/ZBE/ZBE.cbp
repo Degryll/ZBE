@@ -186,6 +186,7 @@
 		<Unit filename="../../../include/ZBE/SDL/tools/SDLTimer.h" />
 		<Unit filename="../../../include/ZBE/SDL/tools/SDLUtils.h" />
 		<Unit filename="../../../include/ZBE/archetypes/ActivePhysicalObject.h" />
+		<Unit filename="../../../include/ZBE/archetypes/Area.h" />
 		<Unit filename="../../../include/ZBE/archetypes/Bouncing.h" />
 		<Unit filename="../../../include/ZBE/archetypes/BouncingAPO.h" />
 		<Unit filename="../../../include/ZBE/archetypes/BouncingPO.h" />
@@ -208,6 +209,7 @@
 		<Unit filename="../../../include/ZBE/archetypes/WideMobile.h" />
 		<Unit filename="../../../include/ZBE/archetypes/implementations/BaseState.h" />
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleActivePhysicalObject.h" />
+		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleArea.h" />
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleBouncing.h" />
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleBouncingAPO.h" />
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleDamping.h" />
@@ -310,11 +312,13 @@
 		<Unit filename="../../../include/ZBE/entities/avatars/Bouncer.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/Movable.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/Positionable.h" />
+		<Unit filename="../../../include/ZBE/entities/avatars/Resizable.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/SingleTextSprite.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/Stated.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/BaseBouncer.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/BaseMovable.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/BasePositionable.h" />
+		<Unit filename="../../../include/ZBE/entities/avatars/implementations/BaseResizableArea.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/BaseSingleTextSprite.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/BaseStated.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/SimpleBounceable.h" />

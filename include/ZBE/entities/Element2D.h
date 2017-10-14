@@ -21,6 +21,8 @@
 #include "ZBE/archetypes/implementations/SimplePositionPO.h"
 #include "ZBE/archetypes/implementations/SimpleState.h"
 #include "ZBE/archetypes/implementations/SimpleTimeStamp.h"
+#include "ZBE/archetypes/implementations/SimpleArea.h"
+#include "ZBE/archetypes/Area.h"
 #include "ZBE/archetypes/PositionPO.h"
 #include "ZBE/archetypes/State.h"
 #include "ZBE/archetypes/TimeStamp.h"
@@ -39,6 +41,7 @@ class Element2D: public Entity,
                  public SimpleTimeStamp,
                  public Drawable,
                  public SimplePositionPO<2>,
+                 public SimpleArea,
                  public SimpleState,
                  public AvatarEntityFixed<Avatar>,
                  public AvatarEntityAdapted<AnimatedSprite>,
@@ -51,7 +54,7 @@ public:
 
   Element2D(Point2D position, uint64_t actuatorsList, int64_t width, int64_t height, uint64_t graphics)
     : SimpleTimeStamp(0),
-    SimplePositionPO<2>(position, actuatorsList), w(width), h(height), g(graphics), ea(0) {
+    SimplePositionPO<2>(position, actuatorsList), SimpleArea(width, height), g(graphics), ea(0) {
     AvatarEntityFixed<Avatar>::setAvatar(new BaseAvatar(this));
     AvatarEntityFixed<Positionable<2> >::setAvatar(new BasePositionable<2>(this));
     AvatarEntityFixed<Stated>::setAvatar(new BaseStated(this));
@@ -59,14 +62,11 @@ public:
 
   int64_t getX() {return (SimplePositionPO::getPosition()[0]);}
   int64_t getY() {return (SimplePositionPO::getPosition()[1]);}
-  int64_t getW() {return (w);}
-  int64_t getH() {return (h);}
+  int64_t getW() {return (SimpleArea::getWidth());}
+  int64_t getH() {return (SimpleArea::getHeight());}
   uint64_t getGraphics() {return (g);}
 
 private:
-
-  int64_t w;
-  int64_t h;
   uint64_t g;
   int64_t ea;
 };

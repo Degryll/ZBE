@@ -26,7 +26,6 @@
 #include "zombienoid/entities/adaptors/ActiveElement2DAnimatedSpriteAdaptor.h"
 #include "zombienoid/entities/adaptors/ItemCatorAdaptor.h"
 
-
 namespace zombienoid {
 
 /** \brief A tool capable of build a ball with the same position an velocity as a given movable
