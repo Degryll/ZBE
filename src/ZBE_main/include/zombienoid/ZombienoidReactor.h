@@ -4,6 +4,8 @@
 #include "ZBE/reactobjects/VoidReactObject.h"
 #include "ZBE/events/reactobjects/InteractionTesterRO.h"
 
+#include "zombienoid/events/reactobjects/CustomVectorRO.h"
+
 namespace zombienoid {
 
 class VoidReactObject;
@@ -17,6 +19,8 @@ public:
   virtual void act(zbe::InteractionTesterRO<ZombienoidReactor>*) {}
 
   virtual void act(zbe::Stated*) {}
+
+  virtual void act(CustomVectorRO*) {}
 
 };
 

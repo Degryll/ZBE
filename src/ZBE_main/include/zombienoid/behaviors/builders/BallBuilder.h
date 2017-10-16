@@ -71,7 +71,7 @@ public:
 
     std::shared_ptr<zbe::ActiveElement2D<R> > ball(new zbe::CActiveElement2D<R>(nballs, movable->getPosition(), movable->getVelocity(), alId, cbslId, s, s, g));
 
-    std::shared_ptr<zbe::Adaptor<zbe::AnimatedSprite> > ballSpriteAdaptor(new zbe::ActiveElement2DAnimatedSpriteAdaptor<R>(ball));
+    std::shared_ptr<zbe::Adaptor<zbe::AnimatedSprite> > ballSpriteAdaptor(new ActiveElement2DAnimatedSpriteAdaptor<R>(ball));
     setAdaptor(ball, ballSpriteAdaptor);
 
     std::shared_ptr<zbe::Adaptor<zbe::Collisionator<R> > > ballCollisionatorAdaptor(new BallCatorAdaptor<R>(ball));

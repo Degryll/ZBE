@@ -67,13 +67,17 @@
 #include "ZBE/SDL/tools/SDLTimer.h"
 
 #include "zombienoid/events/handlers/actuators/ItemCatcher.h"
+#include "zombienoid/events/handlers/actuators/CustomNormalBouncerActuator.h"
+
 #include "zombienoid/events/handlers/ExitInputHandler.h"
 
 #include "zombienoid/entities/adaptors/ActiveElement2DAnimatedSpriteAdaptor.h"
 #include "zombienoid/entities/adaptors/BallCatorAdaptor.h"
 #include "zombienoid/entities/adaptors/BlockConerAdaptor.h"
+#include "zombienoid/entities/adaptors/BarConerAdaptor.h"
 #include "zombienoid/entities/adaptors/BoardConerAdaptor.h"
 #include "zombienoid/entities/adaptors/Element2DAnimatedSpriteAdaptor.h"
+#include "zombienoid/entities/adaptors/Element2DDisplacedAnimatedSpriteAdaptor.h"
 
 #include "zombienoid/entities/LifeCounter.h"
 
@@ -153,14 +157,13 @@ int zombienoidmain(int, char*[]) {
     BAR_I_WIDTH = 322,
     BAR_HEIGHT = 32,
     BAR_MARGIN = 32,
-    LIFE_COUNTER_F_SIZE = 64
+    LIFE_COUNTER_F_SIZE = 28
   };
   // Ticket ids.
   const int COLLISION_TICKET = SysIdGenerator::getId();
   const int DRAW_TICKET = SysIdGenerator::getId();
   const int BEHAVE_TICKET = SysIdGenerator::getId();
-  // BOARD_GRAPHICS is never read.
-  const int BOARD_GRAPHICS = SysIdGenerator::getId();
+
   // Event ids.
   const int INPUTEVENT = SysIdGenerator::getId();
   const int TIMEEVENT = SysIdGenerator::getId();
@@ -188,11 +191,12 @@ int zombienoidmain(int, char*[]) {
   const int BRICK_SS = SysIdGenerator::getId();
   const int BALL_SS = SysIdGenerator::getId();
   const int BAR_SS = SysIdGenerator::getId();
+  const int BOARD_SS = SysIdGenerator::getId();
 
 
   //const char boardImg[] = "escriba su anuncio aqui, por favor";
   const char brickImg[] = "data/images/zombieball/braikn_32.png";
-  const char ballImg[]  = "data/images/zombieball/zomball_st_64.png";
+  const char ballImg[]  = "data/images/zombieball/zball_n.png";
   const char barImg[]   = "data/images/zombieball/zombar_color_32.png";
   //const char beerImg[]   = "data/images/zombieball/beer_l_32.png";
 
@@ -203,6 +207,9 @@ int zombienoidmain(int, char*[]) {
   const char decelerator[]   = "data/images/zombieball/zbeza_dcel_32.png";
   const char bigger[]   = "data/images/zombieball/zbeza_ebal_32.png";
   const char smaller[]   = "data/images/zombieball/zbeza_rbal_32.png";
+
+  //Back
+  const char backImg[]   = "data/images/zombieball/bck.png";
 
   //Fonts
   const char fontFileName[] = "data/fonts/PublicEnemyNF.ttf";
@@ -274,18 +281,42 @@ int zombienoidmain(int, char*[]) {
   std::shared_ptr<zbe::AvatarEntityContainer<zbe::SingleTextSprite> > aecsts;
 
   //board----------------------------------------------------------------------------------------------------
+
+  uint64_t BOARD_GRAPHICS = imgStore.loadImg(backImg);
+
+  ImgSrcDef boardGraphics;
+  boardGraphics.frameAmount = 8;
+  boardGraphics.frameDisplacemet = Vector2D({800.0,0.0});
+  boardGraphics.frameTime = 16000;
+  boardGraphics.intialRegion = Region2D({0.0,0.0},{800.0,600.0});
+  boardGraphics.imgSrcId = BOARD_GRAPHICS;
+
+  MultiSpriteSheet* boardSheet = new MultiSpriteSheet(6, boardGraphics);
+
+  std::shared_ptr<SpriteSheet<AnimatedSprite> > boardSS(boardSheet);
+  rmss.insert(BOARD_SS, boardSS);
+
+  std::shared_ptr<TicketedFAEC<AnimatedSprite> > boardAnimatedSpriteList(new TicketedFAEC<AnimatedSprite>());
+
   std::shared_ptr<std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Positionable<2>, Stated >* > > boardActuatorsList(new std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Positionable<2>, Stated >* >());
 
   rmact.insert(BOARD_ACTUATORS_LIST, boardActuatorsList);
 
-  std::shared_ptr<Element2D<ZombienoidReactor> > board(new Element2D<ZombienoidReactor>({MARGIN, MARGIN}, BOARD_ACTUATORS_LIST, WIDTH - (MARGIN * 2), HEIGHT /*- (MARGIN * 2)*/, BOARD_GRAPHICS));
+  std::shared_ptr<Element2D<ZombienoidReactor> > board(new Element2D<ZombienoidReactor>({MARGIN, MARGIN}, BOARD_ACTUATORS_LIST, WIDTH - (MARGIN * 2), HEIGHT /*- (MARGIN * 2)*/, BOARD_SS));
 
   std::shared_ptr<Adaptor<Collisioner<ZombienoidReactor> > > boardCollisionerAdaptor(new BoardConerAdaptor<ZombienoidReactor>(board));
   setAdaptor(board, boardCollisionerAdaptor);
 
   std::shared_ptr<TicketedFAE<Collisioner<ZombienoidReactor> > > boardCollisionerList(new TicketedFAE<Collisioner<ZombienoidReactor> >());
+//Vector2D({-(WIDTH - (MARGIN * 2))/2, -(HEIGHT/2) + MARGIN })
+//Vector2D({(WIDTH - (MARGIN * 2))/2, (HEIGHT/2) + MARGIN })
+  std::shared_ptr<Adaptor<AnimatedSprite> > boardSpriteAdaptor(new Element2DDisplacedAnimatedSpriteAdaptor<ZombienoidReactor>(board, Vector2D({0, 0})));
+  setAdaptor(board, boardSpriteAdaptor);
+
+  wrapAEC(&aecas, board);
 
   board->addToList(COLLISION_TICKET, boardCollisionerList->push_front(board));
+  board->addToList(DRAW_TICKET, boardAnimatedSpriteList->push_front(aecas));
 
   ballCBSJoint->add(boardCollisionerList);
   itemCBSJoint->add(boardCollisionerList);
@@ -298,7 +329,7 @@ int zombienoidmain(int, char*[]) {
   std::shared_ptr<std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* > > itemActuatorsList(new std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* >());
 
   ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* itemAgainsBoardEraser = new  ActuatorWrapperCommon<ZombienoidReactor, Avatar, Avatar, Bouncer<2>, Stated>(new EraserActuator<ZombienoidReactor, InteractionTesterRO<ZombienoidReactor> >());
-  ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* itemAgainsBarEraser   = new  ActuatorWrapperCommon<ZombienoidReactor, Avatar, Avatar, Bouncer<2>, Stated>(new EraserActuator<ZombienoidReactor, zbe::VoidReactObject<ZombienoidReactor> >());
+  ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* itemAgainsBarEraser   = new  ActuatorWrapperCommon<ZombienoidReactor, Avatar, Avatar, Bouncer<2>, Stated>(new EraserActuator<ZombienoidReactor, CustomVectorRO>());
   itemActuatorsList->push_front(itemAgainsBoardEraser);
   itemActuatorsList->push_front(itemAgainsBarEraser);
 
@@ -341,7 +372,6 @@ int zombienoidmain(int, char*[]) {
   ctsJoint->add(itemCollisionatorsList);
 
   std::shared_ptr<TicketedFAEC<AnimatedSprite> > itemAnimatedSpriteList(new TicketedFAEC<AnimatedSprite>());
-  asJoint->add(itemAnimatedSpriteList);
 
   std::shared_ptr<CustomItemBuilder> itemBuilder= std::make_shared<CustomItemBuilder>(ITEM_ACTUATORS_LIST, ITEM_CBS_JOINT, ITEM_SS, ITEM_WIDTH, ITEM_HEIGHT, ITEM_TYPES, (double) ITEM_FALL_SPEED , COLLISION_TICKET,
                           DRAW_TICKET, BEHAVE_TICKET, itemCollisionatorsList,itemAnimatedSpriteList, itemList);
@@ -363,7 +393,6 @@ int zombienoidmain(int, char*[]) {
   ballCBSJoint->add(brickCollisionerList);
 
   std::shared_ptr<TicketedFAEC<AnimatedSprite> > brickAnimatedSpriteList(new TicketedFAEC<AnimatedSprite>());
-  asJoint->add(brickAnimatedSpriteList);
 
   ResourceManager<TicketedForwardList<AvatarEntityContainer<Stated, Avatar, Positionable<2> > > >& rmsam2 = ResourceManager<TicketedForwardList<AvatarEntityContainer<Stated, Avatar, Positionable<2> > > >::getInstance();
   std::shared_ptr<TicketedForwardList<AvatarEntityContainer<Stated, Avatar, Positionable<2> > > > brickList(new TicketedForwardList<AvatarEntityContainer<Stated, Avatar, Positionable<2> > >());
@@ -421,9 +450,11 @@ int zombienoidmain(int, char*[]) {
   //ball-----------------------------------------------------------------------------------------------------
   std::shared_ptr<std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated >* > > ballActuatorsList(new std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated >* >());
 
+  ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* ballCustomBouncerVoidWrapper = new  ActuatorWrapperCommon<ZombienoidReactor, Bouncer<2>, Avatar, Bouncer<2>, Stated>(new CustomVectorBouncerActuator<ZombienoidReactor>());
   ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* ballBouncerVoidWrapper = new  ActuatorWrapperCommon<ZombienoidReactor, Bouncer<2>, Avatar, Bouncer<2>, Stated>(new BouncerActuator<ZombienoidReactor, zbe::VoidReactObject<ZombienoidReactor> >());
   ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* ballBouncerITWrapper = new  ActuatorWrapperCommon<ZombienoidReactor, Bouncer<2>, Avatar, Bouncer<2>, Stated>(new BouncerActuator<ZombienoidReactor, InteractionTesterRO<ZombienoidReactor> >());
   ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* ballEraserWrapper = new  ActuatorWrapperCommon<ZombienoidReactor, Avatar, Avatar, Bouncer<2>, Stated>(new ConditionalEraserActuator<ZombienoidReactor>());
+  ballActuatorsList->push_front(ballCustomBouncerVoidWrapper);
   ballActuatorsList->push_front(ballBouncerVoidWrapper);
   ballActuatorsList->push_front(ballBouncerITWrapper);
   ballActuatorsList->push_front(ballEraserWrapper);
@@ -448,7 +479,6 @@ int zombienoidmain(int, char*[]) {
   ctsJoint->add(ballCollisionatorsList);
 
   std::shared_ptr<TicketedFAEC<AnimatedSprite> > ballAnimatedSpriteList(new TicketedFAEC<AnimatedSprite>());
-  asJoint->add(ballAnimatedSpriteList);
 
   ResourceManager<TicketedFAEC<Bouncer<2>, Resizable> > & rmb2w = ResourceManager<TicketedFAEC<Bouncer<2>, Resizable> >::getInstance();
   std::shared_ptr<TicketedFAEC<Bouncer<2>, Resizable> > ballList(new TicketedFAEC<Bouncer<2>, Resizable>());
@@ -476,7 +506,6 @@ int zombienoidmain(int, char*[]) {
   itemCBSJoint->add(barCollisionerList);
 
   std::shared_ptr<TicketedFAEC<AnimatedSprite> > barAnimatedSpriteList(new TicketedFAEC<AnimatedSprite>());
-  asJoint->add(barAnimatedSpriteList);
 
   //std::shared_ptr<TicketedForwardList<Element2D<ZombienoidReactor> > > barList(new TicketedForwardList<Element2D<ZombienoidReactor> >());
 
@@ -490,13 +519,20 @@ int zombienoidmain(int, char*[]) {
   std::shared_ptr<Adaptor<AnimatedSprite> > barSpriteAdaptor(new Element2DAnimatedSpriteAdaptor<ZombienoidReactor>(bar));
   setAdaptor(bar, barSpriteAdaptor);
 
-  std::shared_ptr<Adaptor<Collisioner<ZombienoidReactor> > > barCollisionerAdaptor(new BlockConerAdaptor<ZombienoidReactor>(bar));
+  std::shared_ptr<Adaptor<Collisioner<ZombienoidReactor> > > barCollisionerAdaptor(new BarConerAdaptor<ZombienoidReactor>(bar));
   setAdaptor(bar, barCollisionerAdaptor);
 
   zbe::wrapAEC(&aecas, bar);
 
   bar->addToList(COLLISION_TICKET, barCollisionerList->push_front(bar));
   bar->addToList(DRAW_TICKET, barAnimatedSpriteList->push_front(aecas));
+
+  //Game Draw layers front to back
+  asJoint->add(itemAnimatedSpriteList);
+  asJoint->add(ballAnimatedSpriteList);
+  asJoint->add(brickAnimatedSpriteList);
+  asJoint->add(barAnimatedSpriteList);
+  asJoint->add(boardAnimatedSpriteList);
 
   // HUD
   //Life counter-----------------------------------------------------------------------------------------------------
@@ -511,7 +547,7 @@ int zombienoidmain(int, char*[]) {
 
   int TEXT_FONT = textFontStore.loadFont(fontFileName, LIFE_COUNTER_F_SIZE, aColor);
   std::shared_ptr<Value<int64_t> > lifeCount(new SimpleValue<int64_t>(INITIAL_LIFES));
-  std::shared_ptr<LifeCounter> lc(new LifeCounter(0, 0, 64, 64, TEXT_FONT, lifeCount));
+  std::shared_ptr<LifeCounter> lc(new LifeCounter(4, 4, 32, 32, TEXT_FONT, lifeCount));
 
   ItemCatcher<ZombienoidReactor>* catcher = new ItemCatcher<ZombienoidReactor>();
 
@@ -524,7 +560,7 @@ int zombienoidmain(int, char*[]) {
   std::shared_ptr<Daemon> lifeItem = std::make_shared<LifeItem>(lifeCount,1);
   std::shared_ptr<Daemon> multiplierItem = std::make_shared<BallMultiplierItem<TicketedFAEC<Bouncer<2>, Resizable> > >(ballBuilder, BALL_LIST, angles, 2);
   std::shared_ptr<Daemon> accelItem = std::make_shared<BallAcceleratorItem<TicketedFAEC<Bouncer<2>, Resizable> > >(BALL_LIST, 1.5);
-  std::shared_ptr<Daemon> decelItem = std::make_shared<BallAcceleratorItem<TicketedFAEC<Bouncer<2>, Resizable> > >(BALL_LIST, 0.5);
+  std::shared_ptr<Daemon> decelItem = std::make_shared<BallAcceleratorItem<TicketedFAEC<Bouncer<2>, Resizable> > >(BALL_LIST, 0.666666);
   std::shared_ptr<Daemon> ballMagnifier = std::make_shared<BallRadiusItem<TicketedFAEC<Bouncer<2>, Resizable> > >(BALL_LIST, BALL_SIZE_STEP, BALL_SIZE_MIN, BALL_SIZE_MAX);
   std::shared_ptr<Daemon> ballMinifier = std::make_shared<BallRadiusItem<TicketedFAEC<Bouncer<2>, Resizable> > >(BALL_LIST, -BALL_SIZE_STEP, BALL_SIZE_MIN, BALL_SIZE_MAX);
 

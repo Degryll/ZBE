@@ -4,7 +4,7 @@
  * @since 2017-06-26
  * @date 2017-06-26
  * @author Batis Degryll Ludo
- * @brief Interface for a ReactObject capable of test if a collisionData meets a given condition.
+ * @brief InteractionTesterRO Implementation for zombienoid board. Check if collision has been on the floor.
  */
 
 #ifndef EVENTS_REACTOBJECTS_BOARDINTERACTIONTESTERRO_H_
@@ -16,26 +16,26 @@
 
 #include "ZBE/core/tools/math/objects.h"
 
-namespace zbe {
+namespace zombienoid {
 
-/** @brief Interface for a ReactObject capable of test if a collisionData meets a given condition.
+/** @brief InteractionTesterRO Implementation for zombienoid board. Check if collision has been on the floor.
  */
  template<typename R>
-class BoardInteractionTesterRO : public InteractionTesterRO<R> {
+class BoardInteractionTesterRO : public zbe::InteractionTesterRO<R> {
 public:
 
-  BoardInteractionTesterRO(AABB2D square)
-    : InteractionTesterRO<R>(this),
-      square(square) {}
+  BoardInteractionTesterRO(zbe::AABB2D square)
+    : zbe::InteractionTesterRO<R>(this),
+      s(square) {}
 
-  bool test(CollisionData *data) {
-    return (square.maximum.y == data->getPoint().y);
+  bool test(zbe::CollisionData *data) {
+    return (s.maximum.y == data->getPoint().y);
   }
 
 private:
-  AABB2D square;
+  zbe::AABB2D s;
 };
 
-}  // namespace zbe
+}  // namespace zombienoid
 
 #endif  // EVENTS_REACTOBJECTS_BOARDINTERACTIONTESTERRO_H_

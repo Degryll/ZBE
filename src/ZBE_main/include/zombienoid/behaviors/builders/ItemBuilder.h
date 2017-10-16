@@ -68,7 +68,7 @@ public:
     int64_t state = (rand() % maxState);
     item->setState(state);
 
-    std::shared_ptr<zbe::Adaptor<zbe::AnimatedSprite> > itemSpriteAdaptor(new zbe::ActiveElement2DAnimatedSpriteAdaptor<R>(item));
+    std::shared_ptr<zbe::Adaptor<zbe::AnimatedSprite> > itemSpriteAdaptor(new ActiveElement2DAnimatedSpriteAdaptor<R>(item));
     setAdaptor(item, itemSpriteAdaptor);
 
     std::shared_ptr<zbe::Adaptor<zbe::Collisionator<R> > > itemCollisionatorAdaptor(new ItemCatorAdaptor<R>(item));
