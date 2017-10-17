@@ -4,13 +4,15 @@
  * @since 2017-07-05
  * @date 2017-07-05
  * @author Batis Degrill Ludo
- * @brief Handler that uses the MouseKeeper to store the mouse X
+ * @brief Handler that uses the MouseKeeper to store the mouse X into a Value<double>
  */
 
 #ifndef ZBE_EVENTS_HANDLERS_MOUSEXIH
 #define ZBE_EVENTS_HANDLERS_MOUSEXIH
 
 #include <cstdlib>
+
+#include "ZBE/core/tools/shared/Value.h"
 
 #include "ZBE/core/events/handlers/InputHandler.h"
 
@@ -24,20 +26,17 @@ public:
   /** brief Parametrized constructor
     * param entity Positionable whose x will be modified.
    */
-  MouseXIH(std::shared_ptr<AvatarEntity<Positionable<2> > > entity) : e(entity) {}
+  MouseXIH(std::shared_ptr<zbe::Value<double> > xValue) : x(xValue) {}
 
-  /** brief Modifies the X position of an entity with the x position from the mouse.
-    * param entity Entity whose x will be modified.
+  /** brief Stores the X position from the mouse on given Value<double>.
+    * param status value from input.
    */
   void run(float status) {
-
-    Positionable<2>* avatar;
-    e->assignAvatar(&avatar);
-    avatar->getPosition()[0] = status;
+    x->setValue(status);
   }
 
 private:
-  std::shared_ptr<AvatarEntity<Positionable<2> > > e;
+  std::shared_ptr<zbe::Value<double> > x;
 };
 } //namespace zbe
 

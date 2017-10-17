@@ -90,6 +90,7 @@
 #include "zombienoid/daemons/ZombienoidLifeSubstractor.h"
 
 #include "zombienoid/behaviors/BrickEraser.h"
+#include "zombienoid/behaviors/XSetter.h"
 
 #include "zombienoid/behaviors/builders/BallBuilder.h"
 #include "zombienoid/behaviors/builders/ItemBuilder.h"
@@ -183,6 +184,7 @@ int zombienoidmain(int, char*[]) {
   const int BALLSPAWN_LIST = SysIdGenerator::getId();
   const int BALL_LIST = SysIdGenerator::getId();
   const int ITEM_LIST = SysIdGenerator::getId();
+  const int MOUSE_CONTROL_LIST = SysIdGenerator::getId();
   // Collisionables list joints
   const int BALL_CBS_JOINT = SysIdGenerator::getId();
   const int ITEM_CBS_JOINT = SysIdGenerator::getId();
@@ -276,6 +278,7 @@ int zombienoidmain(int, char*[]) {
 
   std::shared_ptr<zbe::AvatarEntityContainer<zbe::Bouncer<2> > > aecb2;
   std::shared_ptr<zbe::AvatarEntityContainer<zbe::Movable<2> > > aecm2;
+  std::shared_ptr<zbe::AvatarEntityContainer<zbe::Positionable<2> > > aecp2;
   std::shared_ptr<zbe::AvatarEntityContainer<zbe::Stated, zbe::Avatar> > aecsa;
   std::shared_ptr<zbe::AvatarEntityContainer<zbe::AnimatedSprite> > aecas;
   std::shared_ptr<zbe::AvatarEntityContainer<zbe::SingleTextSprite> > aecsts;
@@ -498,6 +501,12 @@ int zombienoidmain(int, char*[]) {
   ballCreatorDaemon->run();
 
   //bar------------------------------------------------------------------------------------------------------
+  std::shared_ptr<Value<double> > mouseXPos(new SimpleValue<double>());
+
+  ResourceManager<TicketedFAEC<Positionable<2> > > & rmp2 = ResourceManager<TicketedFAEC<Positionable<2> > >::getInstance();
+  std::shared_ptr<TicketedFAEC<Positionable<2> > > mouseControlList(new TicketedFAEC<Positionable<2> >());
+  rmp2.insert(MOUSE_CONTROL_LIST, mouseControlList);
+
   std::shared_ptr<std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Positionable<2>, Stated >* > > barActuatorsList(new std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Positionable<2>, Stated >* >());
   rmact.insert(BAR_ACTUATORS_LIST, barActuatorsList);
 
@@ -506,8 +515,6 @@ int zombienoidmain(int, char*[]) {
   itemCBSJoint->add(barCollisionerList);
 
   std::shared_ptr<TicketedFAEC<AnimatedSprite> > barAnimatedSpriteList(new TicketedFAEC<AnimatedSprite>());
-
-  //std::shared_ptr<TicketedForwardList<Element2D<ZombienoidReactor> > > barList(new TicketedForwardList<Element2D<ZombienoidReactor> >());
 
   uint64_t BAR_GRAPHICS = imgStore.loadImg(barImg);
 
@@ -523,9 +530,13 @@ int zombienoidmain(int, char*[]) {
   setAdaptor(bar, barCollisionerAdaptor);
 
   zbe::wrapAEC(&aecas, bar);
+  zbe::wrapAEC(&aecp2, bar);
 
   bar->addToList(COLLISION_TICKET, barCollisionerList->push_front(bar));
   bar->addToList(DRAW_TICKET, barAnimatedSpriteList->push_front(aecas));
+  bar->addToList(BEHAVE_TICKET, mouseControlList->push_front(aecp2));
+
+  std::shared_ptr<Daemon> mouseControllDaemon(new  BehaviorDaemon<Positionable<2>, TicketedFAEC<Positionable<2>> >(std::make_shared<XSetter>(mouseXPos), MOUSE_CONTROL_LIST ));
 
   //Game Draw layers front to back
   asJoint->add(itemAnimatedSpriteList);
@@ -581,8 +592,9 @@ int zombienoidmain(int, char*[]) {
 
   std::shared_ptr<Daemon> lifeDaemon = std::make_shared<ZombienoidLifeSubstractor>(ballCount, lifeCount, ballCreatorDaemon);
   reactBehaviorMaster->addDaemon(lifeDaemon);
+  reactBehaviorMaster->addDaemon(mouseControllDaemon);
 
-  MouseXIH mouseX(bar);
+  MouseXIH mouseX(mouseXPos);
   ieg->addHandler(ZBEK_MOUSE_OFFSET_X, &mouseX);
 
   //--- Actuators & behaviors ---//

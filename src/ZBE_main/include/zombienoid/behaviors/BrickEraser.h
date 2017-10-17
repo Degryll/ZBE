@@ -7,8 +7,8 @@
  * @brief Implements a behavior that kills the entity when it reaches a state lower than a nummber.
  */
 
-#ifndef ZBE_BEHAVIORS_BRICKERASER_H_
-#define ZBE_BEHAVIORS_BRICKERASER_H_
+#ifndef ZOMBIENOID_BEHAVIORS_BRICKERASER_H_
+#define ZOMBIENOID_BEHAVIORS_BRICKERASER_H_
 
 #include <memory>
 
@@ -20,12 +20,12 @@
 
 #include "ZBE/core/entities/avatars/Avatar.h"
 
-namespace zbe {
+namespace zombienoid {
 
 /** \brief Implements a behavior that kills the entity when it reaches a state lower than a nummber.
  */
 
-class BrickEraser : virtual public Behavior<Stated, Avatar, Positionable<2> > {// : public Behavior<Element2D<R> > {
+class BrickEraser : virtual public zbe::Behavior<zbe::Stated, zbe::Avatar, zbe::Positionable<2> > {// : public Behavior<Element2D<R> > {
 public:
   /**\brief Will erase the brick when its state is lower than the limit.
     It also have an oportunity to create an entity.
@@ -33,18 +33,18 @@ public:
      \param succes positive cases amount for item creation.
      \param total total cases amount for item creation.
   */
-  BrickEraser(int64_t limit, uint64_t succes, uint64_t total, std::shared_ptr<zbe::Behavior<Positionable<2> > > builder) : limit(limit), succes(succes), total(total), builder(builder) {}
+  BrickEraser(int64_t limit, uint64_t succes, uint64_t total, std::shared_ptr<zbe::Behavior<zbe::Positionable<2> > > builder) : limit(limit), succes(succes), total(total), builder(builder) {}
 
   ~BrickEraser(){}
 
   /**\brief If entity state down limit is reached, entity is erased and an attempt to create an item is made.
   */
-  void apply(std::shared_ptr<AvatarEntityContainer<Stated, Avatar, Positionable<2> > > entity) {
+  void apply(std::shared_ptr<zbe::AvatarEntityContainer<zbe::Stated, zbe::Avatar, zbe::Positionable<2> > > entity) {
     zbe::Stated* stated;
-    std::shared_ptr<AvatarEntityContainer<Stated> > aecs = entity;
+    std::shared_ptr<zbe::AvatarEntityContainer<zbe::Stated> > aecs = entity;
     assignAvatar(aecs , &stated);
     zbe::Avatar* avatar;
-    std::shared_ptr<AvatarEntityContainer<Avatar> > aeca = entity;
+    std::shared_ptr<zbe::AvatarEntityContainer<zbe::Avatar> > aeca = entity;
     assignAvatar(aeca, &avatar);
     if(stated->getState() < limit){
       avatar->setERASED();
@@ -63,9 +63,9 @@ private:
   int64_t limit;
   int64_t succes;
   int64_t total;
-  std::shared_ptr<zbe::Behavior<Positionable<2> > > builder;
+  std::shared_ptr<zbe::Behavior<zbe::Positionable<2> > > builder;
 };
 
-}  // namespace zbe
+}  // namespace zombienoid
 
-#endif  // ZBE_BEHAVIORS_BRICKERASER_H_
+#endif  // ZOMBIENOID_BEHAVIORS_BRICKERASER_H_
