@@ -10,8 +10,6 @@
 #ifndef ZBE_ENTITIES_ADAPTORS_ITEMCATORADAPTOR_H_
 #define ZBE_ENTITIES_ADAPTORS_ITEMCATORADAPTOR_H_
 
-#include "zombienoid/events/reactobjects/BoardInteractionTesterRO.h"
-
 #include "ZBE/core/entities/Adaptor.h"
 #include "ZBE/entities/ActiveElement2D.h"
 
@@ -30,9 +28,7 @@ public:
     std::shared_ptr<zbe::WeakAvatarEntityContainer<zbe::Avatar, zbe::Bouncer<2>, zbe::Stated > > aeContainer = std::make_shared<zbe::WeakAvatarEntityContainer<zbe::Avatar, zbe::Bouncer<2>, zbe::Stated > >(ent);
     std::shared_ptr<zbe::ConstantMovingCircle<R> > cObject(new zbe::ConstantMovingCircle<R>(zbe::Circle(zbe::Point2D({(ent->getPosition().x), ent->getPosition().y}), ent->getWidth()/2.0), ent->getVelocity()));
 
-    zbe::Stated* stated;
-    assignAvatar(ent, &stated);
-    std::shared_ptr<zbe::ReactObjectCommon<R, zbe::Stated> > roStated = std::make_shared<zbe::ReactObjectCommon<R, zbe::Stated> >(stated);
+    std::shared_ptr<zbe::ReactObjectCommon<R, zbe::Stated> > roStated = std::make_shared<zbe::ReactObjectCommon<R, zbe::Stated> >(std::make_shared<zbe::WeakAvatarEntityContainer<zbe::Stated> >(ent));
 
     s = new zbe::CollisionatorCommon<R,zbe::Avatar, zbe::Bouncer<2>, zbe::Stated >(aeContainer, cObject, roStated, ent->getActuatorsList(), ent->getCollisionablesList());
   }

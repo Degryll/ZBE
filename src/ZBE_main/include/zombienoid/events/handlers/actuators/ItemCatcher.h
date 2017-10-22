@@ -26,7 +26,10 @@ class ItemCatcher: public zbe::Actuator<Stated, R> {
 public:
 
   ItemCatcher(): items(){}
-  void act(zbe::Stated* stated) {
+
+  void act(std::shared_ptr< zbe::WeakAvatarEntityContainer<zbe::Stated> > weakAEC) {
+      zbe::Stated* stated;
+      weakAEC->get()->assignAvatar(&stated);
       uint64_t state = stated->getState();
       if (state>=0 && state<items.size()) {
         items[state]->run();

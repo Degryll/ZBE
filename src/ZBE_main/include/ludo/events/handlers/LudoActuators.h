@@ -18,8 +18,6 @@
 #include "ZBE/core/tools/math/math.h"
 #include "ZBE/core/tools/math/Point.h"
 
-#include "ZBE/reactobjects/VoidReactObject.h"
-
 namespace ludo {
 
 template <typename R>
@@ -30,7 +28,7 @@ class DestroyerReactObject;
 template <typename R>
 class AvatarEraser: public zbe::Actuator<zbe::Avatar, R> {
   public:
-    void act(DestroyerReactObject<R>*) {
+    void act(std::shared_ptr< zbe::WeakAvatarEntityContainer<Destroyer> >) {
       zbe::Avatar * a = zbe::Actuator<zbe::Avatar, R>::getCollisioner();
       a->setERASED();
     }
@@ -41,7 +39,7 @@ class AvatarEraser: public zbe::Actuator<zbe::Avatar, R> {
 template <typename R>
 class LudoBallBouncer: public zbe::Actuator<zbe::Bouncer<2>, R> {
   public:
-    void act(zbe::VoidReactObject<R>*) {
+    void act() {
       zbe::Bouncer<2> * gb = zbe::Actuator<zbe::Bouncer<2>, R>::getCollisioner();
       zbe::CollisionData * cd = zbe::Actuator<zbe::Bouncer<2>, R>::getCollisionData();
       zbe::Vector<2> n = gb->getPosition() - cd->getPoint();
@@ -54,7 +52,7 @@ class LudoBallBouncer: public zbe::Actuator<zbe::Bouncer<2>, R> {
 template <typename R>
 class BouncerAnnoyer: public zbe::Actuator< zbe::Bouncer<2>, R> {
   public:
-    void act(DestroyerReactObject<R>*) {
+    void act(std::shared_ptr< zbe::WeakAvatarEntityContainer<Destroyer> >) {
       zbe::Bouncer<2> * gb = zbe::Actuator<zbe::Bouncer<2>, R>::getCollisioner();
       zbe::Vector<2> v = gb->getVelocity();
       v.setCartesian(100,100);

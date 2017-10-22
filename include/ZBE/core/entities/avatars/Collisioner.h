@@ -15,12 +15,15 @@
 
 #include "ZBE/core/tools/math/Point.h"
 #include "ZBE/core/tools/tools.h"
+#include "ZBE/core/tools/containers/ResourceManager.h"
+
 #include "ZBE/core/events/handlers/Actuator.h"
 #include "ZBE/core/events/handlers/ActuatorWrapper.h"
 #include "ZBE/core/events/generators/util/CollisionData.h"
 #include "ZBE/core/events/generators/util/CollisionObject.h"
 #include "ZBE/core/events/generators/util/ReactObject.h"
-#include "ZBE/core/tools/containers/ResourceManager.h"
+
+#include "ZBE/core/entities/AvatarEntity.h"
 
 namespace zbe {
 
@@ -46,7 +49,7 @@ class Collisioner {
      */
     virtual std::shared_ptr<ReactObject<R> > getReactObject() = 0;
 
-    virtual void react(CollisionData * collisionData, ReactObject<R> * reactObject) = 0;
+    virtual void react(CollisionData * collisionData, std::shared_ptr<ReactObject<R> > reactObject) = 0;
 };
 
 /** \brief Every Collisioner (an entity involved in a collision) has a collision object defining his "physical shape".
@@ -86,7 +89,7 @@ class CollisionerCommon : virtual public Collisioner<R> {
      */
     inline std::shared_ptr<ReactObject<R> > getReactObject() {return (ro);}
 
-    void react(CollisionData * collisionData, ReactObject<R> * reactObject);
+    void react(CollisionData * collisionData, std::shared_ptr<ReactObject<R> > reactObject);
 
   private:
     std::shared_ptr<CollisionObject<R> > co;  //!< Collision object
@@ -98,7 +101,7 @@ class CollisionerCommon : virtual public Collisioner<R> {
 };
 
 template <typename R, typename ...Bases>
-void CollisionerCommon<R, Bases...>::react(CollisionData * collisionData, ReactObject<R> * reactObject) {
+void CollisionerCommon<R, Bases...>::react(CollisionData * collisionData, std::shared_ptr<ReactObject<R> > reactObject) {
   for (auto a : *(lma.get(al)) ) {
     a->run(c, reactObject, collisionData);
   }

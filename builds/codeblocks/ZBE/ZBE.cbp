@@ -310,6 +310,7 @@
 		<Unit filename="../../../include/ZBE/entities/adaptors/TextDrawableSingleTextSpriteAdaptor.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/Bounceable.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/Bouncer.h" />
+		<Unit filename="../../../include/ZBE/entities/avatars/InteractionTester.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/Movable.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/Positionable.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/Resizable.h" />
@@ -327,8 +328,6 @@
 		<Unit filename="../../../include/ZBE/events/handlers/actuators/ConditionalEraserActuator.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/actuators/EraserActuator.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/actuators/StateChangerActuator.h" />
-		<Unit filename="../../../include/ZBE/events/reactobjects/InteractionTesterRO.h" />
-		<Unit filename="../../../include/ZBE/reactobjects/VoidReactObject.h" />
 		<Unit filename="../../../src/ZBE/SDL/daemons/BasicPostLoopSDLDaemon.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/daemons/BasicPreLoopSDLDaemon.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/drawers/AnimatedSpriteSDLDrawer.cpp" />

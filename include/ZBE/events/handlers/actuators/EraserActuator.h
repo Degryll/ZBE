@@ -20,7 +20,7 @@ namespace zbe {
 template <typename R, typename T>
 class EraserActuator: public zbe::Actuator<zbe::Avatar, R> {
   public:
-    void act(T*) {
+    void act(std::shared_ptr< zbe::WeakAvatarEntityContainer<T> >) {
       zbe::Avatar * a = zbe::Actuator<zbe::Avatar, R>::getCollisioner();
       a->setERASED();
     }

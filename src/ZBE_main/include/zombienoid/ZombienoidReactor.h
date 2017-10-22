@@ -1,26 +1,29 @@
 #ifndef ZBE_MAIN_ZOMBIENOID_ZOMBIENOIDREACTOR_H
 #define ZBE_MAIN_ZOMBIENOID_ZOMBIENOIDREACTOR_H
 
-#include "ZBE/reactobjects/VoidReactObject.h"
-#include "ZBE/events/reactobjects/InteractionTesterRO.h"
+#include "ZBE/core/entities/AvatarEntity.h"
 
-#include "zombienoid/events/reactobjects/CustomVectorRO.h"
+#include "ZBE/entities/avatars/InteractionTester.h"
+
+#include "zombienoid/entities/avatars/CustomVector.h"
+
+#include "zombienoid/entities/avatars/Solid.h"
 
 namespace zombienoid {
-
-class VoidReactObject;
 
 class ZombienoidReactor {
 public:
   virtual ~ZombienoidReactor() {}
 
-  virtual void act(zbe::VoidReactObject<ZombienoidReactor>*) {}
+  virtual void act() {}
 
-  virtual void act(zbe::InteractionTesterRO<ZombienoidReactor>*) {}
+  virtual void act(std::shared_ptr<zbe::WeakAvatarEntityContainer<zbe::InteractionTester> >) {}
 
-  virtual void act(zbe::Stated*) {}
+  virtual void act(std::shared_ptr<zbe::WeakAvatarEntityContainer<zbe::Stated> >) {}
 
-  virtual void act(CustomVectorRO*) {}
+  virtual void act(std::shared_ptr<zbe::WeakAvatarEntityContainer<CustomVector> >) {}
+
+  virtual void act(std::shared_ptr<zbe::WeakAvatarEntityContainer<Solid> >) {}
 
 };
 

@@ -244,7 +244,7 @@ int ludomain(int, char** ) {
   std::shared_ptr<zbe::AvatarEntityContainer<zbe::RotatedSprite> > aecrs;
   std::shared_ptr<zbe::AvatarEntityContainer<zbe::Positionable<2> > > aecp2;
 
-  for(int i = 0; i<1000; i++){
+  for(int i = 0; i<1; i++){
     int64_t r = 16 + (rand()% 4);
     int64_t xc =(WIDTH/2 + rand()%100-50);
     int64_t yc = (HEIGHT/2 + rand()%100-50);

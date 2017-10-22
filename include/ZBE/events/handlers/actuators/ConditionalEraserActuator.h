@@ -10,10 +10,14 @@
 #ifndef ZBE_EVENTS_HANDLERS_ACTUATORS_CONDITIONALERASERACTUATOR
 #define ZBE_EVENTS_HANDLERS_ACTUATORS_CONDITIONALERASERACTUATOR
 
+#include <memory>
+
 #include "ZBE/core/events/handlers/Actuator.h"
 #include "ZBE/core/entities/avatars/Avatar.h"
 
-#include "ZBE/events/reactobjects/InteractionTesterRO.h"
+#include "ZBE/entities/avatars/InteractionTester.h"
+
+#include "ZBE/core/entities/AvatarEntity.h"
 
 namespace zbe {
 
@@ -22,9 +26,11 @@ namespace zbe {
 template <typename R>
 class ConditionalEraserActuator: public zbe::Actuator<zbe::Avatar, R> {
   public:
-    void act(InteractionTesterRO<R> *ro) {
+    void act(std::shared_ptr<WeakAvatarEntityContainer<InteractionTester> > ro) {
+      InteractionTester* it;
+      ro->get()->assignAvatar(&it);
       zbe::CollisionData * cd = zbe::Actuator<zbe::Avatar, R>::getCollisionData();
-      if (ro->test(cd)){
+      if (it->test(cd)){
         zbe::Avatar * a = zbe::Actuator<zbe::Avatar, R>::getCollisioner();
         a->setERASED();
       }

@@ -14,11 +14,12 @@
 #include <stdlib.h>
 
 #include "ZBE/core/events/handlers/Actuator.h"
+#include "ZBE/core/entities/AvatarEntity.h"
 #include "ZBE/core/tools/math/Vector.h"
 
 #include "ZBE/entities/avatars/Bouncer.h"
 
-#include "zombienoid/events/reactobjects/CustomVectorRO.h"
+#include "zombienoid/entities/avatars/CustomVector.h"
 
 namespace zombienoid {
 
@@ -27,7 +28,9 @@ namespace zombienoid {
 template <typename R>
 class CustomVectorBouncerActuator: public zbe::Actuator<zbe::Bouncer<2>, R> {
   public:
-    void act(CustomVectorRO* customVector) {
+    void act(std::shared_ptr<zbe::WeakAvatarEntityContainer<CustomVector> > weakAEC) {
+      CustomVector* customVector;
+      weakAEC->get()->assignAvatar(&customVector);
       zbe::Bouncer<2> * gb = zbe::Actuator<zbe::Bouncer<2>, R>::getCollisioner();
       zbe::CollisionData * cd = zbe::Actuator<zbe::Bouncer<2>, R>::getCollisionData();
       zbe::Vector2D v = customVector->getNormal(cd);

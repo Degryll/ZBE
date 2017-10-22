@@ -45,6 +45,16 @@ class BaseResizableArea : virtual public Resizable {
      */
     double getSize() {return (s);}
 
+    /** \brief Retunrs the actual heigth of the area.
+     * \return The actual heigth.
+     */
+    double getHeight() {return (a->getHeight());}
+
+    /** \brief Retunrs the actual width of the area.
+     * \return The actual width.
+     */
+    double getWidth() {return (a->getWidth());}
+
   private:
     Area *a;
     double wBase;

@@ -10,6 +10,10 @@
 #ifndef CORE_EVENTS_GENERATORS_UTIL_REACTOBJECT_H
 #define CORE_EVENTS_GENERATORS_UTIL_REACTOBJECT_H
 
+#include <initializer_list>
+
+#include "ZBE/core/entities/AvatarEntity.h"
+
 namespace zbe {
 
 /** \brief Object against which to react.
@@ -23,7 +27,7 @@ class ReactObject {
 
 /** \brief Object against which to react. Common code. Implementers should use this Class instead of ReactObject.
  */
-template <typename R, typename T>
+template <typename R, typename ...Bases>
 class ReactObjectCommon : public ReactObject<R> {
   public:
     ReactObjectCommon(const ReactObjectCommon&) = delete;
@@ -31,14 +35,36 @@ class ReactObjectCommon : public ReactObject<R> {
 
     virtual ~ReactObjectCommon(){};
 
-  	ReactObjectCommon(T* rObject) : rObject(rObject) {}
+  	ReactObjectCommon(std::shared_ptr<WeakAvatarEntityContainer<Bases...> > rObject) : rObject(rObject) {}
 
     void act(R* reactor) {
-      reactor->act(rObject);
+      // This code is using a c ++11 syntax trick to call a method for each template parameter.
+      // The list of initializers is being used to allow braces usage.
+      // Comma operator is being used to pass a value to the braces.
+      std::initializer_list<int>{ (reactor->act(std::shared_ptr<WeakAvatarEntityContainer<Bases> >(rObject)), 0)... };
+      reactor->act();
     }
 
   private:
-    T* rObject;
+    std::shared_ptr<WeakAvatarEntityContainer<Bases...> > rObject;
+};
+
+/** \brief Object against which to react. Common code. Implementers should use this Class instead of ReactObject.
+ */
+template <typename R>
+class ReactObjectCommon<R> : public ReactObject<R> {
+  public:
+    ReactObjectCommon(const ReactObjectCommon&) = delete;
+    void operator=(const ReactObjectCommon&) = delete;
+
+  	virtual ~ReactObjectCommon() {}
+
+    ReactObjectCommon(std::shared_ptr<WeakAvatarEntityContainer<void> >){};
+    ReactObjectCommon(){};
+
+    void act(R* reactor) {
+      reactor->act();
+    }
 };
 
 }  // namespace

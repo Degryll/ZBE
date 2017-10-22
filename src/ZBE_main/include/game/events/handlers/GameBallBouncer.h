@@ -19,7 +19,6 @@
 #include "ZBE/core/tools/math/Point.h"
 
 #include "ZBE/entities/avatars/Bouncer.h"
-#include "ZBE/reactobjects/VoidReactObject.h"
 
 #include "game/GameReactor.h"
 
@@ -29,7 +28,7 @@ namespace game {
  */
 class GameBallBouncer: public zbe::Actuator<zbe::Bouncer<2>, GameReactor> {
   public:
-    void act(zbe::VoidReactObject<game::GameReactor>*) {
+    void act() {
       zbe::Bouncer<2> * gb = zbe::Actuator<zbe::Bouncer<2>, GameReactor>::getCollisioner();
       zbe::CollisionData * cd = zbe::Actuator<zbe::Bouncer<2>, GameReactor>::getCollisionData();
       zbe::Vector<2> n = gb->getPosition() - cd->getPoint();

@@ -26,7 +26,7 @@ class ActuatorWrapper {
 
     virtual ~ActuatorWrapper() {};
 
-    virtual void run(std::shared_ptr<WeakAvatarEntityContainer<Bases...> > container, ReactObject<R>* rObject, CollisionData* cData) = 0;
+    virtual void run(std::shared_ptr<WeakAvatarEntityContainer<Bases...> > container, std::shared_ptr<ReactObject<R> > rObject, CollisionData* cData) = 0;
 
 };
 
@@ -41,7 +41,7 @@ public:
   ActuatorWrapperCommon(Actuator<T, R> * actuator):a(actuator){};
   virtual ~ActuatorWrapperCommon() {};
 
-  void run(std::shared_ptr<WeakAvatarEntityContainer<Bases...> > container, ReactObject<R>* rObject, CollisionData* cData) {
+  void run(std::shared_ptr<WeakAvatarEntityContainer<Bases...> > container, std::shared_ptr<ReactObject<R> > rObject, CollisionData* cData) {
     T* t;
     std::shared_ptr<WeakAvatarEntityContainer<T> > tcont = container;
     assignAvatar(tcont->get(), &t);

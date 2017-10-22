@@ -63,7 +63,7 @@ public:
       delete c;
       std::shared_ptr<LudoBall<R> > ball = b.lock();
       std::shared_ptr<zbe::CollisionObject<R> > co = std::make_shared<zbe::ConstantMovingCircle<R> >(zbe::ConstantMovingCircle<R>(zbe::Circle(ball->getPosition(), ball->getWidth()), ball->getVelocity()));
-      std::shared_ptr<zbe::ReactObject<R> > ro = std::make_shared<zbe::VoidReactObject<R> >();
+      std::shared_ptr<zbe::ReactObject<R> > ro = std::make_shared<zbe::ReactObjectCommon<R> >();
       c = new zbe::CollisionatorCommon<R, zbe::Avatar, zbe::Bouncer<2> >(std::make_shared<zbe::WeakAvatarEntityContainer<zbe::Avatar, zbe::Bouncer<2> > >(ball), co, ro, ball->getActuatorsList() ,ball->getCollisionablesList());
       return (c);
     }

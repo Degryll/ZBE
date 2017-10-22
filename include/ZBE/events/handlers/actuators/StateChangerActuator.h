@@ -23,7 +23,7 @@ class StateChangerActuator: public zbe::Actuator<zbe::Stated, R> {
   public:
     StateChangerActuator(int64_t value) : v(value) {}
 
-    void act(T*) {
+    void act(std::shared_ptr< zbe::WeakAvatarEntityContainer<T> >) {
       zbe::Stated * s = zbe::Actuator<zbe::Stated, R>::getCollisioner();
       s->add(v);
     }

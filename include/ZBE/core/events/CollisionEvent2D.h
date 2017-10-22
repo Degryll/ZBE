@@ -73,10 +73,7 @@ class CollisionEvent2D : public Event {
      * do the actions associated with it.
      */
     void manage() {
-      /*std::shared_ptr<Collisioner<R> >  c = event->getCollisioner();
-      std::shared_ptr<ReactObject<R> >  ro = event->getReactObject();
-      CollisionData cd = event->getCollisionData();*/
-      c->react(&cd,&(*ro));
+      c->react(&cd,ro);
     };
 
   private:

@@ -33,6 +33,7 @@
 #include "ZBE/archetypes/implementations/SimpleMobile.h"
 #include "ZBE/archetypes/Mobile.h"
 
+#include "ZBE/entities/avatars/InteractionTester.h"
 #include "ZBE/entities/avatars/Movable.h"
 #include "ZBE/entities/avatars/Resizable.h"
 #include "ZBE/entities/avatars/implementations/BaseMovable.h"
@@ -49,8 +50,6 @@
 
 #include "ZBE/events/handlers/actuators/ConditionalEraserActuator.h"
 #include "ZBE/events/handlers/MouseXIH.h"
-
-#include "ZBE/reactobjects/VoidReactObject.h"
 
 #include "ZBE/SDL/daemons/BasicPostLoopSDLDaemon.h"
 #include "ZBE/SDL/daemons/BasicPreLoopSDLDaemon.h"
@@ -141,17 +140,17 @@ int zombienoidmain(int, char*[]) {
     ITEM_FALL_SPEED = 100,
     ITEM_WIDTH = 32,
     ITEM_HEIGHT = 64,
-    NBRICKS_X = 14,
-    NBRICKS_Y = 8,
+    NBRICKS_X = 16,
+    NBRICKS_Y = 10,
     BRICK_WIDTH = 51,
     BRICK_HEIGHT = 32,
     BRICK_COLS = 12,
     BRICK_ROWS = 8,
-    BRICKS_X_MARGIN = 123,
-    BRICKS_Y_MARGIN = 128,
+    BRICKS_X_MARGIN = 72,//123,
+    BRICKS_Y_MARGIN = 96,//128,
     BRICK_MAX_LEVEL = 2,
     BRICK_ITEM_SUCCES = 1,
-    BRICK_ITEM_TOTAL = 10,
+    BRICK_ITEM_TOTAL = 5,
     BALL_SIZE = 32,
     BALL_V_X = -300,
     BALL_V_Y = -300,
@@ -331,8 +330,8 @@ int zombienoidmain(int, char*[]) {
 
   std::shared_ptr<std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* > > itemActuatorsList(new std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* >());
 
-  ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* itemAgainsBoardEraser = new  ActuatorWrapperCommon<ZombienoidReactor, Avatar, Avatar, Bouncer<2>, Stated>(new EraserActuator<ZombienoidReactor, InteractionTesterRO<ZombienoidReactor> >());
-  ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* itemAgainsBarEraser   = new  ActuatorWrapperCommon<ZombienoidReactor, Avatar, Avatar, Bouncer<2>, Stated>(new EraserActuator<ZombienoidReactor, CustomVectorRO>());
+  ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* itemAgainsBoardEraser = new  ActuatorWrapperCommon<ZombienoidReactor, Avatar, Avatar, Bouncer<2>, Stated>(new EraserActuator<ZombienoidReactor, InteractionTester >());
+  ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* itemAgainsBarEraser   = new  ActuatorWrapperCommon<ZombienoidReactor, Avatar, Avatar, Bouncer<2>, Stated>(new EraserActuator<ZombienoidReactor, CustomVector>());
   itemActuatorsList->push_front(itemAgainsBoardEraser);
   itemActuatorsList->push_front(itemAgainsBarEraser);
 
@@ -383,7 +382,7 @@ int zombienoidmain(int, char*[]) {
 
   std::shared_ptr<std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Positionable<2>, Stated >* > > brickActuatorsList(new std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Positionable<2>, Stated >* >());
 
-  ActuatorWrapper<ZombienoidReactor, Avatar, Positionable<2>, Stated >* brickEraserWrapper = new  ActuatorWrapperCommon<ZombienoidReactor, Stated, Avatar, Positionable<2>, Stated >(new StateChangerActuator<ZombienoidReactor, zbe::VoidReactObject<ZombienoidReactor> >(-1));
+  ActuatorWrapper<ZombienoidReactor, Avatar, Positionable<2>, Stated >* brickEraserWrapper = new  ActuatorWrapperCommon<ZombienoidReactor, Stated, Avatar, Positionable<2>, Stated >(new StateChangerActuator<ZombienoidReactor, Solid>(-1));
   brickActuatorsList->push_front(brickEraserWrapper);
 
   rmact.insert(BRICK_ACTUATORS_LIST, brickActuatorsList);
@@ -454,8 +453,8 @@ int zombienoidmain(int, char*[]) {
   std::shared_ptr<std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated >* > > ballActuatorsList(new std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated >* >());
 
   ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* ballCustomBouncerVoidWrapper = new  ActuatorWrapperCommon<ZombienoidReactor, Bouncer<2>, Avatar, Bouncer<2>, Stated>(new CustomVectorBouncerActuator<ZombienoidReactor>());
-  ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* ballBouncerVoidWrapper = new  ActuatorWrapperCommon<ZombienoidReactor, Bouncer<2>, Avatar, Bouncer<2>, Stated>(new BouncerActuator<ZombienoidReactor, zbe::VoidReactObject<ZombienoidReactor> >());
-  ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* ballBouncerITWrapper = new  ActuatorWrapperCommon<ZombienoidReactor, Bouncer<2>, Avatar, Bouncer<2>, Stated>(new BouncerActuator<ZombienoidReactor, InteractionTesterRO<ZombienoidReactor> >());
+  ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* ballBouncerVoidWrapper = new  ActuatorWrapperCommon<ZombienoidReactor, Bouncer<2>, Avatar, Bouncer<2>, Stated>(new BouncerActuator<ZombienoidReactor, Solid>());
+  ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* ballBouncerITWrapper = new  ActuatorWrapperCommon<ZombienoidReactor, Bouncer<2>, Avatar, Bouncer<2>, Stated>(new BouncerActuator<ZombienoidReactor, InteractionTester>());
   ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* ballEraserWrapper = new  ActuatorWrapperCommon<ZombienoidReactor, Avatar, Avatar, Bouncer<2>, Stated>(new ConditionalEraserActuator<ZombienoidReactor>());
   ballActuatorsList->push_front(ballCustomBouncerVoidWrapper);
   ballActuatorsList->push_front(ballBouncerVoidWrapper);

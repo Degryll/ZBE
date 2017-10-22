@@ -53,19 +53,23 @@ class DestroyerCircleAreaCreator : public zbe::Behavior<zbe::Positionable<2> > {
 public:
   DestroyerCircleAreaCreator(double radius, uint64_t catorListId, uint64_t conerListId, uint64_t actuatorsList)
     : lmAEC(zbe::ResourceManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > >::getInstance()),
-      r(radius), ctLId(catorListId), cnLId(conerListId), aLId(actuatorsList) {
+      aeDestroyer(new zbe::AvatarEntityFixed<Destroyer>(new Destroyer())),
+      weakAEC(new zbe::WeakAvatarEntityContainer<Destroyer>(aeDestroyer)),
+      ro(new zbe::ReactObjectCommon<R, Destroyer>(weakAEC)),r(radius),ctLId(catorListId), cnLId(conerListId), aLId(actuatorsList) {
   }
 
   void apply(std::shared_ptr<zbe::AvatarEntityContainer<zbe::Positionable<2> > > entity){
     zbe::Positionable<2>* a;
     assignAvatar(entity, &a);
-    std::shared_ptr<zbe::ReactObject<R> > ro = std::make_shared<DestroyerReactObject<R> >();
     //double x, double y, double radius, uint64_t actuatorsList, uint64_t collisionablesList, std::shared_ptr<zbe::ReactObject<R> > ro
     std::shared_ptr<LudoCircleArea<R> > lca(new LudoCircleArea<R>(a->getPosition().x, a->getPosition().y, r, aLId, cnLId, ro));
     lmAEC.get(ctLId)->push_front(lca);
   }
 private:
     zbe::ResourceManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > >& lmAEC;
+    std::shared_ptr<zbe::AvatarEntity<Destroyer> > aeDestroyer;
+    std::shared_ptr<zbe::WeakAvatarEntityContainer<Destroyer> > weakAEC;
+    std::shared_ptr<zbe::ReactObject<R> > ro;
     double r;
     uint64_t ctLId;
     uint64_t cnLId;

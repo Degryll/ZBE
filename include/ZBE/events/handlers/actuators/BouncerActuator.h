@@ -17,7 +17,6 @@
 #include "ZBE/core/tools/math/Vector.h"
 
 #include "ZBE/entities/avatars/Bouncer.h"
-#include "ZBE/reactobjects/VoidReactObject.h"
 
 namespace zbe {
 
@@ -26,7 +25,7 @@ namespace zbe {
 template <typename R, typename RO>
 class BouncerActuator: public Actuator<Bouncer<2>, R> {
   public:
-    void act(RO*) {
+    void act(std::shared_ptr< zbe::WeakAvatarEntityContainer<RO> > ) {
       Bouncer<2> * gb = Actuator<Bouncer<2>, R>::getCollisioner();
       CollisionData * cd = Actuator<Bouncer<2>, R>::getCollisionData();
       Vector<2> n = gb->getPosition() - cd->getPoint();

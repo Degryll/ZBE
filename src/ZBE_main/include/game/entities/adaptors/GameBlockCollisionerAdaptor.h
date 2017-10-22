@@ -38,7 +38,7 @@ public:
       std::shared_ptr<GameBlock> ball = b.lock();
       zbe::Point<2> max {ball->getPosition()[0] + ball->getW(), ball->getPosition()[1] + ball->getH()};
       std::shared_ptr<zbe::CollisionObject<GameReactor> > co = std::make_shared<zbe::StaticSolidAABB2D<GameReactor> >(zbe::AABB2D(ball->getPosition(), max));
-      std::shared_ptr<zbe::ReactObject<GameReactor> > ro = std::make_shared<zbe::VoidReactObject<GameReactor> >();
+      std::shared_ptr<zbe::ReactObject<GameReactor> > ro = std::make_shared<zbe::ReactObjectCommon<GameReactor> >();
       c = new zbe::VoidCollisioner<GameReactor>(co, ro, ball->getActuatorsList());
       return (c);
     }

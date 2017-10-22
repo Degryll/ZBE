@@ -10,10 +10,12 @@
 #ifndef ZBE_ENTITIES_ADAPTORS_BALLCATORADAPTOR_H_
 #define ZBE_ENTITIES_ADAPTORS_BALLCATORADAPTOR_H_
 
-#include "zombienoid/events/reactobjects/BoardInteractionTesterRO.h"
+#include "zombienoid/entities/avatars/implementations/BoardInteractionTester.h"
 
 #include "ZBE/core/entities/Adaptor.h"
 #include "ZBE/entities/ActiveElement2D.h"
+
+#include "zombienoid/entities/avatars/Solid.h"
 
 namespace zombienoid {
 
@@ -25,13 +27,14 @@ public:
   BallCatorAdaptor(const BallCatorAdaptor&) = delete;
   void operator=(const BallCatorAdaptor&) = delete;
 
-  BallCatorAdaptor(std::weak_ptr<zbe::ActiveElement2D<R> > entity): e(entity), s(nullptr) {
+  BallCatorAdaptor(std::weak_ptr<zbe::ActiveElement2D<R> > entity): e(entity), s(nullptr), aes(new zbe::AvatarEntityFixed<Solid>(new Solid())) {
     std::shared_ptr<zbe::ActiveElement2D<R> > ent = e.lock();
     std::shared_ptr<zbe::WeakAvatarEntityContainer<zbe::Avatar, zbe::Bouncer<2>, zbe::Stated > > aeContainer = std::make_shared<zbe::WeakAvatarEntityContainer<zbe::Avatar, zbe::Bouncer<2>, zbe::Stated > >(ent);
     std::shared_ptr<zbe::ConstantMovingCircle<R> > cObject(new zbe::ConstantMovingCircle<R>(zbe::Circle(zbe::Point2D({(ent->getPosition().x), ent->getPosition().y}), ent->getWidth()/2.0), ent->getVelocity()));
-    std::shared_ptr<zbe::VoidReactObject<R> > vro(new zbe::VoidReactObject<R>());
 
-    s = new zbe::CollisionatorCommon<R,zbe::Avatar, zbe::Bouncer<2>, zbe::Stated >(aeContainer, cObject, vro, ent->getActuatorsList(), ent->getCollisionablesList());
+    std::shared_ptr<zbe::WeakAvatarEntityContainer<Solid> > weakAEC = std::make_shared<zbe::WeakAvatarEntityContainer<Solid> >(aes);
+    std::shared_ptr<zbe::ReactObject<R> > ro(new zbe::ReactObjectCommon<R, Solid>(weakAEC));
+    s = new zbe::CollisionatorCommon<R,zbe::Avatar, zbe::Bouncer<2>, zbe::Stated >(aeContainer, cObject, ro, ent->getActuatorsList(), ent->getCollisionablesList());
   }
 
   ~BallCatorAdaptor() {delete s;}
@@ -47,6 +50,7 @@ public:
 private:
     std::weak_ptr<zbe::ActiveElement2D<R> > e;
     zbe::CollisionatorCommon<R,zbe::Avatar, zbe::Bouncer<2>, zbe::Stated >* s;
+    std::shared_ptr<zbe::AvatarEntity<Solid> > aes;
 };
 
 }  // namespace zombienoid

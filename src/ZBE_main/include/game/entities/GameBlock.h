@@ -18,7 +18,6 @@
 #include "ZBE/core/entities/avatars/Collisioner.h"
 #include "ZBE/core/entities/avatars/SingleSprite.h"
 #include "ZBE/core/entities/avatars/implementations/VoidCollisioner.h"
-#include "ZBE/reactobjects/VoidReactObject.h"
 #include "ZBE/archetypes/Drawable.h"
 #include "ZBE/archetypes/implementations/SimplePositionPO.h"
 #include "ZBE/entities/avatars/implementations/BasePositionable.h"

@@ -19,7 +19,6 @@
 #include "ZBE/entities/avatars/Bouncer.h"
 #include "ZBE/entities/avatars/Movable.h"
 #include "ZBE/entities/avatars/implementations/BaseBouncer.h"
-#include "ZBE/reactobjects/VoidReactObject.h"
 #include "ZBE/core/entities/Entity.h"
 #include "ZBE/core/entities/avatars/Avatar.h"
 #include "ZBE/core/entities/avatars/SingleSprite.h"
@@ -39,11 +38,9 @@ namespace ludo {
 
 /****  ReactObjects ****/
 
-template <typename R>
-class DestroyerReactObject : public zbe::ReactObjectCommon<R, DestroyerReactObject<R> > {
+class Destroyer {
 public:
-  DestroyerReactObject() : zbe::ReactObjectCommon<R, DestroyerReactObject<R> >(this) {}
-  virtual ~DestroyerReactObject() {}
+    using Base = void;
 };
 
 
@@ -90,7 +87,7 @@ class LudoBoard : public zbe::AvatarEntityFixed<zbe::Collisioner<R> > {
 public:
   LudoBoard(double x, double y, double width, double height, uint64_t actuatorsList) :
     zbe::AvatarEntityFixed<zbe::Collisioner<R> >(new zbe::VoidCollisioner<R>(std::make_shared<zbe::StaticLimiterAABB2D<R> >(zbe::AABB2D({x, y}, {width, height} )),
-         std::make_shared<zbe::VoidReactObject<R> >(),
+         std::make_shared<zbe::ReactObjectCommon<R> >(),
          actuatorsList)) {}
 };
 
