@@ -1,10 +1,10 @@
 /**
  * Copyright 2012 Batis Degryll Ludo
- * @file ItemCatcher.h
+ * @file BallRadiusItem.h
  * @since 2017-10-09
  * @date 2017-10-09
  * @author Ludo
- * @brief Daemon capable of increase an value.
+ * @brief Daemon capable of increase balls radius
  */
 
 #ifndef ZBE_MAIN_ZMBIENOID_DAEMONS_ITEMS_BALLRADIUSITEM
@@ -24,7 +24,7 @@
 
 namespace zombienoid {
 
-/** \brief Daemon capable of increase an value.
+/** \brief Daemon capable of increase balls radius
  */
 template <typename BL>
 class BallRadiusItem : public zbe::Daemon {

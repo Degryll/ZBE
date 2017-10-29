@@ -15,8 +15,10 @@
 
 #include "ZBE/core/tools/math/objects.h"
 
+#include "zombienoid/entities/avatars/Magnet.h"
 #include "zombienoid/entities/avatars/CustomVector.h"
 #include "zombienoid/entities/avatars/implementations/BarCustomVector.h"
+#include "zombienoid/entities/avatars/implementations/BasePositionMagnet.h"
 
 namespace zombienoid {
 
@@ -32,15 +34,21 @@ public:
     : e(entity),
       s(nullptr),
       customVector(new BarCustomVector(zbe::AABB<2>())),
-      aeCustoVector(new zbe::AvatarEntityFixed<CustomVector>(customVector)) {
+      aeCustoVector(new zbe::AvatarEntityFixed<CustomVector>(customVector)),
+      aeMagnet(new zbe::AvatarEntityFixed<Magnet<2> >(new BasePositionMagnet<2>(&(*entity.lock())))),
+      roBase(), roMagnet() {
     std::shared_ptr<zbe::Element2D<R> > ent = e.lock();
     std::shared_ptr<zbe::WeakAvatarEntityContainer<zbe::Avatar, zbe::Positionable<2>, zbe::Stated> > aeContainer = std::make_shared<zbe::WeakAvatarEntityContainer<zbe::Avatar, zbe::Positionable<2>, zbe::Stated> >(ent);
     zbe::AABB2D aabb({(double)ent->getX(), (double)ent->getY()},{(double)ent->getX()+ent->getW(), (double)ent->getY()+ent->getH()});
     std::shared_ptr<zbe::StaticSolidAABB2D<R> > cObject(new zbe::StaticSolidAABB2D<R>(aabb));
-    std::shared_ptr<zbe::WeakAvatarEntityContainer<CustomVector> > weakAECCustomVector(new zbe::WeakAvatarEntityContainer<CustomVector>(aeCustoVector));
-    std::shared_ptr<zbe::ReactObjectCommon<R, CustomVector> > ro(new zbe::ReactObjectCommon<R, CustomVector>(weakAECCustomVector));
 
-    s = new zbe::CollisionerCommon<R,zbe::Avatar, zbe::Positionable<2>, zbe::Stated>(aeContainer, cObject, ro, ent->getActuatorsList());
+    std::shared_ptr<zbe::WeakAvatarEntityContainer<CustomVector> > weakAECCustomVector(new zbe::WeakAvatarEntityContainer<CustomVector>(aeCustoVector));
+    roBase = std::make_shared<zbe::ReactObjectCommon<R, CustomVector> >(weakAECCustomVector);
+
+    std::shared_ptr<zbe::WeakAvatarEntityContainer<CustomVector, Magnet<2> > > weakAECMagnet(new zbe::WeakAvatarEntityContainer<CustomVector, Magnet<2> >(aeCustoVector, aeMagnet));
+    roMagnet = std::make_shared<zbe::ReactObjectCommon<R, CustomVector, Magnet<2> > >(weakAECMagnet);
+
+    s = new zbe::CollisionerCommon<R,zbe::Avatar, zbe::Positionable<2>, zbe::Stated>(aeContainer, cObject, roBase, ent->getActuatorsList());
   }
 
   ~BarConerAdaptor() {
@@ -56,7 +64,15 @@ public:
     std::shared_ptr<zbe::StaticSolidAABB2D<R> > cObject(new zbe::StaticSolidAABB2D<R>(aabb));
     customVector->setAABB(aabb);
     s->setCollisionObject(cObject);
+    s->setReactObject(getReactObject(ent));
     return (s);
+  }
+
+  std::shared_ptr<zbe::ReactObject<R> > getReactObject(std::shared_ptr<zbe::State> state) {
+      if(state->getState() == 1) {
+          return roMagnet;
+      }
+      return roBase;
   }
 
 private:
@@ -64,6 +80,10 @@ private:
     zbe::CollisionerCommon<R,zbe::Avatar, zbe::Positionable<2>, zbe::Stated>* s;
     BarCustomVector* customVector;
     std::shared_ptr<zbe::AvatarEntity<CustomVector> > aeCustoVector;
+    std::shared_ptr<zbe::AvatarEntity<Magnet<2> > > aeMagnet;
+
+    std::shared_ptr<zbe::ReactObjectCommon<R, CustomVector> > roBase;
+    std::shared_ptr<zbe::ReactObjectCommon<R, CustomVector, Magnet<2> > > roMagnet;
 };
 
 }  // namespace zombienoid

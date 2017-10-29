@@ -119,10 +119,10 @@ TEST(IntersectionEventGenerator, run) {
   ieg.run();
   es.manageCurrent();
   A* a;
-  zbe::assignAvatar(&(*dconer), &a);
+  zbe::assignAvatar(dconer, &a);
   EXPECT_EQ(42, a->id) << "Coner id must be 42";
   EXPECT_EQ(37, a->vs) << "Coner is must be 37";
-  zbe::assignAvatar(&(*dcator), &a);
+  zbe::assignAvatar(dcator, &a);
   EXPECT_EQ(37, a->id) << "Cator id must be 37";
   EXPECT_EQ(42, a->vs) << "Cator is must be 42";
 
@@ -182,10 +182,10 @@ TEST(InstantIntersectionEventGenerator, run_no_collision) {
   es.manageCurrent();
 
   A* a;
-  zbe::assignAvatar(&(*dconer), &a);
+  zbe::assignAvatar(dconer, &a);
   EXPECT_EQ(42, a->id) << "Coner id must be 42";
   EXPECT_EQ(0, a->vs) << "Coner is must be 37";
-  zbe::assignAvatar(&(*dcator), &a);
+  zbe::assignAvatar(dcator, &a);
   EXPECT_EQ(37, a->id) << "Cator id must be 37";
   EXPECT_EQ(0, a->vs) << "Cator is must be 42";
 
@@ -245,10 +245,10 @@ TEST(InstantIntersectionEventGenerator, run) {
   es.manageCurrent();
 
   A* a;
-  zbe::assignAvatar(&(*dconer), &a);
+  zbe::assignAvatar(dconer, &a);
   EXPECT_EQ(42, a->id) << "Coner id must be 42";
   EXPECT_EQ(37, a->vs) << "Coner is must be 37";
-  zbe::assignAvatar(&(*dcator), &a);
+  zbe::assignAvatar(dcator, &a);
   EXPECT_EQ(37, a->id) << "Cator id must be 37";
   EXPECT_EQ(42, a->vs) << "Cator is must be 42";
 

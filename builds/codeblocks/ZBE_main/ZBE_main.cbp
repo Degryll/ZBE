@@ -206,13 +206,16 @@
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/entities/adaptors/Element2DDisplacedAnimatedSpriteAdaptor.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/entities/adaptors/ItemCatorAdaptor.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/entities/avatars/CustomVector.h" />
+		<Unit filename="../../../src/ZBE_main/include/zombienoid/entities/avatars/Magnet.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/entities/avatars/Solid.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/entities/avatars/implementations/BarCustomVector.h" />
+		<Unit filename="../../../src/ZBE_main/include/zombienoid/entities/avatars/implementations/BasePositionMagnet.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/entities/avatars/implementations/BoardInteractionTester.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/entities/avatars/implementations/BoundedWrapperPositionable2D.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/events/handlers/ExitInputHandler.h" />
-		<Unit filename="../../../src/ZBE_main/include/zombienoid/events/handlers/actuators/CustomNormalBouncerActuator.h" />
+		<Unit filename="../../../src/ZBE_main/include/zombienoid/events/handlers/actuators/CustomVectorBouncerActuator.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/events/handlers/actuators/ItemCatcher.h" />
+		<Unit filename="../../../src/ZBE_main/include/zombienoid/events/handlers/actuators/MagnetSticker.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/events/reactobjects/BarCustomVectorRO.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/events/reactobjects/BoardInteractionTesterRO.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/events/reactobjects/CustomVectorRO.h" />

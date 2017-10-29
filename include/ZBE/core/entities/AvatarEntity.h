@@ -187,6 +187,7 @@ class WeakAvatarEntityContainer : virtual public WeakAvatarEntityContainer<Bases
 public:
   template<typename T>
   WeakAvatarEntityContainer(const T aet): WeakAvatarEntityContainer<Bases>(aet)... {}
+  WeakAvatarEntityContainer(std::shared_ptr<AvatarEntity<Bases> >... aes): WeakAvatarEntityContainer<Bases>(aes)... {}
 
   ~WeakAvatarEntityContainer(){}
 };

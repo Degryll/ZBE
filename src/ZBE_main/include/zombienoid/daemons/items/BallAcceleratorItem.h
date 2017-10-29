@@ -1,10 +1,10 @@
 /**
  * Copyright 2012 Batis Degryll Ludo
- * @file ItemCatcher.h
+ * @file BallAcceleratorItem.h
  * @since 2017-10-09
  * @date 2017-10-09
  * @author Ludo
- * @brief Daemon capable of increase an value.
+ * @brief Daemon capable of increase speed of a list of entities.
  */
 
 #ifndef ZBE_MAIN_ZMBIENOID_DAEMONS_ITEMS_BALLACELERATORITEM
@@ -23,7 +23,7 @@
 
 namespace zombienoid {
 
-/** \brief Daemon capable of increase an value.
+/** \brief Daemon capable of increase speed of a list of entities.
  */
 template <typename BL>
 class BallAcceleratorItem : public zbe::Daemon {

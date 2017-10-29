@@ -66,7 +66,8 @@
 #include "ZBE/SDL/tools/SDLTimer.h"
 
 #include "zombienoid/events/handlers/actuators/ItemCatcher.h"
-#include "zombienoid/events/handlers/actuators/CustomNormalBouncerActuator.h"
+#include "zombienoid/events/handlers/actuators/CustomVectorBouncerActuator.h"
+#include "zombienoid/events/handlers/actuators/MagnetSticker.h"
 
 #include "zombienoid/events/handlers/ExitInputHandler.h"
 
@@ -84,6 +85,7 @@
 #include "zombienoid/daemons/items/BallMultiplierItem.h"
 #include "zombienoid/daemons/items/BallAcceleratorItem.h"
 #include "zombienoid/daemons/items/BallRadiusItem.h"
+#include "zombienoid/daemons/items/StickyBarItem.h"
 
 #include "zombienoid/daemons/ZombienoidDeathTester.h"
 #include "zombienoid/daemons/ZombienoidLifeSubstractor.h"
@@ -136,7 +138,7 @@ int zombienoidmain(int, char*[]) {
     HEIGHT = 768,
     MARGIN = 32,
     NBALLS = 1,
-    ITEM_TYPES = 6,
+    ITEM_TYPES = 7,
     ITEM_FALL_SPEED = 100,
     ITEM_WIDTH = 32,
     ITEM_HEIGHT = 64,
@@ -150,7 +152,7 @@ int zombienoidmain(int, char*[]) {
     BRICKS_Y_MARGIN = 96,//128,
     BRICK_MAX_LEVEL = 2,
     BRICK_ITEM_SUCCES = 1,
-    BRICK_ITEM_TOTAL = 5,
+    BRICK_ITEM_TOTAL = 3,
     BALL_SIZE = 32,
     BALL_V_X = -300,
     BALL_V_Y = -300,
@@ -199,6 +201,7 @@ int zombienoidmain(int, char*[]) {
   const char brickImg[] = "data/images/zombieball/braikn_32.png";
   const char ballImg[]  = "data/images/zombieball/zball_n.png";
   const char barImg[]   = "data/images/zombieball/zombar_color_32.png";
+  const char barImgGrey[]   = "data/images/zombieball/zombar_grey_32.png";
   //const char beerImg[]   = "data/images/zombieball/beer_l_32.png";
 
   //Items
@@ -208,6 +211,7 @@ int zombienoidmain(int, char*[]) {
   const char decelerator[]   = "data/images/zombieball/zbeza_dcel_32.png";
   const char bigger[]   = "data/images/zombieball/zbeza_ebal_32.png";
   const char smaller[]   = "data/images/zombieball/zbeza_rbal_32.png";
+  const char magnet[]   = "data/images/zombieball/zbeza_sbar_32.png";
 
   //Back
   const char backImg[]   = "data/images/zombieball/bck.png";
@@ -293,7 +297,7 @@ int zombienoidmain(int, char*[]) {
   boardGraphics.intialRegion = Region2D({0.0,0.0},{800.0,600.0});
   boardGraphics.imgSrcId = BOARD_GRAPHICS;
 
-  MultiSpriteSheet* boardSheet = new MultiSpriteSheet(6, boardGraphics);
+  MultiSpriteSheet* boardSheet = new MultiSpriteSheet(2, boardGraphics);
 
   std::shared_ptr<SpriteSheet<AnimatedSprite> > boardSS(boardSheet);
   rmss.insert(BOARD_SS, boardSS);
@@ -346,6 +350,7 @@ int zombienoidmain(int, char*[]) {
   uint64_t ITEM_DECEL_GRAPHICS = imgStore.loadImg(decelerator);
   uint64_t ITEM_BIGGER_GRAPHICS = imgStore.loadImg(bigger);
   uint64_t ITEM_SMALLER_GRAPHICS = imgStore.loadImg(smaller);
+  uint64_t ITEM_MAGNET_GRAPHICS = imgStore.loadImg(magnet);
 
   ImgSrcDef itemGraphics;
   itemGraphics.frameAmount = 1;
@@ -354,7 +359,7 @@ int zombienoidmain(int, char*[]) {
   itemGraphics.intialRegion = Region2D({0.0,0.0},{32.0,64.0});
   itemGraphics.imgSrcId = ITEM_LIFE_GRAPHICS;
 
-  MultiSpriteSheet* itemSheet = new MultiSpriteSheet(6, itemGraphics);
+  MultiSpriteSheet* itemSheet = new MultiSpriteSheet(7, itemGraphics);
   itemGraphics.imgSrcId = ITEM_MULTIPLIER_GRAPHICS;
   itemSheet->setImgSrcDef(1,itemGraphics);
   itemGraphics.imgSrcId = ITEM_ACCEL_GRAPHICS;
@@ -365,6 +370,8 @@ int zombienoidmain(int, char*[]) {
   itemSheet->setImgSrcDef(4,itemGraphics);
   itemGraphics.imgSrcId = ITEM_SMALLER_GRAPHICS;
   itemSheet->setImgSrcDef(5,itemGraphics);
+  itemGraphics.imgSrcId = ITEM_MAGNET_GRAPHICS;
+  itemSheet->setImgSrcDef(6,itemGraphics);
 
 
   std::shared_ptr<SpriteSheet<AnimatedSprite> > itemSS(itemSheet);
@@ -388,6 +395,7 @@ int zombienoidmain(int, char*[]) {
   rmact.insert(BRICK_ACTUATORS_LIST, brickActuatorsList);
 
   int BRICK_GRAHPICS = imgStore.loadImg(brickImg);
+
   std::shared_ptr<SpriteSheet<AnimatedSprite> > brickSS(new SimpleSpriteSheet(BRICK_GRAHPICS));
   rmss.insert(BRICK_SS, brickSS);
 
@@ -453,10 +461,12 @@ int zombienoidmain(int, char*[]) {
   std::shared_ptr<std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated >* > > ballActuatorsList(new std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated >* >());
 
   ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* ballCustomBouncerVoidWrapper = new  ActuatorWrapperCommon<ZombienoidReactor, Bouncer<2>, Avatar, Bouncer<2>, Stated>(new CustomVectorBouncerActuator<ZombienoidReactor>());
+  ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* ballMagnetWrapper = new  ActuatorWrapperCommon<ZombienoidReactor, Bouncer<2>, Avatar, Bouncer<2>, Stated>(new MagnetSticker<ZombienoidReactor>());
   ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* ballBouncerVoidWrapper = new  ActuatorWrapperCommon<ZombienoidReactor, Bouncer<2>, Avatar, Bouncer<2>, Stated>(new BouncerActuator<ZombienoidReactor, Solid>());
   ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* ballBouncerITWrapper = new  ActuatorWrapperCommon<ZombienoidReactor, Bouncer<2>, Avatar, Bouncer<2>, Stated>(new BouncerActuator<ZombienoidReactor, InteractionTester>());
   ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* ballEraserWrapper = new  ActuatorWrapperCommon<ZombienoidReactor, Avatar, Avatar, Bouncer<2>, Stated>(new ConditionalEraserActuator<ZombienoidReactor>());
   ballActuatorsList->push_front(ballCustomBouncerVoidWrapper);
+  ballActuatorsList->push_front(ballMagnetWrapper);
   ballActuatorsList->push_front(ballBouncerVoidWrapper);
   ballActuatorsList->push_front(ballBouncerITWrapper);
   ballActuatorsList->push_front(ballEraserWrapper);
@@ -516,8 +526,20 @@ int zombienoidmain(int, char*[]) {
   std::shared_ptr<TicketedFAEC<AnimatedSprite> > barAnimatedSpriteList(new TicketedFAEC<AnimatedSprite>());
 
   uint64_t BAR_GRAPHICS = imgStore.loadImg(barImg);
+  uint64_t BAR_GRAPHICS_GREY = imgStore.loadImg(barImgGrey);
 
-  std::shared_ptr<SpriteSheet<AnimatedSprite> > barSS(new SimpleSpriteSheet(BAR_GRAPHICS));
+  ImgSrcDef barGrapDef;
+  barGrapDef.frameAmount = 1;
+  barGrapDef.frameDisplacemet = Vector2D({0.0,0.0});
+  barGrapDef.frameTime = 1000;
+  barGrapDef.intialRegion = Region2D({0.0,0.0},{161.0,32.0});
+  barGrapDef.imgSrcId = BAR_GRAPHICS;
+
+  MultiSpriteSheet* barSheet = new MultiSpriteSheet(2, barGrapDef);
+  barGrapDef.imgSrcId = BAR_GRAPHICS_GREY;
+  barSheet->setImgSrcDef(1,barGrapDef);
+
+  std::shared_ptr<SpriteSheet<AnimatedSprite> > barSS(barSheet);
   rmss.insert(BAR_SS, barSS);
 
   std::shared_ptr<Element2D<ZombienoidReactor> > bar(new Element2D<ZombienoidReactor>({(WIDTH-BAR_I_WIDTH)/2, HEIGHT-BAR_MARGIN-(BAR_HEIGHT/2)},   BAR_ACTUATORS_LIST, BAR_I_WIDTH, BAR_HEIGHT, BAR_SS));
@@ -564,7 +586,7 @@ int zombienoidmain(int, char*[]) {
   double* angles = new double[2]{-30.0, 30.0};
 
   double BALL_SIZE_MIN = 0.25;
-  double BALL_SIZE_MAX = 4;
+  double BALL_SIZE_MAX = 2;
   double BALL_SIZE_STEP = 0.25;
 
   std::shared_ptr<Daemon> lifeItem = std::make_shared<LifeItem>(lifeCount,1);
@@ -573,6 +595,7 @@ int zombienoidmain(int, char*[]) {
   std::shared_ptr<Daemon> decelItem = std::make_shared<BallAcceleratorItem<TicketedFAEC<Bouncer<2>, Resizable> > >(BALL_LIST, 0.666666);
   std::shared_ptr<Daemon> ballMagnifier = std::make_shared<BallRadiusItem<TicketedFAEC<Bouncer<2>, Resizable> > >(BALL_LIST, BALL_SIZE_STEP, BALL_SIZE_MIN, BALL_SIZE_MAX);
   std::shared_ptr<Daemon> ballMinifier = std::make_shared<BallRadiusItem<TicketedFAEC<Bouncer<2>, Resizable> > >(BALL_LIST, -BALL_SIZE_STEP, BALL_SIZE_MIN, BALL_SIZE_MAX);
+  std::shared_ptr<Daemon> magnetBar = std::make_shared<StickyBarItem>(bar, teg,SECOND*6,1);
 
   catcher->addItem(lifeItem);
   catcher->addItem(multiplierItem);
@@ -580,6 +603,7 @@ int zombienoidmain(int, char*[]) {
   catcher->addItem(decelItem);
   catcher->addItem(ballMagnifier);
   catcher->addItem(ballMinifier);
+  catcher->addItem(magnetBar);
 
   ActuatorWrapper<ZombienoidReactor, Avatar, Positionable<2>, Stated >* itemCatchWrapper = new  ActuatorWrapperCommon<ZombienoidReactor, Stated, Avatar, Positionable<2>, Stated >(catcher);
 

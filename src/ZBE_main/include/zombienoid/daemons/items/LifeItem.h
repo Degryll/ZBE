@@ -1,10 +1,10 @@
 /**
  * Copyright 2012 Batis Degryll Ludo
- * @file ItemCatcher.h
+ * @file LifeItem.h
  * @since 2017-10-09
  * @date 2017-10-09
  * @author Ludo
- * @brief Daemon capable of increase an value.
+ * @brief Daemon capable of increase the amount of lifes.
  */
 
 #ifndef ZBE_MAIN_ZMBIENOID_DAEMONS_ITEMS_LIFEITEM

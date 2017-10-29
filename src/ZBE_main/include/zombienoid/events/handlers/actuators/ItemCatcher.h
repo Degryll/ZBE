@@ -17,12 +17,12 @@
 #include "ZBE/core/events/handlers/Actuator.h"
 #include "ZBE/core/entities/avatars/Avatar.h"
 
-namespace zbe {
+namespace zombienoid {
 
 /** \brief Actuator capable of erasing an entity.
  */
 template <typename R>
-class ItemCatcher: public zbe::Actuator<Stated, R> {
+class ItemCatcher: public zbe::Actuator<zbe::Stated, R> {
 public:
 
   ItemCatcher(): items(){}
@@ -44,6 +44,6 @@ private:
   std::vector<std::shared_ptr<zbe::Daemon> > items;
 };
 
-}  // namespace zbe
+}  // namespace zombienoid
 
 #endif // ZBE_MAIN_ZMBIENOID_EVENTS_HANDLERS_ACTUATORS_ITEMCATCHER

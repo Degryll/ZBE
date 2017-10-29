@@ -9,6 +9,8 @@
 
 #include "zombienoid/entities/avatars/Solid.h"
 
+#include "zombienoid/entities/avatars/Magnet.h"
+
 namespace zombienoid {
 
 class ZombienoidReactor {
@@ -24,6 +26,8 @@ public:
   virtual void act(std::shared_ptr<zbe::WeakAvatarEntityContainer<CustomVector> >) {}
 
   virtual void act(std::shared_ptr<zbe::WeakAvatarEntityContainer<Solid> >) {}
+
+  virtual void act(std::shared_ptr<zbe::WeakAvatarEntityContainer<Magnet<2> > >) {}
 
 };
 

@@ -33,6 +33,7 @@
 					<Add directory="include/ZBE/core/behaviors" />
 					<Add directory="include/ZBE/core/io/SDL" />
 					<Add directory="include/ZBE/core/system/SDL" />
+					<Add directory="include/ZBE/events/handlers/input" />
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
@@ -70,6 +71,7 @@
 					<Add directory="include/ZBE/core/behaviors" />
 					<Add directory="include/ZBE/core/io/SDL" />
 					<Add directory="include/ZBE/core/system/SDL" />
+					<Add directory="include/ZBE/events/handlers/input" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -112,6 +114,7 @@
 					<Add directory="include/ZBE/core/behaviors" />
 					<Add directory="include/ZBE/core/io/SDL" />
 					<Add directory="include/ZBE/core/system/SDL" />
+					<Add directory="include/ZBE/events/handlers/input" />
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
@@ -151,6 +154,7 @@
 					<Add directory="include/ZBE/core/behaviors" />
 					<Add directory="include/ZBE/core/io/SDL" />
 					<Add directory="include/ZBE/core/system/SDL" />
+					<Add directory="include/ZBE/events/handlers/input" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -328,6 +332,9 @@
 		<Unit filename="../../../include/ZBE/events/handlers/actuators/ConditionalEraserActuator.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/actuators/EraserActuator.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/actuators/StateChangerActuator.h" />
+		<Unit filename="../../../include/ZBE/events/handlers/input/DaemonInputHander.h" />
+		<Unit filename="../../../include/ZBE/events/handlers/time/DaemonRecurrentTimeHandler.h" />
+		<Unit filename="../../../include/ZBE/events/handlers/time/DaemonTimeHandler.h" />
 		<Unit filename="../../../src/ZBE/SDL/daemons/BasicPostLoopSDLDaemon.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/daemons/BasicPreLoopSDLDaemon.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/drawers/AnimatedSpriteSDLDrawer.cpp" />
