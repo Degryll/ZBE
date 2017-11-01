@@ -19,12 +19,13 @@ namespace zbe {
 /** \brief Actuator capable of erasing an entity.
  */
 template <typename R, typename T>
-class StateChangerActuator: public zbe::Actuator<zbe::Stated, R> {
+class StateChangerActuator: public zbe::Actuator<WeakAvatarEntityContainer<zbe::Stated>, R> {
   public:
     StateChangerActuator(int64_t value) : v(value) {}
 
     void act(std::shared_ptr< zbe::WeakAvatarEntityContainer<T> >) {
-      zbe::Stated * s = zbe::Actuator<zbe::Stated, R>::getCollisioner();
+      zbe::Stated * s;
+      zbe::Actuator<WeakAvatarEntityContainer<zbe::Stated>, R>::getCollisioner()->get()->assignAvatar(&s);
       s->add(v);
     }
   private:

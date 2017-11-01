@@ -23,11 +23,12 @@ namespace zbe {
 /** \brief Actuator capable of making a entity bounce.
  */
 template <typename R, typename RO>
-class BouncerActuator: public Actuator<Bouncer<2>, R> {
+class BouncerActuator: public Actuator<WeakAvatarEntityContainer<Bouncer<2> >, R> {
   public:
     void act(std::shared_ptr< zbe::WeakAvatarEntityContainer<RO> > ) {
-      Bouncer<2> * gb = Actuator<Bouncer<2>, R>::getCollisioner();
-      CollisionData * cd = Actuator<Bouncer<2>, R>::getCollisionData();
+      Bouncer<2> * gb;
+      Actuator<WeakAvatarEntityContainer<Bouncer<2> >, R>::getCollisioner()->get()->assignAvatar(&gb);
+      CollisionData * cd = Actuator<WeakAvatarEntityContainer<Bouncer<2> >, R>::getCollisionData();
       Vector<2> n = gb->getPosition() - cd->getPoint();
       gb->addNormal(n);
     }

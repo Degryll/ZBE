@@ -26,17 +26,17 @@ class Actuator : public R {
 
     Actuator() : collisioner(nullptr), cData(nullptr) {}
 
-  	T* getCollisioner() { return collisioner; }
+  	std::shared_ptr<T> getCollisioner() { return collisioner; }
     CollisionData* getCollisionData() { return cData; }
 
-    void run(T* collisioner, std::shared_ptr<ReactObject<R> > rObject, CollisionData* cData){
+    void run(std::shared_ptr<T> collisioner, std::shared_ptr<ReactObject<R> > rObject, CollisionData* cData){
 			this->collisioner = collisioner;
       this->cData = cData;
       rObject->act(this);
     }
 
   protected:
-  	T* collisioner;
+  	std::shared_ptr<T> collisioner;
     CollisionData* cData;
 };
 

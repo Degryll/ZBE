@@ -20,35 +20,33 @@ namespace zbe {
 
 /** \brief Actuator base functionality.
  */
-template <typename R, typename... Bases>
+template <typename R, typename TEnt>
 class ActuatorWrapper {
   public:
 
     virtual ~ActuatorWrapper() {};
 
-    virtual void run(std::shared_ptr<WeakAvatarEntityContainer<Bases...> > container, std::shared_ptr<ReactObject<R> > rObject, CollisionData* cData) = 0;
+    virtual void run(std::shared_ptr<TEnt> container, std::shared_ptr<ReactObject<R> > rObject, CollisionData* cData) = 0;
 
 };
 
 /** \brief Actuator base functionality.
  */
-template <typename R, typename T, typename... Bases>
-class ActuatorWrapperCommon: virtual public ActuatorWrapper<R, Bases...>{
+template <typename R, typename TAct, typename TEnt>
+class ActuatorWrapperCommon: virtual public ActuatorWrapper<R, TEnt>{
 public:
   ActuatorWrapperCommon(const ActuatorWrapperCommon&) = delete;
   void operator=(const ActuatorWrapperCommon&) = delete;
 
-  ActuatorWrapperCommon(Actuator<T, R> * actuator):a(actuator){};
-  virtual ~ActuatorWrapperCommon() {};
+  ActuatorWrapperCommon(Actuator<TAct, R> * actuator):a(actuator){};
+  virtual ~ActuatorWrapperCommon() {}; //TODO delete a;
 
-  void run(std::shared_ptr<WeakAvatarEntityContainer<Bases...> > container, std::shared_ptr<ReactObject<R> > rObject, CollisionData* cData) {
-    T* t;
-    std::shared_ptr<WeakAvatarEntityContainer<T> > tcont = container;
-    assignAvatar(tcont->get(), &t);
-    a->run(t,rObject,cData);
+  void run(std::shared_ptr<TEnt> entity, std::shared_ptr<ReactObject<R> > rObject, CollisionData* cData) {
+    std::shared_ptr<TAct> act = std::make_shared<TAct>(entity);
+    a->run(act,rObject,cData);
   }
 private:
-  Actuator<T, R>* a;
+  Actuator<TAct, R>* a;
 };
 
 }  // namespace

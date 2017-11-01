@@ -63,7 +63,9 @@ class CollisionerCommon : virtual public Collisioner<R> {
     /** \brief A collisionable entity is defined by a collision object.
       * \param object A collision object that defines the "physical shape" of the entity.
       */
-    CollisionerCommon(std::shared_ptr<WeakAvatarEntityContainer<Bases...> > collisioner, std::shared_ptr<CollisionObject<R> > collisionObject, std::shared_ptr<ReactObject<R> > reactObject, uint64_t actuatorsList) : co(collisionObject), ro(reactObject), al(actuatorsList), c(collisioner), lma(ResourceManager<std::forward_list<ActuatorWrapper<R, Bases...>* > >::getInstance())  {}
+    CollisionerCommon(std::shared_ptr<WeakAvatarEntityContainer<Bases...> > collisioner, std::shared_ptr<CollisionObject<R> > collisionObject, std::shared_ptr<ReactObject<R> > reactObject, uint64_t actuatorsList)
+      : co(collisionObject), ro(reactObject), al(actuatorsList), c(collisioner),
+        lma(ResourceManager<std::forward_list<ActuatorWrapper<R, WeakAvatarEntityContainer<Bases...> >* > >::getInstance())  {}
 
     /** \brief Empty destructor.
       */
@@ -96,7 +98,7 @@ class CollisionerCommon : virtual public Collisioner<R> {
     std::shared_ptr<ReactObject<R> > ro;  //!< Collision object
     uint64_t al;
     std::shared_ptr<WeakAvatarEntityContainer<Bases...> > c;
-    ResourceManager<std::forward_list<ActuatorWrapper<R, Bases...>* > >& lma;
+    ResourceManager<std::forward_list<ActuatorWrapper<R, WeakAvatarEntityContainer<Bases...> >* > >& lma;
 
 };
 

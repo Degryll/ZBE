@@ -208,11 +208,11 @@ int ludomain(int, char** ) {
   printf("Creating a ball and giving it a position and size\n");fflush(stdout);
 
   //ball
-  std::shared_ptr<std::forward_list<ActuatorWrapper<LudoReactor, Avatar, Bouncer<2> >* > > ballActuatorsList(new std::forward_list<ActuatorWrapper<LudoReactor, Avatar, Bouncer<2> >* >());
-  ResourceManager< std::forward_list<ActuatorWrapper<LudoReactor, Avatar, Bouncer<2> >* > >& lmBallActuatorsList = ResourceManager< std::forward_list<ActuatorWrapper<LudoReactor, Avatar, Bouncer<2> >* > >::getInstance();
+  std::shared_ptr<std::forward_list<ActuatorWrapper<LudoReactor, zbe::WeakAvatarEntityContainer<Avatar, Bouncer<2> > >* > > ballActuatorsList(new std::forward_list<ActuatorWrapper<LudoReactor, zbe::WeakAvatarEntityContainer<Avatar, Bouncer<2> > >* >());
+  ResourceManager< std::forward_list<ActuatorWrapper<LudoReactor, zbe::WeakAvatarEntityContainer<Avatar, Bouncer<2> > >* > >& lmBallActuatorsList = ResourceManager< std::forward_list<ActuatorWrapper<LudoReactor, zbe::WeakAvatarEntityContainer<Avatar, Bouncer<2> > >* > >::getInstance();
   lmBallActuatorsList.insert(BALLACTUATORLIST, ballActuatorsList);
-  ActuatorWrapper<LudoReactor, Avatar, Bouncer<2> >* bouncerWrapper = new  ActuatorWrapperCommon<LudoReactor, Bouncer<2>, Avatar, Bouncer<2> >(new LudoBallBouncer<LudoReactor>());
-  ActuatorWrapper<LudoReactor, Avatar, Bouncer<2> >* eraserWrapper = new  ActuatorWrapperCommon<LudoReactor, Avatar, Avatar, Bouncer<2> >(new AvatarEraser<LudoReactor>());
+  ActuatorWrapper<LudoReactor, zbe::WeakAvatarEntityContainer<Avatar, Bouncer<2> > >* bouncerWrapper = new  ActuatorWrapperCommon<LudoReactor, zbe::WeakAvatarEntityContainer<Bouncer<2> >, zbe::WeakAvatarEntityContainer<Avatar, Bouncer<2> > >(new LudoBallBouncer<LudoReactor>());
+  ActuatorWrapper<LudoReactor, zbe::WeakAvatarEntityContainer<Avatar, Bouncer<2> > >* eraserWrapper = new  ActuatorWrapperCommon<LudoReactor, zbe::WeakAvatarEntityContainer<Avatar>, zbe::WeakAvatarEntityContainer<Avatar, Bouncer<2> > >(new AvatarEraser<LudoReactor>());
   ballActuatorsList->push_front(bouncerWrapper);
   ballActuatorsList->push_front(eraserWrapper);
 
@@ -350,11 +350,11 @@ int ludomain(int, char** ) {
   ieg->addHandler(ZBEK_RIGHT, &rtoggler);
 
   printf("Pasive enities\n");fflush(stdout);
-  ResourceManager<std::forward_list<ActuatorWrapper<LudoReactor, void >*> >& lmSimpleConerActuatorsList = ResourceManager<std::forward_list<ActuatorWrapper<LudoReactor, void>*> >::getInstance();
+  ResourceManager<std::forward_list<ActuatorWrapper<LudoReactor, zbe::WeakAvatarEntityContainer<void> >*> >& lmSimpleConerActuatorsList = ResourceManager<std::forward_list<ActuatorWrapper<LudoReactor, zbe::WeakAvatarEntityContainer<void> >*> >::getInstance();
   printf("Creating the bricks\n");fflush(stdout);
 
   printf("Creating the board and giving it a size\n");fflush(stdout);
-  std::shared_ptr<std::forward_list<ActuatorWrapper<LudoReactor, void>*> > boardActuatorsList(new std::forward_list<ActuatorWrapper<LudoReactor, void>*>());
+  std::shared_ptr<std::forward_list<ActuatorWrapper<LudoReactor, zbe::WeakAvatarEntityContainer<void> >*> > boardActuatorsList(new std::forward_list<ActuatorWrapper<LudoReactor, zbe::WeakAvatarEntityContainer<void> >*>());
   lmSimpleConerActuatorsList.insert(BOARDACTUATORLIST, boardActuatorsList);
   std::shared_ptr<LudoBoard<LudoReactor> > board = std::make_shared<LudoBoard<LudoReactor> >(50, 50, WIDTH - 50, HEIGHT - 50, BOARDACTUATORLIST);
   collisionablesList->push_front(board);

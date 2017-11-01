@@ -22,7 +22,7 @@ namespace zombienoid {
 /** \brief Actuator capable of erasing an entity.
  */
 template <typename R>
-class ItemCatcher: public zbe::Actuator<zbe::Stated, R> {
+class ItemCatcher: public zbe::Actuator<zbe::WeakAvatarEntityContainer<zbe::Stated>, R> {
 public:
 
   ItemCatcher(): items(){}

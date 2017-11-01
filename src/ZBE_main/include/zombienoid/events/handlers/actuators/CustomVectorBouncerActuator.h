@@ -26,13 +26,14 @@ namespace zombienoid {
 /** \brief Actuator capable of making a entity bounce.
  */
 template <typename R>
-class CustomVectorBouncerActuator: public zbe::Actuator<zbe::Bouncer<2>, R> {
+class CustomVectorBouncerActuator: public zbe::Actuator<zbe::WeakAvatarEntityContainer<zbe::Bouncer<2> >, R> {
   public:
     void act(std::shared_ptr<zbe::WeakAvatarEntityContainer<CustomVector> > weakAEC) {
       CustomVector* customVector;
       weakAEC->get()->assignAvatar(&customVector);
-      zbe::Bouncer<2> * gb = zbe::Actuator<zbe::Bouncer<2>, R>::getCollisioner();
-      zbe::CollisionData * cd = zbe::Actuator<zbe::Bouncer<2>, R>::getCollisionData();
+      zbe::Bouncer<2> * gb;
+      zbe::Actuator<zbe::WeakAvatarEntityContainer<zbe::Bouncer<2> >, R>::getCollisioner()->get()->assignAvatar(&gb);
+      zbe::CollisionData * cd = zbe::Actuator<zbe::WeakAvatarEntityContainer<zbe::Bouncer<2> >, R>::getCollisionData();
       zbe::Vector2D v = customVector->getNormal(cd);
       v = v * (gb->getVelocity().getModule()/v.getModule());
       gb->setVelocity(v);

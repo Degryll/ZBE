@@ -24,14 +24,15 @@ namespace zbe {
 /** \brief Actuator capable of erasing an entity if collisiondata meets a condition.
  */
 template <typename R>
-class ConditionalEraserActuator: public zbe::Actuator<zbe::Avatar, R> {
+class ConditionalEraserActuator: public zbe::Actuator<zbe::WeakAvatarEntityContainer<zbe::Avatar>, R> {
   public:
     void act(std::shared_ptr<WeakAvatarEntityContainer<InteractionTester> > ro) {
       InteractionTester* it;
       ro->get()->assignAvatar(&it);
-      zbe::CollisionData * cd = zbe::Actuator<zbe::Avatar, R>::getCollisionData();
+      zbe::CollisionData * cd = zbe::Actuator<zbe::WeakAvatarEntityContainer<zbe::Avatar>, R>::getCollisionData();
       if (it->test(cd)){
-        zbe::Avatar * a = zbe::Actuator<zbe::Avatar, R>::getCollisioner();
+        zbe::Avatar * a;
+        zbe::Actuator<zbe::WeakAvatarEntityContainer<zbe::Avatar>, R>::getCollisioner()->get()->assignAvatar(&a);
         a->setERASED();
       }
     }

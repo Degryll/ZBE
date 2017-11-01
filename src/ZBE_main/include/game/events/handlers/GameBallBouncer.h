@@ -13,6 +13,7 @@
 #include <cstdio>
 #include <stdlib.h>
 
+#include "ZBE/core/entities/AvatarEntity.h"
 #include "ZBE/core/events/handlers/Actuator.h"
 #include "ZBE/core/tools/math/Vector.h"
 #include "ZBE/core/tools/math/math.h"
@@ -26,11 +27,12 @@ namespace game {
 
 /** \brief Actuator capable of making a BouncerCollisioner bounce in a Bounceable.
  */
-class GameBallBouncer: public zbe::Actuator<zbe::Bouncer<2>, GameReactor> {
+class GameBallBouncer: public zbe::Actuator<zbe::WeakAvatarEntityContainer<zbe::Bouncer<2> >, GameReactor> {
   public:
     void act() {
-      zbe::Bouncer<2> * gb = zbe::Actuator<zbe::Bouncer<2>, GameReactor>::getCollisioner();
-      zbe::CollisionData * cd = zbe::Actuator<zbe::Bouncer<2>, GameReactor>::getCollisionData();
+      zbe::Bouncer<2> * gb;
+      getCollisioner()->get()->assignAvatar(&gb);
+      zbe::CollisionData * cd = getCollisionData(); //zbe::Actuator<zbe::Bouncer<2>, GameReactor>::
       zbe::Vector<2> n = gb->getPosition() - cd->getPoint();
       gb->addNormal(n);
     }

@@ -58,12 +58,14 @@ class Cator :  public zbe::AvatarEntityFixed<A>, public zbe::AvatarEntityFixed<z
     ~Cator(){}
 };
 
-class AActuator: public zbe::Actuator<A, R> {
+class AActuator: public zbe::Actuator<zbe::WeakAvatarEntityContainer<A> , R> {
   public:
     void act(std::shared_ptr<zbe::WeakAvatarEntityContainer<A> > a) {
       A* avatar;
       a->get()->assignAvatar(&avatar);
-      collisioner->vs = avatar->id;
+      A* vs;
+      collisioner->get()->assignAvatar(&vs);
+      vs->vs = avatar->id;
     }
 };
 
@@ -80,12 +82,12 @@ TEST(IntersectionEventGenerator, run) {
   std::shared_ptr<zbe::CollisionObject<R> > sbox = std::make_shared<zbe::StaticSolidAABB2D<R> >(zbe::AABB2D({{1.0,5.0},{6.0,10.0}}));
   std::shared_ptr<zbe::CollisionObject<R> > cc = std::make_shared<zbe::ConstantMovingCircle<R> >(zbe::Circle({{2.0,3.0},1.0}),zbe::Vector2D({3.0,4.0}));
 
-  zbe::ResourceManager<std::forward_list<zbe::ActuatorWrapper<R, A>* > >& lma = zbe::ResourceManager<std::forward_list<zbe::ActuatorWrapper<R, A>* > >::getInstance();
+  zbe::ResourceManager<std::forward_list<zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* > >& lma = zbe::ResourceManager<std::forward_list<zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* > >::getInstance();
 
-  std::shared_ptr<std::forward_list<zbe::ActuatorWrapper<R, A>* > > act(new std::forward_list<zbe::ActuatorWrapper<R, A>* >());
+  std::shared_ptr<std::forward_list<zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* > > act(new std::forward_list<zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* >());
   lma.insert(1, act);
 
-  zbe::ActuatorWrapper<R, A>* actwrap = new  zbe::ActuatorWrapperCommon<R, A, A>(new AActuator());
+  zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* actwrap = new  zbe::ActuatorWrapperCommon<R, zbe::WeakAvatarEntityContainer<A>, zbe::WeakAvatarEntityContainer<A> >(new AActuator());
   act->push_front(actwrap);
 
   zbe::ResourceManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > > >& lmcn = zbe::ResourceManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > > >::getInstance();
@@ -142,12 +144,12 @@ TEST(InstantIntersectionEventGenerator, run_no_collision) {
   std::shared_ptr<zbe::CollisionObject<R> > sbox = std::make_shared<zbe::StaticSolidAABB2D<R> >(zbe::AABB2D({{1.0,5.0},{6.0,10.0}}));
   std::shared_ptr<zbe::CollisionObject<R> > cc = std::make_shared<zbe::ConstantMovingCircle<R> >(zbe::Circle({{2.0,3.0},1.0}),zbe::Vector2D({3.0,4.0}));
 
-  zbe::ResourceManager<std::forward_list<zbe::ActuatorWrapper<R, A>* > >& lma = zbe::ResourceManager<std::forward_list<zbe::ActuatorWrapper<R, A>* > >::getInstance();
+  zbe::ResourceManager<std::forward_list<zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* > >& lma = zbe::ResourceManager<std::forward_list<zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* > >::getInstance();
 
-  std::shared_ptr<std::forward_list<zbe::ActuatorWrapper<R, A>* > > act(new std::forward_list<zbe::ActuatorWrapper<R, A>* >());
+  std::shared_ptr<std::forward_list<zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* > > act(new std::forward_list<zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* >());
   lma.insert(1, act);
 
-  zbe::ActuatorWrapper<R, A>* actwrap = new  zbe::ActuatorWrapperCommon<R, A, A>(new AActuator());
+  zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* actwrap = new  zbe::ActuatorWrapperCommon<R, zbe::WeakAvatarEntityContainer<A>, zbe::WeakAvatarEntityContainer<A> >(new AActuator());
   act->push_front(actwrap);
 
   zbe::ResourceManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > > >& lmcn = zbe::ResourceManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > > >::getInstance();
@@ -205,12 +207,12 @@ TEST(InstantIntersectionEventGenerator, run) {
   std::shared_ptr<zbe::CollisionObject<R> > sbox = std::make_shared<zbe::StaticSolidAABB2D<R> >(zbe::AABB2D({{0.0,0.0},{10.0,10.0}}));
   std::shared_ptr<zbe::CollisionObject<R> > cc = std::make_shared<zbe::ConstantMovingCircle<R> >(zbe::Circle({{5.0,5.0},1.0}),zbe::Vector2D({3.0,4.0}));
 
-  zbe::ResourceManager<std::forward_list<zbe::ActuatorWrapper<R, A>* > >& lma = zbe::ResourceManager<std::forward_list<zbe::ActuatorWrapper<R, A>* > >::getInstance();
+  zbe::ResourceManager<std::forward_list<zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* > >& lma = zbe::ResourceManager<std::forward_list<zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* > >::getInstance();
 
-  std::shared_ptr<std::forward_list<zbe::ActuatorWrapper<R, A>* > > act(new std::forward_list<zbe::ActuatorWrapper<R, A>* >());
+  std::shared_ptr<std::forward_list<zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* > > act(new std::forward_list<zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* >());
   lma.insert(1, act);
 
-  zbe::ActuatorWrapper<R, A>* actwrap = new  zbe::ActuatorWrapperCommon<R, A, A>(new AActuator());
+  zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* actwrap = new  zbe::ActuatorWrapperCommon<R, zbe::WeakAvatarEntityContainer<A> , zbe::WeakAvatarEntityContainer<A> >(new AActuator());
   act->push_front(actwrap);
 
   zbe::ResourceManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > > >& lmcn = zbe::ResourceManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > > >::getInstance();

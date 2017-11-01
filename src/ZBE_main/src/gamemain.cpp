@@ -154,10 +154,10 @@ int gamemain(int, char** ) {
   printf("Creating a ball and giving it a position and size\n");fflush(stdout);
 
   //ball
-  std::shared_ptr<std::forward_list< zbe::ActuatorWrapper<game::GameReactor , zbe::Bouncer<2> >*> > ballActuatorsList(new std::forward_list< zbe::ActuatorWrapper<game::GameReactor , zbe::Bouncer<2> >*>());
-  zbe::ResourceManager< std::forward_list< zbe::ActuatorWrapper<game::GameReactor, zbe::Bouncer<2> >* > >& lmBallActuatorsList = zbe::ResourceManager< std::forward_list< zbe::ActuatorWrapper<game::GameReactor, zbe::Bouncer<2> >* > >::getInstance();
+  std::shared_ptr<std::forward_list< zbe::ActuatorWrapper<game::GameReactor , zbe::WeakAvatarEntityContainer<zbe::Bouncer<2> > >*> > ballActuatorsList(new std::forward_list< zbe::ActuatorWrapper<game::GameReactor , zbe::WeakAvatarEntityContainer<zbe::Bouncer<2> > >*>());
+  zbe::ResourceManager< std::forward_list< zbe::ActuatorWrapper<game::GameReactor, zbe::WeakAvatarEntityContainer<zbe::Bouncer<2> > >* > >& lmBallActuatorsList = zbe::ResourceManager< std::forward_list< zbe::ActuatorWrapper<game::GameReactor, zbe::WeakAvatarEntityContainer<zbe::Bouncer<2> > >* > >::getInstance();
   lmBallActuatorsList.insert(BALLACTUATORLIST, ballActuatorsList);
-  zbe::ActuatorWrapper<game::GameReactor, zbe::Bouncer<2> >* bouncerWrapper = new  zbe::ActuatorWrapperCommon<game::GameReactor, zbe::Bouncer<2>, zbe::Bouncer<2> >(new game::GameBallBouncer());
+  zbe::ActuatorWrapper<game::GameReactor, zbe::WeakAvatarEntityContainer<zbe::Bouncer<2> > >* bouncerWrapper = new  zbe::ActuatorWrapperCommon<game::GameReactor, zbe::WeakAvatarEntityContainer<zbe::Bouncer<2> >, zbe::WeakAvatarEntityContainer<zbe::Bouncer<2> > >(new game::GameBallBouncer());
   ballActuatorsList->push_front(bouncerWrapper);
 
   std::shared_ptr<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<game::GameReactor> > > > collisionablesList(new zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<game::GameReactor> > >());

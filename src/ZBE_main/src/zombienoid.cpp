@@ -264,9 +264,9 @@ int zombienoidmain(int, char*[]) {
 
   ResourceManager<SpriteSheet<AnimatedSprite> >& rmss = ResourceManager<SpriteSheet<AnimatedSprite> >::getInstance();
 
-  ResourceManager<std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Positionable<2>, Stated >* > >& rmact = ResourceManager<std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Positionable<2>, Stated >* > >::getInstance();
+  ResourceManager<std::forward_list<ActuatorWrapper<ZombienoidReactor, WeakAvatarEntityContainer<Avatar, Positionable<2>, Stated> >* > >& rmact = ResourceManager<std::forward_list<ActuatorWrapper<ZombienoidReactor, WeakAvatarEntityContainer<Avatar, Positionable<2>, Stated> >* > >::getInstance();
 
-  ResourceManager<std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* > >& rmaact = ResourceManager<std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* > >::getInstance();
+  ResourceManager<std::forward_list<ActuatorWrapper<ZombienoidReactor, WeakAvatarEntityContainer<Avatar, Bouncer<2>, Stated> >* > >& rmaact = ResourceManager<std::forward_list<ActuatorWrapper<ZombienoidReactor, WeakAvatarEntityContainer<Avatar, Bouncer<2>, Stated> >* > >::getInstance();
 
   zombienoid::ExitInputHandler terminator;
   ieg->addHandler(zbe::ZBEK_ESCAPE, &terminator);
@@ -304,7 +304,7 @@ int zombienoidmain(int, char*[]) {
 
   std::shared_ptr<TicketedFAEC<AnimatedSprite> > boardAnimatedSpriteList(new TicketedFAEC<AnimatedSprite>());
 
-  std::shared_ptr<std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Positionable<2>, Stated >* > > boardActuatorsList(new std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Positionable<2>, Stated >* >());
+  std::shared_ptr<std::forward_list<ActuatorWrapper<ZombienoidReactor, WeakAvatarEntityContainer<Avatar, Positionable<2>, Stated> >* > > boardActuatorsList(new std::forward_list<ActuatorWrapper<ZombienoidReactor, WeakAvatarEntityContainer<Avatar, Positionable<2>, Stated> >* >());
 
   rmact.insert(BOARD_ACTUATORS_LIST, boardActuatorsList);
 
@@ -332,10 +332,10 @@ int zombienoidmain(int, char*[]) {
   std::shared_ptr<TicketedFAEC<Movable<2> > > itemList(new TicketedFAEC<Movable<2> >());
   rmm2.insert(ITEM_LIST, itemList);
 
-  std::shared_ptr<std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* > > itemActuatorsList(new std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* >());
+  std::shared_ptr<std::forward_list<ActuatorWrapper<ZombienoidReactor, WeakAvatarEntityContainer<Avatar, Bouncer<2>, Stated> >* > > itemActuatorsList(new std::forward_list<ActuatorWrapper<ZombienoidReactor, WeakAvatarEntityContainer<Avatar, Bouncer<2>, Stated> >* >());
 
-  ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* itemAgainsBoardEraser = new  ActuatorWrapperCommon<ZombienoidReactor, Avatar, Avatar, Bouncer<2>, Stated>(new EraserActuator<ZombienoidReactor, InteractionTester >());
-  ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* itemAgainsBarEraser   = new  ActuatorWrapperCommon<ZombienoidReactor, Avatar, Avatar, Bouncer<2>, Stated>(new EraserActuator<ZombienoidReactor, CustomVector>());
+  ActuatorWrapper<ZombienoidReactor, WeakAvatarEntityContainer<Avatar, Bouncer<2>, Stated> >* itemAgainsBoardEraser = new  ActuatorWrapperCommon<ZombienoidReactor, WeakAvatarEntityContainer<Avatar>, WeakAvatarEntityContainer<Avatar, Bouncer<2>, Stated> >(new EraserActuator<ZombienoidReactor, InteractionTester >());
+  ActuatorWrapper<ZombienoidReactor, WeakAvatarEntityContainer<Avatar, Bouncer<2>, Stated> >* itemAgainsBarEraser   = new  ActuatorWrapperCommon<ZombienoidReactor, WeakAvatarEntityContainer<Avatar>, WeakAvatarEntityContainer<Avatar, Bouncer<2>, Stated> >(new EraserActuator<ZombienoidReactor, CustomVector>());
   itemActuatorsList->push_front(itemAgainsBoardEraser);
   itemActuatorsList->push_front(itemAgainsBarEraser);
 
@@ -387,9 +387,9 @@ int zombienoidmain(int, char*[]) {
 
   //bricks---------------------------------------------------------------------------------------------------
 
-  std::shared_ptr<std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Positionable<2>, Stated >* > > brickActuatorsList(new std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Positionable<2>, Stated >* >());
+  std::shared_ptr<std::forward_list<ActuatorWrapper<ZombienoidReactor, WeakAvatarEntityContainer<Avatar, Positionable<2>, Stated> >* > > brickActuatorsList(new std::forward_list<ActuatorWrapper<ZombienoidReactor, WeakAvatarEntityContainer<Avatar, Positionable<2>, Stated> >* >());
 
-  ActuatorWrapper<ZombienoidReactor, Avatar, Positionable<2>, Stated >* brickEraserWrapper = new  ActuatorWrapperCommon<ZombienoidReactor, Stated, Avatar, Positionable<2>, Stated >(new StateChangerActuator<ZombienoidReactor, Solid>(-1));
+  ActuatorWrapper<ZombienoidReactor, WeakAvatarEntityContainer<Avatar, Positionable<2>, Stated> >* brickEraserWrapper = new  ActuatorWrapperCommon<ZombienoidReactor, WeakAvatarEntityContainer<Stated>, WeakAvatarEntityContainer<Avatar, Positionable<2>, Stated> >(new StateChangerActuator<ZombienoidReactor, Solid>(-1));
   brickActuatorsList->push_front(brickEraserWrapper);
 
   rmact.insert(BRICK_ACTUATORS_LIST, brickActuatorsList);
@@ -458,13 +458,13 @@ int zombienoidmain(int, char*[]) {
   std::shared_ptr<Value<int64_t> > ballCount(new SimpleValue<int64_t>());
 
   //ball-----------------------------------------------------------------------------------------------------
-  std::shared_ptr<std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated >* > > ballActuatorsList(new std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated >* >());
+  std::shared_ptr<std::forward_list<ActuatorWrapper<ZombienoidReactor, WeakAvatarEntityContainer<Avatar, Bouncer<2>, Stated> >* > > ballActuatorsList(new std::forward_list<ActuatorWrapper<ZombienoidReactor, WeakAvatarEntityContainer<Avatar, Bouncer<2>, Stated> >* >());
 
-  ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* ballCustomBouncerVoidWrapper = new  ActuatorWrapperCommon<ZombienoidReactor, Bouncer<2>, Avatar, Bouncer<2>, Stated>(new CustomVectorBouncerActuator<ZombienoidReactor>());
-  ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* ballMagnetWrapper = new  ActuatorWrapperCommon<ZombienoidReactor, Bouncer<2>, Avatar, Bouncer<2>, Stated>(new MagnetSticker<ZombienoidReactor>());
-  ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* ballBouncerVoidWrapper = new  ActuatorWrapperCommon<ZombienoidReactor, Bouncer<2>, Avatar, Bouncer<2>, Stated>(new BouncerActuator<ZombienoidReactor, Solid>());
-  ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* ballBouncerITWrapper = new  ActuatorWrapperCommon<ZombienoidReactor, Bouncer<2>, Avatar, Bouncer<2>, Stated>(new BouncerActuator<ZombienoidReactor, InteractionTester>());
-  ActuatorWrapper<ZombienoidReactor, Avatar, Bouncer<2>, Stated>* ballEraserWrapper = new  ActuatorWrapperCommon<ZombienoidReactor, Avatar, Avatar, Bouncer<2>, Stated>(new ConditionalEraserActuator<ZombienoidReactor>());
+  ActuatorWrapper<ZombienoidReactor, WeakAvatarEntityContainer<Avatar, Bouncer<2>, Stated> >* ballCustomBouncerVoidWrapper = new  ActuatorWrapperCommon<ZombienoidReactor, WeakAvatarEntityContainer<Bouncer<2> >, WeakAvatarEntityContainer<Avatar, Bouncer<2>, Stated> >(new CustomVectorBouncerActuator<ZombienoidReactor>());
+  ActuatorWrapper<ZombienoidReactor, WeakAvatarEntityContainer<Avatar, Bouncer<2>, Stated> >* ballMagnetWrapper = new  ActuatorWrapperCommon<ZombienoidReactor, WeakAvatarEntityContainer<Bouncer<2> >, WeakAvatarEntityContainer<Avatar, Bouncer<2>, Stated> >(new MagnetSticker<ZombienoidReactor>());
+  ActuatorWrapper<ZombienoidReactor, WeakAvatarEntityContainer<Avatar, Bouncer<2>, Stated> >* ballBouncerVoidWrapper = new  ActuatorWrapperCommon<ZombienoidReactor, WeakAvatarEntityContainer<Bouncer<2> >, WeakAvatarEntityContainer<Avatar, Bouncer<2>, Stated> >(new BouncerActuator<ZombienoidReactor, Solid>());
+  ActuatorWrapper<ZombienoidReactor, WeakAvatarEntityContainer<Avatar, Bouncer<2>, Stated> >* ballBouncerITWrapper = new  ActuatorWrapperCommon<ZombienoidReactor, WeakAvatarEntityContainer<Bouncer<2> >, WeakAvatarEntityContainer<Avatar, Bouncer<2>, Stated> >(new BouncerActuator<ZombienoidReactor, InteractionTester>());
+  ActuatorWrapper<ZombienoidReactor, WeakAvatarEntityContainer<Avatar, Bouncer<2>, Stated> >* ballEraserWrapper = new  ActuatorWrapperCommon<ZombienoidReactor, WeakAvatarEntityContainer<Avatar>, WeakAvatarEntityContainer<Avatar, Bouncer<2>, Stated> >(new ConditionalEraserActuator<ZombienoidReactor>());
   ballActuatorsList->push_front(ballCustomBouncerVoidWrapper);
   ballActuatorsList->push_front(ballMagnetWrapper);
   ballActuatorsList->push_front(ballBouncerVoidWrapper);
@@ -516,7 +516,7 @@ int zombienoidmain(int, char*[]) {
   std::shared_ptr<TicketedFAEC<Positionable<2> > > mouseControlList(new TicketedFAEC<Positionable<2> >());
   rmp2.insert(MOUSE_CONTROL_LIST, mouseControlList);
 
-  std::shared_ptr<std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Positionable<2>, Stated >* > > barActuatorsList(new std::forward_list<ActuatorWrapper<ZombienoidReactor, Avatar, Positionable<2>, Stated >* >());
+  std::shared_ptr<std::forward_list<ActuatorWrapper<ZombienoidReactor, WeakAvatarEntityContainer<Avatar, Positionable<2>, Stated> >* > > barActuatorsList(new std::forward_list<ActuatorWrapper<ZombienoidReactor, WeakAvatarEntityContainer<Avatar, Positionable<2>, Stated> >* >());
   rmact.insert(BAR_ACTUATORS_LIST, barActuatorsList);
 
   std::shared_ptr<TicketedFAE<Collisioner<ZombienoidReactor> > > barCollisionerList(new TicketedFAE<Collisioner<ZombienoidReactor> >());
@@ -605,7 +605,7 @@ int zombienoidmain(int, char*[]) {
   catcher->addItem(ballMinifier);
   catcher->addItem(magnetBar);
 
-  ActuatorWrapper<ZombienoidReactor, Avatar, Positionable<2>, Stated >* itemCatchWrapper = new  ActuatorWrapperCommon<ZombienoidReactor, Stated, Avatar, Positionable<2>, Stated >(catcher);
+  ActuatorWrapper<ZombienoidReactor, WeakAvatarEntityContainer<Avatar, Positionable<2>, Stated> >* itemCatchWrapper = new  ActuatorWrapperCommon<ZombienoidReactor, WeakAvatarEntityContainer<Stated>, WeakAvatarEntityContainer<Avatar, Positionable<2>, Stated> >(catcher);
 
   barActuatorsList->push_front(itemCatchWrapper);
 

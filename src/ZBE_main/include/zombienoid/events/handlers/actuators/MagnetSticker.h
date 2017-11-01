@@ -22,7 +22,7 @@ namespace zombienoid {
 /** \brief Actuator capable of erasing an entity.
  */
 template <typename R>
-class MagnetSticker : public zbe::Actuator<zbe::Bouncer<2>, R>  {
+class MagnetSticker : public zbe::Actuator<zbe::WeakAvatarEntityContainer<zbe::Bouncer<2> >, R>  {
 public:
 
   MagnetSticker(): value(0){}

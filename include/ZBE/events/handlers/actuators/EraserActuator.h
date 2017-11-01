@@ -18,10 +18,11 @@ namespace zbe {
 /** \brief Actuator capable of erasing an entity.
  */
 template <typename R, typename T>
-class EraserActuator: public zbe::Actuator<zbe::Avatar, R> {
+class EraserActuator: public zbe::Actuator<WeakAvatarEntityContainer<zbe::Avatar>, R> {
   public:
     void act(std::shared_ptr< zbe::WeakAvatarEntityContainer<T> >) {
-      zbe::Avatar * a = zbe::Actuator<zbe::Avatar, R>::getCollisioner();
+      zbe::Avatar * a;
+      zbe::Actuator<WeakAvatarEntityContainer<zbe::Avatar>, R>::getCollisioner()->get()->assignAvatar(&a);
       a->setERASED();
     }
 };
