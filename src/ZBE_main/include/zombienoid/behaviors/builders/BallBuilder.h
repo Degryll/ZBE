@@ -57,15 +57,18 @@ public:
    *  \param bl;     ball list
    */
   BallBuilder( uint64_t alId, uint64_t cbslId, uint64_t g, int64_t s, std::shared_ptr<zbe::Value<int64_t> > nballs,
-               uint64_t ctId, uint64_t dtId, uint64_t btId, std::shared_ptr<CTL> ctl,
+               int64_t maxBalls, uint64_t ctId, uint64_t dtId, uint64_t btId, std::shared_ptr<CTL> ctl,
                std::shared_ptr<ASL> asl,  std::shared_ptr<BL> bl)
                : alId(alId), cbslId(cbslId),g(g), s(s), nballs(nballs),
-               ctId(ctId), dtId(dtId), btId(btId), ctl(ctl),
+               maxBalls(maxBalls), ctId(ctId), dtId(dtId), btId(btId), ctl(ctl),
                asl(asl), bl(bl){}
 
   /** \brief It will build a ball with the same position an velocity as the given movable
    */
   void apply(std::shared_ptr<zbe::AvatarEntityContainer<zbe::Movable<2> > > aecm) {
+    if(nballs->getValue() > maxBalls) {
+        return;
+    }
     zbe::Movable<2>* movable;
     assignAvatar(aecm->get(), &movable);
 
@@ -96,6 +99,7 @@ private:
 
   int64_t s; //<! ball size
   std::shared_ptr<zbe::Value<int64_t> > nballs; //<! ball count
+  int64_t maxBalls;
 
   uint64_t ctId; //<! collision ticket id
   uint64_t dtId; //<! draw ticket id

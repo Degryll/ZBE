@@ -332,7 +332,7 @@
 		<Unit filename="../../../include/ZBE/events/handlers/actuators/ConditionalEraserActuator.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/actuators/EraserActuator.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/actuators/StateChangerActuator.h" />
-		<Unit filename="../../../include/ZBE/events/handlers/input/DaemonInputHander.h" />
+		<Unit filename="../../../include/ZBE/events/handlers/input/DaemonInputHandler.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/time/DaemonRecurrentTimeHandler.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/time/DaemonTimeHandler.h" />
 		<Unit filename="../../../src/ZBE/SDL/daemons/BasicPostLoopSDLDaemon.cpp" />

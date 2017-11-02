@@ -14,11 +14,11 @@
 
 #include "ZBE/entities/avatars/Positionable.h"
 
-namespace zbe {
+namespace zombienoid {
 
 /** \brief This define an avatar that can be moved.
  */
-class BoundedWrapperPositionable2D : virtual public Positionable<2> {
+class BoundedWrapperPositionable2D : virtual public zbe::Positionable<2> {
   public:
     BoundedWrapperPositionable2D(const BoundedWrapperPositionable2D&) = delete; //<! Avoid copy
     void operator=(const BoundedWrapperPositionable2D&) = delete; //<! Avoid copy
@@ -29,34 +29,42 @@ class BoundedWrapperPositionable2D : virtual public Positionable<2> {
 
     /** \brief Builds this BasePositionable with a Position.
      */
-    BoundedWrapperPositionable2D(std::shared_ptr<zbe::AvatarEntity<Positionable<2> > > positionable2d, double xMin, double yMin, double xMax, double yMax)
-        : p2d(positionable2d),  x0(xMin), y0(yMin), x1(xMax), y1(yMax) {}
+    BoundedWrapperPositionable2D(std::shared_ptr<zbe::AvatarEntity<zbe::Positionable<2> > > positionable2d, double xMin, double yMin, double xMax, double yMax, double xOffset, double yOffset)
+        : p2d(positionable2d),  xMin(xMin), yMin(yMin), xMax(xMax), yMax(yMax), xOff(xOffset), yOff(yOffset) {}
 
     /** \brief Sets the position for this Positionable.
      * \param List of values for the position..
      */
-    void setPosition(std::initializer_list<double> l) { this->setPosition(Point2D(l);}
+    void setPosition(std::initializer_list<double> l) { this->setPosition(zbe::Point2D(l));}
 
     /** \brief Sets the position for this Positionable.
      * \param The position.
      */
-    void setPosition(Point2D position) {
-      p2d->setPosition(Point2D(std::min(std::max(x0,position.x), x1),std::min(std::max(y0,position.y), y1)));
+    void setPosition(zbe::Point2D position) {
+      zbe::Positionable<2>* pable2;
+      p2d->assignAvatar(&pable2);
+      pable2->setPosition(zbe::Point2D({std::min(std::max(xMin, position.x + xOff), xMax), std::min(std::max(yMin, position.y + yOff), yMax)}));
     }
 
     /** \brief Retunrs the position of this Positionable.
      * \return The position.
      */
-    Point<s>& getPosition() {return (p2d->getPosition());}
+    zbe::Point<2>& getPosition() {
+      zbe::Positionable<2>* pable2;
+      p2d->assignAvatar(&pable2);
+      return (pable2->getPosition());
+    }
 
   private:
     std::shared_ptr<zbe::AvatarEntity<Positionable<2> > > p2d;
-    double x0;
-    double y0;
-    double x1;
-    double y1;
+    double xMin;
+    double yMin;
+    double xMax;
+    double yMax;
+    double xOff;
+    double yOff;
 };
 
-}  // namespace zbe
+}  // namespace zombienoid
 
 #endif  // ZOMBIENOID_ENTITIES_AVATARS_BOUNDEDWRAPPERPOSITIONABLE2D_H_

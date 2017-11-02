@@ -179,6 +179,7 @@
 		<Unit filename="../../../src/ZBE_main/include/zombienoid.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/ZombienoidReactor.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/behaviors/BrickEraser.h" />
+		<Unit filename="../../../src/ZBE_main/include/zombienoid/behaviors/Demagnetizer.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/behaviors/XSetter.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/behaviors/builders/BallBuilder.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/behaviors/builders/ItemBuilder.h" />

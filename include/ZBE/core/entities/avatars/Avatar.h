@@ -22,6 +22,12 @@ struct Avatar {
 
     virtual ~Avatar(){}
 
+    /** \brief Register a new Ticket from a list.
+     *  \param id Id to identify the list.
+     *  \param ticket The ticket to be stored.
+     */
+    virtual void addToList(uint64_t id, std::shared_ptr<Ticket> ticket) = 0;
+
     /** \brief Change the state of this avatar in the list identified by id to ACTIVE.
      *  \param id Id to identify the list.
      */
