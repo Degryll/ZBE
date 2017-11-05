@@ -25,7 +25,7 @@ template <typename R>
 class ItemCatcher: public zbe::Actuator<zbe::WeakAvatarEntityContainer<zbe::Stated>, R> {
 public:
 
-  ItemCatcher(): items(){}
+  ItemCatcher(std::shared_ptr<zbe::Value<int64_t> > totalPoints): items(), daemonPoints(), totalPoints(totalPoints) {}
 
   void act(std::shared_ptr< zbe::WeakAvatarEntityContainer<zbe::Stated> > weakAEC) {
       zbe::Stated* stated;
@@ -33,15 +33,25 @@ public:
       uint64_t state = stated->getState();
       if (state>=0 && state<items.size()) {
         items[state]->run();
+        totalPoints->add(daemonPoints[state]);
       }
   }
 
-  void addItem(std::shared_ptr<zbe::Daemon> d){
-      items.push_back(d);
+  void addItem(std::shared_ptr<zbe::Daemon> daemon, int64_t points){
+      items.push_back(daemon);
+      daemonPoints.push_back(points);
   }
 
 private:
+
   std::vector<std::shared_ptr<zbe::Daemon> > items;
+  std::vector<int64_t> daemonPoints;
+  std::shared_ptr<zbe::Value<int64_t> > totalPoints;
+
+};
+
+class DummyItem : virtual public zbe::Daemon {
+  void run() {};
 };
 
 }  // namespace zombienoid

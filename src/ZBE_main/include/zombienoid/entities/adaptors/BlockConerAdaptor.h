@@ -18,6 +18,7 @@
 #include "ZBE/core/tools/math/objects.h"
 
 #include "zombienoid/entities/avatars/Solid.h"
+#include "zombienoid/entities/avatars/Breakable.h"
 
 namespace zombienoid {
 
@@ -29,14 +30,14 @@ public:
   BlockConerAdaptor(const BlockConerAdaptor&) = delete;
   void operator=(const BlockConerAdaptor&) = delete;
 
-  BlockConerAdaptor(std::weak_ptr<zbe::Element2D<R> > entity): e(entity), s(nullptr), aes(new zbe::AvatarEntityFixed<Solid>(new Solid())) {
+  BlockConerAdaptor(std::weak_ptr<zbe::Element2D<R> > entity): e(entity), s(nullptr), aes(new zbe::AvatarEntityFixed<Solid>(new Solid())), aeb(new zbe::AvatarEntityFixed<Breakable>(new Breakable())) {
     std::shared_ptr<zbe::Element2D<R> > ent = e.lock();
     std::shared_ptr<zbe::WeakAvatarEntityContainer<zbe::Avatar, zbe::Positionable<2>, zbe::Stated> > aeContainer = std::make_shared<zbe::WeakAvatarEntityContainer<zbe::Avatar, zbe::Positionable<2>, zbe::Stated> >(ent);
     zbe::AABB2D aabb({(double)ent->getX(), (double)ent->getY()},{(double)ent->getX()+ent->getW(), (double)ent->getY()+ent->getH()});
     std::shared_ptr<zbe::StaticSolidAABB2D<R> > cObject(new zbe::StaticSolidAABB2D<R>(aabb));
 
-    std::shared_ptr<zbe::WeakAvatarEntityContainer<Solid> > weakAEC = std::make_shared<zbe::WeakAvatarEntityContainer<Solid> >(aes);
-    std::shared_ptr<zbe::ReactObject<R> > ro(new zbe::ReactObjectCommon<R, Solid>(weakAEC));
+    std::shared_ptr<zbe::WeakAvatarEntityContainer<Solid, Breakable> > weakAEC = std::make_shared<zbe::WeakAvatarEntityContainer<Solid, Breakable> >(aes, aeb);
+    std::shared_ptr<zbe::ReactObject<R> > ro(new zbe::ReactObjectCommon<R, Solid, Breakable>(weakAEC));
 
     s = new zbe::CollisionerCommon<R,zbe::Avatar, zbe::Positionable<2>, zbe::Stated>(aeContainer, cObject, ro, ent->getActuatorsList());
   }
@@ -58,6 +59,7 @@ private:
     std::weak_ptr<zbe::Element2D<R> > e;
     zbe::CollisionerCommon<R,zbe::Avatar, zbe::Positionable<2>, zbe::Stated>* s;
     std::shared_ptr<zbe::AvatarEntity<Solid> > aes;
+    std::shared_ptr<zbe::AvatarEntity<Breakable> > aeb;
 };
 
 }  // namespace zombienoid

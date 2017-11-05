@@ -16,17 +16,22 @@ namespace zbe {
 void SingleTextSDLDrawer::apply(std::shared_ptr<AvatarEntityContainer<SingleTextSprite> > entity) {
   SingleTextSprite* avatar;
   assignAvatar(entity, &avatar);
+  SDL_Texture* t = textFontStore->renderText(avatar->getGraphics(), avatar->getText().c_str());
+
+  int tw, th, aw, ah;
+  SDL_QueryTexture(t, NULL,NULL, &tw, &th);
   SDL_Rect src,dst;
+  aw = (int)avatar->getW();
+  ah = (int)avatar->getH();
+  src.w = std::min(tw,aw);
+  src.h = std::min(th,ah);
+  dst.w = src.w;
+  dst.h = src.h;
   src.x = 0;
   src.y = 0;
-  src.w = avatar->getW();
-  src.h = avatar->getH();
+  dst.x = (int)avatar->getX() + (aw - dst.w);
+  dst.y = (int)avatar->getY() + (ah - dst.h);
 
-  dst.x = avatar->getX();
-  dst.y = avatar->getY();
-  dst.w = avatar->getW();
-  dst.h = avatar->getH();
-  SDL_Texture* t = textFontStore->renderText(avatar->getGraphics(), avatar->getText().c_str());
   window->render(t, &src, &dst);
   SDL_DestroyTexture(t);
 }

@@ -18,7 +18,7 @@
 
 namespace zbe {
 
-class BaseState : public State {
+class BaseState : virtual public State {
 public:
   BaseState(std::shared_ptr<Value<int64_t> > state) : s(state) {}
 

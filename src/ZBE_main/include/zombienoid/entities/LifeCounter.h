@@ -28,22 +28,34 @@ namespace zbe {
 /** \brief This implements a base 1:1 avatar that can bounce.
  */
 class LifeCounter: public BaseState, // TODO build BaseState with a Value<uint64_t> reference.
+                   virtual public State,
                    public AvatarEntityFixed<Stated>,
                    public TextBox {
 public:
 
-  LifeCounter(int64_t x, int64_t y, int64_t width, int64_t height, uint64_t graphics, std::shared_ptr<Value<int64_t> > lifes)
-    : BaseState(lifes), TextBox(x, y, width, height, graphics), t(std::to_string(lifes->getValue())) {
+  LifeCounter(int64_t x, int64_t y, int64_t width, int64_t height, uint64_t charLenght , uint64_t graphics, std::shared_ptr<Value<int64_t> > lifes)
+    : BaseState(lifes), TextBox(x, y, width, height, graphics), len(charLenght), stateCache(BaseState::getState()), t(std::to_string(lifes->getValue())) {
     AvatarEntityFixed<Stated>::setAvatar(new BaseStated(this));
     AvatarEntityFixed<SingleTextSprite>::setAvatar(new BaseSingleTextSprite(this));
+    updateText();
   }
 
   const std::string& getText() {
-    t = std::to_string(BaseState::getState());
+    updateText();
     return t;
   }
 
 private:
+  void updateText() {
+    int64_t state = BaseState::getState();
+    if(state != stateCache) {
+      stateCache = BaseState::getState();
+      t = std::to_string(state);
+      t.insert(t.begin(), std::max((uint64_t)0, len - t.length()), ' ');
+    }
+  }
+  uint64_t len;
+  int64_t stateCache;
   std::string t;
 };
 

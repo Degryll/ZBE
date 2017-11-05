@@ -18,7 +18,7 @@
 
 namespace zbe {
 
-class TextBox: public TextDrawable,
+class TextBox: virtual public TextDrawable,
                public AvatarEntityFixed<SingleTextSprite> {
 public:
 
