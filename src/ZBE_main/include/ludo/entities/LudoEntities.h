@@ -14,10 +14,16 @@
 #include <memory>
 
 #include "ZBE/archetypes/Drawable.h"
+#include "ZBE/archetypes/State.h"
+#include "ZBE/archetypes/TimeStamp.h"
+#include "ZBE/archetypes/implementations/SimpleTimeStamp.h"
+#include "ZBE/archetypes/implementations/SimpleState.h"
 #include "ZBE/archetypes/implementations/SimpleWideBouncingAPO.h"
 #include "ZBE/archetypes/implementations/SimpleMobile.h"
+#include "ZBE/entities/avatars/Stated.h"
 #include "ZBE/entities/avatars/Bouncer.h"
 #include "ZBE/entities/avatars/Movable.h"
+#include "ZBE/entities/avatars/implementations/BaseStated.h"
 #include "ZBE/entities/avatars/implementations/BaseBouncer.h"
 #include "ZBE/core/entities/Entity.h"
 #include "ZBE/core/entities/avatars/Avatar.h"
@@ -92,13 +98,13 @@ public:
 };
 
 
-class BallParticle :    public RotatedDrawable,
-                        public State,
-                        public zbe::AvatarEntityFixed<Stated>,
+class BallParticle :    virtual public RotatedDrawable,
+                        public zbe::SimpleState,
+                        public zbe::AvatarEntityFixed<zbe::Stated>,
                         public zbe::AvatarEntityAdapted<zbe::RotatedSprite> {
 public:
   BallParticle(double x, double y, double radius, uint64_t graphics, double angle):
-       s(), g(graphics),
+       SimpleState(), g(graphics),
        x(x-radius),y(y-radius),
        d(2*radius), a(angle) {
     //zbe::AvatarEntityFixed<Stated>::setAvatar(&s);
@@ -110,14 +116,38 @@ public:
   int64_t getH() {return ((int64_t)d);}
   double  getAngle() {return a;}
   uint64_t getGraphics() {return (g);}
-  uint64_t getState(){return s.getState();}
 
 private:
-  SimpleStated s;
   uint64_t g;    //!< Image index
   double x, y;
   double d, a;
 };
+
+class GraphicElement :    virtual public RotatedDrawable,
+                        public zbe::SimpleState,
+                        public zbe::SimpleTimeStamp {
+public:
+  GraphicElement(double x, double y, double w, double h, int64_t state, uint64_t graphics, double angle, int64_t timeStamp):
+       SimpleState(state), SimpleTimeStamp(timeStamp),
+       g(graphics), x(x), y(y),
+       w(w), h(h), a(angle) {
+    //zbe::AvatarEntityFixed<Stated>::setAvatar(&s);
+  };
+
+  int64_t getX() {return ((int64_t)x);}
+  int64_t getY() {return ((int64_t)y);}
+  int64_t getW() {return ((int64_t)w);}
+  int64_t getH() {return ((int64_t)h);}
+  double  getAngle() {return a;}
+  uint64_t getGraphics() {return (g);}
+
+private:
+  uint64_t g;    //!< Image index
+  double x, y;
+  double w, h;
+  double a;
+};
+
 
 template<typename R>
 class LudoCircleArea :  public zbe::AvatarEntityFixed<zbe::Collisionator<R> > {

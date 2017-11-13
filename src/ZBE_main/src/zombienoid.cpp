@@ -103,8 +103,8 @@
 
 #include "zombienoid/ZombienoidReactor.h"
 
-#include "zombienoid/graphics/SimpleSpriteSheet.h"
 #include "zombienoid/graphics/MultiSpriteSheet.h"
+#include "zombienoid/graphics/SimpleSpriteSheet.h"
 
 
 namespace zombienoid {

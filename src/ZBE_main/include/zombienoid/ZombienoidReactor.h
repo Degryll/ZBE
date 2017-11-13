@@ -24,17 +24,11 @@ public:
   virtual void act() {}
 
   virtual void act(std::shared_ptr<zbe::WeakAvatarEntityContainer<zbe::InteractionTester> >) {}
-
   virtual void act(std::shared_ptr<zbe::WeakAvatarEntityContainer<zbe::Stated> >) {}
-
   virtual void act(std::shared_ptr<zbe::WeakAvatarEntityContainer<CustomVector> >) {}
-
   virtual void act(std::shared_ptr<zbe::WeakAvatarEntityContainer<Solid> >) {}
-
   virtual void act(std::shared_ptr<zbe::WeakAvatarEntityContainer<Magnet<2> > >) {}
-
   virtual void act(std::shared_ptr<zbe::WeakAvatarEntityContainer<Breakable> >) {}
-
   virtual void act(std::shared_ptr<zbe::WeakAvatarEntityContainer<Wall> >) {}
 
 };

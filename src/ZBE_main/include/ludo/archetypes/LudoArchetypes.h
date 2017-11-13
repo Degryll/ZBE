@@ -23,7 +23,7 @@ class RotatedDrawable : virtual public zbe::Drawable {
     virtual double getAngle() = 0;
 };
 
-/** \brief This define a Drawable entity with an angle.
+/** \brief This define a Drawable entity with modifiable graphgics id
  */
 class SetableGraphics {
   public:
@@ -32,13 +32,13 @@ class SetableGraphics {
     virtual void setGraphics(unsigned) = 0;
 };
 
-/** \brief This define a Drawable entity with an angle.
- */
-class State {
-  public:
-    virtual ~State() {}
-    virtual uint64_t getState() = 0;
-};
+///** \brief This define a Drawable entity with an angle.
+// */
+//class State {
+//  public:
+//    virtual ~State() {}
+//    virtual uint64_t getState() = 0;
+//};
 
 }  // namespace zbe
 

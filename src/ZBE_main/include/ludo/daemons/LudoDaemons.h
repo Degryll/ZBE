@@ -15,6 +15,7 @@
 
 #include "ZBE/core/tools/containers/ResourceManager.h"
 #include "ZBE/core/daemons/Daemon.h"
+#include "ZBE/core/system/SysTime.h"
 
 #include "ludo/entities/LudoEntities.h"
 
@@ -30,6 +31,28 @@ public:
 private:
   uint64_t id;
   zbe::ResourceManager<zbe::TicketedForwardList<T> >& lmT;
+};
+
+class StateRotator : public zbe::Daemon {
+  public:
+	StateRotator(const StateRotator&) = delete;
+	void operator=(const StateRotator&) = delete;
+
+  	StateRotator(std::shared_ptr<GraphicElement> graphElem, int64_t minState, int64_t maxState)
+  	  : ge(graphElem), mState(minState),  states(maxState - minState + 1), sysTime(zbe::SysTime::getInstance()) {}
+
+  	void run() {
+      int64_t current = ge->getState() - mState;
+      current = ((current+1) % states) + mState;
+      ge->setState(current);
+      ge->setTimeStamp(sysTime.getEventTime());
+  	}
+
+  private:
+    std::shared_ptr<GraphicElement> ge;
+    int64_t mState;
+    int64_t states;
+    zbe::SysTime &sysTime = zbe::SysTime::getInstance();
 };
 
 } // namespace

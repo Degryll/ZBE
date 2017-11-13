@@ -13,12 +13,13 @@
 #include <stdint.h>
 #include <vector>
 
+#include "ZBE/core/tools/graphics/SpriteSheet.h"
 #include "ZBE/core/tools/graphics/Sprite.h"
 #include "ZBE/core/tools/math/Vector.h"
 #include "ZBE/core/tools/math/Point.h"
 #include "ZBE/core/tools/math/Region.h"
 #include "ZBE/core/entities/AvatarEntity.h"
-#include "zombienoid/graphics/MultiSpriteSheet.h"
+#include "ZBE/core/entities/avatars/AnimatedSprite.h"
 
 namespace zombienoid {
 

@@ -98,7 +98,6 @@ class TicketEraser : public zbe::TimeHandler {
     std::shared_ptr<zbe::Ticket> t;
 };
 
-
 class DemonRecurrentTimeHandler : public zbe::TimeHandler {
   public:
 	DemonRecurrentTimeHandler(const DemonRecurrentTimeHandler&) = delete;

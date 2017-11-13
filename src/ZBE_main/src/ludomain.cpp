@@ -7,9 +7,11 @@
 #include <cstdlib>
 
 #include "ZBE/core/daemons/DaemonMaster.h"
+
 #include "ZBE/core/entities/avatars/Collisioner.h"
 #include "ZBE/core/entities/avatars/Collisionator.h"
 #include "ZBE/core/entities/avatars/implementations/VoidCollisioner.h"
+
 #include "ZBE/core/events/Event.h"
 #include "ZBE/core/events/EventStore.h"
 #include "ZBE/core/events/TimeEvent.h"
@@ -25,21 +27,36 @@
 #include "ZBE/core/events/generators/TimeEventGenerator.h"
 #include "ZBE/core/events/handlers/Actuator.h"
 #include "ZBE/core/events/handlers/ActuatorWrapper.h"
+
 #include "ZBE/core/system/SysTime.h"
 #include "ZBE/core/system/SysIdGenerator.h"
+
 #include "ZBE/core/tools/Timer.h"
 #include "ZBE/core/tools/math/math.h"
+#include "ZBE/core/tools/graphics/SpriteSheet.h"
+
 #include "ZBE/core/system/SysError.h"
+#include "ZBE/core/system/MainLoop.h"
+
+#include "ZBE/core/daemons/BasicPreLoopTimeDaemon.h"
 #include "ZBE/core/daemons/Punishers.h"
+
 #include "ZBE/archetypes/Mobile.h"
 #include "ZBE/archetypes/MobileAPO.h"
+
 #include "ZBE/behaviors/UniformLinearMotion.h"
 #include "ZBE/behaviors/Bounce.h"
 #include "ZBE/entities/adaptors/SimpleDrawableSingleSpriteAdaptor.h"
+
 #include "ZBE/SDL/tools/SDLTimer.h"
 #include "ZBE/SDL/system/SDLEventDispatcher.h"
 #include "ZBE/SDL/system/SDLWindow.h"
+#include "ZBE/SDL/drawers/SpriteSheetSDLDrawer.h"
 #include "ZBE/SDL/drawers/SingleSpriteSDLDrawer.h"
+#include "ZBE/SDL/daemons/BasicPreLoopSDLDaemon.h"
+#include "ZBE/SDL/daemons/BasicPostLoopSDLDaemon.h"
+
+#include "zombienoid/graphics/MultiSpriteSheet.h"
 
 #include "game/events/handlers/ExitInputHandler.h"
 
@@ -53,11 +70,6 @@
 #include "ludo/events/handlers/LudoActuators.h"
 #include "ludo/events/handlers/LudoHandlers.h"
 
-#include "ZBE/core/system/MainLoop.h"
-#include "ZBE/core/daemons/BasicPreLoopTimeDaemon.h"
-#include "ZBE/SDL/daemons/BasicPreLoopSDLDaemon.h"
-#include "ZBE/SDL/daemons/BasicPostLoopSDLDaemon.h"
-
 #define PI 3.14159265
 
 namespace ludo {
@@ -67,13 +79,20 @@ using namespace zbe;
 template<typename T>
 using TicketedAE = TicketedForwardList<AvatarEntity<T> >;
 
+template <typename ...Avatars>
+using TicketedAEC = TicketedForwardList<AvatarEntityContainer<Avatars...> >;
+
 int ludomain(int, char** ) {
 
   printf("--- Ludo main ---\n\n");
 
   enum {
     WIDTH = 1024,
-    HEIGHT = 768
+    HEIGHT = 768,
+    MARGIN = 50,
+    LEFT_PANEL = 300,
+    BOARD_WIDTH = WIDTH - MARGIN - LEFT_PANEL,
+    BOARD_HEIGHT = HEIGHT - MARGIN
   };
 
   //int GENERATORLIST = SysIdGenerator::getId();
@@ -244,10 +263,10 @@ int ludomain(int, char** ) {
   std::shared_ptr<zbe::AvatarEntityContainer<zbe::RotatedSprite> > aecrs;
   std::shared_ptr<zbe::AvatarEntityContainer<zbe::Positionable<2> > > aecp2;
 
-  for(int i = 0; i<1; i++){
+  for(int i = 0; i<1000; i++){
     int64_t r = 16 + (rand()% 4);
-    int64_t xc =(WIDTH/2 + rand()%100-50);
-    int64_t yc = (HEIGHT/2 + rand()%100-50);
+    int64_t xc =(MARGIN + (BOARD_WIDTH/2) + rand()%100-50);
+    int64_t yc = (MARGIN + (BOARD_HEIGHT/2) + rand()%100-50);
     unsigned graphId = ballgraphics[0];
 
     int64_t vt = 500;
@@ -290,7 +309,7 @@ int ludomain(int, char** ) {
   std::shared_ptr<TicketedForwardList<AvatarEntityContainer<Movable<2> > > > tflLAEMovable(new TicketedForwardList<AvatarEntityContainer<Movable<2> > >());
   lmTflAEMovable.insert(RROTATORS, tflLAEMovable);
 
-  std::shared_ptr<LudoBall<LudoReactor> > rotator = std::make_shared<LudoBall<ludo::LudoReactor> >( WIDTH/2, HEIGHT/2, 16, 200, 100, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics[3]);
+  std::shared_ptr<LudoBall<LudoReactor> > rotator = std::make_shared<LudoBall<ludo::LudoReactor> >( MARGIN + (BOARD_WIDTH/2), MARGIN + (BOARD_HEIGHT/2), 16, 200, 100, BALLACTUATORLIST, COLLISIONABLELIST, ballgraphics[3]);
   std::shared_ptr<Adaptor<RotatedSprite> > spriteAdaptor = std::make_shared<RotatedDrawableSimpleRotatedSpriteAdaptor>(rotator);
   setAdaptor(rotator, spriteAdaptor);
   std::shared_ptr<Adaptor<Collisionator<LudoReactor> > > lbca = std::make_shared<LudoBallCollisionatorAdaptor<LudoReactor> >(rotator);
@@ -328,13 +347,14 @@ int ludomain(int, char** ) {
   //Adding daemons
   killMaster->addDaemon(areaCreatorDaemon);
   killMaster->addDaemon(iceg);
-  killMaster->addDaemon(eraser);
+  //killMaster->addDaemon(eraser);
   killMaster->addDaemon(explodParticle);
+  //This is erased on reactBehaviorMaster cause areas must be still present when events are managed.
+  reactBehaviorMaster->addDaemon(eraser);
 
   DaemonInputHandler dih(killMaster);
 
   ieg->addHandler(ZBEK_k, &dih);
-  //** kill end
 
   auto fticket = vAEMovable->push_front(aecm2);
   fticket->setINACTIVE();
@@ -356,10 +376,93 @@ int ludomain(int, char** ) {
   printf("Creating the board and giving it a size\n");fflush(stdout);
   std::shared_ptr<std::forward_list<ActuatorWrapper<LudoReactor, zbe::WeakAvatarEntityContainer<void> >*> > boardActuatorsList(new std::forward_list<ActuatorWrapper<LudoReactor, zbe::WeakAvatarEntityContainer<void> >*>());
   lmSimpleConerActuatorsList.insert(BOARDACTUATORLIST, boardActuatorsList);
-  std::shared_ptr<LudoBoard<LudoReactor> > board = std::make_shared<LudoBoard<LudoReactor> >(50, 50, WIDTH - 50, HEIGHT - 50, BOARDACTUATORLIST);
+  std::shared_ptr<LudoBoard<LudoReactor> > board = std::make_shared<LudoBoard<LudoReactor> >(MARGIN, MARGIN, BOARD_WIDTH, BOARD_HEIGHT, BOARDACTUATORLIST);
   collisionablesList->push_front(board);
   std::shared_ptr<LudoBoard<LudoReactor> > board2 = std::make_shared<LudoBoard<LudoReactor> >(0, 0, WIDTH , HEIGHT , BOARDACTUATORLIST);
   collisionablesList->push_front(board2);
+
+  //Right panel
+  const char dmg_walk[] = "data/images/ludo/platformer/Char_aaa_damaged_walk.png";
+  const char in_air[] = "data/images/ludo/platformer/Char_aaa_in_air.png";
+  const char jump_end[] = "data/images/ludo/platformer/Char_aaa_jump_end.png";
+  const char jump_start[] = "data/images/ludo/platformer/Char_aaa_jump_start.png";
+  const char walk[] = "data/images/ludo/platformer/Char_aaa_walk.png";
+  const char stand[] = "data/images/ludo/platformer/Char_aaa_stand.png";
+
+  uint64_t WALK_GRAPHICS = imgStore.loadImg(walk);
+  uint64_t DMG_WALK_GRAPHICS = imgStore.loadImg(dmg_walk);
+  uint64_t IN_AIR_GRAPHICS = imgStore.loadImg(in_air);
+  uint64_t JUMP_END_GRAPHICS = imgStore.loadImg(jump_end);
+  uint64_t JUMP_START_GRAPHICS = imgStore.loadImg(jump_start);
+  uint64_t STAND_GRAPHICS = imgStore.loadImg(stand);
+
+  zombienoid::ImgSrcDef playerGraphics;
+  playerGraphics.frameAmount = 24;
+  playerGraphics.frameDisplacemet = Vector2D({205.0,0.0});
+  playerGraphics.frameTime = SECOND / 24;
+  playerGraphics.intialRegion = Region2D({0.0,0.0},{205.0,299.0});
+  playerGraphics.imgSrcId = WALK_GRAPHICS;
+
+  zombienoid::MultiSpriteSheet* playerSheet = new zombienoid::MultiSpriteSheet(6, playerGraphics);
+
+  playerGraphics.imgSrcId = DMG_WALK_GRAPHICS;
+  playerSheet->setImgSrcDef(1,playerGraphics);
+
+  playerGraphics.frameAmount = 12;
+  //playerGraphics.frameTime = SECOND / 12;
+  playerGraphics.imgSrcId = JUMP_START_GRAPHICS;
+  playerSheet->setImgSrcDef(2,playerGraphics);
+
+  playerGraphics.frameAmount = 12;
+  //playerGraphics.frameTime = SECOND / 12;
+  playerGraphics.imgSrcId = IN_AIR_GRAPHICS;
+  playerSheet->setImgSrcDef(3,playerGraphics);
+
+  playerGraphics.frameAmount = 6;
+  //playerGraphics.frameTime = SECOND / 12;
+  playerGraphics.imgSrcId = JUMP_END_GRAPHICS;
+  playerSheet->setImgSrcDef(4,playerGraphics);
+
+  playerGraphics.frameAmount = 12;
+  //playerGraphics.frameTime = SECOND / 12;
+  playerGraphics.imgSrcId = STAND_GRAPHICS;
+  playerSheet->setImgSrcDef(5,playerGraphics);
+
+  const int AS_LIST = SysIdGenerator::getId();
+  const int PLAYER_SS = SysIdGenerator::getId();
+
+  ResourceManager<SpriteSheet<AnimatedSprite> >& rmss = ResourceManager<SpriteSheet<AnimatedSprite> >::getInstance();
+  std::shared_ptr<SpriteSheet<AnimatedSprite> > playerSS(playerSheet);
+  rmss.insert(PLAYER_SS, playerSS);
+  ResourceManager<TicketedAEC<AnimatedSprite> >& rmtfaecas = ResourceManager<TicketedAEC<AnimatedSprite> >::getInstance();
+  std::shared_ptr<TicketedAEC<AnimatedSprite> > itemAnimatedSpriteList(new TicketedAEC<AnimatedSprite>());
+  rmtfaecas.insert(AS_LIST, itemAnimatedSpriteList);
+  std::shared_ptr<Daemon> mssDrawerDaemon(new  BehaviorDaemon<AnimatedSprite, TicketedAEC<AnimatedSprite> >(std::make_shared<SpriteSheetSDLDrawer<AnimatedSprite> >(&window, &imgStore), AS_LIST));
+  drawMaster->addDaemon(mssDrawerDaemon);
+
+  std::shared_ptr<GraphicElement> ge = std::make_shared<GraphicElement>(700, 50, 205, 299, 0, PLAYER_SS, 0, 0);
+  std::shared_ptr<Adaptor<AnimatedSprite> > sAdaptor = std::make_shared<GraphicElementAnimatedSpriteAdaptor>(ge);
+  std::shared_ptr<AvatarEntityAdapted<AnimatedSprite> > aeaas = std::make_shared<AvatarEntityAdapted<AnimatedSprite> >();
+  setAdaptor(aeaas, sAdaptor);
+  std::shared_ptr<AvatarEntityContainer<AnimatedSprite> > aecas = std::make_shared<AvatarEntityContainer<AnimatedSprite> >(aeaas);
+
+  std::shared_ptr<Daemon> stateRotator(new  StateRotator(ge, 0, 5));
+  std::shared_ptr<TimeHandler> stateRotatorTimer = std::make_shared<DemonRecurrentTimeHandler>(stateRotator, teg, SECOND * 2);
+  teg->addTimer(stateRotatorTimer, SECOND * 2);
+
+  itemAnimatedSpriteList->push_front(aecas);
+
+  std::shared_ptr<GraphicElement> ge1 = std::make_shared<GraphicElement>(700, 350, 100, 150, 0, PLAYER_SS, 0, 0);
+  sAdaptor = std::make_shared<GraphicElementAnimatedSpriteAdaptor>(ge1);
+  aeaas = std::make_shared<AvatarEntityAdapted<AnimatedSprite> >();
+  setAdaptor(aeaas, sAdaptor);
+  aecas = std::make_shared<AvatarEntityContainer<AnimatedSprite> >(aeaas);
+
+  std::shared_ptr<Daemon> stateRotator1(new  StateRotator(ge1, 0, 5));
+  std::shared_ptr<TimeHandler> stateRotatorTimer1 = std::make_shared<DemonRecurrentTimeHandler>(stateRotator1, teg, SECOND * 2);
+  teg->addTimer(stateRotatorTimer1, SECOND * 2);
+
+  itemAnimatedSpriteList->push_front(aecas);
 
   printf("|=================== Starting up system ===================|\n");fflush(stdout);
   printf("Starting SysTimer\n");fflush(stdout);
