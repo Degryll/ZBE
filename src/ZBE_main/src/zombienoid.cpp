@@ -161,6 +161,8 @@ int zombienoidmain(int, char*[]) {
     ITEM_POINTS_999 = 999,
     ITEM_POINTS_N5000 = -5000,
 
+    ITEM_STICKY_TIME = SECOND*4,
+
     NBRICKS_X = 16,
     NBRICKS_Y = 10,
     BRICK_WIDTH = 51,
@@ -675,7 +677,7 @@ int zombienoidmain(int, char*[]) {
   std::shared_ptr<Daemon> decelItem = std::make_shared<BallAcceleratorItem<TicketedFAEC<Bouncer<2>, Resizable> > >(BALL_LIST, 0.666666);
   std::shared_ptr<Daemon> ballMagnifierItem = std::make_shared<BallRadiusItem<TicketedFAEC<Bouncer<2>, Resizable> > >(BALL_LIST, BALL_SIZE_STEP, BALL_SIZE_MIN, BALL_SIZE_MAX);
   std::shared_ptr<Daemon> ballMinifierItem = std::make_shared<BallRadiusItem<TicketedFAEC<Bouncer<2>, Resizable> > >(BALL_LIST, -BALL_SIZE_STEP, BALL_SIZE_MIN, BALL_SIZE_MAX);
-  std::shared_ptr<Daemon> magnetBarItem = std::make_shared<StickyBarItem>(bar, teg,SECOND*6,1);
+  std::shared_ptr<Daemon> magnetBarItem = std::make_shared<StickyBarItem>(bar, teg, ITEM_STICKY_TIME, 1);
   std::shared_ptr<Daemon> dummyItem = std::make_shared<DummyItem>();
 
   catcher->addItem(lifeItem, ITEM_POINTS);

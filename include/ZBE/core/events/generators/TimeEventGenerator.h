@@ -17,6 +17,7 @@
 
 #include "ZBE/core/tools/math/math.h"
 #include "ZBE/core/events/EventStore.h"
+#include "ZBE/core/events/TimeEvent.h"
 #include "ZBE/core/events/handlers/TimeHandler.h"
 #include "ZBE/core/system/SysTime.h"
 
@@ -30,7 +31,46 @@ struct TimerData {
   inline bool operator<(const TimerData& rhs) const {return (this->time < rhs.time);}
 };
 
-typedef std::multiset<TimerData>::iterator TimerIter;
+class TimerTicket {
+public:
+
+  TimerTicket(const TimerTicket&) = delete;
+  void operator=(const TimerTicket&) = delete;
+
+  TimerTicket(std::multiset<TimerData>::iterator iter, std::multiset<TimerData>& timers, int eventId) : iter(iter), timers(timers), eventId(eventId), es(EventStore::getInstance()), sysTime(SysTime::getInstance()) {}
+
+  /**
+   * return true if the increment makes the timer go to zero or less.
+   */
+  bool increaseTime(int64_t increment) {
+    TimerData td = (*iter);
+    timers.erase(iter);
+    td.time += increment;
+    if(td.time>0){
+      iter = timers.insert(td);
+      return (false);
+    } else {
+      es.storeInstantEvent(new TimeEvent(eventId, 0, iter->handler));
+      return (true);
+    }
+
+  }
+
+  void erase() {
+    timers.erase(iter);
+  }
+
+  int64_t getTime() {
+    return (iter->time);
+  }
+
+private:
+  std::multiset<TimerData>::iterator iter;
+  std::multiset<TimerData>& timers;
+  int eventId;
+  EventStore& es;
+  SysTime &sysTime;
+};
 
 /** \brief Generate collision events.
  */
@@ -38,7 +78,7 @@ class TimeEventGenerator : virtual public Daemon {
   public:
     /** \brief Empty Constructor.
      */
-    TimeEventGenerator(int eventId) : eventId(eventId), es(EventStore::getInstance()), timers(), sysTime(zbe::SysTime::getInstance()) {};
+    TimeEventGenerator(int eventId) : eventId(eventId), es(EventStore::getInstance()), timers(), sysTime(SysTime::getInstance()) {};
 
 //    /** \brief Empty destructor.
 //    */
@@ -50,16 +90,8 @@ class TimeEventGenerator : virtual public Daemon {
      * \return return An iterator used to erase the timer.
      * \sa eraseTimer
      */
-    inline TimerIter addTimer(std::shared_ptr<TimeHandler> handler, int64_t time) {
-      return (timers.insert(TimerData(handler,quantizeTime(time))));
-    }
-
-    /** Erase a Timer.
-     * \param it Iterator to the timer
-     * \sa addTimer
-     */
-    inline void eraseTimer(TimerIter it) {
-      timers.erase(it);
+    inline std::shared_ptr<TimerTicket> addTimer(std::shared_ptr<TimeHandler> handler, int64_t time) {
+      return (std::make_shared<TimerTicket>(timers.insert(TimerData(handler,quantizeTime(time))), timers, eventId));
     }
 
     /** Will search for time events occurred between initTime and finalTime and send it to the EventStore.
@@ -72,7 +104,7 @@ class TimeEventGenerator : virtual public Daemon {
     int eventId;
     EventStore& es;
     std::multiset<TimerData> timers;
-    zbe::SysTime &sysTime;
+    SysTime &sysTime;
 };
 
 }  // namespace zbe
