@@ -165,8 +165,8 @@ int zombienoidmain(int, char*[]) {
 
     NBRICKS_X = 16,
     NBRICKS_Y = 10,
-    BRICK_WIDTH = 51,
-    BRICK_HEIGHT = 32,
+    BRICK_WIDTH = 48,
+    BRICK_HEIGHT = 24,
     BRICK_COLS = 12,
     BRICK_ROWS = 8,
     BRICKS_X_MARGIN = 72,
@@ -230,7 +230,7 @@ int zombienoidmain(int, char*[]) {
 
 
   //const char boardImg[] = "escriba su anuncio aqui, por favor";
-  const char brickImg[] = "data/images/zombieball/braikn_32.png";
+  const char brickImg[] = "data/images/zombieball/braikn_64.png";
   const char ballImg[] = "data/images/zombieball/zball_n.png";
   const char barImg[] = "data/images/zombieball/zombar_color_32.png";
   const char barImgGrey[] = "data/images/zombieball/zombar_grey_32.png";
