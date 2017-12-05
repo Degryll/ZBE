@@ -7,8 +7,8 @@
  * @brief Daemon capable of increase the amount of lifes.
  */
 
-#ifndef ZBE_MAIN_ZMBIENOID_DAEMONS_ITEMS_LIFEITEM
-#define ZBE_MAIN_ZMBIENOID_DAEMONS_ITEMS_LIFEITEM
+#ifndef ZOMBIENOID_DAEMONS_ITEMS_LIFEITEM
+#define ZOMBIENOID_DAEMONS_ITEMS_LIFEITEM
 
 #include <memory>
 #include <cstdint>
@@ -35,4 +35,4 @@ private:
 
 }  // namespace zombienoid
 
-#endif // ZBE_MAIN_ZMBIENOID_DAEMONS_ITEMS_LIFEITEM
+#endif // ZOMBIENOID_DAEMONS_ITEMS_LIFEITEM

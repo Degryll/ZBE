@@ -14,6 +14,7 @@
 
 #include "ZBE/core/entities/Adaptor.h"
 #include "ZBE/entities/ActiveElement2D.h"
+#include "ZBE/entities/avatars/Resizable.h"
 
 #include "zombienoid/entities/avatars/Solid.h"
 #include "zombienoid/entities/avatars/Scorer.h"
@@ -29,15 +30,15 @@ public:
   BallCatorAdaptor(const BallCatorAdaptor&) = delete;
   void operator=(const BallCatorAdaptor&) = delete;
 
-  BallCatorAdaptor(std::weak_ptr<zbe::ActiveElement2D<R> > entity)
-    : e(entity), s(nullptr), aes(new zbe::AvatarEntityFixed<Solid>(new Solid())), aesc(new zbe::AvatarEntityFixed<Scorer>(new SimpleScorer())) {
+  BallCatorAdaptor(std::weak_ptr<zbe::ActiveElement2D<R> > entity, std::weak_ptr<zbe::AvatarEntity<zbe::Resizable> > resizeable)
+    : e(entity), resizeable(resizeable), s(nullptr), aes(new zbe::AvatarEntityFixed<Solid>(new Solid())), aesc(new zbe::AvatarEntityFixed<Scorer>(new SimpleScorer())) {
     std::shared_ptr<zbe::ActiveElement2D<R> > ent = e.lock();
-    std::shared_ptr<zbe::WeakAvatarEntityContainer<zbe::Avatar, zbe::Bouncer<2>, zbe::Stated, Scorer> > aeContainer = std::make_shared<zbe::WeakAvatarEntityContainer<zbe::Avatar, zbe::Bouncer<2>, zbe::Stated, Scorer> >(ent,ent,ent,aesc);
+    std::shared_ptr<zbe::WeakAvatarEntityContainer<zbe::Avatar, zbe::Bouncer<2>, zbe::Stated, Scorer, zbe::Resizable> > aeContainer = std::make_shared<zbe::WeakAvatarEntityContainer<zbe::Avatar, zbe::Bouncer<2>, zbe::Stated, Scorer, zbe::Resizable> >(ent,ent,ent,aesc, resizeable);
     std::shared_ptr<zbe::ConstantMovingCircle<R> > cObject(new zbe::ConstantMovingCircle<R>(zbe::Circle(zbe::Point2D({(ent->getPosition().x), ent->getPosition().y}), ent->getWidth()/2.0), ent->getVelocity()));
 
     std::shared_ptr<zbe::WeakAvatarEntityContainer<Solid> > weakAEC = std::make_shared<zbe::WeakAvatarEntityContainer<Solid> >(aes);
     std::shared_ptr<zbe::ReactObject<R> > ro(new zbe::ReactObjectCommon<R, Solid>(weakAEC));
-    s = new zbe::CollisionatorCommon<R,zbe::Avatar, zbe::Bouncer<2>, zbe::Stated, Scorer>(aeContainer, cObject, ro, ent->getActuatorsList(), ent->getCollisionablesList());
+    s = new zbe::CollisionatorCommon<R, zbe::Avatar, zbe::Bouncer<2>, zbe::Stated, Scorer, zbe::Resizable>(aeContainer, cObject, ro, ent->getActuatorsList(), ent->getCollisionablesList());
   }
 
   ~BallCatorAdaptor() {delete s;}
@@ -52,7 +53,8 @@ public:
 
 private:
     std::weak_ptr<zbe::ActiveElement2D<R> > e;
-    zbe::CollisionatorCommon<R,zbe::Avatar, zbe::Bouncer<2>, zbe::Stated, Scorer>* s;
+    std::weak_ptr<zbe::AvatarEntity<zbe::Resizable> > resizeable;
+    zbe::CollisionatorCommon<R, zbe::Avatar, zbe::Bouncer<2>, zbe::Stated, Scorer, zbe::Resizable>* s;
     std::shared_ptr<zbe::AvatarEntity<Solid> > aes;
     std::shared_ptr<zbe::AvatarEntity<Scorer> > aesc;
 };

@@ -7,8 +7,8 @@
  * @brief Daemon capable of increase balls radius
  */
 
-#ifndef ZBE_MAIN_ZMBIENOID_DAEMONS_ITEMS_BALLRADIUSITEM
-#define ZBE_MAIN_ZMBIENOID_DAEMONS_ITEMS_BALLRADIUSITEM
+#ifndef ZOMBIENOID_DAEMONS_ITEMS_BALLRADIUSITEM
+#define ZOMBIENOID_DAEMONS_ITEMS_BALLRADIUSITEM
 
 #include <memory>
 #include <cstdint>
@@ -33,9 +33,9 @@ public:
   BallRadiusItem(const BallRadiusItem&) = delete;
   void operator=(const BallRadiusItem&) = delete;
 
-  BallRadiusItem(uint64_t listId, double amount, double min, double max)
+  BallRadiusItem(uint64_t listId, double amount)
     : ballList(zbe::ResourceManager<BL>::getInstance().get(listId)),
-      amount(amount), min(min), max(max) {
+      amount(amount) {
   }
 
   ~BallRadiusItem(){}
@@ -44,18 +44,15 @@ public:
     for(auto ball : (*ballList)) {
       zbe::Resizable* resizable;
       assignAvatar((std::shared_ptr<zbe::AvatarEntityContainer<zbe::Resizable> >)ball,&resizable);
-      double finalSize = std::min(std::max(resizable->getSize() + amount, min), max);
-      resizable->setSize(finalSize);
+      resizable->increaseSize(amount);
     }
   }
 
 private:
   std::shared_ptr<BL> ballList;
   double amount;
-  double min;
-  double max;
 };
 
 }  // namespace zombienoid
 
-#endif // ZBE_MAIN_ZMBIENOID_DAEMONS_ITEMS_BALLRADIUSITEM
+#endif // ZOMBIENOID_DAEMONS_ITEMS_BALLRADIUSITEM

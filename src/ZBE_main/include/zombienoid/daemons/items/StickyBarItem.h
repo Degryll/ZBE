@@ -7,8 +7,8 @@
  * @brief Daemon capable of change bar state.
  */
 
-#ifndef ZBE_MAIN_ZMBIENOID_DAEMONS_ITEMS_STICKYBARITEM
-#define ZBE_MAIN_ZMBIENOID_DAEMONS_ITEMS_STICKYBARITEM
+#ifndef ZOMBIENOID_DAEMONS_ITEMS_STICKYBARITEM
+#define ZOMBIENOID_DAEMONS_ITEMS_STICKYBARITEM
 
 #include <memory>
 #include <cstdint>
@@ -69,4 +69,4 @@ private:
 
 }  // namespace zombienoid
 
-#endif // ZBE_MAIN_ZMBIENOID_DAEMONS_ITEMS_STICKYBARITEM
+#endif // ZOMBIENOID_DAEMONS_ITEMS_STICKYBARITEM

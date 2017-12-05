@@ -47,6 +47,8 @@ public:
 
    *  \param s:      ball size
    *  \param nballs: ball count
+   *  \param minbs:  min ball size
+   *  \param maxbs:  max ball size
 
    *  \param ctId:   collision ticket id
    *  \param dtId:   draw ticket id
@@ -56,10 +58,10 @@ public:
    *  \param asl;    animated sprite list
    *  \param bl;     ball list
    */
-  BallBuilder( uint64_t alId, uint64_t cbslId, uint64_t g, int64_t s, std::shared_ptr<zbe::Value<int64_t> > nballs,
+  BallBuilder( uint64_t alId, uint64_t cbslId, uint64_t g, int64_t sizeRatio, double minbs, double maxbs, std::shared_ptr<zbe::Value<int64_t> > nballs,
                int64_t maxBalls, uint64_t ctId, uint64_t dtId, uint64_t btId, std::shared_ptr<CTL> ctl,
                std::shared_ptr<ASL> asl,  std::shared_ptr<BL> bl)
-               : alId(alId), cbslId(cbslId),g(g), s(s), nballs(nballs),
+               : alId(alId), cbslId(cbslId),g(g), sizeRatio(sizeRatio), minbs(minbs), maxbs(maxbs), nballs(nballs),
                maxBalls(maxBalls), ctId(ctId), dtId(dtId), btId(btId), ctl(ctl),
                asl(asl), bl(bl){}
 
@@ -72,20 +74,20 @@ public:
     zbe::Movable<2>* movable;
     assignAvatar(aecm->get(), &movable);
 
-    std::shared_ptr<zbe::ActiveElement2D<R> > ball(new zbe::CActiveElement2D<R>(nballs, movable->getPosition(), movable->getVelocity(), alId, cbslId, s, s, g));
-
+    std::shared_ptr<zbe::ActiveElement2D<R> > ball(new zbe::CActiveElement2D<R>(nballs, movable->getPosition(), movable->getVelocity(), alId, cbslId, sizeRatio, sizeRatio, g));
+    ball->setState(0);
     std::shared_ptr<zbe::Adaptor<zbe::AnimatedSprite> > ballSpriteAdaptor(new ActiveElement2DAnimatedSpriteAdaptor<R>(ball));
     setAdaptor(ball, ballSpriteAdaptor);
 
-    std::shared_ptr<zbe::Adaptor<zbe::Collisionator<R> > > ballCollisionatorAdaptor(new BallCatorAdaptor<R>(ball));
-    setAdaptor(ball, ballCollisionatorAdaptor);
-
-    zbe::BaseResizableArea* resizableArea = new zbe::BaseResizableArea(&(*ball), s, s);
+    zbe::BaseResizableArea* resizableArea = new zbe::BaseResizableArea(&(*ball), sizeRatio, sizeRatio, minbs, maxbs);
 
     std::shared_ptr<zbe::AvatarEntity<zbe::Resizable> > resizableAE = std::make_shared<zbe::AvatarEntityFixed<zbe::Resizable> >(resizableArea);
 
     std::shared_ptr<zbe::AvatarEntityContainer<zbe::AnimatedSprite> > aecas = std::make_shared<zbe::AvatarEntityContainer<zbe::AnimatedSprite> >(ball);
     std::shared_ptr<zbe::AvatarEntityContainer<zbe::Bouncer<2>, zbe::Resizable> > aecb2w = std::make_shared<zbe::AvatarEntityContainer<zbe::Bouncer<2>, zbe::Resizable> >(ball, resizableAE);
+
+    std::shared_ptr<zbe::Adaptor<zbe::Collisionator<R> > > ballCollisionatorAdaptor(new BallCatorAdaptor<R>(ball, resizableAE));
+    setAdaptor(ball, ballCollisionatorAdaptor);
 
     ball->addToList(ctId, ctl->push_front(ball));
     ball->addToList(dtId, asl->push_front(aecas));
@@ -97,7 +99,9 @@ private:
   uint64_t cbslId; //<! colisionables list id
   uint64_t g; //<! graphics id
 
-  int64_t s; //<! ball size
+  int64_t sizeRatio; //<! ball size
+  double minbs;
+  double maxbs;
   std::shared_ptr<zbe::Value<int64_t> > nballs; //<! ball count
   int64_t maxBalls;
 

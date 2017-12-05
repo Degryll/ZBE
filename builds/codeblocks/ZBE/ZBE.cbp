@@ -231,6 +231,7 @@
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleWideMobile.h" />
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleWideMobileAPO.h" />
 		<Unit filename="../../../include/ZBE/behaviors/Bounce.h" />
+		<Unit filename="../../../include/ZBE/behaviors/Erase.h" />
 		<Unit filename="../../../include/ZBE/behaviors/StateLTEraser.h" />
 		<Unit filename="../../../include/ZBE/behaviors/UniformLinearMotion.h" />
 		<Unit filename="../../../include/ZBE/core/behaviors/Behavior.h" />

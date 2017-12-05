@@ -12,13 +12,16 @@
 
 #include <memory>
 #include <map>
+
 #include "ZBE/core/tools/containers/Ticket.h"
+
+#include "ZBE/core/entities/avatars/Avatar.h"
 
 namespace zbe {
 
 /** \brief Define the basic functionality of every entity.
  */
-class Entity {
+class Entity : virtual public Avatar {
   public:
     /** \brief Empty constructor.
       */

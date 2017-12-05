@@ -31,6 +31,14 @@ class Resizable {
      * \return The actual size.
      */
     virtual double getSize() = 0;
+
+    /** \brief Increase entity size with given increment.
+     * \param size The desired increment
+     */
+    void increaseSize(double increment) {
+        setSize(getSize() + increment);
+    }
+
 };
 
 }  // namespace zbe

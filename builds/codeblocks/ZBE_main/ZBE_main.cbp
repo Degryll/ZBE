@@ -206,6 +206,7 @@
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/entities/adaptors/Element2DAnimatedSpriteAdaptor.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/entities/adaptors/Element2DDisplacedAnimatedSpriteAdaptor.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/entities/adaptors/ItemCatorAdaptor.h" />
+		<Unit filename="../../../src/ZBE_main/include/zombienoid/entities/avatars/Boombizer.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/entities/avatars/Breakable.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/entities/avatars/CustomVector.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/entities/avatars/Magnet.h" />
@@ -216,9 +217,13 @@
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/entities/avatars/implementations/BasePositionMagnet.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/entities/avatars/implementations/BoardInteractionTester.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/entities/avatars/implementations/BoundedWrapperPositionable2D.h" />
+		<Unit filename="../../../src/ZBE_main/include/zombienoid/entities/avatars/implementations/PositionableTimerSprite.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/entities/avatars/implementations/SimpleScorer.h" />
+		<Unit filename="../../../src/ZBE_main/include/zombienoid/events/handlers/BallExploder.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/events/handlers/ExitInputHandler.h" />
+		<Unit filename="../../../src/ZBE_main/include/zombienoid/events/handlers/actuators/BallBoombizer.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/events/handlers/actuators/BallScorer.h" />
+		<Unit filename="../../../src/ZBE_main/include/zombienoid/events/handlers/actuators/BrickHitStateActuator.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/events/handlers/actuators/CustomVectorBouncerActuator.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/events/handlers/actuators/ItemCatcher.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/events/handlers/actuators/MagnetSticker.h" />

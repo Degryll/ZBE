@@ -1,3 +1,4 @@
+//-----
 /**
  * Copyright 2012 Batis Degryll Ludo
  * @file Positionable.h
@@ -29,13 +30,13 @@ class BaseResizableArea : virtual public Resizable {
 
     /** \brief Builds this BaseResizableArea with a Position.
      */
-    BaseResizableArea(Area *area , double wBase , double hBase, double size = 1.0) : a(area), wBase(wBase), hBase(hBase), s(size)  {}
+    BaseResizableArea(Area *area , double wBase , double hBase, double min, double max, double size = 1.0) : a(area), wBase(wBase), hBase(hBase), min(min), max(max), s(size)  {}
 
     /** \brief Sets the size for this Resizable.
      * \param size The desired size
      */
     void setSize(double size) {
-        s = size;
+        s = std::min(std::max(min,size), max);
         a->setWidth(s * wBase);
         a->setHeight(s * hBase);
     }
@@ -59,6 +60,8 @@ class BaseResizableArea : virtual public Resizable {
     Area *a;
     double wBase;
     double hBase;
+    double min;
+    double max;
     double s;
 };
 

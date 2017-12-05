@@ -6,14 +6,11 @@
 #include "ZBE/entities/avatars/InteractionTester.h"
 
 #include "zombienoid/entities/avatars/CustomVector.h"
-
 #include "zombienoid/entities/avatars/Solid.h"
-
 #include "zombienoid/entities/avatars/Breakable.h"
-
 #include "zombienoid/entities/avatars/Wall.h"
-
 #include "zombienoid/entities/avatars/Magnet.h"
+#include "zombienoid/entities/avatars/Boombizer.h"
 
 namespace zombienoid {
 
@@ -30,6 +27,7 @@ public:
   virtual void act(std::shared_ptr<zbe::WeakAvatarEntityContainer<Magnet<2> > >) {}
   virtual void act(std::shared_ptr<zbe::WeakAvatarEntityContainer<Breakable> >) {}
   virtual void act(std::shared_ptr<zbe::WeakAvatarEntityContainer<Wall> >) {}
+  virtual void act(std::shared_ptr<zbe::WeakAvatarEntityContainer<Boombizer> >) {}
 
 };
 

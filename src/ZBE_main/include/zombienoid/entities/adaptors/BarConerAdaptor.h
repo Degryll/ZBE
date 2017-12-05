@@ -26,7 +26,7 @@ namespace zombienoid {
  */
 template <typename R>
 class BarConerAdaptor : public zbe::Adaptor<zbe::Collisioner<R> > {
-public:
+ public:
   BarConerAdaptor(const BarConerAdaptor&) = delete;
   void operator=(const BarConerAdaptor&) = delete;
 
@@ -39,7 +39,7 @@ public:
       roBase(), roMagnet() {
     std::shared_ptr<zbe::Element2D<R> > ent = e.lock();
     std::shared_ptr<zbe::WeakAvatarEntityContainer<zbe::Avatar, zbe::Positionable<2>, zbe::Stated> > aeContainer = std::make_shared<zbe::WeakAvatarEntityContainer<zbe::Avatar, zbe::Positionable<2>, zbe::Stated> >(ent);
-    zbe::AABB2D aabb({(double)ent->getX(), (double)ent->getY()},{(double)ent->getX()+ent->getW(), (double)ent->getY()+ent->getH()});
+    zbe::AABB2D aabb({(double)ent->getX(), (double)ent->getY()}, {(double)ent->getX()+ent->getW(), (double)ent->getY()+ent->getH()});
     std::shared_ptr<zbe::StaticSolidAABB2D<R> > cObject(new zbe::StaticSolidAABB2D<R>(aabb));
 
     std::shared_ptr<zbe::WeakAvatarEntityContainer<CustomVector> > weakAECCustomVector(new zbe::WeakAvatarEntityContainer<CustomVector>(aeCustoVector));
@@ -52,15 +52,15 @@ public:
   }
 
   ~BarConerAdaptor() {
-      delete s;
-      delete customVector;
-   }
+    delete s;
+    delete customVector;
+  }
 
   zbe::Collisioner<R>* getAvatar() {
     std::shared_ptr<zbe::Element2D<R> > ent = e.lock();
     double halfW = ent->getW() / 2.0;
     double halfH = ent->getH() / 2.0;
-    zbe::AABB2D aabb({(double)ent->getX() - halfW, (double)ent->getY() - halfH},{(double)ent->getX() + halfW, (double)ent->getY() + halfH});
+    zbe::AABB2D aabb({(double)ent->getX() - halfW, (double)ent->getY() - halfH}, {(double)ent->getX() + halfW, (double)ent->getY() + halfH});
     std::shared_ptr<zbe::StaticSolidAABB2D<R> > cObject(new zbe::StaticSolidAABB2D<R>(aabb));
     customVector->setAABB(aabb);
     s->setCollisionObject(cObject);
@@ -68,22 +68,23 @@ public:
     return (s);
   }
 
+ private:
+
   std::shared_ptr<zbe::ReactObject<R> > getReactObject(std::shared_ptr<zbe::State> state) {
-      if(state->getState() == 1) {
-          return roMagnet;
-      }
-      return roBase;
+    if(state->getState() == 1) {
+      return roMagnet;
+    }
+    return roBase;
   }
 
-private:
-    std::weak_ptr<zbe::Element2D<R> > e;
-    zbe::CollisionerCommon<R,zbe::Avatar, zbe::Positionable<2>, zbe::Stated>* s;
-    BarCustomVector* customVector;
-    std::shared_ptr<zbe::AvatarEntity<CustomVector> > aeCustoVector;
-    std::shared_ptr<zbe::AvatarEntity<Magnet<2> > > aeMagnet;
+  std::weak_ptr<zbe::Element2D<R> > e;
+  zbe::CollisionerCommon<R,zbe::Avatar, zbe::Positionable<2>, zbe::Stated>* s;
+  BarCustomVector* customVector;
+  std::shared_ptr<zbe::AvatarEntity<CustomVector> > aeCustoVector;
+  std::shared_ptr<zbe::AvatarEntity<Magnet<2> > > aeMagnet;
 
-    std::shared_ptr<zbe::ReactObjectCommon<R, CustomVector> > roBase;
-    std::shared_ptr<zbe::ReactObjectCommon<R, CustomVector, Magnet<2> > > roMagnet;
+  std::shared_ptr<zbe::ReactObjectCommon<R, CustomVector> > roBase;
+  std::shared_ptr<zbe::ReactObjectCommon<R, CustomVector, Magnet<2> > > roMagnet;
 };
 
 }  // namespace zombienoid

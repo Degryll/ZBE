@@ -41,6 +41,7 @@ public:
     s->setH(ent->getH());
     s->setX(ent->getX() - ent->getW()/2.0);
     s->setY(ent->getY() - ent->getH()/2.0);
+    s->setState(ent->getState());
     s->setTime(sysTime.getTotalTime());
     return (s);
   }

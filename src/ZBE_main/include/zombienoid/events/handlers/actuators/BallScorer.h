@@ -7,8 +7,8 @@
  * @brief Actuator capable of increase point when ball hit breakables.
  */
 
-#ifndef ZBE_MAIN_ZMBIENOID_EVENTS_HANDLERS_ACTUATORS_BallScorer
-#define ZBE_MAIN_ZMBIENOID_EVENTS_HANDLERS_ACTUATORS_BallScorer
+#ifndef ZOMBIENOID_EVENTS_HANDLERS_ACTUATORS_BallScorer
+#define ZOMBIENOID_EVENTS_HANDLERS_ACTUATORS_BallScorer
 
 #include "ZBE/core/system/SysTime.h"
 #include "ZBE/core/tools/shared/Value.h"
@@ -62,4 +62,4 @@ private:
 
 }  // namespace zombienoid
 
-#endif // ZBE_MAIN_ZMBIENOID_EVENTS_HANDLERS_ACTUATORS_BallScorer
+#endif // ZOMBIENOID_EVENTS_HANDLERS_ACTUATORS_BallScorer
