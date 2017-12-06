@@ -13,15 +13,18 @@
 #include <cstdint>
 #include <memory>
 
+#include "ZBE/core/tools/containers/ResourceManager.h"
+#include "ZBE/core/system/SysTime.h"
+
 #include "ZBE/core/daemons/Daemon.h"
 
 #include "ZBE/core/entities/AvatarEntity.h"
 #include "ZBE/core/entities/avatars/Collisioner.h"
 #include "ZBE/core/entities/avatars/Collisionator.h"
+
 #include "ZBE/core/events/EventStore.h"
 #include "ZBE/core/events/CollisionEvent2D.h"
-#include "ZBE/core/tools/containers/ResourceManager.h"
-#include "ZBE/core/system/SysTime.h"
+#include "ZBE/core/events/generators/util/CollisionData.h"
 
 namespace zbe {
 
@@ -82,6 +85,7 @@ template <typename R, typename IS, typename LN, typename LT>
 void InteractionEventGenerator<R, IS, LN, LT>::run() {
   int64_t totalTime = getTotalTime();
   Point2D point;
+  Vector2D normal;
   std::shared_ptr<LT> ctl = lmct.get(id);
 
   for(auto catorEntity : (*ctl)) {
@@ -92,8 +96,8 @@ void InteractionEventGenerator<R, IS, LN, LT>::run() {
     for(auto conerEntity : (*cnl)) {
       Collisioner<R>* coner;
       conerEntity->assignAvatar(&coner);
-      if(is->select(*cator, *coner, totalTime, point)) {
-        CollisionData cd(point);
+      if(is->select(*cator, *coner, totalTime, point, normal)) {
+        CollisionData cd(point, normal);
         CollisionEvent2D<R>* a = new CollisionEvent2D<R>(eventId, sysTime.getInitFrameTime() + totalTime, cator, cd, std::shared_ptr<zbe::ReactObject<R> >(coner->getReactObject()));
         CollisionEvent2D<R>* b = new CollisionEvent2D<R>(eventId, sysTime.getInitFrameTime() + totalTime, coner, cd, std::shared_ptr<zbe::ReactObject<R> >(cator->getReactObject()));
         storeEvents(a,b);

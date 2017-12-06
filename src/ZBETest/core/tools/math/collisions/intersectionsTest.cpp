@@ -691,9 +691,10 @@ TEST(Intersections, BeamOutsideAABB_BottomRightCorner) {
 
 void testMovingCircleInsideABB(zbe::Circle ball, zbe::Vector2D velocity, zbe::AABB<2> block, int64_t tMax, int64_t time, zbe::Point<2> point, int64_t maxTimeDiff = 0, double maxXDiff = 0.0, double maxYDiff = 0.0, bool expected =  true){
   zbe::Point<2> p;
+  zbe::Vector<2> n;
   int64_t t = tMax;
   bool correctP = false;
-  bool result = IntersectionMovingCircleInsideAABB2D(ball, velocity, block, t, p);
+  bool result = IntersectionMovingCircleInsideAABB2D(ball, velocity, block, t, p, n);
   EXPECT_EQ(expected,result) << "First Moving Circle vs AABB collision.";
   if (expected) {
     int64_t diff = time - t;
@@ -915,9 +916,10 @@ TEST(Intersections, MovingCircleInsideAABB_BottomRightCorner) {
 
 void testMovingCircleOutsideABB(zbe::Circle ball, zbe::Vector2D velocity, zbe::AABB<2> block, int64_t tMax, int64_t time, zbe::Point<2> point, int64_t maxTimeDiff = 0, double maxXDiff = 0.0, double maxYDiff = 0.0, bool expected =  true){
   zbe::Point<2> p;
+  zbe::Vector<2> n;
   int64_t t = tMax;
   bool correctP = false;
-  bool result = IntersectionMovingCircleOutsideAABB2D(ball, velocity, block, t, p);
+  bool result = IntersectionMovingCircleOutsideAABB2D(ball, velocity, block, t, p, n);
   EXPECT_EQ(expected,result) << "First Moving Circle vs AABB collision.\nball: (" << ball.c[0] << ", " << ball.c[1] << ") r(" << ball.r << "), velocity: (" << velocity[0] << ", " << velocity[1] << "), block: min(" << block.minimum[0] << ", " << block.minimum[1] << ") max(" << block.maximum[0] << ", " << block.maximum[1] << ").";
   if (expected) {
     int64_t diff = time - t;

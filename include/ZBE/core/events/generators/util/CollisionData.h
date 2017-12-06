@@ -25,7 +25,7 @@ class CollisionData {
      *
      *  Build the collision data with the point of the collision.
      */
-    CollisionData(const Point2D& point): p(point){}
+    CollisionData(const Point2D& point, const Vector2D& normal): p(point), n(normal) {}
 
     /** \brief Returns the point associated with the collision.
      *
@@ -39,9 +39,22 @@ class CollisionData {
      */
     Point2D& getPoint() {return p;}
 
+    /** \brief Returns the point associated with the collision.
+     *
+     * \return A Point2D.
+     */
+    const Vector2D& getNormal() const {return n;}
+
+    /** \brief Returns the point associated with the collision.
+     *
+     * \return A Point2D.
+     */
+    Vector2D& getNormal() {return n;}
+
   private:
 
     Point2D p;
+    Vector2D n;
 };
 
 }  // namespace zbe

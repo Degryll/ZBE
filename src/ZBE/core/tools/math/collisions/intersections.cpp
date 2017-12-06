@@ -20,7 +20,7 @@ namespace zbe {
  * \param point Stores the point of collision, if any.
  * \return True if there is a collision before the initial value of time, false otherwise.
  */
-bool IntersectionMovingCircleOutsideAABB2D(NSphere<2> nsphere, Vector<2> direction, AABB<2> box, int64_t& time, Point<2>& point) {
+bool IntersectionMovingCircleOutsideAABB2D(NSphere<2> nsphere, Vector<2> direction, AABB<2> box, int64_t& time, Point<2>& point, Vector<2>& normal) {
   double r = nsphere.r;
   AABB<2> e = box;
   e.minimum[0] -= r;
@@ -34,11 +34,11 @@ bool IntersectionMovingCircleOutsideAABB2D(NSphere<2> nsphere, Vector<2> directi
 
   if (intersectionBeamOutsideAABB<2>(ray, e, t, point)) {
     if (t > time) {return (false);}
-
+    normal = {.0,.0};
     int m=0;
     for(unsigned i = 0; i < 2; i++) {
-      if (point[i] < box.minimum[i]) {m++; c[i] = box.minimum[i]; point[i] += r;}
-      if (point[i] > box.maximum[i]) {m++; c[i] = box.maximum[i]; point[i] -= r;}
+      if (point[i] < box.minimum[i]) {m++; c[i] = box.minimum[i]; point[i] += r; normal[i] = -1.0;}
+      if (point[i] > box.maximum[i]) {m++; c[i] = box.maximum[i]; point[i] -= r; normal[i] = 1.0;}
     }
 
     // The collision happens at the corner of the expansion box
@@ -46,6 +46,7 @@ bool IntersectionMovingCircleOutsideAABB2D(NSphere<2> nsphere, Vector<2> directi
     if (m == 2) {
       t = time;
       point = c;
+      normal = nsphere.c - c;
       if(!intersectionRayNSphere<2>(ray, NSphere<2>(c,r), t, c) || (t > time)) return (false);
     }
     time = t;
@@ -62,16 +63,17 @@ bool IntersectionMovingCircleOutsideAABB2D(NSphere<2> nsphere, Vector<2> directi
     if (m == 2) {
       t = time;
       point = c;
+      normal = nsphere.c - c;
       if(!intersectionRayNSphere<2>(ray, NSphere<2>(c,r), t, c) || (t > time)) return (false);
-
       time = t;
-  	  return (true);
+      return (true);
     } else {  // 4 vertex collision
       c[0] = box.minimum[0];
       c[1] = box.minimum[1];
       if(intersectionRayNSphere<2>(ray, NSphere<2>(c,r), t, c) && (t > time)) {
         point = c;
         time = t;
+        normal = nsphere.c - c;
         return (true);
       }
       c[0] = box.minimum[0];
@@ -79,6 +81,7 @@ bool IntersectionMovingCircleOutsideAABB2D(NSphere<2> nsphere, Vector<2> directi
       if(intersectionRayNSphere<2>(ray, NSphere<2>(c,r), t, c) && (t > time)) {
         point = c;
         time = t;
+        normal = nsphere.c - c;
         return (true);
       }
       c[0] = box.maximum[0];
@@ -86,6 +89,7 @@ bool IntersectionMovingCircleOutsideAABB2D(NSphere<2> nsphere, Vector<2> directi
       if(intersectionRayNSphere<2>(ray, NSphere<2>(c,r), t, c) && (t > time)) {
         point = c;
         time = t;
+        normal = nsphere.c - c;
         return (true);
       }
       c[0] = box.maximum[0];
@@ -93,10 +97,11 @@ bool IntersectionMovingCircleOutsideAABB2D(NSphere<2> nsphere, Vector<2> directi
       if(intersectionRayNSphere<2>(ray, NSphere<2>(c,r), t, c) && (t > time)) {
         point = c;
         time = t;
+        normal = nsphere.c - c;
         return (true);
       }
     }  // if m == 2
-		return (false);
+        return (false);
   }  // if extended box collision
 }
 

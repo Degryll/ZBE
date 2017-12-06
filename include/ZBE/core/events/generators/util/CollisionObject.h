@@ -30,10 +30,10 @@ class CollisionObject {
 public:
   virtual ~CollisionObject() {}  //!< Empty destructor
 // You must add a new "accept" function for any new derived CollisionObject
-  virtual bool accept(CollisionSelector<R> &visitor, CollisionObject& collObject, int64_t& time, Point2D& point) = 0;       //!< Collision solver using the visitor pattern
-  virtual bool accept(CollisionSelector<R> &visitor, StaticSolidAABB2D<R>& collObject, int64_t& time, Point2D& point) = 0;          //!< Collision solver using the visitor pattern
-  virtual bool accept(CollisionSelector<R> &visitor, StaticLimiterAABB2D<R>& collObject, int64_t& time, Point2D& point) = 0;          //!< Collision solver using the visitor pattern
-  virtual bool accept(CollisionSelector<R> &visitor, ConstantMovingCircle<R>& collObject, int64_t& time, Point2D& point) = 0;  //!< Collision solver using the visitor pattern
+  virtual bool accept(CollisionSelector<R> &visitor, CollisionObject& collObject, int64_t& time, Point2D& point, Vector2D& normal) = 0;       //!< Collision solver using the visitor pattern
+  virtual bool accept(CollisionSelector<R> &visitor, StaticSolidAABB2D<R>& collObject, int64_t& time, Point2D& point, Vector2D& normal) = 0;          //!< Collision solver using the visitor pattern
+  virtual bool accept(CollisionSelector<R> &visitor, StaticLimiterAABB2D<R>& collObject, int64_t& time, Point2D& point, Vector2D& normal) = 0;          //!< Collision solver using the visitor pattern
+  virtual bool accept(CollisionSelector<R> &visitor, ConstantMovingCircle<R>& collObject, int64_t& time, Point2D& point, Vector2D& normal) = 0;  //!< Collision solver using the visitor pattern
 };
 
 // You must add to this class a new "accept" function for any new derived CollisionObject
@@ -46,20 +46,20 @@ public:
 
   CollisionObjectCommon(T* collisionObject) : c(collisionObject) {}
 
-  bool accept(CollisionSelector<R> &visitor, CollisionObject<R>& collObject, int64_t& time, Point2D& point) {
-    return (collObject.accept(visitor, *c, time, point));
+  bool accept(CollisionSelector<R> &visitor, CollisionObject<R>& collObject, int64_t& time, Point2D& point, Vector2D& normal) {
+    return (collObject.accept(visitor, *c, time, point, normal));
   }
 
-  bool accept(CollisionSelector<R> &visitor, StaticSolidAABB2D<R>& collObject, int64_t& time, Point2D& point) {
-    return (visitor.visit(*c, collObject, time, point));
+  bool accept(CollisionSelector<R> &visitor, StaticSolidAABB2D<R>& collObject, int64_t& time, Point2D& point, Vector2D& normal) {
+    return (visitor.visit(*c, collObject, time, point, normal));
   }
 
-  bool accept(CollisionSelector<R> &visitor, StaticLimiterAABB2D<R>& collObject, int64_t& time, Point2D& point) {
-    return (visitor.visit(*c, collObject, time, point));
+  bool accept(CollisionSelector<R> &visitor, StaticLimiterAABB2D<R>& collObject, int64_t& time, Point2D& point, Vector2D& normal) {
+    return (visitor.visit(*c, collObject, time, point, normal));
   }
 
-  bool accept(CollisionSelector<R> &visitor, ConstantMovingCircle<R>& collObject, int64_t& time, Point2D& point) {
-    return (visitor.visit(*c, collObject, time, point));
+  bool accept(CollisionSelector<R> &visitor, ConstantMovingCircle<R>& collObject, int64_t& time, Point2D& point, Vector2D& normal) {
+    return (visitor.visit(*c, collObject, time, point, normal));
   }
 
 private:

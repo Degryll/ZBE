@@ -29,8 +29,7 @@ class BouncerActuator: public Actuator<WeakAvatarEntityContainer<Bouncer<2> >, R
       Bouncer<2> * gb;
       Actuator<WeakAvatarEntityContainer<Bouncer<2> >, R>::getCollisioner()->get()->assignAvatar(&gb);
       CollisionData * cd = Actuator<WeakAvatarEntityContainer<Bouncer<2> >, R>::getCollisionData();
-      Vector<2> n = gb->getPosition() - cd->getPoint();
-      gb->addNormal(n);
+      gb->addNormal(cd->getNormal());
     }
 };
 

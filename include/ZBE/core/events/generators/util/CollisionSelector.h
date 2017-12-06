@@ -12,6 +12,8 @@
 
 #include <cstdint>
 
+#include "ZBE/core/tools/math/Point.h"
+#include "ZBE/core/tools/math/Vector.h"
 #include "ZBE/core/tools/math/objects.h"
 #include "ZBE/core/tools/math/collisions/intersections.h"
 #include "ZBE/core/events/generators/util/CollisionBodies.h"
@@ -40,8 +42,8 @@ class CollisionSelector {
      *  \param point Point of collision if any.
      *  \return True if there is a collision in the timeslot set by time, false otherwise.
      */
-    inline bool select(Collisioner<R>& param1, Collisioner<R>& param2, int64_t& time, Point2D& point) {
-      return (param2.getCollisionObject()->accept(*this, *(param1.getCollisionObject()), time, point));
+    inline bool select(Collisioner<R>& param1, Collisioner<R>& param2, int64_t& time, Point2D& point, Vector2D& normal) {
+      return (param2.getCollisionObject()->accept(*this, *(param1.getCollisionObject()), time, point, normal));
     }
 
     /** \brief Dont move, wont collide.
@@ -51,7 +53,7 @@ class CollisionSelector {
      *  \param point Unaltered.
      *  \return False.
      */
-    virtual bool visit(StaticSolidAABB2D<R>& param1, StaticSolidAABB2D<R>& param2, int64_t&, Point2D&) = 0;
+    virtual bool visit(StaticSolidAABB2D<R>& param1, StaticSolidAABB2D<R>& param2, int64_t& time, Point2D& point, Vector2D& normal) = 0;
 
     /** \brief Dont move, wont collide.
      *  \param param1 First AABB.
@@ -60,7 +62,7 @@ class CollisionSelector {
      *  \param point Point of collision if any.
      *  \return False.
      */
-    virtual bool visit(StaticLimiterAABB2D<R>& param1, StaticLimiterAABB2D<R>& param2, int64_t&, Point2D&) = 0;
+    virtual bool visit(StaticLimiterAABB2D<R>& param1, StaticLimiterAABB2D<R>& param2, int64_t& time, Point2D& point, Vector2D& normal) = 0;
 
     /** \brief Dont move, wont collide.
      *  \param param1 First AABB.
@@ -69,7 +71,7 @@ class CollisionSelector {
      *  \param point Point of collision if any.
      *  \return False.
      */
-    virtual bool visit(StaticSolidAABB2D<R>& param1, StaticLimiterAABB2D<R>& param2, int64_t&, Point2D&) = 0;
+    virtual bool visit(StaticSolidAABB2D<R>& param1, StaticLimiterAABB2D<R>& param2, int64_t& time, Point2D& point, Vector2D& normal) = 0;
 
     /** \brief Dont move, wont collide.
      *  \param param1 First AABB.
@@ -78,7 +80,7 @@ class CollisionSelector {
      *  \param point Point of collision if any.
      *  \return False.
      */
-    virtual bool visit(StaticLimiterAABB2D<R>& param1, StaticSolidAABB2D<R>& param2, int64_t&, Point2D&) = 0;
+    virtual bool visit(StaticLimiterAABB2D<R>& param1, StaticSolidAABB2D<R>& param2, int64_t& time, Point2D& point, Vector2D& normal) = 0;
 
     /** \brief Collision detection for an AABB and a circle.
      *  \param param1 The AABB.
@@ -87,7 +89,7 @@ class CollisionSelector {
      *  \param point Point of collision if any.
      *  \return True if there is a collision in the timeslot set by time, false otherwise.
      */
-    virtual bool visit(StaticSolidAABB2D<R>& param1, ConstantMovingCircle<R>& param2, int64_t& time, Point2D& point) = 0;
+    virtual bool visit(StaticSolidAABB2D<R>& param1, ConstantMovingCircle<R>& param2, int64_t& time, Point2D& point, Vector2D& normal) = 0;
 
     /** \brief Collision detection for an AABB and a circle.
      *  \param param1 The AABB.
@@ -96,7 +98,7 @@ class CollisionSelector {
      *  \param point Point of collision if any.
      *  \return True if there is a collision in the timeslot set by time, false otherwise.
      */
-    virtual bool visit(StaticLimiterAABB2D<R>& param1, ConstantMovingCircle<R>& param2, int64_t& time, Point2D& point) = 0;
+    virtual bool visit(StaticLimiterAABB2D<R>& param1, ConstantMovingCircle<R>& param2, int64_t& time, Point2D& point, Vector2D& normal) = 0;
 
     /** \brief Collision detection for a circle and an AABB.
      *  \param param1 The circle.
@@ -105,7 +107,7 @@ class CollisionSelector {
      *  \param point Point of collision if any.
      *  \return True if there is a collision in the timeslot set by time, false otherwise.
      */
-    virtual bool visit(ConstantMovingCircle<R>& param1, StaticSolidAABB2D<R>& param2, int64_t& time, Point2D& point) = 0;
+    virtual bool visit(ConstantMovingCircle<R>& param1, StaticSolidAABB2D<R>& param2, int64_t& time, Point2D& point, Vector2D& normal) = 0;
 
     /** \brief Collision detection for a circle and an AABB.
      *  \param param1 The circle.
@@ -114,7 +116,7 @@ class CollisionSelector {
      *  \param point Point of collision if any.
      *  \return True if there is a collision in the timeslot set by time, false otherwise.
      */
-    virtual bool visit(ConstantMovingCircle<R>& param1, StaticLimiterAABB2D<R>& param2, int64_t& time, Point2D& point) = 0;
+    virtual bool visit(ConstantMovingCircle<R>& param1, StaticLimiterAABB2D<R>& param2, int64_t& time, Point2D& point, Vector2D& normal) = 0;
 
     /** \brief Collision detection for two circles.
      *  \param param1 First circle.
@@ -123,7 +125,7 @@ class CollisionSelector {
      *  \param point Point of collision if any.
      *  \return True if there is a collision in the timeslot set by time, false otherwise.
      */
-    virtual bool visit(ConstantMovingCircle<R>& param1, ConstantMovingCircle<R>& param2, int64_t& time, Point2D& point) = 0;
+    virtual bool visit(ConstantMovingCircle<R>& param1, ConstantMovingCircle<R>& param2, int64_t& time, Point2D& point, Vector2D& normal) = 0;
 };
 
 }  // namespace zbe

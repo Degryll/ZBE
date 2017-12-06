@@ -78,9 +78,9 @@ inline bool intersectionBeamOutsideAABB2D(Ray2D ray, AABB2D box, int64_t &time, 
 inline bool intersectionBeamOutsideAABB3D(Ray3D ray, AABB3D box, int64_t &time, Point3D& point) {return (intersectionBeamOutsideAABB<3>(ray,box,time,point));}  //!< 3D allias of intersectionBeamOutsideAABB.
 
 template <unsigned dim>
-bool intersectionMovingNSphereInsideAABB(NSphere<dim> nsphere, Vector<dim> direction, AABB<dim> box, int64_t& time, Point<dim>& point);
-inline bool IntersectionMovingCircleInsideAABB2D(Circle circle, Vector2D direction, AABB2D box, int64_t& time, Point2D& point) {return (intersectionMovingNSphereInsideAABB<2>(circle,direction,box, time,point));}  //!< 2D allias of IntersectionMovingNSphereInsideAABB.
-inline bool IntersectionMovingSphereInsideAABB3D(Sphere sphere, Vector3D direction, AABB3D box, int64_t& time, Point3D& point) {return (intersectionMovingNSphereInsideAABB<3>(sphere,direction,box, time,point));}  //!< 3D allias of IntersectionMovingNSphereInsideAABB.
+bool intersectionMovingNSphereInsideAABB(NSphere<dim> nsphere, Vector<dim> direction, AABB<dim> box, int64_t& time, Point<dim>& point, Vector<dim>& normal);
+inline bool IntersectionMovingCircleInsideAABB2D(Circle circle, Vector2D direction, AABB2D box, int64_t& time, Point2D& point, Vector<2>& normal) {return (intersectionMovingNSphereInsideAABB<2>(circle,direction,box, time,point, normal));}  //!< 2D allias of IntersectionMovingNSphereInsideAABB.
+inline bool IntersectionMovingSphereInsideAABB3D(Sphere sphere, Vector3D direction, AABB3D box, int64_t& time, Point3D& point, Vector<3>& normal) {return (intersectionMovingNSphereInsideAABB<3>(sphere,direction,box, time,point, normal));}  //!< 3D allias of IntersectionMovingNSphereInsideAABB.
 
 
 template <unsigned dim>
@@ -88,7 +88,7 @@ bool intersectionMovingNSphereOutsideAABB(NSphere<dim> nsphere, Vector<dim> dire
 //inline bool IntersectionMovingCircleOutsideAABB2D(Circle circle, Vector2D direction, AABB2D box, int64_t& time, Point2D& point) {return (intersectionMovingNSphereOutsideAABB<2>(circle,direction,box,time,point));}  //!< 2D allias of IntersectionMovingNSphereOutsideAABB.
 inline bool IntersectionMovingSphereOutsideAABB3D(Sphere sphere, Vector3D direction, AABB3D box, int64_t& time, Point3D& point) {return (intersectionMovingNSphereOutsideAABB<3>(sphere,direction,box,time,point));}  //!< 3D allias of IntersectionMovingNSphereOutsideAABB.
 
-bool IntersectionMovingCircleOutsideAABB2D(NSphere<2> nsphere, Vector<2> direction, AABB<2> box, int64_t& time, Point<2>& point);
+bool IntersectionMovingCircleOutsideAABB2D(NSphere<2> nsphere, Vector<2> direction, AABB<2> box, int64_t& time, Point<2>& point, Vector<2>& normal);
 
 /** \brief A template function that tell if two AABB boxes intersects.
  *
@@ -271,7 +271,7 @@ bool intersectionBeamInsideAABB(Ray<dim> ray, AABB<dim> box, int64_t &time, Poin
   for(unsigned i = 0; i < dim; i++) {
     if (abs(ray.d[i]) < PRECISION) continue;
     double d = (SECOND / ray.d[i]);
-  	int64_t t1 = (box.minimum[i] - ray.o[i]) * d;
+    int64_t t1 = (box.minimum[i] - ray.o[i]) * d;
     int64_t t2 = (box.maximum[i] - ray.o[i]) * d;
 
     int64_t t = quantizeTime(std::max(t1, t2));
@@ -391,7 +391,7 @@ bool rayOutsideAABB(Ray<dim> ray, AABB<dim> box, int64_t tmin, int64_t tmax, int
  * \return True if there is a collision before the initial value of time, false otherwise.
  */
 template <unsigned dim>
-bool intersectionMovingNSphereInsideAABB(NSphere<dim> nsphere, Vector<dim> direction, AABB<dim> box, int64_t& time, Point<dim>& point) {
+bool intersectionMovingNSphereInsideAABB(NSphere<dim> nsphere, Vector<dim> direction, AABB<dim> box, int64_t& time, Point<dim>& point, Vector<dim>& normal) {
   double r = nsphere.r;
   AABB<dim> e = box;
   for(unsigned i = 0; i < dim; i++) {
@@ -400,14 +400,17 @@ bool intersectionMovingNSphereInsideAABB(NSphere<dim> nsphere, Vector<dim> direc
   }
 
   int64_t t = time;
+  normal = {.0,.0};
   Ray<dim> ray(nsphere.c, direction);
   if(intersectionBeamInsideAABB<dim>(ray, e, t, point) && (t <= time)) {
     for(unsigned i = 0; i < dim; i++) {
       double minDistance = direction[i] * TIME_QUANTUM_VALUE;
       if((e.minimum[i] - point[i]) >= (minDistance - PRECISION)) {
-      	point[i] = box.minimum[i];
+        point[i] = box.minimum[i];
+        normal[i] = 1.0;
       } else if ((e.maximum[i] - point[i]) <= (minDistance + PRECISION)) {
-      	point[i] = box.maximum[i];
+        point[i] = box.maximum[i];
+        normal[i] = -1.0;
       }
     }
     time = t;

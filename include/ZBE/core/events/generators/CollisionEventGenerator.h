@@ -70,6 +70,7 @@ template <typename R>
 void CollisionEventGenerator<R>::run() {
   int64_t totalTime = sysTime.getRemainTime();
   Point2D point;
+  Vector2D normal;
   std::shared_ptr<TicketedForwardList<AvatarEntity<Collisionator<R> > > > ctl = lmct.get(id);
 
   for(auto catorEntity : (*ctl)) {
@@ -80,8 +81,8 @@ void CollisionEventGenerator<R>::run() {
     for(auto conerEntity : (*cnl)) {
       Collisioner<R>* coner;
       conerEntity->assignAvatar(&coner);
-      if(cs->select(*cator, *coner, totalTime, point)) {
-        CollisionData cd(point);
+      if(cs->select(*cator, *coner, totalTime, point, normal)) {
+        CollisionData cd(point, normal);
         es.storeEvent(new CollisionEvent2D<R>(eventId, sysTime.getInitFrameTime() + totalTime, cator, cd, std::shared_ptr<zbe::ReactObject<R> >(coner->getReactObject())));
         es.storeEvent(new CollisionEvent2D<R>(eventId, sysTime.getInitFrameTime() + totalTime, coner, cd, std::shared_ptr<zbe::ReactObject<R> >(cator->getReactObject())));
       }  // if collision
