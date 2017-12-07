@@ -372,8 +372,6 @@ int zombienoidmain(int, char*[]) {
   setAdaptor(board, boardCollisionerAdaptor);
 
   std::shared_ptr<TicketedFAE<Collisioner<ZombienoidReactor> > > boardCollisionerList(new TicketedFAE<Collisioner<ZombienoidReactor> >());
-//Vector2D({-(WIDTH - (MARGIN * 2))/2, -(HEIGHT/2) + MARGIN })
-//Vector2D({(WIDTH - (MARGIN * 2))/2, (HEIGHT/2) + MARGIN })
   std::shared_ptr<Adaptor<AnimatedSprite> > boardSpriteAdaptor(new Element2DDisplacedAnimatedSpriteAdaptor<ZombienoidReactor>(board, Vector2D({0, 0})));
   setAdaptor(board, boardSpriteAdaptor);
 
@@ -719,7 +717,7 @@ int zombienoidmain(int, char*[]) {
   std::shared_ptr<Daemon> ballBounce(new BehaviorDaemon<Bouncer<2>, TicketedFAEC<Bouncer<2>, Resizable> >(std::make_shared<Bounce<2> >(), BALL_LIST));
   std::shared_ptr<Daemon> ballULM(new BehaviorDaemon<Movable<2>, TicketedFAEC<Bouncer<2>, Resizable> >(std::make_shared<UniformLinearMotion<2> >(), BALL_LIST));
 
-  commonBehaviorMaster->addDaemon(ballBounce);
+  reactBehaviorMaster->addDaemon(ballBounce);
   commonBehaviorMaster->addDaemon(ballULM);
 
   std::shared_ptr<CustomBallBuilder> ballBuilder= std::make_shared<CustomBallBuilder>(BALL_ACTUATORS_LIST, BALL_CBS_JOINT, BALL_SS, BALL_SIZE, BALL_SIZE_MIN, BALL_SIZE_MAX, ballCount, MAXBALLS, COLLISION_TICKET,
