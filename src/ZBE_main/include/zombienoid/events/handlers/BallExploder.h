@@ -111,6 +111,9 @@ class BallExploder : public zbe::TimeHandler {
     std::shared_ptr<zbe::Ticket> spriteTicket = asList->push_front(aecAS);
     //Graphic entity erase.
     teg->addTimer(std::make_shared<zbe::TicketEraser>(spriteTicket), zbe::SysTime::getInstance().getEventTime() + graphTime);
+
+    //Return ball size to 1
+    resizable->setSize(1);
   }
 
  private:
