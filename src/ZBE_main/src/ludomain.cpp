@@ -5,6 +5,7 @@
 #include <chrono>
 #include <thread>
 #include <cstdlib>
+#include <math.h>
 
 #include "ZBE/core/daemons/DaemonMaster.h"
 
@@ -428,19 +429,32 @@ int ludomain(int, char** ) {
   playerGraphics.imgSrcId = STAND_GRAPHICS;
   playerSheet->setImgSrcDef(5,playerGraphics);
 
+  zombienoid::ImgSrcDef bulletGraphics;
+  bulletGraphics.frameAmount = 11;
+  bulletGraphics.frameDisplacemet = Vector2D({20.0,0.0});
+  bulletGraphics.frameTime = SECOND / 24;
+  bulletGraphics.intialRegion = Region2D({0.0,0.0},{20.0,20.0});
+  bulletGraphics.imgSrcId = ballgraphics[4];
+
+  zombienoid::MultiSpriteSheet* bulletSheet = new zombienoid::MultiSpriteSheet(1, bulletGraphics);
+
   const int AS_LIST = SysIdGenerator::getId();
   const int PLAYER_SS = SysIdGenerator::getId();
+  const int BULLET_SS = SysIdGenerator::getId();
 
   ResourceManager<SpriteSheet<AnimatedSprite> >& rmss = ResourceManager<SpriteSheet<AnimatedSprite> >::getInstance();
   std::shared_ptr<SpriteSheet<AnimatedSprite> > playerSS(playerSheet);
   rmss.insert(PLAYER_SS, playerSS);
+  std::shared_ptr<SpriteSheet<AnimatedSprite> > bulletSS(bulletSheet);
+  rmss.insert(BULLET_SS, bulletSS);
+
   ResourceManager<TicketedAEC<AnimatedSprite> >& rmtfaecas = ResourceManager<TicketedAEC<AnimatedSprite> >::getInstance();
   std::shared_ptr<TicketedAEC<AnimatedSprite> > itemAnimatedSpriteList(new TicketedAEC<AnimatedSprite>());
   rmtfaecas.insert(AS_LIST, itemAnimatedSpriteList);
   std::shared_ptr<Daemon> mssDrawerDaemon(new  BehaviorDaemon<AnimatedSprite, TicketedAEC<AnimatedSprite> >(std::make_shared<SpriteSheetSDLDrawer<AnimatedSprite> >(&window, &imgStore), AS_LIST));
   drawMaster->addDaemon(mssDrawerDaemon);
 
-  std::shared_ptr<GraphicElement> ge = std::make_shared<GraphicElement>(700, 50, 205, 299, 0, PLAYER_SS, 0, 0);
+  std::shared_ptr<GraphicElement> ge = std::make_shared<GraphicElement>(800, 50, 205, 299, 0, PLAYER_SS, 0, 0);
   std::shared_ptr<Adaptor<AnimatedSprite> > sAdaptor = std::make_shared<GraphicElementAnimatedSpriteAdaptor>(ge);
   std::shared_ptr<AvatarEntityAdapted<AnimatedSprite> > aeaas = std::make_shared<AvatarEntityAdapted<AnimatedSprite> >();
   setAdaptor(aeaas, sAdaptor);
@@ -452,7 +466,7 @@ int ludomain(int, char** ) {
 
   itemAnimatedSpriteList->push_front(aecas);
 
-  std::shared_ptr<GraphicElement> ge1 = std::make_shared<GraphicElement>(700, 350, 100, 150, 0, PLAYER_SS, 0, 0);
+  std::shared_ptr<GraphicElement> ge1 = std::make_shared<GraphicElement>(700, 50, 100, 150, 0, PLAYER_SS, 0, 0);
   sAdaptor = std::make_shared<GraphicElementAnimatedSpriteAdaptor>(ge1);
   aeaas = std::make_shared<AvatarEntityAdapted<AnimatedSprite> >();
   setAdaptor(aeaas, sAdaptor);
@@ -462,7 +476,22 @@ int ludomain(int, char** ) {
   std::shared_ptr<TimeHandler> stateRotatorTimer1 = std::make_shared<DemonRecurrentTimeHandler>(stateRotator1, teg, SECOND * 2);
   teg->addTimer(stateRotatorTimer1, SECOND * 2);
 
+  TicketedForwardList<GraphicElement> bullets;
+
   itemAnimatedSpriteList->push_front(aecas);
+  for(int i = 0;i < 9; i++){
+    for(int j = 0;j < 12; j++){
+      std::shared_ptr<GraphicElement> ge2 = std::make_shared<GraphicElement>(700 + 30*i , 340 + 30*j , 60, 60, 0, BULLET_SS, 0, ((SECOND / 24) * (i+j))) ;
+      sAdaptor = std::make_shared<GraphicElementAnimatedSpriteAdaptor>(ge2);
+      aeaas = std::make_shared<AvatarEntityAdapted<AnimatedSprite> >();
+      setAdaptor(aeaas, sAdaptor);
+      aecas = std::make_shared<AvatarEntityContainer<AnimatedSprite> >(aeaas);
+
+      itemAnimatedSpriteList->push_front(aecas);
+      bullets.push_front(ge2);
+    }
+  }
+
 
   printf("|=================== Starting up system ===================|\n");fflush(stdout);
   printf("Starting SysTimer\n");fflush(stdout);

@@ -337,10 +337,7 @@ int zombienoidmain(int, char*[]) {
 
   //wrappers--------------------------------------------------------------------------------------------------
 
-  std::shared_ptr<AvatarEntityContainer<Bouncer<2> > > aecb2;
-  std::shared_ptr<AvatarEntityContainer<Movable<2> > > aecm2;
   std::shared_ptr<AvatarEntityContainer<Positionable<2>, Avatar> > aecp2a;
-  std::shared_ptr<AvatarEntityContainer<Stated, Avatar> > aecsa;
   std::shared_ptr<AvatarEntityContainer<AnimatedSprite> > aecas;
   std::shared_ptr<AvatarEntityContainer<SingleTextSprite> > aecsts;
 
@@ -458,6 +455,9 @@ int zombienoidmain(int, char*[]) {
 
   //bricks---------------------------------------------------------------------------------------------------
 
+  //bricks counter---------------------------------------------------------------------------------------------
+  std::shared_ptr<Value<int64_t> > brickCount(new SimpleValue<int64_t>(0));
+
   std::shared_ptr<std::forward_list<ActuatorWrapper<ZombienoidReactor, WeakAvatarEntityContainer<Avatar, Positionable<2>, Stated> >* > > brickActuatorsList(new std::forward_list<ActuatorWrapper<ZombienoidReactor, WeakAvatarEntityContainer<Avatar, Positionable<2>, Stated> >* >());
 
   ActuatorWrapper<ZombienoidReactor, WeakAvatarEntityContainer<Avatar, Positionable<2>, Stated> >* brickEraserWrapper = new  ActuatorWrapperCommon<ZombienoidReactor, WeakAvatarEntityContainer<Stated>, WeakAvatarEntityContainer<Avatar, Positionable<2>, Stated> >(new BrickHitStateActuator<ZombienoidReactor, Solid>(-1,10,-1));
@@ -471,42 +471,44 @@ int zombienoidmain(int, char*[]) {
 
   rmss.insert(BRICK_SS, brickSS);
 
-  std::shared_ptr<TicketedFAE<Collisioner<ZombienoidReactor> > > brickCollisionerList(new TicketedForwardList<AvatarEntity<Collisioner<ZombienoidReactor> > >());
+  std::shared_ptr<TicketedFAE<Collisioner<ZombienoidReactor> > > brickCollisionerList(new TicketedFAE<Collisioner<ZombienoidReactor> >());
   ballCBSJoint->add(brickCollisionerList);
 
   std::shared_ptr<TicketedFAEC<AnimatedSprite> > brickAnimatedSpriteList(new TicketedFAEC<AnimatedSprite>());
 
-  ResourceManager<TicketedForwardList<AvatarEntityContainer<Stated, Avatar, Positionable<2> > > >& rmsam2 = ResourceManager<TicketedForwardList<AvatarEntityContainer<Stated, Avatar, Positionable<2> > > >::getInstance();
-  std::shared_ptr<TicketedForwardList<AvatarEntityContainer<Stated, Avatar, Positionable<2> > > > brickList(new TicketedForwardList<AvatarEntityContainer<Stated, Avatar, Positionable<2> > >());
+  ResourceManager<TicketedFAEC<Stated, Avatar, Positionable<2> > >& rmsam2 = ResourceManager<TicketedFAEC<Stated, Avatar, Positionable<2> > >::getInstance();
+  std::shared_ptr<TicketedFAEC<Stated, Avatar, Positionable<2> > > brickList(new TicketedFAEC<Stated, Avatar, Positionable<2> >());
   rmsam2.insert(BRICK_LIST, brickList);
 
-  std::shared_ptr<Daemon> brickEraserLT(new PunisherDaemon<Behavior<Stated, Avatar, Positionable<2> >, TicketedForwardList<AvatarEntityContainer<Stated, Avatar, Positionable<2> > > >(std::make_shared<BrickEraser>(0, BRICK_ITEM_SUCCES, BRICK_ITEM_TOTAL, itemBuilder), BRICK_LIST));
+  std::shared_ptr<Daemon> brickEraserLT(new PunisherDaemon<Behavior<Stated, Avatar, Positionable<2> >, TicketedFAEC<Stated, Avatar, Positionable<2> > >(std::make_shared<BrickEraser>(0, BRICK_ITEM_SUCCES, BRICK_ITEM_TOTAL, itemBuilder), BRICK_LIST));
   reactBehaviorMaster->addDaemon(brickEraserLT);
-  std::shared_ptr<AvatarEntityContainer<Stated, Avatar, Positionable<2> > > aecsap2;
   for(int i = 0; i < NBRICKS_X; i++) {
     for(int j = 0; j < NBRICKS_Y; j++) {
-        int state = (rand() % (BRICK_MAX_LEVEL + 1)-SPECIAL_STATES);
-        if(state == -1){
-            continue;
-        }
-        if(state == -2){
-            state = BRICK_BOOMBIZER_STATE;
-        }
 
-        std::shared_ptr<Element2D<ZombienoidReactor> > brick(new Element2D<ZombienoidReactor>({(double)(BRICK_WIDTH*i)+MARGIN + (BRICK_WIDTH/2) + BRICKS_X_MARGIN, (double)BRICKS_Y_MARGIN+(double)(BRICK_HEIGHT*j)+MARGIN + (BRICK_HEIGHT/2)}, BRICK_ACTUATORS_LIST, (double)BRICK_WIDTH, (double)BRICK_HEIGHT, BRICK_SS));
-        std::shared_ptr<Adaptor<AnimatedSprite> > brickSpriteAdaptor(new Element2DAnimatedSpriteAdaptor<ZombienoidReactor>(brick));
-        setAdaptor(brick, brickSpriteAdaptor);
-        brick->setState( state );
+      std::shared_ptr<AvatarEntityContainer<Stated, Avatar, Positionable<2> > > aecsap2;
+      std::shared_ptr<AvatarEntityContainer<AnimatedSprite> > aecas;
 
-        std::shared_ptr<Adaptor<Collisioner<ZombienoidReactor> > > brickCollisionerAdaptor(new BlockConerAdaptor<ZombienoidReactor>(brick, BRICK_BOOMBIZER_STATE));
-        setAdaptor(brick, brickCollisionerAdaptor);
+      int state = (rand() % (BRICK_MAX_LEVEL + 1)-SPECIAL_STATES);
+      if(state == -1){
+          continue;
+      }
+      if(state == -2){
+          state = BRICK_BOOMBIZER_STATE;
+      }
+      std::shared_ptr<Element2D<ZombienoidReactor> > brick(new CElement2D<ZombienoidReactor>(brickCount, {(double)(BRICK_WIDTH*i)+MARGIN + (BRICK_WIDTH/2) + BRICKS_X_MARGIN, (double)BRICKS_Y_MARGIN+(double)(BRICK_HEIGHT*j)+MARGIN + (BRICK_HEIGHT/2)}, BRICK_ACTUATORS_LIST, (double)BRICK_WIDTH, (double)BRICK_HEIGHT, BRICK_SS));
+      std::shared_ptr<Adaptor<AnimatedSprite> > brickSpriteAdaptor(new Element2DAnimatedSpriteAdaptor<ZombienoidReactor>(brick));
+      setAdaptor(brick, brickSpriteAdaptor);
+      brick->setState( state );
 
-        wrapAEC(&aecas, brick);
-        wrapAEC(&aecsap2, brick);
+      std::shared_ptr<Adaptor<Collisioner<ZombienoidReactor> > > brickCollisionerAdaptor(new BlockConerAdaptor<ZombienoidReactor>(brick, BRICK_BOOMBIZER_STATE));
+      setAdaptor(brick, brickCollisionerAdaptor);
 
-        brick->addToList(COLLISION_TICKET, brickCollisionerList->push_front(brick));
-        brick->addToList(DRAW_TICKET, brickAnimatedSpriteList->push_front(aecas));
-        brick->addToList(BEHAVE_TICKET, brickList->push_front(aecsap2));
+      wrapAEC(&aecas, brick);
+      wrapAEC(&aecsap2, brick);
+
+      brick->addToList(COLLISION_TICKET, brickCollisionerList->push_front(brick));
+      brick->addToList(DRAW_TICKET, brickAnimatedSpriteList->push_front(aecas));
+      brick->addToList(BEHAVE_TICKET, brickList->push_front(aecsap2));
     }
   }
 
@@ -530,6 +532,7 @@ int zombienoidmain(int, char*[]) {
     spawnData->setVelocity({(double)vx, (double)vy});
     Movable<2>* spawnAvatar = new BaseMovable<2>(spawnData);
     std::shared_ptr<AvatarEntityFixed<Movable<2> > > spawner = std::make_shared<AvatarEntityFixed<Movable<2> > >(spawnAvatar);
+    std::shared_ptr<AvatarEntityContainer<Movable<2> > > aecm2;
     wrapAEC(&aecm2, spawner);
     spawnList->push_front(aecm2);
   }
@@ -626,10 +629,6 @@ int zombienoidmain(int, char*[]) {
 
   ActuatorWrapper<ZombienoidReactor, WeakAvatarEntityContainer<Avatar, Bouncer<2>, Stated, Scorer, Resizable> >* ballScorerWrapper;
   ballScorerWrapper = new  ActuatorWrapperCommon<ZombienoidReactor, WeakAvatarEntityContainer<Scorer>, WeakAvatarEntityContainer<Avatar, Bouncer<2>, Stated, Scorer, Resizable> >(new BallScorer<ZombienoidReactor>(pointsValue, P_ACCUM_TIME, P_EXTRA_ACCUM_TIME, POINTS_MULTIPLIER));
-
-  // TODO
-  // multiss de ladrillos
-  // multiss de bola
 
   std::shared_ptr<TicketedFAEC<AnimatedSprite> > boomAnimatedSpriteList(new TicketedFAEC<AnimatedSprite>());
   ResourceManager<TicketedFAEC<AnimatedSprite> >& rmTFAECAS = ResourceManager<TicketedFAEC<AnimatedSprite> >::getInstance();
@@ -753,7 +752,6 @@ int zombienoidmain(int, char*[]) {
   int TEXT_FONT = textFontStore.loadFont(fontFileName, TEXT_F_SIZE, aColor);
   std::shared_ptr<Value<int64_t> > lifeCountValue(new SimpleValue<int64_t>(INITIAL_LIFES));
   std::shared_ptr<LifeCounter> lifeCountEnt(new LifeCounter(TEXT_BOX_MARGIN, TEXT_BOX_MARGIN, TEXT_CHAR_W * LIFE_BOX_CHARS, TEXT_CHAR_H, LIFE_BOX_CHARS, TEXT_FONT, lifeCountValue));
-
   std::shared_ptr<LifeCounter> pointsEnt(new LifeCounter(WIDTH - (POINT_BOX_CHARS * TEXT_CHAR_W) - TEXT_BOX_MARGIN, TEXT_BOX_MARGIN, POINT_BOX_CHARS * TEXT_CHAR_W, TEXT_CHAR_H, POINT_BOX_CHARS, TEXT_FONT, pointsValue));
 
   ItemCatcher<ZombienoidReactor>* catcher = new ItemCatcher<ZombienoidReactor>(pointsValue);
@@ -822,7 +820,9 @@ int zombienoidmain(int, char*[]) {
   MainLoop mainLoop(preLoop, postLoop, eventGenerator, commonBehaviorMaster, reactBehaviorMaster, drawMaster);
 
   std::shared_ptr<Daemon> failDaemon = std::make_shared<ZombienoidDeathTester>(lifeCountValue, &mainLoop);
+  std::shared_ptr<Daemon> succesDaemon = std::make_shared<ZombienoidDeathTester>(brickCount, &mainLoop);
   reactBehaviorMaster->addDaemon(failDaemon);
+  reactBehaviorMaster->addDaemon(succesDaemon);
 
   mainLoop.loop();
 

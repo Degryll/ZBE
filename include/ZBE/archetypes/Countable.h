@@ -20,18 +20,18 @@ public:
   /** \brief Parametrized constructor.
       \param ninstances
    */
-  Countable(std::shared_ptr<Value<T> > ninstances) : ninstances(ninstances) {
-    ninstances->add(1);
+  Countable(std::shared_ptr<Value<T> > ninstances) : ni(ninstances) {
+    ni->add(1);
   }
 
   /** \brief Desctructor
   */
   virtual ~Countable() {
-    ninstances->add(-1);
+    ni->add(-1);
   }
 
 private:
-  std::shared_ptr<Value<T> > ninstances;
+  std::shared_ptr<Value<T> > ni;
 };
 
 } // namespace zbe
