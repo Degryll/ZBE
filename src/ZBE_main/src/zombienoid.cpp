@@ -277,10 +277,6 @@ int zombienoidmain(int, char*[]) {
   const char fontFileName[] = "data/fonts/PublicEnemyNF.ttf";
 
   const int64_t INITIAL_LIFES = 3;
-  double BALL_SIZE_MIN = 0.25;
-  double BALL_SIZE_MAX = 2;
-  double BALL_SIZE_STEP = 0.25;
-  double BALL_XPLODE_RATIO = 64.0;
 
   srand(time(0));
 
@@ -372,14 +368,8 @@ int zombienoidmain(int, char*[]) {
 
   std::shared_ptr<Element2D<ZombienoidReactor> > board(new Element2D<ZombienoidReactor>({MARGIN, MARGIN}, BOARD_ACTUATORS_LIST, WIDTH - (MARGIN * 2), HEIGHT /*- (MARGIN * 2)*/, BOARD_SS));
 
-  double secondMargin = MARGIN - BALL_SIZE_MAX * BALL_SIZE;
-  std::shared_ptr<Element2D<ZombienoidReactor> > securityBoard(new Element2D<ZombienoidReactor>({secondMargin, secondMargin}, BOARD_ACTUATORS_LIST, WIDTH - (secondMargin * 2), HEIGHT * 2, BOARD_SS));
-
   std::shared_ptr<Adaptor<Collisioner<ZombienoidReactor> > > boardCollisionerAdaptor(new BoardConerAdaptor<ZombienoidReactor>(board));
   setAdaptor(board, boardCollisionerAdaptor);
-
-  std::shared_ptr<Adaptor<Collisioner<ZombienoidReactor> > > securityBoardCollisionerAdaptor(new BoardConerAdaptor<ZombienoidReactor>(securityBoard));
-  setAdaptor(securityBoard, securityBoardCollisionerAdaptor);
 
   std::shared_ptr<TicketedFAE<Collisioner<ZombienoidReactor> > > boardCollisionerList(new TicketedFAE<Collisioner<ZombienoidReactor> >());
   std::shared_ptr<Adaptor<AnimatedSprite> > boardSpriteAdaptor(new Element2DDisplacedAnimatedSpriteAdaptor<ZombienoidReactor>(board, Vector2D({0, 0})));
@@ -388,7 +378,6 @@ int zombienoidmain(int, char*[]) {
   wrapAEC(&aecas, board);
 
   board->addToList(COLLISION_TICKET, boardCollisionerList->push_front(board));
-  securityBoard->addToList(COLLISION_TICKET, boardCollisionerList->push_front(securityBoard));
   board->addToList(DRAW_TICKET, boardAnimatedSpriteList->push_front(aecas));
 
   ballCBSJoint->add(boardCollisionerList);
@@ -613,6 +602,10 @@ int zombienoidmain(int, char*[]) {
   std::shared_ptr<Value<int64_t> > ballCount(new SimpleValue<int64_t>());
 
   //ball-----------------------------------------------------------------------------------------------------
+  double BALL_SIZE_MIN = 0.25;
+  double BALL_SIZE_MAX = 2;
+  double BALL_SIZE_STEP = 0.25;
+  double BALL_XPLODE_RATIO = 64.0;
 
   std::shared_ptr<std::forward_list<ActuatorWrapper<ZombienoidReactor, WeakAvatarEntityContainer<Avatar, Bouncer<2>, Stated, Scorer, Resizable> >* > > ballActuatorsList(new std::forward_list<ActuatorWrapper<ZombienoidReactor, WeakAvatarEntityContainer<Avatar, Bouncer<2>, Stated, Scorer, Resizable> >* >());
 
