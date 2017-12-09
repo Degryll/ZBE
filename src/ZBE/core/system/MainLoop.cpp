@@ -6,7 +6,7 @@
 
 namespace zbe {
 
-void MainLoop::loop() {
+void MainLoop::run() {
 
   keep = true;
   while(keep){

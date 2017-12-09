@@ -69,7 +69,7 @@ class BallBoombizer: public zbe::Actuator<zbe::WeakAvatarEntityContainer<zbe::Av
       std::shared_ptr<zbe::TimeHandler> exploder = std::make_shared<BallExploder<R, BHL, CTL, CNL, ASL> >(waecPRS, eventId, catorListId, conerListId,
                                                                                                             actuatorListId, catorTicketId, behavTicketId,
                                                                                                             behavListId, asListId, graphsId, prevState,
-                                                                                                            zbe::SECOND/4, sizeRatio, ticketId, teg);
+                                                                                                            zbe::SECOND / 2, sizeRatio, ticketId, teg);
       std::shared_ptr<zbe::TimerTicket> timerTicket = teg->addTimer(exploder, zbe::SysTime::getInstance().getEventTime()+ time);
 
       timerSprite->setTimer(timerTicket);

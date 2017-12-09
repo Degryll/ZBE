@@ -19,7 +19,7 @@ namespace zbe {
 
 /** \brief The Main Loop of the game.
  */
-class MainLoop {
+class MainLoop : virtual public Daemon {
   public:
 
     /** \brief Constructor.
@@ -46,7 +46,7 @@ class MainLoop {
 
     /** \brief It will run the main loop.
      */
-    void loop();
+    void run();
 
     /** \brief Setter for the Pre-loop daemon.
      * \param daemon Pointer to the Daemon desired to be used.

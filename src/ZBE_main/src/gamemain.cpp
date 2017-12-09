@@ -239,7 +239,7 @@ int gamemain(int, char** ) {
   preLoop->addDaemon(prltd);
 
   zbe::MainLoop mainLoop(preLoop, postLoop, gema, commonBehaviorMaster, reactBehaviorMaster, drawMaster);
-  mainLoop.loop();
+  mainLoop.run();
 
   return 0;
 }

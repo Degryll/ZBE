@@ -524,7 +524,7 @@ int ludomain(int, char** ) {
   preLoop->addDaemon(prltd);
 
   MainLoop mainLoop(preLoop, postLoop, gema, commonBehaviorMaster, reactBehaviorMaster, drawMaster);
-  mainLoop.loop();
+  mainLoop.run();
 
   return 0;
 }

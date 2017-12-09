@@ -39,7 +39,7 @@ public:
   int64_t getGraphics() {return (graphics);}
 
   const std::string& getText() {
-    text = std::to_string((timer->getTime()-zbe::SysTime::getInstance().getEndFrameTime())/zbe::SECOND);
+    text = std::to_string(((timer->getTime()-zbe::SysTime::getInstance().getEndFrameTime())/zbe::SECOND+1));
     return (text);
   }
 

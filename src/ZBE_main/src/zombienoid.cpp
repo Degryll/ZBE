@@ -164,10 +164,10 @@ int zombienoidmain(int, char*[]) {
     ITEM_POINTS_999 = 999,
     ITEM_POINTS_N5000 = -5000,
 
-    ITEM_STICKY_TIME = SECOND*4,
+    ITEM_STICKY_TIME = SECOND*6,
 
     NBRICKS_X = 13,
-    NBRICKS_Y = 10,
+    NBRICKS_Y = 11,
     BRICK_WIDTH = 64,
     BRICK_HEIGHT = 32,
     BRICKS_X_MARGIN = 64,
@@ -179,7 +179,7 @@ int zombienoidmain(int, char*[]) {
 
     BRICK_BOOMBIZER_STATE = 16,
     BALL_BOOM_STATE = 1,
-    BOOM_TIME = SECOND*4,
+    BOOM_TIME = SECOND*5,
 
     BALL_SIZE = 32,
     BALL_V_X = -300,
@@ -270,7 +270,7 @@ int zombienoidmain(int, char*[]) {
   const char points999[] = "data/images/zombieball/zbeza_pnts_999_32.png";
   const char pointsn5000[] = "data/images/zombieball/zbeza_pntn_32.png";
   //Explosion
-  const char explosion[] = "data/images/zombieball/orb_001_512.png";
+  const char explosion[] = "data/images/zombieball/boom_002_256.png";
   //Back
   const char backImg[]   = "data/images/zombieball/bck.png";
   //Fonts
@@ -691,10 +691,10 @@ int zombienoidmain(int, char*[]) {
   ballSheet->setImgSrcDef(BALL_BOOM_STATE,ballGrapDef);
 
   ImgSrcDef explosionGrapDef;
-  explosionGrapDef.frameAmount = 1;
-  explosionGrapDef.frameDisplacemet = Vector2D({0.0,0.0});
-  explosionGrapDef.frameTime = 1000;
-  explosionGrapDef.intialRegion = Region2D({0.0,0.0},{512.0,512.0});
+  explosionGrapDef.frameAmount = 6;
+  explosionGrapDef.frameDisplacemet = Vector2D({256.0,0.0});
+  explosionGrapDef.frameTime = SECOND/12;
+  explosionGrapDef.intialRegion = Region2D({0.0,0.0},{256.0,256.0});
   explosionGrapDef.imgSrcId = EXPLODE_GRAPHICS;
 
   MultiSpriteSheet* explosionSheet = new MultiSpriteSheet(1, explosionGrapDef);
@@ -824,7 +824,7 @@ int zombienoidmain(int, char*[]) {
   reactBehaviorMaster->addDaemon(failDaemon);
   reactBehaviorMaster->addDaemon(succesDaemon);
 
-  mainLoop.loop();
+  mainLoop.run();
 
   return 0;
 }
