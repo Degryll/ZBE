@@ -328,12 +328,12 @@
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/BaseSingleTextSprite.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/BaseStated.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/SimpleBounceable.h" />
-		<Unit filename="../../../include/ZBE/events/handlers/MouseXIH.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/actuators/BouncerActuator.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/actuators/ConditionalEraserActuator.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/actuators/EraserActuator.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/actuators/StateChangerActuator.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/input/DaemonInputHandler.h" />
+		<Unit filename="../../../include/ZBE/events/handlers/input/InputToValue.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/time/DaemonRecurrentTimeHandler.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/time/DaemonTimeHandler.h" />
 		<Unit filename="../../../src/ZBE/SDL/daemons/BasicPostLoopSDLDaemon.cpp" />

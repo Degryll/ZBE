@@ -200,6 +200,7 @@ private:
    */
   template <typename T>
   using TicketedFLConstIterator = TicketedForwardListIterator<T const>;
+
 }  // namespace zbe
 
 #endif  // ZBE_CORE_TOOLS_CONTAINERS_TICKETEDFORWARDLIST_H_

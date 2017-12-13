@@ -283,6 +283,20 @@ void wrapAEC(std::shared_ptr<AvatarEntityContainer<Bases...> >* aec, std::shared
     *aec = std::make_shared<AvatarEntityContainer<Bases...> >(src);
 }
 
+template <typename T>
+using AE = AvatarEntity<T>;
+
+template <typename T>
+using AEFixed = AvatarEntityFixed<T>;
+
+template <typename T>
+using AEAdapted = AvatarEntityAdapted<T>;
+
+template <typename ...Avatars>
+using AEC = AvatarEntityContainer<Avatars...>;
+
+template <typename ...Avatars>
+using WAEC = WeakAvatarEntityContainer<Avatars...>;
 
 }  // namespace ZBE
 
