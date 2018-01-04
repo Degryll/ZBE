@@ -48,7 +48,7 @@ namespace zombienoid {
   uint64_t ZBNCfg::EXPLSION_SS;
   uint64_t ZBNCfg::BAR_SS;
   uint64_t ZBNCfg::BOARD_SS;
-  // Image paths
+  // Image ids
   uint64_t ZBNCfg::BOARD_GRAPHICS;
   uint64_t ZBNCfg::ITEM_LIFE_GRAPHICS;
   uint64_t ZBNCfg::ITEM_MULTIPLIER_GRAPHICS;
@@ -68,6 +68,9 @@ namespace zombienoid {
   uint64_t ZBNCfg::BALL_N_GRAPHICS;
   uint64_t ZBNCfg::BALL_B_GRAPHICS;
   uint64_t ZBNCfg::EXPLODE_GRAPHICS;
+  // Font ids
+  uint64_t ZBNCfg::BOOM_TEXT_FONT;
+  uint64_t ZBNCfg::TEXT_FONT;
 
   void ZBNCfg::initIds() {
     // Ticket ids.
@@ -117,7 +120,7 @@ namespace zombienoid {
     EXPLSION_SS = zbe::SysIdGenerator::getId();
     BAR_SS = zbe::SysIdGenerator::getId();
     BOARD_SS = zbe::SysIdGenerator::getId();
-    // Image paths
+    // Image ids
     BOARD_GRAPHICS = zbe::SysIdGenerator::getId();
     ITEM_LIFE_GRAPHICS = zbe::SysIdGenerator::getId();
     ITEM_MULTIPLIER_GRAPHICS = zbe::SysIdGenerator::getId();
@@ -137,5 +140,8 @@ namespace zombienoid {
     BALL_N_GRAPHICS = zbe::SysIdGenerator::getId();
     BALL_B_GRAPHICS = zbe::SysIdGenerator::getId();
     EXPLODE_GRAPHICS = zbe::SysIdGenerator::getId();
+    // Font ids
+    BOOM_TEXT_FONT = zbe::SysIdGenerator::getId();
+    TEXT_FONT = zbe::SysIdGenerator::getId();
   }
 }

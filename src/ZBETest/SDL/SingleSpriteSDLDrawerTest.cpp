@@ -45,10 +45,10 @@ private:
 
 TEST(SingleSpriteSDLDrawer, DISABLED_Render) {
   //srand(time(nullptr));
-  zbe::SDLWindow window(WINDOW_W, WINDOW_H);
-  zbe::SDLImageStore imgStore(window.getRenderer());
+  std::shared_ptr<zbe::SDLWindow> window = std::make_shared<zbe::SDLWindow>(WINDOW_W, WINDOW_H);
+  zbe::SDLImageStore imgStore(window->getRenderer());
 
-  zbe::SingleSpriteSDLDrawer drawer(&window, &imgStore);
+  zbe::SingleSpriteSDLDrawer drawer(window, &imgStore);
 
   std::shared_ptr<DrawerMock> dm = std::make_shared<DrawerMock>();
   std::shared_ptr<zbe::Adaptor<zbe::SingleSprite> > spriteAdaptor = std::make_shared<zbe::SimpleDrawableSingleSpriteAdaptor>(dm);
@@ -79,9 +79,9 @@ TEST(SingleSpriteSDLDrawer, DISABLED_Render) {
 
 printf("bgcolor: %hhd, %hhd, %hhd, %hhd\n", bgcolor[0], bgcolor[1], bgcolor[2], bgcolor[3]);
 
-  window.render2Texture();
-  window.setBackgroundColor(bgcolor[0], bgcolor[1], bgcolor[2], bgcolor[3]);
-  window.clear();
+  window->render2Texture();
+  window->setBackgroundColor(bgcolor[0], bgcolor[1], bgcolor[2], bgcolor[3]);
+  window->clear();
 
   int x = rand() % 50;
   int y = rand() % 50;

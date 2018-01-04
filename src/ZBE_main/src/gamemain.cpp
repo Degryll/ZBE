@@ -123,8 +123,8 @@ int gamemain(int, char** ) {
   sysTime.setSystemTimer(sysTimer);
   printf("|-------------------- Drawing system ----------------------|\n");fflush(stdout);
   printf("Building the window to draw on\n");fflush(stdout);
-  zbe::SDLWindow window(WIDTH,HEIGHT);
-  zbe::SDLImageStore imgStore(window.getRenderer());
+  std::shared_ptr<zbe::SDLWindow> window = std::make_shared<zbe::SDLWindow>(WIDTH,HEIGHT);
+  zbe::SDLImageStore imgStore(window->getRenderer());
   printf("Creating draw master list\n");fflush(stdout);
   std::shared_ptr<zbe::DaemonMaster> drawMaster(new zbe::DaemonMaster());
   printf("Creating drawables list\n");fflush(stdout);
@@ -135,7 +135,7 @@ int gamemain(int, char** ) {
   ballgraphics = imgStore.loadImg(ballfilename);
   brickgraphics = imgStore.loadImg(brickfilename);
   printf("Building the drawer to paint SingleSprite's \n");fflush(stdout);
-  std::shared_ptr<zbe::Daemon> drawerDaemon(new  zbe::BehaviorDaemon<zbe::SingleSprite, zbe::TicketedForwardList<zbe::AvatarEntityContainer<zbe::SingleSprite > > >(std::make_shared<zbe::SingleSpriteSDLDrawer>(&window, &imgStore), SPRITELIST));
+  std::shared_ptr<zbe::Daemon> drawerDaemon(new  zbe::BehaviorDaemon<zbe::SingleSprite, zbe::TicketedForwardList<zbe::AvatarEntityContainer<zbe::SingleSprite > > >(std::make_shared<zbe::SingleSpriteSDLDrawer>(window, &imgStore), SPRITELIST));
   drawMaster->addDaemon(drawerDaemon);
   printf("|-------------------- Daemons ----------------------|\n");fflush(stdout);
   std::shared_ptr<zbe::DaemonMaster> commonBehaviorMaster(new zbe::DaemonMaster());
@@ -231,8 +231,8 @@ int gamemain(int, char** ) {
   sysTime.update();
 
   std::shared_ptr<zbe::Daemon> prltd = std::make_shared<zbe::BasicPreLoopTimeDaemon>();
-  std::shared_ptr<zbe::Daemon> prlsdl = std::make_shared<zbe::BasicPreLoopSDLDaemon>(&window);
-  std::shared_ptr<zbe::Daemon> postLoop = std::make_shared<zbe::BasicPostLoopSDLDaemon>(&window);
+  std::shared_ptr<zbe::Daemon> prlsdl = std::make_shared<zbe::BasicPreLoopSDLDaemon>(window);
+  std::shared_ptr<zbe::Daemon> postLoop = std::make_shared<zbe::BasicPostLoopSDLDaemon>(window);
   std::shared_ptr<zbe::DaemonMaster> preLoop(new zbe::DaemonMaster());
 
   preLoop->addDaemon(prlsdl);

@@ -30,15 +30,16 @@ namespace zombienoid {
       ZBNoidResourceLoader(const ZBNoidResourceLoader&) = delete;
       void operator=(const ZBNoidResourceLoader&) = delete;
 
-      ZBNoidResourceLoader(std::shared_ptr<RsrcIDDictionary> idStore, std::shared_ptr<zbe::SDLImageStore> store) : idStore(idStore), store(store)  {}
+      ZBNoidResourceLoader(std::shared_ptr<RsrcIDDictionary> rsrcIDDic, std::shared_ptr<zbe::SDLImageStore> imgStore, std::shared_ptr<zbe::SDLTextFontStore> textFontStore) : rsrcIDDic(rsrcIDDic), imgStore(imgStore), textFontStore(textFontStore)  {}
 
       ~ZBNoidResourceLoader() {}
 
       void run();
 
     private:
-      std::shared_ptr<RsrcIDDictionary> idStore;
-      std::shared_ptr<zbe::SDLImageStore> store;
+      std::shared_ptr<RsrcIDDictionary> rsrcIDDic;
+      std::shared_ptr<zbe::SDLImageStore> imgStore;
+      std::shared_ptr<zbe::SDLTextFontStore> textFontStore;
   };
 
 

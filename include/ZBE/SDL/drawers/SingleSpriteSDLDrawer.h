@@ -31,7 +31,7 @@ class SingleSpriteSDLDrawer : public Behavior<SingleSprite> {
     /** \brief Create a new drawer in the given context.
      *  \param window A SDLwindow with its context.
      */
-    SingleSpriteSDLDrawer(SDLWindow* window, SDLImageStore* imgStore) : window(window), imgStore(imgStore) {}
+    SingleSpriteSDLDrawer(std::shared_ptr<zbe::SDLWindow> window, SDLImageStore* imgStore) : window(window), imgStore(imgStore) {}
 
     /** \brief Destructor.
      */
@@ -43,7 +43,7 @@ class SingleSpriteSDLDrawer : public Behavior<SingleSprite> {
     void apply(std::shared_ptr<AvatarEntityContainer<SingleSprite> > entity);
 
   private:
-    SDLWindow* window;  //!< A SDL window with its context.
+    std::shared_ptr<zbe::SDLWindow> window;  //!< A SDL window with its context.
     SDLImageStore* imgStore; //!< Where the images are stored.
 };
 

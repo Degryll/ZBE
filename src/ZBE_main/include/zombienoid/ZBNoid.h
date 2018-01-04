@@ -120,7 +120,7 @@
 
  #include "zombienoid/daemons/ZBNoidResourceLoader.h"
 
- namespace zombienoid {
+namespace zombienoid {
 
 using InteractionGenerator = zbe::InteractionEventGenerator<
   ZombienoidReactor, zbe::CollisionSelector<ZombienoidReactor>,
@@ -198,7 +198,68 @@ enum {
    LIFE_BOX_CHARS = 2,
    POINT_BOX_CHARS = 10,
    TEXT_BOX_MARGIN = 6
- };
+};
+
+const int64_t INITIAL_LIFES = 3;
+const double BALL_SIZE_MIN = 0.25;
+const double BALL_SIZE_MAX = 2;
+const double BALL_SIZE_STEP = 0.25;
+const double BALL_XPLODE_RATIO = 64.0;
+
+const size_t RSRC_ID_DICT_SIZE = 20;
+
+// BOARD
+// -GRAPHICS
+const int64_t BOARD_FRAMES = 8;
+const zbe::Vector2D BOARD_DISPLACEMENT = zbe::Vector2D{800.0, 0.0};
+const int64_t BOARD_FRAMETIME = 16000;
+const zbe::Region2D BOARD_REGION = zbe::Region2D({0.0, 0.0}, {800.0, 600.0});
+const int64_t BOARD_STATES = 2;
+const zbe::Vector2D BOARD_SPRITE_DISPLACEMENT = zbe::Vector2D{0, 0};
+
+// -SIZE
+const double BOARD_WIDTH = WIDTH - (MARGIN * 2);
+const double BOARD_HEIGHT = HEIGHT /*- (MARGIN * 2)*/;
+const double SECURITY_MARGIN = MARGIN - BALL_SIZE_MAX * BALL_SIZE;
+const double SECURITY_WIDTH = WIDTH - (SECURITY_MARGIN * 2);
+const double SECURITY_HEIGHT = HEIGHT * 2;
+
+// ITEM
+// -GRAPHICS
+const int64_t ITEM_FRAMES = 1;
+const zbe::Vector2D ITEM_DISPLACEMENT = zbe::Vector2D{0.0, 0.0};
+const int64_t ITEM_FRAMETIME = 1000;
+const zbe::Region2D ITEM_REGION = zbe::Region2D({0.0, 0.0}, {32.0, 64.0});
+
+// BRICK HIT ACTUATOR
+const int64_t BRK_HIT_INCREMENT = -1;
+const int64_t BRK_HIT_HIGHLIMIT = 10;
+const int64_t BRK_HIT_LOWLIMIT = 0;
+const int64_t BRK_HIT_DEADVALUE = BRK_HIT_LOWLIMIT - 1;
+
+// BAR
+// -GRAPHICS
+const int64_t BAR_FRAMES = 1;
+const zbe::Vector2D BAR_DISPLACEMENT = zbe::Vector2D{0.0, 0.0};
+const int64_t BAR_FRAMETIME = 1000;
+const zbe::Region2D BAR_REGION = zbe::Region2D({0.0, 0.0}, {161.0, 32.0});
+const int64_t BAR_STATES = 2;
+
+// BALL
+// -GRAPHICS
+const int64_t BALL_FRAMES = 1;
+const zbe::Vector2D BALL_DISPLACEMENT = zbe::Vector2D{0.0, 0.0};
+const int64_t BALL_FRAMETIME = 1000;
+const zbe::Region2D BALL_REGION = zbe::Region2D({0.0, 0.0}, {64.0, 64.0});
+const int64_t BALL_STATES = 2;
+
+// EXPLOSION
+// -GRAPHICS
+const int64_t EXPLOSION_FRAMES = 6;
+const zbe::Vector2D EXPLOSION_DISPLACEMENT = zbe::Vector2D{256.0, 0.0};
+const int64_t EXPLOSION_FRAMETIME = zbe::SECOND/12;
+const zbe::Region2D EXPLOSION_REGION = zbe::Region2D({0.0, 0.0}, {256.0, 256.0});
+const int64_t EXPLOSION_STATES = 1;
 
 class ZBNCfg {
 public:
@@ -249,7 +310,7 @@ public:
   static uint64_t EXPLSION_SS;
   static uint64_t BAR_SS;
   static uint64_t BOARD_SS;
-  // Image paths
+  // Image ids
   static uint64_t BOARD_GRAPHICS;
   static uint64_t ITEM_LIFE_GRAPHICS;
   static uint64_t ITEM_MULTIPLIER_GRAPHICS;
@@ -269,6 +330,9 @@ public:
   static uint64_t BALL_N_GRAPHICS;
   static uint64_t BALL_B_GRAPHICS;
   static uint64_t EXPLODE_GRAPHICS;
+  // Font ids
+  static uint64_t BOOM_TEXT_FONT;
+  static uint64_t TEXT_FONT;
 
   static void initIds();
 private:

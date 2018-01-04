@@ -10,6 +10,8 @@
 #ifndef CORE_DAEMONS_BASICPOSTLOOPSDLDAEMON_H_
 #define CORE_DAEMONS_BASICPOSTLOOPSDLDAEMON_H_
 
+#include <memory>
+
 #include "ZBE/core/daemons/Daemon.h"
 #include "ZBE/SDL/system/SDLWindow.h"
 
@@ -22,7 +24,7 @@ namespace zbe {
       BasicPostLoopSDLDaemon(const BasicPostLoopSDLDaemon&) = delete;
       void operator=(const BasicPostLoopSDLDaemon&) = delete;
 
-      BasicPostLoopSDLDaemon(zbe::SDLWindow* window): window(window) {}
+      BasicPostLoopSDLDaemon(std::shared_ptr<zbe::SDLWindow> window): window(window) {}
 
       /** \brief Destroys the BasicPostLoopSDLDaemon
        */
@@ -32,7 +34,7 @@ namespace zbe {
        */
       void run();
     private:
-      zbe::SDLWindow* window;
+      std::shared_ptr<zbe::SDLWindow> window;
   };
 }  // namespace zbe
 
