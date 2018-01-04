@@ -47,7 +47,7 @@ public:
   /** \brief Returns graphics.
    *  \return graphics.
    */
-  virtual int64_t getGraphics() = 0;
+  virtual uint64_t getGraphics() = 0;
 
 };
 

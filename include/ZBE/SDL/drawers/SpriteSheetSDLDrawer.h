@@ -10,6 +10,7 @@
 #ifndef SDL_DRAWERS_SPRITESHEETSDLDRAWER_H_
 #define SDL_DRAWERS_SPRITESHEETSDLDRAWER_H_
 
+#include <memory>
 #include <SDL2/SDL.h>
 
 #include "ZBE/core/behaviors/Behavior.h"
@@ -37,7 +38,7 @@ class SpriteSheetSDLDrawer : public Behavior<T> {
     /** \brief Create a new drawer in the given context.
      *  \param window A SDLwindow with its context.
      */
-    SpriteSheetSDLDrawer(SDLWindow* window, SDLImageStore* imgStore)
+    SpriteSheetSDLDrawer(SDLWindow* window, std::shared_ptr<SDLImageStore> imgStore)
       : window(window), imgStore(imgStore), rmss(ResourceManager<SpriteSheet<T> >::getInstance()) {}
 
     /** \brief Destructor.
@@ -64,7 +65,7 @@ class SpriteSheetSDLDrawer : public Behavior<T> {
 
   private:
     SDLWindow* window;  //!< A SDL window with its context.
-    SDLImageStore* imgStore; //!< Where the images are stored.
+    std::shared_ptr<SDLImageStore> imgStore; //!< Where the images are stored.
     ResourceManager<SpriteSheet<T> >& rmss; //!< Resource manager instance.
 };
 

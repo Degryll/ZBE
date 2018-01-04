@@ -238,8 +238,10 @@
 		<Unit filename="../../../include/ZBE/core/daemons/BasicPreLoopTimeDaemon.h" />
 		<Unit filename="../../../include/ZBE/core/daemons/Daemon.h" />
 		<Unit filename="../../../include/ZBE/core/daemons/DaemonMaster.h" />
+		<Unit filename="../../../include/ZBE/core/daemons/MainLoopExit.h" />
 		<Unit filename="../../../include/ZBE/core/daemons/PunisherDaemon.h" />
 		<Unit filename="../../../include/ZBE/core/daemons/Punishers.h" />
+		<Unit filename="../../../include/ZBE/core/daemons/StateMachineDaemon.h" />
 		<Unit filename="../../../include/ZBE/core/drawers/Drawer.h" />
 		<Unit filename="../../../include/ZBE/core/entities/Adaptor.h" />
 		<Unit filename="../../../include/ZBE/core/entities/AvatarEntity.h" />

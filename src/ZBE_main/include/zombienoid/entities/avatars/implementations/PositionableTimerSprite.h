@@ -36,7 +36,7 @@ public:
   int64_t getY() {return (getP2D()->getPosition().y + yOffset);}
   int64_t getW() {return (width);}
   int64_t getH() {return (height);}
-  int64_t getGraphics() {return (graphics);}
+  uint64_t getGraphics() {return (graphics);}
 
   const std::string& getText() {
     text = std::to_string(((timer->getTime()-zbe::SysTime::getInstance().getEndFrameTime())/zbe::SECOND+1));

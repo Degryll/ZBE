@@ -14,6 +14,7 @@
 
 #include <vector>
 #include <mutex>
+#include <memory>
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
@@ -39,7 +40,7 @@ public:
     /** \brief Creates a new SDLTextFontStore associated to a renderer.
      *  \param renderer SDL_Renderer to use.
      */
-    SDLTextFontStore(SDLImageStore* imageStore, SDL_Renderer* renderer);
+    SDLTextFontStore(std::shared_ptr<SDLImageStore> imageStore, SDL_Renderer* renderer);
 
     /** \brief Adds a font to the font collection.
      *
@@ -72,7 +73,7 @@ private:
     std::vector<ZBE_Font> fontCollection;     //!< Collection of fonts.
     std::mutex m;                             //!< Mutex to avoid race conditions.
     std::mutex mf;                            //!< Another mutex to avoid race conditions.
-    SDLImageStore* imageStore;                //!< ImageStore to store pre-rendered texts.
+    std::shared_ptr<SDLImageStore> imageStore; //!< ImageStore to store pre-rendered texts.
     SDL_Renderer* renderer;                   //!< Renderer to be used for drawing.
 
 };

@@ -29,12 +29,12 @@ public:
   /** \brief Returns state.
    *  \return state.
    */
-  virtual uint64_t getState() = 0;
+  virtual int64_t getState() = 0;
 
   /** \brief Sets state.
    *  \param state
    */
-  virtual void setState(uint64_t state) = 0;
+  virtual void setState(int64_t state) = 0;
 
 };
 

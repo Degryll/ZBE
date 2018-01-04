@@ -23,20 +23,20 @@ namespace zombienoid {
 
 class SimpleStateDrawable : virtual public zbe::State, virtual public zbe::Drawable, virtual public zbe::AnimatedSprite {
 public:
-  SimpleStateDrawable(zbe::Region2D area, int64_t state, unt64_t graphics) : area(area), state(state), graphics(graphics), time(0), sysTime(zbe::SysTime::getInstance()) {}
+  SimpleStateDrawable(zbe::Region2D area, int64_t state, double degrees, uint64_t graphics) : area(area), state(state), graphics(graphics), time(0), degrees(degrees), sysTime(zbe::SysTime::getInstance()) {}
 
   void setState(int64_t state) {
     this->time = sysTime.getEventTime();
     this->state = state;
   }
 
-  void add(int64_t value) {this->state + value}
+  void add(int64_t value) {this->state += value;}
 
   int64_t getState() {return (state);}
 
   int64_t getX() {return (area.p.x);}
 
-  int64_t getY(return (area.p.y);)
+  int64_t getY() {return (area.p.y);}
 
   int64_t getW() {return (area.v.x);}
 
@@ -46,6 +46,8 @@ public:
 
   uint64_t getTime() {return sysTime.getTotalTime() - time;}
 
+  double getDegrees() {return degrees;}
+
   zbe::Region2D getArea() {return (area);}
 
   void setArea(zbe::Region2D area) {this->area = area;}
@@ -53,10 +55,11 @@ public:
 private:
   zbe::Region2D area;
   int64_t state;
-  unt64_t graphics;
-  unt64_t time;
+  int64_t graphics;
+  int64_t time;
+  double degrees;
   zbe::SysTime& sysTime;
-}
+};
 
 } // namespace zombienoid
 

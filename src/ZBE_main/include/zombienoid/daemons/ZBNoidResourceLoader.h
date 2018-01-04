@@ -17,6 +17,10 @@
 
 #include "zombienoid/ZBNoid.h"
 
+#include "zombienoid/graphics/RsrcIDDictionary.h"
+
+#include "ZBE/SDL/system/SDLImageStore.h"
+
 namespace zombienoid {
   /** \brief Defines a daemon that ends the game if the number of lifes reaches 0 in zombienoid game.
    */
@@ -26,14 +30,15 @@ namespace zombienoid {
       ZBNoidResourceLoader(const ZBNoidResourceLoader&) = delete;
       void operator=(const ZBNoidResourceLoader&) = delete;
 
-      ZBNoidResourceLoader() {}
+      ZBNoidResourceLoader(std::shared_ptr<RsrcIDDictionary> idStore, std::shared_ptr<zbe::SDLImageStore> store) : idStore(idStore), store(store)  {}
 
-      ~ZBNoidResourceLoader(){}
+      ~ZBNoidResourceLoader() {}
 
-      void run(){}
+      void run();
 
     private:
-      
+      std::shared_ptr<RsrcIDDictionary> idStore;
+      std::shared_ptr<zbe::SDLImageStore> store;
   };
 
 

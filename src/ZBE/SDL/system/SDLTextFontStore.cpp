@@ -15,7 +15,7 @@
 
 namespace zbe {
 
-SDLTextFontStore::SDLTextFontStore(SDLImageStore* imageStore, SDL_Renderer* renderer) : nfonts(0), fontCollection(), m(), mf(), imageStore(imageStore), renderer(renderer) {
+SDLTextFontStore::SDLTextFontStore(std::shared_ptr<SDLImageStore> imageStore, SDL_Renderer* renderer) : nfonts(0), fontCollection(), m(), mf(), imageStore(imageStore), renderer(renderer) {
     TTF_Init();
 }
 

@@ -53,7 +53,7 @@ public:
   /** \brief Returns graphics.
    *  \return graphics.
    */
-  int64_t getGraphics() {return graphics;}
+  uint64_t getGraphics() {return graphics;}
 
   /** \brief Sets x.
    *  \param x value for the x attribute

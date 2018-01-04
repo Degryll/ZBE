@@ -59,7 +59,7 @@ public:
   /** \brief Returns graphics.
    *  \return graphics.
    */
-  int64_t getGraphics() {return (td->getGraphics());}
+  uint64_t getGraphics() {return (td->getGraphics());}
 
 private:
 

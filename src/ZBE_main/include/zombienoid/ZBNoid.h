@@ -118,6 +118,8 @@
  #include "zombienoid/graphics/MultiSpriteSheet.h"
  #include "zombienoid/graphics/SimpleSpriteSheet.h"
 
+ #include "zombienoid/daemons/ZBNoidResourceLoader.h"
+
  namespace zombienoid {
 
 using InteractionGenerator = zbe::InteractionEventGenerator<
@@ -198,54 +200,81 @@ enum {
    TEXT_BOX_MARGIN = 6
  };
 
- // Ticket ids.
- const int COLLISION_TICKET = zbe::SysIdGenerator::getId();
- const int DRAW_TICKET = zbe::SysIdGenerator::getId();
- const int BEHAVE_TICKET = zbe::SysIdGenerator::getId();
- const int MAGNET_TICKET = zbe::SysIdGenerator::getId();
- const int BOOM_TEXTSPRITE_TICKET = zbe::SysIdGenerator::getId();
- // Event ids.
- const int INPUTEVENT = zbe::SysIdGenerator::getId();
- const int TIMEEVENT = zbe::SysIdGenerator::getId();
- const int COLLISIONEVENT = zbe::SysIdGenerator::getId();
- // List joints for collisiontors, sprites and text sprites.
- const int CTS_JOINT = zbe::SysIdGenerator::getId();
- const int AS_JOINT = zbe::SysIdGenerator::getId();
- const int ATS_JOINT = zbe::SysIdGenerator::getId();
- // Actuators list.
- const int BOARD_ACTUATORS_LIST = zbe::SysIdGenerator::getId();
- const int ITEM_ACTUATORS_LIST = zbe::SysIdGenerator::getId();
- const int BRICK_ACTUATORS_LIST = zbe::SysIdGenerator::getId();
- const int BALL_ACTUATORS_LIST = zbe::SysIdGenerator::getId();
- const int EXPLOSION_ACTUATORS_LIST = zbe::SysIdGenerator::getId();
- const int BAR_ACTUATORS_LIST = zbe::SysIdGenerator::getId();
- // Behaviors list
- const int BRICK_LIST = zbe::SysIdGenerator::getId();
- const int BALLSPAWN_LIST = zbe::SysIdGenerator::getId();
- const int BALL_LIST = zbe::SysIdGenerator::getId();
- const int ITEM_LIST = zbe::SysIdGenerator::getId();
- const int MOUSE_CONTROL_LIST = zbe::SysIdGenerator::getId();
- const int DEMAGNETIZE_LIST = zbe::SysIdGenerator::getId();
- const int EXPLSION_ERASE_LIST = zbe::SysIdGenerator::getId();
- // Collisionables list
- const int BRICK_COLLISIONER_LIST = zbe::SysIdGenerator::getId();
- // Collisionables list
- const int BOOM_COLLISIONATOR_LIST = zbe::SysIdGenerator::getId();
- // Collisionables list joints
- const int BALL_CBS_JOINT = zbe::SysIdGenerator::getId();
- const int ITEM_CBS_JOINT = zbe::SysIdGenerator::getId();
- // AnimatedSprite list
- const int BOOM_AS_LIST = zbe::SysIdGenerator::getId();
- // TextSprite list
- const int TEXT_TS_LIST = zbe::SysIdGenerator::getId();
- // Sprite sheet ids
- const int ITEM_SS = zbe::SysIdGenerator::getId();
- const int BRICK_SS = zbe::SysIdGenerator::getId();
- const int BALL_SS = zbe::SysIdGenerator::getId();
- const int EXPLSION_SS = zbe::SysIdGenerator::getId();
- const int BAR_SS = zbe::SysIdGenerator::getId();
- const int BOARD_SS = zbe::SysIdGenerator::getId();
+class ZBNCfg {
+public:
+  // Ticket ids.
+  static uint64_t COLLISION_TICKET;
+  static uint64_t DRAW_TICKET;
+  static uint64_t BEHAVE_TICKET;
+  static uint64_t MAGNET_TICKET;
+  static uint64_t BOOM_TEXTSPRITE_TICKET;
+  // Event ids.
+  static uint64_t INPUTEVENT;
+  static uint64_t TIMEEVENT;
+  static uint64_t COLLISIONEVENT;
+  // List joints for collisiontors, sprites and text sprites.
+  static uint64_t CTS_JOINT;
+  static uint64_t AS_JOINT;
+  static uint64_t ATS_JOINT;
+  // Actuators list.
+  static uint64_t BOARD_ACTUATORS_LIST;
+  static uint64_t ITEM_ACTUATORS_LIST;
+  static uint64_t BRICK_ACTUATORS_LIST;
+  static uint64_t BALL_ACTUATORS_LIST;
+  static uint64_t EXPLOSION_ACTUATORS_LIST;
+  static uint64_t BAR_ACTUATORS_LIST;
+  // Behaviors list
+  static uint64_t BRICK_LIST;
+  static uint64_t BALLSPAWN_LIST;
+  static uint64_t BALL_LIST;
+  static uint64_t ITEM_LIST;
+  static uint64_t MOUSE_CONTROL_LIST;
+  static uint64_t DEMAGNETIZE_LIST;
+  static uint64_t EXPLSION_ERASE_LIST;
+  // Collisionables list
+  static uint64_t BRICK_COLLISIONER_LIST;
+  // Collisionables list
+  static uint64_t BOOM_COLLISIONATOR_LIST;
+  // Collisionables list joints
+  static uint64_t BALL_CBS_JOINT;
+  static uint64_t ITEM_CBS_JOINT;
+  // AnimatedSprite list
+  static uint64_t BOOM_AS_LIST;
+  // TextSprite list
+  static uint64_t TEXT_TS_LIST;
+  // Sprite sheet ids
+  static uint64_t ITEM_SS;
+  static uint64_t BRICK_SS;
+  static uint64_t BALL_SS;
+  static uint64_t EXPLSION_SS;
+  static uint64_t BAR_SS;
+  static uint64_t BOARD_SS;
+  // Image paths
+  static uint64_t BOARD_GRAPHICS;
+  static uint64_t ITEM_LIFE_GRAPHICS;
+  static uint64_t ITEM_MULTIPLIER_GRAPHICS;
+  static uint64_t ITEM_ACCEL_GRAPHICS;
+  static uint64_t ITEM_DECEL_GRAPHICS;
+  static uint64_t ITEM_BIGGER_GRAPHICS;
+  static uint64_t ITEM_SMALLER_GRAPHICS;
+  static uint64_t ITEM_MAGNET_GRAPHICS;
+  static uint64_t ITEM_P100_GRAPHICS;
+  static uint64_t ITEM_P200_GRAPHICS;
+  static uint64_t ITEM_P500_GRAPHICS;
+  static uint64_t ITEM_P999_GRAPHICS;
+  static uint64_t ITEM_PN5000_GRAPHICS;
+  static uint64_t BRICK_GRAHPICS;
+  static uint64_t BAR_GRAPHICS;
+  static uint64_t BAR_GRAPHICS_GREY;
+  static uint64_t BALL_N_GRAPHICS;
+  static uint64_t BALL_B_GRAPHICS;
+  static uint64_t EXPLODE_GRAPHICS;
 
- }
+  static void initIds();
+private:
+  ZBNCfg() {}
+};
+
+} //namespace zombienoid
 
  #endif  // ZOMBIENOID_ZBNOID_H

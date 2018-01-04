@@ -7,8 +7,8 @@
  * @brief Define the minimal functions of demons.
  */
 
-#ifndef CORE_DAEMONS_DAEMON_H
-#define CORE_DAEMONS_DAEMON_H
+#ifndef CORE_DAEMONS_MAINLOOPEXIT_H
+#define CORE_DAEMONS_MAINLOOPEXIT_H
 
 #include <memory>
 #include <cstdint>
@@ -30,8 +30,8 @@ public:
   ~MainLoopExit() {}
 
   void run() {
+    mainLoop->stop();
     value->setValue(exitValue);
-    mainLoop.exit();
   }
 
 private:
@@ -42,4 +42,4 @@ private:
 
 }  // namespace zbe
 
-#endif // CORE_DAEMONS_DAEMON_H
+#endif // CORE_DAEMONS_MAINLOOPEXIT_H

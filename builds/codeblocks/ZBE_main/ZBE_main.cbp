@@ -177,12 +177,19 @@
 		<Unit filename="../../../src/ZBE_main/include/ludo/events/handlers/LudoHandlers.h" />
 		<Unit filename="../../../src/ZBE_main/include/ludomain.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid.h" />
+		<Unit filename="../../../src/ZBE_main/include/zombienoid/ZBNoid.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/ZombienoidReactor.h" />
+		<Unit filename="../../../src/ZBE_main/include/zombienoid/archetypes/implementations/SimpleStateDrawable.h" />
+		<Unit filename="../../../src/ZBE_main/include/zombienoid/archetypes/implementations/SimpleTextDrawable.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/behaviors/BrickEraser.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/behaviors/Demagnetizer.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/behaviors/XSetter.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/behaviors/builders/BallBuilder.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/behaviors/builders/ItemBuilder.h" />
+		<Unit filename="../../../src/ZBE_main/include/zombienoid/builders/ButtonBuilder.h" />
+		<Unit filename="../../../src/ZBE_main/include/zombienoid/daemons/ZBNoidLevelStart.h" />
+		<Unit filename="../../../src/ZBE_main/include/zombienoid/daemons/ZBNoidResourceLoader.h" />
+		<Unit filename="../../../src/ZBE_main/include/zombienoid/daemons/ZBNoidTitleBuilder.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/daemons/ZombienoidDeathTester.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/daemons/ZombienoidLifeSubstractor.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/daemons/items/BallAcceleratorItem.h" />
@@ -228,6 +235,7 @@
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/events/handlers/actuators/ItemCatcher.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/events/handlers/actuators/MagnetSticker.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/graphics/MultiSpriteSheet.h" />
+		<Unit filename="../../../src/ZBE_main/include/zombienoid/graphics/RsrcIDDictionary.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/graphics/SimpleSpriteSheet.h" />
 		<Unit filename="../../../src/ZBE_main/src/batismain.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/degryllmain.cpp" />
@@ -235,6 +243,10 @@
 		<Unit filename="../../../src/ZBE_main/src/ludomain.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/main.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/zombienoid.cpp" />
+		<Unit filename="../../../src/ZBE_main/src/zombienoid/ZBNoid.cpp" />
+		<Unit filename="../../../src/ZBE_main/src/zombienoid/builders/ButtonBuilder.cpp" />
+		<Unit filename="../../../src/ZBE_main/src/zombienoid/daemons/ZBNoidResourceLoader.cpp" />
+		<Unit filename="../../../src/ZBE_main/src/zombienoid/daemons/ZBNoidTitleBuilder.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

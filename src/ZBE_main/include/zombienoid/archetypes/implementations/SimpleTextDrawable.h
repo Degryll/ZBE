@@ -13,19 +13,19 @@
 #include <cstdint>
 
 #include "ZBE/archetypes/TextDrawable.h"
-#include "ZBE/core/entities/avatars/SingleTextSprite.h"
+#include "ZBE/entities/avatars/SingleTextSprite.h"
 
 namespace zombienoid {
 
-class SimpleTextDrawable : virtual public zbe::TextDrawable {
+class SimpleTextDrawable : virtual public zbe::TextDrawable, virtual public zbe::SingleTextSprite {
 public:
-  SimpleTextDrawable(zbe::Region2D area, std::string text, unt64_t graphics) : area(area), state(state), graphics(graphics) {}
+  SimpleTextDrawable(zbe::Region2D area, std::string text, uint64_t graphics) : area(area), text(text), graphics(graphics) {}
 
   std::string& getText() {return (text);};
 
   int64_t getX() {return (area.p.x);}
 
-  int64_t getY(return (area.p.y);)
+  int64_t getY() {return (area.p.y);}
 
   int64_t getW() {return (area.v.x);}
 
@@ -40,7 +40,7 @@ public:
 private:
   zbe::Region2D area;
   std::string text;
-  unt64_t graphics;
+  uint64_t graphics;
 };
 
 } // namespace zombienoid

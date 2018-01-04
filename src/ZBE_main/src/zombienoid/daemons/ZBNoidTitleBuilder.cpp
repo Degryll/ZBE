@@ -14,6 +14,7 @@
 #include "ZBE/core/system/MainLoop.h"
 #include "ZBE/core/system/SysIdGenerator.h"
 #include "ZBE/core/tools/shared/Value.h"
+#include "ZBE/core/tools/shared/implementations/SimpleValue.h"
 #include "ZBE/core/daemons/MainLoopExit.h"
 #include "ZBE/core/zbe.h"
 
@@ -22,8 +23,7 @@
 #include "ZBE/SDL/drawers/SpriteSheetSDLDrawer.h"
 #include "ZBE/SDL/drawers/SingleTextSDLDrawer.h"
 
-#include "zombienoid/ZBNoid.h"
-
+#include "zombienoid/builders/ButtonBuilder.h"
 
 namespace zombienoid {
 
@@ -34,13 +34,13 @@ void ZBNoidTitleBuilder::run() {
   ResourceManager<Behavior<AnimatedSprite> >& asDrawerRsrc = ResourceManager<Behavior<AnimatedSprite> >::getInstance();
   ResourceManager<Behavior<SingleTextSprite> >& stsDrawerRsrc = ResourceManager<Behavior<SingleTextSprite> >::getInstance();
   // Common daemons
-  std::shared_ptr<Daemon> preLoop = daemonResource.get(preLoopId);
-  std::shared_ptr<Daemon> postLoop = daemonResource.get(postLoopId);
+  std::shared_ptr<Daemon> preLoop = daemonRsrc.get(preLoopId);
+  std::shared_ptr<Daemon> postLoop = daemonRsrc.get(postLoopId);
   // Event generators
   std::shared_ptr<DaemonMaster> eventGenerator(new DaemonMaster());
   eventGenerator->addDaemon(ieg);
-  auto xvalue = std::make_shared<Value<double> >();
-  auto yvalue = std::make_shared<Value<double> >();
+  std::shared_ptr<Value<double> > xvalue = std::make_shared<SimpleValue<double> >();
+  std::shared_ptr<Value<double> > yvalue = std::make_shared<SimpleValue<double> >();
 
   ieg->addHandler(ZBEK_MOUSE_OFFSET_X, new InputToValue(xvalue));
   ieg->addHandler(ZBEK_MOUSE_OFFSET_Y, new InputToValue(yvalue));
@@ -54,8 +54,8 @@ void ZBNoidTitleBuilder::run() {
   uint64_t asDrwListId = SysIdGenerator::getId();
   uint64_t spsDrwListId = SysIdGenerator::getId();
 
-  auto drawerDaemon = std::make_shared<BehaviorDaemon<AnimatedSprite, TicketedFAEC<AnimatedSprite> > >(asDrawerRsrc.get(asDrawerId), asDrwListId));
-  auto writerDaemon = std::make_shared<BehaviorDaemon<SingleTextSprite, TicketedFAEC<SingleTextSprite> > >(stsDrawerRsrc.get(spsDrawerId), spsDrwListId));
+  auto drawerDaemon = std::make_shared<BehaviorDaemon<AnimatedSprite, TicketedFAEC<AnimatedSprite> > >(asDrawerRsrc.get(asDrawerId), asDrwListId);
+  auto writerDaemon = std::make_shared<BehaviorDaemon<SingleTextSprite, TicketedFAEC<SingleTextSprite> > >(stsDrawerRsrc.get(stsDrawerId), stsDrawerId);
   std::shared_ptr<DaemonMaster> drawMaster(new DaemonMaster());
   drawMaster->addDaemon(drawerDaemon);
   drawMaster->addDaemon(writerDaemon);
@@ -70,7 +70,7 @@ void ZBNoidTitleBuilder::run() {
     .withInputEventGenerator(ieg)
     .withMouseX(xvalue)
     .withMouseY(yvalue)
-    .withArea({462.0, 50.0, 100.0, 50.0})
+    .withArea(Region2D({462.0, 50.0}, {100.0, 50.0}))
     .withDaemon(startButton)
     .withGraphics(spriteSheetID)
     .withText("START")
@@ -83,7 +83,7 @@ void ZBNoidTitleBuilder::run() {
     .withInputEventGenerator(ieg)
     .withMouseX(xvalue)
     .withMouseY(yvalue)
-    .withArea({462.0, 110.0, 100.0, 50.0})
+    .withArea(Region2D({462.0, 110.0}, {100.0, 50.0}))
     .withDaemon(exitButton)
     .withGraphics(spriteSheetID)
     .withText("EXIT")
