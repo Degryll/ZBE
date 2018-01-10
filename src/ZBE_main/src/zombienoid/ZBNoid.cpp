@@ -7,6 +7,7 @@ namespace zombienoid {
   uint64_t ZBNCfg::BEHAVE_TICKET;
   uint64_t ZBNCfg::MAGNET_TICKET;
   uint64_t ZBNCfg::BOOM_TEXTSPRITE_TICKET;
+  uint64_t ZBNCfg::STICKY_LIST_TICKET;
   // Event ids.
   uint64_t ZBNCfg::INPUTEVENT;
   uint64_t ZBNCfg::TIMEEVENT;
@@ -30,6 +31,7 @@ namespace zombienoid {
   uint64_t ZBNCfg::MOUSE_CONTROL_LIST;
   uint64_t ZBNCfg::DEMAGNETIZE_LIST;
   uint64_t ZBNCfg::EXPLSION_ERASE_LIST;
+  uint64_t ZBNCfg::STICKY_STATE_LIST;
   // Collisionables list
   uint64_t ZBNCfg::BRICK_COLLISIONER_LIST;
   // Collisionables list
@@ -79,6 +81,7 @@ namespace zombienoid {
     BEHAVE_TICKET = zbe::SysIdGenerator::getId();
     MAGNET_TICKET = zbe::SysIdGenerator::getId();
     BOOM_TEXTSPRITE_TICKET = zbe::SysIdGenerator::getId();
+    STICKY_LIST_TICKET = zbe::SysIdGenerator::getId();
     // Event ids.
     INPUTEVENT = zbe::SysIdGenerator::getId();
     TIMEEVENT = zbe::SysIdGenerator::getId();
@@ -102,6 +105,7 @@ namespace zombienoid {
     MOUSE_CONTROL_LIST = zbe::SysIdGenerator::getId();
     DEMAGNETIZE_LIST = zbe::SysIdGenerator::getId();
     EXPLSION_ERASE_LIST = zbe::SysIdGenerator::getId();
+    STICKY_STATE_LIST = zbe::SysIdGenerator::getId();
     // Collisionables list
     BRICK_COLLISIONER_LIST = zbe::SysIdGenerator::getId();
     // Collisionables list

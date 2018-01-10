@@ -21,7 +21,6 @@
 #include "ZBE/core/tools/graphics/SpriteSheet.h"
 
 #include "ZBE/SDL/system/SDLWindow.h"
-#include "ZBE/SDL/system/SDLImageStore.h"
 
 #include "ZBE/SDL/tools/SDLUtils.h"
 
@@ -38,8 +37,8 @@ class SpriteSheetSDLDrawer : public Behavior<T> {
     /** \brief Create a new drawer in the given context.
      *  \param window A SDLwindow with its context.
      */
-    SpriteSheetSDLDrawer(std::shared_ptr<SDLWindow> window, std::shared_ptr<SDLImageStore> imgStore)
-      : window(window), imgStore(imgStore), rmss(ResourceManager<SpriteSheet<T> >::getInstance()) {}
+    SpriteSheetSDLDrawer(std::shared_ptr<SDLWindow> window)
+      : window(window), imgStore(window->getImgStore()), rmss(ResourceManager<SpriteSheet<T> >::getInstance()) {}
 
     /** \brief Destructor.
      */

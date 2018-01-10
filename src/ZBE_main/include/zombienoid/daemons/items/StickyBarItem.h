@@ -3,7 +3,7 @@
  * @file StickyBarItem.h
  * @since 2017-10-09
  * @date 2017-10-09
- * @author Ludo
+ * @author Ludo Batis Degryll
  * @brief Daemon capable of change bar state.
  */
 
@@ -29,41 +29,46 @@ namespace zombienoid {
  */
 class UnStickyBar : public zbe::Daemon {
 public:
-  UnStickyBar(std::shared_ptr<zbe::AvatarEntity<zbe::Stated> > aeStated, uint64_t state): aeStated(aeStated), state(state) {}
+  UnStickyBar(std::shared_ptr<zbe::Daemon> endDaemon, std::shared_ptr<zbe::Value<int64_t> > itemState, int64_t endState)
+    : endDaemon(endDaemon), itemState(itemState), endState(endState) {}
   void run(){
-    zbe::Stated* s;
-    aeStated->assignAvatar(&s);
-    s->setState(state);
+    endDaemon->run();
+    itemState->setValue(endState);
   }
 
 private:
-  std::shared_ptr<zbe::AvatarEntity<zbe::Stated> > aeStated;
-  uint64_t state;
+  std::shared_ptr<zbe::Daemon> endDaemon;
+  std::shared_ptr<zbe::Value<int64_t> > itemState;
+  int64_t endState;
 };
 
 /** \brief Daemon capable of increase an value.
  */
+
 class StickyBarItem : public zbe::Daemon {
 public:
-  StickyBarItem(std::shared_ptr<zbe::AvatarEntity<zbe::Stated> > aeStated, std::shared_ptr<zbe::TimeEventGenerator> teg, int64_t time, int64_t state): aeStated(aeStated), teg(teg), time(time), state(state), timer(nullptr) {}
+  StickyBarItem(std::shared_ptr<zbe::Daemon> initDaemon, std::shared_ptr<zbe::Daemon> endDaemon, std::shared_ptr<zbe::TimeEventGenerator> teg,
+                int64_t time, int64_t initState, int64_t endState, std::shared_ptr<zbe::Value<int64_t> > itemState)
+    : initDaemon(initDaemon), endDaemon(endDaemon), teg(teg), time(time), initState(initState), endState(endState), itemState(itemState), timer(nullptr) {}
   void run(){
-    zbe::Stated* s;
-    aeStated->assignAvatar(&s);
-    int64_t oldState= s->getState();
-    if(oldState!=state) {
-      s->setState(state);
-      std::shared_ptr<zbe::TimeHandler> th = std::make_shared<zbe::DaemonTimeHandler>(std::make_shared<UnStickyBar>(aeStated, oldState));
-      timer = teg->addTimer(th, zbe::SysTime::getInstance().getEventTime() + time);
+    if(itemState->getValue() != initState) {
+      itemState->setValue(initState);
+      initDaemon->run();
+      std::shared_ptr<zbe::TimeHandler> endHandler = std::make_shared<zbe::DaemonTimeHandler>(std::make_shared<UnStickyBar>(endDaemon, itemState, endState));
+      timer = teg->addTimer(endHandler, zbe::SysTime::getInstance().getEventTime() + time);
     } else {
-        timer->increaseTime(time);
+      timer->increaseTime(time);
     }
   }
 
 private:
-  std::shared_ptr<zbe::AvatarEntity<zbe::Stated> > aeStated;
+  std::shared_ptr<zbe::Daemon> initDaemon;
+  std::shared_ptr<zbe::Daemon> endDaemon;
   std::shared_ptr<zbe::TimeEventGenerator> teg;
   int64_t time;
-  int64_t state;
+  int64_t initState;
+  int64_t endState;
+  std::shared_ptr<zbe::Value<int64_t> > itemState;
   std::shared_ptr<zbe::TimerTicket> timer;
 };
 

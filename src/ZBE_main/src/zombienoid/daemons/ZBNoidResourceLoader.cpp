@@ -34,6 +34,9 @@ namespace zombienoid{
   const SDL_Color textColor{255, 128, 0, 255};
 
   void ZBNoidResourceLoader::run () {
+
+     srand(time(0));
+     
      rsrcIDDic->setId(ZBNCfg::BOARD_GRAPHICS, imgStore->loadImg(backImg));
 
      rsrcIDDic->setId(ZBNCfg::ITEM_LIFE_GRAPHICS, imgStore->loadImg(extraLife));
@@ -145,7 +148,7 @@ namespace zombienoid{
     explosionGrapDef.imgSrcId = rsrcIDDic->getId(ZBNCfg::EXPLODE_GRAPHICS);
 
     MultiSpriteSheet* explosionSheet = new MultiSpriteSheet(1, explosionGrapDef);
-    
+
     std::shared_ptr<zbe::SpriteSheet<zbe::AnimatedSprite> > explosionSS(explosionSheet);
     rmss.insert(ZBNCfg::EXPLSION_SS, explosionSS);
 

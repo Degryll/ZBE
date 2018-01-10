@@ -16,7 +16,6 @@
 #include "ZBE/core/entities/AvatarEntity.h"
 #include "ZBE/core/entities/avatars/SingleSprite.h"
 #include "ZBE/SDL/system/SDLWindow.h"
-#include "ZBE/SDL/system/SDLImageStore.h"
 
 #include "ludo/entities/LudoAvatars.h"
 

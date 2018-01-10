@@ -16,7 +16,6 @@
 #include "ZBE/core/entities/avatars/RotatedSprite.h"
 #include "ZBE/core/entities/AvatarEntity.h"
 #include "ZBE/SDL/system/SDLWindow.h"
-#include "ZBE/SDL/system/SDLImageStore.h"
 
 namespace zbe {
 

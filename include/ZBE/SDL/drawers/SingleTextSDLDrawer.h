@@ -17,7 +17,6 @@
 #include "ZBE/entities/avatars/SingleTextSprite.h"
 #include "ZBE/core/entities/AvatarEntity.h"
 #include "ZBE/SDL/system/SDLWindow.h"
-#include "ZBE/SDL/system/SDLTextFontStore.h"
 
 namespace zbe {
 
@@ -31,7 +30,8 @@ class SingleTextSDLDrawer : public Behavior<SingleTextSprite> {
     /** \brief Create a new drawer in the given context.
      *  \param window A SDLwindow with its context.
      */
-    SingleTextSDLDrawer(std::shared_ptr<SDLWindow> window, std::shared_ptr<SDLTextFontStore> textFontStore) : window(window), textFontStore(textFontStore) {}
+    SingleTextSDLDrawer(std::shared_ptr<SDLWindow> window)
+      : window(window), textFontStore(window->getFontStore()) {}
 
     /** \brief Destructor.
      */

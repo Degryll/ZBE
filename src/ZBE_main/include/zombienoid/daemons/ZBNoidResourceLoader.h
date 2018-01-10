@@ -19,7 +19,7 @@
 
 #include "zombienoid/graphics/RsrcIDDictionary.h"
 
-#include "ZBE/SDL/system/SDLImageStore.h"
+#include "ZBE/SDL/system/SDLWindow.h"
 
 namespace zombienoid {
   /** \brief Defines a daemon that ends the game if the number of lifes reaches 0 in zombienoid game.

@@ -20,6 +20,7 @@
 #include "ZBE/core/events/TimeEvent.h"
 #include "ZBE/core/events/handlers/TimeHandler.h"
 #include "ZBE/core/system/SysTime.h"
+#include "ZBE/core/system/SysError.h"
 
 namespace zbe {
 

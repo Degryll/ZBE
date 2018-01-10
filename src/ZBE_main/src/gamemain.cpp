@@ -123,7 +123,7 @@ int gamemain(int, char** ) {
   sysTime.setSystemTimer(sysTimer);
   printf("|-------------------- Drawing system ----------------------|\n");fflush(stdout);
   printf("Building the window to draw on\n");fflush(stdout);
-  std::shared_ptr<zbe::SDLWindow> window = std::make_shared<zbe::SDLWindow>(WIDTH,HEIGHT);
+  std::shared_ptr<zbe::SDLWindow> window = std::make_shared<zbe::SDLWindow>("Game Main", WIDTH,HEIGHT);
   zbe::SDLImageStore imgStore(window->getRenderer());
   printf("Creating draw master list\n");fflush(stdout);
   std::shared_ptr<zbe::DaemonMaster> drawMaster(new zbe::DaemonMaster());

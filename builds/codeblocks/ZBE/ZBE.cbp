@@ -184,8 +184,6 @@
 		<Unit filename="../../../include/ZBE/SDL/drawers/StatedSpriteSDLDrawer.h" />
 		<Unit filename="../../../include/ZBE/SDL/starters/SDL_Starter.h" />
 		<Unit filename="../../../include/ZBE/SDL/system/SDLEventDispatcher.h" />
-		<Unit filename="../../../include/ZBE/SDL/system/SDLImageStore.h" />
-		<Unit filename="../../../include/ZBE/SDL/system/SDLTextFontStore.h" />
 		<Unit filename="../../../include/ZBE/SDL/system/SDLWindow.h" />
 		<Unit filename="../../../include/ZBE/SDL/tools/SDLTimer.h" />
 		<Unit filename="../../../include/ZBE/SDL/tools/SDLUtils.h" />
@@ -346,8 +344,6 @@
 		<Unit filename="../../../src/ZBE/SDL/drawers/SingleTextSDLDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/drawers/StatedSpriteSDLDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/system/SDLEventDispatcher.cpp" />
-		<Unit filename="../../../src/ZBE/SDL/system/SDLImageStore.cpp" />
-		<Unit filename="../../../src/ZBE/SDL/system/SDLTextFontStore.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/system/SDLWindow.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/tools/SDLTimer.cpp" />
 		<Unit filename="../../../src/ZBE/core/daemons/BasicPreLoopTimeDaemon.cpp" />

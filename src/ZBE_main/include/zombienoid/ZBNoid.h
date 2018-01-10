@@ -57,6 +57,7 @@
  #include "ZBE/behaviors/Erase.h"
  #include "ZBE/behaviors/UniformLinearMotion.h"
  #include "ZBE/behaviors/StateLTEraser.h"
+ #include "ZBE/behaviors/StateSetter.h"
 
  #include "ZBE/events/handlers/actuators/ConditionalEraserActuator.h"
  #include "ZBE/events/handlers/input/DaemonInputHandler.h"
@@ -70,9 +71,6 @@
 
  #include "ZBE/SDL/system/SDLWindow.h"
  #include "ZBE/SDL/system/SDLEventDispatcher.h"
-
- #include "ZBE/SDL/system/SDLImageStore.h"
- #include "ZBE/SDL/system/SDLTextFontStore.h"
 
  #include "ZBE/SDL/tools/SDLTimer.h"
 
@@ -139,9 +137,6 @@ using CustomItemBuilder = ItemBuilder<
   zbe::TicketedFAEC<zbe::AnimatedSprite>,
   zbe::TicketedFAEC<zbe::Movable<2> > >;
 
-static const int64_t GAME_EXIT_VALUE = 0;
-static const int64_t GAME_START_VALUE = 1;
-
 enum {
    WIDTH = 1024,
    HEIGHT = 768,
@@ -175,7 +170,7 @@ enum {
    BRICKS_Y_MARGIN = 64,
    BRICK_MAX_LEVEL = 3,
    BRICK_ITEM_SUCCES = 1,
-   BRICK_ITEM_TOTAL = 10,
+   BRICK_ITEM_TOTAL = 1,
    SPECIAL_STATES = 2,
 
    BRICK_BOOMBIZER_STATE = 16,
@@ -200,11 +195,24 @@ enum {
    TEXT_BOX_MARGIN = 6
 };
 
+const int64_t GAME_EXIT_VALUE = 0;
+const int64_t GAME_START_VALUE = 1;
+const char ZBENOID_WINDOW_TITLE[] = "ZBNoid";
+
 const int64_t INITIAL_LIFES = 3;
 const double BALL_SIZE_MIN = 0.25;
 const double BALL_SIZE_MAX = 2;
 const double BALL_SIZE_STEP = 0.25;
 const double BALL_XPLODE_RATIO = 64.0;
+
+const int BALL_MULTIPLIER_AMOUNT = 2;
+const double BALL_MULTIPLIER_ANGLES[BALL_MULTIPLIER_AMOUNT] = {-30.0, 30.0};
+const double BALL_ACCELERATION_RATIO = 3.0/2.0;
+const double BALL_DECELERATION_RATIO = 1.0/BALL_ACCELERATION_RATIO;
+
+const int BAR_NORMAL_STATE = 0;
+const int BAR_STICKY_STATE = 1;
+const int LIFE_ITEM_AMOUNT = 1;
 
 const size_t RSRC_ID_DICT_SIZE = 20;
 
@@ -269,6 +277,7 @@ public:
   static uint64_t BEHAVE_TICKET;
   static uint64_t MAGNET_TICKET;
   static uint64_t BOOM_TEXTSPRITE_TICKET;
+  static uint64_t STICKY_LIST_TICKET;
   // Event ids.
   static uint64_t INPUTEVENT;
   static uint64_t TIMEEVENT;
@@ -292,6 +301,7 @@ public:
   static uint64_t MOUSE_CONTROL_LIST;
   static uint64_t DEMAGNETIZE_LIST;
   static uint64_t EXPLSION_ERASE_LIST;
+  static uint64_t STICKY_STATE_LIST;
   // Collisionables list
   static uint64_t BRICK_COLLISIONER_LIST;
   // Collisionables list

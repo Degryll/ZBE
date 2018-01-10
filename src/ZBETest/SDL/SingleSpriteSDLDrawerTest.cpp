@@ -6,7 +6,6 @@
 #include <ctime>
 
 #include "ZBE/SDL/system/SDLWindow.h"
-#include "ZBE/SDL/system/SDLImageStore.h"
 #include "ZBE/core/tools/containers/ResourceManager.h"
 #include "ZBE/core/tools/containers/TicketedForwardList.h"
 #include "ZBE/core/entities/AvatarEntity.h"
@@ -45,7 +44,7 @@ private:
 
 TEST(SingleSpriteSDLDrawer, DISABLED_Render) {
   //srand(time(nullptr));
-  std::shared_ptr<zbe::SDLWindow> window = std::make_shared<zbe::SDLWindow>(WINDOW_W, WINDOW_H);
+  std::shared_ptr<zbe::SDLWindow> window = std::make_shared<zbe::SDLWindow>("test", WINDOW_W, WINDOW_H);
   zbe::SDLImageStore imgStore(window->getRenderer());
 
   zbe::SingleSpriteSDLDrawer drawer(window, &imgStore);

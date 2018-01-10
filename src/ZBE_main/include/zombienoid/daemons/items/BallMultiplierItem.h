@@ -42,7 +42,7 @@ public:
   BallMultiplierItem(const BallMultiplierItem&) = delete;
   void operator=(const BallMultiplierItem&) = delete;
 
-  BallMultiplierItem(std::shared_ptr<zbe::Behavior<zbe::Movable<2> > > builder, uint64_t listId, double* angles, unsigned amount)
+  BallMultiplierItem(std::shared_ptr<zbe::Behavior<zbe::Movable<2> > > builder, uint64_t listId, const double* angles, unsigned amount)
     : builder(builder), ballList(zbe::ResourceManager<BL>::getInstance().get(listId)),
       archetype(new zbe::SimpleMobile<2>()), avatar(new zbe::BaseMovable<2>(archetype)),
       aem2(new zbe::AvatarEntityFixed<zbe::Movable<2> >(avatar)), model(new zbe::AvatarEntityContainer<zbe::Movable<2> >(aem2)),
@@ -78,7 +78,7 @@ private:
   zbe::BaseMovable<2>* avatar;
   std::shared_ptr<zbe::AvatarEntity<zbe::Movable<2> > > aem2;
   std::shared_ptr<zbe::AvatarEntityContainer<zbe::Movable<2> > > model;
-  double* angles;
+  const double* angles;
   unsigned amount;
 };
 
