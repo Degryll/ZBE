@@ -10,6 +10,7 @@
 #ifndef ZBE_SDL_SYSTEM_SDLEVENTDISPATCHER_H
 #define ZBE_SDL_SYSTEM_SDLEVENTDISPATCHER_H
 
+#include <memory>
 #include <map>
 #include <list>
 
@@ -44,14 +45,14 @@ public:
   /** \brief Returns the InputBuffer where the input info will be written.
    *  \return The InputBuffer.
    */
-  InputBuffer* getInputBuffer() {return &inputBuffer;}
+  std::shared_ptr<InputBuffer> getInputBuffer() {return inputBuffer;}
 
   /** \brief Distribute SDL events in the appropriate structures of the system.
    */
   void run();
 
 private:
-  SDLEventDispatcher() : sdl(SDL_Starter::getInstance(SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC | SDL_INIT_GAMECONTROLLER | SDL_INIT_EVENTS)), inputBuffer(), st(SysTime::getInstance()) {}
+  SDLEventDispatcher() : sdl(SDL_Starter::getInstance(SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC | SDL_INIT_GAMECONTROLLER | SDL_INIT_EVENTS)), inputBuffer(std::make_shared<InputBuffer>()), st(SysTime::getInstance()) {}
 
   bool tryKeyboardEvent(SDL_Event &event);
 
@@ -68,7 +69,7 @@ private:
   uint32_t getEquivalentToSDL(SDL_Keycode k) {return (k);}
 
   SDL_Starter &sdl;
-  InputBuffer inputBuffer;
+  std::shared_ptr<InputBuffer> inputBuffer;
   SysTime& st;
 };
 

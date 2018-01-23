@@ -26,18 +26,47 @@ namespace zombienoid {
  */
 class ButtonBuilder {
 public:
-  
+
+  ButtonBuilder(const ButtonBuilder& rhs)
+    : brdcstHI(), xvalue(), yvalue(), area(), daemon(), text(),
+      graphics(), textGraphics(), asDrwListId(), spsDrwListId() {
+    brdcstHI = rhs.brdcstHI;
+    xvalue = rhs.xvalue;
+    yvalue = rhs.yvalue;
+    area = rhs.area;
+    daemon = rhs.daemon;
+    text = rhs.text;
+    graphics = rhs.graphics;
+    textGraphics = rhs.textGraphics;
+    asDrwListId = rhs.asDrwListId;
+    spsDrwListId = rhs.spsDrwListId;
+  }
+
+  ButtonBuilder& operator=(const ButtonBuilder& rhs) {
+    brdcstHI = rhs.brdcstHI;
+    xvalue = rhs.xvalue;
+    yvalue = rhs.yvalue;
+    area = rhs.area;
+    daemon = rhs.daemon;
+    text = rhs.text;
+    graphics = rhs.graphics;
+    textGraphics = rhs.textGraphics;
+    asDrwListId = rhs.asDrwListId;
+    spsDrwListId = rhs.spsDrwListId;
+    return *this;
+  }
+
   ~ButtonBuilder() {}
 
   /** \brief It will finish the game if the number of lifes reaches 0
    */
   static ButtonBuilder aButton() {return (ButtonBuilder());}
 
-  inline ButtonBuilder& withInputEventGenerator(std::shared_ptr<zbe::InputEventGenerator> ieg) {this->ieg = ieg; return (*this);}
-  inline ButtonBuilder& withMouseX(std::shared_ptr<zbe::Value<double> > xvalue)                {this->xvalue = xvalue; return (*this);}
-  inline ButtonBuilder& withMouseY(std::shared_ptr<zbe::Value<double> > yvalue)                {this->yvalue = yvalue; return (*this);}
-  inline ButtonBuilder& withArea(zbe::Region2D area)                                           {this->area = area; return (*this);}
-  inline ButtonBuilder& withDaemon(std::shared_ptr<zbe::Daemon> daemon)                        {this->daemon = daemon; return (*this);}
+  inline ButtonBuilder& withBroadcastHI(BroadcastIH* brdcstHI)                            { this->brdcstHI = brdcstHI; return (*this);};
+  inline ButtonBuilder& withMouseX(std::shared_ptr<zbe::Value<double> > xvalue)           {this->xvalue = xvalue; return (*this);}
+  inline ButtonBuilder& withMouseY(std::shared_ptr<zbe::Value<double> > yvalue)           {this->yvalue = yvalue; return (*this);}
+  inline ButtonBuilder& withArea(zbe::Region2D area)                                      {this->area = area; return (*this);}
+  inline ButtonBuilder& withDaemon(std::shared_ptr<zbe::Daemon> daemon)                   {this->daemon = daemon; return (*this);}
   inline ButtonBuilder& withGraphics(uint64_t graphics)                                   {this->graphics = graphics; return (*this);}
   inline ButtonBuilder& withText(std::string text)                                        {this->text = text; return (*this);}
   inline ButtonBuilder& withTextGraphics(uint64_t textGraphics)                           {this->textGraphics = textGraphics; return (*this);}
@@ -47,9 +76,9 @@ public:
   void build();
 
 private:
-  ButtonBuilder() : ieg(),  xvalue(), yvalue(), area(), daemon(), text(), graphics(), textGraphics(), asDrwListId(), spsDrwListId() {}
+  ButtonBuilder() : brdcstHI(),  xvalue(), yvalue(), area(), daemon(), text(), graphics(), textGraphics(), asDrwListId(), spsDrwListId() {}
 
-  std::shared_ptr<zbe::InputEventGenerator> ieg;
+  BroadcastIH* brdcstHI;
   std::shared_ptr<zbe::Value<double> > xvalue;
   std::shared_ptr<zbe::Value<double> > yvalue;
   zbe::Region2D area;

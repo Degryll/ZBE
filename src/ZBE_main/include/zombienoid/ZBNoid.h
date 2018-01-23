@@ -14,8 +14,10 @@
 
 #include "ZBE/core/daemons/Daemon.h"
 #include "ZBE/core/daemons/DaemonMaster.h"
+#include "ZBE/core/daemons/MainLoopExit.h"
 #include "ZBE/core/daemons/Punishers.h"
 #include "ZBE/core/daemons/BasicPreLoopTimeDaemon.h"
+#include "ZBE/core/daemons/StateMachineDaemon.h"
 
 #include "ZBE/core/events/generators/InputEventGenerator.h"
 #include "ZBE/core/events/generators/TimeEventGenerator.h"
@@ -82,6 +84,7 @@
 #include "zombienoid/events/handlers/actuators/BrickHitStateActuator.h"
 
 #include "zombienoid/events/handlers/ExitInputHandler.h"
+#include "zombienoid/events/handlers/BroadcastIH.h"
 
 #include "zombienoid/entities/adaptors/ActiveElement2DAnimatedSpriteAdaptor.h"
 #include "zombienoid/entities/adaptors/BallCatorAdaptor.h"
@@ -117,6 +120,12 @@
 #include "zombienoid/graphics/SimpleSpriteSheet.h"
 
 #include "zombienoid/daemons/ZBNoidResourceLoader.h"
+#include "zombienoid/daemons/ZBNoidGameLoader.h"
+#include "zombienoid/daemons/ZBNoidLevelLoader.h"
+
+#include "zombienoid/builders/ZBNoidMainGameBuilder.h"
+#include "zombienoid/builders/ZBNoidTitleBuilder.h"
+#include "zombienoid/builders/ButtonBuilder.h"
 
 namespace zombienoid {
 
@@ -138,6 +147,20 @@ using CustomItemBuilder = ItemBuilder<
                           zbe::TicketedFAEC<zbe::Movable<2> > >;
 
 enum {
+  MAINTITLE = 0,
+  LOADGAME = 1,
+  LOADLEVEL = 2,
+  MAINGAME = 3,
+  LOSTENDGAME = 4,
+  WINENDGAME = 4,
+  CLEARGAME = 6,
+
+  GAMELOADSUCCESS = LOADLEVEL,
+  LEVELLOADSUCCESS = MAINGAME,
+
+  MAINGAMEWIN = LOADLEVEL,
+  MAINGAMEOVER = -1,  // EXIT
+
   WIDTH = 1024,
   HEIGHT = 768,
   MARGIN = 32,
@@ -215,6 +238,14 @@ const int BAR_STICKY_STATE = 1;
 const int LIFE_ITEM_AMOUNT = 1;
 
 const size_t RSRC_ID_DICT_SIZE = 20;
+
+// BUTTON
+// -GRAPHICS
+const int64_t BUTTON_FRAMES = 1;
+const zbe::Vector2D BUTTON_DISPLACEMENT = zbe::Vector2D{256.0, 0.0};
+const int64_t BUTTON_FRAMETIME = 1000;
+const zbe::Region2D BUTTON_REGION = zbe::Region2D({0.0, 0.0}, {512.0, 128.0});
+const int64_t BUTTON_STATES = 2;
 
 // BOARD
 // -GRAPHICS
@@ -351,9 +382,12 @@ class ZBNCfg {
   static uint64_t BOARD_AS_LIST;
   static uint64_t BRICK_AS_LIST;
   static uint64_t BAR_AS_LIST;
+  static uint64_t TITLE_BUTTONS_AS_LIST;
   // TextSprite list
   static uint64_t TEXT_TS_LIST;
+  static uint64_t TITLE_BUTTONS_TS_LIST;
   // Sprite sheet ids
+  static uint64_t BUTTON_SS;
   static uint64_t ITEM_SS;
   static uint64_t BRICK_SS;
   static uint64_t BALL_SS;
@@ -361,6 +395,8 @@ class ZBNCfg {
   static uint64_t BAR_SS;
   static uint64_t BOARD_SS;
   // Image ids
+  static uint64_t BUTTON_GRAPHICS;
+  static uint64_t SELECTED_BUTTON_GRAPHICS;
   static uint64_t BOARD_GRAPHICS;
   static uint64_t ITEM_LIFE_GRAPHICS;
   static uint64_t ITEM_MULTIPLIER_GRAPHICS;
@@ -384,6 +420,7 @@ class ZBNCfg {
   static uint64_t BOOM_TEXT_FONT;
   static uint64_t TEXT_FONT;
   // Value ids
+  static uint64_t GAMESTATE;
   static uint64_t NLIFES;
   static uint64_t NBRICKS;
   static uint64_t NPOINTS;

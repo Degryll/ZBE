@@ -59,7 +59,7 @@ inline void SDLEventDispatcher::setState(uint32_t key, float value, int64_t time
   int64_t gameTime = zbeTime - st.getLostTime();
   int64_t storeTime = quantizeTime(gameTime) + zbe::TIME_QUANTUM;
   InputStatus is(key, value, storeTime);
-  inputBuffer.insert(is);
+  inputBuffer->insert(is);
 }
 
 inline void SDLEventDispatcher::setMouseButtonState(SDL_Event &event, float value) {

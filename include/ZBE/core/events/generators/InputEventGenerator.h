@@ -32,7 +32,7 @@ namespace zbe {
 
       /** \brief Default constructor.
        */
-      InputEventGenerator(InputBuffer * inputBuffer, int eventId) : inputBuffer(inputBuffer), eventId(eventId), store(EventStore::getInstance()), handlers(), sysTime(zbe::SysTime::getInstance()) {};
+      InputEventGenerator(std::shared_ptr<InputBuffer> inputBuffer, int eventId) : inputBuffer(inputBuffer), eventId(eventId), store(EventStore::getInstance()), handlers(), sysTime(zbe::SysTime::getInstance()) {};
 
       /** \brief Empty destructor.
        */
@@ -56,7 +56,7 @@ namespace zbe {
       inline void removeHandler(uint32_t id) {handlers.erase(id);}
 
     private:
-      InputBuffer* inputBuffer;
+      std::shared_ptr<InputBuffer> inputBuffer;
       int eventId;
       EventStore &store;
       std::map<uint32_t, InputHandler*> handlers;

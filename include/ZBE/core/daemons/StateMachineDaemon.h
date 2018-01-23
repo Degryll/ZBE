@@ -33,14 +33,14 @@ namespace zbe {
        * and an initial state amount.
        *
        */
-      StateMachineDaemon(std::shared_ptr<Value<int64_t> > state, unsigned initialSize) : state(state), daemons(initialSize) {}
+      StateMachineDaemon(std::shared_ptr<Value<int64_t> > state, unsigned initialSize) : daemons(initialSize), state(state) {}
 
       /** \brief Destroys the StateMachineDaemon.
        */
       virtual ~StateMachineDaemon() {}
 
       void setDaemon(unsigned state, std::shared_ptr<Daemon> daemon) {
-        if(state >= daemons.size) {
+        if(state >= daemons.size()) {
           daemons.resize(state+1);
         }
         daemons[state]= daemon;
@@ -51,15 +51,9 @@ namespace zbe {
       void run();
 
     private:
-      std::std::vector<std::shared_ptr<Daemon> > daemons;
+      std::vector<std::shared_ptr<Daemon> > daemons;
       std::shared_ptr<Value<int64_t> > state;
   };
-
-  void StateMachineDaemon::run(){
-    while(state->getValue()>=0) {
-      daemons[state->getValue()]->run();
-    }
-  }
 }  // namespace zbe
 
 

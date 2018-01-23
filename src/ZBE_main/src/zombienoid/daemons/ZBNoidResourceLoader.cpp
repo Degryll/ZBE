@@ -1,7 +1,9 @@
 #include "zombienoid/daemons/ZBNoidResourceLoader.h"
 
 namespace zombienoid {
-
+// Tittle screen
+const char menuButton[] = "data/images/zombieball/button_001_512_128.png";
+const char selcetedMenuButton[] = "data/images/zombieball/button_001_selected_512_128.png";
 //Bricks
 const char brickImg[] = "data/images/zombieball/braikn_64.png";
 // Balls
@@ -67,6 +69,7 @@ void ZBNoidResourceLoader::run () {
   auto stickerList = std::make_shared<TicketedFAEC<Stated> >();
   auto itemCollisionatorsList = std::make_shared<TicketedFAE<Collisionator<ZombienoidReactor> > >();
   auto textSpriteList = std::make_shared<TicketedFAEC<SingleTextSprite> >();
+  auto titleButontextSpriteList = std::make_shared<TicketedFAEC<SingleTextSprite> >();
   auto brickList = std::make_shared<TicketedFAEC<Stated, Avatar, Positionable<2> > >();
   auto brickCollisionerList = std::make_shared<TicketedFAE<Collisioner<ZombienoidReactor> > >();
   auto spawnList = std::make_shared<TicketedFAEC<Movable<2> > >();
@@ -84,6 +87,7 @@ void ZBNoidResourceLoader::run () {
   auto brickAnimatedSpriteList = std::make_shared<TicketedFAEC<AnimatedSprite> >();
   auto barAnimatedSpriteList = std::make_shared<TicketedFAEC<AnimatedSprite> >();
   auto boardAnimatedSpriteList = std::make_shared<TicketedFAEC<AnimatedSprite> >();
+  auto titleButonsAnimatedSpriteList = std::make_shared<TicketedFAEC<AnimatedSprite> >();
 
   ZBNCfg::rmFLAWExplosion.insert(ZBNCfg::EXPLOSION_ACTUATORS_LIST, explosionActuatorsList);
   ZBNCfg::rmFLAWBlock.insert(ZBNCfg::BOARD_ACTUATORS_LIST, boardActuatorsList);
@@ -99,10 +103,12 @@ void ZBNoidResourceLoader::run () {
   ZBNCfg::rmTFAECStatAvtPos2D.insert(ZBNCfg::BRICK_LIST, brickList);
   ZBNCfg::rmTFAECBncr2DRsz.insert(ZBNCfg::BALL_LIST, ballList);
   ZBNCfg::rmTFAECSTextSprt.insert(ZBNCfg::TEXT_TS_LIST, textSpriteList);
+  ZBNCfg::rmTFAECSTextSprt.insert(ZBNCfg::TITLE_BUTTONS_TS_LIST, titleButontextSpriteList);
   ZBNCfg::rmTFAECAnimSprt.insert(ZBNCfg::BOOM_AS_LIST, boomAnimatedSpriteList);
   ZBNCfg::rmTFAECAnimSprt.insert(ZBNCfg::BOARD_AS_LIST, boardAnimatedSpriteList);
   ZBNCfg::rmTFAECAnimSprt.insert(ZBNCfg::BRICK_AS_LIST, brickAnimatedSpriteList);
   ZBNCfg::rmTFAECAnimSprt.insert(ZBNCfg::BAR_AS_LIST, barAnimatedSpriteList);
+  ZBNCfg::rmTFAECAnimSprt.insert(ZBNCfg::TITLE_BUTTONS_AS_LIST, titleButonsAnimatedSpriteList);
   ZBNCfg::rmTFAECAvtScor.insert(ZBNCfg::EXPLSION_ERASE_LIST, explosionAvatarList);
   ZBNCfg::rmTFAEConer.insert(ZBNCfg::BRICK_COLLISIONER_LIST, brickCollisionerList);
   ZBNCfg::rmTFAEConer.insert(ZBNCfg::BOARD_COLLISIONER_LIST, boardCollisionerList);
@@ -129,6 +135,7 @@ void ZBNoidResourceLoader::run () {
   jaeCator->add(ballCollisionatorsList);
   jaecSTextSprt->add(textSpriteList);
 
+  std::shared_ptr<Value<int64_t> > gameState(new SimpleValue<int64_t>(MAINTITLE));
   std::shared_ptr<Value<int64_t> > lifeCountValue(new SimpleValue<int64_t>(INITIAL_LIFES));
   std::shared_ptr<Value<int64_t> > brickCount(new SimpleValue<int64_t>(0));
   std::shared_ptr<Value<int64_t> > pointsValue(new SimpleValue<int64_t>(0));
@@ -136,6 +143,7 @@ void ZBNoidResourceLoader::run () {
   std::shared_ptr<Value<int64_t> > stickyItemState(new SimpleValue<int64_t>(BAR_NORMAL_STATE));
   std::shared_ptr<Value<double> > mouseXPos(new SimpleValue<double>());
 
+  ZBNCfg::rmVInt64.insert(ZBNCfg::GAMESTATE, gameState);
   ZBNCfg::rmVInt64.insert(ZBNCfg::NLIFES, lifeCountValue);
   ZBNCfg::rmVInt64.insert(ZBNCfg::NBRICKS, brickCount);
   ZBNCfg::rmVInt64.insert(ZBNCfg::NPOINTS, pointsValue);
@@ -158,6 +166,9 @@ void ZBNoidResourceLoader::run () {
   ZBNCfg::rmBMov2D.insert(ZBNCfg::BALL_BUILDER, ballBuilder);
   ZBNCfg::rmBPos2D.insert(ZBNCfg::ITEM_BUILDER, itemBuilder);
   ZBNCfg::rmD.insert(ZBNCfg::BALL_BUILDER_DAEMON, ballCreatorDaemon);
+
+  rsrcIDDic->setId(ZBNCfg::BUTTON_GRAPHICS, imgStore->loadImg(menuButton));
+  rsrcIDDic->setId(ZBNCfg::SELECTED_BUTTON_GRAPHICS, imgStore->loadImg(selcetedMenuButton));
 
   rsrcIDDic->setId(ZBNCfg::BOARD_GRAPHICS, imgStore->loadImg(backImg));
   rsrcIDDic->setId(ZBNCfg::ITEM_LIFE_GRAPHICS, imgStore->loadImg(extraLife));
@@ -184,6 +195,23 @@ void ZBNoidResourceLoader::run () {
 
   rsrcIDDic->setId(ZBNCfg::BOOM_TEXT_FONT, textFontStore->loadFont(fontFileName, TEXT_B_SIZE, boomTextColor));
   rsrcIDDic->setId(ZBNCfg::TEXT_FONT, textFontStore->loadFont(fontFileName, TEXT_F_SIZE, textColor));
+
+  std::shared_ptr<zbe::SpriteSheet<zbe::AnimatedSprite> > brickSS(new SimpleSpriteSheet(rsrcIDDic->getId(ZBNCfg::BRICK_GRAHPICS)));
+  ZBNCfg::rmSSheetAnimSprt.insert(ZBNCfg::BRICK_SS, brickSS);
+
+  ImgSrcDef buttonGraphics;
+  buttonGraphics.frameAmount = BUTTON_FRAMES;
+  buttonGraphics.frameDisplacemet = BUTTON_DISPLACEMENT;
+  buttonGraphics.frameTime = BUTTON_FRAMETIME;
+  buttonGraphics.intialRegion = BUTTON_REGION;
+  buttonGraphics.imgSrcId = rsrcIDDic->getId(ZBNCfg::BUTTON_GRAPHICS);
+
+  MultiSpriteSheet* buttonSheet = new MultiSpriteSheet(BUTTON_STATES, buttonGraphics);
+  buttonGraphics.imgSrcId = rsrcIDDic->getId(ZBNCfg::SELECTED_BUTTON_GRAPHICS);
+  buttonSheet->setImgSrcDef(1, buttonGraphics);
+
+  std::shared_ptr<zbe::SpriteSheet<zbe::AnimatedSprite> > buttonSS(buttonSheet);
+  ZBNCfg::rmSSheetAnimSprt.insert(ZBNCfg::BUTTON_SS, buttonSS);
 
   ImgSrcDef boardGraphics;
   boardGraphics.frameAmount = BOARD_FRAMES;

@@ -33,7 +33,8 @@ namespace zombienoid {
        *  \param nballs Current number of balls
        *  \param nlifes Current number of lifes
        */
-      ZombienoidDeathTester(std::shared_ptr<zbe::Value<int64_t> > nlifes, zbe::MainLoop* mainloop) : nl(nlifes), ml(mainloop) {}
+      ZombienoidDeathTester(std::shared_ptr<zbe::Value<int64_t> > nlifes, std::shared_ptr<zbe::MainLoop> mainloop, std::shared_ptr<zbe::Value<int64_t> > gamesState, uint64_t outValue)
+        : nl(nlifes), ml(mainloop), gamesState(gamesState), outValue(outValue) {}
 
       ~ZombienoidDeathTester(){}
 
@@ -42,12 +43,15 @@ namespace zombienoid {
       void run(){
         if(nl->getValue() <= 0){
           ml->stop();
+          gamesState->setValue(outValue);
         }
       }
 
     private:
       std::shared_ptr<zbe::Value<int64_t> > nl;
-      zbe::MainLoop* ml;
+      std::shared_ptr<zbe::MainLoop> ml;
+      std::shared_ptr<zbe::Value<int64_t> > gamesState;
+      uint64_t outValue;
   };
 
 

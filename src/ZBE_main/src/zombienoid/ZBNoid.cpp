@@ -81,9 +81,12 @@ uint64_t ZBNCfg::BOOM_AS_LIST;
 uint64_t ZBNCfg::BOARD_AS_LIST;
 uint64_t ZBNCfg::BRICK_AS_LIST;
 uint64_t ZBNCfg::BAR_AS_LIST;
+uint64_t ZBNCfg::TITLE_BUTTONS_AS_LIST;
 // TextSprite list
 uint64_t ZBNCfg::TEXT_TS_LIST;
+uint64_t ZBNCfg::TITLE_BUTTONS_TS_LIST;
 // Sprite sheet ids
+uint64_t ZBNCfg::BUTTON_SS;
 uint64_t ZBNCfg::ITEM_SS;
 uint64_t ZBNCfg::BRICK_SS;
 uint64_t ZBNCfg::BALL_SS;
@@ -91,6 +94,8 @@ uint64_t ZBNCfg::EXPLSION_SS;
 uint64_t ZBNCfg::BAR_SS;
 uint64_t ZBNCfg::BOARD_SS;
 // Image ids
+uint64_t ZBNCfg::BUTTON_GRAPHICS;
+uint64_t ZBNCfg::SELECTED_BUTTON_GRAPHICS;
 uint64_t ZBNCfg::BOARD_GRAPHICS;
 uint64_t ZBNCfg::ITEM_LIFE_GRAPHICS;
 uint64_t ZBNCfg::ITEM_MULTIPLIER_GRAPHICS;
@@ -114,6 +119,7 @@ uint64_t ZBNCfg::EXPLODE_GRAPHICS;
 uint64_t ZBNCfg::BOOM_TEXT_FONT;
 uint64_t ZBNCfg::TEXT_FONT;
 // Value ids
+uint64_t ZBNCfg::GAMESTATE;
 uint64_t ZBNCfg::NLIFES;
 uint64_t ZBNCfg::NBRICKS;
 uint64_t ZBNCfg::NPOINTS;
@@ -174,9 +180,12 @@ void ZBNCfg::initIds() {
   BOARD_AS_LIST = zbe::SysIdGenerator::getId();
   BRICK_AS_LIST = zbe::SysIdGenerator::getId();
   BAR_AS_LIST = zbe::SysIdGenerator::getId();
+  TITLE_BUTTONS_AS_LIST = zbe::SysIdGenerator::getId();
   // TextSprite list
   TEXT_TS_LIST = zbe::SysIdGenerator::getId();
+  TITLE_BUTTONS_TS_LIST = zbe::SysIdGenerator::getId();
   // Sprite sheet ids
+  BUTTON_SS = zbe::SysIdGenerator::getId();
   ITEM_SS = zbe::SysIdGenerator::getId();
   BRICK_SS = zbe::SysIdGenerator::getId();
   BALL_SS = zbe::SysIdGenerator::getId();
@@ -184,6 +193,8 @@ void ZBNCfg::initIds() {
   BAR_SS = zbe::SysIdGenerator::getId();
   BOARD_SS = zbe::SysIdGenerator::getId();
   // Image ids
+  BUTTON_GRAPHICS = zbe::SysIdGenerator::getId();
+  SELECTED_BUTTON_GRAPHICS = zbe::SysIdGenerator::getId();
   BOARD_GRAPHICS = zbe::SysIdGenerator::getId();
   ITEM_LIFE_GRAPHICS = zbe::SysIdGenerator::getId();
   ITEM_MULTIPLIER_GRAPHICS = zbe::SysIdGenerator::getId();
@@ -207,6 +218,7 @@ void ZBNCfg::initIds() {
   BOOM_TEXT_FONT = zbe::SysIdGenerator::getId();
   TEXT_FONT = zbe::SysIdGenerator::getId();
   // Value ids
+  GAMESTATE = zbe::SysIdGenerator::getId();
   NLIFES = zbe::SysIdGenerator::getId();
   NBRICKS = zbe::SysIdGenerator::getId();
   NPOINTS = zbe::SysIdGenerator::getId();
@@ -219,4 +231,5 @@ void ZBNCfg::initIds() {
   // Daemon ids
   BALL_BUILDER_DAEMON = zbe::SysIdGenerator::getId();
 }
-}
+
+}// namespace zombienoid

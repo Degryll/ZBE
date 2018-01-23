@@ -92,7 +92,7 @@ int gamemain(int, char** ) {
   zbe::SDLEventDispatcher & sdlEventDist = zbe::SDLEventDispatcher::getInstance();
   printf("Acquiring InputBuffer\n");fflush(stdout);
   printf("SDLEventDispatcher Will store input changes for a frame into it\n");fflush(stdout);
-  zbe::InputBuffer * inputBuffer = sdlEventDist.getInputBuffer();
+  std::shared_ptr<zbe::InputBuffer> inputBuffer = sdlEventDist.getInputBuffer();
   printf("Acquiring and configuring InputEventGenerator with that InputReader\n");fflush(stdout);
   printf("Will read events from the InputReader and send them to the store\n");fflush(stdout);
   printf("Input events will use id 0\n");fflush(stdout);

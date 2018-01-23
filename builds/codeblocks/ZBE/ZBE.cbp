@@ -332,6 +332,7 @@
 		<Unit filename="../../../include/ZBE/events/handlers/actuators/ConditionalEraserActuator.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/actuators/EraserActuator.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/actuators/StateChangerActuator.h" />
+		<Unit filename="../../../include/ZBE/events/handlers/input/DaemonClickIH.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/input/DaemonInputHandler.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/input/InputToValue.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/time/DaemonRecurrentTimeHandler.h" />
@@ -348,6 +349,7 @@
 		<Unit filename="../../../src/ZBE/SDL/tools/SDLTimer.cpp" />
 		<Unit filename="../../../src/ZBE/core/daemons/BasicPreLoopTimeDaemon.cpp" />
 		<Unit filename="../../../src/ZBE/core/daemons/DaemonMaster.cpp" />
+		<Unit filename="../../../src/ZBE/core/daemons/StateMachineDaemon.cpp" />
 		<Unit filename="../../../src/ZBE/core/entities/Entity.cpp" />
 		<Unit filename="../../../src/ZBE/core/events/EventStore.cpp" />
 		<Unit filename="../../../src/ZBE/core/events/InputEvent.cpp" />

@@ -24,20 +24,20 @@ namespace zbe {
 class MainLoopExit : virtual public Daemon {
 public:
 
-  MainLoopExit(std::shared_ptr<MainLoop> mainLoop, int64_t exitValue, std::shared_ptr< Value<int64_t> > value)
-    : mainLoop(mainLoop), exitValue(exitValue), value(value) {}
+  MainLoopExit(std::shared_ptr<MainLoop> mainLoop, std::shared_ptr< Value<int64_t> > value, int64_t exitValue)
+    : mainLoop(mainLoop), value(value), exitValue(exitValue) {}
 
   ~MainLoopExit() {}
 
   void run() {
-    mainLoop->stop();
     value->setValue(exitValue);
+    mainLoop->stop();
   }
 
 private:
   std::shared_ptr<MainLoop> mainLoop;
-  int64_t exitValue;
   std::shared_ptr< Value<int64_t> > value;
+  int64_t exitValue;
 };
 
 }  // namespace zbe

@@ -17,18 +17,15 @@
 namespace zbe {
 
 class DaemonInputHandler : public InputHandler {
-  public:
-	DaemonInputHandler(const DaemonInputHandler&) = delete;
-	void operator=(const DaemonInputHandler&) = delete;
+public:
+	DaemonInputHandler(std::shared_ptr<Daemon> daemon):d(daemon) {}
 
-  	DaemonInputHandler(std::shared_ptr<Daemon> daemon):d(daemon) {}
+	void run(float) {
+    d->run();
+	}
 
-  	void run(float) {
-      d->run();
-  	}
-
-  private:
-  	std::shared_ptr<Daemon> d;
+private:
+	std::shared_ptr<Daemon> d;
 };
 
 } //namespace zbe

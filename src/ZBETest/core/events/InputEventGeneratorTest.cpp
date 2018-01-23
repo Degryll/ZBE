@@ -45,7 +45,7 @@ TEST(InputEventGenerator, Event) {
   sysTime.setSystemTimer(sysTimer);
 
   // Build tools
-  zbe::InputBuffer * ib = new zbe::InputBuffer();
+  std::shared_ptr<zbe::InputBuffer> ib = std::make_shared<zbe::InputBuffer>();
   MockInputHandler ha;
   MockInputHandler hb;
   MockInputHandler hc;

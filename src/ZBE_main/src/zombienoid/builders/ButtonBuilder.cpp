@@ -14,7 +14,7 @@
 
 #include "ZBE/entities/avatars/SingleTextSprite.h"
 
-#include "ZBE/events/handlers/input/DaemonInputHandler.h"
+#include "ZBE/events/handlers/input/DaemonClickIH.h"
 
 #include "zombienoid/archetypes/implementations/SimpleStateDrawable.h"
 #include "zombienoid/archetypes/implementations/SimpleTextDrawable.h"
@@ -24,9 +24,9 @@ namespace zombienoid {
 void ButtonBuilder::build() {
   const int64_t IDLE_BUTTON_STATE = 0;
 
-  zbe::RsrcTicketedFAEC<zbe::AnimatedSprite>::getInstance().get(asDrwListId)->push_front(std::make_shared<zbe::AEC<zbe::AnimatedSprite> >(std::make_shared<zbe::AEFixed<zbe::AnimatedSprite> >(new SimpleStateDrawable(area, IDLE_BUTTON_STATE, 0.0, graphics))));
-  zbe::RsrcTicketedFAEC<zbe::SingleTextSprite>::getInstance().get(spsDrwListId)->push_front(std::make_shared<zbe::AEC<zbe::SingleTextSprite> >(std::make_shared<zbe::AEFixed<zbe::SingleTextSprite> >(new SimpleTextDrawable(area, text, graphics))));
-  ieg->addHandler(zbe::ZBEK_MOUSE_LEFT, new zbe::DaemonInputHandler(daemon));
+  ZBNCfg::rmTFAECAnimSprt.get(ZBNCfg::TITLE_BUTTONS_AS_LIST)->push_front(std::make_shared<zbe::AEC<zbe::AnimatedSprite> >(std::make_shared<zbe::AEFixed<zbe::AnimatedSprite> >(new SimpleStateDrawable(area, IDLE_BUTTON_STATE, 0.0, graphics))));
+  ZBNCfg::rmTFAECSTextSprt.get(ZBNCfg::TITLE_BUTTONS_TS_LIST)->push_front(std::make_shared<zbe::AEC<zbe::SingleTextSprite> >(std::make_shared<zbe::AEFixed<zbe::SingleTextSprite> >(new SimpleTextDrawable(area, text, textGraphics))));
+  brdcstHI->addHandler(std::make_shared<zbe::DaemonClickIH>(area, xvalue, yvalue, daemon));
 }
 
 }  // namespace zombienoid

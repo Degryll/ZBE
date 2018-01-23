@@ -22,43 +22,26 @@
 
 namespace zombienoid {
 
-  struct ZBNoidTitleBuilderCFG {
-    uint64_t preLoopId;
-    uint64_t postLoopId;
-    uint64_t asDrawerId;
-    uint64_t stsDrawerId;
-    uint64_t spriteSheetID;
-    uint64_t fontID;
-  };
-
   /** \brief Defines a daemon that ends the game if the number of lifes reaches 0 in zombienoid game.
    */
-  class ZBNoidTitleBuilder : public zbe::Daemon {
+  class ZBNoidTitleBuilder {
     public:
 
       ZBNoidTitleBuilder(const ZBNoidTitleBuilder&) = delete;
       void operator=(const ZBNoidTitleBuilder&) = delete;
 
-      ZBNoidTitleBuilder(std::shared_ptr<zbe::InputEventGenerator> ieg, std::shared_ptr<zbe::Value<int64_t> > exit, const ZBNoidTitleBuilderCFG& cfg )
-        : ieg(ieg), exit(exit), preLoopId(cfg.preLoopId), postLoopId(cfg.postLoopId), asDrawerId(cfg.asDrawerId),
-          stsDrawerId(cfg.stsDrawerId), spriteSheetID(cfg.spriteSheetID), fontID(cfg.fontID) {
-      }
+      ZBNoidTitleBuilder(std::shared_ptr<RsrcIDDictionary> rsrcIDDic, std::shared_ptr<zbe::SDLWindow> window, std::shared_ptr<zbe::InputBuffer> inputBuffer) : rsrcIDDic(rsrcIDDic), window(window), inputBuffer(inputBuffer) {}
 
       ~ZBNoidTitleBuilder(){}
 
       /** \brief It will finish the game if the number of lifes reaches 0
        */
-      void run();
+      std::shared_ptr<zbe::Daemon> build();
 
     private:
-      std::shared_ptr<zbe::InputEventGenerator> ieg;
-      std::shared_ptr<zbe::Value<int64_t> > exit;
-      uint64_t preLoopId;
-      uint64_t postLoopId;
-      uint64_t asDrawerId;
-      uint64_t stsDrawerId;
-      uint64_t spriteSheetID;
-      uint64_t fontID;
+      std::shared_ptr<RsrcIDDictionary> rsrcIDDic;
+      std::shared_ptr<zbe::SDLWindow> window;
+      std::shared_ptr<zbe::InputBuffer> inputBuffer;
   };
 
 

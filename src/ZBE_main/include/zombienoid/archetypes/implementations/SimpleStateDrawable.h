@@ -40,7 +40,7 @@ public:
 
   int64_t getW() {return (area.v.x);}
 
-  int64_t getH() {return (area.v.x);}
+  int64_t getH() {return (area.v.y);}
 
   uint64_t getGraphics() {return graphics;}
 
