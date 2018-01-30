@@ -51,7 +51,7 @@ std::shared_ptr<zbe::Daemon> ZBNoidTitleBuilder::build() {
   drawMaster->addDaemon(writerDaemon);
 
   // Buttons
-  std::shared_ptr<Daemon> startButton = std::make_shared<MainLoopExit>(mainLoop, ZBNCfg::rmVInt64.get(ZBNCfg::GAMESTATE), LOADGAME);
+  std::shared_ptr<Daemon> startButton = std::make_shared<MainLoopExit>(mainLoop, ZBNCfg::rmVInt64.get(ZBNCfg::GAMESTATE), LOADLEVEL);
   std::shared_ptr<Daemon> exitButton = std::make_shared<MainLoopExit>(mainLoop, ZBNCfg::rmVInt64.get(ZBNCfg::GAMESTATE), MAINGAMEOVER);
 
   ButtonBuilder::aButton()

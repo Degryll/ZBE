@@ -177,6 +177,7 @@
 		<Unit filename="../../../src/ZBE_main/include/ludo/events/handlers/LudoHandlers.h" />
 		<Unit filename="../../../src/ZBE_main/include/ludomain.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid.h" />
+		<Unit filename="../../../src/ZBE_main/include/zombienoid/ZBNCfg.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/ZBNoid.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/ZombienoidReactor.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/archetypes/implementations/SimpleStateDrawable.h" />
@@ -190,6 +191,7 @@
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/builders/ZBNoidMainGameBuilder.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/builders/ZBNoidTitleBuilder.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/daemons/ZBNoidGameLoader.h" />
+		<Unit filename="../../../src/ZBE_main/include/zombienoid/daemons/ZBNoidLevelCleaner.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/daemons/ZBNoidLevelLoader.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/daemons/ZBNoidResourceLoader.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/daemons/ZombienoidDeathTester.h" />
@@ -251,6 +253,7 @@
 		<Unit filename="../../../src/ZBE_main/src/zombienoid/builders/ZBNoidMainGameBuilder.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/zombienoid/builders/ZBNoidTitleBuilder.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/zombienoid/daemons/ZBNoidGameLoader.cpp" />
+		<Unit filename="../../../src/ZBE_main/src/zombienoid/daemons/ZBNoidLevelCleaner.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/zombienoid/daemons/ZBNoidLevelLoader.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/zombienoid/daemons/ZBNoidResourceLoader.cpp" />
 		<Extensions>

@@ -18,6 +18,7 @@
 
 #include "ZBE/core/entities/Adaptor.h"
 #include "ZBE/core/entities/avatars/AnimatedSprite.h"
+#include "ZBE/core/entities/avatars/implementations/BaseAvatar.h"
 
 #include "ZBE/core/behaviors/Behavior.h"
 
@@ -31,6 +32,8 @@
 
 #include "zombienoid/entities/adaptors/ActiveElement2DAnimatedSpriteAdaptor.h"
 #include "zombienoid/entities/adaptors/BallCatorAdaptor.h"
+
+#include "zombienoid/ZBNCfg.h"
 
 namespace zombienoid {
 
@@ -80,11 +83,13 @@ public:
     setAdaptor(ball, ballSpriteAdaptor);
 
     zbe::BaseResizableArea* resizableArea = new zbe::BaseResizableArea(&(*ball), sizeRatio, sizeRatio, minbs, maxbs);
+    zbe::BaseAvatar* avatar = new zbe::BaseAvatar(&(*ball));
 
     std::shared_ptr<zbe::AvatarEntity<zbe::Resizable> > resizableAE = std::make_shared<zbe::AvatarEntityFixed<zbe::Resizable> >(resizableArea);
+    std::shared_ptr<zbe::AvatarEntity<zbe::Avatar> > avatarAE = std::make_shared<zbe::AvatarEntityFixed<zbe::Avatar> >(avatar);
 
     std::shared_ptr<zbe::AvatarEntityContainer<zbe::AnimatedSprite> > aecas = std::make_shared<zbe::AvatarEntityContainer<zbe::AnimatedSprite> >(ball);
-    std::shared_ptr<zbe::AvatarEntityContainer<zbe::Bouncer<2>, zbe::Resizable> > aecb2w = std::make_shared<zbe::AvatarEntityContainer<zbe::Bouncer<2>, zbe::Resizable> >(ball, resizableAE);
+    std::shared_ptr<zbe::AvatarEntityContainer<zbe::Bouncer<2>, zbe::Resizable, zbe::Avatar> > aecb2w  = std::make_shared<zbe::AvatarEntityContainer<zbe::Bouncer<2>, zbe::Resizable, zbe::Avatar> >(ball, resizableAE, avatarAE);
 
     std::shared_ptr<zbe::Adaptor<zbe::Collisionator<R> > > ballCollisionatorAdaptor(new BallCatorAdaptor<R>(ball, resizableAE));
     setAdaptor(ball, ballCollisionatorAdaptor);

@@ -26,12 +26,14 @@ public:
    */
   Ticket(State state = ACTIVE) : s(state) {}
 
+  virtual ~Ticket(){}
+
   inline void setState(State state) {s = state;}  //!< Set the State.
   inline State getState() const {return (s);}     //!< Get the current state.
 
   inline void setACTIVE()   {s = ACTIVE;}    //!< Set the state as ACTIVE.
   inline void setINACTIVE() {s = INACTIVE;}  //!< Set the state as INACTIVE.
-  inline void setERASED()   {s = ERASED;}    //!< Set the state as ERASED.
+  inline virtual void setERASED()   {s = ERASED;}    //!< Set the state as ERASED.
 
   inline bool isACTIVE()    {return (s == ACTIVE);}    //!< True if state is ACTIVE.
   inline bool isNotACTIVE() {return (s != ACTIVE);}    //!< True if state is not ACTIVE, either INACTIVE or ERASED.
@@ -60,6 +62,11 @@ public:
    *  \return The element
    */
   inline std::shared_ptr<T> getElement() {return (e);}
+
+  void setERASED() {
+      Ticket::setERASED();
+      e.reset();
+  }
 
 private:
 

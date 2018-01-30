@@ -37,15 +37,16 @@ int zombienoidmain(int, char*[]) {
   ZBNoidTitleBuilder titleBuilder(rsrcIDDic, window, inputBuffer);
   std::shared_ptr<Daemon> titleScreen = titleBuilder.build();
 
-  std::shared_ptr<Daemon> gameloader =  std::make_shared<ZBNoidGameLoader>(rsrcIDDic);
-  std::shared_ptr<Daemon> levelloader =  std::make_shared<ZBNoidLevelLoader>(rsrcIDDic);
-  //loader->run();
+  std::shared_ptr<Daemon> gameLoader =  std::make_shared<ZBNoidGameLoader>(rsrcIDDic);
+  std::shared_ptr<Daemon> levelLoader =  std::make_shared<ZBNoidLevelLoader>(rsrcIDDic);
+  std::shared_ptr<Daemon> levelCleaner =  std::make_shared<ZBNoidLevelCleaner>();
 
   std::shared_ptr<StateMachineDaemon> gameStateMachine = std::make_shared<StateMachineDaemon>(ZBNCfg::rmVInt64.get(ZBNCfg::GAMESTATE), 3);
+  gameStateMachine->setDaemon(LOADGAME, gameLoader);
   gameStateMachine->setDaemon(MAINTITLE, titleScreen);
-  gameStateMachine->setDaemon(LOADGAME, gameloader);
-  gameStateMachine->setDaemon(LOADLEVEL, levelloader);
+  gameStateMachine->setDaemon(LOADLEVEL, levelLoader);
   gameStateMachine->setDaemon(MAINGAME, mainLoop);
+  gameStateMachine->setDaemon(CLEARGAME, levelCleaner);
 
   // (0) ZBNoidTitleBuilder title
   // (1) V ZBNoidLevelLoaderBuilder loader

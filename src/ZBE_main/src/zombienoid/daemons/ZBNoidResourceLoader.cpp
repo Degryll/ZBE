@@ -77,7 +77,7 @@ void ZBNoidResourceLoader::run () {
   auto demagnetizeList = std::make_shared<TicketedFAEC<Positionable<2>, Avatar> >();
   auto explosionAvatarList = std::make_shared<TicketedFAEC<Avatar, Scorer> >();
   auto ballCollisionatorsList = std::make_shared<TicketedFAE<Collisionator<ZombienoidReactor> > >();
-  auto ballList = std::make_shared<TicketedFAEC<Bouncer<2>, Resizable> >();
+  auto ballList = std::make_shared<TicketedFAEC<Bouncer<2>, Resizable, zbe::Avatar> >();
   auto barCollisionerList = std::make_shared<TicketedFAE<Collisioner<ZombienoidReactor> > >();
 
   // Drawing layers
@@ -101,19 +101,21 @@ void ZBNoidResourceLoader::run () {
   ZBNCfg::rmTFAECMov2D.insert(ZBNCfg::BALLSPAWN_LIST, spawnList);
   ZBNCfg::rmTFAECStat.insert(ZBNCfg::STICKY_STATE_LIST, stickerList);
   ZBNCfg::rmTFAECStatAvtPos2D.insert(ZBNCfg::BRICK_LIST, brickList);
-  ZBNCfg::rmTFAECBncr2DRsz.insert(ZBNCfg::BALL_LIST, ballList);
+  ZBNCfg::rmTFAECBncr2DRszAvt.insert(ZBNCfg::BALL_LIST, ballList);
   ZBNCfg::rmTFAECSTextSprt.insert(ZBNCfg::TEXT_TS_LIST, textSpriteList);
   ZBNCfg::rmTFAECSTextSprt.insert(ZBNCfg::TITLE_BUTTONS_TS_LIST, titleButontextSpriteList);
   ZBNCfg::rmTFAECAnimSprt.insert(ZBNCfg::BOOM_AS_LIST, boomAnimatedSpriteList);
   ZBNCfg::rmTFAECAnimSprt.insert(ZBNCfg::BOARD_AS_LIST, boardAnimatedSpriteList);
   ZBNCfg::rmTFAECAnimSprt.insert(ZBNCfg::BRICK_AS_LIST, brickAnimatedSpriteList);
   ZBNCfg::rmTFAECAnimSprt.insert(ZBNCfg::BAR_AS_LIST, barAnimatedSpriteList);
+  ZBNCfg::rmTFAECAnimSprt.insert(ZBNCfg::BALL_AS_LIST, ballAnimatedSpriteList);
   ZBNCfg::rmTFAECAnimSprt.insert(ZBNCfg::TITLE_BUTTONS_AS_LIST, titleButonsAnimatedSpriteList);
   ZBNCfg::rmTFAECAvtScor.insert(ZBNCfg::EXPLSION_ERASE_LIST, explosionAvatarList);
   ZBNCfg::rmTFAEConer.insert(ZBNCfg::BRICK_COLLISIONER_LIST, brickCollisionerList);
   ZBNCfg::rmTFAEConer.insert(ZBNCfg::BOARD_COLLISIONER_LIST, boardCollisionerList);
   ZBNCfg::rmTFAEConer.insert(ZBNCfg::BAR_COLLISIONER_LIST, barCollisionerList);
   ZBNCfg::rmTFAECator.insert(ZBNCfg::BOOM_COLLISIONATOR_LIST, std::make_shared<TicketedFAE<Collisionator<ZombienoidReactor> > >());
+  ZBNCfg::rmTFAECator.insert(ZBNCfg::BALL_COLLISIONATOR_LIST, ballCollisionatorsList);
 
   // Populating joints
   // Game Draw layers front to back
@@ -135,7 +137,7 @@ void ZBNoidResourceLoader::run () {
   jaeCator->add(ballCollisionatorsList);
   jaecSTextSprt->add(textSpriteList);
 
-  std::shared_ptr<Value<int64_t> > gameState(new SimpleValue<int64_t>(MAINTITLE));
+  std::shared_ptr<Value<int64_t> > gameState(new SimpleValue<int64_t>(LOADGAME));
   std::shared_ptr<Value<int64_t> > lifeCountValue(new SimpleValue<int64_t>(INITIAL_LIFES));
   std::shared_ptr<Value<int64_t> > brickCount(new SimpleValue<int64_t>(0));
   std::shared_ptr<Value<int64_t> > pointsValue(new SimpleValue<int64_t>(0));

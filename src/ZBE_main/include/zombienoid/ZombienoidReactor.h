@@ -4,6 +4,7 @@
 #include "ZBE/core/entities/AvatarEntity.h"
 
 #include "ZBE/entities/avatars/InteractionTester.h"
+#include "ZBE/entities/avatars/Stated.h"
 
 #include "zombienoid/entities/avatars/CustomVector.h"
 #include "zombienoid/entities/avatars/Solid.h"

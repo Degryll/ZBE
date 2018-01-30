@@ -10,8 +10,13 @@
 #ifndef ZBE_CORE_ZBE_H_
 #define ZBE_CORE_ZBE_H_
 
-#include "ZBE/core/tools/containers/containers.h"
+#include "ZBE/core/behaviors/Behavior.h"
+#include "ZBE/core/daemons/Daemon.h"
 #include "ZBE/core/entities/AvatarEntity.h"
+#include "ZBE/core/system/SysIdGenerator.h"
+#include "ZBE/core/tools/containers/containers.h"
+#include "ZBE/core/tools/math/Region.h"
+#include "ZBE/core/tools/shared/Value.h"
 
 namespace zbe {
 

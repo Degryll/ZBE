@@ -77,7 +77,10 @@ public:
   /** \brief Removes all elements from the container (which are destroyed), and leaving the container with a size of 0.
    */
   void clear() {
-    l.clear();
+    for(auto it = this->begin(); it != this->end(); ++it) {
+      it.setERASED();
+    }
+    begin();
   }
 
 private:
@@ -171,6 +174,12 @@ public:
    */
   operator TicketedForwardListIterator<const T>() const {
     return (TicketedForwardListIterator<const T>(fl, p, i, e));
+  }
+
+  void setERASED() {
+    if (i != e) {
+      i->get()->setERASED();
+    }
   }
 
   protected:

@@ -38,7 +38,14 @@ class ResourceManager {
      *  \param id Id to identify the resource.
      *  \param resource The resource.
      */
-    void insert(uint64_t id, std::shared_ptr<T> resource) {l[id] = resource;}
+    void insert(uint64_t id, std::shared_ptr<T> resource) {
+      auto it = l.find(id);
+      if (it != l.end()) {
+        SysError::setError("Id already in use.");
+        return;
+      }
+      l[id] = resource;
+    }
 
     /** \brief Returns the resource identify by the id.
      *  \param id Id to identify the resource.

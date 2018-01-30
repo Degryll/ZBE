@@ -25,7 +25,7 @@ zbe::ResourceManager<zbe::TicketedFAEC<zbe::Stated, zbe::Avatar, zbe::Positionab
 zbe::ResourceManager<zbe::TicketedFAEC<zbe::Positionable<2>, zbe::Avatar > >& ZBNCfg::rmTFAECPos2DAvt = zbe::ResourceManager<zbe::TicketedFAEC<zbe::Positionable<2>, zbe::Avatar > >::getInstance();
 zbe::ResourceManager<zbe::JointAEC<zbe::Positionable<2>, zbe::Avatar > >& ZBNCfg::rmJAECPos2DAvt = zbe::ResourceManager<zbe::JointAEC<zbe::Positionable<2>, zbe::Avatar > >::getInstance();
 zbe::ResourceManager<zbe::TicketedFAEC<zbe::Avatar, Scorer> >& ZBNCfg::rmTFAECAvtScor = zbe::ResourceManager<zbe::TicketedFAEC<zbe::Avatar, Scorer> >::getInstance();
-zbe::ResourceManager<zbe::TicketedFAEC<zbe::Bouncer<2>, zbe::Resizable> >& ZBNCfg::rmTFAECBncr2DRsz = zbe::ResourceManager<zbe::TicketedFAEC<zbe::Bouncer<2>, zbe::Resizable> >::getInstance();
+zbe::ResourceManager<zbe::TicketedFAEC<zbe::Bouncer<2>, zbe::Resizable, zbe::Avatar> >& ZBNCfg::rmTFAECBncr2DRszAvt = zbe::ResourceManager<zbe::TicketedFAEC<zbe::Bouncer<2>, zbe::Resizable, zbe::Avatar> >::getInstance();
 // Behaviors
 zbe::ResourceManager<zbe::Behavior<zbe::Positionable<2> > >& ZBNCfg::rmBPos2D = zbe::ResourceManager<zbe::Behavior<zbe::Positionable<2> > >::getInstance();
 zbe::ResourceManager<zbe::Behavior<zbe::Movable<2> > >& ZBNCfg::rmBMov2D = zbe::ResourceManager<zbe::Behavior<zbe::Movable<2> > >::getInstance();
@@ -73,11 +73,13 @@ uint64_t ZBNCfg::BRICK_COLLISIONER_LIST;
 uint64_t ZBNCfg::BAR_COLLISIONER_LIST;
 // Collisionables list
 uint64_t ZBNCfg::BOOM_COLLISIONATOR_LIST;
+uint64_t ZBNCfg::BALL_COLLISIONATOR_LIST;
 // Collisionables list joints
 uint64_t ZBNCfg::BALL_CBS_JOINT;
 uint64_t ZBNCfg::ITEM_CBS_JOINT;
 // zbe::AnimatedSprite list
 uint64_t ZBNCfg::BOOM_AS_LIST;
+uint64_t ZBNCfg::BALL_AS_LIST;
 uint64_t ZBNCfg::BOARD_AS_LIST;
 uint64_t ZBNCfg::BRICK_AS_LIST;
 uint64_t ZBNCfg::BAR_AS_LIST;
@@ -172,11 +174,13 @@ void ZBNCfg::initIds() {
   BAR_COLLISIONER_LIST = zbe::SysIdGenerator::getId();
   // Collisionables list
   BOOM_COLLISIONATOR_LIST = zbe::SysIdGenerator::getId();
+  BALL_COLLISIONATOR_LIST = zbe::SysIdGenerator::getId();
   // Collisionables list joints
   BALL_CBS_JOINT = zbe::SysIdGenerator::getId();
   ITEM_CBS_JOINT = zbe::SysIdGenerator::getId();
   // zbe::AnimatedSprite list
   BOOM_AS_LIST = zbe::SysIdGenerator::getId();
+  BALL_AS_LIST = zbe::SysIdGenerator::getId();
   BOARD_AS_LIST = zbe::SysIdGenerator::getId();
   BRICK_AS_LIST = zbe::SysIdGenerator::getId();
   BAR_AS_LIST = zbe::SysIdGenerator::getId();
