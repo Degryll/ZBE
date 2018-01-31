@@ -10,6 +10,7 @@
 #ifndef ZBE_EVENTS_HANDLERS_INPUT_DAEMONCLICKINPUTHANDLER_H
 #define ZBE_EVENTS_HANDLERS_INPUT_DAEMONCLICKINPUTHANDLER_H
 
+#include "ZBE/core/io/Input.h"
 #include "ZBE/core/events/handlers/InputHandler.h"
 
 #include <memory>
@@ -27,7 +28,10 @@ public:
 
 DaemonClickIH(Region2D area, std::shared_ptr<Value<double> > xvalue, std::shared_ptr<Value<double> > yvalue, std::shared_ptr<Daemon> daemon) : a(area), xval(xvalue), yval(yvalue), d(daemon) {}
 
-void run(float) {
+void run(float state) {
+  if(state!=ZBE_KEYUP){
+    return;
+  }
   double x = xval->getValue();
   double y = yval->getValue();
   double minx = std::min(a.p.x, a.p.x + a.v.x);

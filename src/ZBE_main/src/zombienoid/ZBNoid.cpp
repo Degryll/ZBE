@@ -84,9 +84,13 @@ uint64_t ZBNCfg::BOARD_AS_LIST;
 uint64_t ZBNCfg::BRICK_AS_LIST;
 uint64_t ZBNCfg::BAR_AS_LIST;
 uint64_t ZBNCfg::TITLE_BUTTONS_AS_LIST;
+uint64_t ZBNCfg::WIN_BUTTONS_AS_LIST;
+uint64_t ZBNCfg::LOST_BUTTONS_AS_LIST;
 // TextSprite list
 uint64_t ZBNCfg::TEXT_TS_LIST;
 uint64_t ZBNCfg::TITLE_BUTTONS_TS_LIST;
+uint64_t ZBNCfg::WIN_BUTTONS_TS_LIST;
+uint64_t ZBNCfg::LOST_BUTTONS_TS_LIST;
 // Sprite sheet ids
 uint64_t ZBNCfg::BUTTON_SS;
 uint64_t ZBNCfg::ITEM_SS;
@@ -185,9 +189,13 @@ void ZBNCfg::initIds() {
   BRICK_AS_LIST = zbe::SysIdGenerator::getId();
   BAR_AS_LIST = zbe::SysIdGenerator::getId();
   TITLE_BUTTONS_AS_LIST = zbe::SysIdGenerator::getId();
+  WIN_BUTTONS_AS_LIST = zbe::SysIdGenerator::getId();
+  LOST_BUTTONS_AS_LIST = zbe::SysIdGenerator::getId();
   // TextSprite list
   TEXT_TS_LIST = zbe::SysIdGenerator::getId();
   TITLE_BUTTONS_TS_LIST = zbe::SysIdGenerator::getId();
+  WIN_BUTTONS_TS_LIST = zbe::SysIdGenerator::getId();
+  LOST_BUTTONS_TS_LIST = zbe::SysIdGenerator::getId();
   // Sprite sheet ids
   BUTTON_SS = zbe::SysIdGenerator::getId();
   ITEM_SS = zbe::SysIdGenerator::getId();

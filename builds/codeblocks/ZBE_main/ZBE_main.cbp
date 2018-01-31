@@ -188,11 +188,14 @@
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/behaviors/builders/BallBuilder.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/behaviors/builders/ItemBuilder.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/builders/ButtonBuilder.h" />
+		<Unit filename="../../../src/ZBE_main/include/zombienoid/builders/ZBNoidLostScreenBuilder.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/builders/ZBNoidMainGameBuilder.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/builders/ZBNoidTitleBuilder.h" />
+		<Unit filename="../../../src/ZBE_main/include/zombienoid/builders/ZBNoidWinScreenBuilder.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/daemons/ZBNoidGameLoader.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/daemons/ZBNoidLevelCleaner.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/daemons/ZBNoidLevelLoader.h" />
+		<Unit filename="../../../src/ZBE_main/include/zombienoid/daemons/ZBNoidLevelReset.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/daemons/ZBNoidResourceLoader.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/daemons/ZombienoidDeathTester.h" />
 		<Unit filename="../../../src/ZBE_main/include/zombienoid/daemons/ZombienoidLifeSubstractor.h" />
@@ -250,11 +253,14 @@
 		<Unit filename="../../../src/ZBE_main/src/zombienoid.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/zombienoid/ZBNoid.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/zombienoid/builders/ButtonBuilder.cpp" />
+		<Unit filename="../../../src/ZBE_main/src/zombienoid/builders/ZBNoidLostScreenBuilder.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/zombienoid/builders/ZBNoidMainGameBuilder.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/zombienoid/builders/ZBNoidTitleBuilder.cpp" />
+		<Unit filename="../../../src/ZBE_main/src/zombienoid/builders/ZBNoidWinScreenBuilder.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/zombienoid/daemons/ZBNoidGameLoader.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/zombienoid/daemons/ZBNoidLevelCleaner.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/zombienoid/daemons/ZBNoidLevelLoader.cpp" />
+		<Unit filename="../../../src/ZBE_main/src/zombienoid/daemons/ZBNoidLevelReset.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/zombienoid/daemons/ZBNoidResourceLoader.cpp" />
 		<Extensions>
 			<code_completion />

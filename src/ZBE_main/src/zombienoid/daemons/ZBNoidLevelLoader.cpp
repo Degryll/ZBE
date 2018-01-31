@@ -50,7 +50,7 @@ void ZBNoidLevelLoader::run() {
 
       wrapAEC(&aecas, brick);
       wrapAEC(&aecsap2, brick);
-      
+
       brick->addToList(ZBNCfg::COLLISION_TICKET, ZBNCfg::rmTFAEConer.get(ZBNCfg::BRICK_COLLISIONER_LIST)->push_front(brick));
       brick->addToList(ZBNCfg::DRAW_TICKET, ZBNCfg::rmTFAECAnimSprt.get(ZBNCfg::BRICK_AS_LIST)->push_front(aecas));
       brick->addToList(ZBNCfg::BEHAVE_TICKET, ZBNCfg::rmTFAECStatAvtPos2D.get(ZBNCfg::BRICK_LIST)->push_front(aecsap2));
@@ -60,6 +60,8 @@ void ZBNoidLevelLoader::run() {
   // ball-----------------------------------------------------------------------------------------------------
 
   ZBNCfg::rmD.get(ZBNCfg::BALL_BUILDER_DAEMON)->run();
+
+  ZBNCfg::rmVInt64.get(ZBNCfg::NLIFES)->setValue(INITIAL_LIFES);
 
   ZBNCfg::rmVInt64.get(ZBNCfg::GAMESTATE)->setValue(LEVELLOADSUCCESS);
 }

@@ -1,13 +1,13 @@
 /**
  * Copyright 2015 Batis Degryll Ludo
- * @file ZBNoidTitleBuilder.cpp
+ * @file ZBNoidWinScreenBuilder.cpp
  * @since 2017-12-08
  * @date 2017-12-08
  * @author Degryll Ludo Batis
- * @brief Defines a builder that creates the title screen.
+ * @brief Defines a builder that creates the win screen.
  */
 
-#include "zombienoid/builders/ZBNoidTitleBuilder.h"
+#include "zombienoid/builders/ZBNoidWinScreenBuilder.h"
 
 #include <memory>
 
@@ -15,7 +15,7 @@
 
 namespace zombienoid {
 
-std::shared_ptr<zbe::Daemon> ZBNoidTitleBuilder::build() {
+std::shared_ptr<zbe::Daemon> ZBNoidWinScreenBuilder::build() {
   using namespace zbe;
 
   std::shared_ptr<DaemonMaster> preLoop(new DaemonMaster());
@@ -45,39 +45,39 @@ std::shared_ptr<zbe::Daemon> ZBNoidTitleBuilder::build() {
   BroadcastIH* brdcstHI = new BroadcastIH();
   ieg->addHandler(ZBEK_MOUSE_LEFT, brdcstHI);
 
-  auto drawerDaemon = std::make_shared<BehaviorDaemon<AnimatedSprite, TicketedFAEC<AnimatedSprite> > >(std::make_shared<SpriteSheetSDLDrawer<AnimatedSprite> >(window) , ZBNCfg::TITLE_BUTTONS_AS_LIST);
-  auto writerDaemon = std::make_shared<BehaviorDaemon<SingleTextSprite, TicketedFAEC<SingleTextSprite> > >(std::make_shared<SingleTextSDLDrawer>(window) , ZBNCfg::TITLE_BUTTONS_TS_LIST);
+  auto drawerDaemon = std::make_shared<BehaviorDaemon<AnimatedSprite, TicketedFAEC<AnimatedSprite> > >(std::make_shared<SpriteSheetSDLDrawer<AnimatedSprite> >(window) , ZBNCfg::WIN_BUTTONS_AS_LIST);
+  auto writerDaemon = std::make_shared<BehaviorDaemon<SingleTextSprite, TicketedFAEC<SingleTextSprite> > >(std::make_shared<SingleTextSDLDrawer>(window) , ZBNCfg::WIN_BUTTONS_TS_LIST);
   drawMaster->addDaemon(drawerDaemon);
   drawMaster->addDaemon(writerDaemon);
 
   // Buttons
-  std::shared_ptr<Daemon> startButton = std::make_shared<MainLoopExit>(mainLoop, ZBNCfg::rmVInt64.get(ZBNCfg::GAMESTATE), START);
-  std::shared_ptr<Daemon> exitButton = std::make_shared<MainLoopExit>(mainLoop, ZBNCfg::rmVInt64.get(ZBNCfg::GAMESTATE), END);
+  std::shared_ptr<Daemon> goNextLevel = std::make_shared<MainLoopExit>(mainLoop, ZBNCfg::rmVInt64.get(ZBNCfg::GAMESTATE), GONEXTLEVEL);
+  std::shared_ptr<Daemon> goMainTitle = std::make_shared<MainLoopExit>(mainLoop, ZBNCfg::rmVInt64.get(ZBNCfg::GAMESTATE), MAINTITLE);
 
   ButtonBuilder::aButton()
     .withBroadcastHI(brdcstHI)
     .withMouseX(xvalue)
     .withMouseY(yvalue)
-    .withArea(Region2D({462.0, 150.0}, {100.0, 50.0}))
-    .withDaemon(startButton)
+    .withArea(Region2D({462.0, 150.0}, {100.0, 40.0}))
+    .withDaemon(goMainTitle)
     .withGraphics(ZBNCfg::BUTTON_SS)
-    .withText("START")
+    .withText("MAIN TITLE")
     .withTextGraphics(rsrcIDDic->getId(ZBNCfg::TEXT_FONT))
-    .inDrawList(ZBNCfg::TITLE_BUTTONS_AS_LIST)
-    .inTextList(ZBNCfg::TITLE_BUTTONS_TS_LIST)
+    .inDrawList(ZBNCfg::WIN_BUTTONS_AS_LIST)
+    .inTextList(ZBNCfg::WIN_BUTTONS_TS_LIST)
   .build();
 
   ButtonBuilder::aButton()
     .withBroadcastHI(brdcstHI)
     .withMouseX(xvalue)
     .withMouseY(yvalue)
-    .withArea(Region2D({462.0, 210.0}, {100.0, 50.0}))
-    .withDaemon(exitButton)
+    .withArea(Region2D({452.0, 210.0}, {120.0, 60.0}))
+    .withDaemon(goNextLevel)
     .withGraphics(ZBNCfg::BUTTON_SS)
-    .withText("EXIT")
+    .withText("NEXT LEVEL")
     .withTextGraphics(rsrcIDDic->getId(ZBNCfg::TEXT_FONT))
-    .inDrawList(ZBNCfg::TITLE_BUTTONS_AS_LIST)
-    .inTextList(ZBNCfg::TITLE_BUTTONS_TS_LIST)
+    .inDrawList(ZBNCfg::WIN_BUTTONS_AS_LIST)
+    .inTextList(ZBNCfg::WIN_BUTTONS_TS_LIST)
   .build();
 
   return mainLoop;

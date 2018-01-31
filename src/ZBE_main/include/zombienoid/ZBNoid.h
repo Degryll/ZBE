@@ -122,9 +122,12 @@
 #include "zombienoid/daemons/ZBNoidGameLoader.h"
 #include "zombienoid/daemons/ZBNoidLevelLoader.h"
 #include "zombienoid/daemons/ZBNoidLevelCleaner.h"
+#include "zombienoid/daemons/ZBNoidLevelReset.h"
 
 #include "zombienoid/builders/ZBNoidMainGameBuilder.h"
 #include "zombienoid/builders/ZBNoidTitleBuilder.h"
+#include "zombienoid/builders/ZBNoidWinScreenBuilder.h"
+#include "zombienoid/builders/ZBNoidLostScreenBuilder.h"
 #include "zombienoid/builders/ButtonBuilder.h"
 
 #include "zombienoid/ZombienoidReactor.h"

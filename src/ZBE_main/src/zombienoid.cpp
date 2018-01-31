@@ -37,29 +37,39 @@ int zombienoidmain(int, char*[]) {
   ZBNoidTitleBuilder titleBuilder(rsrcIDDic, window, inputBuffer);
   std::shared_ptr<Daemon> titleScreen = titleBuilder.build();
 
+  ZBNoidWinScreenBuilder winScreenBuilder(rsrcIDDic, window, inputBuffer);
+  std::shared_ptr<Daemon> winScreen = winScreenBuilder.build();
+
+  ZBNoidLostScreenBuilder lostScreenBuilder(rsrcIDDic, window, inputBuffer);
+  std::shared_ptr<Daemon> lostScreen = lostScreenBuilder.build();
+
   std::shared_ptr<Daemon> gameLoader =  std::make_shared<ZBNoidGameLoader>(rsrcIDDic);
   std::shared_ptr<Daemon> levelLoader =  std::make_shared<ZBNoidLevelLoader>(rsrcIDDic);
   std::shared_ptr<Daemon> levelCleaner =  std::make_shared<ZBNoidLevelCleaner>();
+  std::shared_ptr<Daemon> levelReset =  std::make_shared<ZBNoidLevelReset>();
 
   std::shared_ptr<StateMachineDaemon> gameStateMachine = std::make_shared<StateMachineDaemon>(ZBNCfg::rmVInt64.get(ZBNCfg::GAMESTATE), 3);
   gameStateMachine->setDaemon(LOADGAME, gameLoader);
   gameStateMachine->setDaemon(MAINTITLE, titleScreen);
+  gameStateMachine->setDaemon(GAMERESET, levelReset);
   gameStateMachine->setDaemon(LOADLEVEL, levelLoader);
   gameStateMachine->setDaemon(MAINGAME, mainLoop);
+  gameStateMachine->setDaemon(WINENDGAME, winScreen);
+  gameStateMachine->setDaemon(LOSTENDGAME, lostScreen);
   gameStateMachine->setDaemon(CLEARGAME, levelCleaner);
 
-  // (0) ZBNoidTitleBuilder title
-  // (1) V ZBNoidLevelLoaderBuilder loader
-  // (2) V mainLoop
-  // (3) ZBNoidLevelEndBuilder end
-  // (4) ZBNoidLevelClean clear
-
-  // StateMachineDaemon stateMachine(title, loader, mainLoop, end, clear, gameStateValue)
-  // stateMachine->run();
+  // LOADGAME = 0,
+  // MAINTITLE = 1,
+  // GAMERESET = 2,
+  // LOADLEVEL = 3,
+  // MAINGAME = 4,
+  // LOSTENDGAME = 5,
+  // WINENDGAME = 6,
+  // CLEARGAME = 7,
+  // EXIT = -1,
 
   // HUD
   // Life & point counter-----------------------------------------------------------------------------------------------------
-
 
   //mainLoop->run();
   gameStateMachine->run();

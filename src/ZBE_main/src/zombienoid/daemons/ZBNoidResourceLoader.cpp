@@ -70,6 +70,8 @@ void ZBNoidResourceLoader::run () {
   auto itemCollisionatorsList = std::make_shared<TicketedFAE<Collisionator<ZombienoidReactor> > >();
   auto textSpriteList = std::make_shared<TicketedFAEC<SingleTextSprite> >();
   auto titleButontextSpriteList = std::make_shared<TicketedFAEC<SingleTextSprite> >();
+  auto winButontextSpriteList = std::make_shared<TicketedFAEC<SingleTextSprite> >();
+  auto lostButontextSpriteList = std::make_shared<TicketedFAEC<SingleTextSprite> >();
   auto brickList = std::make_shared<TicketedFAEC<Stated, Avatar, Positionable<2> > >();
   auto brickCollisionerList = std::make_shared<TicketedFAE<Collisioner<ZombienoidReactor> > >();
   auto spawnList = std::make_shared<TicketedFAEC<Movable<2> > >();
@@ -88,6 +90,8 @@ void ZBNoidResourceLoader::run () {
   auto barAnimatedSpriteList = std::make_shared<TicketedFAEC<AnimatedSprite> >();
   auto boardAnimatedSpriteList = std::make_shared<TicketedFAEC<AnimatedSprite> >();
   auto titleButonsAnimatedSpriteList = std::make_shared<TicketedFAEC<AnimatedSprite> >();
+  auto winButonsAnimatedSpriteList = std::make_shared<TicketedFAEC<AnimatedSprite> >();
+  auto lostButonsAnimatedSpriteList = std::make_shared<TicketedFAEC<AnimatedSprite> >();
 
   ZBNCfg::rmFLAWExplosion.insert(ZBNCfg::EXPLOSION_ACTUATORS_LIST, explosionActuatorsList);
   ZBNCfg::rmFLAWBlock.insert(ZBNCfg::BOARD_ACTUATORS_LIST, boardActuatorsList);
@@ -104,12 +108,16 @@ void ZBNoidResourceLoader::run () {
   ZBNCfg::rmTFAECBncr2DRszAvt.insert(ZBNCfg::BALL_LIST, ballList);
   ZBNCfg::rmTFAECSTextSprt.insert(ZBNCfg::TEXT_TS_LIST, textSpriteList);
   ZBNCfg::rmTFAECSTextSprt.insert(ZBNCfg::TITLE_BUTTONS_TS_LIST, titleButontextSpriteList);
+  ZBNCfg::rmTFAECSTextSprt.insert(ZBNCfg::WIN_BUTTONS_TS_LIST, winButontextSpriteList);
+  ZBNCfg::rmTFAECSTextSprt.insert(ZBNCfg::LOST_BUTTONS_TS_LIST, lostButontextSpriteList);
   ZBNCfg::rmTFAECAnimSprt.insert(ZBNCfg::BOOM_AS_LIST, boomAnimatedSpriteList);
   ZBNCfg::rmTFAECAnimSprt.insert(ZBNCfg::BOARD_AS_LIST, boardAnimatedSpriteList);
   ZBNCfg::rmTFAECAnimSprt.insert(ZBNCfg::BRICK_AS_LIST, brickAnimatedSpriteList);
   ZBNCfg::rmTFAECAnimSprt.insert(ZBNCfg::BAR_AS_LIST, barAnimatedSpriteList);
   ZBNCfg::rmTFAECAnimSprt.insert(ZBNCfg::BALL_AS_LIST, ballAnimatedSpriteList);
   ZBNCfg::rmTFAECAnimSprt.insert(ZBNCfg::TITLE_BUTTONS_AS_LIST, titleButonsAnimatedSpriteList);
+  ZBNCfg::rmTFAECAnimSprt.insert(ZBNCfg::WIN_BUTTONS_AS_LIST, winButonsAnimatedSpriteList);
+  ZBNCfg::rmTFAECAnimSprt.insert(ZBNCfg::LOST_BUTTONS_AS_LIST, lostButonsAnimatedSpriteList);
   ZBNCfg::rmTFAECAvtScor.insert(ZBNCfg::EXPLSION_ERASE_LIST, explosionAvatarList);
   ZBNCfg::rmTFAEConer.insert(ZBNCfg::BRICK_COLLISIONER_LIST, brickCollisionerList);
   ZBNCfg::rmTFAEConer.insert(ZBNCfg::BOARD_COLLISIONER_LIST, boardCollisionerList);
@@ -138,7 +146,7 @@ void ZBNoidResourceLoader::run () {
   jaecSTextSprt->add(textSpriteList);
 
   std::shared_ptr<Value<int64_t> > gameState(new SimpleValue<int64_t>(LOADGAME));
-  std::shared_ptr<Value<int64_t> > lifeCountValue(new SimpleValue<int64_t>(INITIAL_LIFES));
+  std::shared_ptr<Value<int64_t> > lifeCountValue(new SimpleValue<int64_t>());
   std::shared_ptr<Value<int64_t> > brickCount(new SimpleValue<int64_t>(0));
   std::shared_ptr<Value<int64_t> > pointsValue(new SimpleValue<int64_t>(0));
   std::shared_ptr<Value<int64_t> > ballCount(new SimpleValue<int64_t>());

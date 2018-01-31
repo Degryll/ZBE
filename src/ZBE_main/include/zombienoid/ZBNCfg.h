@@ -37,18 +37,26 @@ namespace zombienoid {
 enum {
   LOADGAME = 0,
   MAINTITLE = 1,
-  LOADLEVEL = 2,
-  MAINGAME = 3,
-  LOSTENDGAME = 4,
-  WINENDGAME = 5,
-  CLEARGAME = 6,
+  GAMERESET = 2,
+  LOADLEVEL = 3,
+  MAINGAME = 4,
+  LOSTENDGAME = 5,
+  WINENDGAME = 6,
+  CLEARGAME = 7,
+  EXIT = -1,
+
+  START = GAMERESET,
+  END = EXIT,
+
+  RESETSUCCESS = CLEARGAME,
 
   GAMELOADSUCCESS = MAINTITLE,
   LEVELLOADSUCCESS = MAINGAME,
   LEVELCLEARSUCCESS = LOADLEVEL,
 
-  MAINGAMEWIN = CLEARGAME,
-  MAINGAMEOVER = -1,  // EXIT
+  MAINGAMEWIN = WINENDGAME,
+  GONEXTLEVEL = CLEARGAME,
+  MAINGAMEOVER = LOSTENDGAME,
 
   WIDTH = 1024,
   HEIGHT = 768,
@@ -125,6 +133,8 @@ const double BALL_DECELERATION_RATIO = 1.0/BALL_ACCELERATION_RATIO;
 const int BAR_NORMAL_STATE = 0;
 const int BAR_STICKY_STATE = 1;
 const int LIFE_ITEM_AMOUNT = 1;
+
+const int64_t IDLE_BUTTON_STATE = 0;
 
 const size_t RSRC_ID_DICT_SIZE = 20;
 
@@ -279,9 +289,13 @@ class ZBNCfg {
   static uint64_t BRICK_AS_LIST;
   static uint64_t BAR_AS_LIST;
   static uint64_t TITLE_BUTTONS_AS_LIST;
+  static uint64_t WIN_BUTTONS_AS_LIST;
+  static uint64_t LOST_BUTTONS_AS_LIST;
   // TextSprite list
   static uint64_t TEXT_TS_LIST;
   static uint64_t TITLE_BUTTONS_TS_LIST;
+  static uint64_t WIN_BUTTONS_TS_LIST;
+  static uint64_t LOST_BUTTONS_TS_LIST;
   // Sprite sheet ids
   static uint64_t BUTTON_SS;
   static uint64_t ITEM_SS;

@@ -22,10 +22,9 @@
 namespace zombienoid {
 
 void ButtonBuilder::build() {
-  const int64_t IDLE_BUTTON_STATE = 0;
 
-  ZBNCfg::rmTFAECAnimSprt.get(ZBNCfg::TITLE_BUTTONS_AS_LIST)->push_front(std::make_shared<zbe::AEC<zbe::AnimatedSprite> >(std::make_shared<zbe::AEFixed<zbe::AnimatedSprite> >(new SimpleStateDrawable(area, IDLE_BUTTON_STATE, 0.0, graphics))));
-  ZBNCfg::rmTFAECSTextSprt.get(ZBNCfg::TITLE_BUTTONS_TS_LIST)->push_front(std::make_shared<zbe::AEC<zbe::SingleTextSprite> >(std::make_shared<zbe::AEFixed<zbe::SingleTextSprite> >(new SimpleTextDrawable(area, text, textGraphics))));
+  ZBNCfg::rmTFAECAnimSprt.get(asDrwListId)->push_front(std::make_shared<zbe::AEC<zbe::AnimatedSprite> >(std::make_shared<zbe::AEFixed<zbe::AnimatedSprite> >(new SimpleStateDrawable(area, IDLE_BUTTON_STATE, 0.0, graphics))));
+  ZBNCfg::rmTFAECSTextSprt.get(spsDrwListId)->push_front(std::make_shared<zbe::AEC<zbe::SingleTextSprite> >(std::make_shared<zbe::AEFixed<zbe::SingleTextSprite> >(new SimpleTextDrawable(area, text, textGraphics))));
   brdcstHI->addHandler(std::make_shared<zbe::DaemonClickIH>(area, xvalue, yvalue, daemon));
 }
 
