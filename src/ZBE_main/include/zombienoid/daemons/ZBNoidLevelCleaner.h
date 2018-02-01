@@ -20,16 +20,20 @@
 #include "zombienoid/graphics/RsrcIDDictionary.h"
 
 namespace zombienoid {
-  /** \brief Defines a daemon that Load each level.
-   */
-  class ZBNoidLevelCleaner : public zbe::Daemon {
-    public:
+/** \brief Defines a daemon that Load each level.
+ */
+class ZBNoidLevelCleaner : public zbe::Daemon {
+public:
 
-      ZBNoidLevelCleaner() {}
-      ~ZBNoidLevelCleaner() {}
+  ZBNoidLevelCleaner() : demagnetizeDaemon(std::make_shared<zbe::BehaviorDaemon<zbe::Avatar, zbe::TicketedFAEC<zbe::Positionable<2>, zbe::Avatar> > >(std::make_shared<Demagnetizer>(ZBNCfg::BEHAVE_TICKET, ZBNCfg::MAGNET_TICKET), ZBNCfg::DEMAGNETIZE_LIST)) {}
+  ~ZBNoidLevelCleaner() {}
 
-      void run();
-  };
+  void run();
+
+private:
+  std::shared_ptr<zbe::Daemon> demagnetizeDaemon;
+
+};
 
 
 }  // namespace zombienoid

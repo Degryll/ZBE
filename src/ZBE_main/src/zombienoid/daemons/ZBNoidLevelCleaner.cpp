@@ -27,6 +27,8 @@ void ZBNoidLevelCleaner::run() {
   ZBNCfg::rmTFAECAnimSprt.get(ZBNCfg::BRICK_AS_LIST)->clear();
   ZBNCfg::rmTFAECStatAvtPos2D.get(ZBNCfg::BRICK_LIST)->clear();
 
+  demagnetizeDaemon->run();
+
   // ball-----------------------------------------------------------------------------------------------------
 
   for(auto aecBall : (*ZBNCfg::rmTFAECBncr2DRszAvt.get(ZBNCfg::BALL_LIST))) {
@@ -36,7 +38,17 @@ void ZBNoidLevelCleaner::run() {
     avtr->setERASED();
   }
 
+  // bar------------------------------------------------------------------------------------------------------
+
+  for(auto aecBar : (*ZBNCfg::rmTFAECStat.get(ZBNCfg::STICKY_STATE_LIST))) {
+    zbe::Stated* sttd;
+    std::shared_ptr<AvatarEntityContainer<zbe::Stated> > aecS = aecBar;
+    aecS->get()->assignAvatar(&sttd);
+    sttd->setState(BAR_NORMAL_STATE);
+  }
+
   ZBNCfg::rmVInt64.get(ZBNCfg::GAMESTATE)->setValue(LEVELCLEARSUCCESS);
+
 }
 
 } //namespace zombienoid
