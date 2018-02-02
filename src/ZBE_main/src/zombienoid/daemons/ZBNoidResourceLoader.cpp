@@ -65,7 +65,7 @@ void ZBNoidResourceLoader::run () {
   auto brickActuatorsList = std::make_shared<std::forward_list<ActuatorWrapper<ZombienoidReactor, WAEC<Avatar, Positionable<2>, Stated> >* > >();
   auto explosionActuatorsList = std::make_shared<std::forward_list<zbe::ActuatorWrapper<ZombienoidReactor, zbe::WAEC<Scorer> >*> >();
   auto boardCollisionerList = std::make_shared<TicketedFAE<Collisioner<ZombienoidReactor> > >();
-  auto itemList = std::make_shared<TicketedFAEC<Movable<2> > >();
+  auto itemList = std::make_shared<TicketedFAEC<Bouncer<2>, Avatar> >();
   auto stickerList = std::make_shared<TicketedFAEC<Stated> >();
   auto itemCollisionatorsList = std::make_shared<TicketedFAE<Collisionator<ZombienoidReactor> > >();
   auto textSpriteList = std::make_shared<TicketedFAEC<SingleTextSprite> >();
@@ -101,8 +101,8 @@ void ZBNoidResourceLoader::run () {
   ZBNCfg::rmFLAWBall.insert(ZBNCfg::BALL_ACTUATORS_LIST, ballActuatorsList);
   ZBNCfg::rmTFAECPos2DAvt.insert(ZBNCfg::DEMAGNETIZE_LIST, demagnetizeList);
   ZBNCfg::rmTFAECPos2DAvt.insert(ZBNCfg::BALL_MOUSE_CONTROL_LIST, mouseControlList);
-  ZBNCfg::rmTFAECMov2D.insert(ZBNCfg::ITEM_LIST, itemList);
   ZBNCfg::rmTFAECMov2D.insert(ZBNCfg::BALLSPAWN_LIST, spawnList);
+  ZBNCfg::rmTFAECBncr2DAvt.insert(ZBNCfg::ITEM_LIST, itemList);
   ZBNCfg::rmTFAECStat.insert(ZBNCfg::STICKY_STATE_LIST, stickerList);
   ZBNCfg::rmTFAECStatAvtPos2D.insert(ZBNCfg::BRICK_LIST, brickList);
   ZBNCfg::rmTFAECBncr2DRszAvt.insert(ZBNCfg::BALL_LIST, ballList);

@@ -1,4 +1,4 @@
-#include "zombienoid/ZBNoid.h"
+#include "zombienoid/ZBNCfg.h"
 
 namespace zombienoid {
 
@@ -21,6 +21,7 @@ zbe::ResourceManager<std::forward_list<zbe::ActuatorWrapper<ZombienoidReactor, z
 // Specific zbe::ResourceManager for Behaviors
 zbe::ResourceManager<zbe::TicketedFAEC<zbe::Stated> >& ZBNCfg::rmTFAECStat = zbe::ResourceManager<zbe::TicketedFAEC<zbe::Stated> >::getInstance();
 zbe::ResourceManager<zbe::TicketedFAEC<zbe::Movable<2> > >& ZBNCfg::rmTFAECMov2D = zbe::ResourceManager<zbe::TicketedFAEC<zbe::Movable<2> > >::getInstance();
+zbe::ResourceManager<zbe::TicketedFAEC<zbe::Bouncer<2>, zbe::Avatar> >& ZBNCfg::rmTFAECBncr2DAvt =zbe::ResourceManager<zbe::TicketedFAEC<zbe::Bouncer<2>, zbe::Avatar> >::getInstance();
 zbe::ResourceManager<zbe::TicketedFAEC<zbe::Stated, zbe::Avatar, zbe::Positionable<2> > >& ZBNCfg::rmTFAECStatAvtPos2D = zbe::ResourceManager<zbe::TicketedFAEC<zbe::Stated, zbe::Avatar, zbe::Positionable<2> > >::getInstance();
 zbe::ResourceManager<zbe::TicketedFAEC<zbe::Positionable<2>, zbe::Avatar > >& ZBNCfg::rmTFAECPos2DAvt = zbe::ResourceManager<zbe::TicketedFAEC<zbe::Positionable<2>, zbe::Avatar > >::getInstance();
 zbe::ResourceManager<zbe::JointAEC<zbe::Positionable<2>, zbe::Avatar > >& ZBNCfg::rmJAECPos2DAvt = zbe::ResourceManager<zbe::JointAEC<zbe::Positionable<2>, zbe::Avatar > >::getInstance();

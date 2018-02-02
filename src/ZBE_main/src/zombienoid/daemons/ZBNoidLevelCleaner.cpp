@@ -38,6 +38,13 @@ void ZBNoidLevelCleaner::run() {
     avtr->setERASED();
   }
 
+  for(auto aecItem : (*ZBNCfg::rmTFAECBncr2DAvt.get(ZBNCfg::ITEM_LIST))) {
+    zbe::Avatar* avtr;
+    std::shared_ptr<AvatarEntityContainer<zbe::Avatar> > aecA = aecItem;
+    aecA->get()->assignAvatar(&avtr);
+    avtr->setERASED();
+  }
+
   // bar------------------------------------------------------------------------------------------------------
 
   for(auto aecBar : (*ZBNCfg::rmTFAECStat.get(ZBNCfg::STICKY_STATE_LIST))) {
@@ -47,6 +54,7 @@ void ZBNoidLevelCleaner::run() {
     sttd->setState(BAR_NORMAL_STATE);
   }
 
+  ZBNCfg::rmVInt64.get(ZBNCfg::STICKY_ITEM_STATE)->setValue(BAR_NORMAL_STATE);
   ZBNCfg::rmVInt64.get(ZBNCfg::GAMESTATE)->setValue(LEVELCLEARSUCCESS);
 
 }

@@ -251,7 +251,7 @@
 		<Unit filename="../../../src/ZBE_main/src/ludomain.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/main.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/zombienoid.cpp" />
-		<Unit filename="../../../src/ZBE_main/src/zombienoid/ZBNoid.cpp" />
+		<Unit filename="../../../src/ZBE_main/src/zombienoid/ZBNCfg.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/zombienoid/builders/ButtonBuilder.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/zombienoid/builders/ZBNoidLostScreenBuilder.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/zombienoid/builders/ZBNoidMainGameBuilder.cpp" />

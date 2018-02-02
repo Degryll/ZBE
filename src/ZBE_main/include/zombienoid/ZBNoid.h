@@ -151,7 +151,7 @@ using CustomItemBuilder = ItemBuilder<
                           ZombienoidReactor,
                           zbe::TicketedFAE<zbe::Collisionator<ZombienoidReactor> >,
                           zbe::TicketedFAEC<zbe::AnimatedSprite>,
-                          zbe::TicketedFAEC<zbe::Movable<2> > >;
+                          zbe::TicketedFAEC<zbe::Bouncer<2> ,zbe::Avatar> >;
 
 } // namespace zombienoid
 #endif  // ZOMBIENOID_ZBNOID_H

@@ -75,7 +75,7 @@ public:
     setAdaptor(item, itemCollisionatorAdaptor);
 
     std::shared_ptr<zbe::AvatarEntityContainer<zbe::AnimatedSprite> > aecas = std::make_shared<zbe::AvatarEntityContainer<zbe::AnimatedSprite> >(item);
-    std::shared_ptr<zbe::AvatarEntityContainer<zbe::Bouncer<2> > > aecb2 = std::make_shared<zbe::AvatarEntityContainer<zbe::Bouncer<2> > >(item);
+    std::shared_ptr<zbe::AvatarEntityContainer<zbe::Bouncer<2>, zbe::Avatar> > aecb2 = std::make_shared<zbe::AvatarEntityContainer<zbe::Bouncer<2>, zbe::Avatar > >(item, item);
 
     item->addToList(ctId, ctl->push_front(item));
     item->addToList(dtId, asl->push_front(aecas));

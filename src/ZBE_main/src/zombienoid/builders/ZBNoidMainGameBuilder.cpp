@@ -39,7 +39,7 @@ std::shared_ptr<zbe::Daemon> ZBNoidMainGameBuilder::build() {
   eventGenerator->addDaemon(iaeg);
 
   // Common behaviors
-  std::shared_ptr<Daemon> itemULM(new BehaviorDaemon<Movable<2>, TicketedFAEC<Movable<2> > >(std::make_shared<UniformLinearMotion<2> >(), ZBNCfg::ITEM_LIST));
+  std::shared_ptr<Daemon> itemULM(new BehaviorDaemon<Movable<2>, TicketedFAEC<Bouncer<2>, Avatar> >(std::make_shared<UniformLinearMotion<2> >(), ZBNCfg::ITEM_LIST));
   std::shared_ptr<Daemon> ballULM(new BehaviorDaemon<Movable<2>, TicketedFAEC<Bouncer<2>, Resizable, Avatar> >(std::make_shared<UniformLinearMotion<2> >(), ZBNCfg::BALL_LIST));
   commonBehaviorMaster->addDaemon(itemULM);
   commonBehaviorMaster->addDaemon(ballULM);

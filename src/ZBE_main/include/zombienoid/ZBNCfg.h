@@ -80,7 +80,7 @@ enum {
   ITEM_POINTS_999 = 999,
   ITEM_POINTS_N5000 = -5000,
 
-  ITEM_STICKY_TIME = zbe::SECOND*150,
+  ITEM_STICKY_TIME = zbe::SECOND*6,
 
   NBRICKS_X = 13,
   NBRICKS_Y = 11,
@@ -90,7 +90,7 @@ enum {
   BRICKS_Y_MARGIN = 64,
   BRICK_MAX_LEVEL = 3,
   BRICK_ITEM_SUCCES = 1,
-  BRICK_ITEM_TOTAL = 2,
+  BRICK_ITEM_TOTAL = 10,
   SPECIAL_STATES = 2,
 
   BRICK_BOOMBIZER_STATE = 16,
@@ -223,6 +223,7 @@ class ZBNCfg {
   // Specific zbe::ResourceManager for Behaviors
   static zbe::ResourceManager<zbe::TicketedFAEC<zbe::Stated> >& rmTFAECStat;
   static zbe::ResourceManager<zbe::TicketedFAEC<zbe::Movable<2> > >& rmTFAECMov2D;
+  static zbe::ResourceManager<zbe::TicketedFAEC<zbe::Bouncer<2>, zbe::Avatar> >& rmTFAECBncr2DAvt;
   static zbe::ResourceManager<zbe::TicketedFAEC<zbe::Stated, zbe::Avatar, zbe::Positionable<2> > >& rmTFAECStatAvtPos2D;
   static zbe::ResourceManager<zbe::TicketedFAEC<zbe::Positionable<2>, zbe::Avatar > >& rmTFAECPos2DAvt;
   static zbe::ResourceManager<zbe::JointAEC<zbe::Positionable<2>, zbe::Avatar > >& rmJAECPos2DAvt;
