@@ -343,6 +343,7 @@ class ZBNCfg {
   static uint64_t BALL_BUILDER;
   // Daemon ids
   static uint64_t BALL_BUILDER_DAEMON;
+  static uint64_t BALL_MAGNETIZER_DAEMON;
 
   static void initIds();
  private:

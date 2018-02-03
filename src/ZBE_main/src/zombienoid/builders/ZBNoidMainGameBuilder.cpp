@@ -49,7 +49,10 @@ std::shared_ptr<zbe::Daemon> ZBNoidMainGameBuilder::build() {
   std::shared_ptr<Daemon> succesDaemon = std::make_shared<ZombienoidDeathTester>( ZBNCfg::rmVInt64.get(ZBNCfg::NBRICKS), mainLoop, ZBNCfg::rmVInt64.get(ZBNCfg::GAMESTATE), MAINGAMEWIN);
   std::shared_ptr<Daemon> ballBounce = std::make_shared<BehaviorDaemon<Bouncer<2>, TicketedFAEC<Bouncer<2>, Resizable, Avatar> > >(std::make_shared<Bounce<2> >(), ZBNCfg::BALL_LIST);
   std::shared_ptr<Daemon> brickEraserLT = std::make_shared<PunisherDaemon<Behavior<Stated, Avatar, Positionable<2> >, TicketedFAEC<Stated, Avatar, Positionable<2> > > >(std::make_shared<BrickEraser>(BRK_HIT_LOWLIMIT, BRICK_ITEM_SUCCES, BRICK_ITEM_TOTAL, ZBNCfg::rmBPos2D.get(ZBNCfg::ITEM_BUILDER)), ZBNCfg::BRICK_LIST);
-  std::shared_ptr<Daemon> lifeDaemon = std::make_shared<ZombienoidLifeSubstractor>( ZBNCfg::rmVInt64.get(ZBNCfg::NBALLS),  ZBNCfg::rmVInt64.get(ZBNCfg::NLIFES), ZBNCfg::rmD.get(ZBNCfg::BALL_BUILDER_DAEMON));
+  std::shared_ptr<DaemonMaster> ballInitializerDmn(new DaemonMaster());
+  ballInitializerDmn->addDaemon(ZBNCfg::rmD.get(ZBNCfg::BALL_BUILDER_DAEMON));
+  ballInitializerDmn->addDaemon(ZBNCfg::rmD.get(ZBNCfg::BALL_MAGNETIZER_DAEMON));
+  std::shared_ptr<Daemon> lifeDaemon = std::make_shared<ZombienoidLifeSubstractor>( ZBNCfg::rmVInt64.get(ZBNCfg::NBALLS),  ZBNCfg::rmVInt64.get(ZBNCfg::NLIFES), ballInitializerDmn);
   std::shared_ptr<Daemon> mouseControllDaemon = std::make_shared<BehaviorDaemon<Positionable<2>, JointAEC<Positionable<2>, Avatar > > >(std::make_shared<XSetter>( ZBNCfg::rmVDouble.get(ZBNCfg::MOUSE_X_POS)), ZBNCfg::MOUSE_CONTROL_LIST );
   std::shared_ptr<Daemon> demagnetizeDaemon = std::make_shared<BehaviorDaemon<Avatar, TicketedFAEC<Positionable<2>, Avatar> > >(std::make_shared<Demagnetizer>(ZBNCfg::BEHAVE_TICKET, ZBNCfg::MAGNET_TICKET), ZBNCfg::DEMAGNETIZE_LIST);
   std::shared_ptr<Daemon> explosionEraser = std::make_shared<BehaviorDaemon<Avatar, TicketedFAEC<Avatar, Scorer> > >(std::make_shared<Erase>(), ZBNCfg::EXPLSION_ERASE_LIST);

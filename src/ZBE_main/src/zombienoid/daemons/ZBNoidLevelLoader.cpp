@@ -60,6 +60,7 @@ void ZBNoidLevelLoader::run() {
   // ball-----------------------------------------------------------------------------------------------------
 
   ZBNCfg::rmD.get(ZBNCfg::BALL_BUILDER_DAEMON)->run();
+  ZBNCfg::rmD.get(ZBNCfg::BALL_MAGNETIZER_DAEMON)->run();
 
   ZBNCfg::rmVInt64.get(ZBNCfg::NLIFES)->setValue(INITIAL_LIFES);
 

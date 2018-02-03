@@ -171,11 +171,18 @@ void ZBNoidResourceLoader::run () {
       BALL_SIZE_MIN, BALL_SIZE_MAX, ballCount, MAXBALLS, ZBNCfg::COLLISION_TICKET, ZBNCfg::DRAW_TICKET,
       ZBNCfg::BEHAVE_TICKET, ballCollisionatorsList,ballAnimatedSpriteList, ballList);
 
+  std::shared_ptr<zbe::Behavior<zbe::Bouncer<2>, zbe::Resizable, zbe::Avatar> > ballMagnetizerBhv = std::make_shared<InitialBallMagnetizer<ZombienoidReactor, TicketedFAEC<Positionable<2>, Avatar>, zbe::Bouncer<2>, zbe::Resizable, zbe::Avatar> >(
+     ZBNCfg::rmTFAECPos2DAvt.get(ZBNCfg::DEMAGNETIZE_LIST),
+     ZBNCfg::BEHAVE_TICKET, ZBNCfg::MAGNET_TICKET, MARGIN + 64, MARGIN + 64, WIDTH - (2*MARGIN), HEIGHT,Vector2D({BAR_HEIGHT/2.0-(BALL_SIZE/2),0.0})
+  );
+
   std::shared_ptr<Daemon> ballCreatorDaemon = std::make_shared<BehaviorDaemon<Movable<2>, TicketedFAEC<Movable<2> > > >(ballBuilder, ZBNCfg::BALLSPAWN_LIST );
+  std::shared_ptr<Daemon> ballMagentizerDaemon = std::make_shared<PunisherDaemon<Behavior<zbe::Bouncer<2>, zbe::Resizable, zbe::Avatar>, TicketedFAEC<zbe::Bouncer<2>, zbe::Resizable, zbe::Avatar> > >( ballMagnetizerBhv, ZBNCfg::BALL_LIST);
 
   ZBNCfg::rmBMov2D.insert(ZBNCfg::BALL_BUILDER, ballBuilder);
   ZBNCfg::rmBPos2D.insert(ZBNCfg::ITEM_BUILDER, itemBuilder);
   ZBNCfg::rmD.insert(ZBNCfg::BALL_BUILDER_DAEMON, ballCreatorDaemon);
+  ZBNCfg::rmD.insert(ZBNCfg::BALL_MAGNETIZER_DAEMON, ballMagentizerDaemon);
 
   rsrcIDDic->setId(ZBNCfg::BUTTON_GRAPHICS, imgStore->loadImg(menuButton));
   rsrcIDDic->setId(ZBNCfg::SELECTED_BUTTON_GRAPHICS, imgStore->loadImg(selcetedMenuButton));

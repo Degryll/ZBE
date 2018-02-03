@@ -64,18 +64,19 @@ void ZBNoidGameLoader::run() {
   // ball spawner---------------------------------------------------------------------------------------------
 
   for(unsigned i = 0; i < INITBALLS; i++) {
-    int64_t vel = 600;
-    double vAngleL = (rand()%1800)+900;
-    vAngleL/=10;
-    double vAngleR = rand()%100;
-    vAngleR/=1000;
-    double vAngle = vAngleL + vAngleR;
-    int64_t vx = sin(vAngle*PI/180)*vel;
-    int64_t vy = cos(vAngle*PI/180)*vel;
+    // int64_t vel = 600;
+    // double vAngleL = (rand()%1800)+900;
+    // vAngleL/=10;
+    // double vAngleR = rand()%100;
+    // vAngleR/=1000;
+    // double vAngle = vAngleL + vAngleR;
+    // int64_t vx = sin(vAngle*PI/180)*vel;
+    // int64_t vy = cos(vAngle*PI/180)*vel;
 
     Mobile<2>* spawnData = new SimpleMobile<2>();
-    spawnData->setPosition({WIDTH/2.0, HEIGHT*5.0/6.0});
-    spawnData->setVelocity({(double)vx, (double)vy});
+    spawnData->setPosition({WIDTH/2.0, HEIGHT-BAR_MARGIN-BAR_HEIGHT-(BALL_SIZE/2)});//HEIGHT*5.0/6.0});
+    //spawnData->setVelocity({(double)vx, (double)vy});
+    spawnData->setVelocity({0.0, -600.0});
     Movable<2>* spawnAvatar = new BaseMovable<2>(spawnData);
     std::shared_ptr<AEFixed<Movable<2> > > spawner = std::make_shared<AEFixed<Movable<2> > >(spawnAvatar);
     std::shared_ptr<AEC<Movable<2> > > aecm2;

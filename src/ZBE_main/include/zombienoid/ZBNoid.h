@@ -107,6 +107,7 @@
 #include "zombienoid/daemons/ZombienoidDeathTester.h"
 #include "zombienoid/daemons/ZombienoidLifeSubstractor.h"
 
+#include "zombienoid/behaviors/InitialBallMagnetizer.h"
 #include "zombienoid/behaviors/Demagnetizer.h"
 #include "zombienoid/behaviors/BrickEraser.h"
 #include "zombienoid/behaviors/XSetter.h"

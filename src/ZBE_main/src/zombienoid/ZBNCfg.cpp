@@ -138,6 +138,7 @@ uint64_t ZBNCfg::ITEM_BUILDER;
 uint64_t ZBNCfg::BALL_BUILDER;
 // Daemon ids
 uint64_t ZBNCfg::BALL_BUILDER_DAEMON;
+uint64_t ZBNCfg::BALL_MAGNETIZER_DAEMON;
 
 void ZBNCfg::initIds() {
 
@@ -243,6 +244,7 @@ void ZBNCfg::initIds() {
   BALL_BUILDER = zbe::SysIdGenerator::getId();
   // Daemon ids
   BALL_BUILDER_DAEMON = zbe::SysIdGenerator::getId();
+  BALL_MAGNETIZER_DAEMON = zbe::SysIdGenerator::getId();
 }
 
 }// namespace zombienoid
