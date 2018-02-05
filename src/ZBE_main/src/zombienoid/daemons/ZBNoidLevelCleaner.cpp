@@ -53,6 +53,7 @@ void ZBNoidLevelCleaner::run() {
     aecS->get()->assignAvatar(&sttd);
     sttd->setState(BAR_NORMAL_STATE);
   }
+  ZBNCfg::rmTFAECAnimSprt.get(ZBNCfg::BOOM_AS_LIST)->clear();
 
   ZBNCfg::rmVInt64.get(ZBNCfg::STICKY_ITEM_STATE)->setValue(BAR_NORMAL_STATE);
   ZBNCfg::rmVInt64.get(ZBNCfg::GAMESTATE)->setValue(LEVELCLEARSUCCESS);
