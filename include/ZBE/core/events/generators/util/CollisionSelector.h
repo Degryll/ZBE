@@ -16,6 +16,7 @@
 #include "ZBE/core/tools/math/Vector.h"
 #include "ZBE/core/tools/math/objects.h"
 #include "ZBE/core/tools/math/collisions/intersections.h"
+#include "ZBE/core/entities/avatars/Collisioner.h"
 #include "ZBE/core/events/generators/util/CollisionBodies.h"
 #include "ZBE/core/events/generators/util/CollisionObject.h"
 

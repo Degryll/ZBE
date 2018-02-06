@@ -9,6 +9,8 @@
 #ifndef LUDO_EVENTS_HANDLERS_LUDOHANDLERS_H
 #define LUDO_EVENTS_HANDLERS_LUDOHANDLERS_H
 
+#include "ZBE/core/zbe.h"
+#include "ZBE/core/daemons/Daemon.h"
 #include "ZBE/core/daemons/Daemon.h"
 #include "ZBE/core/tools/containers/ResourceManager.h"
 #include "ZBE/core/tools/containers/Ticket.h"

@@ -12,7 +12,7 @@
 #include "ZBE/core/entities/Adaptor.h"
 #include "ZBE/core/events/EventStore.h"
 #include "ZBE/core/events/generators/InputEventGenerator.h"
-#include "ZBE/core/events/generators/CollisionEventGenerator.h"
+//#include "ZBE/core/events/generators/CollisionEventGenerator.h"
 #include "ZBE/core/events/generators/TimeEventGenerator.h"
 #include "ZBE/SDL/tools/SDLTimer.h"
 #include "ZBE/SDL/system/SDLEventDispatcher.h"

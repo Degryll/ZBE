@@ -263,10 +263,8 @@
 		<Unit filename="../../../include/ZBE/core/events/EventStore.h" />
 		<Unit filename="../../../include/ZBE/core/events/InputEvent.h" />
 		<Unit filename="../../../include/ZBE/core/events/TimeEvent.h" />
-		<Unit filename="../../../include/ZBE/core/events/generators/CollisionEventGenerator.h" />
 		<Unit filename="../../../include/ZBE/core/events/generators/InputEventGenerator.h" />
 		<Unit filename="../../../include/ZBE/core/events/generators/InteractionEventGenerator.h" />
-		<Unit filename="../../../include/ZBE/core/events/generators/IntersectionEventGenerator.h" />
 		<Unit filename="../../../include/ZBE/core/events/generators/TimeEventGenerator.h" />
 		<Unit filename="../../../include/ZBE/core/events/generators/util/BaseCollisionSelector.h" />
 		<Unit filename="../../../include/ZBE/core/events/generators/util/CollisionBodies.h" />

@@ -3,7 +3,7 @@
 #include <cstdio>
 
 #include "ZBE/core/events/EventStore.h"
-#include "ZBE/core/events/generators/CollisionEventGenerator.h"
+//#include "ZBE/core/events/generators/CollisionEventGenerator.h"
 #include "ZBE/core/events/generators/util/CollisionSelector.h"
 #include "ZBE/core/events/generators/util/BaseCollisionSelector.h"
 #include "ZBE/core/events/generators/util/ReactObject.h"
