@@ -11,13 +11,16 @@
 #define ZBE_EVENTS_HANDLERS_INPUTTOVALUE_H_
 
 #include <cstdlib>
+#include <memory>
 
 #include "ZBE/core/tools/shared/Value.h"
 
 #include "ZBE/core/events/handlers/InputHandler.h"
 
 namespace zbe {
-
+  
+/** \brief Handler that stores input value to a Value<double>
+ */
 class InputToValue : public zbe::InputHandler {
 public:
   InputToValue(const InputToValue&) = delete; //!< Deleted copy constructor.
@@ -38,6 +41,7 @@ public:
 private:
   std::shared_ptr<zbe::Value<double> > val;
 };
-} //namespace zbe
 
-#endif //ZBE_EVENTS_HANDLERS_INPUTTOVALUE_H_
+}  // namespace zbe
+
+#endif  // ZBE_EVENTS_HANDLERS_INPUTTOVALUE_H_

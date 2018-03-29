@@ -2,13 +2,13 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file SpriteSheetSDLDrawer.h
  * @since 2017-06-15
- * @date 2017-06-15
+ * @date 2018-02-25
  * @author Ludo
  * @brief Class that know how to draw using SpriteSheets.
  */
 
-#ifndef SDL_DRAWERS_SPRITESHEETSDLDRAWER_H_
-#define SDL_DRAWERS_SPRITESHEETSDLDRAWER_H_
+#ifndef ZBE_SDL_DRAWERS_SPRITESHEETSDLDRAWER_H_
+#define ZBE_SDL_DRAWERS_SPRITESHEETSDLDRAWER_H_
 
 #include <memory>
 #include <SDL2/SDL.h>
@@ -31,8 +31,8 @@ namespace zbe {
 template<typename T>
 class SpriteSheetSDLDrawer : public Behavior<T> {
   public:
-    SpriteSheetSDLDrawer(const SpriteSheetSDLDrawer&) = delete;
-    void operator=(const SpriteSheetSDLDrawer&) = delete;
+    SpriteSheetSDLDrawer(const SpriteSheetSDLDrawer&) = delete; //!< Avoid copy.
+    void operator=(const SpriteSheetSDLDrawer&) = delete; //!< Avoid copy.
 
     /** \brief Create a new drawer in the given context.
      *  \param window A SDLwindow with its context.
@@ -70,4 +70,4 @@ class SpriteSheetSDLDrawer : public Behavior<T> {
 
 }  // namespace zbe
 
-#endif  // SDL_DRAWERS_SPRITESHEETSDLDRAWER_H_
+#endif  // ZBE_SDL_DRAWERS_SPRITESHEETSDLDRAWER_H_

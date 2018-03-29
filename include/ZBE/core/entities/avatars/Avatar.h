@@ -2,13 +2,16 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file Avatar.h
  * @since 2017-04-12
- * @date 2017-04-12
- * @author Ludo
+ * @date 2018-02-25
+ * @author Degryll Batis Ludo
  * @brief This define an avatar that can be used to deactivate/activate or erase the corresponding entity.
  */
 
 #ifndef ZBE_CORE_ENTITIES_AVATARS_AVATAR_H_
 #define ZBE_CORE_ENTITIES_AVATARS_AVATAR_H_
+
+#include <cstdint>
+#include <memory>
 
 #include "ZBE/core/tools/containers/Ticket.h"
 
@@ -18,8 +21,10 @@ namespace zbe {
  */
 struct Avatar {
 
-    using Base = void;
+    using Base = void; //!< Inheritance info.
 
+    /** \brief Virtual destructor.
+     */
     virtual ~Avatar(){}
 
     /** \brief Register a new Ticket from a list.

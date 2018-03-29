@@ -2,8 +2,8 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file EventStore.cpp
  * @since 2016-03-26
- * @date 2016-03-26
- * @author Ludo
+ * @date 2018-03-27
+ * @author Ludo Batis Degryll
  * @brief A container to store events. It will store only the sooner event (or events) and will discard every other.
  */
 
@@ -11,7 +11,9 @@
 
 namespace zbe {
 
-
+/** \brief Used to delete (and free memory) all events in a store.
+*
+*/
 static bool deleteAll(Event* e) {
   delete e;
   return true;
@@ -67,4 +69,4 @@ int64_t EventStore::getTime() {
   return (bettertime);
 }
 
-}
+}  // namespace zbe

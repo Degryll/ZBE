@@ -14,7 +14,7 @@ namespace zbe {
 
 /** \brief Used when a template need to know the bases classes of "T".
  *
- * In the case you have:
+ * In case you have:
  * class A { ... };
  * class B : public A { ... };
  * template <typename T> class Mytemplate { ... };

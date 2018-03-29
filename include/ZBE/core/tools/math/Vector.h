@@ -2,7 +2,7 @@
  * Copyright 2011 Batis Degryll Ludo
  * @file Vector.h
  * @since 2010/07/22
- * @date 2017/05/15
+ * @date 26/03/2018
  * @author Ludo Degryll Batis
  * @brief Math Vector definition
  */
@@ -10,10 +10,8 @@
 #ifndef ZBE_CORE_TOOLS_MATH_VECTOR_H_
 #define ZBE_CORE_TOOLS_MATH_VECTOR_H_
 
-#include <utility>
-#include <initializer_list>
-
 #include <cmath>
+#include <initializer_list>
 
 #include "ZBE/core/tools/math/math.h"
 #include "ZBE/core/tools/math/Point.h"
@@ -22,18 +20,18 @@ namespace zbe {
 
 /** \brief A class that represent Vectors of any dimension.
  *
- *  Not use this class, use Vector<s>.
+ *  Not use this class, use Vector<dim>.
  *
  *  \sa Vector
  */
-template<unsigned s>
+template<unsigned dim>
 class _VECTOR {
   public:
 
     /** \brief Void constructor, the vector's values are set to 0.
      */
     _VECTOR() {
-      for(unsigned i = 0; i < s; i++) {
+      for(unsigned i = 0; i < dim; i++) {
         data[i] = 0;
       }
     }
@@ -48,9 +46,10 @@ class _VECTOR {
      *
      *        Vector<N> p = {v1, v2, ... , vN}
      *
+     *  \param l Initializer list with the vector coordinates
      */
     _VECTOR(std::initializer_list<double> l) {
-      if (l.size() != s) {
+      if (l.size() != dim) {
         SysError::setError("Vector ERROR: Initializer list size is incorrect.");
         return;
       }
@@ -66,10 +65,10 @@ class _VECTOR {
     virtual ~_VECTOR() {}
 
     /** \brief This class let you assign initializer lists to _VECTOR.
-     *  \param l initializer list
+     *  \param l Initializer list with the vector coordinates
      */
     _VECTOR& operator=(std::initializer_list<double> l) {
-      if (l.size() != s) {
+      if (l.size() != dim) {
         SysError::setError("Vector ERROR: Initializer list size is incorrect.");
         return (*this);
       }
@@ -108,8 +107,8 @@ class _VECTOR {
      * \return A reference to this Vector, resultant of the addition.
      * \sa operator-=(), operator-() and operator*=().
      */
-    _VECTOR<s>& operator+=(_VECTOR<s> rhs) {
-      for(unsigned i = 0; i < s; i++) {
+    _VECTOR<dim>& operator+=(_VECTOR<dim> rhs) {
+      for(unsigned i = 0; i < dim; i++) {
         data[i] += rhs.data[i];
       }
 
@@ -122,8 +121,8 @@ class _VECTOR {
      * \return A reference to this Vector, resultant of the subtraction.
      * \sa operator+=(), operator-() and operator*=().
      */
-    _VECTOR<s>& operator-=(_VECTOR<s> rhs) {
-      for(unsigned i = 0; i < s; i++) {
+    _VECTOR<dim>& operator-=(_VECTOR<dim> rhs) {
+      for(unsigned i = 0; i < dim; i++) {
         data[i] -= rhs.data[i];
       }
 
@@ -135,8 +134,8 @@ class _VECTOR {
      * \return A reference to the this Vector.
      * \sa operator+=(), operator-=() and operator*=().
      */
-    _VECTOR<s>& operator-() {
-      for(unsigned i = 0; i < s; i++) {
+    _VECTOR<dim>& operator-() {
+      for(unsigned i = 0; i < dim; i++) {
         data[i] = -data[i];
       }
 
@@ -149,8 +148,8 @@ class _VECTOR {
      * \return A reference to this Vector after the multiplication.
      * \sa operator+=(), operator-=(), operator-(), operator+(), operator/=().
      */
-    _VECTOR<s>& operator*=(double rhs) {
-      for(unsigned i = 0; i < s; i++) {
+    _VECTOR<dim>& operator*=(double rhs) {
+      for(unsigned i = 0; i < dim; i++) {
         data[i] *= rhs;
       }
 
@@ -163,8 +162,8 @@ class _VECTOR {
      * \return A reference to this Vector after the multiplication.
      * \sa operator+=(), operator-=(), operator-(), operator+(), operator*=().
      */
-    _VECTOR<s>& operator/=(double rhs) {
-      for(unsigned i = 0; i < s; i++) {
+    _VECTOR<dim>& operator/=(double rhs) {
+      for(unsigned i = 0; i < dim; i++) {
         data[i] /= rhs;
       }
 
@@ -174,8 +173,8 @@ class _VECTOR {
     /** \brief Creates an all-zero vector
      * \return An all-zero vector
      */
-    _VECTOR<s>& setZeros() {
-      for(unsigned i = 0; i < s; i++) {
+    _VECTOR<dim>& setZeros() {
+      for(unsigned i = 0; i < dim; i++) {
         data[i] = 0;
       }
 
@@ -185,8 +184,8 @@ class _VECTOR {
     /** \brief Creates an all-zero vector
      * \return An all-zero vector
      */
-    static _VECTOR<s> zeros() {
-      _VECTOR<s> out;
+    static _VECTOR<dim> zeros() {
+      _VECTOR<dim> out;
       out.setZeros();
 
       return (out);
@@ -200,7 +199,7 @@ class _VECTOR {
      */
     double getModule() {
       double r = 0;
-      for(unsigned i = 0; i < s; i++) {
+      for(unsigned i = 0; i < dim; i++) {
         r += data[i] * data[i];
       }
 
@@ -214,7 +213,7 @@ class _VECTOR {
      */
     double getSqrModule() {  // to avoid square root
       double r2 = 0;
-      for(unsigned i = 0; i < s; i++) {
+      for(unsigned i = 0; i < dim; i++) {
         r2 += data[i] * data[i];
       }
 
@@ -225,7 +224,7 @@ class _VECTOR {
      *
      * \return Normalized vector.
      */
-    _VECTOR<s>&  normalize() {
+    _VECTOR<dim>&  normalize() {
       double m = getModule();
       if(m == 0) {return (*this);}
       *this /= m;
@@ -239,13 +238,13 @@ class _VECTOR {
      * \return Vector with the ray or object path reflected.
      * \brief calculates the resulting path of reflection of a ray or impact of an object with a plane.
      */
-    _VECTOR<s>& reflect(_VECTOR<s> normal) {
-      _VECTOR<s>& d = *this;
+    _VECTOR<dim>& reflect(_VECTOR<dim> normal) {
+      _VECTOR<dim>& d = *this;
       normal.normalize();
       double dn = (d * normal);
-      _VECTOR<s> dnn = dn * normal;
-      _VECTOR<s> dnn2 = dnn * 2;
-      _VECTOR<s> out = d - dnn2;
+      _VECTOR<dim> dnn = dn * normal;
+      _VECTOR<dim> dnn2 = dnn * 2;
+      _VECTOR<dim> out = d - dnn2;
       d = out;
       //*this = d - (((d * normal) * normal) * 2);
       return (*this);
@@ -319,7 +318,7 @@ class _VECTOR {
      */
     friend double operator*(const _VECTOR& lhs, const _VECTOR& rhs) {
       double v = 0;
-      for(unsigned i = 0; i < s; i++) {
+      for(unsigned i = 0; i < dim; i++) {
         v += lhs.data[i] * rhs.data[i];
       }
 
@@ -339,19 +338,19 @@ class _VECTOR {
 ///////////////////////////////////////////////////////////////////////////////
 
   protected:
-    double data[s];  //!< Vector data.
+    double data[dim];  //!< Vector data.
 };
 
 /** \brief A class that represent Vectors of any dimension.
  *
  *  This template needs to know the number of dimensions of the hyperplane to which the Vectors belongs to.
  */
-template<unsigned s>
-class Vector : public _VECTOR<s> {
+template<unsigned dim>
+class Vector : public _VECTOR<dim> {
   public:
     /** \brief Void constructor, the Vector's values are unknown.
      */
-    Vector() : _VECTOR<s>() {}
+    Vector() : _VECTOR<dim>() {}
 
     /** \brief A list initializer constructor.
      *
@@ -363,8 +362,9 @@ class Vector : public _VECTOR<s> {
      *
      *        Vector<N> p = {v1, v2, ... , vN}
      *
+     *  \param l Initializer list with the vector coordinates
      */
-    Vector(std::initializer_list<double> l) : _VECTOR<s>(l) {}
+    Vector(std::initializer_list<double> l) : _VECTOR<dim>(l) {}
 };
 
 /** \brief A class that represent 2D Vectors.
@@ -384,10 +384,12 @@ class Vector<2> : public _VECTOR<2> {
     Vector() : _VECTOR<2>(), x(data[0]), y(data[1]) {}
 
     /** \brief A copy constructor.
+     *  \param v Vector to copy
      */
     Vector(const Vector<2>& v) : _VECTOR<2>(v), x(data[0]), y(data[1]) {}
 
     /** \brief A copy constructor with _VECTOR<2>.
+     *  \param v _VECTOR to copy
      */
     Vector(const _VECTOR<2>& v) : _VECTOR<2>(v), x(data[0]), y(data[1]) {}
 
@@ -401,30 +403,40 @@ class Vector<2> : public _VECTOR<2> {
      *
      *        Vector2D v = {v1, v2}
      *
+     *  \param l Initializer list with the vector coordinates
      */
     Vector(std::initializer_list<double> l) : _VECTOR<2>(l), x(data[0]), y(data[1]) {}
 
     /** \brief Assign operator.
+     *  \param rhs Vector to copy
      */
     Vector& operator=(Vector<2> rhs) {_VECTOR<2>::operator=(rhs); return (*this);}
 
     /** \brief This class let you assign _VECTOR<2> classes to Vector<2>.
+     *  \param rhs _VECTOR to copy
      */
     Vector& operator=(_VECTOR<2> rhs) {_VECTOR<2>::operator=(rhs); return (*this);}
 
     /** \brief This class let you assign initializer lists to Vector<2>.
+     *  \param l Initializer list with the vector coordinates
      */
     Vector& operator=(std::initializer_list<double> l) {_VECTOR<2>::operator=(l); return (*this);}
 
     /** \brief Set values of the vector as Cartesian coordinates (default).
+     *  \param x X coordinate
+     *  \param y Y coordinate
      */
     void setCartesian(double x, double y) {data[0] = x; data[1] = y;}
 
     /** \brief Set values of the vector as Polar coordinates in radians (transformed to Cartesian).
+     *  \param r Radial coordinate
+     *  \param rads Angular coordinate (in radians)
      */
     void setPolars(double r, double rads) {data[0] = r*cos(rads); data[1] = r*sin(rads);}
 
     /** \brief Set values of the vector as Polar coordinates in degrees (transformed to Cartesian).
+    *  \param r Radial coordinate
+    *  \param degree Angular coordinate (in degrees)
      */
     void setPolarsDegrees(double r, double degree) {data[0] = r*cos(degree*TORADIANS); data[1] = r*sin(degree*TORADIANS);}
 
@@ -458,10 +470,12 @@ class Vector<3> : public _VECTOR<3> {
     Vector() : _VECTOR<3>(), x(data[0]), y(data[1]), z(data[2]) {}
 
     /** \brief A copy constructor.
+     *  \param Vector to copy
      */
     Vector(const Vector<3>& v) : _VECTOR<3>(v), x(data[0]), y(data[1]), z(data[2]) {}
 
     /** \brief A copy constructor with _VECTOR<3>.
+     *  \param _VECTOR to copy
      */
     Vector(const _VECTOR<3>& v) : _VECTOR<3>(v), x(data[0]), y(data[1]), z(data[2]) {}
 
@@ -475,18 +489,22 @@ class Vector<3> : public _VECTOR<3> {
      *
      *        Vector3D v = {v1, v2, v3}
      *
+     *  \param l Initializer list with the vector coordinates
      */
     Vector(std::initializer_list<double> l) : _VECTOR<3>(l), x(data[0]), y(data[1]), z(data[2]) {}
 
     /** \brief Assign operator.
+     *  \param Vector to copy
      */
     Vector& operator=(Vector<3> rhs) {_VECTOR<3>::operator=(rhs); return (*this);}
 
     /** \brief This class let you assign _VECTOR<3> classes to Vector<3>.
+     *  \param _VECTOR to copy
      */
     Vector& operator=(_VECTOR<3> rhs) {_VECTOR<3>::operator=(rhs); return (*this);}
 
     /** \brief This class let you assign _VECTOR<3> classes to Vector<3>.
+     *  \param l Initializer list with the vector coordinates
      */
     Vector& operator=(std::initializer_list<double> l) {_VECTOR<3>::operator=(l); return (*this);}
 };

@@ -2,13 +2,17 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file Positionable.h
  * @since 2016-12-16
- * @date 2017-01-11
+ * @date 2018-02-25
  * @author Batis Degryll Ludo
  * @brief This defines an avatar that can be posicioned.
  */
 
 #ifndef ZBE_ENTITIES_AVATARS_IMPLEMENTATIONS_BASEPOSITIONABLE_H_
 #define ZBE_ENTITIES_AVATARS_IMPLEMENTATIONS_BASEPOSITIONABLE_H_
+
+#include <initializer_list>
+
+#include "ZBE/core/tools/math/Point.h"
 
 #include "ZBE/entities/avatars/Positionable.h"
 #include "ZBE/archetypes/Position.h"

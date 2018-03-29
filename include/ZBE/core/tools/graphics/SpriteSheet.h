@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file SpriteSheet.h
  * @since 2017-06-14
- * @date 2017-06-14
+ * @date 2018-03-25
  * @author Degryll Ludo Batis
  * @brief Interface capable of generate a sprite from a given entity.
  */
@@ -10,10 +10,9 @@
 #ifndef ZBE_CORE_TOOLS_GRAPHICS_SPRITESHEET_H_
 #define ZBE_CORE_TOOLS_GRAPHICS_SPRITESHEET_H_
 
-#include <stdint.h>
+#include <cstdint>
 
 #include "ZBE/core/tools/graphics/Sprite.h"
-#include "ZBE/core/entities/AvatarEntity.h"
 
 namespace zbe {
 
@@ -23,6 +22,8 @@ template<typename T>
 class SpriteSheet {
 public:
 
+  /** \brief Virtual destructor
+  */
   virtual ~SpriteSheet(){} //!< Virtual destrutor.
 
   /** \brief Generate a sprite from a given entity.

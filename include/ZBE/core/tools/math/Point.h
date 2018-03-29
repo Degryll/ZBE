@@ -2,7 +2,7 @@
  * Copyright 2011 Batis Degryll Ludo
  * @file Point.h
  * @since 2015/05/16
- * @date 2017/05/15
+ * @date 2018/03/25
  * @author Degryll Ludo
  * @brief Math Point definitions
  */
@@ -47,6 +47,7 @@ class _POINT {
      *
      *        Point<N> p = {v1, v2, ... , vN}
      *
+     *  \param l List of values.
      */
     _POINT(const std::initializer_list<double> l) {
       if (l.size() != s) {
@@ -204,7 +205,7 @@ class Point : public _POINT<s> {
      *  or
      *
      *        Point<N> p = {v1, v2, ... , vN}
-     *
+     *  \param l List of values.
      */
     Point(std::initializer_list<double> l) : _POINT<s>(l) {}
 };
@@ -226,10 +227,14 @@ class Point<2> : public _POINT<2> {
     Point() : _POINT<2>(), x(data[0]), y(data[1]) {}
 
     /** \brief A copy constructor.
+     *
+     *  \param p Point to copy
      */
     Point(const Point<2>& p) : _POINT<2>(p), x(data[0]), y(data[1]) {}
 
     /** \brief A copy constructor with _POINT<2>.
+     *
+     *  \param p Point to copy
      */
     Point(const _POINT<2>& p) : _POINT<2>(p), x(data[0]), y(data[1]) {}
 
@@ -243,18 +248,22 @@ class Point<2> : public _POINT<2> {
      *
      *        Point2D p = {v1, v2}
      *
+     *  \param l List of values.
      */
     Point(std::initializer_list<double> l) : _POINT(l), x(data[0]), y(data[1]) {}
 
     /** \brief Assign operator.
+     *  \param rhs Point to assign
      */
     Point& operator=(Point<2> rhs) {_POINT<2>::operator=(rhs); return (*this);}
 
     /** \brief This class let you assign _POINT<2> classes to Point<2>.
+     *  \param rhs Point to assign
      */
     Point& operator=(_POINT<2> rhs) {_POINT<2>::operator=(rhs); return (*this);}
 
     /** \brief This class let you assign initializer lists to Point<2>.
+     *  \param rhs Point to assign
      */
     Point& operator=(std::initializer_list<double> l) {_POINT<2>::operator=(l); return (*this);}
 };
@@ -279,10 +288,14 @@ class Point<3> : public _POINT<3> {
     Point() : _POINT<3>(), x(data[0]), y(data[1]), z(data[2]) {}
 
     /** \brief A copy constructor.
+     *
+     *  \param p Point to copy
      */
     Point(const Point<3>& p) : _POINT<3>(p), x(data[0]), y(data[1]), z(data[2]) {}
 
     /** \brief A copy constructor with _POINT<3>.
+     *
+     *  \param p Point to copy
      */
     Point(const _POINT<3>& p) : _POINT<3>(p), x(data[0]), y(data[1]), z(data[2]) {}
 
@@ -296,18 +309,22 @@ class Point<3> : public _POINT<3> {
      *
      *        Point2D p = {v1, v2, v3}
      *
+     *  \param l List of values that defines the point.
      */
     Point(std::initializer_list<double> l) : _POINT(l), x(data[0]), y(data[1]), z(data[2]) {}
 
     /** \brief Assign operator.
+     *  \param rhs Point to assign
      */
     Point& operator=(Point<3> rhs) {_POINT<3>::operator=(rhs); return (*this);}
 
     /** \brief This class let you assign _POINT<3> classes to Point<3>.
+     *  \param rhs Point to assign
      */
     Point& operator=(_POINT<3> rhs) {_POINT<3>::operator=(rhs); return (*this);}
 
     /** \brief This class let you assign initializer lists to Point<3>.
+     *  \param l List of values that defines the point
      */
     Point& operator=(std::initializer_list<double> l) {_POINT<3>::operator=(l); return (*this);}
 };

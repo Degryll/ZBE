@@ -1,25 +1,27 @@
 /**
  * Copyright 2011 Batis Degryll Ludo
  * @file TicketedForwardList.h
- * @since 2015/02/08
- * @date 2016/03/22
- * @author Degryll
+ * @since 2015-02-08
+ * @date 2018-03-25
+ * @author Degryll Batis Ludo
  * @brief A wrapper for c++ forward_list using Tickets.
  */
 
 #ifndef ZBE_CORE_TOOLS_CONTAINERS_TICKETEDFORWARDLIST_H_
 #define ZBE_CORE_TOOLS_CONTAINERS_TICKETEDFORWARDLIST_H_
 
-#include <type_traits>
-#include <memory>
 #include <forward_list>
+#include <memory>
+#include <type_traits>
 
 #include "ZBE/core/system/SysError.h"
-
 #include "ZBE/core/tools/containers/Ticket.h"
 
 namespace zbe {
 
+/** \brief Iterator for a ticketed forward list.
+ *
+ */
 template <typename T, typename UnqualifiedType = std::remove_cv<T> >
 class TicketedForwardListIterator;
 
@@ -86,7 +88,6 @@ public:
 private:
 
   std::forward_list< std::shared_ptr< TicketedElement<T> > > l;  //!< The STL forward list
-
 };
 
 template <typename T, typename UnqualifiedType>
@@ -176,13 +177,19 @@ public:
     return (TicketedForwardListIterator<const T>(fl, p, i, e));
   }
 
+  /** \brief Marks the current item as erased.
+   *
+   */
   void setERASED() {
     if (i != e) {
       i->get()->setERASED();
     }
   }
 
-  protected:
+protected:
+  /** brief Moves the iterator to the next active element.
+   *
+  */
   void checkForACTIVE() {
     while(i != e && i->get()->isNotACTIVE()) {
       if(i->get()->isERASED()) {

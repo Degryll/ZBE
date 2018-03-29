@@ -2,14 +2,15 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file StatedSpriteSDLDrawer.h
  * @since 2017-04-05
- * @date 2017-04-05
+ * @date 2018-02-25
  * @author degryll
  * @brief Class that know how to draw StatedSprite entities with SDL.
  */
 
-#ifndef CORE_DRAWERS_SIMPLESPRITESDLDRAWER_H_
-#define CORE_DRAWERS_SIMPLESPRITESDLDRAWER_H_
+#ifndef ZBE_SDL_DRAWERS_SIMPLESPRITESDLDRAWER_H_
+#define ZBE_SDL_DRAWERS_SIMPLESPRITESDLDRAWER_H_
 
+#include <memory>
 #include <SDL2/SDL.h>
 
 #include "ZBE/core/behaviors/Behavior.h"
@@ -23,8 +24,8 @@ namespace zbe {
  */
 class StatedSpriteSDLDrawer : public Behavior<StatedSprite> {
   public:
-    StatedSpriteSDLDrawer(const StatedSpriteSDLDrawer&) = delete;
-    void operator=(const StatedSpriteSDLDrawer&) = delete;
+    StatedSpriteSDLDrawer(const StatedSpriteSDLDrawer&) = delete; //!< Avoid copy.
+    void operator=(const StatedSpriteSDLDrawer&) = delete; //!< Avoid copy.
 
     /** \brief Create a new drawer in the given context.
      *  \param window A SDLwindow with its context.
@@ -47,4 +48,4 @@ class StatedSpriteSDLDrawer : public Behavior<StatedSprite> {
 
 }  // namespace zbe
 
-#endif  // CORE_DRAWERS_SIMPLESPRITESDLDRAWER_H_
+#endif  // ZBE_SDL_DRAWERS_SIMPLESPRITESDLDRAWER_H_

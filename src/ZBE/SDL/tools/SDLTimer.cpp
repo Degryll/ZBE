@@ -2,8 +2,8 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file SDLTimer.cpp
  * @since 2016-03-24
- * @date 2017-05-11
- * @author Batis
+ * @date 2018-03-28
+ * @author Batis Degryll Ludo
  * @brief Implements a timer that uses SDL to give elapsed times between events.
  */
 
@@ -13,22 +13,15 @@
 
 namespace zbe {
 
-/** \brief Construct the timer.
- *  \param startHere If true, once constructed, the timer start counting. Default false.
- */
 SDLTimer::SDLTimer(bool startHere)
   : sdl(SDL_Starter::getInstance(SDL_INIT_TIMER)),
     running(startHere), totalElapsedTime(0),
     lastTime(SDL_GetTicks()), lastLapTime(0) {}
 
-/** \brief Destructor.
- */
 SDLTimer::~SDLTimer() {
   sdl.quitSubSystem(SDL_INIT_TIMER);
 }
 
-/** \brief Start the timer.
- */
 void SDLTimer::start() {
   if (running == false) {
     running = true;
@@ -36,9 +29,6 @@ void SDLTimer::start() {
   }
 }
 
-/** \brief Stop the timer, the current count holds.
- *  \return The current time.
- */
 int64_t SDLTimer::stop() {
   int64_t lastLap = 0;
   if (running == true) {
@@ -50,17 +40,12 @@ int64_t SDLTimer::stop() {
   return lastLap;
 }
 
-/** \brief Stop the timer and reset to 0.
- */
 void SDLTimer::reset() {
   running = false;
   totalElapsedTime = 0;
   lastLapTime = 0;
 }
 
-/** \brief Return the lap time.
- *  \return The time since the last call to start, stop or lapTime.
- */
 int64_t SDLTimer::lapTime() {
   int64_t lastLap = -1;
   int64_t now = quantizeTime(MILITOZBETU(SDL_GetTicks()));
@@ -73,9 +58,6 @@ int64_t SDLTimer::lapTime() {
   return lastLap;
 }
 
-/** \brief Return the total time, it doesn't stop the timer.
- *  \return The time since start.
- */
 int64_t SDLTimer::totalTime() {
   int64_t totalElapsed;
 

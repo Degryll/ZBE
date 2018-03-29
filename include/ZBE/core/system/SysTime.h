@@ -2,7 +2,7 @@
  * Copyright 2016 Batis Degryll Ludo
  * @file SysTime.h
  * @since 2016-06-05
- * @date 2016-06-12
+ * @date 2018-03-21
  * @author Ludo Degryll Batis
  * @brief Tool used to ask about system time.
  */
@@ -12,7 +12,6 @@
 
 #include <cstdint>
 
-#include "ZBE/core/tools/math/math.h"
 #include "ZBE/core/tools/Timer.h"
 #include "ZBE/core/system/SysError.h"
 
@@ -74,6 +73,7 @@ public:
   }
 
   /** \brief Set the time of the first interrupt, probably an event.
+   *  \param eventTime time in which current events occured
    */
   inline void setEventTime(int64_t eventTime) {
     if (eventTime <= endT) {
@@ -180,6 +180,6 @@ private:
   static int64_t maxFrameTime;  //!< No frame will be longer than this.
 };
 
-}
+} // namespace zbe
 
-#endif //  ZBE_CORE_SYSTEM_SYSTEMTIME_H
+#endif  // ZBE_CORE_SYSTEM_SYSTEMTIME_H

@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file SimplePosition.h
  * @since 2016-12-16
- * @date 2017-05-08
+ * @date 2018-02-25
  * @author Degryll
  * @brief Simple implementation of the Position interface.
  */
@@ -10,8 +10,11 @@
 #ifndef ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEPOSITION_H
 #define ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEPOSITION_H
 
-#include "ZBE/archetypes/Position.h"
+#include <initializer_list>
+
 #include "ZBE/core/tools/math/Point.h"
+
+#include "ZBE/archetypes/Position.h"
 
 namespace zbe {
 

@@ -1,14 +1,16 @@
 /**
  * Copyright 2015 Batis Degryll Ludo
- * @file
+ * @file BasicPostLoopSDLDaemon.h
  * @since 2017-05-11
- * @date 2017-05-11
- * @author Batis
- * @brief
+ * @date 2018-02-25
+ * @author Batis Degryll Ludo
+ * @brief Daemon that runs after the main loop.
+ * at the end of every frame:
+ * Shows the window (if double buffer changes it).
  */
 
-#ifndef CORE_DAEMONS_BASICPOSTLOOPSDLDAEMON_H_
-#define CORE_DAEMONS_BASICPOSTLOOPSDLDAEMON_H_
+#ifndef ZBE_SDL_DAEMONS_BASICPOSTLOOPSDLDAEMON_H_
+#define ZBE_SDL_DAEMONS_BASICPOSTLOOPSDLDAEMON_H_
 
 #include <memory>
 
@@ -16,27 +18,29 @@
 #include "ZBE/SDL/system/SDLWindow.h"
 
 namespace zbe {
-  /** \brief
+/** \brief Basic post-loop daemon used for SDL
+ */
+class BasicPostLoopSDLDaemon : public Daemon {
+public:
+  BasicPostLoopSDLDaemon(const BasicPostLoopSDLDaemon&) = delete; //!< Avoid copy.
+  void operator=(const BasicPostLoopSDLDaemon&) = delete; //!< Avoid copy.
+
+  /** \brief Builds a BasicPostLoopSDLDaemon from a window.
+   *  \param window windo to use.
    */
-  class BasicPostLoopSDLDaemon : public Daemon {
-    public:
+  BasicPostLoopSDLDaemon(std::shared_ptr<zbe::SDLWindow> window): window(window) {}
 
-      BasicPostLoopSDLDaemon(const BasicPostLoopSDLDaemon&) = delete;
-      void operator=(const BasicPostLoopSDLDaemon&) = delete;
+  /** \brief Destroys the BasicPostLoopSDLDaemon
+   */
+  ~BasicPostLoopSDLDaemon() {}
 
-      BasicPostLoopSDLDaemon(std::shared_ptr<zbe::SDLWindow> window): window(window) {}
+  /** \brief Runs the daemon.
+   */
+  void run();
+private:
+  std::shared_ptr<zbe::SDLWindow> window;
+};
 
-      /** \brief Destroys the BasicPostLoopSDLDaemon
-       */
-      ~BasicPostLoopSDLDaemon() {}
-
-      /** \brief Runs the daemon.
-       */
-      void run();
-    private:
-      std::shared_ptr<zbe::SDLWindow> window;
-  };
 }  // namespace zbe
 
-
-#endif // CORE_DAEMONS_BASICPOSTLOOPSDLDAEMON_H_
+#endif  // ZBE_SDL_DAEMONS_BASICPOSTLOOPSDLDAEMON_H_

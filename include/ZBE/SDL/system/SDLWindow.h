@@ -3,7 +3,7 @@
  * @file SDL_Window.h
  *
  * @since 2015/05/30
- * @date 2017/06/11
+ * @date 2018/02/25
  * @author Degryll Ludo
  * @brief  Three structures:
  *  - SDLWindow: Create a windows using SDL 2.0.
@@ -14,14 +14,16 @@
 #ifndef ZBE_SDL_SYSTEM_SDLWINDOW_H_
 #define ZBE_SDL_SYSTEM_SDLWINDOW_H_
 
-#include <vector>
-#include <mutex>
+#include <cstdint>
 #include <memory>
+#include <mutex>
+#include <vector>
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 
 #include "ZBE/core/system/SysError.h"
+
 #include "ZBE/SDL/starters/SDL_Starter.h"
 
 namespace zbe {
@@ -146,14 +148,20 @@ class SDLWindow {
      */
     void present() {SDL_RenderPresent(renderer);}
 
+    /** \brief issue #25
+     */
     void render2Texture() {
       SDL_SetRenderTarget(renderer, output);
     }
 
+    /** \brief issue #25
+     */
     void render2Screen() {
       SDL_SetRenderTarget(renderer, nullptr);
     }
 
+    /** \brief issue #25
+     */
     void readPixels(char* data, int pitch) {
       SDL_RenderReadPixels(renderer, nullptr, SDL_PIXELFORMAT_BGR888, data, pitch);
     }

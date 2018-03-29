@@ -2,13 +2,13 @@
  * Copyright 2015 Batis Degryll Ludo
  * @file MainLoopExit.h
  * @since 2015-05-04
- * @date 2015-12-09
- * @author Ludo
- * @brief Define the minimal functions of demons.
+ * @date 2018-02-25
+ * @author Ludo Batis Degryll
+ * @brief Daemon capable of end a MainLoop
  */
 
-#ifndef CORE_DAEMONS_MAINLOOPEXIT_H
-#define CORE_DAEMONS_MAINLOOPEXIT_H
+#ifndef zBE_CORE_DAEMONS_MAINLOOPEXIT_H
+#define zBE_CORE_DAEMONS_MAINLOOPEXIT_H
 
 #include <memory>
 #include <cstdint>
@@ -19,16 +19,25 @@
 
 namespace zbe {
 
-/** \brief Interface for all daemons. Daemons are responsible for execute automated processes. Basically Daemons rules the world.
+/** \brief Daemon capable of end a MainLoop
  */
 class MainLoopExit : virtual public Daemon {
 public:
 
+  /** \brief Builds a MainLoopExit from its raw data.
+   * \param mainLoop main loop to end.
+   * \param value Value where exit value will be saved.
+   * \param exitValue value to save.
+   */
   MainLoopExit(std::shared_ptr<MainLoop> mainLoop, std::shared_ptr< Value<int64_t> > value, int64_t exitValue)
     : mainLoop(mainLoop), value(value), exitValue(exitValue) {}
 
+  /** \brief Virtual destructor.
+   */
   ~MainLoopExit() {}
 
+  /** \brief End MainLoop and save given value.
+   */
   void run() {
     value->setValue(exitValue);
     mainLoop->stop();
@@ -42,4 +51,4 @@ private:
 
 }  // namespace zbe
 
-#endif // CORE_DAEMONS_MAINLOOPEXIT_H
+#endif  // ZBE_CORE_DAEMONS_MAINLOOPEXIT_H

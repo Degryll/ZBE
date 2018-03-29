@@ -2,14 +2,15 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file SingleSpriteSDLDrawer.h
  * @since 2012-02-01
- * @date 2017-05-11
- * @author Degryll Ludo
+ * @date 2018-02-25
+ * @author Degryll Ludo Batis
  * @brief Class that know how to draw SingleSprite entities with SDL.
  */
 
 #ifndef SDL_DRAWERS_SIMPLESPRITESDLDRAWER_H_
 #define SDL_DRAWERS_SIMPLESPRITESDLDRAWER_H_
 
+#include <memory>
 #include <SDL2/SDL.h>
 
 #include "ZBE/core/behaviors/Behavior.h"
@@ -24,8 +25,8 @@ namespace zbe {
  */
 class SingleSpriteSDLDrawer : public Behavior<SingleSprite> {
   public:
-    SingleSpriteSDLDrawer(const SingleSpriteSDLDrawer&) = delete;
-    void operator=(const SingleSpriteSDLDrawer&) = delete;
+    SingleSpriteSDLDrawer(const SingleSpriteSDLDrawer&) = delete; //!< Avoid copy.
+    void operator=(const SingleSpriteSDLDrawer&) = delete; //!< Avoid copy.
 
     /** \brief Create a new drawer in the given context.
      *  \param window A SDLwindow with its context.

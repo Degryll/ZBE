@@ -176,7 +176,6 @@
 		</Compiler>
 		<Unit filename="../../../include/ZBE/SDL/daemons/BasicPostLoopSDLDaemon.h" />
 		<Unit filename="../../../include/ZBE/SDL/daemons/BasicPreLoopSDLDaemon.h" />
-		<Unit filename="../../../include/ZBE/SDL/drawers/AnimatedSpriteSDLDrawer.h" />
 		<Unit filename="../../../include/ZBE/SDL/drawers/RotatedSpriteSDLDrawer.h" />
 		<Unit filename="../../../include/ZBE/SDL/drawers/SingleSpriteSDLDrawer.h" />
 		<Unit filename="../../../include/ZBE/SDL/drawers/SingleTextSDLDrawer.h" />
@@ -337,7 +336,6 @@
 		<Unit filename="../../../include/ZBE/events/handlers/time/DaemonTimeHandler.h" />
 		<Unit filename="../../../src/ZBE/SDL/daemons/BasicPostLoopSDLDaemon.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/daemons/BasicPreLoopSDLDaemon.cpp" />
-		<Unit filename="../../../src/ZBE/SDL/drawers/AnimatedSpriteSDLDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/drawers/RotatedSpriteSDLDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/drawers/SimpleSpriteSDLDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/drawers/SingleTextSDLDrawer.cpp" />

@@ -14,6 +14,8 @@
 
 namespace zbe {
 
+/** \brief Converts a zbe::Region2D into a SDL_Rect.
+ */
 inline SDL_Rect convert2SDLRect(const Region2D& region2d) {
   SDL_Rect rect;
   rect.x = region2d.p.x;
@@ -23,6 +25,6 @@ inline SDL_Rect convert2SDLRect(const Region2D& region2d) {
   return (rect);
 }
 
-} // namespace zbe
+}  // namespace zbe
 
 #endif  // ZBE_SDL_TOOLS_SDLUTILS_H_

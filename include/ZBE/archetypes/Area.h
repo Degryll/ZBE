@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file Area.h
  * @since 2017-10-14
- * @date 2017-10-14
+ * @date 2018-02-25
  * @author Degryll Ludo Batis
  * @brief Interface of an archetype that has an area.
  */
@@ -39,6 +39,6 @@ public:
   virtual double getWidth() = 0;
 };
 
-} // namespace zbe
+}  // namespace zbe
 
 #endif  // ZBE_ARCHETYPES_AREA_H

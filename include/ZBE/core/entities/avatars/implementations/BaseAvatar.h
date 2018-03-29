@@ -2,14 +2,18 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file Avatar.h
  * @since 2017-04-12
- * @date 2017-04-12
- * @author Ludo
+ * @date 2018-02-25
+ * @author Ludo Batis Degryll
  * @brief Base implementation of avatar that uses an Entity.
  */
 
-#ifndef ZBE_CORE_ENTITIES_AVATARS_BASEAVATAR_H_
-#define ZBE_CORE_ENTITIES_AVATARS_BASEAVATAR_H_
+#ifndef ZBE_CORE_ENTITIES_AVATARS_IMPLEMENTATIONS_BASEAVATAR_H_
+#define ZBE_CORE_ENTITIES_AVATARS_IMPLEMENTATIONS_BASEAVATAR_H_
 
+#include <cstdint>
+#include <memory>
+
+#include "ZBE/core/tools/containers/Ticket.h"
 #include "ZBE/core/entities/Entity.h"
 #include "ZBE/core/entities/avatars/Avatar.h"
 
@@ -19,8 +23,8 @@ namespace zbe {
  */
 struct BaseAvatar : virtual public Avatar{
 
-    BaseAvatar(const BaseAvatar&) = delete;
-    void operator=(const BaseAvatar&) = delete;
+    BaseAvatar(const BaseAvatar&) = delete; //!< Avoid copy.
+    void operator=(const BaseAvatar&) = delete; //!< Avoid copy.
 
     BaseAvatar(Entity * entity): e(entity) {}
 
@@ -77,4 +81,4 @@ struct BaseAvatar : virtual public Avatar{
 
 }  // namespace zbe
 
-#endif  // ZBE_CORE_ENTITIES_AVATARS_BASEAVATAR_H_
+#endif  // ZBE_CORE_ENTITIES_AVATARS_IMPLEMENTATIONS_BASEAVATAR_H_

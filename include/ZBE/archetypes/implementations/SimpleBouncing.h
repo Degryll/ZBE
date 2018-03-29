@@ -2,13 +2,15 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file SimpleBouncing.h
  * @since 2017-03-07
- * @date 2017-05-06
+ * @date 2018-02-22
  * @author Batis Degryll Ludo
  * @brief Implements the interface of a class that stores normals to bounce.
  */
 
 #ifndef ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEBOUNCING_H
 #define ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEBOUNCING_H
+
+#include <initializer_list>
 
 #include "ZBE/core/tools/math/Point.h"
 #include "ZBE/core/tools/math/Vector.h"

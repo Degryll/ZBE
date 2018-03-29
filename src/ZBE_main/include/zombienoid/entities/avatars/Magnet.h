@@ -17,10 +17,11 @@ namespace zombienoid {
 /** @brief Interface capable of give the position of a magnet.
  */
 template <unsigned s>
-class Magnet : virtual public zbe::Positionable<s>{
+class Magnet : virtual public zbe::Positionable<s> {
 public:
   using Base = void;
-  virtual ~Magnet(){}
+  
+  virtual ~Magnet() {}
 };
 
 }  // namespace zombienoid

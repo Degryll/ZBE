@@ -2,13 +2,13 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file TextDrawableSingleTextSpriteAdaptor.h
  * @since 2017-04-16
- * @date 2017-05-10
+ * @date 2018-02-25
  * @author Batis Degryll Ludo
  * @brief Template that adapts an entity to a SingleTextSprite.
  */
 
-#ifndef ZBE_ENTITIES_ADAPTORS_IMPLEMENTATIONS_TEXTDRAWABLESINGLETEXTSPRITEADAPTOR_H_
-#define ZBE_ENTITIES_ADAPTORS_IMPLEMENTATIONS_TEXTDRAWABLESINGLETEXTSPRITEADAPTOR_H_
+#ifndef ZBE_ENTITIES_ADAPTORS_TEXTDRAWABLESINGLETEXTSPRITEADAPTOR_H_
+#define ZBE_ENTITIES_ADAPTORS_TEXTDRAWABLESINGLETEXTSPRITEADAPTOR_H_
 
 #include "ZBE/entities/avatars/SingleTextSprite.h"
 #include "ZBE/core/entities/Adaptor.h"
@@ -52,4 +52,4 @@ private:
 
 }  // namespace zbe
 
-#endif  // ZBE_ENTITIES_ADAPTORS_IMPLEMENTATIONS_TEXTDRAWABLESINGLETEXTSPRITEADAPTOR_H_
+#endif  // ZBE_ENTITIES_ADAPTORS_TEXTDRAWABLESINGLETEXTSPRITEADAPTOR_H_

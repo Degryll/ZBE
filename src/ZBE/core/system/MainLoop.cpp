@@ -1,20 +1,27 @@
+/**
+ * Copyright 2012 Batis Degryll Ludo
+ * @file MainLoop.cpp
+ * @since 2018-03-27
+ * @date 2018-03-27
+ * @author Batis Degryll Ludo
+ * @brief Daemon that executes a main game loop.
+ */
+
 #include "ZBE/core/system/MainLoop.h"
 
-
-#include <iostream>//--------------------
-
+#include <iostream>
 
 namespace zbe {
 
 void MainLoop::run() {
 
   keep = true;
-  while(keep){
-    //Pre daemon
+  while(keep) {  // Each iteration generates a frame.
+    // Pre daemon
     dPre->run();
     // Inner loop
     while (sysTime.isFrameRemaining()) {
-      // Timed events daemon (gema)
+      // Timed events generator daemon
       dTE->run();
       sysTime.setEventTime(store.getTime());
       if (sysTime.isPartialFrame()) {
@@ -29,12 +36,13 @@ void MainLoop::run() {
         store.clearStore();
       }
       sysTime.updateInitTime();
-    }
-    //Post daemon
+    }  // while frame remaining
+    // Drawer daemon
     dDM->run();
+    // Post daemon
     dPost->run();
     // end
-  }
+  }  // while keep
 }
 
-}
+}  // namespace zbe

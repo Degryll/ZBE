@@ -2,13 +2,18 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file SimpleMobile.h
  * @since 2016-12-16
- * @date 2017-05-08
+ * @date 2018-02-25
  * @author Degryll Ludo
  * @brief Simple implementation of the Mobile<s> interface.
  */
 
 #ifndef ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEMOBILE_H
 #define ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEMOBILE_H
+
+#include <initializer_list>
+
+#include "ZBE/core/tools/math/Point.h"
+#include "ZBE/core/tools/math/Vector.h"
 
 #include "ZBE/archetypes/Mobile.h"
 #include "ZBE/archetypes/implementations/SimplePosition.h"

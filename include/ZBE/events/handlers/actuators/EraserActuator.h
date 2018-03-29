@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file EraserActuator.h
  * @since 2017-06-25
- * @date 2017-06-25
+ * @date 2018-02-25
  * @author Batis Degryll Ludo
  * @brief Actuator capable of erasing an entity.
  */
@@ -10,7 +10,10 @@
 #ifndef ZBE_EVENTS_HANDLERS_ACTUATORS_ERASERACTUATOR
 #define ZBE_EVENTS_HANDLERS_ACTUATORS_ERASERACTUATOR
 
+#include <memory>
+
 #include "ZBE/core/events/handlers/Actuator.h"
+#include "ZBE/core/entities/AvatarEntity.h"
 #include "ZBE/core/entities/avatars/Avatar.h"
 
 namespace zbe {
@@ -20,6 +23,10 @@ namespace zbe {
 template <typename R, typename T>
 class EraserActuator: public zbe::Actuator<WeakAvatarEntityContainer<zbe::Avatar>, R> {
   public:
+
+    /** \brief Erases entity when interact with template given ReactObject.
+     *  \param ro not used.
+     */
     void act(std::shared_ptr< zbe::WeakAvatarEntityContainer<T> >) {
       zbe::Avatar * a;
       zbe::Actuator<WeakAvatarEntityContainer<zbe::Avatar>, R>::getCollisioner()->get()->assignAvatar(&a);
@@ -29,4 +36,4 @@ class EraserActuator: public zbe::Actuator<WeakAvatarEntityContainer<zbe::Avatar
 
 }  // namespace zbe
 
-#endif // ZBE_EVENTS_HANDLERS_ACTUATORS_ERASERACTUATOR
+#endif  // ZBE_EVENTS_HANDLERS_ACTUATORS_ERASERACTUATOR

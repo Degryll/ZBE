@@ -2,14 +2,12 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file SysError.cpp
  * @since 2013-11-23
- * @date 2017-05-15
- * @author Degryll
+ * @date 2018-03-27
+ * @author Degryll Batis Ludo
  * @brief System to inform about errors.
  */
 
 #include "ZBE/core/system/SysError.h"
-
-#include <string>
 
 namespace zbe {
 
@@ -25,10 +23,10 @@ std::string SysError::getFirstErrorString() {
 }
 
 void SysError::setError(std::string errorString) {
-        if (!SysError::nerrors) {
-                SysError::errorString = errorString;
-        }
-        SysError::nerrors++;
+  if (!SysError::nerrors) {
+          SysError::errorString = errorString;
+  }
+  SysError::nerrors++;
 }
 
 void SysError::clear() {

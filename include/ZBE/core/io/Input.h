@@ -1,6 +1,8 @@
 #ifndef ZBE_CORE_IO_INPUT_H
 #define ZBE_CORE_IO_INPUT_H
 
+#include <cstdint>
+
 namespace zbe {
 
 // Input status

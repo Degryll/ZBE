@@ -2,13 +2,13 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file CollisionEvent.h
  * @since 2016-03-26
- * @date 2016-08-15
- * @author Ludo
+ * @date 2018-03-20
+ * @author Ludo Degryll Batis
  * @brief Base event.
  */
 
-#ifndef CORE_EVENTS_EVENT_H
-#define CORE_EVENTS_EVENT_H
+#ifndef ZBE_CORE_EVENTS_EVENT_H
+#define ZBE_CORE_EVENTS_EVENT_H
 
 #include <cstdint>
 
@@ -69,5 +69,6 @@ class Event {
     int64_t time;  //!< Time when the event occurs
 };
 
-}
-#endif // CORE_EVENTS_EVENT_H
+}  // namespace zbe
+
+#endif  // ZBE_CORE_EVENTS_EVENT_H

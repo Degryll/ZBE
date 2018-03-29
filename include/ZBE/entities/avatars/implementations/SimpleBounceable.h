@@ -2,19 +2,19 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file BaseMovable2D.h
  * @since 2016-12-17
- * @date 2016-12-17
+ * @date 2018-02-25
  * @author Batis
- * @brief #####################################################################
+ * @brief Simple implementations of Bounceable avatar interface.
  */
 
-#ifndef ZBE_ENTITIES_AVATARS_SIMPLEBOUNCEABLE_H_
-#define ZBE_ENTITIES_AVATARS_SIMPLEBOUNCEABLE_H_
+#ifndef ZBE_ENTITIES_AVATARS_IMPLEMENTATIONS_SIMPLEBOUNCEABLE_H_
+#define ZBE_ENTITIES_AVATARS_IMPLEMENTATIONS_SIMPLEBOUNCEABLE_H_
 
 #include "ZBE/entities/avatars/Bounceable.h"
 
 namespace zbe {
 
-/** \brief This implements a base 1:1 avatar that can be moved.
+/** \brief Simple implementations of Bounceable avatar interface.
  */
 class SimpleBounceable : public Bounceable{
   public:
@@ -38,4 +38,4 @@ class SimpleBounceable : public Bounceable{
 
 }  // namespace zbe
 
-#endif //ZBE_ENTITIES_AVATARS_SIMPLEBOUNCEABLE_H_
+#endif  // ZBE_ENTITIES_AVATARS_IMPLEMENTATIONS_SIMPLEBOUNCEABLE_H_

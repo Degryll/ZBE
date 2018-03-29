@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file Mobile.h
  * @since 2016-12-16
- * @date 2017-05-10
+ * @date 2018-02-25
  * @author Degryll
  * @brief Defines the interface of a class with a position and a velocity.
  */
@@ -10,7 +10,10 @@
 #ifndef ZBE_ARCHETYPES_MOBILE_H
 #define ZBE_ARCHETYPES_MOBILE_H
 
+#include <initializer_list>
+
 #include "ZBE/core/tools/math/Vector.h"
+
 #include "ZBE/archetypes/Position.h"
 
 namespace zbe {
@@ -45,4 +48,4 @@ public:
 
 }  // namespace zbe
 
-#endif //ZBE_ARCHETYPES_MOBILE_H
+#endif  // ZBE_ARCHETYPES_MOBILE_H

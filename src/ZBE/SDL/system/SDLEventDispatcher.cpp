@@ -2,13 +2,14 @@
  * Copyright 2016 Batis Degryll Ludo
  * @file SDLEventDispatcher.h
  * @since 2016-04-27
- * @date 2016-05-13
- * @author Ludo
+ * @date 2018-03-28
+ * @author Ludo Batis Degryll
  * @brief Dispatcher for sdl events.
  */
 
 #include "ZBE/SDL/system/SDLEventDispatcher.h"
 
+#include "ZBE/core/tools/math/math.h"
 #include "ZBE/core/io/InputStatus.h"
 
 namespace zbe {
@@ -27,31 +28,31 @@ void SDLEventDispatcher::run() {
 }
 
 inline bool SDLEventDispatcher::tryKeyboardEvent(SDL_Event &event){
-    if (event.type == SDL_KEYDOWN) {
-      setState(getEquivalentToSDL(event.key.keysym.sym), 1.0f, event.key.timestamp);
-      return true;
-    } else if (event.type == SDL_KEYUP) {
-      setState(getEquivalentToSDL(event.key.keysym.sym), 0.0f, event.key.timestamp);
-      return true;
-    }
-    return false;
+  if (event.type == SDL_KEYDOWN) {
+    setState(getEquivalentToSDL(event.key.keysym.sym), 1.0f, event.key.timestamp);
+    return true;
+  } else if (event.type == SDL_KEYUP) {
+    setState(getEquivalentToSDL(event.key.keysym.sym), 0.0f, event.key.timestamp);
+    return true;
+  }
+  return false;
 }
 
 inline bool SDLEventDispatcher::tryMouseEvent(SDL_Event &event){
-    if (event.type == SDL_MOUSEBUTTONDOWN) {
-      setMouseButtonState(event, 1.0f);
-      return true;
-    } else if (event.type == SDL_MOUSEBUTTONUP) {
-      setMouseButtonState(event, 0.0f);
-      return true;
-    } else if (event.type == SDL_MOUSEWHEEL){
-      setMouseWheelState(event);
-      return true;
-    } else if (event.type == SDL_MOUSEMOTION){
-      setMouseCoordsState(event);
-      return true;
-    }
-    return false;
+  if (event.type == SDL_MOUSEBUTTONDOWN) {
+    setMouseButtonState(event, 1.0f);
+    return true;
+  } else if (event.type == SDL_MOUSEBUTTONUP) {
+    setMouseButtonState(event, 0.0f);
+    return true;
+  } else if (event.type == SDL_MOUSEWHEEL){
+    setMouseWheelState(event);
+    return true;
+  } else if (event.type == SDL_MOUSEMOTION){
+    setMouseCoordsState(event);
+    return true;
+  }
+  return false;
 }
 
 inline void SDLEventDispatcher::setState(uint32_t key, float value, int64_t time){
@@ -96,4 +97,4 @@ inline void SDLEventDispatcher::setMouseCoordsState(SDL_Event &event) {
   setState(ZBEK_MOUSE_OFFSET_Y,event.motion.y,event.key.timestamp);
 }
 
-} // namespace zbe
+}  // namespace zbe

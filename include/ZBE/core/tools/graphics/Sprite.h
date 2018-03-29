@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file Sprite.h
  * @since 2017-06-14
- * @date 2017-06-14
+ * @date 2018-03-25
  * @author Degryll Ludo Batis
  * @brief Structure representing from where and where to draw a graphic element.
  */
@@ -10,7 +10,7 @@
 #ifndef ZBE_CORE_TOOLS_GRAPHICS_SPRITE_H_
 #define ZBE_CORE_TOOLS_GRAPHICS_SPRITE_H_
 
-#include <stdint.h>
+#include <cstdint>
 
 #include "ZBE/core/tools/math/Region.h"
 

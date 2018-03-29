@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file SimpleDrawable.h
  * @since 2016-11-22
- * @date 2017-05-06
+ * @date 2018-02-25
  * @author Degryll
  * @brief This implements an entity that can be drawn.
  */
@@ -37,55 +37,55 @@ public:
    *  \return The left coordinate.
    *  \sa setX, getY, getW, getH, getGraphics
    */
-  int64_t      getX()        {return (x);}
+  int64_t getX() {return (x);}
 
   /** \brief Gets the top coordinate.
    *  \return The top coordinate.
    *  \sa setY, getX, getW, getH, getGraphics
    */
-  int64_t      getY()        {return (y);}
+  int64_t getY() {return (y);}
 
   /** \brief Gets the width of the image.
    *  \return The width of the image.
    *  \sa setW, getX, getY, getH, getGraphics
    */
-  int64_t getW()        {return (w);}
+  int64_t getW() {return (w);}
 
   /** \brief Gets the height of the image.
    *  \return The height of the image.
    *  \sa setH, getX, getY, getW, getGraphics
    */
-  int64_t getH()        {return (h);}
+  int64_t getH() {return (h);}
 
   /** \brief Gets the graphics resource.
    *  \return The graphics resource. It could be and image index, text index, a complex 3D model.
    *  \sa setGraphics, getX, getY, getW, getH
    */
-  uint64_t      getGraphics() {return (graphics);}
+  uint64_t getGraphics() {return (graphics);}
 
   /** \brief Sets the left coordinate.
    *  \param x The left coordinate.
    *  \sa getX, setY, setW, setH, setGraphics
    */
-  void setX(const int64_t x)               {this->x = x;}
+  void setX(const int64_t x) {this->x = x;}
 
   /** \brief Sets the top coordinate.
    *  \param x The top coordinate.
    *  \sa getY, setX, setW, setH, setGraphics
    */
-  void setY(const int64_t y)               {this->y = y;}
+  void setY(const int64_t y) {this->y = y;}
 
   /** \brief Sets the width of the image.
    *  \param x The width of the image.
    *  \sa getW, setX, setY, setH, setGraphics
    */
-  void setW(const int64_t w)          {this->w = w;}
+  void setW(const int64_t w) {this->w = w;}
 
   /** \brief Sets the height of the image.
    *  \param x The height of the image.
    *  \sa getH, setX, setY, setW, setGraphics
    */
-  void setH(const int64_t h)          {this->h = h;}
+  void setH(const int64_t h) {this->h = h;}
 
   /** \brief Sets the graphics resource.
    *  \param graphics The graphics resource. It could be and image index, text index, a complex 3D model.

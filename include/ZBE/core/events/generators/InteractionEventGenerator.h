@@ -2,13 +2,13 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file InteractionEventGenerator.h
  * @since 2017-05-01
- * @date 2017-05-01
+ * @date 2018-03-18
  * @author Degryll Ludo
  * @brief Generate Interaction events.
  */
 
-#ifndef CORE_EVENTS_INTERACTIONEVENTGENERATOR_H
-#define CORE_EVENTS_INTERACTIONEVENTGENERATOR_H
+#ifndef ZBE_CORE_EVENTS_INTERACTIONEVENTGENERATOR_H
+#define ZBE_CORE_EVENTS_INTERACTIONEVENTGENERATOR_H
 
 #include <cstdint>
 #include <memory>
@@ -28,17 +28,20 @@
 
 namespace zbe {
 
-/** \brief Generate Interaction events.
+/** \brief Generate interaction events occurred within the remaining frame time.
  */
 template <typename R, typename IS, typename LN, typename LT>
 class InteractionEventGenerator : virtual public Daemon {
 public:
-  InteractionEventGenerator(const InteractionEventGenerator&) = delete;
-  void operator=(const InteractionEventGenerator&) = delete;
+  InteractionEventGenerator(const InteractionEventGenerator&) = delete;  //!< Avoid copy.
+  void operator=(const InteractionEventGenerator&) = delete;  //!< Avoid copy.
 
   /** \brief Parametrized Constructor.
    *  \param list The list id of collisionators
    *  \param Id for the interaction events.
+   *  \param is An interaction selector, that is part of a visitor pattern. This
+   *  selector chooses how to check the interacion according to the types of the
+   *  participants in the interaction.
    */
   InteractionEventGenerator(uint64_t list, int eventId, IS* is)
   : es(EventStore::getInstance()), id(list), eventId(eventId), is(is),
@@ -50,24 +53,28 @@ public:
   */
   virtual ~InteractionEventGenerator() {delete is;}
 
-  /** Will search for interaction events occurred between initTime and finalTime and send it to the EventStore.
-   * \param initTime Initial time of the frame
-   * \param endTime End time of the frame
+  /** \brief It will look for interaction events occurred within the available
+   *  time and it will send them to the EventStore.
    */
   void run();
 
 protected:
-
+  /** \brief Stores both events in the EventStore
+   * \param a Collision event from entity a
+   * \param a Collision event from entity b
+   */
   virtual void storeEvents(CollisionEvent2D<R>* a, CollisionEvent2D<R>* b){
     es.storeEvent(a);
     es.storeEvent(b);
   }
 
-  virtual int64_t getTotalTime(){
+  /** \brief Returns the available time to search for interactions.
+   */
+  virtual int64_t getTotalTime() {
     return sysTime.getRemainTime();
   }
 
-  EventStore& es;
+  EventStore& es; //!< The Event Store.
 
 private:
 
@@ -81,6 +88,8 @@ private:
 
 };
 
+/** \brief It looks for interactions between interactor objects.
+ */
 template <typename R, typename IS, typename LN, typename LT>
 void InteractionEventGenerator<R, IS, LN, LT>::run() {
   int64_t totalTime = getTotalTime();
@@ -106,24 +115,36 @@ void InteractionEventGenerator<R, IS, LN, LT>::run() {
   }  // for each collisionator
 }
 
-/** \brief Generate Interaction events.
+/** \brief Generate interaction events occurred in the current time.
  */
 template <typename R, typename IS, typename LN, typename LT>
 class InstantInteractionEventGenerator : public InteractionEventGenerator<R, IS, LN, LT> {
 public:
-  InstantInteractionEventGenerator(const InstantInteractionEventGenerator&) = delete;
-  void operator=(const InstantInteractionEventGenerator&) = delete;
+  InstantInteractionEventGenerator(const InstantInteractionEventGenerator&) = delete; //!< Avoid copy.
+  void operator=(const InstantInteractionEventGenerator&) = delete; //!< Avoid copy.
 
+  /** \brief Parametrized Constructor.
+   * \param list The list id of collisionators.
+   * \param eventId Id for the interaction events.
+   * \param is An interaction selector, that is part of a visitor pattern. This
+   *  selector chooses how to check the interacion according to the types of the
+   *  participants in the interaction.
+   */
   InstantInteractionEventGenerator(uint64_t list, int eventId, IS* is): InteractionEventGenerator<R, IS, LN, LT>(list, eventId, is){}
 
 protected:
-
+  /** \brief Stores both events in the EventStore
+   * \param a Collision event from entity a view
+   * \param a Collision event from entity b view
+   */
   void storeEvents(CollisionEvent2D<R>* a, CollisionEvent2D<R>* b){
     this->es.storeInstantEvent(a);
     this->es.storeInstantEvent(b);
   }
 
-  int64_t getTotalTime(){
+  /** \brief Returns the available time to search for interactions.
+   */
+  int64_t getTotalTime() {
     return 0;
   }
 
@@ -131,4 +152,4 @@ protected:
 
 }  // namespace zbe
 
-#endif // CORE_EVENTS_INTERACTIONEVENTGENERATOR_H
+#endif  // ZBE_CORE_EVENTS_INTERACTIONEVENTGENERATOR_H

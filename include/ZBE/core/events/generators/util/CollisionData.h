@@ -7,8 +7,8 @@
  * @brief Data of a collision.
  */
 
-#ifndef CORE_EVENTS_GENERATORS_UTIL_COLLISIONDATA_H_
-#define CORE_EVENTS_GENERATORS_UTIL_COLLISIONDATA_H_
+#ifndef ZBE_CORE_EVENTS_GENERATORS_UTIL_COLLISIONDATA_H_
+#define ZBE_CORE_EVENTS_GENERATORS_UTIL_COLLISIONDATA_H_
 
 #include "ZBE/core/tools/math/Vector.h"
 #include "ZBE/core/tools/math/Point.h"
@@ -59,4 +59,4 @@ class CollisionData {
 
 }  // namespace zbe
 
-#endif  // CORE_EVENTS_GENERATORS_UTIL_COLLISIONDATA_H_
+#endif  // ZBE_CORE_EVENTS_GENERATORS_UTIL_COLLISIONDATA_H_

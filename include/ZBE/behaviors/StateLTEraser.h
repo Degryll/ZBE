@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file StateLTEraser.h
  * @since 2017-08-05
- * @date 2017-08-05
+ * @date 2018-02-25
  * @author Degryll Ludo Batis
  * @brief Implements a behavior that kills the entity when it reaches a state lower than a nummber.
  */
@@ -10,6 +10,7 @@
 #ifndef ZBE_BEHAVIORS_STATELTERASER_H_
 #define ZBE_BEHAVIORS_STATELTERASER_H_
 
+#include <cstdint>
 #include <memory>
 
 #include "ZBE/core/behaviors/Behavior.h"
@@ -30,7 +31,7 @@ template<typename T>
      */
     StateLTEraser(int64_t limit) : limit(limit){}
 
-    /** \brief Changes the entity velocity with the accumulated normals.
+    /** \brief Erases given entity if its stata is less that expected one.
      */
     void apply(std::shared_ptr<T> entity) {
       Stated* stated;

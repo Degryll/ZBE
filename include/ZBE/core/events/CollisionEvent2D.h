@@ -2,21 +2,21 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file CollisionEvent2D.h
  * @since 2016-12-27
- * @date 2016-12-27
- * @author Degryll Ludo
+ * @date 2018-03-18
+ * @author Degryll Ludo Batis
  * @brief Event that has the information needed to resolve a collision.
  */
 
-#ifndef CORE_EVENTS_COLLISIONEVENT2D_H
-#define CORE_EVENTS_COLLISIONEVENT2D_H
+#ifndef ZBE_CORE_EVENTS_COLLISIONEVENT2D_H
+#define ZBE_CORE_EVENTS_COLLISIONEVENT2D_H
 
 #include <memory>
+#include <cstdint>
 
 #include "ZBE/core/events/Event.h"
 #include "ZBE/core/entities/avatars/Collisioner.h"
 #include "ZBE/core/events/generators/util/ReactObject.h"
 #include "ZBE/core/events/generators/util/CollisionData.h"
-
 
 namespace zbe {
 
@@ -25,6 +25,10 @@ namespace zbe {
 template<typename R>
 class CollisionEvent2D : public Event {
   public:
+
+    /** \brief Parametrized constructor.
+     *  \param rhs CollsiionEvent2D for copy constructor.
+     */
     CollisionEvent2D(const CollisionEvent2D& rhs) {
       Event::operator=(rhs);
       c = rhs.c;
@@ -82,6 +86,6 @@ class CollisionEvent2D : public Event {
     std::shared_ptr<ReactObject<R> > ro; //!< second entitie involved. void to avoid template.
 };
 
+}  // namespace zbe
 
-} // namespace zbe
-#endif // CORE_EVENTS_COLLISIONEVENT2D_H
+#endif  // ZBE_CORE_EVENTS_COLLISIONEVENT2D_H

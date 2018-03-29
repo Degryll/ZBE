@@ -2,14 +2,15 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file TimeEventGenerator.h
  * @since 2016-08-17
- * @date 2016-08-19
+ * @date 2018-03-18
  * @author Degryll
  * @brief Generate time events.
  */
 
-#ifndef CORE_EVENTS_TIMEEVENTGENERATOR_H
-#define CORE_EVENTS_TIMEEVENTGENERATOR_H
+#ifndef ZBE_CORE_EVENTS_TIMEEVENTGENERATOR_H
+#define ZBE_CORE_EVENTS_TIMEEVENTGENERATOR_H
 
+#include <cstdint>
 #include <memory>
 #include <set>
 
@@ -24,23 +25,36 @@
 
 namespace zbe {
 
+/** \brief Stores de time of a timer, and the handler that will be launched when timer reaches 0;
+ */
 struct TimerData {
   std::shared_ptr<TimeHandler> handler;    //!< A handler that will be executed when the event is triggered.
   int64_t time;  //!< When time reaches 0, the time event is triggered.
 
+  /** \brief Builds a TimerData with the TimeHandler and the time.
+   *
+   */
   TimerData(std::shared_ptr<TimeHandler> handler, int64_t time) : handler(handler), time(time) {}
   inline bool operator<(const TimerData& rhs) const {return (this->time < rhs.time);}
 };
 
+/** \brief It gives access to a timer.
+ *
+ */
 class TimerTicket {
 public:
 
-  TimerTicket(const TimerTicket&) = delete;
-  void operator=(const TimerTicket&) = delete;
+  TimerTicket(const TimerTicket&) = delete;  //!< Avoid copy.
+  void operator=(const TimerTicket&) = delete;  //!< Avoid copy.
 
+  /** \brief Parametrized constructor
+   *  \param iter Iterator from the timers multiset.
+   *  \param timers The multiset where the timer is stored.
+   *  \param eventId Event Id.
+   */
   TimerTicket(std::multiset<TimerData>::iterator iter, std::multiset<TimerData>& timers, int eventId) : iter(iter), timers(timers), eventId(eventId), es(EventStore::getInstance()), sysTime(SysTime::getInstance()) {}
 
-  /**
+  /** \brief Increases the time in a given amount (that can be negative). If the incremented time is zero or less, the event is triggered.
    * return true if the increment makes the timer go to zero or less.
    */
   bool increaseTime(int64_t increment) {
@@ -57,10 +71,15 @@ public:
 
   }
 
+  /** \brief Erases the timer.
+   */
   void erase() {
     timers.erase(iter);
   }
 
+  /** \brief Returns the event time.
+   * \return The event time.
+  */
   int64_t getTime() {
     return (iter->time);
   }
@@ -81,23 +100,17 @@ class TimeEventGenerator : virtual public Daemon {
      */
     TimeEventGenerator(int eventId) : eventId(eventId), es(EventStore::getInstance()), timers(), sysTime(SysTime::getInstance()) {};
 
-//    /** \brief Empty destructor.
-//    */
-//    ~TimeEventGenerator() {};
-
     /** Add a new Timer that only triggers onces.
      * \param id Id of the Timer, to identify the action to accomplish when the event is triggered
-     * \param time Time to wait until the time event is triggered
-     * \return return An iterator used to erase the timer.
+     * \param time The amount of time to wait until the time event is triggered
+     * \return return A ticket used to modify or erase the timer.
      * \sa eraseTimer
      */
     inline std::shared_ptr<TimerTicket> addTimer(std::shared_ptr<TimeHandler> handler, int64_t time) {
       return (std::make_shared<TimerTicket>(timers.insert(TimerData(handler,quantizeTime(time))), timers, eventId));
     }
 
-    /** Will search for time events occurred between initTime and finalTime and send it to the EventStore.
-     * \param initTime Initial time of the frame
-     * \param endTime End time of the frame
+    /** \brief It will look for time events occurred within the available.
      */
     void run();
 
@@ -110,4 +123,4 @@ class TimeEventGenerator : virtual public Daemon {
 
 }  // namespace zbe
 
-#endif // CORE_EVENTS_TIMEEVENTGENERATOR_H
+#endif  // ZBE_CORE_EVENTS_TIMEEVENTGENERATOR_H

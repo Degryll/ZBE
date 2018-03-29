@@ -1,20 +1,17 @@
 /**
  * Copyright 2011 Batis Degryll Ludo
  * @file math.h
- * @since 2015/05/16
- * @date 2015/05/19
- * @author Degryll
- * @brief Math constant
+ * @since 2015-05-16
+ * @date 2018-03-25
+ * @author Degryll Batis Ludo
+ * @brief Math constants and functions
  */
 
 #ifndef ZBE_CORE_TOOLS_MATH_MATH_H_
 #define ZBE_CORE_TOOLS_MATH_MATH_H_
 
-#include <math.h>
+#include <cmath>
 #include <cstdint>
-#include <limits>
-#include <utility>
-#include <initializer_list>
 
 #include "ZBE/core/tools/math/Point.h"
 
@@ -59,8 +56,8 @@ static const double TIME_QUANTUM_VALUE = (double)TIME_QUANTUM / SECOND;
 static const int64_t ROUND_MASK = -TIME_QUANTUM;
 
 
-/** \brief This constant is used to transform the time stored in a uint64_t (nanoseconds)to the time in a velocity (in
- *  seconds, because the velocity is in m/s).
+/** \brief Transforms the received time from ZBE time units to miliseconds.
+ * \param time Time to convert.
  */
 inline uint64_t MILITOZBETU(uint64_t time) {
   return ((time << 16) / 1000);
@@ -68,23 +65,31 @@ inline uint64_t MILITOZBETU(uint64_t time) {
 
 /** \brief Used to round time values to its closer quantum.
  * WARNING: does not work with negative times
+ * \param n Time to quantize.
  */
 inline int64_t quantizeTime(int64_t n) {
   return (n & ROUND_MASK);
 }
 
 /** \brief Used to round values to its closer integer.
+ * \param Number to be rounded.
  */
 inline double round(double d) {
   return floor(d + 0.5);
 }
 
 /** \brief Used to round up values to (negatives values will round down).
+ * \param n Number to be rounded.
  */
 inline int64_t roundUp (double n) {
     return ((n > 0) ? ceil(n) : floor(n));
 }
 
+/** \brief Returns the square of the distance between two points.
+ *  \param a First point.
+ *  \param a Second point.
+ *  \return The square of the distance between a and b.
+*/
 template <unsigned dim>
 inline double sqrPointDist(Point<dim> a, Point<dim> b) {
     double accum = 0;
@@ -96,6 +101,11 @@ inline double sqrPointDist(Point<dim> a, Point<dim> b) {
     return accum;
 }
 
+/** \brief Returns the distance between two points.
+ *  \param a First point.
+ *  \param a Second point.
+ *  \return The distance between a and b.
+*/
 template <unsigned dim>
 inline double pointDist(Point<dim> a, Point<dim> b) {
     return sqrt(sqrPointDist(a,b));

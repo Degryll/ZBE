@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file BouncingAPO.h
  * @since 2017-03-07
- * @date 2017-05-10
+ * @date 2018-02-25
  * @author Batis Degryll Ludo
  * @brief Defines the interface for a Bouncing Active Physical Object.
  */
@@ -27,4 +27,4 @@ public:
 
 }  // namespace zbe
 
-#endif //ZBE_ARCHETYPES_BOUNCINGAPO_H
+#endif  // ZBE_ARCHETYPES_BOUNCINGAPO_H

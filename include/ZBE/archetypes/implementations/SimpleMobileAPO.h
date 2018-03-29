@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file SimpleMobileAPO.h
  * @since 2016-12-16
- * @date 2017-05-08
+ * @date 2018-02-25
  * @author Degryll
  * @brief Simple implementation of the Mobile active physical object interface.
  */
@@ -11,6 +11,10 @@
 #define ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEMOBILEAPO_H
 
 #include <cstdint>
+#include <initializer_list>
+
+#include "ZBE/core/tools/math/Vector.h"
+#include "ZBE/core/tools/math/Point.h"
 
 #include "ZBE/archetypes/MobileAPO.h"
 #include "ZBE/archetypes/implementations/SimpleMobile.h"
@@ -62,4 +66,4 @@ public:
 
 }  // namespace zbe
 
-#endif //ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEMOBILE_H
+#endif //ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEMOBILEAPO_H

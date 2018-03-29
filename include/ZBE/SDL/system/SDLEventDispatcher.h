@@ -2,7 +2,7 @@
  * Copyright 2016 Batis Degryll Ludo
  * @file SDLEventDispatcher.h
  * @since 2016-04-27
- * @date 2016-05-13
+ * @date 2018-02-25
  * @author Ludo
  * @brief Dispatcher for sdl events.
  */
@@ -10,9 +10,10 @@
 #ifndef ZBE_SDL_SYSTEM_SDLEVENTDISPATCHER_H
 #define ZBE_SDL_SYSTEM_SDLEVENTDISPATCHER_H
 
-#include <memory>
-#include <map>
+#include <cstdint>
 #include <list>
+#include <map>
+#include <memory>
 
 #include <SDL2/SDL.h>
 
@@ -75,4 +76,4 @@ private:
 
 }  // namespace zbe
 
-#endif // ZBE_SDL_SYSTEM_SDLEVENTDISPATCHER_H
+#endif  // ZBE_SDL_SYSTEM_SDLEVENTDISPATCHER_H

@@ -2,7 +2,7 @@
  * Copyright 2016 Batis Degryll Ludo
  * @file InputBuffer.h
  * @since 2016-08-21
- * @date 2017-05-13
+ * @date 2018-03-20
  * @author Ludo
  * @brief Stores a ordered collection of InputStatus.
  * Its in charge of keep them ordered and discard those that have expired.
@@ -14,7 +14,8 @@
 #include <cstdint>
 #include <set>
 #include <vector>
-#include "InputStatus.h"
+
+#include "ZBE/core/io/InputStatus.h"
 
 namespace zbe {
 
@@ -46,4 +47,4 @@ private:
 
 }  // namespace zbe
 
-#endif //ZBE_CORE_IO_INPUTBUFFER_H
+#endif  // ZBE_CORE_IO_INPUTBUFFER_H

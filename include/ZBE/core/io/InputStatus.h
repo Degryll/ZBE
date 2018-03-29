@@ -54,4 +54,4 @@ private:
 
 }  // namespace zbe
 
-#endif //ZBE_CORE_IO_INPUTSTATUS_H
+#endif  // ZBE_CORE_IO_INPUTSTATUS_H

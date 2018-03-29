@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file ActivePhysicalObject.h
  * @since 2016-12-16
- * @date 2017-05-07
+ * @date 2018-02-25
  * @author Degryll Ludo Batis
  * @brief Defines the interface of an object that interacts actively physically.
  * Please, if inherit from this class, use APO for naming.
@@ -41,4 +41,4 @@ public:
 
 }  // namespace zbe
 
-#endif //ZBE_ARCHETYPES_ACTIVEPHYSICALOBJECT_H
+#endif  // ZBE_ARCHETYPES_ACTIVEPHYSICALOBJECT_H

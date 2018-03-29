@@ -3,7 +3,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file Positionable.h
  * @since 2016-12-16
- * @date 2017-01-11
+ * @date 2018-02-25
  * @author Batis Degryll Ludo
  * @brief This defines an avatar capable of resize a referenced area with given proportions.
  */

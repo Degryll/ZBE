@@ -2,13 +2,15 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file BaseMovableCollisionator.h
  * @since 2017-03-09
- * @date 2017-03-09
+ * @date 2018-02-25
  * @author Degryll Ludo Batis
  * @brief This implements a base 1:1 avatar that can bounce.
  */
 
 #ifndef ZBE_ENTITIES_AVATARS_IMPLEMENTATIONS_BASEBOUNCER_H_
 #define ZBE_ENTITIES_AVATARS_IMPLEMENTATIONS_BASEBOUNCER_H_
+
+#include "ZBE/core/tools/math/Vector.h"
 
 #include "ZBE/archetypes/Bouncing.h"
 #include "ZBE/entities/avatars/Bouncer.h"

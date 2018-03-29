@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file MobilePO.h
  * @since 2016-12-16
- * @date 2017-05-10
+ * @date 2018-02-25
  * @author Degryll
  * @brief Defines the interface for a Mobile Physical Object.
  */
@@ -27,4 +27,4 @@ public:
 
 }  // namespace zbe
 
-#endif //ZBE_ARCHETYPES_MOBILEPO_H
+#endif  // ZBE_ARCHETYPES_MOBILEPO_H

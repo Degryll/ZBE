@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file SimpleWideMobileAPO.h
  * @since 2017-01-30
- * @date 2017-05-09
+ * @date 2018-02-25
  * @author Degryll Batis Ludo
  * @brief Implements the interface of a class with a position, velocity, width and interacts actively with other objects.
  */
@@ -11,6 +11,10 @@
 #define ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEWIDEMOBILEAPO_H
 
 #include <cstdint>
+#include <initializer_list>
+
+#include "ZBE/core/tools/math/Point.h"
+#include "ZBE/core/tools/math/Vector.h"
 
 #include "ZBE/archetypes/WideMobileAPO.h"
 #include "ZBE/archetypes/implementations/SimpleWide.h"
@@ -63,4 +67,4 @@ public:
 
 }  // namespace zbe
 
-#endif //ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEWIDEMOBILEAPO_H
+#endif  // ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEWIDEMOBILEAPO_H

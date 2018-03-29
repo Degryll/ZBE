@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file Bounceable.h
  * @since 2016-12-17
- * @date 2017-05-09
+ * @date 2018-02-25
  * @author Batis
  * @brief This define an avatar in which others can bounce.
  */
@@ -16,7 +16,7 @@ namespace zbe {
  */
 class Bounceable {
   public:
-    using Base = void;//!< inheritance info
+    using Base = void; //!< inheritance info
 
     /** \brief Virtual destructor.
      */
@@ -30,4 +30,4 @@ class Bounceable {
 
 }  // namespace zbe
 
-#endif //ZBE_ENTITIES_AVATARS_BOUNCEABLE_H_
+#endif  // ZBE_ENTITIES_AVATARS_BOUNCEABLE_H_

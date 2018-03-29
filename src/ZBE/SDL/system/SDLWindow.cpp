@@ -1,28 +1,19 @@
 /**
  * Copyright 2016 Batis Degryll Ludo
  * @file SDL_Window.cpp
- *
- * @since 2015/05/30
- * @date 2017/06/11
- * @author Degryll Ludo
+ * @since 2015-05-30
+ * @date 2018-03-28
+ * @author Degryll Ludo Batis
  * @brief Create a SDLWindows using SDL 2.0.
  */
 
 #include "ZBE/SDL/system/SDLWindow.h"
 
 #include <string>
+
 #include <SDL2/SDL_image.h>
 
 namespace zbe {
-
-// SDLWindow::SDLWindow(int width, int height, Uint32 window_flags)
-//   : sdl(SDL_Starter::getInstance(SDL_INIT_VIDEO)), window(0), renderer(0),
-//     output(SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, width, height)),
-//     imgStore(), fontStore(){
-//   if(SDL_CreateWindowAndRenderer(width, height, window_flags, &window, &renderer)) {
-//     zbe::SysError::setError(std::string("ERROR: SDL could not create a SDLWindow and/or a renderer! SDL ERROR: ") + SDL_GetError());
-//   }
-// }
 
 SDLWindow::SDLWindow(const char* title, int width, int height, Uint32 SDLWindow_flags, Uint32 rederer_flags)
   : SDLWindow(title, 0, 0, width, height, SDLWindow_flags, rederer_flags) {}

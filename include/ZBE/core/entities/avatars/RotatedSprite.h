@@ -2,8 +2,8 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file RotatedSprite.h
  * @since 2017-04-05
- * @date 2017-04-05
- * @author Degryll
+ * @date 2018-02-25
+ * @author Degryll Batis Ludo
  * @brief This define an avatar that can be drawn in any direction.
  */
 
@@ -20,7 +20,7 @@ class RotatedSprite : virtual public SingleSprite {
 
 public:
 
-  using Base = SingleSprite;
+  using Base = SingleSprite; //!< Inheritance info.
 
   /** \brief Virtual Destructor.
    */

@@ -1,9 +1,9 @@
 /**
  * Copyright 2011 Batis Degryll Ludo
  * @file objects.h
- * @since 2015/05/19
- * @date 2017/05/15
- * @author Degryll
+ * @since 2015-05-19
+ * @date 2018-03-25
+ * @author Degryll Ludo Batis
  * @brief Math objects definitions
  */
 
@@ -30,6 +30,8 @@ struct Ray {
   /** \brief Parametrized constructor.
    *
    *  A Ray is constructed with a point to the origin and a director vector.
+   *  \param p Origin point.
+   *  \param v Direction vector.
    */
   Ray(Point<s> p, Vector<s> v) : o(p), d(v) {}
 
@@ -42,6 +44,8 @@ struct Ray {
    *  or
    *
    *        Ray<N> r = {{o1, o2, ... , oN}, {d1, d2, ... , dN}}
+   *  \param lo list of coordinates that defines the origin point of the Ray
+   *  \param lv list of dimensions that defines the direction vector of the Ray
    */
   Ray(std::initializer_list<double> lo, std::initializer_list<double> lv) : o(lo), d(lv) {}
 
@@ -63,7 +67,9 @@ struct Ray<2> {
 
   /** \brief Parametrized constructor.
    *
-   *  A 2D Ray is constructed with a 2D point to the origin and a 2D director vector.
+   *  A 2D Ray is constructed with a 2D point to the origin and a 2D direction vector.
+   *  \param p Origin point.
+   *  \param v Direction vector.
    */
   Ray(Point2D p, Vector2D v) : o(p), d(v) {}
 
@@ -76,6 +82,8 @@ struct Ray<2> {
    *  or
    *
    *        Ray2D r = {{o1, o2}, {d1, d2}}
+   *  \param lo list of coordinates that defines the origin point of the Ray
+   *  \param lv list of dimensions that defines the direction vector of the Ray
    */
   Ray(std::initializer_list<double> lo, std::initializer_list<double> lv) : o(lo), d(lv) {}
 
@@ -112,6 +120,8 @@ struct Ray<3> {
    *  or
    *
    *        Ray3D r = {{o1, o2, o3}, {d1, d2, d3}}
+   *  \param lo list of coordinates that defines the origin point of the Ray
+   *  \param lv list of dimensions that defines the direction vector of the Ray
    */
   Ray(std::initializer_list<double> lo, std::initializer_list<double> lv) : o(lo), d(lv) {}
 
@@ -146,6 +156,8 @@ struct NSphere {
    *  or
    *
    *        NSphere<N> s = {{c1, c2, ... , cN}, radius}
+   *  \param lc list of coordinates that defines the center point of the NSphere
+   *  \param r radius
    */
   NSphere(std::initializer_list<double> lc, double r) : c(lc), r(r) {}
 
@@ -180,6 +192,8 @@ struct NSphere<2> {
    *  or
    *
    *        Circle c = {{c1, c2}, radius}
+   *  \param lc list of coordinates that defines the center point of the NSphere
+   *  \param r radius
    */
   NSphere(std::initializer_list<double> lc, double r) : c(lc), r(r) {}
 
@@ -216,6 +230,8 @@ struct NSphere<3> {
    *  or
    *
    *        Sphere c = {{c1, c2, c3}, radius}
+   *  \param lc list of coordinates that defines the center point of the NSphere
+   *  \param r radius
    */
   NSphere(std::initializer_list<double> lc, double r) : c(lc), r(r) {}
 
@@ -252,6 +268,8 @@ struct AABB {
    *  or
    *
    *        AABB<N> b = {{min1, min2, ... , minN}, {max1, max2, ... , maxN}}
+   *  \param lmin list of coordinates that defines the "minimun" point of the AABB.
+   *  \param lmax list of coordinates that defines the "maximum" point of the AABB.
    */
   AABB(std::initializer_list<double> lmin, std::initializer_list<double> lmax) : minimum(lmin), maximum(lmax) {}
 
@@ -288,6 +306,8 @@ struct AABB<2> {
    *  or
    *
    *        AABB2D b = {{min1, min2}, {max1, max2}}
+   *  \param lmin list of coordinates that defines the "minimun" point of the AABB.
+   *  \param lmax list of coordinates that defines the "maximum" point of the AABB.
    */
   AABB(std::initializer_list<double> lmin, std::initializer_list<double> lmax) : minimum(lmin), maximum(lmax) {}
 
@@ -326,6 +346,8 @@ struct AABB<3> {
    *  or
    *
    *        AABB2D b = {{min1, min2, min3}, {max1, max2, max3}}
+   *  \param lmin list of coordinates that defines the "minimun" point of the AABB.
+   *  \param lmax list of coordinates that defines the "maximum" point of the AABB.
    */
   AABB(std::initializer_list<double> lmin, std::initializer_list<double> lmax) : minimum(lmin), maximum(lmax) {}
 

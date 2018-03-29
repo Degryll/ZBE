@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file DaemonTimeHandler.h
  * @since 2017-11-24
- * @date 2017-11-24
+ * @date 2018-02-25
  * @author Batis Degrill Ludo
  * @brief Time handler capable of erase a ticket.
  */
@@ -10,6 +10,7 @@
 #ifndef ZBE_EVENTS_HANDLERS_TIME_TICKETERASER_H
 #define ZBE_EVENTS_HANDLERS_TIME_TICKETERASER_H
 
+#include <cstdint>
 #include <memory>
 
 #include "ZBE/core/tools/containers/Ticket.h"
@@ -19,12 +20,18 @@ namespace zbe {
 
 class TicketEraser : public TimeHandler {
   public:
-	TicketEraser(const TicketEraser&) = delete;
-	void operator=(const TicketEraser&) = delete;
+	TicketEraser(const TicketEraser&) = delete; //!< Avoid copy.
+	void operator=(const TicketEraser&) = delete; //!< Avoid copy.
 
+    /** brief Parametrized constructor
+     * param ticket Ticket to be erased
+     */
   	TicketEraser(std::shared_ptr<Ticket> ticket): t(ticket){
   	}
 
+    /** brief Erases ticket
+     *  param time not used
+     */
   	void run(uint64_t) {
         t->setERASED();
   	}
@@ -34,5 +41,6 @@ class TicketEraser : public TimeHandler {
 
 };
 
-} //namespace zbe
-#endif //ZBE_EVENTS_HANDLERS_TIME_TICKETERASER_H
+}  // namespace zbe
+
+#endif  // ZBE_EVENTS_HANDLERS_TIME_TICKETERASER_H

@@ -4,7 +4,7 @@
  * @since 2017-06-04
  * @date 2017-08-05
  * @author Degryll Ludo Batis
- * @brief Defines the interface of a class with a state.
+ * @brief Defines the interface of an archetype with a state.
  */
 
 #ifndef ZBE_ARCHETYPES_STATE_H
@@ -12,6 +12,8 @@
 
 namespace zbe {
 
+/** \brief Defines the interface of an archetype with a state.
+ */
 class State {
 public:
   /** \brief Virtual destructor.
@@ -37,4 +39,3 @@ public:
 } // namespace zbe
 
 #endif  // ZBE_ARCHETYPES_STATE_H
-

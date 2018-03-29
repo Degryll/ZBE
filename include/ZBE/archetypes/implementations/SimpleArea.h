@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file Area.h
  * @since 2017-10-14
- * @date 2017-10-14
+ * @date 2018-02-22
  * @author Degryll Ludo Batis
  * @brief Implementation of an archetype that has an area.
  */
@@ -55,6 +55,6 @@ private:
   double h;
 };
 
-} // namespace zbe
+}  // namespace zbe
 
 #endif  // ZBE_ARCHETYPES_SIMPLEAREA_H

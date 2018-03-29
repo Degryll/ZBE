@@ -2,8 +2,8 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file Logger.h
  * @since 2014-05-16
- * @date 2017-05-15
- * @author Degryll Ludo
+ * @date 2018-03-20
+ * @author Degryll Ludo Batis
  * @brief To create Logs.
  */
 
@@ -202,9 +202,9 @@ public:
    *
    *      void (*)(int ntype, const char * msgtype, const char * msg);
    *
-   *  - ntype: represent the type of the annotation to the log. Use it to differentiate annotations (i.e. changing colors).
-   *  - msgtype: a text to identify the annotation, typically, a name surrounded by "[" and "]" (i.e. [INFO] or [DEBUG]).
-   *  - msg: the message to be annotated.
+   *  - ntype: Represents the type of the annotation to the log. Use it to differentiate annotations (i.e. changing colors).
+   *  - msgtype: A text to identify the annotation, typically, a name surrounded by "[" and "]" (i.e. [INFO] or [DEBUG]).
+   *  - msg: The message to be annotated.
    *
    * \sa setDefaultFileWriter(), setDefaultCommandLineWriter() and setDefaultWriters()
    */
@@ -217,6 +217,7 @@ public:
    *  Each time you use the Logger (using the [macros](@ref Logger.h)), it calls all the functions added to the Logger.
    *
    * \sa setDefaultFileWriter(), setDefaultCommandLineWriter() and setDefaultWriters()
+   * \param callback Writer to add to the log.
    */
   void addWriter(WriterCallback callback);
   // TODO delWriter probably use vector instead of forward_list
@@ -224,15 +225,24 @@ public:
   /** \brief Log a new annotation.
    *
    *  Don't use this function directly, use the [macros](@ref Logger.h).
+   * \param ntype Represents the type of the annotation to the log. Use it to differentiate annotations (i.e. changing colors).
+   * \param msgtype A text to identify the annotation, typically, a name surrounded by "[" and "]" (i.e. [INFO] or [DEBUG]).
+   * \param msg The message to be annotated.
    */
   void log(int ntype, const char * msgtype, LoggerMsg msg);
 
 protected:
   /** \brief Definition of the file writer.
+  * \param ntype Represents the type of the annotation to the log. Use it to differentiate annotations (i.e. changing colors).
+  * \param msgtype A text to identify the annotation, typically, a name surrounded by "[" and "]" (i.e. [INFO] or [DEBUG]).
+  * \param msg The message to be annotated.
    */
   static void defaultFileWriter(int ntype, const char * msgtype, const char * msg);
 
   /** \brief Definition of the command line writer.
+  * \param ntype Represents the type of the annotation to the log. Use it to differentiate annotations (i.e. changing colors).
+  * \param msgtype A text to identify the annotation, typically, a name surrounded by "[" and "]" (i.e. [INFO] or [DEBUG]).
+  * \param msg The message to be annotated.
    */
   static void defaultCommandLineWriter(int ntype, const char * msgtype, const char * msg);
 

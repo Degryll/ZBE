@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file SimpleBouncingAPO.h
  * @since 2017-03-07
- * @date 2017-05-08
+ * @date 2018-02-22
  * @author Degryll Ludo Batis
  * @brief Simple implementation of the Bouncing Mobile active physical object interface.
  */
@@ -10,13 +10,18 @@
 #ifndef ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEBOUNCINGAPO_H
 #define ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEBOUNCINGAPO_H
 
+#include <cstdint>
+#include <initializer_list>
+
+#include "ZBE/core/tools/math/Vector.h"
+#include "ZBE/core/tools/math/Point.h"
+
 #include "ZBE/archetypes/BouncingAPO.h"
 #include "ZBE/archetypes/implementations/SimpleBouncing.h"
 #include "ZBE/archetypes/implementations/SimpleActivePhysicalObject.h"
 
-namespace zbe {
 
-// This class has no test. Its functionality is tested in SimpleBouncig and SimpleActivePhysicalObject
+namespace zbe {
 
 /** \brief Simple implementation of the Bouncing Mobile active physical object interface.
  */

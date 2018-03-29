@@ -7,7 +7,6 @@
 #include "ZBE/core/daemons/Punishers.h"
 
 #include "ZBE/core/behaviors/Behavior.h"
-#include "ZBE/core/drawers/Drawer.h"
 
 #include "ZBE/core/tools/containers/ResourceManager.h"
 

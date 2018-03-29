@@ -2,13 +2,13 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file AnimatedDrawable.h
  * @since 2017-04-05
- * @date 2017-04-05
- * @author Degryll
+ * @date 2018-02-25
+ * @author Degryll Ludo Batis
  * @brief This define an entity that can be drawn in any direction with different animations.
  */
 
-#ifndef ZBE_MAIN_BATIS_TEXTDRAWABLE_H_
-#define ZBE_MAIN_BATIS_TEXTDRAWABLE_H_
+#ifndef ZBE_ARCHETYPES_TEXTDRAWABLE_H_
+#define ZBE_ARCHETYPES_TEXTDRAWABLE_H_
 
 #include <string>
 
@@ -21,12 +21,17 @@ namespace zbe {
 /** \brief This define an entity that can be drawn in any direction.
  */
 class TextDrawable : virtual public Drawable {
-  public:
-    virtual ~TextDrawable() {}
+public:
+  /** \brief Virtual destructor.
+   */
+  virtual ~TextDrawable() {}
 
-    virtual const std::string& getText() = 0;
+  /** \brief Gets the text.
+   *  \return Return string text.
+   */
+  virtual const std::string& getText() = 0;
 };
 
 }  // namespace zbe
 
-#endif  // ZBE_MAIN_BATIS_TEXTDRAWABLE_H_
+#endif  // ZBE_ARCHETYPES_TEXTDRAWABLE_H_

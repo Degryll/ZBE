@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file Entity.h
  * @since 2016-03-24
- * @date 2016-03-24
+ * @date 2018-03-06
  * @author Degryll
  * @brief Define the basic functionality of every entity.
  */
@@ -10,6 +10,7 @@
 #ifndef ZBE_CORE_ENTITIES_ENTITY_H_
 #define ZBE_CORE_ENTITIES_ENTITY_H_
 
+#include <cstdint>
 #include <memory>
 #include <map>
 

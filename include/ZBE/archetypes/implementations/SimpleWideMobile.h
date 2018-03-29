@@ -2,13 +2,18 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file SimpleWideMobile.h
  * @since 2017-01-30
- * @date 2017-05-09
+ * @date 2018-02-25
  * @author Degryll Ludo Batis
  * @brief Simple implementation of the WideMobile interface.
  */
 
 #ifndef ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEWIDEMOBILE_H
 #define ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEWIDEMOBILE_H
+
+#include <initializer_list>
+
+#include "ZBE/core/tools/math/Point.h"
+#include "ZBE/core/tools/math/Vector.h"
 
 #include "ZBE/archetypes/WideMobile.h"
 #include "ZBE/archetypes/implementations/SimpleMobile.h"
@@ -60,4 +65,4 @@ public:
 
 }  // namespace
 
-#endif //ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEWIDEMOBILE_H
+#endif  //ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEWIDEMOBILE_H

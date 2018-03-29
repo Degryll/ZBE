@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file BaseSingleTextSprite.h
  * @since 2017-08-22
- * @date 2017-08-22
+ * @date 2018-02-25
  * @author Batis Degryll Ludo
  * @brief Base implementation of a single text sprite.
  */
@@ -11,6 +11,7 @@
 #define ZBE_ENTITIES_AVATARS_IMPLEMENTATIONS_BASESINGLETEXTSPRITE_H_
 
 #include <cstdint>
+#include <string>
 
 #include "ZBE/entities/avatars/SingleTextSprite.h"
 

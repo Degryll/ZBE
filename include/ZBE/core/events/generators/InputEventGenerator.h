@@ -2,13 +2,13 @@
  * Copyright 2016 Batis Degryll Ludo
  * @file InputEventGenerator.h
  * @since 2016-04-06
- * @date 2016-04-10
+ * @date 2018-03-15
  * @author Ludo
  * @brief Input event generator.
  */
 
-#ifndef CORE_IO_INPUT_EVENT_GENERATOR_H
-#define CORE_IO_INPUT_EVENT_GENERATOR_H
+#ifndef ZBE_CORE_EVENTS_GENERATORS_INPUTEVENTGENERATOR_H
+#define ZBE_CORE_EVENTS_GENERATORS_INPUTEVENTGENERATOR_H
 
 #include <cstdint>
 #include <memory>
@@ -17,9 +17,10 @@
 #include "ZBE/core/daemons/Daemon.h"
 
 #include "ZBE/core/io/InputBuffer.h"
+#include "ZBE/core/system/SysTime.h"
+#include "ZBE/core/events/handlers/InputHandler.h"
 #include "ZBE/core/events/EventStore.h"
 #include "ZBE/core/events/InputEvent.h"
-#include "ZBE/core/system/SysTime.h"
 
 namespace zbe {
 
@@ -27,8 +28,8 @@ namespace zbe {
    */
   class InputEventGenerator : virtual public Daemon {
     public:
-      InputEventGenerator(const InputEventGenerator&) = delete; //!< Deleted copy constructor.
-      void operator=(const InputEventGenerator&) = delete; //!< Deleted operator.
+      InputEventGenerator(const InputEventGenerator&) = delete;  //!< Deleted copy constructor.
+      void operator=(const InputEventGenerator&) = delete;  //!< Deleted operator.
 
       /** \brief Default constructor.
        */
@@ -62,6 +63,7 @@ namespace zbe {
       std::map<uint32_t, InputHandler*> handlers;
       zbe::SysTime &sysTime;
   };
-} // namespace zbe
 
-#endif // CORE_IO_INPUT_EVENT_GENERATOR_H
+}  // namespace zbe
+
+#endif  // ZBE_CORE_EVENTS_GENERATORS_INPUTEVENTGENERATOR_H

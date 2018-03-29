@@ -2,13 +2,19 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file SimpleWideBouncingAPO.h
  * @since 2017-03-20
- * @date 2017-05-09
+ * @date 2018-02-25
  * @author Degryll Batis Ludo
  * @brief Implements the interface of a class with a position, a velocity, a width, the ability to accumulate normals and interacts actively with other objects.
  */
 
 #ifndef ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEWIDEBOUNCINGAPO_H
 #define ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEWIDEBOUNCINGAPO_H
+
+#include <cstdint>
+#include <initializer_list>
+
+#include "ZBE/core/tools/math/Point.h"
+#include "ZBE/core/tools/math/Vector.h"
 
 #include "ZBE/archetypes/WideBouncingAPO.h"
 #include "ZBE/archetypes/implementations/SimpleWide.h"

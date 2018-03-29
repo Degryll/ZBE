@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file DaemonTimeHandler.h
  * @since 2017-10-25
- * @date 2017-10-25
+ * @date 2018-02-25
  * @author Batis Degrill Ludo
  * @brief Time handler capable of run a daemon.
  */
@@ -10,27 +10,36 @@
 #ifndef ZBE_EVENTS_HANDLERS_TIME_DAEMONTIMEHANDLER_H
 #define ZBE_EVENTS_HANDLERS_TIME_DAEMONTIMEHANDLER_H
 
-#include "ZBE/core/events/handlers/TimeHandler.h"
+#include <cstdint>
+#include <memory>
 
+#include "ZBE/core/events/handlers/TimeHandler.h"
 #include "ZBE/core/daemons/Daemon.h"
+
 
 namespace zbe {
 
 class DaemonTimeHandler : public TimeHandler {
-  public:
-	DaemonTimeHandler(const DaemonTimeHandler&) = delete;
-	void operator=(const DaemonTimeHandler&) = delete;
+public:
+DaemonTimeHandler(const DaemonTimeHandler&) = delete; //!< Avoid copy.
+void operator=(const DaemonTimeHandler&) = delete; //!< Avoid copy.
 
-  	DaemonTimeHandler(std::shared_ptr<Daemon> daemon):d(daemon) {}
+  /** brief Parametrized constructor
+   * param daemon Daemon to be executed
+   */
+	DaemonTimeHandler(std::shared_ptr<Daemon> daemon):d(daemon) {}
 
-  	void run(uint64_t) {
-      d->run();
-  	}
+  /** brief Run daemon
+   *  param time not used
+   */
+	void run(uint64_t) {
+    d->run();
+	}
 
-  private:
-  	std::shared_ptr<Daemon> d;
+private:
+	std::shared_ptr<Daemon> d;
 };
 
-} //namespace zbe
+}  // namespace zbe
 
-#endif //ZBE_EVENTS_HANDLERS_TIME_DAEMONTIMEHANDLER_H
+#endif  // ZBE_EVENTS_HANDLERS_TIME_DAEMONTIMEHANDLER_H

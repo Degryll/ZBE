@@ -2,13 +2,15 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file SimpleTimeStamp.h
  * @since 2017-06-07
- * @date 2017-06-07
+ * @date 2018-02-25
  * @author Degryll Ludo Batis
  * @brief Simple implementation of the TimeStamp archetype.
  */
 
 #ifndef ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLETIMESTAMP_H
 #define ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLETIMESTAMP_H
+
+#include <cstdint>
 
 #include "ZBE/archetypes/TimeStamp.h"
 

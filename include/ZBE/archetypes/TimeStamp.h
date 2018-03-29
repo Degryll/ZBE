@@ -2,13 +2,15 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file TimeStamp.h
  * @since 2017-06-07
- * @date 2017-06-07
+ * @date 2018-02-25
  * @author Degryll Batis Ludo
  * @brief Archetype for an entity with a time stamp.
  */
 
 #ifndef ZBE_ARCHETYPES_TIMESTAMP_H
 #define ZBE_ARCHETYPES_TIMESTAMP_H
+
+#include <cstdint>
 
 namespace zbe {
 
@@ -34,4 +36,4 @@ public:
 
 }  // namespace zbe
 
-#endif //ZBE_ARCHETYPES_TIMESTAMP_H
+#endif  // ZBE_ARCHETYPES_TIMESTAMP_H

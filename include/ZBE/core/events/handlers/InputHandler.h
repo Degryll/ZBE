@@ -2,30 +2,31 @@
  * Copyright 2015 Batis Degryll Ludo
  * @file InputHandler.h
  * @since 2016-08-21
- * @date 2016-08-21
- * @author Batis
+ * @date 2018-03-18
+ * @author Batis Degryll Ludo
  * @brief Receives a input(keyboard, mouse, etc) event and reacts to that.
  */
 
-#ifndef CORE_GUARDS_INPUTHANDLER_H
-#define CORE_GUARDS_INPUTHANDLER_H
+#ifndef ZBE_CORE_EVENTS_HANDLERS_INPUTHANDLER_H
+#define ZBE_CORE_EVENTS_HANDLERS_INPUTHANDLER_H
 
 namespace zbe {
 
-  /** \brief Receives a input(keyboard, mouse, etc) event and reacts to that.
+/** \brief Receives a input(keyboard, mouse, etc) event and reacts to that.
+ */
+class InputHandler {
+public:
+
+  /** \brief Destructor.
    */
-  class InputHandler {
-    public:
+  virtual ~InputHandler() {}
 
-      /** \brief Do the Handler job.
-       */
-      virtual void run(float state) = 0;
+  /** \brief Do the Handler job.
+   */
+  virtual void run(float state) = 0;
 
-      /** \brief Destructor.
-       */
-      virtual ~InputHandler(){};
-  };
+};
 
 }  // namespace zbe
 
-#endif // CORE_GUARDS_INPUTHANDLER_H
+#endif  // ZBE_CORE_EVENTS_HANDLERS_INPUTHANDLER_H

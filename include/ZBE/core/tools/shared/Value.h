@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file Value.h
  * @since 2017-06-28
- * @date 2017-06-28
+ * @date 2018-03-26
  * @author Batis Degryll Ludo
  * @brief Stores a value that can be modified.
  */
@@ -35,6 +35,7 @@ public:
    */
   virtual void add(T value) = 0;
 };
-} // namespace zbe
+
+}  // namespace zbe
 
 #endif  // ZBE_CORE_TOOLS_SHARED_VALUE_H_

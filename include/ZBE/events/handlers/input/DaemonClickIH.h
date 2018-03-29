@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file DaemonClickIH.h
  * @since 2018-01-22
- * @date 2018-01-22
+ * @date 2018-02-25
  * @author Batis Degrill Ludo
  * @brief Input handler capable of run a daemon if given coords are inside a given area.
  */
@@ -10,12 +10,13 @@
 #ifndef ZBE_EVENTS_HANDLERS_INPUT_DAEMONCLICKINPUTHANDLER_H
 #define ZBE_EVENTS_HANDLERS_INPUT_DAEMONCLICKINPUTHANDLER_H
 
-#include "ZBE/core/io/Input.h"
-#include "ZBE/core/events/handlers/InputHandler.h"
-
 #include <memory>
 #include <algorithm>
 
+#include "ZBE/core/io/Input.h"
+#include "ZBE/core/events/handlers/InputHandler.h"
+#include "ZBE/core/tools/shared/Value.h"
+#include "ZBE/core/tools/math/Region.h"
 #include "ZBE/core/daemons/Daemon.h"
 
 namespace zbe {
@@ -26,8 +27,17 @@ namespace zbe {
 class DaemonClickIH : public InputHandler {
 public:
 
+/** \brief Constructs a DaemonClickIH from its raw data
+ *  \param area area to use.
+ *  \param xvalue Value where mouse x will be readed.
+ *  \param yvalue Value where mouse y will be readed.
+ *  \param daemon daemon to be executed when condition are met.
+ */
 DaemonClickIH(Region2D area, std::shared_ptr<Value<double> > xvalue, std::shared_ptr<Value<double> > yvalue, std::shared_ptr<Daemon> daemon) : a(area), xval(xvalue), yval(yvalue), d(daemon) {}
 
+/** \brief exec daemon if click is inside given area.
+ *  \param state input state.
+ */
 void run(float state) {
   if(state!=ZBE_KEYUP){
     return;
@@ -50,6 +60,6 @@ private:
   std::shared_ptr<Daemon> d;
 };
 
-} //namespace zbe
+}  // namespace zbe
 
-#endif //ZBE_EVENTS_HANDLERS_INPUT_DAEMONCLICKINPUTHANDLER_H
+#endif  // ZBE_EVENTS_HANDLERS_INPUT_DAEMONCLICKINPUTHANDLER_H

@@ -2,43 +2,44 @@
  * Copyright 2015 Batis Degryll Ludo
  * @file
  * @since 2017-05-11
- * @date 2017-05-11
- * @author Batis
- * @brief
+ * @date 2018-02-25
+ * @author Batis Ludo Degryll
+ * @brief Basic daemon to use in pre-loop.
  */
 
-#ifndef CORE_DAEMONS_BASICPRELOOPTIMEDAEMON_H_
-#define CORE_DAEMONS_BASICPRELOOPTIMEDAEMON_H_
+#ifndef ZBE_CORE_DAEMONS_BASICPRELOOPTIMEDAEMON_H_
+#define ZBE_CORE_DAEMONS_BASICPRELOOPTIMEDAEMON_H_
 
 #include "ZBE/core/daemons/Daemon.h"
 #include "ZBE/SDL/system/SDLWindow.h"
 #include "ZBE/core/system/SysTime.h"
 
 namespace zbe {
-  /** \brief
+/** \brief Basic daemon to use in pre-loop.
+ */
+class BasicPreLoopTimeDaemon : public Daemon {
+public:
+
+  BasicPreLoopTimeDaemon(const BasicPreLoopTimeDaemon&) = delete; //!< Avoid copy.
+  void operator=(const BasicPreLoopTimeDaemon&) = delete; //!< Avoid copy.
+
+  /** \brief Empty constructor.
    */
-  class BasicPreLoopTimeDaemon : public Daemon {
-    public:
+  BasicPreLoopTimeDaemon(): sysTime(zbe::SysTime::getInstance()) {}
 
-      BasicPreLoopTimeDaemon(const BasicPreLoopTimeDaemon&) = delete;
-      void operator=(const BasicPreLoopTimeDaemon&) = delete;
+  /** \brief Destroys the BasicPreLoopTimeDaemon
+   */
+  virtual ~BasicPreLoopTimeDaemon() {}
 
-      BasicPreLoopTimeDaemon(): sysTime(zbe::SysTime::getInstance()) {}
+  /** \brief Runs the daemon.
+   */
+  void run();
 
-      /** \brief Destroys the BasicPreLoopTimeDaemon
-       */
-      virtual ~BasicPreLoopTimeDaemon() {}
+private:
+  zbe::SysTime &sysTime;
 
-      /** \brief Runs the daemon.
-       */
-      void run();
+};
 
-    private:
-
-      zbe::SysTime &sysTime;
-
-  };
 }  // namespace zbe
 
-
-#endif // CORE_DAEMONS_BASICPRELOOPTIMEDAEMON_H_
+#endif  // ZBE_CORE_DAEMONS_BASICPRELOOPTIMEDAEMON_H_

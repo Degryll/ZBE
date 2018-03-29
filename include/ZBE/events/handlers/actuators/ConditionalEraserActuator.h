@@ -14,6 +14,7 @@
 
 #include "ZBE/core/events/handlers/Actuator.h"
 #include "ZBE/core/entities/avatars/Avatar.h"
+#include "ZBE/core/events/generators/util/CollisionData.h"
 
 #include "ZBE/entities/avatars/InteractionTester.h"
 
@@ -26,6 +27,10 @@ namespace zbe {
 template <typename R>
 class ConditionalEraserActuator: public zbe::Actuator<zbe::WeakAvatarEntityContainer<zbe::Avatar>, R> {
   public:
+
+    /** \brief Erases entity if collision data fullfill InteractionTester requirements
+     *  \param ro InteractionTester to test.
+     */
     void act(std::shared_ptr<WeakAvatarEntityContainer<InteractionTester> > ro) {
       InteractionTester* it;
       ro->get()->assignAvatar(&it);
@@ -40,4 +45,4 @@ class ConditionalEraserActuator: public zbe::Actuator<zbe::WeakAvatarEntityConta
 
 }  // namespace zbe
 
-#endif // ZBE_EVENTS_HANDLERS_ACTUATORS_CONDITIONALERASERACTUATOR
+#endif  // ZBE_EVENTS_HANDLERS_ACTUATORS_CONDITIONALERASERACTUATOR

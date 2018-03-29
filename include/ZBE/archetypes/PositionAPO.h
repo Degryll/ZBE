@@ -2,9 +2,9 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file PositionAPO.h
  * @since 2017-03-30
- * @date 2017-05-10
+ * @date 2018-02-25
  * @author Degryll Ludo Batis
- * @brief Defines the interface of an object that interacts physically and have a position 0_0.
+ * @brief Defines the interface of an object that interacts physically and have a position.
  */
 
 #ifndef ZBE_ARCHETYPES_POSITIONAPO_H
@@ -15,7 +15,7 @@
 
 namespace zbe {
 
-/** \brief Defines the interface of an object that interacts physically and have a position 0_0.
+/** \brief Defines the interface of an object that interacts physically and have a position.
  */
 template <unsigned s>
 class PositionAPO : virtual public PositionPO<s>, virtual public ActivePhysicalObject {
@@ -27,4 +27,4 @@ public:
 
 }  // namespace zbe
 
-#endif //ZBE_ARCHETYPES_POSITIONAPO_H
+#endif  // ZBE_ARCHETYPES_POSITIONAPO_H

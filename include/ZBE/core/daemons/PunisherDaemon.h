@@ -2,59 +2,58 @@
  * Copyright 2015 Batis Degryll Ludo
  * @file PunisherDaemon.h
  * @since 2015-05-04
- * @date 2017-01-13
+ * @date 2018-02-25
  * @author Degryll Ludo
- * @brief Define the minimal functions of demons.
+ * @brief Daemon that applies a "punish" over a list of elements.
  */
 
-#ifndef CORE_DAEMONS_PUNISHERDAEMON_H_
-#define CORE_DAEMONS_PUNISHERDAEMON_H_
+#ifndef ZBE_CORE_DAEMONS_PUNISHERDAEMON_H_
+#define ZBE_CORE_DAEMONS_PUNISHERDAEMON_H_
 
-#include <vector>
+#include <cstdint>
 #include <memory>
+#include <vector>
 
 #include "ZBE/core/daemons/Daemon.h"
 #include "ZBE/core/tools/containers/ResourceManager.h"
 
-
 namespace zbe {
-  /** \brief A Daemon capable of execute a specific Behavior over a list of entities.
+/** \brief Daemon that applies a "punish" over a list of elements.
+ */
+template<typename P, typename L>
+class PunisherDaemon : public Daemon {
+public:
+
+  PunisherDaemon(const PunisherDaemon&) = delete; //!< Avoid copy.
+  void operator=(const PunisherDaemon&) = delete; //!< Avoid copy.
+
+  /** \brief Build the Daemon with a punish and a .
+   * The given Behavior will be stored by this Daemon and destroyed with it. It will be executed when run method is called.
+   * \param daemon Pointer to the daemon desired to be stored and executed.
+   *
    */
-  template<typename P, typename L>
-  class PunisherDaemon : public Daemon {
-    public:
+  PunisherDaemon(std::shared_ptr<P> punish, uint64_t listId) : punish(punish), eList( ResourceManager<L>::getInstance().get(listId) ) {}
 
-      PunisherDaemon(const PunisherDaemon&) = delete;
-      void operator=(const PunisherDaemon&) = delete;
+  /** \brief Destroys the PunisherDaemon and the contained punisher.
+   */
+  virtual ~PunisherDaemon() {}
 
-      /** \brief Build the Daemon with a punish and a .
-       * The given Behavior will be stored by this Daemon and destroyed with it. It will be executed when run method is called.
-       * \param daemon Pointer to the daemon desired to be stored and executed.
-       *
-       */
-      PunisherDaemon(std::shared_ptr<P> punish, uint64_t listId) : punish(punish), eList( ResourceManager<L>::getInstance().get(listId) ) {}
+  /** \brief It will run the Behavior over the entity list.
+   */
+  void run();
 
-      /** \brief Destroys the PunisherDaemon and the contained punisher.
-       */
-      virtual ~PunisherDaemon() {}
+private:
+  std::shared_ptr<P> punish;
+  std::shared_ptr<L> eList;
+};
 
-      /** \brief It will run the Behavior over the entity list.
-       */
-      void run();
-
-    private:
-      std::shared_ptr<P> punish;
-      std::shared_ptr<L> eList;
-  };
-
-  template<typename P, typename L>
-  void PunisherDaemon<P, L>::run(){
-    for(auto e : (*eList)) {
-      punish->apply(e);
-    }
+template<typename P, typename L>
+void PunisherDaemon<P, L>::run(){
+  for(auto e : (*eList)) {
+    punish->apply(e);
   }
+}
+
 }  // namespace zbe
 
-
-
-#endif // CORE_DAEMONS_PUNISHERDAEMON_H_
+#endif  // ZBE_CORE_DAEMONS_PUNISHERDAEMON_H_

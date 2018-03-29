@@ -3,13 +3,13 @@
  * @file SDL_Starter.h
  *
  * @since 2010-07-06
- * @date 2017-05-10
+ * @date 2018-02-25
  * @author Degryll Ludo
  * @brief Implements SDL_Starter class.
  */
 
-#ifndef SDL_STARTERS_STARTER_H_
-#define SDL_STARTERS_STARTER_H_
+#ifndef ZBE_SDL_STARTERS_STARTER_H_
+#define ZBE_SDL_STARTERS_STARTER_H_
 
 #include <SDL2/SDL.h>
 
@@ -49,4 +49,4 @@ class SDL_Starter {
 
 }  // namespace zbe
 
-#endif  // SDL_STARTERS_STARTER_H_
+#endif  // ZBE_SDL_STARTERS_STARTER_H_

@@ -28,7 +28,7 @@ public:
    */
   SDLTimer(bool startHere = false);
 
-  /** \brief Destructor.
+  /** \brief Destructor Shuts down SDL timer.
    */
   ~SDLTimer();
 

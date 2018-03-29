@@ -2,14 +2,15 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file SingleTextDrawer.h
  * @since 2017-04-12
- * @date 2017-05-11
- * @author Batis Ludo
+ * @date 2018-02-25
+ * @author Batis Ludo Degryll
  * @brief Class that know how to draw text boxes as SingleTextSprite entities with SDL.
  */
 
-#ifndef SDL_DRAWERS_SIMPLETEXTSDLDRAWER_H_
-#define SDL_DRAWERS_SIMPLETEXTSDLDRAWER_H_
+#ifndef ZBE_SDL_DRAWERS_SIMPLETEXTSDLDRAWER_H_
+#define ZBE_SDL_DRAWERS_SIMPLETEXTSDLDRAWER_H_
 
+#include <memory>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 
@@ -24,8 +25,8 @@ namespace zbe {
  */
 class SingleTextSDLDrawer : public Behavior<SingleTextSprite> {
   public:
-    SingleTextSDLDrawer(const SingleTextSDLDrawer&) = delete;
-    void operator=(const SingleTextSDLDrawer&) = delete;
+    SingleTextSDLDrawer(const SingleTextSDLDrawer&) = delete; //!< Avoid copy.
+    void operator=(const SingleTextSDLDrawer&) = delete; //!< Avoid copy.
 
     /** \brief Create a new drawer in the given context.
      *  \param window A SDLwindow with its context.
@@ -49,4 +50,4 @@ class SingleTextSDLDrawer : public Behavior<SingleTextSprite> {
 
 }  // namespace zbe
 
-#endif  // SDL_DRAWERS_SIMPLETEXTSDLDRAWER_H_
+#endif  // ZBE_SDL_DRAWERS_SIMPLETEXTSDLDRAWER_H_

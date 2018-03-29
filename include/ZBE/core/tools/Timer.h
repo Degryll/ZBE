@@ -2,15 +2,15 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file Timer.h
  * @since 2016-03-23
- * @date 2017-05-10
- * @author Batis
+ * @date 2018-03-25
+ * @author Batis Degryll Ludo
  * @brief Stopwatch interface. A timer that can Start, Stop or Reset a time count.
  */
 
 #ifndef ZBE_CORE_TOOLS_TIMER_H_
 #define ZBE_CORE_TOOLS_TIMER_H_
 
-#include <stdint.h>
+#include <cstdint>
 
 namespace zbe {
 

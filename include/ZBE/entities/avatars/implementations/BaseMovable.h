@@ -2,13 +2,17 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file BaseMovable.h
  * @since 2016-12-16
- * @date 2016-12-18
+ * @date 2018-02-25
  * @author Degryll Ludo Batis
  * @brief This implements a base 1:1 avatar that can be moved.
  */
 
 #ifndef ZBE_ENTITIES_AVATARS_IMPLEMENTATIONS_BASEMOVABLE_H_
 #define ZBE_ENTITIES_AVATARS_IMPLEMENTATIONS_BASEMOVABLE_H_
+
+#include <initializer_list>
+
+#include "ZBE/core/tools/math/Vector.h"
 
 #include "ZBE/entities/avatars/implementations/BasePositionable.h"
 #include "ZBE/entities/avatars/Movable.h"

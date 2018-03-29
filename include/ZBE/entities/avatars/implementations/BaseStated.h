@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file BaseStated.h
  * @since 2017-06-05
- * @date 2017-08-05
+ * @date 2018-02-25
  * @author Batis Degryll Ludo
  * @brief Base implementation of a state.
  */
@@ -49,4 +49,4 @@ private:
 
 }  // namespace zbe
 
-#endif  // ZBE_ENTITIES_AVATARS_STATED_H_
+#endif  // ZBE_ENTITIES_AVATARS_IMPLEMENTATIONS_BASESTATED_H_

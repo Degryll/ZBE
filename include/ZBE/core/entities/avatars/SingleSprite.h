@@ -2,13 +2,15 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file SingleSprite.h
  * @since 2016-11-22
- * @date 2017-04-05
- * @author Degryll
+ * @date 2018-02-25
+ * @author Degryll Batis Ludo
  * @brief This define an avatar that can be drawn.
  */
 
-#ifndef ZBE_CORE_ENTITIES_AVATARS_SIMPLESPRITE_H_
-#define ZBE_CORE_ENTITIES_AVATARS_SIMPLESPRITE_H_
+#ifndef ZBE_CORE_ENTITIES_AVATARS_SINGLESPRITE_H_
+#define ZBE_CORE_ENTITIES_AVATARS_SINGLESPRITE_H_
+
+#include <cstdint>
 
 namespace zbe {
 
@@ -18,7 +20,7 @@ class SingleSprite {
 
 public:
 
-  using Base = void;
+  using Base = void; //!< Inheritance info.
 
   /** \brief Virtual Destructor.
    */
@@ -53,4 +55,4 @@ public:
 
 }  // namespace zbe
 
-#endif  // ZBE_CORE_ENTITIES_AVATARS_SIMPLESPRITE_H_
+#endif  // ZBE_CORE_ENTITIES_AVATARS_SINGLESPRITE_H_

@@ -2,7 +2,7 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file Erase.h
  * @since 2017-11-05
- * @date 2017-11-05
+ * @date 2018-02-25
  * @author Degryll Ludo Batis
  * @brief Erase given avatar.
  */
@@ -28,7 +28,7 @@ class Erase : virtual public Behavior<Avatar> {
      */
     virtual ~Erase() {}
 
-    /** \brief Changes the entity velocity with the accumulated normals.
+    /** \brief Erase given avatar.
      */
     void apply(std::shared_ptr<AvatarEntityContainer<Avatar> > aec) {
       Avatar* avatar;

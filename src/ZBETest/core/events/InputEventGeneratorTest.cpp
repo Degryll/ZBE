@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 #include <vector>
 
+#include "ZBE/core/tools/math/math.h"
 #include "ZBE/core/io/InputStatus.h"
 #include "ZBE/core/io/InputBuffer.h"
 #include "ZBE/core/events/InputEvent.h"

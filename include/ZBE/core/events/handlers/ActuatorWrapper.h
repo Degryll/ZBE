@@ -2,15 +2,15 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file Actuator.h
  * @since 2017-04-27
- * @date 2017-04-27
+ * @date 2018-03-18
  * @author Batis Degryll Ludo
  * @brief Generic Actuator wraper base functionality.
  */
 
-#ifndef CORE_HANDLERS_COLLISION_ACTUATORWRAPPER_H
-#define CORE_HANDLERS_COLLISION_ACTUATORWRAPPER_H
+#ifndef ZBE_CORE_EVENT_HANDLERS_COLLISION_ACTUATORWRAPPER_H
+#define ZBE_CORE_EVENT_HANDLERS_COLLISION_ACTUATORWRAPPER_H
 
-#include "ZBE/core/entities/AvatarEntity.h"
+#include <memory>
 
 #include "ZBE/core/events/handlers/Actuator.h"
 #include "ZBE/core/events/generators/util/ReactObject.h"
@@ -24,8 +24,12 @@ template <typename R, typename TEnt>
 class ActuatorWrapper {
   public:
 
-    virtual ~ActuatorWrapper() {};
+    /** \brief Empty constructor
+    */
+    virtual ~ActuatorWrapper() {}
 
+    /** \brief Calls the Actuator's run method.
+    */
     virtual void run(std::shared_ptr<TEnt> container, std::shared_ptr<ReactObject<R> > rObject, CollisionData* cData) = 0;
 
 };
@@ -35,21 +39,29 @@ class ActuatorWrapper {
 template <typename R, typename TAct, typename TEnt>
 class ActuatorWrapperCommon: virtual public ActuatorWrapper<R, TEnt>{
 public:
-  ActuatorWrapperCommon(const ActuatorWrapperCommon&) = delete;
-  void operator=(const ActuatorWrapperCommon&) = delete;
+  ActuatorWrapperCommon(const ActuatorWrapperCommon&) = delete; //!< Avoid copy.
+  void operator=(const ActuatorWrapperCommon&) = delete; //!< Avoid copy.
 
-  ActuatorWrapperCommon(Actuator<TAct, R> * actuator):a(actuator){};
-  virtual ~ActuatorWrapperCommon() {}; //TODO delete a;
+  /** \brief Parametrized constructor.
+   *  \param actuator The actuator.
+   */
+  ActuatorWrapperCommon(Actuator<TAct, R> * actuator) : a(actuator) {}
 
+  /** \brief Empty destructor.
+   */
+  virtual ~ActuatorWrapperCommon() {} //TODO delete a;
+
+  /** \brief Calls the Actuator's run method.
+  */
   void run(std::shared_ptr<TEnt> entity, std::shared_ptr<ReactObject<R> > rObject, CollisionData* cData) {
     std::shared_ptr<TAct> act = std::make_shared<TAct>(entity);
     a->run(act,rObject,cData);
   }
+
 private:
   Actuator<TAct, R>* a;
 };
 
 }  // namespace
 
-#endif //CORE_HANDLERS_COLLISION_ACTUATORWRAPPER_H
-
+#endif  // ZBE_CORE_EVENT_HANDLERS_COLLISION_ACTUATORWRAPPER_H
