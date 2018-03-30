@@ -436,7 +436,7 @@ bool intersectionRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, int64_t &time, P
   Vector<dim> f = ray.o - nsphere.c;
 
   double a = ray.d * ray.d;
-  if(a == 0) return(false);
+  if(isNearlyEqual(a, 0.0, 0.0)) return(false);
   double b = (f * ray.d) * 2;
   double c = (f * f) - (nsphere.r * nsphere.r);
 

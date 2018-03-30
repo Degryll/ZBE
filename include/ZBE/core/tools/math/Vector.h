@@ -226,7 +226,7 @@ class _VECTOR {
      */
     _VECTOR<dim>&  normalize() {
       double m = getModule();
-      if(m == 0) {return (*this);}
+      if(isNearlyEqual(m, 0.0, 0.0)) {return (*this);}
       *this /= m;
 
       return (*this);

@@ -71,6 +71,15 @@ inline int64_t quantizeTime(int64_t n) {
   return (n & ROUND_MASK);
 }
 
+/** \brief Used to compare two double values.
+ * \param a First number to compare
+ * \param b Second number to compare
+ * \param epsilon Distance to consider both equals
+ */
+inline bool isNearlyEqual(double a, double b, double epsilon) {
+  return (abs(a - b) <= epsilon);
+}
+
 /** \brief Used to round values to its closer integer.
  * \param Number to be rounded.
  */
