@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="ZBNoid" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug-Linux64">
+				<Option output="../../../bin/Debug/ZBNoid" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../../.." />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-Weffc++" />
+					<Add option="-std=c++11" />
+					<Add option="-Wextra" />
+					<Add option="-Wall" />
+					<Add option="-g" />
+					<Add option="-m64" />
+					<Add directory="../../../src/ZBNoid/include" />
+					<Add directory="../../../include" />
+					<Add directory="../../../extlibs/utf8cpp/source" />
+					<Add directory="../../../extlibs/boost_1_57_0" />
+					<Add directory="../../../extlibs/IteratorTypeErasure/IteratorTypeErasure/any_iterator" />
+					<Add directory="../../../extlibs/SDL2/2.0.3/include" />
+					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/include" />
+					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/include" />
+				</Compiler>
+				<Linker>
+					<Add library="ZBE_x64d" />
+					<Add library="SDL2main" />
+					<Add library="SDL2" />
+					<Add library="SDL2_image" />
+					<Add library="SDL2_ttf" />
+					<Add directory="../../../lib" />
+					<Add directory="../../../extlibs/SDL2/2.0.3/lib" />
+					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />
+					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/lib" />
+				</Linker>
+			</Target>
+			<Target title="Release-Linux64">
+				<Option output="../../../bin/Release/ZBNoid" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../../.." />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-std=c++11" />
+					<Add option="-m64" />
+					<Add directory="../../../src/ZBNoid/include" />
+					<Add directory="../../../include" />
+					<Add directory="../../../extlibs/boost_1_57_0" />
+					<Add directory="../../../extlibs/IteratorTypeErasure/IteratorTypeErasure/any_iterator" />
+					<Add directory="../../../extlibs/SDL2/2.0.3/include" />
+					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/include" />
+					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/include" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="ZBE_x64" />
+					<Add library="SDL2main" />
+					<Add library="SDL2" />
+					<Add library="SDL2_image" />
+					<Add library="SDL2_ttf" />
+					<Add directory="../../../lib" />
+					<Add directory="../../../extlibs/SDL2/2.0.3/lib" />
+					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />
+					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/lib" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+		</Compiler>
+		<Unit filename="../../../src/ZBNoid/include/ZBNCfg.h" />
+		<Unit filename="../../../src/ZBNoid/include/ZBNoid.h" />
+		<Unit filename="../../../src/ZBNoid/include/ZombienoidReactor.h" />
+		<Unit filename="../../../src/ZBNoid/include/archetypes/implementations/SimpleStateDrawable.h" />
+		<Unit filename="../../../src/ZBNoid/include/archetypes/implementations/SimpleTextDrawable.h" />
+		<Unit filename="../../../src/ZBNoid/include/behaviors/BrickEraser.h" />
+		<Unit filename="../../../src/ZBNoid/include/behaviors/Demagnetizer.h" />
+		<Unit filename="../../../src/ZBNoid/include/behaviors/InitialBallMagnetizer.h" />
+		<Unit filename="../../../src/ZBNoid/include/behaviors/XSetter.h" />
+		<Unit filename="../../../src/ZBNoid/include/behaviors/builders/BallBuilder.h" />
+		<Unit filename="../../../src/ZBNoid/include/behaviors/builders/ItemBuilder.h" />
+		<Unit filename="../../../src/ZBNoid/include/builders/ButtonBuilder.h" />
+		<Unit filename="../../../src/ZBNoid/include/builders/ZBNoidLostScreenBuilder.h" />
+		<Unit filename="../../../src/ZBNoid/include/builders/ZBNoidMainGameBuilder.h" />
+		<Unit filename="../../../src/ZBNoid/include/builders/ZBNoidTitleBuilder.h" />
+		<Unit filename="../../../src/ZBNoid/include/builders/ZBNoidWinScreenBuilder.h" />
+		<Unit filename="../../../src/ZBNoid/include/daemons/ZBNoidGameLoader.h" />
+		<Unit filename="../../../src/ZBNoid/include/daemons/ZBNoidLevelCleaner.h" />
+		<Unit filename="../../../src/ZBNoid/include/daemons/ZBNoidLevelLoader.h" />
+		<Unit filename="../../../src/ZBNoid/include/daemons/ZBNoidLevelReset.h" />
+		<Unit filename="../../../src/ZBNoid/include/daemons/ZBNoidResourceLoader.h" />
+		<Unit filename="../../../src/ZBNoid/include/daemons/ZombienoidDeathTester.h" />
+		<Unit filename="../../../src/ZBNoid/include/daemons/ZombienoidLifeSubstractor.h" />
+		<Unit filename="../../../src/ZBNoid/include/daemons/items/BallAcceleratorItem.h" />
+		<Unit filename="../../../src/ZBNoid/include/daemons/items/BallBombItem.h" />
+		<Unit filename="../../../src/ZBNoid/include/daemons/items/BallMultiplierItem.h" />
+		<Unit filename="../../../src/ZBNoid/include/daemons/items/BallRadiusItem.h" />
+		<Unit filename="../../../src/ZBNoid/include/daemons/items/BarSizeItem.h" />
+		<Unit filename="../../../src/ZBNoid/include/daemons/items/EtherBallsItem.h" />
+		<Unit filename="../../../src/ZBNoid/include/daemons/items/GunsItem.h" />
+		<Unit filename="../../../src/ZBNoid/include/daemons/items/HarmlessBallsItem.h" />
+		<Unit filename="../../../src/ZBNoid/include/daemons/items/LifeItem.h" />
+		<Unit filename="../../../src/ZBNoid/include/daemons/items/PointItem.h" />
+		<Unit filename="../../../src/ZBNoid/include/daemons/items/StickyBarItem.h" />
+		<Unit filename="../../../src/ZBNoid/include/daemons/items/UnstoppableBallsItem.h" />
+		<Unit filename="../../../src/ZBNoid/include/entities/LifeCounter.h" />
+		<Unit filename="../../../src/ZBNoid/include/entities/adaptors/ActiveElement2DAnimatedSpriteAdaptor.h" />
+		<Unit filename="../../../src/ZBNoid/include/entities/adaptors/BallCatorAdaptor.h" />
+		<Unit filename="../../../src/ZBNoid/include/entities/adaptors/BarConerAdaptor.h" />
+		<Unit filename="../../../src/ZBNoid/include/entities/adaptors/BlockConerAdaptor.h" />
+		<Unit filename="../../../src/ZBNoid/include/entities/adaptors/BoardConerAdaptor.h" />
+		<Unit filename="../../../src/ZBNoid/include/entities/adaptors/Element2DAnimatedSpriteAdaptor.h" />
+		<Unit filename="../../../src/ZBNoid/include/entities/adaptors/Element2DDisplacedAnimatedSpriteAdaptor.h" />
+		<Unit filename="../../../src/ZBNoid/include/entities/adaptors/ItemCatorAdaptor.h" />
+		<Unit filename="../../../src/ZBNoid/include/entities/avatars/Boombizer.h" />
+		<Unit filename="../../../src/ZBNoid/include/entities/avatars/Breakable.h" />
+		<Unit filename="../../../src/ZBNoid/include/entities/avatars/CustomVector.h" />
+		<Unit filename="../../../src/ZBNoid/include/entities/avatars/Magnet.h" />
+		<Unit filename="../../../src/ZBNoid/include/entities/avatars/Scorer.h" />
+		<Unit filename="../../../src/ZBNoid/include/entities/avatars/Solid.h" />
+		<Unit filename="../../../src/ZBNoid/include/entities/avatars/Wall.h" />
+		<Unit filename="../../../src/ZBNoid/include/entities/avatars/implementations/BarCustomVector.h" />
+		<Unit filename="../../../src/ZBNoid/include/entities/avatars/implementations/BasePositionMagnet.h" />
+		<Unit filename="../../../src/ZBNoid/include/entities/avatars/implementations/BoardInteractionTester.h" />
+		<Unit filename="../../../src/ZBNoid/include/entities/avatars/implementations/BoundedWrapperPositionable2D.h" />
+		<Unit filename="../../../src/ZBNoid/include/entities/avatars/implementations/PositionableTimerSprite.h" />
+		<Unit filename="../../../src/ZBNoid/include/entities/avatars/implementations/SimpleScorer.h" />
+		<Unit filename="../../../src/ZBNoid/include/events/handlers/BallExploder.h" />
+		<Unit filename="../../../src/ZBNoid/include/events/handlers/BroadcastIH.h" />
+		<Unit filename="../../../src/ZBNoid/include/events/handlers/ExitInputHandler.h" />
+		<Unit filename="../../../src/ZBNoid/include/events/handlers/actuators/BallBoombizer.h" />
+		<Unit filename="../../../src/ZBNoid/include/events/handlers/actuators/BallScorer.h" />
+		<Unit filename="../../../src/ZBNoid/include/events/handlers/actuators/BrickHitStateActuator.h" />
+		<Unit filename="../../../src/ZBNoid/include/events/handlers/actuators/CustomVectorBouncerActuator.h" />
+		<Unit filename="../../../src/ZBNoid/include/events/handlers/actuators/ItemCatcher.h" />
+		<Unit filename="../../../src/ZBNoid/include/events/handlers/actuators/MagnetSticker.h" />
+		<Unit filename="../../../src/ZBNoid/include/graphics/MultiSpriteSheet.h" />
+		<Unit filename="../../../src/ZBNoid/include/graphics/RsrcIDDictionary.h" />
+		<Unit filename="../../../src/ZBNoid/include/graphics/SimpleSpriteSheet.h" />
+		<Unit filename="../../../src/ZBNoid/src/ZBNCfg.cpp" />
+		<Unit filename="../../../src/ZBNoid/src/builders/ButtonBuilder.cpp" />
+		<Unit filename="../../../src/ZBNoid/src/builders/ZBNoidLostScreenBuilder.cpp" />
+		<Unit filename="../../../src/ZBNoid/src/builders/ZBNoidMainGameBuilder.cpp" />
+		<Unit filename="../../../src/ZBNoid/src/builders/ZBNoidTitleBuilder.cpp" />
+		<Unit filename="../../../src/ZBNoid/src/builders/ZBNoidWinScreenBuilder.cpp" />
+		<Unit filename="../../../src/ZBNoid/src/daemons/ZBNoidGameLoader.cpp" />
+		<Unit filename="../../../src/ZBNoid/src/daemons/ZBNoidLevelCleaner.cpp" />
+		<Unit filename="../../../src/ZBNoid/src/daemons/ZBNoidLevelLoader.cpp" />
+		<Unit filename="../../../src/ZBNoid/src/daemons/ZBNoidLevelReset.cpp" />
+		<Unit filename="../../../src/ZBNoid/src/daemons/ZBNoidResourceLoader.cpp" />
+		<Unit filename="../../../src/ZBNoid/src/zombienoid.cpp" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

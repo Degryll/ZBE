@@ -8,6 +8,11 @@
 			<Depends filename="ZBE/ZBE.cbp" />
 		</Project>
 		<Project filename="ZBE/ZBE.cbp" />
-		<Project filename="ZandBokz/ZandBokz.cbp" />
+		<Project filename="ZandBokz/ZandBokz.cbp">
+			<Depends filename="ZBE/ZBE.cbp" />
+		</Project>
+		<Project filename="ZBNoid/ZBNoid.cbp">
+			<Depends filename="ZBE/ZBE.cbp" />
+		</Project>
 	</Workspace>
 </CodeBlocks_workspace_file>
