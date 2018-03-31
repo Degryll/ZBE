@@ -4,7 +4,6 @@
 #include "degryllmain.h"
 #include "ludomain.h"
 #include "gamemain.h"
-#include "zombienoid.h"
 
 int main(int argc, char* argv[]) {
   int option;
@@ -12,8 +11,7 @@ int main(int argc, char* argv[]) {
   printf("1 - batismain\n");
   printf("2 - degryllmain\n");
   printf("3 - ludomain\n");
-  printf("4 - zombienoid\n");
-  printf("5 - gamemain\n");
+  printf("4 - gamemain\n");
   printf("0 - salir\n");
   printf("--:");
   int readAmount = scanf ("%d",&option);
@@ -34,9 +32,6 @@ int main(int argc, char* argv[]) {
       out = ludo::ludomain(argc,argv);
     break;
     case 4:
-      out = zombienoid::zombienoidmain(argc,argv);
-    break;
-    case 5:
       out = gamemain(argc,argv);
     break;
     case 0:

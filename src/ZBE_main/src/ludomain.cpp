@@ -57,8 +57,6 @@
 #include "ZBE/SDL/daemons/BasicPreLoopSDLDaemon.h"
 #include "ZBE/SDL/daemons/BasicPostLoopSDLDaemon.h"
 
-#include "zombienoid/graphics/MultiSpriteSheet.h"
-
 #include "game/events/handlers/ExitInputHandler.h"
 
 #include "ludo/LudoReactor.h"
