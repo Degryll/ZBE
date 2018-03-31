@@ -1,10 +1,10 @@
 /**
  * Copyright 2012 Batis Degryll Ludo
- * @file zandboks.h
+ * @file ZandBokz.h
  * @since 2018-03-30
  * @date 2018-03-30
  * @author Ludo
- * @brief Main file for ZandBoks game.
+ * @brief Main file for ZandBokz game.
  */
 
 #include <cstdio>

@@ -78,8 +78,8 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="../../../src/ZandBokz/include/zandboks.h" />
-		<Unit filename="../../../src/ZandBokz/src/zandboks.cpp" />
+		<Unit filename="../../../src/ZandBokz/include/zandbokz.h" />
+		<Unit filename="../../../src/ZandBokz/src/zandbokz.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />
