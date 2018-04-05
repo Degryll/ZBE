@@ -51,9 +51,9 @@
 
 #include "ZBE/entities/Element2D.h"
 
-#include "ZBE/events/handlers/actuators/EraserActuator.h"
-#include "ZBE/events/handlers/actuators/BouncerActuator.h"
-#include "ZBE/events/handlers/actuators/StateChangerActuator.h"
+#include "ZBE/events/handlers/actuators/EraserAtor.h"
+#include "ZBE/events/handlers/actuators/BouncerAtor.h"
+#include "ZBE/events/handlers/actuators/StateChangerAtor.h"
 
 #include "ZBE/behaviors/Bounce.h"
 #include "ZBE/behaviors/Erase.h"
@@ -61,7 +61,7 @@
 #include "ZBE/behaviors/StateLTEraser.h"
 #include "ZBE/behaviors/StateSetter.h"
 
-#include "ZBE/events/handlers/actuators/ConditionalEraserActuator.h"
+#include "ZBE/events/handlers/actuators/ConditionalEraserAtor.h"
 #include "ZBE/events/handlers/input/DaemonInputHandler.h"
 #include "ZBE/events/handlers/input/InputToValue.h"
 

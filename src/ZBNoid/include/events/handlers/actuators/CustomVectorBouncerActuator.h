@@ -1,6 +1,6 @@
 /**
  * Copyright 2012 Batis Degryll Ludo
- * @file BouncerActuator.h
+ * @file CustomBouncerActuator.h
  * @since 2017-06-25
  * @date 2017-06-25
  * @author Batis Degryll Ludo

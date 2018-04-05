@@ -1,14 +1,14 @@
 /**
  * Copyright 2012 Batis Degryll Ludo
- * @file StateChangerActuator.h
+ * @file StateChangerAtor.h
  * @since 2017-08-05
  * @date 2018-02-25
  * @author Batis Degryll Ludo
- * @brief Actuator capable of erasing an entity.vaasdf
+ * @brief Actuator capable of change an entity state.
  */
 
-#ifndef ZBE_EVENTS_HANDLERS_ACTUATORS_STATECHANGERACTUATOR
-#define ZBE_EVENTS_HANDLERS_ACTUATORS_STATECHANGERACTUATOR
+#ifndef ZBE_EVENTS_HANDLERS_ACTUATORS_STATECHANGERATOR_H_
+#define ZBE_EVENTS_HANDLERS_ACTUATORS_STATECHANGERATOR_H_
 
 #include <memory>
 #include <cstdint>
@@ -20,12 +20,12 @@
 
 namespace zbe {
 
-/** \brief Actuator capable of erasing an entity.
+/** \brief Actuator capable of change an entity state.
  */
 template <typename R, typename T>
-class StateChangerActuator: public zbe::Actuator<WeakAvatarEntityContainer<zbe::Stated>, R> {
+class StateChangerSelfAtor: public zbe::Actuator<WeakAvatarEntityContainer<zbe::Stated>, R> {
   public:
-    StateChangerActuator(int64_t value) : v(value) {}
+    StateChangerSelfAtor(int64_t value) : v(value) {}
 
     /** \brief Set given state to entity when interact whit template type.
      *  \param entity. Not used.
@@ -41,4 +41,4 @@ class StateChangerActuator: public zbe::Actuator<WeakAvatarEntityContainer<zbe::
 
 }  // namespace zbe
 
-#endif  // ZBE_EVENTS_HANDLERS_ACTUATORS_STATECHANGERACTUATOR
+#endif  // ZBE_EVENTS_HANDLERS_ACTUATORS_STATECHANGERATOR_H_

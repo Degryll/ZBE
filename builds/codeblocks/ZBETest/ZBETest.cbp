@@ -216,6 +216,7 @@
 		<Unit filename="../../../src/ZBETest/core/tools/math/mathTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/tools/math/objectsTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/tools/toolsTest.cpp" />
+		<Unit filename="../../../src/ZBETest/events/handlers/actuators/DaemonSelectorAtorTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/main.cpp" />
 		<Extensions>
 			<code_completion />

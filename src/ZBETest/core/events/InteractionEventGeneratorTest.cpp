@@ -85,7 +85,7 @@ TEST(IntersectionEventGenerator, run) {
   zbe::ResourceManager<std::forward_list<zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* > >& lma = zbe::ResourceManager<std::forward_list<zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* > >::getInstance();
 
   std::shared_ptr<std::forward_list<zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* > > act(new std::forward_list<zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* >());
-  lma.insert(1, act);
+  lma.insert(10, act);
 
   zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* actwrap = new  zbe::ActuatorWrapperCommon<R, zbe::WeakAvatarEntityContainer<A>, zbe::WeakAvatarEntityContainer<A> >(new AActuator());
   act->push_front(actwrap);
@@ -93,26 +93,26 @@ TEST(IntersectionEventGenerator, run) {
   zbe::ResourceManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > > >& lmcn = zbe::ResourceManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > > >::getInstance();
   zbe::ResourceManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > >& lmct = zbe::ResourceManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > >::getInstance();
 
-  lmcn.insert(1, cnl);
-  lmct.insert(2, ctl);
+  lmcn.insert(10, cnl);
+  lmct.insert(20, ctl);
 
   std::shared_ptr<Coner> dconer= std::make_shared<Coner>();
   A* aner = new A(42);
   setAvatar(dconer, aner);
-  zbe::Collisioner<R> *collisioner = new zbe::CollisionerCommon<R, A>(std::make_shared<zbe::WeakAvatarEntityContainer<A> >(dconer), sbox, std::make_shared<zbe::ReactObjectCommon<R, A> >(std::make_shared<zbe::WeakAvatarEntityContainer<A> >(dconer)), 1);
+  zbe::Collisioner<R> *collisioner = new zbe::CollisionerCommon<R, A>(std::make_shared<zbe::WeakAvatarEntityContainer<A> >(dconer), sbox, std::make_shared<zbe::ReactObjectCommon<R, A> >(std::make_shared<zbe::WeakAvatarEntityContainer<A> >(dconer)), 10);
   setAvatar(dconer, collisioner);
 
   std::shared_ptr<Cator> dcator= std::make_shared<Cator>();
   A* ator = new A(37);
   setAvatar(dcator, ator);
-  zbe::Collisionator<R> *collisionator = new  zbe::CollisionatorCommon<R, A>(std::make_shared<zbe::WeakAvatarEntityContainer<A> >(dcator), cc, std::make_shared<zbe::ReactObjectCommon<R, A> >(std::make_shared<zbe::WeakAvatarEntityContainer<A> >(dcator)), 1, 1);
+  zbe::Collisionator<R> *collisionator = new  zbe::CollisionatorCommon<R, A>(std::make_shared<zbe::WeakAvatarEntityContainer<A> >(dcator), cc, std::make_shared<zbe::ReactObjectCommon<R, A> >(std::make_shared<zbe::WeakAvatarEntityContainer<A> >(dcator)), 10, 10);
   setAvatar(dcator, collisionator);
 
   cnl->push_front(dconer);
   ctl->push_front(dcator);
   zbe::CollisionSelector<R>* cs = new zbe::BaseCollisionSelector<R>();
 
-  zbe::InteractionEventGenerator<R, zbe::CollisionSelector<R> , zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > >,  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > > ieg(2, 1, cs);
+  zbe::InteractionEventGenerator<R, zbe::CollisionSelector<R> , zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > >,  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > > ieg(20, 10, cs);
 
   sysTime.update();
   sysTime.update();
@@ -123,10 +123,10 @@ TEST(IntersectionEventGenerator, run) {
   A* a;
   zbe::assignAvatar(dconer, &a);
   EXPECT_EQ(42, a->id) << "Coner id must be 42";
-  EXPECT_EQ(37, a->vs) << "Coner is must be 37";
+  EXPECT_EQ(37, a->vs) << "Coner vs must be 37";
   zbe::assignAvatar(dcator, &a);
   EXPECT_EQ(37, a->id) << "Cator id must be 37";
-  EXPECT_EQ(42, a->vs) << "Cator is must be 42";
+  EXPECT_EQ(42, a->vs) << "Cator vs must be 42";
 
   delete actwrap;
 }
@@ -147,7 +147,7 @@ TEST(InstantIntersectionEventGenerator, run_no_collision) {
   zbe::ResourceManager<std::forward_list<zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* > >& lma = zbe::ResourceManager<std::forward_list<zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* > >::getInstance();
 
   std::shared_ptr<std::forward_list<zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* > > act(new std::forward_list<zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* >());
-  lma.insert(1, act);
+  lma.insert(100, act);
 
   zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* actwrap = new  zbe::ActuatorWrapperCommon<R, zbe::WeakAvatarEntityContainer<A>, zbe::WeakAvatarEntityContainer<A> >(new AActuator());
   act->push_front(actwrap);
@@ -155,26 +155,26 @@ TEST(InstantIntersectionEventGenerator, run_no_collision) {
   zbe::ResourceManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > > >& lmcn = zbe::ResourceManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > > >::getInstance();
   zbe::ResourceManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > >& lmct = zbe::ResourceManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > >::getInstance();
 
-  lmcn.insert(1, cnl);
-  lmct.insert(2, ctl);
+  lmcn.insert(100, cnl);
+  lmct.insert(200, ctl);
 
   std::shared_ptr<Coner> dconer= std::make_shared<Coner>();
   A* aner = new A(42);
   setAvatar(dconer, aner);
-  zbe::Collisioner<R> *collisioner = new zbe::CollisionerCommon<R, A>(std::make_shared<zbe::WeakAvatarEntityContainer<A> >(dconer), sbox, std::make_shared<zbe::ReactObjectCommon<R, A> >(std::make_shared<zbe::WeakAvatarEntityContainer<A> >(dconer)), 1);
+  zbe::Collisioner<R> *collisioner = new zbe::CollisionerCommon<R, A>(std::make_shared<zbe::WeakAvatarEntityContainer<A> >(dconer), sbox, std::make_shared<zbe::ReactObjectCommon<R, A> >(std::make_shared<zbe::WeakAvatarEntityContainer<A> >(dconer)), 100);
   setAvatar(dconer, collisioner);
 
   std::shared_ptr<Cator> dcator= std::make_shared<Cator>();
   A* ator = new A(37);
   setAvatar(dcator, ator);
-  zbe::Collisionator<R> *collisionator = new  zbe::CollisionatorCommon<R, A>(std::make_shared<zbe::WeakAvatarEntityContainer<A> >(dcator), cc, std::make_shared<zbe::ReactObjectCommon<R, A> >(std::make_shared<zbe::WeakAvatarEntityContainer<A> >(dcator)), 1, 1);
+  zbe::Collisionator<R> *collisionator = new  zbe::CollisionatorCommon<R, A>(std::make_shared<zbe::WeakAvatarEntityContainer<A> >(dcator), cc, std::make_shared<zbe::ReactObjectCommon<R, A> >(std::make_shared<zbe::WeakAvatarEntityContainer<A> >(dcator)), 100, 100);
   setAvatar(dcator, collisionator);
 
   cnl->push_front(dconer);
   ctl->push_front(dcator);
   zbe::CollisionSelector<R>* cs = new zbe::IntersectionCollisionSelector<R>();
 
-  zbe::InstantInteractionEventGenerator<R, zbe::CollisionSelector<R> , zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > >,  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > > iieg(2, 1, cs);
+  zbe::InstantInteractionEventGenerator<R, zbe::CollisionSelector<R> , zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > >,  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > > iieg(200, 100, cs);
 
   sysTime.update();
   sysTime.update();
@@ -186,10 +186,10 @@ TEST(InstantIntersectionEventGenerator, run_no_collision) {
   A* a;
   zbe::assignAvatar(dconer, &a);
   EXPECT_EQ(42, a->id) << "Coner id must be 42";
-  EXPECT_EQ(0, a->vs) << "Coner is must be 37";
+  EXPECT_EQ(0, a->vs) << "Coner vs must be 37";
   zbe::assignAvatar(dcator, &a);
   EXPECT_EQ(37, a->id) << "Cator id must be 37";
-  EXPECT_EQ(0, a->vs) << "Cator is must be 42";
+  EXPECT_EQ(0, a->vs) << "Cator vs must be 42";
 
   delete actwrap;
 }
@@ -249,10 +249,10 @@ TEST(InstantIntersectionEventGenerator, run) {
   A* a;
   zbe::assignAvatar(dconer, &a);
   EXPECT_EQ(42, a->id) << "Coner id must be 42";
-  EXPECT_EQ(37, a->vs) << "Coner is must be 37";
+  EXPECT_EQ(37, a->vs) << "Coner vs must be 37";
   zbe::assignAvatar(dcator, &a);
   EXPECT_EQ(37, a->id) << "Cator id must be 37";
-  EXPECT_EQ(42, a->vs) << "Cator is must be 42";
+  EXPECT_EQ(42, a->vs) << "Cator vs must be 42";
 
   delete actwrap;
 }

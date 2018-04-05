@@ -330,10 +330,11 @@
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/BaseSingleTextSprite.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/BaseStated.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/SimpleBounceable.h" />
-		<Unit filename="../../../include/ZBE/events/handlers/actuators/BouncerActuator.h" />
-		<Unit filename="../../../include/ZBE/events/handlers/actuators/ConditionalEraserActuator.h" />
-		<Unit filename="../../../include/ZBE/events/handlers/actuators/EraserActuator.h" />
-		<Unit filename="../../../include/ZBE/events/handlers/actuators/StateChangerActuator.h" />
+		<Unit filename="../../../include/ZBE/events/handlers/actuators/BouncerAtor.h" />
+		<Unit filename="../../../include/ZBE/events/handlers/actuators/ConditionalEraserAtor.h" />
+		<Unit filename="../../../include/ZBE/events/handlers/actuators/DaemonSelectorAtor.h" />
+		<Unit filename="../../../include/ZBE/events/handlers/actuators/EraserAtor.h" />
+		<Unit filename="../../../include/ZBE/events/handlers/actuators/StateChangerAtor.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/input/DaemonClickIH.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/input/DaemonInputHandler.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/input/InputToValue.h" />

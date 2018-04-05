@@ -12,8 +12,9 @@
 
 #include <cstdint>
 #include <memory>
-#include <map>
+#include <unordered_map>
 
+#include "ZBE/core/tools/shared/Value.h"
 #include "ZBE/core/tools/containers/Ticket.h"
 
 #include "ZBE/core/entities/avatars/Avatar.h"
@@ -26,7 +27,7 @@ class Entity : virtual public Avatar {
   public:
     /** \brief Empty constructor.
       */
-    Entity() : tl() {}
+    Entity() : tl(), dv(), uv(), iv() {}
     /** \brief The destructor make sure the entity is marked as ERASED in every Ticket.
       */
     virtual ~Entity();
@@ -64,10 +65,60 @@ class Entity : virtual public Avatar {
      */
     void setERASED();
 
+    /** \brief Sets a Value<double> at identifier id.
+     * This method should be called only once per id.
+     *  \param id identifier
+     *  \param val Value<double> to be set.
+     *  \sa getDobule, setUint, setInt
+     */
+    void setDouble(uint64_t id, std::shared_ptr<Value<double> > val);
+
+    /** \brief Sets a Value<uint64_t> at identifier id.
+     * This method should be called only once per id.
+     *  \param id identifier
+     *  \param val Value<uint64_t> to be set.
+     *  \sa getUint, setDouble, setInt
+     */
+    void setUint(uint64_t id, std::shared_ptr<Value<uint64_t> > val);
+
+    /** \brief Sets a Value<int64_t> at identifier id.
+     * This method should be called only once per id.
+     *  \param id identifier
+     *  \param val Value<int64_t> to be set.
+     *  \sa getInt, setUint, setDouble
+     */
+    void setInt(uint64_t id, std::shared_ptr<Value<int64_t> > val);
+
+    /** \brief Returns the Value<double> associated the identifier id.
+     *  \param id identifier
+     *  \return Value<double>.
+     *  \sa setDouble, getUint, getInt
+     */
+    std::shared_ptr<Value<double> > getDouble(uint64_t id);
+
+    /** \brief Returns the Value<uint64_t> associated the identifier id.
+     *  \param id identifier
+     *  \return Value<uint64_t>.
+     *  \sa setUint, getDouble, getInt
+     */
+    std::shared_ptr<Value<uint64_t> > getUint(uint64_t id);
+
+    /** \brief Returns the Value<int64_t> associated the identifier id.
+     *  \param id identifier
+     *  \return Value<int64_t>.
+     *  \sa setInt, getUint, getDouble
+     */
+    std::shared_ptr<Value<int64_t> > getInt(uint64_t id);
+
   private:
     inline void _setState(zbe::Ticket::State state);
     inline void _setState(uint64_t id, zbe::Ticket::State state);
-    std::map<uint64_t, std::shared_ptr<Ticket> > tl;  //!< Container that identify id with tickets
+
+    std::unordered_map<uint64_t, std::shared_ptr<Ticket> > tl;
+
+    std::unordered_map<uint64_t, std::shared_ptr<Value<double> > > dv;
+    std::unordered_map<uint64_t, std::shared_ptr<Value<uint64_t> > > uv;
+    std::unordered_map<uint64_t, std::shared_ptr<Value<int64_t> > > iv;
 };
 
 }  // namespace zbe

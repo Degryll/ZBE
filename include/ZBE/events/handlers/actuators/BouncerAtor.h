@@ -1,14 +1,14 @@
 /**
  * Copyright 2012 Batis Degryll Ludo
- * @file BouncerActuator.h
+ * @file BouncerAtor.h
  * @since 2017-06-25
  * @date 2018-02-25
  * @author Batis Degryll Ludo
  * @brief Actuator capable of making a entity bounce.
  */
 
-#ifndef ZBE_EVENTS_HANDLERS_ACTUATORS_BOUNCERACTUATOR
-#define ZBE_EVENTS_HANDLERS_ACTUATORS_BOUNCERACTUATOR
+#ifndef ZBE_EVENTS_HANDLERS_ACTUATORS_BOUNCERATOR_H_
+#define ZBE_EVENTS_HANDLERS_ACTUATORS_BOUNCERATOR_H_
 
 #include <memory>
 
@@ -22,7 +22,7 @@ namespace zbe {
 /** \brief Actuator capable of making a entity bounce.
  */
 template <typename R, typename RO>
-class BouncerActuator: public Actuator<WeakAvatarEntityContainer<Bouncer<2> >, R> {
+class BouncerSelfAtor: public Actuator<WeakAvatarEntityContainer<Bouncer<2> >, R> {
   public:
 
     /** \brief Acumulates bounce normal when template type is collided.
@@ -38,4 +38,4 @@ class BouncerActuator: public Actuator<WeakAvatarEntityContainer<Bouncer<2> >, R
 
 }  // namespace zbe
 
-#endif  // ZBE_EVENTS_HANDLERS_ACTUATORS_BOUNCERACTUATOR
+#endif  // ZBE_EVENTS_HANDLERS_ACTUATORS_BOUNCERATOR_H_
