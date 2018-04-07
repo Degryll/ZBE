@@ -19,18 +19,20 @@
 #include "ZBE/core/events/handlers/Actuator.h"
 #include "ZBE/core/entities/AvatarEntity.h"
 
+#include "ZBE/entities/avatars/Stated.h"
+
 namespace zbe {
 
 /** \brief Actuator that stores daemons and is able to call one of them depending on
 * the value of the received Stated.
 */
 template <typename T, typename R>
-class DaemonSelectorAlienAtor: public zbe::Actuator<WeakAvatarEntityContainer<T>, R> {
+class DaemonSelectorAlienAtor: public zbe::Actuator<T, R> {
 public:
   /** \brief Builds a DaemonSelectorAlienAtor with the default daemon.
    *
    */
-  DaemonSelectorActuator(std::shared_ptr<Daemon> defDaemon) : daemons(), defDaemon(defDaemon) {}
+  DaemonSelectorAlienAtor(std::shared_ptr<Daemon> defDaemon) : daemons(), defDaemon(defDaemon) {}
 
   /** \brief call a daemon depending on the value of the received Stated.
    *  \param ro not used.
@@ -76,12 +78,12 @@ public:
   /** \brief Builds a DaemonSelectorAlienAtor with the default daemon.
    *
    */
-  DaemonSelectorActuator(std::shared_ptr<Daemon> defDaemon) : daemons(), defDaemon(defDaemon) {}
+  DaemonSelectorSelfAtor(std::shared_ptr<Daemon> defDaemon) : daemons(), defDaemon(defDaemon) {}
 
   /** \brief call a daemon depending on the value of the received Stated.
    *  \param ro not used.
    */
-  void act(std::shared_ptr< zbe::WeakAvatarEntityContainer<T> > ro) {
+  void act(std::shared_ptr< zbe::WeakAvatarEntityContainer<T> >) {
     zbe::Stated * s;
     zbe::Actuator<WeakAvatarEntityContainer<zbe::Stated>, R>::getCollisioner()->get()->assignAvatar(&s);
     int64_t state = s->getState();
@@ -121,7 +123,7 @@ public:
   /** \brief Builds a DaemonSelectorAlienAtor with the default daemon.
    *
    */
-  DaemonSelectorActuator(std::shared_ptr<Daemon> defDaemon) : daemons(), defDaemon(defDaemon) {}
+  DaemonSelectorSelfAnyAtor(std::shared_ptr<Daemon> defDaemon) : daemons(), defDaemon(defDaemon) {}
 
   /** \brief call a daemon depending on the value of the received Stated.
    *  \param ro not used.
