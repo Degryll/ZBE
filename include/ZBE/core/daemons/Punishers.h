@@ -17,8 +17,8 @@ namespace zbe{
 
 /** \brief Punishers that applies Behaviors over a list of entities.
 */
-template<typename E, typename L>
-using BehaviorDaemon = PunisherDaemon<Behavior<E>, L>;
+template<typename L, typename ...E>
+using BehaviorDaemon = PunisherDaemon<Behavior<E...>, L>;
 
 }  // namespace zbe
 
