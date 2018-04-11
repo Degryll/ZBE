@@ -116,7 +116,7 @@
 #include "behaviors/builders/ItemBuilder.h"
 
 
-#include "graphics/MultiSpriteSheet.h"
+#include "ZBE/graphics/MultiSpriteSheet.h"
 #include "graphics/SimpleSpriteSheet.h"
 
 #include "daemons/ZBNoidResourceLoader.h"

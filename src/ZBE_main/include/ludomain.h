@@ -1,10 +1,12 @@
-
-#ifndef LUDOMAIN_H_
+#ifndef LUDO_LUDOMAIN_H_
 #define LUDOMAIN_H_
 
-#include <cstdio>
-namespace ludo {
-  int ludomain(int argc, char* argv[]);
-}
+#include <nlohmann/json.hpp>
 
-#endif /* LUDOMAIN_H_ */
+namespace ludo {
+
+  int ludomain(int argc, char* argv[]);
+
+}  // namespace ludo
+
+#endif  // LUDO_LUDOMAIN_H_

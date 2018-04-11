@@ -216,25 +216,25 @@ void ZBNoidResourceLoader::run () {
   std::shared_ptr<zbe::SpriteSheet<zbe::AnimatedSprite> > brickSS(new SimpleSpriteSheet(rsrcIDDic->getId(ZBNCfg::BRICK_GRAHPICS)));
   ZBNCfg::rmSSheetAnimSprt.insert(ZBNCfg::BRICK_SS, brickSS);
 
-  ImgSrcDef buttonGraphics;
+  ImgDef buttonGraphics;
   buttonGraphics.frameAmount = BUTTON_FRAMES;
-  buttonGraphics.frameDisplacemet = BUTTON_DISPLACEMENT;
+  buttonGraphics.regionOffset = BUTTON_DISPLACEMENT;
   buttonGraphics.frameTime = BUTTON_FRAMETIME;
-  buttonGraphics.intialRegion = BUTTON_REGION;
+  buttonGraphics.region = BUTTON_REGION;
   buttonGraphics.imgSrcId = rsrcIDDic->getId(ZBNCfg::BUTTON_GRAPHICS);
 
   MultiSpriteSheet* buttonSheet = new MultiSpriteSheet(BUTTON_STATES, buttonGraphics);
   buttonGraphics.imgSrcId = rsrcIDDic->getId(ZBNCfg::SELECTED_BUTTON_GRAPHICS);
-  buttonSheet->setImgSrcDef(1, buttonGraphics);
+  buttonSheet->setSprite(1, buttonGraphics);
 
   std::shared_ptr<zbe::SpriteSheet<zbe::AnimatedSprite> > buttonSS(buttonSheet);
   ZBNCfg::rmSSheetAnimSprt.insert(ZBNCfg::BUTTON_SS, buttonSS);
 
-  ImgSrcDef boardGraphics;
+  ImgDef boardGraphics;
   boardGraphics.frameAmount = BOARD_FRAMES;
-  boardGraphics.frameDisplacemet = BOARD_DISPLACEMENT;
+  boardGraphics.regionOffset = BOARD_DISPLACEMENT;
   boardGraphics.frameTime = BOARD_FRAMETIME;
-  boardGraphics.intialRegion = BOARD_REGION;
+  boardGraphics.region = BOARD_REGION;
   boardGraphics.imgSrcId = rsrcIDDic->getId(ZBNCfg::BOARD_GRAPHICS);
 
   MultiSpriteSheet* boardSheet = new MultiSpriteSheet(BOARD_STATES, boardGraphics);
@@ -242,73 +242,73 @@ void ZBNoidResourceLoader::run () {
   std::shared_ptr<zbe::SpriteSheet<zbe::AnimatedSprite> > boardSS(boardSheet);
   ZBNCfg::rmSSheetAnimSprt.insert(ZBNCfg::BOARD_SS, boardSS);
 
-  ImgSrcDef itemGraphics;
+  ImgDef itemGraphics;
   itemGraphics.frameAmount = ITEM_FRAMES;
-  itemGraphics.frameDisplacemet = ITEM_DISPLACEMENT;
+  itemGraphics.regionOffset = ITEM_DISPLACEMENT;
   itemGraphics.frameTime = ITEM_FRAMETIME;
-  itemGraphics.intialRegion = ITEM_REGION;
+  itemGraphics.region = ITEM_REGION;
   itemGraphics.imgSrcId = rsrcIDDic->getId(ZBNCfg::ITEM_LIFE_GRAPHICS);
 
   MultiSpriteSheet* itemSheet = new MultiSpriteSheet(ITEM_TYPES, itemGraphics);
   itemGraphics.imgSrcId = rsrcIDDic->getId(ZBNCfg::ITEM_MULTIPLIER_GRAPHICS);
-  itemSheet->setImgSrcDef(1, itemGraphics);
+  itemSheet->setSprite(1, itemGraphics);
   itemGraphics.imgSrcId = rsrcIDDic->getId(ZBNCfg::ITEM_ACCEL_GRAPHICS);
-  itemSheet->setImgSrcDef(2, itemGraphics);
+  itemSheet->setSprite(2, itemGraphics);
   itemGraphics.imgSrcId = rsrcIDDic->getId(ZBNCfg::ITEM_DECEL_GRAPHICS);
-  itemSheet->setImgSrcDef(3, itemGraphics);
+  itemSheet->setSprite(3, itemGraphics);
   itemGraphics.imgSrcId = rsrcIDDic->getId(ZBNCfg::ITEM_BIGGER_GRAPHICS);
-  itemSheet->setImgSrcDef(4, itemGraphics);
+  itemSheet->setSprite(4, itemGraphics);
   itemGraphics.imgSrcId = rsrcIDDic->getId(ZBNCfg::ITEM_SMALLER_GRAPHICS);
-  itemSheet->setImgSrcDef(5, itemGraphics);
+  itemSheet->setSprite(5, itemGraphics);
   itemGraphics.imgSrcId = rsrcIDDic->getId(ZBNCfg::ITEM_MAGNET_GRAPHICS);
-  itemSheet->setImgSrcDef(6, itemGraphics);
+  itemSheet->setSprite(6, itemGraphics);
   itemGraphics.imgSrcId = rsrcIDDic->getId(ZBNCfg::ITEM_P100_GRAPHICS);
-  itemSheet->setImgSrcDef(7, itemGraphics);
+  itemSheet->setSprite(7, itemGraphics);
   itemGraphics.imgSrcId = rsrcIDDic->getId(ZBNCfg::ITEM_P200_GRAPHICS);
-  itemSheet->setImgSrcDef(8, itemGraphics);
+  itemSheet->setSprite(8, itemGraphics);
   itemGraphics.imgSrcId = rsrcIDDic->getId(ZBNCfg::ITEM_P500_GRAPHICS);
-  itemSheet->setImgSrcDef(9, itemGraphics);
+  itemSheet->setSprite(9, itemGraphics);
   itemGraphics.imgSrcId = rsrcIDDic->getId(ZBNCfg::ITEM_P999_GRAPHICS);
-  itemSheet->setImgSrcDef(10, itemGraphics);
+  itemSheet->setSprite(10, itemGraphics);
   itemGraphics.imgSrcId = rsrcIDDic->getId(ZBNCfg::ITEM_PN5000_GRAPHICS);
-  itemSheet->setImgSrcDef(11, itemGraphics);
+  itemSheet->setSprite(11, itemGraphics);
 
   std::shared_ptr<zbe::SpriteSheet<zbe::AnimatedSprite> > itemSS(itemSheet);
   ZBNCfg::rmSSheetAnimSprt.insert(ZBNCfg::ITEM_SS, itemSS);
 
-  ImgSrcDef barGrapDef;
+  ImgDef barGrapDef;
   barGrapDef.frameAmount = BAR_FRAMES;
-  barGrapDef.frameDisplacemet = BAR_DISPLACEMENT;
+  barGrapDef.regionOffset = BAR_DISPLACEMENT;
   barGrapDef.frameTime = BAR_FRAMETIME;
-  barGrapDef.intialRegion = BAR_REGION;
+  barGrapDef.region = BAR_REGION;
   barGrapDef.imgSrcId = rsrcIDDic->getId(ZBNCfg::BAR_GRAPHICS);
 
   MultiSpriteSheet* barSheet = new MultiSpriteSheet(2, barGrapDef);
   barGrapDef.imgSrcId = rsrcIDDic->getId(ZBNCfg::BAR_GRAPHICS_GREY);
-  barSheet->setImgSrcDef(1,barGrapDef);
+  barSheet->setSprite(1,barGrapDef);
 
   std::shared_ptr<zbe::SpriteSheet<zbe::AnimatedSprite> > barSS(barSheet);
   ZBNCfg::rmSSheetAnimSprt.insert(ZBNCfg::BAR_SS, barSS);
 
-  ImgSrcDef ballGrapDef;
+  ImgDef ballGrapDef;
   ballGrapDef.frameAmount = BALL_FRAMES;
-  ballGrapDef.frameDisplacemet = BALL_DISPLACEMENT;
+  ballGrapDef.regionOffset = BALL_DISPLACEMENT;
   ballGrapDef.frameTime = BALL_FRAMETIME;
-  ballGrapDef.intialRegion = BALL_REGION;
+  ballGrapDef.region = BALL_REGION;
   ballGrapDef.imgSrcId = rsrcIDDic->getId(ZBNCfg::BALL_N_GRAPHICS);
 
   MultiSpriteSheet* ballSheet = new MultiSpriteSheet(2, ballGrapDef);
   ballGrapDef.imgSrcId = rsrcIDDic->getId(ZBNCfg::BALL_B_GRAPHICS);
-  ballSheet->setImgSrcDef(BALL_BOOM_STATE,ballGrapDef);
+  ballSheet->setSprite(BALL_BOOM_STATE,ballGrapDef);
 
   std::shared_ptr<zbe::SpriteSheet<zbe::AnimatedSprite> > ballSS(ballSheet);
   ZBNCfg::rmSSheetAnimSprt.insert(ZBNCfg::BALL_SS, ballSS);
 
-  ImgSrcDef explosionGrapDef;
+  ImgDef explosionGrapDef;
   explosionGrapDef.frameAmount = EXPLOSION_FRAMES;
-  explosionGrapDef.frameDisplacemet = EXPLOSION_DISPLACEMENT;
+  explosionGrapDef.regionOffset = EXPLOSION_DISPLACEMENT;
   explosionGrapDef.frameTime = EXPLOSION_FRAMETIME;
-  explosionGrapDef.intialRegion = EXPLOSION_REGION;
+  explosionGrapDef.region = EXPLOSION_REGION;
   explosionGrapDef.imgSrcId = rsrcIDDic->getId(ZBNCfg::EXPLODE_GRAPHICS);
 
   MultiSpriteSheet* explosionSheet = new MultiSpriteSheet(1, explosionGrapDef);

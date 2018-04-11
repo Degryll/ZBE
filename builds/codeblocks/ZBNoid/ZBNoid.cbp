@@ -211,7 +211,6 @@
 		<Unit filename="../../../src/ZBNoid/include/events/handlers/actuators/CustomVectorBouncerActuator.h" />
 		<Unit filename="../../../src/ZBNoid/include/events/handlers/actuators/ItemCatcher.h" />
 		<Unit filename="../../../src/ZBNoid/include/events/handlers/actuators/MagnetSticker.h" />
-		<Unit filename="../../../src/ZBNoid/include/graphics/MultiSpriteSheet.h" />
 		<Unit filename="../../../src/ZBNoid/include/graphics/RsrcIDDictionary.h" />
 		<Unit filename="../../../src/ZBNoid/include/graphics/SimpleSpriteSheet.h" />
 		<Unit filename="../../../src/ZBNoid/src/ZBNCfg.cpp" />

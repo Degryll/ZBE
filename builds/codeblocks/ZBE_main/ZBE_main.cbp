@@ -26,6 +26,7 @@
 					<Add directory="../../../extlibs/SDL2/2.0.5/x86_64-w64-mingw32/include/SDL2" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.1/x86_64-w64-mingw32/include" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.14/x86_64-w64-mingw32/include" />
+					<Add directory="../../../extlibs/json" />
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
@@ -59,6 +60,7 @@
 					<Add directory="../../../extlibs/SDL2/2.0.5/x86_64-w64-mingw32/include/SDL2" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.1/x86_64-w64-mingw32/include" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.14/x86_64-w64-mingw32/include" />
+					<Add directory="../../../extlibs/json" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -82,11 +84,11 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-Weffc++" />
-					<Add option="-std=c++11" />
 					<Add option="-Wextra" />
 					<Add option="-Wall" />
-					<Add option="-g" />
+					<Add option="-std=c++11" />
 					<Add option="-m64" />
+					<Add option="-g" />
 					<Add directory="../../../src/ZBE_main/include" />
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/utf8cpp/source" />
@@ -95,8 +97,10 @@
 					<Add directory="../../../extlibs/SDL2/2.0.3/include" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/include" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/include" />
+					<Add directory="../../../extlibs/json" />
 				</Compiler>
 				<Linker>
+					<Add option="-m64" />
 					<Add library="ZBE_x64d" />
 					<Add library="SDL2main" />
 					<Add library="SDL2" />
@@ -125,6 +129,7 @@
 					<Add directory="../../../extlibs/SDL2/2.0.3/include" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/include" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/include" />
+					<Add directory="../../../extlibs/json" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -176,7 +181,6 @@
 		<Unit filename="../../../src/ZBE_main/include/ludo/events/handlers/LudoActuators.h" />
 		<Unit filename="../../../src/ZBE_main/include/ludo/events/handlers/LudoHandlers.h" />
 		<Unit filename="../../../src/ZBE_main/include/ludomain.h" />
-		<Unit filename="../../../src/ZBE_main/include/zombienoid.h" />
 		<Unit filename="../../../src/ZBE_main/src/batismain.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/degryllmain.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/gamemain.cpp" />
