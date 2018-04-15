@@ -107,7 +107,7 @@ void CollisionerCommon<R, Bases...>::react(CollisionData * collisionData, std::s
   for (auto a : *(lma.get(al)) ) {
     a->run(c, reactObject, collisionData);
   }
-};
+}
 
 }  // namespace zbe
 

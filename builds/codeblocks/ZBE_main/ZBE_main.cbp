@@ -13,9 +13,14 @@
 				<Option type="1" />
 				<Option compiler="mingw_64-bit_compiler-710" />
 				<Compiler>
+					<Add option="-Weffc++" />
+					<Add option="-pedantic" />
+					<Add option="-Wextra" />
+					<Add option="-Wall" />
 					<Add option="-std=c++11" />
 					<Add option="-m64" />
 					<Add option="-g" />
+					<Add option="-isystem ../../../extlibs/json" />
 					<Add option="-D_GLIBCXX_USE_CXX11_ABI=0" />
 					<Add directory="../../../src/ZBE_main/include" />
 					<Add directory="../../../include" />
@@ -51,6 +56,7 @@
 					<Add option="-O2" />
 					<Add option="-std=c++11" />
 					<Add option="-m64" />
+					<Add option="-isystem ../../../extlibs/json" />
 					<Add option="-D_GLIBCXX_USE_CXX11_ABI=0" />
 					<Add directory="../../../src/ZBE_main/include" />
 					<Add directory="../../../include" />
@@ -84,6 +90,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-Weffc++" />
+					<Add option="-pedantic" />
 					<Add option="-Wextra" />
 					<Add option="-Wall" />
 					<Add option="-std=c++11" />

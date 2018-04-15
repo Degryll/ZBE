@@ -48,6 +48,6 @@ std::unordered_map<std::string, ImgDef> JSONImgDefFileLoad(std::istream& is, uin
     SysError::setError(std::string("ERROR: Json failed to load ImgDef for id ") + std::to_string(graphicsId) + std::string(" because: ") + std::string(e.what()));
   }
   return m;
-};
+}
 
 }  // namespace zbe
