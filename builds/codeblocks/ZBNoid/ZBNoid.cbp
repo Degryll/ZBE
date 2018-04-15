@@ -84,11 +84,12 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-Weffc++" />
-					<Add option="-std=c++11" />
 					<Add option="-Wextra" />
 					<Add option="-Wall" />
-					<Add option="-g" />
+					<Add option="-std=c++11" />
 					<Add option="-m64" />
+					<Add option="-g" />
+					<Add option="-isystem ../../../extlibs/json" />
 					<Add directory="../../../src/ZBNoid/include" />
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/utf8cpp/source" />
@@ -99,6 +100,7 @@
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/include" />
 				</Compiler>
 				<Linker>
+					<Add option="-m64" />
 					<Add library="ZBE_x64d" />
 					<Add library="SDL2main" />
 					<Add library="SDL2" />
@@ -120,6 +122,7 @@
 					<Add option="-O2" />
 					<Add option="-std=c++11" />
 					<Add option="-m64" />
+					<Add option="-isystem ../../../extlibs/json" />
 					<Add directory="../../../src/ZBNoid/include" />
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/boost_1_57_0" />
@@ -130,6 +133,7 @@
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add option="-m64" />
 					<Add library="ZBE_x64" />
 					<Add library="SDL2main" />
 					<Add library="SDL2" />

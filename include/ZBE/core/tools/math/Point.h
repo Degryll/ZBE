@@ -13,6 +13,7 @@
 #include <initializer_list>
 
 #include "ZBE/core/system/SysError.h"
+#include "ZBE/core/tools/math/math.h"
 
 namespace zbe {
 
@@ -181,6 +182,20 @@ class _POINT {
       return (lhs *= rhs);
     }
 
+    /** \brief Tells if two given _POINT are considered equal.
+     *
+     * \param lhs first Point.
+     * \param rhs second Point.
+     * \return True if both _POINT are equal. False otherwise.
+     */
+    friend bool operator==(const _POINT& lhs, const _POINT& rhs){
+      bool equal = true;
+      for(unsigned i = 0; i < s; i++ ) {
+        equal &= almost_equal(lhs.data[i], rhs.data[i]);
+      }
+      return equal;
+    }
+
   protected:
     double data[s];  //!< Point data.
 };
@@ -330,6 +345,32 @@ class Point<3> : public _POINT<3> {
 };
 
 using Point3D = Point<3>;  //!< An alias to Point<3>.
+
+/** \brief Returns the square of the distance between two points.
+ *  \param a First point.
+ *  \param a Second point.
+ *  \return The square of the distance between a and b.
+*/
+template <unsigned dim>
+double sqrPointDist(Point<dim> a, Point<dim> b) {
+    double accum = 0;
+    double localDist;
+    for(unsigned i = 0; i < dim; i++) {
+        localDist = b[i] - a[i];
+        accum += localDist * localDist;
+    }
+    return accum;
+}
+
+/** \brief Returns the distance between two points.
+ *  \param a First point.
+ *  \param a Second point.
+ *  \return The distance between a and b.
+*/
+template <unsigned dim>
+inline double pointDist(Point<dim> a, Point<dim> b) {
+    return sqrt(sqrPointDist(a,b));
+}
 
 }  // namespace zbe
 

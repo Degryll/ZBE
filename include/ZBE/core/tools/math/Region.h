@@ -14,6 +14,7 @@
 
 #include "ZBE/core/tools/math/Point.h"
 #include "ZBE/core/tools/math/Vector.h"
+#include "ZBE/core/tools/math/math.h"
 
 namespace zbe {
 
@@ -39,6 +40,16 @@ public:
    *  \param v Region dimensions
    */
   _REGION(const Point<dim>& p, const Vector<dim>& v) : _p(p), _v(v) {}
+
+  /** \brief Tells if two given _REGION are considered equal.
+   *
+   * \param lhs first Region.
+   * \param rhs second Region.
+   * \return True if both _REGION are equal. False otherwise.
+   */
+  friend bool operator==(const _REGION& lhs, const _REGION& rhs){
+    return ((lhs._p == rhs._p) && (lhs._v == rhs._v));
+  }
 
 protected:
   Point<dim> _p;

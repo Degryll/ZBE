@@ -333,6 +333,20 @@ class _VECTOR {
         return ray.reflect(normal);
     };
 
+    /** \brief Tells if two given _VECTOR are considered equal.
+     *
+     * \param lhs first Vector.
+     * \param rhs second Vector.
+     * \return True if both _VECTOR are equal. False otherwise.
+     */
+    friend bool operator==(const _VECTOR& lhs, const _VECTOR& rhs){
+      bool equal = true;
+      for(unsigned i = 0; i < dim; i++ ) {
+        equal &= almost_equal(lhs.data[i], rhs.data[i]);
+      }
+      return equal;
+    }
+
 ///////////////////////////////////////////////////////////////////////////////
 // END Friend Functions
 ///////////////////////////////////////////////////////////////////////////////

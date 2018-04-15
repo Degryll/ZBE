@@ -15,6 +15,7 @@
 
 #include "ZBE/core/tools/graphics/SpriteSheet.h"
 #include "ZBE/core/tools/graphics/Sprite.h"
+#include "ZBE/core/tools/math/math.h"
 #include "ZBE/core/tools/math/Vector.h"
 #include "ZBE/core/tools/math/Point.h"
 #include "ZBE/core/tools/math/Region.h"
@@ -23,24 +24,27 @@
 
 namespace zbe {
 
+const Vector2D DFLT_SCALE = {1.0, 1.0};
+const Vector2D DFLT_OFFSET = {0.0, 0.0};
+
 /** \brief Definition of graphical data asociated to an image.
  */
 struct ImgDef {
 
-  ImgDef(uint64_t imgSrcId, uint64_t frameTime, unsigned frameAmount, zbe::Region2D region, zbe::Vector2D regionOffset)
+  ImgDef(uint64_t imgSrcId, uint64_t frameTime, unsigned frameAmount, Region2D region, Vector2D regionOffset)
     : imgSrcId(imgSrcId),
       frameTime(frameTime),
       frameAmount(frameAmount),
       region(region),
       regionOffset(regionOffset) {}
 
-  ImgDef() : imgSrcId(), frameTime(), frameAmount(), region(), regionOffset(){}
+  ImgDef(uint64_t imgSrcId = 0) : imgSrcId(imgSrcId), frameTime(SECOND), frameAmount(1), region({0.0,0.0},{1.0,1.0}), regionOffset({0.0,0.0}){}
 
   uint64_t imgSrcId;
   uint64_t frameTime;
   unsigned frameAmount;
-  zbe::Region2D region;
-  zbe::Vector2D regionOffset;
+  Region2D region;
+  Vector2D regionOffset;
 
 };
 
@@ -48,21 +52,18 @@ struct ImgDef {
  */
 struct SprtDef {
 
-    SprtDef(ImgDef img, zbe::Vector2D drawOffset, double ratio)
-      : img(img), drawOffset(drawOffset), ratio(ratio) {}
-
-    SprtDef() : img(), drawOffset(), ratio(){}
+    SprtDef(ImgDef img = 0, Vector2D drawOffset = DFLT_OFFSET, Vector2D scale = DFLT_SCALE)
+      : img(img), drawOffset(drawOffset), scale(scale) {}
 
     ImgDef img;
-    zbe::Vector2D drawOffset;
-    double ratio;
+    Vector2D drawOffset;
+    Vector2D scale;
 
 };
 
-
 /** \brief Tool capable of generate a sprite from a AnimatedSprite.
  */
-class MultiSpriteSheet : public zbe::SpriteSheet<zbe::AnimatedSprite> {
+class MultiSpriteSheet : public SpriteSheet<AnimatedSprite> {
 public:
 
   /** \brief Parametriced constructor
@@ -74,7 +75,7 @@ public:
     }
   }
 
-  MultiSpriteSheet(int64_t size, const ImgDef& defaultID) : spriteDefintions(size), size(size), defaultSD(defaultID, Vector2D({0.0,0.0}), 1.0) {
+  MultiSpriteSheet(int64_t size, const ImgDef& defaultID) : spriteDefintions(size), size(size), defaultSD(defaultID) {
     for(unsigned i =0; i<size;i++){
       spriteDefintions[i] = defaultSD;
     }
@@ -83,7 +84,7 @@ public:
   /** \brief Generate a sprite from a given entity.
    *  \return generated sprite
    **/
-  zbe::Sprite generateSprite(zbe::AnimatedSprite* a) {
+  Sprite generateSprite(AnimatedSprite* a) {
     SprtDef& usedSD = defaultSD;
     int64_t state = a->getState();
     if(state>=0 && state<size) {
@@ -91,9 +92,9 @@ public:
     }
     uint64_t time = a->getTime() % (usedSD.img.frameAmount * usedSD.img.frameTime);
     uint64_t frame = time/usedSD.img.frameTime;
-    zbe::Region2D src(usedSD.img.region.p + (usedSD.img.regionOffset *  frame), usedSD.img.region.v);
-    zbe::Region2D dst({(double)a->getX() + usedSD.drawOffset.x, (double)a->getY() + usedSD.drawOffset.y}, {(double)a->getW() * usedSD.ratio, (double)a->getH() * usedSD.ratio});
-    zbe::Sprite s(src, dst, a->getDegrees(), usedSD.img.imgSrcId);
+    Region2D src(usedSD.img.region.p + (usedSD.img.regionOffset *  frame), usedSD.img.region.v);
+    Region2D dst({(double)a->getX() + usedSD.drawOffset.x, (double)a->getY() + usedSD.drawOffset.y}, {(double)a->getW() * usedSD.scale.x, (double)a->getH() * usedSD.scale.y});
+    Sprite s(src, dst, a->getDegrees(), usedSD.img.imgSrcId);
     return s;
   }
 
@@ -105,7 +106,7 @@ public:
 
   void setSprite(int64_t index, ImgDef id){
     if(index >= 0 && index < size){
-      spriteDefintions[index]= SprtDef(id, Vector2D({0.0,0.0}), 1.0);
+      spriteDefintions[index]= SprtDef(id);
     }
   }
 
@@ -118,7 +119,7 @@ public:
   }
 
   void setDefaultSprite(ImgDef id){
-    defaultSD = SprtDef(id, Vector2D({0.0,0.0}), 1.0);
+    defaultSD = SprtDef(id);
   }
 
 private:

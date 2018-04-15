@@ -1,0 +1,17 @@
+{
+"name" : "playerSheet",
+"imgdefs" : [
+  {
+    "name" : "jump1",
+    "frameTime" : 1000,
+    "region" : [0.0,0.0,0.5,0.5],
+    "regionOffset" : [0.0,0.0]
+  },
+  {
+    "name" : "run",
+    "frameAmount" : 2,
+    "region" : [0.5,0.5,1.0,1.0],
+    "regionOffset" : [1.0,0.0]
+  }
+]
+}

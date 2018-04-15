@@ -12,8 +12,7 @@
 
 #include <cmath>
 #include <cstdint>
-
-#include "ZBE/core/tools/math/Point.h"
+#include <limits>
 
 namespace zbe {
 
@@ -55,7 +54,6 @@ static const double TIME_QUANTUM_VALUE = (double)TIME_QUANTUM / SECOND;
  */
 static const int64_t ROUND_MASK = -TIME_QUANTUM;
 
-
 /** \brief Transforms the received time from ZBE time units to miliseconds.
  * \param time Time to convert.
  */
@@ -77,14 +75,14 @@ inline int64_t quantizeTime(int64_t n) {
  * \param epsilon Distance to consider both equals
  */
 inline bool isNearlyEqual(double a, double b, double epsilon) {
-  return (abs(a - b) <= epsilon);
+  return (std::abs(a - b) <= epsilon);
 }
 
 /** \brief Used to round values to its closer integer.
  * \param Number to be rounded.
  */
 inline double round(double d) {
-  return floor(d + 0.5);
+  return std::floor(d + 0.5);
 }
 
 /** \brief Used to round up values to (negatives values will round down).
@@ -94,30 +92,20 @@ inline int64_t roundUp (double n) {
     return ((n > 0) ? ceil(n) : floor(n));
 }
 
-/** \brief Returns the square of the distance between two points.
- *  \param a First point.
- *  \param a Second point.
- *  \return The square of the distance between a and b.
-*/
-template <unsigned dim>
-inline double sqrPointDist(Point<dim> a, Point<dim> b) {
-    double accum = 0;
-    double localDist;
-    for(unsigned i = 0; i < dim; i++) {
-        localDist = b[i] - a[i];
-        accum += localDist * localDist;
-    }
-    return accum;
-}
-
-/** \brief Returns the distance between two points.
- *  \param a First point.
- *  \param a Second point.
- *  \return The distance between a and b.
-*/
-template <unsigned dim>
-inline double pointDist(Point<dim> a, Point<dim> b) {
-    return sqrt(sqrPointDist(a,b));
+/** \brief Tells if the given double values are close enough to be cosidered equal.
+ * This code is based in an example found here:
+ * http://en.cppreference.com/w/cpp/types/numeric_limits/epsilon
+ * ULP is fixed to value 2.
+ *  \param a first double
+ *  \param b second double
+ */
+inline bool almost_equal(double a, double b) {
+    const int ulp = 2;
+    // the machine epsilon has to be scaled to the magnitude of the values used
+    // and multiplied by the desired precision in ULPs (units in the last place)
+    return std::abs(a-b) <= std::numeric_limits<double>::epsilon() * std::abs(a+b) * ulp
+    // unless the result is subnormal
+    || std::abs(a-b) < std::numeric_limits<double>::min();
 }
 
 }  // namespace zbe

@@ -2,6 +2,12 @@
 #define LUDOMAIN_H_
 
 #include <nlohmann/json.hpp>
+#include <unordered_map>
+#include <fstream>
+#include <iostream>
+
+#include "ZBE/JSON/graphics/JSONGraphicsLoaders.h"
+#include "ZBE/graphics/MultiSpriteSheet.h"
 
 namespace ludo {
 

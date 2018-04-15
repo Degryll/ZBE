@@ -1,133 +1,80 @@
-/**
- * Copyright 2012 Batis Degryll Ludo
- * @file MultiSpriteSheet.h
- * @since 2018-04-10
- * @date 2018-04-10
- * @author Degryll Ludo Batis
- * @brief Tool capable of generate a sprite from a AnimatedSprite.
- */
+#include "gtest/gtest.h"
 
-#ifndef ZBE_GRAPHICS_MULTISPRITESHEET_H_
-#define ZBE_GRAPHICS_MULTISPRITESHEET_H_
-
-#include <stdint.h>
-#include <vector>
-
-#include "ZBE/core/tools/graphics/SpriteSheet.h"
-#include "ZBE/core/tools/graphics/Sprite.h"
-#include "ZBE/core/tools/math/Vector.h"
-#include "ZBE/core/tools/math/Point.h"
-#include "ZBE/core/tools/math/Region.h"
-#include "ZBE/core/entities/AvatarEntity.h"
+#include "ZBE/core/entities/avatars/implementations/SimpleAnimatedSprite.h"
 #include "ZBE/core/entities/avatars/AnimatedSprite.h"
+#include "ZBE/core/tools/graphics/Sprite.h"
+#include "ZBE/graphics/MultiSpriteSheet.h"
 
-namespace zbe {
+namespace MultiSpriteSheetTest {
 
-/** \brief Definition about grphical data asociated to an image.
- */
-struct ImgDef {
+TEST(MultiSpriteSheet, generateSprite) {
+    using namespace zbe;
+    ImgDef id1(0);
+    ImgDef id2(1, 10000, 2, Region2D({0.5,0.5},{0.5,0.5}), Vector2D({0.5,0.0}));
+    ImgDef idd(2, 10000, 2, Region2D({0.0,0.5},{0.5,0.5}), Vector2D({0.0,0.5}));
+    SprtDef sd1(id1);
+    SprtDef sd2(id2);
+    SprtDef sdd(idd);
+    MultiSpriteSheet mss(2,sdd);
+    mss.setSprite(0, id1);
+    mss.setSprite(1, id2);
+    SimpleAnimatedSprite sas(0, 0, 100, 100, 1, 0.0, 0, 0);
 
-  ImgDef(uint64_t imgSrcId, uint64_t frameTime, unsigned frameAmount, zbe::Region2D region, zbe::Vector2D regionOffset)
-    : imgSrcId(imgSrcId),
-      frameTime(frameTime),
-      frameAmount(frameAmount),
-      region(region),
-      regionOffset(regionOffset) {}
+    sas.setState(0);
+    Sprite s = mss.generateSprite(&sas);
+    EXPECT_EQ(0, s.src.p.x);
+    EXPECT_EQ(0, s.src.p.y);
+    EXPECT_EQ(1, s.src.v.x);
+    EXPECT_EQ(1, s.src.v.y);
+    EXPECT_EQ(0, s.dst.p.x);
+    EXPECT_EQ(0, s.dst.p.y);
+    EXPECT_EQ(100, s.dst.v.x);
+    EXPECT_EQ(100, s.dst.v.y);
 
-  ImgDef() : imgSrcId(), frameTime(), frameAmount(), region(), regionOffset(){}
+    sas.setState(1);
+    s = mss.generateSprite(&sas);
+    EXPECT_EQ(0.5, s.src.p.x);
+    EXPECT_EQ(0.5, s.src.p.y);
+    EXPECT_EQ(0.5, s.src.v.x);
+    EXPECT_EQ(0.5, s.src.v.y);
+    EXPECT_EQ(0.0, s.dst.p.x);
+    EXPECT_EQ(0.0, s.dst.p.y);
+    EXPECT_EQ(100, s.dst.v.x);
+    EXPECT_EQ(100, s.dst.v.y);
 
-  uint64_t imgSrcId;
-  uint64_t frameTime;
-  unsigned frameAmount;
-  zbe::Region2D region;
-  zbe::Vector2D regionOffset;
+    sas.setState(2);
+    s = mss.generateSprite(&sas);
+    EXPECT_EQ(0.5, s.src.p.x);
+    EXPECT_EQ(0.5, s.src.p.y);
+    EXPECT_EQ(0.5, s.src.v.x);
+    EXPECT_EQ(0.5, s.src.v.y);
+    EXPECT_EQ(0, s.dst.p.x);
+    EXPECT_EQ(0, s.dst.p.y);
+    EXPECT_EQ(100, s.dst.v.x);
+    EXPECT_EQ(100, s.dst.v.y);
 
-};
+    sas.setState(7);
+    s = mss.generateSprite(&sas);
+    EXPECT_EQ(0.5, s.src.p.x);
+    EXPECT_EQ(0.5, s.src.p.y);
+    EXPECT_EQ(0.5, s.src.v.x);
+    EXPECT_EQ(0.5, s.src.v.y);
+    EXPECT_EQ(0, s.dst.p.x);
+    EXPECT_EQ(0, s.dst.p.y);
+    EXPECT_EQ(100, s.dst.v.x);
+    EXPECT_EQ(100, s.dst.v.y);
 
-/** \brief Definition about grphical data asociated to an image.
- */
-struct SprtDef {
+    sas.setState(1);
+    sas.setTime(SECOND*1.5);
+    s = mss.generateSprite(&sas);
+    EXPECT_EQ(1.0, s.src.p.x);
+    EXPECT_EQ(0.5, s.src.p.y);
+    EXPECT_EQ(0.5, s.src.v.x);
+    EXPECT_EQ(0.5, s.src.v.y);
+    EXPECT_EQ(0, s.dst.p.x);
+    EXPECT_EQ(0, s.dst.p.y);
+    EXPECT_EQ(100, s.dst.v.x);
+    EXPECT_EQ(100, s.dst.v.y);
+}
 
-    SprtDef(ImgDef img, zbe::Vector2D drawOffset, double ratio)
-      : img(img), drawOffset(drawOffset), ratio(ratio) {}
-
-    SprtDef() : img(), drawOffset(), ratio(){}
-
-    ImgDef img;
-    zbe::Vector2D drawOffset;
-    double ratio;
-
-};
-
-
-/** \brief Tool capable of generate a sprite from a AnimatedSprite.
- */
-class MultiSpriteSheet : public zbe::SpriteSheet<zbe::AnimatedSprite> {
-public:
-
-  /** \brief Parametriced constructor
-   *  \param id Id for the SpriteSheet;
-   **/
-  MultiSpriteSheet(int64_t size, const SprtDef& defaultSD) : imageDefintions(size), size(size), defaultSD(defaultSD) {
-    for(unsigned i =0; i<size;i++){
-      imageDefintions[i] = defaultSD;
-    }
-  }
-
-  MultiSpriteSheet(int64_t size, const ImgDef& defaultID) : imageDefintions(size), size(size), defaultSD(defaultID, Vector2D({0.0,0.0}), 1.0) {
-    for(unsigned i =0; i<size;i++){
-      imageDefintions[i] = defaultSD;
-    }
-  }
-
-  /** \brief Generate a sprite from a given entity.
-   *  \return generated sprite
-   **/
-  zbe::Sprite generateSprite(zbe::AnimatedSprite* a) {
-    //Sprite(Region2D src, Region2D dst, double angle, uint64_t graphics)
-    SprtDef& usedSD = defaultSD;
-    int64_t state = a->getState();
-    if(state>=0 && state<size) {
-        usedSD = imageDefintions[state];
-    }
-    uint64_t time = a->getTime() % (usedSD.img.frameAmount * usedSD.img.frameTime);
-    uint64_t frame = time/usedSD.img.frameTime;
-    zbe::Region2D src(usedSD.img.region.p + (usedSD.img.regionOffset *  frame), usedSD.img.region.v);
-    zbe::Region2D dst({(double)a->getX() + usedSD.drawOffset.x, (double)a->getY() + usedSD.drawOffset.y}, {(double)a->getW() * usedSD.ratio, (double)a->getH() * usedSD.ratio});
-    zbe::Sprite s(src, dst, a->getDegrees(), usedSD.img.imgSrcId);
-    return s;
-  }
-
-  void setSprite(int64_t index, SprtDef sd){
-    if(index >= 0 && index < size){
-      imageDefintions[index]= sd;
-    }
-  }
-
-  void setSprite(int64_t index, ImgDef id){
-    if(index >= 0 && index < size){
-      imageDefintions[index]= SprtDef(id, Vector2D({0.0,0.0}), 1.0);
-    }
-  }
-
-  uint64_t getSize(){
-    return size;
-  }
-
-  void setDefaultSprite(SprtDef sd){
-    defaultSD = sd;
-  }
-
-  void setDefaultSprite(ImgDef id){
-    defaultSD = SprtDef(id, Vector2D({0.0,0.0}), 1.0);
-  }
-
-private:
-  std::vector<SprtDef> imageDefintions;
-  int64_t size;
-  SprtDef defaultSD;
-};
-
-}  // namespace zbe
-
-#endif  // ZBE_GRAPHICS_MULTISPRITESHEET_H_
+}  // namespace MultiSpriteSheetTest
