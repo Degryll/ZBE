@@ -17,7 +17,7 @@
 
 #include "ZBE/core/daemons/Daemon.h"
 
-#include "ZBE/core/tools/containers/ResourceManager.h"
+#include "ZBE/core/tools/containers/RsrcStore.h"
 
 #include "ZBE/entities/avatars/Movable.h"
 
@@ -33,7 +33,7 @@ public:
   void operator=(const BallAcceleratorItem&) = delete;
 
   BallAcceleratorItem(uint64_t listId, double ratio)
-    : ballList(zbe::ResourceManager<BL>::getInstance().get(listId)), ratio(ratio) {
+    : ballList(zbe::RsrcStore<BL>::getInstance().get(listId)), ratio(ratio) {
   }
 
   ~BallAcceleratorItem(){}

@@ -18,7 +18,7 @@
 
 #include "ZBE/core/daemons/Daemon.h"
 
-#include "ZBE/core/tools/containers/ResourceManager.h"
+#include "ZBE/core/tools/containers/RsrcStore.h"
 
 #include "ZBE/entities/avatars/Resizable.h"
 
@@ -34,7 +34,7 @@ public:
   void operator=(const BallRadiusItem&) = delete;
 
   BallRadiusItem(uint64_t listId, double amount)
-    : ballList(zbe::ResourceManager<BL>::getInstance().get(listId)),
+    : ballList(zbe::RsrcStore<BL>::getInstance().get(listId)),
       amount(amount) {
   }
 

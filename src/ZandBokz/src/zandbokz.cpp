@@ -11,5 +11,5 @@
 
 int main(int /*argc*/, char** /*argv*/) {
     printf("Hello ZandBokz\n");
-    zbe::ResourceManager<int>::getInstance();
+    zbe::RsrcStore<int>::getInstance();
 }

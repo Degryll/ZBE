@@ -2,39 +2,39 @@
 
 namespace zombienoid {
 
-// Basic zbe::ResourceManager: List of collisionators and collisioners for collision. List of zbe::AnimatedSprite and zbe::SingleTextSprite for drawing
-zbe::ResourceManager<zbe::TicketedFAE<zbe::Collisioner<ZombienoidReactor> > >& ZBNCfg::rmTFAEConer = zbe::ResourceManager<zbe::TicketedFAE<zbe::Collisioner<ZombienoidReactor> > >::getInstance();
-zbe::ResourceManager<zbe::TicketedFAE<zbe::Collisionator<ZombienoidReactor> > >& ZBNCfg::rmTFAECator = zbe::ResourceManager<zbe::TicketedFAE<zbe::Collisionator<ZombienoidReactor> > >::getInstance();
-zbe::ResourceManager<zbe::JointAE<zbe::Collisionator<ZombienoidReactor> > >& ZBNCfg::rmJAECator = zbe::ResourceManager<zbe::JointAE<zbe::Collisionator<ZombienoidReactor> > >::getInstance();
-zbe::ResourceManager<zbe::JointAE<zbe::Collisioner<ZombienoidReactor> > >& ZBNCfg::rmJAEConer = zbe::ResourceManager<zbe::JointAE<zbe::Collisioner<ZombienoidReactor> > >::getInstance();
-zbe::ResourceManager<zbe::TicketedFAEC<zbe::AnimatedSprite> >& ZBNCfg::rmTFAECAnimSprt = zbe::ResourceManager<zbe::TicketedFAEC<zbe::AnimatedSprite> >::getInstance();
-zbe::ResourceManager<zbe::TicketedFAEC<zbe::SingleTextSprite> >& ZBNCfg::rmTFAECSTextSprt = zbe::ResourceManager<zbe::TicketedFAEC<zbe::SingleTextSprite> >::getInstance();
-zbe::ResourceManager<zbe::JointAEC<zbe::AnimatedSprite> >& ZBNCfg::rmJAECAnimSprt = zbe::ResourceManager<zbe::JointAEC<zbe::AnimatedSprite> >::getInstance();
-zbe::ResourceManager<zbe::JointAEC<zbe::SingleTextSprite> >& ZBNCfg::rmJAECSTextSprt = zbe::ResourceManager<zbe::JointAEC<zbe::SingleTextSprite> >::getInstance();
-// Basic zbe::ResourceManager for zbe::SpriteSheet Drawer
-zbe::ResourceManager<zbe::SpriteSheet<zbe::AnimatedSprite> >& ZBNCfg::rmSSheetAnimSprt = zbe::ResourceManager<zbe::SpriteSheet<zbe::AnimatedSprite> >::getInstance();
-// Specific zbe::ResourceManager for interactions: Actuators
-zbe::ResourceManager<std::forward_list<zbe::ActuatorWrapper<ZombienoidReactor, zbe::WAEC<zbe::Avatar, zbe::Positionable<2>, zbe::Stated> >* > >& ZBNCfg::rmFLAWBlock = zbe::ResourceManager<std::forward_list<zbe::ActuatorWrapper<ZombienoidReactor, zbe::WAEC<zbe::Avatar, zbe::Positionable<2>, zbe::Stated> >* > >::getInstance();
-zbe::ResourceManager<std::forward_list<zbe::ActuatorWrapper<ZombienoidReactor, zbe::WAEC<zbe::Avatar, zbe::Bouncer<2>, zbe::Stated> >* > >& ZBNCfg::rmFLAWItem = zbe::ResourceManager<std::forward_list<zbe::ActuatorWrapper<ZombienoidReactor, zbe::WAEC<zbe::Avatar, zbe::Bouncer<2>, zbe::Stated> >* > >::getInstance();
-zbe::ResourceManager<std::forward_list<zbe::ActuatorWrapper<ZombienoidReactor, zbe::WAEC<zbe::Avatar, zbe::Bouncer<2>, zbe::Stated, Scorer, zbe::Resizable> >* > >& ZBNCfg::rmFLAWBall = zbe::ResourceManager<std::forward_list<zbe::ActuatorWrapper<ZombienoidReactor, zbe::WAEC<zbe::Avatar, zbe::Bouncer<2>, zbe::Stated, Scorer, zbe::Resizable> >* > >::getInstance();
-zbe::ResourceManager<std::forward_list<zbe::ActuatorWrapper<ZombienoidReactor, zbe::WAEC<Scorer> >*> >& ZBNCfg::rmFLAWExplosion = zbe::ResourceManager<std::forward_list<zbe::ActuatorWrapper<ZombienoidReactor, zbe::WAEC<Scorer> >*> >::getInstance();
-// Specific zbe::ResourceManager for Behaviors
-zbe::ResourceManager<zbe::TicketedFAEC<zbe::Stated> >& ZBNCfg::rmTFAECStat = zbe::ResourceManager<zbe::TicketedFAEC<zbe::Stated> >::getInstance();
-zbe::ResourceManager<zbe::TicketedFAEC<zbe::Movable<2> > >& ZBNCfg::rmTFAECMov2D = zbe::ResourceManager<zbe::TicketedFAEC<zbe::Movable<2> > >::getInstance();
-zbe::ResourceManager<zbe::TicketedFAEC<zbe::Bouncer<2>, zbe::Avatar> >& ZBNCfg::rmTFAECBncr2DAvt =zbe::ResourceManager<zbe::TicketedFAEC<zbe::Bouncer<2>, zbe::Avatar> >::getInstance();
-zbe::ResourceManager<zbe::TicketedFAEC<zbe::Stated, zbe::Avatar, zbe::Positionable<2> > >& ZBNCfg::rmTFAECStatAvtPos2D = zbe::ResourceManager<zbe::TicketedFAEC<zbe::Stated, zbe::Avatar, zbe::Positionable<2> > >::getInstance();
-zbe::ResourceManager<zbe::TicketedFAEC<zbe::Positionable<2>, zbe::Avatar > >& ZBNCfg::rmTFAECPos2DAvt = zbe::ResourceManager<zbe::TicketedFAEC<zbe::Positionable<2>, zbe::Avatar > >::getInstance();
-zbe::ResourceManager<zbe::JointAEC<zbe::Positionable<2>, zbe::Avatar > >& ZBNCfg::rmJAECPos2DAvt = zbe::ResourceManager<zbe::JointAEC<zbe::Positionable<2>, zbe::Avatar > >::getInstance();
-zbe::ResourceManager<zbe::TicketedFAEC<zbe::Avatar, Scorer> >& ZBNCfg::rmTFAECAvtScor = zbe::ResourceManager<zbe::TicketedFAEC<zbe::Avatar, Scorer> >::getInstance();
-zbe::ResourceManager<zbe::TicketedFAEC<zbe::Bouncer<2>, zbe::Resizable, zbe::Avatar> >& ZBNCfg::rmTFAECBncr2DRszAvt = zbe::ResourceManager<zbe::TicketedFAEC<zbe::Bouncer<2>, zbe::Resizable, zbe::Avatar> >::getInstance();
+// Basic zbe::RsrcStore: List of collisionators and collisioners for collision. List of zbe::AnimatedSprite and zbe::SingleTextSprite for drawing
+zbe::RsrcStore<zbe::TicketedFAE<zbe::Collisioner<ZombienoidReactor> > >& ZBNCfg::rmTFAEConer = zbe::RsrcStore<zbe::TicketedFAE<zbe::Collisioner<ZombienoidReactor> > >::getInstance();
+zbe::RsrcStore<zbe::TicketedFAE<zbe::Collisionator<ZombienoidReactor> > >& ZBNCfg::rmTFAECator = zbe::RsrcStore<zbe::TicketedFAE<zbe::Collisionator<ZombienoidReactor> > >::getInstance();
+zbe::RsrcStore<zbe::JointAE<zbe::Collisionator<ZombienoidReactor> > >& ZBNCfg::rmJAECator = zbe::RsrcStore<zbe::JointAE<zbe::Collisionator<ZombienoidReactor> > >::getInstance();
+zbe::RsrcStore<zbe::JointAE<zbe::Collisioner<ZombienoidReactor> > >& ZBNCfg::rmJAEConer = zbe::RsrcStore<zbe::JointAE<zbe::Collisioner<ZombienoidReactor> > >::getInstance();
+zbe::RsrcStore<zbe::TicketedFAEC<zbe::AnimatedSprite> >& ZBNCfg::rmTFAECAnimSprt = zbe::RsrcStore<zbe::TicketedFAEC<zbe::AnimatedSprite> >::getInstance();
+zbe::RsrcStore<zbe::TicketedFAEC<zbe::SingleTextSprite> >& ZBNCfg::rmTFAECSTextSprt = zbe::RsrcStore<zbe::TicketedFAEC<zbe::SingleTextSprite> >::getInstance();
+zbe::RsrcStore<zbe::JointAEC<zbe::AnimatedSprite> >& ZBNCfg::rmJAECAnimSprt = zbe::RsrcStore<zbe::JointAEC<zbe::AnimatedSprite> >::getInstance();
+zbe::RsrcStore<zbe::JointAEC<zbe::SingleTextSprite> >& ZBNCfg::rmJAECSTextSprt = zbe::RsrcStore<zbe::JointAEC<zbe::SingleTextSprite> >::getInstance();
+// Basic zbe::RsrcStore for zbe::SpriteSheet Drawer
+zbe::RsrcStore<zbe::SpriteSheet<zbe::AnimatedSprite> >& ZBNCfg::rmSSheetAnimSprt = zbe::RsrcStore<zbe::SpriteSheet<zbe::AnimatedSprite> >::getInstance();
+// Specific zbe::RsrcStore for interactions: Actuators
+zbe::RsrcStore<std::forward_list<zbe::ActuatorWrapper<ZombienoidReactor, zbe::WAEC<zbe::Avatar, zbe::Positionable<2>, zbe::Stated> >* > >& ZBNCfg::rmFLAWBlock = zbe::RsrcStore<std::forward_list<zbe::ActuatorWrapper<ZombienoidReactor, zbe::WAEC<zbe::Avatar, zbe::Positionable<2>, zbe::Stated> >* > >::getInstance();
+zbe::RsrcStore<std::forward_list<zbe::ActuatorWrapper<ZombienoidReactor, zbe::WAEC<zbe::Avatar, zbe::Bouncer<2>, zbe::Stated> >* > >& ZBNCfg::rmFLAWItem = zbe::RsrcStore<std::forward_list<zbe::ActuatorWrapper<ZombienoidReactor, zbe::WAEC<zbe::Avatar, zbe::Bouncer<2>, zbe::Stated> >* > >::getInstance();
+zbe::RsrcStore<std::forward_list<zbe::ActuatorWrapper<ZombienoidReactor, zbe::WAEC<zbe::Avatar, zbe::Bouncer<2>, zbe::Stated, Scorer, zbe::Resizable> >* > >& ZBNCfg::rmFLAWBall = zbe::RsrcStore<std::forward_list<zbe::ActuatorWrapper<ZombienoidReactor, zbe::WAEC<zbe::Avatar, zbe::Bouncer<2>, zbe::Stated, Scorer, zbe::Resizable> >* > >::getInstance();
+zbe::RsrcStore<std::forward_list<zbe::ActuatorWrapper<ZombienoidReactor, zbe::WAEC<Scorer> >*> >& ZBNCfg::rmFLAWExplosion = zbe::RsrcStore<std::forward_list<zbe::ActuatorWrapper<ZombienoidReactor, zbe::WAEC<Scorer> >*> >::getInstance();
+// Specific zbe::RsrcStore for Behaviors
+zbe::RsrcStore<zbe::TicketedFAEC<zbe::Stated> >& ZBNCfg::rmTFAECStat = zbe::RsrcStore<zbe::TicketedFAEC<zbe::Stated> >::getInstance();
+zbe::RsrcStore<zbe::TicketedFAEC<zbe::Movable<2> > >& ZBNCfg::rmTFAECMov2D = zbe::RsrcStore<zbe::TicketedFAEC<zbe::Movable<2> > >::getInstance();
+zbe::RsrcStore<zbe::TicketedFAEC<zbe::Bouncer<2>, zbe::Avatar> >& ZBNCfg::rmTFAECBncr2DAvt =zbe::RsrcStore<zbe::TicketedFAEC<zbe::Bouncer<2>, zbe::Avatar> >::getInstance();
+zbe::RsrcStore<zbe::TicketedFAEC<zbe::Stated, zbe::Avatar, zbe::Positionable<2> > >& ZBNCfg::rmTFAECStatAvtPos2D = zbe::RsrcStore<zbe::TicketedFAEC<zbe::Stated, zbe::Avatar, zbe::Positionable<2> > >::getInstance();
+zbe::RsrcStore<zbe::TicketedFAEC<zbe::Positionable<2>, zbe::Avatar > >& ZBNCfg::rmTFAECPos2DAvt = zbe::RsrcStore<zbe::TicketedFAEC<zbe::Positionable<2>, zbe::Avatar > >::getInstance();
+zbe::RsrcStore<zbe::JointAEC<zbe::Positionable<2>, zbe::Avatar > >& ZBNCfg::rmJAECPos2DAvt = zbe::RsrcStore<zbe::JointAEC<zbe::Positionable<2>, zbe::Avatar > >::getInstance();
+zbe::RsrcStore<zbe::TicketedFAEC<zbe::Avatar, Scorer> >& ZBNCfg::rmTFAECAvtScor = zbe::RsrcStore<zbe::TicketedFAEC<zbe::Avatar, Scorer> >::getInstance();
+zbe::RsrcStore<zbe::TicketedFAEC<zbe::Bouncer<2>, zbe::Resizable, zbe::Avatar> >& ZBNCfg::rmTFAECBncr2DRszAvt = zbe::RsrcStore<zbe::TicketedFAEC<zbe::Bouncer<2>, zbe::Resizable, zbe::Avatar> >::getInstance();
 // Behaviors
-zbe::ResourceManager<zbe::Behavior<zbe::Positionable<2> > >& ZBNCfg::rmBPos2D = zbe::ResourceManager<zbe::Behavior<zbe::Positionable<2> > >::getInstance();
-zbe::ResourceManager<zbe::Behavior<zbe::Movable<2> > >& ZBNCfg::rmBMov2D = zbe::ResourceManager<zbe::Behavior<zbe::Movable<2> > >::getInstance();
+zbe::RsrcStore<zbe::Behavior<zbe::Positionable<2> > >& ZBNCfg::rmBPos2D = zbe::RsrcStore<zbe::Behavior<zbe::Positionable<2> > >::getInstance();
+zbe::RsrcStore<zbe::Behavior<zbe::Movable<2> > >& ZBNCfg::rmBMov2D = zbe::RsrcStore<zbe::Behavior<zbe::Movable<2> > >::getInstance();
 // daemons
-zbe::ResourceManager<zbe::Daemon>& ZBNCfg::rmD = zbe::ResourceManager<zbe::Daemon>::getInstance();
+zbe::RsrcStore<zbe::Daemon>& ZBNCfg::rmD = zbe::RsrcStore<zbe::Daemon>::getInstance();
 // Values
-zbe::ResourceManager<zbe::Value<int64_t> >& ZBNCfg::rmVInt64 = zbe::ResourceManager<zbe::Value<int64_t> >::getInstance();
-zbe::ResourceManager<zbe::Value<double> >& ZBNCfg::rmVDouble = zbe::ResourceManager<zbe::Value<double> >::getInstance();
+zbe::RsrcStore<zbe::Value<int64_t> >& ZBNCfg::rmVInt64 = zbe::RsrcStore<zbe::Value<int64_t> >::getInstance();
+zbe::RsrcStore<zbe::Value<double> >& ZBNCfg::rmVDouble = zbe::RsrcStore<zbe::Value<double> >::getInstance();
 
 // Ticket ids.
 uint64_t ZBNCfg::COLLISION_TICKET;

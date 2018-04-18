@@ -12,6 +12,6 @@
 
 #include "ZBE/core/tools/containers/ListJoint.h"
 #include "ZBE/core/tools/containers/TicketedForwardList.h"
-#include "ZBE/core/tools/containers/ResourceManager.h"
+#include "ZBE/core/tools/containers/RsrcStore.h"
 
 #endif  // ZBE_CORE_TOOLS_CONTAINERS_CONTAINERS_H_

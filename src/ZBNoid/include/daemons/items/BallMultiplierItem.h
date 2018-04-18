@@ -23,7 +23,7 @@
 
 #include "ZBE/core/tools/math/Vector.h"
 
-#include "ZBE/core/tools/containers/ResourceManager.h"
+#include "ZBE/core/tools/containers/RsrcStore.h"
 
 #include "ZBE/archetypes/Mobile.h"
 #include "ZBE/archetypes/implementations/SimpleMobile.h"
@@ -43,7 +43,7 @@ public:
   void operator=(const BallMultiplierItem&) = delete;
 
   BallMultiplierItem(std::shared_ptr<zbe::Behavior<zbe::Movable<2> > > builder, uint64_t listId, const double* angles, unsigned amount)
-    : builder(builder), ballList(zbe::ResourceManager<BL>::getInstance().get(listId)),
+    : builder(builder), ballList(zbe::RsrcStore<BL>::getInstance().get(listId)),
       archetype(new zbe::SimpleMobile<2>()), avatar(new zbe::BaseMovable<2>(archetype)),
       aem2(new zbe::AvatarEntityFixed<zbe::Movable<2> >(avatar)), model(new zbe::AvatarEntityContainer<zbe::Movable<2> >(aem2)),
       angles(angles), amount(amount) {

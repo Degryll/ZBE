@@ -1,14 +1,14 @@
 /**
  * Copyright 2011 Batis Degryll Ludo
- * @file ResourceManager.h
+ * @file RsrcStore.h
  * @since 2016/03/31
  * @date 2016/08/04
  * @author Degryll
  * @brief A class that relates an id with a resource.
  */
 
-#ifndef ZBE_CORE_TOOLS_CONTAINERS_RESOURCEMANAGER_H_
-#define ZBE_CORE_TOOLS_CONTAINERS_RESOURCEMANAGER_H_
+#ifndef ZBE_CORE_TOOLS_CONTAINERS_RSRCSTORE_H_
+#define ZBE_CORE_TOOLS_CONTAINERS_RSRCSTORE_H_
 
 #include <memory>
 
@@ -21,16 +21,16 @@ namespace zbe {
 /** \brief A class that relates an id with a resource.
  */
 template <typename T>
-class ResourceManager {
+class RsrcStore {
   public:
-    ResourceManager(ResourceManager const&)    = delete;  //!< Needed for singleton.
-    void operator=(ResourceManager const&) = delete;  //!< Needed for singleton.
+    RsrcStore(RsrcStore const&)    = delete;  //!< Needed for singleton.
+    void operator=(RsrcStore const&) = delete;  //!< Needed for singleton.
 
     /** \brief Singleton implementation.
-     *  \return The only instance of the ResourceManager.
+     *  \return The only instance of the RsrcStore.
      */
-    static ResourceManager& getInstance() {
-      static ResourceManager<T> instance;
+    static RsrcStore& getInstance() {
+      static RsrcStore<T> instance;
       return (instance);
     }
 
@@ -54,16 +54,16 @@ class ResourceManager {
     std::shared_ptr<T> get(uint64_t id);
 
   private:
-    ResourceManager() : l() {};  //!< Needed for singleton.
+    RsrcStore() : l() {};  //!< Needed for singleton.
 
     std::map<uint64_t, std::shared_ptr<T> > l;  //!< Map that associates resources with ids.
 };
 
 template <typename T>
-std::shared_ptr<T> ResourceManager<T>::get(uint64_t id) {
+std::shared_ptr<T> RsrcStore<T>::get(uint64_t id) {
   auto it = l.find(id);
   if (it == l.end()) {
-    SysError::setError("List not found.");
+    SysError::setError("Resource not found.");
     return (std::shared_ptr<T>());
   } else {
     return (it->second);
@@ -72,4 +72,4 @@ std::shared_ptr<T> ResourceManager<T>::get(uint64_t id) {
 
 }  // namespace zbe
 
-#endif  // ZBE_CORE_TOOLS_CONTAINERS_RESOURCEMANAGER_H_
+#endif  // ZBE_CORE_TOOLS_CONTAINERS_RSRCSTORE_H_

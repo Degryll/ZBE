@@ -15,7 +15,7 @@
 #include <vector>
 
 #include "ZBE/core/daemons/Daemon.h"
-#include "ZBE/core/tools/containers/ResourceManager.h"
+#include "ZBE/core/tools/containers/RsrcStore.h"
 
 namespace zbe {
 /** \brief Daemon that applies a "punish" over a list of elements.
@@ -32,7 +32,7 @@ public:
    * \param daemon Pointer to the daemon desired to be stored and executed.
    *
    */
-  PunisherDaemon(std::shared_ptr<P> punish, uint64_t listId) : punish(punish), eList( ResourceManager<L>::getInstance().get(listId) ) {}
+  PunisherDaemon(std::shared_ptr<P> punish, uint64_t listId) : punish(punish), eList( RsrcStore<L>::getInstance().get(listId) ) {}
 
   /** \brief Destroys the PunisherDaemon and the contained punisher.
    */

@@ -304,9 +304,11 @@
 		<Unit filename="../../../include/ZBE/core/system/SysTime.h" />
 		<Unit filename="../../../include/ZBE/core/tools/Timer.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/ListJoint.h" />
-		<Unit filename="../../../include/ZBE/core/tools/containers/ResourceManager.h" />
+		<Unit filename="../../../include/ZBE/core/tools/containers/RsrcDictionary.h" />
+		<Unit filename="../../../include/ZBE/core/tools/containers/RsrcStore.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/Ticket.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/TicketedForwardList.h" />
+		<Unit filename="../../../include/ZBE/core/tools/containers/containers.h" />
 		<Unit filename="../../../include/ZBE/core/tools/graphics/Sprite.h" />
 		<Unit filename="../../../include/ZBE/core/tools/graphics/SpriteSheet.h" />
 		<Unit filename="../../../include/ZBE/core/tools/math/Point.h" />

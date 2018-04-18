@@ -82,7 +82,7 @@ TEST(IntersectionEventGenerator, run) {
   std::shared_ptr<zbe::CollisionObject<R> > sbox = std::make_shared<zbe::StaticSolidAABB2D<R> >(zbe::AABB2D({{1.0,5.0},{6.0,10.0}}));
   std::shared_ptr<zbe::CollisionObject<R> > cc = std::make_shared<zbe::ConstantMovingCircle<R> >(zbe::Circle({{2.0,3.0},1.0}),zbe::Vector2D({3.0,4.0}));
 
-  zbe::ResourceManager<std::forward_list<zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* > >& lma = zbe::ResourceManager<std::forward_list<zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* > >::getInstance();
+  zbe::RsrcStore<std::forward_list<zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* > >& lma = zbe::RsrcStore<std::forward_list<zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* > >::getInstance();
 
   std::shared_ptr<std::forward_list<zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* > > act(new std::forward_list<zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* >());
   lma.insert(10, act);
@@ -90,8 +90,8 @@ TEST(IntersectionEventGenerator, run) {
   zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* actwrap = new  zbe::ActuatorWrapperCommon<R, zbe::WeakAvatarEntityContainer<A>, zbe::WeakAvatarEntityContainer<A> >(new AActuator());
   act->push_front(actwrap);
 
-  zbe::ResourceManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > > >& lmcn = zbe::ResourceManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > > >::getInstance();
-  zbe::ResourceManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > >& lmct = zbe::ResourceManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > >::getInstance();
+  zbe::RsrcStore< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > > >& lmcn = zbe::RsrcStore< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > > >::getInstance();
+  zbe::RsrcStore< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > >& lmct = zbe::RsrcStore< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > >::getInstance();
 
   lmcn.insert(10, cnl);
   lmct.insert(20, ctl);
@@ -144,7 +144,7 @@ TEST(InstantIntersectionEventGenerator, run_no_collision) {
   std::shared_ptr<zbe::CollisionObject<R> > sbox = std::make_shared<zbe::StaticSolidAABB2D<R> >(zbe::AABB2D({{1.0,5.0},{6.0,10.0}}));
   std::shared_ptr<zbe::CollisionObject<R> > cc = std::make_shared<zbe::ConstantMovingCircle<R> >(zbe::Circle({{2.0,3.0},1.0}),zbe::Vector2D({3.0,4.0}));
 
-  zbe::ResourceManager<std::forward_list<zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* > >& lma = zbe::ResourceManager<std::forward_list<zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* > >::getInstance();
+  zbe::RsrcStore<std::forward_list<zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* > >& lma = zbe::RsrcStore<std::forward_list<zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* > >::getInstance();
 
   std::shared_ptr<std::forward_list<zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* > > act(new std::forward_list<zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* >());
   lma.insert(100, act);
@@ -152,8 +152,8 @@ TEST(InstantIntersectionEventGenerator, run_no_collision) {
   zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* actwrap = new  zbe::ActuatorWrapperCommon<R, zbe::WeakAvatarEntityContainer<A>, zbe::WeakAvatarEntityContainer<A> >(new AActuator());
   act->push_front(actwrap);
 
-  zbe::ResourceManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > > >& lmcn = zbe::ResourceManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > > >::getInstance();
-  zbe::ResourceManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > >& lmct = zbe::ResourceManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > >::getInstance();
+  zbe::RsrcStore< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > > >& lmcn = zbe::RsrcStore< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > > >::getInstance();
+  zbe::RsrcStore< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > >& lmct = zbe::RsrcStore< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > >::getInstance();
 
   lmcn.insert(100, cnl);
   lmct.insert(200, ctl);
@@ -207,7 +207,7 @@ TEST(InstantIntersectionEventGenerator, run) {
   std::shared_ptr<zbe::CollisionObject<R> > sbox = std::make_shared<zbe::StaticSolidAABB2D<R> >(zbe::AABB2D({{0.0,0.0},{10.0,10.0}}));
   std::shared_ptr<zbe::CollisionObject<R> > cc = std::make_shared<zbe::ConstantMovingCircle<R> >(zbe::Circle({{5.0,5.0},1.0}),zbe::Vector2D({3.0,4.0}));
 
-  zbe::ResourceManager<std::forward_list<zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* > >& lma = zbe::ResourceManager<std::forward_list<zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* > >::getInstance();
+  zbe::RsrcStore<std::forward_list<zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* > >& lma = zbe::RsrcStore<std::forward_list<zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* > >::getInstance();
 
   std::shared_ptr<std::forward_list<zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* > > act(new std::forward_list<zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* >());
   lma.insert(1, act);
@@ -215,8 +215,8 @@ TEST(InstantIntersectionEventGenerator, run) {
   zbe::ActuatorWrapper<R, zbe::WeakAvatarEntityContainer<A> >* actwrap = new  zbe::ActuatorWrapperCommon<R, zbe::WeakAvatarEntityContainer<A> , zbe::WeakAvatarEntityContainer<A> >(new AActuator());
   act->push_front(actwrap);
 
-  zbe::ResourceManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > > >& lmcn = zbe::ResourceManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > > >::getInstance();
-  zbe::ResourceManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > >& lmct = zbe::ResourceManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > >::getInstance();
+  zbe::RsrcStore< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > > >& lmcn = zbe::RsrcStore< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > > >::getInstance();
+  zbe::RsrcStore< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > >& lmct = zbe::RsrcStore< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > >::getInstance();
 
   lmcn.insert(1, cnl);
   lmct.insert(2, ctl);

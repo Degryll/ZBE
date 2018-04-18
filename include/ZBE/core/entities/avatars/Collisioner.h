@@ -15,7 +15,7 @@
 
 #include "ZBE/core/tools/math/Point.h"
 #include "ZBE/core/tools/tools.h"
-#include "ZBE/core/tools/containers/ResourceManager.h"
+#include "ZBE/core/tools/containers/RsrcStore.h"
 
 #include "ZBE/core/events/handlers/Actuator.h"
 #include "ZBE/core/events/handlers/ActuatorWrapper.h"
@@ -65,7 +65,7 @@ public:
     */
   CollisionerCommon(std::shared_ptr<WeakAvatarEntityContainer<Bases...> > collisioner, std::shared_ptr<CollisionObject<R> > collisionObject, std::shared_ptr<ReactObject<R> > reactObject, uint64_t actuatorsList)
     : co(collisionObject), ro(reactObject), al(actuatorsList), c(collisioner),
-      lma(ResourceManager<std::forward_list<ActuatorWrapper<R, WeakAvatarEntityContainer<Bases...> >* > >::getInstance())  {}
+      lma(RsrcStore<std::forward_list<ActuatorWrapper<R, WeakAvatarEntityContainer<Bases...> >* > >::getInstance())  {}
 
   /** \brief Empty destructor.
     */
@@ -98,7 +98,7 @@ private:
   std::shared_ptr<ReactObject<R> > ro;  //!< Collision object
   uint64_t al;
   std::shared_ptr<WeakAvatarEntityContainer<Bases...> > c;
-  ResourceManager<std::forward_list<ActuatorWrapper<R, WeakAvatarEntityContainer<Bases...> >* > >& lma;
+  RsrcStore<std::forward_list<ActuatorWrapper<R, WeakAvatarEntityContainer<Bases...> >* > >& lma;
 
 };
 

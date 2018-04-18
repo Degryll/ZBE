@@ -63,7 +63,7 @@ class BallBoombizer: public zbe::Actuator<zbe::WeakAvatarEntityContainer<zbe::Av
       PositionableTimerSprite* timerSprite = new PositionableTimerSprite(waecp2->get(), timeGraphsId, timeGraphsW, timeGraphsH, -(timeGraphsW / 2) , -(timeGraphsH / 2));
 
       auto aecs = std::make_shared<zbe::AvatarEntityContainer<zbe::SingleTextSprite> >(std::make_shared<zbe::AvatarEntityFixed<zbe::SingleTextSprite> >(timerSprite));
-      auto tsList = zbe::ResourceManager<TSL>::getInstance().get(tsListId);
+      auto tsList = zbe::RsrcStore<TSL>::getInstance().get(tsListId);
       avatar->addToList(ticketId, tsList->push_front(aecs));
 
       std::shared_ptr<zbe::TimeHandler> exploder = std::make_shared<BallExploder<R, BHL, CTL, CNL, ASL> >(waecPRS, eventId, catorListId, conerListId,

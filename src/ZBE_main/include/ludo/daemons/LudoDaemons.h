@@ -13,7 +13,7 @@
 #include <cstdint>
 #include <memory>
 
-#include "ZBE/core/tools/containers/ResourceManager.h"
+#include "ZBE/core/tools/containers/RsrcStore.h"
 #include "ZBE/core/daemons/Daemon.h"
 #include "ZBE/core/system/SysTime.h"
 
@@ -24,13 +24,13 @@ namespace ludo {
 template<typename T>
 class ListEraser : virtual public zbe::Daemon {
 public:
-  ListEraser(uint64_t listId): id(listId), lmT(zbe::ResourceManager<zbe::TicketedForwardList<T> >::getInstance()){}
+  ListEraser(uint64_t listId): id(listId), lmT(zbe::RsrcStore<zbe::TicketedForwardList<T> >::getInstance()){}
   void run(){
     lmT.get(id)->clear();
   }
 private:
   uint64_t id;
-  zbe::ResourceManager<zbe::TicketedForwardList<T> >& lmT;
+  zbe::RsrcStore<zbe::TicketedForwardList<T> >& lmT;
 };
 
 class StateRotator : public zbe::Daemon {

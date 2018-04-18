@@ -6,7 +6,7 @@
 #include <ctime>
 
 #include "ZBE/SDL/system/SDLWindow.h"
-#include "ZBE/core/tools/containers/ResourceManager.h"
+#include "ZBE/core/tools/containers/RsrcStore.h"
 #include "ZBE/core/tools/containers/TicketedForwardList.h"
 #include "ZBE/core/entities/AvatarEntity.h"
 

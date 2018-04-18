@@ -6,7 +6,7 @@
 #include "ZBE/archetypes/Drawable.h"
 //#include "ZBE/core/entities/adaptorentities/SimpleSpriteEntity.h"
 #include "ZBE/core/entities/AvatarEntity.h"
-#include "ZBE/core/tools/containers/ResourceManager.h"
+#include "ZBE/core/tools/containers/RsrcStore.h"
 #include "ZBE/core/tools/containers/Ticket.h"
 #include "ZBE/core/tools/containers/TicketedForwardList.h"
 #include "ZBE/core/entities/Adaptor.h"
@@ -32,8 +32,8 @@ class GameReactor {};
 ////class Block: public zbe::Drawable,
 ////             public zbe::AvatarEntityAdapted<zbe::SingleSprite> {
 ////public:
-////  Block() : x(0), y(0), t(0), lm(zbe::ResourceManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite >*> >::getInstance()), ticket(nullptr) {}
-////  Block(int64_t x, int64_t y, uint64_t t, uint64_t id) : x(x), y(y), t(t), lm(zbe::ResourceManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite>*> >::getInstance()), ticket(lm.get(id)->push_front(this)) {}
+////  Block() : x(0), y(0), t(0), lm(zbe::RsrcStore<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite >*> >::getInstance()), ticket(nullptr) {}
+////  Block(int64_t x, int64_t y, uint64_t t, uint64_t id) : x(x), y(y), t(t), lm(zbe::RsrcStore<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite>*> >::getInstance()), ticket(lm.get(id)->push_front(this)) {}
 ////
 ////  void addTo(uint64_t id) {
 ////    ticket = lm.get(id)->push_front(this);
@@ -58,7 +58,7 @@ class GameReactor {};
 ////  int64_t x;
 ////  int64_t y;
 ////  uint64_t t;
-////  zbe::ResourceManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite>*> >& lm;
+////  zbe::RsrcStore<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite>*> >& lm;
 ////  std::shared_ptr<zbe::TicketedElement<zbe::AvatarEntity<zbe::SingleSprite>*> > ticket;
 ////};
 ////
@@ -374,7 +374,7 @@ class GameReactor {};
 ////public:
 ////  Mitil(int x, int y, int width, int height, int graphics, uint64_t id)
 ////  : x(x), y(y), w(width), h(height), g(graphics),
-////    lm(zbe::ResourceManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite>*> >::getInstance()),
+////    lm(zbe::RsrcStore<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite>*> >::getInstance()),
 ////    ticket(lm.get(id)->push_front(this)) {}
 ////
 //////  void setData(int x, int y, int width, int height, int graphics) {
@@ -407,7 +407,7 @@ class GameReactor {};
 ////  int w;
 ////  int h;
 ////  int g;
-////  zbe::ResourceManager<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite>*> >& lm;
+////  zbe::RsrcStore<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite>*> >& lm;
 ////  std::shared_ptr<zbe::TicketedElement<zbe::AvatarEntity<zbe::SingleSprite>*> > ticket;
 ////};
 ////
@@ -986,8 +986,8 @@ class GameReactor {};
 //
 ///*
 //
-//- Partir de la posicion del personaje (centro de la cámara)
-//- buscar suelo (si el personaje está sobre el suelo, ese, si está al aire, descender por niveles hasta encontrarlo).
+//- Partir de la posicion del personaje (centro de la cï¿½mara)
+//- buscar suelo (si el personaje estï¿½ sobre el suelo, ese, si estï¿½ al aire, descender por niveles hasta encontrarlo).
 //- Recorrer el mapa primero hacia atras (izq y arriba) y luego hacia adelante (der y abajo).
 //- Por cada nueva casilla se busca el suelo a partir del suelo contiguo.
 //  - Si al nivel actual la nueva casilla es aire, se desciende hasta encontrar el suelo.
@@ -996,13 +996,13 @@ class GameReactor {};
 //*/
 //
 //void IsometricDrawer::draw() {
-//  // - Partir de la posicion del personaje (centro de la cámara)
+//  // - Partir de la posicion del personaje (centro de la cï¿½mara)
 //  // POR AHORA el centro del mapa
 //  int x = m->getHW();
 //  int y = m->getHH();
 //  int z = m->getHD();
 //
-//  // buscar suelo (si el personaje está sobre el suelo, ese, si está al aire, descender por niveles hasta encontrarlo).
+//  // buscar suelo (si el personaje estï¿½ sobre el suelo, ese, si estï¿½ al aire, descender por niveles hasta encontrarlo).
 //  // POR AHORA siempre esta en el suelo
 //
 //  // - Recorrer el mapa primero hacia atras (izq y arriba) y luego hacia adelante (der y abajo).
@@ -1237,7 +1237,7 @@ int degryllmain(int, char**) {return 0;}
 ////  zbe::InputEventGenerator ieg(inputBuffer,INPUTEVENT);
 ////
 ////  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<GameReactor> >*> ctl;
-////  zbe::ResourceManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<GameReactor> >*> >& lmct = zbe::ResourceManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<GameReactor> >*> >::getInstance();
+////  zbe::RsrcStore< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<GameReactor> >*> >& lmct = zbe::RsrcStore< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<GameReactor> >*> >::getInstance();
 ////  lmct.insert(COLLISIONATORLIST, &ctl);
 ////  zbe::CollisionEventGenerator<GameReactor> ceg(COLLISIONATORLIST, COLLISIONEVENT);
 ////
@@ -1272,7 +1272,7 @@ int degryllmain(int, char**) {return 0;}
 //////  zbe::SimpleSpriteSDLDrawer drawer(&window);
 ////  zbe::DaemonMaster drawMaster;
 ////  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite >*> sprites;
-////  zbe::ResourceManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite >*> >& lmdraw = zbe::ResourceManager< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite >*> >::getInstance();
+////  zbe::RsrcStore< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite >*> >& lmdraw = zbe::RsrcStore< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite >*> >::getInstance();
 ////  lmdraw.insert(DRAWLIST, &sprites);
 ////
 ////  std::shared_ptr<zbe::Daemon> drawerDaemon(new  zbe::DrawerDaemon<zbe::SingleSprite, zbe::TicketedForwardList<zbe::AvatarEntity<zbe::SingleSprite >*> >(std::make_shared<zbe::SingleSpriteSDLDrawer>(&window), DRAWLIST));
@@ -1280,7 +1280,7 @@ int degryllmain(int, char**) {return 0;}
 ////
 ////  zbe::TimedDaemonMaster behavMaster;
 //////  std::vector<zbe::Mobile<2>*> vmobile;
-//////  zbe::ResourceManager< std::vector<zbe::Mobile<2>*> >& lmmobile = zbe::ResourceManager< std::vector<zbe::Mobile<2>*> >::getInstance();
+//////  zbe::RsrcStore< std::vector<zbe::Mobile<2>*> >& lmmobile = zbe::RsrcStore< std::vector<zbe::Mobile<2>*> >::getInstance();
 //////  lmmobile.insert(MOBILELIST, &vmobile);
 //////  std::shared_ptr<zbe::Daemon> bball(new  zbe::BehaviorDaemon< zbe::Mobile<2>, std::vector<zbe::Mobile<2>*> >(new zbe::UniformLinearMotion<2>(), MOBILELIST));
 //////  dMaster.addDaemon(bball);
@@ -1296,13 +1296,13 @@ int degryllmain(int, char**) {return 0;}
 ////  zbetris::Tetromino tetromino(blockgraphics, DRAWLIST, board, 1);
 //////  //ball
 //////  std::forward_list< zbe::Actuator< zbe::MovableCollisioner<game::GameReactor, 2>, game::GameReactor >*> ballActuatorsList;
-//////  zbe::ResourceManager< std::forward_list< zbe::Actuator< zbe::MovableCollisioner<game::GameReactor, 2>, game::GameReactor >* > >& lmBallActuatorsList = zbe::ResourceManager< std::forward_list< zbe::Actuator< zbe::MovableCollisioner<game::GameReactor, 2>, game::GameReactor >* > >::getInstance();
+//////  zbe::RsrcStore< std::forward_list< zbe::Actuator< zbe::MovableCollisioner<game::GameReactor, 2>, game::GameReactor >* > >& lmBallActuatorsList = zbe::RsrcStore< std::forward_list< zbe::Actuator< zbe::MovableCollisioner<game::GameReactor, 2>, game::GameReactor >* > >::getInstance();
 //////  lmBallActuatorsList.insert(BALLACTUATORLIST, &ballActuatorsList);
 //////  game::GameBallBouncer gbBouncer;
 //////  ballActuatorsList.push_front(&gbBouncer);
 //////
 //////  zbe::TicketedForwardList<zbe::CollisionerEntity<game::GameReactor>*> collisionablesList;
-//////  zbe::ResourceManager<zbe::TicketedForwardList<zbe::CollisionerEntity<game::GameReactor>*> >& lmCollisionablesList = zbe::ResourceManager< zbe::TicketedForwardList<zbe::CollisionerEntity<game::GameReactor>*> >::getInstance();
+//////  zbe::RsrcStore<zbe::TicketedForwardList<zbe::CollisionerEntity<game::GameReactor>*> >& lmCollisionablesList = zbe::RsrcStore< zbe::TicketedForwardList<zbe::CollisionerEntity<game::GameReactor>*> >::getInstance();
 //////  lmCollisionablesList.insert(COLLISIONABLELIST, &collisionablesList);
 ////
 ////
@@ -1346,7 +1346,7 @@ int degryllmain(int, char**) {return 0;}
 //////  }
 ////
 ////  //bricks
-//////  zbe::ResourceManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> >& lmSimpleConerActuatorsList = zbe::ResourceManager< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> >::getInstance();
+//////  zbe::RsrcStore< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> >& lmSimpleConerActuatorsList = zbe::RsrcStore< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> >::getInstance();
 //////  std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> brickActuatorsList;
 //////  lmSimpleConerActuatorsList.insert(BRICKACTUATORLIST, &brickActuatorsList);
 //////  for(int i = 0; i<8 ; i++){

@@ -8,6 +8,7 @@
 
 #include "ZBE/JSON/graphics/JSONGraphicsLoaders.h"
 #include "ZBE/graphics/MultiSpriteSheet.h"
+#include "ZBE/core/tools/containers/RsrcDictionary.h"
 
 namespace ludo {
 

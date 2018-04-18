@@ -17,7 +17,7 @@
 
 #include "ZBE/core/entities/AvatarEntity.h"
 
-#include "ZBE/core/tools/containers/ResourceManager.h"
+#include "ZBE/core/tools/containers/RsrcStore.h"
 #include "ZBE/core/tools/graphics/SpriteSheet.h"
 
 #include "ZBE/SDL/system/SDLWindow.h"
@@ -38,7 +38,7 @@ class SpriteSheetSDLDrawer : public Behavior<T> {
      *  \param window A SDLwindow with its context.
      */
     SpriteSheetSDLDrawer(std::shared_ptr<SDLWindow> window)
-      : window(window), imgStore(window->getImgStore()), rmss(ResourceManager<SpriteSheet<T> >::getInstance()) {}
+      : window(window), imgStore(window->getImgStore()), rmss(RsrcStore<SpriteSheet<T> >::getInstance()) {}
 
     /** \brief Destructor.
      */
@@ -65,7 +65,7 @@ class SpriteSheetSDLDrawer : public Behavior<T> {
   private:
     std::shared_ptr<SDLWindow> window;  //!< A SDL window with its context.
     std::shared_ptr<SDLImageStore> imgStore; //!< Where the images are stored.
-    ResourceManager<SpriteSheet<T> >& rmss; //!< Resource manager instance.
+    RsrcStore<SpriteSheet<T> >& rmss; //!< Resource manager instance.
 };
 
 }  // namespace zbe

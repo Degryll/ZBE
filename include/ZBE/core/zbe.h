@@ -33,16 +33,16 @@ template <typename ...Avatars>
 using JointAEC = ListTicketedJoint<TicketedFAEC<Avatars...>, std::shared_ptr<AEC<Avatars...> > >;  //!< Shortened name for ListTicketedJoint<TicketedFAEC<Avatars...>, std::shared_ptr<AEC<Avatars...> > >
 
 template <typename T>
-using RsrcTicketedFAE = ResourceManager<TicketedFAE<T> >;  //!< Shortened name for ResourceManager<TicketedFAE<T> >
+using RsrcTicketedFAE = RsrcStore<TicketedFAE<T> >;  //!< Shortened name for RsrcStore<TicketedFAE<T> >
 
 template <typename ...Avatars>
-using RsrcTicketedFAEC = ResourceManager<TicketedFAEC<Avatars...> >;  //!< Shortened name for ResourceManager<TicketedFAEC<Avatars...> >
+using RsrcTicketedFAEC = RsrcStore<TicketedFAEC<Avatars...> >;  //!< Shortened name for RsrcStore<TicketedFAEC<Avatars...> >
 
 template <typename T>
-using RsrcJointAE = ResourceManager<JointAE<T> >;  //!< Shortened name for ResourceManager<JointAE<T> >
+using RsrcJointAE = RsrcStore<JointAE<T> >;  //!< Shortened name for RsrcStore<JointAE<T> >
 
 template <typename ...Avatars>
-using RsrcJointAEC = ResourceManager<JointAEC<Avatars...> >;  //!< Shortened name for ResourceManager<JointAEC<Avatars...> >
+using RsrcJointAEC = RsrcStore<JointAEC<Avatars...> >;  //!< Shortened name for RsrcStore<JointAEC<Avatars...> >
 
 }  // namespace zbe
 

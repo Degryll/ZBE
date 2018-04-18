@@ -13,7 +13,7 @@
 #include <cstdint>
 #include <memory>
 
-#include "ZBE/core/tools/containers/ResourceManager.h"
+#include "ZBE/core/tools/containers/RsrcStore.h"
 #include "ZBE/core/system/SysTime.h"
 
 #include "ZBE/core/daemons/Daemon.h"
@@ -45,8 +45,8 @@ public:
    */
   InteractionEventGenerator(uint64_t list, int eventId, IS* is)
   : es(EventStore::getInstance()), id(list), eventId(eventId), is(is),
-    lmct(ResourceManager<LT>::getInstance()),
-    lmcn(ResourceManager<LN>::getInstance()),
+    lmct(RsrcStore<LT>::getInstance()),
+    lmcn(RsrcStore<LN>::getInstance()),
     sysTime(zbe::SysTime::getInstance()) {}
 
   /** \brief Empty destructor.
@@ -82,8 +82,8 @@ private:
   int eventId;  //!< id for the events of this type.
   IS* is;  //!< Use to select the type of the interaction.
 
-  ResourceManager<LT>& lmct;
-  ResourceManager<LN>& lmcn;
+  RsrcStore<LT>& lmct;
+  RsrcStore<LN>& lmcn;
   zbe::SysTime &sysTime;
 
 };

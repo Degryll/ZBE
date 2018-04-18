@@ -202,41 +202,41 @@ const int64_t EXPLOSION_STATES = 1;
 class ZBNCfg {
  public:
 
-  // Basic zbe::ResourceManager: List of entities for cleaning.
-  static zbe::ResourceManager<zbe::TicketedForwardList<zbe::Entity> >& rmTFEntity;
-  // Basic zbe::ResourceManager: List of collisionators and collisioners for collision. List of zbe::AnimatedSprite and zbe::SingleTextSprite for drawing
-  static zbe::ResourceManager<zbe::TicketedFAE<zbe::Collisioner<ZombienoidReactor> > >& rmTFAEConer;
-  static zbe::ResourceManager<zbe::TicketedFAE<zbe::Collisionator<ZombienoidReactor> > >& rmTFAECator;
-  static zbe::ResourceManager<zbe::JointAE<zbe::Collisionator<ZombienoidReactor> > >& rmJAECator;
-  static zbe::ResourceManager<zbe::JointAE<zbe::Collisioner<ZombienoidReactor> > >& rmJAEConer;
-  static zbe::ResourceManager<zbe::TicketedFAEC<zbe::AnimatedSprite> >& rmTFAECAnimSprt;
-  static zbe::ResourceManager<zbe::TicketedFAEC<zbe::SingleTextSprite> >& rmTFAECSTextSprt;
-  static zbe::ResourceManager<zbe::JointAEC<zbe::AnimatedSprite> >& rmJAECAnimSprt;
-  static zbe::ResourceManager<zbe::JointAEC<zbe::SingleTextSprite> >& rmJAECSTextSprt;
-  // Basic zbe::ResourceManager for zbe::SpriteSheet Drawer
-  static zbe::ResourceManager<zbe::SpriteSheet<zbe::AnimatedSprite> >& rmSSheetAnimSprt;
-  // Specific zbe::ResourceManager for interactions: Actuators
-  static zbe::ResourceManager<std::forward_list<zbe::ActuatorWrapper<ZombienoidReactor, zbe::WAEC<zbe::Avatar, zbe::Positionable<2>, zbe::Stated> >* > >& rmFLAWBlock;
-  static zbe::ResourceManager<std::forward_list<zbe::ActuatorWrapper<ZombienoidReactor, zbe::WAEC<zbe::Avatar, zbe::Bouncer<2>, zbe::Stated> >* > >& rmFLAWItem;
-  static zbe::ResourceManager<std::forward_list<zbe::ActuatorWrapper<ZombienoidReactor, zbe::WAEC<zbe::Avatar, zbe::Bouncer<2>, zbe::Stated, Scorer, zbe::Resizable> >* > >& rmFLAWBall;
-  static zbe::ResourceManager<std::forward_list<zbe::ActuatorWrapper<ZombienoidReactor, zbe::WAEC<Scorer> >*> >& rmFLAWExplosion;
-  // Specific zbe::ResourceManager for Behaviors
-  static zbe::ResourceManager<zbe::TicketedFAEC<zbe::Stated> >& rmTFAECStat;
-  static zbe::ResourceManager<zbe::TicketedFAEC<zbe::Movable<2> > >& rmTFAECMov2D;
-  static zbe::ResourceManager<zbe::TicketedFAEC<zbe::Bouncer<2>, zbe::Avatar> >& rmTFAECBncr2DAvt;
-  static zbe::ResourceManager<zbe::TicketedFAEC<zbe::Stated, zbe::Avatar, zbe::Positionable<2> > >& rmTFAECStatAvtPos2D;
-  static zbe::ResourceManager<zbe::TicketedFAEC<zbe::Positionable<2>, zbe::Avatar > >& rmTFAECPos2DAvt;
-  static zbe::ResourceManager<zbe::JointAEC<zbe::Positionable<2>, zbe::Avatar > >& rmJAECPos2DAvt;
-  static zbe::ResourceManager<zbe::TicketedFAEC<zbe::Avatar, Scorer> >& rmTFAECAvtScor;
-  static zbe::ResourceManager<zbe::TicketedFAEC<zbe::Bouncer<2>, zbe::Resizable, zbe::Avatar> >& rmTFAECBncr2DRszAvt;
+  // Basic zbe::RsrcStore: List of entities for cleaning.
+  static zbe::RsrcStore<zbe::TicketedForwardList<zbe::Entity> >& rmTFEntity;
+  // Basic zbe::RsrcStore: List of collisionators and collisioners for collision. List of zbe::AnimatedSprite and zbe::SingleTextSprite for drawing
+  static zbe::RsrcStore<zbe::TicketedFAE<zbe::Collisioner<ZombienoidReactor> > >& rmTFAEConer;
+  static zbe::RsrcStore<zbe::TicketedFAE<zbe::Collisionator<ZombienoidReactor> > >& rmTFAECator;
+  static zbe::RsrcStore<zbe::JointAE<zbe::Collisionator<ZombienoidReactor> > >& rmJAECator;
+  static zbe::RsrcStore<zbe::JointAE<zbe::Collisioner<ZombienoidReactor> > >& rmJAEConer;
+  static zbe::RsrcStore<zbe::TicketedFAEC<zbe::AnimatedSprite> >& rmTFAECAnimSprt;
+  static zbe::RsrcStore<zbe::TicketedFAEC<zbe::SingleTextSprite> >& rmTFAECSTextSprt;
+  static zbe::RsrcStore<zbe::JointAEC<zbe::AnimatedSprite> >& rmJAECAnimSprt;
+  static zbe::RsrcStore<zbe::JointAEC<zbe::SingleTextSprite> >& rmJAECSTextSprt;
+  // Basic zbe::RsrcStore for zbe::SpriteSheet Drawer
+  static zbe::RsrcStore<zbe::SpriteSheet<zbe::AnimatedSprite> >& rmSSheetAnimSprt;
+  // Specific zbe::RsrcStore for interactions: Actuators
+  static zbe::RsrcStore<std::forward_list<zbe::ActuatorWrapper<ZombienoidReactor, zbe::WAEC<zbe::Avatar, zbe::Positionable<2>, zbe::Stated> >* > >& rmFLAWBlock;
+  static zbe::RsrcStore<std::forward_list<zbe::ActuatorWrapper<ZombienoidReactor, zbe::WAEC<zbe::Avatar, zbe::Bouncer<2>, zbe::Stated> >* > >& rmFLAWItem;
+  static zbe::RsrcStore<std::forward_list<zbe::ActuatorWrapper<ZombienoidReactor, zbe::WAEC<zbe::Avatar, zbe::Bouncer<2>, zbe::Stated, Scorer, zbe::Resizable> >* > >& rmFLAWBall;
+  static zbe::RsrcStore<std::forward_list<zbe::ActuatorWrapper<ZombienoidReactor, zbe::WAEC<Scorer> >*> >& rmFLAWExplosion;
+  // Specific zbe::RsrcStore for Behaviors
+  static zbe::RsrcStore<zbe::TicketedFAEC<zbe::Stated> >& rmTFAECStat;
+  static zbe::RsrcStore<zbe::TicketedFAEC<zbe::Movable<2> > >& rmTFAECMov2D;
+  static zbe::RsrcStore<zbe::TicketedFAEC<zbe::Bouncer<2>, zbe::Avatar> >& rmTFAECBncr2DAvt;
+  static zbe::RsrcStore<zbe::TicketedFAEC<zbe::Stated, zbe::Avatar, zbe::Positionable<2> > >& rmTFAECStatAvtPos2D;
+  static zbe::RsrcStore<zbe::TicketedFAEC<zbe::Positionable<2>, zbe::Avatar > >& rmTFAECPos2DAvt;
+  static zbe::RsrcStore<zbe::JointAEC<zbe::Positionable<2>, zbe::Avatar > >& rmJAECPos2DAvt;
+  static zbe::RsrcStore<zbe::TicketedFAEC<zbe::Avatar, Scorer> >& rmTFAECAvtScor;
+  static zbe::RsrcStore<zbe::TicketedFAEC<zbe::Bouncer<2>, zbe::Resizable, zbe::Avatar> >& rmTFAECBncr2DRszAvt;
   // Behaviors
-  static zbe::ResourceManager<zbe::Behavior<zbe::Positionable<2> > >& rmBPos2D;
-  static zbe::ResourceManager<zbe::Behavior<zbe::Movable<2> > >& rmBMov2D;
+  static zbe::RsrcStore<zbe::Behavior<zbe::Positionable<2> > >& rmBPos2D;
+  static zbe::RsrcStore<zbe::Behavior<zbe::Movable<2> > >& rmBMov2D;
   // daemons
-  static zbe::ResourceManager<zbe::Daemon>& rmD;
+  static zbe::RsrcStore<zbe::Daemon>& rmD;
   // Values
-  static zbe::ResourceManager<zbe::Value<int64_t> >& rmVInt64;
-  static zbe::ResourceManager<zbe::Value<double> >& rmVDouble;
+  static zbe::RsrcStore<zbe::Value<int64_t> >& rmVInt64;
+  static zbe::RsrcStore<zbe::Value<double> >& rmVDouble;
 
   // Ticket ids.
   static uint64_t ENTITY_TICKET;
