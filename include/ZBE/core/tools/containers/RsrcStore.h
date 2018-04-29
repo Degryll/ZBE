@@ -43,6 +43,8 @@ class RsrcStore {
       if (it != l.end()) {
         SysError::setError("Id already in use.");
         return;
+      } else if (id == 0) {
+        SysError::setError("Using zero as id is potentialy dangerous");
       }
       l[id] = resource;
     }

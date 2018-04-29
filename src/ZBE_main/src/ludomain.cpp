@@ -8,7 +8,7 @@ int ludomain(int, char** ) {
 
     std::ifstream i("data/test/json/testjson_001.json");
 
-    std::unordered_map<std::string, zbe::ImgDef> m = zbe::JSONImgDefFileLoad(i, 0);
+    zbe::JSONImgDefFileLoad(i, 0);
 
     std::cout << "--------------------------------------------------------------" << std::endl;
     std::cout << "Errors found: " << zbe::SysError::getNErrors() << std::endl;

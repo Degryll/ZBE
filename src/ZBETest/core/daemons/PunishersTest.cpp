@@ -30,22 +30,25 @@ class MockTimedPunish {
 
 
 TEST(PunisherDaemon, PunisherDaemon) {
+    EXPECT_EQ(0,zbe::SysError::getNErrors()) << "Initialy no errors.";
     MockEntity a,b,c,d;
     zbe::RsrcStore<std::forward_list<MockEntity*> > & lm =zbe::RsrcStore<std::forward_list<MockEntity*> >::getInstance();
-    lm.insert(0, std::make_shared<std::forward_list<MockEntity*> >());
+    lm.insert(2, std::make_shared<std::forward_list<MockEntity*> >());
     lm.insert(1, std::make_shared<std::forward_list<MockEntity*> >());
-    std::shared_ptr<std::forward_list<MockEntity*> > eList0 = lm.get(0);
+    std::shared_ptr<std::forward_list<MockEntity*> > eList2 = lm.get(2);
     std::shared_ptr<std::forward_list<MockEntity*> > eList1 = lm.get(1);
-    eList0->push_front(&a);
-    eList0->push_front(&b);
+    eList2->push_front(&a);
+    eList2->push_front(&b);
     eList1->push_front(&c);
     eList1->push_front(&d);
-    zbe::Daemon* daemon = new zbe::PunisherDaemon<MockPunish, std::forward_list<MockEntity*> >(std::make_shared<MockPunish>(), 0);
+    zbe::Daemon* daemon = new zbe::PunisherDaemon<MockPunish, std::forward_list<MockEntity*> >(std::make_shared<MockPunish>(), 2);
     daemon->run();
     EXPECT_EQ(1, a.data) << "a must has been punished";
     EXPECT_EQ(1, b.data) << "b must has been punished";
     EXPECT_EQ(0, c.data) << "c must has not been punished";
     EXPECT_EQ(0, d.data) << "d must has not been punished";
+
+    EXPECT_EQ(0,zbe::SysError::getNErrors()) << "Finaly no errors.";
 }
 
 }  // namespace Punishers

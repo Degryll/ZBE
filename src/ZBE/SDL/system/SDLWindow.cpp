@@ -69,30 +69,27 @@ void SDLWindow::render(SDL_Surface *surf, const SDL_Rect* srcrect, const SDL_Rec
   }
 }
 
-SDLImageStore::SDLImageStore(SDL_Renderer* renderer): ntextures(0), imgCollection(), m(), mf(), renderer(renderer) { }
+SDLImageStore::SDLImageStore(SDL_Renderer* renderer): ntextures(0), imgCollection(), m(), mf(), renderer(renderer) {
+  imgCollection.push_back(nullptr);  // Id zero is discouraged
+}
 
 SDLImageStore::~SDLImageStore(){
-  for(auto iter = imgCollection.begin(); iter != imgCollection.end(); iter++ ) {
+  // ++ Because id zero is discouraged, element zero is avoided
+  for(auto iter = ++(imgCollection.begin()); iter != imgCollection.end(); iter++ ) {
     SDL_DestroyTexture(*iter);
   }
 }
 
 uint64_t SDLImageStore::loadImg(const char *url) {
-  m.lock();
-    imgCollection.push_back(IMG_LoadTexture(renderer, url));
-    uint64_t rid = ntextures++;  // Avoid race condition
-  m.unlock();
-
-  return (rid);
+  return storeTexture(IMG_LoadTexture(renderer, url));
 }
 
 uint64_t SDLImageStore::storeTexture(SDL_Texture * texture) {
   m.lock();
     imgCollection.push_back(texture);
-    uint64_t rid = ntextures++;  // Avoid race condition
+    ntextures++;  // Avoid race condition
   m.unlock();
-
-  return (rid);
+  return (ntextures);
 }
 
 uint64_t SDLImageStore::loadImg(const char *data, int width, int height, int depth, int pitch) {
@@ -115,10 +112,10 @@ uint64_t SDLImageStore::loadImg(const char *data, int width, int height, int dep
 
   m.lock();
     imgCollection.push_back(t);
-    uint64_t rid = ntextures++;  // Avoid race condition
+    ntextures++;  // Avoid race condition
   m.unlock();
 
-  return (rid);
+  return (ntextures);
 }
 
 uint64_t SDLImageStore::reloadImg(const char *url, uint64_t id) {
@@ -134,7 +131,7 @@ uint64_t SDLImageStore::reloadImg(const char *url, uint64_t id) {
 }
 
 SDL_Texture* SDLImageStore::getTexture(uint64_t id) {
-    return imgCollection[id];
+    return imgCollection.at(id);
 }
 
 

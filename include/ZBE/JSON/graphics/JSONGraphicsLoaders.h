@@ -23,7 +23,7 @@ using json = nlohmann::json;
 
 ImgDef JSONImgDefLoad(json j, uint64_t graphicsId);
 
-std::unordered_map<std::string, ImgDef> JSONImgDefFileLoad(std::istream& is, uint64_t graphicsId);
+void JSONImgDefFileLoad(std::istream& is, uint64_t graphicsId);
 
 
 }  // namespace zbe

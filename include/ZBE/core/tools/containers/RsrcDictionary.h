@@ -43,6 +43,8 @@ class NameRsrcDictionary {
       if (it != l.end()) {
         SysError::setError("Name " + name + " already in use.");
         return;
+      } else if (id == 0) {
+        SysError::setError("Using zero as id is potentialy dangerous");
       }
       l[name] = id;
     }
@@ -93,6 +95,8 @@ class IdRsrcDictionary {
       if (it != l.end()) {
         SysError::setError(std::string("Local id ") + std::to_string(local) + std::string(" already in use."));
         return;
+      } else if (local == 0) {
+        SysError::setError("Using zero as id is potentialy dangerous");
       }
       l[local] = global;
     }

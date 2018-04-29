@@ -215,12 +215,12 @@
 		<Unit filename="../../../src/ZBETest/core/system/SysTimeTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/tools/SDLTimerTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/tools/containers/ListJointTest.cpp" />
-		<Unit filename="../../../src/ZBETest/core/tools/containers/RsrcStore.cpp" />
+		<Unit filename="../../../src/ZBETest/core/tools/containers/RsrcDictionaryTest.cpp" />
+		<Unit filename="../../../src/ZBETest/core/tools/containers/RsrcStoreTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/tools/containers/TicketTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/tools/containers/TicketedForwardListTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/tools/math/PointTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/tools/math/RegionTest.cpp" />
-		<Unit filename="../../../src/ZBETest/core/tools/math/RegionTest.h" />
 		<Unit filename="../../../src/ZBETest/core/tools/math/VectorTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/tools/math/collisions/CollisionSystemSolverTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/tools/math/collisions/intersectionsTest.cpp" />

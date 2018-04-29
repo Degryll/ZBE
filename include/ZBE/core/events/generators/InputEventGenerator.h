@@ -12,7 +12,7 @@
 
 #include <cstdint>
 #include <memory>
-#include <map>
+#include <unordered_map>
 
 #include "ZBE/core/daemons/Daemon.h"
 
@@ -60,7 +60,7 @@ namespace zbe {
       std::shared_ptr<InputBuffer> inputBuffer;
       int eventId;
       EventStore &store;
-      std::map<uint32_t, InputHandler*> handlers;
+      std::unordered_map<uint32_t, InputHandler*> handlers;
       zbe::SysTime &sysTime;
   };
 

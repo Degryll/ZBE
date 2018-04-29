@@ -28,3 +28,15 @@ TEST(RsrcStore, Usage) {
 
   zbe::SysError::clear();
 }
+
+TEST(RsrcStore, WrongUsage) {
+  zbe::RsrcStore<int>& rsu = zbe::RsrcStore<int>::getInstance();
+
+  EXPECT_EQ(0, zbe::SysError::getNErrors()) << "Initialy no errors.";
+
+  rsu.insert(0, std::make_shared<int>(1));
+
+  EXPECT_EQ(1, zbe::SysError::getNErrors()) << "An error must be set because id zero is discouraged.";
+
+  zbe::SysError::clear();
+}

@@ -1,0 +1,11 @@
+{
+"name" : "日ш",
+"imgdefs" : [
+  {
+    "name" : "界",
+    "frameTime" : 1000,
+    "region" : [0.0,0.0,0.5,0.5],
+    "regionOffset" : [0.0,0.0]
+  }
+]
+}

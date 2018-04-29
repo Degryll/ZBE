@@ -11,7 +11,7 @@
 
 namespace zbe {
 
-std::atomic<uint64_t> SysIdGenerator::id(0);
+std::atomic<uint64_t> SysIdGenerator::id(1);
 
 uint64_t SysIdGenerator::getId() {
   return (id++);

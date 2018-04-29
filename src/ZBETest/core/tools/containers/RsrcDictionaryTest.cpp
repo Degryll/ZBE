@@ -57,3 +57,15 @@ TEST(IdRsrcDictionary, Usage) {
 
   zbe::SysError::clear();
 }
+
+TEST(IdRsrcDictionary, WrongUsage) {
+  zbe::IdRsrcDictionary& ird = zbe::IdRsrcDictionary::getInstance();
+  
+  EXPECT_EQ(0, zbe::SysError::getNErrors()) << "Initialy no errors.";
+
+  ird.insert(0, 1);
+
+  EXPECT_EQ(1, zbe::SysError::getNErrors()) << "An error must be set because id zero is discouraged.";
+
+  zbe::SysError::clear();
+}

@@ -7,12 +7,17 @@
  * @brief Functions to load image properties from json files.
  */
 
+#include "ZBE/JSON/graphics/JSONGraphicsLoaders.h"
+
+#include <memory>
 #include <string>
 
 #include <nlohmann/json.hpp>
 
-#include "ZBE/JSON/graphics/JSONGraphicsLoaders.h"
+#include "ZBE/core/tools/containers/RsrcDictionary.h"
+#include "ZBE/core/tools/containers/RsrcStore.h"
 #include "ZBE/core/system/SysError.h"
+#include "ZBE/core/system/SysIdGenerator.h"
 
 namespace zbe {
 
@@ -31,8 +36,11 @@ ImgDef JSONImgDefLoad(json j, uint64_t graphicsId) {
   }
 }
 
-std::unordered_map<std::string, ImgDef> JSONImgDefFileLoad(std::istream& is, uint64_t graphicsId) {
-  std::unordered_map<std::string, ImgDef> m;
+void JSONImgDefFileLoad(std::istream& is, uint64_t graphicsId) {
+
+  RsrcStore<ImgDef>& rsrc = RsrcStore<ImgDef>::getInstance();
+  NameRsrcDictionary& nrd = NameRsrcDictionary::getInstance();
+
   json j;
   try {
     is >> j;
@@ -40,14 +48,17 @@ std::unordered_map<std::string, ImgDef> JSONImgDefFileLoad(std::istream& is, uin
     json imgDefs = j["imgdefs"];
     for (auto imgNode : imgDefs) {
       std::string nodeName = imgNode["name"];
-      m[name + "." + nodeName] = JSONImgDefLoad(imgNode, graphicsId);
+      ImgDef imgDef = JSONImgDefLoad(imgNode, graphicsId);
+      uint64_t id = SysIdGenerator::getId();
+      rsrc.insert(id, std::make_shared<ImgDef>(imgDef));
+      nrd.insert(name + "." + nodeName, id);
     }
   } catch (json::parse_error &e) {
     SysError::setError(std::string("ERROR: Json failed to parse: ") + std::string(e.what()));
   } catch (nlohmann::detail::type_error &e) {
     SysError::setError(std::string("ERROR: Json failed to load ImgDef for id ") + std::to_string(graphicsId) + std::string(" because: ") + std::string(e.what()));
   }
-  return m;
+
 }
 
 }  // namespace zbe
