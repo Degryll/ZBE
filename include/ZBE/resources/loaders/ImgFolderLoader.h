@@ -8,11 +8,14 @@
  * of the loaded image.
  */
 
- #ifndef ZBE_RESOURCES_LOADERS_IMGFOLDERLOADER_H_
- #define ZBE_RESOURCES_LOADERS_IMGFOLDERLOADER_H_
+#ifndef ZBE_RESOURCES_LOADERS_IMGFOLDERLOADER_H_
+#define ZBE_RESOURCES_LOADERS_IMGFOLDERLOADER_H_
 
- #include <filesystem>
- #include <memory>
+#include <experimental/filesystem>
+#include <memory>
+
+#include "ZBE/resources/loaders/ImgDefLoader.h"
+#include "ZBE/resources/loaders/ImgLoader.h"
 
 namespace zbe {
 
@@ -26,7 +29,7 @@ public:
   void load(std::string folder);
 
 private:
-  std::filesystem::path generateDefPath(const std::filesystem::path& p);
+  std::experimental::filesystem::path generateDefPath(const std::experimental::filesystem::path& p);
   std::shared_ptr<ImgLoader> imgLoader;
   std::shared_ptr<ImgDefLoader> imgDefLoader;
 

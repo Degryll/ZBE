@@ -17,11 +17,11 @@
 					<Add option="-pedantic" />
 					<Add option="-Wextra" />
 					<Add option="-Wall" />
-					<Add option="-std=c++11" />
 					<Add option="-m64" />
 					<Add option="-g" />
 					<Add option="-isystem ../../../extlibs/googletest/1.7.0/include" />
 					<Add option="-isystem ../../../extlibs/json" />
+					<Add option="-std=c++17" />
 					<Add directory="../../../src/ZBETest/include" />
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/googletest/1.7.0/include" />
@@ -59,10 +59,10 @@
 					<Add option="-Weffc++" />
 					<Add option="-Wextra" />
 					<Add option="-Wall" />
-					<Add option="-std=c++11" />
 					<Add option="-m64" />
 					<Add option="-isystem ../../../extlibs/googletest/1.7.0/include" />
 					<Add option="-isystem ../../../extlibs/json" />
+					<Add option="-std=c++17" />
 					<Add directory="../../../src/ZBETest/include" />
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/googletest/1.7.0/include" />
@@ -184,6 +184,7 @@
 		<Unit filename="../../../src/ZBETest/SDL/RotatedSpriteSDLDrawerTest.cpp" />
 		<Unit filename="../../../src/ZBETest/SDL/SingleSpriteSDLDrawerTest.cpp" />
 		<Unit filename="../../../src/ZBETest/SDL/StatedSpriteSDLDrawerTest.cpp" />
+		<Unit filename="../../../src/ZBETest/SDL/system/SDLWindowTest.cpp" />
 		<Unit filename="../../../src/ZBETest/archetypes/SimpleActivePhysicalObjectTest.cpp" />
 		<Unit filename="../../../src/ZBETest/archetypes/SimpleBouncingTest.cpp" />
 		<Unit filename="../../../src/ZBETest/archetypes/SimpleDampingTest.cpp" />
@@ -228,7 +229,9 @@
 		<Unit filename="../../../src/ZBETest/core/tools/math/objectsTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/tools/toolsTest.cpp" />
 		<Unit filename="../../../src/ZBETest/events/handlers/actuators/DaemonSelectorAtorTest.cpp" />
+		<Unit filename="../../../src/ZBETest/events/handlers/input/BroadcastIHTest.cpp" />
 		<Unit filename="../../../src/ZBETest/graphics/MultiSpriteSheetTest.cpp" />
+		<Unit filename="../../../src/ZBETest/resources/loaders/ImgFolderLoaderTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/main.cpp" />
 		<Extensions>
 			<code_completion />

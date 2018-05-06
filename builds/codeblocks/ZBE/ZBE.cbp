@@ -22,11 +22,11 @@
 					<Add option="-pedantic" />
 					<Add option="-Wextra" />
 					<Add option="-Wall" />
-					<Add option="-std=c++11" />
+					<Add option="-fPIC" />
 					<Add option="-m64" />
 					<Add option="-g" />
-					<Add option="-fPIC" />
 					<Add option="-isystem ../../../extlibs/json" />
+					<Add option="-std=c++17" />
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/SDL2/2.0.3/include" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/include" />
@@ -63,10 +63,10 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
-					<Add option="-std=c++11" />
-					<Add option="-m64" />
 					<Add option="-fPIC" />
+					<Add option="-m64" />
 					<Add option="-isystem ../../../extlibs/json" />
+					<Add option="-std=c++17" />
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/SDL2/2.0.3/include" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/include" />
@@ -191,6 +191,7 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="../../../include/ZBE/JSON/graphics/JSONGraphicsLoaders.h" />
+		<Unit filename="../../../include/ZBE/JSON/resources/JSONImgDefLoader.h" />
 		<Unit filename="../../../include/ZBE/SDL/daemons/BasicPostLoopSDLDaemon.h" />
 		<Unit filename="../../../include/ZBE/SDL/daemons/BasicPreLoopSDLDaemon.h" />
 		<Unit filename="../../../include/ZBE/SDL/drawers/RotatedSpriteSDLDrawer.h" />
@@ -198,6 +199,7 @@
 		<Unit filename="../../../include/ZBE/SDL/drawers/SingleTextSDLDrawer.h" />
 		<Unit filename="../../../include/ZBE/SDL/drawers/SpriteSheetSDLDrawer.h" />
 		<Unit filename="../../../include/ZBE/SDL/drawers/StatedSpriteSDLDrawer.h" />
+		<Unit filename="../../../include/ZBE/SDL/resources/SDLImgLoader.h" />
 		<Unit filename="../../../include/ZBE/SDL/starters/SDL_Starter.h" />
 		<Unit filename="../../../include/ZBE/SDL/system/SDLEventDispatcher.h" />
 		<Unit filename="../../../include/ZBE/SDL/system/SDLWindow.h" />
@@ -247,6 +249,7 @@
 		<Unit filename="../../../include/ZBE/behaviors/Bounce.h" />
 		<Unit filename="../../../include/ZBE/behaviors/Erase.h" />
 		<Unit filename="../../../include/ZBE/behaviors/StateLTEraser.h" />
+		<Unit filename="../../../include/ZBE/behaviors/StateSetter.h" />
 		<Unit filename="../../../include/ZBE/behaviors/UniformLinearMotion.h" />
 		<Unit filename="../../../include/ZBE/core/behaviors/Behavior.h" />
 		<Unit filename="../../../include/ZBE/core/daemons/BasicPreLoopTimeDaemon.h" />
@@ -321,6 +324,7 @@
 		<Unit filename="../../../include/ZBE/core/tools/shared/implementations/SimpleValue.h" />
 		<Unit filename="../../../include/ZBE/core/tools/text/utf8.h" />
 		<Unit filename="../../../include/ZBE/core/tools/tools.h" />
+		<Unit filename="../../../include/ZBE/core/zbe.h" />
 		<Unit filename="../../../include/ZBE/entities/ActiveElement2D.h" />
 		<Unit filename="../../../include/ZBE/entities/Element2D.h" />
 		<Unit filename="../../../include/ZBE/entities/TextBox.h" />
@@ -349,12 +353,17 @@
 		<Unit filename="../../../include/ZBE/events/handlers/actuators/DaemonSelectorAtor.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/actuators/EraserAtor.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/actuators/StateChangerAtor.h" />
+		<Unit filename="../../../include/ZBE/events/handlers/input/BroadcastIH.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/input/DaemonClickIH.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/input/DaemonInputHandler.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/input/InputToValue.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/time/DaemonRecurrentTimeHandler.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/time/DaemonTimeHandler.h" />
+		<Unit filename="../../../include/ZBE/events/handlers/time/TicketEraser.h" />
 		<Unit filename="../../../include/ZBE/graphics/MultiSpriteSheet.h" />
+		<Unit filename="../../../include/ZBE/resources/loaders/ImgDefLoader.h" />
+		<Unit filename="../../../include/ZBE/resources/loaders/ImgFolderLoader.h" />
+		<Unit filename="../../../include/ZBE/resources/loaders/ImgLoader.h" />
 		<Unit filename="../../../src/ZBE/JSON/graphics/JSONGraphicsLoaders.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/daemons/BasicPostLoopSDLDaemon.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/daemons/BasicPreLoopSDLDaemon.cpp" />
@@ -383,6 +392,7 @@
 		<Unit filename="../../../src/ZBE/core/tools/math/Vector.cpp" />
 		<Unit filename="../../../src/ZBE/core/tools/math/collisions/intersections.cpp" />
 		<Unit filename="../../../src/ZBE/core/tools/text/utf8.cpp" />
+		<Unit filename="../../../src/ZBE/resources/loaders/ImgFolderLoader.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

@@ -1,0 +1,19 @@
+{
+"name" : "house",
+"imgdefs" : [
+  {
+    "name" : "stay",
+    "frameTime" : 1000,
+    "frameAmount" : 6,
+    "region" : [0.0,0.0,0.5,0.5],
+    "regionOffset" : [0.0,0.0]
+  },
+  {
+    "name" : "still",
+    "frameTime" : 500,
+    "frameAmount" : 2,
+    "region" : [0.5,0.5,1.0,1.0],
+    "regionOffset" : [1.0,0.0]
+  }
+]
+}

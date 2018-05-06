@@ -93,10 +93,10 @@
 					<Add option="-pedantic" />
 					<Add option="-Wextra" />
 					<Add option="-Wall" />
-					<Add option="-std=c++11" />
 					<Add option="-m64" />
 					<Add option="-g" />
 					<Add option="-isystem ../../../extlibs/json" />
+					<Add option="-std=c++17" />
 					<Add directory="../../../src/ZBE_main/include" />
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/utf8cpp/source" />
@@ -128,9 +128,9 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
-					<Add option="-std=c++11" />
 					<Add option="-m64" />
 					<Add option="-isystem ../../../extlibs/json" />
+					<Add option="-std=c++17" />
 					<Add directory="../../../src/ZBE_main/include" />
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/boost_1_57_0" />

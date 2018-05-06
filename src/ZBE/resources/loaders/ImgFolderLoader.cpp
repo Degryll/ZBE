@@ -8,24 +8,24 @@
  * of the loaded image.
  */
 
-#include "ZBE/resources/loaders/ImgFolderLoader.h"
+//#include "ZBE/resources/loaders/ImgFolderLoader.h"
 
 namespace zbe {
-
-void ImgFolderLoader::load(std::string folder) {
-  namespace fs = std::filesystem;
-  for(auto& p : fs::directory_iterator(folder)) {
-    if(imgLoader->isLoadable(p.extension())){
-      uint64_t imgId = imgLoader->loadImg(p);
-      if(imgId > 0) {
-        imgDefLoader->loadImgDef(generateDefPath(p), imgId);
-      }
-    }
-  }  // for auto& p
-}
-
-std::filesystem::path ImgFolderLoader::generateDefPath(std::filesystem::path p) {
-  return (p.replace_extension(imgDefLoader->getExtension()));
-}
+//
+//void ImgFolderLoader::load(std::string /*folder*/) {
+////  namespace fs = std::experimental::filesystem;
+////  for(auto& p : fs::directory_iterator(folder)) {
+////    if(imgLoader->isLoadable(p.extension())){
+////      uint64_t imgId = imgLoader->loadImg(p);
+////      if(imgId > 0) {
+////        imgDefLoader->loadImgDef(generateDefPath(p), imgId);
+////      }
+////    }
+////  }  // for auto& p
+//}
+//
+//std::experimental::filesystem::path ImgFolderLoader::generateDefPath(const std::experimental::filesystem::path& /*p*/) {
+//  return "";//(p.replace_extension(imgDefLoader->getExtension()));
+//}
 
 }  // namespace zbe

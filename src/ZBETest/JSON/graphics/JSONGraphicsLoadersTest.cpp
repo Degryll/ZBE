@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iostream>
 
+#include "ZBE/core/system/SysError.h"
 #include "ZBE/core/tools/containers/RsrcDictionary.h"
 #include "ZBE/core/tools/containers/RsrcStore.h"
 #include "ZBE/graphics/MultiSpriteSheet.h"

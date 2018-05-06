@@ -11,7 +11,7 @@
 #ifndef ZBE_RESOURCES_LOADERS_IMGLOADER_H_
 #define ZBE_RESOURCES_LOADERS_IMGLOADER_H_
 
-#include <filesystem>
+#include <experimental/filesystem>
 
 namespace zbe {
 
@@ -25,13 +25,13 @@ public:
    *  \param filePath Path to image file.
    *  \return An id to the image loaded.
    */
-  virtual uint64_t loadImg(std::filesystem::path filePath);
+  virtual uint64_t loadImg(std::experimental::filesystem::path filePath);
 
   /** \brief Tells if a file extension is loadable.
    *  \param extension Image file extension.
    *  \return True if the extensions is loadable by the given implementation.
    */
-  virtual bool isLoadable(std::filesystem::path extension);
+  virtual bool isLoadable(std::experimental::filesystem::path extension);
 
 };
 
