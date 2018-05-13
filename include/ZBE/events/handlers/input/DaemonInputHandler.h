@@ -31,7 +31,7 @@ public:
 	/** \brief run daemon.
 	 *  \param state not used
 	 */
-	void run(float) {
+	void run(uint32_t, float) {
     d->run();
 	}
 

@@ -7,6 +7,7 @@
 #include "ZBE/core/events/InputEvent.h"
 #include "ZBE/core/events/handlers/InputHandler.h"
 #include "ZBE/core/events/EventStore.h"
+#include "ZBE/core/events/generators/util/InputStatusManager.h"
 #include "ZBE/core/events/generators/InputEventGenerator.h"
 
 namespace InputEventGeneratorTest {
@@ -24,18 +25,27 @@ class DummyTimer : public zbe::Timer {
     int i = 0;
 };
 
-class MockInputHandler : public zbe::InputHandler {
-	public:
-	  MockInputHandler(const MockInputHandler&) = delete;
-	  void operator=(const MockInputHandler&) = delete;
+// class MockInputHandler : public zbe::InputHandler {
+// 	public:
+// 	  MockInputHandler(const MockInputHandler&) = delete;
+// 	  void operator=(const MockInputHandler&) = delete;
+//
+//   	MockInputHandler() : b(false) {}
+//
+//   	void run(uint32_t, float) {
+//       b = true;
+//   	}
+//
+//     bool b;
+// };
 
-  	MockInputHandler() : b(false) {}
-
-  	void run(float) {
-      b = true;
-  	}
-
-    bool b;
+class DummyInputStatusManager : public zbe::InputStatusManager {
+public:
+  DummyInputStatusManager() : iss() {}
+  void generate(const zbe::InputStatus& is) {
+    iss.push_back(is);
+  }
+  std::vector<zbe::InputStatus> iss;
 };
 
 TEST(InputEventGenerator, Event) {
@@ -47,19 +57,10 @@ TEST(InputEventGenerator, Event) {
 
   // Build tools
   std::shared_ptr<zbe::InputBuffer> ib = std::make_shared<zbe::InputBuffer>();
-  MockInputHandler ha;
-  MockInputHandler hb;
-  MockInputHandler hc;
-  MockInputHandler hd;
-  MockInputHandler he;
-  MockInputHandler hf;
-  zbe::InputEventGenerator ieg(ib, 1);
-  ieg.addHandler(0, &ha);
-  ieg.addHandler(1, &hb);
-  ieg.addHandler(2, &hc);
-  ieg.addHandler(3, &hd);
-  ieg.addHandler(4, &he);
-  ieg.addHandler(5, &hf);
+  std::shared_ptr<DummyInputStatusManager> dism =  std::make_shared<DummyInputStatusManager>();
+  zbe::InputEventGenerator ieg(ib);
+  ieg.addManager(dism);
+
   // Setup test
   zbe::InputStatus isa(0,0.0,0);
   zbe::InputStatus isb(1,1.0,1);
@@ -84,12 +85,7 @@ TEST(InputEventGenerator, Event) {
   ieg.run();
   zbe::EventStore::getInstance().manageCurrent();
 
-  EXPECT_FALSE(ha.b) << "a must be false";
-  EXPECT_FALSE(hb.b) << "b must be false";
-  EXPECT_FALSE(hc.b) << "c must be false";
-  EXPECT_TRUE(hd.b)  << "d must be true";
-  EXPECT_FALSE(he.b) << "e must be false";
-  EXPECT_FALSE(hf.b) << "f must be false";
+  EXPECT_EQ(dism->iss[0].getId(), 3)  << "d must be true";
 
 }
 

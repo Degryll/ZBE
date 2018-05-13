@@ -21,7 +21,7 @@ struct A{
 };
 
 class DummyInputHandler : public zbe::InputHandler{
-    void run(float) {};
+    void run(uint32_t, float) {};
 };
 
 class R { // Reactor mock

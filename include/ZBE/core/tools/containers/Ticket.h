@@ -4,8 +4,7 @@
  * @since 2015/02/15
  * @date 2017/05/15
  * @author Degryll Ludo
- * @brief To be used in containers in witch each element can be marked as active,
- * inactive or erase.
+ * @brief Ticket that a container gives to a contained item to mark itself as active, inactive or erased.
  */
 
 #ifndef ZBE_CORE_TOOLS_CONTAINERS_TICKET_H_
@@ -19,58 +18,20 @@ namespace zbe {
  */
 class Ticket {
 public:
+
+  virtual ~Ticket() {}
+
+  virtual void setACTIVE() = 0;    //!< Set the state as ACTIVE.
+  virtual void setINACTIVE() = 0;  //!< Set the state as INACTIVE.
+  virtual void setERASED() = 0;    //!< Set the state as ERASED.
+
+  virtual bool isACTIVE() = 0;     //!< True if state is ACTIVE.
+  virtual bool isNotACTIVE() = 0;  //!< True if state is not ACTIVE, either INACTIVE or ERASED.
+  virtual bool isINACTIVE() = 0;   //!< True if state is INACTIVE.
+  virtual bool isERASED() = 0;     //!< True if state is ERASED.
+
+protected:
   enum State{ACTIVE,INACTIVE,ERASED};  //!< The different states.
-
-  /** \brief Parametrized constructor, ACTIVE is the default state.
-   *  \param state The initial state of the element
-   */
-  Ticket(State state = ACTIVE) : s(state) {}
-
-  virtual ~Ticket(){}
-
-  inline void setState(State state) {s = state;}  //!< Set the State.
-  inline State getState() const {return (s);}     //!< Get the current state.
-
-  inline void setACTIVE()   {s = ACTIVE;}    //!< Set the state as ACTIVE.
-  inline void setINACTIVE() {s = INACTIVE;}  //!< Set the state as INACTIVE.
-  inline virtual void setERASED()   {s = ERASED;}    //!< Set the state as ERASED.
-
-  inline bool isACTIVE()    {return (s == ACTIVE);}    //!< True if state is ACTIVE.
-  inline bool isNotACTIVE() {return (s != ACTIVE);}    //!< True if state is not ACTIVE, either INACTIVE or ERASED.
-  inline bool isINACTIVE()  {return (s == INACTIVE);}  //!< True if state is INACTIVE.
-  inline bool isERASED()    {return (s == ERASED);}    //!< True if state is ERASED.
-
-private:
-
-  State s;  //!< State of the object
-
-};
-
-/** \brief To be used in containers in witch each element can be marked as active, inactive and erased.
- */
-template <typename T>
-class TicketedElement : public Ticket {
-public:
-
-  /** \brief Parametrized constructor, ACTIVE is the default state.
-   *  \param element The element
-   *  \param state The initial state of the element
-   */
-  TicketedElement(std::shared_ptr<T> element, State state = ACTIVE) : Ticket(state), e(element) {}
-
-  /** \brief Getter to the element.
-   *  \return The element
-   */
-  inline std::shared_ptr<T> getElement() {return (e);}
-
-  void setERASED() {
-      Ticket::setERASED();
-      e.reset();
-  }
-
-private:
-
-  std::shared_ptr<T> e;      //!< Element
 
 };
 

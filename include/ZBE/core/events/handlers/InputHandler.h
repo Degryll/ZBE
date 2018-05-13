@@ -23,7 +23,7 @@ public:
 
   /** \brief Do the Handler job.
    */
-  virtual void run(float state) = 0;
+  virtual void run(uint32_t key, float state) = 0;
 
 };
 

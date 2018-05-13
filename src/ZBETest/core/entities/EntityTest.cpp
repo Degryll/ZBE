@@ -8,11 +8,12 @@
 #include "ZBE/core/tools/shared/Value.h"
 #include "ZBE/core/tools/shared/implementations/SimpleValue.h"
 #include "ZBE/core/tools/containers/Ticket.h"
+#include "ZBE/core/tools/containers/TicketedElement.h"
 
 #include "ZBE/core/entities/Entity.h"
 
 
-TEST(Entity, Tickets) {
+TEST(Entity, TicketedElements) {
   zbe::Entity *e = new zbe::Entity();
 
   std::shared_ptr<zbe::TicketedElement<int> > t1 = std::make_shared<zbe::TicketedElement<int> >(std::make_shared<int>(1));
@@ -25,35 +26,35 @@ TEST(Entity, Tickets) {
   e->addToList(3, t3);
   e->addToList(4, t4);
 
-  EXPECT_EQ(zbe::Ticket::ACTIVE,t1->getState()) << "Add ticket, state ACTIVE by default. - 1";
-  EXPECT_EQ(zbe::Ticket::ACTIVE,t2->getState()) << "Add ticket, state ACTIVE by default. - 2";
-  EXPECT_EQ(zbe::Ticket::ACTIVE,t3->getState()) << "Add ticket, state ACTIVE by default. - 3";
-  EXPECT_EQ(zbe::Ticket::ACTIVE,t4->getState()) << "Add ticket, state ACTIVE by default. - 4";
+  EXPECT_TRUE(t1->isACTIVE()) << "Add ticket, state ACTIVE by default. - 1";
+  EXPECT_TRUE(t2->isACTIVE()) << "Add ticket, state ACTIVE by default. - 2";
+  EXPECT_TRUE(t3->isACTIVE()) << "Add ticket, state ACTIVE by default. - 3";
+  EXPECT_TRUE(t4->isACTIVE()) << "Add ticket, state ACTIVE by default. - 4";
 
   e->setINACTIVE(2);
   e->setACTIVE(3);
   e->setERASED(4);
 
-  EXPECT_EQ(zbe::Ticket::ACTIVE,  t1->getState()) << "Unmodified, still ACTIVE. - 1";
-  EXPECT_EQ(zbe::Ticket::INACTIVE,t2->getState()) << "Changed to INACTIVE. - 2";
-  EXPECT_EQ(zbe::Ticket::ACTIVE,  t3->getState()) << "Unmodified, changed to the same state, ACTIVE. - 3";
-  EXPECT_EQ(zbe::Ticket::ERASED,  t4->getState()) << "Changed to ERASED. - 4";
+  EXPECT_TRUE(t1->isACTIVE())   << "Unmodified, still ACTIVE. - 1";
+  EXPECT_TRUE(t2->isINACTIVE()) << "Changed to INACTIVE. - 2";
+  EXPECT_TRUE(t3->isACTIVE())   << "Unmodified, changed to the same state, ACTIVE. - 3";
+  EXPECT_TRUE(t4->isERASED())   << "Changed to ERASED. - 4";
 
   e->setERASED(1);
   e->setACTIVE(2);
   e->setINACTIVE(3);
 
-  EXPECT_EQ(zbe::Ticket::ERASED,  t1->getState()) << "Changed to ERASED. - 1";
-  EXPECT_EQ(zbe::Ticket::ACTIVE,  t2->getState()) << "Changed to ACTIVE. - 2";
-  EXPECT_EQ(zbe::Ticket::INACTIVE,t3->getState()) << "Changed to INACTIVE. - 3";
-  EXPECT_EQ(zbe::Ticket::ERASED,  t4->getState()) << "Unmodified, still ERASED. - 4";
+  EXPECT_TRUE(t1->isERASED())   << "Changed to ERASED. - 1";
+  EXPECT_TRUE(t2->isACTIVE())   << "Changed to ACTIVE. - 2";
+  EXPECT_TRUE(t3->isINACTIVE()) << "Changed to INACTIVE. - 3";
+  EXPECT_TRUE(t4->isERASED())   << "Unmodified, still ERASED. - 4";
 
   delete e;
 
-  EXPECT_EQ(zbe::Ticket::ERASED,t1->getState()) << "Unmodified, destructor put as ERASED but already set as ERASED. - 1";
-  EXPECT_EQ(zbe::Ticket::ERASED,t2->getState()) << "Destructor put as ERASED. - 2";
-  EXPECT_EQ(zbe::Ticket::ERASED,t3->getState()) << "Destructor put as ERASED. - 3";
-  EXPECT_EQ(zbe::Ticket::ERASED,t4->getState()) << "Unmodified, destructor put as ERASED but already set as ERASED. - 4";
+  EXPECT_TRUE(t1->isERASED()) << "Unmodified, destructor put as ERASED but already set as ERASED. - 1";
+  EXPECT_TRUE(t2->isERASED()) << "Destructor put as ERASED. - 2";
+  EXPECT_TRUE(t3->isERASED()) << "Destructor put as ERASED. - 3";
+  EXPECT_TRUE(t4->isERASED()) << "Unmodified, destructor put as ERASED but already set as ERASED. - 4";
 }
 
 TEST(Entity, Tickets_Error) {

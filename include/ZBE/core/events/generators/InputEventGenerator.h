@@ -12,15 +12,18 @@
 
 #include <cstdint>
 #include <memory>
+#include <vector>
 #include <unordered_map>
 
 #include "ZBE/core/daemons/Daemon.h"
 
 #include "ZBE/core/io/InputBuffer.h"
+#include "ZBE/core/io/InputStatus.h"
 #include "ZBE/core/system/SysTime.h"
 #include "ZBE/core/events/handlers/InputHandler.h"
 #include "ZBE/core/events/EventStore.h"
 #include "ZBE/core/events/InputEvent.h"
+#include "ZBE/core/events/generators/util/InputStatusManager.h"
 
 namespace zbe {
 
@@ -33,11 +36,13 @@ namespace zbe {
 
       /** \brief Default constructor.
        */
-      InputEventGenerator(std::shared_ptr<InputBuffer> inputBuffer, int eventId) : inputBuffer(inputBuffer), eventId(eventId), store(EventStore::getInstance()), handlers(), sysTime(zbe::SysTime::getInstance()) {};
+      InputEventGenerator(std::shared_ptr<InputBuffer> inputBuffer) : inputBuffer(inputBuffer), managers(), sysTime(zbe::SysTime::getInstance()) {};
 
       /** \brief Empty destructor.
        */
       ~InputEventGenerator() {};
+
+      void addManager(std::shared_ptr<InputStatusManager> manager) {managers.push_back(manager);};
 
       /** Will search for input events occurred between initTime and finalTime and send it to the EventStore.
        * \param initTime Time from which events are generated
@@ -45,23 +50,10 @@ namespace zbe {
        */
       void run();
 
-      /** Add a handler to an input event.
-       * \param id Id of the key
-       * \param handler Handler to run when key pressed
-       */
-      inline void addHandler(uint32_t id, InputHandler* handler) {handlers[id] = handler;}
-
-      /** Remove a handler from an input event.
-       * \param id Id of the key
-       */
-      inline void removeHandler(uint32_t id) {handlers.erase(id);}
-
     private:
       std::shared_ptr<InputBuffer> inputBuffer;
-      int eventId;
-      EventStore &store;
-      std::unordered_map<uint32_t, InputHandler*> handlers;
-      zbe::SysTime &sysTime;
+      std::vector<std::shared_ptr<InputStatusManager> > managers;
+      SysTime &sysTime;
   };
 
 }  // namespace zbe

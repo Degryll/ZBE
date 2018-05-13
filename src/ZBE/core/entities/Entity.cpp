@@ -2,8 +2,8 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file Entity.h
  * @since 2016-03-24
- * @date 2016-03-24
- * @author Degryll
+ * @date 2018-05-06
+ * @author Degryll Batis Ludo
  * @brief Define the basic functionality of every entity.
  */
 
@@ -27,11 +27,33 @@ void Entity::addToList(uint64_t id, std::shared_ptr<Ticket> ticket) {
 }
 
 void Entity::setACTIVE(uint64_t id) {
-  _setState(id, zbe::Ticket::State::ACTIVE);
+  auto it = tl.find(id);
+  if (it == tl.end()) {
+    SysError::setError("Ticket in Entity list is not found.");
+  } else {
+    it->second->setACTIVE();
+  }
+}
+
+inline void Entity::setACTIVE() {
+  for(auto& t : tl){
+    t.second->setACTIVE();
+  }
 }
 
 void Entity::setINACTIVE(uint64_t id) {
-  _setState(id, zbe::Ticket::State::INACTIVE);
+  auto it = tl.find(id);
+  if (it == tl.end()) {
+    SysError::setError("Ticket in Entity list is not found.");
+  } else {
+    it->second->setINACTIVE();
+  }
+}
+
+inline void Entity::setINACTIVE() {
+  for(auto& t : tl){
+    t.second->setINACTIVE();
+  }
 }
 
 void Entity::setERASED(uint64_t id) {
@@ -44,31 +66,11 @@ void Entity::setERASED(uint64_t id) {
   }
 }
 
-void Entity::setACTIVE() {
-  _setState(zbe::Ticket::State::ACTIVE);
-}
-
-void Entity::setINACTIVE() {
-}
-
-void Entity::setERASED() {
-  _setState(zbe::Ticket::State::ERASED);
-  tl.clear();
-}
-
-void Entity::_setState(uint64_t id, zbe::Ticket::State state) {
-  auto it = tl.find(id);
-  if (it == tl.end()) {
-    SysError::setError("Ticket in Entity list is not found.");
-  } else {
-    it->second->setState(state);
-  }
-}
-
-inline void Entity::_setState(zbe::Ticket::State state) {
+inline void Entity::setERASED() {
   for(auto& t : tl){
-    t.second->setState(state);
+    t.second->setERASED();
   }
+  tl.clear();
 }
 
 void Entity::setDouble(uint64_t id, std::shared_ptr<Value<double> >   val) {

@@ -19,6 +19,7 @@
 #include "ZBE/core/daemons/BasicPreLoopTimeDaemon.h"
 #include "ZBE/core/daemons/StateMachineDaemon.h"
 
+#include "ZBE/core/events/generators/util/InputStatusManager.h"
 #include "ZBE/core/events/generators/InputEventGenerator.h"
 #include "ZBE/core/events/generators/TimeEventGenerator.h"
 #include "ZBE/core/events/generators/InteractionEventGenerator.h"

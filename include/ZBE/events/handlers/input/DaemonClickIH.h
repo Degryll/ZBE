@@ -38,7 +38,7 @@ DaemonClickIH(Region2D area, std::shared_ptr<Value<double> > xvalue, std::shared
 /** \brief exec daemon if click is inside given area.
  *  \param state input state.
  */
-void run(float state) {
+void run(uint32_t, float state) {
   if(state!=ZBE_KEYUP){
     return;
   }

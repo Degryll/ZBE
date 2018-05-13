@@ -16,6 +16,7 @@
 
 #include "ZBE/core/daemons/Daemon.h"
 
+#include "ZBE/core/tools/containers/Ticket.h"
 #include "ZBE/core/tools/math/math.h"
 #include "ZBE/core/events/EventStore.h"
 #include "ZBE/core/events/TimeEvent.h"
@@ -41,7 +42,7 @@ struct TimerData {
 /** \brief It gives access to a timer.
  *
  */
-class TimerTicket {
+class TimerTicket : public Ticket {
 public:
 
   TimerTicket(const TimerTicket&) = delete;  //!< Avoid copy.
@@ -52,30 +53,21 @@ public:
    *  \param timers The multiset where the timer is stored.
    *  \param eventId Event Id.
    */
-  TimerTicket(std::multiset<TimerData>::iterator iter, std::multiset<TimerData>& timers, int eventId) : iter(iter), timers(timers), eventId(eventId), es(EventStore::getInstance()), sysTime(SysTime::getInstance()) {}
+  TimerTicket(std::multiset<TimerData>::iterator iter, std::multiset<TimerData>& timers, int eventId) : s(ACTIVE), iter(iter), timers(timers), eventId(eventId), es(EventStore::getInstance()), sysTime(SysTime::getInstance()), td((*iter)) {}
+
+  void setACTIVE();    //!< Set the state as ACTIVE.
+  void setINACTIVE();  //!< Set the state as INACTIVE.
+  void setERASED();    //!< Set the state as ERASED.
+
+  inline bool isACTIVE()    {return (s == ACTIVE);}    //!< True if state is ACTIVE.
+  inline bool isNotACTIVE() {return (s != ACTIVE);}    //!< True if state is not ACTIVE, either INACTIVE or ERASED.
+  inline bool isINACTIVE()  {return (s == INACTIVE);}  //!< True if state is INACTIVE.
+  inline bool isERASED()    {return (s == ERASED);}    //!< True if state is ERASED.
 
   /** \brief Increases the time in a given amount (that can be negative). If the incremented time is zero or less, the event is triggered.
    * return true if the increment makes the timer go to zero or less.
    */
-  bool increaseTime(int64_t increment) {
-    TimerData td = (*iter);
-    timers.erase(iter);
-    td.time += increment;
-    if(td.time>0){
-      iter = timers.insert(td);
-      return (false);
-    } else {
-      es.storeInstantEvent(new TimeEvent(eventId, 0, iter->handler));
-      return (true);
-    }
-
-  }
-
-  /** \brief Erases the timer.
-   */
-  void erase() {
-    timers.erase(iter);
-  }
+  bool increaseTime(int64_t increment);
 
   /** \brief Returns the event time.
    * \return The event time.
@@ -85,11 +77,13 @@ public:
   }
 
 private:
+  State s;  //!< State of the object
   std::multiset<TimerData>::iterator iter;
   std::multiset<TimerData>& timers;
   int eventId;
   EventStore& es;
   SysTime &sysTime;
+  TimerData td;
 };
 
 /** \brief Generate collision events.

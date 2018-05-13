@@ -2,18 +2,36 @@
 
 namespace ludo {
 
-using json = nlohmann::json;
-
 int ludomain(int, char** ) {
+    std::multiset<int> msint;
 
-    std::ifstream i("data/test/json/testjson_001.json");
+    msint.insert(7);
+    std::multiset<int>::iterator iter = msint.insert(8);
+    msint.insert(9);
 
-    zbe::JSONImgDefFileLoad(i, 0);
+    for(int e : msint){
+      printf("%d\n", e);
+    }
 
-    std::cout << "--------------------------------------------------------------" << std::endl;
-    std::cout << "Errors found: " << zbe::SysError::getNErrors() << std::endl;
-    std::cout << "Last error: " << zbe::SysError::getFirstErrorString() << std::endl;
-    std::cout << "--------------------------------------------------------------" << std::endl;
+    if(iter == msint.end()){
+      printf("YEP\n");
+    } else {
+      printf("NOPE\n");
+    }
+
+    msint.erase(iter);
+
+    for(int e : msint){
+      printf("%d\n", e);
+    }
+
+    if(iter == msint.end()){
+      printf("YEP\n");
+    } else {
+      printf("NOPE\n");
+    }
+
+    printf("%d\n", (*iter) );
 
     return 0;
 }

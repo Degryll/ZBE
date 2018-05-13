@@ -14,11 +14,9 @@ namespace zbe {
 void InputEventGenerator::run() {
   std::vector<InputStatus> currentInput;
   inputBuffer->getRange(sysTime.getInitFrameTime(), sysTime.getEndFrameTime(), currentInput);
-  for(auto it = currentInput.begin(); it != currentInput.end(); it++) {
-    auto hit = handlers.find(it->getId());
-    if (hit != handlers.end()) {
-        InputEvent* e = new InputEvent(eventId, it->getTime(), it->getId(), it->getStatus(), hit->second);
-        store.storeEvent(e);
+  for(auto input : currentInput) {
+    for(auto manager : managers){
+      manager->generate(input);
     }
   } // for each currentInput
 }

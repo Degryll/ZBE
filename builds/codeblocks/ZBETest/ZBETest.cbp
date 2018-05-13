@@ -218,7 +218,7 @@
 		<Unit filename="../../../src/ZBETest/core/tools/containers/ListJointTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/tools/containers/RsrcDictionaryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/tools/containers/RsrcStoreTest.cpp" />
-		<Unit filename="../../../src/ZBETest/core/tools/containers/TicketTest.cpp" />
+		<Unit filename="../../../src/ZBETest/core/tools/containers/TicketedElementTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/tools/containers/TicketedForwardListTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/tools/math/PointTest.cpp" />
 		<Unit filename="../../../src/ZBETest/core/tools/math/RegionTest.cpp" />

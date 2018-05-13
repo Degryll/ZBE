@@ -13,9 +13,9 @@ class BroadcastIH : public zbe::InputHandler {
   	BroadcastIH() : ihs() {}
     ~BroadcastIH() {}
 
-  	void run(float status) {
+  	void run(uint32_t key, float status) {
       for (auto ih : ihs){
-        ih->run(status);
+        ih->run(key, status);
       }
   	}
 

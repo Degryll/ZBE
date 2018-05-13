@@ -111,8 +111,6 @@ class Entity : virtual public Avatar {
     std::shared_ptr<Value<int64_t> > getInt(uint64_t id);
 
   private:
-    inline void _setState(zbe::Ticket::State state);
-    inline void _setState(uint64_t id, zbe::Ticket::State state);
 
     std::unordered_map<uint64_t, std::shared_ptr<Ticket> > tl;
 

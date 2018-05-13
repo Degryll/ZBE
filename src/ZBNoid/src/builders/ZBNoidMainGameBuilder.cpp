@@ -31,9 +31,11 @@ std::shared_ptr<zbe::Daemon> ZBNoidMainGameBuilder::build() {
   preLoop->addDaemon(prltd);
 
   // Event generators
-  std::shared_ptr<InputEventGenerator> ieg(new InputEventGenerator(inputBuffer, ZBNCfg::INPUTEVENT));
-  std::shared_ptr<TimeEventGenerator> teg(new TimeEventGenerator(ZBNCfg::TIMEEVENT));
-  std::shared_ptr<InteractionGenerator> iaeg(new InteractionGenerator(ZBNCfg::CTS_JOINT, ZBNCfg::COLLISIONEVENT, new BaseCollisionSelector<ZombienoidReactor>()));
+  std::shared_ptr<InputEventGenerator> ieg = std::make_shared<InputEventGenerator>(inputBuffer);
+  std::shared_ptr<MappedInputStatusManager> ism = std::make_shared<MappedInputStatusManager>(ZBNCfg::INPUTEVENT);
+  ieg->addManager(ism);
+  std::shared_ptr<TimeEventGenerator> teg = std::make_shared<TimeEventGenerator>(ZBNCfg::TIMEEVENT);
+  std::shared_ptr<InteractionGenerator> iaeg = std::make_shared<InteractionGenerator>(ZBNCfg::CTS_JOINT, ZBNCfg::COLLISIONEVENT, new BaseCollisionSelector<ZombienoidReactor>());
   eventGenerator->addDaemon(ieg);
   eventGenerator->addDaemon(teg);
   eventGenerator->addDaemon(iaeg);
@@ -72,13 +74,13 @@ std::shared_ptr<zbe::Daemon> ZBNoidMainGameBuilder::build() {
 
   // input handlers
   ExitInputHandler* terminator = new ExitInputHandler();
-  ieg->addHandler(ZBEK_ESCAPE, terminator);
+  ism->addHandler(ZBEK_ESCAPE, terminator);
 
   DaemonInputHandler* demagnetizeDaemonInputHandler = new DaemonInputHandler(demagnetizeDaemon);
-  ieg->addHandler(ZBEK_MOUSE_LEFT, demagnetizeDaemonInputHandler);
+  ism->addHandler(ZBEK_MOUSE_LEFT, demagnetizeDaemonInputHandler);
 
   InputToValue* mouseX = new InputToValue( ZBNCfg::rmVDouble.get(ZBNCfg::MOUSE_X_POS));
-  ieg->addHandler(ZBEK_MOUSE_OFFSET_X, mouseX);
+  ism->addHandler(ZBEK_MOUSE_OFFSET_X, mouseX);
 
   // ActuatorWrapper's
   // Items --------------------

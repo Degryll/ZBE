@@ -34,16 +34,18 @@ std::shared_ptr<zbe::Daemon> ZBNoidLostScreenBuilder::build() {
   preLoop->addDaemon(prltd);
 
   // Event generators
-  std::shared_ptr<InputEventGenerator> ieg(new InputEventGenerator(inputBuffer, ZBNCfg::INPUTEVENT));
+  std::shared_ptr<InputEventGenerator> ieg = std::make_shared<InputEventGenerator>(inputBuffer);
+  std::shared_ptr<MappedInputStatusManager> ism = std::make_shared<MappedInputStatusManager>(ZBNCfg::INPUTEVENT);
+  ieg->addManager(ism);
   eventGenerator->addDaemon(ieg);
 
   std::shared_ptr<Value<double> > xvalue = std::make_shared<SimpleValue<double> >();
   std::shared_ptr<Value<double> > yvalue = std::make_shared<SimpleValue<double> >();
 
-  ieg->addHandler(ZBEK_MOUSE_OFFSET_X, new InputToValue(xvalue));
-  ieg->addHandler(ZBEK_MOUSE_OFFSET_Y, new InputToValue(yvalue));
+  ism->addHandler(ZBEK_MOUSE_OFFSET_X, new InputToValue(xvalue));
+  ism->addHandler(ZBEK_MOUSE_OFFSET_Y, new InputToValue(yvalue));
   BroadcastIH* brdcstHI = new BroadcastIH();
-  ieg->addHandler(ZBEK_MOUSE_LEFT, brdcstHI);
+  ism->addHandler(ZBEK_MOUSE_LEFT, brdcstHI);
 
   auto drawerDaemon = std::make_shared<BehaviorDaemon<TicketedFAEC<AnimatedSprite>, AnimatedSprite> >(std::make_shared<SpriteSheetSDLDrawer<AnimatedSprite> >(window) , ZBNCfg::LOST_BUTTONS_AS_LIST);
   auto writerDaemon = std::make_shared<BehaviorDaemon<TicketedFAEC<SingleTextSprite>, SingleTextSprite> >(std::make_shared<SingleTextSDLDrawer>(window) , ZBNCfg::LOST_BUTTONS_TS_LIST);

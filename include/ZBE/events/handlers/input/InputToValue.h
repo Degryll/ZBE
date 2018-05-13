@@ -18,7 +18,7 @@
 #include "ZBE/core/events/handlers/InputHandler.h"
 
 namespace zbe {
-  
+
 /** \brief Handler that stores input value to a Value<double>
  */
 class InputToValue : public zbe::InputHandler {
@@ -34,7 +34,7 @@ public:
   /** brief stores input value to the value.
     * param status value from input.
    */
-  void run(float status) {
+  void run(uint32_t, float status) {
     val->setValue(status);
   }
 

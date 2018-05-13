@@ -12,7 +12,7 @@
 namespace zbe {
 
 void InputEvent::manage() {
-  handler->run(state);
+  handler->run(key, state);
 }
 
 }  // namespace zbe
