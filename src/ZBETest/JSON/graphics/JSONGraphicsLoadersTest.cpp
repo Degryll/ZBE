@@ -27,7 +27,7 @@ TEST(JSONGraphicsLoaders, load_succes) {
     uint64_t id = nrd.get("playerSheet.jump1");
     ASSERT_NE(0, id) << "Element playerSheet.jump1 must be present in NameRsrcDictionary";
     std::shared_ptr<zbe::ImgDef> idef = rsrc.get(id);
-    ASSERT_TRUE(idef!=false) << "playerSheet.jump1 id must have an ImgDef stored in the RsrcStore";
+    ASSERT_TRUE(idef!=nullptr) << "playerSheet.jump1 id must have an ImgDef stored in the RsrcStore";
     EXPECT_EQ(1000, idef->frameTime) << "Jump sprite frameTime must be 1000.";
     EXPECT_EQ(6, idef->frameAmount) << "Jump sprite frameAmount must be 6.";
     EXPECT_EQ(zbe::Region2D({0.0,0.0}, {0.5,0.5}), idef->region) << "Jump sprite region must be 0.0, 0.0, 0.5, 0.5.";
@@ -36,7 +36,7 @@ TEST(JSONGraphicsLoaders, load_succes) {
     id = nrd.get("playerSheet.run");
     ASSERT_NE(0, id) << "Element playerSheet.run must be present in NameRsrcDictionary";
     idef = rsrc.get(id);
-    ASSERT_TRUE(idef!=false) << "playerSheet.run id must have an ImgDef stored in the RsrcStore";
+    ASSERT_TRUE(idef!=nullptr) << "playerSheet.run id must have an ImgDef stored in the RsrcStore";
     EXPECT_EQ(500, idef->frameTime) << "Run sprite frameTime must be 1000.";
     EXPECT_EQ(2, idef->frameAmount) << "Run sprite frameAmount must be 6.";
     EXPECT_EQ(zbe::Region2D({0.5,0.5}, {1.0,1.0}), idef->region) << "Run sprite region must be 0.5, 0.5, 1.0, 1.0.";
@@ -61,7 +61,7 @@ TEST(JSONGraphicsLoaders, DISABLED_load_succes_utf8) {
     uint64_t id = nrd.get("playerSheet.jump1");
     ASSERT_NE(0, id) << "Element playerSheet.jump1 must be present in NameRsrcDictionary";
     std::shared_ptr<zbe::ImgDef> idef = rsrc.get(id);
-    ASSERT_TRUE(idef!=false) << "playerSheet.jump1 id must have an ImgDef stored in the RsrcStore";
+    ASSERT_TRUE(idef!=nullptr) << "playerSheet.jump1 id must have an ImgDef stored in the RsrcStore";
 
     EXPECT_EQ(1000, idef->frameTime) << "Jump sprite frameTime must be 1000.";
     EXPECT_EQ(6, idef->frameAmount) << "Jump sprite frameAmount must be 6.";
