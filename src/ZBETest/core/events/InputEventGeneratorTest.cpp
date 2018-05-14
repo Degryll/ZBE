@@ -48,7 +48,7 @@ public:
   std::vector<zbe::InputStatus> iss;
 };
 
-TEST(InputEventGenerator, Event) {
+TEST(InputEventGenerator, run) {
   zbe::SysTime &sysTime = zbe::SysTime::getInstance();
   sysTime.setMaxFrameTime(zbe::SECOND*2);
 
@@ -83,7 +83,6 @@ TEST(InputEventGenerator, Event) {
   sysTime.setEventTime(4);
 
   ieg.run();
-  zbe::EventStore::getInstance().manageCurrent();
 
   EXPECT_EQ(dism->iss[0].getId(), 3)  << "d must be true";
 

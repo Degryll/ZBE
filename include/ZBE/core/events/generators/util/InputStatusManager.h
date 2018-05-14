@@ -10,6 +10,7 @@
 #ifndef ZBE_CORE_EVENTS_GENERATORS_UTIL_INPUTSTATUSMANAGER_H
 #define ZBE_CORE_EVENTS_GENERATORS_UTIL_INPUTSTATUSMANAGER_H
 
+#include <memory>
 #include <unordered_map>
 
 #include "ZBE/core/io/InputStatus.h"
@@ -40,12 +41,12 @@ public:
    * \param id Id of the key
    * \param handler Handler to run when key pressed
    */
-  inline void addHandler(uint32_t id, InputHandler* handler) {handlers[id] = handler;}
+  inline void addHandler(uint32_t inputId, InputHandler* handler) {handlers[inputId] = handler;}
 
   /** Remove a handler from an input event.
    * \param id Id of the key
    */
-  inline void removeHandler(uint32_t id) {handlers.erase(id);}
+  inline void removeHandler(uint32_t inputId) {handlers.erase(inputId);}
 
   void generate(const InputStatus& is) {
     auto hit = handlers.find(is.getId());
