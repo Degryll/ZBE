@@ -1,10 +1,11 @@
 #include "gtest/gtest.h"
 
+#include <vector>
 #include "ZBE/core/system/SysIdGenerator.h"
 
 namespace SysIdGenerator{
 
-const int N = 10000;
+const int N = 10;
 
 void* test(void *idvoid) {
   int *id = (int*)idvoid;
@@ -12,22 +13,24 @@ void* test(void *idvoid) {
 	return (nullptr);
 }
 
-bool check(int *ids) {
+bool check(std::vector<int> ids) {
   for(int i = 0; i < N-1; i++) {
     for(int j = i+1; j < N; j++) {
-      if(ids[i] >= N) return (false);
+      if(ids[j] > N) return (false);
       if(ids[i] == ids[j]) return (false);
     }
   }
-  return (true);
+  return (ids[0] < N);
 }
 
 TEST(SysIdGenerator, GenerateId) {
-	pthread_t *t = new pthread_t[N];
-	int *ids = new int[N];
+  std::vector<pthread_t> t(N);
+	//pthread_t *t = new pthread_t[N];
+  std::vector<int> ids(N);
+	//int *ids = new int[N];
 
   for(int i = 0; i < N; i++) {
-    pthread_create(t+i, 0, test, ids+i);
+    pthread_create(&(t[i]), nullptr, test, &(ids[i]));
   }
 
   for(int i = 0; i < N; i++) {
@@ -35,9 +38,6 @@ TEST(SysIdGenerator, GenerateId) {
   }
 
   EXPECT_TRUE(check(ids)) << "All unique ids.";
-
-  delete[] t;
-  delete[] ids;
 }
 
 }  // namespace SysIdGenerator
