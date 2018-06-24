@@ -16,6 +16,10 @@
 
 namespace zbe {
 
+/** \brief Projection matrix size. 4x4
+ */
+static const int PROJ_MAT4 = 16;
+
 /** \brief The value of PI as 3.14159265358979323846.
  */
 static const double PI = 3.14159265358979323846;

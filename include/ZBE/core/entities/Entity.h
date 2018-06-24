@@ -27,7 +27,7 @@ class Entity : virtual public Avatar {
   public:
     /** \brief Empty constructor.
       */
-    Entity() : tl(), dv(), uv(), iv() {}
+    Entity() : tl(), dv(), fv(), uv(), iv() {}
     /** \brief The destructor make sure the entity is marked as ERASED in every Ticket.
       */
     virtual ~Entity();
@@ -69,15 +69,23 @@ class Entity : virtual public Avatar {
      * This method should be called only once per id.
      *  \param id identifier
      *  \param val Value<double> to be set.
-     *  \sa getDobule, setUint, setInt
+     *  \sa getDobule, setFloat, setUint, setInt
      */
     void setDouble(uint64_t id, std::shared_ptr<Value<double> > val);
+
+    /** \brief Sets a Value<float> at identifier id.
+     * This method should be called only once per id.
+     *  \param id identifier
+     *  \param val Value<float> to be set.
+     *  \sa getFloat, setDouble, setUint, setInt
+     */
+    void setFloat(uint64_t id, std::shared_ptr<Value<float> > val);
 
     /** \brief Sets a Value<uint64_t> at identifier id.
      * This method should be called only once per id.
      *  \param id identifier
      *  \param val Value<uint64_t> to be set.
-     *  \sa getUint, setDouble, setInt
+     *  \sa getUint, setInt, setDouble, setFloat
      */
     void setUint(uint64_t id, std::shared_ptr<Value<uint64_t> > val);
 
@@ -85,36 +93,44 @@ class Entity : virtual public Avatar {
      * This method should be called only once per id.
      *  \param id identifier
      *  \param val Value<int64_t> to be set.
-     *  \sa getInt, setUint, setDouble
+     *  \sa getInt, setUint, setDouble, setFloat
      */
     void setInt(uint64_t id, std::shared_ptr<Value<int64_t> > val);
 
     /** \brief Returns the Value<double> associated the identifier id.
      *  \param id identifier
      *  \return Value<double>.
-     *  \sa setDouble, getUint, getInt
+     *  \sa setDouble, getFloat, getUint, getInt
      */
     std::shared_ptr<Value<double> > getDouble(uint64_t id);
 
     /** \brief Returns the Value<uint64_t> associated the identifier id.
      *  \param id identifier
      *  \return Value<uint64_t>.
-     *  \sa setUint, getDouble, getInt
+     *  \sa setUint, getInt, getDouble, getFloat
      */
     std::shared_ptr<Value<uint64_t> > getUint(uint64_t id);
 
     /** \brief Returns the Value<int64_t> associated the identifier id.
      *  \param id identifier
      *  \return Value<int64_t>.
-     *  \sa setInt, getUint, getDouble
+     *  \sa setInt, getUint, getDouble, getFloat
      */
     std::shared_ptr<Value<int64_t> > getInt(uint64_t id);
+
+    /** \brief Returns the Value<float> associated the identifier id.
+     *  \param id identifier
+     *  \return Value<float>.
+     *  \sa setFloat, getDouble, getUint, getInt
+     */
+    std::shared_ptr<Value<float> > getFloat(uint64_t id);
 
   private:
 
     std::unordered_map<uint64_t, std::shared_ptr<Ticket> > tl;
 
     std::unordered_map<uint64_t, std::shared_ptr<Value<double> > > dv;
+    std::unordered_map<uint64_t, std::shared_ptr<Value<float> > > fv;
     std::unordered_map<uint64_t, std::shared_ptr<Value<uint64_t> > > uv;
     std::unordered_map<uint64_t, std::shared_ptr<Value<int64_t> > > iv;
 };

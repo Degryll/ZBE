@@ -96,7 +96,9 @@
 					<Add option="-m64" />
 					<Add option="-g" />
 					<Add option="-isystem ../../../extlibs/json" />
+					<Add option="-isystem ../../../extlibs/glm/0.9.9.0" />
 					<Add option="-std=c++17" />
+					<Add option="`sdl-config --cflags --libs`" />
 					<Add directory="../../../src/ZBE_main/include" />
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/utf8cpp/source" />
@@ -106,6 +108,9 @@
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/include" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/include" />
 					<Add directory="../../../extlibs/json" />
+					<Add directory="../../../extlibs/GLEW/2.1.0/include" />
+					<Add directory="../../../extlibs/lodePNG" />
+					<Add directory="../../../extlibs/glm/0.9.9.0" />
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
@@ -114,10 +119,13 @@
 					<Add library="SDL2" />
 					<Add library="SDL2_image" />
 					<Add library="SDL2_ttf" />
+					<Add library="GL" />
+					<Add library="GLEW" />
 					<Add directory="../../../lib" />
 					<Add directory="../../../extlibs/SDL2/2.0.3/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/lib" />
+					<Add directory="../../../extlibs/GLEW/2.1.0/linux/lib" />
 				</Linker>
 			</Target>
 			<Target title="Release-Linux64">
@@ -130,7 +138,9 @@
 					<Add option="-O2" />
 					<Add option="-m64" />
 					<Add option="-isystem ../../../extlibs/json" />
+					<Add option="-isystem ../../../extlibs/glm/0.9.9.0" />
 					<Add option="-std=c++17" />
+					<Add option="`sdl-config --cflags --libs`" />
 					<Add directory="../../../src/ZBE_main/include" />
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/boost_1_57_0" />
@@ -139,6 +149,9 @@
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/include" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/include" />
 					<Add directory="../../../extlibs/json" />
+					<Add directory="../../../extlibs/GLEW/2.1.0/include" />
+					<Add directory="../../../extlibs/lodePNG" />
+					<Add directory="../../../extlibs/glm/0.9.9.0" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -148,10 +161,13 @@
 					<Add library="SDL2" />
 					<Add library="SDL2_image" />
 					<Add library="SDL2_ttf" />
+					<Add library="GL" />
+					<Add library="GLEW" />
 					<Add directory="../../../lib" />
 					<Add directory="../../../extlibs/SDL2/2.0.3/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/lib" />
+					<Add directory="../../../extlibs/GLEW/2.1.0/linux/lib" />
 				</Linker>
 			</Target>
 		</Build>
@@ -159,6 +175,7 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="../../../extlibs/lodePNG/lodepng.cpp" />
 		<Unit filename="../../../src/ZBE_main/include/batis/entities/GameBoard.h" />
 		<Unit filename="../../../src/ZBE_main/include/batis/entities/Sign.h" />
 		<Unit filename="../../../src/ZBE_main/include/batis/events/MouseKeeper.h" />

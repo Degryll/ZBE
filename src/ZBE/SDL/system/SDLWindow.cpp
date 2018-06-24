@@ -69,7 +69,7 @@ void SDLWindow::render(SDL_Surface *surf, const SDL_Rect* srcrect, const SDL_Rec
   }
 }
 
-SDLImageStore::SDLImageStore(SDL_Renderer* renderer): ntextures(0), imgCollection(), m(), mf(), renderer(renderer) {
+SDLImageStore::SDLImageStore(SDL_Renderer* renderer): ntextures(0), imgCollection(), m(), renderer(renderer) {
   imgCollection.push_back(nullptr);  // Id zero is discouraged
 }
 

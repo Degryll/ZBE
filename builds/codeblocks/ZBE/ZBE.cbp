@@ -26,6 +26,7 @@
 					<Add option="-m64" />
 					<Add option="-g" />
 					<Add option="-isystem ../../../extlibs/json" />
+					<Add option="-isystem ../../../extlibs/glm/0.9.9.0" />
 					<Add option="-std=c++17" />
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/SDL2/2.0.3/include" />
@@ -42,6 +43,9 @@
 					<Add directory="include/ZBE/core/system/SDL" />
 					<Add directory="include/ZBE/events/handlers/input" />
 					<Add directory="../../../extlibs/json" />
+					<Add directory="../../../extlibs/GLEW/2.1.0/include" />
+					<Add directory="../../../extlibs/lodePNG" />
+					<Add directory="../../../extlibs/glm/0.9.9.0" />
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
@@ -50,9 +54,12 @@
 					<Add library="SDL2_image" />
 					<Add library="SDL2_ttf" />
 					<Add library="pthread" />
+					<Add library="GL" />
+					<Add library="GLEW" />
 					<Add directory="../../../extlibs/SDL2/2.0.3/lib/linux64" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/lib" />
+					<Add directory="../../../extlibs/GLEW/2.1.0/linux/lib" />
 				</Linker>
 			</Target>
 			<Target title="Release-Linux64">
@@ -66,7 +73,9 @@
 					<Add option="-fPIC" />
 					<Add option="-m64" />
 					<Add option="-isystem ../../../extlibs/json" />
+					<Add option="-isystem ../../../extlibs/glm/0.9.9.0" />
 					<Add option="-std=c++17" />
+					<Add option="`sdl-config --cflags --libs`" />
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/SDL2/2.0.3/include" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/include" />
@@ -82,6 +91,9 @@
 					<Add directory="include/ZBE/core/system/SDL" />
 					<Add directory="include/ZBE/events/handlers/input" />
 					<Add directory="../../../extlibs/json" />
+					<Add directory="../../../extlibs/GLEW/2.1.0/include" />
+					<Add directory="../../../extlibs/lodePNG" />
+					<Add directory="../../../extlibs/glm/0.9.9.0" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -91,9 +103,12 @@
 					<Add library="SDL2_image" />
 					<Add library="SDL2_ttf" />
 					<Add library="pthread" />
+					<Add library="GL" />
+					<Add library="GLEW" />
 					<Add directory="../../../extlibs/SDL2/2.0.3/lib/linux64" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/lib" />
+					<Add directory="../../../extlibs/GLEW/2.1.0/linux/lib" />
 				</Linker>
 			</Target>
 			<Target title="Debug-Win64">
@@ -129,6 +144,8 @@
 					<Add directory="include/ZBE/core/system/SDL" />
 					<Add directory="include/ZBE/events/handlers/input" />
 					<Add directory="../../../extlibs/json" />
+					<Add directory="../../../extlibs/GLEW/2.1.0/include" />
+					<Add directory="../../../extlibs/lodePNG" />
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
@@ -137,9 +154,12 @@
 					<Add library="SDL2" />
 					<Add library="SDL2_image" />
 					<Add library="SDL2_ttf" />
+					<Add library="GL" />
+					<Add library="GLEW" />
 					<Add directory="../../../extlibs/SDL2/2.0.5/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.1/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.14/x86_64-w64-mingw32/lib" />
+					<Add directory="../../../extlibs/GLEW/2.1.0/linux/lib" />
 				</Linker>
 			</Target>
 			<Target title="Release-Win64">
@@ -171,6 +191,8 @@
 					<Add directory="include/ZBE/core/system/SDL" />
 					<Add directory="include/ZBE/events/handlers/input" />
 					<Add directory="../../../extlibs/json" />
+					<Add directory="../../../extlibs/GLEW/2.1.0/include" />
+					<Add directory="../../../extlibs/lodePNG" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -180,9 +202,12 @@
 					<Add library="SDL2" />
 					<Add library="SDL2_image" />
 					<Add library="SDL2_ttf" />
+					<Add library="GL" />
+					<Add library="GLEW" />
 					<Add directory="../../../extlibs/SDL2/2.0.5/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.1/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.14/x86_64-w64-mingw32/lib" />
+					<Add directory="../../../extlibs/GLEW/2.1.0/linux/lib" />
 				</Linker>
 			</Target>
 		</Build>
@@ -190,8 +215,16 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="../../../extlibs/lodePNG/lodepng.cpp" />
 		<Unit filename="../../../include/ZBE/JSON/graphics/JSONGraphicsLoaders.h" />
 		<Unit filename="../../../include/ZBE/JSON/resources/JSONImgDefLoader.h" />
+		<Unit filename="../../../include/ZBE/OGL/daemons/OGLModelSheetPosDrawer.h" />
+		<Unit filename="../../../include/ZBE/OGL/daemons/OGLModelSheetPreDrawer.h" />
+		<Unit filename="../../../include/ZBE/OGL/drawers/OGLModelSheetDrawer.h" />
+		<Unit filename="../../../include/ZBE/OGL/graphics/OGLModel.h" />
+		<Unit filename="../../../include/ZBE/OGL/graphics/OGLModelSheet.h" />
+		<Unit filename="../../../include/ZBE/OGL/graphics/implementations/SingleModelOGLModelSheet.h" />
+		<Unit filename="../../../include/ZBE/SDL/OGL/SDLOGLWindow.h" />
 		<Unit filename="../../../include/ZBE/SDL/daemons/BasicPostLoopSDLDaemon.h" />
 		<Unit filename="../../../include/ZBE/SDL/daemons/BasicPreLoopSDLDaemon.h" />
 		<Unit filename="../../../include/ZBE/SDL/drawers/RotatedSpriteSDLDrawer.h" />
@@ -290,6 +323,7 @@
 		<Unit filename="../../../include/ZBE/core/events/generators/util/CollisionData.h" />
 		<Unit filename="../../../include/ZBE/core/events/generators/util/CollisionObject.h" />
 		<Unit filename="../../../include/ZBE/core/events/generators/util/CollisionSelector.h" />
+		<Unit filename="../../../include/ZBE/core/events/generators/util/InputStatusManager.h" />
 		<Unit filename="../../../include/ZBE/core/events/generators/util/IntersectionCollisionSelector.h" />
 		<Unit filename="../../../include/ZBE/core/events/generators/util/ReactObject.h" />
 		<Unit filename="../../../include/ZBE/core/events/handlers/Actuator.h" />
@@ -310,6 +344,7 @@
 		<Unit filename="../../../include/ZBE/core/tools/containers/RsrcDictionary.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/RsrcStore.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/Ticket.h" />
+		<Unit filename="../../../include/ZBE/core/tools/containers/TicketedElement.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/TicketedForwardList.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/containers.h" />
 		<Unit filename="../../../include/ZBE/core/tools/graphics/Sprite.h" />
@@ -339,6 +374,7 @@
 		<Unit filename="../../../include/ZBE/entities/avatars/Movable.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/Positionable.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/Resizable.h" />
+		<Unit filename="../../../include/ZBE/entities/avatars/SingleModel.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/SingleTextSprite.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/Stated.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/BaseBouncer.h" />
@@ -348,6 +384,8 @@
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/BaseSingleTextSprite.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/BaseStated.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/SimpleBounceable.h" />
+		<Unit filename="../../../include/ZBE/entities/avatars/implementations/SimpleSingleModel.h" />
+		<Unit filename="../../../include/ZBE/entities/avatars/implementations/ValuedSingleModel.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/actuators/BouncerAtor.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/actuators/ConditionalEraserAtor.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/actuators/DaemonSelectorAtor.h" />
@@ -365,6 +403,7 @@
 		<Unit filename="../../../include/ZBE/resources/loaders/ImgFolderLoader.h" />
 		<Unit filename="../../../include/ZBE/resources/loaders/ImgLoader.h" />
 		<Unit filename="../../../src/ZBE/JSON/graphics/JSONGraphicsLoaders.cpp" />
+		<Unit filename="../../../src/ZBE/SDL/OGL/SDLOGLWindow.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/daemons/BasicPostLoopSDLDaemon.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/daemons/BasicPreLoopSDLDaemon.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/drawers/RotatedSpriteSDLDrawer.cpp" />

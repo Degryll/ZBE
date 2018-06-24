@@ -82,6 +82,15 @@ void Entity::setDouble(uint64_t id, std::shared_ptr<Value<double> >   val) {
   }
 }
 
+void Entity::setFloat(uint64_t id, std::shared_ptr<Value<float> >   val) {
+  auto it = fv.find(id);
+  if (it != fv.end()) {
+    SysError::setError("Overriding entity double value not allowed.");
+  } else {
+    fv[id] = val;
+  }
+}
+
 void Entity::setUint(uint64_t id, std::shared_ptr<Value<uint64_t> > val) {
   auto it = uv.find(id);
   if (it != uv.end()) {
@@ -107,6 +116,16 @@ std::shared_ptr<Value<double> >  Entity::getDouble(uint64_t id) {
     return (std::shared_ptr<Value<double> >());
   } else {
     return (dv[id]);
+  }
+}
+
+std::shared_ptr<Value<float> >  Entity::getFloat(uint64_t id) {
+  auto it = fv.find(id);
+  if (it == fv.end()) {
+    SysError::setError("Entity has no double value at given index " +  std::to_string(id) + ".");
+    return (std::shared_ptr<Value<float> >());
+  } else {
+    return (fv[id]);
   }
 }
 

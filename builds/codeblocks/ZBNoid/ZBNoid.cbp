@@ -96,6 +96,7 @@
 					<Add option="-m64" />
 					<Add option="-g" />
 					<Add option="-isystem ../../../extlibs/json" />
+					<Add option="-isystem ../../../extlibs/glm/0.9.9.0" />
 					<Add option="-std=c++17" />
 					<Add directory="../../../src/ZBNoid/include" />
 					<Add directory="../../../include" />
@@ -129,6 +130,7 @@
 					<Add option="-O2" />
 					<Add option="-m64" />
 					<Add option="-isystem ../../../extlibs/json" />
+					<Add option="-isystem ../../../extlibs/glm/0.9.9.0" />
 					<Add option="-std=c++17" />
 					<Add directory="../../../src/ZBNoid/include" />
 					<Add directory="../../../include" />
