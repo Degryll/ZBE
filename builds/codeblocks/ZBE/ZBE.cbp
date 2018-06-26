@@ -154,12 +154,12 @@
 					<Add library="SDL2" />
 					<Add library="SDL2_image" />
 					<Add library="SDL2_ttf" />
-					<Add library="GL" />
-					<Add library="GLEW" />
+					<Add library="opengl32" />
+					<Add library="glew32" />
 					<Add directory="../../../extlibs/SDL2/2.0.5/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.1/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.14/x86_64-w64-mingw32/lib" />
-					<Add directory="../../../extlibs/GLEW/2.1.0/linux/lib" />
+					<Add directory="../../../extlibs/GLEW/2.1.0/windows/lib/release/x64" />
 				</Linker>
 			</Target>
 			<Target title="Release-Win64">
@@ -202,12 +202,12 @@
 					<Add library="SDL2" />
 					<Add library="SDL2_image" />
 					<Add library="SDL2_ttf" />
-					<Add library="GL" />
-					<Add library="GLEW" />
+					<Add library="opengl32" />
+					<Add library="glew32" />
 					<Add directory="../../../extlibs/SDL2/2.0.5/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.1/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.14/x86_64-w64-mingw32/lib" />
-					<Add directory="../../../extlibs/GLEW/2.1.0/linux/lib" />
+					<Add directory="../../../extlibs/GLEW/2.1.0/windows/lib/release/x64" />
 				</Linker>
 			</Target>
 		</Build>

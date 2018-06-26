@@ -54,7 +54,7 @@ public:
    *  \param rederer_flags Flags for the Renderer creation. Default no flags.
    */
   SDLOGLWindow(const char* title, int width, int height, Uint32 window_flags = 0, Uint32 rederer_flags = 0) : SDLWindow(title, width, height, window_flags | SDL_WINDOW_OPENGL, rederer_flags), texStore(std::make_shared<OGLTextureStore>()), modelStore(std::make_shared<OGLModelStore>()), shaderStore(std::make_shared<OGLShaderStore>()) {
-    createGLContext();
+    // createGLContext();
   };
 
   /** \brief Creates a new SDLOGLWindow and a Renderer in a specific position.
