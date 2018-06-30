@@ -21,6 +21,7 @@
 					<Add option="-m64" />
 					<Add option="-g" />
 					<Add option="-isystem ../../../extlibs/json" />
+					<Add option="-isystem ../../../extlibs/glm/0.9.9.0" />
 					<Add option="-D_GLIBCXX_USE_CXX11_ABI=0" />
 					<Add directory="../../../src/ZBE_main/include" />
 					<Add directory="../../../include" />
@@ -43,8 +44,8 @@
 					<Add library="SDL2" />
 					<Add library="SDL2_image" />
 					<Add library="SDL2_ttf" />
-					<Add library="opengl32" />
 					<Add library="glew32" />
+					<Add library="openGL32" />
 					<Add directory="../../../lib" />
 					<Add directory="../../../extlibs/SDL2/2.0.5/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.1/x86_64-w64-mingw32/lib" />
@@ -63,6 +64,7 @@
 					<Add option="-std=c++11" />
 					<Add option="-m64" />
 					<Add option="-isystem ../../../extlibs/json" />
+					<Add option="-isystem ../../../extlibs/glm/0.9.9.0" />
 					<Add option="-D_GLIBCXX_USE_CXX11_ABI=0" />
 					<Add directory="../../../src/ZBE_main/include" />
 					<Add directory="../../../include" />

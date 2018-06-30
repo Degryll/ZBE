@@ -19,6 +19,20 @@ const GLuint VT_POS = 1;
 
 //----- SDLOGLWindow -----//
 
+  void GLAPIENTRY
+MessageCallback( GLenum source,
+                 GLenum type,
+                 GLuint id,
+                 GLenum severity,
+                 GLsizei length,
+                 const GLchar* message,
+                 const void* userParam )
+{
+  fprintf( stderr, "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
+           ( type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : "" ),
+            type, severity, message );
+}
+
 void SDLOGLWindow::createGLContext() {
   SDL_GLContext gContext = SDL_GL_CreateContext(getSDL_Window());
   if( gContext == NULL ) {
@@ -29,11 +43,17 @@ void SDLOGLWindow::createGLContext() {
   SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, ZBE_GL_MINOR_VERSION );
   SDL_GL_SetAttribute( SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE );
 
+  SDL_GL_SetSwapInterval(0);
+
   glewExperimental = GL_TRUE;
   GLenum glewError = glewInit();
   if( glewError != GLEW_OK ) {
     SysError::setError(std::string("ERROR: Error initializing GLEW: ") + std::string((char*)glewGetErrorString( glewError )));
   }
+
+// During init, enable debug output
+glEnable              ( GL_DEBUG_OUTPUT );
+glDebugMessageCallback( MessageCallback, 0 );
 
   glEnable(GL_TEXTURE_2D);
   glEnable(GL_DEPTH_TEST);

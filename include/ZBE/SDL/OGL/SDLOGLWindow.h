@@ -29,7 +29,7 @@
 namespace zbe {
 
 const int ZBE_GL_MAJOR_VERSION = 3;
-const int ZBE_GL_MINOR_VERSION = 1;
+const int ZBE_GL_MINOR_VERSION = 3;
 
 class OGLTextureStore;
 class OGLModelStore;
@@ -54,8 +54,8 @@ public:
    *  \param rederer_flags Flags for the Renderer creation. Default no flags.
    */
   SDLOGLWindow(const char* title, int width, int height, Uint32 window_flags = 0, Uint32 rederer_flags = 0) : SDLWindow(title, width, height, window_flags | SDL_WINDOW_OPENGL, rederer_flags), texStore(std::make_shared<OGLTextureStore>()), modelStore(std::make_shared<OGLModelStore>()), shaderStore(std::make_shared<OGLShaderStore>()) {
-    // createGLContext();
-  };
+    createGLContext();
+  }
 
   /** \brief Creates a new SDLOGLWindow and a Renderer in a specific position.
    *
@@ -70,7 +70,7 @@ public:
    */
   SDLOGLWindow(const char* title, int x, int y, int width, int height, Uint32 window_flags = 0, Uint32 rederer_flags = 0) : SDLWindow(title, x, y, width, height, window_flags | SDL_WINDOW_OPENGL, rederer_flags), texStore(std::make_shared<OGLTextureStore>()), modelStore(std::make_shared<OGLModelStore>()), shaderStore(std::make_shared<OGLShaderStore>()){
     createGLContext();
-  };
+  }
 
   /** \brief Free resources and destroy the Renderer and the SDLOGLWindow.
    */
