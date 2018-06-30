@@ -64,8 +64,8 @@
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/boost_1_57_0" />
 					<Add directory="../../../extlibs/IteratorTypeErasure/IteratorTypeErasure/any_iterator" />
-					<Add directory="../../../extlibs/SDL2/2.0.5/x86_64-w64-mingw32/include" />
-					<Add directory="../../../extlibs/SDL2/2.0.5/x86_64-w64-mingw32/include/SDL2" />
+					<Add directory="../../../extlibs/SDL2/2.0.8/include" />
+					<Add directory="../../../extlibs/SDL2/2.0.8/include/SDL2" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.1/x86_64-w64-mingw32/include" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.14/x86_64-w64-mingw32/include" />
 				</Compiler>
