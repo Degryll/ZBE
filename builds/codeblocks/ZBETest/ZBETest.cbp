@@ -95,7 +95,7 @@
 				<Option working_dir="../../../../ZBE" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
-				<Option compiler="mingw_64-bit_compiler-710" />
+				<Option compiler="mingw_64-bit_compiler-810" />
 				<Compiler>
 					<Add option="-Weffc++" />
 					<Add option="-pedantic" />
@@ -138,7 +138,7 @@
 				<Option working_dir="../../../../ZBE" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
-				<Option compiler="mingw_64-bit_compiler-710" />
+				<Option compiler="mingw_64-bit_compiler-810" />
 				<Compiler>
 					<Add option="-O2" />
 					<Add option="-Weffc++" />
