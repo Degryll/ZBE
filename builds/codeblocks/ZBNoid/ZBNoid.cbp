@@ -105,7 +105,7 @@
 					<Add directory="../../../extlibs/utf8cpp/source" />
 					<Add directory="../../../extlibs/boost_1_57_0" />
 					<Add directory="../../../extlibs/IteratorTypeErasure/IteratorTypeErasure/any_iterator" />
-					<Add directory="../../../extlibs/SDL2/2.0.3/include" />
+					<Add directory="../../../extlibs/SDL2/2.0.8/include" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/include" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/include" />
 				</Compiler>
@@ -117,7 +117,7 @@
 					<Add library="SDL2_image" />
 					<Add library="SDL2_ttf" />
 					<Add directory="../../../lib" />
-					<Add directory="../../../extlibs/SDL2/2.0.3/lib" />
+					<Add directory="../../../extlibs/SDL2/2.0.8/linux64/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/lib" />
 				</Linker>
@@ -138,7 +138,7 @@
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/boost_1_57_0" />
 					<Add directory="../../../extlibs/IteratorTypeErasure/IteratorTypeErasure/any_iterator" />
-					<Add directory="../../../extlibs/SDL2/2.0.3/include" />
+					<Add directory="../../../extlibs/SDL2/2.0.8/include" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/include" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/include" />
 				</Compiler>
@@ -151,7 +151,7 @@
 					<Add library="SDL2_image" />
 					<Add library="SDL2_ttf" />
 					<Add directory="../../../lib" />
-					<Add directory="../../../extlibs/SDL2/2.0.3/lib" />
+					<Add directory="../../../extlibs/SDL2/2.0.8/linux64/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/lib" />
 				</Linker>

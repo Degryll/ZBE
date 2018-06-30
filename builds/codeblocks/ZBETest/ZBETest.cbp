@@ -25,7 +25,7 @@
 					<Add directory="../../../src/ZBETest/include" />
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/googletest/1.7.0/include" />
-					<Add directory="../../../extlibs/SDL2/2.0.3/linux-x64/include" />
+					<Add directory="../../../extlibs/SDL2/2.0.8/include" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/include" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/include" />
 					<Add directory="../../../extlibs/boost_1_57_0" />
@@ -42,7 +42,7 @@
 					<Add library="SDL2_ttf" />
 					<Add library="pthread" />
 					<Add directory="../../../extlibs/googletest/1.7.0/lib/linux64" />
-					<Add directory="../../../extlibs/SDL2/2.0.3/lib/linux64" />
+					<Add directory="../../../extlibs/SDL2/2.0.8/linux64/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/lib" />
 					<Add directory="../../../lib" />
@@ -66,7 +66,7 @@
 					<Add directory="../../../src/ZBETest/include" />
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/googletest/1.7.0/include" />
-					<Add directory="../../../extlibs/SDL2/2.0.3/linux-x64/include" />
+					<Add directory="../../../extlibs/SDL2/2.0.8/include" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/include" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/include" />
 					<Add directory="../../../extlibs/boost_1_57_0" />
@@ -84,7 +84,7 @@
 					<Add library="SDL2_ttf" />
 					<Add library="pthread" />
 					<Add directory="../../../extlibs/googletest/1.7.0/lib/linux64" />
-					<Add directory="../../../extlibs/SDL2/2.0.3/lib/linux64" />
+					<Add directory="../../../extlibs/SDL2/2.0.8/linux64/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/lib" />
 					<Add directory="../../../lib" />

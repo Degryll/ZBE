@@ -118,7 +118,7 @@
 					<Add directory="../../../extlibs/utf8cpp/source" />
 					<Add directory="../../../extlibs/boost_1_57_0" />
 					<Add directory="../../../extlibs/IteratorTypeErasure/IteratorTypeErasure/any_iterator" />
-					<Add directory="../../../extlibs/SDL2/2.0.3/include" />
+					<Add directory="../../../extlibs/SDL2/2.0.8/include" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/include" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/include" />
 					<Add directory="../../../extlibs/json" />
@@ -136,7 +136,7 @@
 					<Add library="GL" />
 					<Add library="GLEW" />
 					<Add directory="../../../lib" />
-					<Add directory="../../../extlibs/SDL2/2.0.3/lib" />
+					<Add directory="../../../extlibs/SDL2/2.0.8/linux64/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/lib" />
 					<Add directory="../../../extlibs/GLEW/2.1.0/linux/lib" />
@@ -159,7 +159,7 @@
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/boost_1_57_0" />
 					<Add directory="../../../extlibs/IteratorTypeErasure/IteratorTypeErasure/any_iterator" />
-					<Add directory="../../../extlibs/SDL2/2.0.3/include" />
+					<Add directory="../../../extlibs/SDL2/2.0.8/include" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/include" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/include" />
 					<Add directory="../../../extlibs/json" />
@@ -178,7 +178,7 @@
 					<Add library="GL" />
 					<Add library="GLEW" />
 					<Add directory="../../../lib" />
-					<Add directory="../../../extlibs/SDL2/2.0.3/lib" />
+					<Add directory="../../../extlibs/SDL2/2.0.8/linux64/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/lib" />
 					<Add directory="../../../extlibs/GLEW/2.1.0/linux/lib" />
