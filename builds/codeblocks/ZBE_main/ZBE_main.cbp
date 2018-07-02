@@ -36,7 +36,7 @@
 					<Add directory="../../../extlibs/GLEW/2.1.0/include" />
 					<Add directory="../../../extlibs/lodePNG" />
 					<Add directory="../../../extlibs/glm/0.9.9.0" />
-					<Add directory="C:/VulkanSDK/1.1.73.0/Include" />
+					<Add directory="../../../extlibs/Vulkan/1.1.73.0/Include" />
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
@@ -53,7 +53,7 @@
 					<Add directory="../../../extlibs/SDL2_image/2.0.1/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.14/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/GLEW/2.1.0/windows/lib/Release/x64" />
-					<Add directory="C:/VulkanSDK/1.1.73.0/Lib" />
+					<Add directory="../../../extlibs/Vulkan/1.1.73.0/Lib" />
 				</Linker>
 			</Target>
 			<Target title="Release-Win64">
@@ -81,7 +81,7 @@
 					<Add directory="../../../extlibs/GLEW/2.1.0/include" />
 					<Add directory="../../../extlibs/lodePNG" />
 					<Add directory="../../../extlibs/glm/0.9.9.0" />
-					<Add directory="C:/VulkanSDK/1.1.73.0/Include" />
+					<Add directory="../../../extlibs/Vulkan/1.1.73.0/Include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -99,7 +99,7 @@
 					<Add directory="../../../extlibs/SDL2_image/2.0.1/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.14/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/GLEW/2.1.0/windows/lib/Release/x64" />
-					<Add directory="C:/VulkanSDK/1.1.73.0/Lib" />
+					<Add directory="../../../extlibs/Vulkan/1.1.73.0/Lib" />
 				</Linker>
 			</Target>
 			<Target title="Debug-Linux64">
