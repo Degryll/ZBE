@@ -1,0 +1,12 @@
+{
+"name" : "nosense",
+"imgdefs" : [
+  {
+    "name" : "foo",
+    "frameTime" : 333,
+    "frameAmount" : 42,
+    "region" : [1.0,2.0,3.0,4.0],
+    "regionOffset" : [5.0,6.0]
+  }
+]
+}

@@ -11,7 +11,7 @@
 #ifndef ZBE_RESOURCES_LOADERS_IMGDEFLOADER_H_
 #define ZBE_RESOURCES_LOADERS_IMGDEFLOADER_H_
 
-#include <experimental/filesystem>
+#include <filesystem>
 
 namespace zbe {
 
@@ -26,12 +26,12 @@ public:
    *  \param imgId Associated image id
    *  \return An id to the image definition.
    */
-  virtual void loadImgDef(const char *url, uint64_t imgId);
+  virtual void loadImgDef(const std::filesystem::path& url, uint64_t imgId) = 0;
 
   /** \brief Returns the file extension.
    *  \return The file extension.
    */
-  virtual std::experimental::filesystem::path getExtension();
+  virtual const std::filesystem::path getExtension() = 0;
 
 };
 

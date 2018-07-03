@@ -6,6 +6,7 @@
  * @author Batis Degryll Ludo
  * @brief SDL implementation of ImgLoader.
  * of the loaded image.
+ * Test on ZBETest/resources/loaders/ImgAndDEfloadTest.cpp
  */
 
 #ifndef ZBE_SDL_RESOURCES_LOADERS_SDLIMGLOADER_H_
@@ -14,27 +15,29 @@
 #include <filesystem>
 #include <memory>
 
+#include "ZBE/resources/loaders/ImgLoader.h"
+
 #include "ZBE/SDL/system/SDLWindow.h"
 
 namespace zbe {
 
 /** \brief SDL implementation of ImgLoader.
  */
-class SLDImgLoader {
+class SDLImgLoader : public ImgLoader {
 public:
 
-  /** \brief Builds an SLDImgLoader from a SDLImageStore and the file extension supported (PNG by default)
-   *  \imgStore SLDImgLoader to use.
+  /** \brief Builds an SDLImgLoader from a SDLImageStore and the file extension supported (PNG by default)
+   *  \imgStore SDLImgLoader to use.
    *  \extension Extension supported. PNG by default.
    */
-  SLDImgLoader(std::shared_ptr<zbe::SDLImageStore> imgStore, std::filesystem::path extension = ".png") : imgStore(imgStore), ext(extension) {}
+  SDLImgLoader(std::shared_ptr<zbe::SDLImageStore> imgStore, std::filesystem::path extension = ".png") : imgStore(imgStore), ext(extension) {}
 
   /** \brief Load an image
    *  \param filePath Path to image file.
    *  \return An id to the image loaded.
    */
   uint64_t loadImg(std::filesystem::path filePath) {
-    return imgStore->loadImg(filePath.u8string());
+    return imgStore->loadImg(filePath.c_str());  // TODO test with ut8
   }
 
   /** \brief Tells if a file extension is loadable.

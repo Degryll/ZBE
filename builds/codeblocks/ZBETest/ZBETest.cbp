@@ -41,6 +41,7 @@
 					<Add library="SDL2_image" />
 					<Add library="SDL2_ttf" />
 					<Add library="pthread" />
+					<Add library="stdc++fs" />
 					<Add directory="../../../extlibs/googletest/1.7.0/lib/linux64" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/linux64/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />
@@ -83,6 +84,7 @@
 					<Add library="SDL2_image" />
 					<Add library="SDL2_ttf" />
 					<Add library="pthread" />
+					<Add library="stdc++fs" />
 					<Add directory="../../../extlibs/googletest/1.7.0/lib/linux64" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/linux64/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />
@@ -232,6 +234,7 @@
 		<Unit filename="../../../src/ZBETest/events/handlers/actuators/DaemonSelectorAtorTest.cpp" />
 		<Unit filename="../../../src/ZBETest/events/handlers/input/BroadcastIHTest.cpp" />
 		<Unit filename="../../../src/ZBETest/graphics/MultiSpriteSheetTest.cpp" />
+		<Unit filename="../../../src/ZBETest/resources/loaders/ImgAndDefLoadTest.cpp" />
 		<Unit filename="../../../src/ZBETest/resources/loaders/ImgFolderLoaderTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/main.cpp" />
 		<Extensions>
