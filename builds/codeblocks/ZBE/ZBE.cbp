@@ -222,6 +222,7 @@
 		<Unit filename="../../../extlibs/lodePNG/lodepng.cpp" />
 		<Unit filename="../../../include/ZBE/JSON/graphics/JSONGraphicsLoaders.h" />
 		<Unit filename="../../../include/ZBE/JSON/resources/JSONImgDefLoader.h" />
+		<Unit filename="../../../include/ZBE/JSON/resources/JSONMultiSpriteSheetLoader.h" />
 		<Unit filename="../../../include/ZBE/OGL/daemons/OGLModelSheetPosDrawer.h" />
 		<Unit filename="../../../include/ZBE/OGL/daemons/OGLModelSheetPreDrawer.h" />
 		<Unit filename="../../../include/ZBE/OGL/drawers/OGLModelSheetDrawer.h" />
@@ -404,8 +405,9 @@
 		<Unit filename="../../../include/ZBE/events/handlers/time/TicketEraser.h" />
 		<Unit filename="../../../include/ZBE/graphics/MultiSpriteSheet.h" />
 		<Unit filename="../../../include/ZBE/resources/loaders/ImgDefLoader.h" />
-		<Unit filename="../../../include/ZBE/resources/loaders/ImgFolderLoader.h" />
-		<Unit filename="../../../include/ZBE/resources/loaders/ImgLoader.h" />
+		<Unit filename="../../../include/ZBE/resources/loaders/RsrcFolderLoader.h" />
+		<Unit filename="../../../include/ZBE/resources/loaders/RsrcLoader.h" />
+		<Unit filename="../../../include/ZBE/resources/loaders/SpriteSheetLoader.h" />
 		<Unit filename="../../../src/ZBE/JSON/graphics/JSONGraphicsLoaders.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/OGL/SDLOGLWindow.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/daemons/BasicPostLoopSDLDaemon.cpp" />
@@ -435,7 +437,7 @@
 		<Unit filename="../../../src/ZBE/core/tools/math/Vector.cpp" />
 		<Unit filename="../../../src/ZBE/core/tools/math/collisions/intersections.cpp" />
 		<Unit filename="../../../src/ZBE/core/tools/text/utf8.cpp" />
-		<Unit filename="../../../src/ZBE/resources/loaders/ImgFolderLoader.cpp" />
+		<Unit filename="../../../src/ZBE/resources/loaders/RsrcFolderLoader.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

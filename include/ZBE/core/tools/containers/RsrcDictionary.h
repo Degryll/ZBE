@@ -64,6 +64,12 @@ class NameRsrcDictionary {
       }
     }
 
+    /** \brief Clear the container.
+     */
+    void clear() {
+      l.clear();
+    }
+
   private:
     NameRsrcDictionary() : l() {};  //!< Needed for singleton.
 
@@ -114,6 +120,12 @@ class IdRsrcDictionary {
       } else {
         return (it->second);
       }
+    }
+
+    /** \brief Clear the container.
+    */
+    void clear() {
+      l.clear();
     }
 
   private:

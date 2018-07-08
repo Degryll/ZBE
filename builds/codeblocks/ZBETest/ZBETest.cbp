@@ -234,8 +234,8 @@
 		<Unit filename="../../../src/ZBETest/events/handlers/actuators/DaemonSelectorAtorTest.cpp" />
 		<Unit filename="../../../src/ZBETest/events/handlers/input/BroadcastIHTest.cpp" />
 		<Unit filename="../../../src/ZBETest/graphics/MultiSpriteSheetTest.cpp" />
-		<Unit filename="../../../src/ZBETest/resources/loaders/ImgAndDefLoadTest.cpp" />
 		<Unit filename="../../../src/ZBETest/resources/loaders/ImgFolderLoaderTest.cpp" />
+		<Unit filename="../../../src/ZBETest/resources/loaders/RsrcLoadTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/main.cpp" />
 		<Extensions>
 			<code_completion />

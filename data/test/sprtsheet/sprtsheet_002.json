@@ -1,0 +1,24 @@
+{
+  "name": "player_002",
+  "sprtdefs" : [
+    {
+      "name" : "stay",
+      "img" : "house.stay",
+      "scale" : [0.7, 0.7],
+      "drawOffset" : [-0.1, -0.1]
+    },
+    {
+      "name" : "jump",
+      "img" : "house.still",
+      "scale" : [0.7, 0.7],
+      "drawOffset" : [-0.1, -0.1]
+    },
+    {
+      "name" : "run",
+      "default" : true,
+      "img" : "house.still",
+      "scale" : [0.7, 0.7],
+      "drawOffset" : [-0.1, -0.1]
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 /**
  * Copyright 2015 Batis Degryll Ludo
- * @file ImgLoader.h
+ * @file SDLImgLoader.h
  * @since 2018-04-19
  * @date 2018-04-19
  * @author Batis Degryll Ludo
@@ -15,7 +15,8 @@
 #include <filesystem>
 #include <memory>
 
-#include "ZBE/resources/loaders/ImgLoader.h"
+#include "ZBE/resources/loaders/RsrcLoader.h"
+#include "ZBE/resources/loaders/ImgDefLoader.h"
 
 #include "ZBE/SDL/system/SDLWindow.h"
 
@@ -23,21 +24,26 @@ namespace zbe {
 
 /** \brief SDL implementation of ImgLoader.
  */
-class SDLImgLoader : public ImgLoader {
+class SDLImgLoader : public RsrcLoader {
 public:
 
   /** \brief Builds an SDLImgLoader from a SDLImageStore and the file extension supported (PNG by default)
    *  \imgStore SDLImgLoader to use.
    *  \extension Extension supported. PNG by default.
    */
-  SDLImgLoader(std::shared_ptr<zbe::SDLImageStore> imgStore, std::filesystem::path extension = ".png") : imgStore(imgStore), ext(extension) {}
+  SDLImgLoader(std::shared_ptr<zbe::SDLImageStore> imgStore, std::shared_ptr<ImgDefLoader> imgDefLoader, std::filesystem::path extension = ".png")
+    : imgStore(imgStore), imgDefLoader(imgDefLoader), ext(extension) {}
 
   /** \brief Load an image
    *  \param filePath Path to image file.
    *  \return An id to the image loaded.
    */
-  uint64_t loadImg(std::filesystem::path filePath) {
-    return imgStore->loadImg(filePath.c_str());  // TODO test with ut8
+  void load(std::filesystem::path filePath) {
+     uint64_t imgId = imgStore->loadImg(filePath.c_str());  // TODO test with ut8
+     if(imgId > 0) {
+       std::filesystem::path defFilePath = generateDefPath(filePath);
+       imgDefLoader->loadImgDef(defFilePath, imgId);
+     }
   }
 
   /** \brief Tells if a file extension is loadable.
@@ -49,7 +55,15 @@ public:
   }
 
 private:
+
+  std::filesystem::path generateDefPath(const std::filesystem::path& p) {
+    std::filesystem::path ext = imgDefLoader->getExtension();
+    std::filesystem::path out = p;
+    return (out.replace_extension(ext));
+  }
+
   std::shared_ptr<zbe::SDLImageStore> imgStore;
+  std::shared_ptr<ImgDefLoader> imgDefLoader;
   std::filesystem::path ext;
 
 };

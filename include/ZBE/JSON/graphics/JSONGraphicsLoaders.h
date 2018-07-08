@@ -25,6 +25,9 @@ ImgDef JSONImgDefLoad(json j, uint64_t graphicsId);
 
 void JSONImgDefFileLoad(std::istream& is, uint64_t graphicsId);
 
+SprtDef JSONSprtDefLoad(json j);
+
+void JSONMultiSpriteSheetFileLoad(std::istream& is);
 
 }  // namespace zbe
 

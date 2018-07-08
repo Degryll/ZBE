@@ -55,6 +55,12 @@ class RsrcStore {
      */
     std::shared_ptr<T> get(uint64_t id);
 
+    /** \brief Clear the container.
+    */
+    void clear() {
+      l.clear();
+    }
+
   private:
     RsrcStore() : l() {};  //!< Needed for singleton.
 

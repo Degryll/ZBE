@@ -69,7 +69,7 @@ public:
   /** \brief Parametriced constructor
    *  \param id Id for the SpriteSheet;
    **/
-  MultiSpriteSheet(int64_t size, const SprtDef& defaultSD) : spriteDefintions(size), size(size), defaultSD(defaultSD) {
+  MultiSpriteSheet(int64_t size, const SprtDef& defaultSD = SprtDef()) : spriteDefintions(size), size(size), defaultSD(defaultSD) {
     for(unsigned i =0; i<size;i++){
       spriteDefintions[i] = defaultSD;
     }

@@ -38,7 +38,7 @@ class JSONImgDefLoader : public ImgDefLoader {
    *  \return The file extension.
    */
   const std::filesystem::path getExtension() {
-    static std::filesystem::path p(".json");
+    static const std::filesystem::path p(".json");
     return p;
   }
 
