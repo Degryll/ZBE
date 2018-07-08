@@ -11,6 +11,9 @@
 #define ZBE_RESOURCES_LOADERS_RSRCLOADER_H_
 
 #include <filesystem>
+#include <string>
+
+#include "ZBE/resources/contextnames.h"
 
 namespace zbe {
 
@@ -18,6 +21,7 @@ namespace zbe {
  */
 class RsrcLoader {
 public:
+
   virtual ~RsrcLoader() {} //!< Virtual destructor.
 
   /** \brief Load a resource

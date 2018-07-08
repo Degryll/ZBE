@@ -20,6 +20,8 @@
 #include "ZBE/core/system/SysError.h"
 #include "ZBE/core/system/SysIdGenerator.h"
 
+#include "ZBE/resources/contextnames.h"
+
 namespace zbe {
 
 using json = nlohmann::json;
@@ -52,7 +54,7 @@ void JSONImgDefFileLoad(std::istream& is, uint64_t graphicsId) {
       ImgDef imgDef = JSONImgDefLoad(imgNode, graphicsId);
       uint64_t id = SysIdGenerator::getId();
       rsrc.insert(id, std::make_shared<ImgDef>(imgDef));
-      nrd.insert(name + "." + nodeName, id);
+      nrd.insert(cn::IMGDEF + cn::SEPARATOR + name + cn::SEPARATOR + nodeName, id);
     }
   } catch (json::parse_error &e) {
     SysError::setError(std::string("ERROR: Json failed to parse: ") + std::string(e.what()));
@@ -67,7 +69,7 @@ SprtDef JSONSprtDefLoad(json j) {
     RsrcStore<ImgDef>& rsrc = RsrcStore<ImgDef>::getInstance();
     NameRsrcDictionary& nrd = NameRsrcDictionary::getInstance();
     std::string imgName = j["img"];
-    uint64_t imgDefId = nrd.get(imgName);
+    uint64_t imgDefId = nrd.get(cn::IMGDEF + cn::SEPARATOR + imgName);
     if(imgDefId > 0){
       std::shared_ptr<ImgDef> storedImgDef = rsrc.get(imgDefId);
       ImgDef imgDef(*storedImgDef);
@@ -96,14 +98,14 @@ void JSONMultiSpriteSheetFileLoad(std::istream& is) {
     for (auto sprtNode : imgDefs) {
       std::string stateName = sprtNode["name"];
       SprtDef sprtDef = JSONSprtDefLoad(sprtNode);
-      sprtSheet->setSprite(nrd.get(stateName), sprtDef);
+      sprtSheet->setSprite(nrd.get(cn::STATE + cn::SEPARATOR + stateName), sprtDef);
       if (!sprtNode["default"].is_null() && sprtNode["default"]) {
         sprtSheet->setDefaultSprite(sprtDef);
       }
     }
     uint64_t id = SysIdGenerator::getId();
     rsrc.insert(id, sprtSheet);
-    nrd.insert(name, id);
+    nrd.insert(cn::SPRTSHEET + cn::SEPARATOR + name, id);
   } catch (json::parse_error &e) {
     SysError::setError(std::string("ERROR: Json failed to parse: ") + std::string(e.what()));
   } catch (nlohmann::detail::type_error &e) {

@@ -9,6 +9,8 @@
 #include "ZBE/graphics/MultiSpriteSheet.h"
 #include "ZBE/JSON/graphics/JSONGraphicsLoaders.h"
 
+#include "ZBE/resources/contextnames.h"
+
 namespace JSONGraphicsLoadersTest {
 
 // "data/test/\u65e5\u0448/\u65e5\u0448.txt";
@@ -24,7 +26,7 @@ TEST(JSONGraphicsLoaders, load_succes) {
 
     EXPECT_EQ(0, zbe::SysError::getNErrors()) << "Must be no parse or type errors.";
 
-    uint64_t id = nrd.get("playerSheet.jump1");
+    uint64_t id = nrd.get(zbe::cn::IMGDEF + zbe::cn::SEPARATOR + "playerSheet.jump1");
     ASSERT_NE(0, id) << "Element playerSheet.jump1 must be present in NameRsrcDictionary";
     std::shared_ptr<zbe::ImgDef> idef = rsrc.get(id);
     ASSERT_TRUE(idef!=nullptr) << "playerSheet.jump1 id must have an ImgDef stored in the RsrcStore";
@@ -33,7 +35,7 @@ TEST(JSONGraphicsLoaders, load_succes) {
     EXPECT_EQ(zbe::Region2D({0.0,0.0}, {0.5,0.5}), idef->region) << "Jump sprite region must be 0.0, 0.0, 0.5, 0.5.";
     EXPECT_EQ(zbe::Vector2D({0.0,0.0}), idef->regionOffset) << "Jump sprite regionOffset must be 0.0, 0.0.";
 
-    id = nrd.get("playerSheet.run");
+    id = nrd.get(zbe::cn::IMGDEF + zbe::cn::SEPARATOR + "playerSheet.run");
     ASSERT_NE(0, id) << "Element playerSheet.run must be present in NameRsrcDictionary";
     idef = rsrc.get(id);
     ASSERT_TRUE(idef!=nullptr) << "playerSheet.run id must have an ImgDef stored in the RsrcStore";
@@ -58,7 +60,7 @@ TEST(JSONGraphicsLoaders, DISABLED_load_succes_utf8) {
 
     EXPECT_EQ(0, zbe::SysError::getNErrors()) << "Must be no parse or type errors.";
 
-    uint64_t id = nrd.get("playerSheet.jump1");
+    uint64_t id = nrd.get(zbe::cn::IMGDEF + zbe::cn::SEPARATOR + "playerSheet.jump1");
     ASSERT_NE(0, id) << "Element playerSheet.jump1 must be present in NameRsrcDictionary";
     std::shared_ptr<zbe::ImgDef> idef = rsrc.get(id);
     ASSERT_TRUE(idef!=nullptr) << "playerSheet.jump1 id must have an ImgDef stored in the RsrcStore";

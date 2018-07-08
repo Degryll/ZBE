@@ -40,9 +40,9 @@ TEST(ImgAndDefTest, Load_folder) {
  zbe::RsrcStore<zbe::ImgDef>& rsrc = zbe::RsrcStore<zbe::ImgDef>::getInstance();
  zbe::NameRsrcDictionary& nrd = zbe::NameRsrcDictionary::getInstance();
 
- uint64_t houseStay = nrd.get(std::string("house.stay"));
- uint64_t houseStill = nrd.get(std::string("house.still"));
- uint64_t nosenseFoo = nrd.get(std::string("nosense.foo"));
+ uint64_t houseStay = nrd.get(zbe::cn::IMGDEF + zbe::cn::SEPARATOR + std::string("house.stay"));
+ uint64_t houseStill = nrd.get(zbe::cn::IMGDEF + zbe::cn::SEPARATOR + std::string("house.still"));
+ uint64_t nosenseFoo = nrd.get(zbe::cn::IMGDEF + zbe::cn::SEPARATOR + std::string("nosense.foo"));
 
  EXPECT_EQ(0, zbe::SysError::getNErrors()) << "No errors in name dictionary.";
 
@@ -99,9 +99,9 @@ TEST(MultiSpriteSheetTest, Load_folder) {
   nrd.clear();
   ssrsrc.clear();
 
-  nrd.insert("stay",1);
-  nrd.insert("jump",2);
-  nrd.insert("run",3);
+  nrd.insert(zbe::cn::STATE + zbe::cn::SEPARATOR + "stay",1);
+  nrd.insert(zbe::cn::STATE + zbe::cn::SEPARATOR + "jump",2);
+  nrd.insert(zbe::cn::STATE + zbe::cn::SEPARATOR + "run",3);
 
   std::shared_ptr<zbe::SDLWindow> window = std::make_shared<zbe::SDLWindow>("ImgAndDefTest", 1000, 1000);
 
@@ -119,8 +119,8 @@ TEST(MultiSpriteSheetTest, Load_folder) {
   EXPECT_EQ(2, zbe::SysError::getNErrors()) << "Two errors expected: \"Resource id not found\" and \"Json failed to build MultiSpriteSheet\".";
   zbe::SysError::clear();
 
-  std::shared_ptr<zbe::SpriteSheet<zbe::AnimatedSprite> > player001 = ssrsrc.get(nrd.get("player_001"));
-  std::shared_ptr<zbe::SpriteSheet<zbe::AnimatedSprite> > player002 = ssrsrc.get(nrd.get("player_002"));
+  std::shared_ptr<zbe::SpriteSheet<zbe::AnimatedSprite> > player001 = ssrsrc.get(nrd.get(zbe::cn::SPRTSHEET + zbe::cn::SEPARATOR + "player_001"));
+  std::shared_ptr<zbe::SpriteSheet<zbe::AnimatedSprite> > player002 = ssrsrc.get(nrd.get(zbe::cn::SPRTSHEET + zbe::cn::SEPARATOR + "player_002"));
 
   zbe::SimpleAnimatedSprite sas1(0, 0, 100, 100, 1, 0.0f, 1, 100);
   zbe::Sprite s1 = player001->generateSprite(&sas1);
@@ -138,7 +138,7 @@ TEST(MultiSpriteSheetTest, Load_folder) {
   EXPECT_NEAR(70.0, s1.dst.v.x, 0.00001) << "Must match dst width";
   EXPECT_NEAR(70.0, s1.dst.v.y, 0.00001) << "Must match dst height";
 
-  EXPECT_EQ(rsrc.get(nrd.get("house.stay"))->imgSrcId, s1.g) << "Must match graphics id.";
+  EXPECT_EQ(rsrc.get(nrd.get(zbe::cn::IMGDEF + zbe::cn::SEPARATOR + "house.stay"))->imgSrcId, s1.g) << "Must match graphics id.";
 
   EXPECT_NEAR(1.5, s2.src.p.x, 0.00001) << "Must match src x";
   EXPECT_NEAR(0.5, s2.src.p.y, 0.00001) << "Must match src y";
@@ -150,7 +150,7 @@ TEST(MultiSpriteSheetTest, Load_folder) {
   EXPECT_NEAR(77.0, s2.dst.v.x, 0.00001) << "Must match dst width";
   EXPECT_NEAR(77.0, s2.dst.v.y, 0.00001) << "Must match dst height";
 
-  EXPECT_EQ(rsrc.get(nrd.get("house.still"))->imgSrcId, s2.g) << "Must match graphics id.";
+  EXPECT_EQ(rsrc.get(nrd.get(zbe::cn::IMGDEF + zbe::cn::SEPARATOR + "house.still"))->imgSrcId, s2.g) << "Must match graphics id.";
 
   EXPECT_EQ(0, zbe::SysError::getNErrors()) << "Finally no errors.";
   zbe::SysError::clear();
