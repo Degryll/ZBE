@@ -125,12 +125,12 @@
 					<Add option="-pedantic" />
 					<Add option="-Wextra" />
 					<Add option="-Wall" />
-					<Add option="-std=c++11" />
 					<Add option="-m64" />
 					<Add option="-g" />
 					<Add option="-static-libstdc++ -D_GLIBCXX_USE_CXX11_ABI=0" />
 					<Add option="-isystem ../../../extlibs/json" />
 					<Add option="-isystem ../../../extlibs/glm/0.9.9.0" />
+					<Add option="-std=c++17" />
 					<Add directory="../../../include" />
 					<Add directory="../../../src" />
 					<Add directory="include/ZBE/core/io" />
@@ -178,6 +178,7 @@
 					<Add option="-m64" />
 					<Add option="-isystem ../../../extlibs/json" />
 					<Add option="-isystem ../../../extlibs/glm/0.9.9.0" />
+					<Add option="-std=c++17" />
 					<Add option="-D_GLIBCXX_USE_CXX11_ABI=0" />
 					<Add directory="../../../include" />
 					<Add directory="../../../src" />

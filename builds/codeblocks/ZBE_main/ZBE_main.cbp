@@ -17,19 +17,19 @@
 					<Add option="-pedantic" />
 					<Add option="-Wextra" />
 					<Add option="-Wall" />
-					<Add option="-std=c++11" />
 					<Add option="-m64" />
 					<Add option="-g" />
 					<Add option="-isystem ../../../extlibs/json" />
 					<Add option="-isystem ../../../extlibs/glm/0.9.9.0" />
+					<Add option="-std=c++17" />
 					<Add option="-D_GLIBCXX_USE_CXX11_ABI=0" />
 					<Add directory="../../../src/ZBE_main/include" />
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/utf8cpp/source" />
 					<Add directory="../../../extlibs/boost_1_57_0" />
 					<Add directory="../../../extlibs/IteratorTypeErasure/IteratorTypeErasure/any_iterator" />
-					<Add directory="../../../extlibs/SDL2/2.0.5/x86_64-w64-mingw32/include" />
-					<Add directory="../../../extlibs/SDL2/2.0.5/x86_64-w64-mingw32/include/SDL2" />
+					<Add directory="../../../extlibs/SDL2/2.0.8/include" />
+					<Add directory="../../../extlibs/SDL2/2.0.8/include/SDL2" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.1/x86_64-w64-mingw32/include" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.14/x86_64-w64-mingw32/include" />
 					<Add directory="../../../extlibs/json" />
@@ -49,7 +49,7 @@
 					<Add library="openGL32" />
 					<Add library="vulkan-1" />
 					<Add directory="../../../lib" />
-					<Add directory="../../../extlibs/SDL2/2.0.5/x86_64-w64-mingw32/lib" />
+					<Add directory="../../../extlibs/SDL2/2.0.8/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.1/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.14/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/GLEW/2.1.0/windows/lib/Release/x64" />
@@ -64,10 +64,10 @@
 				<Option compiler="mingw_64-bit_compiler-810" />
 				<Compiler>
 					<Add option="-O2" />
-					<Add option="-std=c++11" />
 					<Add option="-m64" />
 					<Add option="-isystem ../../../extlibs/json" />
 					<Add option="-isystem ../../../extlibs/glm/0.9.9.0" />
+					<Add option="-std=c++17" />
 					<Add option="-D_GLIBCXX_USE_CXX11_ABI=0" />
 					<Add directory="../../../src/ZBE_main/include" />
 					<Add directory="../../../include" />
@@ -95,7 +95,7 @@
 					<Add library="glew32" />
 					<Add library="vulkan-1" />
 					<Add directory="../../../lib" />
-					<Add directory="../../../extlibs/SDL2/2.0.5/x86_64-w64-mingw32/lib" />
+					<Add directory="../../../extlibs/SDL2/2.0.8/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.1/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.14/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/GLEW/2.1.0/windows/lib/Release/x64" />
