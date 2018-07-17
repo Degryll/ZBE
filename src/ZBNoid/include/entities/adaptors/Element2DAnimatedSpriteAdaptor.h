@@ -25,7 +25,7 @@ public:
   Element2DAnimatedSpriteAdaptor(const Element2DAnimatedSpriteAdaptor&) = delete;
   void operator=(const Element2DAnimatedSpriteAdaptor&) = delete;
 
-  Element2DAnimatedSpriteAdaptor(std::weak_ptr<zbe::Element2D<R> > entity): e(entity), s(nullptr), sysTime(zbe::SysTime::getInstance()) {
+  Element2DAnimatedSpriteAdaptor(std::weak_ptr<zbe::Element2D<R> > entity): e(entity), s(nullptr), contextTime(zbe::SysTime::getInstance()) {
     std::shared_ptr<zbe::Element2D<R> > ent = e.lock();
     s = new zbe::SimpleAnimatedSprite(ent->getX(), ent->getY(), ent->getW(), ent->getH(), ent->getGraphics(), 0, ent->getState(), ent->getTimeStamp());
   }
@@ -41,14 +41,14 @@ public:
     s->setX(ent->getX() - halfW);
     s->setY(ent->getY() - halfH);
     s->setState(ent->getState());
-    s->setTime(sysTime.getTotalTime());
+    s->setTime(contextTime->getTotalTime());
     return (s);
   }
 
 private:
     std::weak_ptr<zbe::Element2D<R> > e;
     zbe::SimpleAnimatedSprite* s;
-    zbe::SysTime &sysTime;
+    std::shared_ptr<zbe::ContextTime> contextTime;
 };
 
 }  // namespace zombienoid

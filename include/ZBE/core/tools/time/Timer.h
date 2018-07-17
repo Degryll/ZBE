@@ -7,8 +7,8 @@
  * @brief Stopwatch interface. A timer that can Start, Stop or Reset a time count.
  */
 
-#ifndef ZBE_CORE_TOOLS_TIMER_H_
-#define ZBE_CORE_TOOLS_TIMER_H_
+#ifndef ZBE_CORE_TOOLS_TIME_TIMER_H_
+#define ZBE_CORE_TOOLS_TIME_TIMER_H_
 
 #include <cstdint>
 
@@ -21,7 +21,7 @@ class Timer {
 public:
   /** \brief Virtual destructor.
    */
-  virtual ~Timer(){};
+  virtual ~Timer() {}
 
   /** \brief Starts counting.
   */
@@ -50,4 +50,4 @@ public:
 
 }  // namespace zbe
 
-#endif  // ZBE_CORE_TOOLS_TIMER_H_
+#endif  // ZBE_CORE_TOOLS_TIME_TIMER_H_

@@ -53,7 +53,7 @@ public:
   void run();
 
 private:
-  SDLEventDispatcher() : sdl(SDL_Starter::getInstance(SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC | SDL_INIT_GAMECONTROLLER | SDL_INIT_EVENTS)), inputBuffer(std::make_shared<InputBuffer>()), st(SysTime::getInstance()) {}
+  SDLEventDispatcher() : sdl(SDL_Starter::getInstance(SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC | SDL_INIT_GAMECONTROLLER | SDL_INIT_EVENTS)), inputBuffer(std::make_shared<InputBuffer>()), contextTime(SysTime::getInstance()) {}
 
   bool tryKeyboardEvent(SDL_Event &event);
 
@@ -71,7 +71,7 @@ private:
 
   SDL_Starter &sdl;
   std::shared_ptr<InputBuffer> inputBuffer;
-  SysTime& st;
+  std::shared_ptr<ContextTime> contextTime;
 };
 
 }  // namespace zbe

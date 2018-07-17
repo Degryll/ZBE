@@ -55,7 +55,7 @@ public:
       itemState->setValue(initState);
       initDaemon->run();
       std::shared_ptr<zbe::TimeHandler> endHandler = std::make_shared<zbe::DaemonTimeHandler>(std::make_shared<UnStickyBar>(endDaemon, itemState, endState));
-      timer = teg->addTimer(endHandler, zbe::SysTime::getInstance().getEventTime() + time);
+      timer = teg->addTimer(endHandler, zbe::SysTime::getInstance()->getEventTime() + time);
     } else {
       timer->increaseTime(time);
     }

@@ -32,7 +32,7 @@ class UniformLinearMotion : virtual public Behavior<Movable<s>  > {
 
     /** \brief Default constructor.
      */
-    UniformLinearMotion() : sysTime(zbe::SysTime::getInstance()) {}
+    UniformLinearMotion() : contextTime(zbe::SysTime::getInstance()) {}
 
     /** \brief Virtual destructor.
      */
@@ -44,11 +44,11 @@ class UniformLinearMotion : virtual public Behavior<Movable<s>  > {
       Movable<s>* avatar;
       assignAvatar(aec, &avatar);
       Point<s>& p = avatar->getPosition();
-      p += (avatar->getVelocity() * sysTime.getCurrentTime()) * zbe::INVERSE_SECOND;
+      p += (avatar->getVelocity() * contextTime->getCurrentTime()) * zbe::INVERSE_SECOND;
     }
 
   private:
-    zbe::SysTime &sysTime;
+    std::shared_ptr<ContextTime> contextTime;
 };
 
 }  // namespace zbe

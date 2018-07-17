@@ -33,7 +33,7 @@ public:
    */
   MainLoop(std::shared_ptr<Daemon> pre, std::shared_ptr<Daemon> post, std::shared_ptr<Daemon> event, std::shared_ptr<Daemon> common, std::shared_ptr<Daemon> react, std::shared_ptr<Daemon> draw)
     : dPre(pre), dPost(post), dTE(event), dCBM(common), dRBM(react), dDM(draw),
-      sysTime(zbe::SysTime::getInstance()), store(zbe::EventStore::getInstance()), keep(true) {}
+      contextTime(zbe::SysTime::getInstance()), store(zbe::EventStore::getInstance()), keep(true) {}
 
   /** \brief Destructor.
    */
@@ -105,7 +105,7 @@ private:
   std::shared_ptr<Daemon> dRBM;
   std::shared_ptr<Daemon> dDM;
 
-  zbe::SysTime &sysTime;
+  std::shared_ptr<ContextTime> contextTime;
   zbe::EventStore &store;
 
   bool keep;

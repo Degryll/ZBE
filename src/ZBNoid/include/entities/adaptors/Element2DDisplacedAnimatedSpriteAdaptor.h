@@ -25,7 +25,7 @@ public:
   Element2DDisplacedAnimatedSpriteAdaptor(const Element2DDisplacedAnimatedSpriteAdaptor&) = delete;
   void operator=(const Element2DDisplacedAnimatedSpriteAdaptor&) = delete;
 
-  Element2DDisplacedAnimatedSpriteAdaptor(std::weak_ptr<Element2D<R> > entity, zbe::Vector2D displacement): e(entity), s(nullptr), d(displacement), sysTime(zbe::SysTime::getInstance()) {
+  Element2DDisplacedAnimatedSpriteAdaptor(std::weak_ptr<Element2D<R> > entity, zbe::Vector2D displacement): e(entity), s(nullptr), d(displacement), contextTime(zbe::SysTime::getInstance()) {
     std::shared_ptr<Element2D<R> > ent = e.lock();
     s = new SimpleAnimatedSprite(ent->getX(), ent->getY(), ent->getW(), ent->getH(), ent->getGraphics(), 0, ent->getState(), ent->getTimeStamp());
   }
@@ -39,7 +39,7 @@ public:
     s->setX(ent->getX() + d.x);
     s->setY(ent->getY() + d.y);
     s->setState(ent->getState());
-    s->setTime(sysTime.getTotalTime());
+    s->setTime(contextTime->getTotalTime());
     return (s);
   }
 
@@ -47,7 +47,7 @@ private:
     std::weak_ptr<Element2D<R> > e;
     SimpleAnimatedSprite* s;
     zbe::Vector2D d;
-    zbe::SysTime &sysTime;
+    std::shared_ptr<zbe::ContextTime> contextTime;
 };
 
 }  // namespace zbe

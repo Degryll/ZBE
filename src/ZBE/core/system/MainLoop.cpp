@@ -20,11 +20,11 @@ void MainLoop::run() {
     // Pre daemon
     dPre->run();
     // Inner loop
-    while (sysTime.isFrameRemaining()) {
+    while (contextTime->isFrameRemaining()) {
       // Timed events generator daemon
       dTE->run();
-      sysTime.setEventTime(store.getTime());
-      if (sysTime.isPartialFrame()) {
+      contextTime->setEventTime(store.getTime());
+      if (contextTime->isPartialFrame()) {
         // commonBehaviorMaster
         dCBM->run();
         store.manageCurrent();
@@ -35,7 +35,7 @@ void MainLoop::run() {
         dCBM->run();
         store.clearStore();
       }
-      sysTime.updateInitTime();
+      contextTime->updateInitTime();
     }  // while frame remaining
     // Drawer daemon
     dDM->run();

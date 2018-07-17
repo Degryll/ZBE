@@ -7,10 +7,10 @@
  * @brief Tool used to ask about system time.
  */
 
-#include "ZBE/core/system/SysTime.h"
+#include "ZBE/core/tools/time/ContextTime.h"
 
 namespace zbe {
 
-int64_t SysTime::maxFrameTime = 2048;
+int64_t ContextTime::maxFrameTime = 2048;
 
 }  // namespace zbe

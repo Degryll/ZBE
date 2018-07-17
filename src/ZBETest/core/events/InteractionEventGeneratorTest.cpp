@@ -70,11 +70,11 @@ class AActuator: public zbe::Actuator<zbe::WeakAvatarEntityContainer<A> , R> {
 };
 
 TEST(IntersectionEventGenerator, run) {
-  zbe::SysTime &sysTime = zbe::SysTime::getInstance();
-  sysTime.setMaxFrameTime(zbe::SECOND*2);
+  std::shared_ptr<zbe::SysTime> sysTime = zbe::SysTime::getInstance();
+  sysTime->setMaxFrameTime(zbe::SECOND*2);
 
   DummyTimer* sysTimer = new DummyTimer;
-  sysTime.setSystemTimer(sysTimer);
+  sysTime->setSystemTimer(sysTimer);
 
   std::shared_ptr<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > > > cnl(new zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > >());
   std::shared_ptr<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > > ctl(new zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > >());
@@ -114,8 +114,8 @@ TEST(IntersectionEventGenerator, run) {
 
   zbe::InteractionEventGenerator<R, zbe::CollisionSelector<R> , zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > >,  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > > ieg(20, 10, cs);
 
-  sysTime.update();
-  sysTime.update();
+  sysTime->update();
+  sysTime->update();
 
   zbe::EventStore &es = zbe::EventStore::getInstance();
   ieg.run();
@@ -132,11 +132,11 @@ TEST(IntersectionEventGenerator, run) {
 }
 
 TEST(InstantIntersectionEventGenerator, run_no_collision) {
-  zbe::SysTime &sysTime = zbe::SysTime::getInstance();
-  sysTime.setMaxFrameTime(zbe::SECOND*2);
+  std::shared_ptr<zbe::SysTime> sysTime = zbe::SysTime::getInstance();
+  sysTime->setMaxFrameTime(zbe::SECOND*2);
 
   DummyTimer* sysTimer = new DummyTimer;
-  sysTime.setSystemTimer(sysTimer);
+  sysTime->setSystemTimer(sysTimer);
 
   std::shared_ptr<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > > > cnl(new zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > >());
   std::shared_ptr<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > > ctl(new zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > >());
@@ -176,8 +176,8 @@ TEST(InstantIntersectionEventGenerator, run_no_collision) {
 
   zbe::InstantInteractionEventGenerator<R, zbe::CollisionSelector<R> , zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > >,  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > > iieg(200, 100, cs);
 
-  sysTime.update();
-  sysTime.update();
+  sysTime->update();
+  sysTime->update();
 
   zbe::EventStore &es = zbe::EventStore::getInstance();
   iieg.run();
@@ -195,11 +195,11 @@ TEST(InstantIntersectionEventGenerator, run_no_collision) {
 }
 
 TEST(InstantIntersectionEventGenerator, run) {
-  zbe::SysTime &sysTime = zbe::SysTime::getInstance();
-  sysTime.setMaxFrameTime(zbe::SECOND*2);
+  std::shared_ptr<zbe::SysTime> sysTime = zbe::SysTime::getInstance();
+  sysTime->setMaxFrameTime(zbe::SECOND*2);
 
   DummyTimer* sysTimer = new DummyTimer;
-  sysTime.setSystemTimer(sysTimer);
+  sysTime->setSystemTimer(sysTimer);
 
   std::shared_ptr<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > > > cnl(new zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > >());
   std::shared_ptr<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > > ctl(new zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > >());
@@ -239,8 +239,8 @@ TEST(InstantIntersectionEventGenerator, run) {
 
   zbe::InstantInteractionEventGenerator<R, zbe::CollisionSelector<R> , zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > >,  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > > iieg(2, 1, cs);
 
-  sysTime.update();
-  sysTime.update();
+  sysTime->update();
+  sysTime->update();
 
   zbe::EventStore &es = zbe::EventStore::getInstance();
   iieg.run();

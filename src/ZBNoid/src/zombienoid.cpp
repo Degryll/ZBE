@@ -22,8 +22,8 @@ int main(int, char*[]) {
   std::shared_ptr<RsrcIDDictionary> rsrcIDDic = std::make_shared<RsrcIDDictionary>(RSRC_ID_DICT_SIZE);
   std::shared_ptr<SDLWindow> window = std::make_shared<SDLWindow>(ZBENOID_WINDOW_TITLE, WIDTH, HEIGHT);
   Timer *sysTimer = new SDLTimer(true);
-  SysTime &sysTime = SysTime::getInstance();
-  sysTime.setSystemTimer(sysTimer);
+  std::shared_ptr<SysTime> sysTime = SysTime::getInstance();
+  sysTime->setSystemTimer(sysTimer);
   SDLEventDispatcher& sdlEDispatcher = SDLEventDispatcher::getInstance();
   std::shared_ptr<InputBuffer> inputBuffer = sdlEDispatcher.getInputBuffer();
 

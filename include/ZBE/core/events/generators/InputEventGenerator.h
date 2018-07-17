@@ -36,7 +36,7 @@ namespace zbe {
 
       /** \brief Default constructor.
        */
-      InputEventGenerator(std::shared_ptr<InputBuffer> inputBuffer) : inputBuffer(inputBuffer), managers(), sysTime(zbe::SysTime::getInstance()) {};
+      InputEventGenerator(std::shared_ptr<InputBuffer> inputBuffer) : inputBuffer(inputBuffer), managers(), contextTime(zbe::SysTime::getInstance()) {};
 
       /** \brief Empty destructor.
        */
@@ -53,7 +53,7 @@ namespace zbe {
     private:
       std::shared_ptr<InputBuffer> inputBuffer;
       std::vector<std::shared_ptr<InputStatusManager> > managers;
-      SysTime &sysTime;
+      std::shared_ptr<ContextTime> contextTime;
   };
 
 }  // namespace zbe

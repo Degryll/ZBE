@@ -53,7 +53,7 @@ public:
    *  \param timers The multiset where the timer is stored.
    *  \param eventId Event Id.
    */
-  TimerTicket(std::multiset<TimerData>::iterator iter, std::multiset<TimerData>& timers, int eventId) : s(ACTIVE), iter(iter), timers(timers), eventId(eventId), es(EventStore::getInstance()), sysTime(SysTime::getInstance()), td((*iter)) {}
+  TimerTicket(std::multiset<TimerData>::iterator iter, std::multiset<TimerData>& timers, int eventId) : s(ACTIVE), iter(iter), timers(timers), eventId(eventId), es(EventStore::getInstance()), contextTime(SysTime::getInstance()), td((*iter)) {}
 
   void setACTIVE();    //!< Set the state as ACTIVE.
   void setINACTIVE();  //!< Set the state as INACTIVE.
@@ -82,7 +82,7 @@ private:
   std::multiset<TimerData>& timers;
   int eventId;
   EventStore& es;
-  SysTime &sysTime;
+  std::shared_ptr<ContextTime> contextTime;
   TimerData td;
 };
 
@@ -92,7 +92,7 @@ class TimeEventGenerator : virtual public Daemon {
   public:
     /** \brief Empty Constructor.
      */
-    TimeEventGenerator(int eventId) : eventId(eventId), es(EventStore::getInstance()), timers(), sysTime(SysTime::getInstance()) {};
+    TimeEventGenerator(int eventId) : eventId(eventId), es(EventStore::getInstance()), timers(), contextTime(SysTime::getInstance()) {};
 
     /** Add a new Timer that only triggers onces.
      * \param id Id of the Timer, to identify the action to accomplish when the event is triggered
@@ -112,7 +112,7 @@ class TimeEventGenerator : virtual public Daemon {
     int eventId;
     EventStore& es;
     std::multiset<TimerData> timers;
-    SysTime &sysTime;
+    std::shared_ptr<ContextTime> contextTime;
 };
 
 }  // namespace zbe

@@ -47,7 +47,7 @@ public:
   : es(EventStore::getInstance()), id(list), eventId(eventId), is(is),
     lmct(RsrcStore<LT>::getInstance()),
     lmcn(RsrcStore<LN>::getInstance()),
-    sysTime(zbe::SysTime::getInstance()) {}
+    contextTime(zbe::SysTime::getInstance()) {}
 
   /** \brief Empty destructor.
   */
@@ -71,7 +71,7 @@ protected:
   /** \brief Returns the available time to search for interactions.
    */
   virtual int64_t getTotalTime() {
-    return sysTime.getRemainTime();
+    return contextTime->getRemainTime();
   }
 
   EventStore& es; //!< The Event Store.
@@ -84,7 +84,7 @@ private:
 
   RsrcStore<LT>& lmct;
   RsrcStore<LN>& lmcn;
-  zbe::SysTime &sysTime;
+  std::shared_ptr<ContextTime> contextTime;
 
 };
 
@@ -107,8 +107,8 @@ void InteractionEventGenerator<R, IS, LN, LT>::run() {
       conerEntity->assignAvatar(&coner);
       if(is->select(*cator, *coner, totalTime, point, normal)) {
         CollisionData cd(point, normal);
-        CollisionEvent2D<R>* a = new CollisionEvent2D<R>(eventId, sysTime.getInitFrameTime() + totalTime, cator, cd, std::shared_ptr<zbe::ReactObject<R> >(coner->getReactObject()));
-        CollisionEvent2D<R>* b = new CollisionEvent2D<R>(eventId, sysTime.getInitFrameTime() + totalTime, coner, cd, std::shared_ptr<zbe::ReactObject<R> >(cator->getReactObject()));
+        CollisionEvent2D<R>* a = new CollisionEvent2D<R>(eventId, contextTime->getInitFrameTime() + totalTime, cator, cd, std::shared_ptr<zbe::ReactObject<R> >(coner->getReactObject()));
+        CollisionEvent2D<R>* b = new CollisionEvent2D<R>(eventId, contextTime->getInitFrameTime() + totalTime, coner, cd, std::shared_ptr<zbe::ReactObject<R> >(cator->getReactObject()));
         storeEvents(a,b);
       }  // if collision
     }  // for each collisionable

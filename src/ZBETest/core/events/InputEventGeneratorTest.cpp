@@ -49,11 +49,11 @@ public:
 };
 
 TEST(InputEventGenerator, run) {
-  zbe::SysTime &sysTime = zbe::SysTime::getInstance();
-  sysTime.setMaxFrameTime(zbe::SECOND*2);
+  std::shared_ptr<zbe::SysTime> sysTime = zbe::SysTime::getInstance();
+  sysTime->setMaxFrameTime(zbe::SECOND*2);
 
   DummyTimer* sysTimer = new DummyTimer;
-  sysTime.setSystemTimer(sysTimer);
+  sysTime->setSystemTimer(sysTimer);
 
   // Build tools
   std::shared_ptr<zbe::InputBuffer> ib = std::make_shared<zbe::InputBuffer>();
@@ -75,12 +75,12 @@ TEST(InputEventGenerator, run) {
   ib->insert(ise);
   ib->insert(isf);
 
-  sysTime.update();
-  sysTime.update();
-  sysTime.setEventTime(2);
+  sysTime->update();
+  sysTime->update();
+  sysTime->setEventTime(2);
 
-  sysTime.update();
-  sysTime.setEventTime(4);
+  sysTime->update();
+  sysTime->setEventTime(4);
 
   ieg.run();
 

@@ -12,7 +12,7 @@
 namespace zbe {
 
 void BasicPreLoopTimeDaemon::run(){
-  sysTime.update();
+  contextTime->update();
 }
 
 }  // namespace zbe

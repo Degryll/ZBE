@@ -7,7 +7,7 @@
 #include "ZBE/archetypes/implementations/SimpleBouncing.h"
 #include "ZBE/behaviors/Bounce.h"
 #include "ZBE/core/tools/math/math.h"
-#include "ZBE/core/tools/Timer.h"
+#include "ZBE/core/tools/time/Timer.h"
 
 namespace Bounce {
 

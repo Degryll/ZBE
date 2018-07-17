@@ -7,7 +7,7 @@
 #include "ZBE/archetypes/implementations/SimpleMobile.h"
 #include "ZBE/behaviors/UniformLinearMotion.h"
 #include "ZBE/core/tools/math/math.h"
-#include "ZBE/core/tools/Timer.h"
+#include "ZBE/core/tools/time/Timer.h"
 #include "ZBE/core/system/SysTime.h"
 
 namespace UniformLinearMotionTest {
@@ -26,11 +26,11 @@ class DummyTimer : public zbe::Timer {
 };
 
 TEST(UniformLinearMotion, apply) {
-    zbe::SysTime &sysTime = zbe::SysTime::getInstance();
-    sysTime.setMaxFrameTime(zbe::SECOND);
+    std::shared_ptr<zbe::SysTime> sysTime = zbe::SysTime::getInstance();
+    sysTime->setMaxFrameTime(zbe::SECOND);
 
     DummyTimer* sysTimer = new DummyTimer;
-    sysTime.setSystemTimer(sysTimer);
+    sysTime->setSystemTimer(sysTimer);
 
     zbe::SimpleMobile<2> m({3.0, 5.0},{7.0, 11.0});
     zbe::BaseMovable<2> * bm = new zbe::BaseMovable<2>(&m);
@@ -42,9 +42,9 @@ TEST(UniformLinearMotion, apply) {
     EXPECT_EQ(3.0,m.getPosition()[0]) << "Initial Position X.";
     EXPECT_EQ(5.0,m.getPosition()[1]) << "Initial Position Y.";
 
-    sysTime.update();
-    sysTime.update();
-    sysTime.setEventTime(zbe::SECOND);
+    sysTime->update();
+    sysTime->update();
+    sysTime->setEventTime(zbe::SECOND);
 
     std::shared_ptr<zbe::AvatarEntityContainer<zbe::Movable<2> > > aec;
     wrapAEC(&aec, memock);
@@ -53,8 +53,8 @@ TEST(UniformLinearMotion, apply) {
     EXPECT_EQ(10.0,m.getPosition()[0]) << "Position X.";
     EXPECT_EQ(16.0,m.getPosition()[1]) << "Position Y.";
 
-    sysTime.update();
-    sysTime.setEventTime(1.5*zbe::SECOND);
+    sysTime->update();
+    sysTime->setEventTime(1.5*zbe::SECOND);
 
     bulma.apply(aec);
 

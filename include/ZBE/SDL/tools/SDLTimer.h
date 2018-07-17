@@ -14,7 +14,7 @@
 
 #include <SDL2/SDL.h>
 
-#include "ZBE/core/tools/Timer.h"
+#include "ZBE/core/tools/time/Timer.h"
 #include "ZBE/SDL/starters/SDL_Starter.h"
 
 namespace zbe {

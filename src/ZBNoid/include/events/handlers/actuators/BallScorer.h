@@ -27,7 +27,7 @@ class BallScorer: public zbe::Actuator<zbe::WeakAvatarEntityContainer<Scorer>, R
 public:
 
   BallScorer(std::shared_ptr<zbe::Value<int64_t> > totalPoints, int64_t accumTime, int64_t extraAccumTime, int64_t pointsPerAccum)
-    : totalPoints(totalPoints), accumTime(accumTime), extraAccumTime(extraAccumTime), pointsPerAccum(pointsPerAccum), sysTime(zbe::SysTime::getInstance()) {}
+    : totalPoints(totalPoints), accumTime(accumTime), extraAccumTime(extraAccumTime), pointsPerAccum(pointsPerAccum), contextTime(zbe::SysTime::getInstance()) {}
 
   void act(std::shared_ptr< zbe::WeakAvatarEntityContainer<Wall> >) {
       Scorer* scorer;
@@ -41,14 +41,14 @@ public:
     Scorer* scorer;
     std::shared_ptr<zbe::WeakAvatarEntityContainer<Scorer> > waecs = zbe::Actuator<zbe::WeakAvatarEntityContainer<Scorer>, R>::getCollisioner();
     waecs->get()->assignAvatar(&scorer);
-    int64_t time = sysTime.getEventTime() - scorer->getLastScoreTime();
+    int64_t time = contextTime->getEventTime() - scorer->getLastScoreTime();
     if(time>accumTime){
       scorer->reset();
     } else if(time<extraAccumTime){
       scorer->accum();
     }
     scorer->accum();
-    scorer->setLastScoreTime(sysTime.getEventTime());
+    scorer->setLastScoreTime(contextTime->getEventTime());
     totalPoints->add(scorer->getTotal()*pointsPerAccum);
   }
 
@@ -57,7 +57,7 @@ private:
   int64_t accumTime;
   int64_t extraAccumTime;
   int64_t pointsPerAccum;
-  zbe::SysTime &sysTime;
+  std::shared_ptr<zbe::ContextTime> contextTime;
 };
 
 }  // namespace zombienoid

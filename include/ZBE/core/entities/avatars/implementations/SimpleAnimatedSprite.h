@@ -28,12 +28,12 @@ public:
    *  \param time Current time of the animated sprite.
    */
   SimpleAnimatedSprite(int64_t x, int64_t y, int64_t w, int64_t h, uint64_t graphics, double degrees, uint64_t state, uint64_t time)
-    : SimpleStatedSprite(x, y, w, h, graphics, degrees, state), t(time), systime(SysTime::getInstance()) {}
+    : SimpleStatedSprite(x, y, w, h, graphics, degrees, state), t(time), contextTime(SysTime::getInstance()) {}
 
   /** \brief Returns time.
    *  \return time.
    */
-  uint64_t getTime() {return systime.getEndFrameTime() - t;}
+  uint64_t getTime() {return contextTime->getEndFrameTime() - t;}
 
   /** \brief Returns time.
    *  \return time.
@@ -42,7 +42,7 @@ public:
 
 private:
   uint64_t t;    //!< Frame of the animation
-  SysTime& systime;
+  std::shared_ptr<ContextTime> contextTime;
 
 };
 

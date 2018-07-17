@@ -16,7 +16,7 @@ namespace zbe {
 inline void TimerTicket::setACTIVE() {
   if(s != ERASED) {
     if((s == INACTIVE) && (td.time > 0)) {
-      td.time += sysTime.getEventTime();
+      td.time += contextTime->getEventTime();
       iter = timers.insert(td);
     }
     s = ACTIVE;
@@ -28,7 +28,7 @@ inline void TimerTicket::setINACTIVE() {
     if(s == ACTIVE) {
       td = (*iter);
       timers.erase(iter);
-      td.time -= sysTime.getEventTime();
+      td.time -= contextTime->getEventTime();
     }
     s = INACTIVE;
   }
@@ -58,7 +58,7 @@ bool TimerTicket::increaseTime(int64_t increment) {
 }
 
 void TimeEventGenerator::run() {
-  timers.erase(timers.begin(),timers.upper_bound(TimerData(0,sysTime.getInitFrameTime())));
+  timers.erase(timers.begin(),timers.upper_bound(TimerData(0,contextTime->getInitFrameTime())));
 
   int64_t v = 0;
   auto it = timers.begin();
@@ -67,7 +67,7 @@ void TimeEventGenerator::run() {
   }
 
   for(; it != timers.end(); ++it) {
-    if((it->time > sysTime.getEndFrameTime())
+    if((it->time > contextTime->getEndFrameTime())
     || (it->time != v)) {
       break;
     }

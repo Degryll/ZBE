@@ -25,7 +25,7 @@ public:
 
   /** \brief Empty constructor.
    */
-  BasicPreLoopTimeDaemon(): sysTime(zbe::SysTime::getInstance()) {}
+  BasicPreLoopTimeDaemon(): contextTime(zbe::SysTime::getInstance()) {}
 
   /** \brief Destroys the BasicPreLoopTimeDaemon
    */
@@ -36,7 +36,7 @@ public:
   void run();
 
 private:
-  zbe::SysTime &sysTime;
+  std::shared_ptr<ContextTime> contextTime;
 
 };
 
