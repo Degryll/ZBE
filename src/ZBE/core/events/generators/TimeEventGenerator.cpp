@@ -46,7 +46,7 @@ inline void TimerTicket::setERASED() {
 bool TimerTicket::increaseTime(int64_t increment) {
   TimerData data = (*iter);
   timers.erase(iter);
-  data.time += increment;
+  data.time += zbe::quantizeTime(increment);
   if(data.time>0){
     iter = timers.insert(data);
     return (false);

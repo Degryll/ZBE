@@ -53,7 +53,7 @@ public:
    *  \param timers The multiset where the timer is stored.
    *  \param eventId Event Id.
    */
-  TimerTicket(std::multiset<TimerData>::iterator iter, std::multiset<TimerData>& timers, int eventId) : s(ACTIVE), iter(iter), timers(timers), eventId(eventId), es(EventStore::getInstance()), contextTime(SysTime::getInstance()), td((*iter)) {}
+  TimerTicket(std::multiset<TimerData>::iterator iter, std::multiset<TimerData>& timers, int eventId, std::shared_ptr<ContextTime> contextTime) : s(ACTIVE), iter(iter), timers(timers), eventId(eventId), es(EventStore::getInstance()), contextTime(contextTime), td((*iter)) {}
 
   void setACTIVE();    //!< Set the state as ACTIVE.
   void setINACTIVE();  //!< Set the state as INACTIVE.
@@ -92,7 +92,7 @@ class TimeEventGenerator : virtual public Daemon {
   public:
     /** \brief Empty Constructor.
      */
-    TimeEventGenerator(int eventId) : eventId(eventId), es(EventStore::getInstance()), timers(), contextTime(SysTime::getInstance()) {};
+    TimeEventGenerator(int eventId, std::shared_ptr<ContextTime> contextTime = SysTime::getInstance()) : eventId(eventId), es(EventStore::getInstance()), timers(), contextTime(contextTime) {};
 
     /** Add a new Timer that only triggers onces.
      * \param id Id of the Timer, to identify the action to accomplish when the event is triggered
@@ -101,7 +101,7 @@ class TimeEventGenerator : virtual public Daemon {
      * \sa eraseTimer
      */
     inline std::shared_ptr<TimerTicket> addTimer(std::shared_ptr<TimeHandler> handler, int64_t time) {
-      return (std::make_shared<TimerTicket>(timers.insert(TimerData(handler,quantizeTime(time))), timers, eventId));
+      return (std::make_shared<TimerTicket>(timers.insert(TimerData(handler,quantizeTime(time))), timers, eventId, contextTime));
     }
 
     /** \brief It will look for time events occurred within the available.
