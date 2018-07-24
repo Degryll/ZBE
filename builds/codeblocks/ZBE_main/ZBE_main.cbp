@@ -131,6 +131,7 @@
 					<Add directory="../../../extlibs/GLEW/2.1.0/include" />
 					<Add directory="../../../extlibs/lodePNG" />
 					<Add directory="../../../extlibs/glm/0.9.9.0" />
+					<Add directory="../../../extlibs/Vulkan/1.1.77.0/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
@@ -141,11 +142,13 @@
 					<Add library="SDL2_ttf" />
 					<Add library="GL" />
 					<Add library="GLEW" />
+					<Add library="vulkan" />
 					<Add directory="../../../lib" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/linux64/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/lib" />
 					<Add directory="../../../extlibs/GLEW/2.1.0/linux/lib" />
+					<Add directory="../../../extlibs/Vulkan/1.1.77.0/lib" />
 				</Linker>
 			</Target>
 			<Target title="Release-Linux64">
@@ -172,6 +175,7 @@
 					<Add directory="../../../extlibs/GLEW/2.1.0/include" />
 					<Add directory="../../../extlibs/lodePNG" />
 					<Add directory="../../../extlibs/glm/0.9.9.0" />
+					<Add directory="../../../extlibs/Vulkan/1.1.77.0/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -183,11 +187,13 @@
 					<Add library="SDL2_ttf" />
 					<Add library="GL" />
 					<Add library="GLEW" />
+					<Add library="vulkan" />
 					<Add directory="../../../lib" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/linux64/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/lib" />
 					<Add directory="../../../extlibs/GLEW/2.1.0/linux/lib" />
+					<Add directory="../../../extlibs/Vulkan/1.1.77.0/lib" />
 				</Linker>
 			</Target>
 		</Build>
@@ -228,11 +234,13 @@
 		<Unit filename="../../../src/ZBE_main/include/ludo/events/handlers/LudoActuators.h" />
 		<Unit filename="../../../src/ZBE_main/include/ludo/events/handlers/LudoHandlers.h" />
 		<Unit filename="../../../src/ZBE_main/include/ludomain.h" />
+		<Unit filename="../../../src/ZBE_main/include/testing.h" />
 		<Unit filename="../../../src/ZBE_main/src/batismain.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/degryllmain.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/gamemain.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/ludomain.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/main.cpp" />
+		<Unit filename="../../../src/ZBE_main/src/testing.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

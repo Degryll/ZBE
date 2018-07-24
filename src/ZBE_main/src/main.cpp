@@ -4,6 +4,7 @@
 #include "degryllmain.h"
 #include "ludomain.h"
 #include "gamemain.h"
+#include "testing.h"
 
 int main(int argc, char* argv[]) {
   int option;
@@ -12,6 +13,7 @@ int main(int argc, char* argv[]) {
   printf("2 - degryllmain\n");
   printf("3 - ludomain\n");
   printf("4 - gamemain\n");
+  printf("5 - testing\n");
   printf("0 - salir\n");
   printf("--:");
   int readAmount = scanf ("%d",&option);
@@ -34,11 +36,14 @@ int main(int argc, char* argv[]) {
     case 4:
       out = gamemain(argc,argv);
     break;
+    case 5:
+      out = testing::testingmain(argc,argv);
+    break;
     case 0:
-      printf("¿Y para que has venido?\n");
+      printf("ï¿½Y para que has venido?\n");
     break;
     default:
-      printf("¿como he llegado aqui?\n");
+      printf("ï¿½como he llegado aqui?\n");
     break;
   }
 

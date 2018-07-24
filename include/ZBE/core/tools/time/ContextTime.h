@@ -25,6 +25,12 @@ public:
 
   virtual ~ContextTime(){}
 
+
+  /** \brief Get the total time passed until the end of last frame.
+  * \return Total time passed until last frame.
+  */
+  virtual std::shared_ptr<ContextTime> clone() = 0;
+
   /** \brief set max time for a frame. If a frame lasts longer
    *  than this value the excess will be ignored.
    *  \param  time Desired max frame time
@@ -129,24 +135,22 @@ public:
    */
   void pause() {
     paused = true;
+    remainT = 0;
   }
 
   /** \brief Resume the ContextTime.
    */
-  void resume() {
-    resumed = paused || resumed;
-    paused = false;
+  void resume(int64_t resumeTime) {
+    if (paused) {
+      total = resumeTime;
+      paused = false;
+    }
   }
 
   /** \brief Refreshes the SystemTime info using given Timer.
    */
   inline void update() {
     if (paused) {return;}
-    if (resumed) {
-      total = _getTotalTime();
-      resumed = false;
-      return;
-    }
     int64_t actual = _getTotalTime();
     int64_t finalTime = actual - lostTime;
     int64_t realFrameTime = finalTime - total;

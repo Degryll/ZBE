@@ -30,7 +30,7 @@ TEST(TimeEventGenerator, Event) {
   std::shared_ptr<DummyTimeHandler> c = std::make_shared<DummyTimeHandler>();
 
   std::shared_ptr<zbetest::MockedContextTime> contextTime = std::make_shared<zbetest::MockedContextTime>();
-  contextTime->setMaxFrameTime(5000000);
+  zbe::ContextTime::setMaxFrameTime(5000000);
 
   contextTime->setFixedTime(0);
   contextTime->update();

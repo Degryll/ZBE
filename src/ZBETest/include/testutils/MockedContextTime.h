@@ -24,6 +24,10 @@ public:
 
   MockedContextTime(uint64_t fixedTime = 0) : fixedTime(fixedTime) {}
 
+  std::shared_ptr<ContextTime> clone() {
+    return std::make_shared<MockedContextTime>(fixedTime);
+  };
+
   void setFixedTime(uint64_t fixedTime) { this->fixedTime = fixedTime;}
 
   uint64_t getFixedTime() { return fixedTime;}
