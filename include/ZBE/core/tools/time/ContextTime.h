@@ -21,7 +21,7 @@ class SubordinateTime;
 */
 class ContextTime {
 public:
-  ContextTime() : total(0), frame(0), lostTime(0), initT(0), endT(0), eventT(0), is_partFrame(false), currentT(0), remainT(0), paused(false), resumed(false) {}  //!< Basic constructor to be used internally.
+  ContextTime() : frame(0), lostTime(0), initT(0), endT(0), eventT(0), is_partFrame(false), currentT(0), remainT(0), paused(false), resumed(false) {}  //!< Basic constructor to be used internally.
 
   virtual ~ContextTime(){}
 
@@ -43,7 +43,7 @@ public:
    * \return Total time passed until last frame.
    */
   inline int64_t getTotalTime() {
-    return total;
+    return endT;
   }
 
   /** \brief Get the last frame duration.
@@ -136,13 +136,14 @@ public:
   void pause() {
     paused = true;
     remainT = 0;
+    initT = endT;
   }
 
   /** \brief Resume the ContextTime.
    */
   void resume(int64_t resumeTime) {
     if (paused) {
-      total = resumeTime;
+      endT = resumeTime;
       paused = false;
     }
   }
@@ -151,19 +152,19 @@ public:
    */
   inline void update() {
     if (paused) {return;}
-    int64_t actual = _getTotalTime();
-    int64_t finalTime = actual - lostTime;
-    int64_t realFrameTime = finalTime - total;
+    initT = _getInitTime();
+    int64_t finalTime = _getTotalTime();
+    int64_t realFrameTime = finalTime - initT;
+    int64_t total;
     if (realFrameTime < maxFrameTime) {
       total = finalTime;
       frame = realFrameTime;
     } else {
-      total += maxFrameTime;
+      total = initT + maxFrameTime;
       lostTime += (realFrameTime - maxFrameTime);
       frame = maxFrameTime;
     }
 
-    initT = endT;
     endT = total;
     eventT = initT;
     currentT = eventT - initT;
@@ -171,7 +172,6 @@ public:
   }
 
 protected:
-  int64_t total;     //!< Total time passed until the end of last frame.
   int64_t frame;     //!< Last frame duration
   int64_t lostTime;  //!< Accumulated Total Time - Max frame time
   int64_t initT;     //!< Initial frame time.
@@ -186,6 +186,7 @@ protected:
 
 private:
   virtual uint64_t _getTotalTime() = 0;
+  virtual uint64_t _getInitTime() = 0;
 };
 
 }  // namespace zbe

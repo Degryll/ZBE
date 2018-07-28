@@ -39,7 +39,11 @@ public:
 private:
   std::shared_ptr<ContextTime> parent;
   uint64_t _getTotalTime() {
-    return parent->getTotalTime();
+    return parent->getTotalTime() - lostTime;
+  }
+
+  uint64_t _getInitTime() {
+    return parent->getInitFrameTime() - lostTime;
   }
 
 };

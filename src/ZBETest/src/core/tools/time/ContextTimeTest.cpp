@@ -10,8 +10,8 @@
 
 namespace ContextTimeTest {
 
-TEST (ContextTimeTest, DISABLED_Hierarchy) {
-  zbe::ContextTime::setMaxFrameTime(1000);
+TEST (ContextTimeTest, Hierarchy) {
+  zbe::ContextTime::setMaxFrameTime(1500);
   std::shared_ptr<zbetest::MockedContextTime> grandpa = std::make_shared<zbetest::MockedContextTime>();
   std::shared_ptr<zbe::ContextTime> parent = zbe::SubordinateTime::child(grandpa);
   std::shared_ptr<zbe::ContextTime> uncle = parent->clone();

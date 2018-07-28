@@ -58,8 +58,13 @@ private:
   Timer* timer;      //!< Actual implementation of Timer to be used.
 
   uint64_t _getTotalTime() {
-    return timer->totalTime();
+    return timer->totalTime() - lostTime;
   }
+
+  uint64_t _getInitTime() {
+    return endT;
+  }
+
 };
 
 } // namespace zbe

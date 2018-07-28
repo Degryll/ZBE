@@ -39,6 +39,10 @@ private:
     return fixedTime;
   }
 
+  uint64_t _getInitTime() {
+    return endT;
+  }
+
 };
 
 
