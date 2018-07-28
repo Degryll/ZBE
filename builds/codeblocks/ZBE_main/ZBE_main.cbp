@@ -148,7 +148,7 @@
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/lib" />
 					<Add directory="../../../extlibs/GLEW/2.1.0/linux/lib" />
-					<Add directory="../../../extlibs/Vulkan/1.1.77.0/lib" />
+					<Add directory="../../../extlibs/Vulkan/1.1.77.0/linux/lib" />
 				</Linker>
 			</Target>
 			<Target title="Release-Linux64">
@@ -193,7 +193,7 @@
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/lib" />
 					<Add directory="../../../extlibs/GLEW/2.1.0/linux/lib" />
-					<Add directory="../../../extlibs/Vulkan/1.1.77.0/lib" />
+					<Add directory="../../../extlibs/Vulkan/1.1.77.0/linux/lib" />
 				</Linker>
 			</Target>
 		</Build>
