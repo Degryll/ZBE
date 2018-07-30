@@ -28,7 +28,7 @@ public:
   /** \brief Setter for the state attribute.
    *  \param state The integer value for the state.
    */
-  void setState(int64_t state) {s->setValue(state);}
+  void setState(int64_t state) {s->set(state);}
 
   /** \brief Adds a value to the state attribute.
    *  \param value The integer value to add to the state.
@@ -38,7 +38,7 @@ public:
   /** \brief Getter for the state attribute.
    *  \return The integer value of the state.
    */
-  int64_t getState() {return (s->getValue());}
+  int64_t getState() {return (s->get());}
 
 private:
 	std::shared_ptr<Value<int64_t> > s;

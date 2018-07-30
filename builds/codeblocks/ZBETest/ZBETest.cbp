@@ -231,6 +231,7 @@
 		<Unit filename="../../../src/ZBETest/src/core/tools/math/collisions/intersectionsTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/core/tools/math/mathTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/core/tools/math/objectsTest.cpp" />
+		<Unit filename="../../../src/ZBETest/src/core/tools/shared/implmentations/SimpleValueTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/core/tools/time/ContextTimeTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/core/tools/toolsTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/events/handlers/actuators/DaemonSelectorAtorTest.cpp" />

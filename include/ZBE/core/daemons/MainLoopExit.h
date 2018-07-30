@@ -39,7 +39,7 @@ public:
   /** \brief End MainLoop and save given value.
    */
   void run() {
-    value->setValue(exitValue);
+    value->set(exitValue);
     mainLoop->stop();
   }
 

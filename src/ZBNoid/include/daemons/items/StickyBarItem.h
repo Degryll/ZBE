@@ -33,7 +33,7 @@ public:
     : endDaemon(endDaemon), itemState(itemState), endState(endState) {}
   void run(){
     endDaemon->run();
-    itemState->setValue(endState);
+    itemState->set(endState);
   }
 
 private:
@@ -51,8 +51,8 @@ public:
                 int64_t time, int64_t initState, int64_t endState, std::shared_ptr<zbe::Value<int64_t> > itemState)
     : initDaemon(initDaemon), endDaemon(endDaemon), teg(teg), time(time), initState(initState), endState(endState), itemState(itemState), timer(nullptr) {}
   void run(){
-    if(itemState->getValue() != initState) {
-      itemState->setValue(initState);
+    if(itemState->get() != initState) {
+      itemState->set(initState);
       initDaemon->run();
       std::shared_ptr<zbe::TimeHandler> endHandler = std::make_shared<zbe::DaemonTimeHandler>(std::make_shared<UnStickyBar>(endDaemon, itemState, endState));
       timer = teg->addTimer(endHandler, zbe::SysTime::getInstance()->getEventTime() + time);

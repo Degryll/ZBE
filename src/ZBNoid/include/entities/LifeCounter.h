@@ -34,7 +34,7 @@ class LifeCounter: public BaseState, // TODO build BaseState with a Value<uint64
 public:
 
   LifeCounter(int64_t x, int64_t y, int64_t width, int64_t height, uint64_t charLenght , uint64_t graphics, std::shared_ptr<Value<int64_t> > lifes)
-    : BaseState(lifes), TextBox(x, y, width, height, graphics), len(charLenght), stateCache(BaseState::getState()), t(std::to_string(lifes->getValue())) {
+    : BaseState(lifes), TextBox(x, y, width, height, graphics), len(charLenght), stateCache(BaseState::getState()), t(std::to_string(lifes->get())) {
     AvatarEntityFixed<Stated>::setAvatar(new BaseStated(this));
     AvatarEntityFixed<SingleTextSprite>::setAvatar(new BaseSingleTextSprite(this));
     updateText();

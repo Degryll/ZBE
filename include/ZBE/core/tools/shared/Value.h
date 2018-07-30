@@ -20,15 +20,22 @@ public:
 
   virtual ~Value(){} //<! Virtual destructor
 
-  /** brief Sets the value.
-   *  param value Value to store.
+  /** brief Returns the value.
+   *  return value;
    */
-  virtual void setValue(T value) = 0;
+  virtual T get() = 0;
 
   /** brief Returns the value.
    *  return value;
    */
-  virtual T getValue() = 0;
+  T operator()() {
+    return get();
+  }
+
+  /** brief Sets the value.
+   *  param value Value to store.
+   */
+  virtual void set(T value) = 0;
 
   /** brief Modifies stored value by the param received.
    *  param value Value to add.

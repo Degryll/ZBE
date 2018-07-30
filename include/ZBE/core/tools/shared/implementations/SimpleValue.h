@@ -31,14 +31,14 @@ public:
   /** brief Sets the value.
    *  param value Value to store.
    */
-  void setValue(T value) {
+  void set(T value) {
     v = value ;
   }
 
   /** brief Returns the value.
    *  return value;
    */
-  T getValue() {
+  T get() {
     return v;
   }
 

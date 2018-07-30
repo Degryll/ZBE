@@ -100,22 +100,22 @@ TEST(Entity, values) {
   e.setInt(0, vali1);
   e.setInt(1, vali2);
 
-  EXPECT_DOUBLE_EQ(0.0,  e.getDouble(0)->getValue()) << "First double value is 0.0.";
-  EXPECT_DOUBLE_EQ(1.0,  e.getDouble(1)->getValue()) << "Second double value is 1.0";
-  EXPECT_EQ(42, e.getUint(0)->getValue()) << "First uint value is 42.";
-  EXPECT_EQ(37, e.getUint(1)->getValue()) << "Second uint value is 37";
-  EXPECT_EQ(-1, e.getInt(0)->getValue()) << "First int value is -1.";
-  EXPECT_EQ(3, e.getInt(1)->getValue()) << "Second int value is 3";
+  EXPECT_DOUBLE_EQ(0.0,  e.getDouble(0)->get()) << "First double value is 0.0.";
+  EXPECT_DOUBLE_EQ(1.0,  e.getDouble(1)->get()) << "Second double value is 1.0";
+  EXPECT_EQ(42, e.getUint(0)->get()) << "First uint value is 42.";
+  EXPECT_EQ(37, e.getUint(1)->get()) << "Second uint value is 37";
+  EXPECT_EQ(-1, e.getInt(0)->get()) << "First int value is -1.";
+  EXPECT_EQ(3, e.getInt(1)->get()) << "Second int value is 3";
 
 
-  e.getDouble(0)->setValue(-3.0);
-  valu1->setValue(84);
+  e.getDouble(0)->set(-3.0);
+  valu1->set(84);
   auto v = e.getInt(1);
-  v->setValue(-30);
+  v->set(-30);
 
-  EXPECT_DOUBLE_EQ(-3.0,  e.getDouble(0)->getValue()) << "First double value now is -3.0.";
-  EXPECT_EQ(84, e.getUint(0)->getValue()) << "First uint value now is 84.";
-  EXPECT_EQ(-30, e.getInt(1)->getValue()) << "First uint value now is -30.";
+  EXPECT_DOUBLE_EQ(-3.0,  e.getDouble(0)->get()) << "First double value now is -3.0.";
+  EXPECT_EQ(84, e.getUint(0)->get()) << "First uint value now is 84.";
+  EXPECT_EQ(-30, e.getInt(1)->get()) << "First uint value now is -30.";
 
   EXPECT_EQ(0,zbe::SysError::getNErrors()) << "No error ocurred.";
 

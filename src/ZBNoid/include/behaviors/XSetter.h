@@ -36,7 +36,7 @@ public:
     zbe::Positionable<2>* positionable;
     std::shared_ptr<zbe::AvatarEntityContainer<zbe::Positionable<2> > > aecp2 = entity;
     assignAvatar(aecp2 , &positionable);
-    positionable->setPosition({p->getValue(), positionable->getPosition().y});
+    positionable->setPosition({p->get(), positionable->getPosition().y});
   }
 
 private:

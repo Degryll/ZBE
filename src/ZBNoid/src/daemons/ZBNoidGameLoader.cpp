@@ -96,7 +96,7 @@ void ZBNoidGameLoader::run() {
 
   ZBNCfg::rmTFAECSTextSprt.get(ZBNCfg::TEXT_TS_LIST)->push_front(aecsts);
 
-  ZBNCfg::rmVInt64.get(ZBNCfg::GAMESTATE)->setValue(GAMELOADSUCCESS);
+  ZBNCfg::rmVInt64.get(ZBNCfg::GAMESTATE)->set(GAMELOADSUCCESS);
 
 }
 

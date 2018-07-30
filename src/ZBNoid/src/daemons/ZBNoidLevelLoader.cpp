@@ -62,9 +62,9 @@ void ZBNoidLevelLoader::run() {
   ZBNCfg::rmD.get(ZBNCfg::BALL_BUILDER_DAEMON)->run();
   ZBNCfg::rmD.get(ZBNCfg::BALL_MAGNETIZER_DAEMON)->run();
 
-  ZBNCfg::rmVInt64.get(ZBNCfg::NLIFES)->setValue(INITIAL_LIFES);
+  ZBNCfg::rmVInt64.get(ZBNCfg::NLIFES)->set(INITIAL_LIFES);
 
-  ZBNCfg::rmVInt64.get(ZBNCfg::GAMESTATE)->setValue(LEVELLOADSUCCESS);
+  ZBNCfg::rmVInt64.get(ZBNCfg::GAMESTATE)->set(LEVELLOADSUCCESS);
 }
 
 } //namespace zombienoid

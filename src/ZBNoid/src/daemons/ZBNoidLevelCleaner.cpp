@@ -55,8 +55,8 @@ void ZBNoidLevelCleaner::run() {
   }
   ZBNCfg::rmTFAECAnimSprt.get(ZBNCfg::BOOM_AS_LIST)->clear();
 
-  ZBNCfg::rmVInt64.get(ZBNCfg::STICKY_ITEM_STATE)->setValue(BAR_NORMAL_STATE);
-  ZBNCfg::rmVInt64.get(ZBNCfg::GAMESTATE)->setValue(LEVELCLEARSUCCESS);
+  ZBNCfg::rmVInt64.get(ZBNCfg::STICKY_ITEM_STATE)->set(BAR_NORMAL_STATE);
+  ZBNCfg::rmVInt64.get(ZBNCfg::GAMESTATE)->set(LEVELCLEARSUCCESS);
 
 }
 

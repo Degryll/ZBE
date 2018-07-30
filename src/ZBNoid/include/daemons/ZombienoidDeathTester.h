@@ -41,9 +41,9 @@ namespace zombienoid {
       /** \brief It will finish the game if the number of lifes reaches 0
        */
       void run(){
-        if(nl->getValue() <= 0){
+        if(nl->get() <= 0){
           ml->stop();
-          gamesState->setValue(outValue);
+          gamesState->set(outValue);
         }
       }
 

@@ -13,8 +13,8 @@
 namespace zbe {
 
 void StateMachineDaemon::run(){
-  while(state->getValue()>=0 && state->getValue() < static_cast<int64_t>(daemons.size()) ) {
-    daemons[state->getValue()]->run();
+  while(state->get()>=0 && state->get() < static_cast<int64_t>(daemons.size()) ) {
+    daemons[state->get()]->run();
   }
 }
 

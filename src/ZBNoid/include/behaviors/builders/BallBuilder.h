@@ -71,7 +71,7 @@ public:
   /** \brief It will build a ball with the same position an velocity as the given movable
    */
   void apply(std::shared_ptr<zbe::AvatarEntityContainer<zbe::Movable<2> > > aecm) {
-    if(nballs->getValue() > maxBalls) {
+    if(nballs->get() > maxBalls) {
         return;
     }
     zbe::Movable<2>* movable;

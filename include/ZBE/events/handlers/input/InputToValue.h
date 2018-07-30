@@ -35,7 +35,7 @@ public:
     * param status value from input.
    */
   void run(uint32_t, float status) {
-    val->setValue(status);
+    val->set(status);
   }
 
 private:

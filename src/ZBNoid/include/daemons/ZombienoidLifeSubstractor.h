@@ -40,7 +40,7 @@ namespace zombienoid {
       /** \brief It will run decrease lifes there are no balls.
        */
       void run(){
-        if(nb->getValue() == 0){
+        if(nb->get() == 0){
           nl->add(-1);
           builder->run();
         }

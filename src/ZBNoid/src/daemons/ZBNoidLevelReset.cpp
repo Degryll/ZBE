@@ -13,11 +13,11 @@ namespace zombienoid {
 
 void ZBNoidLevelReset::run() {
   using namespace zbe;
-  ZBNCfg::rmVInt64.get(ZBNCfg::NLIFES)->setValue(0);
+  ZBNCfg::rmVInt64.get(ZBNCfg::NLIFES)->set(0);
 
-  ZBNCfg::rmVInt64.get(ZBNCfg::NPOINTS)->setValue(0);
+  ZBNCfg::rmVInt64.get(ZBNCfg::NPOINTS)->set(0);
 
-  ZBNCfg::rmVInt64.get(ZBNCfg::GAMESTATE)->setValue(RESETSUCCESS);
+  ZBNCfg::rmVInt64.get(ZBNCfg::GAMESTATE)->set(RESETSUCCESS);
 }
 
 } //namespace zombienoid

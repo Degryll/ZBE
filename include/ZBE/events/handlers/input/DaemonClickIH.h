@@ -42,8 +42,8 @@ void run(uint32_t, float state) {
   if(state!=ZBE_KEYUP){
     return;
   }
-  double x = xval->getValue();
-  double y = yval->getValue();
+  double x = xval->get();
+  double y = yval->get();
   double minx = std::min(a.p.x, a.p.x + a.v.x);
   double miny = std::min(a.p.y, a.p.y + a.v.y);
   double maxx = std::max(a.p.x, a.p.x + a.v.x);
