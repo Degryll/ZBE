@@ -12,7 +12,11 @@
 
 #include <vulkan/vulkan.h>
 
+#define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
+#include <chrono>
 
 #include "ZBE/SDL/starters/SDL_Starter.h"
 #include "ZBE/SDL/system/SDLWindow.h"
@@ -143,6 +147,12 @@ const std::vector<uint16_t> indices = {
   0, 1, 2, 2, 3, 0
 };
 
+struct UniformBufferObject {
+  glm::mat4 model;
+  glm::mat4 view;
+  glm::mat4 proj;
+};
+
 /**
 * @class SDLVKWindow
 * @brief Used to create windows using SDL 2.0. with Vulkan support.
@@ -167,8 +177,10 @@ public:
       instance(nullptr), callback(0), surface(0), physicalDevice(VK_NULL_HANDLE), device(VK_NULL_HANDLE),
       graphicsQueue(VK_NULL_HANDLE), presentQueue(VK_NULL_HANDLE), swapChain(0), swapChainImages(),
       swapChainImageFormat(VK_FORMAT_UNDEFINED), swapChainExtent{}, swapChainImageViews(),
-      renderPass(0), pipelineLayout(0), graphicsPipeline(0), swapChainFramebuffers(),
-      commandPool(0), commandBuffers(), imageAvailableSemaphores(), renderFinishedSemaphores(),
+      swapChainFramebuffers(), renderPass(0), descriptorSetLayout(0), pipelineLayout(0), graphicsPipeline(0),
+      commandPool(0), vertexBuffer(0), vertexBufferMemory(0), indexBuffer(0), indexBufferMemory(0),
+      uniformBuffers(), uniformBuffersMemory(), descriptorPool(0), descriptorSets(),
+      commandBuffers(), imageAvailableSemaphores(), renderFinishedSemaphores(),
       inFlightFences(), currentFrame(0), framebufferResized(false) {
 
     //int sdlvk = SDL_Vulkan_LoadLibrary(nullptr);
@@ -193,8 +205,10 @@ public:
       instance(nullptr), callback(0), surface(0), physicalDevice(VK_NULL_HANDLE), device(VK_NULL_HANDLE),
       graphicsQueue(VK_NULL_HANDLE), presentQueue(VK_NULL_HANDLE), swapChain(0), swapChainImages(),
       swapChainImageFormat(VK_FORMAT_UNDEFINED), swapChainExtent{}, swapChainImageViews(),
-      renderPass(0), pipelineLayout(0), graphicsPipeline(0), swapChainFramebuffers(),
-      commandPool(0), commandBuffers(), imageAvailableSemaphores(), renderFinishedSemaphores(),
+      swapChainFramebuffers(), renderPass(0), descriptorSetLayout(0), pipelineLayout(0), graphicsPipeline(0),
+      commandPool(0), vertexBuffer(0), vertexBufferMemory(0), indexBuffer(0), indexBufferMemory(0),
+      uniformBuffers(), uniformBuffersMemory(), descriptorPool(0), descriptorSets(),
+      commandBuffers(), imageAvailableSemaphores(), renderFinishedSemaphores(),
       inFlightFences(), currentFrame(0), framebufferResized(false) {
     //int sdlvk = SDL_Vulkan_LoadLibrary(nullptr);
     //printf("ERRORS IN CONSTRUCTOR? Vulkan load library: %d zbe log: %s SDL:  %s\n", sdlvk, zbe::SysError::getFirstErrorString().c_str(), SDL_GetError());
@@ -241,6 +255,7 @@ private:
   void createImageViews();
   VkShaderModule createShaderModule(const std::vector<char>& code);
   void createRenderPass();
+  void createDescriptorSetLayout();
   void createGraphicsPipeline();
   void createFramebuffers();
   void createCommandPool();
@@ -249,6 +264,9 @@ private:
   void copyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size);
   void createVertexBuffer();
   void createIndexBuffer();
+  void createUniformBuffer();
+  void createDescriptorPool();
+  void createDescriptorSets();
   void createCommandBuffers();
   void createSyncObjects();
   void initVulkan();
@@ -257,6 +275,8 @@ private:
 
   void cleanupSwapChain();
   void recreateSwapChain();
+
+  void updateUniformBuffer(uint32_t currentImage);
 
   void printExtensions();
 
@@ -281,6 +301,7 @@ private:
   std::vector<VkFramebuffer> swapChainFramebuffers;
 
   VkRenderPass renderPass;
+  VkDescriptorSetLayout descriptorSetLayout;
   VkPipelineLayout pipelineLayout;
   VkPipeline graphicsPipeline;
 
@@ -290,6 +311,12 @@ private:
   VkDeviceMemory vertexBufferMemory;
   VkBuffer indexBuffer;
   VkDeviceMemory indexBufferMemory;
+
+  std::vector<VkBuffer> uniformBuffers;
+  std::vector<VkDeviceMemory> uniformBuffersMemory;
+
+  VkDescriptorPool descriptorPool;
+  std::vector<VkDescriptorSet> descriptorSets;
 
   std::vector<VkCommandBuffer> commandBuffers;
 
@@ -312,11 +339,15 @@ void SDLVKWindow::initVulkan() {
   createSwapChain();
   createImageViews();
   createRenderPass();
+  createDescriptorSetLayout();
   createGraphicsPipeline();
   createFramebuffers();
   createCommandPool();
   createVertexBuffer();
   createIndexBuffer();
+  createUniformBuffer();
+  createDescriptorPool();
+  createDescriptorSets();
   createCommandBuffers();
   createSyncObjects();
 }
@@ -787,7 +818,8 @@ void SDLVKWindow::createGraphicsPipeline() {
   rasterizer.polygonMode = VK_POLYGON_MODE_FILL;
   rasterizer.lineWidth = 1.0f;
   rasterizer.cullMode = VK_CULL_MODE_BACK_BIT;
-  rasterizer.frontFace = VK_FRONT_FACE_CLOCKWISE;
+  rasterizer.frontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE;
+  //rasterizer.frontFace = VK_FRONT_FACE_CLOCKWISE;
   rasterizer.depthBiasEnable = VK_FALSE;
   rasterizer.depthBiasConstantFactor = 0.0f; // Optional
   rasterizer.depthBiasClamp = 0.0f; // Optional
@@ -825,8 +857,8 @@ void SDLVKWindow::createGraphicsPipeline() {
 
   VkPipelineLayoutCreateInfo pipelineLayoutInfo = {};
   pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
-  pipelineLayoutInfo.setLayoutCount = 0; // Optional
-  pipelineLayoutInfo.pSetLayouts = nullptr; // Optional
+  pipelineLayoutInfo.setLayoutCount = 1; // Optional
+  pipelineLayoutInfo.pSetLayouts = &descriptorSetLayout; // Optional
   pipelineLayoutInfo.pushConstantRangeCount = 0; // Optional
   pipelineLayoutInfo.pPushConstantRanges = nullptr; // Optional
 
@@ -996,6 +1028,7 @@ void SDLVKWindow::createCommandBuffers() {
 
     vkCmdBindIndexBuffer(commandBuffers[i], indexBuffer, 0, VK_INDEX_TYPE_UINT16);
 
+    vkCmdBindDescriptorSets(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, pipelineLayout, 0, 1, &descriptorSets[i], 0, nullptr);
     //vkCmdDraw(commandBuffers[i], static_cast<uint32_t>(vertices.size()), 1, 0, 0);
     vkCmdDrawIndexed(commandBuffers[i], static_cast<uint32_t>(indices.size()), 1, 0, 0, 0);
     vkCmdEndRenderPass(commandBuffers[i]);
@@ -1040,7 +1073,7 @@ void SDLVKWindow::drawFrame() {
     printf("ERROR: failed to acquire swap chain image!\n");
   }
 
-  vkResetFences(device, 1, &inFlightFences[currentFrame]);
+  updateUniformBuffer(imageIndex);
 
   VkSubmitInfo submitInfo = {};
   submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
@@ -1056,6 +1089,8 @@ void SDLVKWindow::drawFrame() {
   VkSemaphore signalSemaphores[] = {renderFinishedSemaphores[currentFrame]};
   submitInfo.signalSemaphoreCount = 1;
   submitInfo.pSignalSemaphores = signalSemaphores;
+
+  vkResetFences(device, 1, &inFlightFences[currentFrame]);
 
   if (vkQueueSubmit(graphicsQueue, 1, &submitInfo, inFlightFences[currentFrame]) != VK_SUCCESS) {
     printf("ERROR: failed to submit draw command buffer!\n");
@@ -1085,6 +1120,15 @@ void SDLVKWindow::drawFrame() {
 
 void SDLVKWindow::cleanup() {
   cleanupSwapChain();
+
+  vkDestroyDescriptorPool(device, descriptorPool, nullptr);
+
+  vkDestroyDescriptorSetLayout(device, descriptorSetLayout, nullptr);
+
+  for (size_t i = 0; i < swapChainImages.size(); i++) {
+    vkDestroyBuffer(device, uniformBuffers[i], nullptr);
+    vkFreeMemory(device, uniformBuffersMemory[i], nullptr);
+  }
 
   vkDestroyBuffer(device, indexBuffer, nullptr);
   vkFreeMemory(device, indexBufferMemory, nullptr);
@@ -1161,7 +1205,7 @@ void SDLVKWindow::createBuffer(VkDeviceSize size, VkBufferUsageFlags usage, VkMe
   bufferInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 
   if (vkCreateBuffer(device, &bufferInfo, nullptr, &buffer) != VK_SUCCESS) {
-      printf("ERROR: failed to create vertex buffer!\n");
+      printf("ERROR: failed to create buffer!\n");
   }
 
   VkMemoryRequirements memRequirements;
@@ -1173,10 +1217,12 @@ void SDLVKWindow::createBuffer(VkDeviceSize size, VkBufferUsageFlags usage, VkMe
   allocInfo.memoryTypeIndex = findMemoryType(memRequirements.memoryTypeBits, properties);
 
   if (vkAllocateMemory(device, &allocInfo, nullptr, &bufferMemory) != VK_SUCCESS) {
-      printf("ERROR: failed to allocate vertex buffer memory!\n");
+      printf("ERROR: failed to allocate buffer memory!\n");
   }
 
-  vkBindBufferMemory(device, buffer, bufferMemory, 0);
+  if (vkBindBufferMemory(device, buffer, bufferMemory, 0) != VK_SUCCESS) {
+      printf("ERROR: failed to bind buffer memory!\n");
+  }
 }
 
 void SDLVKWindow::createVertexBuffer() {
@@ -1267,6 +1313,105 @@ void SDLVKWindow::createIndexBuffer() {
 
   vkDestroyBuffer(device, stagingBuffer, nullptr);
   vkFreeMemory(device, stagingBufferMemory, nullptr);
+}
+
+void SDLVKWindow::createDescriptorSetLayout() {
+  VkDescriptorSetLayoutBinding uboLayoutBinding = {};
+  uboLayoutBinding.binding = 0;
+  uboLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+  uboLayoutBinding.descriptorCount = 1;
+  uboLayoutBinding.stageFlags = VK_SHADER_STAGE_VERTEX_BIT;
+  uboLayoutBinding.pImmutableSamplers = nullptr; // Optional
+
+  VkDescriptorSetLayoutCreateInfo layoutInfo = {};
+  layoutInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
+  layoutInfo.bindingCount = 1;
+  layoutInfo.pBindings = &uboLayoutBinding;
+
+  if (vkCreateDescriptorSetLayout(device, &layoutInfo, nullptr, &descriptorSetLayout) != VK_SUCCESS) {
+    printf("ERROR: failed to create descriptor set layout!\n");
+  }
+}
+
+void SDLVKWindow::createUniformBuffer() {
+  VkDeviceSize bufferSize = sizeof(UniformBufferObject);
+
+  uniformBuffers.resize(swapChainImages.size());
+  uniformBuffersMemory.resize(swapChainImages.size());
+
+  for (size_t i = 0; i < swapChainImages.size(); i++) {
+    createBuffer(bufferSize, VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, uniformBuffers[i], uniformBuffersMemory[i]);
+  }
+}
+
+void SDLVKWindow::updateUniformBuffer(uint32_t currentImage) {
+  static auto startTime = std::chrono::high_resolution_clock::now();
+
+  auto currentTime = std::chrono::high_resolution_clock::now();
+  float time = std::chrono::duration<float, std::chrono::seconds::period>(currentTime - startTime).count();
+
+  UniformBufferObject ubo = {};
+  ubo.model = glm::rotate(glm::mat4(1.0f), time * glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+  ubo.view = glm::lookAt(glm::vec3(2.0f, 2.0f, 2.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+  ubo.proj = glm::perspective(glm::radians(45.0f), swapChainExtent.width / (float) swapChainExtent.height, 0.1f, 10.0f);
+  ubo.proj[1][1] *= -1;
+
+  void* data;
+  vkMapMemory(device, uniformBuffersMemory[currentImage], 0, sizeof(ubo), 0, &data);
+    memcpy(data, &ubo, sizeof(ubo));
+  vkUnmapMemory(device, uniformBuffersMemory[currentImage]);
+}
+
+void SDLVKWindow::createDescriptorPool() {
+  VkDescriptorPoolSize poolSize = {};
+  poolSize.type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+  poolSize.descriptorCount = static_cast<uint32_t>(swapChainImages.size());
+
+  VkDescriptorPoolCreateInfo poolInfo = {};
+  poolInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
+  poolInfo.poolSizeCount = 1;
+  poolInfo.pPoolSizes = &poolSize;
+  poolInfo.maxSets = static_cast<uint32_t>(swapChainImages.size());
+
+  if (vkCreateDescriptorPool(device, &poolInfo, nullptr, &descriptorPool) != VK_SUCCESS) {
+    printf("ERROR: failed to create descriptor pool!\n");
+  }
+}
+
+void SDLVKWindow::createDescriptorSets() {
+  std::vector<VkDescriptorSetLayout> layouts(swapChainImages.size(), descriptorSetLayout);
+  VkDescriptorSetAllocateInfo allocInfo = {};
+  allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
+  allocInfo.descriptorPool = descriptorPool;
+  allocInfo.descriptorSetCount = static_cast<uint32_t>(swapChainImages.size());
+  allocInfo.pSetLayouts = layouts.data();
+
+  descriptorSets.resize(swapChainImages.size());
+
+  if (vkAllocateDescriptorSets(device, &allocInfo, &descriptorSets[0]) != VK_SUCCESS) {
+    printf("ERROR: failed to allocate descriptor sets!\n");
+  }
+
+  for (size_t i = 0; i < swapChainImages.size(); i++) {
+
+    VkDescriptorBufferInfo bufferInfo = {};
+    bufferInfo.buffer = uniformBuffers[i];
+    bufferInfo.offset = 0;
+    bufferInfo.range = sizeof(UniformBufferObject);
+
+    VkWriteDescriptorSet descriptorWrite = {};
+    descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+    descriptorWrite.dstSet = descriptorSets[i];
+    descriptorWrite.dstBinding = 0;
+    descriptorWrite.dstArrayElement = 0;
+    descriptorWrite.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+    descriptorWrite.descriptorCount = 1;
+    descriptorWrite.pBufferInfo = &bufferInfo;
+    descriptorWrite.pImageInfo = nullptr; // Optional
+    descriptorWrite.pTexelBufferView = nullptr; // Optional
+
+    vkUpdateDescriptorSets(device, 1, &descriptorWrite, 0, nullptr);
+  }
 }
 
 }  // namespace zbe
