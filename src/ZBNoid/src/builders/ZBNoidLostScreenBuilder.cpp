@@ -29,9 +29,7 @@ std::shared_ptr<zbe::Daemon> ZBNoidLostScreenBuilder::build() {
 
   // Pre & post loop.
   std::shared_ptr<Daemon> prlsdl = std::make_shared<BasicPreLoopSDLDaemon>(window);
-  std::shared_ptr<Daemon> prltd = std::make_shared<BasicPreLoopTimeDaemon>();
   preLoop->addDaemon(prlsdl);
-  preLoop->addDaemon(prltd);
 
   // Event generators
   std::shared_ptr<InputEventGenerator> ieg = std::make_shared<InputEventGenerator>(inputBuffer);

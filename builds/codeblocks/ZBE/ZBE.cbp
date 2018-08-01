@@ -291,7 +291,6 @@
 		<Unit filename="../../../include/ZBE/behaviors/StateSetter.h" />
 		<Unit filename="../../../include/ZBE/behaviors/UniformLinearMotion.h" />
 		<Unit filename="../../../include/ZBE/core/behaviors/Behavior.h" />
-		<Unit filename="../../../include/ZBE/core/daemons/BasicPreLoopTimeDaemon.h" />
 		<Unit filename="../../../include/ZBE/core/daemons/Daemon.h" />
 		<Unit filename="../../../include/ZBE/core/daemons/DaemonMaster.h" />
 		<Unit filename="../../../include/ZBE/core/daemons/MainLoopExit.h" />
@@ -421,7 +420,6 @@
 		<Unit filename="../../../src/ZBE/SDL/system/SDLEventDispatcher.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/system/SDLWindow.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/tools/SDLTimer.cpp" />
-		<Unit filename="../../../src/ZBE/core/daemons/BasicPreLoopTimeDaemon.cpp" />
 		<Unit filename="../../../src/ZBE/core/daemons/DaemonMaster.cpp" />
 		<Unit filename="../../../src/ZBE/core/daemons/StateMachineDaemon.cpp" />
 		<Unit filename="../../../src/ZBE/core/entities/Entity.cpp" />

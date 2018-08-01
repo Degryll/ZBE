@@ -18,6 +18,7 @@ void MainLoop::run() {
   keep = true;
   while(keep) {  // Each iteration generates a frame.
     // Pre daemon
+    contextTime->update();
     dPre->run();
     // Inner loop
     while (contextTime->isFrameRemaining()) {

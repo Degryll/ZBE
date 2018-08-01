@@ -141,6 +141,7 @@
 					<Add directory="../../../extlibs/glm/0.9.9.0" />
 					<Add directory="../../../extlibs/Vulkan/1.1.77.0/include" />
 					<Add directory="../../../extlibs/SDL2_mixer/2.0.2/include" />
+					<Add directory="../../../extlibs/SDL2/2.0.8/include/SDL2" />
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
@@ -188,6 +189,7 @@
 					<Add directory="../../../extlibs/glm/0.9.9.0" />
 					<Add directory="../../../extlibs/Vulkan/1.1.77.0/include" />
 					<Add directory="../../../extlibs/SDL2_mixer/2.0.2/include" />
+					<Add directory="../../../extlibs/SDL2/2.0.8/include/SDL2" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
