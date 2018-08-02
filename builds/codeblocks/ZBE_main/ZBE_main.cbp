@@ -21,6 +21,7 @@
 					<Add option="-g" />
 					<Add option="-isystem ../../../extlibs/json" />
 					<Add option="-isystem ../../../extlibs/glm/0.9.9.0" />
+					<Add option="-isystem ../../../extlibs/tinyobjloader" />
 					<Add option="-std=c++17" />
 					<Add option="-D_GLIBCXX_USE_CXX11_ABI=0" />
 					<Add directory="../../../src/ZBE_main/include" />
@@ -38,6 +39,7 @@
 					<Add directory="../../../extlibs/lodePNG" />
 					<Add directory="../../../extlibs/glm/0.9.9.0" />
 					<Add directory="../../../extlibs/Vulkan/1.1.77.0/include" />
+					<Add directory="../../../extlibs/tinyobjloader" />
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
@@ -71,6 +73,7 @@
 					<Add option="-m64" />
 					<Add option="-isystem ../../../extlibs/json" />
 					<Add option="-isystem ../../../extlibs/glm/0.9.9.0" />
+					<Add option="-isystem ../../../extlibs/tinyobjloader" />
 					<Add option="-std=c++17" />
 					<Add option="-D_GLIBCXX_USE_CXX11_ABI=0" />
 					<Add directory="../../../src/ZBE_main/include" />
@@ -87,6 +90,7 @@
 					<Add directory="../../../extlibs/glm/0.9.9.0" />
 					<Add directory="../../../extlibs/Vulkan/1.1.77.0/include" />
 					<Add directory="../../../extlibs/SDL2_mixer/2.0.2/include" />
+					<Add directory="../../../extlibs/tinyobjloader" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -125,6 +129,7 @@
 					<Add option="-g" />
 					<Add option="-isystem ../../../extlibs/json" />
 					<Add option="-isystem ../../../extlibs/glm/0.9.9.0" />
+					<Add option="-isystem ../../../extlibs/tinyobjloader" />
 					<Add option="-std=c++17" />
 					<Add option="`sdl-config --cflags --libs`" />
 					<Add directory="../../../src/ZBE_main/include" />
@@ -142,6 +147,7 @@
 					<Add directory="../../../extlibs/Vulkan/1.1.77.0/include" />
 					<Add directory="../../../extlibs/SDL2_mixer/2.0.2/include" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/include/SDL2" />
+					<Add directory="../../../extlibs/tinyobjloader" />
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
@@ -174,6 +180,7 @@
 					<Add option="-m64" />
 					<Add option="-isystem ../../../extlibs/json" />
 					<Add option="-isystem ../../../extlibs/glm/0.9.9.0" />
+					<Add option="-isystem ../../../extlibs/tinyobjloader" />
 					<Add option="-std=c++17" />
 					<Add option="`sdl-config --cflags --libs`" />
 					<Add directory="../../../src/ZBE_main/include" />
@@ -190,6 +197,7 @@
 					<Add directory="../../../extlibs/Vulkan/1.1.77.0/include" />
 					<Add directory="../../../extlibs/SDL2_mixer/2.0.2/include" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/include/SDL2" />
+					<Add directory="../../../extlibs/tinyobjloader" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
