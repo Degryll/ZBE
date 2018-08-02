@@ -19,18 +19,17 @@ namespace zbe {
 /** \brief Defines a AABB area of the space that is "solid" inside.
  * Its used to detect collisions with objects that come from outside the box.
  */
-template <typename R>
-class StaticSolidAABB2D: public CollisionObjectCommon<StaticSolidAABB2D<R>, R> {
+class StaticSolidAABB2D: public CollisionObjectCommon<StaticSolidAABB2D> {
 public:
 
   /** \brief Empty constructor
    */
-  StaticSolidAABB2D() : CollisionObjectCommon<StaticSolidAABB2D<R>, R>(this), box() {}
+  StaticSolidAABB2D() : CollisionObjectCommon<StaticSolidAABB2D>(this), box() {}
 
   /** \brief Builds a StaticSolidAABB2D from a AABB2D structure.
    *  \param box The required AABB2D
    */
-  StaticSolidAABB2D(AABB2D box) : CollisionObjectCommon<StaticSolidAABB2D<R>, R>(this), box(box) {}
+  StaticSolidAABB2D(AABB2D box) : CollisionObjectCommon<StaticSolidAABB2D>(this), box(box) {}
 
   /** \brief Return the 2D AABB.
    *  \return A 2D AABB.
@@ -44,18 +43,17 @@ private:
 /** \brief Defines a AABB area of the space that is "solid" outside.
  * Its used to detect collisions with objects that come from inside the box.
  */
-template <typename R>
-class StaticLimiterAABB2D: public CollisionObjectCommon<StaticLimiterAABB2D<R>, R> {
+class StaticLimiterAABB2D: public CollisionObjectCommon<StaticLimiterAABB2D> {
 public:
 
   /** \brief Empty constructor
    */
-  StaticLimiterAABB2D() : CollisionObjectCommon<StaticLimiterAABB2D<R>, R>(this), box() {}
+  StaticLimiterAABB2D() : CollisionObjectCommon<StaticLimiterAABB2D>(this), box() {}
 
   /** \brief Parametrized constructor
       \param box The 2D AABB
    */
-  StaticLimiterAABB2D(AABB2D box) : CollisionObjectCommon<StaticLimiterAABB2D<R>, R>(this), box(box) {}
+  StaticLimiterAABB2D(AABB2D box) : CollisionObjectCommon<StaticLimiterAABB2D>(this), box(box) {}
 
   /** \brief getter for box:
    *  \return box The 2D AABB.
@@ -69,24 +67,23 @@ private:
 /** \brief A collision object defined by a circle moving with a constant speed.
  * Its used to detect collisions with objects that are approached from the outside.
  */
-template <typename R>
-class ConstantMovingCircle: public CollisionObjectCommon<ConstantMovingCircle<R>, R> {
+class ConstantMovingCircle: public CollisionObjectCommon<ConstantMovingCircle> {
 public:
 
   /** \Empty constructor
    */
-  ConstantMovingCircle() : CollisionObjectCommon<ConstantMovingCircle<R>, R>(this), circle(), direction() {}
+  ConstantMovingCircle() : CollisionObjectCommon<ConstantMovingCircle>(this), circle(), direction() {}
 
   /** \brief Parametrized constructor
    *  \param circle The moving Circle
    *  \param direction The direction of the moving Circle
    */
-  ConstantMovingCircle(Circle circle, Vector2D direction) : CollisionObjectCommon<ConstantMovingCircle<R>, R>(this), circle(circle), direction(direction) {}
+  ConstantMovingCircle(Circle circle, Vector2D direction) : CollisionObjectCommon<ConstantMovingCircle>(this), circle(circle), direction(direction) {}
 
   /** \brief Parametrized constructor
    *  \param rhs The moving Circle
    */
-  ConstantMovingCircle(ConstantMovingCircle&& rhs) : CollisionObjectCommon<ConstantMovingCircle<R>, R>(this), circle(std::move(rhs.circle)), direction(std::move(rhs.direction)) {}
+  ConstantMovingCircle(ConstantMovingCircle&& rhs) : CollisionObjectCommon<ConstantMovingCircle>(this), circle(std::move(rhs.circle)), direction(std::move(rhs.direction)) {}
 
   /** \brief getter for circle. Returns the circle.
    *  \return circle The moving circle.

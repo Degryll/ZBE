@@ -15,7 +15,7 @@
 #include "ZBE/entities/avatars/Bouncer.h"
 #include "ZBE/entities/avatars/implementations/BaseBouncer.h"
 #include "ZBE/core/entities/avatars/SingleSprite.h"
-#include "ZBE/core/entities/avatars/Collisionator.h"
+#include "ZBE/core/entities/avatars/Interactionator.h"
 #include "ZBE/core/entities/AvatarEntity.h"
 
 #include "game/GameReactor.h"
@@ -27,7 +27,7 @@ class GameBall: public zbe::Drawable,
                 public zbe::SimpleWideBouncingAPO<2>,
                 public zbe::AvatarEntityAdapted<zbe::SingleSprite>,
                 public zbe::AvatarEntityFixed<zbe::Bouncer<2> >,
-                public zbe::AvatarEntityAdapted<zbe::Collisionator<game::GameReactor> > {
+                public zbe::AvatarEntityAdapted<zbe::Interactionator<game::GameReactor> > {
 public:
   GameBall(const GameBall&) = delete;
   void operator=(const GameBall&) = delete;

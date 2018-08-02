@@ -1,6 +1,6 @@
 /**
  * Copyright 2012 Batis Degryll Ludo
- * @file BaseMovableCollisionator.h
+ * @file BaseMovableInteractionator.h
  * @since 2017-03-09
  * @date 2018-02-25
  * @author Degryll Ludo Batis

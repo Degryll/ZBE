@@ -303,8 +303,8 @@
 		<Unit filename="../../../include/ZBE/core/entities/Entity.h" />
 		<Unit filename="../../../include/ZBE/core/entities/avatars/AnimatedSprite.h" />
 		<Unit filename="../../../include/ZBE/core/entities/avatars/Avatar.h" />
-		<Unit filename="../../../include/ZBE/core/entities/avatars/Collisionator.h" />
-		<Unit filename="../../../include/ZBE/core/entities/avatars/Collisioner.h" />
+		<Unit filename="../../../include/ZBE/core/entities/avatars/Interactionator.h" />
+		<Unit filename="../../../include/ZBE/core/entities/avatars/Interactioner.h" />
 		<Unit filename="../../../include/ZBE/core/entities/avatars/RotatedSprite.h" />
 		<Unit filename="../../../include/ZBE/core/entities/avatars/SingleSprite.h" />
 		<Unit filename="../../../include/ZBE/core/entities/avatars/StatedSprite.h" />
@@ -319,6 +319,7 @@
 		<Unit filename="../../../include/ZBE/core/events/Event.h" />
 		<Unit filename="../../../include/ZBE/core/events/EventStore.h" />
 		<Unit filename="../../../include/ZBE/core/events/InputEvent.h" />
+		<Unit filename="../../../include/ZBE/core/events/InteractionEvent.h" />
 		<Unit filename="../../../include/ZBE/core/events/TimeEvent.h" />
 		<Unit filename="../../../include/ZBE/core/events/generators/InputEventGenerator.h" />
 		<Unit filename="../../../include/ZBE/core/events/generators/InteractionEventGenerator.h" />
@@ -331,6 +332,7 @@
 		<Unit filename="../../../include/ZBE/core/events/generators/util/InputStatusManager.h" />
 		<Unit filename="../../../include/ZBE/core/events/generators/util/IntersectionCollisionSelector.h" />
 		<Unit filename="../../../include/ZBE/core/events/generators/util/ReactObject.h" />
+		<Unit filename="../../../include/ZBE/core/events/generators/util/Reactor.h" />
 		<Unit filename="../../../include/ZBE/core/events/handlers/Actuator.h" />
 		<Unit filename="../../../include/ZBE/core/events/handlers/ActuatorWrapper.h" />
 		<Unit filename="../../../include/ZBE/core/events/handlers/InputHandler.h" />
@@ -363,6 +365,9 @@
 		<Unit filename="../../../include/ZBE/core/tools/shared/Value.h" />
 		<Unit filename="../../../include/ZBE/core/tools/shared/implementations/SimpleValue.h" />
 		<Unit filename="../../../include/ZBE/core/tools/text/utf8.h" />
+		<Unit filename="../../../include/ZBE/core/tools/time/ContextTime.h" />
+		<Unit filename="../../../include/ZBE/core/tools/time/SubordinateTime.h" />
+		<Unit filename="../../../include/ZBE/core/tools/time/Timer.h" />
 		<Unit filename="../../../include/ZBE/core/tools/tools.h" />
 		<Unit filename="../../../include/ZBE/core/zbe.h" />
 		<Unit filename="../../../include/ZBE/entities/ActiveElement2D.h" />
@@ -409,6 +414,7 @@
 		<Unit filename="../../../include/ZBE/resources/loaders/RsrcFolderLoader.h" />
 		<Unit filename="../../../include/ZBE/resources/loaders/RsrcLoader.h" />
 		<Unit filename="../../../include/ZBE/resources/loaders/SpriteSheetLoader.h" />
+		<Unit filename="../../../include/ZBE/system/SimpleLoopBuilder.h" />
 		<Unit filename="../../../src/ZBE/JSON/graphics/JSONGraphicsLoaders.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/OGL/SDLOGLWindow.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/daemons/BasicPostLoopSDLDaemon.cpp" />

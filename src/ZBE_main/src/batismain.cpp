@@ -8,14 +8,14 @@
 //#include "ZBE/core/daemons/Daemon.h"
 //#include "ZBE/core/daemons/DaemonMaster.h"
 //
-//#include "ZBE/core/entities/avatars/Collisioner.h"
-//#include "ZBE/core/entities/avatars/Collisionator.h"
-//#include "ZBE/core/entities/avatars/implementations/VoidCollisioner.h"
+//#include "ZBE/core/entities/avatars/Interactioner.h"
+//#include "ZBE/core/entities/avatars/Interactionator.h"
+//#include "ZBE/core/entities/avatars/Interactioner.h"
 //#include "ZBE/core/events/Event.h"
 //#include "ZBE/core/events/EventStore.h"
 //#include "ZBE/core/events/TimeEvent.h"
 //#include "ZBE/core/events/InputEvent.h"
-//#include "ZBE/core/events/CollisionEvent2D.h"
+//#include "ZBE/core/events/InteractionEvent.h"
 //#include "ZBE/core/events/generators/util/CollisionSelector.h"
 //#include "ZBE/core/events/generators/util/BaseCollisionSelector.h"
 //#include "ZBE/core/events/generators/InputEventGenerator.h"
@@ -130,9 +130,9 @@ int batismain(int, char** ) {
 //  printf("|------------------- Collision Event Generator-------------|\n");fflush(stdout);
 //  printf("Building list for collisionator entinties. Currently empty.\n");fflush(stdout);
 //  printf("It will store entities that will search for a collision.\n");fflush(stdout);
-//  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<game::GameReactor> > > ctl;
+//  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Interactionator<game::GameReactor> > > ctl;
 //  printf("Acquiring singleton list-manager for this list (ctl).\n");fflush(stdout);
-//  zbe::RsrcStore< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<game::GameReactor> > > >& lmct = zbe::RsrcStore< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<game::GameReactor> > > >::getInstance();
+//  zbe::RsrcStore< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Interactionator<game::GameReactor> > > >& lmct = zbe::RsrcStore< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Interactionator<game::GameReactor> > > >::getInstance();
 //  printf("Storing ctl in that list-manager.\n");fflush(stdout);
 //  lmct.insert(COLLISIONATORLIST, &ctl);
 //  printf("Building collision event generator with list id and the event id to use (1).\n");fflush(stdout);
@@ -192,7 +192,7 @@ int batismain(int, char** ) {
 //
 //  printf("Creating the board and giving it a size\n");fflush(stdout);
 //  //board
-//  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<game::GameReactor> > > collisionablesList;
+//  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Interactioner<game::GameReactor> > > collisionablesList;
 //  zbe::RsrcStore< std::forward_list<zbe::ActuatorWrapper<game::GameReactor, void>*> >& lmSimpleConerActuatorsList = zbe::RsrcStore< std::forward_list< zbe::ActuatorWrapper<game::GameReactor, void>*> >::getInstance();
 //  std::forward_list<zbe::ActuatorWrapper<game::GameReactor, void>*> boardActuatorsList;
 //  lmSimpleConerActuatorsList.insert(BOARDACTUATORLIST, &boardActuatorsList);
@@ -219,7 +219,7 @@ int batismain(int, char** ) {
 //  zbe::ActuatorWrapper<game::GameReactor, zbe::Bouncer<2> >* bouncerWrapper = new  zbe::ActuatorWrapperCommon<game::GameReactor, zbe::Bouncer<2>, zbe::Bouncer<2> >(new game::GameBallBouncer());
 //  ballActuatorsList.push_front(bouncerWrapper);
 //
-//  zbe::RsrcStore<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<game::GameReactor> > > >& lmCollisionablesList = zbe::RsrcStore< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<game::GameReactor> > > >::getInstance();
+//  zbe::RsrcStore<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Interactioner<game::GameReactor> > > >& lmCollisionablesList = zbe::RsrcStore< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Interactioner<game::GameReactor> > > >::getInstance();
 //  lmCollisionablesList.insert(COLLISIONABLELIST, &collisionablesList);
 //
 //  printf("Building an sprite adaptor for the ball\n");fflush(stdout);
@@ -253,7 +253,7 @@ int batismain(int, char** ) {
 //    std::shared_ptr<zbe::Adaptor<zbe::SingleSprite> > spriteAdaptor = std::make_shared<zbe::SimpleDrawableSingleSpriteAdaptor>(&(*ball));
 //    zbe::setAdaptor(ball,spriteAdaptor);
 //
-//    std::shared_ptr<zbe::Adaptor<zbe::Collisionator<game::GameReactor> > > gbca = std::make_shared<game::GameBallCollisionatorAdaptor>(&(*ball));
+//    std::shared_ptr<zbe::Adaptor<zbe::Interactionator<game::GameReactor> > > gbca = std::make_shared<game::GameBallCollisionatorAdaptor>(&(*ball));
 //    zbe::setAdaptor(ball,gbca);
 //
 //    ctl.push_front(ball);
@@ -279,7 +279,7 @@ int batismain(int, char** ) {
 //        std::shared_ptr<zbe::Adaptor<zbe::SingleSprite> > spriteAdaptor = std::make_shared<zbe::SimpleDrawableSingleSpriteAdaptor>(&(*brick));
 //        zbe::setAdaptor(brick, spriteAdaptor);
 //
-//        std::shared_ptr<zbe::Adaptor<zbe::Collisioner<game::GameReactor> > >gBrCA = std::make_shared<game::GameBlockCollisionerAdaptor>(&(*brick));
+//        std::shared_ptr<zbe::Adaptor<zbe::Interactioner<game::GameReactor> > >gBrCA = std::make_shared<game::GameBlockCollisionerAdaptor>(&(*brick));
 //        zbe::setAdaptor(brick, gBrCA);
 //
 //        collisionablesList.push_front(brick);

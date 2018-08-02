@@ -233,7 +233,7 @@ class _VECTOR {
     }
 
     /**
-     * \fn _VECTOR::reflect
+     * \fn _VECTOtypename R::reflect
      * \param normal Vector normal to the collision plane.
      * \return Vector with the ray or object path reflected.
      * \brief calculates the resulting path of reflection of a ray or impact of an object with a plane.

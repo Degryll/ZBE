@@ -71,7 +71,7 @@ public:
     std::shared_ptr<zbe::Adaptor<zbe::AnimatedSprite> > itemSpriteAdaptor(new ActiveElement2DAnimatedSpriteAdaptor<R>(item));
     setAdaptor(item, itemSpriteAdaptor);
 
-    std::shared_ptr<zbe::Adaptor<zbe::Collisionator<R> > > itemCollisionatorAdaptor(new ItemCatorAdaptor<R>(item));
+    std::shared_ptr<zbe::Adaptor<zbe::Interactionator<R> > > itemCollisionatorAdaptor(new ItemCatorAdaptor<R>(item));
     setAdaptor(item, itemCollisionatorAdaptor);
 
     std::shared_ptr<zbe::AvatarEntityContainer<zbe::AnimatedSprite> > aecas = std::make_shared<zbe::AvatarEntityContainer<zbe::AnimatedSprite> >(item);

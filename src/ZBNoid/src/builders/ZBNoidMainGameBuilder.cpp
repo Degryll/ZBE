@@ -33,7 +33,7 @@ std::shared_ptr<zbe::Daemon> ZBNoidMainGameBuilder::build() {
   std::shared_ptr<MappedInputStatusManager> ism = std::make_shared<MappedInputStatusManager>(ZBNCfg::INPUTEVENT);
   ieg->addManager(ism);
   std::shared_ptr<TimeEventGenerator> teg = std::make_shared<TimeEventGenerator>(ZBNCfg::TIMEEVENT);
-  std::shared_ptr<InteractionGenerator> iaeg = std::make_shared<InteractionGenerator>(ZBNCfg::CTS_JOINT, ZBNCfg::COLLISIONEVENT, new BaseCollisionSelector<ZombienoidReactor>());
+  std::shared_ptr<InteractionGenerator> iaeg = std::make_shared<InteractionGenerator>(ZBNCfg::CTS_JOINT, ZBNCfg::COLLISIONEVENT, new BaseCollisionSelector());
   eventGenerator->addDaemon(ieg);
   eventGenerator->addDaemon(teg);
   eventGenerator->addDaemon(iaeg);
@@ -110,8 +110,8 @@ std::shared_ptr<zbe::Daemon> ZBNoidMainGameBuilder::build() {
   ZBNCfg::rmFLAWExplosion.get(ZBNCfg::EXPLOSION_ACTUATORS_LIST)->push_front(explosionScorerWrapper);
   auto ballBombizer = new BallBoombizer<ZombienoidReactor,
                                         TicketedFAEC<Avatar, Scorer>,
-                                        TicketedFAE<Collisionator<ZombienoidReactor> >,
-                                        TicketedFAE<Collisioner<ZombienoidReactor> >, TicketedFAEC<SingleTextSprite>,
+                                        TicketedFAE<Interactionator<ZombienoidReactor> >,
+                                        TicketedFAE<Interactioner<ZombienoidReactor> >, TicketedFAEC<SingleTextSprite>,
                                         TicketedFAEC<AnimatedSprite> >
                                         (teg, ZBNCfg::COLLISIONEVENT, ZBNCfg::BOOM_TEXTSPRITE_TICKET, ZBNCfg::EXPLOSION_ACTUATORS_LIST,
                                          ZBNCfg::COLLISION_TICKET, ZBNCfg::BEHAVE_TICKET, ZBNCfg::EXPLSION_ERASE_LIST, ZBNCfg::BOOM_COLLISIONATOR_LIST,

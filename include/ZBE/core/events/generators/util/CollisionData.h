@@ -25,7 +25,13 @@ class CollisionData {
      *
      *  Build the collision data with the point of the collision.
      */
-    CollisionData(const Point2D& point, const Vector2D& normal): p(point), n(normal) {}
+    CollisionData() : p(), n() {}
+
+    /** \brief Parametrized constructor
+     *
+     *  Build the collision data with the point of the collision.
+     */
+    CollisionData(const Point2D& point, const Vector2D& normal) : p(point), n(normal) {}
 
     /** \brief Returns the point associated with the collision.
      *

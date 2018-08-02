@@ -27,10 +27,10 @@ void ZBNoidGameLoader::run() {
   std::shared_ptr<Element2D<ZombienoidReactor> > board(new Element2D<ZombienoidReactor>({MARGIN, MARGIN}, ZBNCfg::BOARD_ACTUATORS_LIST, BOARD_WIDTH, BOARD_HEIGHT, ZBNCfg::BOARD_SS));
   std::shared_ptr<Element2D<ZombienoidReactor> > securityBoard(new Element2D<ZombienoidReactor>({SECURITY_MARGIN, SECURITY_MARGIN},ZBNCfg::BOARD_ACTUATORS_LIST, SECURITY_WIDTH, SECURITY_HEIGHT, ZBNCfg::BOARD_SS));
 
-  std::shared_ptr<Adaptor<Collisioner<ZombienoidReactor> > > boardCollisionerAdaptor(new BoardConerAdaptor<ZombienoidReactor>(board));
+  std::shared_ptr<Adaptor<Interactioner<ZombienoidReactor> > > boardCollisionerAdaptor(new BoardConerAdaptor<ZombienoidReactor>(board));
   setAdaptor(board, boardCollisionerAdaptor);
 
-  std::shared_ptr<Adaptor<Collisioner<ZombienoidReactor> > > securityBoardCollisionerAdaptor(new BoardConerAdaptor<ZombienoidReactor>(securityBoard));
+  std::shared_ptr<Adaptor<Interactioner<ZombienoidReactor> > > securityBoardCollisionerAdaptor(new BoardConerAdaptor<ZombienoidReactor>(securityBoard));
   setAdaptor(securityBoard, securityBoardCollisionerAdaptor);
 
   std::shared_ptr<Adaptor<AnimatedSprite> > boardSpriteAdaptor(new Element2DDisplacedAnimatedSpriteAdaptor<ZombienoidReactor>(board, BOARD_SPRITE_DISPLACEMENT));
@@ -49,7 +49,7 @@ void ZBNoidGameLoader::run() {
   std::shared_ptr<Adaptor<AnimatedSprite> > barSpriteAdaptor(new Element2DAnimatedSpriteAdaptor<ZombienoidReactor>(bar));
   setAdaptor(bar, barSpriteAdaptor);
 
-  std::shared_ptr<Adaptor<Collisioner<ZombienoidReactor> > > barCollisionerAdaptor(new BarConerAdaptor<ZombienoidReactor>(bar));
+  std::shared_ptr<Adaptor<Interactioner<ZombienoidReactor> > > barCollisionerAdaptor(new BarConerAdaptor<ZombienoidReactor>(bar));
   setAdaptor(bar, barCollisionerAdaptor);
 
   wrapAEC(&aecas, bar);

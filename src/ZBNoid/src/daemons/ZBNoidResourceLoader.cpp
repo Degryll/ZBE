@@ -43,9 +43,9 @@ void ZBNoidResourceLoader::run () {
   srand(time(0));
 
   // Joints
-  auto jaeCator = std::make_shared<JointAE<Collisionator<ZombienoidReactor> > >();
-  auto jaeBallConer = std::make_shared<JointAE<Collisioner<ZombienoidReactor> > >();
-  auto jaeItemConer = std::make_shared<JointAE<Collisioner<ZombienoidReactor> > >();
+  auto jaeCator = std::make_shared<JointAE<Interactionator<ZombienoidReactor> > >();
+  auto jaeBallConer = std::make_shared<JointAE<Interactioner<ZombienoidReactor> > >();
+  auto jaeItemConer = std::make_shared<JointAE<Interactioner<ZombienoidReactor> > >();
   auto jaecAnimSprt = std::make_shared<JointAEC<AnimatedSprite> >();
   auto jaecSTextSprt = std::make_shared<JointAEC<SingleTextSprite> >();
   auto jaecMouse = std::make_shared<JointAEC<Positionable<2>, Avatar> >();
@@ -64,23 +64,23 @@ void ZBNoidResourceLoader::run () {
   auto ballActuatorsList = std::make_shared<std::forward_list<ActuatorWrapper<ZombienoidReactor, WAEC<Avatar, Bouncer<2>, Stated, Scorer, Resizable> >* > >();
   auto brickActuatorsList = std::make_shared<std::forward_list<ActuatorWrapper<ZombienoidReactor, WAEC<Avatar, Positionable<2>, Stated> >* > >();
   auto explosionActuatorsList = std::make_shared<std::forward_list<zbe::ActuatorWrapper<ZombienoidReactor, zbe::WAEC<Scorer> >*> >();
-  auto boardCollisionerList = std::make_shared<TicketedFAE<Collisioner<ZombienoidReactor> > >();
+  auto boardCollisionerList = std::make_shared<TicketedFAE<Interactioner<ZombienoidReactor> > >();
   auto itemList = std::make_shared<TicketedFAEC<Bouncer<2>, Avatar> >();
   auto stickerList = std::make_shared<TicketedFAEC<Stated> >();
-  auto itemCollisionatorsList = std::make_shared<TicketedFAE<Collisionator<ZombienoidReactor> > >();
+  auto itemCollisionatorsList = std::make_shared<TicketedFAE<Interactionator<ZombienoidReactor> > >();
   auto textSpriteList = std::make_shared<TicketedFAEC<SingleTextSprite> >();
   auto titleButontextSpriteList = std::make_shared<TicketedFAEC<SingleTextSprite> >();
   auto winButontextSpriteList = std::make_shared<TicketedFAEC<SingleTextSprite> >();
   auto lostButontextSpriteList = std::make_shared<TicketedFAEC<SingleTextSprite> >();
   auto brickList = std::make_shared<TicketedFAEC<Stated, Avatar, Positionable<2> > >();
-  auto brickCollisionerList = std::make_shared<TicketedFAE<Collisioner<ZombienoidReactor> > >();
+  auto brickCollisionerList = std::make_shared<TicketedFAE<Interactioner<ZombienoidReactor> > >();
   auto spawnList = std::make_shared<TicketedFAEC<Movable<2> > >();
   auto mouseControlList = std::make_shared<TicketedFAEC<Positionable<2>, Avatar> >();
   auto demagnetizeList = std::make_shared<TicketedFAEC<Positionable<2>, Avatar> >();
   auto explosionAvatarList = std::make_shared<TicketedFAEC<Avatar, Scorer> >();
-  auto ballCollisionatorsList = std::make_shared<TicketedFAE<Collisionator<ZombienoidReactor> > >();
+  auto ballCollisionatorsList = std::make_shared<TicketedFAE<Interactionator<ZombienoidReactor> > >();
   auto ballList = std::make_shared<TicketedFAEC<Bouncer<2>, Resizable, zbe::Avatar> >();
-  auto barCollisionerList = std::make_shared<TicketedFAE<Collisioner<ZombienoidReactor> > >();
+  auto barCollisionerList = std::make_shared<TicketedFAE<Interactioner<ZombienoidReactor> > >();
 
   // Drawing layers
   auto itemAnimatedSpriteList = std::make_shared<TicketedFAEC<AnimatedSprite> >();
@@ -122,7 +122,7 @@ void ZBNoidResourceLoader::run () {
   ZBNCfg::rmTFAEConer.insert(ZBNCfg::BRICK_COLLISIONER_LIST, brickCollisionerList);
   ZBNCfg::rmTFAEConer.insert(ZBNCfg::BOARD_COLLISIONER_LIST, boardCollisionerList);
   ZBNCfg::rmTFAEConer.insert(ZBNCfg::BAR_COLLISIONER_LIST, barCollisionerList);
-  ZBNCfg::rmTFAECator.insert(ZBNCfg::BOOM_COLLISIONATOR_LIST, std::make_shared<TicketedFAE<Collisionator<ZombienoidReactor> > >());
+  ZBNCfg::rmTFAECator.insert(ZBNCfg::BOOM_COLLISIONATOR_LIST, std::make_shared<TicketedFAE<Interactionator<ZombienoidReactor> > >());
   ZBNCfg::rmTFAECator.insert(ZBNCfg::BALL_COLLISIONATOR_LIST, ballCollisionatorsList);
 
   // Populating joints

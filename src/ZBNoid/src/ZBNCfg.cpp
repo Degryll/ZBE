@@ -3,10 +3,10 @@
 namespace zombienoid {
 
 // Basic zbe::RsrcStore: List of collisionators and collisioners for collision. List of zbe::AnimatedSprite and zbe::SingleTextSprite for drawing
-zbe::RsrcStore<zbe::TicketedFAE<zbe::Collisioner<ZombienoidReactor> > >& ZBNCfg::rmTFAEConer = zbe::RsrcStore<zbe::TicketedFAE<zbe::Collisioner<ZombienoidReactor> > >::getInstance();
-zbe::RsrcStore<zbe::TicketedFAE<zbe::Collisionator<ZombienoidReactor> > >& ZBNCfg::rmTFAECator = zbe::RsrcStore<zbe::TicketedFAE<zbe::Collisionator<ZombienoidReactor> > >::getInstance();
-zbe::RsrcStore<zbe::JointAE<zbe::Collisionator<ZombienoidReactor> > >& ZBNCfg::rmJAECator = zbe::RsrcStore<zbe::JointAE<zbe::Collisionator<ZombienoidReactor> > >::getInstance();
-zbe::RsrcStore<zbe::JointAE<zbe::Collisioner<ZombienoidReactor> > >& ZBNCfg::rmJAEConer = zbe::RsrcStore<zbe::JointAE<zbe::Collisioner<ZombienoidReactor> > >::getInstance();
+zbe::RsrcStore<zbe::TicketedFAE<zbe::Interactioner<ZombienoidReactor> > >& ZBNCfg::rmTFAEConer = zbe::RsrcStore<zbe::TicketedFAE<zbe::Interactioner<ZombienoidReactor> > >::getInstance();
+zbe::RsrcStore<zbe::TicketedFAE<zbe::Interactionator<ZombienoidReactor> > >& ZBNCfg::rmTFAECator = zbe::RsrcStore<zbe::TicketedFAE<zbe::Interactionator<ZombienoidReactor> > >::getInstance();
+zbe::RsrcStore<zbe::JointAE<zbe::Interactionator<ZombienoidReactor> > >& ZBNCfg::rmJAECator = zbe::RsrcStore<zbe::JointAE<zbe::Interactionator<ZombienoidReactor> > >::getInstance();
+zbe::RsrcStore<zbe::JointAE<zbe::Interactioner<ZombienoidReactor> > >& ZBNCfg::rmJAEConer = zbe::RsrcStore<zbe::JointAE<zbe::Interactioner<ZombienoidReactor> > >::getInstance();
 zbe::RsrcStore<zbe::TicketedFAEC<zbe::AnimatedSprite> >& ZBNCfg::rmTFAECAnimSprt = zbe::RsrcStore<zbe::TicketedFAEC<zbe::AnimatedSprite> >::getInstance();
 zbe::RsrcStore<zbe::TicketedFAEC<zbe::SingleTextSprite> >& ZBNCfg::rmTFAECSTextSprt = zbe::RsrcStore<zbe::TicketedFAEC<zbe::SingleTextSprite> >::getInstance();
 zbe::RsrcStore<zbe::JointAEC<zbe::AnimatedSprite> >& ZBNCfg::rmJAECAnimSprt = zbe::RsrcStore<zbe::JointAEC<zbe::AnimatedSprite> >::getInstance();

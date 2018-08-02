@@ -19,12 +19,11 @@
 #include "ZBE/core/daemons/Daemon.h"
 
 #include "ZBE/core/entities/AvatarEntity.h"
-#include "ZBE/core/entities/avatars/Collisioner.h"
-#include "ZBE/core/entities/avatars/Collisionator.h"
+#include "ZBE/core/entities/avatars/Interactioner.h"
+#include "ZBE/core/entities/avatars/Interactionator.h"
 
 #include "ZBE/core/events/EventStore.h"
-#include "ZBE/core/events/CollisionEvent2D.h"
-#include "ZBE/core/events/generators/util/CollisionData.h"
+#include "ZBE/core/events/InteractionEvent.h"
 
 namespace zbe {
 
@@ -37,7 +36,7 @@ public:
   void operator=(const InteractionEventGenerator&) = delete;  //!< Avoid copy.
 
   /** \brief Parametrized Constructor.
-   *  \param list The list id of collisionators
+   *  \param list The list id of interactionators
    *  \param Id for the interaction events.
    *  \param is An interaction selector, that is part of a visitor pattern. This
    *  selector chooses how to check the interacion according to the types of the
@@ -60,10 +59,10 @@ public:
 
 protected:
   /** \brief Stores both events in the EventStore
-   * \param a Collision event from entity a
-   * \param a Collision event from entity b
+   * \param a Interaction event from entity a
+   * \param a Interaction event from entity b
    */
-  virtual void storeEvents(CollisionEvent2D<R>* a, CollisionEvent2D<R>* b){
+  virtual void storeEvents(InteractionEvent<R>* a, InteractionEvent<R>* b){
     es.storeEvent(a);
     es.storeEvent(b);
   }
@@ -78,14 +77,13 @@ protected:
 
 private:
 
-  uint64_t id;  //!< id for the list of collisionators.
+  uint64_t id;  //!< id for the list of interactionators.
   int eventId;  //!< id for the events of this type.
   IS* is;  //!< Use to select the type of the interaction.
 
   RsrcStore<LT>& lmct;
   RsrcStore<LN>& lmcn;
   std::shared_ptr<ContextTime> contextTime;
-
 };
 
 /** \brief It looks for interactions between interactor objects.
@@ -93,26 +91,26 @@ private:
 template <typename R, typename IS, typename LN, typename LT>
 void InteractionEventGenerator<R, IS, LN, LT>::run() {
   int64_t totalTime = getTotalTime();
-  Point2D point;
-  Vector2D normal;
-  std::shared_ptr<LT> ctl = lmct.get(id);
+  // Point2D point;
+  // Vector2D normal
+  typename R::InteractionData iData;
+  std::shared_ptr<LT> itl = lmct.get(id);
 
-  for(auto catorEntity : (*ctl)) {
-    Collisionator<R>* cator;
-    catorEntity->assignAvatar(&cator);
-    uint64_t cablesId = cator->getCollisionablesListId();
-    std::shared_ptr<LN> cnl = lmcn.get(cablesId);
-    for(auto conerEntity : (*cnl)) {
-      Collisioner<R>* coner;
-      conerEntity->assignAvatar(&coner);
-      if(is->select(*cator, *coner, totalTime, point, normal)) {
-        CollisionData cd(point, normal);
-        CollisionEvent2D<R>* a = new CollisionEvent2D<R>(eventId, contextTime->getInitFrameTime() + totalTime, cator, cd, std::shared_ptr<zbe::ReactObject<R> >(coner->getReactObject()));
-        CollisionEvent2D<R>* b = new CollisionEvent2D<R>(eventId, contextTime->getInitFrameTime() + totalTime, coner, cd, std::shared_ptr<zbe::ReactObject<R> >(cator->getReactObject()));
+  for(auto iatorEntity : (*itl)) {
+    Interactionator<R>* iator;
+    iatorEntity->assignAvatar(&iator);
+    uint64_t cablesId = iator->getInteractionablesListId();
+    std::shared_ptr<LN> inl = lmcn.get(cablesId);
+    for(auto ionerEntity : (*inl)) {
+      Interactioner<R>* ioner;
+      ionerEntity->assignAvatar(&ioner);
+      if(is->select(iator->getInteractionObject(), ioner->getInteractionObject(), totalTime, &iData)) {
+        InteractionEvent<R>* a = new InteractionEvent<R>(eventId, contextTime->getInitFrameTime() + totalTime, iator, iData, std::shared_ptr<zbe::ReactObject<R> >(ioner->getReactObject()));
+        InteractionEvent<R>* b = new InteractionEvent<R>(eventId, contextTime->getInitFrameTime() + totalTime, ioner, iData, std::shared_ptr<zbe::ReactObject<R> >(iator->getReactObject()));
         storeEvents(a,b);
-      }  // if collision
-    }  // for each collisionable
-  }  // for each collisionator
+      }  // if interaction
+    }  // for each interactionable
+  }  // for each interactionator
 }
 
 /** \brief Generate interaction events occurred in the current time.
@@ -124,7 +122,7 @@ public:
   void operator=(const InstantInteractionEventGenerator&) = delete; //!< Avoid copy.
 
   /** \brief Parametrized Constructor.
-   * \param list The list id of collisionators.
+   * \param list The list id of interactionators.
    * \param eventId Id for the interaction events.
    * \param is An interaction selector, that is part of a visitor pattern. This
    *  selector chooses how to check the interacion according to the types of the
@@ -134,10 +132,10 @@ public:
 
 protected:
   /** \brief Stores both events in the EventStore
-   * \param a Collision event from entity a view
-   * \param a Collision event from entity b view
+   * \param a Interaction event from entity a view
+   * \param a Interaction event from entity b view
    */
-  void storeEvents(CollisionEvent2D<R>* a, CollisionEvent2D<R>* b){
+  void storeEvents(InteractionEvent<R>* a, InteractionEvent<R>* b){
     this->es.storeInstantEvent(a);
     this->es.storeInstantEvent(b);
   }
@@ -147,7 +145,6 @@ protected:
   int64_t getTotalTime() {
     return 0;
   }
-
 };
 
 }  // namespace zbe

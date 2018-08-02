@@ -26,7 +26,7 @@ namespace zombienoid {
 /** \brief Implementation that adapts a Drawable to a AnimatedSprite.
  */
 template <typename R>
-class BlockConerAdaptor : public zbe::Adaptor<zbe::Collisioner<R> > {
+class BlockConerAdaptor : public zbe::Adaptor<zbe::Interactioner<R> > {
  public:
   BlockConerAdaptor(const BlockConerAdaptor&) = delete;
   void operator=(const BlockConerAdaptor&) = delete;
@@ -40,7 +40,7 @@ class BlockConerAdaptor : public zbe::Adaptor<zbe::Collisioner<R> > {
     std::shared_ptr<zbe::Element2D<R> > ent = e.lock();
     std::shared_ptr<zbe::WeakAvatarEntityContainer<zbe::Avatar, zbe::Positionable<2>, zbe::Stated> > aeContainer = std::make_shared<zbe::WeakAvatarEntityContainer<zbe::Avatar, zbe::Positionable<2>, zbe::Stated> >(ent);
     zbe::AABB2D aabb({(double)ent->getX(), (double)ent->getY()}, {(double)ent->getX()+ent->getW(), (double)ent->getY()+ent->getH()});
-    std::shared_ptr<zbe::StaticSolidAABB2D<R> > cObject(new zbe::StaticSolidAABB2D<R>(aabb));
+    std::shared_ptr<zbe::StaticSolidAABB2D > cObject(new zbe::StaticSolidAABB2D(aabb));
 
     std::shared_ptr<zbe::WeakAvatarEntityContainer<Solid, Breakable> > weakAECSB = std::make_shared<zbe::WeakAvatarEntityContainer<Solid, Breakable> >(aeSolid, aeBreak);
     std::shared_ptr<zbe::WeakAvatarEntityContainer<Solid, Breakable, Boombizer> > weakAECSBB = std::make_shared<zbe::WeakAvatarEntityContainer<Solid, Breakable, Boombizer> >(aeSolid, aeBreak, aeBoomb);
@@ -48,21 +48,21 @@ class BlockConerAdaptor : public zbe::Adaptor<zbe::Collisioner<R> > {
     roSB  = std::make_shared<zbe::ReactObjectCommon<R, Solid, Breakable> >(weakAECSB);
     roSBB = std::make_shared<zbe::ReactObjectCommon<R, Solid, Breakable, Boombizer> >(weakAECSBB);
 
-    s = new zbe::CollisionerCommon<R,zbe::Avatar, zbe::Positionable<2>, zbe::Stated>(aeContainer, cObject, getReactObject(ent), ent->getActuatorsList());
+    s = new zbe::InteractionerCommon<R,zbe::Avatar, zbe::Positionable<2>, zbe::Stated>(aeContainer, cObject, getReactObject(ent), ent->getActuatorsList());
   }
 
   ~BlockConerAdaptor() {
     delete s;
   }
 
-  zbe::Collisioner<R>* getAvatar() {
+  zbe::Interactioner<R>* getAvatar() {
     std::shared_ptr<zbe::Element2D<R> > ent = e.lock();
     double halfW = ent->getW() / 2.0;
     double halfH = ent->getH() / 2.0;
     zbe::AABB2D aabb({(double)ent->getX() - halfW, (double)ent->getY() - halfH}, {(double)ent->getX() + halfW, (double)ent->getY() + halfH});
-    std::shared_ptr<zbe::StaticSolidAABB2D<R> > cObject(new zbe::StaticSolidAABB2D<R>(aabb));
+    std::shared_ptr<zbe::StaticSolidAABB2D > cObject(new zbe::StaticSolidAABB2D(aabb));
     s->setReactObject(getReactObject(ent));
-    s->setCollisionObject(cObject);
+    s->setInteractionObject(cObject);
     return (s);
   }
 
@@ -77,7 +77,7 @@ class BlockConerAdaptor : public zbe::Adaptor<zbe::Collisioner<R> > {
 
   std::weak_ptr<zbe::Element2D<R> > e;
   int64_t boomState;
-  zbe::CollisionerCommon<R,zbe::Avatar, zbe::Positionable<2>, zbe::Stated>* s;
+  zbe::InteractionerCommon<R,zbe::Avatar, zbe::Positionable<2>, zbe::Stated>* s;
   std::shared_ptr<zbe::AvatarEntity<Solid> > aeSolid;
   std::shared_ptr<zbe::AvatarEntity<Breakable> > aeBreak;
   std::shared_ptr<zbe::AvatarEntity<Boombizer> > aeBoomb;

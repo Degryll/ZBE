@@ -24,8 +24,8 @@
 #include "ZBE/core/events/generators/InteractionEventGenerator.h"
 #include "ZBE/core/events/generators/util/BaseCollisionSelector.h"
 
-#include "ZBE/core/entities/avatars/Collisioner.h"
-#include "ZBE/core/entities/avatars/Collisionator.h"
+#include "ZBE/core/entities/avatars/Interactioner.h"
+#include "ZBE/core/entities/avatars/Interactionator.h"
 #include "ZBE/core/entities/avatars/AnimatedSprite.h"
 
 #include "ZBE/core/tools/containers/containers.h"
@@ -138,19 +138,19 @@
 namespace zombienoid {
 
 using InteractionGenerator = zbe::InteractionEventGenerator<
-                             ZombienoidReactor, zbe::CollisionSelector<ZombienoidReactor>,
-                             zbe::JointAE<zbe::Collisioner<ZombienoidReactor> >,
-                             zbe::JointAE<zbe::Collisionator<ZombienoidReactor> > >;
+                             ZombienoidReactor, zbe::CollisionSelector,
+                             zbe::JointAE<zbe::Interactioner<ZombienoidReactor> >,
+                             zbe::JointAE<zbe::Interactionator<ZombienoidReactor> > >;
 
 using CustomBallBuilder = BallBuilder<
                           ZombienoidReactor,
-                          zbe::TicketedFAE<zbe::Collisionator<ZombienoidReactor> >,
+                          zbe::TicketedFAE<zbe::Interactionator<ZombienoidReactor> >,
                           zbe::TicketedFAEC<zbe::AnimatedSprite>,
                           zbe::TicketedFAEC<zbe::Bouncer<2>, zbe::Resizable, zbe::Avatar> >;
 
 using CustomItemBuilder = ItemBuilder<
                           ZombienoidReactor,
-                          zbe::TicketedFAE<zbe::Collisionator<ZombienoidReactor> >,
+                          zbe::TicketedFAE<zbe::Interactionator<ZombienoidReactor> >,
                           zbe::TicketedFAEC<zbe::AnimatedSprite>,
                           zbe::TicketedFAEC<zbe::Bouncer<2> ,zbe::Avatar> >;
 

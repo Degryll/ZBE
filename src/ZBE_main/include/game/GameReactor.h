@@ -1,16 +1,22 @@
 #ifndef ZBE_MAIN_GAME_GAMEREACTOR
 #define ZBE_MAIN_GAME_GAMEREACTOR
 
+#include "ZBE/core/events/generators/util/Reactor.h"
+#include "ZBE/core/events/generators/util/CollisionObject.h"
+#include "ZBE/core/events/generators/util/CollisionData.h"
+
 namespace game{
 
-class VoidReactObject;
+//class VoidReactObject;
 
-class GameReactor {
-public:
-  virtual ~GameReactor() {}
+typedef zbe::Reactor<zbe::CollisionData, zbe::CollisionObject, void> GameReactor;
 
-  virtual void act() {}
-};
+//class GameReactor {
+//public:
+//  virtual ~GameReactor() {}
+//
+//  virtual void act() {}
+//};
 
 }  // namespace game
 

@@ -14,8 +14,8 @@
 
 #include "ZombienoidReactor.h"
 
-#include "ZBE/core/entities/avatars/Collisioner.h"
-#include "ZBE/core/entities/avatars/Collisionator.h"
+#include "ZBE/core/entities/avatars/Interactioner.h"
+#include "ZBE/core/entities/avatars/Interactionator.h"
 #include "ZBE/core/entities/avatars/AnimatedSprite.h"
 #include "ZBE/core/entities/avatars/Avatar.h"
 #include "ZBE/core/entities/Entity.h"
@@ -205,10 +205,10 @@ class ZBNCfg {
   // Basic zbe::RsrcStore: List of entities for cleaning.
   static zbe::RsrcStore<zbe::TicketedForwardList<zbe::Entity> >& rmTFEntity;
   // Basic zbe::RsrcStore: List of collisionators and collisioners for collision. List of zbe::AnimatedSprite and zbe::SingleTextSprite for drawing
-  static zbe::RsrcStore<zbe::TicketedFAE<zbe::Collisioner<ZombienoidReactor> > >& rmTFAEConer;
-  static zbe::RsrcStore<zbe::TicketedFAE<zbe::Collisionator<ZombienoidReactor> > >& rmTFAECator;
-  static zbe::RsrcStore<zbe::JointAE<zbe::Collisionator<ZombienoidReactor> > >& rmJAECator;
-  static zbe::RsrcStore<zbe::JointAE<zbe::Collisioner<ZombienoidReactor> > >& rmJAEConer;
+  static zbe::RsrcStore<zbe::TicketedFAE<zbe::Interactioner<ZombienoidReactor> > >& rmTFAEConer;
+  static zbe::RsrcStore<zbe::TicketedFAE<zbe::Interactionator<ZombienoidReactor> > >& rmTFAECator;
+  static zbe::RsrcStore<zbe::JointAE<zbe::Interactionator<ZombienoidReactor> > >& rmJAECator;
+  static zbe::RsrcStore<zbe::JointAE<zbe::Interactioner<ZombienoidReactor> > >& rmJAEConer;
   static zbe::RsrcStore<zbe::TicketedFAEC<zbe::AnimatedSprite> >& rmTFAECAnimSprt;
   static zbe::RsrcStore<zbe::TicketedFAEC<zbe::SingleTextSprite> >& rmTFAECSTextSprt;
   static zbe::RsrcStore<zbe::JointAEC<zbe::AnimatedSprite> >& rmJAECAnimSprt;

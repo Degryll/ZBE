@@ -27,7 +27,7 @@ class Actuator : public R {
 
     /** \brief Empty constructor.
     */
-    Actuator() : collisioner(), cData(nullptr) {}
+    Actuator() : collisioner(), iData(nullptr) {}
 
     /** \brief Empty destructor.
      */
@@ -39,19 +39,19 @@ class Actuator : public R {
 
     /** \brief Getter for a collisionData attribute.
      */
-    CollisionData* getCollisionData() { return cData; }
+    typename R::InteractionData* getCollisionData() { return iData; }
 
     /** \brief It executes the actuator's logic.
      */
-    void run(std::shared_ptr<T> collisioner, std::shared_ptr<ReactObject<R> > rObject, CollisionData* cData){
+    void run(std::shared_ptr<T> collisioner, std::shared_ptr<ReactObject<R> > rObject, typename R::InteractionData* iData){
 			this->collisioner = collisioner;
-      this->cData = cData;
+      this->iData = iData;
       rObject->act(this);
     }
 
   protected:
   	std::shared_ptr<T> collisioner;
-    CollisionData* cData;
+    typename R::InteractionData* iData;
 };
 
 }  // namespace zbe

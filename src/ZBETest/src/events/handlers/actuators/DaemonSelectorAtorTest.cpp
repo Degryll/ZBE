@@ -4,6 +4,9 @@
 
 #include "ZBE/core/entities/AvatarEntity.h"
 #include "ZBE/core/daemons/Daemon.h"
+#include "ZBE/core/events/generators/util/Reactor.h"
+#include "ZBE/core/events/generators/util/CollisionObject.h"
+#include "ZBE/core/events/generators/util/CollisionData.h"
 
 #include "ZBE/entities/avatars/Stated.h"
 
@@ -26,13 +29,15 @@ public:
     using Base = void;
 };
 
-class DummyReactor {
-public:
-  virtual ~DummyReactor(){}
-  virtual void act() {};
-  virtual void act(std::shared_ptr< zbe::WeakAvatarEntityContainer<A> >) {};
-  virtual void act(std::shared_ptr< zbe::WeakAvatarEntityContainer<zbe::Stated> >) {};
-};
+typedef zbe::Reactor<zbe::CollisionData, zbe::CollisionObject, A, zbe::Stated> DummyReactor;
+
+//class DummyReactor {
+//public:
+//  virtual ~DummyReactor(){}
+//  virtual void act() {};
+//  virtual void act(std::shared_ptr< zbe::WeakAvatarEntityContainer<A> >) {};
+//  virtual void act(std::shared_ptr< zbe::WeakAvatarEntityContainer<zbe::Stated> >) {};
+//};
 
 class DummyStated : public zbe::Stated {
 public:

@@ -45,7 +45,7 @@ void ZBNoidLevelLoader::run() {
       setAdaptor(brick, brickSpriteAdaptor);
       brick->setState( state );
 
-      std::shared_ptr<Adaptor<Collisioner<ZombienoidReactor> > > brickCollisionerAdaptor(new BlockConerAdaptor<ZombienoidReactor>(brick, BRICK_BOOMBIZER_STATE));
+      std::shared_ptr<Adaptor<Interactioner<ZombienoidReactor> > > brickCollisionerAdaptor(new BlockConerAdaptor<ZombienoidReactor>(brick, BRICK_BOOMBIZER_STATE));
       setAdaptor(brick, brickCollisionerAdaptor);
 
       wrapAEC(&aecas, brick);

@@ -89,7 +89,7 @@ public:
     std::shared_ptr<zbe::AvatarEntityContainer<zbe::AnimatedSprite> > aecas = std::make_shared<zbe::AvatarEntityContainer<zbe::AnimatedSprite> >(ball);
     std::shared_ptr<zbe::AvatarEntityContainer<zbe::Bouncer<2>, zbe::Resizable, zbe::Avatar> > aecb2w  = std::make_shared<zbe::AvatarEntityContainer<zbe::Bouncer<2>, zbe::Resizable, zbe::Avatar> >(ball, resizableAE, ball);
 
-    std::shared_ptr<zbe::Adaptor<zbe::Collisionator<R> > > ballCollisionatorAdaptor(new BallCatorAdaptor<R>(ball, resizableAE));
+    std::shared_ptr<zbe::Adaptor<zbe::Interactionator<R> > > ballCollisionatorAdaptor(new BallCatorAdaptor<R>(ball, resizableAE));
     setAdaptor(ball, ballCollisionatorAdaptor);
 
     ball->addToList(ctId, ctl->push_front(ball));

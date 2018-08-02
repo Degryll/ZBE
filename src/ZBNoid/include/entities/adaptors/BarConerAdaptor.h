@@ -25,7 +25,7 @@ namespace zombienoid {
 /** \brief Implementation that adapts a Drawable to a AnimatedSprite.
  */
 template <typename R>
-class BarConerAdaptor : public zbe::Adaptor<zbe::Collisioner<R> > {
+class BarConerAdaptor : public zbe::Adaptor<zbe::Interactioner<R> > {
  public:
   BarConerAdaptor(const BarConerAdaptor&) = delete;
   void operator=(const BarConerAdaptor&) = delete;
@@ -40,7 +40,7 @@ class BarConerAdaptor : public zbe::Adaptor<zbe::Collisioner<R> > {
     std::shared_ptr<zbe::Element2D<R> > ent = e.lock();
     std::shared_ptr<zbe::WeakAvatarEntityContainer<zbe::Avatar, zbe::Positionable<2>, zbe::Stated> > aeContainer = std::make_shared<zbe::WeakAvatarEntityContainer<zbe::Avatar, zbe::Positionable<2>, zbe::Stated> >(ent);
     zbe::AABB2D aabb({(double)ent->getX(), (double)ent->getY()}, {(double)ent->getX()+ent->getW(), (double)ent->getY()+ent->getH()});
-    std::shared_ptr<zbe::StaticSolidAABB2D<R> > cObject(new zbe::StaticSolidAABB2D<R>(aabb));
+    std::shared_ptr<zbe::StaticSolidAABB2D > cObject(new zbe::StaticSolidAABB2D(aabb));
 
     std::shared_ptr<zbe::WeakAvatarEntityContainer<CustomVector> > weakAECCustomVector(new zbe::WeakAvatarEntityContainer<CustomVector>(aeCustoVector));
     roBase = std::make_shared<zbe::ReactObjectCommon<R, CustomVector> >(weakAECCustomVector);
@@ -48,7 +48,7 @@ class BarConerAdaptor : public zbe::Adaptor<zbe::Collisioner<R> > {
     std::shared_ptr<zbe::WeakAvatarEntityContainer<CustomVector, Magnet<2> > > weakAECMagnet(new zbe::WeakAvatarEntityContainer<CustomVector, Magnet<2> >(aeCustoVector, aeMagnet));
     roMagnet = std::make_shared<zbe::ReactObjectCommon<R, CustomVector, Magnet<2> > >(weakAECMagnet);
 
-    s = new zbe::CollisionerCommon<R,zbe::Avatar, zbe::Positionable<2>, zbe::Stated>(aeContainer, cObject, roBase, ent->getActuatorsList());
+    s = new zbe::InteractionerCommon<R,zbe::Avatar, zbe::Positionable<2>, zbe::Stated>(aeContainer, cObject, roBase, ent->getActuatorsList());
   }
 
   ~BarConerAdaptor() {
@@ -56,14 +56,14 @@ class BarConerAdaptor : public zbe::Adaptor<zbe::Collisioner<R> > {
     delete customVector;
   }
 
-  zbe::Collisioner<R>* getAvatar() {
+  zbe::Interactioner<R>* getAvatar() {
     std::shared_ptr<zbe::Element2D<R> > ent = e.lock();
     double halfW = ent->getW() / 2.0;
     double halfH = ent->getH() / 2.0;
     zbe::AABB2D aabb({(double)ent->getX() - halfW, (double)ent->getY() - halfH}, {(double)ent->getX() + halfW, (double)ent->getY() + halfH});
-    std::shared_ptr<zbe::StaticSolidAABB2D<R> > cObject(new zbe::StaticSolidAABB2D<R>(aabb));
+    std::shared_ptr<zbe::StaticSolidAABB2D > cObject(new zbe::StaticSolidAABB2D(aabb));
     customVector->setAABB(aabb);
-    s->setCollisionObject(cObject);
+    s->setInteractionObject(cObject);
     s->setReactObject(getReactObject(ent));
     return (s);
   }
@@ -78,7 +78,7 @@ class BarConerAdaptor : public zbe::Adaptor<zbe::Collisioner<R> > {
   }
 
   std::weak_ptr<zbe::Element2D<R> > e;
-  zbe::CollisionerCommon<R,zbe::Avatar, zbe::Positionable<2>, zbe::Stated>* s;
+  zbe::InteractionerCommon<R,zbe::Avatar, zbe::Positionable<2>, zbe::Stated>* s;
   BarCustomVector* customVector;
   std::shared_ptr<zbe::AvatarEntity<CustomVector> > aeCustoVector;
   std::shared_ptr<zbe::AvatarEntity<Magnet<2> > > aeMagnet;

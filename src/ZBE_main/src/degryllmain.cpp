@@ -3070,8 +3070,8 @@ int degryllmain(int, char*[]) {
 //////  zbe::InputBuffer * inputBuffer = sdlEventDist.getInputBuffer();
 //////  zbe::InputEventGenerator ieg(inputBuffer,INPUTEVENT);
 //////
-//////  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<GameReactor> >*> ctl;
-//////  zbe::RsrcStore< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<GameReactor> >*> >& lmct = zbe::RsrcStore< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<GameReactor> >*> >::getInstance();
+//////  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Interactionator<GameReactor> >*> ctl;
+//////  zbe::RsrcStore< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Interactionator<GameReactor> >*> >& lmct = zbe::RsrcStore< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Interactionator<GameReactor> >*> >::getInstance();
 //////  lmct.insert(COLLISIONATORLIST, &ctl);
 //////  zbe::CollisionEventGenerator<GameReactor> ceg(COLLISIONATORLIST, COLLISIONEVENT);
 //////
@@ -3129,8 +3129,8 @@ int degryllmain(int, char*[]) {
 //////
 //////  zbetris::Tetromino tetromino(blockgraphics, DRAWLIST, board, 1);
 ////////  //ball
-////////  std::forward_list< zbe::Actuator< zbe::MovableCollisioner<game::GameReactor, 2>, game::GameReactor >*> ballActuatorsList;
-////////  zbe::RsrcStore< std::forward_list< zbe::Actuator< zbe::MovableCollisioner<game::GameReactor, 2>, game::GameReactor >* > >& lmBallActuatorsList = zbe::RsrcStore< std::forward_list< zbe::Actuator< zbe::MovableCollisioner<game::GameReactor, 2>, game::GameReactor >* > >::getInstance();
+////////  std::forward_list< zbe::Actuator< zbe::MovableInteractioner<game::GameReactor, 2>, game::GameReactor >*> ballActuatorsList;
+////////  zbe::RsrcStore< std::forward_list< zbe::Actuator< zbe::MovableInteractioner<game::GameReactor, 2>, game::GameReactor >* > >& lmBallActuatorsList = zbe::RsrcStore< std::forward_list< zbe::Actuator< zbe::MovableInteractioner<game::GameReactor, 2>, game::GameReactor >* > >::getInstance();
 ////////  lmBallActuatorsList.insert(BALLACTUATORLIST, &ballActuatorsList);
 ////////  game::GameBallBouncer gbBouncer;
 ////////  ballActuatorsList.push_front(&gbBouncer);
@@ -3180,8 +3180,8 @@ int degryllmain(int, char*[]) {
 ////////  }
 //////
 //////  //bricks
-////////  zbe::RsrcStore< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> >& lmSimpleConerActuatorsList = zbe::RsrcStore< std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> >::getInstance();
-////////  std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> brickActuatorsList;
+////////  zbe::RsrcStore< std::forward_list< zbe::Actuator<zbe::SimpleInteractioner<game::GameReactor>, game::GameReactor>*> >& lmSimpleConerActuatorsList = zbe::RsrcStore< std::forward_list< zbe::Actuator<zbe::SimpleInteractioner<game::GameReactor>, game::GameReactor>*> >::getInstance();
+////////  std::forward_list< zbe::Actuator<zbe::SimpleInteractioner<game::GameReactor>, game::GameReactor>*> brickActuatorsList;
 ////////  lmSimpleConerActuatorsList.insert(BRICKACTUATORLIST, &brickActuatorsList);
 ////////  for(int i = 0; i<8 ; i++){
 ////////      for(int j = 0; j<8 ; j++){
@@ -3193,7 +3193,7 @@ int degryllmain(int, char*[]) {
 ////////  }
 //////
 //////  //board
-////////  std::forward_list< zbe::Actuator<zbe::SimpleCollisioner<game::GameReactor>, game::GameReactor>*> boardActuatorsList;
+////////  std::forward_list< zbe::Actuator<zbe::SimpleInteractioner<game::GameReactor>, game::GameReactor>*> boardActuatorsList;
 ////////  lmSimpleConerActuatorsList.insert(BOARDACTUATORLIST, &boardActuatorsList);
 ////////  game::GameBoard board(WIDTH, HEIGHT, BOARDACTUATORLIST);
 ////////  collisionablesList.push_front(&board);

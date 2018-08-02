@@ -15,9 +15,9 @@
 
 #include "ZBE/core/tools/math/objects.h"
 #include "ZBE/core/entities/AvatarEntity.h"
-#include "ZBE/core/entities/avatars/Collisioner.h"
+#include "ZBE/core/entities/avatars/Interactioner.h"
 #include "ZBE/core/entities/avatars/SingleSprite.h"
-#include "ZBE/core/entities/avatars/implementations/VoidCollisioner.h"
+#include "ZBE/core/entities/avatars/Interactioner.h"
 #include "ZBE/archetypes/Drawable.h"
 #include "ZBE/archetypes/implementations/SimplePositionPO.h"
 #include "ZBE/entities/avatars/implementations/BasePositionable.h"
@@ -30,7 +30,7 @@ namespace game {
 class GameBlock :  public zbe::Drawable,
                    public zbe::SimplePositionPO<2>,
                    public zbe::AvatarEntityAdapted<zbe::SingleSprite>,
-                   public zbe::AvatarEntityAdapted<zbe::Collisioner<GameReactor> >,
+                   public zbe::AvatarEntityAdapted<zbe::Interactioner<GameReactor> >,
                    public zbe::AvatarEntityFixed<zbe::Positionable<2> >{
 public:
   GameBlock(double x, double y, double width, double height, uint64_t graphics, uint64_t actuatorsList)

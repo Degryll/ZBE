@@ -16,6 +16,7 @@
 #include "ZBE/core/tools/math/Point.h"
 #include "ZBE/core/tools/math/Vector.h"
 
+#include "ZBE/core/events/generators/util/CollisionData.h"
 #include "ZBE/core/events/generators/util/CollisionObject.h"
 #include "ZBE/core/events/generators/util/CollisionSelector.h"
 
@@ -23,8 +24,7 @@ namespace zbe {
 
 /** \brief Apply the correct function to solve a collision.
  */
-template <typename R>
-class IntersectionCollisionSelector : public CollisionSelector<R> {
+class IntersectionCollisionSelector : public CollisionSelector {
 
     /** \brief Solve an intersection between a StaticSolidAABB2D and a StaticSolidAABB2D.
      *  \param param1 First element interested in the collision
@@ -33,7 +33,7 @@ class IntersectionCollisionSelector : public CollisionSelector<R> {
      *  \param point Where collisión point will be stored if a collision is detected,
      *  \param normal Where collisión normal will be stored if a collision is detected,
      */
-    inline bool visit(StaticSolidAABB2D<R>&, StaticSolidAABB2D<R>&, int64_t&, Point2D&, Vector2D&);
+    inline bool visit(StaticSolidAABB2D&, StaticSolidAABB2D&, int64_t&, CollisionData*);
 
     /** \brief Solve an intersection between a StaticLimiterAABB2D and a StaticLimiterAABB2D.
      *  \param param1 First element interested in the collision
@@ -42,7 +42,7 @@ class IntersectionCollisionSelector : public CollisionSelector<R> {
      *  \param point Where collisión point will be stored if a collision is detected,
      *  \param normal Where collisión normal will be stored if a collision is detected,
      */
-    inline bool visit(StaticLimiterAABB2D<R>&, StaticLimiterAABB2D<R>&, int64_t&, Point2D&, Vector2D&);
+    inline bool visit(StaticLimiterAABB2D&, StaticLimiterAABB2D&, int64_t&, CollisionData*);
 
     /** \brief Solve an intersection between a StaticSolidAABB2D and a StaticLimiterAABB2D.
      *  \param param1 First element interested in the collision
@@ -51,7 +51,7 @@ class IntersectionCollisionSelector : public CollisionSelector<R> {
      *  \param point Where collisión point will be stored if a collision is detected,
      *  \param normal Where collisión normal will be stored if a collision is detected,
      */
-    inline bool visit(StaticSolidAABB2D<R>&, StaticLimiterAABB2D<R>&, int64_t&, Point2D&, Vector2D&);
+    inline bool visit(StaticSolidAABB2D&, StaticLimiterAABB2D&, int64_t&, CollisionData*);
 
     /** \brief Solve an intersection between a StaticLimiterAABB2D and a StaticSolidAABB2D.
      *  \param param1 First element interested in the collision
@@ -60,7 +60,7 @@ class IntersectionCollisionSelector : public CollisionSelector<R> {
      *  \param point Where collisión point will be stored if a collision is detected,
      *  \param normal Where collisión normal will be stored if a collision is detected,
      */
-    inline bool visit(StaticLimiterAABB2D<R>&, StaticSolidAABB2D<R>&, int64_t&, Point2D&, Vector2D&);
+    inline bool visit(StaticLimiterAABB2D&, StaticSolidAABB2D&, int64_t&, CollisionData*);
 
     /** \brief Solve an intersection between a StaticSolidAABB2D and a ConstantMovingCircle.
      *  \param param1 First element interested in the collision
@@ -69,7 +69,7 @@ class IntersectionCollisionSelector : public CollisionSelector<R> {
      *  \param point Where collisión point will be stored if a collision is detected,
      *  \param normal Where collisión normal will be stored if a collision is detected,
      */
-    inline bool visit(StaticSolidAABB2D<R>& param1, ConstantMovingCircle<R>& param2, int64_t& time, Point2D& point, Vector2D& normal);
+    inline bool visit(StaticSolidAABB2D& param1, ConstantMovingCircle& param2, int64_t& time, CollisionData* data);
 
     /** \brief Solve an intersection between a StaticLimiterAABB2D and a ConstantMovingCircle.
      *  \param param1 First element interested in the collision
@@ -78,7 +78,7 @@ class IntersectionCollisionSelector : public CollisionSelector<R> {
      *  \param point Where collisión point will be stored if a collision is detected,
      *  \param normal Where collisión normal will be stored if a collision is detected,
      */
-    inline bool visit(StaticLimiterAABB2D<R>& param1, ConstantMovingCircle<R>& param2, int64_t& time, Point2D& point, Vector2D& normal);
+    inline bool visit(StaticLimiterAABB2D& param1, ConstantMovingCircle& param2, int64_t& time, CollisionData* data);
 
     /** \brief Solve an intersection between a ConstantMovingCircle and a StaticSolidAABB2D.
      *  \param param1 First element interested in the collision
@@ -87,7 +87,7 @@ class IntersectionCollisionSelector : public CollisionSelector<R> {
      *  \param point Where collisión point will be stored if a collision is detected,
      *  \param normal Where collisión normal will be stored if a collision is detected,
      */
-    inline bool visit(ConstantMovingCircle<R>& param1, StaticSolidAABB2D<R>& param2, int64_t& time, Point2D& point, Vector2D& normal);
+    inline bool visit(ConstantMovingCircle& param1, StaticSolidAABB2D& param2, int64_t& time, CollisionData* data);
 
     /** \brief Solve an intersection between a ConstantMovingCircle and a StaticLimiterAABB2D.
      *  \param param1 First element interested in the collision
@@ -96,7 +96,7 @@ class IntersectionCollisionSelector : public CollisionSelector<R> {
      *  \param point Where collisión point will be stored if a collision is detected,
      *  \param normal Where collisión normal will be stored if a collision is detected,
      */
-    inline bool visit(ConstantMovingCircle<R>& param1, StaticLimiterAABB2D<R>& param2, int64_t& time, Point2D& point, Vector2D& normal);
+    inline bool visit(ConstantMovingCircle& param1, StaticLimiterAABB2D& param2, int64_t& time, CollisionData* data);
 
     /** \brief Solve an intersection between a ConstantMovingCircle and a ConstantMovingCircle.
      *  \param param1 First element interested in the collision
@@ -105,60 +105,51 @@ class IntersectionCollisionSelector : public CollisionSelector<R> {
      *  \param point Where collisión point will be stored if a collision is detected,
      *  \param normal Where collisión normal will be stored if a collision is detected,
      */
-    inline bool visit(ConstantMovingCircle<R>& param1, ConstantMovingCircle<R>& param2, int64_t& time, Point2D& point, Vector2D& normal);
+    inline bool visit(ConstantMovingCircle& param1, ConstantMovingCircle& param2, int64_t& time, CollisionData* data);
 };
 
-template <typename R>
-bool IntersectionCollisionSelector<R>::visit(StaticSolidAABB2D<R>& param1, StaticSolidAABB2D<R>& param2, int64_t& time, Point2D& point, Vector2D& normal) {
-  time=0; point = Point2D{0,0}; normal = Vector2D{0,0};
+bool IntersectionCollisionSelector::visit(StaticSolidAABB2D& param1, StaticSolidAABB2D& param2, int64_t& time, CollisionData* data) {
+  time=0; data->getPoint() = Point2D{0,0}; data->getNormal() = Vector2D{0,0};
   return (intersectionAABBAABB<2>(param1.getAABB2D(),param2.getAABB2D()));
 }
 
-template <typename R>
-bool IntersectionCollisionSelector<R>::visit(StaticLimiterAABB2D<R>& param1, StaticLimiterAABB2D<R>& param2, int64_t& time, Point2D& point, Vector2D& normal) {
-  time=0; point = Point2D{0,0}; normal = Vector2D{0,0};
+bool IntersectionCollisionSelector::visit(StaticLimiterAABB2D& param1, StaticLimiterAABB2D& param2, int64_t& time, CollisionData* data) {
+  time=0; data->getPoint() = Point2D{0,0}; data->getNormal() = Vector2D{0,0};
   return (intersectionAABBAABB<2>(param1.getAABB2D(),param2.getAABB2D()));
 }
 
-template <typename R>
-bool IntersectionCollisionSelector<R>::visit(StaticSolidAABB2D<R>& param1, StaticLimiterAABB2D<R>& param2, int64_t& time, Point2D& point, Vector2D& normal) {
-  time=0; point = Point2D{0,0}; normal = Vector2D{0,0};
+bool IntersectionCollisionSelector::visit(StaticSolidAABB2D& param1, StaticLimiterAABB2D& param2, int64_t& time, CollisionData* data) {
+  time=0; data->getPoint() = Point2D{0,0}; data->getNormal() = Vector2D{0,0};
   return (intersectionAABBAABB<2>(param1.getAABB2D(),param2.getAABB2D()));
 }
 
-template <typename R>
-bool IntersectionCollisionSelector<R>::visit(StaticLimiterAABB2D<R>& param1, StaticSolidAABB2D<R>& param2, int64_t& time, Point2D& point, Vector2D& normal) {
-  time=0; point = Point2D{0,0}; normal = Vector2D{0,0};
+bool IntersectionCollisionSelector::visit(StaticLimiterAABB2D& param1, StaticSolidAABB2D& param2, int64_t& time, CollisionData* data) {
+  time=0; data->getPoint() = Point2D{0,0}; data->getNormal() = Vector2D{0,0};
   return intersectionAABBAABB<2>(param1.getAABB2D(),param2.getAABB2D());
 }
 
-template <typename R>
-bool IntersectionCollisionSelector<R>::visit(StaticSolidAABB2D<R>& param1, ConstantMovingCircle<R>& param2, int64_t& time, Point2D& point, Vector2D& normal) {
-  time=0; point = Point2D{0,0}; normal = Vector2D{0,0};
+bool IntersectionCollisionSelector::visit(StaticSolidAABB2D& param1, ConstantMovingCircle& param2, int64_t& time, CollisionData* data) {
+  time=0; data->getPoint() = Point2D{0,0}; data->getNormal() = Vector2D{0,0};
   return(intersectionCircleAABB2D(param2.getCircle(), param1.getAABB2D()));
 }
 
-template <typename R>
-bool IntersectionCollisionSelector<R>::visit(StaticLimiterAABB2D<R>& param1, ConstantMovingCircle<R>& param2, int64_t& time, Point2D& point, Vector2D& normal) {
-  time=0; point = Point2D{0,0}; normal = Vector2D{0,0};
+bool IntersectionCollisionSelector::visit(StaticLimiterAABB2D& param1, ConstantMovingCircle& param2, int64_t& time, CollisionData* data) {
+  time=0; data->getPoint() = Point2D{0,0}; data->getNormal() = Vector2D{0,0};
   return(intersectionCircleAABB2D(param2.getCircle(), param1.getAABB2D()));
 }
 
-template <typename R>
-bool IntersectionCollisionSelector<R>::visit(ConstantMovingCircle<R>& param1, StaticSolidAABB2D<R>& param2, int64_t& time, Point2D& point, Vector2D& normal) {
-  time=0; point = Point2D{0,0}; normal = Vector2D{0,0};
+bool IntersectionCollisionSelector::visit(ConstantMovingCircle& param1, StaticSolidAABB2D& param2, int64_t& time, CollisionData* data) {
+  time=0; data->getPoint() = Point2D{0,0}; data->getNormal() = Vector2D{0,0};
   return(intersectionCircleAABB2D(param1.getCircle(), param2.getAABB2D()));
 }
 
-template <typename R>
-bool IntersectionCollisionSelector<R>::visit(ConstantMovingCircle<R>& param1, StaticLimiterAABB2D<R>& param2, int64_t& time, Point2D& point, Vector2D& normal) {
-  time=0; point = Point2D{0,0}; normal = Vector2D{0,0};
+bool IntersectionCollisionSelector::visit(ConstantMovingCircle& param1, StaticLimiterAABB2D& param2, int64_t& time, CollisionData* data) {
+  time=0; data->getPoint() = Point2D{0,0}; data->getNormal() = Vector2D{0,0};
   return(intersectionCircleAABB2D(param1.getCircle(), param2.getAABB2D()));
 }
 
-template <typename R>
-bool IntersectionCollisionSelector<R>::visit(ConstantMovingCircle<R>& param1, ConstantMovingCircle<R>& param2, int64_t& time, Point2D& point, Vector2D& normal) {
-  time=0; point = Point2D{0,0}; normal = Vector2D{0,0};
+bool IntersectionCollisionSelector::visit(ConstantMovingCircle& param1, ConstantMovingCircle& param2, int64_t& time, CollisionData* data) {
+  time=0; data->getPoint() = Point2D{0,0}; data->getNormal() = Vector2D{0,0};
   return(intersectionCircleCircle(param1.getCircle(), param2.getCircle()));
 }
 

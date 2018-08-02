@@ -16,7 +16,7 @@
 #include "ZBE/core/entities/Entity.h"
 #include "ZBE/core/entities/AvatarEntity.h"
 #include "ZBE/core/entities/avatars/Avatar.h"
-#include "ZBE/core/entities/avatars/Collisionator.h"
+#include "ZBE/core/entities/avatars/Interactionator.h"
 #include "ZBE/core/entities/avatars/implementations/BaseAvatar.h"
 #include "ZBE/core/entities/avatars/implementations/SimpleAnimatedSprite.h"
 
@@ -45,7 +45,7 @@ class BallExploder : public zbe::TimeHandler {
                uint64_t eventId, uint64_t catorListId, uint64_t conerListId, uint64_t actuatorListId, uint64_t catorTicketId, uint64_t behavTicketId, uint64_t behavListId,
                uint64_t spriteListId, uint64_t graphsId, uint64_t state, int64_t graphTime, double ratio, uint64_t ticketId, std::shared_ptr<zbe::TimeEventGenerator> teg)
     : teg(teg), asList(zbe::RsrcStore<ASL>::getInstance().get(spriteListId)), catorList(zbe::RsrcStore<CTL>::getInstance().get(catorListId)),
-      behavList(zbe::RsrcStore<BHL>::getInstance().get(behavListId)), iaeg(new InteractionGenerator(catorListId, eventId, new zbe::IntersectionCollisionSelector<R>())),
+      behavList(zbe::RsrcStore<BHL>::getInstance().get(behavListId)), iaeg(new InteractionGenerator(catorListId, eventId, new zbe::IntersectionCollisionSelector())),
       waecPRS(waecPRS), state(state), conerListId(conerListId), actuatorListId(actuatorListId), catorTicketId(catorTicketId), behavTicketId(behavTicketId),
       behavListId(behavListId), graphsId(graphsId), graphTime(graphTime), ratio(ratio), ticketId(ticketId), ro() {
     auto aes = std::make_shared<zbe::AvatarEntityFixed<Solid> > (new Solid());
@@ -90,10 +90,10 @@ class BallExploder : public zbe::TimeHandler {
     std::shared_ptr<zbe::AvatarEntity<zbe::Avatar> > entity = std::make_shared<zbe::AvatarEntityFixed<zbe::Avatar> >(ent);
     std::shared_ptr<zbe::AvatarEntity<Scorer> > scorer = std::make_shared<zbe::AvatarEntityFixed<Scorer> >(new SimpleScorer());
     std::shared_ptr<zbe::AvatarEntityContainer<zbe::Avatar, Scorer> > entityContainer = std::make_shared<zbe::AvatarEntityContainer<zbe::Avatar, Scorer> >(entity, scorer);
-    std::shared_ptr<zbe::ConstantMovingCircle<R> > cObject = std::make_shared<zbe::ConstantMovingCircle<R> >(zbe::Circle(pos2d->getPosition(), radius), zbe::Vector2D({0.0, 0.0}));
-    zbe::CollisionatorCommon<R, Scorer>* cator;
-    cator = new zbe::CollisionatorCommon<R, Scorer>(std::make_shared<zbe::WeakAvatarEntityContainer<Scorer> >(scorer), cObject, ro, actuatorListId, conerListId);
-    std::shared_ptr<zbe::AvatarEntity<zbe::Collisionator<R> > > aeCator = std::make_shared<zbe::AvatarEntityFixed<zbe::Collisionator<R> > >(cator);
+    std::shared_ptr<zbe::ConstantMovingCircle > cObject = std::make_shared<zbe::ConstantMovingCircle >(zbe::Circle(pos2d->getPosition(), radius), zbe::Vector2D({0.0, 0.0}));
+    zbe::InteractionatorCommon<R, Scorer>* cator;
+    cator = new zbe::InteractionatorCommon<R, Scorer>(std::make_shared<zbe::WeakAvatarEntityContainer<Scorer> >(scorer), cObject, ro, actuatorListId, conerListId);
+    std::shared_ptr<zbe::AvatarEntity<zbe::Interactionator<R> > > aeCator = std::make_shared<zbe::AvatarEntityFixed<zbe::Interactionator<R> > >(cator);
     ent->addToList(catorTicketId, catorList->push_front(aeCator));
     ent->addToList(behavTicketId, behavList->push_front(entityContainer));
     //std::shared_ptr<zbe::Ticket> catorTicket = ;
@@ -117,7 +117,7 @@ class BallExploder : public zbe::TimeHandler {
   }
 
  private:
-  using InteractionGenerator = zbe::InstantInteractionEventGenerator<R, zbe::CollisionSelector<R>, CNL, CTL>;
+  using InteractionGenerator = zbe::InstantInteractionEventGenerator<R, zbe::CollisionSelector, CNL, CTL>;
   std::shared_ptr<zbe::TimeEventGenerator> teg;
   std::shared_ptr<ASL> asList;
   std::shared_ptr<CTL> catorList;

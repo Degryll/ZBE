@@ -14,18 +14,17 @@
 #include <memory>
 
 #include "ZBE/core/tools/math/objects.h"
-#include "ZBE/core/entities/avatars/Collisioner.h"
-#include "ZBE/core/entities/avatars/implementations/VoidCollisioner.h"
+#include "ZBE/core/entities/avatars/Interactioner.h"
 #include "ZBE/core/entities/AvatarEntity.h"
 
 #include "game/GameReactor.h"
 
 namespace game {
 
-class GameBoard : public zbe::AvatarEntityFixed<zbe::Collisioner<GameReactor> > {
+class GameBoard : public zbe::AvatarEntityFixed<zbe::Interactioner<GameReactor> > {
 public:
   GameBoard(double x, double y, double width, double height, uint64_t actuatorsList) :
-    zbe::AvatarEntityFixed<zbe::Collisioner<GameReactor> >(new zbe::VoidCollisioner<GameReactor>(std::make_shared<zbe::StaticLimiterAABB2D<GameReactor> >(zbe::AABB2D({x, y}, {width, height} )),
+    zbe::AvatarEntityFixed<zbe::Interactioner<GameReactor> >(new zbe::InteractionerCommon<GameReactor, void>(std::make_shared<zbe::WeakAvatarEntityContainer<void> >(), std::make_shared<zbe::StaticLimiterAABB2D>(zbe::AABB2D({x, y}, {width, height} )),
          std::make_shared<zbe::ReactObjectCommon<GameReactor> >(),
          actuatorsList)) {}
 };

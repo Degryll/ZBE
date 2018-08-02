@@ -23,7 +23,7 @@ class CustomVector {
 public:
   using Base = void;
 
-  virtual ~CustomVector(){}
+  virtual ~CustomVector() {}
   virtual zbe::Vector2D getNormal(zbe::CollisionData*) = 0;
 };
 

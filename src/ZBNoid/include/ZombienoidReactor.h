@@ -3,6 +3,10 @@
 
 #include "ZBE/core/entities/AvatarEntity.h"
 
+#include "ZBE/core/events/generators/util/Reactor.h"
+#include "ZBE/core/events/generators/util/CollisionData.h"
+#include "ZBE/core/events/generators/util/CollisionObject.h"
+
 #include "ZBE/entities/avatars/InteractionTester.h"
 #include "ZBE/entities/avatars/Stated.h"
 
@@ -15,22 +19,7 @@
 
 namespace zombienoid {
 
-class ZombienoidReactor {
-public:
-  virtual ~ZombienoidReactor() {}
-
-  virtual void act() {}
-
-  virtual void act(std::shared_ptr<zbe::WeakAvatarEntityContainer<zbe::InteractionTester> >) {}
-  virtual void act(std::shared_ptr<zbe::WeakAvatarEntityContainer<zbe::Stated> >) {}
-  virtual void act(std::shared_ptr<zbe::WeakAvatarEntityContainer<CustomVector> >) {}
-  virtual void act(std::shared_ptr<zbe::WeakAvatarEntityContainer<Solid> >) {}
-  virtual void act(std::shared_ptr<zbe::WeakAvatarEntityContainer<Magnet<2> > >) {}
-  virtual void act(std::shared_ptr<zbe::WeakAvatarEntityContainer<Breakable> >) {}
-  virtual void act(std::shared_ptr<zbe::WeakAvatarEntityContainer<Wall> >) {}
-  virtual void act(std::shared_ptr<zbe::WeakAvatarEntityContainer<Boombizer> >) {}
-
-};
+typedef zbe::Reactor<zbe::CollisionData, zbe::CollisionObject, zbe::InteractionTester, zbe::Stated, CustomVector, Solid, Magnet<2>, Breakable, Wall, Boombizer> ZombienoidReactor;
 
 }  // zombienoid
 

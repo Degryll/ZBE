@@ -14,7 +14,7 @@
 #include <memory>
 
 #include "ZBE/core/entities/avatars/implementations/BaseAvatar.h"
-#include "ZBE/core/entities/avatars/Collisionator.h"
+#include "ZBE/core/entities/avatars/Interactionator.h"
 #include "ZBE/core/entities/avatars/Avatar.h"
 #include "ZBE/core/entities/avatars/AnimatedSprite.h"
 #include "ZBE/core/entities/AvatarEntity.h"
@@ -51,7 +51,7 @@ class ActiveElement2D: public Entity,
                        public SimpleState,
                        public AvatarEntityFixed<Avatar>,
                        public AvatarEntityAdapted<AnimatedSprite>,
-                       public AvatarEntityAdapted<Collisionator<R> >,
+                       public AvatarEntityAdapted<Interactionator<R> >,
                        public AvatarEntityFixed<Bouncer<2> >,
                        public AvatarEntityFixed<Stated> {
 public:

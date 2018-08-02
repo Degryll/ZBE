@@ -8,10 +8,11 @@
 #include "ZBE/core/events/InputEvent.h"
 #include "ZBE/core/events/handlers/InputHandler.h"
 #include "ZBE/core/events/TimeEvent.h"
-#include "ZBE/core/events/CollisionEvent2D.h"
+#include "ZBE/core/events/InteractionEvent.h"
+#include "ZBE/core/events/generators/util/Reactor.h"
 #include "ZBE/core/events/generators/util/ReactObject.h"
 #include "ZBE/core/events/generators/util/CollisionSelector.h"
-#include "ZBE/core/entities/avatars/Collisioner.h"
+#include "ZBE/core/entities/avatars/Interactioner.h"
 #include "ZBE/core/events/handlers/TimeHandler.h"
 
 namespace EventsTest {
@@ -24,14 +25,11 @@ class DummyInputHandler : public zbe::InputHandler{
     void run(uint32_t, float) {};
 };
 
-class R { // Reactor mock
-public:
-  virtual ~R() {}
-};
+typedef zbe::Reactor<zbe::CollisionData, zbe::CollisionObject, void> R;
 
-class C : public zbe::CollisionerCommon<R, A> {
+class C : public zbe::InteractionerCommon<R, A> {
   public:
-    C(std::shared_ptr<zbe::WeakAvatarEntityContainer<A> > waeca) : zbe::CollisionerCommon<R, A>(waeca, nullptr, nullptr, 1){};
+    C(std::shared_ptr<zbe::WeakAvatarEntityContainer<A> > waeca) : zbe::InteractionerCommon<R, A>(waeca, nullptr, nullptr, 1){};
 };
 
 class RO : public zbe::ReactObject<R> {
@@ -68,12 +66,12 @@ TEST(Event, CollisionEvent) {
   C* c = new C(waeca);
   RO * ro = new RO();
   zbe::Point2D p{400000, 2};
-  zbe::CollisionEvent2D<R> e(1,100, c, zbe::CollisionData(p, {.0,.0}), std::shared_ptr<zbe::ReactObject<R> >(ro));
+  zbe::InteractionEvent<R> e(1,100, c, zbe::CollisionData(p, {.0,.0}), std::shared_ptr<zbe::ReactObject<R> >(ro));
   EXPECT_EQ((uint64_t)1, e.getId()) << "Must store id";
   EXPECT_EQ((uint64_t)100, e.getTime()) << "Must store time";
   //EXPECT_EQ(c, e.getCollisioner()) << "Must store EntityA";
-  EXPECT_EQ(p.x, e.getCollisionData().getPoint().x) << "Must store Point x coordinate";
-  EXPECT_EQ(p.y, e.getCollisionData().getPoint().y) << "Must store Point y coordinate";
+  EXPECT_EQ(p.x, e.getInteractionData().getPoint().x) << "Must store Point x coordinate";
+  EXPECT_EQ(p.y, e.getInteractionData().getPoint().y) << "Must store Point y coordinate";
 }
 
 }

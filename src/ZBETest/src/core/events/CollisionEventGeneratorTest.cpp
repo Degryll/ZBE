@@ -12,8 +12,8 @@
 #include "ZBE/core/tools/math/math.h"
 #include "ZBE/core/entities/Entity.h"
 #include "ZBE/core/entities/AvatarEntity.h"
-#include "ZBE/core/entities/avatars/Collisioner.h"
-#include "ZBE/core/entities/avatars/Collisionator.h"
+#include "ZBE/core/entities/avatars/Interactioner.h"
+#include "ZBE/core/entities/avatars/Interactionator.h"
 
 namespace CollisionEventGeneratorTest {
 
@@ -43,17 +43,17 @@ namespace CollisionEventGeneratorTest {
 //  	int id;
 //};
 //
-//class Coner : public zbe::CollisionerCommon<Coner, R> {
+//class Coner : public zbe::InteractionerCommon<Coner, R> {
 //  public:
-//    Coner(std::shared_ptr<zbe::CollisionObject<R> > co, uint64_t actuators, int id) : zbe::CollisionerCommon<Coner, R>(this, co, std::make_shared<Robject>(id), actuators),  id(id), vs(0){}
+//    Coner(std::shared_ptr<zbe::CollisionObject<R> > co, uint64_t actuators, int id) : zbe::InteractionerCommon<Coner, R>(this, co, std::make_shared<Robject>(id), actuators),  id(id), vs(0){}
 //    ~Coner(){}
 //    int id;
 //  	int vs;
 //};
 //
-//class Cator : public zbe::CollisionatorCommon<Cator, R> {
+//class Cator : public zbe::InteractionatorCommon<Cator, R> {
 //  public:
-//    Cator(std::shared_ptr<zbe::CollisionObject<R> > co, uint64_t actuators, int id, uint64_t listId) : zbe::CollisionatorCommon<Cator, R>(this, co, std::make_shared<Robject>(id), actuators, listId),  id(id), vs(0) {}
+//    Cator(std::shared_ptr<zbe::CollisionObject<R> > co, uint64_t actuators, int id, uint64_t listId) : zbe::InteractionatorCommon<Cator, R>(this, co, std::make_shared<Robject>(id), actuators, listId),  id(id), vs(0) {}
 //    ~Cator(){}
 //    int id;
 //  	int vs;
@@ -73,7 +73,7 @@ namespace CollisionEventGeneratorTest {
 //    }
 //};
 //
-//class DummyCollisionerEntity : public zbe::AvatarEntityFixed<zbe::Collisioner<R> > {
+//class DummyCollisionerEntity : public zbe::AvatarEntityFixed<zbe::Interactioner<R> > {
 //public:
 //  DummyCollisionerEntity(const DummyCollisionerEntity&) = delete;
 //  void operator=(const DummyCollisionerEntity&) = delete;
@@ -87,7 +87,7 @@ namespace CollisionEventGeneratorTest {
 //  Coner* c;
 //};
 //
-//class DummyCollisionatorEntity : public zbe::AvatarEntityFixed<zbe::Collisionator<R> > {
+//class DummyCollisionatorEntity : public zbe::AvatarEntityFixed<zbe::Interactionator<R> > {
 //public:
 //  DummyCollisionatorEntity(const DummyCollisionatorEntity&) = delete;
 //  void operator=(const DummyCollisionatorEntity&) = delete;
@@ -108,11 +108,11 @@ TEST(CollisionEventGenerator, DISABLED_Generate) {
 //  DummyTimer* sysTimer = new DummyTimer;
 //  sysTime.setSystemTimer(sysTimer);
 //
-//  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > > cnl;
-//  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > ctl;
+//  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Interactioner<R> > > cnl;
+//  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Interactionator<R> > > ctl;
 //
-//  std::shared_ptr<zbe::CollisionObject<R> > sbox = std::make_shared<zbe::StaticSolidAABB2D<R> >(zbe::AABB2D({{1.0,5.0},{6.0,10.0}}));
-//  std::shared_ptr<zbe::CollisionObject<R> > cc = std::make_shared<zbe::ConstantMovingCircle<R> >(zbe::Circle({{2.0,3.0},1.0}),zbe::Vector2D({3.0,4.0}));
+//  std::shared_ptr<zbe::CollisionObject<R> > sbox = std::make_shared<zbe::StaticSolidAABB2D >(zbe::AABB2D({{1.0,5.0},{6.0,10.0}}));
+//  std::shared_ptr<zbe::CollisionObject<R> > cc = std::make_shared<zbe::ConstantMovingCircle >(zbe::Circle({{2.0,3.0},1.0}),zbe::Vector2D({3.0,4.0}));
 //
 //  std::forward_list<zbe::Actuator<Coner,R>* > actconer;
 //  std::forward_list<zbe::Actuator<Cator,R>* > actcator;
@@ -128,8 +128,8 @@ TEST(CollisionEventGenerator, DISABLED_Generate) {
 //  actconer.push_front(&cna);
 //  actcator.push_front(&cta);
 //
-//  zbe::RsrcStore< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > > >& lmcn = zbe::RsrcStore< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisioner<R> > > >::getInstance();
-//  zbe::RsrcStore< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > >& lmct = zbe::RsrcStore< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Collisionator<R> > > >::getInstance();
+//  zbe::RsrcStore< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Interactioner<R> > > >& lmcn = zbe::RsrcStore< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Interactioner<R> > > >::getInstance();
+//  zbe::RsrcStore< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Interactionator<R> > > >& lmct = zbe::RsrcStore< zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Interactionator<R> > > >::getInstance();
 //
 //  lmcn.insert(1, &cnl);
 //  lmct.insert(2, &ctl);
@@ -139,7 +139,7 @@ TEST(CollisionEventGenerator, DISABLED_Generate) {
 //
 //  cnl.push_front(dconer);
 //  ctl.push_front(dcator);
-//  zbe::CollisionSelector<R>* cs = new zbe::BaseCollisionSelector<R>();
+//  zbe::CollisionSelector* cs = new zbe::BaseCollisionSelector();
 //
 //  zbe::CollisionEventGenerator<R> ceg(2, 1, cs);
 //

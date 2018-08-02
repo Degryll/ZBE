@@ -9,7 +9,7 @@
 #include "ZBE/core/tools/math/Point.h"
 #include "ZBE/core/tools/math/Vector.h"
 #include "ZBE/core/tools/math/objects.h"
-#include "ZBE/core/entities/avatars/Collisioner.h"
+#include "ZBE/core/entities/avatars/Interactioner.h"
 #include "ZBE/core/events/generators/util/CollisionSelector.h"
 #include "ZBE/core/events/generators/util/BaseCollisionSelector.h"
 #include "ZBE/core/events/generators/util/ReactObject.h"
@@ -24,20 +24,20 @@
 //    void act(R*) {}
 //};
 //
-//class C : public zbe::CollisionerCommon<C, R> {
+//class C : public zbe::InteractionerCommon<C, R> {
 //  public:
-//    C(std::shared_ptr<zbe::CollisionObject<R> > co):zbe::CollisionerCommon<C, R>(this, co, std::shared_ptr<zbe::ReactObject<R> >(new RO()), 1) {};
+//    C(std::shared_ptr<zbe::CollisionObject<R> > co):zbe::InteractionerCommon<C, R>(this, co, std::shared_ptr<zbe::ReactObject<R> >(new RO()), 1) {};
 //};
 
 TEST(CollisionSystemSolver, DISABLED_MovingCircleStaticSolidAABB) {
-//  //zbe::ConstantMovingCircle<R>* cc = new zbe::ConstantMovingCircle<R>(zbe::Circle({{2.0,3.0},1.0}),zbe::Vector2D({3.0,4.0}));
+//  //zbe::ConstantMovingCircle* cc = new zbe::ConstantMovingCircle(zbe::Circle({{2.0,3.0},1.0}),zbe::Vector2D({3.0,4.0}));
 //  //zbe::StaticAABB2D<R>* sbox = new zbe::StaticAABB2D<R>(zbe::AABB2D({{1.0,5.0},{6.0,10.0}}));
-//  std::shared_ptr<zbe::ConstantMovingCircle<R> > cc(new zbe::ConstantMovingCircle<R>(zbe::Circle({{20.0,30.0},10.0}), zbe::Vector2D({30.0,40.0})));
-//  std::shared_ptr<zbe::StaticSolidAABB2D<R> > sbox(new zbe::StaticSolidAABB2D<R>({{10.0,50.0},{60.0,100.0}}));
+//  std::shared_ptr<zbe::ConstantMovingCircle > cc(new zbe::ConstantMovingCircle(zbe::Circle({{20.0,30.0},10.0}), zbe::Vector2D({30.0,40.0})));
+//  std::shared_ptr<zbe::StaticSolidAABB2D > sbox(new zbe::StaticSolidAABB2D({{10.0,50.0},{60.0,100.0}}));
 //  C a(cc);
 //  C b(sbox);
 //
-//  zbe::CollisionSelector<R>* cs = new zbe::BaseCollisionSelector<R>();
+//  zbe::CollisionSelector* cs = new zbe::BaseCollisionSelector();
 //
 //  bool result;
 //  zbe::Point2D p;
@@ -52,12 +52,12 @@ TEST(CollisionSystemSolver, DISABLED_MovingCircleStaticSolidAABB) {
 }
 
 TEST(CollisionSystemSolver, DISABLED_StaticSolidAABBMovingCircle) {
-//  std::shared_ptr<zbe::ConstantMovingCircle<R> > cc(new zbe::ConstantMovingCircle<R>(zbe::Circle({{200,300},100}), zbe::Vector2D({300,400})));
-//  std::shared_ptr<zbe::StaticSolidAABB2D<R> > sbox(new zbe::StaticSolidAABB2D<R>({{100,500},{600,1000}}));
+//  std::shared_ptr<zbe::ConstantMovingCircle > cc(new zbe::ConstantMovingCircle(zbe::Circle({{200,300},100}), zbe::Vector2D({300,400})));
+//  std::shared_ptr<zbe::StaticSolidAABB2D > sbox(new zbe::StaticSolidAABB2D({{100,500},{600,1000}}));
 //  C a(cc);
 //  C b(sbox);
 //
-//  zbe::CollisionSelector<R>* cs = new zbe::BaseCollisionSelector<R>();
+//  zbe::CollisionSelector* cs = new zbe::BaseCollisionSelector();
 //
 //  bool result;
 //  zbe::Point2D p;
