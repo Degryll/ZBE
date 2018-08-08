@@ -25,14 +25,12 @@ public:
 };
 
 template<typename D, typename O, typename RO>
-class Reactor<D, O, RO> {
+class Reactor<D, O, RO> : public Reactor<D, O, void> {
 public:
   virtual ~Reactor() {}
 
-  using InteractionData = D;
-  using InteractionObject = O;
-
-  virtual void act() {}
+  using Reactor<D, O, void>::act;
+  
   virtual void act(std::shared_ptr<zbe::WeakAvatarEntityContainer<RO> >) {}
 };
 
@@ -46,8 +44,6 @@ public:
 
   virtual void act() {}
 };
-
-
 
 }  // namespace zbe
 
