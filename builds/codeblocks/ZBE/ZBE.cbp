@@ -433,6 +433,9 @@
 		<Unit filename="../../../src/ZBE/core/events/InputEvent.cpp" />
 		<Unit filename="../../../src/ZBE/core/events/generators/InputEventGenerator.cpp" />
 		<Unit filename="../../../src/ZBE/core/events/generators/TimeEventGenerator.cpp" />
+		<Unit filename="../../../src/ZBE/core/events/generators/util/BaseCollisionSelector.cpp" />
+		<Unit filename="../../../src/ZBE/core/events/generators/util/CollisionSelector.cpp" />
+		<Unit filename="../../../src/ZBE/core/events/generators/util/IntersectionCollisionSelector.cpp" />
 		<Unit filename="../../../src/ZBE/core/io/FileHandler.cpp" />
 		<Unit filename="../../../src/ZBE/core/io/InputBuffer.cpp" />
 		<Unit filename="../../../src/ZBE/core/system/Logger.cpp" />

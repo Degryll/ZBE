@@ -1916,7 +1916,7 @@ void SDLVKWindow::loadModel() {
   std::string err;
 
   if (!tinyobj::LoadObj(&attrib, &shapes, &materials, &err, MODEL_PATH.c_str())) {
-    printf(err.c_str());
+    printf("%s", err.c_str());
   }
 
   std::unordered_map<Vertex, uint32_t, VertexHash> uniqueVertices = {};

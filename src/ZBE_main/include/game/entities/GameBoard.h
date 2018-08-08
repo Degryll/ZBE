@@ -13,6 +13,8 @@
 #include <cstdint>
 #include <memory>
 
+#include "ZBE/core/events/generators/util/CollisionBodies.h"
+
 #include "ZBE/core/tools/math/objects.h"
 #include "ZBE/core/entities/avatars/Interactioner.h"
 #include "ZBE/core/entities/AvatarEntity.h"

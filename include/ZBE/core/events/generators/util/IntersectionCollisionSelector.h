@@ -17,7 +17,6 @@
 #include "ZBE/core/tools/math/Vector.h"
 
 #include "ZBE/core/events/generators/util/CollisionData.h"
-#include "ZBE/core/events/generators/util/CollisionObject.h"
 #include "ZBE/core/events/generators/util/CollisionSelector.h"
 
 namespace zbe {
@@ -33,7 +32,7 @@ class IntersectionCollisionSelector : public CollisionSelector {
      *  \param point Where collisión point will be stored if a collision is detected,
      *  \param normal Where collisión normal will be stored if a collision is detected,
      */
-    inline bool visit(StaticSolidAABB2D&, StaticSolidAABB2D&, int64_t&, CollisionData*);
+    bool visit(StaticSolidAABB2D& param1, StaticSolidAABB2D& param2, int64_t& time, CollisionData* data);
 
     /** \brief Solve an intersection between a StaticLimiterAABB2D and a StaticLimiterAABB2D.
      *  \param param1 First element interested in the collision
@@ -107,51 +106,6 @@ class IntersectionCollisionSelector : public CollisionSelector {
      */
     inline bool visit(ConstantMovingCircle& param1, ConstantMovingCircle& param2, int64_t& time, CollisionData* data);
 };
-
-bool IntersectionCollisionSelector::visit(StaticSolidAABB2D& param1, StaticSolidAABB2D& param2, int64_t& time, CollisionData* data) {
-  time=0; data->getPoint() = Point2D{0,0}; data->getNormal() = Vector2D{0,0};
-  return (intersectionAABBAABB<2>(param1.getAABB2D(),param2.getAABB2D()));
-}
-
-bool IntersectionCollisionSelector::visit(StaticLimiterAABB2D& param1, StaticLimiterAABB2D& param2, int64_t& time, CollisionData* data) {
-  time=0; data->getPoint() = Point2D{0,0}; data->getNormal() = Vector2D{0,0};
-  return (intersectionAABBAABB<2>(param1.getAABB2D(),param2.getAABB2D()));
-}
-
-bool IntersectionCollisionSelector::visit(StaticSolidAABB2D& param1, StaticLimiterAABB2D& param2, int64_t& time, CollisionData* data) {
-  time=0; data->getPoint() = Point2D{0,0}; data->getNormal() = Vector2D{0,0};
-  return (intersectionAABBAABB<2>(param1.getAABB2D(),param2.getAABB2D()));
-}
-
-bool IntersectionCollisionSelector::visit(StaticLimiterAABB2D& param1, StaticSolidAABB2D& param2, int64_t& time, CollisionData* data) {
-  time=0; data->getPoint() = Point2D{0,0}; data->getNormal() = Vector2D{0,0};
-  return intersectionAABBAABB<2>(param1.getAABB2D(),param2.getAABB2D());
-}
-
-bool IntersectionCollisionSelector::visit(StaticSolidAABB2D& param1, ConstantMovingCircle& param2, int64_t& time, CollisionData* data) {
-  time=0; data->getPoint() = Point2D{0,0}; data->getNormal() = Vector2D{0,0};
-  return(intersectionCircleAABB2D(param2.getCircle(), param1.getAABB2D()));
-}
-
-bool IntersectionCollisionSelector::visit(StaticLimiterAABB2D& param1, ConstantMovingCircle& param2, int64_t& time, CollisionData* data) {
-  time=0; data->getPoint() = Point2D{0,0}; data->getNormal() = Vector2D{0,0};
-  return(intersectionCircleAABB2D(param2.getCircle(), param1.getAABB2D()));
-}
-
-bool IntersectionCollisionSelector::visit(ConstantMovingCircle& param1, StaticSolidAABB2D& param2, int64_t& time, CollisionData* data) {
-  time=0; data->getPoint() = Point2D{0,0}; data->getNormal() = Vector2D{0,0};
-  return(intersectionCircleAABB2D(param1.getCircle(), param2.getAABB2D()));
-}
-
-bool IntersectionCollisionSelector::visit(ConstantMovingCircle& param1, StaticLimiterAABB2D& param2, int64_t& time, CollisionData* data) {
-  time=0; data->getPoint() = Point2D{0,0}; data->getNormal() = Vector2D{0,0};
-  return(intersectionCircleAABB2D(param1.getCircle(), param2.getAABB2D()));
-}
-
-bool IntersectionCollisionSelector::visit(ConstantMovingCircle& param1, ConstantMovingCircle& param2, int64_t& time, CollisionData* data) {
-  time=0; data->getPoint() = Point2D{0,0}; data->getNormal() = Vector2D{0,0};
-  return(intersectionCircleCircle(param1.getCircle(), param2.getCircle()));
-}
 
 }  // namespace zbe
 

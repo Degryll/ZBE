@@ -2,8 +2,8 @@
  * Copyright 2012 Batis Degryll Ludo
  * @file CollisionSelector.h
  * @since 2016-05-01
- * @date 2016-08-04
- * @author Degryll
+ * @date 2018-08-07
+ * @author Degryll Ludo
  * @brief Apply the correct function to solve a collision.
  */
 
@@ -17,11 +17,10 @@
 #include "ZBE/core/tools/math/objects.h"
 #include "ZBE/core/tools/math/collisions/intersections.h"
 #include "ZBE/core/entities/avatars/Interactioner.h"
-#include "ZBE/core/events/generators/util/CollisionBodies.h"
-#include "ZBE/core/events/generators/util/CollisionObject.h"
 
 namespace zbe {
 
+class CollisionObject;
 class StaticSolidAABB2D;
 class StaticLimiterAABB2D;
 class ConstantMovingCircle;
@@ -30,7 +29,7 @@ class ConstantMovingCircle;
  */
 class CollisionSelector {
   public:
-    virtual ~CollisionSelector(){}
+    virtual ~CollisionSelector() {}
 
     /** \brief Using the Visitor pattern select the correct collision detection function to use depending of the types of the params.
      *  \param param1 First collision object.
@@ -39,9 +38,7 @@ class CollisionSelector {
      *  \param point Point of collision if any.
      *  \return True if there is a collision in the timeslot set by time, false otherwise.
      */
-    inline bool select(std::shared_ptr<CollisionObject> param1, std::shared_ptr<CollisionObject> param2, int64_t& time, CollisionData *data) {
-      return (param2->accept(*this, *param1, time, data));
-    }
+    bool select(std::shared_ptr<CollisionObject> param1, std::shared_ptr<CollisionObject> param2, int64_t& time, CollisionData *data);
 
     /** \brief Dont move, wont collide.
      *  \param param1 First AABB.

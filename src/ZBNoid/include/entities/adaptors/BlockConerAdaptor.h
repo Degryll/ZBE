@@ -11,6 +11,7 @@
 #define ZBE_MAIN_ZOMBIENOID_ENTITIES_ADAPTORS_BLOCKCONERADAPTOR_H_
 
 #include "ZBE/core/events/generators/util/ReactObject.h"
+#include "ZBE/core/events/generators/util/CollisionBodies.h"
 
 #include "ZBE/core/entities/Adaptor.h"
 #include "ZBE/entities/Element2D.h"

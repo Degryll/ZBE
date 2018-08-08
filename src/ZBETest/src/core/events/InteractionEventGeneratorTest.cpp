@@ -6,6 +6,7 @@
 #include "ZBE/core/events/generators/InteractionEventGenerator.h"
 #include "ZBE/core/events/generators/util/Reactor.h"
 #include "ZBE/core/events/generators/util/CollisionSelector.h"
+#include "ZBE/core/events/generators/util/CollisionBodies.h"
 #include "ZBE/core/events/generators/util/BaseCollisionSelector.h"
 #include "ZBE/core/events/generators/util/BaseCollisionSelector.h"
 #include "ZBE/core/events/generators/util/IntersectionCollisionSelector.h"
