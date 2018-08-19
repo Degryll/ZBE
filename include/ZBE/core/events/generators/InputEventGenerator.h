@@ -36,13 +36,13 @@ namespace zbe {
 
       /** \brief Default constructor.
        */
-      InputEventGenerator(std::shared_ptr<InputBuffer> inputBuffer) : inputBuffer(inputBuffer), managers(), contextTime(zbe::SysTime::getInstance()) {};
+      InputEventGenerator(std::shared_ptr<InputBuffer> inputBuffer) : inputBuffer(inputBuffer), managers(), contextTime(zbe::SysTime::getInstance()) {}
 
       /** \brief Empty destructor.
        */
-      ~InputEventGenerator() {};
+      ~InputEventGenerator() {}
 
-      void addManager(std::shared_ptr<InputStatusManager> manager) {managers.push_back(manager);};
+      void addManager(std::shared_ptr<InputStatusManager> manager) {managers.push_back(manager);}
 
       /** Will search for input events occurred between initTime and finalTime and send it to the EventStore.
        * \param initTime Time from which events are generated

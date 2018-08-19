@@ -12,6 +12,7 @@
 #define ZBE_SDL_STARTERS_STARTER_H_
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_net.h>
 
 namespace zbe {
 
@@ -20,31 +21,48 @@ namespace zbe {
  * @brief Used to init SDL subsystems only once.
  */
 class SDL_Starter {
-  public:
-    SDL_Starter(SDL_Starter const&)    = delete;  //!< Needed for singleton.
-    void operator=(SDL_Starter const&) = delete;  //!< Needed for singleton.
+public:
+  SDL_Starter(SDL_Starter const&)    = delete;  //!< Needed for singleton.
+  void operator=(SDL_Starter const&) = delete;  //!< Needed for singleton.
 
-    /** \brief Singleton implementation to start SDL subsystems.
-     *  \return The only instance of the SDL_Starter.
-     */
-    static SDL_Starter& getInstance(Uint32 flags = 0) {
-      static SDL_Starter instance;
-      SDL_InitSubSystem(flags);
-      return (instance);
+  static const Uint32 SDLNET = 1;
+
+  /** \brief Singleton implementation to start SDL subsystems.
+   *  \return The only instance of the SDL_Starter.
+   */
+  static SDL_Starter& getInstance(Uint32 flags = 0, Uint32 other = 0) {
+    static SDL_Starter instance;
+    SDL_InitSubSystem(flags);
+    if (other & SDLNET) {
+      SDLNet_Init();
+      sdlnetrefs++;
     }
+    return (instance);
+  }
 
-    /** \brief Shutdowns all SDL subsystems.
-     */
-    void quit() {SDL_Quit();}  //!< Call SDL_Quit.
+  /** \brief Shutdowns all SDL subsystems.
+   */
+  void quit() {SDL_Quit(); SDLNet_Quit();}  //!< Call SDL_Quit.
 
-    /** \brief Shutdowns given SDL subsystem.
-     */
-    void quitSubSystem(Uint32 flags) {
-      SDL_QuitSubSystem(flags);
+  /** \brief Shutdowns given SDL subsystem.
+   */
+  void quitSubSystem(Uint32 flags) {
+    SDL_QuitSubSystem(flags);
+  }
+
+  /** \brief Shutdowns given SDL subsystem.
+   */
+  void quitOtherSystem(Uint32 flags) {
+    if (flags & SDLNET) {
+      sdlnetrefs--;
+      if (!sdlnetrefs) SDLNet_Quit();
     }
+  }
 
-  private:
-    SDL_Starter() {SDL_Init(0);}  //!< Call SDL_Init(0).
+private:
+  SDL_Starter() {SDL_Init(0); SDLNet_Init();}  //!< Call SDL_Init(0).
+
+  static int sdlnetrefs;
 };
 
 }  // namespace zbe

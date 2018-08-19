@@ -2,7 +2,7 @@
  * Copyright 2016 Batis Degryll Ludo
  * @file InputStatus.h
  * @since 2016-08-21
- * @date 2016-08-21
+ * @date 2018-08-12
  * @author Ludo
  * @brief Single input status representation.
  */
@@ -18,6 +18,11 @@ namespace zbe {
  */
 class InputStatus {
 public:
+
+  /** \brief Empty constructor (0 id, 0.0 status).
+   */
+  InputStatus() : id(), status(), time() {}
+
   /** \brief Construct an input status.
    *  \param id Id of the input (key, button, mouse move, etc.).
    *  \param status Status of the input (pressed, moved, etc.).

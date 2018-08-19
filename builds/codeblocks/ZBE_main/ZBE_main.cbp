@@ -40,6 +40,7 @@
 					<Add directory="../../../extlibs/glm/0.9.9.0" />
 					<Add directory="../../../extlibs/Vulkan/1.1.77.0/include" />
 					<Add directory="../../../extlibs/tinyobjloader" />
+					<Add directory="../../../extlibs/SDL2_net/2.0.1/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
@@ -50,6 +51,7 @@
 					<Add library="SDL2_image" />
 					<Add library="SDL2_ttf" />
 					<Add library="SDL2_mixer" />
+					<Add library="SDL2_net" />
 					<Add library="glew32" />
 					<Add library="openGL32" />
 					<Add library="vulkan-1" />
@@ -58,6 +60,7 @@
 					<Add directory="../../../extlibs/SDL2_image/2.0.1/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.14/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_mixer/2.0.2/x86_64-w64-mingw32/lib" />
+					<Add directory="../../../extlibs/SDL2_net/2.0.1/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/GLEW/2.1.0/windows/lib/Release/x64" />
 					<Add directory="../../../extlibs/Vulkan/1.1.77.0/windows/lib" />
 				</Linker>
@@ -84,6 +87,7 @@
 					<Add directory="../../../extlibs/SDL2/2.0.8/include/SDL2" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.1/x86_64-w64-mingw32/include" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.14/x86_64-w64-mingw32/include" />
+					<Add directory="../../../extlibs/SDL2_net/2.0.1/include" />
 					<Add directory="../../../extlibs/json" />
 					<Add directory="../../../extlibs/GLEW/2.1.0/include" />
 					<Add directory="../../../extlibs/lodePNG" />
@@ -102,6 +106,7 @@
 					<Add library="SDL2_image" />
 					<Add library="SDL2_ttf" />
 					<Add library="SDL2_mixer" />
+					<Add library="SDL2_net" />
 					<Add library="opengl32" />
 					<Add library="glew32" />
 					<Add library="vulkan-1" />
@@ -109,9 +114,10 @@
 					<Add directory="../../../extlibs/SDL2/2.0.8/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.1/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.14/x86_64-w64-mingw32/lib" />
+					<Add directory="../../../extlibs/SDL2_mixer/2.0.2/x86_64-w64-mingw32/lib" />
+					<Add directory="../../../extlibs/SDL2_net/2.0.1/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/GLEW/2.1.0/windows/lib/Release/x64" />
 					<Add directory="../../../extlibs/Vulkan/1.1.77.0/windows/lib" />
-					<Add directory="../../../extlibs/SDL2_mixer/2.0.2/x86_64-w64-mingw32/lib" />
 				</Linker>
 			</Target>
 			<Target title="Debug-Linux64">
@@ -156,10 +162,10 @@
 					<Add library="SDL2" />
 					<Add library="SDL2_image" />
 					<Add library="SDL2_ttf" />
+					<Add library="SDL2_mixer" />
 					<Add library="GL" />
 					<Add library="GLEW" />
 					<Add library="vulkan" />
-					<Add library="SDL2_mixer" />
 					<Add directory="../../../lib" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/linux64/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />

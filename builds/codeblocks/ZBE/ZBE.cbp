@@ -134,10 +134,11 @@
 					<Add directory="../../../include" />
 					<Add directory="../../../src" />
 					<Add directory="include/ZBE/core/io" />
-					<Add directory="../../../extlibs/SDL2/2.0.5/x86_64-w64-mingw32/include" />
-					<Add directory="../../../extlibs/SDL2/2.0.5/x86_64-w64-mingw32/include/SDL2" />
+					<Add directory="../../../extlibs/SDL2/2.0.8/include" />
+					<Add directory="../../../extlibs/SDL2/2.0.8/include/SDL2" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.1/x86_64-w64-mingw32/include" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.14/x86_64-w64-mingw32/include" />
+					<Add directory="../../../extlibs/SDL2_net/2.0.1/include" />
 					<Add directory="../../../extlibs/utf8cpp/source" />
 					<Add directory="../../../extlibs/boost_1_57_0" />
 					<Add directory="../../../extlibs/IteratorTypeErasure/IteratorTypeErasure/any_iterator" />
@@ -157,11 +158,13 @@
 					<Add library="SDL2" />
 					<Add library="SDL2_image" />
 					<Add library="SDL2_ttf" />
+					<Add library="SDL2_net" />
 					<Add library="glew32" />
 					<Add library="openGL32" />
-					<Add directory="../../../extlibs/SDL2/2.0.5/x86_64-w64-mingw32/lib" />
+					<Add directory="../../../extlibs/SDL2/2.0.8/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.1/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.14/x86_64-w64-mingw32/lib" />
+					<Add directory="../../../extlibs/SDL2_net/2.0.1/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/GLEW/2.1.0/windows/lib/release/x64" />
 				</Linker>
 			</Target>
@@ -187,6 +190,7 @@
 					<Add directory="../../../extlibs/SDL2/2.0.8/include/SDL2" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.1/x86_64-w64-mingw32/include" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.14/x86_64-w64-mingw32/include" />
+					<Add directory="../../../extlibs/SDL2_net/2.0.1/include" />
 					<Add directory="../../../extlibs/utf8cpp/source" />
 					<Add directory="../../../extlibs/boost_1_57_0" />
 					<Add directory="../../../extlibs/IteratorTypeErasure/IteratorTypeErasure/any_iterator" />
@@ -207,11 +211,13 @@
 					<Add library="SDL2" />
 					<Add library="SDL2_image" />
 					<Add library="SDL2_ttf" />
-					<Add library="opengl32" />
+					<Add library="SDL2_net" />
 					<Add library="glew32" />
-					<Add directory="../../../extlibs/SDL2/2.0.5/x86_64-w64-mingw32/lib" />
+					<Add library="openGL32" />
+					<Add directory="../../../extlibs/SDL2/2.0.8/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.1/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.14/x86_64-w64-mingw32/lib" />
+					<Add directory="../../../extlibs/SDL2_net/2.0.1/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/GLEW/2.1.0/windows/lib/release/x64" />
 				</Linker>
 			</Target>
@@ -241,6 +247,8 @@
 		<Unit filename="../../../include/ZBE/SDL/resources/SDLImgLoader.h" />
 		<Unit filename="../../../include/ZBE/SDL/starters/SDL_Starter.h" />
 		<Unit filename="../../../include/ZBE/SDL/system/SDLEventDispatcher.h" />
+		<Unit filename="../../../include/ZBE/SDL/system/SDLNetDispatcher.h" />
+		<Unit filename="../../../include/ZBE/SDL/system/SDLSocket.h" />
 		<Unit filename="../../../include/ZBE/SDL/system/SDLWindow.h" />
 		<Unit filename="../../../include/ZBE/SDL/tools/SDLTimer.h" />
 		<Unit filename="../../../include/ZBE/SDL/tools/SDLUtils.h" />
@@ -315,14 +323,15 @@
 		<Unit filename="../../../include/ZBE/core/entities/avatars/implementations/SimpleStatedSprite.h" />
 		<Unit filename="../../../include/ZBE/core/entities/avatars/implementations/VoidCollisionator.h" />
 		<Unit filename="../../../include/ZBE/core/entities/avatars/implementations/VoidCollisioner.h" />
-		<Unit filename="../../../include/ZBE/core/events/CollisionEvent2D.h" />
 		<Unit filename="../../../include/ZBE/core/events/Event.h" />
 		<Unit filename="../../../include/ZBE/core/events/EventStore.h" />
 		<Unit filename="../../../include/ZBE/core/events/InputEvent.h" />
 		<Unit filename="../../../include/ZBE/core/events/InteractionEvent.h" />
+		<Unit filename="../../../include/ZBE/core/events/NetEvent.h" />
 		<Unit filename="../../../include/ZBE/core/events/TimeEvent.h" />
 		<Unit filename="../../../include/ZBE/core/events/generators/InputEventGenerator.h" />
 		<Unit filename="../../../include/ZBE/core/events/generators/InteractionEventGenerator.h" />
+		<Unit filename="../../../include/ZBE/core/events/generators/NetEventGenerator.h" />
 		<Unit filename="../../../include/ZBE/core/events/generators/TimeEventGenerator.h" />
 		<Unit filename="../../../include/ZBE/core/events/generators/util/BaseCollisionSelector.h" />
 		<Unit filename="../../../include/ZBE/core/events/generators/util/CollisionBodies.h" />
@@ -336,23 +345,27 @@
 		<Unit filename="../../../include/ZBE/core/events/handlers/Actuator.h" />
 		<Unit filename="../../../include/ZBE/core/events/handlers/ActuatorWrapper.h" />
 		<Unit filename="../../../include/ZBE/core/events/handlers/InputHandler.h" />
+		<Unit filename="../../../include/ZBE/core/events/handlers/NetHandler.h" />
 		<Unit filename="../../../include/ZBE/core/events/handlers/TimeHandler.h" />
 		<Unit filename="../../../include/ZBE/core/io/FileHandler.h" />
 		<Unit filename="../../../include/ZBE/core/io/Input.h" />
 		<Unit filename="../../../include/ZBE/core/io/InputBuffer.h" />
 		<Unit filename="../../../include/ZBE/core/io/InputStatus.h" />
+		<Unit filename="../../../include/ZBE/core/io/NetBuffer.h" />
+		<Unit filename="../../../include/ZBE/core/io/NetMessage.h" />
 		<Unit filename="../../../include/ZBE/core/system/Logger.h" />
 		<Unit filename="../../../include/ZBE/core/system/MainLoop.h" />
 		<Unit filename="../../../include/ZBE/core/system/SysError.h" />
 		<Unit filename="../../../include/ZBE/core/system/SysIdGenerator.h" />
 		<Unit filename="../../../include/ZBE/core/system/SysTime.h" />
-		<Unit filename="../../../include/ZBE/core/tools/Timer.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/ListJoint.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/RsrcDictionary.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/RsrcStore.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/Ticket.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/TicketedElement.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/TicketedForwardList.h" />
+		<Unit filename="../../../include/ZBE/core/tools/containers/TimedBuffer.h" />
+		<Unit filename="../../../include/ZBE/core/tools/containers/TimedElement.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/containers.h" />
 		<Unit filename="../../../include/ZBE/core/tools/graphics/Sprite.h" />
 		<Unit filename="../../../include/ZBE/core/tools/graphics/SpriteSheet.h" />
@@ -423,7 +436,10 @@
 		<Unit filename="../../../src/ZBE/SDL/drawers/SimpleSpriteSDLDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/drawers/SingleTextSDLDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/drawers/StatedSpriteSDLDrawer.cpp" />
+		<Unit filename="../../../src/ZBE/SDL/starters/SDL_Starter.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/system/SDLEventDispatcher.cpp" />
+		<Unit filename="../../../src/ZBE/SDL/system/SDLNetDispatcher.cpp" />
+		<Unit filename="../../../src/ZBE/SDL/system/SDLSocket.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/system/SDLWindow.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/tools/SDLTimer.cpp" />
 		<Unit filename="../../../src/ZBE/core/daemons/DaemonMaster.cpp" />
@@ -432,12 +448,12 @@
 		<Unit filename="../../../src/ZBE/core/events/EventStore.cpp" />
 		<Unit filename="../../../src/ZBE/core/events/InputEvent.cpp" />
 		<Unit filename="../../../src/ZBE/core/events/generators/InputEventGenerator.cpp" />
+		<Unit filename="../../../src/ZBE/core/events/generators/NetEventGenerator.cpp" />
 		<Unit filename="../../../src/ZBE/core/events/generators/TimeEventGenerator.cpp" />
 		<Unit filename="../../../src/ZBE/core/events/generators/util/BaseCollisionSelector.cpp" />
 		<Unit filename="../../../src/ZBE/core/events/generators/util/CollisionSelector.cpp" />
 		<Unit filename="../../../src/ZBE/core/events/generators/util/IntersectionCollisionSelector.cpp" />
 		<Unit filename="../../../src/ZBE/core/io/FileHandler.cpp" />
-		<Unit filename="../../../src/ZBE/core/io/InputBuffer.cpp" />
 		<Unit filename="../../../src/ZBE/core/system/Logger.cpp" />
 		<Unit filename="../../../src/ZBE/core/system/MainLoop.cpp" />
 		<Unit filename="../../../src/ZBE/core/system/SysError.cpp" />

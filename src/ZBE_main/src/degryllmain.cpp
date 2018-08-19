@@ -1950,8 +1950,7 @@ void SDLVKWindow::loadModel() {
 
 }  // namespace zbe
 
-int degryllmain(int, char*[]) {
-  printf("Hola Mundo!\n");
+void vulkantest() {
   SDL_Init(SDL_INIT_VIDEO);
 
   SDL_Event event;
@@ -1976,6 +1975,364 @@ int degryllmain(int, char*[]) {
   }
 
   windows.waitIdle();
+}
+
+
+
+void drawfloor(std::shared_ptr<zbe::SDLWindow> window, uint64_t floortile, int x, int y, int c) {
+  SDL_Rect src, dst;
+  const int iw = 16;
+  const int ih = 9;
+  const int ihw = iw / 2;
+  const int ihh = ih / 2;
+  src.x = 0;
+  src.y = 0;
+  src.w = 16;
+  src.h = 9;
+
+  int offset = (y % 2) ? ihw : 0;
+
+  dst.x = 100 + x * iw + offset;
+  dst.y = 100 + y * ihh - ih * c;
+  dst.w = 16;
+  dst.h = 9;
+  //printf("x: %d, y: %d\n", dst.x, dst.y); fflush(stdout);
+  SDL_Texture* tex = window->getImgStore()->getTexture(floortile);
+  window->render(tex , &src, &dst);
+}
+
+void drawleftwall(std::shared_ptr<zbe::SDLWindow> window, uint64_t tile, int x, int y, int c) {
+  SDL_Rect src, dst;
+  const int iw = 16;
+  const int ih = 9;
+  const int ihw = iw / 2;
+  const int ihh = ih / 2;
+  src.x = 0;
+  src.y = 0;
+  src.w = 8;
+  src.h = 14;
+
+  int offset = (y % 2) ? ihw : 0;
+
+  dst.x = 100 + x * iw + offset;
+  dst.y = 100 + y * ihh - ih * c + ihh;
+  dst.w = 8;
+  dst.h = 14;
+  //printf("x: %d, y: %d\n", dst.x, dst.y); fflush(stdout);
+  SDL_Texture* tex = window->getImgStore()->getTexture(tile);
+  window->render(tex , &src, &dst);
+}
+
+void drawrightwall(std::shared_ptr<zbe::SDLWindow> window, uint64_t tile, int x, int y, int c) {
+  SDL_Rect src, dst;
+  const int iw = 16;
+  const int ih = 9;
+  const int ihw = iw / 2;
+  const int ihh = ih / 2;
+  src.x = 0;
+  src.y = 0;
+  src.w = 8;
+  src.h = 14;
+
+  int offset = (y % 2) ? ihw : 0;
+
+  dst.x = 100 + x * iw + offset + ihw;
+  dst.y = 100 + y * ihh - ih * c + ihh;
+  dst.w = 8;
+  dst.h = 14;
+  //printf("x: %d, y: %d\n", dst.x, dst.y); fflush(stdout);
+  SDL_Texture* tex = window->getImgStore()->getTexture(tile);
+  window->render(tex , &src, &dst);
+}
+
+void drawprota(std::shared_ptr<zbe::SDLWindow> window, uint64_t tile, int x, int y, int c) {
+  SDL_Rect src, dst;
+  const int iw = 16;
+  const int ih = 9;
+  const int ihw = iw / 2;
+  const int ihh = ih / 2;
+  src.x = 0;
+  src.y = 0;
+  src.w = 11;
+  src.h = 38;
+
+  int offset = (y % 2) ? ihw : 0;
+
+  dst.x = 100 + x * iw + offset + 4;
+  dst.y = 100 + y * ihh - ih * c - 32;
+  dst.w = 11;
+  dst.h = 38;
+  //printf("x: %d, y: %d\n", dst.x, dst.y); fflush(stdout);
+  SDL_Texture* tex = window->getImgStore()->getTexture(tile);
+  window->render(tex , &src, &dst);
+}
+
+void draw(std::shared_ptr<zbe::SDLWindow> window, uint64_t floortile, uint64_t izqtile, uint64_t dertile, std::vector<std::vector<std::vector<int>>> m, uint64_t protatile, std::vector<int> prota) {
+  int layers = m.size();
+  int rows = m[0].size();
+  int cols = m[0][0].size();
+
+  for (int row = 0; row < rows; row++) {
+    for (int layer = 0; layer < layers; layer++) {
+      for (int col = 0; col < cols; col++) {
+        if (m[layer][row][col] == 0) continue;
+        drawleftwall(window, izqtile, col, row, layer);
+        drawrightwall(window, dertile, col, row, layer);
+        drawfloor(window, floortile, col, row, layer);
+        if (prota[2] == layer && prota[1] == row && prota[0] == col) drawprota(window, protatile, prota[0], prota[1], prota[2]);
+      }
+    }
+  }
+
+//  for (int i = 0; i < m.size(); i++) {
+//    for (int j = 0; j < m[i].size(); j++) {
+//      for (int k = 0; k < m[i][j].size(); k++) {
+//        if (m[i][j][k] == 0) continue;
+//          drawleftwall(window, izqtile, k, j, i);
+//          drawrightwall(window, dertile, k, j, i);
+//      }
+//    }
+//    for (int j = 0; j < m[i].size(); j++) {
+//      for (int k = 0; k < m[i][j].size(); k++) {
+//        if (m[i][j][k] == 0) continue;
+//          drawfloor(window, floortile, k, j, i);
+//      }
+//    }
+//  }
+
+//
+//
+//
+//  // - Partir de la posicion del personaje (centro de la camara)
+//  // POR AHORA el centro del mapa
+//  int x = m->getHW();
+//  int y = m->getHH();
+//  int z = m->getHD();
+//
+//  // buscar suelo (si el personaje est� sobre el suelo, ese, si est� al aire, descender por niveles hasta encontrarlo).
+//  // POR AHORA siempre esta en el suelo
+//
+//  // - Recorrer el mapa primero hacia atras (izq y arriba) y luego hacia adelante (der y abajo).
+//  // POR AHORA 0 es aire y 1 es tierra
+//  int idx = x;
+//  int idy = y;
+//  int idz = z;
+//  int k = idz;
+//  // backward from center
+//  for(int i = idy; i >= 0; i--) {
+//    for(int j = idx; j >= 0; j--) {
+//      //printf("x: %d, y: %d, d: %d\n", j, i, k); fflush(stdout);
+//      // - Por cada nueva casilla se busca el suelo a partir del suelo contiguo.
+//      //   - Si al nivel actual la nueva casilla es aire, se desciende hasta encontrar el suelo.
+//      //   - Si hay un bloque solido, se asciende hasta encontrar el nuevo nivel de suelo.
+//      while((k > 0) && m->getTile(j, i, k) == 0) k--;
+//      while((k < (m->getD()-1)) && m->getTile(j, i, k) == 1) k++;
+//      ground.insert({(double)j, (double)i, (double)k});
+//      //  TODO insertar muros
+//    }
+//    idx = m->getW() - 1;
+//  }
+//
+//  idx = x + 1;
+//  k = idz;
+//  // forward from center
+//  for(int i = idy; i < m->getH(); i++) {
+//    for(int j = idx; j < m->getW(); j++) {
+//      //printf("x: %d, y: %d, d: %d\n", j, i, k); fflush(stdout);
+//      // - Por cada nueva casilla se busca el suelo a partir del suelo contiguo.
+//      //   - Si al nivel actual la nueva casilla es aire, se desciende hasta encontrar el suelo.
+//      //   - Si hay un bloque solido, se asciende hasta encontrar el nuevo nivel de suelo.
+//      while((k > 0) && m->getTile(j, i, k) == 0) k--;
+//      while((k < (m->getD()-1)) && m->getTile(j, i, k) == 1) k++;
+//      ground.insert({(double)j, (double)i, (double)k});
+//      //  TODO insertar muros
+//    }
+//    idx = 0;
+//  }
+//
+//  SDL_Rect src,dst;
+//  for (auto &point : ground) {
+//    //printf("x: %.1lf, y: %.1lf, d: %.1lf\n", point[0], point[1], point[2]); fflush(stdout);
+//    const int iw = 16;
+//    const int ih = 9;
+//    const int ihw = iw / 2;
+//    const int ihh = ih / 2;
+//    src.x = 0;
+//    src.y = 0;
+//    src.w = 16;
+//    src.h = 9;
+//
+//    int offset = ((int)(point[1]) % 2) ? ihw : 0;
+//
+//    dst.x = 100 + point[0] * iw + offset;
+//    dst.y = 100 + point[1] * ihh - ih * point[2];
+//    dst.w = 16;
+//    dst.h = 9;
+//    //printf("x: %d, y: %d\n", dst.x, dst.y); fflush(stdout);
+//    window->render(grimage, &src, &dst);
+//  }
+
+}
+
+void fixposition(std::vector<int>& prota, std::vector<std::vector<std::vector<int> > > m) {
+  while (m[prota[2]][prota[1]][prota[0]] != 0) {
+    prota[2]++;
+  }
+
+  while (m[prota[2]][prota[1]][prota[0]] != 1) {
+    prota[2]--;
+  }
+}
+
+void isometric() {
+  const int WIDTH = 1024;
+  const int HEIGHT = 768;
+
+  const int MW = 20;
+  const int MH = 20;
+  const int MD = 5;
+
+  std::vector<int> prota(3, 0);
+  prota[0] = 11;
+  prota[1] = 12;
+  prota[2] = 4;
+
+  std::vector<int> er(MW, 0);
+  std::vector<std::vector<int> > layer(MH, er);
+  std::vector<std::vector<std::vector<int> > > m(MD, layer);
+
+  for (int i = 0; i < MH; i++) {
+    for (int j = 0; j < MW; j++) {
+      m[0][i][j] = 1;
+      m[1][i][j] = 1;
+    }
+  }
+
+  m[1][10][10] = 0;
+  m[1][10][11] = 0;
+  m[1][10][12] = 0;
+  m[1][11][10] = 0;
+  m[1][11][11] = 0;
+  m[1][11][12] = 0;
+  m[1][12][10] = 0;
+  m[1][12][11] = 0;
+  m[1][12][12] = 0;
+  m[1][13][10] = 0;
+  m[1][13][11] = 0;
+  m[1][13][12] = 0;
+
+  m[2][0][10] = 1;
+
+  printf("Prota: %d, %d, %d\n\n", prota[0], prota[1], prota[2]); fflush(stdout);
+
+  printf("Mapa!\n"); fflush(stdout);
+  for (auto &level : m) {
+    for (auto &row : level) {
+      for (auto &pixel : row) {
+        printf("%d ", pixel); fflush(stdout);
+      }
+      printf("\n"); fflush(stdout);
+    }
+    printf("\n\n"); fflush(stdout);
+  }
+
+  std::shared_ptr<zbe::SDLWindow> window = std::make_shared<zbe::SDLWindow>("isometrico", 100, 100, WIDTH, HEIGHT);
+  std::shared_ptr<zbe::SDLImageStore> imgStore(window->getImgStore());
+
+  const char floorfilename[] = "data/images/degryll/isotetris/sueloT.png";
+  const char izqfilename[] = "data/images/degryll/isotetris/izqT.png";
+  const char derfilename[] = "data/images/degryll/isotetris/derT.png";
+  const char protafilename[] = "data/images/degryll/isotetris/charDT.png";
+
+  uint64_t floortile     = imgStore->loadImg(floorfilename);
+  uint64_t izqtile       = imgStore->loadImg(izqfilename);
+  uint64_t dertile       = imgStore->loadImg(derfilename);
+  uint64_t protatile     = imgStore->loadImg(protafilename);
+
+  printf("Tiles: %lld %lld %lld\n", floortile, izqtile, dertile); fflush(stdout);
+
+  window->setBackgroundColor(64, 0, 0, 0);
+  window->clear();
+
+  printf("%s", zbe::SysError::getFirstErrorString().c_str()); fflush(stdout);
+
+  bool l,r,t,b,c,d;
+  l = r = t = b = c = d = false;
+
+  SDL_Event event;
+  bool keep = true;
+  while(keep) {
+    while (SDL_PollEvent(&event)) {
+      if (event.type == SDL_WINDOWEVENT) {
+        switch (event.window.event) {
+        case SDL_WINDOWEVENT_CLOSE:
+          keep = false;
+          break;
+        }
+      } else if (event.type == SDL_KEYDOWN) {
+        switch (event.key.keysym.sym) {
+        case SDLK_a:
+          l = true;
+        break;
+        case SDLK_d:
+          r = true;
+        break;
+        case SDLK_w:
+          t = true;
+        break;
+        case SDLK_s:
+          b = true;
+        break;
+        case SDLK_n:
+          c = true;
+        break;
+        case SDLK_m:
+          d = true;
+        break;
+        }
+
+      } else if (event.type == SDL_KEYUP) {
+        if (l && SDLK_a) {
+          l = false;
+          if (prota[0] > 0) prota[0]--;
+        }
+        if (r && SDLK_d) {
+          r = false;
+          if (prota[0] < MW-1) prota[0]++;
+        }
+        if (t && SDLK_w) {
+          t = false;
+          if (prota[1] > 0) prota[1]--;
+        }
+        if (b && SDLK_s) {
+          b = false;
+          if (prota[1] < MH-1) prota[1]++;
+        }
+        if (c && SDLK_n) {
+          c = false;
+          if (prota[2] < MD-1) m[prota[2]+1][prota[1]][prota[0]] = 1;
+        }
+        if (d && SDLK_m) {
+          d = false;
+          if (prota[2] > 0) m[prota[2]][prota[1]][prota[0]] = 0;
+        }
+
+      }  // if SDL_WINDOWEVENT
+    }
+    window->clear();
+    fixposition(prota, m);
+    draw(window, floortile, izqtile, dertile, m, protatile, prota);
+    printf("%s", zbe::SysError::getFirstErrorString().c_str()); fflush(stdout);
+    window->present();
+  }
+
+}
+
+int degryllmain(int, char*[]) {
+  printf("Hola Mundo!\n");
+
+  //vulkantest();
+  isometric();
 
   return (0);
 }

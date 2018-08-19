@@ -58,7 +58,7 @@ public:
 
 private:
 
-  int eventId;
+  uint64_t eventId;
   EventStore &store;
   std::unordered_map<uint32_t, InputHandler*> handlers;
 
