@@ -1979,7 +1979,7 @@ void vulkantest() {
 
 
 
-void drawfloor(std::shared_ptr<zbe::SDLWindow> window, uint64_t floortile, int x, int y, int c) {
+void drawfloor(std::shared_ptr<zbe::SDLWindow> window, uint64_t* floortile, int x, int y, int c) {
   SDL_Rect src, dst;
   const int iw = 16;
   const int ih = 9;
@@ -1997,7 +1997,7 @@ void drawfloor(std::shared_ptr<zbe::SDLWindow> window, uint64_t floortile, int x
   dst.w = 16;
   dst.h = 9;
   //printf("x: %d, y: %d\n", dst.x, dst.y); fflush(stdout);
-  SDL_Texture* tex = window->getImgStore()->getTexture(floortile);
+  SDL_Texture* tex = window->getImgStore()->getTexture(floortile[c % 2]);
   window->render(tex , &src, &dst);
 }
 
@@ -2067,7 +2067,7 @@ void drawprota(std::shared_ptr<zbe::SDLWindow> window, uint64_t tile, int x, int
   window->render(tex , &src, &dst);
 }
 
-void draw(std::shared_ptr<zbe::SDLWindow> window, uint64_t floortile, uint64_t izqtile, uint64_t dertile, std::vector<std::vector<std::vector<int>>> m, uint64_t protatile, std::vector<int> prota) {
+void draw(std::shared_ptr<zbe::SDLWindow> window, uint64_t* floortile, uint64_t izqtile, uint64_t dertile, std::vector<std::vector<std::vector<int>>> m, uint64_t protatile, std::vector<int> prota) {
   int layers = m.size();
   int rows = m[0].size();
   int cols = m[0][0].size();
@@ -2175,11 +2175,11 @@ void draw(std::shared_ptr<zbe::SDLWindow> window, uint64_t floortile, uint64_t i
 }
 
 void fixposition(std::vector<int>& prota, std::vector<std::vector<std::vector<int> > > m) {
-  while (m[prota[2]][prota[1]][prota[0]] != 0) {
+  while (prota[2] < m.size()-1 && m[prota[2]][prota[1]][prota[0]] != 0) {
     prota[2]++;
   }
 
-  while (m[prota[2]][prota[1]][prota[0]] != 1) {
+  while (prota[2] > 0 && m[prota[2]][prota[1]][prota[0]] != 1) {
     prota[2]--;
   }
 }
@@ -2190,7 +2190,7 @@ void isometric() {
 
   const int MW = 20;
   const int MH = 20;
-  const int MD = 5;
+  const int MD = 10;
 
   std::vector<int> prota(3, 0);
   prota[0] = 11;
@@ -2240,16 +2240,15 @@ void isometric() {
   std::shared_ptr<zbe::SDLImageStore> imgStore(window->getImgStore());
 
   const char floorfilename[] = "data/images/degryll/isotetris/sueloT.png";
+  const char floorfilename2[] = "data/images/degryll/isotetris/sueloG.png";
   const char izqfilename[] = "data/images/degryll/isotetris/izqT.png";
   const char derfilename[] = "data/images/degryll/isotetris/derT.png";
   const char protafilename[] = "data/images/degryll/isotetris/charDT.png";
 
-  uint64_t floortile     = imgStore->loadImg(floorfilename);
+  uint64_t floortile[2]     = {imgStore->loadImg(floorfilename), imgStore->loadImg(floorfilename2)};
   uint64_t izqtile       = imgStore->loadImg(izqfilename);
   uint64_t dertile       = imgStore->loadImg(derfilename);
   uint64_t protatile     = imgStore->loadImg(protafilename);
-
-  printf("Tiles: %lld %lld %lld\n", floortile, izqtile, dertile); fflush(stdout);
 
   window->setBackgroundColor(64, 0, 0, 0);
   window->clear();
