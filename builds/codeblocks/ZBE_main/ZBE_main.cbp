@@ -41,6 +41,8 @@
 					<Add directory="../../../extlibs/Vulkan/1.1.77.0/include" />
 					<Add directory="../../../extlibs/tinyobjloader" />
 					<Add directory="../../../extlibs/SDL2_net/2.0.1/include" />
+					<Add directory="../../../extlibs/OALSoft/1.18.2/include" />
+					<Add directory="../../../extlibs/stb_vorbis" />
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
@@ -55,6 +57,7 @@
 					<Add library="glew32" />
 					<Add library="openGL32" />
 					<Add library="vulkan-1" />
+					<Add library="OpenAL32" />
 					<Add directory="../../../lib" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.1/x86_64-w64-mingw32/lib" />
@@ -63,6 +66,7 @@
 					<Add directory="../../../extlibs/SDL2_net/2.0.1/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/GLEW/2.1.0/windows/lib/Release/x64" />
 					<Add directory="../../../extlibs/Vulkan/1.1.77.0/windows/lib" />
+					<Add directory="../../../extlibs/OALSoft/1.18.2/windows/lib" />
 				</Linker>
 			</Target>
 			<Target title="Release-Win64">
@@ -95,6 +99,8 @@
 					<Add directory="../../../extlibs/Vulkan/1.1.77.0/include" />
 					<Add directory="../../../extlibs/SDL2_mixer/2.0.2/include" />
 					<Add directory="../../../extlibs/tinyobjloader" />
+					<Add directory="../../../extlibs/OALSoft/1.18.2/include" />
+					<Add directory="../../../extlibs/stb_vorbis" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -110,6 +116,7 @@
 					<Add library="opengl32" />
 					<Add library="glew32" />
 					<Add library="vulkan-1" />
+					<Add library="OpenAL32" />
 					<Add directory="../../../lib" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.1/x86_64-w64-mingw32/lib" />
@@ -118,6 +125,7 @@
 					<Add directory="../../../extlibs/SDL2_net/2.0.1/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/GLEW/2.1.0/windows/lib/Release/x64" />
 					<Add directory="../../../extlibs/Vulkan/1.1.77.0/windows/lib" />
+					<Add directory="../../../extlibs/OALSoft/1.18.2/windows/lib" />
 				</Linker>
 			</Target>
 			<Target title="Debug-Linux64">
