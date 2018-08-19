@@ -108,12 +108,11 @@
 					<Add option="-std=c++17" />
 					<Add directory="../../../src/ZandBokz/include" />
 					<Add directory="../../../include" />
-					<Add directory="../../../extlibs/utf8cpp/source" />
-					<Add directory="../../../extlibs/boost_1_57_0" />
 					<Add directory="../../../extlibs/IteratorTypeErasure/IteratorTypeErasure/any_iterator" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/include" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/include" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/include" />
+					<Add directory="../../../extlibs/SDL2_net/2.0.1/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
@@ -122,10 +121,12 @@
 					<Add library="SDL2" />
 					<Add library="SDL2_image" />
 					<Add library="SDL2_ttf" />
+					<Add library="SDL2_net" />
 					<Add directory="../../../lib" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/linux64/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/lib" />
+					<Add directory="../../../extlibs/SDL2_net/2.0.1/linux/lib" />
 				</Linker>
 			</Target>
 			<Target title="Release-Linux64">
@@ -142,11 +143,11 @@
 					<Add option="-std=c++17" />
 					<Add directory="../../../src/ZandBokz/include" />
 					<Add directory="../../../include" />
-					<Add directory="../../../extlibs/boost_1_57_0" />
 					<Add directory="../../../extlibs/IteratorTypeErasure/IteratorTypeErasure/any_iterator" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/include" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/include" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/include" />
+					<Add directory="../../../extlibs/SDL2_net/2.0.1/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -156,10 +157,12 @@
 					<Add library="SDL2" />
 					<Add library="SDL2_image" />
 					<Add library="SDL2_ttf" />
+					<Add library="SDL2_net" />
 					<Add directory="../../../lib" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/linux64/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/lib" />
+					<Add directory="../../../extlibs/SDL2_net/2.0.1/linux/lib" />
 				</Linker>
 			</Target>
 		</Build>

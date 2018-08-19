@@ -154,6 +154,9 @@
 					<Add directory="../../../extlibs/SDL2_mixer/2.0.2/include" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/include/SDL2" />
 					<Add directory="../../../extlibs/tinyobjloader" />
+					<Add directory="../../../extlibs/OALSoft/1.18.2/include" />
+					<Add directory="../../../extlibs/stb_vorbis" />
+					<Add directory="../../../extlibs/SDL2_net/2.0.1/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
@@ -163,9 +166,11 @@
 					<Add library="SDL2_image" />
 					<Add library="SDL2_ttf" />
 					<Add library="SDL2_mixer" />
+					<Add library="SDL2_net" />
 					<Add library="GL" />
 					<Add library="GLEW" />
 					<Add library="vulkan" />
+					<Add library="openal" />
 					<Add directory="../../../lib" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/linux64/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />
@@ -173,6 +178,8 @@
 					<Add directory="../../../extlibs/GLEW/2.1.0/linux/lib" />
 					<Add directory="../../../extlibs/Vulkan/1.1.77.0/linux/lib" />
 					<Add directory="../../../extlibs/SDL2_mixer/2.0.2/linux/lib" />
+					<Add directory="../../../extlibs/OALSoft/1.18.2/linux/lib" />
+					<Add directory="../../../extlibs/SDL2_net/2.0.1/linux/lib" />
 				</Linker>
 			</Target>
 			<Target title="Release-Linux64">
@@ -204,6 +211,9 @@
 					<Add directory="../../../extlibs/SDL2_mixer/2.0.2/include" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/include/SDL2" />
 					<Add directory="../../../extlibs/tinyobjloader" />
+					<Add directory="../../../extlibs/OALSoft/1.18.2/include" />
+					<Add directory="../../../extlibs/stb_vorbis" />
+					<Add directory="../../../extlibs/SDL2_net/2.0.1/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -213,10 +223,12 @@
 					<Add library="SDL2" />
 					<Add library="SDL2_image" />
 					<Add library="SDL2_ttf" />
+					<Add library="SDL2_net" />
 					<Add library="GL" />
 					<Add library="GLEW" />
 					<Add library="vulkan" />
 					<Add library="SDL2_mixer" />
+					<Add library="openal" />
 					<Add directory="../../../lib" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/linux64/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />
@@ -224,6 +236,8 @@
 					<Add directory="../../../extlibs/GLEW/2.1.0/linux/lib" />
 					<Add directory="../../../extlibs/Vulkan/1.1.77.0/linux/lib" />
 					<Add directory="../../../extlibs/SDL2_mixer/2.0.2/linux/lib" />
+					<Add directory="../../../extlibs/OALSoft/1.18.2/linux/lib" />
+					<Add directory="../../../extlibs/SDL2_net/2.0.1/linux/lib" />
 				</Linker>
 			</Target>
 		</Build>
@@ -263,6 +277,7 @@
 		<Unit filename="../../../src/ZBE_main/include/ludo/events/handlers/LudoActuators.h" />
 		<Unit filename="../../../src/ZBE_main/include/ludo/events/handlers/LudoHandlers.h" />
 		<Unit filename="../../../src/ZBE_main/include/ludo/generaltest.h" />
+		<Unit filename="../../../src/ZBE_main/include/ludo/openaltest.h" />
 		<Unit filename="../../../src/ZBE_main/include/ludo/opengltest.h" />
 		<Unit filename="../../../src/ZBE_main/include/ludo/sdlaudiotest.h" />
 		<Unit filename="../../../src/ZBE_main/include/ludomain.h" />
@@ -271,6 +286,7 @@
 		<Unit filename="../../../src/ZBE_main/src/degryllmain.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/gamemain.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/ludo/generaltest.cpp" />
+		<Unit filename="../../../src/ZBE_main/src/ludo/openaltest.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/ludo/opengltest.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/ludo/sdlaudiotest.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/ludomain.cpp" />

@@ -14,6 +14,7 @@
 #include "ludo/events/handlers/LudoHandlers.h"
 
 #include "ludo/opengltest.h"
+#include "ludo/openaltest.h"
 #include "ludo/sdlaudiotest.h"
 #include "ludo/generaltest.h"
 

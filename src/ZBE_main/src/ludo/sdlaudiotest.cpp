@@ -38,6 +38,7 @@ int sdlaudiotest(int, char** ) {
   do {
     i = Mix_PlayingMusic();
     printf("Playing:  %d\n", i);
+    printf("Playing others:  %d\n", Mix_Playing(0));
   } while(i);
 
   Mix_FreeMusic(music);

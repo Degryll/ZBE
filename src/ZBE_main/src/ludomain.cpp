@@ -20,10 +20,11 @@ int ludomain(int argc, char** argv) {
   printf("1 - opengl test\n");
   printf("2 - sdl audio test\n");
   printf("3 - test general\n");
+  printf("4 - openal test\n");
   printf("0 - salir\n");
   printf("--:");
   int readAmount = scanf ("%d",&option);
-  while (readAmount!=1 || option<0 || option>3) {
+  while (readAmount!=1 || option<0 || option>4) {
     printf("Introduzca una opcion... que valga: ");
     readAmount = scanf ("%d",&option);
   }
@@ -38,6 +39,9 @@ int ludomain(int argc, char** argv) {
     break;
   case 3:
     out = generaltest(argc,argv);
+    break;
+  case 4:
+    out = openaltest(argc,argv);
     break;
   case 0:
     printf("�Y para que has venido?\n");
