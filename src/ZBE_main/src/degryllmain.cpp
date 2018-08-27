@@ -28,6 +28,7 @@
 
 #include "ZBE/SDL/starters/SDL_Starter.h"
 #include "ZBE/SDL/system/SDLWindow.h"
+#include "ZBE/core/tools/math/Point.h"
 
 // #include <memory>
 // #include <mutex>
@@ -1977,9 +1978,27 @@ void vulkantest() {
   windows.waitIdle();
 }
 
+struct TileComparator {
+  bool operator() (const zbe::Point<4>& lhs, const zbe::Point<4>& rhs) const {
+    if (lhs[2] < rhs[2]) {return true;}
+    else if (lhs[2] > rhs[2]) {return false;}
 
+    if (lhs[3] < rhs[3]) {return true;}
+    else if (lhs[3] > rhs[3]) {return false;}
 
-void drawfloor(std::shared_ptr<zbe::SDLWindow> window, uint64_t* floortile, int x, int y, int c) {
+    if (lhs[1] < rhs[1]) {return true;}
+    else if (lhs[1] > rhs[1]) {return false;}
+
+    if (lhs[0] < rhs[0]) {return true;}
+    else if (lhs[0] > rhs[0]) {return false;}
+
+    return false;
+  }
+};
+
+typedef std::set<zbe::Point<4>, TileComparator> Tile;
+
+void drawfloor(std::shared_ptr<zbe::SDLWindow> window, uint64_t* floortile, int x, int y, int c, int isooffset, int offsetx = 50, int offsety = 50) {
   SDL_Rect src, dst;
   const int iw = 16;
   const int ih = 9;
@@ -1990,18 +2009,18 @@ void drawfloor(std::shared_ptr<zbe::SDLWindow> window, uint64_t* floortile, int 
   src.w = 16;
   src.h = 9;
 
-  int offset = (y % 2) ? ihw : 0;
+  int offset = (isooffset) ? ihw : 0;
 
-  dst.x = 100 + x * iw + offset;
-  dst.y = 100 + y * ihh - ih * c;
+  dst.x = offsetx + x * iw + offset;
+  dst.y = offsety + y * ihh - ih * c;
   dst.w = 16;
   dst.h = 9;
   //printf("x: %d, y: %d\n", dst.x, dst.y); fflush(stdout);
-  SDL_Texture* tex = window->getImgStore()->getTexture(floortile[c % 2]);
+  SDL_Texture* tex = window->getImgStore()->getTexture(floortile[abs(c) % 2]);
   window->render(tex , &src, &dst);
 }
 
-void drawleftwall(std::shared_ptr<zbe::SDLWindow> window, uint64_t tile, int x, int y, int c) {
+void drawleftwall(std::shared_ptr<zbe::SDLWindow> window, uint64_t tile, int x, int y, int c, int isooffset, int offsetx = 50, int offsety = 50) {
   SDL_Rect src, dst;
   const int iw = 16;
   const int ih = 9;
@@ -2012,10 +2031,10 @@ void drawleftwall(std::shared_ptr<zbe::SDLWindow> window, uint64_t tile, int x, 
   src.w = 8;
   src.h = 14;
 
-  int offset = (y % 2) ? ihw : 0;
+  int offset = (isooffset) ? ihw : 0;
 
-  dst.x = 100 + x * iw + offset;
-  dst.y = 100 + y * ihh - ih * c + ihh;
+  dst.x = offsetx + x * iw + offset;
+  dst.y = offsety + y * ihh - ih * c + ihh;
   dst.w = 8;
   dst.h = 14;
   //printf("x: %d, y: %d\n", dst.x, dst.y); fflush(stdout);
@@ -2023,7 +2042,7 @@ void drawleftwall(std::shared_ptr<zbe::SDLWindow> window, uint64_t tile, int x, 
   window->render(tex , &src, &dst);
 }
 
-void drawrightwall(std::shared_ptr<zbe::SDLWindow> window, uint64_t tile, int x, int y, int c) {
+void drawrightwall(std::shared_ptr<zbe::SDLWindow> window, uint64_t tile, int x, int y, int c, int isooffset, int offsetx = 50, int offsety = 50) {
   SDL_Rect src, dst;
   const int iw = 16;
   const int ih = 9;
@@ -2034,10 +2053,10 @@ void drawrightwall(std::shared_ptr<zbe::SDLWindow> window, uint64_t tile, int x,
   src.w = 8;
   src.h = 14;
 
-  int offset = (y % 2) ? ihw : 0;
+  int offset = (isooffset) ? ihw : 0;
 
-  dst.x = 100 + x * iw + offset + ihw;
-  dst.y = 100 + y * ihh - ih * c + ihh;
+  dst.x = offsetx + x * iw + offset + ihw;
+  dst.y = offsety + y * ihh - ih * c + ihh;
   dst.w = 8;
   dst.h = 14;
   //printf("x: %d, y: %d\n", dst.x, dst.y); fflush(stdout);
@@ -2045,7 +2064,7 @@ void drawrightwall(std::shared_ptr<zbe::SDLWindow> window, uint64_t tile, int x,
   window->render(tex , &src, &dst);
 }
 
-void drawprota(std::shared_ptr<zbe::SDLWindow> window, uint64_t tile, int x, int y, int c) {
+void drawprota(std::shared_ptr<zbe::SDLWindow> window, uint64_t tile, int x, int y, int c, int isooffset, int offsetx = 50, int offsety = 50) {
   SDL_Rect src, dst;
   const int iw = 16;
   const int ih = 9;
@@ -2056,10 +2075,10 @@ void drawprota(std::shared_ptr<zbe::SDLWindow> window, uint64_t tile, int x, int
   src.w = 11;
   src.h = 38;
 
-  int offset = (y % 2) ? ihw : 0;
+  int offset = (isooffset) ? ihw : 0;
 
-  dst.x = 100 + x * iw + offset + 4;
-  dst.y = 100 + y * ihh - ih * c - 32;
+  dst.x = offsetx + x * iw + offset + 4;
+  dst.y = offsety + y * ihh - ih * c - 32;
   dst.w = 11;
   dst.h = 38;
   //printf("x: %d, y: %d\n", dst.x, dst.y); fflush(stdout);
@@ -2067,7 +2086,7 @@ void drawprota(std::shared_ptr<zbe::SDLWindow> window, uint64_t tile, int x, int
   window->render(tex , &src, &dst);
 }
 
-void draw(std::shared_ptr<zbe::SDLWindow> window, uint64_t* floortile, uint64_t izqtile, uint64_t dertile, std::vector<std::vector<std::vector<int>>> m, uint64_t protatile, std::vector<int> prota) {
+void draw(std::shared_ptr<zbe::SDLWindow> window, uint64_t* floortile, uint64_t izqtile, uint64_t dertile, std::vector<std::vector<std::vector<int>>> m, uint64_t protatile, std::vector<int> prota, int offsetx = 50, int offsety = 50) {
   int layers = m.size();
   int rows = m[0].size();
   int cols = m[0][0].size();
@@ -2076,102 +2095,48 @@ void draw(std::shared_ptr<zbe::SDLWindow> window, uint64_t* floortile, uint64_t 
     for (int layer = 0; layer < layers; layer++) {
       for (int col = 0; col < cols; col++) {
         if (m[layer][row][col] == 0) continue;
-        drawleftwall(window, izqtile, col, row, layer);
-        drawrightwall(window, dertile, col, row, layer);
-        drawfloor(window, floortile, col, row, layer);
-        if (prota[2] == layer && prota[1] == row && prota[0] == col) drawprota(window, protatile, prota[0], prota[1], prota[2]);
+        drawleftwall(window, izqtile, col, row, layer, row % 2, offsetx, offsety);
+        drawrightwall(window, dertile, col, row, layer, row % 2, offsetx, offsety);
+        drawfloor(window, floortile, col, row, layer, row % 2, offsetx, offsety);
+        if (prota[2] == layer && prota[1] == row && prota[0] == col) drawprota(window, protatile, prota[0], prota[1], prota[2], row % 2, offsetx, offsety);
       }
     }
   }
+}
 
-//  for (int i = 0; i < m.size(); i++) {
-//    for (int j = 0; j < m[i].size(); j++) {
-//      for (int k = 0; k < m[i][j].size(); k++) {
-//        if (m[i][j][k] == 0) continue;
-//          drawleftwall(window, izqtile, k, j, i);
-//          drawrightwall(window, dertile, k, j, i);
-//      }
-//    }
-//    for (int j = 0; j < m[i].size(); j++) {
-//      for (int k = 0; k < m[i][j].size(); k++) {
-//        if (m[i][j][k] == 0) continue;
-//          drawfloor(window, floortile, k, j, i);
-//      }
-//    }
-//  }
+void draw2(std::shared_ptr<zbe::SDLWindow> window, uint64_t* floortile, uint64_t izqtile, uint64_t dertile, std::vector<std::vector<std::vector<int>>> m, uint64_t protatile, std::vector<int> prota, int offsetx = 50, int offsety = 100) {
+  offsetx += 200;
+  int layers = m.size();
+  int rows = m[0].size();
+  int cols = m[0][0].size();
 
-//
-//
-//
-//  // - Partir de la posicion del personaje (centro de la camara)
-//  // POR AHORA el centro del mapa
-//  int x = m->getHW();
-//  int y = m->getHH();
-//  int z = m->getHD();
-//
-//  // buscar suelo (si el personaje est� sobre el suelo, ese, si est� al aire, descender por niveles hasta encontrarlo).
-//  // POR AHORA siempre esta en el suelo
-//
-//  // - Recorrer el mapa primero hacia atras (izq y arriba) y luego hacia adelante (der y abajo).
-//  // POR AHORA 0 es aire y 1 es tierra
-//  int idx = x;
-//  int idy = y;
-//  int idz = z;
-//  int k = idz;
-//  // backward from center
-//  for(int i = idy; i >= 0; i--) {
-//    for(int j = idx; j >= 0; j--) {
-//      //printf("x: %d, y: %d, d: %d\n", j, i, k); fflush(stdout);
-//      // - Por cada nueva casilla se busca el suelo a partir del suelo contiguo.
-//      //   - Si al nivel actual la nueva casilla es aire, se desciende hasta encontrar el suelo.
-//      //   - Si hay un bloque solido, se asciende hasta encontrar el nuevo nivel de suelo.
-//      while((k > 0) && m->getTile(j, i, k) == 0) k--;
-//      while((k < (m->getD()-1)) && m->getTile(j, i, k) == 1) k++;
-//      ground.insert({(double)j, (double)i, (double)k});
-//      //  TODO insertar muros
-//    }
-//    idx = m->getW() - 1;
-//  }
-//
-//  idx = x + 1;
-//  k = idz;
-//  // forward from center
-//  for(int i = idy; i < m->getH(); i++) {
-//    for(int j = idx; j < m->getW(); j++) {
-//      //printf("x: %d, y: %d, d: %d\n", j, i, k); fflush(stdout);
-//      // - Por cada nueva casilla se busca el suelo a partir del suelo contiguo.
-//      //   - Si al nivel actual la nueva casilla es aire, se desciende hasta encontrar el suelo.
-//      //   - Si hay un bloque solido, se asciende hasta encontrar el nuevo nivel de suelo.
-//      while((k > 0) && m->getTile(j, i, k) == 0) k--;
-//      while((k < (m->getD()-1)) && m->getTile(j, i, k) == 1) k++;
-//      ground.insert({(double)j, (double)i, (double)k});
-//      //  TODO insertar muros
-//    }
-//    idx = 0;
-//  }
-//
-//  SDL_Rect src,dst;
-//  for (auto &point : ground) {
-//    //printf("x: %.1lf, y: %.1lf, d: %.1lf\n", point[0], point[1], point[2]); fflush(stdout);
-//    const int iw = 16;
-//    const int ih = 9;
-//    const int ihw = iw / 2;
-//    const int ihh = ih / 2;
-//    src.x = 0;
-//    src.y = 0;
-//    src.w = 16;
-//    src.h = 9;
-//
-//    int offset = ((int)(point[1]) % 2) ? ihw : 0;
-//
-//    dst.x = 100 + point[0] * iw + offset;
-//    dst.y = 100 + point[1] * ihh - ih * point[2];
-//    dst.w = 16;
-//    dst.h = 9;
-//    //printf("x: %d, y: %d\n", dst.x, dst.y); fflush(stdout);
-//    window->render(grimage, &src, &dst);
-//  }
+  for (int row = 0; row < rows; row++) {
+    for (int layer = 0; layer < layers; layer++) {
+      for (int col = 0; col < cols; col++) {
+        if (m[layer][row][col] == 0) continue;
+        drawleftwall(window, izqtile, col-prota[0], row-prota[1], layer-prota[2], row % 2, offsetx, offsety);
+        drawrightwall(window, dertile, col-prota[0], row-prota[1], layer-prota[2], row % 2, offsetx, offsety);
+        drawfloor(window, floortile, col-prota[0], row-prota[1], layer-prota[2], row % 2, offsetx, offsety);
+        if (prota[2] == layer && prota[1] == row && prota[0] == col) drawprota(window, protatile, 0, 0, 0, row % 2, offsetx, offsety);
+      }
+    }
+  }
+}
 
+void draw3(std::shared_ptr<zbe::SDLWindow> window, uint64_t* floortile, uint64_t izqtile, uint64_t dertile, Tile m, uint64_t protatile, std::vector<int> prota, int offsetx = 50, int offsety = 50) {
+  offsetx += 200;
+
+  for(zbe::Point<4> t : m) {
+    if (t[0] == 0) {
+      drawleftwall(window, izqtile, t[1]-prota[0], t[2]-prota[1], t[3]-prota[2], int(t[2]) % 2, offsetx, offsety);
+      drawrightwall(window, dertile, t[1]-prota[0], t[2]-prota[1], t[3]-prota[2], int(t[2]) % 2, offsetx, offsety);
+    } else if (t[0] == 1) {
+      drawfloor(window, floortile, t[1]-prota[0], t[2]-prota[1], t[3]-prota[2], int(t[2]) % 2, offsetx, offsety);
+    } else {
+      drawprota(window, protatile, 0, 0, 0, int(prota[1]) % 2, offsetx, offsety);
+    }
+  }
+  //drawprota(window, protatile, 0, 0, 0, int(prota[1]) % 2, offsetx, offsety);
 }
 
 void fixposition(std::vector<int>& prota, std::vector<std::vector<std::vector<int> > > m) {
@@ -2182,6 +2147,161 @@ void fixposition(std::vector<int>& prota, std::vector<std::vector<std::vector<in
   while (prota[2] > 0 && m[prota[2]][prota[1]][prota[0]] != 1) {
     prota[2]--;
   }
+}
+
+void walkLeft(std::vector<std::vector<std::vector<int>>> m, Tile& m2, int ceiling, int x, int y, int z);
+void walkUpLeft(std::vector<std::vector<std::vector<int>>> m, Tile& m2, int ceiling, int x, int y, int z);
+void walkUp(std::vector<std::vector<std::vector<int>>> m, Tile& m2, int ceiling, int x, int y, int z);
+void walkUpRight(std::vector<std::vector<std::vector<int>>> m, Tile& m2, int ceiling, int x, int y, int z);
+void walkRight(std::vector<std::vector<std::vector<int>>> m, Tile& m2, int ceiling, int x, int y, int z);
+void walkDownRight(std::vector<std::vector<std::vector<int>>> m, Tile& m2, int ceiling, int x, int y, int z);
+void walkDonw(std::vector<std::vector<std::vector<int>>> m, Tile& m2, int ceiling, int x, int y, int z);
+void walkDownLeft(std::vector<std::vector<std::vector<int>>> m, Tile& m2, int ceiling, int x, int y, int z);
+
+void update(std::vector<std::vector<std::vector<int>>> m, Tile& m2, int &ceiling, int &floor, int x, int y, int z) {
+  int d = m.size();
+  floor = z;
+  while ((floor > 0) && (m[floor][y][x] == 0)) floor--;
+  while ((floor+1 < ceiling) && (m[floor+1][y][x] == 1)) {
+    floor++;
+    m2.insert(zbe::Point<4>{0, x, y, floor});
+  }
+  m2.insert(zbe::Point<4>{1, x, y, floor});
+
+  while ((ceiling < d) && (m[ceiling][y][x]) == 0) ceiling++;
+}
+
+void walkLeft(std::vector<std::vector<std::vector<int>>> m, Tile& m2, int ceiling, int x, int y, int z) {
+  int d = m.size();
+  int h = m[0].size();
+  int w = m[0][0].size();
+  if (x < 0 || y < 0 || z < 0
+  ||  x >= w || y >= h || z >= d) return;
+
+  int floor = z;
+  update(m, m2, ceiling, floor, x, y, z);
+
+  walkUpLeft(m, m2, ceiling, x-1, y-1, floor);
+  walkLeft(m, m2, ceiling, x-1, y, floor);
+  walkDownLeft(m, m2, ceiling, x-1, y+1, floor);
+}
+
+void walkUpLeft(std::vector<std::vector<std::vector<int>>> m, Tile& m2, int ceiling, int x, int y, int z) {
+  int d = m.size();
+  int h = m[0].size();
+  int w = m[0][0].size();
+  if (x < 0 || y < 0 || z < 0
+  ||  x >= w || y >= h || z >= d) return;
+
+  int floor = z;
+  update(m, m2, ceiling, floor, x, y, z);
+
+  walkUpLeft(m, m2, ceiling, x-1, y-1, floor);
+}
+
+void walkUp(std::vector<std::vector<std::vector<int>>> m, Tile& m2, int ceiling, int x, int y, int z) {
+  int d = m.size();
+  int h = m[0].size();
+  int w = m[0][0].size();
+  if (x < 0 || y < 0 || z < 0
+  ||  x >= w || y >= h || z >= d) return;
+
+  int floor = z;
+  update(m, m2, ceiling, floor, x, y, z);
+
+  walkUpLeft(m, m2, ceiling, x-1, y-1, floor);
+  walkUp(m, m2, ceiling, x, y-1, floor);
+  walkUpRight(m, m2, ceiling, x+1, y-1, floor);
+}
+
+void walkUpRight(std::vector<std::vector<std::vector<int>>> m, Tile& m2, int ceiling, int x, int y, int z) {
+  int d = m.size();
+  int h = m[0].size();
+  int w = m[0][0].size();
+  if (x < 0 || y < 0 || z < 0
+  ||  x >= w || y >= h || z >= d) return;
+
+  int floor = z;
+  update(m, m2, ceiling, floor, x, y, z);
+
+  walkUpRight(m, m2, ceiling, x+1, y-1, floor);
+}
+
+void walkRight(std::vector<std::vector<std::vector<int>>> m, Tile& m2, int ceiling, int x, int y, int z) {
+  int d = m.size();
+  int h = m[0].size();
+  int w = m[0][0].size();
+  if (x < 0 || y < 0 || z < 0
+  ||  x >= w || y >= h || z >= d) return;
+
+  int floor = z;
+  update(m, m2, ceiling, floor, x, y, z);
+
+  walkUpRight(m, m2, ceiling, x+1, y-1, floor);
+  walkRight(m, m2, ceiling, x+1, y, floor);
+  walkDownRight(m, m2, ceiling, x+1, y+1, floor);
+}
+
+void walkDownRight(std::vector<std::vector<std::vector<int>>> m, Tile& m2, int ceiling, int x, int y, int z) {
+  int d = m.size();
+  int h = m[0].size();
+  int w = m[0][0].size();
+  if (x < 0 || y < 0 || z < 0
+  ||  x >= w || y >= h || z >= d) return;
+
+  int floor = z;
+  update(m, m2, ceiling, floor, x, y, z);
+
+  walkDownRight(m, m2, ceiling, x+1, y+1, floor);
+}
+
+void walkDonw(std::vector<std::vector<std::vector<int>>> m, Tile& m2, int ceiling, int x, int y, int z) {
+  int d = m.size();
+  int h = m[0].size();
+  int w = m[0][0].size();
+  if (x < 0 || y < 0 || z < 0
+  ||  x >= w || y >= h || z >= d) return;
+
+  int floor = z;
+  update(m, m2, ceiling, floor, x, y, z);
+
+  walkDownLeft(m, m2, ceiling, x-1, y+1, floor);
+  walkDonw(m, m2, ceiling, x, y+1, floor);
+  walkDownRight(m, m2, ceiling, x+1, y+1, floor);
+}
+
+void walkDownLeft(std::vector<std::vector<std::vector<int>>> m, Tile& m2, int ceiling, int x, int y, int z) {
+  int d = m.size();
+  int h = m[0].size();
+  int w = m[0][0].size();
+  if (x < 0 || y < 0 || z < 0
+  ||  x >= w || y >= h || z >= d) return;
+
+  int floor = z;
+  update(m, m2, ceiling, floor, x, y, z);
+
+  walkDownLeft(m, m2, ceiling, x-1, y+1, floor);
+}
+
+void fillmap(std::vector<std::vector<std::vector<int>>> m, std::vector<int> prota, Tile& m2) {
+  int x = prota[0];
+  int y = prota[1];
+  int z = prota[2];
+  int ceiling = z + 1;
+  while ((ceiling < m.size()) && (m[ceiling][x][y] == 0)) ceiling++;
+
+  m2.insert(zbe::Point<4>{0, x, y, z});
+  m2.insert(zbe::Point<4>{1, x, y, z});
+  m2.insert(zbe::Point<4>{2, prota[0], prota[1], prota[2]});
+
+  walkLeft(m, m2, ceiling, x-1, y, z);
+  walkUpLeft(m, m2, ceiling, x-1, y-1, z);
+  walkUp(m, m2, ceiling, x, y-1, z);
+  walkUpRight(m, m2, ceiling, x+1, y-1, z);
+  walkRight(m, m2, ceiling, x+1, y, z);
+  walkDownRight(m, m2, ceiling, x+1, y+11, z);
+  walkDonw(m, m2, ceiling, x, y+1, z);
+  walkDownLeft(m, m2, ceiling, x-1, y+1, z);
 }
 
 void isometric() {
@@ -2200,6 +2320,9 @@ void isometric() {
   std::vector<int> er(MW, 0);
   std::vector<std::vector<int> > layer(MH, er);
   std::vector<std::vector<std::vector<int> > > m(MD, layer);
+
+  Tile m2;
+  Tile m3;
 
   for (int i = 0; i < MH; i++) {
     for (int j = 0; j < MW; j++) {
@@ -2320,8 +2443,31 @@ void isometric() {
     }
     window->clear();
     fixposition(prota, m);
+
+    m2.clear();
+    for (int i = 0; i < MD; i++) {
+      for (int j = 0; j < MH; j++) {
+        for (int k = 0; k < MW; k++) {
+          if(m[i][j][k] == 1) {
+            m2.insert(zbe::Point<4>{0, k, j, i});
+            m2.insert(zbe::Point<4>{1, k, j, i});
+          }
+        }
+      }
+    }
+
+    m2.insert(zbe::Point<4>{2, prota[0], prota[1], prota[2]});
+
+    m3.clear();
+    fillmap(m, prota, m3);
     draw(window, floortile, izqtile, dertile, m, protatile, prota);
-    printf("%s", zbe::SysError::getFirstErrorString().c_str()); fflush(stdout);
+    draw2(window, floortile, izqtile, dertile, m, protatile, prota, 550);
+    draw3(window, floortile, izqtile, dertile, m2, protatile, prota, 50, 300);
+    draw3(window, floortile, izqtile, dertile, m3, protatile, prota, 550, 300);
+    if (zbe::SysError::getNErrors() != 0) {
+      printf("%s\n", zbe::SysError::getFirstErrorString().c_str()); fflush(stdout);
+      zbe::SysError::clear();
+    }
     window->present();
   }
 
