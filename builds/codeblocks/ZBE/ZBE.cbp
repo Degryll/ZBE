@@ -49,6 +49,7 @@
 					<Add directory="../../../extlibs/stb_vorbis" />
 					<Add directory="../../../extlibs/SDL2_net/2.0.1/include" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/include/SDL2" />
+					<Add directory="../../../extlibs/OALSoft/1.18.2/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
@@ -61,11 +62,13 @@
 					<Add library="GL" />
 					<Add library="GLEW" />
 					<Add library="stdc++fs" />
+					<Add library="openal" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/linux64/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/lib" />
 					<Add directory="../../../extlibs/GLEW/2.1.0/linux/lib" />
 					<Add directory="../../../extlibs/SDL2_net/2.0.1/linux/lib" />
+					<Add directory="../../../extlibs/OALSoft/1.18.2/linux/lib" />
 				</Linker>
 			</Target>
 			<Target title="Release-Linux64">
@@ -103,6 +106,7 @@
 					<Add directory="../../../extlibs/stb_vorbis" />
 					<Add directory="../../../extlibs/SDL2_net/2.0.1/include" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/include/SDL2" />
+					<Add directory="../../../extlibs/OALSoft/1.18.2/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -116,11 +120,13 @@
 					<Add library="GL" />
 					<Add library="GLEW" />
 					<Add library="stdc++fs" />
+					<Add library="openal" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/linux64/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/lib" />
 					<Add directory="../../../extlibs/GLEW/2.1.0/linux/lib" />
 					<Add directory="../../../extlibs/SDL2_net/2.0.1/linux/lib" />
+					<Add directory="../../../extlibs/OALSoft/1.18.2/linux/lib" />
 				</Linker>
 			</Target>
 			<Target title="Debug-Win64">
@@ -240,6 +246,11 @@
 		<Unit filename="../../../include/ZBE/JSON/graphics/JSONGraphicsLoaders.h" />
 		<Unit filename="../../../include/ZBE/JSON/resources/JSONImgDefLoader.h" />
 		<Unit filename="../../../include/ZBE/JSON/resources/JSONMultiSpriteSheetLoader.h" />
+		<Unit filename="../../../include/ZBE/OAL/entities/avatars/Sound3D.h" />
+		<Unit filename="../../../include/ZBE/OAL/entities/avatars/implementations/BaseSound3D.h" />
+		<Unit filename="../../../include/ZBE/OAL/players/Sound3DOALPlayer.h" />
+		<Unit filename="../../../include/ZBE/OAL/system/OALAudioStore.h" />
+		<Unit filename="../../../include/ZBE/OAL/tools/OALUtils.h" />
 		<Unit filename="../../../include/ZBE/OGL/daemons/OGLModelSheetPosDrawer.h" />
 		<Unit filename="../../../include/ZBE/OGL/daemons/OGLModelSheetPreDrawer.h" />
 		<Unit filename="../../../include/ZBE/OGL/drawers/OGLModelSheetDrawer.h" />
@@ -439,6 +450,9 @@
 		<Unit filename="../../../include/ZBE/resources/loaders/SpriteSheetLoader.h" />
 		<Unit filename="../../../include/ZBE/system/SimpleLoopBuilder.h" />
 		<Unit filename="../../../src/ZBE/JSON/graphics/JSONGraphicsLoaders.cpp" />
+		<Unit filename="../../../src/ZBE/OAL/players/Sound3DOALPlayer.cpp" />
+		<Unit filename="../../../src/ZBE/OAL/system/OALAudioStore.cpp" />
+		<Unit filename="../../../src/ZBE/OAL/tools/OALUtils.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/OGL/SDLOGLWindow.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/daemons/BasicPostLoopSDLDaemon.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/daemons/BasicPreLoopSDLDaemon.cpp" />

@@ -12,6 +12,7 @@
 
 #include <cstdint>
 #include <memory>
+#include <array>
 #include <unordered_map>
 
 #include "ZBE/core/tools/shared/Value.h"
@@ -133,6 +134,14 @@ class Entity : virtual public Avatar {
     std::unordered_map<uint64_t, std::shared_ptr<Value<float> > > fv;
     std::unordered_map<uint64_t, std::shared_ptr<Value<uint64_t> > > uv;
     std::unordered_map<uint64_t, std::shared_ptr<Value<int64_t> > > iv;
+};
+
+template<unsigned n>
+struct EntityIds {
+ EntityIds(std::shared_ptr<Entity> entity, std::array<uint64_t, n> ids) : e(entity), ids(ids) {}
+
+ std::shared_ptr<Entity> e;
+ std::array<uint64_t, n> ids;
 };
 
 }  // namespace zbe

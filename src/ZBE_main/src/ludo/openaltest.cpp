@@ -3,15 +3,25 @@
 #include <cstdio>
 #include <stdio.h>
 #include <string.h>
+#include <vector>
 
 #include <AL/al.h>
 #include <AL/alc.h>
 
-#include <stb_vorbis.c>
+#include "ZBE/core/zbe.h"
+
+#include "ZBE/core/tools/shared/implementations/SimpleValue.h"
+
+#include "ZBE/OAL/entities/avatars/Sound3D.h"
+#include "ZBE/OAL/entities/avatars/implementations/BaseSound3D.h"
+
+#include "ZBE/OAL/players/Sound3DOALPlayer.h"
+
+#include "ZBE/OAL/system/OALAudioStore.h"
 
 namespace ludo {
 
-void printError(){
+void printError() {
   ALCenum error = alGetError();
   if (error != AL_NO_ERROR) {
     if (error == AL_INVALID_NAME) {
@@ -90,98 +100,64 @@ int openaltest(int , char **) {
   alListener3f(AL_VELOCITY, 0, 0, 0);
   alListenerfv(AL_ORIENTATION, listenerOri);
 
-  printf("Source generation ( were the audio comes from )\n");
+  std::shared_ptr<zbe::OALAudioStore> store = std::make_shared<zbe::OALAudioStore>();
 
-	ALuint source;
+  uint64_t bufferId = store->loadAudio("data/test/audio/die_m.ogg");
 
-  alGenSources((ALuint)1, &source);
-  alSourcef(source, AL_PITCH, 1);
-  alSourcef(source, AL_GAIN, 1);
-  alSource3f(source, AL_POSITION, 0, 0, 0);
-  alSource3f(source, AL_VELOCITY, 0, 0, 0);
-  alSourcei(source, AL_LOOPING, AL_TRUE);
+  zbe::Sound3DOALPlayer player(store);
 
-  printf("Buffer generation ( raw audio stream )\n");
+  std::shared_ptr<zbe::AvatarEntityFixed<zbe::Sound3D> > aefS3D = std::make_shared<zbe::AvatarEntityFixed<zbe::Sound3D> >();
+  std::shared_ptr<zbe::AvatarEntityContainer<zbe::Sound3D> > aec = std::make_shared<zbe::AvatarEntityContainer<zbe::Sound3D> >(aefS3D);
 
-  ALuint buffer;
-  alGenBuffers((ALuint)1, &buffer);
-  printError();
+  std::shared_ptr<zbe::Entity> entity = std::make_shared<zbe::Entity>();
 
-  printf("Loading an audio stream to the buffer\n");
+  std::array<uint64_t, 3> pointIds = {1,2,3};
+  std::array<uint64_t, 3> velIds = {4,5,6};
+  std::array<uint64_t, 1> audioIds = {7};
 
-  //ALsizei size, freq;
-  ALenum format;
-	ALint source_state;
+  std::shared_ptr<zbe::Value<double> > px = std::make_shared<zbe::SimpleValue<double> >(0.0);
+  entity->setDouble(pointIds[0], px);
 
-  int channels;
-  int rate;
-  short* decoded;
+  std::shared_ptr<zbe::Value<double> > py = std::make_shared<zbe::SimpleValue<double> >(0.0);
+  entity->setDouble(pointIds[1], py);
 
-  int len = stb_vorbis_decode_filename("data/test/audio/die_m.ogg", &channels, &rate, &decoded);
+  std::shared_ptr<zbe::Value<double> > pz = std::make_shared<zbe::SimpleValue<double> >(0.0);
+  entity->setDouble(pointIds[2], pz);
 
-  if(!len) {
-    printf("Failed to load ogg file\n");
-  } else {
-    printf("Len: %d\n", len);
-  }
+  std::shared_ptr<zbe::Value<double> > vx = std::make_shared<zbe::SimpleValue<double> >(0.0);
+  entity->setDouble(velIds[0], vx);
 
-	if(channels == 2) {
-    format = AL_FORMAT_STEREO16;
-	} else {
-    format = AL_FORMAT_MONO16;
-	}
+  std::shared_ptr<zbe::Value<double> > vy = std::make_shared<zbe::SimpleValue<double> >(0.0);
+  entity->setDouble(velIds[1], vy);
 
-  printf("alBufferData call\n");
-  alBufferData(buffer, format, decoded, len * 2, rate);
-  printError();
+  std::shared_ptr<zbe::Value<double> > vz = std::make_shared<zbe::SimpleValue<double> >(0.0);
+  entity->setDouble(velIds[2], vz);
 
-  printf("alSourcei call\n");
-  alSourcei(source, AL_BUFFER, buffer);
-  printError();
+  zbe::EntityIds<3> point(entity, pointIds);
+  zbe::EntityIds<3> velocity(entity, velIds);
+  zbe::EntityIds<1> ticket(entity, audioIds);
+  uint64_t audioId = bufferId;
 
-  printf("alSourcePlay call\n");
-  alSourcePlay(source);
-  printError();
+  zbe::BaseSound3D* sound3D = new zbe::BaseSound3D(point, velocity, ticket, audioId);
 
-  printf("alGetSourcei call\n");
-  alGetSourcei(source, AL_SOURCE_STATE, &source_state);
-  printError();
-
-  printf("WTF? init: %d play: %d pause: %d stop: %d \n", AL_INITIAL, AL_PLAYING, AL_PAUSED, AL_STOPPED);
-  if(source_state == AL_INITIAL) {
-      printf("A BIG NOPE FOR YOU: AL_INITIAL\n");
-  } else if(source_state == AL_PLAYING) {
-      printf("PLAYING!!!\n");
-  } else if(source_state == AL_PAUSED) {
-      printf("A BIG NOPE FOR YOU: AL_PAUSED\n");
-  } else if(source_state == AL_STOPPED) {
-      printf("A BIG NOPE FOR YOU: AL_STOPPED\n");
-  } else {
-      printf("WTF? %#06x\n", source_state);
-  }
+  aefS3D->setAvatar(sound3D);
 
   printf("Loop\n");
-  // check for errors
+
   int count =  0;
   float coord = 0.0f;
-  while (true){//}source_state == AL_PLAYING) {
+  while (!sound3D->isStopped()) {
 
-    count++;
+   count++;
+   player.apply(aec);
+   alListener3f(AL_POSITION, 2 * sin(coord), 2 * cos(coord), 1.0f);
+   alListener3f(AL_VELOCITY, 0, 0, 0);
+   alListenerfv(AL_ORIENTATION, listenerOri);
 
-    alGetSourcei(source, AL_SOURCE_STATE, &source_state);
-    printError();
-
-    alListener3f(AL_POSITION, 2 * sin(coord), 2 * cos(coord), 1.0f);
-    alListener3f(AL_VELOCITY, 0, 0, 0);
-    alListenerfv(AL_ORIENTATION, listenerOri);
-
-    coord = coord + 0.000001f;
+   coord = coord + 0.00001f;
 
   }
 
-  // cleanup context
-  alDeleteSources(1, &source);
-  alDeleteBuffers(1, &buffer);
   device = alcGetContextsDevice(context);
   alcMakeContextCurrent(NULL);
   alcDestroyContext(context);
