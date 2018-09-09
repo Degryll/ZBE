@@ -166,6 +166,8 @@
 					<Add directory="../../../extlibs/json" />
 					<Add directory="../../../extlibs/lodePNG" />
 					<Add directory="../../../extlibs/GLEW/2.1.0/include" />
+					<Add directory="../../../extlibs/OALSoft/1.18.2/include" />
+					<Add directory="../../../extlibs/stb_vorbis" />
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
@@ -177,11 +179,13 @@
 					<Add library="SDL2_net" />
 					<Add library="glew32" />
 					<Add library="openGL32" />
+					<Add library="OpenAL32" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.1/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.14/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_net/2.0.1/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/GLEW/2.1.0/windows/lib/release/x64" />
+					<Add directory="../../../extlibs/OALSoft/1.18.2/windows/lib" />
 				</Linker>
 			</Target>
 			<Target title="Release-Win64">
@@ -218,6 +222,8 @@
 					<Add directory="../../../extlibs/json" />
 					<Add directory="../../../extlibs/GLEW/2.1.0/include" />
 					<Add directory="../../../extlibs/lodePNG" />
+					<Add directory="../../../extlibs/OALSoft/1.18.2/include" />
+					<Add directory="../../../extlibs/stb_vorbis" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -230,11 +236,13 @@
 					<Add library="SDL2_net" />
 					<Add library="glew32" />
 					<Add library="openGL32" />
+					<Add library="OpenAL32" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.1/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.14/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_net/2.0.1/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/GLEW/2.1.0/windows/lib/release/x64" />
+					<Add directory="../../../extlibs/OALSoft/1.18.2/windows/lib" />
 				</Linker>
 			</Target>
 		</Build>
