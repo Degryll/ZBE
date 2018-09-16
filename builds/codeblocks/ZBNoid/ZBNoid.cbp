@@ -17,11 +17,11 @@
 					<Add option="-pedantic" />
 					<Add option="-Wextra" />
 					<Add option="-Wall" />
-					<Add option="-std=c++11" />
 					<Add option="-m64" />
 					<Add option="-g" />
 					<Add option="-isystem ../../../extlibs/json" />
 					<Add option="-isystem ../../../extlibs/glm/0.9.9.0" />
+					<Add option="-std=c++17" />
 					<Add option="-D_GLIBCXX_USE_CXX11_ABI=0" />
 					<Add directory="../../../src/ZBNoid/include" />
 					<Add directory="../../../include" />
@@ -58,10 +58,10 @@
 				<Option compiler="mingw_64-bit_compiler-810" />
 				<Compiler>
 					<Add option="-O2" />
-					<Add option="-std=c++11" />
 					<Add option="-m64" />
 					<Add option="-isystem ../../../extlibs/json" />
 					<Add option="-isystem ../../../extlibs/glm/0.9.9.0" />
+					<Add option="-std=c++17" />
 					<Add option="-D_GLIBCXX_USE_CXX11_ABI=0" />
 					<Add directory="../../../src/ZBNoid/include" />
 					<Add directory="../../../include" />

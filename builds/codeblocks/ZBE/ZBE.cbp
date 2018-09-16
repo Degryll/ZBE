@@ -197,7 +197,6 @@
 				<Option createStaticLib="1" />
 				<Compiler>
 					<Add option="-O2" />
-					<Add option="-std=c++11" />
 					<Add option="-m64" />
 					<Add option="-isystem ../../../extlibs/json" />
 					<Add option="-isystem ../../../extlibs/glm/0.9.9.0" />

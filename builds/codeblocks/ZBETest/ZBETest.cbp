@@ -111,11 +111,11 @@
 					<Add option="-pedantic" />
 					<Add option="-Wextra" />
 					<Add option="-Wall" />
-					<Add option="-std=c++11" />
 					<Add option="-m64" />
 					<Add option="-g" />
 					<Add option="-isystem ..\..\..\extlibs\googletest\2017-05-14\include -D_GLIBCXX_USE_CXX11_ABI=0" />
 					<Add option="-isystem ../../../extlibs/json" />
+					<Add option="-std=c++17" />
 					<Add directory="../../../src/ZBETest/include" />
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/googletest/2017-05-14/include" />
@@ -157,10 +157,10 @@
 					<Add option="-Weffc++" />
 					<Add option="-Wextra" />
 					<Add option="-Wall" />
-					<Add option="-std=c++11" />
 					<Add option="-m64" />
 					<Add option="-isystem ..\..\..\extlibs\googletest\2017-05-14\include -D_GLIBCXX_USE_CXX11_ABI=0" />
 					<Add option="-isystem ../../../extlibs/json" />
+					<Add option="-std=c++17" />
 					<Add directory="../../../src/ZBETest/include" />
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/googletest/2017-05-14/include" />
