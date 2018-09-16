@@ -47,7 +47,7 @@ int main(int, char*[]) {
   std::shared_ptr<Daemon> levelCleaner =  std::make_shared<ZBNoidLevelCleaner>();
   std::shared_ptr<Daemon> levelReset =  std::make_shared<ZBNoidLevelReset>();
 
-  std::shared_ptr<StateMachineDaemon> gameStateMachine = std::make_shared<StateMachineDaemon>(ZBNCfg::rmVInt64.get(ZBNCfg::GAMESTATE), 3);
+  std::shared_ptr<StateMachineDaemon> gameStateMachine = std::make_shared<StateMachineDaemon>(ZBNCfg::rmVInt64.get(ZBNCfg::GAMESTATE));
   gameStateMachine->setDaemon(LOADGAME, gameLoader);
   gameStateMachine->setDaemon(MAINTITLE, titleScreen);
   gameStateMachine->setDaemon(GAMERESET, levelReset);

@@ -11,7 +11,7 @@
 #ifndef ZBE_CORE_DAEMONS_STATEMACHINEDAEMON_H_
 #define ZBE_CORE_DAEMONS_STATEMACHINEDAEMON_H_
 
-#include <vector>
+#include <unordered_map>
 #include <memory>
 #include <cstdint>
 
@@ -33,7 +33,7 @@ public:
    * and an initial state amount.
    *
    */
-  StateMachineDaemon(std::shared_ptr<Value<int64_t> > state, unsigned initialSize) : daemons(initialSize), state(state) {}
+  StateMachineDaemon(std::shared_ptr<Value<int64_t> > state) : daemons(), state(state) {}
 
   /** \brief Destroys the StateMachineDaemon.
    */
@@ -43,10 +43,10 @@ public:
    * |param state desired state
    * |param daemon Daemon daemon to run
    */
-  void setDaemon(unsigned state, std::shared_ptr<Daemon> daemon) {
-    if(state >= daemons.size()) {
-      daemons.resize(state+1);
-    }
+  void setDaemon(int64_t state, std::shared_ptr<Daemon> daemon) {
+    // if(state >= daemons.size()) {
+    //   daemons.resize(state + 1);
+    // }
     daemons[state]= daemon;
   }
 
@@ -55,7 +55,7 @@ public:
   void run();
 
 private:
-  std::vector<std::shared_ptr<Daemon> > daemons;
+  std::unordered_map<int64_t, std::shared_ptr<Daemon> > daemons;
   std::shared_ptr<Value<int64_t> > state;
   };
 

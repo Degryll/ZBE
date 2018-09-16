@@ -250,6 +250,8 @@
 		<Unit filename="../../../src/ZBETest/src/core/tools/toolsTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/events/handlers/actuators/DaemonSelectorAtorTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/events/handlers/input/BroadcastIHTest.cpp" />
+		<Unit filename="../../../src/ZBETest/src/factories/implementations/daemons/MasterDmnFtryTest.cpp" />
+		<Unit filename="../../../src/ZBETest/src/factories/implementations/daemons/StateMachineDmnFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/graphics/MultiSpriteSheetTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/main.cpp" />
 		<Unit filename="../../../src/ZBETest/src/resources/loaders/ImgFolderLoaderTest.cpp" />
