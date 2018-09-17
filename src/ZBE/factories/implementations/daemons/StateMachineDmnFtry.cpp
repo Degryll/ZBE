@@ -31,9 +31,10 @@ void StateMachineDmnFtry::build(std::string name, uint64_t cfgId) {
     std::shared_ptr<Value<int64_t> > stateVal = valueRsrc.get(stateId);
     std::shared_ptr<StateMachineDaemon> smd = std::make_shared<StateMachineDaemon>(stateVal);
     for (auto dmn : daemons) {
-      if (dmn[1].type() == json::value_t::number_integer) {
+      if (dmn[0].type() == json::value_t::string && dmn[1].type() == json::value_t::string) {
         std::string dname = dmn[0].get<std::string>();
-        int stateno = dmn[1].get<int>();
+        std::string sname = dmn[1].get<std::string>();
+        uint64_t stateno = dict.get("State."s + sname);
         uint64_t dId = dict.get("Daemon."s + dname);
         smd->setDaemon(stateno, daemonRsrc.get(dId));
       } else {

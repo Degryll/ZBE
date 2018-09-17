@@ -45,12 +45,17 @@ TEST(StateMachineDmnFtryTest, build) {
   RsrcStore<Daemon> &daemonRsrc = RsrcStore<Daemon>::getInstance();
   RsrcStore<Value<int64_t> > &valueRsrc = RsrcStore<Value<int64_t> >::getInstance();
 
+  dict.insert("State.state1"s, 1);
+  dict.insert("State.state2"s, 2);
+  dict.insert("State.state3"s, 3);
+  dict.insert("State.state4"s, 4);
+
   auto cfg = std::make_shared<json>();
   (*cfg)["daemons"] = json::array({
-      {"dm1",1},
-      {"dm2",2},
-      {"dm3",3},
-      {"dm4",4}
+      {"dm1","state1"},
+      {"dm2","state2"},
+      {"dm3","state3"},
+      {"dm4","state4"}
   });
   (*cfg)["state"] = "machineState";
 
