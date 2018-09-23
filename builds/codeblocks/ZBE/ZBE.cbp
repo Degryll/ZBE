@@ -329,6 +329,7 @@
 		<Unit filename="../../../include/ZBE/core/behaviors/Behavior.h" />
 		<Unit filename="../../../include/ZBE/core/daemons/Daemon.h" />
 		<Unit filename="../../../include/ZBE/core/daemons/DaemonMaster.h" />
+		<Unit filename="../../../include/ZBE/core/daemons/MainLoop.h" />
 		<Unit filename="../../../include/ZBE/core/daemons/MainLoopExit.h" />
 		<Unit filename="../../../include/ZBE/core/daemons/PunisherDaemon.h" />
 		<Unit filename="../../../include/ZBE/core/daemons/Punishers.h" />
@@ -382,7 +383,6 @@
 		<Unit filename="../../../include/ZBE/core/io/NetBuffer.h" />
 		<Unit filename="../../../include/ZBE/core/io/NetMessage.h" />
 		<Unit filename="../../../include/ZBE/core/system/Logger.h" />
-		<Unit filename="../../../include/ZBE/core/system/MainLoop.h" />
 		<Unit filename="../../../include/ZBE/core/system/SysError.h" />
 		<Unit filename="../../../include/ZBE/core/system/SysIdGenerator.h" />
 		<Unit filename="../../../include/ZBE/core/system/SysTime.h" />
@@ -478,6 +478,7 @@
 		<Unit filename="../../../src/ZBE/SDL/system/SDLWindow.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/tools/SDLTimer.cpp" />
 		<Unit filename="../../../src/ZBE/core/daemons/DaemonMaster.cpp" />
+		<Unit filename="../../../src/ZBE/core/daemons/MainLoop.cpp" />
 		<Unit filename="../../../src/ZBE/core/daemons/StateMachineDaemon.cpp" />
 		<Unit filename="../../../src/ZBE/core/entities/Entity.cpp" />
 		<Unit filename="../../../src/ZBE/core/events/EventStore.cpp" />
@@ -490,7 +491,6 @@
 		<Unit filename="../../../src/ZBE/core/events/generators/util/IntersectionCollisionSelector.cpp" />
 		<Unit filename="../../../src/ZBE/core/io/FileHandler.cpp" />
 		<Unit filename="../../../src/ZBE/core/system/Logger.cpp" />
-		<Unit filename="../../../src/ZBE/core/system/MainLoop.cpp" />
 		<Unit filename="../../../src/ZBE/core/system/SysError.cpp" />
 		<Unit filename="../../../src/ZBE/core/system/SysIdGenerator.cpp" />
 		<Unit filename="../../../src/ZBE/core/tools/math/Vector.cpp" />

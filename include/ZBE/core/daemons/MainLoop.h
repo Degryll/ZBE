@@ -7,8 +7,8 @@
  * @brief The Main Loop of the game.
  */
 
-#ifndef ZBE_CORE_SYSTEM_MAINLOOP_H
-#define ZBE_CORE_SYSTEM_MAINLOOP_H
+#ifndef ZBE_CORE_DAEMONS_MAINLOOP_H
+#define ZBE_CORE_DAEMONS_MAINLOOP_H
 
 #include <memory>
 
@@ -114,4 +114,4 @@ private:
 
 }  // namespace zbe
 
-#endif  // ZBE_CORE_SYSTEM_MAINLOOP_H
+#endif  // ZBE_CORE_DAEMONS_MAINLOOP_H

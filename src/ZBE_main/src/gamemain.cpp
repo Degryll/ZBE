@@ -45,7 +45,7 @@
 #include "game/events/handlers/GameBallBouncer.h"
 #include "game/events/handlers/TtpHandler.h"
 
-#include "ZBE/core/system/MainLoop.h"
+#include "ZBE/core/daemons/MainLoop.h"
 #include "ZBE/SDL/daemons/BasicPreLoopSDLDaemon.h"
 #include "ZBE/SDL/daemons/BasicPostLoopSDLDaemon.h"
 

@@ -7,7 +7,7 @@
  * @brief Daemon that executes a main game loop.
  */
 
-#include "ZBE/core/system/MainLoop.h"
+#include "ZBE/core/daemons/MainLoop.h"
 
 #include <iostream>
 

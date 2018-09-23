@@ -37,7 +37,7 @@
 
 #include "ZBE/core/system/SysTime.h"
 #include "ZBE/core/system/SysIdGenerator.h"
-#include "ZBE/core/system/MainLoop.h"
+#include "ZBE/core/daemons/MainLoop.h"
 
 #include "ZBE/core/io/InputBuffer.h"
 
