@@ -91,7 +91,7 @@ TEST(StateMachineDmnFtryTest, build) {
   StateMachineDmnFtry mdf;
   mdf.build("StateMachineDmnFtryTestName", cfgId);
 
-  //EXPECT_EQ(0, zbe::SysError::getNErrors()) << "Must be no config errors.";
+  EXPECT_EQ(0, zbe::SysError::getNErrors()) << "Must be no config errors.";
   printf("Error: %s", zbe::SysError::getFirstErrorString().c_str());
 
 

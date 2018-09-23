@@ -22,8 +22,9 @@ public:
    */
   virtual ~Factory() {}
 
-  /** \brief Do the behavior work over the given entity
-   *  \param entity The entity to behave.
+  /** \brief Builds desired tool.
+   *  \param name Name for the created tool.
+   *  \param cfgId Tool's configuration id.
    */
   virtual void build(std::string name, uint64_t cfgId) = 0;
 

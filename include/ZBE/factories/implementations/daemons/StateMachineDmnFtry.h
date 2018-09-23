@@ -7,8 +7,8 @@
  * @brief Factory for State Machine Daemons.
  */
 
-#ifndef ZBE_FACTORIES_IMPLEMENTATIONS_FACTORY_H_
-#define ZBE_FACTORIES_IMPLEMENTATIONS_FACTORY_H_
+#ifndef ZBE_FACTORIES_IMPLEMENTATIONS_STATEMACHINEDMNFTRY_H_
+#define ZBE_FACTORIES_IMPLEMENTATIONS_STATEMACHINEDMNFTRY_H_
 
 #include <string>
 
@@ -23,15 +23,18 @@
 #include "ZBE/core/daemons/Daemon.h"
 #include "ZBE/core/daemons/StateMachineDaemon.h"
 
+#include "ZBE/factories/Factory.h"
+
 namespace zbe {
 
 /** \brief Factory for State Machine Daemons.
  */
-class StateMachineDmnFtry {
+class StateMachineDmnFtry : public Factory {
 public:
 
-  /** \brief Do the behavior work over the given entity
-   *  \param entity The entity to behave.
+  /** \brief Builds a StateMachineDaemon.
+   *  \param name Name for the created StateMachineDaemon.
+   *  \param cfgId StateMachineDaemon's configuration id.
    */
   void build(std::string name, uint64_t cfgId);
 
@@ -45,4 +48,4 @@ private:
 
 }  // namespace zbe
 
-#endif  // ZBE_FACTORIES_IMPLEMENTATIONS_FACTORY_H_
+#endif  // ZBE_FACTORIES_IMPLEMENTATIONS_STATEMACHINEDMNFTRY_H_

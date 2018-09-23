@@ -7,8 +7,8 @@
  * @brief Factory for Daemon Masters.
  */
 
-#ifndef ZBE_FACTORIES_IMPLEMENTATIONS_FACTORY_H_
-#define ZBE_FACTORIES_IMPLEMENTATIONS_FACTORY_H_
+#ifndef ZBE_FACTORIES_IMPLEMENTATIONS_MASTERDMNFTRY_H_
+#define ZBE_FACTORIES_IMPLEMENTATIONS_MASTERDMNFTRY_H_
 
 #include <string>
 
@@ -23,15 +23,18 @@
 #include "ZBE/core/daemons/Daemon.h"
 #include "ZBE/core/daemons/DaemonMaster.h"
 
+#include "ZBE/factories/Factory.h"
+
 namespace zbe {
 
-/** \brief Factory for Daemon Masters.
+/** \brief Factory for Master Daemons.
  */
-class MasterDmnFtry {
+class MasterDmnFtry : public Factory {
 public:
 
-  /** \brief Do the behavior work over the given entity
-   *  \param entity The entity to behave.
+  /** \brief Builds a MasterDmnFtry.
+   *  \param name Name for the created MasterDmnFtry.
+   *  \param cfgId MasterDmnFtry's configuration id.
    */
   void build(std::string name, uint64_t cfgId);
 
@@ -44,4 +47,4 @@ private:
 
 }  // namespace zbe
 
-#endif  // ZBE_FACTORIES_IMPLEMENTATIONS_FACTORY_H_
+#endif  // ZBE_FACTORIES_IMPLEMENTATIONS_MASTERDMNFTRY_H_

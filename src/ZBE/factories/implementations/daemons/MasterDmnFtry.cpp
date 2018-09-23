@@ -1,10 +1,10 @@
 /**
  * Copyright 2012 Batis Degryll Ludo
  * @file MasterDmnFtry.cpp
- * @since 2018-09-05
- * @date 2018-09-05
+ * @since 2018-09-19
+ * @date 2018-09-19
  * @author Ludo Degryll Batis
- * @brief Factory for Daemon Masters.
+ * @brief Factory for behavior daemons.
  */
 
 #include "ZBE/factories/implementations/daemons/MasterDmnFtry.h"
