@@ -31,9 +31,9 @@ public:
    * \param react React Behavior Daemon.
    * \param draw Drawer daemon.
    */
-  MainLoop(std::shared_ptr<Daemon> pre, std::shared_ptr<Daemon> post, std::shared_ptr<Daemon> event, std::shared_ptr<Daemon> common, std::shared_ptr<Daemon> react, std::shared_ptr<Daemon> draw)
+  MainLoop(std::shared_ptr<Daemon> pre, std::shared_ptr<Daemon> post, std::shared_ptr<Daemon> event, std::shared_ptr<Daemon> common, std::shared_ptr<Daemon> react, std::shared_ptr<Daemon> draw, std::shared_ptr<ContextTime> contextTime=zbe::SysTime::getInstance())
     : dPre(pre), dPost(post), dTE(event), dCBM(common), dRBM(react), dDM(draw),
-      contextTime(zbe::SysTime::getInstance()), store(zbe::EventStore::getInstance()), keep(true) {}
+      contextTime(contextTime), store(zbe::EventStore::getInstance()), keep(true) {}
 
   /** \brief Destructor.
    */

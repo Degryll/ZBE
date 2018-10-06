@@ -47,21 +47,10 @@ TEST(MasterDmnFtryTest, build) {
   std::shared_ptr<DummyDaemon> dm3 = std::make_shared<DummyDaemon>();
   std::shared_ptr<DummyDaemon> dm4 = std::make_shared<DummyDaemon>();
 
-  uint64_t dm1Id = SysIdGenerator::getId();
-  daemonRsrc.insert(dm1Id, dm1);
-  dict.insert("Daemon.dm1"s, dm1Id);
-
-  uint64_t dm2Id = SysIdGenerator::getId();
-  daemonRsrc.insert(dm2Id, dm2);
-  dict.insert("Daemon.dm2"s, dm2Id);
-
-  uint64_t dm3Id = SysIdGenerator::getId();
-  daemonRsrc.insert(dm3Id, dm3);
-  dict.insert("Daemon.dm3"s, dm3Id);
-
-  uint64_t dm4Id = SysIdGenerator::getId();
-  daemonRsrc.insert(dm4Id, dm4);
-  dict.insert("Daemon.dm4"s, dm4Id);
+  daemonRsrc.insert("Daemon.dm1"s, dm1);
+  daemonRsrc.insert("Daemon.dm2"s, dm2);
+  daemonRsrc.insert("Daemon.dm3"s, dm3);
+  daemonRsrc.insert("Daemon.dm4"s, dm4);
 
   MasterDmnFtry mdf;
   mdf.build("MasterDmnFtryTestName", cfgId);

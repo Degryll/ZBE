@@ -9,24 +9,9 @@
 
 #include "ZBE/JSON/graphics/JSONGraphicsLoaders.h"
 
-#include <memory>
-#include <string>
-
-#include <nlohmann/json.hpp>
-
-#include "ZBE/core/tools/containers/RsrcDictionary.h"
-#include "ZBE/core/tools/containers/RsrcStore.h"
-#include "ZBE/core/tools/graphics/SpriteSheet.h"
-#include "ZBE/core/system/SysError.h"
-#include "ZBE/core/system/SysIdGenerator.h"
-
-#include "ZBE/resources/contextnames.h"
-
 namespace zbe {
 
-using json = nlohmann::json;
-
-ImgDef JSONImgDefLoad(json j, uint64_t graphicsId) {
+ImgDef JSONGraphicsLoaders::JSONImgDefLoad(json j, uint64_t graphicsId) {
   try {
     uint64_t frameTime = j["frameTime"];
     unsigned frameAmount = j["frameAmount"];
@@ -39,11 +24,7 @@ ImgDef JSONImgDefLoad(json j, uint64_t graphicsId) {
   }
 }
 
-void JSONImgDefFileLoad(std::istream& is, uint64_t graphicsId) {
-
-  RsrcStore<ImgDef>& rsrc = RsrcStore<ImgDef>::getInstance();
-  NameRsrcDictionary& nrd = NameRsrcDictionary::getInstance();
-
+void JSONGraphicsLoaders::JSONImgDefFileLoad(std::istream& is, uint64_t graphicsId) {
   json j;
   try {
     is >> j;
@@ -53,7 +34,7 @@ void JSONImgDefFileLoad(std::istream& is, uint64_t graphicsId) {
       std::string nodeName = imgNode["name"];
       ImgDef imgDef = JSONImgDefLoad(imgNode, graphicsId);
       uint64_t id = SysIdGenerator::getId();
-      rsrc.insert(id, std::make_shared<ImgDef>(imgDef));
+      rsrcImgDef.insert(id, std::make_shared<ImgDef>(imgDef));
       nrd.insert(cn::IMGDEF + cn::SEPARATOR + name + cn::SEPARATOR + nodeName, id);
     }
   } catch (json::parse_error &e) {
@@ -64,14 +45,12 @@ void JSONImgDefFileLoad(std::istream& is, uint64_t graphicsId) {
 
 }
 
-SprtDef JSONSprtDefLoad(json j) {
+SprtDef JSONGraphicsLoaders::JSONSprtDefLoad(json j) {
   try {
-    RsrcStore<ImgDef>& rsrc = RsrcStore<ImgDef>::getInstance();
-    NameRsrcDictionary& nrd = NameRsrcDictionary::getInstance();
     std::string imgName = j["img"];
     uint64_t imgDefId = nrd.get(cn::IMGDEF + cn::SEPARATOR + imgName);
     if(imgDefId > 0){
-      std::shared_ptr<ImgDef> storedImgDef = rsrc.get(imgDefId);
+      std::shared_ptr<ImgDef> storedImgDef = rsrcImgDef.get(imgDefId);
       ImgDef imgDef(*storedImgDef);
       Vector2D drawOffset({j["drawOffset"][0],j["drawOffset"][1]});
       Vector2D scale({j["scale"][0],j["scale"][1]});
@@ -85,10 +64,7 @@ SprtDef JSONSprtDefLoad(json j) {
   return SprtDef();  // TODO create default ImgDef & image.
 }
 
-void JSONMultiSpriteSheetFileLoad(std::istream& is) {
-  NameRsrcDictionary& nrd = NameRsrcDictionary::getInstance();
-  RsrcStore<zbe::SpriteSheet<zbe::AnimatedSprite> >& rsrc = RsrcStore<zbe::SpriteSheet<zbe::AnimatedSprite> >::getInstance();
-
+void JSONGraphicsLoaders::JSONMultiSpriteSheetFileLoad(std::istream& is) {
   json j;
   try {
     is >> j;
@@ -104,7 +80,7 @@ void JSONMultiSpriteSheetFileLoad(std::istream& is) {
       }
     }
     uint64_t id = SysIdGenerator::getId();
-    rsrc.insert(id, sprtSheet);
+    rsrcAnimSprt.insert(id, sprtSheet);
     nrd.insert(cn::SPRTSHEET + cn::SEPARATOR + name, id);
   } catch (json::parse_error &e) {
     SysError::setError(std::string("ERROR: Json failed to parse: ") + std::string(e.what()));

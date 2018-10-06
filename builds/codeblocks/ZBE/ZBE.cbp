@@ -451,6 +451,7 @@
 		<Unit filename="../../../include/ZBE/events/handlers/time/TicketEraser.h" />
 		<Unit filename="../../../include/ZBE/factories/Factory.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/daemons/BehaviorDmnFtry.h" />
+		<Unit filename="../../../include/ZBE/factories/implementations/daemons/MainLoopFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/daemons/MasterDmnFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/daemons/StateMachineDmnFtry.h" />
 		<Unit filename="../../../include/ZBE/graphics/MultiSpriteSheet.h" />
@@ -497,6 +498,7 @@
 		<Unit filename="../../../src/ZBE/core/tools/math/collisions/intersections.cpp" />
 		<Unit filename="../../../src/ZBE/core/tools/text/utf8.cpp" />
 		<Unit filename="../../../src/ZBE/core/tools/time/ContextTime.cpp" />
+		<Unit filename="../../../src/ZBE/factories/implementations/daemons/MainLoopFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/daemons/MasterDmnFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/daemons/StateMachineDmnFtry.cpp" />
 		<Unit filename="../../../src/ZBE/resources/contextname.cpp" />

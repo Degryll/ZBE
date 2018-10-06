@@ -251,6 +251,7 @@
 		<Unit filename="../../../src/ZBETest/src/events/handlers/actuators/DaemonSelectorAtorTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/events/handlers/input/BroadcastIHTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/daemons/BehaviorDmnFtryTest.cpp" />
+		<Unit filename="../../../src/ZBETest/src/factories/implementations/daemons/MainLoopFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/daemons/MasterDmnFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/daemons/StateMachineDmnFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/graphics/MultiSpriteSheetTest.cpp" />

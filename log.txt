@@ -1,0 +1,556 @@
+Running main() from gtest_main.cc
+[==========] Running 165 tests from 65 test cases.
+[----------] Global test environment set-up.
+[----------] 1 test from SDLImageStore
+[ RUN      ] SDLImageStore.Store_img
+[       OK ] SDLImageStore.Store_img (213 ms)
+[----------] 1 test from SDLImageStore (213 ms total)
+
+[----------] 2 tests from JSONGraphicsLoaders
+[ RUN      ] JSONGraphicsLoaders.load_succes
+E:\ZBE\ZBE\src\ZBETest\src\JSON\graphics\JSONGraphicsLoadersTest.cpp:30: Failure
+Expected: (0) != (id), actual: 0 vs 0
+Element playerSheet.jump1 must be present in NameRsrcDictionary
+[  FAILED  ] JSONGraphicsLoaders.load_succes (0 ms)
+[ RUN      ] JSONGraphicsLoaders.load_fail_uncomplete_file
+E:\ZBE\ZBE\src\ZBETest\src\JSON\graphics\JSONGraphicsLoadersTest.cpp:87: Failure
+      Expected: 0
+To be equal to: zbe::SysError::getNErrors()
+      Which is: 1
+Initially no errors.
+E:\ZBE\ZBE\src\ZBETest\src\JSON\graphics\JSONGraphicsLoadersTest.cpp:92: Failure
+      Expected: 2
+To be equal to: zbe::SysError::getNErrors()
+      Which is: 3
+Must be content errors
+[  FAILED  ] JSONGraphicsLoaders.load_fail_uncomplete_file (1 ms)
+[----------] 2 tests from JSONGraphicsLoaders (1 ms total)
+
+[----------] 1 test from MultiSpriteSheet
+[ RUN      ] MultiSpriteSheet.generateSprite
+[       OK ] MultiSpriteSheet.generateSprite (0 ms)
+[----------] 1 test from MultiSpriteSheet (0 ms total)
+
+[----------] 2 tests from StateMachineDmnFtryTest
+[ RUN      ] StateMachineDmnFtryTest.build
+Error: [       OK ] StateMachineDmnFtryTest.build (0 ms)
+[ RUN      ] StateMachineDmnFtryTest.build
+[       OK ] StateMachineDmnFtryTest.build (0 ms)
+[----------] 2 tests from StateMachineDmnFtryTest (0 ms total)
+
+[----------] 1 test from MasterDmnFtryTest
+[ RUN      ] MasterDmnFtryTest.build
+[       OK ] MasterDmnFtryTest.build (0 ms)
+[----------] 1 test from MasterDmnFtryTest (0 ms total)
+
+[----------] 1 test from DaemonSelectorSelfAtor
+[ RUN      ] DaemonSelectorSelfAtor.act
+[       OK ] DaemonSelectorSelfAtor.act (0 ms)
+[----------] 1 test from DaemonSelectorSelfAtor (0 ms total)
+
+[----------] 1 test from DaemonSelectorSelfAnyAtor
+[ RUN      ] DaemonSelectorSelfAnyAtor.act
+[       OK ] DaemonSelectorSelfAnyAtor.act (0 ms)
+[----------] 1 test from DaemonSelectorSelfAnyAtor (0 ms total)
+
+[----------] 1 test from DaemonSelectorAlienAtor
+[ RUN      ] DaemonSelectorAlienAtor.act
+[       OK ] DaemonSelectorAlienAtor.act (0 ms)
+[----------] 1 test from DaemonSelectorAlienAtor (0 ms total)
+
+[----------] 1 test from tools
+[ RUN      ] tools.TypeContainerTest
+[       OK ] tools.TypeContainerTest (0 ms)
+[----------] 1 test from tools (0 ms total)
+
+[----------] 1 test from ContextTimeTest
+[ RUN      ] ContextTimeTest.Hierarchy
+[       OK ] ContextTimeTest.Hierarchy (0 ms)
+[----------] 1 test from ContextTimeTest (0 ms total)
+
+[----------] 2 tests from SimpleValue
+[ RUN      ] SimpleValue.GetSetInt
+[       OK ] SimpleValue.GetSetInt (0 ms)
+[ RUN      ] SimpleValue.GetSetChar
+[       OK ] SimpleValue.GetSetChar (0 ms)
+[----------] 2 tests from SimpleValue (0 ms total)
+
+[----------] 2 tests from SDLTimer
+[ RUN      ] SDLTimer.create
+[       OK ] SDLTimer.create (0 ms)
+[ RUN      ] SDLTimer.usage
+[       OK ] SDLTimer.usage (652 ms)
+[----------] 2 tests from SDLTimer (652 ms total)
+
+[----------] 4 tests from Vector
+[ RUN      ] Vector.Constructors
+[       OK ] Vector.Constructors (0 ms)
+[ RUN      ] Vector.DataAccessAssignation
+[       OK ] Vector.DataAccessAssignation (0 ms)
+[ RUN      ] Vector.Operations
+[       OK ] Vector.Operations (0 ms)
+[ RUN      ] Vector.Reflect
+[       OK ] Vector.Reflect (0 ms)
+[----------] 4 tests from Vector (0 ms total)
+
+[----------] 1 test from Vector2D
+[ RUN      ] Vector2D.Constructors
+[       OK ] Vector2D.Constructors (0 ms)
+[----------] 1 test from Vector2D (0 ms total)
+
+[----------] 1 test from Vector3D
+[ RUN      ] Vector3D.Constructors
+[       OK ] Vector3D.Constructors (0 ms)
+[----------] 1 test from Vector3D (0 ms total)
+
+[----------] 3 tests from Region
+[ RUN      ] Region.DataAccessAssignation
+[       OK ] Region.DataAccessAssignation (0 ms)
+[ RUN      ] Region.Region2DCompatibility
+[       OK ] Region.Region2DCompatibility (0 ms)
+[ RUN      ] Region.Region3DCompatibility
+[       OK ] Region.Region3DCompatibility (0 ms)
+[----------] 3 tests from Region (0 ms total)
+
+[----------] 3 tests from Point
+[ RUN      ] Point.Constructors
+[       OK ] Point.Constructors (0 ms)
+[ RUN      ] Point.DataAccessAssignation
+[       OK ] Point.DataAccessAssignation (0 ms)
+[ RUN      ] Point.Operations
+[       OK ] Point.Operations (0 ms)
+[----------] 3 tests from Point (0 ms total)
+
+[----------] 1 test from Point2D
+[ RUN      ] Point2D.Constructors
+[       OK ] Point2D.Constructors (0 ms)
+[----------] 1 test from Point2D (0 ms total)
+
+[----------] 1 test from Point3D
+[ RUN      ] Point3D.Constructors
+[       OK ] Point3D.Constructors (0 ms)
+[----------] 1 test from Point3D (0 ms total)
+
+[----------] 2 tests from Ray
+[ RUN      ] Ray.Constructors
+[       OK ] Ray.Constructors (0 ms)
+[ RUN      ] Ray.DataAccessAssignation
+[       OK ] Ray.DataAccessAssignation (0 ms)
+[----------] 2 tests from Ray (0 ms total)
+
+[----------] 1 test from Ray2D
+[ RUN      ] Ray2D.Constructors
+[       OK ] Ray2D.Constructors (0 ms)
+[----------] 1 test from Ray2D (0 ms total)
+
+[----------] 1 test from Ray3D
+[ RUN      ] Ray3D.Constructors
+[       OK ] Ray3D.Constructors (0 ms)
+[----------] 1 test from Ray3D (0 ms total)
+
+[----------] 2 tests from NSphere
+[ RUN      ] NSphere.Constructors
+[       OK ] NSphere.Constructors (0 ms)
+[ RUN      ] NSphere.DataAccessAssignation
+[       OK ] NSphere.DataAccessAssignation (0 ms)
+[----------] 2 tests from NSphere (0 ms total)
+
+[----------] 1 test from Circle
+[ RUN      ] Circle.Constructors
+[       OK ] Circle.Constructors (0 ms)
+[----------] 1 test from Circle (0 ms total)
+
+[----------] 1 test from Sphere
+[ RUN      ] Sphere.Constructors
+[       OK ] Sphere.Constructors (0 ms)
+[----------] 1 test from Sphere (0 ms total)
+
+[----------] 2 tests from AABB
+[ RUN      ] AABB.Constructors
+[       OK ] AABB.Constructors (0 ms)
+[ RUN      ] AABB.DataAccessAssignation
+[       OK ] AABB.DataAccessAssignation (0 ms)
+[----------] 2 tests from AABB (0 ms total)
+
+[----------] 1 test from AABB2D
+[ RUN      ] AABB2D.Constructors
+[       OK ] AABB2D.Constructors (0 ms)
+[----------] 1 test from AABB2D (0 ms total)
+
+[----------] 1 test from AABB3D
+[ RUN      ] AABB3D.Constructors
+[       OK ] AABB3D.Constructors (0 ms)
+[----------] 1 test from AABB3D (0 ms total)
+
+[----------] 1 test from math
+[ RUN      ] math.quantizeTime
+[       OK ] math.quantizeTime (0 ms)
+[----------] 1 test from math (0 ms total)
+
+[----------] 59 tests from Intersections
+[ RUN      ] Intersections.AABBAABB_Base
+[       OK ] Intersections.AABBAABB_Base (0 ms)
+[ RUN      ] Intersections.AABBAABB_Base_1
+[       OK ] Intersections.AABBAABB_Base_1 (0 ms)
+[ RUN      ] Intersections.AABBAABB_Base_2
+[       OK ] Intersections.AABBAABB_Base_2 (0 ms)
+[ RUN      ] Intersections.AABBAABB_Base_3
+[       OK ] Intersections.AABBAABB_Base_3 (0 ms)
+[ RUN      ] Intersections.NSphereAABB_Base
+[       OK ] Intersections.NSphereAABB_Base (0 ms)
+[ RUN      ] Intersections.NSphereAABB_Base_1
+[       OK ] Intersections.NSphereAABB_Base_1 (0 ms)
+[ RUN      ] Intersections.NSphereAABB_Base_2
+[       OK ] Intersections.NSphereAABB_Base_2 (0 ms)
+[ RUN      ] Intersections.NSphereAABB_Base_3
+[       OK ] Intersections.NSphereAABB_Base_3 (0 ms)
+[ RUN      ] Intersections.NSphereAABB_Base_4
+[       OK ] Intersections.NSphereAABB_Base_4 (0 ms)
+[ RUN      ] Intersections.NSphereAABB_Base_5
+[       OK ] Intersections.NSphereAABB_Base_5 (0 ms)
+[ RUN      ] Intersections.NSphereAABB_Base_6
+[       OK ] Intersections.NSphereAABB_Base_6 (0 ms)
+[ RUN      ] Intersections.NSphereAABB_Base_7
+[       OK ] Intersections.NSphereAABB_Base_7 (0 ms)
+[ RUN      ] Intersections.NSphereAABB_Base_8
+[       OK ] Intersections.NSphereAABB_Base_8 (0 ms)
+[ RUN      ] Intersections.NSphereAABB_Base_9
+[       OK ] Intersections.NSphereAABB_Base_9 (0 ms)
+[ RUN      ] Intersections.NSphereAABB_Base_10
+[       OK ] Intersections.NSphereAABB_Base_10 (0 ms)
+[ RUN      ] Intersections.NSphereAABB_Base_11
+[       OK ] Intersections.NSphereAABB_Base_11 (0 ms)
+[ RUN      ] Intersections.NSphereAABB_Base_12
+[       OK ] Intersections.NSphereAABB_Base_12 (0 ms)
+[ RUN      ] Intersections.NSphereAABB_Base_LF
+[       OK ] Intersections.NSphereAABB_Base_LF (0 ms)
+[ RUN      ] Intersections.NSphereAABB_Base_LT
+[       OK ] Intersections.NSphereAABB_Base_LT (0 ms)
+[ RUN      ] Intersections.NSphereAABB_Base_TF
+[       OK ] Intersections.NSphereAABB_Base_TF (0 ms)
+[ RUN      ] Intersections.NSphereAABB_Base_TT
+[       OK ] Intersections.NSphereAABB_Base_TT (1 ms)
+[ RUN      ] Intersections.NSphereAABB_Base_BF
+[       OK ] Intersections.NSphereAABB_Base_BF (0 ms)
+[ RUN      ] Intersections.NSphereAABB_Base_BT
+[       OK ] Intersections.NSphereAABB_Base_BT (0 ms)
+[ RUN      ] Intersections.NSphereAABB_Base_RF
+[       OK ] Intersections.NSphereAABB_Base_RF (0 ms)
+[ RUN      ] Intersections.NSphereAABB_Base_RT
+[       OK ] Intersections.NSphereAABB_Base_RT (0 ms)
+[ RUN      ] Intersections.PointNSphere
+[       OK ] Intersections.PointNSphere (0 ms)
+[ RUN      ] Intersections.RaySphere
+[       OK ] Intersections.RaySphere (0 ms)
+[ RUN      ] Intersections.RayInsideAABB_Base
+[       OK ] Intersections.RayInsideAABB_Base (0 ms)
+[ RUN      ] Intersections.RayInsideAABB_Horizontal
+[       OK ] Intersections.RayInsideAABB_Horizontal (1 ms)
+[ RUN      ] Intersections.RayInsideAABB_Vertical
+[       OK ] Intersections.RayInsideAABB_Vertical (1 ms)
+[ RUN      ] Intersections.RayInsideAABB_TopLeftCorner
+[       OK ] Intersections.RayInsideAABB_TopLeftCorner (0 ms)
+[ RUN      ] Intersections.RayInsideAABB_TopRightCorner
+[       OK ] Intersections.RayInsideAABB_TopRightCorner (1 ms)
+[ RUN      ] Intersections.RayInsideAABB_BottomLeftCorner
+[       OK ] Intersections.RayInsideAABB_BottomLeftCorner (0 ms)
+[ RUN      ] Intersections.RayInsideAABB_BottomRightCorner
+[       OK ] Intersections.RayInsideAABB_BottomRightCorner (1 ms)
+[ RUN      ] Intersections.BeamOutsideAABB_Base
+[       OK ] Intersections.BeamOutsideAABB_Base (0 ms)
+[ RUN      ] Intersections.BeamOutsideAABB_Horizontal
+[       OK ] Intersections.BeamOutsideAABB_Horizontal (1 ms)
+[ RUN      ] Intersections.BeamOutsideAABB_Vertical
+[       OK ] Intersections.BeamOutsideAABB_Vertical (0 ms)
+[ RUN      ] Intersections.BeamOutsideAABB_TopLeftCorner
+[       OK ] Intersections.BeamOutsideAABB_TopLeftCorner (1 ms)
+[ RUN      ] Intersections.BeamOutsideAABB_TopRightCorner
+[       OK ] Intersections.BeamOutsideAABB_TopRightCorner (1 ms)
+[ RUN      ] Intersections.BeamOutsideAABB_BottomLeftCorner
+[       OK ] Intersections.BeamOutsideAABB_BottomLeftCorner (0 ms)
+[ RUN      ] Intersections.BeamOutsideAABB_BottomRightCorner
+[       OK ] Intersections.BeamOutsideAABB_BottomRightCorner (1 ms)
+[ RUN      ] Intersections.MovingCircleInsideAABB_Base
+[       OK ] Intersections.MovingCircleInsideAABB_Base (0 ms)
+[ RUN      ] Intersections.MovingCircleInsideAABB_Base2
+[       OK ] Intersections.MovingCircleInsideAABB_Base2 (0 ms)
+[ RUN      ] Intersections.MovingCircleInsideAABB_Base3
+[       OK ] Intersections.MovingCircleInsideAABB_Base3 (0 ms)
+[ RUN      ] Intersections.MovingCircleInsideAABB_Horizontal
+[       OK ] Intersections.MovingCircleInsideAABB_Horizontal (1 ms)
+[ RUN      ] Intersections.MovingCircleInsideAABB_Vertical
+[       OK ] Intersections.MovingCircleInsideAABB_Vertical (1 ms)
+[ RUN      ] Intersections.MovingCircleInsideAABB_TopLeftCorner
+[       OK ] Intersections.MovingCircleInsideAABB_TopLeftCorner (1 ms)
+[ RUN      ] Intersections.MovingCircleInsideAABB_TopRightCorner
+[       OK ] Intersections.MovingCircleInsideAABB_TopRightCorner (1 ms)
+[ RUN      ] Intersections.MovingCircleInsideAABB_BottomLeftCorner
+[       OK ] Intersections.MovingCircleInsideAABB_BottomLeftCorner (0 ms)
+[ RUN      ] Intersections.MovingCircleInsideAABB_BottomRightCorner
+[       OK ] Intersections.MovingCircleInsideAABB_BottomRightCorner (1 ms)
+[ RUN      ] Intersections.MovingCircleOutsideAABB_Base
+[       OK ] Intersections.MovingCircleOutsideAABB_Base (0 ms)
+[ RUN      ] Intersections.MovingCircleOutsideAABB_Base2
+[       OK ] Intersections.MovingCircleOutsideAABB_Base2 (0 ms)
+[ RUN      ] Intersections.MovingCircleOutsideAABB_Base3
+[       OK ] Intersections.MovingCircleOutsideAABB_Base3 (1 ms)
+[ RUN      ] Intersections.MovingCircleOutsideAABB_Horizontal
+[       OK ] Intersections.MovingCircleOutsideAABB_Horizontal (1 ms)
+[ RUN      ] Intersections.MovingCircleOutsideAABB_Vertical
+[       OK ] Intersections.MovingCircleOutsideAABB_Vertical (1 ms)
+[ RUN      ] Intersections.MovingCircleOutsideAABB_TopLeftCorner
+[       OK ] Intersections.MovingCircleOutsideAABB_TopLeftCorner (2 ms)
+[ RUN      ] Intersections.MovingCircleOutsideAABB_TopRightCorner
+[       OK ] Intersections.MovingCircleOutsideAABB_TopRightCorner (1 ms)
+[ RUN      ] Intersections.MovingCircleOutsideAABB_BottomLeftCorner
+[       OK ] Intersections.MovingCircleOutsideAABB_BottomLeftCorner (1 ms)
+[ RUN      ] Intersections.MovingCircleOutsideAABB_BottomRightCorner
+[       OK ] Intersections.MovingCircleOutsideAABB_BottomRightCorner (1 ms)
+[----------] 59 tests from Intersections (22 ms total)
+
+[----------] 1 test from TicketedForwardList
+[ RUN      ] TicketedForwardList.IterationTicketedElements
+[       OK ] TicketedForwardList.IterationTicketedElements (1 ms)
+[----------] 1 test from TicketedForwardList (1 ms total)
+
+[----------] 1 test from Ticket
+[ RUN      ] Ticket.Usage
+[       OK ] Ticket.Usage (0 ms)
+[----------] 1 test from Ticket (0 ms total)
+
+[----------] 2 tests from RsrcStore
+[ RUN      ] RsrcStore.Usage
+[       OK ] RsrcStore.Usage (0 ms)
+[ RUN      ] RsrcStore.WrongUsage
+[       OK ] RsrcStore.WrongUsage (0 ms)
+[----------] 2 tests from RsrcStore (0 ms total)
+
+[----------] 1 test from NameRsrcDictionary
+[ RUN      ] NameRsrcDictionary.Usage
+[       OK ] NameRsrcDictionary.Usage (0 ms)
+[----------] 1 test from NameRsrcDictionary (0 ms total)
+
+[----------] 2 tests from IdRsrcDictionary
+[ RUN      ] IdRsrcDictionary.Usage
+[       OK ] IdRsrcDictionary.Usage (0 ms)
+[ RUN      ] IdRsrcDictionary.WrongUsage
+[       OK ] IdRsrcDictionary.WrongUsage (0 ms)
+[----------] 2 tests from IdRsrcDictionary (0 ms total)
+
+[----------] 2 tests from ListJoint
+[ RUN      ] ListJoint.ListForwardJoint_usage
+[       OK ] ListJoint.ListForwardJoint_usage (0 ms)
+[ RUN      ] ListJoint.ListTicketedJoint_usage
+[       OK ] ListJoint.ListTicketedJoint_usage (0 ms)
+[----------] 2 tests from ListJoint (0 ms total)
+
+[----------] 1 test from SysIdGenerator
+[ RUN      ] SysIdGenerator.GenerateId
+[       OK ] SysIdGenerator.GenerateId (4 ms)
+[----------] 1 test from SysIdGenerator (4 ms total)
+
+[----------] 4 tests from SysError
+[ RUN      ] SysError.InitialState
+[       OK ] SysError.InitialState (0 ms)
+[ RUN      ] SysError.SetError
+[       OK ] SysError.SetError (0 ms)
+[ RUN      ] SysError.Clear
+[       OK ] SysError.Clear (0 ms)
+[ RUN      ] SysError.Complete
+[       OK ] SysError.Complete (0 ms)
+[----------] 4 tests from SysError (0 ms total)
+
+[----------] 1 test from SDLEventDispatcher
+[ RUN      ] SDLEventDispatcher.SDLEventDispatcher
+[       OK ] SDLEventDispatcher.SDLEventDispatcher (65 ms)
+[----------] 1 test from SDLEventDispatcher (65 ms total)
+
+[----------] 2 tests from Logger
+[ RUN      ] Logger.stdoutLog
+[       OK ] Logger.stdoutLog (0 ms)
+[ RUN      ] Logger.FileLog
+[INFO]> Prueba Info. 3.1416 añadiendo un double.
+[DEBUG]E:\ZBE\ZBE\src\ZBETest\src\core\system\LoggerTest.cpp:58> Prueba Debug. 42 un int y 0x73f5cc su puntero.
+[WARNING]> Prueba Warning. 'A' un caracter
+[ERROR]> Prueba Error. "Hola Mundo!" una cadena.
+[PROPIA]> Prueba Propia -> true.
+[       OK ] Logger.FileLog (3 ms)
+[----------] 2 tests from Logger (3 ms total)
+
+[----------] 1 test from SDL_Starter
+[ RUN      ] SDL_Starter.CheckSubsystems
+[       OK ] SDL_Starter.CheckSubsystems (120 ms)
+[----------] 1 test from SDL_Starter (120 ms total)
+
+[----------] 1 test from InputStatus
+[ RUN      ] InputStatus.InputStatus
+[       OK ] InputStatus.InputStatus (0 ms)
+[----------] 1 test from InputStatus (0 ms total)
+
+[----------] 1 test from InputBuffer
+[ RUN      ] InputBuffer.insert
+[       OK ] InputBuffer.insert (0 ms)
+[----------] 1 test from InputBuffer (0 ms total)
+
+[----------] 11 tests from FileHandler
+[ RUN      ] FileHandler.Exist
+[       OK ] FileHandler.Exist (0 ms)
+[ RUN      ] FileHandler.ExistDir
+[       OK ] FileHandler.ExistDir (0 ms)
+[ RUN      ] FileHandler.OpenClose
+[       OK ] FileHandler.OpenClose (0 ms)
+[ RUN      ] FileHandler.CreateDeleteFile
+[       OK ] FileHandler.CreateDeleteFile (3 ms)
+[ RUN      ] FileHandler.CreateDeleteDirFile
+[       OK ] FileHandler.CreateDeleteDirFile (7 ms)
+[ RUN      ] FileHandler.Read
+[       OK ] FileHandler.Read (0 ms)
+[ RUN      ] FileHandler.ReadLine
+[       OK ] FileHandler.ReadLine (0 ms)
+[ RUN      ] FileHandler.Write
+[       OK ] FileHandler.Write (3 ms)
+[ RUN      ] FileHandler.Writeline
+[       OK ] FileHandler.Writeline (3 ms)
+[ RUN      ] FileHandler.WriteNullTerminated
+[       OK ] FileHandler.WriteNullTerminated (2 ms)
+[ RUN      ] FileHandler.WritelineNullTerminated
+[       OK ] FileHandler.WritelineNullTerminated (3 ms)
+[----------] 11 tests from FileHandler (22 ms total)
+
+[----------] 2 tests from TimeEventGenerator
+[ RUN      ] TimeEventGenerator.Event
+[       OK ] TimeEventGenerator.Event (0 ms)
+[ RUN      ] TimeEventGenerator.TimerTicket
+[       OK ] TimeEventGenerator.TimerTicket (0 ms)
+[----------] 2 tests from TimeEventGenerator (0 ms total)
+
+[----------] 1 test from IntersectionEventGenerator
+[ RUN      ] IntersectionEventGenerator.run
+[       OK ] IntersectionEventGenerator.run (0 ms)
+[----------] 1 test from IntersectionEventGenerator (0 ms total)
+
+[----------] 2 tests from InstantIntersectionEventGenerator
+[ RUN      ] InstantIntersectionEventGenerator.run_no_collision
+[       OK ] InstantIntersectionEventGenerator.run_no_collision (0 ms)
+[ RUN      ] InstantIntersectionEventGenerator.run
+[       OK ] InstantIntersectionEventGenerator.run (0 ms)
+[----------] 2 tests from InstantIntersectionEventGenerator (0 ms total)
+
+[----------] 1 test from InputEventGenerator
+[ RUN      ] InputEventGenerator.run
+[       OK ] InputEventGenerator.run (0 ms)
+[----------] 1 test from InputEventGenerator (0 ms total)
+
+[----------] 1 test from InputStatusManager
+[ RUN      ] InputStatusManager.generate
+[       OK ] InputStatusManager.generate (0 ms)
+[----------] 1 test from InputStatusManager (0 ms total)
+
+[----------] 3 tests from EventStore
+[ RUN      ] EventStore.TimedEvents
+[       OK ] EventStore.TimedEvents (0 ms)
+[ RUN      ] EventStore.InstantEvents
+[       OK ] EventStore.InstantEvents (0 ms)
+[ RUN      ] EventStore.AllEvents
+[       OK ] EventStore.AllEvents (0 ms)
+[----------] 3 tests from EventStore (0 ms total)
+
+[----------] 3 tests from Event
+[ RUN      ] Event.TimeEvent
+[       OK ] Event.TimeEvent (0 ms)
+[ RUN      ] Event.InputEvent
+[       OK ] Event.InputEvent (0 ms)
+[ RUN      ] Event.CollisionEvent
+[       OK ] Event.CollisionEvent (0 ms)
+[----------] 3 tests from Event (0 ms total)
+
+[----------] 3 tests from Entity
+[ RUN      ] Entity.TicketedElements
+[       OK ] Entity.TicketedElements (0 ms)
+[ RUN      ] Entity.Tickets_Error
+[       OK ] Entity.Tickets_Error (0 ms)
+[ RUN      ] Entity.values
+[       OK ] Entity.values (0 ms)
+[----------] 3 tests from Entity (0 ms total)
+
+[----------] 3 tests from AvatarEntity
+[ RUN      ] AvatarEntity.AvatarEntityContainer_usage
+[       OK ] AvatarEntity.AvatarEntityContainer_usage (0 ms)
+[ RUN      ] AvatarEntity.Usage
+[       OK ] AvatarEntity.Usage (0 ms)
+[ RUN      ] AvatarEntity.TwoBranches
+[       OK ] AvatarEntity.TwoBranches (0 ms)
+[----------] 3 tests from AvatarEntity (0 ms total)
+
+[----------] 1 test from PunisherDaemon
+[ RUN      ] PunisherDaemon.PunisherDaemon
+[       OK ] PunisherDaemon.PunisherDaemon (0 ms)
+[----------] 1 test from PunisherDaemon (0 ms total)
+
+[----------] 2 tests from Daemon
+[ RUN      ] Daemon.DaemonTestImpTest
+[       OK ] Daemon.DaemonTestImpTest (0 ms)
+[ RUN      ] Daemon.DaemonMaster
+[       OK ] Daemon.DaemonMaster (0 ms)
+[----------] 2 tests from Daemon (0 ms total)
+
+[----------] 1 test from UniformLinearMotion
+[ RUN      ] UniformLinearMotion.apply
+[       OK ] UniformLinearMotion.apply (0 ms)
+[----------] 1 test from UniformLinearMotion (0 ms total)
+
+[----------] 1 test from Bounce
+[ RUN      ] Bounce.apply
+[       OK ] Bounce.apply (0 ms)
+[----------] 1 test from Bounce (0 ms total)
+
+[----------] 1 test from SimpleWide
+[ RUN      ] SimpleWide.Implementation
+[       OK ] SimpleWide.Implementation (0 ms)
+[----------] 1 test from SimpleWide (0 ms total)
+
+[----------] 1 test from SimplePosition
+[ RUN      ] SimplePosition.Implementation
+[       OK ] SimplePosition.Implementation (0 ms)
+[----------] 1 test from SimplePosition (0 ms total)
+
+[----------] 1 test from SimplePhysicalObject
+[ RUN      ] SimplePhysicalObject.Implementation
+[       OK ] SimplePhysicalObject.Implementation (0 ms)
+[----------] 1 test from SimplePhysicalObject (0 ms total)
+
+[----------] 1 test from SimpleMobile
+[ RUN      ] SimpleMobile.Implementation
+[       OK ] SimpleMobile.Implementation (0 ms)
+[----------] 1 test from SimpleMobile (0 ms total)
+
+[----------] 1 test from SimpleDrawable
+[ RUN      ] SimpleDrawable.Implementation
+[       OK ] SimpleDrawable.Implementation (0 ms)
+[----------] 1 test from SimpleDrawable (0 ms total)
+
+[----------] 1 test from SimpleDamping
+[ RUN      ] SimpleDamping.Implementation
+[       OK ] SimpleDamping.Implementation (0 ms)
+[----------] 1 test from SimpleDamping (0 ms total)
+
+[----------] 1 test from SimpleBouncing
+[ RUN      ] SimpleBouncing.Implementation
+[       OK ] SimpleBouncing.Implementation (0 ms)
+[----------] 1 test from SimpleBouncing (0 ms total)
+
+[----------] 1 test from SimpleActivePhysicalObject
+[ RUN      ] SimpleActivePhysicalObject.Implementation
+[       OK ] SimpleActivePhysicalObject.Implementation (0 ms)
+[----------] 1 test from SimpleActivePhysicalObject (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 165 tests from 65 test cases ran. (1108 ms total)
+[  PASSED  ] 163 tests.
+[  FAILED  ] 2 tests, listed below:
+[  FAILED  ] JSONGraphicsLoaders.load_succes
+[  FAILED  ] JSONGraphicsLoaders.load_fail_uncomplete_file
+
+ 2 FAILED TESTS
+  YOU HAVE 10 DISABLED TESTS
+

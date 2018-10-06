@@ -15,6 +15,8 @@
 #include <map>
 
 #include "ZBE/core/system/SysError.h"
+#include "ZBE/core/tools/containers/RsrcDictionary.h"
+#include "ZBE/core/system/SysIdGenerator.h"
 
 namespace zbe {
 
@@ -49,11 +51,30 @@ class RsrcStore {
       l[id] = resource;
     }
 
+    /** \brief Associates a resource with a name.
+     *  \param name Name to identify the resource.
+     *  \param resource The resource.
+     */
+    void insert(std::string name, std::shared_ptr<T> resource) {
+      uint64_t id = SysIdGenerator::getId();
+      dict.insert(name, id);
+      this->insert(id, resource);
+    }
+
     /** \brief Returns the resource identify by the id.
      *  \param id Id to identify the resource.
      *  \return The resource.
      */
     std::shared_ptr<T> get(uint64_t id);
+
+    /** \brief Returns the resource identify by the name.
+     *  \param name Name to identify the resource.
+     *  \return The resource.
+     */
+    std::shared_ptr<T> get(std::string name) {
+      uint64_t id = dict.get(name);
+      return (this->get(id));
+    }
 
     /** \brief Clear the container.
     */
@@ -65,6 +86,7 @@ class RsrcStore {
     RsrcStore() : l() {};  //!< Needed for singleton.
 
     std::map<uint64_t, std::shared_ptr<T> > l;  //!< Map that associates resources with ids.
+    NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();  //!< Nuevo, maho y reshulón-----------------
 };
 
 template <typename T>

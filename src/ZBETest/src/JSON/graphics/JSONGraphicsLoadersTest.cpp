@@ -19,7 +19,7 @@ TEST(JSONGraphicsLoaders, load_succes) {
     EXPECT_EQ(0, zbe::SysError::getNErrors()) << "Initially no errors.";
 
     std::ifstream i("data/test/json/testjson_001.json");
-    zbe::JSONImgDefFileLoad(i, 1);
+    zbe::JSONGraphicsLoaders::getInstance().JSONImgDefFileLoad(i, 1);
 
     zbe::RsrcStore<zbe::ImgDef>& rsrc = zbe::RsrcStore<zbe::ImgDef>::getInstance();
     zbe::NameRsrcDictionary& nrd = zbe::NameRsrcDictionary::getInstance();
@@ -53,7 +53,7 @@ TEST(JSONGraphicsLoaders, DISABLED_load_succes_utf8) {
     // std::ifstream i("data/test/json/\u65e5\u0448.json");
     std::ifstream i("data/test/json/testjson_003.json");
 
-    zbe::JSONImgDefFileLoad(i, 0);
+    zbe::JSONGraphicsLoaders::getInstance().JSONImgDefFileLoad(i, 0);
 
     zbe::RsrcStore<zbe::ImgDef>& rsrc = zbe::RsrcStore<zbe::ImgDef>::getInstance();
     zbe::NameRsrcDictionary& nrd = zbe::NameRsrcDictionary::getInstance();
@@ -87,7 +87,7 @@ TEST(JSONGraphicsLoaders, load_fail_uncomplete_file) {
     EXPECT_EQ(0, zbe::SysError::getNErrors()) << "Initially no errors.";
 
     std::ifstream i("data/test/json/testjson_002.json");
-    zbe::JSONImgDefFileLoad(i, 1);
+    zbe::JSONGraphicsLoaders::getInstance().JSONImgDefFileLoad(i, 1);
 
     EXPECT_EQ(2, zbe::SysError::getNErrors()) << "Must be content errors";
     zbe::SysError::clear();

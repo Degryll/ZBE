@@ -4,7 +4,7 @@
  * @since 2018-09-19
  * @date 2018-09-19
  * @author Ludo Degryll Batis
- * @brief Factory for behavior daemons.
+ * @brief Factory for master daemons.
  */
 
 #include "ZBE/factories/implementations/daemons/MasterDmnFtry.h"

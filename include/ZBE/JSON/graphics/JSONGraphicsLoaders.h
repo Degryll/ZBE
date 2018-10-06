@@ -11,23 +11,47 @@
 #define ZBE_JSON_GRAPHICS_JSONGRAPHICSLOADERS_H_
 
 #include <iostream>
+#include <memory>
+#include <string>
 #include <unordered_map>
 
 #include <nlohmann/json.hpp>
 
+#include "ZBE/core/tools/containers/RsrcDictionary.h"
+#include "ZBE/core/tools/containers/RsrcStore.h"
+#include "ZBE/core/tools/graphics/SpriteSheet.h"
+#include "ZBE/core/system/SysError.h"
+#include "ZBE/core/system/SysIdGenerator.h"
+
 #include "ZBE/graphics/MultiSpriteSheet.h"
+#include "ZBE/resources/contextnames.h"
 
 namespace zbe {
 
-using json = nlohmann::json;
+class JSONGraphicsLoaders {
+public:
+  using json = nlohmann::json;
 
-ImgDef JSONImgDefLoad(json j, uint64_t graphicsId);
+  static JSONGraphicsLoaders& getInstance() {
+    static JSONGraphicsLoaders instance;
+    return instance;
+  }
 
-void JSONImgDefFileLoad(std::istream& is, uint64_t graphicsId);
+  ImgDef JSONImgDefLoad(json j, uint64_t graphicsId);
 
-SprtDef JSONSprtDefLoad(json j);
+  void JSONImgDefFileLoad(std::istream& is, uint64_t graphicsId);
 
-void JSONMultiSpriteSheetFileLoad(std::istream& is);
+  SprtDef JSONSprtDefLoad(json j);
+
+  void JSONMultiSpriteSheetFileLoad(std::istream& is);
+
+private:
+  JSONGraphicsLoaders() {}
+
+  RsrcStore<zbe::SpriteSheet<zbe::AnimatedSprite> >& rsrcAnimSprt = RsrcStore<zbe::SpriteSheet<zbe::AnimatedSprite> >::getInstance();
+  RsrcStore<ImgDef>& rsrcImgDef = RsrcStore<ImgDef>::getInstance();
+  NameRsrcDictionary& nrd = NameRsrcDictionary::getInstance();
+};
 
 }  // namespace zbe
 
