@@ -10,8 +10,6 @@
 #ifndef ZOMBIENOID_EVENTS_HANDLERS_ACTUATORS_MAGNETSTICKER_H
 #define ZOMBIENOID_EVENTS_HANDLERS_ACTUATORS_MAGNETSTICKER_H
 
-#include <cstdio>
-
 #include "ZBE/core/entities/avatars/Avatar.h"
 #include "ZBE/core/entities/AvatarEntity.h"
 

@@ -92,8 +92,6 @@ TEST(StateMachineDmnFtryTest, build) {
   mdf.build("StateMachineDmnFtryTestName", cfgId);
 
   EXPECT_EQ(0, zbe::SysError::getNErrors()) << "Must be no config errors.";
-  printf("Error: %s", zbe::SysError::getFirstErrorString().c_str());
-
 
   uint64_t outId = dict.get("Daemon.StateMachineDmnFtryTestName");
   std::shared_ptr<zbe::Daemon> outDmn = daemonRsrc.get(outId);

@@ -11,7 +11,6 @@
 #define ZBE_OGL_DRAWERS_OGLMODELSHEETSDLDRAWER_H_
 
 #include <memory>
-#include <cstdio>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>

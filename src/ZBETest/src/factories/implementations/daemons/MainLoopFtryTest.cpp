@@ -63,9 +63,9 @@ public:
   DummyEventDaemon(): executed(false){}
 
   void run() {
+    if(executed) return;
     auto e = new DummyEvent();
     es.storeEvent(e);
-printf("e: %lld, es: %lld\n", e->getTime(), es.getTime());
     executed = true;
   }
   zbe::EventStore& es = zbe::EventStore::getInstance();
@@ -88,8 +88,7 @@ TEST(MainLoopFtryTest, build) {
   (*cfg)["reactDaemon"] = "reactD"s;
   (*cfg)["drawDaemon"] = "drawD"s;
   (*cfg)["postDaemon"] = "postD"s;
-  (*cfg)["contextTime"] = "contextD"s;
-printf("llega 1;\n");fflush(stdout);
+  (*cfg)["contextTime"] = "contextT"s;
   uint64_t cfgId = SysIdGenerator::getId();
   configRsrc.insert(cfgId, cfg);
 
@@ -100,7 +99,8 @@ printf("llega 1;\n");fflush(stdout);
   auto drawD = std::make_shared<DummyDaemon>();
   auto postD = std::make_shared<DummyMainLoopExit>();
 
-  auto contextD = std::make_shared<zbetest::MockedContextTime>();
+  auto contextT = std::make_shared<zbetest::MockedContextTime>();
+  zbe::ContextTime::setMaxFrameTime(5000000);
 
   daemonRsrc.insert("Daemon.preD"s, preD);
   daemonRsrc.insert("Daemon.eventD"s, eventD);
@@ -108,21 +108,20 @@ printf("llega 1;\n");fflush(stdout);
   daemonRsrc.insert("Daemon.reactD"s, reactD);
   daemonRsrc.insert("Daemon.drawD"s, drawD);
   daemonRsrc.insert("Daemon.postD"s, postD);
-  timeRsrc.insert("Time.contextD"s, contextD);
-printf("pre build\n"); fflush(stdout);
+  timeRsrc.insert("Time.contextT"s, contextT);
   MainLoopFtry mlf;
   mlf.build("MainLoopFtryTestName", cfgId);
-printf("pos build\n"); fflush(stdout);
 
   auto mlDmn = daemonRsrc.get("Daemon.MainLoopFtryTestName");
   std::shared_ptr<MainLoop> aux = std::dynamic_pointer_cast<MainLoop> (mlDmn);
   postD->setML(aux);
 
-  contextD->setFixedTime(10000);
-printf("pre run\n"); fflush(stdout);
+  contextT->setFixedTime(0);
+  contextT->update();
+
+  contextT->setFixedTime(10000);
 
   mlDmn->run();
-printf("pos run\n"); fflush(stdout);
 
   EXPECT_TRUE(preD->executed) << "Must call preD";
   EXPECT_TRUE(eventD->executed) << "Must call eventD";
@@ -130,7 +129,7 @@ printf("pos run\n"); fflush(stdout);
   EXPECT_TRUE(reactD->executed) << "Must call reactD";
   EXPECT_TRUE(drawD->executed) << "Must not call drawD";
   EXPECT_TRUE(postD->executed) << "Must not call postD";
-printf("llega 4;\n");fflush(stdout);
+  
   configRsrc.clear();
   dict.clear();
   daemonRsrc.clear();

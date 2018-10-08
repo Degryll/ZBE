@@ -8,7 +8,7 @@
  */
 
 #include "ZBE/core/events/EventStore.h"
-#include <cstdio>
+
 namespace zbe {
 
 /** \brief Used to delete (and free memory) all events in a store.
@@ -37,14 +37,12 @@ void EventStore::clearStore() {
   clearInstantStore();
 }
 
-void EventStore::storeEvent(Event* e) {printf("e->getTime() = %lld\n", e->getTime());
+void EventStore::storeEvent(Event* e) {
   if(e->getTime() == bettertime){
     timedStore.push_front(e);
   } else if (e->getTime() < bettertime){
-printf("Entra\n");
     clearTimedStore();
     bettertime = e->getTime();
-printf("getTime() = %lld\n", getTime());
     timedStore.push_front(e);
   } else {
     delete e;
@@ -68,7 +66,6 @@ void EventStore::manageStore(std::forward_list<Event*>& store) {
 }
 
 int64_t EventStore::getTime() {
-  printf("%p\n", this);
   return (bettertime);
 }
 

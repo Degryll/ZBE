@@ -24,18 +24,14 @@ void MainLoop::run() {
     while (contextTime->isFrameRemaining()) {
       // Timed events generator daemon
       dTE->run();
-printf("%lld: ", store.getTime());
-//9223372036854775807: Pues no
       contextTime->setEventTime(store.getTime());
       if (contextTime->isPartialFrame()) {
-printf("Entra\n");
         // commonBehaviorMaster
         dCBM->run();
         store.manageCurrent();
         // reactBehaviorMaster
         dRBM->run();
       } else {
-printf("Pues no\n");
         // commonBehaviorMaster
         dCBM->run();
         store.clearStore();
