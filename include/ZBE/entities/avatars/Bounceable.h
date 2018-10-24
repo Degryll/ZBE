@@ -10,11 +10,13 @@
 #ifndef ZBE_ENTITIES_AVATARS_BOUNCEABLE_H_
 #define ZBE_ENTITIES_AVATARS_BOUNCEABLE_H_
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief This define an avatar in which others can bounce.
  */
-class Bounceable {
+class ZBEAPI Bounceable {
   public:
     using Base = void; //!< inheritance info
 

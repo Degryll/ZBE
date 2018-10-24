@@ -15,12 +15,14 @@
 
 #include "ZBE/archetypes/PhysicalObject.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Implements the interface of an object that interacts with other objects.
  *  Please, if inherit from this class, use PO for naming.
  */
-class SimplePhysicalObject : virtual public PhysicalObject {
+class ZBEAPI SimplePhysicalObject : virtual public PhysicalObject {
 public:
   /** \brief Construct a physicalObject with his actuators list.
    *  \param actuatorsList Index list of actuators.

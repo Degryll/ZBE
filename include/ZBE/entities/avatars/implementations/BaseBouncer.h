@@ -16,12 +16,14 @@
 #include "ZBE/entities/avatars/Bouncer.h"
 #include "ZBE/entities/avatars/implementations/BaseMovable.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief This implements a base 1:1 avatar that can bounce.
  */
 template <unsigned s>
-class BaseBouncer : virtual public Bouncer<s>, public BaseMovable<s> {
+class ZBEAPI BaseBouncer : virtual public Bouncer<s>, public BaseMovable<s> {
   public:
     BaseBouncer(const BaseBouncer<s>&) = delete; //<! Avoid copy
     void operator=(const BaseBouncer<s>&) = delete; //<! Avoid copy

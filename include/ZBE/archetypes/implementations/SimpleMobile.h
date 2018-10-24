@@ -18,12 +18,14 @@
 #include "ZBE/archetypes/Mobile.h"
 #include "ZBE/archetypes/implementations/SimplePosition.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Simple implementation of the Mobile<s> interface.
  */
 template <unsigned s>
-class SimpleMobile : virtual public Mobile<s>, public SimplePosition<s> {
+class ZBEAPI SimpleMobile : virtual public Mobile<s>, public SimplePosition<s> {
 public:
   /** \brief Empty constructor. Position and velocity are set to 0.
    */

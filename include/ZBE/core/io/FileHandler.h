@@ -4,7 +4,7 @@
  * @since 2014-05-25
  * @date 2018-03-20
  * @author Degryll Batis Ludo
- * @brief Class capable of handle files in UTF8.
+ * @brief class ZBEAPI capable of handle files in UTF8.
  */
 
 #ifndef ZBE_CORE_IO_FILEHANDLER_H
@@ -20,11 +20,13 @@
 
 #include <string>
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
-/** \brief Class capable of handle files in UTF8.
+/** \brief class ZBEAPI capable of handle files in UTF8.
  */
-class FileHandler {
+class ZBEAPI FileHandler {
 public:
 #ifdef __linux__
   const std::string SEPARATORS = "\\/";  //!< Directory separators "\" and "/"

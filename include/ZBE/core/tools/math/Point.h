@@ -15,19 +15,21 @@
 #include "ZBE/core/system/SysError.h"
 #include "ZBE/core/tools/math/math.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 template <unsigned s>
-class Vector;
+class ZBEAPI Vector;
 
-/** \brief A base class that represent Points of any dimension.
+/** \brief A base class ZBEAPI that represent Points of any dimension.
  *
  *  Not use this class, use Point<s>.
  *
  *  \sa Point
  */
 template<unsigned s>
-class _POINT {
+class ZBEAPI _POINT {
   public:
 
     /** \brief Void constructor, the point's values are set to 0.
@@ -62,11 +64,11 @@ class _POINT {
       }
     }
 
-    /** \brief Virtual destructor (this class is a base class).
+    /** \brief Virtual destructor (this class ZBEAPI is a base class).
      */
     virtual ~_POINT() {}
 
-    /** \brief This class let you assign initializer lists to _POINT.
+    /** \brief This class ZBEAPI let you assign initializer lists to _POINT.
      *  \param l initializer list
      */
     _POINT& operator=(const std::initializer_list<double> l) {
@@ -200,12 +202,12 @@ class _POINT {
     double data[s];  //!< Point data.
 };
 
-/** \brief A class that represent Points of any dimension.
+/** \brief A class ZBEAPI that represent Points of any dimension.
  *
  *  This template needs to know the number of dimensions of the hyperplane to which the Point belongs.
  */
 template <unsigned s>
-class Point : public _POINT<s> {
+class ZBEAPI Point : public _POINT<s> {
   public:
     /** \brief Void constructor, the Point's values are unknown.
      */
@@ -225,14 +227,14 @@ class Point : public _POINT<s> {
     Point(std::initializer_list<double> l) : _POINT<s>(l) {}
 };
 
-/** \brief A class that represent 2D points.
+/** \brief A class ZBEAPI that represent 2D points.
  *
  *  Point2D is an alias of Point<2>.
  *
  *  This specialization let you access with the alias .x or .y to the first and second dimension of the 2D point.
  */
 template <>
-class Point<2> : public _POINT<2> {
+class ZBEAPI Point<2> : public _POINT<2> {
   public:
     double &x;  //!< An alias to access the first dimension as p.x.
     double &y;  //!< An alias to access the second dimension as p.y.
@@ -272,12 +274,12 @@ class Point<2> : public _POINT<2> {
      */
     Point& operator=(Point<2> rhs) {_POINT<2>::operator=(rhs); return (*this);}
 
-    /** \brief This class let you assign _POINT<2> classes to Point<2>.
+    /** \brief This class ZBEAPI let you assign _POINT<2> classes to Point<2>.
      *  \param rhs Point to assign
      */
     Point& operator=(_POINT<2> rhs) {_POINT<2>::operator=(rhs); return (*this);}
 
-    /** \brief This class let you assign initializer lists to Point<2>.
+    /** \brief This class ZBEAPI let you assign initializer lists to Point<2>.
      *  \param rhs Point to assign
      */
     Point& operator=(std::initializer_list<double> l) {_POINT<2>::operator=(l); return (*this);}
@@ -285,14 +287,14 @@ class Point<2> : public _POINT<2> {
 
 using Point2D = Point<2>;  //!< An alias to Point<2>.
 
-/** \brief A class that represent 3D points.
+/** \brief A class ZBEAPI that represent 3D points.
  *
  *  Point3D is an alias of Point<3>.
  *
  *  This specialization let you access with the alias .x, .y or .z to the first, second or third dimension of the 3D point.
  */
 template <>
-class Point<3> : public _POINT<3> {
+class ZBEAPI Point<3> : public _POINT<3> {
   public:
     double &x;  //!< An alias to access the first dimension as p.x.
     double &y;  //!< An alias to access the second dimension as p.y.
@@ -333,12 +335,12 @@ class Point<3> : public _POINT<3> {
      */
     Point& operator=(Point<3> rhs) {_POINT<3>::operator=(rhs); return (*this);}
 
-    /** \brief This class let you assign _POINT<3> classes to Point<3>.
+    /** \brief This class ZBEAPI let you assign _POINT<3> classes to Point<3>.
      *  \param rhs Point to assign
      */
     Point& operator=(_POINT<3> rhs) {_POINT<3>::operator=(rhs); return (*this);}
 
-    /** \brief This class let you assign initializer lists to Point<3>.
+    /** \brief This class ZBEAPI let you assign initializer lists to Point<3>.
      *  \param l List of values that defines the point
      */
     Point& operator=(std::initializer_list<double> l) {_POINT<3>::operator=(l); return (*this);}

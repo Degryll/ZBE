@@ -25,12 +25,14 @@
 
 #include "ZBE/factories/Factory.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Factory for behavior daemons.
  */
 template<typename L, typename ...E>
-class BehaviorDmnFtry : public Factory {
+class ZBEAPI BehaviorDmnFtry : public Factory {
 public:
 
   /** \brief Do the behavior work over the given entity

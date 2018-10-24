@@ -12,12 +12,14 @@
 
 #include <cstdint>
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Element with temporary validity.
  */
 template <typename T>
-class TimedElement {
+class ZBEAPI TimedElement {
 public:
   /** \brief Construct a dummy Timed Element for comparison purpose.
    *  \param time When this element was created.

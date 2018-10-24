@@ -16,12 +16,14 @@
 
 #include "ZBE/archetypes/Position.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Simple implementation of the Position interface.
  */
 template <unsigned s>
-class SimplePosition : virtual public Position<s> {
+class ZBEAPI SimplePosition : virtual public Position<s> {
 public:
   /** \brief Empty constructor. Position is set to 0.
    */

@@ -16,9 +16,11 @@
 #include "ZBE/core/tools/containers/Ticket.h"
 #include "ZBE/core/events/handlers/TimeHandler.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
-class TicketEraser : public TimeHandler {
+class ZBEAPI TicketEraser : public TimeHandler {
   public:
 	TicketEraser(const TicketEraser&) = delete; //!< Avoid copy.
 	void operator=(const TicketEraser&) = delete; //!< Avoid copy.

@@ -16,11 +16,13 @@
 
 #include "ZBE/archetypes/Drawable.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief This define an entity that can be drawn in any direction.
  */
-class TextDrawable : virtual public Drawable {
+class ZBEAPI TextDrawable : virtual public Drawable {
 public:
   /** \brief Virtual destructor.
    */

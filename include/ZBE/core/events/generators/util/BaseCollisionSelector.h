@@ -19,12 +19,14 @@
 #include "ZBE/core/events/generators/util/CollisionData.h"
 #include "ZBE/core/events/generators/util/CollisionSelector.h"
 
+#include "ZBE/core/system/system.h"
+
 
 namespace zbe {
 
 /** \brief Apply the correct function to solve a collision.
  */
-class BaseCollisionSelector : public CollisionSelector {
+class ZBEAPI BaseCollisionSelector : public CollisionSelector {
 
   /** \brief Solve a collision between a StaticSolidAABB2D and a StaticSolidAABB2D.
    *  \param param1 First element interested in the collision
@@ -42,7 +44,7 @@ class BaseCollisionSelector : public CollisionSelector {
      *  \param point Where collisión point will be stored if a collision is detected,
      *  \param normal Where collisión normal will be stored if a collision is detected,
      */
-    inline bool visit(StaticLimiterAABB2D&, StaticLimiterAABB2D&, int64_t&, CollisionData*);
+    /*inline*/ bool visit(StaticLimiterAABB2D&, StaticLimiterAABB2D&, int64_t&, CollisionData*);
 
     /** \brief Solve a collision between a StaticSolidAABB2D and a StaticLimiterAABB2D.
      *  \param param1 First element interested in the collision
@@ -51,7 +53,7 @@ class BaseCollisionSelector : public CollisionSelector {
      *  \param point Where collisión point will be stored if a collision is detected,
      *  \param normal Where collisión normal will be stored if a collision is detected,
      */
-    inline bool visit(StaticSolidAABB2D&, StaticLimiterAABB2D&, int64_t&, CollisionData*);
+    /*inline*/ bool visit(StaticSolidAABB2D&, StaticLimiterAABB2D&, int64_t&, CollisionData*);
 
     /** \brief Solve a collision between a StaticLimiterAABB2D and a StaticSolidAABB2D.
      *  \param param1 First element interested in the collision
@@ -60,7 +62,7 @@ class BaseCollisionSelector : public CollisionSelector {
      *  \param point Where collisión point will be stored if a collision is detected,
      *  \param normal Where collisión normal will be stored if a collision is detected,
      */
-    inline bool visit(StaticLimiterAABB2D&, StaticSolidAABB2D&, int64_t&, CollisionData*);
+    /*inline*/ bool visit(StaticLimiterAABB2D&, StaticSolidAABB2D&, int64_t&, CollisionData*);
 
     /** \brief Solve a collision between a StaticSolidAABB2D and a ConstantMovingCircle.
      *  \param param1 First element interested in the collision
@@ -69,7 +71,7 @@ class BaseCollisionSelector : public CollisionSelector {
      *  \param point Where collisión point will be stored if a collision is detected,
      *  \param normal Where collisión normal will be stored if a collision is detected,
      */
-    inline bool visit(StaticSolidAABB2D& param1, ConstantMovingCircle& param2, int64_t& time, CollisionData* data);
+    /*inline*/ bool visit(StaticSolidAABB2D& param1, ConstantMovingCircle& param2, int64_t& time, CollisionData* data);
 
     /** \brief Solve a collision between a StaticLimiterAABB2D and a ConstantMovingCircle.
      *  \param param1 First element interested in the collision
@@ -78,7 +80,7 @@ class BaseCollisionSelector : public CollisionSelector {
      *  \param point Where collisión point will be stored if a collision is detected,
      *  \param normal Where collisión normal will be stored if a collision is detected,
      */
-    inline bool visit(StaticLimiterAABB2D& param1, ConstantMovingCircle& param2, int64_t& time, CollisionData* data);
+    /*inline*/ bool visit(StaticLimiterAABB2D& param1, ConstantMovingCircle& param2, int64_t& time, CollisionData* data);
 
     /** \brief Solve a collision between a ConstantMovingCircle and a StaticSolidAABB2D.
      *  \param param1 First element interested in the collision
@@ -87,7 +89,7 @@ class BaseCollisionSelector : public CollisionSelector {
      *  \param point Where collisión point will be stored if a collision is detected,
      *  \param normal Where collisión normal will be stored if a collision is detected,
      */
-    inline bool visit(ConstantMovingCircle& param1, StaticSolidAABB2D& param2, int64_t& time, CollisionData* data);
+    /*inline*/ bool visit(ConstantMovingCircle& param1, StaticSolidAABB2D& param2, int64_t& time, CollisionData* data);
 
     /** \brief Solve a collision between a ConstantMovingCircle and a StaticLimiterAABB2D.
      *  \param param1 First element interested in the collision
@@ -96,7 +98,7 @@ class BaseCollisionSelector : public CollisionSelector {
      *  \param point Where collisión point will be stored if a collision is detected,
      *  \param normal Where collisión normal will be stored if a collision is detected,
      */
-    inline bool visit(ConstantMovingCircle& param1, StaticLimiterAABB2D& param2, int64_t& time, CollisionData* data);
+    /*inline*/ bool visit(ConstantMovingCircle& param1, StaticLimiterAABB2D& param2, int64_t& time, CollisionData* data);
 
     /** \brief Solve a collision between a ConstantMovingCircle and a ConstantMovingCircle.
      *  \param param1 First element interested in the collision
@@ -105,7 +107,7 @@ class BaseCollisionSelector : public CollisionSelector {
      *  \param point Where collisión point will be stored if a collision is detected,
      *  \param normal Where collisión normal will be stored if a collision is detected,
      */
-    inline bool visit(ConstantMovingCircle& param1, ConstantMovingCircle& param2, int64_t& time, CollisionData* data);
+    /*inline*/ bool visit(ConstantMovingCircle& param1, ConstantMovingCircle& param2, int64_t& time, CollisionData* data);
 };
 
 }  // namespace zbe

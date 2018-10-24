@@ -17,10 +17,12 @@
 #include "ZBE/core/daemons/Daemon.h"
 #include "ZBE/SDL/system/SDLWindow.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 /** \brief Basic post-loop daemon used for SDL
  */
-class BasicPostLoopSDLDaemon : public Daemon {
+class ZBEAPI BasicPostLoopSDLDaemon : public Daemon {
 public:
   BasicPostLoopSDLDaemon(const BasicPostLoopSDLDaemon&) = delete; //!< Avoid copy.
   void operator=(const BasicPostLoopSDLDaemon&) = delete; //!< Avoid copy.

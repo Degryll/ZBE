@@ -23,12 +23,14 @@
 
 #include "ZBE/core/entities/AvatarEntity.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Every Interactioner (an entity involved in a interaction) has a interaction object defining his "physical shape".
  */
 template <typename R>
-class Interactioner {
+class ZBEAPI Interactioner {
 public:
 
   using Base = void; //!< Inheritance info.
@@ -53,7 +55,7 @@ public:
 /** \brief Every Interactioner (an entity involved in a interaction) has a interaction object defining his "physical shape".
 */
 template <typename R, typename ...Bases>
-class InteractionerCommon : virtual public Interactioner<R> {
+class ZBEAPI InteractionerCommon : virtual public Interactioner<R> {
 public:
   InteractionerCommon(const InteractionerCommon&) = delete;
   void operator=(const InteractionerCommon&) = delete;

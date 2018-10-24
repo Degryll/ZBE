@@ -15,11 +15,13 @@
 #include "ZBE/core/entities/avatars/RotatedSprite.h"
 #include "ZBE/core/entities/avatars/implementations/SimpleSingleSprite.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief This define an avatar that can be drawn in any direction.
  */
-class SimpleRotatedSprite : virtual public RotatedSprite, public SimpleSingleSprite {
+class ZBEAPI SimpleRotatedSprite : virtual public RotatedSprite, public SimpleSingleSprite {
 
 public:
 

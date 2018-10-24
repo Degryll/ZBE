@@ -16,11 +16,13 @@
 #include "ZBE/core/events/handlers/NetHandler.h"
 #include "ZBE/SDL/system/SDLSocket.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief An event caused by input devices.
 */
-class NetEvent : public Event {
+class ZBEAPI NetEvent : public Event {
 public:
 
   /** \brief Copy Constructor.

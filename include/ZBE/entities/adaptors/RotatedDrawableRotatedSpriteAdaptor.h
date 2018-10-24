@@ -15,11 +15,13 @@
 
 #include "ZBE/archetypes/RotatedDrawable.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Implementation that adapts an RotatedDrawable to a RotatedSprite.
  */
-class RotatedDrawableRotatedSpriteAdaptor : public Adaptor<RotatedSprite> {
+class ZBEAPI RotatedDrawableRotatedSpriteAdaptor : public Adaptor<RotatedSprite> {
 public:
   RotatedDrawableRotatedSpriteAdaptor(const RotatedDrawableRotatedSpriteAdaptor&) = delete; //<! Avoid copy
   void operator=(const RotatedDrawableRotatedSpriteAdaptor&) = delete; //<! Avoid copy

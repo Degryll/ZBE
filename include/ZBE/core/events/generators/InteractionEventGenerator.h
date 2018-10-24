@@ -25,12 +25,14 @@
 #include "ZBE/core/events/EventStore.h"
 #include "ZBE/core/events/InteractionEvent.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Generate interaction events occurred within the remaining frame time.
  */
 template <typename R, typename IS, typename LN, typename LT>
-class InteractionEventGenerator : virtual public Daemon {
+class ZBEAPI InteractionEventGenerator : virtual public Daemon {
 public:
   InteractionEventGenerator(const InteractionEventGenerator&) = delete;  //!< Avoid copy.
   void operator=(const InteractionEventGenerator&) = delete;  //!< Avoid copy.
@@ -116,7 +118,7 @@ void InteractionEventGenerator<R, IS, LN, LT>::run() {
 /** \brief Generate interaction events occurred in the current time.
  */
 template <typename R, typename IS, typename LN, typename LT>
-class InstantInteractionEventGenerator : public InteractionEventGenerator<R, IS, LN, LT> {
+class ZBEAPI InstantInteractionEventGenerator : public InteractionEventGenerator<R, IS, LN, LT> {
 public:
   InstantInteractionEventGenerator(const InstantInteractionEventGenerator&) = delete; //!< Avoid copy.
   void operator=(const InstantInteractionEventGenerator&) = delete; //!< Avoid copy.

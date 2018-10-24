@@ -17,13 +17,14 @@
 #include "ZBE/entities/avatars/Positionable.h"
 #include "ZBE/archetypes/Position.h"
 
+#include "ZBE/core/system/system.h"
 
 namespace zbe {
 
 /** \brief This define an avatar that can be moved.
  */
 template <unsigned s>
-class BasePositionable : virtual public Positionable<s> {
+class ZBEAPI BasePositionable : virtual public Positionable<s> {
   public:
     BasePositionable(const BasePositionable&) = delete; //<! Avoid copy
     void operator=(const BasePositionable&) = delete; //<! Avoid copy

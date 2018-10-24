@@ -15,12 +15,14 @@
 
 #include "ZBE/archetypes/PhysicalObject.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Defines the interface of an object that interacts actively physically.
  *  Please, if inherit from this class, use APO for naming.
  */
-class ActivePhysicalObject : virtual public PhysicalObject {
+class ZBEAPI ActivePhysicalObject : virtual public PhysicalObject {
 public:
   /** \brief Virtual destructor.
    */

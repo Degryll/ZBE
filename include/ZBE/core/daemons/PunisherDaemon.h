@@ -17,11 +17,13 @@
 #include "ZBE/core/daemons/Daemon.h"
 #include "ZBE/core/tools/containers/RsrcStore.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 /** \brief Daemon that applies a "punish" over a list of elements.
  */
 template<typename P, typename L>
-class PunisherDaemon : public Daemon {
+class ZBEAPI PunisherDaemon : public Daemon {
 public:
 
   PunisherDaemon(const PunisherDaemon&) = delete; //!< Avoid copy.

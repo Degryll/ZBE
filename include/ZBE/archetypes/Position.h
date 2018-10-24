@@ -4,7 +4,7 @@
  * @since 2016-12-16
  * @date 2018-02-25
  * @author Degryll
- * @brief Defines the interface of a class with a position.
+ * @brief Defines the interface of a class ZBEAPI with a position.
  */
 
 #ifndef ZBE_ARCHETYPES_POSITION_H
@@ -14,12 +14,14 @@
 
 #include "ZBE/core/tools/math/Point.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
-/** \brief Defines the interface of a class with a position.
+/** \brief Defines the interface of a class ZBEAPI with a position.
  */
 template <unsigned s>
-class Position {
+class ZBEAPI Position {
 public:
   /** \brief Virtual destructor.
    */

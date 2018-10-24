@@ -12,11 +12,13 @@
 
 #include "ZBE/archetypes/Drawable.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief This implements an entity that can be wrote.
  */
-class SimpleTextDrawable : virtual public Drawable {
+class ZBEAPI SimpleTextDrawable : virtual public Drawable {
 public:
   /** \brief Constructs a SimpleTextDrawable with position as x - y, size as w - h, graphics id to use, text value and color.
    */

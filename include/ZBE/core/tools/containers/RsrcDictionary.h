@@ -16,11 +16,13 @@
 
 #include "ZBE/core/system/SysError.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
-/** \brief A class that translate a name to a globaly accesible resource id.
+/** \brief A class ZBEAPI that translate a name to a globaly accesible resource id.
  */
-class NameRsrcDictionary {
+class ZBEAPI NameRsrcDictionary {
   public:
     NameRsrcDictionary(NameRsrcDictionary const&)    = delete;  //!< Needed for singleton.
     void operator=(NameRsrcDictionary const&) = delete;  //!< Needed for singleton.
@@ -76,9 +78,9 @@ class NameRsrcDictionary {
     std::map<std::string, uint64_t> l;  //!< Map that associates resources with ids.
 };
 
-/** \brief A class that translate a local resource id to a globaly accesible resource id.
+/** \brief A class ZBEAPI that translate a local resource id to a globaly accesible resource id.
  */
-class IdRsrcDictionary {
+class ZBEAPI IdRsrcDictionary {
   public:
     IdRsrcDictionary(IdRsrcDictionary const&)    = delete;  //!< Needed for singleton.
     void operator=(IdRsrcDictionary const&) = delete;  //!< Needed for singleton.

@@ -4,7 +4,7 @@
  * @since 2012-02-01
  * @date 2018-02-25
  * @author Degryll Ludo Batis
- * @brief Class that know how to draw SingleSprite entities with SDL.
+ * @brief class ZBEAPI that know how to draw SingleSprite entities with SDL.
  */
 
 #ifndef SDL_DRAWERS_SIMPLESPRITESDLDRAWER_H_
@@ -18,12 +18,13 @@
 #include "ZBE/core/entities/AvatarEntity.h"
 #include "ZBE/SDL/system/SDLWindow.h"
 
+#include "ZBE/core/system/system.h"
 
 namespace zbe {
 
 /** \brief This draws a simple sprite (an image).
  */
-class SingleSpriteSDLDrawer : public Behavior<SingleSprite> {
+class ZBEAPI SingleSpriteSDLDrawer : public Behavior<SingleSprite> {
   public:
     SingleSpriteSDLDrawer(const SingleSpriteSDLDrawer&) = delete; //!< Avoid copy.
     void operator=(const SingleSpriteSDLDrawer&) = delete; //!< Avoid copy.

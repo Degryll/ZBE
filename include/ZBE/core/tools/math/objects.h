@@ -15,9 +15,11 @@
 #include "ZBE/core/tools/math/Point.h"
 #include "ZBE/core/tools/math/Vector.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
-/** \brief A class that represent a Ray (an origin and a direction).
+/** \brief A class ZBEAPI that represent a Ray (an origin and a direction).
  *
  *  This template needs to know the number of dimensions of the hyperplane to which the Ray belongs to.
  */
@@ -53,7 +55,7 @@ struct Ray {
   Vector<s> d;  //!< Direction data.
 };
 
-/** \brief A class that represent a 2D Ray (an origin and a direction).
+/** \brief A class ZBEAPI that represent a 2D Ray (an origin and a direction).
  *
  *  Ray2D is an alias of Ray<2>.
  *
@@ -93,7 +95,7 @@ struct Ray<2> {
 
 using Ray2D = Ray<2>;  //!< An alias to Ray<2>.
 
-/** \brief A class that represent a 3D Ray (an origin and a direction).
+/** \brief A class ZBEAPI that represent a 3D Ray (an origin and a direction).
  *
  *  Ray3D is an alias of Ray<3>.
  *
@@ -131,7 +133,7 @@ struct Ray<3> {
 
 using Ray3D = Ray<3>;  //!< An alias to Ray<3>.
 
-/** \brief A class that represent a NSphere (a center and a radius).
+/** \brief A class ZBEAPI that represent a NSphere (a center and a radius).
  *
  *  This template needs to know the number of dimensions of the hyperplane to which the Nsphere belongs to.
  */
@@ -165,7 +167,7 @@ struct NSphere {
   double r;    //!< Radius data.
 };
 
-/** \brief A class that represent a Circle (NSphere of 2 dimensions).
+/** \brief A class ZBEAPI that represent a Circle (NSphere of 2 dimensions).
  *
  *  Circle is an alias of NSphere<2>.
  *
@@ -203,7 +205,7 @@ struct NSphere<2> {
 
 using Circle = NSphere<2>;  //!< An alias to NSphere<2>.
 
-/** \brief A class that represent a Sphere (NSphere of 3 dimensions).
+/** \brief A class ZBEAPI that represent a Sphere (NSphere of 3 dimensions).
  *
  *  Sphere is an alias of NSphere<3>.
  *
@@ -241,7 +243,7 @@ struct NSphere<3> {
 
 using Sphere = NSphere<3>;  //!< An alias to NSphere<3>.
 
-/** \brief A class that represent an Axis Aligned Bounding Box (AABB).
+/** \brief A class ZBEAPI that represent an Axis Aligned Bounding Box (AABB).
  *
  *  An AABB is defined by two opposite corners. This corners are obtained with the minimum and maximum values its dimensions.
  *
@@ -277,7 +279,7 @@ struct AABB {
   Point<s> maximum;  //!< maximum corner.
 };
 
-/** \brief A class that represent an Axis Aligned Bounding Box (AABB).
+/** \brief A class ZBEAPI that represent an Axis Aligned Bounding Box (AABB).
  *
  *  An AABB is defined by two opposite corners. This corners are obtained with the minimum and maximum values of x and y.
  *
@@ -317,7 +319,7 @@ struct AABB<2> {
 
 using AABB2D = AABB<2>;  //!< An alias to AABB<2>.
 
-/** \brief A class that represent an Axis Aligned Bounding Box (AABB).
+/** \brief A class ZBEAPI that represent an Axis Aligned Bounding Box (AABB).
  *
  *  An AABB is defined by two opposite corners. This corners are obtained with the minimum and maximum values of x and y and z.
  *

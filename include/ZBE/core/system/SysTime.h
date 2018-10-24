@@ -18,11 +18,13 @@
 #include "ZBE/core/tools/time/ContextTime.h"
 #include "ZBE/core/tools/time/SubordinateTime.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
-/** \brief This class will store and manage the system time.
+/** \brief This class ZBEAPI will store and manage the system time.
 */
-class SysTime : public ContextTime {
+class ZBEAPI SysTime : public ContextTime {
 public:
   SysTime(const SysTime&) = delete;
   void operator=(const SysTime&) = delete;

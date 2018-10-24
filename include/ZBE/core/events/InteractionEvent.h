@@ -17,12 +17,14 @@
 #include "ZBE/core/entities/avatars/Interactioner.h"
 #include "ZBE/core/events/generators/util/ReactObject.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Has the information needed to resolve a interaction.
  */
 template<typename R>
-class InteractionEvent : public Event {
+class ZBEAPI InteractionEvent : public Event {
   public:
 
     /** \brief Parametrized constructor.

@@ -15,12 +15,14 @@
 
 #include "ZBE/core/tools/containers/TicketedForwardList.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Iterator for Joint container.
  */
 template<typename J, typename L, typename E> //!< Joint type, List type, Element type.
-class JointIterator : public std::iterator<std::forward_iterator_tag, E>{
+class ZBEAPI JointIterator : public std::iterator<std::forward_iterator_tag, E>{
 public:
 
   /** \brief parametrized constructor
@@ -117,7 +119,7 @@ private:
 * T elements.
  */
 template<typename L, typename T>
-class ListJoint {
+class ZBEAPI ListJoint {
 public:
     /** \brief empty constructor
     */
@@ -159,7 +161,7 @@ private:
 * T elements.
  */
 template<typename L, typename T>
-class ListTicketedJoint {
+class ZBEAPI ListTicketedJoint {
 public:
     /** \brief Empty constructor.
      */

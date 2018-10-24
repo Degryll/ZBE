@@ -13,13 +13,15 @@
 #include "ZBE/core/tools/math/Vector.h"
 #include "ZBE/core/tools/math/Point.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Stores the data of a collision between two entities.
  *
  *  For now, the information stored is just the point of collision.
  */
-class CollisionData {
+class ZBEAPI CollisionData {
   public:
     /** \brief Parametrized constructor
      *

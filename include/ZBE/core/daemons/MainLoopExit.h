@@ -17,11 +17,13 @@
 #include "ZBE/core/tools/shared/Value.h"
 #include "ZBE/core/daemons/Daemon.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Daemon capable of end a MainLoop
  */
-class MainLoopExit : virtual public Daemon {
+class ZBEAPI MainLoopExit : virtual public Daemon {
 public:
 
   /** \brief Builds a MainLoopExit from its raw data.

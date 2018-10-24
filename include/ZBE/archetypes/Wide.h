@@ -10,11 +10,13 @@
 #ifndef ZBE_ARCHETYPES_WIDE_H
 #define ZBE_ARCHETYPES_WIDE_H
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Interface of an archetype with a width.
  */
-class Wide {
+class ZBEAPI Wide {
 public:
   /** \brief Virtual destructor.
    */

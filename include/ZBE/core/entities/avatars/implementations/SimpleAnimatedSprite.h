@@ -16,11 +16,13 @@
 #include "ZBE/core/entities/avatars/AnimatedSprite.h"
 #include "ZBE/core/entities/avatars/implementations/SimpleStatedSprite.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief This define an avatar that can be drawn in any direction with different animations.
  */
-class SimpleAnimatedSprite : virtual public AnimatedSprite, virtual public SimpleStatedSprite {
+class ZBEAPI SimpleAnimatedSprite : virtual public AnimatedSprite, virtual public SimpleStatedSprite {
 
 public:
 

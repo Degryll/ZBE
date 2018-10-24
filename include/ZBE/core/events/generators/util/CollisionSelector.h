@@ -18,18 +18,22 @@
 #include "ZBE/core/tools/math/collisions/intersections.h"
 #include "ZBE/core/entities/avatars/Interactioner.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
-class CollisionObject;
-class StaticSolidAABB2D;
-class StaticLimiterAABB2D;
-class ConstantMovingCircle;
+class ZBEAPI CollisionObject;
+class ZBEAPI StaticSolidAABB2D;
+class ZBEAPI StaticLimiterAABB2D;
+class ZBEAPI ConstantMovingCircle;
 
 /** \brief Apply the correct function to solve a collision.
  */
-class CollisionSelector {
+class ZBEAPI CollisionSelector {
   public:
     virtual ~CollisionSelector() {}
+
+    CollisionSelector() {}
 
     /** \brief Using the Visitor pattern select the correct collision detection function to use depending of the types of the params.
      *  \param param1 First collision object.

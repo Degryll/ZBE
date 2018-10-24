@@ -15,12 +15,14 @@
 
 #include "ZBE/core/entities/AvatarEntity.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Object against which to react.
  */
 template <typename R>
-class ReactObject {
+class ZBEAPI ReactObject {
   public:
     /** \brief destructor
      */
@@ -32,10 +34,10 @@ class ReactObject {
 		virtual void act(R* reactor) = 0;
 };
 
-/** \brief Object against which to react. Common code. All implementations should inherit this Class instead of ReactObject.
+/** \brief Object against which to react. Common code. All implementations should inherit this class ZBEAPI instead of ReactObject.
  */
 template <typename R, typename ...Bases>
-class ReactObjectCommon : public ReactObject<R> {
+class ZBEAPI ReactObjectCommon : public ReactObject<R> {
   public:
 
     /** \brief parametrized constructor
@@ -80,10 +82,10 @@ class ReactObjectCommon : public ReactObject<R> {
     std::shared_ptr<WeakAvatarEntityContainer<Bases...> > rObject;
 };
 
-/** \brief Object against which to react. Common code. Implementers should use this Class instead of ReactObject.
+/** \brief Object against which to react. Common code. Implementers should use this class ZBEAPI instead of ReactObject.
  */
 template <typename R>
-class ReactObjectCommon<R> : public ReactObject<R> {
+class ZBEAPI ReactObjectCommon<R> : public ReactObject<R> {
   public:
 
     /** \brief parametrized constructor

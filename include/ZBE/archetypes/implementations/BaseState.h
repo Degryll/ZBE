@@ -17,11 +17,13 @@
 
 #include "ZBE/core/tools/shared/Value.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Base implementation of the State interface using a Value<uint64_t>.
  */
-class BaseState : virtual public State {
+class ZBEAPI BaseState : virtual public State {
 public:
   BaseState(std::shared_ptr<Value<int64_t> > state) : s(state) {}
 

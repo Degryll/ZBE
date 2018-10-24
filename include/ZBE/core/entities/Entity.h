@@ -20,11 +20,13 @@
 
 #include "ZBE/core/entities/avatars/Avatar.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Define the basic functionality of every entity.
  */
-class Entity : virtual public Avatar {
+class ZBEAPI Entity : virtual public Avatar {
   public:
     /** \brief Empty constructor.
       */

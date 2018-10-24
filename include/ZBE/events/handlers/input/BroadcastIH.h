@@ -15,9 +15,11 @@
 
 #include "ZBE/core/events/handlers/InputHandler.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
-class BroadcastIH : public InputHandler {
+class ZBEAPI BroadcastIH : public InputHandler {
 	public:
 
   	BroadcastIH() : ihs() {}

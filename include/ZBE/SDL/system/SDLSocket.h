@@ -18,11 +18,13 @@
 #include "ZBE/core/events/handlers/NetHandler.h"
 #include "ZBE/core/system/SysError.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 struct SDLSocketHasher;
 
-class SDLSocket {
+class ZBEAPI SDLSocket {
 public:
   enum Type {TCP = 0, UDP = 1};
 

@@ -19,12 +19,14 @@
 #include "ZBE/archetypes/implementations/SimpleMobile.h"
 #include "ZBE/archetypes/implementations/SimpleWide.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Simple implementation of the WideMobile interface.
  */
 template <unsigned s>
-class SimpleWideMobile : virtual public WideMobile<s>, public SimpleWide, public SimpleMobile<s> {
+class ZBEAPI SimpleWideMobile : virtual public WideMobile<s>, public SimpleWide, public SimpleMobile<s> {
 public:
   /** \brief Constructor with position and velocity set to 0.
    */

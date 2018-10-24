@@ -14,12 +14,14 @@
 
 #include "ZBE/core/tools/graphics/Sprite.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Interface capable of generate a sprite from a given entity.
  */
 template<typename T>
-class SpriteSheet {
+class ZBEAPI SpriteSheet {
 public:
 
   /** \brief Virtual destructor

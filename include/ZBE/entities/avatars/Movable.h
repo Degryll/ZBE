@@ -15,12 +15,14 @@
 #include "ZBE/core/tools/math/Vector.h"
 #include "ZBE/entities/avatars/Positionable.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief This define an avatar that can be moved.
  */
 template <unsigned s>
-class Movable : virtual public Positionable<s> {
+class ZBEAPI Movable : virtual public Positionable<s> {
   public:
     using Base = Positionable<s>;//!< inheritance info
 

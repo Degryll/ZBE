@@ -24,6 +24,8 @@
 #include "ZBE/core/system/SysTime.h"
 #include "ZBE/core/system/SysError.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Stores de time of a timer, and the handler that will be launched when timer reaches 0;
@@ -42,7 +44,7 @@ struct TimerData {
 /** \brief It gives access to a timer.
  *
  */
-class TimerTicket : public Ticket {
+class ZBEAPI TimerTicket : public Ticket {
 public:
 
   TimerTicket(const TimerTicket&) = delete;  //!< Avoid copy.
@@ -88,7 +90,7 @@ private:
 
 /** \brief Generate collision events.
  */
-class TimeEventGenerator : virtual public Daemon {
+class ZBEAPI TimeEventGenerator : virtual public Daemon {
   public:
     /** \brief Empty Constructor.
      */

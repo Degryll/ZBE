@@ -14,12 +14,14 @@
 #include "ZBE/core/tools/math/objects.h"
 #include "ZBE/core/tools/math/Vector.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Defines a AABB area of the space that is "solid" inside.
  * Its used to detect collisions with objects that come from outside the box.
  */
-class StaticSolidAABB2D: public CollisionObjectCommon<StaticSolidAABB2D> {
+class ZBEAPI StaticSolidAABB2D: public CollisionObjectCommon<StaticSolidAABB2D> {
 public:
 
   /** \brief Empty constructor
@@ -43,7 +45,7 @@ private:
 /** \brief Defines a AABB area of the space that is "solid" outside.
  * Its used to detect collisions with objects that come from inside the box.
  */
-class StaticLimiterAABB2D: public CollisionObjectCommon<StaticLimiterAABB2D> {
+class ZBEAPI StaticLimiterAABB2D: public CollisionObjectCommon<StaticLimiterAABB2D> {
 public:
 
   /** \brief Empty constructor
@@ -67,7 +69,7 @@ private:
 /** \brief A collision object defined by a circle moving with a constant speed.
  * Its used to detect collisions with objects that are approached from the outside.
  */
-class ConstantMovingCircle: public CollisionObjectCommon<ConstantMovingCircle> {
+class ZBEAPI ConstantMovingCircle: public CollisionObjectCommon<ConstantMovingCircle> {
 public:
 
   /** \Empty constructor

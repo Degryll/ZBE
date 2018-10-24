@@ -14,12 +14,14 @@
 
 #include "ZBE/core/tools/math/Point.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Defines an avatar that can be positioned.
  */
 template <unsigned s>
-class Positionable {
+class ZBEAPI Positionable {
   public:
     using Base = void;//!< inheritance info
 

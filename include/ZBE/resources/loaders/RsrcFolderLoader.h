@@ -5,7 +5,7 @@
 // * @since 2018-07-07
 // * @date 2018-07-07
 // * @author Batis Degryll Ludo
-// * @brief Class that loads all compatible resources within a folder.
+// * @brief class ZBEAPI that loads all compatible resources within a folder.
 // */
 //
 //#ifndef ZBE_RESOURCES_LOADERS_RSRCFOLDERLOADER_H_
@@ -20,7 +20,7 @@
 //
 ///** \brief Interface for classes that loads images. It will return an identifier
 // */
-//class RsrcFolderLoader {
+//class ZBEAPI RsrcFolderLoader {
 //public:
 //  RsrcFolderLoader(std::shared_ptr<RsrcLoader> rsrcLoader) : rsrcLoader(rsrcLoader) {}
 //

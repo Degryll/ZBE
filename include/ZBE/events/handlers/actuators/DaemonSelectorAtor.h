@@ -21,13 +21,15 @@
 
 #include "ZBE/entities/avatars/Stated.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Actuator that stores daemons and is able to call one of them depending on
 * the value of the received Stated.
 */
 template <typename T, typename R>
-class DaemonSelectorAlienAtor: public zbe::Actuator<T, R> {
+class ZBEAPI DaemonSelectorAlienAtor: public zbe::Actuator<T, R> {
 public:
   /** \brief Builds a DaemonSelectorAlienAtor with the default daemon.
    *
@@ -73,7 +75,7 @@ private:
 * the value of the own Stated when interacts with a given reactor type.
 */
 template <typename T, typename R>
-class DaemonSelectorSelfAtor: public zbe::Actuator<WeakAvatarEntityContainer<zbe::Stated>, R> {
+class ZBEAPI DaemonSelectorSelfAtor: public zbe::Actuator<WeakAvatarEntityContainer<zbe::Stated>, R> {
 public:
   /** \brief Builds a DaemonSelectorAlienAtor with the default daemon.
    *
@@ -118,7 +120,7 @@ private:
 * the value of the own Stated when interacts with any reactor type.
 */
 template <typename R>
-class DaemonSelectorSelfAnyAtor: public zbe::Actuator<WeakAvatarEntityContainer<zbe::Stated>, R> {
+class ZBEAPI DaemonSelectorSelfAnyAtor: public zbe::Actuator<WeakAvatarEntityContainer<zbe::Stated>, R> {
 public:
   /** \brief Builds a DaemonSelectorAlienAtor with the default daemon.
    *

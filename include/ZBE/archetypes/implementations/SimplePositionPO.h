@@ -19,12 +19,14 @@
 #include "ZBE/archetypes/implementations/SimplePosition.h"
 #include "ZBE/archetypes/implementations/SimplePhysicalObject.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Simple implementation of the PositionPO interface.
  */
 template <unsigned s>
-class SimplePositionPO : virtual public PositionPO<s>, public SimplePosition<s>, public SimplePhysicalObject {
+class ZBEAPI SimplePositionPO : virtual public PositionPO<s>, public SimplePosition<s>, public SimplePhysicalObject {
 public:
   /** \brief Constructs a SimplePositionPO with position set to 0.
    */

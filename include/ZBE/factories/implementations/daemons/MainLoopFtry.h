@@ -26,11 +26,13 @@
 
 #include "ZBE/factories/Factory.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Factory for Main Loop.
  */
-class MainLoopFtry : public Factory {
+class ZBEAPI MainLoopFtry : public Factory {
 public:
 
   /** \brief Builds a MainLoop.

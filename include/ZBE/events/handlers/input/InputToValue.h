@@ -17,11 +17,13 @@
 
 #include "ZBE/core/events/handlers/InputHandler.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Handler that stores input value to a Value<double>
  */
-class InputToValue : public zbe::InputHandler {
+class ZBEAPI InputToValue : public zbe::InputHandler {
 public:
   InputToValue(const InputToValue&) = delete; //!< Deleted copy constructor.
   void operator=(const InputToValue&) = delete; //!< Deleted operator.

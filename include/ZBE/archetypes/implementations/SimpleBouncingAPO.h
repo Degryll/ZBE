@@ -20,13 +20,14 @@
 #include "ZBE/archetypes/implementations/SimpleBouncing.h"
 #include "ZBE/archetypes/implementations/SimpleActivePhysicalObject.h"
 
+#include "ZBE/core/system/system.h"
 
 namespace zbe {
 
 /** \brief Simple implementation of the Bouncing Mobile active physical object interface.
  */
 template <unsigned s>
-class SimpleBouncingAPO : virtual public BouncingAPO<s>, public SimpleBouncing<s>, public SimpleActivePhysicalObject {
+class ZBEAPI SimpleBouncingAPO : virtual public BouncingAPO<s>, public SimpleBouncing<s>, public SimpleActivePhysicalObject {
 public:
   /** \brief Constructs a BouncingAPO with position and velocity set to 0.
    */

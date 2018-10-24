@@ -10,11 +10,13 @@
 #ifndef ZBE_CORE_EVENTS_HANDLERS_INPUTHANDLER_H
 #define ZBE_CORE_EVENTS_HANDLERS_INPUTHANDLER_H
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Receives a input(keyboard, mouse, etc) event and reacts to that.
  */
-class InputHandler {
+class ZBEAPI InputHandler {
 public:
 
   /** \brief Destructor.

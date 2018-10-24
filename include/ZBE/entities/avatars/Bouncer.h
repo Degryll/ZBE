@@ -13,12 +13,14 @@
 #include "ZBE/core/tools/math/Vector.h"
 #include "ZBE/entities/avatars/Movable.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief This define an avatar of an entity that can bounce with multiple normals.
  */
 template <unsigned s>
-class Bouncer : virtual public Movable<s> {
+class ZBEAPI Bouncer : virtual public Movable<s> {
   public:
     using Base = Movable<s>;//!< inheritance info
 

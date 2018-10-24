@@ -12,11 +12,13 @@
 
 #include <cstdint>
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Receives a time event and reacts to it.
  */
-class TimeHandler {
+class ZBEAPI TimeHandler {
 public:
 
   /** \brief Destructor.

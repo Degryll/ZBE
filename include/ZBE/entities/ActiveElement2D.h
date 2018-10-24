@@ -38,12 +38,14 @@
 #include "ZBE/entities/avatars/implementations/BaseStated.h"
 #include "ZBE/entities/avatars/implementations/BaseBouncer.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief A simple active game element in 2D..
  */
 template<typename R>
-class ActiveElement2D: public Entity,
+class ZBEAPI ActiveElement2D: public Entity,
                        public SimpleTimeStamp,
                        public Drawable,
                        public SimpleBouncingAPO<2>,
@@ -104,7 +106,7 @@ private:
 };
 
 template<typename R>
-class CActiveElement2D : public Countable<int64_t>, public ActiveElement2D<R> {
+class ZBEAPI CActiveElement2D : public Countable<int64_t>, public ActiveElement2D<R> {
 public:
   CActiveElement2D(std::shared_ptr<Value<int64_t> > ninstances, Point2D position, Vector2D velocity, uint64_t actuatorsList, uint64_t collisionersList, int64_t width, int64_t height, uint64_t graphics)
     : Countable<int64_t>(ninstances), ActiveElement2D<R>(position, velocity, actuatorsList, collisionersList, width, height,  graphics){}

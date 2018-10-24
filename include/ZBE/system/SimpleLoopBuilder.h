@@ -15,9 +15,11 @@
 
 #include "ZBE/core/daemons/Daemon.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
-class SimpleEventDistpacher : public Daemon {
+class ZBEAPI SimpleEventDistpacher : public Daemon {
 
 void run() {
   SDLEventDispatcher::getInstance().run();
@@ -27,7 +29,7 @@ void run() {
 
 /** \brief Defines a daemon that ends the game if the number of lifes reaches 0 in zombienoid game.
  */
-class SimpleLoopBuilder {
+class ZBEAPI SimpleLoopBuilder {
 public:
   SimpleLoopBuilder() {}
   ~SimpleLoopBuilder() {}

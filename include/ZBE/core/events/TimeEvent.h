@@ -16,11 +16,13 @@
 #include "ZBE/core/events/handlers/TimeHandler.h"
 #include "ZBE/core/events/Event.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief An event caused by time.
  */
-class TimeEvent : public Event {
+class ZBEAPI TimeEvent : public Event {
 public:
 
   TimeEvent(const TimeEvent& rhs) = delete;       //!< Avoid copy.

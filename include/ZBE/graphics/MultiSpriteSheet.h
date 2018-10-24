@@ -22,6 +22,8 @@
 #include "ZBE/core/entities/AvatarEntity.h"
 #include "ZBE/core/entities/avatars/AnimatedSprite.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 const Vector2D DFLT_SCALE = {1.0, 1.0};
@@ -63,7 +65,7 @@ struct SprtDef {
 
 /** \brief Tool capable of generate a sprite from a AnimatedSprite.
  */
-class MultiSpriteSheet : public SpriteSheet<AnimatedSprite> {
+class ZBEAPI MultiSpriteSheet : public SpriteSheet<AnimatedSprite> {
 public:
 
   /** \brief Parametriced constructor

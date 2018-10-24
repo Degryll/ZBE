@@ -17,12 +17,14 @@
 
 #include "ZBE/entities/avatars/Bouncer.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Implements a bounce behavior.
  */
 template<unsigned s>
-class Bounce : virtual public Behavior<Bouncer<s>  > {
+class ZBEAPI Bounce : virtual public Behavior<Bouncer<s>  > {
   public:
 
     /** \brief Virtual destructor.

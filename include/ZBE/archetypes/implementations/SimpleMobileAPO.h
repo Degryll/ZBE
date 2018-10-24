@@ -20,12 +20,14 @@
 #include "ZBE/archetypes/implementations/SimpleMobile.h"
 #include "ZBE/archetypes/implementations/SimpleAcitvePhysicalObject.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Simple implementation of the Mobile active physical object interface.
  */
 template <typename R, unsigned s>
-class SimpleMobileAPO : public MobileAPO<R, s>, public SimpleMobile<s>, public SimpleActivePhysicalObject {
+class ZBEAPI SimpleMobileAPO : public MobileAPO<R, s>, public SimpleMobile<s>, public SimpleActivePhysicalObject {
 public:
   /** \brief Constructs a BouncingAPO with position and velocity set to 0.
    */

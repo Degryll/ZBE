@@ -12,12 +12,14 @@
 
 #include "ZBE/core/tools/shared/Value.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** Stores a value that can be modified.
  */
 template <typename T>
-class SimpleValue : public Value<T> {
+class ZBEAPI SimpleValue : public Value<T> {
 public:
   /** brief Void constructor.
    */

@@ -20,12 +20,14 @@
 
 #include "ZBE/core/entities/AvatarEntity.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Actuator capable of erasing an entity if collisiondata meets a condition.
  */
 template <typename R>
-class ConditionalEraserAtor: public zbe::Actuator<zbe::WeakAvatarEntityContainer<zbe::Avatar>, R> {
+class ZBEAPI ConditionalEraserAtor: public zbe::Actuator<zbe::WeakAvatarEntityContainer<zbe::Avatar>, R> {
   public:
 
     /** \brief Erases entity if collision data fullfill InteractionTester requirements

@@ -23,11 +23,13 @@
 
 #include "ZBE/OAL/tools/OALUtils.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 /**
  * @brief A store for audio samples.
  */
-class OALAudioStore {
+class ZBEAPI OALAudioStore {
 public:
     OALAudioStore(const OALAudioStore&) = delete; //!< Delete copy constructor
     void operator=(const OALAudioStore&) = delete; //!< Delete assing aperator

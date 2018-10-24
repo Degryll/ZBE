@@ -4,7 +4,7 @@
  * @since 2016-12-16
  * @date 2018-02-25
  * @author Degryll
- * @brief Defines the interface of a class with a position and a velocity.
+ * @brief Defines the interface of a class ZBEAPI with a position and a velocity.
  */
 
 #ifndef ZBE_ARCHETYPES_MOBILE_H
@@ -16,12 +16,14 @@
 
 #include "ZBE/archetypes/Position.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
-/** \brief Defines the interface of a class with a position and a velocity.
+/** \brief Defines the interface of a class ZBEAPI with a position and a velocity.
  */
 template <unsigned s>
-class Mobile : virtual public Position<s> {
+class ZBEAPI Mobile : virtual public Position<s> {
 public:
   /** \brief Virtual destructor.
    */

@@ -4,7 +4,7 @@
  * @since 2013-11-23
  * @date 2017-05-15
  * @author Degryll
- * @brief A system class to inform about errors.
+ * @brief A system class ZBEAPI to inform about errors.
  */
 
 #ifndef ZBE_CORE_SYSTEM_SYSERROR_H_
@@ -12,14 +12,16 @@
 
 #include <string>
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
-/** \brief A system class to inform about errors.
+/** \brief A system class ZBEAPI to inform about errors.
  *
  *  Store the number of errors (calls to setError) and the text for the first
  *  error.
  */
-class SysError {
+class ZBEAPI SysError {
 public:
 
   /** \brief Set a new error

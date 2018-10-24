@@ -25,11 +25,13 @@
 
 #include "ZBE/factories/Factory.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Factory for Master Daemons.
  */
-class MasterDmnFtry : public Factory {
+class ZBEAPI MasterDmnFtry : public Factory {
 public:
 
   /** \brief Builds a MasterDmnFtry.

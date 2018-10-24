@@ -20,7 +20,7 @@
 //
 ///** \brief Interface for classes that loads resources.
 // */
-//class RsrcLoader {
+//class ZBEAPI RsrcLoader {
 //public:
 //
 //  virtual ~RsrcLoader() {} //!< Virtual destructor.

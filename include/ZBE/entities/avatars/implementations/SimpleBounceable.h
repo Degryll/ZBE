@@ -12,11 +12,13 @@
 
 #include "ZBE/entities/avatars/Bounceable.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Simple implementations of Bounceable avatar interface.
  */
-class SimpleBounceable : public Bounceable{
+class ZBEAPI SimpleBounceable : public Bounceable{
   public:
 
     /** \brief Builds this SimpleBounceable with a factor.

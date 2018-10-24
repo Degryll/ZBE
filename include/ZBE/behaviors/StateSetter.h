@@ -18,11 +18,13 @@
 
 #include "ZBE/entities/avatars/Stated.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Sets a given state to the entity.
  */
-class StateSetter : virtual public Behavior<Stated> {
+class ZBEAPI StateSetter : virtual public Behavior<Stated> {
 public:
 
   StateSetter(uint64_t state) : state(state) {}
@@ -38,7 +40,7 @@ public:
     assignAvatar(aecs , &stated);
     stated->setState(state);
   }
-  
+
 private:
   uint64_t state;
 };

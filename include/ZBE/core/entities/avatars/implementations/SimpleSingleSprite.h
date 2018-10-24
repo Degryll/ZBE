@@ -14,11 +14,13 @@
 
 #include "ZBE/core/entities/avatars/SingleSprite.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief This define an avatar that can be drawn.
  */
-class SimpleSingleSprite : virtual public SingleSprite {
+class ZBEAPI SimpleSingleSprite : virtual public SingleSprite {
 
 public:
 

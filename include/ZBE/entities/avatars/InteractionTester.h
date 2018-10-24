@@ -13,11 +13,13 @@
 #include "ZBE/core/events/generators/util/ReactObject.h"
 #include "ZBE/core/events/generators/util/CollisionData.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** @brief Interface for an avatar capable of test if a collisionData meets a given condition.
  */
-class InteractionTester {
+class ZBEAPI InteractionTester {
 public:
   using Base = void; //!< inheritance info
 

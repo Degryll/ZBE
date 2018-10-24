@@ -17,13 +17,15 @@
 #include "ZBE/core/system/SysError.h"
 #include "ZBE/core/tools/containers/TicketedElement.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Iterator for a ticketed forward list.
  *
  */
 template <typename T, typename UnqualifiedType = std::remove_cv<T> >
-class TicketedForwardListIterator;
+class ZBEAPI TicketedForwardListIterator;
 
 /** \brief A wrapper for c++ forward_list using Tickets.
  *
@@ -31,7 +33,7 @@ class TicketedForwardListIterator;
  *  \sa Ticket
  */
 template <typename T>
-class TicketedForwardList {
+class ZBEAPI TicketedForwardList {
 public:
   TicketedForwardList(const TicketedForwardList&) = delete;
   void operator=(const TicketedForwardList&) = delete;
@@ -91,7 +93,7 @@ private:
 };
 
 template <typename T, typename UnqualifiedType>
-class TicketedForwardListIterator : public std::iterator<std::forward_iterator_tag,
+class ZBEAPI TicketedForwardListIterator : public std::iterator<std::forward_iterator_tag,
                                            UnqualifiedType,
                                            std::ptrdiff_t,
                                            T*,

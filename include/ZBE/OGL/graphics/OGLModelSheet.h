@@ -14,12 +14,14 @@
 
 #include "ZBE/OGL/graphics/OGLModel.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Interface capable of generate a sprite from a given entity.
  */
 template<typename T>
-class OGLModelSheet {
+class ZBEAPI OGLModelSheet {
 public:
 
   /** \brief Virtual destructor

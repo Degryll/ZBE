@@ -17,9 +17,11 @@
 #include "ZBE/entities/avatars/SingleTextSprite.h"
 #include "ZBE/archetypes/TextDrawable.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
-class TextBox: virtual public TextDrawable,
+class ZBEAPI TextBox: virtual public TextDrawable,
                public AvatarEntityFixed<SingleTextSprite> {
 public:
 

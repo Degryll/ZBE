@@ -4,7 +4,7 @@
  * @since 2017-03-20
  * @date 2018-02-25
  * @author Degryll Batis Ludo
- * @brief Implements the interface of a class with a position, a velocity, a width, the ability to accumulate normals and interacts actively with other objects.
+ * @brief Implements the interface of a class ZBEAPI with a position, a velocity, a width, the ability to accumulate normals and interacts actively with other objects.
  */
 
 #ifndef ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEWIDEBOUNCINGAPO_H
@@ -21,12 +21,14 @@
 #include "ZBE/archetypes/implementations/SimpleBouncing.h"
 #include "ZBE/archetypes/implementations/SimpleActivePhysicalObject.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
-/** \brief Implements the interface of a class with a position, a velocity, a width, the ability to accumulate normals and interacts actively with other objects.
+/** \brief Implements the interface of a class ZBEAPI with a position, a velocity, a width, the ability to accumulate normals and interacts actively with other objects.
  */
 template <unsigned s>
-class SimpleWideBouncingAPO : virtual public WideBouncingAPO<s>, public SimpleWide, public SimpleBouncing<s>, public SimpleActivePhysicalObject {
+class ZBEAPI SimpleWideBouncingAPO : virtual public WideBouncingAPO<s>, public SimpleWide, public SimpleBouncing<s>, public SimpleActivePhysicalObject {
 public:
   /** \brief Constructor with position data as an initializer list. Velocity will be 0.
    */

@@ -19,12 +19,14 @@
 #include "ZBE/entities/avatars/Stated.h"
 #include "ZBE/core/entities/avatars/Avatar.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Implements a behavior that kills the entity when it reaches a state lower than a nummber.
  */
 template<typename T>
-  class StateLTEraser {// : public Behavior<Element2D<R> > {
+  class ZBEAPI StateLTEraser {// : public Behavior<Element2D<R> > {
   public:
     /** \brief Parametrized constructor.
         \param limit Limit below which the entity will be killed.

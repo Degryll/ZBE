@@ -13,12 +13,14 @@
 #include "ZBE/archetypes/ActivePhysicalObject.h"
 #include "ZBE/archetypes/BouncingPO.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Defines the interface for a Bouncing Active Physical Object.
  */
 template <unsigned s>
-class BouncingAPO : virtual public BouncingPO<s>, virtual public ActivePhysicalObject {
+class ZBEAPI BouncingAPO : virtual public BouncingPO<s>, virtual public ActivePhysicalObject {
 public:
   /** \brief Virtual destructor.
    */

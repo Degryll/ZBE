@@ -22,11 +22,13 @@
 #include "ZBE/core/io/InputBuffer.h"
 #include "ZBE/core/system/SysTime.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Dispatcher for sdl events.
  */
-class SDLEventDispatcher {
+class ZBEAPI SDLEventDispatcher {
 public:
   SDLEventDispatcher(SDLEventDispatcher const&)    = delete;  //!< Needed for singleton.
   void operator=(SDLEventDispatcher const&) = delete;  //!< Needed for singleton.

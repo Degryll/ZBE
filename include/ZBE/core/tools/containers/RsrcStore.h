@@ -4,7 +4,7 @@
  * @since 2016/03/31
  * @date 2016/08/04
  * @author Degryll
- * @brief A class that relates an id with a resource.
+ * @brief A class ZBEAPI that relates an id with a resource.
  */
 
 #ifndef ZBE_CORE_TOOLS_CONTAINERS_RSRCSTORE_H_
@@ -18,12 +18,14 @@
 #include "ZBE/core/tools/containers/RsrcDictionary.h"
 #include "ZBE/core/system/SysIdGenerator.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
-/** \brief A class that relates an id with a resource.
+/** \brief A class ZBEAPI that relates an id with a resource.
  */
 template <typename T>
-class RsrcStore {
+class ZBEAPI RsrcStore {
   public:
     RsrcStore(RsrcStore const&)    = delete;  //!< Needed for singleton.
     void operator=(RsrcStore const&) = delete;  //!< Needed for singleton.

@@ -4,7 +4,7 @@
  * @since 2017-05-15
  * @date 2017-05-15
  * @author Degryll
- * @brief A system class to get unique Ids.
+ * @brief A system class ZBEAPI to get unique Ids.
  */
 
 #ifndef ZBE_CORE_SYSTEM_SYSIDGENERATOR_H_
@@ -13,11 +13,13 @@
 #include <cstdint>
 #include <atomic>
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
-/** \brief A system class to get unique Ids.
+/** \brief A system class ZBEAPI to get unique Ids.
  */
-class SysIdGenerator {
+class ZBEAPI SysIdGenerator {
 public:
 
   /** \brief Each time it's called return an unique id.

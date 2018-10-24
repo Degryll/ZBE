@@ -12,11 +12,13 @@
 
 #include "ZBE/archetypes/Wide.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Simple implementation of the Wide archetype.
  */
-class SimpleWide : virtual public Wide {
+class ZBEAPI SimpleWide : virtual public Wide {
 public:
   /** \brief Parametrized constructor. Set the size of the archetype.
    *  \param width Size of the archetype.

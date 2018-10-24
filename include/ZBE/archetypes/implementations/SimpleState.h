@@ -14,11 +14,13 @@
 
 #include "ZBE/archetypes/State.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Simple implementation of the State interface.
  */
-class SimpleState : public State {
+class ZBEAPI SimpleState : public State {
 public:
 
   /** \brief Constructs a SimpleState with a state value (default 0).

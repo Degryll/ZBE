@@ -12,11 +12,13 @@
 
 #include <cstdint>
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief This defines an avatar that will have a state.
  */
-class Stated {
+class ZBEAPI Stated {
   public:
     using Base = void;//!< inheritance info
 

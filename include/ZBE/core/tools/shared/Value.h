@@ -10,12 +10,14 @@
 #ifndef ZBE_CORE_TOOLS_SHARED_VALUE_H_
 #define ZBE_CORE_TOOLS_SHARED_VALUE_H_
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** Stores a value that can be modified.
  */
 template <typename T>
-class Value {
+class ZBEAPI Value {
 public:
 
   virtual ~Value(){} //<! Virtual destructor

@@ -20,11 +20,13 @@
 #include "ZBE/OAL/tools/OALUtils.h"
 #include "ZBE/OAL/entities/avatars/Sound3D.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief A behavior that plays 3d sounds.
  */
-class Sound3DOALPlayer : public Behavior<Sound3D> {
+class ZBEAPI Sound3DOALPlayer : public Behavior<Sound3D> {
 public:
   Sound3DOALPlayer(std::shared_ptr<OALAudioStore> store) : store(store) {}
 

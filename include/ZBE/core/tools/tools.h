@@ -15,9 +15,9 @@ namespace zbe {
 /** \brief Used when a template need to know the bases classes of "T".
  *
  * In case you have:
- * class A { ... };
- * class B : public A { ... };
- * template <typename T> class Mytemplate { ... };
+ * class ZBEAPI A { ... };
+ * class ZBEAPI B : public A { ... };
+ * template <typename T> class ZBEAPI Mytemplate { ... };
  *
  * Then:
  * MyTemplate<B>* is an invalid covariance of Mytemplate<A>*.
@@ -25,11 +25,11 @@ namespace zbe {
  *
  * Usage:
  *
- * class A { ... };
- * class B : public A {using Base = A; ... };
+ * class ZBEAPI A { ... };
+ * class ZBEAPI B : public A {using Base = A; ... };
  *
  * template<typename T>
- * class MyTemplateClass : virtual public Covariance_Traits<MyTemplateClass<typename T::Base>, typename T::Base>::Type
+ * class ZBEAPI MyTemplateclass ZBEAPI : virtual public Covariance_Traits<MyTemplateClass<typename T::Base>, typename T::Base>::Type
  */
 template<typename T, typename U>
 struct Covariance_Traits {
@@ -49,7 +49,7 @@ struct Covariance_Traits<T, void> {
   };
 };
 
-/** \brief A gimmick class used to specialize a member function without the need to specialized the main class
+/** \brief A gimmick class ZBEAPI used to specialize a member function without the need to specialized the main class
  */
 template <typename T>
 struct TypeGimmick { typedef T type; };

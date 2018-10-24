@@ -4,17 +4,19 @@
  * @since 2016-12-16
  * @date 2018-02-25
  * @author Degryll
- * @brief Defines the interface of a class with a damping factor.
+ * @brief Defines the interface of a class ZBEAPI with a damping factor.
  */
 
 #ifndef ZBE_ARCHETYPES_DAMPING_H
 #define ZBE_ARCHETYPES_DAMPING_H
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
-/** \brief Defines the interface of a class with a damping factor.
+/** \brief Defines the interface of a class ZBEAPI with a damping factor.
  */
-class Damping {
+class ZBEAPI Damping {
 public:
   /** \brief Virtual destructor.
    */

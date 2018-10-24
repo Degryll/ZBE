@@ -15,11 +15,13 @@
 #include "ZBE/core/events/Event.h"
 #include "ZBE/core/events/handlers/InputHandler.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief An event caused by input devices.
 */
-class InputEvent : public Event {
+class ZBEAPI InputEvent : public Event {
 public:
 
   /** \brief Copy Constructor.

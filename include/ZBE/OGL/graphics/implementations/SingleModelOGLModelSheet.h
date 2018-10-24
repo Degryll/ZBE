@@ -22,11 +22,13 @@
 #include "ZBE/OGL/graphics/OGLModel.h"
 #include "ZBE/OGL/graphics/OGLModelSheet.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Interface capable of generate a sprite from a given entity.
  */
-class SingleModelOGLModelSheet : public OGLModelSheet<SingleModel> {
+class ZBEAPI SingleModelOGLModelSheet : public OGLModelSheet<SingleModel> {
 public:
   SingleModelOGLModelSheet(const SingleModelOGLModelSheet&) = delete;
   void operator=(const SingleModelOGLModelSheet&) = delete;

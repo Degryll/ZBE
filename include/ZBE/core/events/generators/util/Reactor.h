@@ -12,10 +12,12 @@
 
 #include "ZBE/core/entities/AvatarEntity.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 template<typename D, typename O, typename RO, typename... ROS>
-class Reactor : public Reactor<D, O, ROS...> {
+class ZBEAPI Reactor : public Reactor<D, O, ROS...> {
 public:
   virtual ~Reactor() {}
 
@@ -25,17 +27,17 @@ public:
 };
 
 template<typename D, typename O, typename RO>
-class Reactor<D, O, RO> : public Reactor<D, O, void> {
+class ZBEAPI Reactor<D, O, RO> : public Reactor<D, O, void> {
 public:
   virtual ~Reactor() {}
 
   using Reactor<D, O, void>::act;
-  
+
   virtual void act(std::shared_ptr<zbe::WeakAvatarEntityContainer<RO> >) {}
 };
 
 template<typename D, typename O>
-class Reactor<D, O, void> {
+class ZBEAPI Reactor<D, O, void> {
 public:
   virtual ~Reactor() {}
 

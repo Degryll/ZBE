@@ -18,11 +18,13 @@
 
 #include "ZBE/entities/avatars/SingleModel.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief This define an avatar that can be drawn in 3D.
  */
-class ValuedSingleModel : public SingleModel {
+class ZBEAPI ValuedSingleModel : public SingleModel {
 
 public:
 

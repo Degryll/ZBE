@@ -4,7 +4,7 @@
  * @since 2017-06-15
  * @date 2018-02-25
  * @author Ludo
- * @brief Class that know how to draw using SpriteSheets.
+ * @brief class ZBEAPI that know how to draw using SpriteSheets.
  */
 
 #ifndef ZBE_SDL_DRAWERS_SPRITESHEETSDLDRAWER_H_
@@ -24,12 +24,14 @@
 
 #include "ZBE/SDL/tools/SDLUtils.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
-/** \brief Class that know how to draw using SpriteSheets.
+/** \brief class ZBEAPI that know how to draw using SpriteSheets.
  */
 template<typename T>
-class SpriteSheetSDLDrawer : public Behavior<T> {
+class ZBEAPI SpriteSheetSDLDrawer : public Behavior<T> {
   public:
     SpriteSheetSDLDrawer(const SpriteSheetSDLDrawer&) = delete; //!< Avoid copy.
     void operator=(const SpriteSheetSDLDrawer&) = delete; //!< Avoid copy.

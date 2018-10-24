@@ -4,7 +4,7 @@
  * @since 2017-04-05
  * @date 2017-04-05
  * @author degryll
- * @brief Class that know how to draw StatedSprite entities with SDL.
+ * @brief class ZBEAPI that know how to draw StatedSprite entities with SDL.
  */
 
 #include "ZBE/SDL/drawers/StatedSpriteSDLDrawer.h"

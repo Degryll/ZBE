@@ -4,7 +4,7 @@
  * @since 2017-04-12
  * @date 2018-02-25
  * @author Batis Ludo Degryll
- * @brief Class that know how to draw text boxes as SingleTextSprite entities with SDL.
+ * @brief class ZBEAPI that know how to draw text boxes as SingleTextSprite entities with SDL.
  */
 
 #ifndef ZBE_SDL_DRAWERS_SIMPLETEXTSDLDRAWER_H_
@@ -19,11 +19,13 @@
 #include "ZBE/core/entities/AvatarEntity.h"
 #include "ZBE/SDL/system/SDLWindow.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief This draws a simple sprite (an image).
  */
-class SingleTextSDLDrawer : public Behavior<SingleTextSprite> {
+class ZBEAPI SingleTextSDLDrawer : public Behavior<SingleTextSprite> {
   public:
     SingleTextSDLDrawer(const SingleTextSDLDrawer&) = delete; //!< Avoid copy.
     void operator=(const SingleTextSDLDrawer&) = delete; //!< Avoid copy.

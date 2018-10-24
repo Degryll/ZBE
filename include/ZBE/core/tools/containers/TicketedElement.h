@@ -14,12 +14,14 @@
 
 #include "ZBE/core/tools/containers/Ticket.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief To be used in containers in witch each element can be marked as active, inactive and erased.
  */
 template <typename T>
-class TicketedElement : public Ticket {
+class ZBEAPI TicketedElement : public Ticket {
 public:
 
   /** \brief Parametrized constructor, ACTIVE is the default state.

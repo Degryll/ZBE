@@ -5,7 +5,7 @@
 // * @since 2018-07-07
 // * @date 2018-07-07
 // * @author Batis Degryll Ludo
-// * @brief Class that loads all compatible resources within a folder.
+// * @brief class ZBEAPI that loads all compatible resources within a folder.
 // */
 //
 //#include "ZBE/resources/loaders/RsrcFolderLoader.h"

@@ -18,10 +18,12 @@
 #include "ZBE/SDL/system/SDLWindow.h"
 #include "ZBE/SDL/system/SDLEventDispatcher.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
   /** \brief
    */
-  class BasicPreLoopSDLDaemon : public Daemon {
+  class ZBEAPI BasicPreLoopSDLDaemon : public Daemon {
     public:
 
       BasicPreLoopSDLDaemon(const BasicPreLoopSDLDaemon&) = delete; //!< Avoid copy.

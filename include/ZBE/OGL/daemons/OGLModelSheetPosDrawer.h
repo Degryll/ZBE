@@ -10,11 +10,13 @@
 #ifndef ZBE_OGLE_DAEMONS_OGLMODELSHEETPosDRAWER_H
 #define ZBE_OGLE_DAEMONS_OGLMODELSHEETPosDRAWER_H
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Interface for all daemons. Daemons are responsible for execute automated processes. Basically Daemons rules the world.
  */
-class OGLModelSheetPosDrawer {
+class ZBEAPI OGLModelSheetPosDrawer {
 public:
 
   OGLModelSheetPosDrawer() {}

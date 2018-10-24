@@ -15,11 +15,13 @@
 
 #include "ZBE/core/tools/containers/Ticket.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief This define an avatar that can be used to deactivate/activate or erase the corresponding entity.
  */
-struct Avatar {
+struct ZBEAPI Avatar {
 
     using Base = void; //!< Inheritance info.
 

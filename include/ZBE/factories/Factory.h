@@ -12,11 +12,13 @@
 
 #include <string>
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Define the interface of a Factory.
  */
-class Factory {
+class ZBEAPI Factory {
 public:
   /** \brief Virtual destructor.
    */

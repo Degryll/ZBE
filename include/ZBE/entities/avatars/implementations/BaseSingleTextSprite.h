@@ -17,11 +17,13 @@
 
 #include "ZBE/archetypes/TextDrawable.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Base implementation of a single text sprite.
  */
-class BaseSingleTextSprite : virtual public SingleTextSprite {
+class ZBEAPI BaseSingleTextSprite : virtual public SingleTextSprite {
 public:
   BaseSingleTextSprite(const BaseSingleTextSprite&) = delete; //<! Avoid copy
   void operator=(const BaseSingleTextSprite&) = delete; //<! Avoid copy

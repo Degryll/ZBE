@@ -16,7 +16,7 @@ namespace zbe {
 
   /** \brief Apply the correct function to solve a collision.
    */
-  class IntersectionCollisionSelector : public CollisionSelector {
+  class ZBEAPI IntersectionCollisionSelector : public CollisionSelector {
 
       /** \brief Solve an intersection between a StaticSolidAABB2D and a StaticSolidAABB2D.
        *  \param param1 First element interested in the collision

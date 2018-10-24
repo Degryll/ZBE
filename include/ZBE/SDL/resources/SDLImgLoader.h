@@ -25,7 +25,7 @@
 //
 ///** \brief SDL implementation of ImgLoader.
 // */
-//class SDLImgLoader : public RsrcLoader {
+//class ZBEAPI SDLImgLoader : public RsrcLoader {
 //public:
 //
 //  /** \brief Builds an SDLImgLoader from a SDLImageStore and the file extension supported (PNG by default)

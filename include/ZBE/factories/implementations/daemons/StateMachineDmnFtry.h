@@ -25,11 +25,13 @@
 
 #include "ZBE/factories/Factory.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Factory for State Machine Daemons.
  */
-class StateMachineDmnFtry : public Factory {
+class ZBEAPI StateMachineDmnFtry : public Factory {
 public:
 
   /** \brief Builds a StateMachineDaemon.

@@ -15,18 +15,20 @@
 #include "ZBE/core/events/generators/util/CollisionData.h"
 #include "ZBE/core/events/generators/util/CollisionSelector.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
-class StaticSolidAABB2D;
-class StaticLimiterAABB2D;
-class ConstantMovingCircle;
+class ZBEAPI StaticSolidAABB2D;
+class ZBEAPI StaticLimiterAABB2D;
+class ZBEAPI ConstantMovingCircle;
 
 /** \brief Defines an element that, using a CollisionSelector, is able to
  * solve a collision with another CollisionObject.
  * It is solved through visitor pattern.
  * You must add a new "accept" function for any new derived CollisionObject
  */
-class CollisionObject {
+class ZBEAPI CollisionObject {
 public:
   virtual ~CollisionObject() {}  //!< Empty destructor
 
@@ -69,10 +71,10 @@ public:
 
 
 /** \brief Common implementation of collisionObject used to avoid repeated code
- * You must add to this class a new "accept" function for any new derived CollisionObject
+ * You must add to this class ZBEAPI a new "accept" function for any new derived CollisionObject
  */
 template <typename T>
-class CollisionObjectCommon : public CollisionObject {
+class ZBEAPI CollisionObjectCommon : public CollisionObject {
 public:
 
   CollisionObjectCommon(const CollisionObjectCommon&) = delete;  //!< Avoid copy

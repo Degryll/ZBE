@@ -17,13 +17,15 @@
 
 #include "ZBE/core/tools/containers/TimedElement.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Stores a ordered collection of Elements.
  * Its in charge of keep them ordered and discard those that have expired.
  */
 template <typename T>
-class TimedBuffer {
+class ZBEAPI TimedBuffer {
 public:
   /** \brief Construct a new InputBuffer.
    */

@@ -16,6 +16,8 @@
 #include <sstream>
 #include <mutex>
 
+#include "ZBE/core/system/system.h"
+
 /** \brief Add a [INFO] annotation to the logs.
  *
  *  Used to add information messages to the logs.
@@ -67,11 +69,11 @@ do{ zbe::LoggerMsg lm; \
 
 namespace zbe {
 
-/** \brief Wrapper class to use the operator "<<" in the log messages.
+/** \brief Wrapper class ZBEAPI to use the operator "<<" in the log messages.
  *
- *  This class is not used directly.
+ *  This class ZBEAPI is not used directly.
  *
- *  This class let us use the operator "<<" to concatenate distinct type of variables.
+ *  This class ZBEAPI let us use the operator "<<" to concatenate distinct type of variables.
  *  i.e.:
  *
  *        int a = 3;
@@ -81,13 +83,13 @@ namespace zbe {
  *
  *  > [INFO]> A message with 3 variables (3.1415) of distinct type: true;
  *
- *  This class also change the printed value of a bool variable from 1 or 0 to
+ *  This class ZBEAPI also change the printed value of a bool variable from 1 or 0 to
  *  "true" or "false.
  *
  *  To use a custom type in the message composition, the new type should define an operator<<
  *  that returns a stringstream compatible type, i.e. a std::string.
  */
-class LoggerMsg {
+class ZBEAPI LoggerMsg {
 public:
   /** \brief Void constructor.
    */
@@ -117,9 +119,9 @@ LoggerMsg& LoggerMsg::operator<<(T t) {
   return (*this);
 }
 
-/** \brief A class to handle logs.
+/** \brief A class ZBEAPI to handle logs.
  *
- *  This class implements singleton pattern so:
+ *  This class ZBEAPI implements singleton pattern so:
  *
  *    - There is no constructor, someone should call getInstance to receive the unique instance of the Logger.
  *    - The Logger instance is used only to create and configure it.
@@ -140,13 +142,13 @@ LoggerMsg& LoggerMsg::operator<<(T t) {
  *    > [ERROR]> A warning message.\n
  *    > [CUSTOM]> A message for a user defined type.\n
  *
- *  Before use this class (with the [macros](@ref Logger.h)) you need to configure the writers,
+ *  Before use this class ZBEAPI (with the [macros](@ref Logger.h)) you need to configure the writers,
  *  this means, tell the Logger what kind of logs (file, console, etc.) do you want to use. You can set default writes calling:
  *  - `setDefaultFileWriter()` for file logs, it writes to `./system.log`.
  *  - `setDefaultCommandLineWriter()` for console logs (write to `stdout`).
  *  - `setDefaultWriters()` to set both writers.
  */
-class Logger {
+class ZBEAPI Logger {
 public:
   static const int NINFO;       //!< Id of INFO annotations
   static const int NDEBUG;      //!< Id of DEBUG annotations

@@ -4,7 +4,7 @@
  * @since 2017-06-15
  * @date 2018-02-25
  * @author Ludo
- * @brief Class that know how to draw using SpriteSheets.
+ * @brief class ZBEAPI that know how to draw using SpriteSheets.
  */
 
 #ifndef ZBE_OGL_DRAWERS_OGLMODELSHEETSDLDRAWER_H_
@@ -24,12 +24,14 @@
 
 #include "ZBE/SDL/OGL/SDLOGLWindow.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
-/** \brief Class that know how to draw using SpriteSheets.
+/** \brief class ZBEAPI that know how to draw using SpriteSheets.
  */
 template<typename T>
-class OGLModelSheetDrawer : public Behavior<T> {
+class ZBEAPI OGLModelSheetDrawer : public Behavior<T> {
   public:
     OGLModelSheetDrawer(const OGLModelSheetDrawer&) = delete; //!< Avoid copy.
     void operator=(const OGLModelSheetDrawer&) = delete; //!< Avoid copy.

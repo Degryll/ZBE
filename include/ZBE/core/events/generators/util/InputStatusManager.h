@@ -18,9 +18,11 @@
 #include "ZBE/core/events/EventStore.h"
 #include "ZBE/core/events/InputEvent.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
-class InputStatusManager {
+class ZBEAPI InputStatusManager {
 public:
   virtual ~InputStatusManager() {}
 
@@ -32,7 +34,7 @@ public:
 
 };
 
-class MappedInputStatusManager : public InputStatusManager {
+class ZBEAPI MappedInputStatusManager : public InputStatusManager {
 public:
   MappedInputStatusManager(int eventId) : eventId(eventId), store(EventStore::getInstance()), handlers() {}
   virtual ~MappedInputStatusManager() {}
@@ -64,7 +66,7 @@ private:
 
 };
 
-class RangedInputStatusManager : public InputStatusManager {
+class ZBEAPI RangedInputStatusManager : public InputStatusManager {
 public:
   virtual ~RangedInputStatusManager() {}
 
@@ -72,7 +74,7 @@ public:
 
 };
 
-class AnyInputStatusManager : public InputStatusManager {
+class ZBEAPI AnyInputStatusManager : public InputStatusManager {
 public:
   virtual ~AnyInputStatusManager() {}
 

@@ -16,16 +16,18 @@
 #include "ZBE/core/tools/math/math.h"
 #include "ZBE/core/tools/math/Point.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
-/** \brief A class that represent Vectors of any dimension.
+/** \brief A class ZBEAPI that represent Vectors of any dimension.
  *
  *  Not use this class, use Vector<dim>.
  *
  *  \sa Vector
  */
 template<unsigned dim>
-class _VECTOR {
+class ZBEAPI _VECTOR {
   public:
 
     /** \brief Void constructor, the vector's values are set to 0.
@@ -60,11 +62,11 @@ class _VECTOR {
       }
     }
 
-    /** \brief Virtual destructor (this class is a base class).
+    /** \brief Virtual destructor (this class ZBEAPI is a base class).
      */
     virtual ~_VECTOR() {}
 
-    /** \brief This class let you assign initializer lists to _VECTOR.
+    /** \brief This class ZBEAPI let you assign initializer lists to _VECTOR.
      *  \param l Initializer list with the vector coordinates
      */
     _VECTOR& operator=(std::initializer_list<double> l) {
@@ -355,12 +357,12 @@ class _VECTOR {
     double data[dim];  //!< Vector data.
 };
 
-/** \brief A class that represent Vectors of any dimension.
+/** \brief A class ZBEAPI that represent Vectors of any dimension.
  *
  *  This template needs to know the number of dimensions of the hyperplane to which the Vectors belongs to.
  */
 template<unsigned dim>
-class Vector : public _VECTOR<dim> {
+class ZBEAPI Vector : public _VECTOR<dim> {
   public:
     /** \brief Void constructor, the Vector's values are unknown.
      */
@@ -381,14 +383,14 @@ class Vector : public _VECTOR<dim> {
     Vector(std::initializer_list<double> l) : _VECTOR<dim>(l) {}
 };
 
-/** \brief A class that represent 2D Vectors.
+/** \brief A class ZBEAPI that represent 2D Vectors.
  *
  *  Vector2D is an alias of Vector<2>.
  *
  *  This specialization let you access with the alias .x or .y to the first and second dimension of the 2D Vectors.
  */
 template<>
-class Vector<2> : public _VECTOR<2> {
+class ZBEAPI Vector<2> : public _VECTOR<2> {
   public:
     double &x;  //!< An alias to access the first dimension as v.x.
     double &y;  //!< An alias to access the first dimension as v.y.
@@ -426,12 +428,12 @@ class Vector<2> : public _VECTOR<2> {
      */
     Vector& operator=(Vector<2> rhs) {_VECTOR<2>::operator=(rhs); return (*this);}
 
-    /** \brief This class let you assign _VECTOR<2> classes to Vector<2>.
+    /** \brief This class ZBEAPI let you assign _VECTOR<2> classes to Vector<2>.
      *  \param rhs _VECTOR to copy
      */
     Vector& operator=(_VECTOR<2> rhs) {_VECTOR<2>::operator=(rhs); return (*this);}
 
-    /** \brief This class let you assign initializer lists to Vector<2>.
+    /** \brief This class ZBEAPI let you assign initializer lists to Vector<2>.
      *  \param l Initializer list with the vector coordinates
      */
     Vector& operator=(std::initializer_list<double> l) {_VECTOR<2>::operator=(l); return (*this);}
@@ -466,14 +468,14 @@ class Vector<2> : public _VECTOR<2> {
 
 using Vector2D = Vector<2>;  //!< An alias to Vector<2>.
 
-/** \brief A class that represent 3D Vectors.
+/** \brief A class ZBEAPI that represent 3D Vectors.
  *
  *  Vector3D is an alias of Vector<3>.
  *
  *  This specialization let you access with the alias .x, .y or .z to the first, second or third dimension of the 3D Vector.
  */
 template<>
-class Vector<3> : public _VECTOR<3> {
+class ZBEAPI Vector<3> : public _VECTOR<3> {
   public:
     double &x;  //!< An alias to access the first dimension as v.x.
     double &y;  //!< An alias to access the first dimension as v.y.
@@ -512,12 +514,12 @@ class Vector<3> : public _VECTOR<3> {
      */
     Vector& operator=(Vector<3> rhs) {_VECTOR<3>::operator=(rhs); return (*this);}
 
-    /** \brief This class let you assign _VECTOR<3> classes to Vector<3>.
+    /** \brief This class ZBEAPI let you assign _VECTOR<3> classes to Vector<3>.
      *  \param _VECTOR to copy
      */
     Vector& operator=(_VECTOR<3> rhs) {_VECTOR<3>::operator=(rhs); return (*this);}
 
-    /** \brief This class let you assign _VECTOR<3> classes to Vector<3>.
+    /** \brief This class ZBEAPI let you assign _VECTOR<3> classes to Vector<3>.
      *  \param l Initializer list with the vector coordinates
      */
     Vector& operator=(std::initializer_list<double> l) {_VECTOR<3>::operator=(l); return (*this);}

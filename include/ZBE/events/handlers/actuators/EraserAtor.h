@@ -16,12 +16,14 @@
 #include "ZBE/core/entities/AvatarEntity.h"
 #include "ZBE/core/entities/avatars/Avatar.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Actuator capable of erasing an entity.
  */
 template <typename R, typename T>
-class EraserAtor: public zbe::Actuator<WeakAvatarEntityContainer<zbe::Avatar>, R> {
+class ZBEAPI EraserAtor: public zbe::Actuator<WeakAvatarEntityContainer<zbe::Avatar>, R> {
   public:
 
     /** \brief Erases entity when interact with template given ReactObject.

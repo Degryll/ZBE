@@ -18,7 +18,7 @@
 //
 // /** \brief Interface for classes that loads image definitions. It will return an identifier
 //  */
-//class ImgDefLoader {
+//class ZBEAPI ImgDefLoader {
 //public:
 //  virtual ~ImgDefLoader(){} //!< Virtual destructor.
 //

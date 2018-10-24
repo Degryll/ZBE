@@ -18,11 +18,13 @@
 
 #include "ZBE/archetypes/Drawable.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Implementation that adapts an Drawable to a SingleSprite.
  */
-class SimpleDrawableSingleSpriteAdaptor : public Adaptor<SingleSprite> {
+class ZBEAPI SimpleDrawableSingleSpriteAdaptor : public Adaptor<SingleSprite> {
 public:
   SimpleDrawableSingleSpriteAdaptor(const SimpleDrawableSingleSpriteAdaptor&) = delete; //<! Avoid copy
   void operator=(const SimpleDrawableSingleSpriteAdaptor&) = delete; //<! Avoid copy

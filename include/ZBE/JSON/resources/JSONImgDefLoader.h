@@ -23,7 +23,7 @@
 //
 // /** \brief JSON implementation of ImgDefLoader.
 //  */
-//class JSONImgDefLoader : public ImgDefLoader {
+//class ZBEAPI JSONImgDefLoader : public ImgDefLoader {
 //
 //  /** \brief Load an image definition
 //   *  \param url Image definition file to be loaded.

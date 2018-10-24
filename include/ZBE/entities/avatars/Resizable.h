@@ -10,11 +10,13 @@
 #ifndef ZBE_ENTITIES_AVATARS_RESIZABLE_H_
 #define ZBE_ENTITIES_AVATARS_RESIZABLE_H_
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Defines an avatar that can be resized.
  */
-class Resizable {
+class ZBEAPI Resizable {
   public:
     using Base = void;//!< inheritance info
 

@@ -16,14 +16,14 @@
 #include "ZBE/core/events/handlers/Actuator.h"
 #include "ZBE/core/entities/AvatarEntity.h"
 
-
+#include "ZBE/core/system/system.h"
 
 namespace zbe {
 
 /** \brief Actuator capable of change an entity state.
  */
 template <typename R, typename T>
-class StateChangerSelfAtor: public zbe::Actuator<WeakAvatarEntityContainer<zbe::Stated>, R> {
+class ZBEAPI StateChangerSelfAtor: public zbe::Actuator<WeakAvatarEntityContainer<zbe::Stated>, R> {
   public:
     StateChangerSelfAtor(int64_t value) : v(value) {}
 

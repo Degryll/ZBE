@@ -10,13 +10,15 @@
 #ifndef ZBE_CORE_EVENTS_HANDLERS_NETHANDLER_H
 #define ZBE_CORE_EVENTS_HANDLERS_NETHANDLER_H
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
-class SDLSocket;
+class ZBEAPI SDLSocket;
 
 /** \brief Receives a net event and reacts to that.
  */
-class NetHandler {
+class ZBEAPI NetHandler {
 public:
 
   /** \brief Destructor.

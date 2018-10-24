@@ -16,11 +16,13 @@
 
 #include "ZBE/SDL/system/SDLSocket.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Single input status representation.
  */
-class NetMessage {
+class ZBEAPI NetMessage {
 public:
   /** \brief Empty constructor for dummy messages.
    */

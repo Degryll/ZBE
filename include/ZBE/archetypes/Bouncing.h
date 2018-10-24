@@ -4,7 +4,7 @@
  * @since 2017-03-07
  * @date 2018-02-25
  * @author Batis Degryll Ludo
- * @brief Defines the interface of a class that stores normals for to bounce.
+ * @brief Defines the interface of a class ZBEAPI that stores normals for to bounce.
  */
 
 #ifndef ZBE_ARCHETYPES_BOUNCING_H
@@ -13,10 +13,12 @@
 #include "ZBE/core/tools/math/Vector.h"
 #include "ZBE/archetypes/Mobile.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 template <unsigned s>
-class Bouncing : virtual public Mobile<s> {
+class ZBEAPI Bouncing : virtual public Mobile<s> {
 public:
   /** \brief Virtual destructor.
    */

@@ -17,11 +17,13 @@
 #include "ZBE/core/tools/math/Point.h"
 #include "ZBE/core/tools/math/Vector.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief This defines an avatar that produces sound.
  */
-class Sound3D {
+class ZBEAPI Sound3D {
 public:
   using Base = void;//!< inheritance info
 

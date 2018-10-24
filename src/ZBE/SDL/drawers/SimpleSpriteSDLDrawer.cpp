@@ -4,7 +4,7 @@
  * @since 2012-02-01
  * @date 2016-03-29
  * @author degryll
- * @brief Class that know how to draw SimpleSprite entities with SDL.
+ * @brief class ZBEAPI that know how to draw SimpleSprite entities with SDL.
  */
 
 #include "ZBE/SDL/drawers/SingleSpriteSDLDrawer.h"

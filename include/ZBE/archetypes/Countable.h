@@ -14,10 +14,12 @@
 
 #include "ZBE/core/tools/shared/Value.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 template <typename T>
-class Countable {
+class ZBEAPI Countable {
 public:
   /** \brief Parametrized constructor.
       \param ninstances

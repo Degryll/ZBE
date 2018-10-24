@@ -12,11 +12,13 @@
 
 #include <cstdint>
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief This define an entity that can be drawn.
  */
-class Drawable {
+class ZBEAPI Drawable {
 public:
   /** \brief Virtual destructor.
    */

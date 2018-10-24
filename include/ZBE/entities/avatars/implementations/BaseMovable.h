@@ -18,12 +18,14 @@
 #include "ZBE/entities/avatars/Movable.h"
 #include "ZBE/archetypes/Mobile.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief This implements a base 1:1 avatar that can be moved.
  */
 template <unsigned s>
-class BaseMovable : virtual public Movable<s>, public BasePositionable<s> {
+class ZBEAPI BaseMovable : virtual public Movable<s>, public BasePositionable<s> {
   public:
     BaseMovable(const BaseMovable&) = delete; //<! Avoid copy
     void operator=(const BaseMovable&) = delete; //<! Avoid copy

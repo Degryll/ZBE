@@ -10,11 +10,13 @@
 #ifndef ZBE_ARCHETYPES_STATE_H
 #define ZBE_ARCHETYPES_STATE_H
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Defines the interface of an archetype with a state.
  */
-class State {
+class ZBEAPI State {
 public:
   /** \brief Virtual destructor.
    */

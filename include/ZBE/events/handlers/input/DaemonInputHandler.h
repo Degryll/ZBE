@@ -16,11 +16,13 @@
 #include "ZBE/core/events/handlers/InputHandler.h"
 #include "ZBE/core/daemons/Daemon.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Input handler capable of run a daemon.
  */
-class DaemonInputHandler : public InputHandler {
+class ZBEAPI DaemonInputHandler : public InputHandler {
 public:
 
  /** \brief Constructs a DaemonInputHandler from a daemon.

@@ -12,11 +12,13 @@
 
 #include <cstdint>
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Archetype for an entity with a time stamp.
  */
-class TimeStamp {
+class ZBEAPI TimeStamp {
 public:
   /** \brief Virtual destructor.
    */

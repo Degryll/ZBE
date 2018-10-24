@@ -26,9 +26,11 @@
 #include "ZBE/graphics/MultiSpriteSheet.h"
 #include "ZBE/resources/contextnames.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
-class JSONGraphicsLoaders {
+class ZBEAPI JSONGraphicsLoaders {
 public:
   using json = nlohmann::json;
 

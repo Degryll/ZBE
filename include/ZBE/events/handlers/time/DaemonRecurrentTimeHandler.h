@@ -17,11 +17,13 @@
 #include "ZBE/core/events/handlers/TimeHandler.h"
 #include "ZBE/core/daemons/Daemon.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Time handler capable of run a daemon.
  */
-class DaemonRecurrentTimeHandler : public TimeHandler {
+class ZBEAPI DaemonRecurrentTimeHandler : public TimeHandler {
 public:
 DaemonRecurrentTimeHandler(const DaemonRecurrentTimeHandler&) = delete; //!< Deleted copy constructor.
 void operator=(const DaemonRecurrentTimeHandler&) = delete; //!< Deleted copy constructor.

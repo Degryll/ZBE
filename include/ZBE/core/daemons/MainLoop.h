@@ -16,11 +16,13 @@
 #include "ZBE/core/daemons/Daemon.h"
 #include "ZBE/core/system/SysTime.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief The Main Loop of the game.
  */
-class MainLoop : virtual public Daemon {
+class ZBEAPI MainLoop : virtual public Daemon {
 public:
 
   /** \brief Constructor.

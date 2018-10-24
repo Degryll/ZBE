@@ -14,9 +14,11 @@ namespace zbe {
 
 #include "ZBE/core/tools/math/math.h"
 
+#include "ZBE/core/system/system.h"
+
 /** \brief Interface for all daemons. Daemons are responsible for execute automated processes. Basically Daemons rules the world.
  */
-class OGLModelSheetPreDrawer {
+class ZBEAPI OGLModelSheetPreDrawer {
 public:
 
   OGLModelSheetPreDrawer(std::shared_ptr<SDLOGLWindow> window, uint64_t programId, std::shared_ptr<std::vector<GLfloat> > projection, std::shared_ptr<std::vector<GLfloat> > view)

@@ -17,11 +17,13 @@
 #include "ZBE/core/tools/time/Timer.h"
 #include "ZBE/SDL/starters/SDL_Starter.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Implements a timer that uses SDL to give elapsed times between events.
  */
-class SDLTimer : public Timer {
+class ZBEAPI SDLTimer : public Timer {
 public:
   /** \brief Construct the timer.
    *  \param startHere If true, once constructed, the timer start counting. Default false.

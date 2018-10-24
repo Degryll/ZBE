@@ -26,20 +26,22 @@
 #include "ZBE/SDL/starters/SDL_Starter.h"
 #include "ZBE/SDL/system/SDLWindow.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 const int ZBE_GL_MAJOR_VERSION = 3;
 const int ZBE_GL_MINOR_VERSION = 3;
 
-class OGLTextureStore;
-class OGLModelStore;
-class OGLShaderStore;
+class ZBEAPI OGLTextureStore;
+class ZBEAPI OGLModelStore;
+class ZBEAPI OGLShaderStore;
 
 /**
- * @class SDLOGLWindow
+ * @class ZBEAPI SDLOGLWindow
  * @brief Used to create windows using SDL 2.0. with OpenGL support.
  */
-class SDLOGLWindow : public SDLWindow {
+class ZBEAPI SDLOGLWindow : public SDLWindow {
 public:
   SDLOGLWindow(const SDLOGLWindow&) = delete;  //!< Does not make sense to "copy" a SDLOGLWindow.
   void operator=(const SDLOGLWindow&) = delete;  //!< Does not make sense to "copy" a SDLOGLWindow.
@@ -101,7 +103,7 @@ private:
   std::shared_ptr<OGLShaderStore> shaderStore;
 };
 
-class OGLTextureStore {
+class ZBEAPI OGLTextureStore {
 public:
     OGLTextureStore(const OGLTextureStore&) = delete; //!< Delete copy constructor
     void operator=(const OGLTextureStore&) = delete; //!< Delete assing aperator
@@ -154,7 +156,7 @@ private:
   std::mutex m;                       //!< Mutex to avoid race conditions.
 };
 
-class OGLModelStore {
+class ZBEAPI OGLModelStore {
 public:
     OGLModelStore(const OGLModelStore&) = delete; //!< Delete copy constructor
     void operator=(const OGLModelStore&) = delete; //!< Delete assing aperator
@@ -180,7 +182,7 @@ struct ShaderDef {
   GLenum type;
 };
 
-class OGLShaderStore {
+class ZBEAPI OGLShaderStore {
 public:
   OGLShaderStore(const OGLShaderStore&) = delete; //!< Delete copy constructor
   void operator=(const OGLShaderStore&) = delete; //!< Delete assing aperator

@@ -14,11 +14,13 @@
 
 #include "ZBE/entities/avatars/Stated.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Base implementation of a state.
  */
-class BaseStated : virtual public Stated {
+class ZBEAPI BaseStated : virtual public Stated {
 public:
   BaseStated(const BaseStated&) = delete; //<! Avoid copy
   void operator=(const BaseStated&) = delete; //<! Avoid copy

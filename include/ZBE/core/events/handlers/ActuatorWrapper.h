@@ -16,12 +16,14 @@
 #include "ZBE/core/events/generators/util/ReactObject.h"
 #include "ZBE/core/events/generators/util/CollisionData.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Actuator base functionality.
  */
 template <typename R, typename TEnt>
-class ActuatorWrapper {
+class ZBEAPI ActuatorWrapper {
   public:
 
     /** \brief Empty constructor
@@ -37,7 +39,7 @@ class ActuatorWrapper {
 /** \brief Actuator base functionality.
  */
 template <typename R, typename TAct, typename TEnt>
-class ActuatorWrapperCommon: virtual public ActuatorWrapper<R, TEnt>{
+class ZBEAPI ActuatorWrapperCommon: virtual public ActuatorWrapper<R, TEnt>{
 public:
   ActuatorWrapperCommon(const ActuatorWrapperCommon&) = delete; //!< Avoid copy.
   void operator=(const ActuatorWrapperCommon&) = delete; //!< Avoid copy.

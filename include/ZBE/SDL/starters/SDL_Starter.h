@@ -14,13 +14,15 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_net.h>
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /**
- * @class SDL_Starter
+ * @class ZBEAPI SDL_Starter
  * @brief Used to init SDL subsystems only once.
  */
-class SDL_Starter {
+class ZBEAPI SDL_Starter {
 public:
   SDL_Starter(SDL_Starter const&)    = delete;  //!< Needed for singleton.
   void operator=(SDL_Starter const&) = delete;  //!< Needed for singleton.

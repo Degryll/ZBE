@@ -15,11 +15,13 @@
 
 #include "ZBE/core/daemons/Daemon.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief DaemonMaster is a Daemon responsible for run others Daemons. This is necessary to build the Daemons tree.
  */
-class DaemonMaster : public Daemon {
+class ZBEAPI DaemonMaster : public Daemon {
 public:
 
   /** \brief Empty constructor.

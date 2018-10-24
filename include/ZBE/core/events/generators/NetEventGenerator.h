@@ -24,11 +24,13 @@
 #include "ZBE/core/events/EventStore.h"
 #include "ZBE/core/events/NetEvent.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
-/** \brief This class will look for network messages received and creates a net event sending it to the EventStore.
+/** \brief This class ZBEAPI will look for network messages received and creates a net event sending it to the EventStore.
  */
-class NetEventGenerator : virtual public Daemon {
+class ZBEAPI NetEventGenerator : virtual public Daemon {
 public:
   NetEventGenerator(const NetEventGenerator&) = delete;  //!< Deleted copy constructor.
   void operator=(const NetEventGenerator&) = delete;  //!< Deleted operator.

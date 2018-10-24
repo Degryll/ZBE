@@ -15,11 +15,13 @@
 
 #include "ZBE/core/tools/time/ContextTime.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Tool used to ask about time inside a subordinated context.
 */
-class SubordinateTime : public ContextTime {
+class ZBEAPI SubordinateTime : public ContextTime {
 public:
 
   SubordinateTime(std::shared_ptr<ContextTime> parent) : parent(parent) {}

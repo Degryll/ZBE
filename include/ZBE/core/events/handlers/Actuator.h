@@ -15,12 +15,14 @@
 #include "ZBE/core/events/generators/util/ReactObject.h"
 #include "ZBE/core/events/generators/util/CollisionData.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Actuator base functionality.
  */
 template <typename T, typename R>
-class Actuator : public R {
+class ZBEAPI Actuator : public R {
   public:
   	Actuator(const Actuator&) = delete;  //!< Avoid copy.
   	void operator=(const Actuator&) = delete;  //!< Avoid copy.

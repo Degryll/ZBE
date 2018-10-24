@@ -13,11 +13,13 @@
 
 #include <filesystem>
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Interface for classes that loads SpriteSheets. It will return an identifier
  */
-class SpriteSheetLoader {
+class ZBEAPI SpriteSheetLoader {
 public:
   virtual ~SpriteSheetLoader() {} //!< Virtual destructor.
 

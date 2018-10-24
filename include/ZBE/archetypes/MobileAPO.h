@@ -13,12 +13,14 @@
 #include "ZBE/archetypes/ActivePhysicalObject.h"
 #include "ZBE/archetypes/MobilePO.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Defines the interface for a Mobile Active Physical Object.
  */
 template <unsigned s>
-class MobileAPO : virtual public MobilePO<s>, virtual public ActivePhysicalObject {
+class ZBEAPI MobileAPO : virtual public MobilePO<s>, virtual public ActivePhysicalObject {
 public:
   /** \brief Virtual destructor.
    */

@@ -14,11 +14,13 @@
 
 #include "ZBE/archetypes/TimeStamp.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Simple implementation of the TimeStamp archetype.
  */
-class SimpleTimeStamp : virtual public TimeStamp {
+class ZBEAPI SimpleTimeStamp : virtual public TimeStamp {
 public:
   /** \brief Parametrized constructor. Set the size of the archetype.
    *  \param width Size of the archetype.

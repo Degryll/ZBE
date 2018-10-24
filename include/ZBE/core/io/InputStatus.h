@@ -12,11 +12,13 @@
 
 #include <cstdint>
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Single input status representation.
  */
-class InputStatus {
+class ZBEAPI InputStatus {
 public:
 
   /** \brief Empty constructor (0 id, 0.0 status).

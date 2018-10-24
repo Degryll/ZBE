@@ -12,11 +12,13 @@
 
 #include <memory>
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Ticket to send to and entities so it can mark itself as active, inactive or erase in the related list.
  */
-class Ticket {
+class ZBEAPI Ticket {
 public:
 
   virtual ~Ticket() {}

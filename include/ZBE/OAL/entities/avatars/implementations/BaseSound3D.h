@@ -21,11 +21,13 @@
 
 #include "ZBE/OAL/entities/avatars/Sound3D.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief This defines an avatar that produces sound.
  */
-class BaseSound3D : public Sound3D {
+class ZBEAPI BaseSound3D : public Sound3D {
 public:
   using Base = void;//!< inheritance info
 

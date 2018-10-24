@@ -18,12 +18,13 @@
 #include "ZBE/core/daemons/Daemon.h"
 #include "ZBE/core/tools/shared/Value.h"
 
+#include "ZBE/core/system/system.h"
 
 namespace zbe {
 /** \brief A Daemon capable of execute an specific sub Daemon depending on
 * an state.
 */
-class StateMachineDaemon : public Daemon {
+class ZBEAPI StateMachineDaemon : public Daemon {
 public:
 
   StateMachineDaemon(const StateMachineDaemon&) = delete;

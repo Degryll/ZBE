@@ -4,7 +4,7 @@
  * @since 2017-05-15
  * @date 2018-03-27
  * @author Degryll Batis Ludo
- * @brief A system class to get unique Ids.
+ * @brief A system class ZBEAPI to get unique Ids.
  */
 
 #include "ZBE/core/system/SysIdGenerator.h"

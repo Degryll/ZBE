@@ -13,12 +13,14 @@
 #include "ZBE/archetypes/PhysicalObject.h"
 #include "ZBE/archetypes/Position.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Defines the interface of an object that interacts physically and have a position.
  */
 template <unsigned s>
-class PositionPO : virtual public Position<s>, virtual public PhysicalObject {
+class ZBEAPI PositionPO : virtual public Position<s>, virtual public PhysicalObject {
 public:
   /** \brief Virtual destructor.
    */

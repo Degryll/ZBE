@@ -12,11 +12,13 @@
 
 #include <cstdint>
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief This define an avatar that can be drawn.
  */
-class SingleSprite {
+class ZBEAPI SingleSprite {
 
 public:
 

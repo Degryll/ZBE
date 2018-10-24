@@ -17,6 +17,8 @@
 #include "ZBE/core/entities/Entity.h"
 #include "ZBE/core/entities/avatars/Avatar.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Base implementation of avatar that uses an Entity.

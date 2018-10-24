@@ -25,11 +25,13 @@
 #include "ZBE/core/events/InputEvent.h"
 #include "ZBE/core/events/generators/util/InputStatusManager.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
-  /** \brief This class will search for input event occurred between two given times and send it to the EventStore.
+  /** \brief This class ZBEAPI will search for input event occurred between two given times and send it to the EventStore.
    */
-  class InputEventGenerator : virtual public Daemon {
+  class ZBEAPI InputEventGenerator : virtual public Daemon {
     public:
       InputEventGenerator(const InputEventGenerator&) = delete;  //!< Deleted copy constructor.
       void operator=(const InputEventGenerator&) = delete;  //!< Deleted operator.

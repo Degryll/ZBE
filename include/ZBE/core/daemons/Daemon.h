@@ -10,11 +10,13 @@
 #ifndef ZBE_CORE_DAEMONS_DAEMON_H
 #define ZBE_CORE_DAEMONS_DAEMON_H
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Interface for all daemons. Daemons are responsible for execute automated processes. Basically Daemons rules the world.
  */
-class Daemon {
+class ZBEAPI Daemon {
 public:
 
   /** \brief Do the actual Daemon job.

@@ -16,10 +16,12 @@
 
 #include "ZBE/core/events/Event.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 /** \brief A container to store events. It will store only the sooner event (or events) and will discard every other.
 */
-class EventStore {
+class ZBEAPI EventStore {
 public:
   EventStore(EventStore const&)    = delete;  //!< Needed for singleton.
   void operator=(EventStore const&) = delete;  //!< Needed for singleton.
@@ -66,13 +68,11 @@ public:
   */
   int64_t getTime();
 
-protected:
-
+private:
   void clearStore(std::forward_list<Event*>&);
 
   void manageStore(std::forward_list<Event*>&);
 
-private:
   EventStore() :timedStore(), instantStore(), bettertime(std::numeric_limits<int64_t>::max()) {}
   std::forward_list<Event*> timedStore;
   std::forward_list<Event*> instantStore;

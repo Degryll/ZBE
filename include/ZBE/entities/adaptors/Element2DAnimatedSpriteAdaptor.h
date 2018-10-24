@@ -15,11 +15,13 @@
 #include "ZBE/core/entities/Adaptor.h"
 #include "ZBE/core/entities/avatars/Element2D.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Implementation that adapts an Drawable to a AnimatedSprite.
  */
-class Element2DAnimatedSpriteAdaptor : public Adaptor<AnimatedSprite> {
+class ZBEAPI Element2DAnimatedSpriteAdaptor : public Adaptor<AnimatedSprite> {
 public:
   Element2DAnimatedSpriteAdaptor(const Element2DAnimatedSpriteAdaptor&) = delete; //<! Avoid copy
   void operator=(const Element2DAnimatedSpriteAdaptor&) = delete; //<! Avoid copy

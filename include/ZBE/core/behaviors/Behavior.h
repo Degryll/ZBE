@@ -14,12 +14,14 @@
 
 #include "ZBE/core/entities/AvatarEntity.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Define the minimal functions of every behavior.
  */
 template<typename ...Avatars>
-class Behavior {
+class ZBEAPI Behavior {
 public:
   /** \brief Virtual destructor.
    */

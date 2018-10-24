@@ -4,7 +4,7 @@
  * @since 2017-04-12
  * @date 2017-10-11
  * @author batis ludo
- * @brief Class that know how to draw text boxes as SingleTextSprite entities with SDL.
+ * @brief class ZBEAPI that know how to draw text boxes as SingleTextSprite entities with SDL.
  */
 
 #include <SDL2/SDL.h>

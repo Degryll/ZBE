@@ -17,12 +17,14 @@
 
 #include "ZBE/entities/avatars/Bouncer.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Actuator capable of making a entity bounce.
  */
 template <typename R, typename RO>
-class BouncerSelfAtor: public Actuator<WeakAvatarEntityContainer<Bouncer<2> >, R> {
+class ZBEAPI BouncerSelfAtor: public Actuator<WeakAvatarEntityContainer<Bouncer<2> >, R> {
   public:
 
     /** \brief Acumulates bounce normal when template type is collided.

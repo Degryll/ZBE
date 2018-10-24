@@ -16,10 +16,11 @@
 #include "ZBE/core/events/handlers/TimeHandler.h"
 #include "ZBE/core/daemons/Daemon.h"
 
+#include "ZBE/core/system/system.h"
 
 namespace zbe {
 
-class DaemonTimeHandler : public TimeHandler {
+class ZBEAPI DaemonTimeHandler : public TimeHandler {
 public:
 DaemonTimeHandler(const DaemonTimeHandler&) = delete; //!< Avoid copy.
 void operator=(const DaemonTimeHandler&) = delete; //!< Avoid copy.

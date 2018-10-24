@@ -19,11 +19,13 @@
 #include "ZBE/core/io/NetBuffer.h"
 #include "ZBE/core/system/SysTime.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Dispatcher for SDL network messages.
  */
-class SDLNetDispatcher {
+class ZBEAPI SDLNetDispatcher {
 public:
   SDLNetDispatcher(SDLNetDispatcher const&)    = delete;  //!< Needed for singleton.
   void operator=(SDLNetDispatcher const&) = delete;  //!< Needed for singleton.

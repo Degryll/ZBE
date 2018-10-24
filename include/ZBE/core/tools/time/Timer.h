@@ -12,12 +12,14 @@
 
 #include <cstdint>
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Stopwatch interface. A timer that can Start, Stop or Reset a time count.
  *  It can return elapsed times from the beginning or from the last lap.
 */
-class Timer {
+class ZBEAPI Timer {
 public:
   /** \brief Virtual destructor.
    */

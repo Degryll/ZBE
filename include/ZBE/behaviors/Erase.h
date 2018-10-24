@@ -16,12 +16,13 @@
 #include "ZBE/core/entities/AvatarEntity.h"
 #include "ZBE/core/entities/avatars/Avatar.h"
 
+#include "ZBE/core/system/system.h"
 
 namespace zbe {
 
 /** \brief Erase given avatar.
  */
-class Erase : virtual public Behavior<Avatar> {
+class ZBEAPI Erase : virtual public Behavior<Avatar> {
   public:
 
     /** \brief Virtual destructor.

@@ -38,12 +38,14 @@
 #include "ZBE/entities/avatars/implementations/BaseStated.h"
 #include "ZBE/entities/avatars/implementations/BasePositionable.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief A simple game element in 2D.
  */
 template<typename R>
-class Element2D: public Entity,
+class ZBEAPI Element2D: public Entity,
                  public SimpleTimeStamp,
                  public Drawable,
                  public SimplePositionPO<2>,
@@ -105,7 +107,7 @@ private:
 };
 
 template<typename R>
-class CElement2D : public Countable<int64_t>, public Element2D<R> {
+class ZBEAPI CElement2D : public Countable<int64_t>, public Element2D<R> {
 public:
   CElement2D (std::shared_ptr<Value<int64_t> > ninstances, Point2D position, uint64_t actuatorsList, int64_t width, int64_t height, uint64_t graphics)
   : Countable<int64_t>(ninstances), Element2D<R>(position, actuatorsList, width, height, graphics) {}

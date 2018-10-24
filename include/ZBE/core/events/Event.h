@@ -12,13 +12,15 @@
 
 #include <cstdint>
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
-class EventDispatcher;
+class ZBEAPI EventDispatcher;
 
 /** \brief Represents a basic event. An event its something that, when it occurs, can cause some element of the game to change its state.
  */
-class Event {
+class ZBEAPI Event {
   public:
 
     /** \brief Basic constructor.
