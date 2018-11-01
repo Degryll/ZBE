@@ -17,7 +17,7 @@
 namespace zbe {
 
 template<typename D, typename O, typename RO, typename... ROS>
-class ZBEAPI Reactor : public Reactor<D, O, ROS...> {
+class Reactor : public Reactor<D, O, ROS...> {
 public:
   virtual ~Reactor() {}
 
@@ -27,7 +27,7 @@ public:
 };
 
 template<typename D, typename O, typename RO>
-class ZBEAPI Reactor<D, O, RO> : public Reactor<D, O, void> {
+class Reactor<D, O, RO> : public Reactor<D, O, void> {
 public:
   virtual ~Reactor() {}
 
@@ -37,7 +37,7 @@ public:
 };
 
 template<typename D, typename O>
-class ZBEAPI Reactor<D, O, void> {
+class Reactor<D, O, void> {
 public:
   virtual ~Reactor() {}
 

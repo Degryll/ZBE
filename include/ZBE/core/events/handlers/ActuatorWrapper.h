@@ -23,7 +23,7 @@ namespace zbe {
 /** \brief Actuator base functionality.
  */
 template <typename R, typename TEnt>
-class ZBEAPI ActuatorWrapper {
+class ActuatorWrapper {
   public:
 
     /** \brief Empty constructor
@@ -39,7 +39,7 @@ class ZBEAPI ActuatorWrapper {
 /** \brief Actuator base functionality.
  */
 template <typename R, typename TAct, typename TEnt>
-class ZBEAPI ActuatorWrapperCommon: virtual public ActuatorWrapper<R, TEnt>{
+class ActuatorWrapperCommon: virtual public ActuatorWrapper<R, TEnt>{
 public:
   ActuatorWrapperCommon(const ActuatorWrapperCommon&) = delete; //!< Avoid copy.
   void operator=(const ActuatorWrapperCommon&) = delete; //!< Avoid copy.

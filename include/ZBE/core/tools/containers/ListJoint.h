@@ -22,7 +22,7 @@ namespace zbe {
 /** \brief Iterator for Joint container.
  */
 template<typename J, typename L, typename E> //!< Joint type, List type, Element type.
-class ZBEAPI JointIterator : public std::iterator<std::forward_iterator_tag, E>{
+class JointIterator : public std::iterator<std::forward_iterator_tag, E>{
 public:
 
   /** \brief parametrized constructor
@@ -119,7 +119,7 @@ private:
 * T elements.
  */
 template<typename L, typename T>
-class ZBEAPI ListJoint {
+class ListJoint {
 public:
     /** \brief empty constructor
     */
@@ -161,7 +161,7 @@ private:
 * T elements.
  */
 template<typename L, typename T>
-class ZBEAPI ListTicketedJoint {
+class ListTicketedJoint {
 public:
     /** \brief Empty constructor.
      */

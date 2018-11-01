@@ -24,7 +24,7 @@ namespace zbe {
 /** \brief Actuator capable of making a entity bounce.
  */
 template <typename R, typename RO>
-class ZBEAPI BouncerSelfAtor: public Actuator<WeakAvatarEntityContainer<Bouncer<2> >, R> {
+class BouncerSelfAtor: public Actuator<WeakAvatarEntityContainer<Bouncer<2> >, R> {
   public:
 
     /** \brief Acumulates bounce normal when template type is collided.

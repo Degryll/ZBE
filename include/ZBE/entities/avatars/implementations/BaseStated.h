@@ -20,7 +20,7 @@ namespace zbe {
 
 /** \brief Base implementation of a state.
  */
-class ZBEAPI BaseStated : virtual public Stated {
+class BaseStated : virtual public Stated {
 public:
   BaseStated(const BaseStated&) = delete; //<! Avoid copy
   void operator=(const BaseStated&) = delete; //<! Avoid copy

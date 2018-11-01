@@ -20,7 +20,7 @@ namespace zbe {
 /** \brief Defines the interface for a Bouncing Active Physical Object.
  */
 template <unsigned s>
-class ZBEAPI BouncingAPO : virtual public BouncingPO<s>, virtual public ActivePhysicalObject {
+class BouncingAPO : virtual public BouncingPO<s>, virtual public ActivePhysicalObject {
 public:
   /** \brief Virtual destructor.
    */

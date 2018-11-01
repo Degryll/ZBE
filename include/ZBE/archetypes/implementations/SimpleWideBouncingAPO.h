@@ -28,7 +28,7 @@ namespace zbe {
 /** \brief Implements the interface of a class ZBEAPI with a position, a velocity, a width, the ability to accumulate normals and interacts actively with other objects.
  */
 template <unsigned s>
-class ZBEAPI SimpleWideBouncingAPO : virtual public WideBouncingAPO<s>, public SimpleWide, public SimpleBouncing<s>, public SimpleActivePhysicalObject {
+class SimpleWideBouncingAPO : virtual public WideBouncingAPO<s>, public SimpleWide, public SimpleBouncing<s>, public SimpleActivePhysicalObject {
 public:
   /** \brief Constructor with position data as an initializer list. Velocity will be 0.
    */

@@ -17,7 +17,7 @@ namespace zbe {
 /** Stores a value that can be modified.
  */
 template <typename T>
-class ZBEAPI Value {
+class Value {
 public:
 
   virtual ~Value(){} //<! Virtual destructor

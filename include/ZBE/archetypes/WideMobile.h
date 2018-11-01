@@ -20,7 +20,7 @@ namespace zbe {
 /** \brief Defines the interface of a class ZBEAPI with a position, a velocity and a width.
  */
 template <unsigned s>
-class ZBEAPI WideMobile : virtual public Wide, virtual public Mobile<s> {
+class WideMobile : virtual public Wide, virtual public Mobile<s> {
 public:
   /** \brief Virtual destructor.
    */

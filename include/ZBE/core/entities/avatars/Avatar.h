@@ -21,7 +21,7 @@ namespace zbe {
 
 /** \brief This define an avatar that can be used to deactivate/activate or erase the corresponding entity.
  */
-struct ZBEAPI Avatar {
+struct Avatar {
 
     using Base = void; //!< Inheritance info.
 

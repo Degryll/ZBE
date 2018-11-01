@@ -27,7 +27,7 @@ namespace zbe {
 /** \brief Actuator capable of erasing an entity if collisiondata meets a condition.
  */
 template <typename R>
-class ZBEAPI ConditionalEraserAtor: public zbe::Actuator<zbe::WeakAvatarEntityContainer<zbe::Avatar>, R> {
+class ConditionalEraserAtor: public zbe::Actuator<zbe::WeakAvatarEntityContainer<zbe::Avatar>, R> {
   public:
 
     /** \brief Erases entity if collision data fullfill InteractionTester requirements

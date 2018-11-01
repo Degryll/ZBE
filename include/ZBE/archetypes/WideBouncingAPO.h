@@ -20,7 +20,7 @@ namespace zbe {
 /** \brief Defines the interface of a class ZBEAPI with a position, a velocity and a width.
  */
 template <unsigned s>
-class ZBEAPI WideBouncingAPO : virtual public Wide, virtual public BouncingAPO<s> {
+class WideBouncingAPO : virtual public Wide, virtual public BouncingAPO<s> {
 public:
   /** \brief Virtual destructor.
    */

@@ -20,7 +20,7 @@ namespace zbe {
 /** \brief Defines the interface for a Mobile Physical Object.
  */
 template <unsigned s>
-class ZBEAPI MobilePO : virtual public Mobile<s>, virtual public PhysicalObject {
+class MobilePO : virtual public Mobile<s>, virtual public PhysicalObject {
 public:
   /** \brief Virtual destructor.
    */

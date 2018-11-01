@@ -22,7 +22,7 @@ namespace zbe {
 /** \brief This define an avatar that can be moved.
  */
 template <unsigned s>
-class ZBEAPI Movable : virtual public Positionable<s> {
+class Movable : virtual public Positionable<s> {
   public:
     using Base = Positionable<s>;//!< inheritance info
 

@@ -23,7 +23,7 @@ namespace zbe {
 /** \brief Define the basic functionality of every Interactionable entity.
  */
 template <typename R>
-class ZBEAPI Interactionator : virtual public Interactioner<R> {
+class Interactionator : virtual public Interactioner<R> {
 public:
 
   using Base = Interactioner<R>; //!< Inheritance info.
@@ -42,7 +42,7 @@ public:
 /** \brief Every Interactionator (an entity involved in a collision) has a collision object defining his "physical shape".
 */
 template <typename R, typename ...Bases>
-class ZBEAPI InteractionatorCommon : virtual public Interactionator<R>, public InteractionerCommon<R, Bases...> {
+class InteractionatorCommon : virtual public Interactionator<R>, public InteractionerCommon<R, Bases...> {
 public:
   InteractionatorCommon(const InteractionatorCommon<R, Bases...>&) = delete;
   void operator=(const InteractionatorCommon<R, Bases...>&) = delete;

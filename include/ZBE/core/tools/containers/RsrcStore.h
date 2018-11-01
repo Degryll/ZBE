@@ -25,7 +25,7 @@ namespace zbe {
 /** \brief A class ZBEAPI that relates an id with a resource.
  */
 template <typename T>
-class ZBEAPI RsrcStore {
+class RsrcStore {
   public:
     RsrcStore(RsrcStore const&)    = delete;  //!< Needed for singleton.
     void operator=(RsrcStore const&) = delete;  //!< Needed for singleton.

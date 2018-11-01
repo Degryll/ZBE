@@ -26,7 +26,7 @@ namespace zbe {
 /** \brief Simple implementation of the WideMobile interface.
  */
 template <unsigned s>
-class ZBEAPI SimpleWideMobile : virtual public WideMobile<s>, public SimpleWide, public SimpleMobile<s> {
+class SimpleWideMobile : virtual public WideMobile<s>, public SimpleWide, public SimpleMobile<s> {
 public:
   /** \brief Constructor with position and velocity set to 0.
    */

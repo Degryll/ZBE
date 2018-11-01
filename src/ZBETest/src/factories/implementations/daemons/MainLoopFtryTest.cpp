@@ -60,12 +60,13 @@ public:
 
 class DummyEventDaemon : public zbe::Daemon {
 public:
-  DummyEventDaemon(): executed(false){}
+  DummyEventDaemon(): executed(false) {}
 
   void run() {
     if(executed) return;
     auto e = new DummyEvent();
     es.storeEvent(e);
+    printf("DummyEvent: %p\n", &es);
     executed = true;
   }
   zbe::EventStore& es = zbe::EventStore::getInstance();
@@ -129,7 +130,7 @@ TEST(MainLoopFtryTest, build) {
   EXPECT_TRUE(reactD->executed) << "Must call reactD";
   EXPECT_TRUE(drawD->executed) << "Must not call drawD";
   EXPECT_TRUE(postD->executed) << "Must not call postD";
-  
+
   configRsrc.clear();
   dict.clear();
   daemonRsrc.clear();

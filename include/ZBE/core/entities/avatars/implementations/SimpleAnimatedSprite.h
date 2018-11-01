@@ -22,10 +22,8 @@ namespace zbe {
 
 /** \brief This define an avatar that can be drawn in any direction with different animations.
  */
-class ZBEAPI SimpleAnimatedSprite : virtual public AnimatedSprite, virtual public SimpleStatedSprite {
-
+class  SimpleAnimatedSprite : virtual public AnimatedSprite, public SimpleStatedSprite {
 public:
-
   /** \brief Parametrized Constructor.
    *  \param time Current time of the animated sprite.
    */
@@ -45,7 +43,6 @@ public:
 private:
   uint64_t t;    //!< Frame of the animation
   std::shared_ptr<ContextTime> contextTime;
-
 };
 
 }  // namespace zbe

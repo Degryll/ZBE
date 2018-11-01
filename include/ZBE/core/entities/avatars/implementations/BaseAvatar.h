@@ -23,7 +23,7 @@ namespace zbe {
 
 /** \brief Base implementation of avatar that uses an Entity.
  */
-struct BaseAvatar : virtual public Avatar{
+struct BaseAvatar : virtual public Avatar {
 
     BaseAvatar(const BaseAvatar&) = delete; //!< Avoid copy.
     void operator=(const BaseAvatar&) = delete; //!< Avoid copy.

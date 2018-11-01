@@ -23,7 +23,7 @@ namespace zbe {
 /** \brief Simple implementation of the Position interface.
  */
 template <unsigned s>
-class ZBEAPI SimplePosition : virtual public Position<s> {
+class SimplePosition : virtual public Position<s> {
 public:
   /** \brief Empty constructor. Position is set to 0.
    */

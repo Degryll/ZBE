@@ -18,7 +18,7 @@ namespace zbe {
 
 /** \brief Archetype for an entity with a time stamp.
  */
-class ZBEAPI TimeStamp {
+class TimeStamp {
 public:
   /** \brief Virtual destructor.
    */

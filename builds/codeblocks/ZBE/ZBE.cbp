@@ -28,6 +28,7 @@
 					<Add option="-isystem ../../../extlibs/json" />
 					<Add option="-isystem ../../../extlibs/glm/0.9.9.0" />
 					<Add option="-std=c++17" />
+					<Add option="-isystem ../../../extlibs/stb_vorbis" />
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/linux64/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/include" />
@@ -85,6 +86,7 @@
 					<Add option="-isystem ../../../extlibs/glm/0.9.9.0" />
 					<Add option="-std=c++17" />
 					<Add option="`sdl-config --cflags --libs`" />
+					<Add option="-isystem ../../../extlibs/stb_vorbis/" />
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/include" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/include" />
@@ -148,6 +150,7 @@
 					<Add option="-isystem ../../../extlibs/json" />
 					<Add option="-isystem ../../../extlibs/glm/0.9.9.0" />
 					<Add option="-std=c++17" />
+					<Add option="-isystem ../../../extlibs/stb_vorbis/" />
 					<Add option="-DZBE_EXPORTS" />
 					<Add directory="../../../include" />
 					<Add directory="../../../src" />
@@ -204,6 +207,7 @@
 					<Add option="-isystem ../../../extlibs/json" />
 					<Add option="-isystem ../../../extlibs/glm/0.9.9.0" />
 					<Add option="-std=c++17" />
+					<Add option="-isystem ../../../extlibs/stb_vorbis/" />
 					<Add option="-D_GLIBCXX_USE_CXX11_ABI=0" />
 					<Add option="-DZBE_EXPORTS" />
 					<Add directory="../../../include" />

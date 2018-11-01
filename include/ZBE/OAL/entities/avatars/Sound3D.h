@@ -23,7 +23,7 @@ namespace zbe {
 
 /** \brief This defines an avatar that produces sound.
  */
-class ZBEAPI Sound3D {
+class Sound3D {
 public:
   using Base = void;//!< inheritance info
 

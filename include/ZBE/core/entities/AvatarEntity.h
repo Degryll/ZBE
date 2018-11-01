@@ -26,13 +26,13 @@ namespace zbe{
 /** \brief Forward declaration for use in Covariance_Traits.
  */
 template<typename T>
-class ZBEAPI AvatarEntity;
+class AvatarEntity;
 
 
 /** \brief Entity that can be seen as an specific Avatar.
  */
 template<typename T>
-class ZBEAPI AvatarEntity : virtual public Covariance_Traits<AvatarEntity<typename T::Base>,  typename T::Base>::Type {
+class AvatarEntity : virtual public Covariance_Traits<AvatarEntity<typename T::Base>,  typename T::Base>::Type {
 public:
 
   /** \brief Virtual destructor
@@ -48,7 +48,7 @@ public:
 /** \brief Avatar Entity that uses an adaptor to generate de avatar from the entity
  */
 template<typename T>
-class ZBEAPI AvatarEntityAdapted :
+class AvatarEntityAdapted :
             virtual public AvatarEntity<T>,
             public Covariance_Traits<AvatarEntityAdapted<typename T::Base>,  typename T::Base>::Type {
 public:
@@ -98,7 +98,7 @@ private:
 /** \brief Avatar Entity with a fixed avatar
  */
 template<typename T>
-class ZBEAPI AvatarEntityFixed :
+class AvatarEntityFixed :
                 virtual public AvatarEntity<T>,
                 virtual public Covariance_Traits<AvatarEntityFixed<typename T::Base>,  typename T::Base>::Type{
 public:
@@ -162,7 +162,7 @@ private:
 /** \brief A container of AvatarEntities. Used to group AvatarEntities.
  */
 template <typename T, typename... Bases>
-class ZBEAPI AvatarEntityContainer : virtual public AvatarEntityContainer<T>,  virtual public AvatarEntityContainer<Bases>... {
+class AvatarEntityContainer : virtual public AvatarEntityContainer<T>,  virtual public AvatarEntityContainer<Bases>... {
 public:
 
   /** \brief Builds an AvatarEntityContainer from an object that inherits all the needed types.
@@ -182,7 +182,7 @@ public:
 /** \brief An Avatar Entity Container of a single avatar type. This type can belong to an avatar hierarchy.
  */
 template <typename T>
-class ZBEAPI AvatarEntityContainer<T> : virtual public AvatarEntityContainer<typename T::Base> {
+class AvatarEntityContainer<T> : virtual public AvatarEntityContainer<typename T::Base> {
 public:
 
   /** \brief Builds an AvatarEntityContainer from a pointer to an AvatarEntityContainer of the specific type. This type can belong to an avatar hierarchy.
@@ -229,7 +229,7 @@ private:
 /** \brief An Avatar Entity Container of no type. Base case.
  */
 template <>
-class ZBEAPI AvatarEntityContainer<void> {
+class AvatarEntityContainer<void> {
 public:
 
   AvatarEntityContainer() {}  //<! Empty constructor
@@ -249,7 +249,7 @@ protected:
  * It's used when an Avatar, inside an AvatarEntity, stores other AvatarEntities that references to the parent entity.(Avoid shared_ptr circular reference)
  */
 template <typename... Bases>
-class ZBEAPI WeakAvatarEntityContainer : virtual public WeakAvatarEntityContainer<Bases>... {
+class WeakAvatarEntityContainer : virtual public WeakAvatarEntityContainer<Bases>... {
 public:
   /** \brief Builds a WeakAvatarEntityContainer from an object that inherits all the needed types.
    */
@@ -268,7 +268,7 @@ public:
 /** \brief A Weak Avatar Entity Container of a single avatar type. This type can belong to an avatar hierarchy.
  */
 template <typename T>
-class ZBEAPI WeakAvatarEntityContainer<T> : virtual public WeakAvatarEntityContainer<typename T::Base> {
+class WeakAvatarEntityContainer<T> : virtual public WeakAvatarEntityContainer<typename T::Base> {
 public:
 
   /** \brief Builds a WeakAvatarEntityContainer from a shared_ptr to a WeakAvatarEntityContainer of the specific type. This type can belong to an avatar hierarchy.
@@ -313,7 +313,7 @@ private:
 /** \brief A Weak Avatar Entity Container of no type. Base case.
  */
 template <>
-class ZBEAPI WeakAvatarEntityContainer<void> {
+class WeakAvatarEntityContainer<void> {
 protected:
     template<typename T>
     void _setAE(T) {}

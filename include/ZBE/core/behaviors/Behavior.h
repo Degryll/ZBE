@@ -21,7 +21,7 @@ namespace zbe {
 /** \brief Define the minimal functions of every behavior.
  */
 template<typename ...Avatars>
-class ZBEAPI Behavior {
+class Behavior {
 public:
   /** \brief Virtual destructor.
    */

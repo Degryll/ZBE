@@ -16,7 +16,7 @@ namespace zbe {
 
 /** \brief Defines an avatar that can be resized.
  */
-class ZBEAPI Resizable {
+class Resizable {
   public:
     using Base = void;//!< inheritance info
 

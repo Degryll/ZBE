@@ -21,10 +21,8 @@ namespace zbe {
 
 /** \brief This define an avatar that can be drawn in any direction.
  */
-class ZBEAPI SimpleRotatedSprite : virtual public RotatedSprite, public SimpleSingleSprite {
-
+class SimpleRotatedSprite : virtual public RotatedSprite, public SimpleSingleSprite {
 public:
-
   /** \brief Parametrized Constructor.
    *  \param degrees Rotation degrees.
    */

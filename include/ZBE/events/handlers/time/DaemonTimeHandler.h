@@ -20,7 +20,7 @@
 
 namespace zbe {
 
-class ZBEAPI DaemonTimeHandler : public TimeHandler {
+class DaemonTimeHandler : public TimeHandler {
 public:
 DaemonTimeHandler(const DaemonTimeHandler&) = delete; //!< Avoid copy.
 void operator=(const DaemonTimeHandler&) = delete; //!< Avoid copy.

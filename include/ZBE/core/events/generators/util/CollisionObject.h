@@ -74,7 +74,7 @@ public:
  * You must add to this class ZBEAPI a new "accept" function for any new derived CollisionObject
  */
 template <typename T>
-class ZBEAPI CollisionObjectCommon : public CollisionObject {
+class CollisionObjectCommon : public CollisionObject {
 public:
 
   CollisionObjectCommon(const CollisionObjectCommon&) = delete;  //!< Avoid copy

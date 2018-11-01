@@ -31,7 +31,7 @@ namespace zbe {
 /** \brief class ZBEAPI that know how to draw using SpriteSheets.
  */
 template<typename T>
-class ZBEAPI OGLModelSheetDrawer : public Behavior<T> {
+class OGLModelSheetDrawer : public Behavior<T> {
   public:
     OGLModelSheetDrawer(const OGLModelSheetDrawer&) = delete; //!< Avoid copy.
     void operator=(const OGLModelSheetDrawer&) = delete; //!< Avoid copy.

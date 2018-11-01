@@ -33,8 +33,6 @@ class ZBEAPI CollisionSelector {
   public:
     virtual ~CollisionSelector() {}
 
-    CollisionSelector() {}
-
     /** \brief Using the Visitor pattern select the correct collision detection function to use depending of the types of the params.
      *  \param param1 First collision object.
      *  \param param2 Second collision object.

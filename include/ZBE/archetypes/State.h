@@ -16,7 +16,7 @@ namespace zbe {
 
 /** \brief Defines the interface of an archetype with a state.
  */
-class ZBEAPI State {
+class State {
 public:
   /** \brief Virtual destructor.
    */

@@ -256,7 +256,7 @@ private:
 
 };
 
-struct ZBE_Font {
+struct ZBEAPI ZBE_Font {
   TTF_Font* font;
   SDL_Color color;
 };

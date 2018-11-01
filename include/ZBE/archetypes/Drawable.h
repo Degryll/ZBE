@@ -18,7 +18,7 @@ namespace zbe {
 
 /** \brief This define an entity that can be drawn.
  */
-class ZBEAPI Drawable {
+class Drawable {
 public:
   /** \brief Virtual destructor.
    */

@@ -27,7 +27,7 @@ namespace zbe {
 /** \brief Define the minimal functions of every behavior.
  */
 template<unsigned s>
-class ZBEAPI UniformLinearMotion : virtual public Behavior<Movable<s>  > {
+class UniformLinearMotion : virtual public Behavior<Movable<s>  > {
   public:
     UniformLinearMotion(const UniformLinearMotion&) = delete;
     void operator=(const UniformLinearMotion&) = delete;

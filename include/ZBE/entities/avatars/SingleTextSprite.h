@@ -20,7 +20,7 @@ namespace zbe {
 
 /** \brief This define an avatar that can be drawn as text.
  */
-class ZBEAPI SingleTextSprite : virtual public SingleSprite {
+class SingleTextSprite : virtual public SingleSprite {
 public:
     using Base = SingleSprite;//!< inheritance info
 

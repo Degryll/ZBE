@@ -25,7 +25,7 @@ namespace zbe {
 /** \brief This implements a base 1:1 avatar that can be moved.
  */
 template <unsigned s>
-class ZBEAPI BaseMovable : virtual public Movable<s>, public BasePositionable<s> {
+class BaseMovable : virtual public Movable<s>, public BasePositionable<s> {
   public:
     BaseMovable(const BaseMovable&) = delete; //<! Avoid copy
     void operator=(const BaseMovable&) = delete; //<! Avoid copy

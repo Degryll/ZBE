@@ -22,7 +22,7 @@ namespace zbe {
 /** \brief Object against which to react.
  */
 template <typename R>
-class ZBEAPI ReactObject {
+class ReactObject {
   public:
     /** \brief destructor
      */
@@ -37,7 +37,7 @@ class ZBEAPI ReactObject {
 /** \brief Object against which to react. Common code. All implementations should inherit this class ZBEAPI instead of ReactObject.
  */
 template <typename R, typename ...Bases>
-class ZBEAPI ReactObjectCommon : public ReactObject<R> {
+class ReactObjectCommon : public ReactObject<R> {
   public:
 
     /** \brief parametrized constructor
@@ -85,7 +85,7 @@ class ZBEAPI ReactObjectCommon : public ReactObject<R> {
 /** \brief Object against which to react. Common code. Implementers should use this class ZBEAPI instead of ReactObject.
  */
 template <typename R>
-class ZBEAPI ReactObjectCommon<R> : public ReactObject<R> {
+class ReactObjectCommon<R> : public ReactObject<R> {
   public:
 
     /** \brief parametrized constructor

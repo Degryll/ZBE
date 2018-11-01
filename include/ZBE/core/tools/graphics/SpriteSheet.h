@@ -21,7 +21,7 @@ namespace zbe {
 /** \brief Interface capable of generate a sprite from a given entity.
  */
 template<typename T>
-class ZBEAPI SpriteSheet {
+class SpriteSheet {
 public:
 
   /** \brief Virtual destructor

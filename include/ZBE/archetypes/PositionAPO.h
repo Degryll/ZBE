@@ -20,7 +20,7 @@ namespace zbe {
 /** \brief Defines the interface of an object that interacts physically and have a position.
  */
 template <unsigned s>
-class ZBEAPI PositionAPO : virtual public PositionPO<s>, virtual public ActivePhysicalObject {
+class PositionAPO : virtual public PositionPO<s>, virtual public ActivePhysicalObject {
 public:
   /** \brief Virtual destructor.
    */

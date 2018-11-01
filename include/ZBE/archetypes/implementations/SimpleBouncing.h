@@ -24,7 +24,7 @@ namespace zbe {
 /** \brief Implements the interface of a class ZBEAPI that stores normals to bounce.
  */
 template <unsigned s>
-class ZBEAPI SimpleBouncing : virtual public Bouncing<s>, public SimpleMobile<s> {
+class SimpleBouncing : virtual public Bouncing<s>, public SimpleMobile<s> {
 public:
   /** \brief Empty constructor. Initially no normal has been added.
    */

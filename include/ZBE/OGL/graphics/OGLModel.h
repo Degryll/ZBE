@@ -16,11 +16,13 @@
 #include <GL/glew.h>
 #include <glm/mat4x4.hpp>
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Structure representing from where and where to draw a graphic element.
  */
-struct OGLModel {
+struct ZBEAPI OGLModel {
 
   OGLModel() : vao(), nvertex(), textures(), modelMat() {}
 

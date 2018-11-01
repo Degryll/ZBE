@@ -28,7 +28,7 @@ namespace zbe {
 /** \brief Implements the interface of a class ZBEAPI with a position, velocity, width and interacts actively with other objects.
  */
 template <unsigned s>
-class ZBEAPI SimpleWideMobileAPO : virtual public WideMobileAPO<s>, public SimpleWide, public SimpleMobile<s> public SimpleActivePhysicalObject {
+class SimpleWideMobileAPO : virtual public WideMobileAPO<s>, public SimpleWide, public SimpleMobile<s> public SimpleActivePhysicalObject {
 public:
   /** \brief Constructor with position and velocity set to 0.
    */

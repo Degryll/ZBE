@@ -12,8 +12,10 @@
 
 #include <string>
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
-struct cn {
+struct ZBEAPI cn {
 
 static const std::string SEPARATOR;
 

@@ -30,7 +30,7 @@ namespace zbe {
 
 /** \brief Stores de time of a timer, and the handler that will be launched when timer reaches 0;
  */
-struct TimerData {
+struct ZBEAPI TimerData {
   std::shared_ptr<TimeHandler> handler;    //!< A handler that will be executed when the event is triggered.
   int64_t time;  //!< When time reaches 0, the time event is triggered.
 

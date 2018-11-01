@@ -20,7 +20,7 @@
 
 namespace zbe {
 
-class ZBEAPI TicketEraser : public TimeHandler {
+class TicketEraser : public TimeHandler {
   public:
 	TicketEraser(const TicketEraser&) = delete; //!< Avoid copy.
 	void operator=(const TicketEraser&) = delete; //!< Avoid copy.

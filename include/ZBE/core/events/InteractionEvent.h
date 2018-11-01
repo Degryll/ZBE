@@ -24,7 +24,7 @@ namespace zbe {
 /** \brief Has the information needed to resolve a interaction.
  */
 template<typename R>
-class ZBEAPI InteractionEvent : public Event {
+class InteractionEvent : public Event {
   public:
 
     /** \brief Parametrized constructor.

@@ -16,7 +16,7 @@ namespace zbe {
 
 /** \brief Interface for all daemons. Daemons are responsible for execute automated processes. Basically Daemons rules the world.
  */
-class ZBEAPI Daemon {
+class Daemon {
 public:
 
   /** \brief Do the actual Daemon job.

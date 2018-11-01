@@ -23,7 +23,7 @@ namespace zbe {
 /** \brief Defines the interface of a class ZBEAPI with a position and a velocity.
  */
 template <unsigned s>
-class ZBEAPI Mobile : virtual public Position<s> {
+class Mobile : virtual public Position<s> {
 public:
   /** \brief Virtual destructor.
    */

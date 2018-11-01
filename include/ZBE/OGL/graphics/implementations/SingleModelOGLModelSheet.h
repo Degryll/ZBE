@@ -28,7 +28,7 @@ namespace zbe {
 
 /** \brief Interface capable of generate a sprite from a given entity.
  */
-class ZBEAPI SingleModelOGLModelSheet : public OGLModelSheet<SingleModel> {
+class SingleModelOGLModelSheet : public OGLModelSheet<SingleModel> {
 public:
   SingleModelOGLModelSheet(const SingleModelOGLModelSheet&) = delete;
   void operator=(const SingleModelOGLModelSheet&) = delete;

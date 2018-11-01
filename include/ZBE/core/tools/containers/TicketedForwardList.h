@@ -25,7 +25,7 @@ namespace zbe {
  *
  */
 template <typename T, typename UnqualifiedType = std::remove_cv<T> >
-class ZBEAPI TicketedForwardListIterator;
+class TicketedForwardListIterator;
 
 /** \brief A wrapper for c++ forward_list using Tickets.
  *
@@ -33,7 +33,7 @@ class ZBEAPI TicketedForwardListIterator;
  *  \sa Ticket
  */
 template <typename T>
-class ZBEAPI TicketedForwardList {
+class TicketedForwardList {
 public:
   TicketedForwardList(const TicketedForwardList&) = delete;
   void operator=(const TicketedForwardList&) = delete;
@@ -93,7 +93,7 @@ private:
 };
 
 template <typename T, typename UnqualifiedType>
-class ZBEAPI TicketedForwardListIterator : public std::iterator<std::forward_iterator_tag,
+class TicketedForwardListIterator : public std::iterator<std::forward_iterator_tag,
                                            UnqualifiedType,
                                            std::ptrdiff_t,
                                            T*,

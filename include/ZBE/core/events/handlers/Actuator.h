@@ -22,7 +22,7 @@ namespace zbe {
 /** \brief Actuator base functionality.
  */
 template <typename T, typename R>
-class ZBEAPI Actuator : public R {
+class Actuator : public R {
   public:
   	Actuator(const Actuator&) = delete;  //!< Avoid copy.
   	void operator=(const Actuator&) = delete;  //!< Avoid copy.

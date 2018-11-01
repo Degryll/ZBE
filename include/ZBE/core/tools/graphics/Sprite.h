@@ -14,11 +14,13 @@
 
 #include "ZBE/core/tools/math/Region.h"
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Structure representing from where and where to draw a graphic element.
  */
-struct Sprite {
+struct ZBEAPI Sprite {
 
   /** \brief Builds a Sprite with all its needed data.
    *

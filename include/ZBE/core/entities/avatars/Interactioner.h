@@ -30,7 +30,7 @@ namespace zbe {
 /** \brief Every Interactioner (an entity involved in a interaction) has a interaction object defining his "physical shape".
  */
 template <typename R>
-class ZBEAPI Interactioner {
+class Interactioner {
 public:
 
   using Base = void; //!< Inheritance info.
@@ -55,7 +55,7 @@ public:
 /** \brief Every Interactioner (an entity involved in a interaction) has a interaction object defining his "physical shape".
 */
 template <typename R, typename ...Bases>
-class ZBEAPI InteractionerCommon : virtual public Interactioner<R> {
+class InteractionerCommon : virtual public Interactioner<R> {
 public:
   InteractionerCommon(const InteractionerCommon&) = delete;
   void operator=(const InteractionerCommon&) = delete;

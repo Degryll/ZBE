@@ -20,7 +20,7 @@ namespace zbe {
 /** \brief This define an avatar of an entity that can bounce with multiple normals.
  */
 template <unsigned s>
-class ZBEAPI Bouncer : virtual public Movable<s> {
+class Bouncer : virtual public Movable<s> {
   public:
     using Base = Movable<s>;//!< inheritance info
 

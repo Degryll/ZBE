@@ -18,10 +18,8 @@ namespace zbe {
 
 /** \brief This define an avatar that can be drawn.
  */
-class ZBEAPI SingleSprite {
-
+class  SingleSprite {
 public:
-
   using Base = void; //!< Inheritance info.
 
   /** \brief Virtual Destructor.

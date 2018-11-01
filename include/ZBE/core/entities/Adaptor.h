@@ -20,7 +20,7 @@ namespace zbe{
 /** \brief class ZBEAPI that adapts an entity to an avatar.
  */
 template<typename T>
-class ZBEAPI Adaptor : virtual public Covariance_Traits<Adaptor<typename T::Base>,  typename T::Base>::Type {
+class Adaptor : virtual public Covariance_Traits<Adaptor<typename T::Base>,  typename T::Base>::Type {
 public:
 
   /** \brief Virtual destructor.

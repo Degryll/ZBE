@@ -26,7 +26,7 @@ namespace zbe {
 /** \brief Simple implementation of the PositionPO interface.
  */
 template <unsigned s>
-class ZBEAPI SimplePositionPO : virtual public PositionPO<s>, public SimplePosition<s>, public SimplePhysicalObject {
+class SimplePositionPO : virtual public PositionPO<s>, public SimplePosition<s>, public SimplePhysicalObject {
 public:
   /** \brief Constructs a SimplePositionPO with position set to 0.
    */

@@ -23,7 +23,7 @@ namespace zbe {
 /** \brief A n-dimensional region of the space.
 */
 template <unsigned dim>
-class ZBEAPI _REGION {
+class _REGION {
 public:
 
   /** \brief Empty constructor
@@ -61,7 +61,7 @@ protected:
 /** \brief A n-dimensional region of the space.
 */
 template <unsigned dim>
-class ZBEAPI Region : public _REGION<dim>{
+class Region : public _REGION<dim>{
 public:
   Point<dim>& p; //!< N-dimensional point as region origin.
   Vector<dim>& v; //!< N-dimensional vector as region dimensions.
@@ -117,7 +117,7 @@ public:
 /** \brief A 2-dimensional region of the space.
 */
 template <>
-class ZBEAPI Region<2> : public _REGION<2>{
+class Region<2> : public _REGION<2>{
 public:
   Point<2>& p; //!< N-dimensional point as region origin.
   Vector<2>& v; //!< N-dimensional vector as region dimensions.
@@ -171,7 +171,7 @@ using Region2D = Region<2>; //!< An alias to Region<2>.
 /** \brief A 3-dimensional region of the space.
 */
 template <>
-class ZBEAPI Region<3> : public _REGION<3>{
+class Region<3> : public _REGION<3>{
 public:
   Point3D& p; //!< N-dimensional point as region origin.
   Vector3D& v; //!< N-dimensional vector as region dimensions.

@@ -175,7 +175,7 @@ private:
   std::mutex m;
 };
 
-struct ShaderDef {
+struct ZBEAPI ShaderDef {
   ShaderDef() : filename(), type() {}
   ShaderDef(std::string filename, GLenum type) : filename(filename), type(type) {}
   std::string filename;

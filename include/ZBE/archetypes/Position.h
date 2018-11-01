@@ -21,7 +21,7 @@ namespace zbe {
 /** \brief Defines the interface of a class ZBEAPI with a position.
  */
 template <unsigned s>
-class ZBEAPI Position {
+class Position {
 public:
   /** \brief Virtual destructor.
    */

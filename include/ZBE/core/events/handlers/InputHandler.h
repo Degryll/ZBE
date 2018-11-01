@@ -16,7 +16,7 @@ namespace zbe {
 
 /** \brief Receives a input(keyboard, mouse, etc) event and reacts to that.
  */
-class ZBEAPI InputHandler {
+class InputHandler {
 public:
 
   /** \brief Destructor.

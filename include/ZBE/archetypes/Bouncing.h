@@ -18,7 +18,7 @@
 namespace zbe {
 
 template <unsigned s>
-class ZBEAPI Bouncing : virtual public Mobile<s> {
+class Bouncing : virtual public Mobile<s> {
 public:
   /** \brief Virtual destructor.
    */

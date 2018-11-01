@@ -20,10 +20,8 @@ namespace zbe {
 
 /** \brief This define an avatar that can be drawn.
  */
-class ZBEAPI SimpleSingleSprite : virtual public SingleSprite {
-
+class SimpleSingleSprite : virtual public SingleSprite {
 public:
-
   /** \brief Parametrized Constructor.
   *  \param x X coordinate (horizontal).
   *  \param y Y coordinate (vertical).

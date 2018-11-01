@@ -23,7 +23,7 @@ namespace zbe {
 /** \brief Actuator capable of erasing an entity.
  */
 template <typename R, typename T>
-class ZBEAPI EraserAtor: public zbe::Actuator<WeakAvatarEntityContainer<zbe::Avatar>, R> {
+class EraserAtor: public zbe::Actuator<WeakAvatarEntityContainer<zbe::Avatar>, R> {
   public:
 
     /** \brief Erases entity when interact with template given ReactObject.

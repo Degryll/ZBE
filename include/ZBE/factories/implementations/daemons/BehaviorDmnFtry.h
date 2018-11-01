@@ -32,7 +32,7 @@ namespace zbe {
 /** \brief Factory for behavior daemons.
  */
 template<typename L, typename ...E>
-class ZBEAPI BehaviorDmnFtry : public Factory {
+class BehaviorDmnFtry : public Factory {
 public:
 
   /** \brief Do the behavior work over the given entity

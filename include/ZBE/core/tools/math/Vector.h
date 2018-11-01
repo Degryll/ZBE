@@ -27,7 +27,7 @@ namespace zbe {
  *  \sa Vector
  */
 template<unsigned dim>
-class ZBEAPI _VECTOR {
+class _VECTOR {
   public:
 
     /** \brief Void constructor, the vector's values are set to 0.
@@ -362,7 +362,7 @@ class ZBEAPI _VECTOR {
  *  This template needs to know the number of dimensions of the hyperplane to which the Vectors belongs to.
  */
 template<unsigned dim>
-class ZBEAPI Vector : public _VECTOR<dim> {
+class Vector : public _VECTOR<dim> {
   public:
     /** \brief Void constructor, the Vector's values are unknown.
      */
@@ -390,7 +390,7 @@ class ZBEAPI Vector : public _VECTOR<dim> {
  *  This specialization let you access with the alias .x or .y to the first and second dimension of the 2D Vectors.
  */
 template<>
-class ZBEAPI Vector<2> : public _VECTOR<2> {
+class Vector<2> : public _VECTOR<2> {
   public:
     double &x;  //!< An alias to access the first dimension as v.x.
     double &y;  //!< An alias to access the first dimension as v.y.
@@ -475,7 +475,7 @@ using Vector2D = Vector<2>;  //!< An alias to Vector<2>.
  *  This specialization let you access with the alias .x, .y or .z to the first, second or third dimension of the 3D Vector.
  */
 template<>
-class ZBEAPI Vector<3> : public _VECTOR<3> {
+class Vector<3> : public _VECTOR<3> {
   public:
     double &x;  //!< An alias to access the first dimension as v.x.
     double &y;  //!< An alias to access the first dimension as v.y.
@@ -527,8 +527,8 @@ class ZBEAPI Vector<3> : public _VECTOR<3> {
 
 using Vector3D = Vector<3>; //!< An alias to Vector<3>.
 
-Vector<2> reflect(Vector<2> ray, const Vector<2> &normal);
-Vector<3> reflect(Vector<3> ray, const Vector<3> &normal);
+ZBEAPI Vector<2> reflect(Vector<2> ray, const Vector<2> &normal);
+ZBEAPI Vector<3> reflect(Vector<3> ray, const Vector<3> &normal);
 
 }  // namespace zbe
 

@@ -23,7 +23,7 @@ namespace zbe {
 /** \brief Actuator capable of change an entity state.
  */
 template <typename R, typename T>
-class ZBEAPI StateChangerSelfAtor: public zbe::Actuator<WeakAvatarEntityContainer<zbe::Stated>, R> {
+class StateChangerSelfAtor: public zbe::Actuator<WeakAvatarEntityContainer<zbe::Stated>, R> {
   public:
     StateChangerSelfAtor(int64_t value) : v(value) {}
 

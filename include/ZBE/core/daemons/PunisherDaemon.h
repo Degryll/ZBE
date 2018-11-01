@@ -23,7 +23,7 @@ namespace zbe {
 /** \brief Daemon that applies a "punish" over a list of elements.
  */
 template<typename P, typename L>
-class ZBEAPI PunisherDaemon : public Daemon {
+class PunisherDaemon : public Daemon {
 public:
 
   PunisherDaemon(const PunisherDaemon&) = delete; //!< Avoid copy.

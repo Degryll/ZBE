@@ -16,7 +16,7 @@ namespace zbe {
 
 /** @brief Interface of an archetype that has an area.
 */
-class ZBEAPI Area {
+class Area {
 public:
   /** \brief Virtual destructor.
    */

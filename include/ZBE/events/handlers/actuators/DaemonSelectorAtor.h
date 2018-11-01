@@ -29,7 +29,7 @@ namespace zbe {
 * the value of the received Stated.
 */
 template <typename T, typename R>
-class ZBEAPI DaemonSelectorAlienAtor: public zbe::Actuator<T, R> {
+class DaemonSelectorAlienAtor: public zbe::Actuator<T, R> {
 public:
   /** \brief Builds a DaemonSelectorAlienAtor with the default daemon.
    *
@@ -75,7 +75,7 @@ private:
 * the value of the own Stated when interacts with a given reactor type.
 */
 template <typename T, typename R>
-class ZBEAPI DaemonSelectorSelfAtor: public zbe::Actuator<WeakAvatarEntityContainer<zbe::Stated>, R> {
+class DaemonSelectorSelfAtor: public zbe::Actuator<WeakAvatarEntityContainer<zbe::Stated>, R> {
 public:
   /** \brief Builds a DaemonSelectorAlienAtor with the default daemon.
    *
@@ -120,7 +120,7 @@ private:
 * the value of the own Stated when interacts with any reactor type.
 */
 template <typename R>
-class ZBEAPI DaemonSelectorSelfAnyAtor: public zbe::Actuator<WeakAvatarEntityContainer<zbe::Stated>, R> {
+class DaemonSelectorSelfAnyAtor: public zbe::Actuator<WeakAvatarEntityContainer<zbe::Stated>, R> {
 public:
   /** \brief Builds a DaemonSelectorAlienAtor with the default daemon.
    *

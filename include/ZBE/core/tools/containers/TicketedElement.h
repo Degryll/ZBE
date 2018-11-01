@@ -21,7 +21,7 @@ namespace zbe {
 /** \brief To be used in containers in witch each element can be marked as active, inactive and erased.
  */
 template <typename T>
-class ZBEAPI TicketedElement : public Ticket {
+class TicketedElement : public Ticket {
 public:
 
   /** \brief Parametrized constructor, ACTIVE is the default state.

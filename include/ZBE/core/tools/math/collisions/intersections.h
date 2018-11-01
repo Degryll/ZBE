@@ -18,298 +18,9 @@
 #include "ZBE/core/tools/math/Point.h"
 #include "ZBE/core/tools/math/Vector.h"
 #include "ZBE/core/tools/math/objects.h"
+#include "ZBE/core/system/SysError.h"
 
 namespace zbe {
-
-/** \brief Tells if two AABB intersects.
- *  \param boxa AABB a.
- *  \param boxb AABB b.
- */
-template <unsigned dim>
-bool intersectionAABBAABB(AABB<dim> boxa, AABB<dim> boxb);
-
-/** \brief Tells if two n-dimensional spheres intersects.
- *  \param NSpherea Sphere a.
- *  \param NSphereb Sphere b.
- */
-template <unsigned dim>
-bool intersectionNSphereNSphere(NSphere<dim> nspherea, NSphere<dim> nsphereb);
-
-/** \brief Tells if two circles (2d sphere) intersects.
- *  \param circlea Circle a.
- *  \param circleb Circle b.
- */
-inline bool intersectionCircleCircle(Circle circlea, Circle circleb) {return intersectionNSphereNSphere<2>(circlea, circleb);}
-
-/** \brief Tells if two 3d spheres intersects.
- *  \param spherea Sphere a.
- *  \param sphereb Sphere b.
- */
-inline bool intersectionSphereSphere(Sphere spherea, Sphere sphereb) {return intersectionNSphereNSphere<3>(spherea, sphereb);}
-
-
-/** \brief Tells if a n-dimensional sphere and a AABB intersects.
- *  \param sphere Sphere.
- *  \param box AABB.
- */
-template <unsigned dim>
-bool intersectionNSphereAABB(NSphere<dim> sphere, AABB<dim> box);
-
-/** \brief Tells if a circle and a 2d AABB intersects.
- *  \param circle Circle.
- *  \param box AABB.
- */
-inline bool intersectionCircleAABB2D(Circle circle, AABB<2> box) {return intersectionNSphereAABB<2>(circle, box);}
-
-/** \brief Tells if a 3d sphere and a 3d AABB intersects.
- *  \param sphere Sphere.
- *  \param box AABB.
- */
-inline bool intersectionSphereAABB3D(Sphere sphere, AABB<3> box) {return intersectionNSphereAABB<3>(sphere, box);}
-
-
-/** \brief Tells if a n-dimensional point is into a n-dimensional AABB.
- *  \param point Point.
- *  \param box AABB.
- */
-template <unsigned dim>
-bool intersectionPointAABB(Point<dim> point, AABB<dim> box);
-
-/** \brief Tells if a 2d point is into a 2d AABB.
- *  \param point Point.
- *  \param box AABB.
- */
-inline bool intersectionPoint2DAABB2D(Point2D point, AABB<2> box) {return intersectionPointAABB<2>(point, box);}
-
-/** \brief Tells if a 3d point is into a 3d AABB.
- *  \param point Point.
- *  \param box AABB.
- */
-inline bool intersectionPoint3DAABB3D(Point3D point, AABB<3> box) {return intersectionPointAABB<3>(point, box);}
-
-
-/** \brief Tells if a n-dimensional point is into a n-dimensional sphere.
- *  \param point Point.
- *  \param nsphere Sphere.
- */
-template <unsigned dim>
-bool intersectionPointNSphere(Point<dim> point, NSphere<dim> nsphere);
-
-/** \brief Tells if a 2d point is into a circle.
- *  \param point Point.
- *  \param circle Circle.
- */
-inline bool intersectionPoint2DCircle(Point2D point, Circle circle) {return intersectionPointNSphere<2>(point, circle);}
-
-/** \brief Tells if a 3d point is into a 3d sphere.
- *  \param point Point.
- *  \param nsphere Sphere.
- */
-inline bool intersectionPoint3DSphere(Point3D point, Sphere sphere) {return intersectionPointNSphere<3>(point, sphere);}
-
-
-/** \brief Tells if a n-dimensional ray and a n-dimensional sphere intersects and
- * stores the time of the "collision" and the coordinates where it occured into
- * two parameters.
- *  \param ray Ray.
- *  \param sphere Sphere.
- *  \param time Initialy it has a limit time, if the collision happens before that time, this value is updated to the collision time.
- *  \param point Intersection location.
- */
-template <unsigned dim>
-bool intersectionRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, int64_t &time, Point<dim>& point);
-
-/** \brief Tells if a 2d ray and a circle intersects and stores the time of the
- "collision" and the coordinates where it occured into two parameters.
- *  \param ray Ray.
- *  \param circle Circle.
- *  \param time Initialy it has a limit time, if the collision happens before that time, this value is updated to the collision time.
- *  \param point Intersection location.
- */
-inline bool intersectionRayCircle(Ray2D ray, Circle circle, int64_t &time, Point2D& point) {return (intersectionRayNSphere<2>(ray,circle,time,point));}
-
-/** \brief Tells if a 3d ray and a 3d sphere intersects and stores the time of
- the "collision" and the coordinates where it occured into two parameters.
- *  \param ray Ray.
- *  \param sphere Sphere.
- *  \param time Initialy it has a limit time, if the collision happens before that time, this value is updated to the collision time.
- *  \param point Intersection location.
- */
-inline bool intersectionRaySphere(Ray3D ray, Sphere sphere, int64_t &time, Point3D& point) {return (intersectionRayNSphere<3>(ray,sphere,time,point));}
-
-
-/** \brief Tells if a normalized n-dimensional ray and a n-dimensional sphere
-intersects and stores the time of the "collision" and the coordinates where it
-occured into two parameters.
- *  \param ray Ray.
- *  \param sphere Sphere.
- *  \param time Initialy it has a limit time, if the collision happens before that time, this value is updated to the collision time.
- *  \param point Intersection location.
- */
-template <unsigned dim>
-bool intersectionNormalRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, int64_t &time, Point<dim>& point);
-
-/** \brief Tells if a normalized 2d ray and a circle intersects and stores the
-time of the "collision" and the coordinates where it occured into two parameters.
- *  \param ray Ray.
- *  \param circle Circle.
- *  \param time Initialy it has a limit time, if the collision happens before that time, this value is updated to the collision time.
- *  \param point Intersection location.
- */
-inline bool intersectionNormalRayCircle(Ray2D ray, Circle circle, int64_t &time, Point2D& point) {return (intersectionNormalRayNSphere<2>(ray,circle,time,point));}
-
-/** \brief Tells if a normalized 3d ray and a 3d sphere intersects and stores the
-time of the "collision" and the coordinates where it occured into two parameters.
- *  \param ray Ray.
- *  \param sphere Sphere.
- *  \param time Initialy it has a limit time, if the collision happens before that time, this value is updated to the collision time.
- *  \param point Intersection location.
- */
-inline bool intersectionNormalRaySphere(Ray3D ray, Sphere sphere, int64_t &time, Point3D& point) {return (intersectionNormalRayNSphere<3>(ray,sphere,time,point));}
-
-
-/** \brief Tells if a n-dimensional beam and a AABB intersects (ray moving inside
- AABB) and stores the time of the "collision" and the coordinates where it occured
- into two parameters.
- *  \param ray Beam.
- *  \param box AABB.
- *  \param time Initialy it has a limit time, if the collision happens before that time, this value is updated to the collision time.
- *  \param point Intersection location.
- */
-template <unsigned dim>
-bool intersectionBeamInsideAABB(Ray<dim> ray, AABB<dim> box, int64_t &time, Point<dim>& point);
-
-/** \brief Tells if a 2d beam and a 2d AABB intersects and (ray moving inside
-AABB) stores the time of the "collision" and the coordinates where it occured
-into two parameters.
- *  \param ray Beam.
- *  \param box AABB.
- *  \param time Initialy it has a limit time, if the collision happens before that time, this value is updated to the collision time.
- *  \param point Intersection location.
- */
-inline bool intersectionBeamInsideAABB2D(Ray2D ray, AABB2D box, int64_t &time, Point2D& point) {return (intersectionBeamInsideAABB<2>(ray, box, time, point));}
-
-/** \brief Tells if a 3d beam and a 3d AABB intersects (ray moving inside AABB)
-and stores the time of the "collision" and the coordinates where it occured into
-two parameters.
- *  \param ray Beam.
- *  \param box AABB.
- *  \param time Initialy it has a limit time, if the collision happens before that time, this value is updated to the collision time.
- *  \param point Intersection location.
- */
-inline bool intersectionBeamInsideAABB3D(Ray3D ray, AABB3D box, int64_t &time, Point3D& point) {return (intersectionBeamInsideAABB<3>(ray, box, time, point));}
-
-
-/************************************/
-/* EL QUANTIZER DE TIEMPO NO FUNCIONA CON NEGATIVOS TODO: Esto parece que afecta a cosas. O no.*/
-/*************************************/
-//template <unsigned dim>
-//bool intersectionRayOutsideAABB(Ray<dim> ray, AABB<dim> box, int64_t &time, Point<dim>& point);
-//inline bool intersectionRayOutsideAABB2D(Ray2D ray, AABB2D box, int64_t &time, Point2D& point) {return (intersectionRayOutsideAABB<2>(ray,box,time,point));}  //!< 2D allias of intersectionRayOutsideAABB.
-//inline bool intersectionRayOutsideAABB3D(Ray3D ray, AABB3D box, int64_t &time, Point3D& point) {return (intersectionRayOutsideAABB<3>(ray,box,time,point));}  //!< 3D allias of intersectionRayOutsideAABB.
-
-
-/** \brief Tells if a n-dimensional segment and a AABB intersects (ray moving
-outside AABB) and stores the time of the "collision" and the coordinates
-where it occured into two parameters.
- *  \param ray Segment.
- *  \param box AABB.
- *  \param time Initialy it has a limit time, if the collision happens before that time, this value is updated to the collision time.
- *  \param point Intersection location.
- */
-template <unsigned dim>
-bool intersectionSegmentOutsideAABB(Ray<dim> ray, AABB<dim> box, int64_t &time, Point<dim>& point);
-
-/** \brief Tells if a 2d segment and a 2d AABB intersects (ray moving outside
-AABB) and stores the time of the "collision" and the coordinates where it occured
-into two parameters.
- *  \param ray Segment.
- *  \param box AABB.
- *  \param time Initialy it has a limit time, if the collision happens before that time, this value is updated to the collision time.
- *  \param point Intersection location.
- */
-inline bool intersectionSegmentOutsideAABB2D(Ray2D ray, AABB2D box, int64_t &time, Point2D& point) {return (intersectionSegmentOutsideAABB<2>(ray,box,time,point));}  //!< 2D allias of intersectionSegmentOutsideAABB.
-
-/** \brief Tells if a 3d segment and a 3d AABB intersects (ray moving outside
-AABB) and stores the time of the "collision" and the coordinates where it occured
-into two parameters.
- *  \param ray Segment.
- *  \param box AABB.
- *  \param time Initialy it has a limit time, if the collision happens before that time, this value is updated to the collision time.
- *  \param point Intersection location.
- */
-inline bool intersectionSegmentOutsideAABB3D(Ray3D ray, AABB3D box, int64_t &time, Point3D& point) {return (intersectionSegmentOutsideAABB<3>(ray,box,time,point));}  //!< 3D allias of intersectionSegmentOutsideAABB.
-
-
-/** \brief Tells if a n-dimensional beam and a AABB intersects (ray moving outside
-AABB) and stores the time of the "collision" and the coordinates where it occured
-into two parameters.
- *  \param ray Beam.
- *  \param box AABB.
- *  \param time Initialy it has a limit time, if the collision happens before that time, this value is updated to the collision time.
- *  \param point Intersection location.
- */
-template <unsigned dim>
-bool intersectionBeamOutsideAABB(Ray<dim> ray, AABB<dim> box, int64_t &time, Point<dim>& point);
-
-/** \brief Tells if a 2d beam and a 2d AABB intersects (ray moving outside AABB)
-and stores the time of the "collision" and the coordinates where it occured into
-two parameters.
- *  \param ray Beam.
- *  \param box AABB.
- *  \param time Initialy it has a limit time, if the collision happens before that time, this value is updated to the collision time.
- *  \param point Intersection location.
- */
-inline bool intersectionBeamOutsideAABB2D(Ray2D ray, AABB2D box, int64_t &time, Point2D& point) {return (intersectionBeamOutsideAABB<2>(ray,box,time,point));}
-
-/** \brief Tells if a 3d beam and a 3d AABB intersects (ray moving outside AABB)
-and stores the time of the "collision" and the coordinates where it occured into
-two parameters.
- *  \param ray Beam.
- *  \param box AABB.
- *  \param time Initialy it has a limit time, if the collision happens before that time, this value is updated to the collision time.
- *  \param point Intersection location.
- */
-inline bool intersectionBeamOutsideAABB3D(Ray3D ray, AABB3D box, int64_t &time, Point3D& point) {return (intersectionBeamOutsideAABB<3>(ray,box,time,point));}
-
-
-/** \brief Tells if a n-dimensional moving sphere and a AABB intersects (sphere
-moving inside AABB) and stores the time of the "collision", the coordinates where
-it occured, and the normal into parameters.
- *  \param nsphere Sphere.
- *  \param direction Sphere's moving direction vector.
- *  \param box AABB.
- *  \param time Initialy it has a limit time, if the collision happens before that time, this value is updated to the collision time.
- *  \param point Intersection location.
- *  \param normal Stores the collision point's normal.
- */
-template <unsigned dim>
-bool intersectionMovingNSphereInsideAABB(NSphere<dim> nsphere, Vector<dim> direction, AABB<dim> box, int64_t& time, Point<dim>& point, Vector<dim>& normal);
-
-/** \brief Tells if a moving circle and a 2d AABB intersects (circle moving inside
-AABB) and stores the time of the "collision", the coordinates where it occured,
-and the normal into parameters.
- *  \param nsphere Sphere.
- *  \param direction Sphere's moving direction vector.
- *  \param box AABB.
- *  \param time Initialy it has a limit time, if the collision happens before that time, this value is updated to the collision time.
- *  \param point Intersection location.
- *  \param normal Stores the collision point's normal.
- */
-inline bool IntersectionMovingCircleInsideAABB2D(Circle circle, Vector2D direction, AABB2D box, int64_t& time, Point2D& point, Vector<2>& normal) {return (intersectionMovingNSphereInsideAABB<2>(circle,direction,box, time,point, normal));}
-
-/** \brief Tells if a moving 3d sphere and a 3d AABB intersects (sphere moving
-outside AABB) and stores the time of the "collision", the coordinates where it
-occured, and the normal into parameters.
- *  \param nsphere Sphere.
- *  \param direction Sphere's moving direction vector.
- *  \param box AABB.
- *  \param time Initialy it has a limit time, if the collision happens before that time, this value is updated to the collision time.
- *  \param point Intersection location.
- *  \param normal Stores the collision point's normal.
- */
-inline bool IntersectionMovingSphereInsideAABB3D(Sphere sphere, Vector3D direction, AABB3D box, int64_t& time, Point3D& point, Vector<3>& normal) {return (intersectionMovingNSphereInsideAABB<3>(sphere,direction,box, time,point, normal));}  //!< 3D allias of IntersectionMovingNSphereInsideAABB.
-
 
 /** \brief Tells if a n-dimensional moving sphere and a AABB intersects (sphere
 moving outside AABB) and stores the time of the "collision", the coordinates where
@@ -322,9 +33,9 @@ it occured, and the normal into parameters.
  *  \param normal Stores the collision point's normal.
  */
 template <unsigned dim>
-bool intersectionMovingNSphereOutsideAABB(NSphere<dim> nsphere, Vector<dim> direction, AABB<dim> box, int64_t& time, Point<dim>& point);
+bool intersectionMovingNSphereOutsideAABB(NSphere<dim> nsphere, Vector<dim> direction, AABB<dim> box, int64_t& time, Point<dim>& point) {SysError::setError("intersectionMovingNSphereOutsideAABB: Not implemented yet."); return false;}
 //inline bool IntersectionMovingCircleOutsideAABB2D(Circle circle, Vector2D direction, AABB2D box, int64_t& time, Point2D& point) {return (intersectionMovingNSphereOutsideAABB<2>(circle,direction,box,time,point));}  //!< 2D allias of IntersectionMovingNSphereOutsideAABB.
-inline bool IntersectionMovingSphereOutsideAABB3D(Sphere sphere, Vector3D direction, AABB3D box, int64_t& time, Point3D& point) {return (intersectionMovingNSphereOutsideAABB<3>(sphere,direction,box,time,point));}  //!< 3D allias of IntersectionMovingNSphereOutsideAABB.
+ZBEAPI bool IntersectionMovingSphereOutsideAABB3D(Sphere sphere, Vector3D direction, AABB3D box, int64_t& time, Point3D& point);  //!< 3D allias of IntersectionMovingNSphereOutsideAABB.
 
 /** \brief Tells if a moving circle and a 2d AABB intersects (circle moving outside
 AABB) and stores the time of the "collision", the coordinates where it occured,
@@ -336,7 +47,7 @@ and the normal into parameters.
  *  \param point Intersection location.
  *  \param normal Stores the collision point's normal.
  */
-bool IntersectionMovingCircleOutsideAABB2D(Circle circle, Vector2D direction, AABB2D box, int64_t& time, Point2D& point, Vector2D& normal);
+ZBEAPI bool IntersectionMovingCircleOutsideAABB2D(Circle circle, Vector2D direction, AABB2D box, int64_t& time, Point2D& point, Vector2D& normal);
 
 /** \brief A template function that tell if two AABB boxes intersects.
  *
@@ -363,11 +74,23 @@ bool intersectionAABBAABB(AABB<dim> boxa, AABB<dim> boxb) {
  * \sa intersectionNSphereNSphere.
  */
 template <unsigned dim>
-bool intersectionNSphereNSphere(NSphere<dim> nspherea, NSphere<dim> nsphereb){
+bool intersectionNSphereNSphere(NSphere<dim> nspherea, NSphere<dim> nsphereb) {
   double rsum = nspherea.r + nsphereb.r;
   double r2 = rsum * rsum;
   return sqrPointDist(nspherea.c, nsphereb.c) < r2;
 }
+
+/** \brief Tells if two circles (2d sphere) intersects.
+ *  \param circlea Circle a.
+ *  \param circleb Circle b.
+ */
+ZBEAPI bool intersectionCircleCircle(Circle circlea, Circle circleb);
+
+/** \brief Tells if two 3d spheres intersects.
+ *  \param spherea Sphere a.
+ *  \param sphereb Sphere b.
+ */
+ZBEAPI bool intersectionSphereSphere(Sphere spherea, Sphere sphereb);
 
 /** \brief A template function that tell if an N-dimensional Sphere intersects an AABB.
  *
@@ -392,6 +115,17 @@ bool intersectionNSphereAABB(NSphere<dim> sphere, AABB<dim> box) {
   return mins_dist <= r2;
 }
 
+/** \brief Tells if a circle and a 2d AABB intersects.
+ *  \param circle Circle.
+ *  \param box AABB.
+ */
+ZBEAPI bool intersectionCircleAABB2D(Circle circle, AABB<2> box);
+
+/** \brief Tells if a 3d sphere and a 3d AABB intersects.
+ *  \param sphere Sphere.
+ *  \param box AABB.
+ */
+ZBEAPI bool intersectionSphereAABB3D(Sphere sphere, AABB<3> box);
 
 /** \brief A template function that tell if an N-dimensional Point is inside an AABB.
  *
@@ -407,7 +141,20 @@ bool intersectionPointAABB(Point<dim> point, AABB<dim> box) {
       return false;
     }
   }
+  return true;
 }
+
+/** \brief Tells if a 2d point is into a 2d AABB.
+ *  \param point Point.
+ *  \param box AABB.
+ */
+ZBEAPI bool intersectionPoint2DAABB2D(Point2D point, AABB<2> box);
+
+/** \brief Tells if a 3d point is into a 3d AABB.
+ *  \param point Point.
+ *  \param box AABB.
+ */
+ZBEAPI bool intersectionPoint3DAABB3D(Point3D point, AABB<3> box);
 
 /** \brief A template function that tell if an N-dimensional Point is inside an NSphere.
  *
@@ -421,6 +168,18 @@ bool intersectionPointNSphere(Point<dim> point, NSphere<dim> nsphere) {
     double sqrRadius = nsphere.r * nsphere.r;
     return sqrPointDist(point, nsphere.c) < sqrRadius;
 }
+
+/** \brief Tells if a 2d point is into a circle.
+ *  \param point Point.
+ *  \param circle Circle.
+ */
+ZBEAPI bool intersectionPoint2DCircle(Point2D point, Circle circle);
+
+/** \brief Tells if a 3d point is into a 3d sphere.
+ *  \param point Point.
+ *  \param nsphere Sphere.
+ */
+ZBEAPI bool intersectionPoint3DSphere(Point3D point, Sphere sphere);
 
 /** \brief A template function that compute the time and point of collision (if any) of an N-dimensional ray and a NSphere.
  *
@@ -458,6 +217,24 @@ bool intersectionRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, int64_t &time, P
   return (true);
 }
 
+/** \brief Tells if a 2d ray and a circle intersects and stores the time of the
+ "collision" and the coordinates where it occured into two parameters.
+ *  \param ray Ray.
+ *  \param circle Circle.
+ *  \param time Initialy it has a limit time, if the collision happens before that time, this value is updated to the collision time.
+ *  \param point Intersection location.
+ */
+ZBEAPI bool intersectionRayCircle(Ray2D ray, Circle circle, int64_t &time, Point2D& point);
+
+/** \brief Tells if a 3d ray and a 3d sphere intersects and stores the time of
+ the "collision" and the coordinates where it occured into two parameters.
+ *  \param ray Ray.
+ *  \param sphere Sphere.
+ *  \param time Initialy it has a limit time, if the collision happens before that time, this value is updated to the collision time.
+ *  \param point Intersection location.
+ */
+ZBEAPI bool intersectionRaySphere(Ray3D ray, Sphere sphere, int64_t &time, Point3D& point);
+
 /** \brief A template function that compute the time and point of collision (if any) of an N-dimensional ray with its director vector normalized and a NSphere.
  *
  *  \param ray A ray defined by its origin and a direction.
@@ -492,6 +269,24 @@ bool intersectionNormalRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, int64_t &t
   return (true);
 }
 
+/** \brief Tells if a normalized 2d ray and a circle intersects and stores the
+time of the "collision" and the coordinates where it occured into two parameters.
+ *  \param ray Ray.
+ *  \param circle Circle.
+ *  \param time Initialy it has a limit time, if the collision happens before that time, this value is updated to the collision time.
+ *  \param point Intersection location.
+ */
+ZBEAPI bool intersectionNormalRayCircle(Ray2D ray, Circle circle, int64_t &time, Point2D& point);
+
+/** \brief Tells if a normalized 3d ray and a 3d sphere intersects and stores the
+time of the "collision" and the coordinates where it occured into two parameters.
+ *  \param ray Ray.
+ *  \param sphere Sphere.
+ *  \param time Initialy it has a limit time, if the collision happens before that time, this value is updated to the collision time.
+ *  \param point Intersection location.
+ */
+ZBEAPI bool intersectionNormalRaySphere(Ray3D ray, Sphere sphere, int64_t &time, Point3D& point);
+
 /** \brief Computes the collision of a N-dimensional Beam inside and AABB.
  *
  *  This function considerate the ray an infinite ray with an origin.
@@ -522,6 +317,26 @@ bool intersectionBeamInsideAABB(Ray<dim> ray, AABB<dim> box, int64_t &time, Poin
   point = ray.o + ((ray.d * time) * INVERSE_SECOND);
   return true;
 }
+
+/** \brief Tells if a 2d beam and a 2d AABB intersects and (ray moving inside
+AABB) stores the time of the "collision" and the coordinates where it occured
+into two parameters.
+ *  \param ray Beam.
+ *  \param box AABB.
+ *  \param time Initialy it has a limit time, if the collision happens before that time, this value is updated to the collision time.
+ *  \param point Intersection location.
+ */
+ZBEAPI bool intersectionBeamInsideAABB2D(Ray2D ray, AABB2D box, int64_t &time, Point2D& point);
+
+/** \brief Tells if a 3d beam and a 3d AABB intersects (ray moving inside AABB)
+and stores the time of the "collision" and the coordinates where it occured into
+two parameters.
+ *  \param ray Beam.
+ *  \param box AABB.
+ *  \param time Initialy it has a limit time, if the collision happens before that time, this value is updated to the collision time.
+ *  \param point Intersection location.
+ */
+ZBEAPI bool intersectionBeamInsideAABB3D(Ray3D ray, AABB3D box, int64_t &time, Point3D& point);
 
 /** \brief Computes the collision of a N-dimensional Ray and AABB.
  *
@@ -557,6 +372,26 @@ inline bool intersectionSegmentOutsideAABB(Ray<dim> ray, AABB<dim> box, int64_t 
   return (rayOutsideAABB(ray, box, tmin, tmax, time, point));
 }
 
+/** \brief Tells if a 2d segment and a 2d AABB intersects (ray moving outside
+AABB) and stores the time of the "collision" and the coordinates where it occured
+into two parameters.
+ *  \param ray Segment.
+ *  \param box AABB.
+ *  \param time Initialy it has a limit time, if the collision happens before that time, this value is updated to the collision time.
+ *  \param point Intersection location.
+ */
+ZBEAPI bool intersectionSegmentOutsideAABB2D(Ray2D ray, AABB2D box, int64_t &time, Point2D& point);  //!< 2D allias of intersectionSegmentOutsideAABB.
+
+/** \brief Tells if a 3d segment and a 3d AABB intersects (ray moving outside
+AABB) and stores the time of the "collision" and the coordinates where it occured
+into two parameters.
+ *  \param ray Segment.
+ *  \param box AABB.
+ *  \param time Initialy it has a limit time, if the collision happens before that time, this value is updated to the collision time.
+ *  \param point Intersection location.
+ */
+ZBEAPI bool intersectionSegmentOutsideAABB3D(Ray3D ray, AABB3D box, int64_t &time, Point3D& point);  //!< 3D allias of intersectionSegmentOutsideAABB.
+
 /** \brief Computes the collision of a N-dimensional Ray and AABB.
  *
  *  This function considerate the ray an infinite ray with an origin.
@@ -574,6 +409,26 @@ inline bool intersectionBeamOutsideAABB(Ray<dim> ray, AABB<dim> box, int64_t &ti
   int64_t tmax = std::numeric_limits<int64_t>::max();
   return (rayOutsideAABB(ray, box, tmin, tmax, time, point));
 }
+
+/** \brief Tells if a 2d beam and a 2d AABB intersects (ray moving outside AABB)
+and stores the time of the "collision" and the coordinates where it occured into
+two parameters.
+ *  \param ray Beam.
+ *  \param box AABB.
+ *  \param time Initialy it has a limit time, if the collision happens before that time, this value is updated to the collision time.
+ *  \param point Intersection location.
+ */
+ZBEAPI bool intersectionBeamOutsideAABB2D(Ray2D ray, AABB2D box, int64_t &time, Point2D& point);
+
+/** \brief Tells if a 3d beam and a 3d AABB intersects (ray moving outside AABB)
+and stores the time of the "collision" and the coordinates where it occured into
+two parameters.
+ *  \param ray Beam.
+ *  \param box AABB.
+ *  \param time Initialy it has a limit time, if the collision happens before that time, this value is updated to the collision time.
+ *  \param point Intersection location.
+ */
+ZBEAPI bool intersectionBeamOutsideAABB3D(Ray3D ray, AABB3D box, int64_t &time, Point3D& point);
 
 /** \brief Computes the collision of a N-dimensional Ray and AABB.
  *
@@ -654,6 +509,30 @@ bool intersectionMovingNSphereInsideAABB(NSphere<dim> nsphere, Vector<dim> direc
 
   return (false);
 }
+
+/** \brief Tells if a moving circle and a 2d AABB intersects (circle moving inside
+AABB) and stores the time of the "collision", the coordinates where it occured,
+and the normal into parameters.
+ *  \param nsphere Sphere.
+ *  \param direction Sphere's moving direction vector.
+ *  \param box AABB.
+ *  \param time Initialy it has a limit time, if the collision happens before that time, this value is updated to the collision time.
+ *  \param point Intersection location.
+ *  \param normal Stores the collision point's normal.
+ */
+ZBEAPI bool IntersectionMovingCircleInsideAABB2D(Circle circle, Vector2D direction, AABB2D box, int64_t& time, Point2D& point, Vector<2>& normal);
+
+/** \brief Tells if a moving 3d sphere and a 3d AABB intersects (sphere moving
+outside AABB) and stores the time of the "collision", the coordinates where it
+occured, and the normal into parameters.
+ *  \param nsphere Sphere.
+ *  \param direction Sphere's moving direction vector.
+ *  \param box AABB.
+ *  \param time Initialy it has a limit time, if the collision happens before that time, this value is updated to the collision time.
+ *  \param point Intersection location.
+ *  \param normal Stores the collision point's normal.
+ */
+ZBEAPI bool IntersectionMovingSphereInsideAABB3D(Sphere sphere, Vector3D direction, AABB3D box, int64_t& time, Point3D& point, Vector<3>& normal);  //!< 3D allias of IntersectionMovingNSphereInsideAABB.
 
 }  // namespace zbe
 

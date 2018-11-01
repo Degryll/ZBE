@@ -28,10 +28,10 @@
 
 namespace zbe {
 
-/** \brief class ZBEAPI that know how to draw using SpriteSheets.
+/** \brief class that know how to draw using SpriteSheets.
  */
 template<typename T>
-class ZBEAPI SpriteSheetSDLDrawer : public Behavior<T> {
+class SpriteSheetSDLDrawer : public Behavior<T> {
   public:
     SpriteSheetSDLDrawer(const SpriteSheetSDLDrawer&) = delete; //!< Avoid copy.
     void operator=(const SpriteSheetSDLDrawer&) = delete; //!< Avoid copy.

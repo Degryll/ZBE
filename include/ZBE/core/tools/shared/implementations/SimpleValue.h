@@ -19,7 +19,7 @@ namespace zbe {
 /** Stores a value that can be modified.
  */
 template <typename T>
-class ZBEAPI SimpleValue : public Value<T> {
+class SimpleValue : public Value<T> {
 public:
   /** brief Void constructor.
    */

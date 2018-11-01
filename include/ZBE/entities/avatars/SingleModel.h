@@ -21,7 +21,7 @@ namespace zbe {
 
 /** \brief This define an avatar that can be drawn in 3D.
  */
-class ZBEAPI SingleModel {
+class SingleModel {
 
 public:
 

@@ -21,7 +21,7 @@ namespace zbe {
 /** \brief Defines an avatar that can be positioned.
  */
 template <unsigned s>
-class ZBEAPI Positionable {
+class Positionable {
   public:
     using Base = void;//!< inheritance info
 

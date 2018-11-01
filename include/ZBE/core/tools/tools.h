@@ -10,6 +10,8 @@
 #ifndef ZBE_CORE_TOOLS_TOOLS_H_
 #define ZBE_CORE_TOOLS_TOOLS_H_
 
+#include "ZBE/core/system/system.h"
+
 namespace zbe {
 
 /** \brief Used when a template need to know the bases classes of "T".

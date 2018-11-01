@@ -27,7 +27,7 @@ namespace zbe {
 /** \brief Simple implementation of the Mobile active physical object interface.
  */
 template <typename R, unsigned s>
-class ZBEAPI SimpleMobileAPO : public MobileAPO<R, s>, public SimpleMobile<s>, public SimpleActivePhysicalObject {
+class SimpleMobileAPO : public MobileAPO<R, s>, public SimpleMobile<s>, public SimpleActivePhysicalObject {
 public:
   /** \brief Constructs a BouncingAPO with position and velocity set to 0.
    */

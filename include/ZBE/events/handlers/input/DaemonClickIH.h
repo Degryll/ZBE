@@ -26,7 +26,7 @@ namespace zbe {
 /**
  * brief Input handler capable of run a daemon if given coords are inside a given area.
  */
-class ZBEAPI DaemonClickIH : public InputHandler {
+class DaemonClickIH : public InputHandler {
 public:
 
 /** \brief Constructs a DaemonClickIH from its raw data

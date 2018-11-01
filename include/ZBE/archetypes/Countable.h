@@ -19,7 +19,7 @@
 namespace zbe {
 
 template <typename T>
-class ZBEAPI Countable {
+class Countable {
 public:
   /** \brief Parametrized constructor.
       \param ninstances

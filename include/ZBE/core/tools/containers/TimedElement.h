@@ -19,7 +19,7 @@ namespace zbe {
 /** \brief Element with temporary validity.
  */
 template <typename T>
-class ZBEAPI TimedElement {
+class TimedElement {
 public:
   /** \brief Construct a dummy Timed Element for comparison purpose.
    *  \param time When this element was created.

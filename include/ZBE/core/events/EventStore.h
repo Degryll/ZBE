@@ -29,10 +29,8 @@ public:
   /** \brief Singleton implementation.
    *  \return The unique instance of the EventStore.
    */
-  static EventStore& getInstance() {
-    static EventStore instance;
-    return (instance);
-  }
+  static EventStore& getInstance();
+
   ~EventStore() {};  //!< Empty destructor.
 
   /** \brief Store an event if the event time is the same of the current

@@ -25,7 +25,7 @@ namespace zbe {
  * Its in charge of keep them ordered and discard those that have expired.
  */
 template <typename T>
-class ZBEAPI TimedBuffer {
+class TimedBuffer {
 public:
   /** \brief Construct a new InputBuffer.
    */

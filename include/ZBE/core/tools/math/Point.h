@@ -20,7 +20,7 @@
 namespace zbe {
 
 template <unsigned s>
-class ZBEAPI Vector;
+class Vector;
 
 /** \brief A base class ZBEAPI that represent Points of any dimension.
  *
@@ -29,7 +29,7 @@ class ZBEAPI Vector;
  *  \sa Point
  */
 template<unsigned s>
-class ZBEAPI _POINT {
+class _POINT {
   public:
 
     /** \brief Void constructor, the point's values are set to 0.
@@ -207,7 +207,7 @@ class ZBEAPI _POINT {
  *  This template needs to know the number of dimensions of the hyperplane to which the Point belongs.
  */
 template <unsigned s>
-class ZBEAPI Point : public _POINT<s> {
+class Point : public _POINT<s> {
   public:
     /** \brief Void constructor, the Point's values are unknown.
      */
@@ -234,7 +234,7 @@ class ZBEAPI Point : public _POINT<s> {
  *  This specialization let you access with the alias .x or .y to the first and second dimension of the 2D point.
  */
 template <>
-class ZBEAPI Point<2> : public _POINT<2> {
+class Point<2> : public _POINT<2> {
   public:
     double &x;  //!< An alias to access the first dimension as p.x.
     double &y;  //!< An alias to access the second dimension as p.y.
@@ -294,7 +294,7 @@ using Point2D = Point<2>;  //!< An alias to Point<2>.
  *  This specialization let you access with the alias .x, .y or .z to the first, second or third dimension of the 3D point.
  */
 template <>
-class ZBEAPI Point<3> : public _POINT<3> {
+class Point<3> : public _POINT<3> {
   public:
     double &x;  //!< An alias to access the first dimension as p.x.
     double &y;  //!< An alias to access the second dimension as p.y.
