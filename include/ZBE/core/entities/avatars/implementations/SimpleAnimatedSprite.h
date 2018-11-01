@@ -22,7 +22,8 @@ namespace zbe {
 
 /** \brief This define an avatar that can be drawn in any direction with different animations.
  */
-class  SimpleAnimatedSprite : virtual public AnimatedSprite, public SimpleStatedSprite {
+class SimpleAnimatedSprite : virtual public AnimatedSprite, public SimpleStatedSprite {
+
 public:
   /** \brief Parametrized Constructor.
    *  \param time Current time of the animated sprite.

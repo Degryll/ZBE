@@ -44,8 +44,8 @@
 const int WIDTH = 800;
 const int HEIGHT = 600;
 
-const std::string MODEL_PATH = "data/models/chalet.obj";
-const std::string TEXTURE_PATH = "data/images/textures/chalet.png";
+const std::string MODEL_PATH = "data/models/body.obj";
+const std::string TEXTURE_PATH = "data/images/textures/body_2048.png";
 
 const int MAX_FRAMES_IN_FLIGHT = 2;
 
@@ -2476,8 +2476,8 @@ void isometric() {
 int degryllmain(int, char*[]) {
   printf("Hola Mundo!\n");
 
-  //vulkantest();
-  isometric();
+  vulkantest();
+  //isometric();
 
   return (0);
 }

@@ -9,8 +9,6 @@
 
 #include "ZBE/core/daemons/MainLoop.h"
 
-#include <iostream>
-
 namespace zbe {
 
 void MainLoop::run() {
@@ -24,7 +22,6 @@ void MainLoop::run() {
     while (contextTime->isFrameRemaining()) {
       // Timed events generator daemon
       dTE->run();
-      printf("MainLoop: %p\n", &store);
       contextTime->setEventTime(store.getTime());
       if (contextTime->isPartialFrame()) {
         // commonBehaviorMaster
