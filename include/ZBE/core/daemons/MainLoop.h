@@ -25,6 +25,11 @@ namespace zbe {
 class ZBEAPI MainLoop : virtual public Daemon {
 public:
 
+  /** \brief Builds an empty MainLoop.
+   */
+  MainLoop() : dPre(nullptr), dPost(nullptr), dTE(nullptr), dCBM(nullptr), dRBM(nullptr), dDM(nullptr),
+      contextTime(nullptr), store(zbe::EventStore::getInstance()), keep(true) {}
+
   /** \brief Constructor.
    * \param pre Pre loop Daemon.
    * \param post Post Loop Daemon.
@@ -61,39 +66,38 @@ public:
 
   /** \brief Setter for the Pre-loop daemon.
    * \param daemon Pointer to the Daemon desired to be used.
-   * \return void
    */
   void setPre(std::shared_ptr<Daemon> daemon) {dPre = daemon;}
 
   /** \brief Setter for the Post-loop daemon.
    * \param daemon Pointer to the Daemon desired to be used.
-   * \return void
    */
   void setPost(std::shared_ptr<Daemon> daemon) {dPost = daemon;}
 
   /** \brief Setter for the Timed Events daemon.
    * \param daemon Pointer to the Daemon desired to be used.
-   * \return void
    */
   void setEvent(std::shared_ptr<Daemon> daemon) {dTE = daemon;}
 
   /** \brief Setter for the Common Behavior Daemon Master.
    * \param daemon Pointer to the Daemon desired to be used.
-   * \return voidsince
    */
   void setCommon(std::shared_ptr<Daemon> daemon) {dCBM = daemon;}
 
   /** \brief Setter for the React Behavior Daemon Master.
    * \param daemon Pointer to the Daemon desired to be used.
-   * \return void
    */
   void setReact(std::shared_ptr<Daemon> daemon) {dRBM = daemon;}
 
   /** \brief Setter for the Drawlo  Master.
    * \param daemon Pointer to the Daemon desired to be used.
-   * \return void
    */
   void setDraw(std::shared_ptr<Daemon> daemon) {dDM = daemon;}
+
+  /** \brief Setter for the context time.
+   * \param contextTime Pointer to the context time desired to be used.
+   */
+  void setContextTime(std::shared_ptr<ContextTime> contextTime) {this->contextTime = contextTime;}
 
   /** \brief Stops current loop.
    */

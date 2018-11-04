@@ -24,11 +24,17 @@ public:
    */
   virtual ~Factory() {}
 
-  /** \brief Builds desired tool.
+  /** \brief Create the desired tool, probably incomplete.
    *  \param name Name for the created tool.
    *  \param cfgId Tool's configuration id.
    */
-  virtual void build(std::string name, uint64_t cfgId) = 0;
+  virtual void create(std::string name, uint64_t cfgId) = 0;
+
+  /** \brief Setup the desired tool. The tool will be complete after this step.
+   *  \param name Name of the tool.
+   *  \param cfgId Tool's configuration id.
+   */
+  virtual void setup(std::string name, uint64_t cfgId) = 0;
 
 };
 

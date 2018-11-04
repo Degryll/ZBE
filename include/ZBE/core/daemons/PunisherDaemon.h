@@ -29,16 +29,29 @@ public:
   PunisherDaemon(const PunisherDaemon&) = delete; //!< Avoid copy.
   void operator=(const PunisherDaemon&) = delete; //!< Avoid copy.
 
-  /** \brief Build the Daemon with a punish and a .
+  /** \brief Builds an empty Punisher Daemon.
+   *
+   */
+  PunisherDaemon() : punish(nullptr), list(nullptr) {}
+
+  /** \brief Build the Daemon with a punish and a list id.
    * The given Behavior will be stored by this Daemon and destroyed with it. It will be executed when run method is called.
    * \param daemon Pointer to the daemon desired to be stored and executed.
    *
    */
-  PunisherDaemon(std::shared_ptr<P> punish, uint64_t listId) : punish(punish), eList( RsrcStore<L>::getInstance().get(listId) ) {}
+  PunisherDaemon(std::shared_ptr<P> punish, std::shared_ptr<L> list) : punish(punish), list(list) {}
 
   /** \brief Destroys the PunisherDaemon and the contained punisher.
    */
   virtual ~PunisherDaemon() {}
+
+  void setPunish(std::shared_ptr<P> punish) {
+    this->punish = punish;
+  }
+
+  void setList(std::shared_ptr<L> list) {
+    this->list = list;
+  }
 
   /** \brief It will run the Behavior over the entity list.
    */
@@ -46,12 +59,12 @@ public:
 
 private:
   std::shared_ptr<P> punish;
-  std::shared_ptr<L> eList;
+  std::shared_ptr<L> list;
 };
 
 template<typename P, typename L>
 void PunisherDaemon<P, L>::run(){
-  for(auto e : (*eList)) {
+  for(auto e : (*list)) {
     punish->apply(e);
   }
 }

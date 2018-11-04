@@ -38,12 +38,19 @@ public:
    *  \param name Name for the created MasterDmnFtry.
    *  \param cfgId MasterDmnFtry's configuration id.
    */
-  void build(std::string name, uint64_t cfgId);
+  void create(std::string name, uint64_t cfgId);
+
+  /** \brief Setup the desired tool. The tool will be complete after this step.
+   *  \param name Name of the tool.
+   *  \param cfgId Tool's configuration id.
+   */
+  void setup(std::string name, uint64_t cfgId);
 
 private:
   NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<Daemon> &daemonRsrc = RsrcStore<Daemon>::getInstance();
+  RsrcStore<DaemonMaster> &dmnMasterRsrc = RsrcStore<DaemonMaster>::getInstance();
 
 };
 

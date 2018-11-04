@@ -35,21 +35,43 @@ template<typename L, typename ...E>
 class BehaviorDmnFtry : public Factory {
 public:
 
-  /** \brief Do the behavior work over the given entity
-   *  \param entity The entity to behave.
+/** \brief Create the desired tool, probably incomplete.
+ *  \param name Name for the created tool.
+ *  \param cfgId Tool's configuration id.
+ */
+  void create(std::string name, uint64_t cfgId);
+
+  /** \brief Setup the desired tool. The tool will be complete after this step.
+   *  \param name Name of the tool.
+   *  \param cfgId Tool's configuration id.
    */
-  void build(std::string name, uint64_t cfgId);
+  void setup(std::string name, uint64_t cfgId);
 
 private:
   NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<Daemon> &daemonRsrc = RsrcStore<Daemon>::getInstance();
+  RsrcStore<BehaviorDaemon<L, E...> > &behaviorDmnRsrc = RsrcStore<BehaviorDaemon<L, E...> >::getInstance();
   RsrcStore<Behavior<E...> > &behaviorRsrc = RsrcStore<Behavior<E...> >::getInstance();
+  RsrcStore<L> &listRsrc = RsrcStore<L>::getInstance();
 
 };
 
 template<typename L, typename ...E>
-void BehaviorDmnFtry<L, E...>::build(std::string name, uint64_t cfgId) {
+void BehaviorDmnFtry<L, E...>::create(std::string name, uint64_t) {
+  using namespace std::string_literals;
+
+  auto dm = std::make_shared<BehaviorDaemon<L, E...> >();
+  uint64_t id = SysIdGenerator::getId();
+  daemonRsrc.insert(id, dm);
+  dict.insert("Daemon."s + name, id);
+  id = SysIdGenerator::getId();
+  behaviorDmnRsrc.insert(id, dm);
+  dict.insert("BehaviorDaemon."s + name, id);
+}
+
+template<typename L, typename ...E>
+void BehaviorDmnFtry<L, E...>::setup(std::string name, uint64_t cfgId) {
   using namespace std::string_literals;
   using namespace nlohmann;
   std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -61,10 +83,9 @@ void BehaviorDmnFtry<L, E...>::build(std::string name, uint64_t cfgId) {
       std::string lname = j["list"].get<std::string>();
       uint64_t bId = dict.get("Behavior."s + bname);
       uint64_t lId = dict.get("List."s + lname);
-      auto dm = std::make_shared<BehaviorDaemon<L, E...> >(behaviorRsrc.get(bId), lId);
-      uint64_t id = SysIdGenerator::getId();
-      daemonRsrc.insert(id, dm);
-      dict.insert("Daemon."s + name, id);
+      auto dm = behaviorDmnRsrc.get("BehaviorDaemon."s + name);
+      dm->setPunish(behaviorRsrc.get(bId));
+      dm->setList(listRsrc.get(lId));
     } else {
       SysError::setError("BehaviorDmnFtry config for "s + name + " must contain valid strings for behavior and list names."s);
     }

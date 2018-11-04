@@ -41,7 +41,7 @@ TEST(PunisherDaemon, PunisherDaemon) {
     eList2->push_front(&b);
     eList1->push_front(&c);
     eList1->push_front(&d);
-    zbe::Daemon* daemon = new zbe::PunisherDaemon<MockPunish, std::forward_list<MockEntity*> >(std::make_shared<MockPunish>(), 2);
+    zbe::Daemon* daemon = new zbe::PunisherDaemon<MockPunish, std::forward_list<MockEntity*> >(std::make_shared<MockPunish>(), lm.get(2));
     daemon->run();
     EXPECT_EQ(1, a.data) << "a must has been punished";
     EXPECT_EQ(1, b.data) << "b must has been punished";

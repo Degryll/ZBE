@@ -111,7 +111,8 @@ TEST(MainLoopFtryTest, build) {
   daemonRsrc.insert("Daemon.postD"s, postD);
   timeRsrc.insert("Time.contextT"s, contextT);
   MainLoopFtry mlf;
-  mlf.build("MainLoopFtryTestName", cfgId);
+  mlf.create("MainLoopFtryTestName", cfgId);
+  mlf.setup("MainLoopFtryTestName", cfgId);
 
   auto mlDmn = daemonRsrc.get("Daemon.MainLoopFtryTestName");
   std::shared_ptr<MainLoop> aux = std::dynamic_pointer_cast<MainLoop> (mlDmn);

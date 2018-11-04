@@ -11,7 +11,19 @@
 
 namespace zbe {
 
-void StateMachineDmnFtry::build(std::string name, uint64_t cfgId) {
+void StateMachineDmnFtry::create(std::string name, uint64_t) {
+  using namespace std::string_literals;
+  std::shared_ptr<StateMachineDaemon> smd = std::make_shared<StateMachineDaemon>();
+
+  uint64_t id = SysIdGenerator::getId();
+  daemonRsrc.insert(id, smd);
+  dict.insert("Daemon."s + name, id);
+  id = SysIdGenerator::getId();
+  stateMachinedaemonRsrc.insert(id, smd);
+  dict.insert("StateMachineDaemon."s + name, id);
+}
+
+void StateMachineDmnFtry::setup(std::string name, uint64_t cfgId) {
   using namespace std::string_literals;
   using namespace nlohmann;
   std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -29,7 +41,8 @@ void StateMachineDmnFtry::build(std::string name, uint64_t cfgId) {
     json daemons = j["daemons"];
     uint64_t stateId = dict.get("Valueu."s + stateName);
     std::shared_ptr<Value<int64_t> > stateVal = valueRsrc.get(stateId);
-    std::shared_ptr<StateMachineDaemon> smd = std::make_shared<StateMachineDaemon>(stateVal);
+    auto smd = stateMachinedaemonRsrc.get("StateMachineDaemon."s + name);
+    smd->setStateValue(stateVal);
     for (auto dmn : daemons) {
       if (dmn[0].type() == json::value_t::string && dmn[1].type() == json::value_t::string) {
         std::string dname = dmn[0].get<std::string>();
@@ -42,9 +55,6 @@ void StateMachineDmnFtry::build(std::string name, uint64_t cfgId) {
       }
     }
 
-    uint64_t id = SysIdGenerator::getId();
-    daemonRsrc.insert(id, smd);
-    dict.insert("Daemon."s + name, id);
   } else {
     SysError::setError("StateMachineDmnFtry config for "s + name + " not found."s);
   }

@@ -30,6 +30,10 @@ public:
   StateMachineDaemon(const StateMachineDaemon&) = delete;
   void operator=(const StateMachineDaemon&) = delete;
 
+  /** \brief Builds an empty StateMachineDaemon.
+   */
+  StateMachineDaemon() : daemons(), state(nullptr) {}
+
   /** \brief Build the Daemon with the value used to select the state
    * and an initial state amount.
    *
@@ -45,10 +49,14 @@ public:
    * |param daemon Daemon daemon to run
    */
   void setDaemon(int64_t state, std::shared_ptr<Daemon> daemon) {
-    // if(state >= daemons.size()) {
-    //   daemons.resize(state + 1);
-    // }
     daemons[state]= daemon;
+  }
+
+  /** \brief Sets the Value<int64_t> where the state will be found.
+   * |param state state container.
+   */
+  void setStateValue(std::shared_ptr<Value<int64_t> > state) {
+    this->state = state;
   }
 
   /** \brief It will run the contained daemons while "state" is positive.

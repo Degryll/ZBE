@@ -53,7 +53,8 @@ TEST(MasterDmnFtryTest, build) {
   daemonRsrc.insert("Daemon.dm4"s, dm4);
 
   MasterDmnFtry mdf;
-  mdf.build("MasterDmnFtryTestName", cfgId);
+  mdf.create("MasterDmnFtryTestName", cfgId);
+  mdf.setup("MasterDmnFtryTestName", cfgId);
 
   uint64_t outId = dict.get("Daemon.MasterDmnFtryTestName");
   std::shared_ptr<zbe::Daemon> outDmn = daemonRsrc.get(outId);

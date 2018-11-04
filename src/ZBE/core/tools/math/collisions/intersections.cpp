@@ -11,7 +11,7 @@
 
 namespace zbe {
 
-bool IntersectionMovingSphereOutsideAABB3D(Sphere sphere, Vector3D direction, AABB3D box, int64_t& time, Point3D& point) {SysError::setError("IntersectionMovingSphereOutsideAABB3D: Not implemented yet."); return false;}
+bool IntersectionMovingSphereOutsideAABB3D(Sphere, Vector3D, AABB3D, int64_t&, Point3D&) {SysError::setError("IntersectionMovingSphereOutsideAABB3D: Not implemented yet."); return false;}
 
 bool intersectionCircleCircle(Circle circlea, Circle circleb) {return intersectionNSphereNSphere<2>(circlea, circleb);}
 bool intersectionSphereSphere(Sphere spherea, Sphere sphereb) {return intersectionNSphereNSphere<3>(spherea, sphereb);}

@@ -91,7 +91,8 @@ TEST(StateMachineDmnFtryTest, build) {
   dict.insert("List.dummyl"s, listId);
 
   BehaviorDmnFtry<TicketedFAEC<DummyAvatar>, DummyAvatar> bdf;
-  bdf.build("BehaviorDmnFtryTestName", cfgId);
+  bdf.create("BehaviorDmnFtryTestName", cfgId);
+  bdf.setup("BehaviorDmnFtryTestName", cfgId);
 
   EXPECT_EQ(0, zbe::SysError::getNErrors()) << "Must be no config errors.";
 

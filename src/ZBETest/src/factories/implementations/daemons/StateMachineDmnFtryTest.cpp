@@ -89,7 +89,8 @@ TEST(StateMachineDmnFtryTest, build) {
   dict.insert("Daemon.dm4"s, dm4Id);
 
   StateMachineDmnFtry mdf;
-  mdf.build("StateMachineDmnFtryTestName", cfgId);
+  mdf.create("StateMachineDmnFtryTestName", cfgId);
+  mdf.setup("StateMachineDmnFtryTestName", cfgId);
 
   EXPECT_EQ(0, zbe::SysError::getNErrors()) << "Must be no config errors.";
 

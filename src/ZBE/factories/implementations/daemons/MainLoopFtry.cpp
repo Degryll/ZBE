@@ -11,7 +11,19 @@
 
 namespace zbe {
 
-void MainLoopFtry::build(std::string name, uint64_t cfgId) {
+void MainLoopFtry::create(std::string name, uint64_t) {
+  using namespace std::string_literals;
+
+  auto ml = std::make_shared<MainLoop>();
+  uint64_t id = SysIdGenerator::getId();
+  daemonRsrc.insert(id, ml);
+  dict.insert("Daemon."s + name, id);
+  id = SysIdGenerator::getId();
+  mainLoopRsrc.insert(id, ml);
+  dict.insert("MainLoop."s + name, id);
+}
+
+void MainLoopFtry::setup(std::string name, uint64_t cfgId) {
   using namespace std::string_literals;
   using namespace nlohmann;
   std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -45,11 +57,16 @@ void MainLoopFtry::build(std::string name, uint64_t cfgId) {
       postDm   = daemonRsrc.get("Daemon."s + post.get<std::string>());
       ctxTime  = timeRsrc.get("Time."s + cTime.get<std::string>());
 
-      auto ml = std::make_shared<MainLoop>(preDm, postDm, eventDm, commonDm, reactDm, drawDm, ctxTime);
+      auto ml = mainLoopRsrc.get("MainLoop."s + name);
 
-      uint64_t id = SysIdGenerator::getId();
-      daemonRsrc.insert(id, ml);
-      dict.insert("Daemon."s + name, id);
+      ml->setPre(preDm);
+      ml->setPost(postDm);
+      ml->setEvent(eventDm);
+      ml->setCommon(commonDm);
+      ml->setReact(reactDm);
+      ml->setDraw(drawDm);
+      ml->setContextTime(ctxTime);
+
     } else {
       SysError::setError("Bad config for MainLoopFtry."s);
     }   // if pre, event, common, react, draw, post
