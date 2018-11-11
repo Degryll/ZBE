@@ -16,7 +16,7 @@ namespace zbe {
 
 /** \brief Interface of an archetype with a width.
  */
-class ZBEAPI Wide {
+class Wide {
 public:
   /** \brief Virtual destructor.
    */

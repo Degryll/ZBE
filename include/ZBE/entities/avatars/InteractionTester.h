@@ -19,7 +19,7 @@ namespace zbe {
 
 /** @brief Interface for an avatar capable of test if a collisionData meets a given condition.
  */
-class ZBEAPI InteractionTester {
+class InteractionTester {
 public:
   using Base = void; //!< inheritance info
 

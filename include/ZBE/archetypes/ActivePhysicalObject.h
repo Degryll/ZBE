@@ -22,7 +22,7 @@ namespace zbe {
 /** \brief Defines the interface of an object that interacts actively physically.
  *  Please, if inherit from this class, use APO for naming.
  */
-class ZBEAPI ActivePhysicalObject : virtual public PhysicalObject {
+class ActivePhysicalObject : virtual public PhysicalObject {
 public:
   /** \brief Virtual destructor.
    */

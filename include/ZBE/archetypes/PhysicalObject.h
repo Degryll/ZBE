@@ -12,14 +12,12 @@
 
 #include <cstdint>
 
-#include "ZBE/core/system/system.h"
-
 namespace zbe {
 
 /** \brief Defines the interface of an object that interacts with other objects.
  *  Please, if inherit from this class, use PO for naming.
  */
-class ZBEAPI PhysicalObject {
+class PhysicalObject {
 public:
   /** \brief Virtual destructor.
    */

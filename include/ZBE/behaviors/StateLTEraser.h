@@ -25,27 +25,29 @@ namespace zbe {
 
 /** \brief Implements a behavior that kills the entity when it reaches a state lower than a nummber.
  */
-template<typename T>
-  class StateLTEraser {// : public Behavior<Element2D<R> > {
-  public:
-    /** \brief Parametrized constructor.
-        \param limit Limit below which the entity will be killed.
-     */
-    StateLTEraser(int64_t limit) : limit(limit){}
+class StateLTEraser : virtual public Behavior<Avatar, Stated> {
+public:
+  /** \brief Parametrized constructor.
+      \param limit Limit below which the entity will be killed.
+   */
+  StateLTEraser(int64_t limit) : limit(limit){}
 
-    /** \brief Erases given entity if its stata is less that expected one.
-     */
-    void apply(std::shared_ptr<T> entity) {
-      Stated* stated;
-      assignAvatar<AvatarEntity<Stated>, Stated>(&(*entity), &stated);
-      Avatar* avatar;
-      assignAvatar<AvatarEntity<Avatar>, Avatar>(&(*entity), &avatar);
-      if(stated->getState() < limit){
-      	avatar->setERASED();
-      }
+  /** \brief Erases given entity if its stata is less that expected one.
+   */
+  void apply(std::shared_ptr<AvatarEntityContainer<Avatar, Stated> > entity) {
+    zbe::Stated* stated;
+    std::shared_ptr<zbe::AvatarEntityContainer<zbe::Stated> > aecs = entity;
+    assignAvatar(aecs, &stated);
+    Avatar* avatar;
+    std::shared_ptr<zbe::AvatarEntityContainer<zbe::Avatar> > aeca = entity;
+    assignAvatar(aeca, &avatar);
+    if(stated->getState() < limit){
+      avatar->setERASED();
     }
-  private:
-    int64_t limit;
+  }
+
+private:
+  int64_t limit;
 };
 
 }  // namespace zbe
