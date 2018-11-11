@@ -45,8 +45,8 @@ std::shared_ptr<zbe::Daemon> ZBNoidLostScreenBuilder::build() {
   BroadcastIH* brdcstHI = new BroadcastIH();
   ism->addHandler(ZBEK_MOUSE_LEFT, brdcstHI);
 
-  auto drawerDaemon = std::make_shared<BehaviorDaemon<TicketedFAEC<AnimatedSprite>, AnimatedSprite> >(std::make_shared<SpriteSheetSDLDrawer<AnimatedSprite> >(window) , ZBNCfg::LOST_BUTTONS_AS_LIST);
-  auto writerDaemon = std::make_shared<BehaviorDaemon<TicketedFAEC<SingleTextSprite>, SingleTextSprite> >(std::make_shared<SingleTextSDLDrawer>(window) , ZBNCfg::LOST_BUTTONS_TS_LIST);
+  auto drawerDaemon = std::make_shared<BehaviorDaemon<TicketedFAEC<AnimatedSprite>, AnimatedSprite> >(std::make_shared<SpriteSheetSDLDrawer<AnimatedSprite> >(window) , RsrcStore<TicketedFAEC<AnimatedSprite> >::getInstance().get(ZBNCfg::LOST_BUTTONS_AS_LIST));
+  auto writerDaemon = std::make_shared<BehaviorDaemon<TicketedFAEC<SingleTextSprite>, SingleTextSprite> >(std::make_shared<SingleTextSDLDrawer>(window) , RsrcStore<TicketedFAEC<SingleTextSprite> >::getInstance().get(ZBNCfg::LOST_BUTTONS_TS_LIST));
   drawMaster->addDaemon(drawerDaemon);
   drawMaster->addDaemon(writerDaemon);
 

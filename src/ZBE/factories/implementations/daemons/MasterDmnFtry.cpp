@@ -34,7 +34,7 @@ void MasterDmnFtry::setup(std::string name, uint64_t cfgId) {
     json daemons = j["daemons"];
     auto dm = dmnMasterRsrc.get("DaemonMaster."s + name);
     for (auto daemon : daemons) {
-      if (daemon.type() == json::value_t::string) {
+      if (daemon.is_string()) {
         uint64_t dId = dict.get("Daemon."s + daemon.get<std::string>());
         dm->addDaemon(daemonRsrc.get(dId));
       } else {

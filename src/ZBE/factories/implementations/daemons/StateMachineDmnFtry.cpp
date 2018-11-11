@@ -32,7 +32,7 @@ void StateMachineDmnFtry::setup(std::string name, uint64_t cfgId) {
     auto j = *cfg;
     json state = j["state"];
     std::string stateName;
-    if(state.type() == json::value_t::string){
+    if(state.is_string()){
        stateName = state.get<std::string>();
     } else {
       SysError::setError("StateMachineDmnFtry state for "s + name + " is invalid or not present."s);
@@ -44,7 +44,7 @@ void StateMachineDmnFtry::setup(std::string name, uint64_t cfgId) {
     auto smd = stateMachinedaemonRsrc.get("StateMachineDaemon."s + name);
     smd->setStateValue(stateVal);
     for (auto dmn : daemons) {
-      if (dmn[0].type() == json::value_t::string && dmn[1].type() == json::value_t::string) {
+      if (dmn[0].is_string() && dmn[1].is_string()) {
         std::string dname = dmn[0].get<std::string>();
         std::string sname = dmn[1].get<std::string>();
         uint64_t stateno = dict.get("State."s + sname);

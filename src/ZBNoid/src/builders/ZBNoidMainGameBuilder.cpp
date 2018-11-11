@@ -39,23 +39,23 @@ std::shared_ptr<zbe::Daemon> ZBNoidMainGameBuilder::build() {
   eventGenerator->addDaemon(iaeg);
 
   // Common behaviors
-  std::shared_ptr<Daemon> itemULM(new BehaviorDaemon<TicketedFAEC<Bouncer<2>, Avatar>, Movable<2> >(std::make_shared<UniformLinearMotion<2> >(), ZBNCfg::ITEM_LIST));
-  std::shared_ptr<Daemon> ballULM(new BehaviorDaemon<TicketedFAEC<Bouncer<2>, Resizable, Avatar>, Movable<2> >(std::make_shared<UniformLinearMotion<2> >(), ZBNCfg::BALL_LIST));
+  std::shared_ptr<Daemon> itemULM(new BehaviorDaemon<TicketedFAEC<Bouncer<2>, Avatar>, Movable<2> >(std::make_shared<UniformLinearMotion<2> >(), RsrcStore<TicketedFAEC<Bouncer<2>, Avatar> >::getInstance().get(ZBNCfg::ITEM_LIST)));
+  std::shared_ptr<Daemon> ballULM(new BehaviorDaemon<TicketedFAEC<Bouncer<2>, Resizable, Avatar>, Movable<2> >(std::make_shared<UniformLinearMotion<2> >(), RsrcStore<TicketedFAEC<Bouncer<2>, Resizable, Avatar> >::getInstance().get(ZBNCfg::BALL_LIST)));
   commonBehaviorMaster->addDaemon(itemULM);
   commonBehaviorMaster->addDaemon(ballULM);
 
   // React behaviors
   std::shared_ptr<Daemon> failDaemon = std::make_shared<ZombienoidDeathTester>( ZBNCfg::rmVInt64.get(ZBNCfg::NLIFES), mainLoop, ZBNCfg::rmVInt64.get(ZBNCfg::GAMESTATE), MAINGAMEOVER);
   std::shared_ptr<Daemon> succesDaemon = std::make_shared<ZombienoidDeathTester>( ZBNCfg::rmVInt64.get(ZBNCfg::NBRICKS), mainLoop, ZBNCfg::rmVInt64.get(ZBNCfg::GAMESTATE), MAINGAMEWIN);
-  std::shared_ptr<Daemon> ballBounce = std::make_shared<BehaviorDaemon<TicketedFAEC<Bouncer<2>, Resizable, Avatar>, Bouncer<2> > >(std::make_shared<Bounce<2> >(), ZBNCfg::BALL_LIST);
-  std::shared_ptr<Daemon> brickEraserLT = std::make_shared<BehaviorDaemon<TicketedFAEC<Stated, Avatar, Positionable<2> >, Stated, Avatar, Positionable<2> > >(std::make_shared<BrickEraser>(BRK_HIT_LOWLIMIT, BRICK_ITEM_SUCCES, BRICK_ITEM_TOTAL, ZBNCfg::rmBPos2D.get(ZBNCfg::ITEM_BUILDER)), ZBNCfg::BRICK_LIST);
+  std::shared_ptr<Daemon> ballBounce = std::make_shared<BehaviorDaemon<TicketedFAEC<Bouncer<2>, Resizable, Avatar>, Bouncer<2> > >(std::make_shared<Bounce<2> >(), RsrcStore<TicketedFAEC<Bouncer<2>, Resizable, Avatar> >::getInstance().get(ZBNCfg::BALL_LIST));
+  std::shared_ptr<Daemon> brickEraserLT = std::make_shared<BehaviorDaemon<TicketedFAEC<Stated, Avatar, Positionable<2> >, Stated, Avatar, Positionable<2> > >(std::make_shared<BrickEraser>(BRK_HIT_LOWLIMIT, BRICK_ITEM_SUCCES, BRICK_ITEM_TOTAL, ZBNCfg::rmBPos2D.get(ZBNCfg::ITEM_BUILDER)), RsrcStore<TicketedFAEC<Stated, Avatar, Positionable<2> > >::getInstance().get(ZBNCfg::BRICK_LIST));
   std::shared_ptr<DaemonMaster> ballInitializerDmn(new DaemonMaster());
   ballInitializerDmn->addDaemon(ZBNCfg::rmD.get(ZBNCfg::BALL_BUILDER_DAEMON));
   ballInitializerDmn->addDaemon(ZBNCfg::rmD.get(ZBNCfg::BALL_MAGNETIZER_DAEMON));
   std::shared_ptr<Daemon> lifeDaemon = std::make_shared<ZombienoidLifeSubstractor>( ZBNCfg::rmVInt64.get(ZBNCfg::NBALLS),  ZBNCfg::rmVInt64.get(ZBNCfg::NLIFES), ballInitializerDmn);
-  std::shared_ptr<Daemon> mouseControllDaemon = std::make_shared<BehaviorDaemon<JointAEC<Positionable<2>, Avatar >, Positionable<2> > >(std::make_shared<XSetter>( ZBNCfg::rmVDouble.get(ZBNCfg::MOUSE_X_POS)), ZBNCfg::MOUSE_CONTROL_LIST );
-  std::shared_ptr<Daemon> demagnetizeDaemon = std::make_shared<BehaviorDaemon<TicketedFAEC<Positionable<2>, Avatar>, Avatar > >(std::make_shared<Demagnetizer>(ZBNCfg::BEHAVE_TICKET, ZBNCfg::MAGNET_TICKET), ZBNCfg::DEMAGNETIZE_LIST);
-  std::shared_ptr<Daemon> explosionEraser = std::make_shared<BehaviorDaemon<TicketedFAEC<Avatar, Scorer>, Avatar > >(std::make_shared<Erase>(), ZBNCfg::EXPLSION_ERASE_LIST);
+  std::shared_ptr<Daemon> mouseControllDaemon = std::make_shared<BehaviorDaemon<JointAEC<Positionable<2>, Avatar >, Positionable<2> > >(std::make_shared<XSetter>( ZBNCfg::rmVDouble.get(ZBNCfg::MOUSE_X_POS)), RsrcStore<JointAEC<Positionable<2>, Avatar > >::getInstance().get(ZBNCfg::MOUSE_CONTROL_LIST));
+  std::shared_ptr<Daemon> demagnetizeDaemon = std::make_shared<BehaviorDaemon<TicketedFAEC<Positionable<2>, Avatar>, Avatar > >(std::make_shared<Demagnetizer>(ZBNCfg::BEHAVE_TICKET, ZBNCfg::MAGNET_TICKET), RsrcStore<TicketedFAEC<Positionable<2>, Avatar> >::getInstance().get(ZBNCfg::DEMAGNETIZE_LIST));
+  std::shared_ptr<Daemon> explosionEraser = std::make_shared<BehaviorDaemon<TicketedFAEC<Avatar, Scorer>, Avatar > >(std::make_shared<Erase>(), RsrcStore<TicketedFAEC<Avatar, Scorer> >::getInstance().get(ZBNCfg::EXPLSION_ERASE_LIST));
   reactBehaviorMaster->addDaemon(failDaemon);
   reactBehaviorMaster->addDaemon(succesDaemon);
   reactBehaviorMaster->addDaemon(ballBounce);
@@ -65,8 +65,8 @@ std::shared_ptr<zbe::Daemon> ZBNoidMainGameBuilder::build() {
   reactBehaviorMaster->addDaemon(explosionEraser);
 
   // Drawers
-  std::shared_ptr<Daemon> drawerDaemon(new  BehaviorDaemon<JointAEC<AnimatedSprite>, AnimatedSprite >(std::make_shared<SpriteSheetSDLDrawer<AnimatedSprite> >(window), ZBNCfg::AS_JOINT));
-  std::shared_ptr<Daemon> writerDaemon(new  BehaviorDaemon<JointAEC<SingleTextSprite>, SingleTextSprite >(std::make_shared<SingleTextSDLDrawer>(window), ZBNCfg::ATS_JOINT));
+  std::shared_ptr<Daemon> drawerDaemon(new  BehaviorDaemon<JointAEC<AnimatedSprite>, AnimatedSprite >(std::make_shared<SpriteSheetSDLDrawer<AnimatedSprite> >(window), RsrcStore<JointAEC<AnimatedSprite> >::getInstance().get(ZBNCfg::AS_JOINT)));
+  std::shared_ptr<Daemon> writerDaemon(new  BehaviorDaemon<JointAEC<SingleTextSprite>, SingleTextSprite >(std::make_shared<SingleTextSDLDrawer>(window), RsrcStore<JointAEC<SingleTextSprite> >::getInstance().get(ZBNCfg::ATS_JOINT)));
   drawMaster->addDaemon(drawerDaemon);
   drawMaster->addDaemon(writerDaemon);
 
@@ -138,8 +138,8 @@ std::shared_ptr<zbe::Daemon> ZBNoidMainGameBuilder::build() {
   std::shared_ptr<Daemon> decelItem = std::make_shared<BallAcceleratorItem<TicketedFAEC<Bouncer<2>, Resizable, Avatar> > >(ZBNCfg::BALL_LIST, BALL_DECELERATION_RATIO);
   std::shared_ptr<Daemon> ballMagnifierItem = std::make_shared<BallRadiusItem<TicketedFAEC<Bouncer<2>, Resizable, Avatar> > >(ZBNCfg::BALL_LIST, BALL_SIZE_STEP);
   std::shared_ptr<Daemon> ballMinifierItem = std::make_shared<BallRadiusItem<TicketedFAEC<Bouncer<2>, Resizable, Avatar> > >(ZBNCfg::BALL_LIST, -BALL_SIZE_STEP);
-  std::shared_ptr<zbe::Daemon> initDaemon = std::make_shared<BehaviorDaemon<TicketedFAEC<Stated>, Stated > >(std::make_shared<StateSetter>(BAR_STICKY_STATE), ZBNCfg::STICKY_STATE_LIST);
-  std::shared_ptr<zbe::Daemon> endDaemon = std::make_shared<BehaviorDaemon<TicketedFAEC<Stated>, Stated > >(std::make_shared<StateSetter>(BAR_NORMAL_STATE), ZBNCfg::STICKY_STATE_LIST);
+  std::shared_ptr<zbe::Daemon> initDaemon = std::make_shared<BehaviorDaemon<TicketedFAEC<Stated>, Stated > >(std::make_shared<StateSetter>(BAR_STICKY_STATE), RsrcStore<TicketedFAEC<Stated> >::getInstance().get(ZBNCfg::STICKY_STATE_LIST));
+  std::shared_ptr<zbe::Daemon> endDaemon = std::make_shared<BehaviorDaemon<TicketedFAEC<Stated>, Stated > >(std::make_shared<StateSetter>(BAR_NORMAL_STATE), RsrcStore<TicketedFAEC<Stated> >::getInstance().get(ZBNCfg::STICKY_STATE_LIST));
   std::shared_ptr<Daemon> magnetBarItem = std::make_shared<StickyBarItem>(initDaemon,  endDaemon, teg, ITEM_STICKY_TIME, BAR_STICKY_STATE, BAR_NORMAL_STATE,  ZBNCfg::rmVInt64.get(ZBNCfg::STICKY_ITEM_STATE));
   std::shared_ptr<Daemon> dummyItem = std::make_shared<DummyItem>();
 

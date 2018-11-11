@@ -45,8 +45,8 @@ std::shared_ptr<zbe::Daemon> ZBNoidTitleBuilder::build() {
   BroadcastIH* brdcstHI = new BroadcastIH();
   ism->addHandler(ZBEK_MOUSE_LEFT, brdcstHI);
 
-  auto drawerDaemon = std::make_shared<BehaviorDaemon<TicketedFAEC<AnimatedSprite>, AnimatedSprite > >(std::make_shared<SpriteSheetSDLDrawer<AnimatedSprite> >(window) , ZBNCfg::TITLE_BUTTONS_AS_LIST);
-  auto writerDaemon = std::make_shared<BehaviorDaemon<TicketedFAEC<SingleTextSprite>, SingleTextSprite > >(std::make_shared<SingleTextSDLDrawer>(window) , ZBNCfg::TITLE_BUTTONS_TS_LIST);
+  auto drawerDaemon = std::make_shared<BehaviorDaemon<TicketedFAEC<AnimatedSprite>, AnimatedSprite > >(std::make_shared<SpriteSheetSDLDrawer<AnimatedSprite> >(window) , RsrcStore<TicketedFAEC<AnimatedSprite> >::getInstance().get(ZBNCfg::TITLE_BUTTONS_AS_LIST));
+  auto writerDaemon = std::make_shared<BehaviorDaemon<TicketedFAEC<SingleTextSprite>, SingleTextSprite > >(std::make_shared<SingleTextSDLDrawer>(window) , RsrcStore<TicketedFAEC<SingleTextSprite> >::getInstance().get(ZBNCfg::TITLE_BUTTONS_TS_LIST));
   drawMaster->addDaemon(drawerDaemon);
   drawMaster->addDaemon(writerDaemon);
 

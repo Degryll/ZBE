@@ -41,13 +41,13 @@ void MainLoopFtry::setup(std::string name, uint64_t cfgId) {
     std::shared_ptr<Daemon> preDm, postDm, eventDm, commonDm, reactDm, drawDm;
     std::shared_ptr<ContextTime> ctxTime;
 
-    if ((pre.type() == json::value_t::string)
-    &&  (event.type() == json::value_t::string)
-    &&  (common.type() == json::value_t::string)
-    &&  (react.type() == json::value_t::string)
-    &&  (draw.type() == json::value_t::string)
-    &&  (post.type() == json::value_t::string)
-    &&  (cTime.type() == json::value_t::string)) {
+    if ((pre.is_string())
+    &&  (event.is_string())
+    &&  (common.is_string())
+    &&  (react.is_string())
+    &&  (draw.is_string())
+    &&  (post.is_string())
+    &&  (cTime.is_string())) {
 
       preDm    = daemonRsrc.get("Daemon."s + pre.get<std::string>());
       eventDm  = daemonRsrc.get("Daemon."s + event.get<std::string>());

@@ -176,8 +176,8 @@ void ZBNoidResourceLoader::run () {
      ZBNCfg::BEHAVE_TICKET, ZBNCfg::MAGNET_TICKET, MARGIN + 64, MARGIN + 64, WIDTH - (2*MARGIN), HEIGHT,Vector2D({BAR_HEIGHT/2.0-(BALL_SIZE/2),0.0})
   );
 
-  std::shared_ptr<Daemon> ballCreatorDaemon = std::make_shared<BehaviorDaemon<TicketedFAEC<Movable<2> >, Movable<2> > >(ballBuilder, ZBNCfg::BALLSPAWN_LIST );
-  std::shared_ptr<Daemon> ballMagentizerDaemon = std::make_shared<BehaviorDaemon<TicketedFAEC<zbe::Bouncer<2>, zbe::Resizable, zbe::Avatar>, zbe::Bouncer<2>, zbe::Resizable, zbe::Avatar > >( ballMagnetizerBhv, ZBNCfg::BALL_LIST);
+  std::shared_ptr<Daemon> ballCreatorDaemon = std::make_shared<BehaviorDaemon<TicketedFAEC<Movable<2> >, Movable<2> > >(ballBuilder, RsrcStore<TicketedFAEC<Movable<2> > >::getInstance().get(ZBNCfg::BALLSPAWN_LIST));
+  std::shared_ptr<Daemon> ballMagentizerDaemon = std::make_shared<BehaviorDaemon<TicketedFAEC<zbe::Bouncer<2>, zbe::Resizable, zbe::Avatar>, zbe::Bouncer<2>, zbe::Resizable, zbe::Avatar > >( ballMagnetizerBhv, RsrcStore<TicketedFAEC<zbe::Bouncer<2>, zbe::Resizable, zbe::Avatar> >::getInstance().get(ZBNCfg::BALL_LIST));
 
   ZBNCfg::rmBMov2D.insert(ZBNCfg::BALL_BUILDER, ballBuilder);
   ZBNCfg::rmBPos2D.insert(ZBNCfg::ITEM_BUILDER, itemBuilder);

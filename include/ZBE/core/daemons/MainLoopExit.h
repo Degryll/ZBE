@@ -26,6 +26,10 @@ namespace zbe {
 class MainLoopExit : virtual public Daemon {
 public:
 
+  /** \brief Builds an empty MainLoopExit.
+   */
+  MainLoopExit() : mainLoop(nullptr), value(nullptr), exitValue(0) {}
+
   /** \brief Builds a MainLoopExit from its raw data.
    * \param mainLoop main loop to end.
    * \param value Value where exit value will be saved.
@@ -37,6 +41,18 @@ public:
   /** \brief Virtual destructor.
    */
   ~MainLoopExit() {}
+
+  void setMainLoop(std::shared_ptr<MainLoop> mainLoop){
+    this->mainLoop = mainLoop;
+  }
+
+  void setValue(std::shared_ptr< Value<int64_t> > value){
+    this->value = value;
+  }
+
+  void setExitValue(int64_t exitValue){
+    this->exitValue = exitValue;
+  }
 
   /** \brief End MainLoop and save given value.
    */
