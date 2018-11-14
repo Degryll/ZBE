@@ -11,13 +11,17 @@
 #include "ZBE/core/tools/containers/RsrcStore.h"
 #include "ZBE/core/tools/containers/RsrcDictionary.h"
 
+#include "ZBE/core/tools/shared/Value.h"
+#include "ZBE/core/tools/shared/implementations/SimpleValue.h"
+
 #include "ZBE/core/daemons/Daemon.h"
 #include "ZBE/core/daemons/MainLoop.h"
+#include "ZBE/core/daemons/DaemonMaster.h"
 
 #include "ZBE/core/events/Event.h"
 #include "ZBE/core/events/EventStore.h"
 
-#include "ZBE/factories/implementations/daemons/MainLoopFtry.h"
+#include "ZBE/factories/implementations/daemons/MainLoopExitFtry.h"
 
 #include "testutils/MockedContextTime.h"
 
@@ -47,7 +51,6 @@ public:
     if(executed) return;
     auto e = new DummyEvent();
     es.storeEvent(e);
-    printf("DummyEvent: %p\n", &es);
     executed = true;
   }
   zbe::EventStore& es = zbe::EventStore::getInstance();
@@ -55,69 +58,60 @@ public:
 };
 
 TEST(MainLoopExitFtryTest, build) {
-//  using namespace zbe;
-//  using namespace nlohmann;
-//  using namespace std::string_literals;
-//  NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();
-//  auto& configRsrc = RsrcStore<json>::getInstance();
-//  auto& daemonRsrc = RsrcStore<Daemon>::getInstance();
-//  auto& timeRsrc = RsrcStore<ContextTime>::getInstance();
-//
-//  std::shared_ptr<json> cfg = std::make_shared<json>();
-//  (*cfg)["preDaemon"] = "preD"s;
-//  (*cfg)["eventDaemon"] = "eventD"s;
-//  (*cfg)["commonDaemon"] = "commonD"s;
-//  (*cfg)["reactDaemon"] = "reactD"s;
-//  (*cfg)["drawDaemon"] = "drawD"s;
-//  (*cfg)["postDaemon"] = "postD"s;
-//  (*cfg)["contextTime"] = "contextT"s;
-//  uint64_t cfgId = SysIdGenerator::getId();
-//  configRsrc.insert(cfgId, cfg);
-//
-//  auto preD = std::make_shared<DummyDaemon>();
-//  auto eventD = std::make_shared<DummyEventDaemon>();
-//  auto commonD = std::make_shared<DummyDaemon>();
-//  auto reactD = std::make_shared<DummyDaemon>();
-//  auto drawD = std::make_shared<DummyDaemon>();
-//  auto postD = std::make_shared<DummyMainLoopExit>();
-//
-//  auto contextT = std::make_shared<zbetest::MockedContextTime>();
-//  zbe::ContextTime::setMaxFrameTime(5000000);
-//
-//  daemonRsrc.insert("Daemon.preD"s, preD);
-//  daemonRsrc.insert("Daemon.eventD"s, eventD);
-//  daemonRsrc.insert("Daemon.commonD"s, commonD);
-//  daemonRsrc.insert("Daemon.reactD"s, reactD);
-//  daemonRsrc.insert("Daemon.drawD"s, drawD);
-//  daemonRsrc.insert("Daemon.postD"s, postD);
-//  timeRsrc.insert("Time.contextT"s, contextT);
-//  MainLoopFtry mlf;
-//  mlf.create("MainLoopFtryTestName", cfgId);
-//  mlf.setup("MainLoopFtryTestName", cfgId);
-//
-//  auto mlDmn = daemonRsrc.get("Daemon.MainLoopFtryTestName");
-//  std::shared_ptr<MainLoop> aux = std::dynamic_pointer_cast<MainLoop> (mlDmn);
-//  postD->setML(aux);
-//
-//  contextT->setFixedTime(0);
-//  contextT->update();
-//
-//  contextT->setFixedTime(10000);
-//
-//  mlDmn->run();
-//
-//  EXPECT_TRUE(preD->executed) << "Must call preD";
-//  EXPECT_TRUE(eventD->executed) << "Must call eventD";
-//  EXPECT_TRUE(commonD->executed) << "Must call commonD";
-//  EXPECT_TRUE(reactD->executed) << "Must call reactD";
-//  EXPECT_TRUE(drawD->executed) << "Must not call drawD";
-//  EXPECT_TRUE(postD->executed) << "Must not call postD";
-//
-//  configRsrc.clear();
-//  dict.clear();
-//  daemonRsrc.clear();
-//
-//  zbe::SysError::clear();
+  using namespace zbe;
+  using namespace nlohmann;
+  using namespace std::string_literals;
+  NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();
+  auto& configRsrc = RsrcStore<json>::getInstance();
+  auto& daemonRsrc = RsrcStore<Daemon>::getInstance();
+  auto& mlRsrc = RsrcStore<MainLoop>::getInstance();
+  auto& valIRsrc = RsrcStore<Value<int64_t> >::getInstance();
+
+  std::shared_ptr<json> cfg = std::make_shared<json>();
+  (*cfg)["mainloop"] = "ml1"s;
+  (*cfg)["valueHolder"] = "val1"s;
+  (*cfg)["outValue"] = 1;
+  uint64_t cfgId = SysIdGenerator::getId();
+  configRsrc.insert(cfgId, cfg);
+
+  auto preD = std::make_shared<DummyDaemon>();
+  auto eventD = std::make_shared<DummyEventDaemon>();
+  auto commonD = std::make_shared<DummyDaemon>();
+  auto reactD = std::make_shared<DummyDaemon>();
+  auto drawD = std::make_shared<DummyDaemon>();
+  auto postD = std::make_shared<DaemonMaster>();
+
+  auto contextT = std::make_shared<zbetest::MockedContextTime>();
+  zbe::ContextTime::setMaxFrameTime(5000000);
+  auto ml = std::make_shared<MainLoop>(preD, eventD, commonD, reactD, drawD, postD, contextT);
+  mlRsrc.insert("MainLoop.ml1", ml);
+  daemonRsrc.insert("Daemon.ml1", ml);
+  valIRsrc.insert("ValueI.val1", std::make_shared<SimpleValue<int64_t> >());
+
+  MainLoopExitFtry mlef;
+  mlef.create("MainLoopExitFtryTestName", cfgId);
+  mlef.setup("MainLoopExitFtryTestName", cfgId);
+
+  auto mleDmn = daemonRsrc.get("Daemon.MainLoopExitFtryTestName");
+  postD->addDaemon(mleDmn);
+
+  contextT->setFixedTime(0);
+  contextT->update();
+
+  contextT->setFixedTime(10000);
+
+  ml->run();
+
+  EXPECT_TRUE(preD->executed) << "Must call preD";
+  EXPECT_TRUE(eventD->executed) << "Must call eventD";
+  EXPECT_TRUE(commonD->executed) << "Must call commonD";
+  EXPECT_TRUE(reactD->executed) << "Must call reactD";
+
+  configRsrc.clear();
+  dict.clear();
+  daemonRsrc.clear();
+
+  zbe::SysError::clear();
 }
 
 }  // namespace MainLoopFtryTest

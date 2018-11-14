@@ -41,13 +41,13 @@ void MainLoopExitFtry::setup(std::string name, uint64_t cfgId) {
       SysError::setError("Bad config for MainLoopExitFtry - valueHolder."s + name);
       return;
     }
-    if(outValue.is_number()) {
+    if(!outValue.is_number()) {
       SysError::setError("Bad config for MainLoopExitFtry - outValue."s + name);
       return;
     }
     auto mle = mainLoopExitRsrc.get("MainLoopExit."s + name);
     auto ml = mainLoopRsrc.get("MainLoop."s + mainloopName.get<std::string>());
-    auto valueHolder = valueRsrc.get("Value."s + valueHolderName.get<std::string>());
+    auto valueHolder = valueRsrc.get("ValueI."s + valueHolderName.get<std::string>());
     uint64_t value = outValue.get<uint64_t>();
     mle->setMainLoop(ml);
     mle->setValue(valueHolder);

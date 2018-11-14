@@ -66,7 +66,6 @@ public:
     if(executed) return;
     auto e = new DummyEvent();
     es.storeEvent(e);
-    printf("DummyEvent: %p\n", &es);
     executed = true;
   }
   zbe::EventStore& es = zbe::EventStore::getInstance();
