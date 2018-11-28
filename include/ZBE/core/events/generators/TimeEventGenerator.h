@@ -94,7 +94,7 @@ class ZBEAPI TimeEventGenerator : virtual public Daemon {
   public:
     /** \brief Empty Constructor.
      */
-    TimeEventGenerator(int eventId, std::shared_ptr<ContextTime> contextTime = SysTime::getInstance()) : eventId(eventId), es(EventStore::getInstance()), timers(), contextTime(contextTime) {};
+    TimeEventGenerator(int eventId, std::shared_ptr<ContextTime> contextTime = SysTime::getInstance()) : eventId(eventId), es(EventStore::getInstance()), timers(), contextTime(contextTime) {}
 
     /** Add a new Timer that only triggers onces.
      * \param id Id of the Timer, to identify the action to accomplish when the event is triggered

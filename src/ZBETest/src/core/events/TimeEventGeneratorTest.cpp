@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 #include <vector>
 #include <memory>
+#include <cstdio>
 
 #include "ZBE/core/tools/math/math.h"
 #include "ZBE/core/tools/time/ContextTime.h"
@@ -40,6 +41,7 @@ TEST(TimeEventGenerator, Event) {
   teg.addTimer(b, 1500000);
   teg.addTimer(c, 2500000);
   zbe::EventStore &es = zbe::EventStore::getInstance();
+  es.clearStore();
 
   EXPECT_EQ(0, a->callTime) << "a must not be called";
   EXPECT_EQ(0, b->callTime) << "b must not be called";
