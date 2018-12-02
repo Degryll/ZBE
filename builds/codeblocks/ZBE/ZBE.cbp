@@ -465,6 +465,7 @@
 		<Unit filename="../../../include/ZBE/factories/implementations/daemons/MainLoopFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/daemons/MasterDmnFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/daemons/StateMachineDmnFtry.h" />
+		<Unit filename="../../../include/ZBE/factories/implementations/events/handlers/actuators/DmnSelectorAtorFtry.h" />
 		<Unit filename="../../../include/ZBE/graphics/MultiSpriteSheet.h" />
 		<Unit filename="../../../include/ZBE/resources/contextnames.h" />
 		<Unit filename="../../../include/ZBE/resources/loaders/ImgDefLoader.h" />

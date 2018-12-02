@@ -31,10 +31,18 @@ namespace zbe {
 template <typename T, typename R>
 class DaemonSelectorAlienAtor: public zbe::Actuator<T, R> {
 public:
+
+  /** \brief Builds a DaemonSelectorAlienAtor with the default daemon.
+   *
+   */
+  DaemonSelectorAlienAtor() : daemons(), defDaemon(defDaemon) {}
+
   /** \brief Builds a DaemonSelectorAlienAtor with the default daemon.
    *
    */
   DaemonSelectorAlienAtor(std::shared_ptr<Daemon> defDaemon) : daemons(), defDaemon(defDaemon) {}
+
+  using zbe::Actuator<T, R>::act;
 
   /** \brief call a daemon depending on the value of the received Stated.
    *  \param ro not used.

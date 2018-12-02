@@ -71,7 +71,7 @@ void MainLoopFtry::setup(std::string name, uint64_t cfgId) {
       SysError::setError("Bad config for MainLoopFtry."s);
     }   // if pre, event, common, react, draw, post
   } else {
-    SysError::setError("MasterDmnFtry config for "s + name + " not found."s);
+    SysError::setError("MainLoopFtry config for "s + name + " not found."s);
   }
 }
 
