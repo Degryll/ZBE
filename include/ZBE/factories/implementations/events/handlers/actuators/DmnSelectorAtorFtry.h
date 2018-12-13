@@ -53,7 +53,7 @@ private:
   NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<Daemon> &daemonRsrc = RsrcStore<Daemon>::getInstance();
-  RsrcStore<Actuator<T,R> > &atorRsrc = RsrcStore<Actuator<T,R> >::getInstance();
+  RsrcStore<Actuator<WeakAvatarEntityContainer<T>,R> > &atorRsrc = RsrcStore<Actuator<WeakAvatarEntityContainer<T>,R> >::getInstance();
   RsrcStore<DaemonSelectorAlienAtor<T,R> > &dsalAtorRsrc = RsrcStore<DaemonSelectorAlienAtor<T,R> >::getInstance();
 };
 
@@ -88,8 +88,17 @@ void DaemonSelectorAlienAtorFtry<T, R>::setup(std::string name, uint64_t cfgId) 
         uint64_t dId = dict.get("Daemon."s + dname);
         dsaa->setDaemon(stateno, daemonRsrc.get(dId));
       } else {
-        SysError::setError("StateMachineDmnFtry config for "s + dmn[0].get<std::string>() + ": state is not an integer."s);
+        SysError::setError("DaemonSelectorAlienAtorFtry config for "s + dmn[0].get<std::string>() + ": must be a string."s);
       }
+    }
+    
+    json defDaemon = j["defdmn"];
+    if(defDaemon.is_string()){
+      std::string dname = defDaemon.get<std::string>();
+      uint64_t dId = dict.get("Daemon."s + dname);
+      dsaa->setDefault(daemonRsrc.get(dId));
+    } else {
+      SysError::setError("DaemonSelectorAlienAtorFtry config for default daemon must be a string."s);
     }
 
   } else {

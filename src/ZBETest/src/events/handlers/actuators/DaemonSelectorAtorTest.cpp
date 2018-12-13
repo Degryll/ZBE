@@ -191,7 +191,7 @@ TEST(DaemonSelectorAlienAtor, act) {
   std::shared_ptr<DummyDaemon> d1 = std::make_shared<DummyDaemon>();
   std::shared_ptr<DummyDaemon> d2 = std::make_shared<DummyDaemon>();
   std::shared_ptr<DummyDaemon> dd = std::make_shared<DummyDaemon>();
-  zbe::DaemonSelectorAlienAtor<zbe::WeakAvatarEntityContainer<>, DummyReactor > dsaa(dd);
+  zbe::DaemonSelectorAlienAtor<A, DummyReactor > dsaa(dd);
   dsaa.setDaemon(0,d1);
   dsaa.setDaemon(1,d2);
   // react object
@@ -200,7 +200,10 @@ TEST(DaemonSelectorAlienAtor, act) {
   auto waecs = std::make_shared<zbe::WeakAvatarEntityContainer<zbe::Stated> >(aes);
   std::shared_ptr<zbe::ReactObject<DummyReactor> > ro = std::make_shared<zbe::ReactObjectCommon<DummyReactor, zbe::Stated> > (waecs);
   // Collisioner
-  auto coner = std::make_shared<zbe::WeakAvatarEntityContainer<> >();
+
+  A *a = new A();
+  std::shared_ptr<zbe::AvatarEntity<A> > aea = std::make_shared<zbe::AvatarEntityFixed<A> >(a);
+  auto coner = std::make_shared<zbe::WeakAvatarEntityContainer<A> >(aea);
   // cd
   zbe::CollisionData* cData = new zbe::CollisionData(zbe::Point2D(), zbe::Vector2D());
 

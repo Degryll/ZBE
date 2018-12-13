@@ -5,6 +5,8 @@
 
 #include <nlohmann/json.hpp>
 
+#include "ZBE/core/entities/AvatarEntity.h"
+
 #include "ZBE/core/system/SysError.h"
 #include "ZBE/core/system/SysIdGenerator.h"
 
@@ -16,9 +18,20 @@
 
 #include "ZBE/core/events/generators/util/Reactor.h"
 
+#include "ZBE/entities/avatars/Stated.h"
+
 #include "ZBE/factories/implementations/events/handlers/actuators/DmnSelectorAtorFtry.h"
 
 namespace DmnSelectorAtorFtryTest {
+
+class DummyStated : virtual public zbe::Stated {
+public:
+    DummyStated(int64_t state) : state(state) {}
+    void setState(int64_t state) {this->state = state;}
+    void add(int64_t value) {this->state += value;}
+    int64_t getState() {return this->state;}
+    int64_t state;
+};
 
 class DummyInteractionData {
 
@@ -27,9 +40,9 @@ class DummyInteractionData {
 class DummyInteractionObject {
 };
 
-class DummyAvatar {
+class A {
 public:
-  using Base = void;
+    using Base = void;
 };
 
 class DummyDaemon : public zbe::Daemon {
@@ -42,9 +55,9 @@ public:
   bool executed;
 };
 
-typedef zbe::Reactor<DummyInteractionData, DummyInteractionObject, DummyAvatar> DummyReactor;
+typedef zbe::Reactor<DummyInteractionData, DummyInteractionObject, A, zbe::Stated> DummyReactor;
 
-TEST(DaemonSelectorAlienAtorFtry, DISABLED_build) {
+TEST(DaemonSelectorAlienAtorFtry, build) {
   EXPECT_EQ(0, zbe::SysError::getNErrors()) << "Initially no errors.";
 
   using namespace zbe;
@@ -53,7 +66,8 @@ TEST(DaemonSelectorAlienAtorFtry, DISABLED_build) {
   NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();
   auto &configRsrc = RsrcStore<json>::getInstance();
   auto &daemonRsrc = RsrcStore<Daemon>::getInstance();
-  auto &actuatorRsrc = RsrcStore<DaemonSelectorAlienAtor<DummyAvatar, DummyReactor> >::getInstance();
+  auto &actuatorRsrc = RsrcStore<Actuator<zbe::WeakAvatarEntityContainer<A>, DummyReactor> >::getInstance();
+  auto &dsaRsrc = RsrcStore<DaemonSelectorAlienAtor<A, DummyReactor> >::getInstance();
 
   dict.insert("State.state1"s, 1);
   dict.insert("State.state2"s, 2);
@@ -67,47 +81,56 @@ TEST(DaemonSelectorAlienAtorFtry, DISABLED_build) {
       {"dm3","state3"},
       {"dm4","state4"}
   });
+  (*cfg)["defdmn"] = "dm0";
 
   uint64_t cfgId = SysIdGenerator::getId();
   configRsrc.insert(cfgId, cfg);
 
+  auto dm0 = std::make_shared<DummyDaemon>();
   auto dm1 = std::make_shared<DummyDaemon>();
   auto dm2 = std::make_shared<DummyDaemon>();
   auto dm3 = std::make_shared<DummyDaemon>();
   auto dm4 = std::make_shared<DummyDaemon>();
 
-  uint64_t dm1Id = SysIdGenerator::getId();
-  daemonRsrc.insert(dm1Id, dm1);
-  dict.insert("Daemon.dm1"s, dm1Id);
-
-  uint64_t dm2Id = SysIdGenerator::getId();
-  daemonRsrc.insert(dm2Id, dm2);
-  dict.insert("Daemon.dm2"s, dm2Id);
-
-  uint64_t dm3Id = SysIdGenerator::getId();
-  daemonRsrc.insert(dm3Id, dm3);
-  dict.insert("Daemon.dm3"s, dm3Id);
-
-  uint64_t dm4Id = SysIdGenerator::getId();
-  daemonRsrc.insert(dm4Id, dm4);
-  dict.insert("Daemon.dm4"s, dm4Id);
-
-  DaemonSelectorAlienAtorFtry<DummyAvatar, DummyReactor> dsaaf;
+  daemonRsrc.insert("Daemon.dm0"s, dm0);
+  daemonRsrc.insert("Daemon.dm1"s, dm1);
+  daemonRsrc.insert("Daemon.dm2"s, dm2);
+  daemonRsrc.insert("Daemon.dm3"s, dm3);
+  daemonRsrc.insert("Daemon.dm4"s, dm4);
+  
+  DaemonSelectorAlienAtorFtry<A, DummyReactor> dsaaf;
   dsaaf.create("DaemonSelectorAlienAtorFtryTestName", cfgId);
   dsaaf.setup("DaemonSelectorAlienAtorFtryTestName", cfgId);
 
   EXPECT_EQ(0, zbe::SysError::getNErrors()) << "Must be no config errors.";
 
   uint64_t outId = dict.get("Actuator.DaemonSelectorAlienAtorFtryTestName");
+  uint64_t outRealId = dict.get("DaemonSelectorAlienAtor.DaemonSelectorAlienAtorFtryTestName");
   auto outAtor= actuatorRsrc.get(outId);
+  auto outRealAtor= dsaRsrc.get(outRealId);
 
   ASSERT_NE(0, outId) << "Must create a daemon with given name";
 
-  outAtor->act();
+  // Collisioner
+  A *a = new A();
+  std::shared_ptr<zbe::AvatarEntity<A> > aea = std::make_shared<zbe::AvatarEntityFixed<A> >(a);
+  auto waeca = std::make_shared<zbe::WeakAvatarEntityContainer<A> >(aea);
+
+  // react object
+  zbe::Stated *s = new DummyStated(1);
+  std::shared_ptr<zbe::AvatarEntity<zbe::Stated> > aes = std::make_shared<zbe::AvatarEntityFixed<zbe::Stated> >(s);
+  auto waecs = std::make_shared<zbe::WeakAvatarEntityContainer<zbe::Stated> >(aes);
+  std::shared_ptr<zbe::ReactObject<DummyReactor> > ro = std::make_shared<zbe::ReactObjectCommon<DummyReactor, zbe::Stated> > (waecs);
+  // cd
+  DummyInteractionData* diData = new DummyInteractionData();
+  std::shared_ptr<Actuator<zbe::WeakAvatarEntityContainer<A>, DummyReactor> > outAtorCast = outRealAtor;
+  outAtor->run(waeca, ro,  diData);
+  outAtorCast->run(waeca, ro,  diData);
+  outRealAtor->run(waeca, ro,  diData);
 
   EXPECT_TRUE(dm1->executed) << "Must call dm1";
-  EXPECT_TRUE(dm2->executed) << "Must call dm2";
-  EXPECT_TRUE(dm3->executed) << "Must call dm3";
+  EXPECT_FALSE(dm2->executed) << "Must not call dm2";
+  EXPECT_FALSE(dm3->executed) << "Must not call dm3";
   EXPECT_FALSE(dm4->executed) << "Must not call dm4";
 
   configRsrc.clear();

@@ -29,25 +29,23 @@ namespace zbe {
 * the value of the received Stated.
 */
 template <typename T, typename R>
-class DaemonSelectorAlienAtor: public zbe::Actuator<T, R> {
+class DaemonSelectorAlienAtor: public zbe::Actuator<WeakAvatarEntityContainer<T>, R> {
 public:
 
   /** \brief Builds a DaemonSelectorAlienAtor with the default daemon.
    *
    */
-  DaemonSelectorAlienAtor() : daemons(), defDaemon(defDaemon) {}
+  DaemonSelectorAlienAtor() : daemons(), defDaemon() {}
 
   /** \brief Builds a DaemonSelectorAlienAtor with the default daemon.
    *
    */
   DaemonSelectorAlienAtor(std::shared_ptr<Daemon> defDaemon) : daemons(), defDaemon(defDaemon) {}
 
-  using zbe::Actuator<T, R>::act;
-
   /** \brief call a daemon depending on the value of the received Stated.
    *  \param ro not used.
    */
-  void act(std::shared_ptr< zbe::WeakAvatarEntityContainer<zbe::Stated> > ro) {
+  void act(std::shared_ptr< zbe::WeakAvatarEntityContainer<Stated> > ro) {
     zbe::Stated * s;
     ro->get()->assignAvatar(&s);
     int64_t state = s->getState();
@@ -83,7 +81,7 @@ private:
 * the value of the own Stated when interacts with a given reactor type.
 */
 template <typename T, typename R>
-class DaemonSelectorSelfAtor: public zbe::Actuator<WeakAvatarEntityContainer<zbe::Stated>, R> {
+class DaemonSelectorSelfAtor: public zbe::Actuator<WeakAvatarEntityContainer<Stated>, R> {
 public:
   /** \brief Builds a DaemonSelectorAlienAtor with the default daemon.
    *
