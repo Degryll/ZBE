@@ -32,7 +32,7 @@ template <typename T, typename R>
 class DaemonSelectorAlienAtor: public zbe::Actuator<WeakAvatarEntityContainer<T>, R> {
 public:
 
-  /** \brief Builds a DaemonSelectorAlienAtor with the default daemon.
+  /** \brief Builds an empty DaemonSelectorAlienAtor
    *
    */
   DaemonSelectorAlienAtor() : daemons(), defDaemon() {}
@@ -83,7 +83,13 @@ private:
 template <typename T, typename R>
 class DaemonSelectorSelfAtor: public zbe::Actuator<WeakAvatarEntityContainer<Stated>, R> {
 public:
-  /** \brief Builds a DaemonSelectorAlienAtor with the default daemon.
+
+  /** \brief Builds an empty DaemonSelectorSelfAtor
+   *
+   */
+  DaemonSelectorSelfAtor() : daemons(), defDaemon() {}
+
+  /** \brief Builds a DaemonSelectorSelfAtor with the default daemon.
    *
    */
   DaemonSelectorSelfAtor(std::shared_ptr<Daemon> defDaemon) : daemons(), defDaemon(defDaemon) {}
