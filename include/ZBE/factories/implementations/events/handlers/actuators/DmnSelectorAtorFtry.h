@@ -106,8 +106,6 @@ void DaemonSelectorAlienAtorFtry<T, R>::setup(std::string name, uint64_t cfgId) 
   }
 }
 
-
-
 /** \brief Factory for DaemonSelectorSelfAtor.
  */
 template<typename T, typename R>
@@ -166,6 +164,81 @@ void DaemonSelectorSelfAtorFtry<T, R>::setup(std::string name, uint64_t cfgId) {
         dsaa->setDaemon(stateno, daemonRsrc.get(dId));
       } else {
         SysError::setError("DaemonSelectorSelfAtorFtry config for "s + dmn[0].get<std::string>() + ": must be a string."s);
+      }
+    }
+
+    json defDaemon = j["defdmn"];
+    if(defDaemon.is_string()){
+      std::string dname = defDaemon.get<std::string>();
+      uint64_t dId = dict.get("Daemon."s + dname);
+      dsaa->setDefault(daemonRsrc.get(dId));
+    } else {
+      SysError::setError("DaemonSelectorSelfAtorFtry config for default daemon must be a string."s);
+    }
+
+  } else {
+    SysError::setError("DaemonSelectorAlienAtorFtry config for "s + name + " not found."s);
+  }
+}
+
+/** \brief Factory for DaemonSelectorSelfAnyAtor.
+ */
+template<typename R>
+class DaemonSelectorSelfAnyAtorFtry : public Factory {
+public:
+
+/** \brief Create the desired tool, probably incomplete.
+ *  \param name Name for the created tool.
+ *  \param cfgId Tool's configuration id.
+ */
+  void create(std::string name, uint64_t cfgId);
+
+  /** \brief Setup the desired tool. The tool will be complete after this step.
+   *  \param name Name of the tool.
+   *  \param cfgId Tool's configuration id.
+   */
+  void setup(std::string name, uint64_t cfgId);
+
+private:
+  NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();
+  RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<Daemon> &daemonRsrc = RsrcStore<Daemon>::getInstance();
+  RsrcStore<Actuator<zbe::Stated, R> > &atorRsrc = RsrcStore<Actuator<zbe::Stated, R> >::getInstance();
+  RsrcStore<DaemonSelectorSelfAnyAtor<R> > &dsalAtorRsrc = RsrcStore<DaemonSelectorSelfAnyAtor<R> >::getInstance();
+};
+
+template<typename R>
+void DaemonSelectorSelfAnyAtorFtry<R>::create(std::string name, uint64_t) {
+  using namespace std::string_literals;
+
+  auto ator = std::make_shared<DaemonSelectorSelfAnyAtor<R> >();
+  uint64_t id = SysIdGenerator::getId();
+  atorRsrc.insert(id, ator);
+  dict.insert("Actuator."s + name, id);
+  id = SysIdGenerator::getId();
+  dsalAtorRsrc.insert(id, ator);
+  dict.insert("DaemonSelectorSelfAnyAtor."s + name, id);
+}
+
+template<typename R>
+void DaemonSelectorSelfAnyAtorFtry<R>::setup(std::string name, uint64_t cfgId) {
+  using namespace std::string_literals;
+  using namespace nlohmann;
+  std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+  if(cfg) {
+    auto j = *cfg;
+    json daemons = j["daemons"];
+    auto dsaa = dsalAtorRsrc.get("DaemonSelectorSelfAnyAtor."s + name);
+    for (auto dmn : daemons) {
+      if (dmn[0].is_string() && dmn[1].is_string()) {
+        std::string dname = dmn[0].get<std::string>();
+        std::string sname = dmn[1].get<std::string>();
+        uint64_t stateno = dict.get("State."s + sname);
+        uint64_t dId = dict.get("Daemon."s + dname);
+        dsaa->setDaemon(stateno, daemonRsrc.get(dId));
+      } else {
+        SysError::setError("DaemonSelectorSelfAnyAtorFtry config for "s + dmn[0].get<std::string>() + ": must be a string."s);
       }
     }
 
