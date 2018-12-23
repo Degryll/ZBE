@@ -20,12 +20,8 @@ void StateLTEraserBhvFtry::create(std::string name, uint64_t cfgId) {
     auto j = *cfg;
     int64_t limit = j["limit"];
     std::shared_ptr<StateLTEraser> seb = std::make_shared<StateLTEraser>(limit);
-    uint64_t id = SysIdGenerator::getId();
-    behaviorRsrc.insert(id, seb);
-    dict.insert("Behavior."s + name, id);
-    id = SysIdGenerator::getId();
-    StateLTEraserRsrc.insert(id, seb);
-    dict.insert("StateLTEraser."s + name, id);
+    behaviorRsrc.insert("Behavior."s + name, seb);
+    StateLTEraserRsrc.insert("StateLTEraser."s + name, seb);
   } else {
     SysError::setError("StateLTEraserBhvFtry config for "s + name + " not found."s);
   }

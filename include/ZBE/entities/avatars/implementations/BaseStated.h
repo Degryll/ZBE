@@ -13,6 +13,7 @@
 #include <cstdint>
 
 #include "ZBE/entities/avatars/Stated.h"
+#include "ZBE/archetypes/State.h"
 
 #include "ZBE/core/system/system.h"
 

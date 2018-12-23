@@ -211,6 +211,8 @@
 		<Unit filename="../../../src/ZBETest/src/archetypes/SimplePositionTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/archetypes/SimpleWideTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/behavior/BounceTest.cpp" />
+		<Unit filename="../../../src/ZBETest/src/behavior/StateLTEraserTest.cpp" />
+		<Unit filename="../../../src/ZBETest/src/behavior/StateSetterTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/behavior/UniformLinearMotionTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/core/daemons/PunishersTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/core/daemons/daemonsTest.cpp" />
@@ -250,6 +252,8 @@
 		<Unit filename="../../../src/ZBETest/src/core/tools/toolsTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/events/handlers/actuators/DaemonSelectorAtorTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/events/handlers/input/BroadcastIHTest.cpp" />
+		<Unit filename="../../../src/ZBETest/src/factories/implementations/behaviors/StateLTEraserBhvFtryTest.cpp" />
+		<Unit filename="../../../src/ZBETest/src/factories/implementations/behaviors/StateSetterBhvFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/daemons/BehaviorDmnFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/daemons/MainLoopExitFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/daemons/MainLoopFtryTest.cpp" />

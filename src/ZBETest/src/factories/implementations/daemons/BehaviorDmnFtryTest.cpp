@@ -43,7 +43,7 @@ public:
   }
 };
 
-TEST(StateMachineDmnFtryTest, build) {
+TEST(BehaviorDmnFtryTest, build) {
   EXPECT_EQ(0, zbe::SysError::getNErrors()) << "Initially no errors.";
 
   using namespace zbe;
@@ -120,4 +120,4 @@ TEST(StateMachineDmnFtryTest, build) {
   zbe::SysError::clear();
 }
 
-}  // namespace StateMachineDmnFtryTest
+}  // namespace BehaviorDmnFtryTest

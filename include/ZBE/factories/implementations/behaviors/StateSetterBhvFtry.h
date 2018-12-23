@@ -1,14 +1,14 @@
 /**
  * Copyright 2012 Batis Degryll Ludo
- * @file StateLTEraserBhvFtry.h
- * @since 2018-11-05
- * @date 2018-11-05
+ * @file StateSetterBhvFtry.h
+ * @since 2018-12-13
+ * @date 2018-12-13
  * @author Degryll
- * @brief Factory for State less than Eraser Behavior.
+ * @brief Factory for State Setter Behavior.
  */
 
-#ifndef ZBE_FACTORIES_IMPLEMENTATIONS_BEHAVIORS_STATELTERASERBHVFTRY_H_
-#define ZBE_FACTORIES_IMPLEMENTATIONS_BEHAVIORS_STATELTERASERBHVFTRY_H_
+#ifndef ZBE_FACTORIES_IMPLEMENTATIONS_BEHAVIORS_STATESETTERBHVFTRY_H_
+#define ZBE_FACTORIES_IMPLEMENTATIONS_BEHAVIORS_STATESETTERBHVFTRY_H_
 
 #include <string>
 
@@ -19,10 +19,9 @@
 #include "ZBE/core/tools/containers/RsrcStore.h"
 
 #include "ZBE/core/behaviors/Behavior.h"
-#include "ZBE/behaviors/StateLTEraser.h"
+#include "ZBE/behaviors/StateSetter.h"
 
 #include "ZBE/entities/avatars/Stated.h"
-#include "ZBE/core/entities/avatars/Avatar.h"
 
 #include "ZBE/factories/Factory.h"
 
@@ -32,7 +31,7 @@ namespace zbe {
 
 /** \brief Factory for State Machine Daemons.
  */
-class ZBEAPI StateLTEraserBhvFtry : public Factory {
+class ZBEAPI StateSetterBhvFtry : public Factory {
 public:
 
   /** \brief Builds a StateMachineDaemon.
@@ -49,10 +48,10 @@ public:
 
 private:
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
-  RsrcStore<Behavior<Avatar, Stated> > &behaviorRsrc = RsrcStore<Behavior<Avatar, Stated> >::getInstance();
-  RsrcStore<StateLTEraser> &StateLTEraserRsrc = RsrcStore<StateLTEraser>::getInstance();
+  RsrcStore<Behavior<Stated> > &behaviorRsrc = RsrcStore<Behavior<Stated> >::getInstance();
+  RsrcStore<StateSetter> &StateSetterRsrc = RsrcStore<StateSetter>::getInstance();
 };
 
 }  // namespace zbe
 
-#endif  // ZBE_FACTORIES_IMPLEMENTATIONS_BEHAVIORS_STATELTERASERBHVFTRY_H_
+#endif  // ZBE_FACTORIES_IMPLEMENTATIONS_BEHAVIORS_STATESETTERBHVFTRY_H_

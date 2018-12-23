@@ -4,12 +4,13 @@
 
 #include "ZBE/core/entities/AvatarEntity.h"
 #include "ZBE/entities/avatars/implementations/BaseBouncer.h"
+#include "ZBE/entities/avatars/Bouncer.h"
 #include "ZBE/archetypes/implementations/SimpleBouncing.h"
 #include "ZBE/behaviors/Bounce.h"
 #include "ZBE/core/tools/math/math.h"
 #include "ZBE/core/tools/time/Timer.h"
 
-namespace Bounce {
+namespace BounceTest {
 
 TEST(Bounce, apply) {
 
@@ -35,4 +36,4 @@ TEST(Bounce, apply) {
     EXPECT_EQ(0,b.getVelocity()[1]) << "Velocity should be inverted";
 }
 
-}  // namespace Bounce
+}  // namespace BounceTest
