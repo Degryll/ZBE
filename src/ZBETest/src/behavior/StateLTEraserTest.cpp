@@ -48,9 +48,9 @@ TEST(StateLTEraser, apply) {
     EXPECT_TRUE(check) << "setERASED should be called.";
 
     delete e;
-    delete ba;
+    //delete ba;  // AvatarEntityFixed deletes it
     delete ss;
-    delete bs;
+    //delete bs;  // AvatarEntityFixed deletes it
 }
 
 }  // namespace StateLTEraserTest

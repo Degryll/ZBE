@@ -50,7 +50,6 @@ TEST(StateLTEraserBhvFtryTest, build) {
   auto &behaviorRsrc = RsrcStore<Behavior<Avatar, Stated> >::getInstance();
 
   auto cfg = std::make_shared<json>();
-  (*cfg)["behavior"] = "dummyss";
   (*cfg)["limit"] = 10;
 
   uint64_t cfgId = SysIdGenerator::getId();
@@ -96,9 +95,9 @@ TEST(StateLTEraserBhvFtryTest, build) {
   behaviorRsrc.clear();
 
   delete e;
-  delete ba;
+  //delete ba;  // AvatarEntityFixed deletes it
   delete ss;
-  delete bs;
+  //delete bs;  // AvatarEntityFixed deletes it
 
   zbe::SysError::clear();
 }

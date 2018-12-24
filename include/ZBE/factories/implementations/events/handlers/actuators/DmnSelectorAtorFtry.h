@@ -1,10 +1,10 @@
 /**
  * Copyright 2012 Batis Degryll Ludo
- * @file BehaviorDmnFtry.h
+ * @file DmnSelectorAtorFtry.h
  * @since 2018-09-19
  * @date 2018-09-19
  * @author Ludo Degryll Batis
- * @brief Factory for behavior daemons.
+ * @brief Factory for DaemonSelectorAlienAtor.
  */
 
 #ifndef ZBE_FACTORIES_IMPLEMENTATIONS_EVENTS_HANDLERS_ACTUATORS_DMNSELECTORATORFCTRY_H_

@@ -12,7 +12,7 @@
 
 #include "ZBE/events/handlers/actuators/DaemonSelectorAtor.h"
 
-namespace DaemonSelectorAtor {
+namespace DaemonSelectorAtorTest {
 
 class DummyDaemon : public zbe::Daemon {
 public:
@@ -232,4 +232,4 @@ TEST(DaemonSelectorAlienAtor, act) {
   dd->executed = false;
 }
 
-}  // namespace DaemonSelectorAtor
+}  // namespace DaemonSelectorAtorTest

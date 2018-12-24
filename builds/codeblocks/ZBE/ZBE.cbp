@@ -465,6 +465,7 @@
 		<Unit filename="../../../include/ZBE/factories/implementations/daemons/MasterDmnFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/daemons/StateMachineDmnFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/events/handlers/actuators/DmnSelectorAtorFtry.h" />
+		<Unit filename="../../../include/ZBE/factories/implementations/events/handlers/time/TicketEraserFtry.h" />
 		<Unit filename="../../../include/ZBE/graphics/MultiSpriteSheet.h" />
 		<Unit filename="../../../include/ZBE/resources/contextnames.h" />
 		<Unit filename="../../../include/ZBE/resources/loaders/ImgDefLoader.h" />
@@ -515,6 +516,7 @@
 		<Unit filename="../../../src/ZBE/factories/implementations/daemons/MainLoopFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/daemons/MasterDmnFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/daemons/StateMachineDmnFtry.cpp" />
+		<Unit filename="../../../src/ZBE/factories/implementations/events/handlers/time/TicketEraserFtry.cpp" />
 		<Unit filename="../../../src/ZBE/resources/contextname.cpp" />
 		<Unit filename="../../../src/ZBE/resources/loaders/RsrcFolderLoader.cpp" />
 		<Extensions>

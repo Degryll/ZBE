@@ -25,7 +25,7 @@ TEST(StateSetter, apply) {
     EXPECT_EQ(10, ss->getState()) << "After apply the behavior, the state has changed.";
 
     delete ss;
-    delete bs;
+    //delete bs;  // AvatarEntityFixed deletes it
 }
 
 }  // namespace StateSetterTest
