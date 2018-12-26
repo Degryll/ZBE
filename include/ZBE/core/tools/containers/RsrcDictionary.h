@@ -20,18 +20,19 @@
 
 namespace zbe {
 
-/** \brief A class ZBEAPI that translate a name to a globaly accesible resource id.
+/** \brief A class that translate a name to a globaly accesible resource id.
  */
-class ZBEAPI NameRsrcDictionary {
+template<typename T>
+class ZBEAPI RsrcDictionary {
   public:
-    NameRsrcDictionary(NameRsrcDictionary const&)    = delete;  //!< Needed for singleton.
-    void operator=(NameRsrcDictionary const&) = delete;  //!< Needed for singleton.
+    RsrcDictionary(RsrcDictionary const&)    = delete;  //!< Needed for singleton.
+    void operator=(RsrcDictionary const&) = delete;  //!< Needed for singleton.
 
     /** \brief Singleton implementation.
-     *  \return The only instance of the NameRsrcDictionary.
+     *  \return The only instance of the RsrcDictionary.
      */
-    static NameRsrcDictionary& getInstance() {
-      static NameRsrcDictionary instance;
+    static RsrcDictionary& getInstance() {
+      static RsrcDictionary instance;
       return (instance);
     }
 
@@ -40,23 +41,23 @@ class ZBEAPI NameRsrcDictionary {
      *  \param id Id of the resource in the adecuate store.
      *  \sa get(string name)
      */
-    void insert(std::string name, uint64_t id) {
+    void insert(std::string name, T rsrc) {
       auto it = l.find(name);
       if (it != l.end()) {
         SysError::setError("Name " + name + " already in use.");
         return;
-      } else if (id == 0) {
+      } else if (rsrc == 0) {
         SysError::setError("Using zero as id is potentialy dangerous");
       }
-      l[name] = id;
+      l[name] = rsrc;
     }
 
-    /** \brief Returns the id of resource named "name".
+    /** \brief Returns the resource named "name".
      *  \param name Name to identify the resource.
-     *  \return The resource id.
+     *  \return The resource.
      *  \sa insert
      */
-    uint64_t get(std::string name) {
+    T get(std::string name) {
       auto it = l.find(name);
       if (it == l.end()) {
         SysError::setError("Resource id not found.");
@@ -73,10 +74,12 @@ class ZBEAPI NameRsrcDictionary {
     }
 
   private:
-    NameRsrcDictionary() : l() {};  //!< Needed for singleton.
+    RsrcDictionary() : l() {};  //!< Needed for singleton.
 
-    std::map<std::string, uint64_t> l;  //!< Map that associates resources with ids.
+    std::map<std::string, T> l;  //!< Map that associates resources with ids.
 };
+
+using NameRsrcDictionary = RsrcDictionary<uint64_t>;
 
 /** \brief A class ZBEAPI that translate a local resource id to a globaly accesible resource id.
  */
@@ -86,7 +89,7 @@ class ZBEAPI IdRsrcDictionary {
     void operator=(IdRsrcDictionary const&) = delete;  //!< Needed for singleton.
 
     /** \brief Singleton implementation.
-     *  \return The only instance of the NameRsrcDictionary.
+     *  \return The only instance of the IdRsrcDictionary.
      */
     static IdRsrcDictionary& getInstance() {
       static IdRsrcDictionary instance;
