@@ -28,7 +28,7 @@ void operator=(const DaemonTimeHandler&) = delete; //!< Avoid copy.
   /** brief Parametrized constructor
    * param daemon Daemon to be executed
    */
-	DaemonTimeHandler(std::shared_ptr<Daemon> daemon):d(daemon) {}
+	DaemonTimeHandler(std::shared_ptr<Daemon> daemon) : d(daemon) {}
 
   /** brief Run daemon
    *  param time not used

@@ -18,10 +18,15 @@ void StateSetterBhvFtry::create(std::string name, uint64_t cfgId) {
 
   if(cfg) {
     auto j = *cfg;
-    int64_t limit = j["limit"];
-    std::shared_ptr<StateSetter> seb = std::make_shared<StateSetter>(limit);
-    behaviorRsrc.insert("Behavior."s + name, seb);
-    StateSetterRsrc.insert("StateSetter."s + name, seb);
+    if (j["state"].is_string()) {
+      std::string cname = j["state"].get<std::string>();
+      uint64_t state = dict.get(cname);
+      std::shared_ptr<StateSetter> seb = std::make_shared<StateSetter>(state);
+      behaviorRsrc.insert("Behavior."s + name, seb);
+      StateSetterRsrc.insert("StateSetter."s + name, seb);
+    } else {
+      SysError::setError("StateSetterBhvFtry config for "s + j["state"].get<std::string>() + ": must be a string."s);
+    }
   } else {
     SysError::setError("StateSetterBhvFtry config for "s + name + " not found."s);
   }

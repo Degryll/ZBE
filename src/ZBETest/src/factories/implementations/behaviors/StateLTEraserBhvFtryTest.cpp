@@ -50,7 +50,8 @@ TEST(StateLTEraserBhvFtryTest, build) {
   auto &behaviorRsrc = RsrcStore<Behavior<Avatar, Stated> >::getInstance();
 
   auto cfg = std::make_shared<json>();
-  (*cfg)["limit"] = 10;
+  (*cfg)["limit"] = "StateLTEraserLimit";
+  dict.insert("StateLTEraserLimit", 10);
 
   uint64_t cfgId = SysIdGenerator::getId();
   configRsrc.insert(cfgId, cfg);

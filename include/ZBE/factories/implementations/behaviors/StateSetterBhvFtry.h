@@ -47,6 +47,7 @@ public:
   void setup(std::string name, uint64_t cfgId);
 
 private:
+  NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<Behavior<Stated> > &behaviorRsrc = RsrcStore<Behavior<Stated> >::getInstance();
   RsrcStore<StateSetter> &StateSetterRsrc = RsrcStore<StateSetter>::getInstance();

@@ -34,7 +34,9 @@ TEST(StateSetterBhvFtryTest, build) {
   auto &behaviorRsrc = RsrcStore<Behavior<Stated> >::getInstance();
 
   auto cfg = std::make_shared<json>();
-  (*cfg)["limit"] = 42;
+  (*cfg)["state"] = "StateSetterState";
+  dict.insert("StateSetterState", 42);
+
 
   uint64_t cfgId = SysIdGenerator::getId();
   configRsrc.insert(cfgId, cfg);

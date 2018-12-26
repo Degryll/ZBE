@@ -18,10 +18,15 @@ void StateLTEraserBhvFtry::create(std::string name, uint64_t cfgId) {
 
   if(cfg) {
     auto j = *cfg;
-    int64_t limit = j["limit"];
-    std::shared_ptr<StateLTEraser> seb = std::make_shared<StateLTEraser>(limit);
-    behaviorRsrc.insert("Behavior."s + name, seb);
-    StateLTEraserRsrc.insert("StateLTEraser."s + name, seb);
+    if (j["limit"].is_string()) {
+      std::string cname = j["limit"].get<std::string>();
+      uint64_t limit = dict.get(cname);
+      std::shared_ptr<StateLTEraser> seb = std::make_shared<StateLTEraser>(limit);
+      behaviorRsrc.insert("Behavior."s + name, seb);
+      StateLTEraserRsrc.insert("StateLTEraser."s + name, seb);
+    } else {
+      SysError::setError("StateLTEraserBhvFtry config for "s + j["limit"].get<std::string>() + ": must be a string."s);
+    }
   } else {
     SysError::setError("StateLTEraserBhvFtry config for "s + name + " not found."s);
   }
