@@ -65,7 +65,7 @@ TEST(StateMachineDmnFtryTest, build) {
   auto state = std::make_shared<SimpleValue<int64_t> >(1);
   uint64_t valueId = SysIdGenerator::getId();
   valueRsrc.insert(valueId, state);
-  dict.insert("Valueu.machineState"s, valueId);
+  dict.insert("Valuei.machineState"s, valueId);
 
   auto dm1 = std::make_shared<DummyDaemon>(state, 2);
   auto dm2 = std::make_shared<DummyDaemon>(state, 3);

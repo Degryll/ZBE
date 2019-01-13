@@ -39,7 +39,7 @@ void StateMachineDmnFtry::setup(std::string name, uint64_t cfgId) {
       return;
     }
     json daemons = j["daemons"];
-    uint64_t stateId = dict.get("Valueu."s + stateName);
+    uint64_t stateId = dict.get("Valuei."s + stateName);
     std::shared_ptr<Value<int64_t> > stateVal = valueRsrc.get(stateId);
     auto smd = stateMachinedaemonRsrc.get("StateMachineDaemon."s + name);
     smd->setStateValue(stateVal);

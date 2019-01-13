@@ -32,7 +32,7 @@ namespace zbe {
 
 /** \brief Factory for Main Loop.
  */
-class ZBEAPI MainLoopFtry : public Factory {
+class ZBEAPI MainLoopFtry : virtual public Factory {
 public:
 
   /** \brief Builds a MainLoop.

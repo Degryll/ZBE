@@ -33,7 +33,7 @@ namespace zbe {
 
 /** \brief Factory for TicketEraser.
  */
-class ZBEAPI TicketEraserFtry : public Factory {
+class ZBEAPI TicketEraserFtry : virtual public Factory {
 public:
 
 /** \brief Create the desired tool, probably incomplete.

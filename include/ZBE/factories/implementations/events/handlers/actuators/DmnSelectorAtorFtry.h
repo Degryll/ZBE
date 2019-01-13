@@ -34,7 +34,7 @@ namespace zbe {
 /** \brief Factory for DaemonSelectorAlienAtor.
  */
 template<typename T, typename R>
-class DaemonSelectorAlienAtorFtry : public Factory {
+class DaemonSelectorAlienAtorFtry : virtual public Factory {
 public:
 
 /** \brief Create the desired tool, probably incomplete.
@@ -109,7 +109,7 @@ void DaemonSelectorAlienAtorFtry<T, R>::setup(std::string name, uint64_t cfgId) 
 /** \brief Factory for DaemonSelectorSelfAtor.
  */
 template<typename T, typename R>
-class DaemonSelectorSelfAtorFtry : public Factory {
+class DaemonSelectorSelfAtorFtry : virtual public Factory {
 public:
 
 /** \brief Create the desired tool, probably incomplete.
@@ -184,7 +184,7 @@ void DaemonSelectorSelfAtorFtry<T, R>::setup(std::string name, uint64_t cfgId) {
 /** \brief Factory for DaemonSelectorSelfAnyAtor.
  */
 template<typename R>
-class DaemonSelectorSelfAnyAtorFtry : public Factory {
+class DaemonSelectorSelfAnyAtorFtry : virtual public Factory {
 public:
 
 /** \brief Create the desired tool, probably incomplete.

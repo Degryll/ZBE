@@ -33,7 +33,7 @@ namespace zbe {
 
 /** \brief Factory for DaemonTimeHandler.
  */
-class ZBEAPI DaemonTimeHandlerFtry : public Factory {
+class ZBEAPI DaemonTimeHandlerFtry : virtual public Factory {
 public:
 
 /** \brief Create the desired tool, probably incomplete.
