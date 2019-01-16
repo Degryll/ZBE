@@ -11,7 +11,15 @@
 
 namespace zbe {
 
-void StateLTEraserBhvFtry::create(std::string name, uint64_t cfgId) {
+void StateLTEraserBhvFtry::create(std::string name, uint64_t) {
+  using namespace std::string_literals;
+
+  std::shared_ptr<StateLTEraser> seb = std::make_shared<StateLTEraser>();
+  behaviorRsrc.insert("Behavior."s + name, seb);
+  StateLTEraserRsrc.insert("StateLTEraser."s + name, seb);
+}
+
+void StateLTEraserBhvFtry::setup(std::string name, uint64_t cfgId) {
   using namespace std::string_literals;
   using namespace nlohmann;
   std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -21,9 +29,10 @@ void StateLTEraserBhvFtry::create(std::string name, uint64_t cfgId) {
     if (j["limit"].is_string()) {
       std::string cname = j["limit"].get<std::string>();
       uint64_t limit = dict.get(cname);
-      std::shared_ptr<StateLTEraser> seb = std::make_shared<StateLTEraser>(limit);
-      behaviorRsrc.insert("Behavior."s + name, seb);
-      StateLTEraserRsrc.insert("StateLTEraser."s + name, seb);
+
+      auto ss = StateLTEraserRsrc.get("StateLTEraser."s + name);
+      ss->setLimit(limit);
+
     } else {
       SysError::setError("StateLTEraserBhvFtry config for "s + j["limit"].get<std::string>() + ": must be a string."s);
     }
@@ -31,7 +40,5 @@ void StateLTEraserBhvFtry::create(std::string name, uint64_t cfgId) {
     SysError::setError("StateLTEraserBhvFtry config for "s + name + " not found."s);
   }
 }
-
-void StateLTEraserBhvFtry::setup(std::string, uint64_t) {}
 
 }  // namespace zbe

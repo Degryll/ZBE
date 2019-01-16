@@ -27,11 +27,22 @@ namespace zbe {
 class StateSetter : virtual public Behavior<Stated> {
 public:
 
+  /** \brief Empty constructor.
+   */
+  StateSetter() : state(0) {}
+
+  /** \brief Parametrized constructor.
+    \param state State that will be set.
+   */
   StateSetter(uint64_t state) : state(state) {}
 
   /** \brief Virtual destructor.
    */
   virtual ~StateSetter() {}
+
+  /** \brief Set the state.
+   */
+  void setState(uint64_t state) {this->state = state;}
 
   /** \brief Sets the entity state to given one.
    */

@@ -15,12 +15,8 @@ void MainLoopFtry::create(std::string name, uint64_t) {
   using namespace std::string_literals;
 
   auto ml = std::make_shared<MainLoop>();
-  uint64_t id = SysIdGenerator::getId();
-  daemonRsrc.insert(id, ml);
-  dict.insert("Daemon."s + name, id);
-  id = SysIdGenerator::getId();
-  mainLoopRsrc.insert(id, ml);
-  dict.insert("MainLoop."s + name, id);
+  daemonRsrc.insert("Daemon."s + name, ml);
+  mainLoopRsrc.insert("MainLoop."s + name, ml);
 }
 
 void MainLoopFtry::setup(std::string name, uint64_t cfgId) {

@@ -27,10 +27,19 @@ namespace zbe {
  */
 class StateLTEraser : virtual public Behavior<Avatar, Stated> {
 public:
+
+  /** \brief Empty constructor.
+   */
+  StateLTEraser() : limit(0) {}
+
   /** \brief Parametrized constructor.
       \param limit Limit below which the entity will be killed.
    */
   StateLTEraser(int64_t limit) : limit(limit){}
+
+  /** \brief Sets the limit, any avatar with state bellow this limit will be erased.
+   */
+  void setLimit(int64_t limit) {this->limit = limit;}
 
   /** \brief Erases given entity if its stata is less that expected one.
    */

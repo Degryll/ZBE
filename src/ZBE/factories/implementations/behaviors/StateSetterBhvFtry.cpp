@@ -11,7 +11,15 @@
 
 namespace zbe {
 
-void StateSetterBhvFtry::create(std::string name, uint64_t cfgId) {
+void StateSetterBhvFtry::create(std::string name, uint64_t) {
+  using namespace std::string_literals;
+
+  std::shared_ptr<StateSetter> ss = std::make_shared<StateSetter>();
+  behaviorRsrc.insert("Behavior."s + name, ss);
+  StateSetterRsrc.insert("StateSetter."s + name, ss);
+}
+
+void StateSetterBhvFtry::setup(std::string name, uint64_t cfgId) {
   using namespace std::string_literals;
   using namespace nlohmann;
   std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -21,9 +29,10 @@ void StateSetterBhvFtry::create(std::string name, uint64_t cfgId) {
     if (j["state"].is_string()) {
       std::string cname = j["state"].get<std::string>();
       uint64_t state = dict.get(cname);
-      std::shared_ptr<StateSetter> seb = std::make_shared<StateSetter>(state);
-      behaviorRsrc.insert("Behavior."s + name, seb);
-      StateSetterRsrc.insert("StateSetter."s + name, seb);
+
+      auto ss = StateSetterRsrc.get("StateSetter."s + name);
+      ss->setState(state);
+
     } else {
       SysError::setError("StateSetterBhvFtry config for "s + j["state"].get<std::string>() + ": must be a string."s);
     }
@@ -31,7 +40,5 @@ void StateSetterBhvFtry::create(std::string name, uint64_t cfgId) {
     SysError::setError("StateSetterBhvFtry config for "s + name + " not found."s);
   }
 }
-
-void StateSetterBhvFtry::setup(std::string, uint64_t) {}
 
 }  // namespace zbe
