@@ -31,7 +31,7 @@ namespace zbe {
 
 /** \brief Factory for Master Daemons.
  */
-class ZBEAPI MasterDmnFtry : public Factory {
+class ZBEAPI MasterDmnFtry : virtual public Factory {
 public:
 
   /** \brief Builds a MasterDmnFtry.

@@ -22,10 +22,23 @@ namespace zbe {
 
 /** \brief Actuator capable of change an entity state.
  */
-template <typename R, typename T>
+template <typename T, typename R>
 class StateChangerSelfAtor: public zbe::Actuator<WeakAvatarEntityContainer<zbe::Stated>, R> {
   public:
-    StateChangerSelfAtor(int64_t value) : v(value) {}
+
+    /** \brief Builds a StateChangerSelfAtor with the desired value.
+    */
+    StateChangerSelfAtor(int64_t newState) : v(newState) {}
+
+    /** \brief Builds an empty StateChangerSelfAtor.
+    */
+    StateChangerSelfAtor() : v() {}
+
+    /** \brief Set the state to use.
+    */
+    void setNewState(int64_t newState) {
+      v = newState;
+    }
 
     /** \brief Set given state to entity when interact whit template type.
      *  \param entity. Not used.
@@ -33,8 +46,9 @@ class StateChangerSelfAtor: public zbe::Actuator<WeakAvatarEntityContainer<zbe::
     void act(std::shared_ptr< zbe::WeakAvatarEntityContainer<T> >) {
       zbe::Stated * s;
       zbe::Actuator<WeakAvatarEntityContainer<zbe::Stated>, R>::getCollisioner()->get()->assignAvatar(&s);
-      s->add(v);
+      s->setState(v);
     }
+
   private:
     int64_t v;
 };

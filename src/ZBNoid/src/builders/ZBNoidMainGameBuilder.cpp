@@ -33,7 +33,7 @@ std::shared_ptr<zbe::Daemon> ZBNoidMainGameBuilder::build() {
   std::shared_ptr<MappedInputStatusManager> ism = std::make_shared<MappedInputStatusManager>(ZBNCfg::INPUTEVENT);
   ieg->addManager(ism);
   std::shared_ptr<TimeEventGenerator> teg = std::make_shared<TimeEventGenerator>(ZBNCfg::TIMEEVENT);
-  std::shared_ptr<InteractionGenerator> iaeg = std::make_shared<InteractionGenerator>(ZBNCfg::CTS_JOINT, ZBNCfg::COLLISIONEVENT, new BaseCollisionSelector());
+  std::shared_ptr<InteractionGenerator> iaeg = std::make_shared<InteractionGenerator>(ZBNCfg::CTS_JOINT, ZBNCfg::COLLISIONEVENT, std::make_shared<BaseCollisionSelector>());
   eventGenerator->addDaemon(ieg);
   eventGenerator->addDaemon(teg);
   eventGenerator->addDaemon(iaeg);

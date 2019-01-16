@@ -53,7 +53,6 @@
 
 #include "ZBE/events/handlers/actuators/EraserAtor.h"
 #include "ZBE/events/handlers/actuators/BouncerAtor.h"
-#include "ZBE/events/handlers/actuators/StateChangerAtor.h"
 
 #include "ZBE/behaviors/Bounce.h"
 #include "ZBE/behaviors/Erase.h"

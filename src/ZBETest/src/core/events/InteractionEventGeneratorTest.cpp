@@ -109,9 +109,8 @@ TEST(IntersectionEventGenerator, run) {
 
   cnl->push_front(dconer);
   ctl->push_front(dcator);
-  zbe::CollisionSelector* cs = new zbe::BaseCollisionSelector();
 
-  zbe::InteractionEventGenerator<R, zbe::CollisionSelector , zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Interactioner<R> > >,  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Interactionator<R> > > > ieg(20, 10, cs);
+  zbe::InteractionEventGenerator<R, zbe::CollisionSelector , zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Interactioner<R> > >,  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Interactionator<R> > > > ieg(20, 10, std::make_shared<zbe::BaseCollisionSelector>());
 
   sysTime->update();
   sysTime->update();
@@ -171,9 +170,8 @@ TEST(InstantIntersectionEventGenerator, run_no_collision) {
 
   cnl->push_front(dconer);
   ctl->push_front(dcator);
-  zbe::CollisionSelector* cs = new zbe::IntersectionCollisionSelector();
 
-  zbe::InstantInteractionEventGenerator<R, zbe::CollisionSelector , zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Interactioner<R> > >,  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Interactionator<R> > > > iieg(200, 100, cs);
+  zbe::InstantInteractionEventGenerator<R, zbe::CollisionSelector , zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Interactioner<R> > >,  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Interactionator<R> > > > iieg(200, 100, std::make_shared<zbe::IntersectionCollisionSelector>());
 
   sysTime->update();
   sysTime->update();
@@ -234,9 +232,8 @@ TEST(InstantIntersectionEventGenerator, run) {
 
   cnl->push_front(dconer);
   ctl->push_front(dcator);
-  zbe::CollisionSelector* cs = new zbe::IntersectionCollisionSelector();
 
-  zbe::InstantInteractionEventGenerator<R, zbe::CollisionSelector , zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Interactioner<R> > >,  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Interactionator<R> > > > iieg(2, 1, cs);
+  zbe::InstantInteractionEventGenerator<R, zbe::CollisionSelector , zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Interactioner<R> > >,  zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Interactionator<R> > > > iieg(2, 1, std::make_shared<zbe::IntersectionCollisionSelector>());
 
   sysTime->update();
   sysTime->update();

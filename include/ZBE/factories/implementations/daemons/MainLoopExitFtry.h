@@ -33,7 +33,7 @@ namespace zbe {
 
 /** \brief Factory for Main Loop.
  */
-class ZBEAPI MainLoopExitFtry : public Factory {
+class ZBEAPI MainLoopExitFtry : virtual public Factory {
 public:
 
   /** \brief Builds a MainLoop.

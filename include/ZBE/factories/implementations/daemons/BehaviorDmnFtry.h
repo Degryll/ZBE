@@ -32,7 +32,7 @@ namespace zbe {
 /** \brief Factory for behavior daemons.
  */
 template<typename L, typename ...E>
-class BehaviorDmnFtry : public Factory {
+class BehaviorDmnFtry : virtual public Factory {
 public:
 
 /** \brief Create the desired tool, probably incomplete.

@@ -31,7 +31,7 @@ namespace zbe {
 
 /** \brief Factory for State Machine Daemons.
  */
-class ZBEAPI StateSetterBhvFtry : public Factory {
+class ZBEAPI StateSetterBhvFtry : virtual public Factory {
 public:
 
   /** \brief Builds a StateMachineDaemon.

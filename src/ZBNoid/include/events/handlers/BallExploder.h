@@ -45,7 +45,7 @@ class BallExploder : public zbe::TimeHandler {
                uint64_t eventId, uint64_t catorListId, uint64_t conerListId, uint64_t actuatorListId, uint64_t catorTicketId, uint64_t behavTicketId, uint64_t behavListId,
                uint64_t spriteListId, uint64_t graphsId, uint64_t state, int64_t graphTime, double ratio, uint64_t ticketId, std::shared_ptr<zbe::TimeEventGenerator> teg)
     : teg(teg), asList(zbe::RsrcStore<ASL>::getInstance().get(spriteListId)), catorList(zbe::RsrcStore<CTL>::getInstance().get(catorListId)),
-      behavList(zbe::RsrcStore<BHL>::getInstance().get(behavListId)), iaeg(new InteractionGenerator(catorListId, eventId, new zbe::IntersectionCollisionSelector())),
+      behavList(zbe::RsrcStore<BHL>::getInstance().get(behavListId)), iaeg(new InteractionGenerator(catorListId, eventId, std::make_shared<zbe::IntersectionCollisionSelector>())),
       waecPRS(waecPRS), state(state), conerListId(conerListId), actuatorListId(actuatorListId), catorTicketId(catorTicketId), behavTicketId(behavTicketId),
       behavListId(behavListId), graphsId(graphsId), graphTime(graphTime), ratio(ratio), ticketId(ticketId), ro() {
     auto aes = std::make_shared<zbe::AvatarEntityFixed<Solid> > (new Solid());

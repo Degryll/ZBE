@@ -37,6 +37,14 @@ public:
   InteractionEventGenerator(const InteractionEventGenerator&) = delete;  //!< Avoid copy.
   void operator=(const InteractionEventGenerator&) = delete;  //!< Avoid copy.
 
+  /** \brief Empty Constructor, unusable generator until the list id, event id and interaction selector are properly set.
+   */
+  InteractionEventGenerator()
+  : es(EventStore::getInstance()), id(0), eventId(0), is(nullptr),
+    lmct(RsrcStore<LT>::getInstance()),
+    lmcn(RsrcStore<LN>::getInstance()),
+    contextTime(zbe::SysTime::getInstance()) {}
+
   /** \brief Parametrized Constructor.
    *  \param list The list id of interactionators
    *  \param Id for the interaction events.
@@ -44,15 +52,30 @@ public:
    *  selector chooses how to check the interacion according to the types of the
    *  participants in the interaction.
    */
-  InteractionEventGenerator(uint64_t list, int eventId, IS* is)
+  InteractionEventGenerator(uint64_t list, uint64_t eventId, std::shared_ptr<IS> is)
   : es(EventStore::getInstance()), id(list), eventId(eventId), is(is),
     lmct(RsrcStore<LT>::getInstance()),
     lmcn(RsrcStore<LN>::getInstance()),
     contextTime(zbe::SysTime::getInstance()) {}
 
+  /** \brief Sets the interactionators list id.
+  *   \param id interactionators list id.
+  */
+  void setListId(uint64_t id) {this->id = id;}
+
+  /** \brief Sets the the id for the generated events.
+  *   \param eventId events id.
+  */
+  void setEventId(uint64_t eventId) {this->eventId = eventId;}
+
+  /** \brief Sets the Interaction Selector
+  *   \param is id interactionators list id.
+  */
+  void setInteractionSelector(std::shared_ptr<IS> is) {this->is = is;}
+
   /** \brief Empty destructor.
   */
-  virtual ~InteractionEventGenerator() {delete is;}
+  virtual ~InteractionEventGenerator() {}
 
   /** \brief It will look for interaction events occurred within the available
    *  time and it will send them to the EventStore.
@@ -80,8 +103,8 @@ protected:
 private:
 
   uint64_t id;  //!< id for the list of interactionators.
-  int eventId;  //!< id for the events of this type.
-  IS* is;  //!< Use to select the type of the interaction.
+  uint64_t eventId;  //!< id for the events of this type.
+  std::shared_ptr<IS> is;  //!< Use to select the type of the interaction.
 
   RsrcStore<LT>& lmct;
   RsrcStore<LN>& lmcn;
@@ -123,6 +146,10 @@ public:
   InstantInteractionEventGenerator(const InstantInteractionEventGenerator&) = delete; //!< Avoid copy.
   void operator=(const InstantInteractionEventGenerator&) = delete; //!< Avoid copy.
 
+  /** \brief Empty constructor.
+   */
+  InstantInteractionEventGenerator(): InteractionEventGenerator<R, IS, LN, LT>(){}
+
   /** \brief Parametrized Constructor.
    * \param list The list id of interactionators.
    * \param eventId Id for the interaction events.
@@ -130,7 +157,7 @@ public:
    *  selector chooses how to check the interacion according to the types of the
    *  participants in the interaction.
    */
-  InstantInteractionEventGenerator(uint64_t list, int eventId, IS* is): InteractionEventGenerator<R, IS, LN, LT>(list, eventId, is){}
+  InstantInteractionEventGenerator(uint64_t list, int eventId, std::shared_ptr<IS> is): InteractionEventGenerator<R, IS, LN, LT>(list, eventId, is){}
 
 protected:
   /** \brief Stores both events in the EventStore
