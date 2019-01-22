@@ -18,6 +18,8 @@
 
 #include "ZBE/core/system/system.h"
 
+#include "ZBE/entities/avatars/Stated.h"
+
 namespace zbe {
 
 /** \brief Actuator capable of change an entity state.

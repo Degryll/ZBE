@@ -25,9 +25,9 @@ class ZBEAPI BroadcastIH : public InputHandler {
   	BroadcastIH() : ihs() {}
     ~BroadcastIH() {}
 
-  	void run(float status) {
+  	void run(uint32_t key, float state) {
       for (auto ih : ihs){
-        ih->run(status);
+        ih->run(key, state);
       }
   	}
 
