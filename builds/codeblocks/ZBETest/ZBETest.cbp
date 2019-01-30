@@ -264,6 +264,7 @@
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/events/handlers/actuators/DmnSelectorAtorFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/events/handlers/actuators/StateChangerAtorFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/events/handlers/input/BroadcastIHFtryTest.cpp" />
+		<Unit filename="../../../src/ZBETest/src/factories/implementations/events/handlers/input/DaemonClickIHFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/events/handlers/time/DaemonTimeHandlerFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/events/handlers/time/TicketEraserFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/graphics/MultiSpriteSheetTest.cpp" />

@@ -8,6 +8,7 @@ namespace SDLWindowTest {
 
   TEST(SDLImageStore, Store_img) {
     EXPECT_EQ(0, zbe::SysError::getNErrors()) << "Initially no errors.";
+    //zbe::SysError::getFirstErrorString()
 
     std::shared_ptr<zbe::SDLWindow> window = std::make_shared<zbe::SDLWindow>("test", 100, 100);
     std::shared_ptr<zbe::SDLImageStore> imgStore = window->getImgStore();

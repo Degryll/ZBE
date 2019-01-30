@@ -81,7 +81,11 @@ SDLImageStore::~SDLImageStore(){
 }
 
 uint64_t SDLImageStore::loadImg(const char *url) {
-  return storeTexture(IMG_LoadTexture(renderer, url));
+  SDL_Texture * texture = IMG_LoadTexture(renderer, url);
+  if(!texture) {
+    zbe::SysError::setError(std::string("ERROR: Can't reload Texture: ") + url + std::string(". IMG_LoadTexture return null and say:") + SDL_GetError());
+  }
+  return storeTexture(texture);
 }
 
 uint64_t SDLImageStore::storeTexture(SDL_Texture * texture) {

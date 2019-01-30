@@ -12,6 +12,7 @@
 #include <memory>
 
 #include "ZBNoid.h"
+#include <cstdio>
 
 int main(int, char*[]) {
   using namespace zbe;
@@ -29,6 +30,9 @@ int main(int, char*[]) {
 
   ZBNoidResourceLoader resourceLoader(rsrcIDDic, window->getImgStore(), window->getFontStore());
   resourceLoader.run();
+
+  SysError::getNErrors();
+  SysError::getFirstErrorString();
 
   ZBNoidMainGameBuilder maingameBuilder(rsrcIDDic, window, inputBuffer);
   std::shared_ptr<Daemon> mainLoop = maingameBuilder.build();
@@ -72,6 +76,11 @@ int main(int, char*[]) {
 
   //mainLoop->run();
   gameStateMachine->run();
+
+  if(zbe::SysError::getNErrors()>0) {
+    printf("ERRORS!\n");
+    printf("%s\n", zbe::SysError::getFirstErrorString().c_str());
+  }
 
   return 0;
 }

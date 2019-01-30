@@ -35,7 +35,44 @@ public:
  *  \param yvalue Value where mouse y will be readed.
  *  \param daemon daemon to be executed when condition are met.
  */
+DaemonClickIH() : a(), xval(nullptr), yval(nullptr), d(nullptr) {}
+
+
+/** \brief Constructs a DaemonClickIH from its raw data
+ *  \param area area to use.
+ *  \param xvalue Value where mouse x will be readed.
+ *  \param yvalue Value where mouse y will be readed.
+ *  \param daemon daemon to be executed when condition are met.
+ */
 DaemonClickIH(Region2D area, std::shared_ptr<Value<double> > xvalue, std::shared_ptr<Value<double> > yvalue, std::shared_ptr<Daemon> daemon) : a(area), xval(xvalue), yval(yvalue), d(daemon) {}
+
+/** \brief Set Value<double> where x pointer coor will be found
+ *  \param xvalue where x pointer coor will be found.
+ */
+void setXValue(std::shared_ptr<Value<double> > xvalue) {
+  this->xval = xvalue;
+}
+
+/** \brief Set Value<double> where y pointer coor will be found
+ *  \param yvalue where y pointer coor will be found.
+ */
+void setYValue(std::shared_ptr<Value<double> > yvalue) {
+  this->yval = yvalue;
+}
+
+/** \brief Set the area where the daemon will be launch.
+ *  \param area where the daemon will be launch.
+ */
+void setArea(Region2D area) {
+  this->a = area;
+}
+
+/** \brief Set the Daemon to run.
+ *  \param daemon the Daemon to run.
+ */
+void setDaemon(std::shared_ptr<Daemon> daemon) {
+  this->d = daemon;
+}
 
 /** \brief exec daemon if click is inside given area.
  *  \param state input state.
@@ -56,7 +93,7 @@ void run(uint32_t, float state) {
 }
 
 private:
-	Region2D a;
+  Region2D a;
   std::shared_ptr<Value<double> > xval;
   std::shared_ptr<Value<double> > yval;
   std::shared_ptr<Daemon> d;
