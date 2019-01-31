@@ -28,10 +28,21 @@ public:
   InputToValue(const InputToValue&) = delete; //!< Deleted copy constructor.
   void operator=(const InputToValue&) = delete; //!< Deleted operator.
 
+  /** brief Empty constructor
+   */
+  InputToValue() : val(nullptr) {}
+
   /** brief Parametrized constructor
     * param value where to store input.
    */
   InputToValue(std::shared_ptr<zbe::Value<double> > val) : val(val) {}
+
+  /** \brief Set Value<double> where input will be stored.
+   *  \param value where input will be stored.
+   */
+  void setValue(std::shared_ptr<Value<double> > value) {
+    this->val = value;
+  }
 
   /** brief stores input value to the value.
     * param status value from input.
@@ -41,7 +52,7 @@ public:
   }
 
 private:
-  std::shared_ptr<zbe::Value<double> > val;
+  std::shared_ptr<Value<double> > val;
 };
 
 }  // namespace zbe

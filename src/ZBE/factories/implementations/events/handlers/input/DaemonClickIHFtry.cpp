@@ -53,7 +53,6 @@ void DaemonClickIHFtry::setup(std::string name, uint64_t cfgId) {
       json yValcfg = j["yval"];
 
       if (xValcfg.is_string() && yValcfg.is_string()){
-        std::string daemonName = xValcfg.get<std::string>();
         dcih->setYValue(valueDRsrc.get("ValueD."s + yValcfg.get<std::string>()));
         dcih->setXValue(valueDRsrc.get("ValueD."s + xValcfg.get<std::string>()));
       } else {

@@ -470,6 +470,8 @@
 		<Unit filename="../../../include/ZBE/factories/implementations/events/handlers/actuators/StateChangerAtorFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/events/handlers/input/BroadcastIHFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/events/handlers/input/DaemonClickIHFtry.h" />
+		<Unit filename="../../../include/ZBE/factories/implementations/events/handlers/input/DaemonIHFtry.h" />
+		<Unit filename="../../../include/ZBE/factories/implementations/events/handlers/input/InputToValueFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/events/handlers/time/DaemonTimeHandlerFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/events/handlers/time/TicketEraserFtry.h" />
 		<Unit filename="../../../include/ZBE/graphics/MultiSpriteSheet.h" />
@@ -524,6 +526,8 @@
 		<Unit filename="../../../src/ZBE/factories/implementations/daemons/StateMachineDmnFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/events/handlers/input/BroadcastIHFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/events/handlers/input/DaemonClickIHFtry.cpp" />
+		<Unit filename="../../../src/ZBE/factories/implementations/events/handlers/input/DaemonIHFtry.cpp" />
+		<Unit filename="../../../src/ZBE/factories/implementations/events/handlers/input/InputToValueFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/events/handlers/time/DaemonTimeHandlerFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/events/handlers/time/TicketEraserFtry.cpp" />
 		<Unit filename="../../../src/ZBE/resources/contextname.cpp" />
