@@ -74,8 +74,8 @@ std::shared_ptr<zbe::Daemon> ZBNoidMainGameBuilder::build() {
   ExitInputHandler* terminator = new ExitInputHandler();
   ism->addHandler(ZBEK_ESCAPE, terminator);
 
-  DaemonInputHandler* demagnetizeDaemonInputHandler = new DaemonInputHandler(demagnetizeDaemon);
-  ism->addHandler(ZBEK_MOUSE_LEFT, demagnetizeDaemonInputHandler);
+  DaemonIH* demagnetizeDaemonIH = new DaemonIH(demagnetizeDaemon);
+  ism->addHandler(ZBEK_MOUSE_LEFT, demagnetizeDaemonIH);
 
   InputToValue* mouseX = new InputToValue( ZBNCfg::rmVDouble.get(ZBNCfg::MOUSE_X_POS));
   ism->addHandler(ZBEK_MOUSE_OFFSET_X, mouseX);

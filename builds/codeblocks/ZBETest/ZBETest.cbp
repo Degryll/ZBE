@@ -251,7 +251,6 @@
 		<Unit filename="../../../src/ZBETest/src/core/tools/time/ContextTimeTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/core/tools/toolsTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/events/handlers/actuators/DaemonSelectorAtorTest.cpp" />
-		<Unit filename="../../../src/ZBETest/src/events/handlers/input/BroadcastIHTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/events/handlers/time/DaemonTimeHandlerTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/events/handlers/time/TicketEraserTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/behaviors/StateLTEraserBhvFtryTest.cpp" />

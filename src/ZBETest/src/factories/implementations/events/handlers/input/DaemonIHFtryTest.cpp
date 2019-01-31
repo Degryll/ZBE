@@ -14,9 +14,9 @@
 #include "ZBE/core/tools/shared/Value.h"
 #include "ZBE/core/tools/shared/implementations/SimpleValue.h"
 
-#include "ZBE/factories/implementations/events/handlers/input/DaemonClickIHFtry.h"
+#include "ZBE/factories/implementations/events/handlers/input/DaemonIHFtry.h"
 
-namespace DaemonClickIHFtryTest {
+namespace DaemonIHFtryTest {
 
 class DummyDaemon : public zbe::Daemon {
 public:
@@ -28,7 +28,7 @@ public:
   bool executed;
 };
 
-TEST(DaemonClickIHFtry, build) {
+TEST(DaemonIHFtry, build) {
   EXPECT_EQ(0, zbe::SysError::getNErrors()) << "Initially no errors.";
 
   using namespace zbe;
@@ -37,44 +37,31 @@ TEST(DaemonClickIHFtry, build) {
   auto &dict = NameRsrcDictionary::getInstance();
   auto &configRsrc = RsrcStore<nlohmann::json>::getInstance();
   auto &inputRsrc = RsrcStore<InputHandler>::getInstance();
-  auto &dcihRsrc = RsrcStore<DaemonClickIH>::getInstance();
+  auto &dcihRsrc = RsrcStore<DaemonIH>::getInstance();
   auto &daemonRsrc = RsrcStore<Daemon>::getInstance();
   auto &valueDRsrc = RsrcStore<Value<double> >::getInstance();
 
   auto cfg = std::make_shared<json>();
-  (*cfg) = {
-              {"daemon", "dm1"},
-              {"x", 10},
-              {"y", 10},
-              {"h", 100},
-              {"w", 100},
-              {"xval", "dchixval"},
-              {"yval", "dchiyval"}
-            };
+  (*cfg) = {{"daemon", "dm1"}};
 
   uint64_t cfgId = SysIdGenerator::getId();
   configRsrc.insert(cfgId, cfg);
 
   auto dm1 = std::make_shared<DummyDaemon>();
-  auto xval = std::make_shared<SimpleValue<double> >(15.0);
-  auto yval = std::make_shared<SimpleValue<double> >(15.0);
 
   daemonRsrc.insert("Daemon."s + "dm1", dm1);
 
-  valueDRsrc.insert("ValueD."s + "dchixval"s, xval);
-  valueDRsrc.insert("ValueD."s + "dchiyval"s, yval);
-
-  DaemonClickIHFtry dcihf;
-  dcihf.create("DaemonClickIHFtryTestName", cfgId);
-  dcihf.setup("DaemonClickIHFtryTestName", cfgId);
+  DaemonIHFtry dcihf;
+  dcihf.create("DaemonIHFtryTestName", cfgId);
+  dcihf.setup("DaemonIHFtryTestName", cfgId);
 
   EXPECT_EQ(0, zbe::SysError::getNErrors()) << "Must be no config errors.";
 
-  uint64_t outId = dict.get("InputHandler.DaemonClickIHFtryTestName");
-  uint64_t outRealId = dict.get("DaemonClickIH.DaemonClickIHFtryTestName");
+  uint64_t outId = dict.get("InputHandler.DaemonIHFtryTestName");
+  uint64_t outRealId = dict.get("DaemonIH.DaemonIHFtryTestName");
 
   ASSERT_NE(0, outId) << "Must create a InputHandler with given name";
-  ASSERT_NE(0, outRealId) << "Must create a DaemonClickIH with given name";
+  ASSERT_NE(0, outRealId) << "Must create a DaemonIH with given name";
 
   auto outHnd = inputRsrc.get(outId);
 
@@ -83,14 +70,6 @@ TEST(DaemonClickIHFtry, build) {
   outHnd->run(1, 0.0f);
 
   EXPECT_TRUE(dm1->executed) << "Daemon called after run";
-
-  dm1->executed = false;
-  xval->set(0);
-  yval->set(0);
-
-  outHnd->run(1, 0.0f);
-
-  EXPECT_FALSE(dm1->executed) << "Daemon not called after run out of bounds";
 
   EXPECT_EQ(0, zbe::SysError::getNErrors()) << "Finaly no errors.";
 

@@ -61,7 +61,7 @@
 #include "ZBE/behaviors/StateSetter.h"
 
 #include "ZBE/events/handlers/actuators/ConditionalEraserAtor.h"
-#include "ZBE/events/handlers/input/DaemonInputHandler.h"
+#include "ZBE/events/handlers/input/DaemonIH.h"
 #include "ZBE/events/handlers/input/InputToValue.h"
 
 #include "ZBE/SDL/daemons/BasicPostLoopSDLDaemon.h"
