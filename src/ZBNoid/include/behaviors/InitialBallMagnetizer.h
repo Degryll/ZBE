@@ -47,7 +47,7 @@ public:
     zbe::Positionable<2>* wrapper = new BoundedWrapperPositionable2D(aecp2->get(), xMin, yMin, xMax, yMax, offset.x, 0);
     std::shared_ptr<zbe::AvatarEntity<zbe::Positionable<2> > > aep2 = std::make_shared<zbe::AvatarEntityFixed<zbe::Positionable<2> > >(wrapper);
     std::shared_ptr<zbe::AvatarEntityContainer<zbe::Positionable<2>, zbe::Avatar> > aecp2a = std::make_shared<zbe::AvatarEntityContainer<zbe::Positionable<2>, zbe::Avatar> >(aep2, aeca->get());
-    avatar->addToList(newBhvId, list->push_front(aecp2a));
+    avatar->addTicket(newBhvId, list->push_front(aecp2a));
     avatar->setINACTIVE(oldBhvId);
   }
 private:

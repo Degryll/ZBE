@@ -251,6 +251,7 @@
 		<Unit filename="../../../src/ZBETest/src/core/tools/time/ContextTimeTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/core/tools/toolsTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/events/handlers/actuators/DaemonSelectorAtorTest.cpp" />
+		<Unit filename="../../../src/ZBETest/src/events/handlers/time/DaemonRecurrentTimeHandlerTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/events/handlers/time/DaemonTimeHandlerTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/events/handlers/time/TicketEraserTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/behaviors/StateLTEraserBhvFtryTest.cpp" />
@@ -266,6 +267,7 @@
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/events/handlers/input/DaemonClickIHFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/events/handlers/input/DaemonIHFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/events/handlers/input/InputToValueFtryTest.cpp" />
+		<Unit filename="../../../src/ZBETest/src/factories/implementations/events/handlers/time/DaemonRecurrentTimeHandlerFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/events/handlers/time/DaemonTimeHandlerFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/events/handlers/time/TicketEraserFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/graphics/MultiSpriteSheetTest.cpp" />

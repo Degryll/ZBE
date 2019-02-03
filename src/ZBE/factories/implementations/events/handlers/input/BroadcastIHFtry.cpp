@@ -11,7 +11,7 @@
 
 namespace zbe {
 
-void BroadcastIHFtry::create(std::string name, uint64_t cfgId) {
+void BroadcastIHFtry::create(std::string name, uint64_t) {
   using namespace std::string_literals;
   std::shared_ptr<BroadcastIH> bih = std::make_shared<BroadcastIH>();
 

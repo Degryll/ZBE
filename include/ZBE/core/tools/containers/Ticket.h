@@ -20,6 +20,7 @@ namespace zbe {
  */
 class Ticket {
 public:
+  enum State{ACTIVE,INACTIVE,ERASED};  //!< The different states.
 
   virtual ~Ticket() {}
 
@@ -27,14 +28,14 @@ public:
   virtual void setINACTIVE() = 0;  //!< Set the state as INACTIVE.
   virtual void setERASED() = 0;    //!< Set the state as ERASED.
 
+  virtual void setState(State state) = 0;  //!< Set the state as state.
+
   virtual bool isACTIVE() = 0;     //!< True if state is ACTIVE.
   virtual bool isNotACTIVE() = 0;  //!< True if state is not ACTIVE, either INACTIVE or ERASED.
   virtual bool isINACTIVE() = 0;   //!< True if state is INACTIVE.
   virtual bool isERASED() = 0;     //!< True if state is ERASED.
 
-protected:
-  enum State{ACTIVE,INACTIVE,ERASED};  //!< The different states.
-
+  virtual State getState() = 0;  //!< Return the state of the ticket.
 };
 
 }  // namespace zbe

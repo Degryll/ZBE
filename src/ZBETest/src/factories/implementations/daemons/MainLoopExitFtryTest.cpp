@@ -61,7 +61,6 @@ TEST(MainLoopExitFtryTest, build) {
   using namespace zbe;
   using namespace nlohmann;
   using namespace std::string_literals;
-  NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();
   auto& configRsrc = RsrcStore<json>::getInstance();
   auto& daemonRsrc = RsrcStore<Daemon>::getInstance();
   auto& mlRsrc = RsrcStore<MainLoop>::getInstance();
@@ -108,7 +107,6 @@ TEST(MainLoopExitFtryTest, build) {
   EXPECT_TRUE(reactD->executed) << "Must call reactD";
 
   configRsrc.clear();
-  dict.clear();
   daemonRsrc.clear();
 
   zbe::SysError::clear();

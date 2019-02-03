@@ -18,9 +18,18 @@ Entity::~Entity() {
   }
 }
 
-void Entity::addToList(uint64_t id, std::shared_ptr<Ticket> ticket) {
+void Entity::addTicket(uint64_t id, std::shared_ptr<Ticket> ticket) {
   auto it = tl.find(id);
   if (it != tl.end()) {
+    SysError::setError("Ticket in Entity list is not found.");
+  }
+  tl[id] = ticket;
+}
+
+void Entity::replaceTicket(uint64_t id, std::shared_ptr<Ticket> ticket) {
+  auto it = tl.find(id);
+  if (it != tl.end()) {
+    ticket->setState(it->second->getState());
     it->second->setERASED();
   }
   tl[id] = ticket;

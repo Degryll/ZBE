@@ -92,9 +92,9 @@ public:
     std::shared_ptr<zbe::Adaptor<zbe::Interactionator<R> > > ballCollisionatorAdaptor(new BallCatorAdaptor<R>(ball, resizableAE));
     setAdaptor(ball, ballCollisionatorAdaptor);
 
-    ball->addToList(ctId, ctl->push_front(ball));
-    ball->addToList(dtId, asl->push_front(aecas));
-    ball->addToList(btId, bl->push_front(aecb2w));
+    ball->addTicket(ctId, ctl->push_front(ball));
+    ball->addTicket(dtId, asl->push_front(aecas));
+    ball->addTicket(btId, bl->push_front(aecb2w));
   }
 
 private:

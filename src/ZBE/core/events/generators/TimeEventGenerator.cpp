@@ -43,6 +43,12 @@ inline void TimerTicket::setERASED() {
   }
 }
 
+inline void TimerTicket::setState(State state) {
+  if(state == ACTIVE) this->setACTIVE();
+  if(state == INACTIVE) this->setINACTIVE();
+  if(state == ERASED) this->setERASED();
+}
+
 bool TimerTicket::increaseTime(int64_t increment) {
   TimerData data = (*iter);
   timers.erase(iter);
@@ -71,7 +77,6 @@ void TimeEventGenerator::run() {
     || (it->time != v)) {
       break;
     }
-
     es.storeEvent(new TimeEvent(eventId, v, it->handler));
   }  // for each timer
 }

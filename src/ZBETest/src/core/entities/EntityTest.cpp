@@ -21,10 +21,10 @@ TEST(Entity, TicketedElements) {
   std::shared_ptr<zbe::TicketedElement<int> > t3 = std::make_shared<zbe::TicketedElement<int> >(std::make_shared<int>(3));
   std::shared_ptr<zbe::TicketedElement<int> > t4 = std::make_shared<zbe::TicketedElement<int> >(std::make_shared<int>(4));
 
-  e->addToList(1, t1);
-  e->addToList(2, t2);
-  e->addToList(3, t3);
-  e->addToList(4, t4);
+  e->addTicket(1, t1);
+  e->addTicket(2, t2);
+  e->addTicket(3, t3);
+  e->addTicket(4, t4);
 
   EXPECT_TRUE(t1->isACTIVE()) << "Add ticket, state ACTIVE by default. - 1";
   EXPECT_TRUE(t2->isACTIVE()) << "Add ticket, state ACTIVE by default. - 2";
@@ -69,7 +69,7 @@ TEST(Entity, Tickets_Error) {
   zbe::SysError::clear();
 
   std::shared_ptr<zbe::TicketedElement<int> > t1 = std::make_shared<zbe::TicketedElement<int> >(std::make_shared<int>(1));
-  e.addToList(42, t1);
+  e.addTicket(42, t1);
 
   EXPECT_EQ(0,zbe::SysError::getNErrors()) << "Access a valid Ticket.";
 

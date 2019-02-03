@@ -25,10 +25,16 @@ public:
 DaemonTimeHandler(const DaemonTimeHandler&) = delete; //!< Avoid copy.
 void operator=(const DaemonTimeHandler&) = delete; //!< Avoid copy.
 
+  /** brief Empty constructor
+   */
+	DaemonTimeHandler() : d(nullptr) {}
+
   /** brief Parametrized constructor
    * param daemon Daemon to be executed
    */
 	DaemonTimeHandler(std::shared_ptr<Daemon> daemon) : d(daemon) {}
+
+	void setDaemon(std::shared_ptr<Daemon> daemon) {d = daemon;}
 
   /** brief Run daemon
    *  param time not used

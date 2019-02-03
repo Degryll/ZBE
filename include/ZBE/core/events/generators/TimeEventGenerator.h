@@ -61,10 +61,14 @@ public:
   void setINACTIVE();  //!< Set the state as INACTIVE.
   void setERASED();    //!< Set the state as ERASED.
 
+  void setState(State state);  //!< Set the state as state.
+
   inline bool isACTIVE()    {return (s == ACTIVE);}    //!< True if state is ACTIVE.
   inline bool isNotACTIVE() {return (s != ACTIVE);}    //!< True if state is not ACTIVE, either INACTIVE or ERASED.
   inline bool isINACTIVE()  {return (s == INACTIVE);}  //!< True if state is INACTIVE.
   inline bool isERASED()    {return (s == ERASED);}    //!< True if state is ERASED.
+
+  State getState() {return (s);}  //!< Return the state of the ticket.
 
   /** \brief Increases the time in a given amount (that can be negative). If the incremented time is zero or less, the event is triggered.
    * return true if the increment makes the timer go to zero or less.

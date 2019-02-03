@@ -51,9 +51,9 @@ void ZBNoidLevelLoader::run() {
       wrapAEC(&aecas, brick);
       wrapAEC(&aecsap2, brick);
 
-      brick->addToList(ZBNCfg::COLLISION_TICKET, ZBNCfg::rmTFAEConer.get(ZBNCfg::BRICK_COLLISIONER_LIST)->push_front(brick));
-      brick->addToList(ZBNCfg::DRAW_TICKET, ZBNCfg::rmTFAECAnimSprt.get(ZBNCfg::BRICK_AS_LIST)->push_front(aecas));
-      brick->addToList(ZBNCfg::BEHAVE_TICKET, ZBNCfg::rmTFAECStatAvtPos2D.get(ZBNCfg::BRICK_LIST)->push_front(aecsap2));
+      brick->addTicket(ZBNCfg::COLLISION_TICKET, ZBNCfg::rmTFAEConer.get(ZBNCfg::BRICK_COLLISIONER_LIST)->push_front(brick));
+      brick->addTicket(ZBNCfg::DRAW_TICKET, ZBNCfg::rmTFAECAnimSprt.get(ZBNCfg::BRICK_AS_LIST)->push_front(aecas));
+      brick->addTicket(ZBNCfg::BEHAVE_TICKET, ZBNCfg::rmTFAECStatAvtPos2D.get(ZBNCfg::BRICK_LIST)->push_front(aecsap2));
     }
   }
 

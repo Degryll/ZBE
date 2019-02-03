@@ -39,10 +39,14 @@ public:
   inline void setINACTIVE() {s = INACTIVE;}  //!< Set the state as INACTIVE.
   inline void setERASED()   {s = ERASED;}  //!< Set the state as ERASED.
 
+  inline void setState(State state) {s = state;}  //!< Set the state as state.
+
   inline bool isACTIVE()    {return (s == ACTIVE);}    //!< True if state is ACTIVE.
   inline bool isNotACTIVE() {return (s != ACTIVE);}    //!< True if state is not ACTIVE, either INACTIVE or ERASED.
   inline bool isINACTIVE()  {return (s == INACTIVE);}  //!< True if state is INACTIVE.
   inline bool isERASED()    {return (s == ERASED);}    //!< True if state is ERASED.
+
+  inline State getState() {return (s);}  //!< Return the state of the ticket.
 
 private:
 

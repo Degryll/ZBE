@@ -94,8 +94,8 @@ class BallExploder : public zbe::TimeHandler {
     zbe::InteractionatorCommon<R, Scorer>* cator;
     cator = new zbe::InteractionatorCommon<R, Scorer>(std::make_shared<zbe::WeakAvatarEntityContainer<Scorer> >(scorer), cObject, ro, actuatorListId, conerListId);
     std::shared_ptr<zbe::AvatarEntity<zbe::Interactionator<R> > > aeCator = std::make_shared<zbe::AvatarEntityFixed<zbe::Interactionator<R> > >(cator);
-    ent->addToList(catorTicketId, catorList->push_front(aeCator));
-    ent->addToList(behavTicketId, behavList->push_front(entityContainer));
+    ent->addTicket(catorTicketId, catorList->push_front(aeCator));
+    ent->addTicket(behavTicketId, behavList->push_front(entityContainer));
     //std::shared_ptr<zbe::Ticket> catorTicket = ;
     //Collision detection
     iaeg->run();

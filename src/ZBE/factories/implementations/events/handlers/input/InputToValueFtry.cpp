@@ -11,7 +11,7 @@
 
 namespace zbe {
 
-void InputToValueFtry::create(std::string name, uint64_t cfgId) {
+void InputToValueFtry::create(std::string name, uint64_t) {
   using namespace std::string_literals;
   std::shared_ptr<InputToValue> itv = std::make_shared<InputToValue>();
 

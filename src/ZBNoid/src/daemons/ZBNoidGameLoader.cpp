@@ -38,10 +38,10 @@ void ZBNoidGameLoader::run() {
 
   wrapAEC(&aecas, board);
 
-  board->addToList(ZBNCfg::COLLISION_TICKET, ZBNCfg::rmTFAEConer.get(ZBNCfg::BOARD_COLLISIONER_LIST)->push_front(board));
-  board->addToList(ZBNCfg::DRAW_TICKET, ZBNCfg::rmTFAECAnimSprt.get(ZBNCfg::BOARD_AS_LIST)->push_front(aecas));
+  board->addTicket(ZBNCfg::COLLISION_TICKET, ZBNCfg::rmTFAEConer.get(ZBNCfg::BOARD_COLLISIONER_LIST)->push_front(board));
+  board->addTicket(ZBNCfg::DRAW_TICKET, ZBNCfg::rmTFAECAnimSprt.get(ZBNCfg::BOARD_AS_LIST)->push_front(aecas));
 
-  securityBoard->addToList(ZBNCfg::COLLISION_TICKET, ZBNCfg::rmTFAEConer.get(ZBNCfg::BOARD_COLLISIONER_LIST)->push_front(securityBoard));
+  securityBoard->addTicket(ZBNCfg::COLLISION_TICKET, ZBNCfg::rmTFAEConer.get(ZBNCfg::BOARD_COLLISIONER_LIST)->push_front(securityBoard));
   // bar------------------------------------------------------------------------------------------------------
 
   std::shared_ptr<Element2D<ZombienoidReactor> > bar(new Element2D<ZombienoidReactor>({(WIDTH-BAR_I_WIDTH)/2, HEIGHT-BAR_MARGIN-(BAR_HEIGHT/2)},   ZBNCfg::BAR_ACTUATORS_LIST, BAR_I_WIDTH, BAR_HEIGHT, ZBNCfg::BAR_SS));
@@ -56,10 +56,10 @@ void ZBNoidGameLoader::run() {
   wrapAEC(&aecp2a, bar);
   wrapAEC(&aecs, bar);
 
-  bar->addToList(ZBNCfg::COLLISION_TICKET, ZBNCfg::rmTFAEConer.get(ZBNCfg::BAR_COLLISIONER_LIST)->push_front(bar));
-  bar->addToList(ZBNCfg::DRAW_TICKET, ZBNCfg::rmTFAECAnimSprt.get(ZBNCfg::BAR_AS_LIST)->push_front(aecas));
-  bar->addToList(ZBNCfg::BEHAVE_TICKET, ZBNCfg::rmTFAECPos2DAvt.get(ZBNCfg::BALL_MOUSE_CONTROL_LIST)->push_front(aecp2a));
-  bar->addToList(ZBNCfg::STICKY_LIST_TICKET, ZBNCfg::rmTFAECStat.get(ZBNCfg::STICKY_STATE_LIST)->push_front(aecs));
+  bar->addTicket(ZBNCfg::COLLISION_TICKET, ZBNCfg::rmTFAEConer.get(ZBNCfg::BAR_COLLISIONER_LIST)->push_front(bar));
+  bar->addTicket(ZBNCfg::DRAW_TICKET, ZBNCfg::rmTFAECAnimSprt.get(ZBNCfg::BAR_AS_LIST)->push_front(aecas));
+  bar->addTicket(ZBNCfg::BEHAVE_TICKET, ZBNCfg::rmTFAECPos2DAvt.get(ZBNCfg::BALL_MOUSE_CONTROL_LIST)->push_front(aecp2a));
+  bar->addTicket(ZBNCfg::STICKY_LIST_TICKET, ZBNCfg::rmTFAECStat.get(ZBNCfg::STICKY_STATE_LIST)->push_front(aecs));
 
   // ball spawner---------------------------------------------------------------------------------------------
 

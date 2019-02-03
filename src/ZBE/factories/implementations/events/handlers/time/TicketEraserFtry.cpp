@@ -11,7 +11,15 @@
 
 namespace zbe {
 
-void TicketEraserFtry::create(std::string name, uint64_t cfgId) {
+void TicketEraserFtry::create(std::string name, uint64_t) {
+  using namespace std::string_literals;
+
+  std::shared_ptr<TicketEraser> te = std::make_shared<TicketEraser>();
+  timeRsrc.insert("TimeHandler."s + name, te);
+  timeEraserRsrc.insert("TicketEraser."s + name, te);
+}
+
+void TicketEraserFtry::setup(std::string name, uint64_t cfgId) {
   using namespace std::string_literals;
   using namespace nlohmann;
   std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -20,11 +28,10 @@ void TicketEraserFtry::create(std::string name, uint64_t cfgId) {
     auto j = *cfg;
     if (j["ticket"].is_string()) {
       std::string tname = j["ticket"].get<std::string>();
-      uint64_t tId = dict.get("Ticket."s + tname);
-      std::shared_ptr<Ticket> ticket = ticketRsrc.get(tId);
-      std::shared_ptr<TicketEraser> te = std::make_shared<TicketEraser>(ticket);
-      timeRsrc.insert("TimeHandler."s + name, te);
-      timeEraserRsrc.insert("TicketEraser."s + name, te);
+      std::shared_ptr<Ticket> ticket = ticketRsrc.get("Ticket."s + tname);
+      auto te = timeEraserRsrc.get("TicketEraser."s + name);
+      te->setTicket(ticket);
+
     } else {
       SysError::setError("TicketEraserFtry config for "s + j["ticket"].get<std::string>() + ": must be a string."s);
     }
@@ -32,7 +39,5 @@ void TicketEraserFtry::create(std::string name, uint64_t cfgId) {
     SysError::setError("TicketEraserFtry config for "s + name + " not found."s);
   }
 }
-
-void TicketEraserFtry::setup(std::string, uint64_t) {}
 
 }  // namespace zbe

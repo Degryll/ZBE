@@ -11,7 +11,7 @@
 
 namespace zbe {
 
-void DaemonIHFtry::create(std::string name, uint64_t cfgId) {
+void DaemonIHFtry::create(std::string name, uint64_t) {
   using namespace std::string_literals;
   std::shared_ptr<DaemonIH> dcih = std::make_shared<DaemonIH>();
 

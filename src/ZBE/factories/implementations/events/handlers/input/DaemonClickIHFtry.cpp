@@ -11,7 +11,7 @@
 
 namespace zbe {
 
-void DaemonClickIHFtry::create(std::string name, uint64_t cfgId) {
+void DaemonClickIHFtry::create(std::string name, uint64_t) {
   using namespace std::string_literals;
   std::shared_ptr<DaemonClickIH> dcih = std::make_shared<DaemonClickIH>();
 
