@@ -28,7 +28,7 @@ void DaemonRecurrentTimeHandlerFtry::setup(std::string name, uint64_t cfgId) {
     auto j = *cfg;
     std::shared_ptr<Daemon> daemon;
     std::shared_ptr<TimeEventGenerator> teg;
-    std::shared_ptr<Avatar> a;
+    std::shared_ptr<AvatarEntity<Avatar> > a;
     uint64_t id = 0;
     uint64_t period = 0;
     if (j["daemon"].is_string()) {

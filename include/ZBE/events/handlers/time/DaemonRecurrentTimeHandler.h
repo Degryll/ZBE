@@ -13,6 +13,7 @@
 #include <cstdint>
 #include <memory>
 
+#include "ZBE/core/entities/AvatarEntity.h"
 #include "ZBE/core/entities/avatars/Avatar.h"
 
 #include "ZBE/core/events/generators/TimeEventGenerator.h"
@@ -41,7 +42,7 @@ void operator=(const DaemonRecurrentTimeHandler&) = delete; //!< Deleted copy co
    * param id Id to identify the ticket to the timer
    * param period repeat time
    */
-	DaemonRecurrentTimeHandler(std::shared_ptr<Daemon> daemon, std::shared_ptr<TimeEventGenerator> teg, std::shared_ptr<Avatar> avatar, uint64_t id, uint64_t period) : d(daemon), teg(teg), a(avatar), id(id), p(period) {}
+	DaemonRecurrentTimeHandler(std::shared_ptr<Daemon> daemon, std::shared_ptr<TimeEventGenerator> teg, std::shared_ptr<AvatarEntity<Avatar> > avatar, uint64_t id, uint64_t period) : d(daemon), teg(teg), a(avatar), id(id), p(period) {}
 
   /** brief Set the daemon that will be executed when the timers ends.
    *  param daemon The daemon.
@@ -57,7 +58,7 @@ void operator=(const DaemonRecurrentTimeHandler&) = delete; //!< Deleted copy co
    *  param avatar The avatar.
    *  param id The id used to store the ticket.
    */
-	void setAvatar(std::shared_ptr<Avatar> avatar, uint64_t id) {
+	void setAvatar(std::shared_ptr<AvatarEntity<Avatar> > avatar, uint64_t id) {
 	  this->a = avatar;
 	  this->id = id;
   }
@@ -72,16 +73,18 @@ void operator=(const DaemonRecurrentTimeHandler&) = delete; //!< Deleted copy co
    *  param time used to calculate next iteration.
    */
 	void run(uint64_t time) {
+    Avatar* avatar;
+    a->assignAvatar(&avatar);
     d->run();
     std::shared_ptr<TimeHandler> th = std::make_shared<DaemonRecurrentTimeHandler>(d, teg, a, id, p);
     std::shared_ptr<TimerTicket> tt = teg->addTimer(th, time + p);
-    a->replaceTicket(id, tt);
+    avatar->replaceTicket(id, tt);
 	}
 
 private:
 	std::shared_ptr<Daemon> d;
   std::shared_ptr<TimeEventGenerator> teg;
-  std::shared_ptr<Avatar> a;
+  std::shared_ptr<AvatarEntity<Avatar> > a;
 	uint64_t id;
 	uint64_t p;
 };

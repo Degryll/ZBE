@@ -2,6 +2,8 @@
 
 #include <memory>
 
+#include "ZBE/core/entities/AvatarEntity.h"
+#include "ZBE/core/entities/Entity.h"
 #include "ZBE/core/entities/avatars/Avatar.h"
 #include "ZBE/core/entities/avatars/implementations/BaseAvatar.h"
 #include "ZBE/core/events/EventStore.h"
@@ -36,13 +38,13 @@ TEST(DaemonRecurrentTimeHandler, run) {
 
   auto teg = std::make_shared<zbe::TimeEventGenerator>(3, contextTime);
 
+  auto *e = new zbe::Entity;
+  auto *ba = new zbe::BaseAvatar(e);
+  auto aefa = std::make_shared<zbe::AvatarEntityFixed<zbe::Avatar> >(ba);
 
-  zbe::Entity e;
-  auto ba = std::make_shared<zbe::BaseAvatar>(&e);
-
-  auto dth1 = std::make_shared<zbe::DaemonRecurrentTimeHandler>(d, teg, ba, 42, zbe::TIME_QUANTUM * 1000);
-  auto dth2 = std::make_shared<zbe::DaemonRecurrentTimeHandler>(d, teg, ba, 43, zbe::TIME_QUANTUM * 1500);
-  auto dth3 = std::make_shared<zbe::DaemonRecurrentTimeHandler>(d, teg, ba, 44,  zbe::TIME_QUANTUM * 500);
+  auto dth1 = std::make_shared<zbe::DaemonRecurrentTimeHandler>(d, teg, aefa, 42, zbe::TIME_QUANTUM * 1000);
+  auto dth2 = std::make_shared<zbe::DaemonRecurrentTimeHandler>(d, teg, aefa, 43, zbe::TIME_QUANTUM * 1500);
+  auto dth3 = std::make_shared<zbe::DaemonRecurrentTimeHandler>(d, teg, aefa, 44,  zbe::TIME_QUANTUM * 500);
 
   teg->addTimer(dth1, zbe::TIME_QUANTUM * 1000);
   teg->addTimer(dth2, zbe::TIME_QUANTUM * 1500);
@@ -112,6 +114,9 @@ TEST(DaemonRecurrentTimeHandler, run) {
   es.manageCurrent();
 
   EXPECT_EQ(8, d->runtimes) << "No new execution, all timers all erased.";
+
+  delete e;
+  // delete ba;  // AvatarEntityFixed deletes it
 }
 
 }  // namespace DaemonRecurrentTimeHandlerTest

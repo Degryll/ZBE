@@ -54,7 +54,7 @@ private:
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<Daemon> &dmnRsrc = RsrcStore<Daemon>::getInstance();
   RsrcStore<TimeEventGenerator> &tegRsrc = RsrcStore<TimeEventGenerator>::getInstance();
-  RsrcStore<Avatar> &avatarRsrc = RsrcStore<Avatar>::getInstance();
+  RsrcStore<AvatarEntity<Avatar> > &avatarRsrc = RsrcStore<AvatarEntity<Avatar> >::getInstance();
   RsrcStore<TimeHandler> &timeRsrc = RsrcStore<TimeHandler>::getInstance();
   RsrcStore<DaemonRecurrentTimeHandler> &dmnRecurrentTimeHandlerRsrc = RsrcStore<DaemonRecurrentTimeHandler>::getInstance();
 };

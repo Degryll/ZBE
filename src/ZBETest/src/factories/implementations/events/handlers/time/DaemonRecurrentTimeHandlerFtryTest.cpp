@@ -12,6 +12,8 @@
 #include "ZBE/core/tools/containers/RsrcStore.h"
 #include "ZBE/core/tools/containers/RsrcDictionary.h"
 
+#include "ZBE/core/entities/AvatarEntity.h"
+#include "ZBE/core/entities/Entity.h"
 #include "ZBE/core/entities/avatars/Avatar.h"
 #include "ZBE/core/entities/avatars/implementations/BaseAvatar.h"
 #include "ZBE/core/events/EventStore.h"
@@ -47,7 +49,7 @@ TEST(DaemonRecurrentTimeHandlerFtry, run) {
   auto &configRsrc = RsrcStore<json>::getInstance();
   auto &dmnRsrc = RsrcStore<Daemon>::getInstance();
   auto &tegRsrc = RsrcStore<TimeEventGenerator>::getInstance();
-  auto &avatarRsrc = RsrcStore<Avatar>::getInstance();
+  auto &avatarRsrc = RsrcStore<AvatarEntity<Avatar> >::getInstance();
   auto &dmnRecurrentTimeHandlerRsrc = RsrcStore<DaemonRecurrentTimeHandler>::getInstance();
 
   auto cfg = std::make_shared<json>();
@@ -90,9 +92,10 @@ TEST(DaemonRecurrentTimeHandlerFtry, run) {
   auto teg = std::make_shared<zbe::TimeEventGenerator>(3, contextTime);
   tegRsrc.insert("timeEventGenerator.teg"s, teg);
 
-  zbe::Entity e;
-  auto ba = std::make_shared<zbe::BaseAvatar>(&e);
-  avatarRsrc.insert("avatar.avatar"s, ba);
+  auto *e = new zbe::Entity;
+  auto *ba = new zbe::BaseAvatar(e);
+  auto aefa = std::make_shared<zbe::AvatarEntityFixed<zbe::Avatar> >(ba);
+  avatarRsrc.insert("avatar.avatar"s, aefa);
 
   dict.insert("drthf.id1"s, 42);
   dict.insert("drthf.id2"s, 43);
@@ -205,6 +208,9 @@ TEST(DaemonRecurrentTimeHandlerFtry, run) {
   tegRsrc.clear();
   avatarRsrc.clear();
   dmnRecurrentTimeHandlerRsrc.clear();
+
+  delete e;
+  delete ba;
 
   zbe::SysError::clear();
 }
