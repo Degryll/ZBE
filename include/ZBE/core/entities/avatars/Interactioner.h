@@ -99,7 +99,6 @@ private:
   uint64_t al;
   std::shared_ptr<WeakAvatarEntityContainer<Bases...> > c;
   RsrcStore<std::forward_list<ActuatorWrapper<R, WeakAvatarEntityContainer<Bases...> >* > >& lma;
-
 };
 
 template <typename R, typename ...Bases>

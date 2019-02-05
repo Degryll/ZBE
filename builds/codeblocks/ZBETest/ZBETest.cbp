@@ -211,6 +211,7 @@
 		<Unit filename="../../../src/ZBETest/src/archetypes/SimplePositionTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/archetypes/SimpleWideTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/behavior/BounceTest.cpp" />
+		<Unit filename="../../../src/ZBETest/src/behavior/EraserTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/behavior/StateLTEraserTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/behavior/StateSetterTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/behavior/UniformLinearMotionTest.cpp" />
@@ -218,6 +219,7 @@
 		<Unit filename="../../../src/ZBETest/src/core/daemons/daemonsTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/core/entities/AvatarEntityTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/core/entities/EntityTest.cpp" />
+		<Unit filename="../../../src/ZBETest/src/core/entities/avatars/InteractionerTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/core/events/CollisionEventGeneratorTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/core/events/EventStoreTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/core/events/EventsTest.cpp" />

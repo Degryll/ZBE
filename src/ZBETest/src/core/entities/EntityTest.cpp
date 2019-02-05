@@ -12,6 +12,7 @@
 
 #include "ZBE/core/entities/Entity.h"
 
+namespace EntityTest {
 
 TEST(Entity, TicketedElements) {
   zbe::Entity *e = new zbe::Entity();
@@ -121,3 +122,5 @@ TEST(Entity, values) {
 
   zbe::SysError::clear();
 }
+
+}  // namespace EntityTest
