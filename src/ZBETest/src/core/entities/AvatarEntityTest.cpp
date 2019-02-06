@@ -7,6 +7,7 @@
 #include "ZBE/core/entities/AvatarEntity.h"
 #include "ZBE/core/entities/Adaptor.h"
 
+namespace AvatarEntityTest {
 // First branch classes
 
 class DummyAvatarA {
@@ -91,7 +92,32 @@ TEST (AvatarEntity, AvatarEntityContainer_usage) {
     aefz->setAvatar(dazOriginal);
 
     std::shared_ptr<zbe::AvatarEntityContainer<DummyAvatarC, DummyAvatarZ> >  aeccz = std::make_shared<zbe::AvatarEntityContainer<DummyAvatarC, DummyAvatarZ> >(aefc, aefz);
-    zbe::WeakAvatarEntityContainer<DummyAvatarC, DummyAvatarZ> waecDac(aeccz);
+    long int aefcPreCount = aefc.use_count();
+    long int aefzPreCount = aefz.use_count();
+    std::shared_ptr<zbe::WeakAvatarEntityContainer<DummyAvatarC, DummyAvatarZ> > waecDac = std::make_shared<zbe::WeakAvatarEntityContainer<DummyAvatarC, DummyAvatarZ> >(aeccz);
+    long int aefcPostCount = aefc.use_count();
+    long int aefzPostCount = aefz.use_count();
+
+    EXPECT_EQ(aefcPreCount, aefcPostCount) << "Must not increase references";
+    EXPECT_EQ(aefzPreCount, aefzPostCount) << "Must not increase references";
+
+    DummyAvatarC* dacFromAEC;
+    DummyAvatarZ* dazFromAEC;
+
+    DummyAvatarC* dacFromWAEC;
+    DummyAvatarZ* dazFromWAEC;
+
+    assignAvatar((std::shared_ptr<zbe::AvatarEntityContainer<DummyAvatarC> >)aeccz, &dacFromAEC);
+    assignAvatar((std::shared_ptr<zbe::AvatarEntityContainer<DummyAvatarZ> >)aeccz, &dazFromAEC);
+
+    assignAvatar((std::shared_ptr<zbe::WeakAvatarEntityContainer<DummyAvatarC> >)waecDac, &dacFromWAEC);
+    assignAvatar((std::shared_ptr<zbe::WeakAvatarEntityContainer<DummyAvatarZ> >)waecDac, &dazFromWAEC);
+
+    EXPECT_EQ(dacOriginal, dacFromAEC) << "Must return original avatar";
+    EXPECT_EQ(dacOriginal, dacFromWAEC) << "Must return original avatar";
+
+    EXPECT_EQ(dazOriginal, dazFromAEC) << "Must return original avatar";
+    EXPECT_EQ(dazOriginal, dazFromWAEC) << "Must return original avatar";
 }
 
 TEST (AvatarEntity, Usage) {
@@ -323,3 +349,5 @@ TEST (AvatarEntity, TwoBranches) {
     EXPECT_EQ(73, daz->getValueY()) << "Must return 73";
     EXPECT_EQ(24, daz->getValueZ()) << "Must return 24";
 }
+
+}  // namespace AvatarEntityTest

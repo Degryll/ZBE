@@ -24,18 +24,18 @@ namespace zbe {
 /** \brief Actuator capable of making a entity bounce.
  */
 template <typename R, typename RO>
-class BouncerSelfAtor: public Actuator<WeakAvatarEntityContainer<Bouncer<2> >, R> {
-  public:
+class BouncerSelfAtor : public Actuator<WeakAvatarEntityContainer<Bouncer<2> >, R> {
+public:
 
-    /** \brief Acumulates bounce normal when template type is collided.
-     *  \param entity. Not used.
-     */
-    void act(std::shared_ptr< zbe::WeakAvatarEntityContainer<RO> > ) {
-      Bouncer<2> * gb;
-      Actuator<WeakAvatarEntityContainer<Bouncer<2> >, R>::getCollisioner()->get()->assignAvatar(&gb);
-      CollisionData * cd = Actuator<WeakAvatarEntityContainer<Bouncer<2> >, R>::getCollisionData();
-      gb->addNormal(cd->getNormal());
-    }
+  /** \brief Acumulates bounce normal when template type is collided.
+   *  \param entity. Not used.
+   */
+  void act(std::shared_ptr< zbe::WeakAvatarEntityContainer<RO> > ) {
+    Bouncer<2> * gb;
+    Actuator<WeakAvatarEntityContainer<Bouncer<2> >, R>::getCollisioner()->get()->assignAvatar(&gb);
+    CollisionData * cd = Actuator<WeakAvatarEntityContainer<Bouncer<2> >, R>::getCollisionData();
+    gb->addNormal(cd->getNormal());
+  }
 };
 
 }  // namespace zbe

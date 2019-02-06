@@ -5,6 +5,7 @@
  * @date 2018-03-21
  * @author Batis, Degryll, Ludo
  * @brief The Main Loop of the game.
+ * Tested in MainLoopFtryTest.
  */
 
 #ifndef ZBE_CORE_DAEMONS_MAINLOOP_H

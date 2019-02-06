@@ -384,6 +384,24 @@ void assignAvatar(std::shared_ptr<AvatarEntityContainer<A> > aec, A **a) {
     aeA->assignAvatar(a);
 }
 
+/** \brief A helper function that assings an avatar of type "A" from a pointer to an object that, at least, inherits from WeakAvatarEntityContainer<A>.
+ * Avoid the need of an explicit type conversion.
+ */
+template <typename A>
+void assignAvatar(WeakAvatarEntityContainer<A>* aec, A **a) {
+    std::shared_ptr<zbe::AvatarEntity<A> > aeA = aec->get();
+    aeA->assignAvatar(a);
+}
+
+/** \brief A helper function that assings an avatar of type "A" from a shared_ptr to an object that, at least, inherits from WeakAvatarEntityContainer<A>.
+ * Avoid the need of an explicit type conversion.
+ */
+template <typename A>
+void assignAvatar(std::shared_ptr<WeakAvatarEntityContainer<A> > aec, A **a) {
+    std::shared_ptr<zbe::AvatarEntity<A> > aeA = aec->get();
+    aeA->assignAvatar(a);
+}
+
 /** \brief A helper function that builds an AvatarEntityContainer<Bases...> from a single shared_ptr to an object that inherits from all needed AvatarEntities.
  * Avoid the need of an explicit type conversion.
  */

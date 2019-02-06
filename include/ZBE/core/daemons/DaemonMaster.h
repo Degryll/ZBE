@@ -5,6 +5,7 @@
  * @date 2018-02-25
  * @author Ludo Degryll Batis
  * @brief A Daemon capable of run other Daemons.
+ * Tested in DaemonMasterFtryTest.
  */
 
 #ifndef ZBE_CORE_DAEMONS_DAEMONMASTER_H

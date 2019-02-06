@@ -5,6 +5,7 @@
  * @date 2018-02-25
  * @author Ludo Batis Degryll
  * @brief Daemon capable of end a MainLoop
+ * Tested in MainLoopExitFtryTest.
  */
 
 #ifndef zBE_CORE_DAEMONS_MAINLOOPEXIT_H

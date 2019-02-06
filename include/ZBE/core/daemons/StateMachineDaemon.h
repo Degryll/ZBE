@@ -6,6 +6,7 @@
  * @author Degryll Ludo Batis
  * @brief A Daemon capable of execute an specific sub Daemon depending on
  * an state.
+ * Tested in StateMachineDaemonFtryTest.
  */
 
 #ifndef ZBE_CORE_DAEMONS_STATEMACHINEDAEMON_H_
