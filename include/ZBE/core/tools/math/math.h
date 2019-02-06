@@ -112,6 +112,22 @@ inline bool almost_equal(double a, double b) {
     || std::abs(a-b) < std::numeric_limits<double>::min();
 }
 
+/** \brief Tells if the given float values are close enough to be cosidered equal.
+ * This code is based in an example found here:
+ * http://en.cppreference.com/w/cpp/types/numeric_limits/epsilon
+ * ULP is fixed to value 2.
+ *  \param a first float
+ *  \param b second float
+ */
+inline bool almost_equal(float a, float b) {
+    const int ulp = 2;
+    // the machine epsilon has to be scaled to the magnitude of the values used
+    // and multiplied by the desired precision in ULPs (units in the last place)
+    return std::abs(a-b) <= std::numeric_limits<float>::epsilon() * std::abs(a+b) * ulp
+    // unless the result is subnormal
+    || std::abs(a-b) < std::numeric_limits<float>::min();
+}
+
 }  // namespace zbe
 
 #endif  // ZBE_CORE_TOOLS_MATH_MATH_H_

@@ -17,6 +17,7 @@
 #include "ZBE/core/events/handlers/InputHandler.h"
 #include "ZBE/core/tools/shared/Value.h"
 #include "ZBE/core/tools/math/Region.h"
+#include "ZBE/core/tools/math/math.h"
 #include "ZBE/core/daemons/Daemon.h"
 
 #include "ZBE/core/system/system.h"
@@ -78,7 +79,7 @@ void setDaemon(std::shared_ptr<Daemon> daemon) {
  *  \param state input state.
  */
 void run(uint32_t, float state) {
-  if(state!=ZBE_KEYUP){
+  if(!almost_equal(state, ZBE_KEYUP)){
     return;
   }
   double x = xval->get();

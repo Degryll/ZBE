@@ -48,6 +48,7 @@ TEST(DaemonRecurrentTimeHandlerFtry, run) {
   auto &dict = NameRsrcDictionary::getInstance();
   auto &configRsrc = RsrcStore<json>::getInstance();
   auto &dmnRsrc = RsrcStore<Daemon>::getInstance();
+  auto &timeRsrc = RsrcStore<TimeHandler>::getInstance();
   auto &tegRsrc = RsrcStore<TimeEventGenerator>::getInstance();
   auto &avatarRsrc = RsrcStore<AvatarEntity<Avatar> >::getInstance();
   auto &dmnRecurrentTimeHandlerRsrc = RsrcStore<DaemonRecurrentTimeHandler>::getInstance();
@@ -205,12 +206,13 @@ TEST(DaemonRecurrentTimeHandlerFtry, run) {
   dict.clear();
   configRsrc.clear();
   dmnRsrc.clear();
+  timeRsrc.clear();
   tegRsrc.clear();
   avatarRsrc.clear();
   dmnRecurrentTimeHandlerRsrc.clear();
 
   delete e;
-  delete ba;
+  //delete ba;  // AvatarEntityFixed deletes it
 
   zbe::SysError::clear();
 }
