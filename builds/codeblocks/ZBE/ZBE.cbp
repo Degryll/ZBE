@@ -458,6 +458,7 @@
 		<Unit filename="../../../include/ZBE/events/handlers/time/DaemonTimeHandler.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/time/TicketEraser.h" />
 		<Unit filename="../../../include/ZBE/factories/Factory.h" />
+		<Unit filename="../../../include/ZBE/factories/implementations/GenericFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/behaviors/StateLTEraserBhvFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/behaviors/StateSetterBhvFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/daemons/BehaviorDmnFtry.h" />
