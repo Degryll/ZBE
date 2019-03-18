@@ -276,11 +276,15 @@
 		<Unit filename="../../../include/ZBE/SDL/OGL/SDLOGLWindow.h" />
 		<Unit filename="../../../include/ZBE/SDL/daemons/BasicPostLoopSDLDaemon.h" />
 		<Unit filename="../../../include/ZBE/SDL/daemons/BasicPreLoopSDLDaemon.h" />
+		<Unit filename="../../../include/ZBE/SDL/daemons/SDLOGLWindowDaemon.h" />
+		<Unit filename="../../../include/ZBE/SDL/daemons/SDLWindowDaemon.h" />
 		<Unit filename="../../../include/ZBE/SDL/drawers/RotatedSpriteSDLDrawer.h" />
 		<Unit filename="../../../include/ZBE/SDL/drawers/SingleSpriteSDLDrawer.h" />
 		<Unit filename="../../../include/ZBE/SDL/drawers/SingleTextSDLDrawer.h" />
 		<Unit filename="../../../include/ZBE/SDL/drawers/SpriteSheetSDLDrawer.h" />
 		<Unit filename="../../../include/ZBE/SDL/drawers/StatedSpriteSDLDrawer.h" />
+		<Unit filename="../../../include/ZBE/SDL/factories/SDLOGLWindowDmnFtry.h" />
+		<Unit filename="../../../include/ZBE/SDL/factories/SDLWindowDmnFtry.h" />
 		<Unit filename="../../../include/ZBE/SDL/resources/SDLImgLoader.h" />
 		<Unit filename="../../../include/ZBE/SDL/starters/SDL_Starter.h" />
 		<Unit filename="../../../include/ZBE/SDL/system/SDLEventDispatcher.h" />
@@ -343,7 +347,6 @@
 		<Unit filename="../../../include/ZBE/core/daemons/PunisherDaemon.h" />
 		<Unit filename="../../../include/ZBE/core/daemons/Punishers.h" />
 		<Unit filename="../../../include/ZBE/core/daemons/StateMachineDaemon.h" />
-		<Unit filename="../../../include/ZBE/core/drawers/Drawer.h" />
 		<Unit filename="../../../include/ZBE/core/entities/Adaptor.h" />
 		<Unit filename="../../../include/ZBE/core/entities/AvatarEntity.h" />
 		<Unit filename="../../../include/ZBE/core/entities/Entity.h" />
@@ -457,6 +460,7 @@
 		<Unit filename="../../../include/ZBE/events/handlers/time/DaemonRecurrentTimeHandler.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/time/DaemonTimeHandler.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/time/TicketEraser.h" />
+		<Unit filename="../../../include/ZBE/factories/CommonFactories.h" />
 		<Unit filename="../../../include/ZBE/factories/Factory.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/GenericFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/behaviors/StateLTEraserBhvFtry.h" />
