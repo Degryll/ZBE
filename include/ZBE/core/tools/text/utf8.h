@@ -37,6 +37,7 @@ DEALINGS IN THE SOFTWARE.
 #ifndef ZBE_CORE_TOOLS_TEXT_UTF8_H_
 #define ZBE_CORE_TOOLS_TEXT_UTF8_H_
 
+#include <cstdint>
 #include <string>
 
 namespace zbe {

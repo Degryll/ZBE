@@ -10,6 +10,7 @@
 #ifndef ZBE_CORE_TOOLS_MATH_COLLISIONS_INTERSECTIONS_H_
 #define ZBE_CORE_TOOLS_MATH_COLLISIONS_INTERSECTIONS_H_
 
+#include <algorithm>
 #include <utility>
 #include <limits>
 #include <cstdint>
