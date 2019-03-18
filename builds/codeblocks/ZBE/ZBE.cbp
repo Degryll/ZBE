@@ -458,6 +458,7 @@
 		<Unit filename="../../../include/ZBE/events/handlers/time/DaemonTimeHandler.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/time/TicketEraser.h" />
 		<Unit filename="../../../include/ZBE/factories/Factory.h" />
+		<Unit filename="../../../include/ZBE/factories/implementations/GenericFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/behaviors/StateLTEraserBhvFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/behaviors/StateSetterBhvFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/daemons/BehaviorDmnFtry.h" />
@@ -481,6 +482,7 @@
 		<Unit filename="../../../include/ZBE/resources/loaders/RsrcFolderLoader.h" />
 		<Unit filename="../../../include/ZBE/resources/loaders/RsrcLoader.h" />
 		<Unit filename="../../../include/ZBE/resources/loaders/SpriteSheetLoader.h" />
+		<Unit filename="../../../include/ZBE/resources/loaders/implementations/JSONAppLoader.h" />
 		<Unit filename="../../../include/ZBE/system/SimpleLoopBuilder.h" />
 		<Unit filename="../../../src/ZBE/JSON/graphics/JSONGraphicsLoaders.cpp" />
 		<Unit filename="../../../src/ZBE/OAL/players/Sound3DOALPlayer.cpp" />
@@ -534,6 +536,7 @@
 		<Unit filename="../../../src/ZBE/factories/implementations/events/handlers/time/TicketEraserFtry.cpp" />
 		<Unit filename="../../../src/ZBE/resources/contextname.cpp" />
 		<Unit filename="../../../src/ZBE/resources/loaders/RsrcFolderLoader.cpp" />
+		<Unit filename="../../../src/ZBE/resources/loaders/implementations/JSONAppLoader.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

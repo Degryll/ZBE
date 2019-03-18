@@ -256,6 +256,7 @@
 		<Unit filename="../../../src/ZBETest/src/events/handlers/time/DaemonRecurrentTimeHandlerTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/events/handlers/time/DaemonTimeHandlerTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/events/handlers/time/TicketEraserTest.cpp" />
+		<Unit filename="../../../src/ZBETest/src/factories/implementations/GenericFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/behaviors/StateLTEraserBhvFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/behaviors/StateSetterBhvFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/daemons/BehaviorDmnFtryTest.cpp" />
@@ -276,6 +277,7 @@
 		<Unit filename="../../../src/ZBETest/src/main.cpp" />
 		<Unit filename="../../../src/ZBETest/src/resources/loaders/ImgFolderLoaderTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/resources/loaders/RsrcLoadTest.cpp" />
+		<Unit filename="../../../src/ZBETest/src/resources/loaders/implementations/JSONAppLoaderTest.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

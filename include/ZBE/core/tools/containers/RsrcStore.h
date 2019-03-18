@@ -63,6 +63,15 @@ class RsrcStore {
       this->insert(id, resource);
     }
 
+    /** \brief Associates a resource with an auto generated id.
+     *  \param resource The resource.
+     */
+    uint64_t insert(std::shared_ptr<T> resource) {
+      uint64_t id = SysIdGenerator::getId();
+      this->insert(id, resource);
+      return id;
+    }
+
     /** \brief Returns the resource identify by the id.
      *  \param id Id to identify the resource.
      *  \return The resource.

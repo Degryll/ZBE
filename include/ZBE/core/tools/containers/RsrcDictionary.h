@@ -46,8 +46,6 @@ class ZBEAPI RsrcDictionary {
       if (it != l.end()) {
         SysError::setError("Name " + name + " already in use.");
         return;
-      } else if (rsrc == 0) {
-        SysError::setError("Using zero as id is potentialy dangerous");
       }
       l[name] = rsrc;
     }

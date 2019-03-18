@@ -1,0 +1,51 @@
+{
+  "meta" : {
+    "description" : "App defintion for test"
+  },
+  "literals" : {
+    "cagando":42,
+    "ojete" : 0,
+    "math.e": 2.71828,
+    "math.pi": 3.14159,
+    "era.necesario" : "y Blas",
+    "san" : "sacabo"
+  },
+  "factories" : [
+    {"factory": "test.dmyFtry1",
+      "name": "dmy1_1",
+      "config" : {
+        "key" : "dmy1_1"
+      }
+    },
+    {"factory": "test.dmyFtry2",
+      "name": "dmy2_1",
+      "config" : {
+        "key" : "dmy2_1"
+      }
+    },
+    {"factory": "test.dmyFtry2",
+      "name": "dmy2_2",
+      "config" : {
+        "key" : "dmy2_2"
+      }
+    },
+    {"factory": "test.dmyFtry3",
+      "name": "dmy3_1",
+      "config" : {
+        "key" : "dmy3_1"
+      }
+    },
+    {"factory": "test.dmyFtry3",
+      "name": "dmy3_2",
+      "config" : {
+        "key" : "dmy3_2"
+      }
+    },
+    {"factory": "test.dmyFtry3",
+      "name": "dmy3_3",
+      "config" : {
+        "key" : "dmy3_3"
+      }
+    }
+  ]
+}
