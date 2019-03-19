@@ -1,16 +1,14 @@
 /**
  * Copyright 2015 Batis Degryll Ludo
- * @file BasicPreLoopSDLDaemon.h
- * @since 2017-05-11
- * @date 2018-02-25
- * @author Batis
- * @brief Daemon that runs before the main loop.
- * at the beginning of every frame:
- * Clears the window and captures SDL events.
+ * @file SDLWindowDaemon.h
+ * @since 2019-03-19
+ * @date 2019-03-19
+ * @author Degryll
+ * @brief Daemon that generates a SDLWindow.
  */
 
-#ifndef ZBE_SDL_DAEMONS_BASICPRELOOPSLDDAEMON_H_
-#define ZBE_SDL_DAEMONS_BASICPRELOOPSLDDAEMON_H_
+#ifndef ZBE_SDL_DAEMONS_SDLWINDOWDAEMON_H_
+#define ZBE_SDL_DAEMONS_SDLWINDOWDAEMON_H_
 
 #include <memory>
 
@@ -23,20 +21,15 @@
 namespace zbe {
   /** \brief
    */
-  class ZBEAPI BasicPreLoopSDLDaemon : public Daemon {
+  class ZBEAPI SDLWindowDaemon : public Daemon {
     public:
 
-      BasicPreLoopSDLDaemon(const BasicPreLoopSDLDaemon&) = delete; //!< Avoid copy.
-      void operator=(const BasicPreLoopSDLDaemon&) = delete; //!< Avoid copy.
+      SDLWindowDaemon(const BasicPreLoopSDLDaemon&) = delete; //!< Avoid copy.
+      void operator=(const SDLWindowDaemon&) = delete; //!< Avoid copy.
 
-      /** \brief Builds a BasicPostLoopSDLDaemon from a window.
-       *  \param window windo to use.
+      /** \brief Empty constructor.
        */
-      BasicPreLoopSDLDaemon(std::shared_ptr<zbe::SDLWindow> window): window(window), sdlEventDist(zbe::SDLEventDispatcher::getInstance()) {}
-
-      /** \brief Destroys the BasicPreLoopSDLDaemon
-       */
-      virtual ~BasicPreLoopSDLDaemon() {}
+      SDLWindowDaemon() :  {}
 
       /** \brief Runs the daemon.
        */
@@ -48,4 +41,4 @@ namespace zbe {
 
 }  // namespace zbe
 
-#endif  // ZBE_SDL_DAEMONS_BASICPRELOOPSLDDAEMON_H_
+#endif  // ZBE_SDL_DAEMONS_SDLWINDOWDAEMON_H_
