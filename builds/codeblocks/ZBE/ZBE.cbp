@@ -501,6 +501,8 @@
 		<Unit filename="../../../src/ZBE/SDL/drawers/SimpleSpriteSDLDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/drawers/SingleTextSDLDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/drawers/StatedSpriteSDLDrawer.cpp" />
+		<Unit filename="../../../src/ZBE/SDL/factories/SDLOGLWindowDmnFtry.cpp" />
+		<Unit filename="../../../src/ZBE/SDL/factories/SDLWindowDmnFtry.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/starters/SDL_Starter.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/system/SDLEventDispatcher.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/system/SDLNetDispatcher.cpp" />

@@ -21,23 +21,27 @@
 namespace zbe {
   /** \brief
    */
-  class ZBEAPI SDLWindowDaemon : public Daemon {
-    public:
+class ZBEAPI SDLWindowDaemon : public Daemon {
+public:
 
-      SDLWindowDaemon(const BasicPreLoopSDLDaemon&) = delete; //!< Avoid copy.
-      void operator=(const SDLWindowDaemon&) = delete; //!< Avoid copy.
+  SDLWindowDaemon(const BasicPreLoopSDLDaemon&) = delete; //!< Avoid copy.
+  void operator=(const SDLWindowDaemon&) = delete; //!< Avoid copy.
 
-      /** \brief Empty constructor.
-       */
-      SDLWindowDaemon() :  {}
+  /** \brief Empty constructor.
+   */
+  SDLWindowDaemon() :  {}
 
-      /** \brief Runs the daemon.
-       */
-      void run();
-    private:
-      std::shared_ptr<zbe::SDLWindow> window;
-      zbe::SDLEventDispatcher& sdlEventDist;
-  };
+
+
+  /** \brief Runs the daemon.
+   */
+  void run();
+private:
+
+  const char* title;
+  int x, y, width, height;
+  Uint32 window_flags, rederer_flags;
+};
 
 }  // namespace zbe
 

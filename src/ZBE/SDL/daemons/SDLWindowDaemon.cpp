@@ -1,20 +1,18 @@
 /**
  * Copyright 2011 Batis Degryll Ludo
- * @file BasicPreLoopSDLDaemon.cpp
- * @since 2018-03-28
- * @date 2018-03-28
+ * @file SDLWindowDaemon.cpp
+ * @since 2019-03-19
+ * @date 2019-03-19
  * @author Ludo Degryll Batis
- * @brief Daemon that runs before the main loop.
- * at the beginning of every frame:
- * Clears the window and captures SDL events.
+ * @brief Daemon that generates a SDLWindow.
  */
 
-#include "ZBE/SDL/daemons/BasicPreLoopSDLDaemon.h"
+#include "ZBE/SDL/daemons/SDLWindowDaemon.h"
 
 namespace zbe {
 
-void BasicPreLoopSDLDaemon::run(){
-  BasicPreLoopSDLDaemon::window->clear();
+void SDLWindowDaemon::run(){
+  SDLWindowDaemon::window->clear();
   sdlEventDist.run();
 }
 
