@@ -1,6 +1,6 @@
 /**
  * Copyright 2012 Batis Degryll Ludo
- * @file StateLTEraserBhvFtry.h
+ * @file SDLWindowDmnFtry.h
  * @since 2018-11-05
  * @date 2018-11-05
  * @author Degryll
@@ -32,7 +32,7 @@ namespace zbe {
 
 /** \brief Factory for State Machine Daemons.
  */
-class ZBEAPI StateLTEraserBhvFtry : virtual public Factory {
+class ZBEAPI SDLWindowDmnFtry : virtual public Factory {
 public:
 
   /** \brief Builds a StateMachineDaemon.

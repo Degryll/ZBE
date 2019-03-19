@@ -1,6 +1,6 @@
 /**
  * Copyright 2011 Batis Degryll Ludo
- * @file BasicPreLoopSDLDaemon.cpp
+ * @file SDLOGLWindowDaemon.cpp
  * @since 2018-03-28
  * @date 2018-03-28
  * @author Ludo Degryll Batis
@@ -9,12 +9,12 @@
  * Clears the window and captures SDL events.
  */
 
-#include "ZBE/SDL/daemons/BasicPreLoopSDLDaemon.h"
+#include "ZBE/SDL/daemons/SDLOGLWindowDaemon.h"
 
 namespace zbe {
 
-void BasicPreLoopSDLDaemon::run(){
-  BasicPreLoopSDLDaemon::window->clear();
+void SDLOGLWindowDaemon::run(){
+  SDLOGLWindowDaemon::window->clear();
   sdlEventDist.run();
 }
 

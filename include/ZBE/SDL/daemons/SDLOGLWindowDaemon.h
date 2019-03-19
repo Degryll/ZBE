@@ -1,6 +1,6 @@
 /**
  * Copyright 2015 Batis Degryll Ludo
- * @file BasicPreLoopSDLDaemon.h
+ * @file SDLOGLWindowDaemon.h
  * @since 2017-05-11
  * @date 2018-02-25
  * @author Batis
@@ -23,28 +23,28 @@
 namespace zbe {
   /** \brief
    */
-  class ZBEAPI BasicPreLoopSDLDaemon : public Daemon {
-    public:
+class ZBEAPI SDLOGLWindowDaemon : public Daemon {
+public:
 
-      BasicPreLoopSDLDaemon(const BasicPreLoopSDLDaemon&) = delete; //!< Avoid copy.
-      void operator=(const BasicPreLoopSDLDaemon&) = delete; //!< Avoid copy.
+  SDLOGLWindowDaemon(const SDLOGLWindowDaemon&) = delete; //!< Avoid copy.
+  void operator=(const SDLOGLWindowDaemon&) = delete; //!< Avoid copy.
 
-      /** \brief Builds a BasicPostLoopSDLDaemon from a window.
-       *  \param window windo to use.
-       */
-      BasicPreLoopSDLDaemon(std::shared_ptr<zbe::SDLWindow> window): window(window), sdlEventDist(zbe::SDLEventDispatcher::getInstance()) {}
+  /** \brief Builds a BasicPostLoopSDLDaemon from a window.
+   *  \param window windo to use.
+   */
+  SDLOGLWindowDaemon(std::shared_ptr<zbe::SDLWindow> window): window(window), sdlEventDist(zbe::SDLEventDispatcher::getInstance()) {}
 
-      /** \brief Destroys the BasicPreLoopSDLDaemon
-       */
-      virtual ~BasicPreLoopSDLDaemon() {}
+  /** \brief Destroys the SDLOGLWindowDaemon
+   */
+  virtual ~SDLOGLWindowDaemon() {}
 
-      /** \brief Runs the daemon.
-       */
-      void run();
-    private:
-      std::shared_ptr<zbe::SDLWindow> window;
-      zbe::SDLEventDispatcher& sdlEventDist;
-  };
+  /** \brief Runs the daemon.
+   */
+  void run();
+private:
+  std::shared_ptr<zbe::SDLWindow> window;
+  zbe::SDLEventDispatcher& sdlEventDist;
+};
 
 }  // namespace zbe
 
