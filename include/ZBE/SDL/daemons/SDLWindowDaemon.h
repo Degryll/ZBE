@@ -12,12 +12,13 @@
 
 #include <string>
 
+#include "ZBE/core/tools/containers/RsrcStore.h"
+
 #include "ZBE/core/daemons/Daemon.h"
 #include "ZBE/SDL/system/SDLWindow.h"
 
-
 namespace zbe {
-  /** \brief
+  /** \brief Daemon that generates a SDLWindow.
    */
 class ZBEAPI SDLWindowDaemon : public Daemon {
 public:
@@ -59,6 +60,8 @@ public:
   void run();
 
 private:
+  zbe::RsrcStore<SDLWindow>& rs = zbe::RsrcStore<SDLWindow>::getInstance();
+
   std::string name;
   const char* title;
   int x, y, width, height;

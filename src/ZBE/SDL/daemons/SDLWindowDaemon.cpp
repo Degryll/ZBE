@@ -11,13 +11,10 @@
 
 #include <memory>
 
-#include "ZBE/core/tools/containers/RsrcStore.h"
-
 namespace zbe {
 
 void SDLWindowDaemon::run(){
   auto w = std::make_shared<SDLWindow>(title, x, y, width, height, window_flags, renderer_flags);
-  auto& rs = zbe::RsrcStore<SDLWindow>::getInstance();
   rs.insert(name, w);
 }
 

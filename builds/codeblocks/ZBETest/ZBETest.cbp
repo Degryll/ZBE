@@ -127,6 +127,7 @@
 					<Add directory="../../../extlibs/boost_1_57_0" />
 					<Add directory="include" />
 					<Add directory="../../../extlibs/json" />
+					<Add directory="../../../extlibs/GLEW/2.1.0/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
@@ -172,6 +173,7 @@
 					<Add directory="../../../extlibs/boost_1_57_0" />
 					<Add directory="include" />
 					<Add directory="../../../extlibs/json" />
+					<Add directory="../../../extlibs/GLEW/2.1.0/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
