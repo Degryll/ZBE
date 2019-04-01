@@ -45,13 +45,14 @@ TEST(StateLTEraserBhvFtryTest, build) {
   using namespace nlohmann;
   using namespace std::string_literals;
   auto &dict = NameRsrcDictionary::getInstance();
+  auto& intStore = RsrcDictionary<int64_t>::getInstance();
   auto &configRsrc = RsrcStore<json>::getInstance();
   auto &stateLTEraserRsrc = RsrcStore<StateLTEraser>::getInstance();
   auto &behaviorRsrc = RsrcStore<Behavior<Avatar, Stated> >::getInstance();
 
   auto cfg = std::make_shared<json>();
   (*cfg)["limit"] = "StateLTEraserLimit";
-  dict.insert("StateLTEraserLimit", 10);
+  intStore.insert("StateLTEraserLimit", 10);
 
   uint64_t cfgId = SysIdGenerator::getId();
   configRsrc.insert(cfgId, cfg);

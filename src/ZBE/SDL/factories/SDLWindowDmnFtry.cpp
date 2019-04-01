@@ -72,17 +72,17 @@ void SDLWindowDmnFtry::setup(std::string name, uint64_t cfgId) {
     aux = j["title"].get<std::string>();
     std::string ctitle = strStore.get(aux);
     aux = j["x"].get<std::string>();
-    uint64_t cx = intStore.get(aux);
+    uint64_t cx = (uint64_t)intStore.get(aux);
     aux = j["y"].get<std::string>();
-    uint64_t cy = intStore.get(aux);
+    uint64_t cy = (uint64_t)intStore.get(aux);
     aux = j["w"].get<std::string>();
-    uint64_t cw = intStore.get(aux);
+    uint64_t cw = (uint64_t)intStore.get(aux);
     aux = j["h"].get<std::string>();
-    uint64_t ch = intStore.get(aux);
+    uint64_t ch = (uint64_t)intStore.get(aux);
     aux = j["wflags"].get<std::string>();
-    uint64_t cwflags = intStore.get(aux);
+    uint64_t cwflags = (uint64_t)intStore.get(aux);
     aux = j["rflags"].get<std::string>();
-    uint64_t crflags = intStore.get(aux);
+    uint64_t crflags = (uint64_t)intStore.get(aux);
 
     auto sdlwdmn = SDLWindowDmnRsrc.get("SDLWindowDaemon."s + name);
     sdlwdmn->setName(cname);

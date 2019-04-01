@@ -34,13 +34,13 @@ public:
    *  \param name Name for the created item.
    *  \param cfgId item's configuration id.
    */
-  void create(std::string name, uint64_t cfgId);
+  void create(std::string name, uint64_t);
 
   /** \brief Set-up an item.
    *  \param name Name for the created item.
    *  \param cfgId item's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId) {}
+  void setup(std::string, uint64_t) {}
 
 private:
   RsrcStore<Generic> &grsrc = RsrcStore<Generic>::getInstance();
@@ -50,7 +50,7 @@ private:
 };
 
 template <typename Generic, typename Specific>
-void GenericFtry<Generic, Specific>::create(std::string name, uint64_t cfgId) {
+void GenericFtry<Generic, Specific>::create(std::string name, uint64_t) {
   using namespace std::string_literals;
   auto i = std::make_shared<Specific>();
   grsrc.insert(gtype + "."s + name, i);

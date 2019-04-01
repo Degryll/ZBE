@@ -29,13 +29,14 @@ TEST(StateSetterBhvFtryTest, build) {
   using namespace nlohmann;
   using namespace std::string_literals;
   auto &dict = NameRsrcDictionary::getInstance();
+  auto& intStore = RsrcDictionary<int64_t>::getInstance();
   auto &configRsrc = RsrcStore<json>::getInstance();
   auto &stateSetterRsrc = RsrcStore<StateSetter>::getInstance();
   auto &behaviorRsrc = RsrcStore<Behavior<Stated> >::getInstance();
 
   auto cfg = std::make_shared<json>();
   (*cfg)["state"] = "StateSetterState";
-  dict.insert("StateSetterState", 42);
+  intStore.insert("StateSetterState", 42);
 
 
   uint64_t cfgId = SysIdGenerator::getId();
