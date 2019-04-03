@@ -33,6 +33,8 @@
 					<Add directory="../../../extlibs/json" />
 					<Add directory="../../../extlibs/SDL2_net/2.0.1/include" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/include/SDL2" />
+					<Add directory="../../../extlibs/GLEW/2.1.0/include" />
+					<Add directory="../../../extlibs/OALSoft/1.18.2/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
@@ -79,6 +81,8 @@
 					<Add directory="../../../extlibs/json" />
 					<Add directory="../../../extlibs/SDL2_net/2.0.1/include" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/include/SDL2" />
+					<Add directory="../../../extlibs/GLEW/2.1.0/include" />
+					<Add directory="../../../extlibs/OALSoft/1.18.2/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -128,6 +132,7 @@
 					<Add directory="include" />
 					<Add directory="../../../extlibs/json" />
 					<Add directory="../../../extlibs/GLEW/2.1.0/include" />
+					<Add directory="../../../extlibs/OALSoft/1.18.2/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
@@ -174,6 +179,7 @@
 					<Add directory="include" />
 					<Add directory="../../../extlibs/json" />
 					<Add directory="../../../extlibs/GLEW/2.1.0/include" />
+					<Add directory="../../../extlibs/OALSoft/1.18.2/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -200,6 +206,7 @@
 		</Compiler>
 		<Unit filename="../../../src/ZBETest/include/testutils/MockedContextTime.h" />
 		<Unit filename="../../../src/ZBETest/src/JSON/graphics/JSONGraphicsLoadersTest.cpp" />
+		<Unit filename="../../../src/ZBETest/src/OAL/resources/OALAudioLoaderTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/SDL/RotatedSpriteSDLDrawerTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/SDL/SingleSpriteSDLDrawerTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/SDL/StatedSpriteSDLDrawerTest.cpp" />

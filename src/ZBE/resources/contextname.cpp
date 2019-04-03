@@ -14,6 +14,7 @@ namespace zbe {
 const std::string cn::SEPARATOR = ".";
 
 const std::string cn::IMGDEF = "imgdef";
+const std::string cn::AUDIO = "audio";
 const std::string cn::SPRTSHEET = "sprtsheet";
 const std::string cn::STATE = "state";
 

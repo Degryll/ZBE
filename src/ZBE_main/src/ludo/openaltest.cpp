@@ -12,6 +12,8 @@
 
 #include "ZBE/core/tools/shared/implementations/SimpleValue.h"
 
+#include "ZBE/OAL/daemons/OALContextDaemon.h"
+
 #include "ZBE/OAL/entities/avatars/Sound3D.h"
 #include "ZBE/OAL/entities/avatars/implementations/BaseSound3D.h"
 
@@ -21,76 +23,10 @@
 
 namespace ludo {
 
-void printError() {
-  ALCenum error = alGetError();
-  if (error != AL_NO_ERROR) {
-    if (error == AL_INVALID_NAME) {
-      printf("AL_INVALID_NAME\n");
-    } else if (error == AL_INVALID_ENUM) {
-      printf("AL_INVALID_ENUM\n");
-    } else if (error == AL_INVALID_VALUE) {
-      printf("AL_INVALID_VALUE\n");
-    } else if (error == AL_INVALID_OPERATION) {
-      printf("AL_INVALID_OPERATION\n");
-    } else if (error == AL_OUT_OF_MEMORY) {
-      printf("AL_OUT_OF_MEMORY\n");
-    } else{
-      printf("OAL unknown error: %d\n", error);
-    }
-  }
-}
-
-static ALCchar* list_audio_devices(const ALCchar *devices) {
-  const ALCchar *device = devices, *next = devices + 1;
-  size_t len = 0;
-  ALCchar *out = (ALCchar*) malloc(sizeof(ALCchar)*1024);
-
-  fprintf(stdout, "Devices list:\n");
-  fprintf(stdout, "----------\n");
-  while (device && *device != '\0' && next && *next != '\0') {
-    strcpy(out, (char*)device);
-    fprintf(stdout, "%s\n", device);
-    len = strlen(device);
-    device += (len + 1);
-    next += (len + 2);
-  }
-  fprintf(stdout, "----------\n");
-  return out;
-}
-
 int openaltest(int , char **) {
-  printf("Checking if ALC_ENUMERATION_EXT is present\n");
 
-  ALboolean enumeration;
-  enumeration = alcIsExtensionPresent(NULL, "ALC_ENUMERATION_EXT");
-
-  printf("Device enumeration ");
-  if (enumeration == AL_FALSE) {
-    printf("unsupported\n");
-  } else {
-    printf("supported\n");
-  }
-
-  ALCchar* last = list_audio_devices(alcGetString(NULL, ALC_DEVICE_SPECIFIER));
-
-  printf("Load audio device %s\n", last);
-  ALCdevice *device;
-  device = alcOpenDevice(last);
-
-  if (!device) {
-    printf("Failed to load audio device\n");
-    printError();
-  }
-
-  printf("Creating context\n");
-
-  ALCcontext *context;
-
-  context = alcCreateContext(device, NULL);
-  if (!alcMakeContextCurrent(context)) {
-    printf("Context error\n");
-    printError();
-  }
+  zbe::OALContextDaemon oalContextDmn;
+  oalContextDmn.run();
 
   printf("Source generation ( were the audio comes from )\n");
 
@@ -157,11 +93,11 @@ int openaltest(int , char **) {
    coord = coord + 0.00001f;
 
   }
-
-  device = alcGetContextsDevice(context);
-  alcMakeContextCurrent(NULL);
-  alcDestroyContext(context);
-  alcCloseDevice(device);
+  // TODO
+  // device = alcGetContextsDevice(context);
+  // alcMakeContextCurrent(NULL);
+  // alcDestroyContext(context);
+  // alcCloseDevice(device);
 
   return 0;
 }

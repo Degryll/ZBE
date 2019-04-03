@@ -12,7 +12,7 @@
 
 #include "ZBE/core/entities/avatars/implementations/SimpleAnimatedSprite.h"
 
-#include "ZBE/resources/loaders/ImgDefLoader.h"
+#include "ZBE/resources/loaders/RsrcDefLoader.h"
 #include "ZBE/resources/loaders/RsrcLoader.h"
 #include "ZBE/resources/loaders/RsrcFolderLoader.h"
 
@@ -30,7 +30,7 @@ TEST(ImgAndDefTest, Load_folder) {
 EXPECT_EQ(0, zbe::SysError::getNErrors()) << "Initially no errors.";
 std::shared_ptr<zbe::SDLWindow> window = std::make_shared<zbe::SDLWindow>("ImgAndDefTest", 1000, 1000);
 
-std::shared_ptr<zbe::ImgDefLoader> idl = std::make_shared<zbe::JSONImgDefLoader>();
+std::shared_ptr<zbe::RsrcDefLoader> idl = std::make_shared<zbe::JSONImgDefLoader>();
 std::shared_ptr<zbe::RsrcLoader> rsrcl = std::make_shared<zbe::SDLImgLoader>(window->getImgStore(), idl);
 zbe::RsrcFolderLoader rsrcfl(rsrcl);
 rsrcfl.load("data/test/img");
@@ -105,7 +105,7 @@ TEST(MultiSpriteSheetTest, Load_folder) {
 
  std::shared_ptr<zbe::SDLWindow> window = std::make_shared<zbe::SDLWindow>("ImgAndDefTest", 1000, 1000);
 
- std::shared_ptr<zbe::ImgDefLoader> idl = std::make_shared<zbe::JSONImgDefLoader>();
+ std::shared_ptr<zbe::RsrcDefLoader> idl = std::make_shared<zbe::JSONImgDefLoader>();
  std::shared_ptr<zbe::RsrcLoader> prerl = std::make_shared<zbe::SDLImgLoader>(window->getImgStore(), idl);
  zbe::RsrcFolderLoader prerfl(prerl);
  prerfl.load("data/test/img");

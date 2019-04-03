@@ -13,7 +13,9 @@
 
 namespace zbe {
 
-OALAudioStore::OALAudioStore() : audioCollection(), m() {}
+OALAudioStore::OALAudioStore() : audioCollection(), m() {
+  audioCollection.push_back(ALuint());  // Id zero is discouraged
+}
 
 OALAudioStore::~OALAudioStore() {
   for(ALuint buf : audioCollection){

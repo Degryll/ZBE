@@ -20,6 +20,7 @@ struct ZBEAPI cn {
 static const std::string SEPARATOR;
 
 static const std::string IMGDEF;
+static const std::string AUDIO;
 static const std::string STATE;
 static const std::string SPRTSHEET;
 

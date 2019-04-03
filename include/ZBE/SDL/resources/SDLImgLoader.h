@@ -6,17 +6,17 @@
 * @author Batis Degryll Ludo
 * @brief SDL implementation of ImgLoader.
 * of the loaded image.
-* Test on ZBETest/resources/loaders/ImgAndDEfloadTest.cpp
+* Test on ZBETest/resources/loaders/RsrcLoadTest.cpp
 */
 
-#ifndef ZBE_SDL_RESOURCES_LOADERS_SDLIMGLOADER_H_
-#define ZBE_SDL_RESOURCES_LOADERS_SDLIMGLOADER_H_
+#ifndef ZBE_SDL_RESOURCES_SDLIMGLOADER_H_
+#define ZBE_SDL_RESOURCES_SDLIMGLOADER_H_
 
 #include <filesystem>
 #include <memory>
 
 #include "ZBE/resources/loaders/RsrcLoader.h"
-#include "ZBE/resources/loaders/ImgDefLoader.h"
+#include "ZBE/resources/loaders/RsrcDefLoader.h"
 
 #include "ZBE/SDL/system/SDLWindow.h"
 
@@ -31,7 +31,7 @@ public:
   *  \imgStore SDLImgLoader to use.
   *  \extension Extension supported. PNG by default.
   */
- SDLImgLoader(std::shared_ptr<zbe::SDLImageStore> imgStore, std::shared_ptr<ImgDefLoader> imgDefLoader, std::filesystem::path extension = ".png")
+ SDLImgLoader(std::shared_ptr<zbe::SDLImageStore> imgStore, std::shared_ptr<RsrcDefLoader> imgDefLoader, std::filesystem::path extension = ".png")
    : imgStore(imgStore), imgDefLoader(imgDefLoader), ext(extension) {}
 
  /** \brief Load an image
@@ -42,7 +42,7 @@ public:
     uint64_t imgId = imgStore->loadImg(filePath.c_str());  // TODO test with ut8
     if(imgId > 0) {
       std::filesystem::path defFilePath = generateDefPath(filePath);
-      imgDefLoader->loadImgDef(defFilePath, imgId);
+      imgDefLoader->loadRsrcDef(defFilePath, imgId);
     }
  }
 
@@ -63,11 +63,11 @@ private:
  }
 
  std::shared_ptr<zbe::SDLImageStore> imgStore;
- std::shared_ptr<ImgDefLoader> imgDefLoader;
+ std::shared_ptr<RsrcDefLoader> imgDefLoader;
  std::filesystem::path ext;
 
 };
 
 }  // namespace zbe
 
-#endif  // ZBE_SDL_RESOURCES_LOADERS_SDLIMGLOADER_H_
+#endif  // ZBE_SDL_RESOURCES_SDLIMGLOADER_H_

@@ -260,11 +260,13 @@
 		</Compiler>
 		<Unit filename="../../../extlibs/lodePNG/lodepng.cpp" />
 		<Unit filename="../../../include/ZBE/JSON/graphics/JSONGraphicsLoaders.h" />
+		<Unit filename="../../../include/ZBE/JSON/resources/JSONAudioDefLoader.h" />
 		<Unit filename="../../../include/ZBE/JSON/resources/JSONImgDefLoader.h" />
 		<Unit filename="../../../include/ZBE/JSON/resources/JSONMultiSpriteSheetLoader.h" />
 		<Unit filename="../../../include/ZBE/OAL/entities/avatars/Sound3D.h" />
 		<Unit filename="../../../include/ZBE/OAL/entities/avatars/implementations/BaseSound3D.h" />
 		<Unit filename="../../../include/ZBE/OAL/players/Sound3DOALPlayer.h" />
+		<Unit filename="../../../include/ZBE/OAL/resources/OALAudioLoader.h" />
 		<Unit filename="../../../include/ZBE/OAL/system/OALAudioStore.h" />
 		<Unit filename="../../../include/ZBE/OAL/tools/OALUtils.h" />
 		<Unit filename="../../../include/ZBE/OGL/daemons/OGLModelSheetPosDrawer.h" />
@@ -483,13 +485,17 @@
 		<Unit filename="../../../include/ZBE/graphics/MultiSpriteSheet.h" />
 		<Unit filename="../../../include/ZBE/resources/contextnames.h" />
 		<Unit filename="../../../include/ZBE/resources/loaders/ImgDefLoader.h" />
+		<Unit filename="../../../include/ZBE/resources/loaders/RsrcDefLoader.h" />
 		<Unit filename="../../../include/ZBE/resources/loaders/RsrcFolderLoader.h" />
 		<Unit filename="../../../include/ZBE/resources/loaders/RsrcLoader.h" />
 		<Unit filename="../../../include/ZBE/resources/loaders/SpriteSheetLoader.h" />
 		<Unit filename="../../../include/ZBE/resources/loaders/implementations/JSONAppLoader.h" />
 		<Unit filename="../../../include/ZBE/system/SimpleLoopBuilder.h" />
 		<Unit filename="../../../src/ZBE/JSON/graphics/JSONGraphicsLoaders.cpp" />
+		<Unit filename="../../../src/ZBE/JSON/resources/JSONAudioDefLoader.cpp" />
+		<Unit filename="../../../src/ZBE/OAL/daemons/OALContextDaemon.cpp" />
 		<Unit filename="../../../src/ZBE/OAL/players/Sound3DOALPlayer.cpp" />
+		<Unit filename="../../../src/ZBE/OAL/resources/OALAudioLoader.cpp" />
 		<Unit filename="../../../src/ZBE/OAL/system/OALAudioStore.cpp" />
 		<Unit filename="../../../src/ZBE/OAL/tools/OALUtils.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/OGL/SDLOGLWindow.cpp" />
