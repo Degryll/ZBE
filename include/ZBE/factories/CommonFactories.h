@@ -12,6 +12,7 @@
 
 #include <string>
 
+#include "ZBE/core/daemons/Daemon.h"
 #include "ZBE/core/system/system.h"
 
 namespace zbe {

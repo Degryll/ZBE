@@ -38,7 +38,7 @@ TEST(RsrcFolderLoadDmn, usage) {
   dmn.setUrl("data/test/img");
   dmn.run();
 
-  EXPECT_EQ(2,rsrcl->calls) << "Must load one image";
+  EXPECT_EQ(2,rsrcl->calls) << "Must load two images";
   EXPECT_EQ(0, zbe::SysError::getNErrors()) << "Finally no errors.";
   zbe::SysError::clear();
 }

@@ -278,6 +278,8 @@
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/daemons/MainLoopExitFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/daemons/MainLoopFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/daemons/MasterDmnFtryTest.cpp" />
+		<Unit filename="../../../src/ZBETest/src/factories/implementations/daemons/RsrcFolderLoaderDmnFtryTest.cpp" />
+		<Unit filename="../../../src/ZBETest/src/factories/implementations/daemons/RsrcLoaderDmnFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/daemons/StateMachineDmnFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/events/handlers/actuators/DmnSelectorAtorFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/events/handlers/actuators/StateChangerAtorFtryTest.cpp" />
