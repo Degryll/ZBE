@@ -20,7 +20,7 @@
 #include "ZBE/factories/implementations/daemons/MasterDmnFtry.h"
 #include "ZBE/factories/implementations/daemons/StateMachineDmnFtry.h"
 
-#include "ZBE/factories/implementations/events/generators/InteractionEvGnFtry.h"
+//#include "ZBE/factories/implementations/events/generators/InteractionEvGnFtry.h"
 
 #include "ZBE/factories/implementations/events/handlers/input/BroadcastIHFtry.h"
 #include "ZBE/factories/implementations/events/handlers/input/DaemonClickIHFtry.h"
@@ -40,7 +40,7 @@ void CommonFactories::load() {
   auto& factories = RsrcStore<Factory>::getInstance();
 
   // --- Daemons
-  factories.insert("DmnFtry.BehaviorDmnFtry", std::make_shared<BehaviorDmnFtry>());
+//  factories.insert("DmnFtry.BehaviorDmnFtry", std::make_shared<BehaviorDmnFtry>());
   factories.insert("DmnFtry.MainLoopExitFtry", std::make_shared<MainLoopExitFtry>());
   factories.insert("DmnFtry.MainLoopFtry", std::make_shared<MainLoopFtry>());
   factories.insert("DmnFtry.MasterDmnFtry", std::make_shared<MasterDmnFtry>());
@@ -48,7 +48,7 @@ void CommonFactories::load() {
 
   // --- Events
   // --- --- Event generators
-  factories.insert("EvGnFtry.InteractionEvGnFtry", std::make_shared<InteractionEvGnFtry>());
+//  factories.insert("EvGnFtry.InteractionEvGnFtry", std::make_shared<InteractionEvGnFtry>());
   // --- --- Event time handlers
   factories.insert("IHFtry.BroadcastIHFtry", std::make_shared<BroadcastIHFtry>());
   factories.insert("IHFtry.DaemonClickIHFtry", std::make_shared<DaemonClickIHFtry>());

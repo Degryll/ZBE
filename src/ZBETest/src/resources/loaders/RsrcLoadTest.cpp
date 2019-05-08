@@ -140,7 +140,7 @@ TEST(MultiSpriteSheetTest, Load_folder) {
 
  EXPECT_EQ(rsrc.get(nrd.get(zbe::cn::IMGDEF + zbe::cn::SEPARATOR + "house.stay"))->imgSrcId, s1.g) << "Must match graphics id.";
 
- EXPECT_NEAR(1.5, s2.src.p.x, 0.00001) << "Must match src x";
+ EXPECT_NEAR(0.5, s2.src.p.x, 0.00001) << "Must match src x";
  EXPECT_NEAR(0.5, s2.src.p.y, 0.00001) << "Must match src y";
  EXPECT_NEAR(1.0, s2.src.v.x, 0.00001) << "Must match src width";
  EXPECT_NEAR(1.0, s2.src.v.y, 0.00001) << "Must match src height";

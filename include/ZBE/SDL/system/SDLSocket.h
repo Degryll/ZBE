@@ -49,6 +49,8 @@ public:
 
   NetHandler* getHandler() {return(handler);}
 
+  void setHandler(NetHandler* handler) {this->handler = handler;}
+
   friend struct ZBEAPI SDLSocketHasher;
 
 private:

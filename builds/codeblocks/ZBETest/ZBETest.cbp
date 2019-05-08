@@ -238,6 +238,7 @@
 		<Unit filename="../../../src/ZBETest/src/core/events/EventsTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/core/events/InputEventGeneratorTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/core/events/InteractionEventGeneratorTest.cpp" />
+		<Unit filename="../../../src/ZBETest/src/core/events/NetEventGeneratorTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/core/events/TimeEventGeneratorTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/core/events/generators/util/InputStatusManagerTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/core/io/FileHandlerTest.cpp" />

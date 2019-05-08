@@ -12,6 +12,10 @@
 
 #include "ZBE/core/tools/shared/implementations/SimpleValue.h"
 
+#include "ZBE/JSON/resources/JSONAudioDefLoader.h"
+
+#include "ZBE/OAL/resources/OALAudioLoader.h"
+
 #include "ZBE/OAL/daemons/OALContextDaemon.h"
 
 #include "ZBE/OAL/entities/avatars/Sound3D.h"
