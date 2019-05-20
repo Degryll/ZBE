@@ -50,11 +50,11 @@ public:
   void setup(std::string name, uint64_t cfgId);
 
 private:
-  auto &uDict = RsrcDictionary<uint64_t>::getInstance();
-  auto &configRsrc = RsrcStore<nlohmann::json>::getInstance();
-  auto &daemonRsrc = RsrcStore<Daemon>::getInstance();
-  auto &iegRsrc = RsrcStore<InteractionEventGenerator<R, IS, LN, LT> >::getInstance();
-  auto &isRsrc = RsrcStore<IS>::getInstance();
+  RsrcDictionary<uint64_t>& uDict = RsrcDictionary<uint64_t>::getInstance();
+  RsrcStore<nlohmann::json>& configRsrc = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<Daemon>& daemonRsrc = RsrcStore<Daemon>::getInstance();
+  RsrcStore<InteractionEventGenerator<R, IS, LN, LT> >& iegRsrc = RsrcStore<InteractionEventGenerator<R, IS, LN, LT> >::getInstance();
+  RsrcStore<IS>& isRsrc = RsrcStore<IS>::getInstance();
 };
 
 template <typename R, typename IS, typename LN, typename LT>

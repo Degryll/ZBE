@@ -429,6 +429,8 @@
 		<Unit filename="../../../include/ZBE/core/tools/time/Timer.h" />
 		<Unit filename="../../../include/ZBE/core/tools/tools.h" />
 		<Unit filename="../../../include/ZBE/core/zbe.h" />
+		<Unit filename="../../../include/ZBE/daemons/RsrcFolderLoaderDmn.h" />
+		<Unit filename="../../../include/ZBE/daemons/RsrcLoaderDmn.h" />
 		<Unit filename="../../../include/ZBE/entities/ActiveElement2D.h" />
 		<Unit filename="../../../include/ZBE/entities/Element2D.h" />
 		<Unit filename="../../../include/ZBE/entities/TextBox.h" />
@@ -476,6 +478,8 @@
 		<Unit filename="../../../include/ZBE/factories/implementations/daemons/MainLoopExitFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/daemons/MainLoopFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/daemons/MasterDmnFtry.h" />
+		<Unit filename="../../../include/ZBE/factories/implementations/daemons/RsrcFolderLoaderDmnFtry.h" />
+		<Unit filename="../../../include/ZBE/factories/implementations/daemons/RsrcLoaderDmnFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/daemons/StateMachineDmnFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/events/generators/InteractionEvGnFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/events/handlers/actuators/DmnSelectorAtorFtry.h" />
@@ -541,11 +545,16 @@
 		<Unit filename="../../../src/ZBE/core/tools/math/collisions/intersections.cpp" />
 		<Unit filename="../../../src/ZBE/core/tools/text/utf8.cpp" />
 		<Unit filename="../../../src/ZBE/core/tools/time/ContextTime.cpp" />
+		<Unit filename="../../../src/ZBE/daemons/RsrcFolderLoaderDmn.cpp" />
+		<Unit filename="../../../src/ZBE/daemons/RsrcLoaderDmn.cpp" />
+		<Unit filename="../../../src/ZBE/factories/CommonFactories.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/behaviors/StateLTEraserBhvFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/behaviors/StateSetterBhvFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/daemons/MainLoopExitFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/daemons/MainLoopFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/daemons/MasterDmnFtry.cpp" />
+		<Unit filename="../../../src/ZBE/factories/implementations/daemons/RsrcFolderLoaderDmnFtry.cpp" />
+		<Unit filename="../../../src/ZBE/factories/implementations/daemons/RsrcLoaderDmnFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/daemons/StateMachineDmnFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/events/handlers/input/BroadcastIHFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/events/handlers/input/DaemonClickIHFtry.cpp" />

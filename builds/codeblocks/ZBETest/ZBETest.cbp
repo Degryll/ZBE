@@ -255,6 +255,7 @@
 		<Unit filename="../../../src/ZBETest/src/core/events/EventsTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/core/events/InputEventGeneratorTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/core/events/InteractionEventGeneratorTest.cpp" />
+		<Unit filename="../../../src/ZBETest/src/core/events/NetEventGeneratorTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/core/events/TimeEventGeneratorTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/core/events/generators/util/InputStatusManagerTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/core/io/FileHandlerTest.cpp" />
@@ -282,6 +283,8 @@
 		<Unit filename="../../../src/ZBETest/src/core/tools/shared/implmentations/SimpleValueTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/core/tools/time/ContextTimeTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/core/tools/toolsTest.cpp" />
+		<Unit filename="../../../src/ZBETest/src/daemons/RsrcFolderLoaderDmnTest.cpp" />
+		<Unit filename="../../../src/ZBETest/src/daemons/RsrcLoaderDmnTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/events/handlers/actuators/DaemonSelectorAtorTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/events/handlers/time/DaemonRecurrentTimeHandlerTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/events/handlers/time/DaemonTimeHandlerTest.cpp" />
@@ -293,6 +296,8 @@
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/daemons/MainLoopExitFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/daemons/MainLoopFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/daemons/MasterDmnFtryTest.cpp" />
+		<Unit filename="../../../src/ZBETest/src/factories/implementations/daemons/RsrcFolderLoaderDmnFtryTest.cpp" />
+		<Unit filename="../../../src/ZBETest/src/factories/implementations/daemons/RsrcLoaderDmnFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/daemons/StateMachineDmnFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/drawers/OGLModelSheetDrawerFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/drawers/SingleTextSDLDrawerFtryTest.cpp" />

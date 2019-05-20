@@ -11,28 +11,28 @@
 
 #include "ZBE/core/tools/containers/RsrcStore.h"
 
-#include "ZBE/factories/behaviors/StateLTEraserBhvFtry.h"
-#include "ZBE/factories/behaviors/StateSetterBhvFtry.h"
+#include "ZBE/factories/implementations/behaviors/StateLTEraserBhvFtry.h"
+#include "ZBE/factories/implementations/behaviors/StateSetterBhvFtry.h"
 
-#include "ZBE/factories/daemons/BehaviorDmnFtry.h"
-#include "ZBE/factories/daemons/MainLoopExitFtry.h"
-#include "ZBE/factories/daemons/MainLoopFtry.h"
-#include "ZBE/factories/daemons/MasterDmnFtry.h"
-#include "ZBE/factories/daemons/StateMachineDmnFtry.h"
+#include "ZBE/factories/implementations/daemons/BehaviorDmnFtry.h"
+#include "ZBE/factories/implementations/daemons/MainLoopExitFtry.h"
+#include "ZBE/factories/implementations/daemons/MainLoopFtry.h"
+#include "ZBE/factories/implementations/daemons/MasterDmnFtry.h"
+#include "ZBE/factories/implementations/daemons/StateMachineDmnFtry.h"
 
-#include "ZBE/factories/events/generators/InteractionEvGnFtry.h"
+//#include "ZBE/factories/implementations/events/generators/InteractionEvGnFtry.h"
 
-#include "ZBE/factories/events/handlers/input/BroadcastIHFtry.h"
-#include "ZBE/factories/events/handlers/input/DaemonClickIHFtry.h"
-#include "ZBE/factories/events/handlers/input/DaemonIHFtry.h"
-#include "ZBE/factories/events/handlers/input/InputToValueFtry.h"
+#include "ZBE/factories/implementations/events/handlers/input/BroadcastIHFtry.h"
+#include "ZBE/factories/implementations/events/handlers/input/DaemonClickIHFtry.h"
+#include "ZBE/factories/implementations/events/handlers/input/DaemonIHFtry.h"
+#include "ZBE/factories/implementations/events/handlers/input/InputToValueFtry.h"
 
-#include "ZBE/factories/events/handlers/time/DaemonRecurrentTimeHandlerFtry.h"
-#include "ZBE/factories/events/handlers/time/DaemonTimeHandlerFtry.h"
-#include "ZBE/factories/events/handlers/time/TicketEraserFtry.h"
+#include "ZBE/factories/implementations/events/handlers/time/DaemonRecurrentTimeHandlerFtry.h"
+#include "ZBE/factories/implementations/events/handlers/time/DaemonTimeHandlerFtry.h"
+#include "ZBE/factories/implementations/events/handlers/time/TicketEraserFtry.h"
 
-#include "ZBE/factories/events/handlers/actuators/DmnSelectorAtorFtry.h"
-#include "ZBE/factories/events/handlers/actuators/StateChangerAtorFtry.h"
+#include "ZBE/factories/implementations/events/handlers/actuators/DmnSelectorAtorFtry.h"
+#include "ZBE/factories/implementations/events/handlers/actuators/StateChangerAtorFtry.h"
 
 namespace zbe {
 
@@ -40,7 +40,7 @@ void CommonFactories::load() {
   auto& factories = RsrcStore<Factory>::getInstance();
 
   // --- Daemons
-  factories.insert("DmnFtry.BehaviorDmnFtry", std::make_shared<BehaviorDmnFtry>());
+//  factories.insert("DmnFtry.BehaviorDmnFtry", std::make_shared<BehaviorDmnFtry>());
   factories.insert("DmnFtry.MainLoopExitFtry", std::make_shared<MainLoopExitFtry>());
   factories.insert("DmnFtry.MainLoopFtry", std::make_shared<MainLoopFtry>());
   factories.insert("DmnFtry.MasterDmnFtry", std::make_shared<MasterDmnFtry>());
@@ -48,7 +48,7 @@ void CommonFactories::load() {
 
   // --- Events
   // --- --- Event generators
-  factories.insert("EvGnFtry.InteractionEvGnFtry", std::make_shared<InteractionEvGnFtry>());
+//  factories.insert("EvGnFtry.InteractionEvGnFtry", std::make_shared<InteractionEvGnFtry>());
   // --- --- Event time handlers
   factories.insert("IHFtry.BroadcastIHFtry", std::make_shared<BroadcastIHFtry>());
   factories.insert("IHFtry.DaemonClickIHFtry", std::make_shared<DaemonClickIHFtry>());
