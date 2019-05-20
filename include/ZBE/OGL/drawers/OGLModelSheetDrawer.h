@@ -12,6 +12,8 @@
 
 #include <memory>
 
+#include <GL/glew.h>
+
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
@@ -35,6 +37,11 @@ class OGLModelSheetDrawer : public Behavior<T> {
   public:
     OGLModelSheetDrawer(const OGLModelSheetDrawer&) = delete; //!< Avoid copy.
     void operator=(const OGLModelSheetDrawer&) = delete; //!< Avoid copy.
+
+    /** \brief Empty constructor
+     */
+    OGLModelSheetDrawer()
+      : window(nullptr), rmglms(RsrcStore<OGLModelSheet<T> >::getInstance()) {}
 
     /** \brief Create a new drawer in the given context.
      *  \param window A SDLwindow with its context.
@@ -63,6 +70,11 @@ class OGLModelSheetDrawer : public Behavior<T> {
       glBindVertexArray(model.vao);
 
       glDrawElements( GL_TRIANGLES, model.nvertex, GL_UNSIGNED_INT, NULL );
+    }
+
+    void setWindow(std::shared_ptr<SDLOGLWindow> window, uint64_t programId) {
+      this->window = window;
+      gProgramID = window->getShaderStore()->getShader(programId);
     }
 
   private:

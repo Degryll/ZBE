@@ -43,6 +43,7 @@ void SDLOGLWindow::createGLContext() {
   SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, ZBE_GL_MINOR_VERSION );
   SDL_GL_SetAttribute( SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE );
 
+
   SDL_GL_SetSwapInterval(0);
 
   glewExperimental = GL_TRUE;
@@ -55,7 +56,7 @@ void SDLOGLWindow::createGLContext() {
 glEnable              ( GL_DEBUG_OUTPUT );
 glDebugMessageCallback( MessageCallback, 0 );
 
-  glEnable(GL_TEXTURE_2D);
+  //glEnable(GL_TEXTURE_2D);printf("Pista a 0x%x\n", glGetError()); fflush(stdout);
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_CULL_FACE);
   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -189,6 +190,7 @@ uint64_t OGLModelStore::storeModel(const GLuint vao, const GLsizei nvertex) {
 //----- OGLShaderStore -----//
 
 uint64_t OGLShaderStore::loadShader(std::vector<ShaderDef> shaderDefs) {
+
   GLuint gProgramID = glCreateProgram();
 
   glBindAttribLocation(gProgramID, V_POS, "pos" );

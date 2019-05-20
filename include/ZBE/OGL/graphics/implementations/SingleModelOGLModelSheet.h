@@ -22,6 +22,8 @@
 #include "ZBE/OGL/graphics/OGLModel.h"
 #include "ZBE/OGL/graphics/OGLModelSheet.h"
 
+#include "ZBE/SDL/OGL/SDLOGLWindow.h"
+
 #include "ZBE/core/system/system.h"
 
 namespace zbe {

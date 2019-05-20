@@ -35,6 +35,7 @@
 					<Add directory="../../../extlibs/SDL2/2.0.8/include/SDL2" />
 					<Add directory="../../../extlibs/GLEW/2.1.0/include" />
 					<Add directory="../../../extlibs/OALSoft/1.18.2/include" />
+					<Add directory="../../../extlibs/glm/0.9.9.0" />
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
@@ -47,12 +48,15 @@
 					<Add library="SDL2_net" />
 					<Add library="pthread" />
 					<Add library="stdc++fs" />
+					<Add library="GLEW" />
+					<Add library="GL" />
 					<Add directory="../../../extlibs/googletest/1.7.0/lib/linux64" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/linux64/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/lib" />
 					<Add directory="../../../lib" />
 					<Add directory="../../../extlibs/SDL2_net/2.0.1/linux/lib" />
+					<Add directory="../../../extlibs/GLEW/2.1.0/linux/lib" />
 				</Linker>
 			</Target>
 			<Target title="Release-Linux64">
@@ -83,6 +87,7 @@
 					<Add directory="../../../extlibs/SDL2/2.0.8/include/SDL2" />
 					<Add directory="../../../extlibs/GLEW/2.1.0/include" />
 					<Add directory="../../../extlibs/OALSoft/1.18.2/include" />
+					<Add directory="../../../extlibs/glm/0.9.9.0" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -96,12 +101,15 @@
 					<Add library="SDL2_net" />
 					<Add library="pthread" />
 					<Add library="stdc++fs" />
+					<Add library="GLEW" />
+					<Add library="GL" />
 					<Add directory="../../../extlibs/googletest/1.7.0/lib/linux64" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/linux64/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/lib" />
 					<Add directory="../../../lib" />
 					<Add directory="../../../extlibs/SDL2_net/2.0.1/linux/lib" />
+					<Add directory="../../../extlibs/GLEW/2.1.0/linux/lib" />
 				</Linker>
 			</Target>
 			<Target title="Debug-Win64">
@@ -133,6 +141,7 @@
 					<Add directory="../../../extlibs/json" />
 					<Add directory="../../../extlibs/GLEW/2.1.0/include" />
 					<Add directory="../../../extlibs/OALSoft/1.18.2/include" />
+					<Add directory="../../../extlibs/glm/0.9.9.0" />
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
@@ -144,12 +153,16 @@
 					<Add library="SDL2_image" />
 					<Add library="SDL2_ttf" />
 					<Add library="SDL2_net" />
+					<Add library="glew32" />
+					<Add library="GL" />
+					<Add library="openGL32" />
 					<Add directory="../../../extlibs/googletest/2017-05-14/lib/win64" />
 					<Add directory="../../../extlibs/SDL2/2.0.5/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.1/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.14/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_net/2.0.1/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../lib" />
+					<Add directory="../../../extlibs/GLEW/2.1.0/windows/lib/Release/x64" />
 				</Linker>
 			</Target>
 			<Target title="Release-Win64">
@@ -180,6 +193,7 @@
 					<Add directory="../../../extlibs/json" />
 					<Add directory="../../../extlibs/GLEW/2.1.0/include" />
 					<Add directory="../../../extlibs/OALSoft/1.18.2/include" />
+					<Add directory="../../../extlibs/glm/0.9.9.0" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -191,12 +205,15 @@
 					<Add library="SDL2_image" />
 					<Add library="SDL2_ttf" />
 					<Add library="SDL2_net" />
+					<Add library="glew32" />
+					<Add library="openGL32" />
 					<Add directory="../../../extlibs/googletest/2017-05-14/lib/win64" />
 					<Add directory="../../../extlibs/SDL2/2.0.5/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.1/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.14/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_net/2.0.1/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../lib" />
+					<Add directory="../../../extlibs/GLEW/2.1.0/windows/lib/Release/x64" />
 				</Linker>
 			</Target>
 		</Build>
@@ -282,6 +299,9 @@
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/daemons/RsrcFolderLoaderDmnFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/daemons/RsrcLoaderDmnFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/daemons/StateMachineDmnFtryTest.cpp" />
+		<Unit filename="../../../src/ZBETest/src/factories/implementations/drawers/OGLModelSheetDrawerFtryTest.cpp" />
+		<Unit filename="../../../src/ZBETest/src/factories/implementations/drawers/SingleTextSDLDrawerFtryTest.cpp" />
+		<Unit filename="../../../src/ZBETest/src/factories/implementations/drawers/SpriteSheetSDLDrawerFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/events/handlers/actuators/DmnSelectorAtorFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/events/handlers/actuators/StateChangerAtorFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/events/handlers/input/BroadcastIHFtryTest.cpp" />
