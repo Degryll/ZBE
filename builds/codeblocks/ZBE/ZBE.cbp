@@ -174,6 +174,7 @@
 					<Add directory="../../../extlibs/GLEW/2.1.0/include" />
 					<Add directory="../../../extlibs/OALSoft/1.18.2/include" />
 					<Add directory="../../../extlibs/stb_vorbis" />
+					<Add directory="../../../extlibs/glm/0.9.9.0" />
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
@@ -232,6 +233,7 @@
 					<Add directory="../../../extlibs/lodePNG" />
 					<Add directory="../../../extlibs/OALSoft/1.18.2/include" />
 					<Add directory="../../../extlibs/stb_vorbis" />
+					<Add directory="../../../extlibs/glm/0.9.9.0" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -287,6 +289,9 @@
 		<Unit filename="../../../include/ZBE/SDL/drawers/StatedSpriteSDLDrawer.h" />
 		<Unit filename="../../../include/ZBE/SDL/factories/SDLOGLWindowDmnFtry.h" />
 		<Unit filename="../../../include/ZBE/SDL/factories/SDLWindowDmnFtry.h" />
+		<Unit filename="../../../include/ZBE/SDL/factories/drawers/OGLModelSheetDrawerFtry.h" />
+		<Unit filename="../../../include/ZBE/SDL/factories/drawers/SingleTextSDLDrawerFtry.h" />
+		<Unit filename="../../../include/ZBE/SDL/factories/drawers/SpriteSheetSDLDrawerFtry.h" />
 		<Unit filename="../../../include/ZBE/SDL/resources/SDLImgLoader.h" />
 		<Unit filename="../../../include/ZBE/SDL/starters/SDL_Starter.h" />
 		<Unit filename="../../../include/ZBE/SDL/system/SDLEventDispatcher.h" />
@@ -509,6 +514,7 @@
 		<Unit filename="../../../src/ZBE/SDL/drawers/StatedSpriteSDLDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/factories/SDLOGLWindowDmnFtry.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/factories/SDLWindowDmnFtry.cpp" />
+		<Unit filename="../../../src/ZBE/SDL/factories/drawers/SingleTextSDLDrawerFtry.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/starters/SDL_Starter.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/system/SDLEventDispatcher.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/system/SDLNetDispatcher.cpp" />

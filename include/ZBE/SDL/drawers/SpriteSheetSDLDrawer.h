@@ -36,6 +36,11 @@ class SpriteSheetSDLDrawer : public Behavior<T> {
     SpriteSheetSDLDrawer(const SpriteSheetSDLDrawer&) = delete; //!< Avoid copy.
     void operator=(const SpriteSheetSDLDrawer&) = delete; //!< Avoid copy.
 
+    /** \brief Empty constructor.
+     */
+    SpriteSheetSDLDrawer()
+      : window(nullptr), imgStore(nullptr), rmss(RsrcStore<SpriteSheet<T> >::getInstance()) {}
+
     /** \brief Create a new drawer in the given context.
      *  \param window A SDLwindow with its context.
      */
@@ -45,6 +50,15 @@ class SpriteSheetSDLDrawer : public Behavior<T> {
     /** \brief Destructor.
      */
     ~SpriteSheetSDLDrawer() {}
+
+    /** \brief sets the window, imgStore and rmss.
+     *  \param window A SDLwindow with its context.
+     */
+    void setWindow(std::shared_ptr<SDLWindow> window) {
+      this->window = window;
+      imgStore = window->getImgStore();
+    }
+
 
     /** \brief Draws the given entity.
      *  \param The entity to be drawn.

@@ -30,6 +30,11 @@ class ZBEAPI SingleTextSDLDrawer : public Behavior<SingleTextSprite> {
     SingleTextSDLDrawer(const SingleTextSDLDrawer&) = delete; //!< Avoid copy.
     void operator=(const SingleTextSDLDrawer&) = delete; //!< Avoid copy.
 
+    /** \brief Empty constructor.
+     */
+    SingleTextSDLDrawer()
+      : window(nullptr), textFontStore(nullptr){}
+
     /** \brief Create a new drawer in the given context.
      *  \param window A SDLwindow with its context.
      */
@@ -39,6 +44,14 @@ class ZBEAPI SingleTextSDLDrawer : public Behavior<SingleTextSprite> {
     /** \brief Destructor.
      */
     ~SingleTextSDLDrawer() {}
+
+    /** \brief sets the window, imgStore and rmss.
+     *  \param window A SDLwindow with its context.
+     */
+    void setWindow(std::shared_ptr<SDLWindow> window) {
+      this->window = window;
+      textFontStore = window->getFontStore();
+    }
 
     /** \brief Draws the given entity.
      *  \param The entity to be drawn.
