@@ -19,9 +19,11 @@
 					<Add option="-Wall" />
 					<Add option="-m64" />
 					<Add option="-g" />
+					<Add option="-std=c++17" />
 					<Add option="-isystem ../../../extlibs/googletest/1.7.0/include" />
 					<Add option="-isystem ../../../extlibs/json" />
-					<Add option="-std=c++17" />
+					<Add option="-isystem ../../../extlibs/glm/0.9.9.0" />
+					<Add option="-isystem ../../../extlibs/stb_vorbis" />
 					<Add directory="../../../src/ZBETest/include" />
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/googletest/1.7.0/include" />
@@ -71,9 +73,11 @@
 					<Add option="-Wextra" />
 					<Add option="-Wall" />
 					<Add option="-m64" />
+					<Add option="-std=c++17" />
 					<Add option="-isystem ../../../extlibs/googletest/1.7.0/include" />
 					<Add option="-isystem ../../../extlibs/json" />
-					<Add option="-std=c++17" />
+					<Add option="-isystem ../../../extlibs/glm/0.9.9.0" />
+					<Add option="-isystem ../../../extlibs/stb_vorbis" />
 					<Add directory="../../../src/ZBETest/include" />
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/googletest/1.7.0/include" />

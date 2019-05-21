@@ -26,6 +26,7 @@ class DummyTimer : public zbe::Timer {
 
 class DummyNetHandler : public zbe::NetHandler {
 public:
+  DummyNetHandler() :msgCall() {}
   void run(uint32_t sequence, zbe::SDLSocket, std::vector<char> msg) {
     sequenceCall = sequence;
     msgCall = msg;

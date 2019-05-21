@@ -41,7 +41,7 @@ class OGLModelSheetDrawer : public Behavior<T> {
     /** \brief Empty constructor
      */
     OGLModelSheetDrawer()
-      : window(nullptr), rmglms(RsrcStore<OGLModelSheet<T> >::getInstance()) {}
+      : gProgramID(), window(nullptr), rmglms(RsrcStore<OGLModelSheet<T> >::getInstance()) {}
 
     /** \brief Create a new drawer in the given context.
      *  \param window A SDLwindow with its context.
