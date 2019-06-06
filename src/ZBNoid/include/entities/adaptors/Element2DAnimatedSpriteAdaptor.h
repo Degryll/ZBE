@@ -27,7 +27,7 @@ public:
 
   Element2DAnimatedSpriteAdaptor(std::weak_ptr<zbe::Element2D<R> > entity): e(entity), s(nullptr), contextTime(zbe::SysTime::getInstance()) {
     std::shared_ptr<zbe::Element2D<R> > ent = e.lock();
-    s = new zbe::SimpleAnimatedSprite(ent->getX(), ent->getY(), ent->getW(), ent->getH(), ent->getGraphics(), 0, ent->getState(), ent->getTimeStamp());
+    s = new zbe::SimpleAnimatedSprite(ent->getX(), ent->getY(), ent->getW(), ent->getH(), ent->getGraphics(), 0, ent->getState(), ent->getTimeStamp(), zbe::SysTime::getInstance());
   }
 
   ~Element2DAnimatedSpriteAdaptor() {delete s;}
@@ -54,4 +54,3 @@ private:
 }  // namespace zombienoid
 
 #endif  // ZBE_ENTITIES_ADAPTORS_ELEMENT2DANIMATEDSPRITEADAPTOR_H_
-

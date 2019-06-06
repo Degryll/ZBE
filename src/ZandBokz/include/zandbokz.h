@@ -8,6 +8,8 @@
  */
 
 #include <cstdio>
+#include "ZBE/factories/CommonFactories.h"
+#include "ZBE/resources/loaders/implementations/JSONAppLoader.h"
 
 int main(int /*argc*/, char** /*argv*/);
 

@@ -30,7 +30,7 @@ public:
     std::shared_ptr<zbe::ActiveElement2D<R> > ent = e.lock();
     double hw = ent->getW()/2.0;
     double hh = ent->getH()/2.0;
-    s = new zbe::SimpleAnimatedSprite(ent->getX()-hw, ent->getY()-hh, ent->getW(), ent->getH(), ent->getGraphics(), 0, ent->getState(), ent->getTimeStamp());
+    s = new zbe::SimpleAnimatedSprite(ent->getX()-hw, ent->getY()-hh, ent->getW(), ent->getH(), ent->getGraphics(), 0, ent->getState(), ent->getTimeStamp(), zbe::SysTime::getInstance());
   }
 
   ~ActiveElement2DAnimatedSpriteAdaptor() {delete s;}

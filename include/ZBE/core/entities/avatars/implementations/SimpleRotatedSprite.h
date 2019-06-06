@@ -23,16 +23,25 @@ namespace zbe {
  */
 class SimpleRotatedSprite : virtual public RotatedSprite, public SimpleSingleSprite {
 public:
+  /** \brief Empty Constructor.
+   */
+  SimpleRotatedSprite() : SimpleSingleSprite(), degrees() {}
+
   /** \brief Parametrized Constructor.
    *  \param degrees Rotation degrees.
    */
   SimpleRotatedSprite(int64_t x, int64_t y, int64_t w, int64_t h, uint64_t graphics, double degrees) :
   SimpleSingleSprite(x, y, w, h, graphics), degrees(degrees) {}
 
-  /** \brief Returns degrees.
+  /** \brief Returns the rotation angle in degrees.
    *  \return degrees.
    */
   double getDegrees() {return degrees;}
+
+  /** \brief Sets the degrees.
+   *  \param degrees rotation angle in degrees
+   */
+  void setDegrees(double degrees) {this->degrees = degrees;}
 
 private:
   double degrees; //!< rotation degrees

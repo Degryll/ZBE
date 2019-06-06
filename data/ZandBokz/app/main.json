@@ -1,0 +1,90 @@
+{
+  "meta" : {
+    "description" : "Zandbokz entry point"
+  },
+  "literals" : {
+    "window_title":"Zandbokz",
+    "width" : 1024,
+    "height": 768
+  },
+  "lists" : [
+    {"factory": "TFAECDrawablesFtry",
+      "name": "loadScreen.drawList",
+      "config" : {}
+    },
+  ],
+  "factories" : [
+    {"factory": "DmnFtry.MainLoopFtry",
+      "name": "Main",
+      "config" : {
+        "preDaemon":"",
+        "preDaemonDesc":"loadScreen.PreDaemon",
+        "eventDaemon":"",
+        "eventDaemonDesc":"loadScreen.eventGenerator",
+        "commonDaemon":"",
+        "commonDaemonDesc":"nada?vacio?",
+        "reactDaemon":"",
+        "reactDaemonDesc":"si hay evento de tiempo: se llama al exit... pero esto lo hace el eventStore.manage(): que esto se queda vacio",
+        "drawDaemon":"",
+        "drawDaemonDesc":"Pues a pintar la pantalla de carga",
+        "postDaemon":"",
+        "postDaemonDesc":"loadScreen.PostDaemon",
+        "contextTime":"",
+        "contextTimeDesc":"el systime"
+      }
+    },
+    {"factory": "BasicPreLoopSDLDaemonFtry",
+      "name": "loadScreen.PreDaemon",
+      "config" : {
+        "key" : "..."
+      }
+    },
+    {"factory": "BasicPostLoopSDLDaemonFtry",
+      "name": "loadScreen.PostDaemon",
+      "config" : {
+        "key" : "..."
+      }
+    },
+    {"factory": "TimeEventGeneratorFtry",
+      "name": "loadScreen.eventGenerator",
+      "config" : {
+        "key" : "..."
+      }
+    },
+    {"factory": "MainExitDaemonFry",
+      "name": "loadScreen.exitDaemon",
+      "config" : {
+        "main_loop" : "Main"
+      }
+    },
+    {"factory": "DaemonTimeHandlerFtry",
+      "name": "loadScreen.exitHandler",
+      "config" : {
+        "generator" : "loadScreen.eventGenerator",
+        "dmn" : "loadScreen.exitDaemon",
+        "exit_value" : "loadScreen.toMenu"
+      }
+    },
+    {"factory": "DrawerFtry",
+      "name": "loadScreen.drawScreen",
+      "description" : "comportamiento que pintara la pantalla",
+      "config" : {
+        "key" : "..."
+      }
+    },
+    {"factory": "DrawablePIMPAMPUMBehaviorDmnFtry",
+      "name": "loadScreen.drawDaemon",
+      "description" : "demonio que pintara la pantalla",
+      "config" : {
+        "list" : "loadScreen.drawList",
+        "behvior" : "loadScreen.drawScreen"
+      }
+    },
+    {"factory": "DrawableSimpleEntityFtry",
+      "name": "loadScreen.background",
+      "config" : {
+        "lists" : ["loadScreen.drawList"]
+      }
+    }
+  ]
+}

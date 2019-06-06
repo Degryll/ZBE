@@ -105,7 +105,7 @@ class BallExploder : public zbe::TimeHandler {
     stated->setState(state);
     //Graphic entity erase timer.
     zbe::Point2D p = pos2d->getPosition();
-    zbe::AnimatedSprite* as = new zbe::SimpleAnimatedSprite(p.x-radius, p.y-radius, radius*2, radius*2, graphsId, 0.0, 0, zbe::SysTime::getInstance()->getEventTime());
+    zbe::AnimatedSprite* as = new zbe::SimpleAnimatedSprite(p.x-radius, p.y-radius, radius*2, radius*2, graphsId, 0.0, 0, zbe::SysTime::getInstance()->getEventTime(), zbe::SysTime::getInstance());
     std::shared_ptr<zbe::AvatarEntity<zbe::AnimatedSprite> > aeAS = std::make_shared<zbe::AvatarEntityFixed<zbe::AnimatedSprite> >(as);
     std::shared_ptr<zbe::AvatarEntityContainer<zbe::AnimatedSprite> > aecAS = std::make_shared<zbe::AvatarEntityContainer<zbe::AnimatedSprite> >(aeAS);
     std::shared_ptr<zbe::Ticket> spriteTicket = asList->push_front(aecAS);

@@ -15,25 +15,25 @@
 #include "ZBE/entities/Element2D.h"
 #include "ZBE/core/entities/avatars/AnimatedSprite.h"
 
-namespace zbe {
+namespace zombienoid {
 
 /** \brief Implementation that adapts an Element2D to an AnimatedSprite.
  */
 template <typename R>
-class Element2DDisplacedAnimatedSpriteAdaptor : public Adaptor<AnimatedSprite> {
+class Element2DDisplacedAnimatedSpriteAdaptor : public zbe::Adaptor<zbe::AnimatedSprite> {
 public:
   Element2DDisplacedAnimatedSpriteAdaptor(const Element2DDisplacedAnimatedSpriteAdaptor&) = delete;
   void operator=(const Element2DDisplacedAnimatedSpriteAdaptor&) = delete;
 
-  Element2DDisplacedAnimatedSpriteAdaptor(std::weak_ptr<Element2D<R> > entity, zbe::Vector2D displacement): e(entity), s(nullptr), d(displacement), contextTime(zbe::SysTime::getInstance()) {
-    std::shared_ptr<Element2D<R> > ent = e.lock();
-    s = new SimpleAnimatedSprite(ent->getX(), ent->getY(), ent->getW(), ent->getH(), ent->getGraphics(), 0, ent->getState(), ent->getTimeStamp());
+  Element2DDisplacedAnimatedSpriteAdaptor(std::weak_ptr<zbe::Element2D<R> > entity, zbe::Vector2D displacement): e(entity), s(nullptr), d(displacement), contextTime(zbe::SysTime::getInstance()) {
+    std::shared_ptr<zbe::Element2D<R> > ent = e.lock();
+    s = new zbe::SimpleAnimatedSprite(ent->getX(), ent->getY(), ent->getW(), ent->getH(), ent->getGraphics(), 0, ent->getState(), ent->getTimeStamp(), zbe::SysTime::getInstance());
   }
 
   ~Element2DDisplacedAnimatedSpriteAdaptor() {delete s;}
 
-  AnimatedSprite* getAvatar() {
-    std::shared_ptr<Element2D<R> > ent = e.lock();
+  zbe::AnimatedSprite* getAvatar() {
+    std::shared_ptr<zbe::Element2D<R> > ent = e.lock();
     s->setW(ent->getW());
     s->setH(ent->getH());
     s->setX(ent->getX() + d.x);
@@ -44,13 +44,12 @@ public:
   }
 
 private:
-    std::weak_ptr<Element2D<R> > e;
-    SimpleAnimatedSprite* s;
+    std::weak_ptr<zbe::Element2D<R> > e;
+    zbe::SimpleAnimatedSprite* s;
     zbe::Vector2D d;
     std::shared_ptr<zbe::ContextTime> contextTime;
 };
 
-}  // namespace zbe
+}  // namespace zombienoid
 
 #endif  // ZBE_ENTITIES_ADAPTORS_ELEMENT2DDISPLACEDANIMATEDSPRITEADAPTOR_H_
-

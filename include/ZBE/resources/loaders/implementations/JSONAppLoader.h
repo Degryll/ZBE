@@ -34,7 +34,8 @@ public:
    */
   JSONAppLoader() : cfgStore(RsrcStore<json>::getInstance()),
                     ftryStore(RsrcStore<Factory>::getInstance()),
-                    appData() {}
+                    appLists(),
+                    appFactories() {}
 
   /** \brief Loads the app config
    *  \param filePath Path to resource file.
@@ -66,7 +67,8 @@ private:
   RsrcDictionary<float>& floatStore = RsrcDictionary<float>::getInstance();
   RsrcDictionary<std::string>& stringStore = RsrcDictionary<std::string>::getInstance();
 
-  std::forward_list<FtryData> appData;
+  std::forward_list<FtryData> appLists;
+  std::forward_list<FtryData> appFactories;
 };
 
 }  // namespace zbe

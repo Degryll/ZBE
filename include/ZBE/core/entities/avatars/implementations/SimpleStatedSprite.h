@@ -23,6 +23,11 @@ namespace zbe {
  */
 class SimpleStatedSprite : virtual public StatedSprite, public SimpleRotatedSprite {
 public:
+  
+  /** \brief Empty Constructor.
+   */
+  SimpleStatedSprite() :  SimpleRotatedSprite(), state() {}
+
   /** \brief Parametrized Constructor.
    *  \param x x coord
    *  \param y y coord

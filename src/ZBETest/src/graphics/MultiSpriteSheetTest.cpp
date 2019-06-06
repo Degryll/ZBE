@@ -1,5 +1,7 @@
 #include "gtest/gtest.h"
 
+#include "ZBE/core/system/SysTime.h"
+
 #include "ZBE/core/entities/avatars/implementations/SimpleAnimatedSprite.h"
 #include "ZBE/core/entities/avatars/AnimatedSprite.h"
 #include "ZBE/core/tools/graphics/Sprite.h"
@@ -18,7 +20,7 @@ TEST(MultiSpriteSheet, generateSprite) {
     MultiSpriteSheet mss(2,sdd);
     mss.setSprite(0, id1);
     mss.setSprite(1, id2);
-    SimpleAnimatedSprite sas(0, 0, 100, 100, 1, 0.0, 0, 0);
+    SimpleAnimatedSprite sas(0, 0, 100, 100, 1, 0.0, 0, 0, SysTime::getInstance());
 
     sas.setState(0);
     Sprite s = mss.generateSprite(&sas);

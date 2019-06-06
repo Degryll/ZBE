@@ -7,6 +7,7 @@
 #include <string>
 
 #include "ZBE/core/system/SysError.h"
+#include "ZBE/core/system/SysTime.h"
 #include "ZBE/core/tools/containers/RsrcDictionary.h"
 #include "ZBE/core/tools/containers/RsrcStore.h"
 
@@ -122,10 +123,10 @@ TEST(MultiSpriteSheetTest, Load_folder) {
  std::shared_ptr<zbe::SpriteSheet<zbe::AnimatedSprite> > player001 = ssrsrc.get(nrd.get(zbe::cn::SPRTSHEET + zbe::cn::SEPARATOR + "player_001"));
  std::shared_ptr<zbe::SpriteSheet<zbe::AnimatedSprite> > player002 = ssrsrc.get(nrd.get(zbe::cn::SPRTSHEET + zbe::cn::SEPARATOR + "player_002"));
 
- zbe::SimpleAnimatedSprite sas1(0, 0, 100, 100, 1, 0.0f, 1, 100);
+ zbe::SimpleAnimatedSprite sas1(0, 0, 100, 100, 1, 0.0f, 1, 100, zbe::SysTime::getInstance());
  zbe::Sprite s1 = player001->generateSprite(&sas1);
 
- zbe::SimpleAnimatedSprite sas2(10, 10, 110, 110, 2, 0.0f, 2, 600);
+ zbe::SimpleAnimatedSprite sas2(10, 10, 110, 110, 2, 0.0f, 2, 600, zbe::SysTime::getInstance());
  zbe::Sprite s2 = player002->generateSprite(&sas2);
 
  EXPECT_NEAR(0.0, s1.src.p.x, 0.00001) << "Must match src x";
