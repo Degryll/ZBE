@@ -72,7 +72,7 @@ TEST(IntersectionEventGenerator, run) {
   std::shared_ptr<zbe::SysTime> sysTime = zbe::SysTime::getInstance();
   sysTime->setMaxFrameTime(zbe::SECOND*2);
 
-  DummyTimer* sysTimer = new DummyTimer;
+  auto sysTimer = std::make_shared<DummyTimer>();
   sysTime->setSystemTimer(sysTimer);
 
   std::shared_ptr<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Interactioner<R> > > > cnl(new zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Interactioner<R> > >());
@@ -133,7 +133,7 @@ TEST(InstantIntersectionEventGenerator, run_no_collision) {
   std::shared_ptr<zbe::SysTime> sysTime = zbe::SysTime::getInstance();
   sysTime->setMaxFrameTime(zbe::SECOND*2);
 
-  DummyTimer* sysTimer = new DummyTimer;
+  auto sysTimer = std::make_shared<DummyTimer>();
   sysTime->setSystemTimer(sysTimer);
 
   std::shared_ptr<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Interactioner<R> > > > cnl(new zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Interactioner<R> > >());
@@ -195,7 +195,7 @@ TEST(InstantIntersectionEventGenerator, run) {
   std::shared_ptr<zbe::SysTime> sysTime = zbe::SysTime::getInstance();
   sysTime->setMaxFrameTime(zbe::SECOND*2);
 
-  DummyTimer* sysTimer = new DummyTimer;
+  auto sysTimer = std::make_shared<DummyTimer>();
   sysTime->setSystemTimer(sysTimer);
 
   std::shared_ptr<zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Interactioner<R> > > > cnl(new zbe::TicketedForwardList<zbe::AvatarEntity<zbe::Interactioner<R> > >());

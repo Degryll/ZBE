@@ -28,7 +28,7 @@ namespace ludo {
 int generaltest(int, char** ) {
   using namespace zbe;
   std::shared_ptr<SDLWindow> window = std::make_shared<SDLWindow>("Ludo testing", 1000, 1000);
-  Timer *sysTimer = new SDLTimer(true);
+  auto sysTimer = std::make_shared<SDLTimer>(true);
   std::shared_ptr<SysTime> sysTime = SysTime::getInstance();
   sysTime->setSystemTimer(sysTimer);
   SDLEventDispatcher& sdlEDispatcher = SDLEventDispatcher::getInstance();

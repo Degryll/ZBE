@@ -29,7 +29,7 @@ TEST(UniformLinearMotion, apply) {
     std::shared_ptr<zbe::SysTime> sysTime = zbe::SysTime::getInstance();
     sysTime->setMaxFrameTime(zbe::SECOND);
 
-    DummyTimer* sysTimer = new DummyTimer;
+    auto sysTimer = std::make_shared<DummyTimer>();
     sysTime->setSystemTimer(sysTimer);
 
     zbe::SimpleMobile<2> m({3.0, 5.0},{7.0, 11.0});

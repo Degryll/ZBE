@@ -80,10 +80,11 @@
         "behvior" : "loadScreen.drawScreen"
       }
     },
-    {"factory": "DrawableSimpleEntityFtry",
+    {"factory": "SmplAnimSprtFtry",
       "name": "loadScreen.background",
       "config" : {
-        "lists" : ["loadScreen.drawList"]
+        "lists" : ["loadScreen.drawList"],
+        "TODO" : "la tira de cosas aquí"
       }
     }
   ]

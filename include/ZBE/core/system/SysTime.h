@@ -11,6 +11,7 @@
 #define ZBE_CORE_SYSTEM_SYSTEMTIME_H
 
 #include <cstdint>
+#include <memory>
 
 #include "ZBE/core/tools/time/Timer.h"
 #include "ZBE/core/system/SysError.h"
@@ -46,7 +47,7 @@ public:
    return getInstance();
   }
 
-  inline void setSystemTimer(Timer* timer) {
+  inline void setSystemTimer(std::shared_ptr<Timer> timer) {
     if (!timer) {
       zbe::SysError::setError(std::string("ERROR: System timer can only be set once"));
     } else {
@@ -55,9 +56,9 @@ public:
   }
 
 private:
-  SysTime() : timer(0) {}  //!< Basic constructor to be used internally.
+  SysTime() : timer(nullptr) {}  //!< Basic constructor to be used internally.
 
-  Timer* timer;      //!< Actual implementation of Timer to be used.
+  std::shared_ptr<Timer> timer;      //!< Actual implementation of Timer to be used.
 
   uint64_t _getTotalTime() {
     return timer->totalTime() - lostTime;

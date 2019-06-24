@@ -56,15 +56,18 @@ class RsrcStore {
     /** \brief Associates a resource with a name.
      *  \param name Name to identify the resource.
      *  \param resource The resource.
+     *  \return id for the inserted resource
      */
-    void insert(std::string name, std::shared_ptr<T> resource) {
+    uint64_t insert(std::string name, std::shared_ptr<T> resource) {
       uint64_t id = SysIdGenerator::getId();
       dict.insert(name, id);
       this->insert(id, resource);
+      return id;
     }
 
     /** \brief Associates a resource with an auto generated id.
      *  \param resource The resource.
+     *  \return id for the inserted resource
      */
     uint64_t insert(std::shared_ptr<T> resource) {
       uint64_t id = SysIdGenerator::getId();

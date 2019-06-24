@@ -52,7 +52,7 @@ TEST(InputEventGenerator, run) {
   std::shared_ptr<zbe::SysTime> sysTime = zbe::SysTime::getInstance();
   sysTime->setMaxFrameTime(zbe::SECOND*2);
 
-  DummyTimer* sysTimer = new DummyTimer;
+  auto sysTimer = std::make_shared<DummyTimer>();
   sysTime->setSystemTimer(sysTimer);
 
   // Build tools

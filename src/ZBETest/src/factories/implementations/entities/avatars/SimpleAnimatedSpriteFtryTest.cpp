@@ -38,6 +38,9 @@ TEST(SimpleAnimatedSpriteFtry, Create) {
 
   std::shared_ptr<zbetest::MockedContextTime> contextTime = std::make_shared<zbetest::MockedContextTime>();
 
+  contextTime->setFixedTime(2);
+  contextTime->update();
+
   timeRsrc.insert("ContextTime.sasftrytest.cTime", contextTime);
 
   auto cfg = std::make_shared<json>();

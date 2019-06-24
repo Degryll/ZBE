@@ -38,7 +38,7 @@ class DummyTimer : public zbe::Timer {
 
 TEST(SysTime, DISABLED_SysTime) {
   std::shared_ptr<zbe::SysTime> st = zbe::SysTime::getInstance();
-  zbe::Timer *t = new DummyTimer();
+  auto t = std::make_shared<DummyTimer>();
   st->setSystemTimer(t);
   int64_t f1 = st->getFrameTime();
   int64_t t1 = st->getFrameTime();

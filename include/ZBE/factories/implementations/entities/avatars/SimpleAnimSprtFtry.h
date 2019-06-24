@@ -125,7 +125,7 @@ void SimpleAnimSprtFtry<List, listnamespace>::setup(std::string name, uint64_t c
     setGraphics(uint64_t graphics)
     */
 
-    std::string contexttimename = j["contexttimename"].get<std::string>();
+    std::string contexttimename = j["contexttime"].get<std::string>();
     std::string timename = j["time"].get<std::string>();
     std::string statename = j["state"].get<std::string>();
     std::string degreesname = j["degrees"].get<std::string>();

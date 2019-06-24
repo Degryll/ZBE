@@ -10,28 +10,28 @@
 #include "ZBE/core/zbe.h"
 
 int main(int /*argc*/, char** /*argv*/) {
-    // using namespace zbe;
-    // printf("Hello ZandBokz\n");
-    //
-    // CommonFactories::load();
-    //
-    // /*CommonListFactories<
-    //   int, "listint",
-    //   float, "list cosa"
-    // >::load();*/
-    //
-    // GenericExtraFactories<
-    //   /*int, "listint",
-    //   float, "list cosa",*/
-    //   TFAEC<Drawable>, "TFAECDrawablesFtry"
-    // >::load();
-    //
-    // JSONAppLoader appLoader;
-    // appLoader.load("data/ZandBokz/app/main.json");
-    // auto& dmnRsrcStore = RsrcStore<Daemon>::getInstance();
-    // auto mainDaemon = dmnRsrcStore.get("Daemon.Main");
-    // mainDaemon.run();
-    // return 0;
+//    using namespace zbe;
+//    printf("Hello ZandBokz\n");
+//
+//    CommonFactories::load();
+//
+//    /*CommonListFactories<
+//      int, "listint",
+//      float, "list cosa"
+//    >::load();*/
+//
+//    GenericExtraFactories<
+//      /*int, "listint",
+//      float, "list cosa",*/
+//      TFAEC<Drawable>, "TFAECDrawablesFtry"
+//      >::load();
+//
+//    JSONAppLoader appLoader;
+//    appLoader.load("data/ZandBokz/app/main.json");
+//    auto& dmnRsrcStore = RsrcStore<Daemon>::getInstance();
+//    auto mainDaemon = dmnRsrcStore.get("Daemon.Main");
+//    mainDaemon.run();
+//    return 0;
 
 
     // Flujo del juego
@@ -51,6 +51,10 @@ int main(int /*argc*/, char** /*argv*/) {
       // Cargar segunda aplicacion: juego.
 
     // Desarrollos necesarios
+      // REPENSAR: ¿Se crea con factorias SysTime? Solo puede haber uno.
+      // ¿Quien lo configura? ¿Quien construye y establece el Timer?
+      // Factorias de ContextTime: SysTime, SubordinateTime
+      // ¿Como configuramos el timer en SysTime?
       // Avatares nuevos: Todos construidos a partir de un Entity.
       // Declarar en CommonFactories factorias para:
         // values
@@ -64,7 +68,10 @@ int main(int /*argc*/, char** /*argv*/) {
     // Desarrollos deseados
       // Expandir interfaz de RsrcLoader para poder preguntar estado.
       // * Cada RsrcLoader es responsable de anotar su estado. struct done/total/msgId
-      //Añadir descripcion a factoria en json
+      // Añadir descripcion a factoria en json
+      // CommonResources incluye recursos por defecto en RsrcStores.
+        // Ejemplo: "ContexTime.SysTime" siempre contiene el singleto de SysTime. (Quizás justo este ejemplo sea malo. No podemos jugarnosla a meter SysTime en un shared_ptr)
+        // ... pues resulta que SysTime::getInstance() devuelve uns shared_ptr.
 
     // Chorrandeces
       // La pantalla de carga dice tontas mientras pasan las barras de progreso.
