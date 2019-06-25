@@ -10,28 +10,28 @@
 #include "ZBE/core/zbe.h"
 
 int main(int /*argc*/, char** /*argv*/) {
-//    using namespace zbe;
-//    printf("Hello ZandBokz\n");
-//
-//    CommonFactories::load();
-//
-//    /*CommonListFactories<
-//      int, "listint",
-//      float, "list cosa"
-//    >::load();*/
-//
-//    GenericExtraFactories<
-//      /*int, "listint",
-//      float, "list cosa",*/
-//      TFAEC<Drawable>, "TFAECDrawablesFtry"
-//      >::load();
-//
-//    JSONAppLoader appLoader;
-//    appLoader.load("data/ZandBokz/app/main.json");
-//    auto& dmnRsrcStore = RsrcStore<Daemon>::getInstance();
-//    auto mainDaemon = dmnRsrcStore.get("Daemon.Main");
-//    mainDaemon.run();
-//    return 0;
+   // using namespace zbe;
+   printf("Hello ZandBokz\n");
+   //
+   // CommonFactories::load();
+   //
+   // /*CommonListFactories<
+   //   int, "listint",
+   //   float, "list cosa"
+   // >::load();*/
+   //
+   // GenericExtraFactories<
+   //   /*int, "listint",
+   //   float, "list cosa",*/
+   //   TFAEC<Drawable>, "TFAECDrawable/home/ludo/workspace/ZBE/src/ZandBokz/src/zandbokz.cppsFtry"
+   //   >::load();
+   //
+   // JSONAppLoader appLoader;
+   // appLoader.load("data/ZandBokz/app/main.json");
+   // auto& dmnRsrcStore = RsrcStore<Daemon>::getInstance();
+   // auto mainDaemon = dmnRsrcStore.get("Daemon.Main");
+   // mainDaemon.run();
+   // return 0;
 
 
     // Flujo del juego
@@ -51,16 +51,14 @@ int main(int /*argc*/, char** /*argv*/) {
       // Cargar segunda aplicacion: juego.
 
     // Desarrollos necesarios
-      // REPENSAR: ¿Se crea con factorias SysTime? Solo puede haber uno.
-      // ¿Quien lo configura? ¿Quien construye y establece el Timer?
-      // Factorias de ContextTime: SysTime, SubordinateTime
-      // ¿Como configuramos el timer en SysTime?
+      // ¿Cambiar factories por general? Necesitamos cargar assets en esa fase.
+      // Factorias de ContextTime:SubordinateTime
       // Avatares nuevos: Todos construidos a partir de un Entity.
       // Declarar en CommonFactories factorias para:
-        // values
-        // listas
+        // values X
+        // listas V
+      // cambiar el campo "lists" del main.json por "containers" e incluir en el factorias de values.
       // ¿Tenemos un demonio vacio?
-      // Factorias tiempos
       // Factorias sistema de menus
       // Factorias BasicPreLoopSDLDaemon/BasicPostLoopSDLDaemon
       // Quizas todas las factorias de entidades iniciales deban dejar tickets de estas en un RsrcStore de tickets.

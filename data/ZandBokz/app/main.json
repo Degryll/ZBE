@@ -5,7 +5,9 @@
   "literals" : {
     "window_title":"Zandbokz",
     "width" : 1024,
-    "height": 768
+    "height": 768,
+    "loadScreen.toMenu": 1,
+    "loadScreen.loadTime" : 4
   },
   "lists" : [
     {"factory": "TFAECDrawablesFtry",
@@ -29,40 +31,47 @@
         "drawDaemonDesc":"Pues a pintar la pantalla de carga",
         "postDaemon":"",
         "postDaemonDesc":"loadScreen.PostDaemon",
-        "contextTime":"",
+        "contextTime":"ContexTime.SYSTEM",
         "contextTimeDesc":"el systime"
       }
+    },
+    {"factory": "SDLSysTimeFtry",
+      "name": "loadScreen.SDLSysTime",
+      "config" : {}
     },
     {"factory": "BasicPreLoopSDLDaemonFtry",
       "name": "loadScreen.PreDaemon",
       "config" : {
-        "key" : "..."
+        "key" : "Probablemente sin configuracion"
       }
     },
     {"factory": "BasicPostLoopSDLDaemonFtry",
       "name": "loadScreen.PostDaemon",
       "config" : {
-        "key" : "..."
+        "key" : "Probablemente sin configuracion"
       }
     },
     {"factory": "TimeEventGeneratorFtry",
       "name": "loadScreen.eventGenerator",
       "config" : {
-        "key" : "..."
+        "key" : "el ContexTime a usar ¿puede usar SYSTEM por defecto?"
       }
     },
     {"factory": "MainExitDaemonFry",
       "name": "loadScreen.exitDaemon",
       "config" : {
-        "main_loop" : "Main"
+        "mainloop" : "Main",
+        "valueHolder" : "Necesitaremos crear un value",
+        "outValue" : "Cambiar por un literal en la factoria del MainLoopExit"
       }
     },
     {"factory": "DaemonTimeHandlerFtry",
       "name": "loadScreen.exitHandler",
       "config" : {
-        "generator" : "loadScreen.eventGenerator",
+        "generator" : "loadScreen.eventGenerator(falta)",
+        "time" : "loadScreen.loadTime (falta)",
         "dmn" : "loadScreen.exitDaemon",
-        "exit_value" : "loadScreen.toMenu"
+        "extra" : "nos falta en la factoria guardarlo en el TimeEventGenerator"
       }
     },
     {"factory": "DrawerFtry",
