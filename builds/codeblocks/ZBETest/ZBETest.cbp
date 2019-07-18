@@ -307,6 +307,7 @@
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/drawers/SingleTextSDLDrawerFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/drawers/SpriteSheetSDLDrawerFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/entities/avatars/SimpleAnimatedSpriteFtryTest.cpp" />
+		<Unit filename="../../../src/ZBETest/src/factories/implementations/events/TimeEventFactoriesTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/events/handlers/actuators/DmnSelectorAtorFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/events/handlers/actuators/StateChangerAtorFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/events/handlers/input/BroadcastIHFtryTest.cpp" />

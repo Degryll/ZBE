@@ -17,7 +17,7 @@
 
 #include "ZBE/core/tools/containers/RsrcStore.h"
 
-#include "ZBE/core/tools/time/ContexTime.h"
+#include "ZBE/core/tools/time/ContextTime.h"
 #include "ZBE/core/system/SysTime.h"
 
 namespace zbe {
@@ -37,7 +37,7 @@ public:
   /** \brief It loads system resources.
   */
   static void load();
-  
+
 private:
   NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();
 

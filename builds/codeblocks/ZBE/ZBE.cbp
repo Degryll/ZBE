@@ -482,7 +482,9 @@
 		<Unit filename="../../../include/ZBE/factories/implementations/daemons/RsrcFolderLoaderDmnFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/daemons/RsrcLoaderDmnFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/daemons/StateMachineDmnFtry.h" />
+		<Unit filename="../../../include/ZBE/factories/implementations/entities/avatars/SimpleAnimSprtFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/events/generators/InteractionEvGnFtry.h" />
+		<Unit filename="../../../include/ZBE/factories/implementations/events/generators/TimeEventGnFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/events/handlers/actuators/DmnSelectorAtorFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/events/handlers/actuators/StateChangerAtorFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/events/handlers/input/BroadcastIHFtry.h" />
@@ -555,6 +557,7 @@
 		<Unit filename="../../../src/ZBE/factories/implementations/daemons/RsrcFolderLoaderDmnFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/daemons/RsrcLoaderDmnFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/daemons/StateMachineDmnFtry.cpp" />
+		<Unit filename="../../../src/ZBE/factories/implementations/events/generators/TimeEventGnFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/events/handlers/input/BroadcastIHFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/events/handlers/input/DaemonClickIHFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/events/handlers/input/DaemonIHFtry.cpp" />

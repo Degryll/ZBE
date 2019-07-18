@@ -98,7 +98,13 @@ class ZBEAPI TimeEventGenerator : virtual public Daemon {
   public:
     /** \brief Empty Constructor.
      */
-    TimeEventGenerator(int eventId, std::shared_ptr<ContextTime> contextTime = SysTime::getInstance()) : eventId(eventId), es(EventStore::getInstance()), timers(), contextTime(contextTime) {}
+    TimeEventGenerator() : eventId(), es(EventStore::getInstance()), timers(), contextTime() {}
+
+    /** \brief Parametrized constructor.
+     *  \param eventId event id.
+     *  \param contextTime ContextTime to use.
+     */
+    TimeEventGenerator(uint64_t eventId, std::shared_ptr<ContextTime> contextTime = SysTime::getInstance()) : eventId(eventId), es(EventStore::getInstance()), timers(), contextTime(contextTime) {}
 
     /** Add a new Timer that only triggers onces.
      * \param id Id of the Timer, to identify the action to accomplish when the event is triggered
@@ -110,12 +116,26 @@ class ZBEAPI TimeEventGenerator : virtual public Daemon {
       return (std::make_shared<TimerTicket>(timers.insert(TimerData(handler,quantizeTime(time))), timers, eventId, contextTime));
     }
 
+    /** Set the event id that created events will have.
+     * \param eventId event id.
+     */
+    void setEventId(uint64_t eventId) {
+      this->eventId = eventId;
+    }
+
+    /** Set the ContextTime to use.
+     * \param contextTime ContextTime to use.
+     */
+    void setContextTime(std::shared_ptr<ContextTime> contextTime) {
+      this->contextTime = contextTime;
+    }
+
     /** \brief It will look for time events occurred within the available.
      */
     void run();
 
   private:
-    int eventId;
+    uint64_t eventId;
     EventStore& es;
     std::multiset<TimerData> timers;
     std::shared_ptr<ContextTime> contextTime;

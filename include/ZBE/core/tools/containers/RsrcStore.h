@@ -75,6 +75,21 @@ class RsrcStore {
       return id;
     }
 
+    /** \brief Removes a resource by its Id and returns it.
+     *  \param Id to identify the resource.
+     *  \return The resource.
+     */
+    std::shared_ptr<T> remove(uint64_t id);
+
+    /** \brief Removes a resource by its Id and returns it.
+     *  \param name Name to identify the resource.
+     *  \return The resource.
+     */
+    std::shared_ptr<T> remove(std::string name) {
+      uint64_t id = dict.get(name);
+      return (this->remove(id));
+    }
+
     /** \brief Returns the resource identify by the id.
      *  \param id Id to identify the resource.
      *  \return The resource.
@@ -113,6 +128,20 @@ std::shared_ptr<T> RsrcStore<T>::get(uint64_t id) {
     return (it->second);
   }
 }
+
+template <typename T>
+std::shared_ptr<T> RsrcStore<T>::remove(uint64_t id) {
+  auto it = l.find(id);
+  if (it == l.end()) {
+    SysError::setError("Resource not found.");
+    return (std::shared_ptr<T>());
+  } else {
+    auto aux = it->second;
+    l.erase(it);
+    return (aux);
+  }
+}
+
 
 }  // namespace zbe
 

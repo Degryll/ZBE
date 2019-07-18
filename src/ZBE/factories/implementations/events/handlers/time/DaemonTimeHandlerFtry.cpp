@@ -15,8 +15,6 @@ void DaemonTimeHandlerFtry::create(std::string name, uint64_t) {
   using namespace std::string_literals;
 
   std::shared_ptr<DaemonTimeHandler> dth = std::make_shared<DaemonTimeHandler>();
-
-  timeRsrc.insert("TimeHandler."s + name, dth);
   dmnTimeHandlerRsrc.insert("DaemonTimeHandler."s + name, dth);
 }
 
@@ -27,16 +25,31 @@ void DaemonTimeHandlerFtry::setup(std::string name, uint64_t cfgId) {
 
   if(cfg) {
     auto j = *cfg;
-    if (j["daemon"].is_string()) {
-      std::string dname = j["daemon"].get<std::string>();
-      std::shared_ptr<Daemon> daemon = dmnRsrc.get("Daemon."s + dname);
-
-      auto dth = dmnTimeHandlerRsrc.get("DaemonTimeHandler."s + name);
-      dth->setDaemon(daemon);
-
-    } else {
-      SysError::setError("DaemonTimeHandlerFtry config for "s + j["daemon"].get<std::string>() + ": must be a string."s);
+    if (!j["dmn"].is_string()) {
+      SysError::setError("DaemonTimeHandlerFtry config for dmn "s + j["dmn"].get<std::string>() + ": must be a string."s);
+      return;
     }
+    if (!j["generator"].is_string()) {
+      SysError::setError("DaemonTimeHandlerFtry config for generator "s + j["generator"].get<std::string>() + ": must be a string."s);
+      return;
+    }
+    if (!j["time"].is_string()){
+      SysError::setError("DaemonTimeHandlerFtry config for time "s + j["time"].get<std::string>() + ": must be a string."s);
+      return;
+    }
+    std::string dname = j["dmn"].get<std::string>();
+    std::string gname = j["generator"].get<std::string>();
+    std::string tname = j["time"].get<std::string>();
+
+    std::shared_ptr<Daemon> daemon = dmnRsrc.get("Daemon."s + dname);
+    std::shared_ptr<TimeEventGenerator> teg = tegRsrc.get("TimeEventGenerator."s + gname);
+    uint64_t time = intStore.get("time."s + tname);
+
+    auto dth = dmnTimeHandlerRsrc.remove("DaemonTimeHandler."s + name);
+    dth->setDaemon(daemon);
+
+    teg->addTimer(dth, time);
+
   } else {
     SysError::setError("DaemonTimeHandlerFtry config for "s + name + " not found."s);
   }

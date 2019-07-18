@@ -1,4 +1,4 @@
-/**
+ /**
  * Copyright 2012 Batis Degryll Ludo
  * @file DaemonTimeHandlerFtry.h
  * @since 2018-12-26
@@ -22,6 +22,7 @@
 #include "ZBE/core/daemons/Daemon.h"
 
 #include "ZBE/core/events/handlers/TimeHandler.h"
+#include "ZBE/core/events/generators/TimeEventGenerator.h"
 
 #include "ZBE/events/handlers/time/DaemonTimeHandler.h"
 
@@ -49,11 +50,11 @@ public:
   void setup(std::string name, uint64_t cfgId);
 
 private:
-  NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<Daemon> &dmnRsrc = RsrcStore<Daemon>::getInstance();
-  RsrcStore<TimeHandler> &timeRsrc = RsrcStore<TimeHandler>::getInstance();
   RsrcStore<DaemonTimeHandler> &dmnTimeHandlerRsrc = RsrcStore<DaemonTimeHandler>::getInstance();
+  RsrcStore<TimeEventGenerator> &tegRsrc = RsrcStore<TimeEventGenerator>::getInstance();
+  RsrcDictionary<int64_t>& intStore = RsrcDictionary<int64_t>::getInstance();
 };
 
 }  // namespace zbe
