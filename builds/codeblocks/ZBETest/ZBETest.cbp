@@ -233,8 +233,10 @@
 		<Unit filename="../../../src/ZBETest/src/SDL/StatedSpriteSDLDrawerTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/SDL/daemons/SDLOGLWindowDaemonTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/SDL/daemons/SDLWindowDaemonTest.cpp" />
+		<Unit filename="../../../src/ZBETest/src/SDL/factories/BasicPostLoopSDLDaemonFtryTest.cpp" />
+		<Unit filename="../../../src/ZBETest/src/SDL/factories/BasicPreLoopSDLDaemonFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/SDL/factories/SDLOGLWindowDmnFtryTest.cpp" />
-		<Unit filename="../../../src/ZBETest/src/SDL/factories/SDLWindowDmnFtryTest.cpp" />
+		<Unit filename="../../../src/ZBETest/src/SDL/factories/SDLWindowFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/SDL/system/SDLWindowTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/archetypes/SimpleActivePhysicalObjectTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/archetypes/SimpleBouncingTest.cpp" />

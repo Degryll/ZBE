@@ -290,9 +290,13 @@
 		<Unit filename="../../../include/ZBE/SDL/drawers/StatedSpriteSDLDrawer.h" />
 		<Unit filename="../../../include/ZBE/SDL/factories/SDLOGLWindowDmnFtry.h" />
 		<Unit filename="../../../include/ZBE/SDL/factories/SDLWindowDmnFtry.h" />
+		<Unit filename="../../../include/ZBE/SDL/factories/daemons/BasicPostLoopSDLDaemonFtry.h" />
+		<Unit filename="../../../include/ZBE/SDL/factories/daemons/BasicPreLoopSDLDaemonFtry.h" />
 		<Unit filename="../../../include/ZBE/SDL/factories/drawers/OGLModelSheetDrawerFtry.h" />
 		<Unit filename="../../../include/ZBE/SDL/factories/drawers/SingleTextSDLDrawerFtry.h" />
 		<Unit filename="../../../include/ZBE/SDL/factories/drawers/SpriteSheetSDLDrawerFtry.h" />
+		<Unit filename="../../../include/ZBE/SDL/factories/system/SDLSysTimeFtry.h" />
+		<Unit filename="../../../include/ZBE/SDL/factories/system/SDLWindowFtry.h" />
 		<Unit filename="../../../include/ZBE/SDL/resources/SDLImgLoader.h" />
 		<Unit filename="../../../include/ZBE/SDL/starters/SDL_Starter.h" />
 		<Unit filename="../../../include/ZBE/SDL/system/SDLEventDispatcher.h" />
@@ -519,7 +523,11 @@
 		<Unit filename="../../../src/ZBE/SDL/drawers/StatedSpriteSDLDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/factories/SDLOGLWindowDmnFtry.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/factories/SDLWindowDmnFtry.cpp" />
+		<Unit filename="../../../src/ZBE/SDL/factories/daemons/BasicPostLoopSDLDaemonFtry.cpp" />
+		<Unit filename="../../../src/ZBE/SDL/factories/daemons/BasicPreLoopSDLDaemonFtry.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/factories/drawers/SingleTextSDLDrawerFtry.cpp" />
+		<Unit filename="../../../src/ZBE/SDL/factories/system/SDLSysTimeFtry.cpp" />
+		<Unit filename="../../../src/ZBE/SDL/factories/system/SDLWindowFtry.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/starters/SDL_Starter.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/system/SDLEventDispatcher.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/system/SDLNetDispatcher.cpp" />

@@ -5,13 +5,13 @@
 
 #include "ZBE/core/tools/containers/RsrcDictionary.h"
 
-#include "ZBE/SDL/daemons/SDLWindowDaemon.h"
+#include "ZBE/SDL/system/SDLWindow.h"
 
-#include "ZBE/SDL/factories/SDLWindowDmnFtry.h"
+#include "ZBE/SDL/factories/system/SDLWindowFtry.h"
 
-namespace SDLWindowDmnFtryTest {
+namespace SDLWindowFtryTest {
 
-TEST(SDLWindowDmnFtry, Create) {
+TEST(SDLWindowFtry, Create) {
   EXPECT_EQ(0, zbe::SysError::getNErrors()) << "Initially no errors.";
 
   using namespace zbe;
@@ -21,12 +21,9 @@ TEST(SDLWindowDmnFtry, Create) {
   auto& strStore = RsrcDictionary<std::string>::getInstance();
   auto& intStore = RsrcDictionary<int64_t>::getInstance();
   auto &configRsrc = RsrcStore<json>::getInstance();
-  auto& SDLWindowDmnRsrc = zbe::RsrcStore<zbe::SDLWindowDaemon>::getInstance();
-  auto &dmnRsrc = RsrcStore<zbe::Daemon>::getInstance();
+  auto& SDLWindowRsrc = zbe::RsrcStore<zbe::SDLWindow>::getInstance();
 
   auto cfg = std::make_shared<json>();
-  (*cfg)["name"] = "testname";
-  strStore.insert("testname", "window.name");
   (*cfg)["title"] = "testtitle";
   strStore.insert("testtitle", "window.title");
   (*cfg)["x"] = "testx";
@@ -45,20 +42,17 @@ TEST(SDLWindowDmnFtry, Create) {
   uint64_t cfgId = SysIdGenerator::getId();
   configRsrc.insert(cfgId, cfg);
 
-  SDLWindowDmnFtry swdf;
-  swdf.create("SDLWindowDmnFtryTestName", cfgId);
-  swdf.setup("SDLWindowDmnFtryTestName", cfgId);
+  SDLWindowFtry swdf;
+  swdf.create("SDLWindowFtryTestName", cfgId);
+  swdf.setup("SDLWindowFtryTestName", cfgId);
 
   EXPECT_EQ(0, zbe::SysError::getNErrors()) << "Must be no config errors.";
 
-  uint64_t outId = dict.get("Daemon.SDLWindowDmnFtryTestName");
-  uint64_t swdId = dict.get("SDLWindowDaemon.SDLWindowDmnFtryTestName");
+  uint64_t outId = dict.get("SDLWindow.SDLWindowFtryTestName");
 
-  ASSERT_NE(0, outId) << "Must create a Daemon with given name";
-  ASSERT_NE(0, swdId) << "Must create a SDLWindowDaemon with given name";
+  ASSERT_NE(0, outId) << "Must create a SDLWindow with given name";
 
-  std::shared_ptr<Daemon> outDmn = dmnRsrc.get(outId);
-  std::shared_ptr<SDLWindowDaemon> outSDLWDmn = SDLWindowDmnRsrc.get(swdId);
+  std::shared_ptr<SDLWindow> outSDLW = SDLWindowRsrc.get(outId);
 
   EXPECT_EQ(0, zbe::SysError::getNErrors()) << "Must be no store errors.";
 
@@ -66,9 +60,9 @@ TEST(SDLWindowDmnFtry, Create) {
   strStore.clear();
   intStore.clear();
   configRsrc.clear();
-  SDLWindowDmnRsrc.clear();
-  dmnRsrc.clear();
+  SDLWindowRsrc.clear();
 
   zbe::SysError::clear();
 }
-}  // namespace SDLWindowDmnFtryTest
+
+}  // namespace SDLWindowFtryTest

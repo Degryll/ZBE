@@ -15,22 +15,17 @@
 
 namespace zbe {
 
-SDLWindow::SDLWindow(const char* title, int width, int height, Uint32 SDLWindow_flags, Uint32 rederer_flags)
-  : SDLWindow(title, 0, 0, width, height, SDLWindow_flags, rederer_flags) {}
+SDLWindow::SDLWindow(const char* title, int width, int height, Uint32 SDLWindow_flags, Uint32 renderer_flags)
+  : SDLWindow(title, 0, 0, width, height, SDLWindow_flags, renderer_flags) {}
 
-SDLWindow::SDLWindow(const char* title, int x, int y, int width, int height, Uint32 window_flags, Uint32 rederer_flags)
-       : sdl(SDL_Starter::getInstance(SDL_INIT_VIDEO)), window(SDL_CreateWindow(title, x, y, width, height, window_flags)),
-         renderer(SDL_CreateRenderer(window, -1, rederer_flags)),
+SDLWindow::SDLWindow(const char* title, int x, int y, int width, int height, Uint32 window_flags, Uint32 renderer_flags)
+       : title(nullptr), x(), y(), width(), height(), window_flags(), renderer_flags(),
+         sdl(SDL_Starter::getInstance(SDL_INIT_VIDEO)), window(SDL_CreateWindow(title, x, y, width, height, window_flags)),
+         renderer(SDL_CreateRenderer(window, -1, renderer_flags)),
          output(SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, width, height)),
          imgStore(std::make_shared<SDLImageStore>(renderer)), fontStore(std::make_shared<SDLTextFontStore>(imgStore, renderer)) {
 
-  if (window == nullptr){
-    zbe::SysError::setError(std::string("ERROR: SDL could not create a SDLWindow! SDL ERROR: ") + SDL_GetError());
-  }
-  if (renderer == nullptr){
-    SDL_DestroyWindow(window);
-    zbe::SysError::setError(std::string("ERROR: SDL could not create a renderer! SDL ERROR: ") + SDL_GetError());
-  }
+  checkWidowCreation();
 }
 
 SDLWindow::~SDLWindow() {
@@ -38,6 +33,17 @@ SDLWindow::~SDLWindow() {
   SDL_DestroyWindow(window);
   sdl.quitSubSystem(SDL_INIT_VIDEO);
 }
+
+void SDLWindow::run() {
+  window = SDL_CreateWindow(title, x, y, width, height, window_flags);
+  renderer = SDL_CreateRenderer(window, -1, renderer_flags);
+  output = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, width, height);
+  imgStore = std::make_shared<SDLImageStore>(renderer);
+  fontStore = std::make_shared<SDLTextFontStore>(imgStore, renderer);
+
+  checkWidowCreation();
+}
+
 
 void SDLWindow::clear() {
   if(SDL_RenderClear(renderer)) {

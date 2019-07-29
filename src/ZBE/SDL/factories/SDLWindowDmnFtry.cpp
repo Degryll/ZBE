@@ -4,7 +4,7 @@
  * @since 2018-09-19
  * @date 2018-09-19
  * @author Ludo Degryll Batis
- * @brief Factory for Main Loop.
+ * @brief Factory for SDLWindow Daemon.
  */
 
 #include "ZBE/SDL/factories/SDLWindowDmnFtry.h"

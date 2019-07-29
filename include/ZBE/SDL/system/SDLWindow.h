@@ -42,6 +42,13 @@ public:
   SDLWindow(const SDLWindow&) = delete;  //!< Does not make sense to "copy" a SDLWindow.
   void operator=(const SDLWindow&) = delete;  //!< Does not make sense to "copy" a SDLWindow.
 
+  /** \brief Empty constructor
+   *
+   *  Creates a non configured SDLWindow.
+   *  \sa run, setTitle, setX, setY, setWidth, setHeight, setWindow_flags, setRenderer_flags
+   */
+  SDLWindow() : title(nullptr), x(), y(), width(), height(), window_flags(), renderer_flags(), sdl(SDL_Starter::getInstance(SDL_INIT_VIDEO)), window(nullptr), renderer(nullptr), output(nullptr), imgStore(nullptr), fontStore(nullptr) {}
+
   /** \brief Creates a new SDLWindow and a Renderer.
    *
    *  Creates a new SDLWindow and a Renderer with the size and flags specified.
@@ -49,9 +56,9 @@ public:
    *  \param width Width of the Window.
    *  \param height Height of the Window.
    *  \param window_flags Flags for the SDLWindow creation. Default no flags.
-   *  \param rederer_flags Flags for the Renderer creation. Default no flags.
+   *  \param renderer_flags Flags for the Renderer creation. Default no flags.
    */
-  SDLWindow(const char* title, int width, int height, Uint32 window_flags = 0, Uint32 rederer_flags = 0);
+  SDLWindow(const char* title, int width, int height, Uint32 window_flags = 0, Uint32 renderer_flags = 0);
 
   /** \brief Creates a new SDLWindow and a Renderer in a specific position.
    *
@@ -62,13 +69,60 @@ public:
    *  \param width Width of the Window.
    *  \param height Height of the Window.
    *  \param window_flags Flags for the SDLWindow creation. Default no flags.
-   *  \param rederer_flags Flags for the Renderer creation. Default no flags.
+   *  \param renderer_flags Flags for the Renderer creation. Default no flags.
    */
-  SDLWindow(const char* title, int x, int y, int width, int height, Uint32 window_flags = 0, Uint32 rederer_flags = 0);
+  SDLWindow(const char* title, int x, int y, int width, int height, Uint32 window_flags = 0, Uint32 renderer_flags = 0);
 
   /** \brief Free resources and destroy the Renderer and the SDLWindow.
    */
   ~SDLWindow();
+
+  /** \brief Sets the window title
+   *  \param title The title
+   *  \sa run, setX, setY, setWidth, setHeight, setWindow_flags, setRenderer_flags
+   */
+  void setTitle(const char* title) {this->title = title;}
+
+  /** \brief Sets the window x position
+   *  \param x The x position
+   *  \sa run, setTitle, setY, setWidth, setHeight, setWindow_flags, setRenderer_flags
+   */
+  void setX(int x) {this->x = x;}
+
+  /** \brief Sets the window y position
+   *  \param y The y position
+   *  \sa run, setTitle, setX, setWidth, setHeight, setWindow_flags, setRenderer_flags
+   */
+  void setY(int y) {this->y = y;}
+
+  /** \brief Sets the window width
+   *  \param width The width
+   *  \sa run, setTitle, setX, setY, setHeight, setWindow_flags, setRenderer_flags
+   */
+  void setWidth(int width) {this->width = width;}
+
+  /** \brief Sets the window height
+   *  \param height The height
+   *  \sa run, setTitle, setX, setY, setWidth, setWindow_flags, setRenderer_flags
+   */
+  void setHeight(int height) {this->height = height;}
+
+  /** \brief Sets the window flags
+   *  \param window_flags The widnow flags, like borderless, resizable, etc.
+   *  \sa run, setTitle, setX, setY, setWidth, setHeight, setRenderer_flags
+   */
+  void setWindow_flags(Uint32 window_flags) {this->window_flags = window_flags;}
+
+  /** \brief Sets the renderer flags
+   *  \param renderer_flags The renderer flags
+   *  \sa run, setTitle, setX, setY, setWidth, setHeight, setWindow_flags
+   */
+  void setRenderer_flags(Uint32 renderer_flags) {this->renderer_flags = renderer_flags;}
+
+  /** \brief Creates the widnows (use only width empty constructor and setters)
+   *  \sa setTitle, setX, setY, setWidth, setHeight, setWindow_flags
+   */
+  void run();
 
   /** \brief internal SDLImageStore getter
    */
@@ -176,7 +230,23 @@ protected:
     return window;
   }
 
+  /** \brief Checks if the window is correctly created
+   */
+  void checkWidowCreation() {
+    if (window == nullptr){
+      zbe::SysError::setError(std::string("ERROR: SDL could not create a SDLWindow! SDL ERROR: ") + SDL_GetError());
+    }
+    if (renderer == nullptr){
+      SDL_DestroyWindow(window);
+      zbe::SysError::setError(std::string("ERROR: SDL could not create a renderer! SDL ERROR: ") + SDL_GetError());
+    }
+  }
+
 private:
+  const char* title;
+  int x, y, width, height;
+  Uint32 window_flags, renderer_flags;
+
   SDL_Starter &sdl;                            //!< SDL instance.
   SDL_Window* window;                          //!< Window.
   SDL_Renderer* renderer;                      //!< Renderer associated with the window

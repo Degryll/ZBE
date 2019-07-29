@@ -29,6 +29,10 @@ namespace zbe {
       BasicPreLoopSDLDaemon(const BasicPreLoopSDLDaemon&) = delete; //!< Avoid copy.
       void operator=(const BasicPreLoopSDLDaemon&) = delete; //!< Avoid copy.
 
+      /** \brief Empty constructor.
+       */
+      BasicPreLoopSDLDaemon(): window(nullptr), sdlEventDist(zbe::SDLEventDispatcher::getInstance()) {}
+
       /** \brief Builds a BasicPostLoopSDLDaemon from a window.
        *  \param window windo to use.
        */
@@ -38,9 +42,17 @@ namespace zbe {
        */
       virtual ~BasicPreLoopSDLDaemon() {}
 
+      /** \brief Sets the window. Use with empty constructor.
+       *  \param window windo to use.
+       */
+      void setWindow(std::shared_ptr<zbe::SDLWindow> window) {
+        this->window = window;
+      }
+
       /** \brief Runs the daemon.
        */
       void run();
+
     private:
       std::shared_ptr<zbe::SDLWindow> window;
       zbe::SDLEventDispatcher& sdlEventDist;

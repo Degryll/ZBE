@@ -27,6 +27,10 @@ public:
   BasicPostLoopSDLDaemon(const BasicPostLoopSDLDaemon&) = delete; //!< Avoid copy.
   void operator=(const BasicPostLoopSDLDaemon&) = delete; //!< Avoid copy.
 
+  /** \brief Empty builder.
+   */
+  BasicPostLoopSDLDaemon(): window(nullptr) {}
+
   /** \brief Builds a BasicPostLoopSDLDaemon from a window.
    *  \param window windo to use.
    */
@@ -35,6 +39,13 @@ public:
   /** \brief Destroys the BasicPostLoopSDLDaemon
    */
   ~BasicPostLoopSDLDaemon() {}
+
+  /** \brief Sets the the window. Use with empty constructor.
+   *  \param window windo to use.
+   */
+  void setWindow(std::shared_ptr<zbe::SDLWindow> window) {
+    this->window = window;
+  }
 
   /** \brief Runs the daemon.
    */
