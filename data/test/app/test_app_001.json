@@ -10,42 +10,50 @@
     "era.necesario" : "y Blas",
     "san" : "sacabo"
   },
-  "factories" : [
-    {"factory": "test.dmyFtry1",
-      "name": "dmy1_1",
-      "config" : {
-        "key" : "dmy1_1"
-      }
-    },
-    {"factory": "test.dmyFtry2",
-      "name": "dmy2_1",
-      "config" : {
-        "key" : "dmy2_1"
-      }
-    },
-    {"factory": "test.dmyFtry2",
-      "name": "dmy2_2",
-      "config" : {
-        "key" : "dmy2_2"
-      }
-    },
-    {"factory": "test.dmyFtry3",
-      "name": "dmy3_1",
-      "config" : {
-        "key" : "dmy3_1"
-      }
-    },
-    {"factory": "test.dmyFtry3",
-      "name": "dmy3_2",
-      "config" : {
-        "key" : "dmy3_2"
-      }
-    },
-    {"factory": "test.dmyFtry3",
-      "name": "dmy3_3",
-      "config" : {
-        "key" : "dmy3_3"
-      }
+  "phases" : [ {
+      "description" : "",
+      "factories" : [
+        {"factory": "test.dmyFtry1",
+          "name": "dmy1_1",
+          "config" : {
+            "key" : "dmy1_1"
+          }
+        },
+        {"factory": "test.dmyFtry2",
+          "name": "dmy2_1",
+          "config" : {
+            "key" : "dmy2_1"
+          }
+        },
+        {"factory": "test.dmyFtry2",
+          "name": "dmy2_2",
+          "config" : {
+            "key" : "dmy2_2"
+          }
+        }
+        ]},
+      {
+      "description" : "",
+      "factories" : [
+        {"factory": "test.dmyFtry3",
+          "name": "dmy3_1",
+          "config" : {
+            "key" : "dmy3_1"
+          }
+        },
+        {"factory": "test.dmyFtry3",
+          "name": "dmy3_2",
+          "config" : {
+            "key" : "dmy3_2"
+          }
+        },
+        {"factory": "test.dmyFtry3",
+          "name": "dmy3_3",
+          "config" : {
+            "key" : "dmy3_3"
+          }
+        }
+      ]
     }
   ]
 }

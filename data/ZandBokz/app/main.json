@@ -16,160 +16,162 @@ Nos falta guardar SysTime en DEFAULT (common resource)"
     "loadScreen.toMenu": 1,
     "loadScreen.loadTime" : 4
   },
-  "phase_0" : {
-    "description" : "
-      Loading initial lists and high priority structures (window).
-    ",
-    "factories" : [
+  "phases":[
       {
-        "factory": "TFAECDrawablesFtry",
-        "description" : "do some serious sheet",
-        "name": "loadScreen.drawList",
-        "config" : {}
-      },
-      {
-        "factory" : "SDLWindowFtry",
-        "name" : "zandbokz.mainwindow",
-        "config" : {
-          "title" : "window_title",
-          "x" : "zero",
-          "y" : "zero",
-          "w" : "width",
-          "h" : "height",
-          "wflags":"testwflags",
-          "rflags":"testrflags"
+      "description" : "
+        Loading initial lists and high priority structures (window).
+      ",
+      "factories" : [
+        {
+          "factory": "TFAECDrawablesFtry",
+          "description" : "do some serious sheet",
+          "name": "loadScreen.drawList",
+          "config" : {}
+        },
+        {
+          "factory" : "SDLWindowFtry",
+          "name" : "zandbokz.mainwindow",
+          "config" : {
+            "title" : "window_title",
+            "x" : "zero",
+            "y" : "zero",
+            "w" : "width",
+            "h" : "height",
+            "wflags":"testwflags",
+            "rflags":"testrflags"
+          }
+        },
+        {
+          "factory": "JSONImgDefLoaderFtry",
+          "name":"zandbokz.JSONImgDefLoader",
+          "config" : {}
+        },
+        {
+          "factory": "SDLImgLoaderFtry",
+          "name":"zandbokz.SDLJSONImgLoader",
+          "config" : {
+            "window" : "zandbokz.mainwindow",
+            "imgdef" : "zandbokz.JSONImgDefLoader"
+          }
         }
-      },
-      {
-        "factory": "JSONImgDefLoaderFtry",
-        "name":"zandbokz.JSONImgDefLoader",
-        "config" : {}
-      },
-      {
-        "factory": "SDLImgLoaderFtry",
-        "name":"zandbokz.SDLJSONImgLoader",
-        "config" : {
-          "window" : "zandbokz.mainwindow",
-          "imgdef" : "zandbokz.JSONImgDefLoader"
+      ]
+    },
+    {
+      "description" : "
+        Loading resources.
+      ",
+      "factories" : [
+        {
+          "factory": "ResourcesFtry",
+          "name":"zandbokz.imgLoaderDOES_NOT_MATTER",
+          "config" : {
+            "loader" : "zandbokz.SDLJSONImgLoader",
+            "folder" : "data/img"
+          }
         }
-      }
-    ]
-  },
-  "phase_1" : {
-    "description" : "
-      Loading resources.
-    ",
-    "factories" : [
-      {
-        "factory": "ResourcesFtry",
-        "name":"zandbokz.imgLoaderDOES_NOT_MATTER",
-        "config" : {
-          "loader" : "zandbokz.SDLJSONImgLoader",
-          "folder" : "data/img"
+      ]
+    },
+    {
+      "description" : "
+        Loading load screen...
+      ",
+      "factories" : [
+        {"factory": "DmnFtry.MainLoopFtry",
+          "name": "Main",
+          "config" : {
+            "preDaemon":"loadScreen.PreDaemon",
+            "preDaemonDesc":"done",
+            "eventDaemon":"loadScreen.eventGenerator",
+            "eventDaemonDesc":"done",
+            "commonDaemon":"DEFAULT",
+            "commonDaemonDesc":"nada?vacio?",
+            "reactDaemon":"DEFAULT",
+            "reactDaemonDesc":"si hay evento de tiempo: se llama al exit... pero esto lo hace el eventStore.manage(): que esto se queda vacio",
+            "drawDaemon":"loadScreen.drawDaemon",
+            "drawDaemonDesc":"Pues a pintar la pantalla de carga",
+            "postDaemon":"loadScreen.PostDaemon",
+            "postDaemonDesc":"Hacer cosas de sdl",
+            "contextTime":"DEFAULT",
+            "contextTimeDesc":"el systime"
+          }
+        },
+        {
+          "factory" : "ValueUFtry",
+          "name" : "zandbokz.loadState",
+          "config" : {
+            "value" : "mainInitialState"
+          }
+        },
+        {"factory": "SDLSysTimeFtry",
+          "name": "loadScreen.SDLSysTime",
+          "config" : {}
+        },
+        {"factory": "BasicPreLoopSDLDaemonFtry",
+          "name": "loadScreen.PreDaemon",
+          "config" : {
+            "window" : "zandbokz.mainwindow"
+          }
+        },
+        {"factory": "BasicPostLoopSDLDaemonFtry",
+          "name": "loadScreen.PostDaemon",
+          "config" : {
+            "window" : "zandbokz.mainwindow"
+          }
+        },
+        {"factory": "TimeEventGeneratorFtry",
+          "name": "loadScreen.eventGenerator",
+          "config" : {
+            "eventId" : "timeEventId",
+            "contextTime" : "DEFAULT"
+          }
+        },
+        {"factory": "MainExitDaemonFry",
+          "name": "loadScreen.exitDaemon",
+          "config" : {
+            "mainloop" : "Main",
+            "valueHolder" : "zandbokz.loadState",
+            "outValue" : "mainExitState"
+          }
+        },
+        {"factory": "DaemonTimeHandlerFtry",
+          "name": "loadScreen.exitHandler",
+          "config" : {
+            "generator" : "loadScreen.eventGenerator",
+            "time" : "loadScreen.loadTime",
+            "dmn" : "loadScreen.exitDaemon"
+          }
+        },
+        {"factory": "SpriteSheetSDLDrawerFtry",
+          "name": "loadScreen.screenDrawer",
+          "description" : "comportamiento que pintara la pantalla. Faltan tipos",
+          "config" : {
+            "window" : "zandbokz.mainwindow"
+          }
+        },
+        {"factory": "BehaviorDmnFtry",
+          "name": "loadScreen.drawDaemon",
+          "description" : "demonio que pintara la pantalla. Faltan tipos",
+          "config" : {
+            "list" : "loadScreen.drawList",
+            "behvior" : "loadScreen.screenDrawer"
+          }
+        },
+        {"factory": "SmplAnimSprtFtry",
+          "name": "loadScreen.background",
+          "config" : {
+            "lists" : ["loadScreen.drawList"],
+            "contexttime": "DEFAULT",
+            "time": "ZERO",
+            "state": "ZERO",
+            "degrees": "ZERO",
+            "x": "zero",
+            "y": "zero",
+            "w": "width",
+            "h": "height",
+            "graphics": "loadScreen.background"
+          }
         }
-      }
-    ]
-  },
-  "phase_2" : {
-    "description" : "
-      Loading load screen...
-    ",
-    "factories" : [
-      {"factory": "DmnFtry.MainLoopFtry",
-        "name": "Main",
-        "config" : {
-          "preDaemon":"loadScreen.PreDaemon",
-          "preDaemonDesc":"done",
-          "eventDaemon":"loadScreen.eventGenerator",
-          "eventDaemonDesc":"done",
-          "commonDaemon":"DEFAULT",
-          "commonDaemonDesc":"nada?vacio?",
-          "reactDaemon":"DEFAULT",
-          "reactDaemonDesc":"si hay evento de tiempo: se llama al exit... pero esto lo hace el eventStore.manage(): que esto se queda vacio",
-          "drawDaemon":"loadScreen.drawDaemon",
-          "drawDaemonDesc":"Pues a pintar la pantalla de carga",
-          "postDaemon":"loadScreen.PostDaemon",
-          "postDaemonDesc":"Hacer cosas de sdl",
-          "contextTime":"DEFAULT",
-          "contextTimeDesc":"el systime"
-        }
-      },
-      {
-        "factory" : "ValueUFtry",
-        "name" : "zandbokz.loadState",
-        "config" : {
-          "value" : "mainInitialState"
-        }
-      },
-      {"factory": "SDLSysTimeFtry",
-        "name": "loadScreen.SDLSysTime",
-        "config" : {}
-      },
-      {"factory": "BasicPreLoopSDLDaemonFtry",
-        "name": "loadScreen.PreDaemon",
-        "config" : {
-          "window" : "zandbokz.mainwindow"
-        }
-      },
-      {"factory": "BasicPostLoopSDLDaemonFtry",
-        "name": "loadScreen.PostDaemon",
-        "config" : {
-          "window" : "zandbokz.mainwindow"
-        }
-      },
-      {"factory": "TimeEventGeneratorFtry",
-        "name": "loadScreen.eventGenerator",
-        "config" : {
-          "eventId" : "timeEventId",
-          "contextTime" : "DEFAULT"
-        }
-      },
-      {"factory": "MainExitDaemonFry",
-        "name": "loadScreen.exitDaemon",
-        "config" : {
-          "mainloop" : "Main",
-          "valueHolder" : "zandbokz.loadState",
-          "outValue" : "mainExitState"
-        }
-      },
-      {"factory": "DaemonTimeHandlerFtry",
-        "name": "loadScreen.exitHandler",
-        "config" : {
-          "generator" : "loadScreen.eventGenerator",
-          "time" : "loadScreen.loadTime",
-          "dmn" : "loadScreen.exitDaemon"
-        }
-      },
-      {"factory": "SpriteSheetSDLDrawerFtry",
-        "name": "loadScreen.screenDrawer",
-        "description" : "comportamiento que pintara la pantalla. Faltan tipos",
-        "config" : {
-          "window" : "zandbokz.mainwindow"
-        }
-      },
-      {"factory": "BehaviorDmnFtry",
-        "name": "loadScreen.drawDaemon",
-        "description" : "demonio que pintara la pantalla. Faltan tipos",
-        "config" : {
-          "list" : "loadScreen.drawList",
-          "behvior" : "loadScreen.screenDrawer"
-        }
-      },
-      {"factory": "SmplAnimSprtFtry",
-        "name": "loadScreen.background",
-        "config" : {
-          "lists" : ["loadScreen.drawList"],
-          "contexttime": "DEFAULT",
-          "time": "ZERO",
-          "state": "ZERO",
-          "degrees": "ZERO",
-          "x": "zero",
-          "y": "zero",
-          "w": "width",
-          "h": "height",
-          "graphics": "loadScreen.background"
-        }
-      }
-    ]
-  }
+      ]
+    }
+  ],
 }

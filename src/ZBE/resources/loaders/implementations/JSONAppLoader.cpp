@@ -23,31 +23,24 @@ void JSONAppLoader::load(std::filesystem::path filePath) {
       loadLiteralConfig(literalCfg.key(), literalCfg.value());
     }
 
-    json listsFactories = appCfg["lists"];
-    for(auto& listCfg : listsFactories) {
-      appLists.push_front(readFactoryConfig(listCfg));
-    }
-
-    json factories = appCfg["factories"];
-    for(auto& ftryCfg : factories) {
-      appFactories.push_front(readFactoryConfig(ftryCfg));
+    json phases = appCfg["phases"];
+    for(auto& phase : phases){
+      json factories = phase["factories"];
+      for(auto& ftryCfg : factories) {
+        appFactories.push_front(readFactoryConfig(ftryCfg));
+      }
+      for(auto ftryData : appFactories) {
+        ftryData.ftry->create(ftryData.name, ftryData.cfgId);
+      }
+      for(auto ftryData : appFactories) {
+        ftryData.ftry->setup(ftryData.name, ftryData.cfgId);
+      }
+      appFactories.clear();
     }
   } catch (json::parse_error &e) {
     SysError::setError("ERROR: Json on "s + filePath.u8string() + " failed to parse: "s + std::string(e.what()));
   } catch (nlohmann::detail::type_error &e) {
     SysError::setError("ERROR: Unexpected type error on json app load: "s + std::string(e.what()));
-  }
-
-  for(auto listData : appLists) {
-    listData.ftry->create(listData.name, listData.cfgId);
-  }
-
-  for(auto ftryData : appFactories) {
-    ftryData.ftry->create(ftryData.name, ftryData.cfgId);
-  }
-
-  for(auto ftryData : appFactories) {
-    ftryData.ftry->setup(ftryData.name, ftryData.cfgId);
   }
 }
 
