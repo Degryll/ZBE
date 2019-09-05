@@ -44,7 +44,7 @@ TEST(SimpleAnimatedSpriteFtry, Create) {
   timeRsrc.insert("ContextTime.sasftrytest.cTime", contextTime);
 
   auto cfg = std::make_shared<json>();
-  (*cfg)["list"] = "sasftrytest.list";
+  (*cfg)["lists"] = {"sasftrytest.list"};
   (*cfg)["contexttime"] = "sasftrytest.cTime";
   (*cfg)["time"] = "sasftrytest.time";
   (*cfg)["state"] = "sasftrytest.state";
@@ -67,19 +67,26 @@ TEST(SimpleAnimatedSpriteFtry, Create) {
   uint64_t cfgId = configRsrc.insert(cfg);
 
   SimpleAnimSprtFtry<TFSAS, LIST_NAMESPACE> sasFtry;
-  sasFtry.create("SimpleAnimatedSpriteFtryTestName", cfgId);
-  sasFtry.setup("SimpleAnimatedSpriteFtryTestName", cfgId);
 
-  EXPECT_EQ(0, zbe::SysError::getNErrors()) << "Must be no config errors.";
+  sasFtry.create("SimpleAnimatedSpriteFtryTestName", cfgId);
 
   uint64_t outId = dict.get("SimpleAnimatedSprite.SimpleAnimatedSpriteFtryTestName");
-
   ASSERT_NE(0, outId) << "Must create an entity with given name";
+  auto createdEntity = sasStore.get(outId);
+  EXPECT_EQ(0, zbe::SysError::getNErrors()) << "Must be no stored errors 1.";
 
-  EXPECT_EQ(0, zbe::SysError::getNErrors()) << "Must be no store errors 1.";
+  sasFtry.setup("SimpleAnimatedSpriteFtryTestName", cfgId);
 
-  auto outEntity = sasStore.get(outId);
-  EXPECT_EQ(0, zbe::SysError::getNErrors()) << "Must be no store errors 2.";
+  auto setupEntity = sasStore.get(outId);
+  EXPECT_EQ(1, zbe::SysError::getNErrors()) << "After setup, there is no entity in the store.";
+  zbe::SysError::clear();
+
+  EXPECT_EQ(0, zbe::SysError::getNErrors()) << "Must be no errors.";
+
+  auto it = list->begin();
+  auto outEntity = *it;
+
+  EXPECT_EQ(0, zbe::SysError::getNErrors()) << "Must be no stored errors 2.";
 
   EXPECT_EQ(1, outEntity->getTime()) << "Must load correct time.";
   EXPECT_EQ(2, outEntity->getState()) << "Must load correct state.";
@@ -89,6 +96,7 @@ TEST(SimpleAnimatedSpriteFtry, Create) {
   EXPECT_EQ(30, outEntity->getW()) << "Must load correct w.";
   EXPECT_EQ(40, outEntity->getH()) << "Must load correct h.";
   EXPECT_EQ(5, outEntity->getGraphics()) << "Must load correct .";
+  EXPECT_EQ(++it, list->end()) << "Must be the only element";
 
   dict.clear();
   configRsrc.clear();

@@ -21,13 +21,19 @@ namespace zbe {
 */
 class ZBEAPI RsrcFolderLoader {
 public:
- RsrcFolderLoader(std::shared_ptr<RsrcLoader> rsrcLoader) : rsrcLoader(rsrcLoader) {}
 
- void load(std::string folder);
+  RsrcFolderLoader() : rsrcLoader(nullptr) {}
+
+  RsrcFolderLoader(std::shared_ptr<RsrcLoader> rsrcLoader) : rsrcLoader(rsrcLoader) {}
+
+  void setRsrcLoader(std::shared_ptr<RsrcLoader> rsrcLoader) {
+    this->rsrcLoader = rsrcLoader;
+  }
+
+  void load(std::string folder);
 
 private:
- std::shared_ptr<RsrcLoader> rsrcLoader;
-
+  std::shared_ptr<RsrcLoader> rsrcLoader;
 };
 
 }  // namespace zbe

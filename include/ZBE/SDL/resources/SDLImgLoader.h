@@ -27,12 +27,38 @@ namespace zbe {
 class ZBEAPI SDLImgLoader : public RsrcLoader {
 public:
 
+ /** \brief Empty constructor, extension is ".png" by default.
+  *  \extension Extension supported. PNG by default.
+  */
+ SDLImgLoader() : imgStore(nullptr), imgDefLoader(nullptr), ext(".png") {}
+
  /** \brief Builds an SDLImgLoader from a SDLImageStore and the file extension supported (PNG by default)
   *  \imgStore SDLImgLoader to use.
   *  \extension Extension supported. PNG by default.
   */
  SDLImgLoader(std::shared_ptr<zbe::SDLImageStore> imgStore, std::shared_ptr<RsrcDefLoader> imgDefLoader, std::filesystem::path extension = ".png")
-   : imgStore(imgStore), imgDefLoader(imgDefLoader), ext(extension) {}
+    : imgStore(imgStore), imgDefLoader(imgDefLoader), ext(extension) {}
+
+ /** \brief Sets the image store.
+  *  \param imgStore The image store.
+  */
+ void setImgStore(std::shared_ptr<zbe::SDLImageStore> imgStore) {
+   this->imgStore = imgStore;
+ }
+
+ /** \brief Sets the image definition loader
+  *  \param imgDefLoader The image definition loader.
+  */
+ void setImgDefLoader(std::shared_ptr<RsrcDefLoader> imgDefLoader) {
+   this->imgDefLoader = imgDefLoader;
+ }
+
+ /** \brief Sets the image file extension
+  *  \param extension The image file extension.
+  */
+ void setExtension(std::filesystem::path extension) {
+   this->ext = extension;
+ }
 
  /** \brief Load an image
   *  \param filePath Path to image file.
@@ -56,16 +82,15 @@ public:
 
 private:
 
- std::filesystem::path generateDefPath(const std::filesystem::path& p) {
-   std::filesystem::path ext = imgDefLoader->getExtension();
-   std::filesystem::path out = p;
-   return (out.replace_extension(ext));
- }
+  std::filesystem::path generateDefPath(const std::filesystem::path& p) {
+    std::filesystem::path ext = imgDefLoader->getExtension();
+    std::filesystem::path out = p;
+    return (out.replace_extension(ext));
+  }
 
- std::shared_ptr<zbe::SDLImageStore> imgStore;
- std::shared_ptr<RsrcDefLoader> imgDefLoader;
- std::filesystem::path ext;
-
+  std::shared_ptr<zbe::SDLImageStore> imgStore;
+  std::shared_ptr<RsrcDefLoader> imgDefLoader;
+  std::filesystem::path ext;
 };
 
 }  // namespace zbe

@@ -7,10 +7,12 @@
 * @brief Interface for classes that loads resource definitions.
 */
 
-#ifndef ZBE_RESOURCES_LOADERS_IMGDEFLOADER_H_
-#define ZBE_RESOURCES_LOADERS_IMGDEFLOADER_H_
+#ifndef ZBE_RESOURCES_LOADERS_RSRCDEFLOADER_H_
+#define ZBE_RESOURCES_LOADERS_RSRCDEFLOADER_H_
 
 #include <filesystem>
+
+#include "ZBE/core/system/system.h"
 
 namespace zbe {
 
@@ -18,7 +20,7 @@ namespace zbe {
  */
 class ZBEAPI RsrcDefLoader {
 public:
- virtual ~RsrcDefLoader(){} //!< Virtual destructor.
+ virtual ~RsrcDefLoader() {} //!< Virtual destructor.
 
  /** \brief Load a resource definition
   *  \param url resource definition file to be loaded.
@@ -36,4 +38,4 @@ public:
 
 }  // namespace zbe
 
-#endif  // ZBE_RESOURCES_LOADERS_IMGDEFLOADER_H_
+#endif  // ZBE_RESOURCES_LOADERS_RSRCDEFLOADER_H_

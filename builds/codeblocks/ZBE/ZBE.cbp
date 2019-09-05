@@ -295,6 +295,7 @@
 		<Unit filename="../../../include/ZBE/SDL/factories/drawers/OGLModelSheetDrawerFtry.h" />
 		<Unit filename="../../../include/ZBE/SDL/factories/drawers/SingleTextSDLDrawerFtry.h" />
 		<Unit filename="../../../include/ZBE/SDL/factories/drawers/SpriteSheetSDLDrawerFtry.h" />
+		<Unit filename="../../../include/ZBE/SDL/factories/resources/SDLImgLoaderFtry.h" />
 		<Unit filename="../../../include/ZBE/SDL/factories/system/SDLSysTimeFtry.h" />
 		<Unit filename="../../../include/ZBE/SDL/factories/system/SDLWindowFtry.h" />
 		<Unit filename="../../../include/ZBE/SDL/resources/SDLImgLoader.h" />
@@ -359,6 +360,7 @@
 		<Unit filename="../../../include/ZBE/core/daemons/PunisherDaemon.h" />
 		<Unit filename="../../../include/ZBE/core/daemons/Punishers.h" />
 		<Unit filename="../../../include/ZBE/core/daemons/StateMachineDaemon.h" />
+		<Unit filename="../../../include/ZBE/core/daemons/VoidDaemon.h" />
 		<Unit filename="../../../include/ZBE/core/entities/Adaptor.h" />
 		<Unit filename="../../../include/ZBE/core/entities/AvatarEntity.h" />
 		<Unit filename="../../../include/ZBE/core/entities/Entity.h" />
@@ -504,7 +506,7 @@
 		<Unit filename="../../../include/ZBE/resources/loaders/RsrcFolderLoader.h" />
 		<Unit filename="../../../include/ZBE/resources/loaders/RsrcLoader.h" />
 		<Unit filename="../../../include/ZBE/resources/loaders/implementations/JSONAppLoader.h" />
-		<Unit filename="../../../include/ZBE/system/SimpleLoopBuilder.h" />
+		<Unit filename="../../../include/ZBE/system/SystemResources.h" />
 		<Unit filename="../../../src/ZBE/JSON/graphics/JSONGraphicsLoaders.cpp" />
 		<Unit filename="../../../src/ZBE/JSON/resources/JSONAudioDefLoader.cpp" />
 		<Unit filename="../../../src/ZBE/OAL/daemons/OALContextDaemon.cpp" />
@@ -526,6 +528,7 @@
 		<Unit filename="../../../src/ZBE/SDL/factories/daemons/BasicPostLoopSDLDaemonFtry.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/factories/daemons/BasicPreLoopSDLDaemonFtry.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/factories/drawers/SingleTextSDLDrawerFtry.cpp" />
+		<Unit filename="../../../src/ZBE/SDL/factories/resources/SDLImgLoaderFtry.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/factories/system/SDLSysTimeFtry.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/factories/system/SDLWindowFtry.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/starters/SDL_Starter.cpp" />

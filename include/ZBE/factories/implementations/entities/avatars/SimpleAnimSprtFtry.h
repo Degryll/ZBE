@@ -58,14 +58,22 @@ void SimpleAnimSprtFtry<List, listnamespace>::create(std::string name, uint64_t 
   std::shared_ptr<json> cfg = configRsrc.get(cfgId);
   if(cfg) {
     auto j = *cfg;
-    if (!j["list"].is_string()) {
+    if (!j["lists"].is_array()) {
       SysError::setError("SimpleAnimatedSprite config for list must be a string."s);
       return;
     }
-    std::string listname = j["list"].get<std::string>();
-    auto list = listStore.get(std::string(listnamespace)+"."+listname);
-    auto ticket = list->push_front(sas);
-    ticketStore.insert("Ticket."s + name, ticket);
+    auto lists = j["lists"];
+    for (auto& e : lists.items()) {
+       auto lConfig = e.value();
+       if (!lConfig.is_string()) {
+         SysError::setError("SimpleAnimatedSprite lists contains invalid data."s);
+         return;
+       }
+       std::string listname = lConfig.get<std::string>();
+       auto list = listStore.get(std::string(listnamespace)+"."+listname);
+       auto ticket = list->push_front(sas);
+       ticketStore.insert("Ticket."s + name, ticket);
+    }
   } else {
     SysError::setError("SimpleAnimatedSprite config for "s + name + " not found."s);
   }
@@ -145,7 +153,7 @@ void SimpleAnimSprtFtry<List, listnamespace>::setup(std::string name, uint64_t c
     int64_t h  = intStore.get(hname);
     uint64_t graphics  = (uint64_t)intStore.get(graphicsname);
 
-    auto sas = sasStore.get("SimpleAnimatedSprite."s + name);
+    auto sas = sasStore.remove("SimpleAnimatedSprite."s + name);
 
     sas->setContextTime(cTime);
     sas->setTime(time);
