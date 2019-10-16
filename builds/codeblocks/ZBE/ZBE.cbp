@@ -288,6 +288,7 @@
 		<Unit filename="../../../include/ZBE/SDL/drawers/SingleTextSDLDrawer.h" />
 		<Unit filename="../../../include/ZBE/SDL/drawers/SpriteSheetSDLDrawer.h" />
 		<Unit filename="../../../include/ZBE/SDL/drawers/StatedSpriteSDLDrawer.h" />
+		<Unit filename="../../../include/ZBE/SDL/factories/SDLFactories.h" />
 		<Unit filename="../../../include/ZBE/SDL/factories/SDLOGLWindowDmnFtry.h" />
 		<Unit filename="../../../include/ZBE/SDL/factories/SDLWindowDmnFtry.h" />
 		<Unit filename="../../../include/ZBE/SDL/factories/daemons/BasicPostLoopSDLDaemonFtry.h" />
@@ -476,9 +477,12 @@
 		<Unit filename="../../../include/ZBE/events/handlers/time/DaemonRecurrentTimeHandler.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/time/DaemonTimeHandler.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/time/TicketEraser.h" />
+		<Unit filename="../../../include/ZBE/factories/BaseFactories.h" />
 		<Unit filename="../../../include/ZBE/factories/CommonFactories.h" />
 		<Unit filename="../../../include/ZBE/factories/Factory.h" />
+		<Unit filename="../../../include/ZBE/factories/ZBEFactories.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/GenericFtry.h" />
+		<Unit filename="../../../include/ZBE/factories/implementations/RsrcFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/behaviors/StateLTEraserBhvFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/behaviors/StateSetterBhvFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/daemons/BehaviorDmnFtry.h" />
@@ -507,6 +511,7 @@
 		<Unit filename="../../../include/ZBE/resources/loaders/RsrcLoader.h" />
 		<Unit filename="../../../include/ZBE/resources/loaders/implementations/JSONAppLoader.h" />
 		<Unit filename="../../../include/ZBE/system/SystemResources.h" />
+		<Unit filename="../../../src/ZBE/JSON/factories/JSONFactories.cpp" />
 		<Unit filename="../../../src/ZBE/JSON/graphics/JSONGraphicsLoaders.cpp" />
 		<Unit filename="../../../src/ZBE/JSON/resources/JSONAudioDefLoader.cpp" />
 		<Unit filename="../../../src/ZBE/OAL/daemons/OALContextDaemon.cpp" />
@@ -523,6 +528,7 @@
 		<Unit filename="../../../src/ZBE/SDL/drawers/SimpleSpriteSDLDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/drawers/SingleTextSDLDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/drawers/StatedSpriteSDLDrawer.cpp" />
+		<Unit filename="../../../src/ZBE/SDL/factories/SDLFactories.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/factories/SDLOGLWindowDmnFtry.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/factories/SDLWindowDmnFtry.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/factories/daemons/BasicPostLoopSDLDaemonFtry.cpp" />
@@ -559,7 +565,10 @@
 		<Unit filename="../../../src/ZBE/core/tools/time/ContextTime.cpp" />
 		<Unit filename="../../../src/ZBE/daemons/RsrcFolderLoaderDmn.cpp" />
 		<Unit filename="../../../src/ZBE/daemons/RsrcLoaderDmn.cpp" />
+		<Unit filename="../../../src/ZBE/factories/BaseFactories.cpp" />
 		<Unit filename="../../../src/ZBE/factories/CommonFactories.cpp" />
+		<Unit filename="../../../src/ZBE/factories/ZBEFactories.cpp" />
+		<Unit filename="../../../src/ZBE/factories/implementations/RsrcFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/behaviors/StateLTEraserBhvFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/behaviors/StateSetterBhvFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/daemons/MainLoopExitFtry.cpp" />

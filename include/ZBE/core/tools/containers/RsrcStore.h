@@ -86,7 +86,7 @@ class RsrcStore {
      *  \return The resource.
      */
     std::shared_ptr<T> remove(std::string name) {
-      uint64_t id = dict.get(name);
+      uint64_t id = dict.remove(name);
       return (this->remove(id));
     }
 

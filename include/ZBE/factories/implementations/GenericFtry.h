@@ -57,6 +57,43 @@ void GenericFtry<Generic, Specific>::create(std::string name, uint64_t) {
   srsrc.insert(stype + "."s + name, i);
 }
 
+/** \brief Generic Factory.
+ */
+template <typename Generic>
+class GenericFtry<Generic, void> : virtual public Factory {
+public:
+  /** \brief Parametrized constructor
+    * \param type Dictionary entry for this item.
+    */
+  GenericFtry(std::string gtype) : gtype(gtype) {}
+
+  /** \brief Creates an item from a file.
+   *  \param name Name for the created item.
+   *  \param cfgId item's configuration id.
+   */
+  void create(std::string name, uint64_t);
+
+  /** \brief Set-up an item.
+   *  \param name Name for the created item.
+   *  \param cfgId item's configuration id.
+   */
+  void setup(std::string, uint64_t) {}
+
+private:
+  RsrcStore<Generic> &grsrc = RsrcStore<Generic>::getInstance();
+  std::string gtype;
+};
+
+template <typename Generic>
+void GenericFtry<Generic, void>::create(std::string name, uint64_t) {
+  using namespace std::string_literals;
+  auto i = std::make_shared<Generic>();
+  grsrc.insert(gtype + "."s + name, i);
+}
+
+template <typename T>
+using SimpleGenericFtry = GenericFtry<T, void>;
+
 } // namespace ZBE
 
 #endif // ZBE_FACTORIES_IMPLEMENTATIONS_GENERICFTRY_H_

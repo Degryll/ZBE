@@ -32,6 +32,7 @@ struct DummyDaemon : public zbe::Daemon {
 };
 
 TEST(TimeEventFactories, Event) {
+  EXPECT_EQ(0, zbe::SysError::getNErrors()) << "Initially no errors.";
   using namespace std::string_literals;
   using namespace nlohmann;
 
@@ -45,11 +46,11 @@ TEST(TimeEventFactories, Event) {
   auto& tegRsrc = zbe::RsrcStore<zbe::TimeEventGenerator>::getInstance();
   auto& intStore = zbe::RsrcDictionary<int64_t>::getInstance();
 
-  intStore.insert("eventId.eI1", 42);
-  intStore.insert("time.t1", 5500);
+  intStore.insert("eI1", 42);
+  intStore.insert("t1", 5500);
 
   std::shared_ptr<zbetest::MockedContextTime> cxTime = std::make_shared<zbetest::MockedContextTime>();
-  cxTimeStore.insert("ContexTime.cT1", cxTime);
+  cxTimeStore.insert("ContextTime.cT1", cxTime);
 
   std::shared_ptr<json> tegCfg = std::make_shared<json>();
   (*tegCfg)["eventId"] = "eI1"s;
@@ -59,7 +60,10 @@ TEST(TimeEventFactories, Event) {
   configRsrc.insert(tegCfgId, tegCfg);
 
   tegF->create("tegname", tegCfgId);
+  EXPECT_EQ(0, zbe::SysError::getNErrors()) << "After teg create no errors.";
+
   tegF->setup("tegname", tegCfgId);
+  EXPECT_EQ(0, zbe::SysError::getNErrors()) << "After teg setup no errors.";
 
   std::shared_ptr<DummyDaemon> dd1 = std::make_shared<DummyDaemon>();
   dmnRsrc.insert("Daemon.dmn1", dd1);
@@ -73,7 +77,10 @@ TEST(TimeEventFactories, Event) {
   configRsrc.insert(dthCfgId, dthCfg);
 
   dthF->create("dthname", dthCfgId);
+  EXPECT_EQ(0, zbe::SysError::getNErrors()) << "After dth create no errors.";
   dthF->setup("dthname", dthCfgId);
+  //zbe::SysError::getFirstErrorString()
+  EXPECT_EQ(0, zbe::SysError::getNErrors()) << "After dth setup no errors.";
 
   zbe::ContextTime::setMaxFrameTime(5000000);
 

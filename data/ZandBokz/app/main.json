@@ -1,11 +1,12 @@
 {
   "meta" : {
-    "description" : "Zandbokz entry point
-Nos falta guardar SysTime en DEFAULT (common resource)"
+    "description" : "Zandbokz entry point Nos falta guardar SysTime en DEFAULT (common resource)"
   },
   "literals" : {
     "window_title":"Zandbokz",
-    "zero" : 0,
+    "state.static" : 0,
+    "ZERO" : 0,
+    "ZEROF" : 0.0,
     "width" : 1024,
     "height": 768,
     "testwflags": 0,
@@ -14,16 +15,14 @@ Nos falta guardar SysTime en DEFAULT (common resource)"
     "mainInitialState" : 0,
     "mainExitState" : 1,
     "loadScreen.toMenu": 1,
-    "loadScreen.loadTime" : 4
+    "loadScreen.loadTime" : 262144
   },
   "phases":[
       {
-      "description" : "
-        Loading initial lists and high priority structures (window).
-      ",
+      "description" : "Loading initial lists and high priority structures (window).",
       "factories" : [
         {
-          "factory": "TFAECDrawablesFtry",
+          "factory": "TFAECAnimSprtFtry",
           "description" : "do some serious sheet",
           "name": "loadScreen.drawList",
           "config" : {}
@@ -33,14 +32,18 @@ Nos falta guardar SysTime en DEFAULT (common resource)"
           "name" : "zandbokz.mainwindow",
           "config" : {
             "title" : "window_title",
-            "x" : "zero",
-            "y" : "zero",
+            "x" : "ZERO",
+            "y" : "ZERO",
             "w" : "width",
             "h" : "height",
             "wflags":"testwflags",
             "rflags":"testrflags"
           }
-        },
+        }]
+      },
+      {
+      "description" : "Creating resource loaders.",
+      "factories" : [
         {
           "factory": "JSONImgDefLoaderFtry",
           "name":"zandbokz.JSONImgDefLoader",
@@ -53,31 +56,53 @@ Nos falta guardar SysTime en DEFAULT (common resource)"
             "window" : "zandbokz.mainwindow",
             "imgdef" : "zandbokz.JSONImgDefLoader"
           }
+        },
+        {
+          "factory": "JSONMultiSprtSheetLoaderFtry",
+          "name":"zandbokz.mssLoader",
+          "config" : {}
         }
       ]
     },
     {
-      "description" : "
-        Loading resources.
-      ",
+      "description" : "Loading images.",
       "factories" : [
         {
-          "factory": "ResourcesFtry",
-          "name":"zandbokz.imgLoaderDOES_NOT_MATTER",
+          "factory": "RsrcFtry",
+          "name":"zandbokz.imgLoader",
           "config" : {
             "loader" : "zandbokz.SDLJSONImgLoader",
-            "folder" : "data/img"
+            "url" : "data/ZandBokz/img"
           }
         }
       ]
     },
     {
-      "description" : "
-        Loading load screen...
-      ",
+      "description" : "Loading sprite sheets.",
       "factories" : [
-        {"factory": "DmnFtry.MainLoopFtry",
+        {
+          "factory": "RsrcFtry",
+          "name":"zandbokz.sprtSheetLoader",
+          "config" : {
+            "loader" : "zandbokz.mssLoader",
+            "url" : "data/ZandBokz/sprtsheet"
+          }
+        }
+      ]
+    },
+    {
+      "description" : "Loading load screen...",
+      "factories" : [
+        {"factory": "MasterDmnFtry",
           "name": "Main",
+          "config" : {
+            "daemons": [
+              "zandbokz.MainLoop"
+            ]
+          }
+        },
+        {"factory": "MainLoopFtry",
+          "name": "zandbokz.MainLoop",
           "config" : {
             "preDaemon":"loadScreen.PreDaemon",
             "preDaemonDesc":"done",
@@ -96,7 +121,7 @@ Nos falta guardar SysTime en DEFAULT (common resource)"
           }
         },
         {
-          "factory" : "ValueUFtry",
+          "factory" : "ValueIFtry",
           "name" : "zandbokz.loadState",
           "config" : {
             "value" : "mainInitialState"
@@ -118,17 +143,17 @@ Nos falta guardar SysTime en DEFAULT (common resource)"
             "window" : "zandbokz.mainwindow"
           }
         },
-        {"factory": "TimeEventGeneratorFtry",
+        {"factory": "TimeEventGnFtry",
           "name": "loadScreen.eventGenerator",
           "config" : {
             "eventId" : "timeEventId",
             "contextTime" : "DEFAULT"
           }
         },
-        {"factory": "MainExitDaemonFry",
+        {"factory": "MainLoopExitFtry",
           "name": "loadScreen.exitDaemon",
           "config" : {
-            "mainloop" : "Main",
+            "mainloop" : "zandbokz.MainLoop",
             "valueHolder" : "zandbokz.loadState",
             "outValue" : "mainExitState"
           }
@@ -148,30 +173,30 @@ Nos falta guardar SysTime en DEFAULT (common resource)"
             "window" : "zandbokz.mainwindow"
           }
         },
-        {"factory": "BehaviorDmnFtry",
+        {"factory": "DrawerAnimSprtFtry",
           "name": "loadScreen.drawDaemon",
           "description" : "demonio que pintara la pantalla. Faltan tipos",
           "config" : {
             "list" : "loadScreen.drawList",
-            "behvior" : "loadScreen.screenDrawer"
+            "behavior" : "loadScreen.screenDrawer"
           }
         },
-        {"factory": "SmplAnimSprtFtry",
-          "name": "loadScreen.background",
+        {"factory": "SimpleAnimSprtFtry",
+          "name": "loadScreen.bgEnt",
           "config" : {
             "lists" : ["loadScreen.drawList"],
             "contexttime": "DEFAULT",
             "time": "ZERO",
-            "state": "ZERO",
-            "degrees": "ZERO",
-            "x": "zero",
-            "y": "zero",
+            "state": "state.static",
+            "degrees": "ZEROF",
+            "x": "ZERO",
+            "y": "ZERO",
             "w": "width",
             "h": "height",
-            "graphics": "loadScreen.background"
+            "graphics": "img.loadScreen.background"
           }
         }
       ]
     }
-  ],
+  ]
 }

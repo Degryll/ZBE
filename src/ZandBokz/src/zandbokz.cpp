@@ -7,31 +7,32 @@
  * @brief Main file for ZandBokz game.
  */
 
+#include <iostream>
+
 #include "ZBE/core/zbe.h"
+#include "ZBE/factories/BaseFactories.h"
+#include "ZBE/factories/ZBEFactories.h"
+#include "ZBE/JSON/factories/JSONFactories.h"
+#include "ZBE/SDL/factories/SDLFactories.h"
+#include "ZBE/resources/loaders/implementations/JSONAppLoader.h"
 
 int main(int /*argc*/, char** /*argv*/) {
-   // using namespace zbe;
+   using namespace zbe;
    printf("Hello ZandBokz\n");
-   //
-   // CommonFactories::load();
-   //
-   // /*CommonListFactories<
-   //   int, "listint",
-   //   float, "list cosa"
-   // >::load();*/
-   //
-   // GenericExtraFactories<
-   //   /*int, "listint",
-   //   float, "list cosa",*/
-   //   TFAEC<Drawable>, "TFAECDrawable/home/ludo/workspace/ZBE/src/ZandBokz/src/zandbokz.cppsFtry"
-   //   >::load();
-   //
-   // JSONAppLoader appLoader;
-   // appLoader.load("data/ZandBokz/app/main.json");
-   // auto& dmnRsrcStore = RsrcStore<Daemon>::getInstance();
-   // auto mainDaemon = dmnRsrcStore.get("Daemon.Main");
-   // mainDaemon.run();
-   // return 0;
+
+   BaseFactories::load();
+   SDLFactories::load();
+   ZBEFactories::load();
+   JSONFactories::load();
+
+   // Load App.
+   JSONAppLoader appLoader;
+   appLoader.load("data/ZandBokz/app/main.json");
+
+   std::cout << SysError::getFirstErrorString() << "\n";
+   // Run App.
+   RsrcStore<Daemon>::getInstance().get("Daemon.Main")->run();
+   return 0;
 
 
     // Flujo del juego

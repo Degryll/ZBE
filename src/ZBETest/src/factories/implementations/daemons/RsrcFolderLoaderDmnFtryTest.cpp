@@ -44,18 +44,17 @@ TEST(RsrcFolderLoaderDmn, build) {
   NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();
   auto& configRsrc = RsrcStore<json>::getInstance();
   auto& daemonRsrc = RsrcStore<Daemon>::getInstance();
-  auto& rsrcFolderLoaderRsrc = RsrcStore<RsrcFolderLoader>::getInstance();
+  auto& rsrcRsrcLoader = RsrcStore<RsrcLoader>::getInstance();
 
   std::shared_ptr<json> cfg = std::make_shared<json>();
-  (*cfg)["rsrcFolderLoader"] = "DummyRsrcFolderLoader"s;
+  (*cfg)["loader"] = "DummyRsrcLoader"s;
   (*cfg)["url"] = "data/test/img"s;
   uint64_t cfgId = SysIdGenerator::getId();
   configRsrc.insert(cfgId, cfg);
 
   auto dummyRsrcLoader = std::make_shared<DummyRsrcLoader>();
-  std::shared_ptr<zbe::RsrcFolderLoader> dummyRsrcfl = std::make_shared<zbe::RsrcFolderLoader>(dummyRsrcLoader);
 
-  rsrcFolderLoaderRsrc.insert("RsrcFolderLoader.DummyRsrcFolderLoader"s, dummyRsrcfl);
+  rsrcRsrcLoader.insert("RsrcLoader.DummyRsrcLoader"s, dummyRsrcLoader);
 
   RsrcFolderLoaderDmnFtry rfldf;
   rfldf.create("RsrcFolderLoaderDmnTestName", cfgId);

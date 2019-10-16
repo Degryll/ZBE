@@ -31,10 +31,10 @@ void RsrcFolderLoaderDmnFtry::setup(std::string name, uint64_t cfgId) {
 
   if(cfg) {
     auto j = *cfg;
-    json rsrcFolderLoaderName = j["rsrcFolderLoader"];
+    json loaderName = j["loader"];
     json url = j["url"];
-    if(!rsrcFolderLoaderName.is_string()) {
-      SysError::setError("Bad config for RsrcFolderLoaderDmnFtry - rsrcLoader. "s + name);
+    if(!loaderName.is_string()) {
+      SysError::setError("Bad config for RsrcFolderLoaderDmnFtry - loaderName. "s + name);
       return;
     }
     if(!url.is_string()) {
@@ -42,9 +42,10 @@ void RsrcFolderLoaderDmnFtry::setup(std::string name, uint64_t cfgId) {
       return;
     }
     auto rfld = rsrcFolderLoaderDmnRsrc.get("RsrcFolderLoaderDmn."s + name);
-    auto rfl = rsrcFolderLoaderRsrc.get("RsrcFolderLoader."s + rsrcFolderLoaderName.get<std::string>());
-
-    rfld->setRsrcFolderLoader(rfl);
+    auto rl = rsrcLoaderRsrc.get("RsrcLoader."s + loaderName.get<std::string>());
+    auto rsrcfl = std::make_shared<zbe::RsrcFolderLoader>(rl);
+    rsrcfl->setRsrcLoader(rl);
+    rfld->setRsrcFolderLoader(rsrcfl);
     rfld->setUrl(url);
   } else {
     SysError::setError("RsrcLoaderDmnFtry config for "s + name + " not found."s);

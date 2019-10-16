@@ -11,7 +11,7 @@
 #include "ZBE/SDL/factories/drawers/SingleTextSDLDrawerFtry.h"
 
 namespace SingleTextSDLDrawerFtryTest {
-//obj\Release\src\ZBETest\src\factories\implementations\drawers\SingleTextSDLDrawerFtryTest.o:SingleTextSDLDrawerFtryTest.cpp|| undefined reference to `zbe::SingleTextSDLDrawerFtry::create(std::string, unsigned long long)'|
+
 TEST(SingleTextSDLDrawerFtry, Create) {
   EXPECT_EQ(0, zbe::SysError::getNErrors()) << "Initially no errors.";
 
@@ -38,7 +38,7 @@ TEST(SingleTextSDLDrawerFtry, Create) {
 
   EXPECT_EQ(0, zbe::SysError::getNErrors()) << "Must be no config errors.";
 
-  uint64_t outId = dict.get("Drawer.SingleTextSDLDrawerFtryTestName");
+  uint64_t outId = dict.get("Behavior.SingleTextSDLDrawerFtryTestName");
   uint64_t swdId = dict.get("STSDLDrawer.SingleTextSDLDrawerFtryTestName");
 
   ASSERT_NE(0, outId) << "Must create a Drawer with given name";

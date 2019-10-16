@@ -78,17 +78,22 @@ void BehaviorDmnFtry<L, E...>::setup(std::string name, uint64_t cfgId) {
 
   if(cfg) {
     auto j = *cfg;
-    if (j["behavior"].type() == json::value_t::string && j["list"].type() == json::value_t::string) {
-      std::string bname = j["behavior"].get<std::string>();
-      std::string lname = j["list"].get<std::string>();
-      uint64_t bId = dict.get("Behavior."s + bname);
-      uint64_t lId = dict.get("List."s + lname);
-      auto dm = behaviorDmnRsrc.get("BehaviorDaemon."s + name);
-      dm->setPunish(behaviorRsrc.get(bId));
-      dm->setList(listRsrc.get(lId));
-    } else {
-      SysError::setError("BehaviorDmnFtry config for "s + name + " must contain valid strings for behavior and list names."s);
+    if (j["behavior"].type() != json::value_t::string) {
+      SysError::setError("BehaviorDmnFtry config for "s + name + " must contain valid strings for behavior name:"s + j["behavior"].get<std::string>());
+      return;
     }
+    if (j["list"].type() != json::value_t::string) {
+      SysError::setError("BehaviorDmnFtry config for "s + name + " must contain valid strings for list names:"s + j["list"].get<std::string>());
+      return;
+    }
+
+    std::string bname = j["behavior"].get<std::string>();
+    std::string lname = j["list"].get<std::string>();
+    uint64_t bId = dict.get("Behavior."s + bname);
+    uint64_t lId = dict.get("List."s + lname);
+    auto dm = behaviorDmnRsrc.get("BehaviorDaemon."s + name);
+    dm->setPunish(behaviorRsrc.get(bId));
+    dm->setList(listRsrc.get(lId));
   } else {
     SysError::setError("BehaviorDmnFtry config for "s + name + " not found."s);
   }

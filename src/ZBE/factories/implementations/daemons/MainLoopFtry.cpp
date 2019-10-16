@@ -51,7 +51,7 @@ void MainLoopFtry::setup(std::string name, uint64_t cfgId) {
       reactDm  = daemonRsrc.get("Daemon."s + react.get<std::string>());
       drawDm   = daemonRsrc.get("Daemon."s + draw.get<std::string>());
       postDm   = daemonRsrc.get("Daemon."s + post.get<std::string>());
-      ctxTime  = timeRsrc.get("Time."s + cTime.get<std::string>());
+      ctxTime  = timeRsrc.get("ContextTime."s + cTime.get<std::string>());
 
       auto ml = mainLoopRsrc.get("MainLoop."s + name);
 

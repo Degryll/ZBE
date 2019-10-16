@@ -30,8 +30,8 @@ namespace zbe{
       std::string ename = j["eventId"].get<std::string>();
       std::string ctname = j["contextTime"].get<std::string>();
 
-      int eId = intStore.get("eventId."s + ename);
-      auto cTime = cxTimeStore.get("ContexTime."s + ctname);
+      int eId = intStore.get(ename);
+      auto cTime = cxTimeStore.get("ContextTime."s + ctname);
 
       auto teg = tegRsrc.get("TimeEventGenerator."s + name);
       teg->setEventId(eId);

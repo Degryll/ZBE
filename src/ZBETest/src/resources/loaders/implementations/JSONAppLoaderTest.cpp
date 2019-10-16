@@ -51,7 +51,7 @@ TEST(JSONAppLoader, load) {
   EXPECT_EQ(0, zbe::SysError::getNErrors()) << "Initially no errors.";
 
   auto& intStore    = zbe::RsrcDictionary<int64_t>::getInstance();
-  auto& floatStore  = zbe::RsrcDictionary<float>::getInstance();
+  auto& doubleStore  = zbe::RsrcDictionary<double>::getInstance();
   auto& stringStore = zbe::RsrcDictionary<std::string>::getInstance();
 
   auto& rsrcFtry = zbe::RsrcStore<zbe::Factory>::getInstance();
@@ -88,8 +88,8 @@ TEST(JSONAppLoader, load) {
   EXPECT_EQ(42, intStore.get("cagando")) << "Must load first int";
   EXPECT_EQ(0, intStore.get("ojete")) << "Must load second int";
 
-  EXPECT_FLOAT_EQ(2.71828,floatStore.get("math.e")) << "Must load first float";
-  EXPECT_FLOAT_EQ(3.14159,floatStore.get("math.pi")) << "Must load second float";
+  EXPECT_FLOAT_EQ(2.71828,doubleStore.get("math.e")) << "Must load first float";
+  EXPECT_FLOAT_EQ(3.14159,doubleStore.get("math.pi")) << "Must load second float";
 
   EXPECT_EQ("y Blas",stringStore.get("era.necesario")) << "Must load first string";
   EXPECT_EQ("sacabo",stringStore.get("san")) << "Must load second string";

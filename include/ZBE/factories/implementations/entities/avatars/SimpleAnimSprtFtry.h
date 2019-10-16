@@ -13,6 +13,8 @@
 #include <string>
 #include <nlohmann/json.hpp>
 
+#include "ZBE/core/entities/AvatarEntity.h"
+
 #include "ZBE/core/tools/containers/RsrcStore.h"
 
 #include "ZBE/factories/Factory.h"
@@ -41,9 +43,11 @@ public:
   void setup(std::string, uint64_t);
 private:
   RsrcDictionary<int64_t>& intStore = RsrcDictionary<int64_t>::getInstance();
+  RsrcDictionary<uint64_t>& uintStore = RsrcDictionary<uint64_t>::getInstance();
   RsrcDictionary<double>& doubleStore = RsrcDictionary<double>::getInstance();
   RsrcStore<List>& listStore = RsrcStore<List>::getInstance();
-  RsrcStore<SimpleAnimatedSprite>& sasStore = RsrcStore<SimpleAnimatedSprite>::getInstance();
+  //RsrcStore<AvatarEntityFixed<AnimatedSprite> >& aefSasStore = RsrcStore<AvatarEntityFixed<AnimatedSprite> >::getInstance();
+  RsrcStore<SimpleAnimatedSprite*>& sasPtrRsrc = RsrcStore<SimpleAnimatedSprite*>::getInstance();
   RsrcStore<Ticket>& ticketStore = RsrcStore<Ticket>::getInstance();
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<ContextTime> &timeRsrc = RsrcStore<ContextTime>::getInstance();
@@ -53,8 +57,9 @@ template<typename List, const char *listnamespace>
 void SimpleAnimSprtFtry<List, listnamespace>::create(std::string name, uint64_t cfgId) {
   using namespace std::string_literals;
   using namespace nlohmann;
-  auto sas = std::make_shared<SimpleAnimatedSprite>();
-  sasStore.insert("SimpleAnimatedSprite."s + name, sas);
+  auto sas = new SimpleAnimatedSprite();
+  auto aef = std::make_shared<AvatarEntityFixed<AnimatedSprite> >(sas);
+  sasPtrRsrc.insert("SimpleAnimatedSpritePtr."s + name, std::make_shared<SimpleAnimatedSprite*>(sas));
   std::shared_ptr<json> cfg = configRsrc.get(cfgId);
   if(cfg) {
     auto j = *cfg;
@@ -63,16 +68,17 @@ void SimpleAnimSprtFtry<List, listnamespace>::create(std::string name, uint64_t 
       return;
     }
     auto lists = j["lists"];
+    auto aec = std::make_shared<AvatarEntityContainer<AnimatedSprite> >(aef);
     for (auto& e : lists.items()) {
-       auto lConfig = e.value();
-       if (!lConfig.is_string()) {
-         SysError::setError("SimpleAnimatedSprite lists contains invalid data."s);
-         return;
-       }
-       std::string listname = lConfig.get<std::string>();
-       auto list = listStore.get(std::string(listnamespace)+"."+listname);
-       auto ticket = list->push_front(sas);
-       ticketStore.insert("Ticket."s + name, ticket);
+      auto lConfig = e.value();
+      if (!lConfig.is_string()) {
+        SysError::setError("SimpleAnimatedSprite lists contains invalid data."s);
+        return;
+      }
+      std::string listname = lConfig.get<std::string>();
+      auto list = listStore.get(std::string(listnamespace)+"."+listname);
+      auto ticket = list->push_front(aec);
+      ticketStore.insert("Ticket."s + name, ticket);
     }
   } else {
     SysError::setError("SimpleAnimatedSprite config for "s + name + " not found."s);
@@ -122,16 +128,6 @@ void SimpleAnimSprtFtry<List, listnamespace>::setup(std::string name, uint64_t c
       SysError::setError("SimpleAnimatedSprite config for graphics must be a string."s);
       return;
     }
-    /*
-    setTime(uint64_t time)
-    setState(int64_t state)
-    setDegrees(double degrees)
-    setX(int64_t x)
-    setY(int64_t y)
-    setW(int64_t w)
-    setH(int64_t h)
-    setGraphics(uint64_t graphics)
-    */
 
     std::string contexttimename = j["contexttime"].get<std::string>();
     std::string timename = j["time"].get<std::string>();
@@ -146,14 +142,14 @@ void SimpleAnimSprtFtry<List, listnamespace>::setup(std::string name, uint64_t c
     std::shared_ptr<ContextTime> cTime = timeRsrc.get("ContextTime."s + contexttimename);
     uint64_t time  = (uint64_t)intStore.get(timename);
     int64_t state  = intStore.get(statename);
-    double degrees  = doubleStore.get(degreesname);
-    int64_t x  = intStore.get(xname);
-    int64_t y  = intStore.get(yname);
-    int64_t w  = intStore.get(wname);
-    int64_t h  = intStore.get(hname);
-    uint64_t graphics  = (uint64_t)intStore.get(graphicsname);
+    double degrees = doubleStore.get(degreesname);
+    int64_t x = intStore.get(xname);
+    int64_t y = intStore.get(yname);
+    int64_t w = intStore.get(wname);
+    int64_t h = intStore.get(hname);
+    uint64_t graphics = uintStore.get(graphicsname);
 
-    auto sas = sasStore.remove("SimpleAnimatedSprite."s + name);
+    SimpleAnimatedSprite* sas = *(sasPtrRsrc.remove("SimpleAnimatedSpritePtr."s + name));
 
     sas->setContextTime(cTime);
     sas->setTime(time);

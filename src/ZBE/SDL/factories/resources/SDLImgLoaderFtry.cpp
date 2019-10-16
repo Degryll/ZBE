@@ -16,6 +16,7 @@ void SDLImgLoaderFtry::create(std::string name, uint64_t) {
 
   auto loader = std::make_shared<SDLImgLoader>();
   sdlImgLoaderRsrc.insert("SDLImgLoader."s + name, loader);
+  rsrcLoaderRsrc.insert("RsrcLoader."s + name, loader);
 }
 
 void SDLImgLoaderFtry::setup(std::string name, uint64_t cfgId) {

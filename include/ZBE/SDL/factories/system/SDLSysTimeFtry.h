@@ -50,7 +50,6 @@ private:
   RsrcStore<Timer> &timerRsrc = RsrcStore<Timer>::getInstance();
   RsrcStore<SDLTimer> &sdlTimerRsrc = RsrcStore<SDLTimer>::getInstance();
   RsrcStore<ContextTime> &contextTimeRsrc = RsrcStore<ContextTime>::getInstance();
-  RsrcStore<SysTime> &sysTimeRsrc = RsrcStore<SysTime>::getInstance();
   NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();
 };
 

@@ -32,7 +32,7 @@ void MainLoopExitFtry::setup(std::string name, uint64_t cfgId) {
     auto j = *cfg;
     json mainloopName = j["mainloop"];
     json valueHolderName = j["valueHolder"];
-    json outValue = j["outValue"];
+    json outValueName = j["outValue"];
     if(!mainloopName.is_string()) {
       SysError::setError("Bad config for MainLoopExitFtry - mainloop."s + name);
       return;
@@ -41,14 +41,19 @@ void MainLoopExitFtry::setup(std::string name, uint64_t cfgId) {
       SysError::setError("Bad config for MainLoopExitFtry - valueHolder."s + name);
       return;
     }
-    if(!outValue.is_number()) {
+    //TODO allow to use numbers or strings
+    // if(!outValue.is_number()) {
+    //   SysError::setError("Bad config for MainLoopExitFtry - outValue."s + name);
+    //   return;
+    // }
+    if(!outValueName.is_string()) {
       SysError::setError("Bad config for MainLoopExitFtry - outValue."s + name);
       return;
     }
     auto mle = mainLoopExitRsrc.get("MainLoopExit."s + name);
     auto ml = mainLoopRsrc.get("MainLoop."s + mainloopName.get<std::string>());
     auto valueHolder = valueRsrc.get("ValueI."s + valueHolderName.get<std::string>());
-    uint64_t value = outValue.get<uint64_t>();
+    uint64_t value = uintStore.get(outValueName.get<std::string>());
     mle->setMainLoop(ml);
     mle->setValue(valueHolder);
     mle->setExitValue(value);

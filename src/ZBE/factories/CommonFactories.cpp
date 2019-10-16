@@ -37,28 +37,46 @@
 namespace zbe {
 
 void CommonFactories::load() {
-  auto& factories = RsrcStore<Factory>::getInstance();
-
-  // --- Daemons
-//  factories.insert("DmnFtry.BehaviorDmnFtry", std::make_shared<BehaviorDmnFtry>());
-  factories.insert("DmnFtry.MainLoopExitFtry", std::make_shared<MainLoopExitFtry>());
-  factories.insert("DmnFtry.MainLoopFtry", std::make_shared<MainLoopFtry>());
-  factories.insert("DmnFtry.MasterDmnFtry", std::make_shared<MasterDmnFtry>());
-  factories.insert("DmnFtry.StateMachineDmnFtry", std::make_shared<StateMachineDmnFtry>());
-
-  // --- Events
-  // --- --- Event generators
-//  factories.insert("EvGnFtry.InteractionEvGnFtry", std::make_shared<InteractionEvGnFtry>());
-  // --- --- Event time handlers
-  factories.insert("IHFtry.BroadcastIHFtry", std::make_shared<BroadcastIHFtry>());
-  factories.insert("IHFtry.DaemonClickIHFtry", std::make_shared<DaemonClickIHFtry>());
-  factories.insert("IHFtry.DaemonIHFtry", std::make_shared<DaemonIHFtry>());
-  factories.insert("IHFtry.InputToValueFtry", std::make_shared<InputToValueFtry>());
-  // --- --- Event time handlers
-  factories.insert("THFtry.DaemonRecurrentTimeHandlerFtry", std::make_shared<DaemonRecurrentTimeHandlerFtry>());
-  factories.insert("THFtry.DaemonTimeHandlerFtry", std::make_shared<DaemonTimeHandlerFtry>());
-  factories.insert("THFtry.TicketEraserFtry", std::make_shared<TicketEraserFtry>());
-
+//   auto& factories = RsrcStore<Factory>::getInstance();
+// //------------------------------------ COMMON ----------------------------------
+//   // --- Daemons
+//   //  factories.insert("DmnFtry.BehaviorDmnFtry", std::make_shared<BehaviorDmnFtry>());
+//   factories.insert("MainLoopExitFtry", std::make_shared<MainLoopExitFtry>());
+//   factories.insert("MainLoopFtry", std::make_shared<MainLoopFtry>());
+//   factories.insert("MasterDmnFtry", std::make_shared<MasterDmnFtry>());
+//   factories.insert("StateMachineDmnFtry", std::make_shared<StateMachineDmnFtry>());
+//
+//   // --- Events
+//   // --- --- Event generators
+//   //  factories.insert("EvGnFtry.InteractionEvGnFtry", std::make_shared<InteractionEvGnFtry>());
+//   // --- --- Event time handlers
+//   factories.insert("BroadcastIHFtry", std::make_shared<BroadcastIHFtry>());
+//   factories.insert("DaemonClickIHFtry", std::make_shared<DaemonClickIHFtry>());
+//   factories.insert("DaemonIHFtry", std::make_shared<DaemonIHFtry>());
+//   factories.insert("InputToValueFtry", std::make_shared<InputToValueFtry>());
+//   // --- --- Event time handlers
+//   factories.insert("DaemonRecurrentTimeHandlerFtry", std::make_shared<DaemonRecurrentTimeHandlerFtry>());
+//   factories.insert("DaemonTimeHandlerFtry", std::make_shared<DaemonTimeHandlerFtry>());
+//   factories.insert("TicketEraserFtry", std::make_shared<TicketEraserFtry>());
+// //------------------------------------- EXTRA ----------------------------------
+//
+//   TFAECDrawablesFtry -> ZBE
+//   SDLWindowFtry -> SDL
+//   JSONImgDefLoaderFtry -> JSON
+//   SDLImgLoaderFtry -> SDL
+//   ResourcesFtry -> BASE
+//   MainLoopFtry -> BASE
+//   ValueUFtry -> BASE (ValueIFtry, ValueFFtry, ...)
+//   SDLSysTimeFtry -> SDL
+//   BasicPreLoopSDLDaemonFtry -> SDL
+//   BasicPostLoopSDLDaemonFtry -> SDL
+//   TimeEventGeneratorFtry -> BASE
+//   MainExitDaemonFry -> BASE
+//   DaemonTimeHandlerFtry -> BASE
+//   SpriteSheetSDLDrawerFtry -> SDL
+//   BehaviorDmnFtry -> ZBE
+//   SmplAnimSprtFtry -> ZBE
+//   Allyour -> BASE //are belong to us
 }
 
 }  // namespace zbe

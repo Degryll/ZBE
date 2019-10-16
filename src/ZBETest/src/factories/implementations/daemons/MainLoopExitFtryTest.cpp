@@ -65,11 +65,12 @@ TEST(MainLoopExitFtryTest, build) {
   auto& daemonRsrc = RsrcStore<Daemon>::getInstance();
   auto& mlRsrc = RsrcStore<MainLoop>::getInstance();
   auto& valIRsrc = RsrcStore<Value<int64_t> >::getInstance();
+  auto& uintStore = RsrcDictionary<uint64_t>::getInstance();
 
   std::shared_ptr<json> cfg = std::make_shared<json>();
   (*cfg)["mainloop"] = "ml1"s;
   (*cfg)["valueHolder"] = "val1"s;
-  (*cfg)["outValue"] = 1;
+  (*cfg)["outValue"] = "outValue";
   uint64_t cfgId = SysIdGenerator::getId();
   configRsrc.insert(cfgId, cfg);
 
@@ -86,6 +87,7 @@ TEST(MainLoopExitFtryTest, build) {
   mlRsrc.insert("MainLoop.ml1", ml);
   daemonRsrc.insert("Daemon.ml1", ml);
   valIRsrc.insert("ValueI.val1", std::make_shared<SimpleValue<int64_t> >());
+  uintStore.insert("outValue",1);
 
   MainLoopExitFtry mlef;
   mlef.create("MainLoopExitFtryTestName", cfgId);
@@ -108,6 +110,9 @@ TEST(MainLoopExitFtryTest, build) {
 
   configRsrc.clear();
   daemonRsrc.clear();
+  uintStore.clear();
+  mlRsrc.clear();
+  valIRsrc.clear();
 
   zbe::SysError::clear();
 }

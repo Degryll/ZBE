@@ -1,0 +1,12 @@
+{
+"name" : "loadScreen",
+"imgdefs" : [
+  {
+    "name" : "background",
+    "frameTime" : 10,
+    "frameAmount" : 1,
+    "region" : [0.0,0.0,360.0,257.0],
+    "regionOffset" : [0.5,0.5]
+  }
+]
+}

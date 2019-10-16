@@ -69,9 +69,9 @@ void JSONGraphicsLoaders::JSONMultiSpriteSheetFileLoad(std::istream& is) {
   try {
     is >> j;
     std::string name = j["name"];
-    json imgDefs = j["sprtdefs"];
-    std::shared_ptr<MultiSpriteSheet> sprtSheet = std::make_shared<MultiSpriteSheet>(j.size());
-    for (auto sprtNode : imgDefs) {
+    json sprtDefs = j["sprtdefs"];
+    std::shared_ptr<MultiSpriteSheet> sprtSheet = std::make_shared<MultiSpriteSheet>(sprtDefs.size());
+    for (auto sprtNode : sprtDefs) {
       std::string stateName = sprtNode["name"];
       SprtDef sprtDef = JSONSprtDefLoad(sprtNode);
       sprtSheet->setSprite(nrd.get(cn::STATE + cn::SEPARATOR + stateName), sprtDef);
@@ -81,7 +81,7 @@ void JSONGraphicsLoaders::JSONMultiSpriteSheetFileLoad(std::istream& is) {
     }
     uint64_t id = SysIdGenerator::getId();
     rsrcAnimSprt.insert(id, sprtSheet);
-    nrd.insert(cn::SPRTSHEET + cn::SEPARATOR + name, id);
+    nrd.insert(name, id);
   } catch (json::parse_error &e) {
     SysError::setError(std::string("ERROR: Json failed to parse: ") + std::string(e.what()));
   } catch (nlohmann::detail::type_error &e) {

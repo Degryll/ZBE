@@ -1,14 +1,14 @@
 /**
  * Copyright 2012 Batis Degryll Ludo
- * @file RsrcFolderLoaderDmnFtry.h
+ * @file RsrcFtry.h
  * @since 2019-04-21
  * @date 2019-04-21
  * @author Ludo Degryll Batis
- * @brief Factory for RsrcLoaderDmn.
+ * @brief Factory that executes a resource loader over a directory.
  */
 
-#ifndef ZBE_FACTORIES_IMPLEMENTATIONS_DAEMONS_RSRCFOLDERLOADERDMNFTRY_H_
-#define ZBE_FACTORIES_IMPLEMENTATIONS_DAEMONS_RSRCFOLDERLOADERDMNFTRY_H_
+#ifndef ZBE_FACTORIES_IMPLEMENTATIONS_RSRCFTRY_H_
+#define ZBE_FACTORIES_IMPLEMENTATIONS_RSRCFTRY_H_
 
 #include <string>
 
@@ -24,7 +24,8 @@
 #include "ZBE/core/daemons/Daemon.h"
 #include "ZBE/core/system/system.h"
 
-#include "ZBE/daemons/RsrcFolderLoaderDmn.h"
+#include "ZBE/resources/loaders/RsrcLoader.h"
+#include "ZBE/resources/loaders/RsrcFolderLoader.h"
 
 #include "ZBE/factories/Factory.h"
 
@@ -33,10 +34,10 @@ namespace zbe {
 
 /** \brief Factory for RsrcLoaderDmn.
  */
-class ZBEAPI RsrcFolderLoaderDmnFtry : virtual public Factory {
+class ZBEAPI RsrcFtry : virtual public Factory {
 public:
 
-  /** \brief Builds a RsrcFolderLoaderDmn.
+  /** \brief Builds a RsrcFtry.
    *  \param name Name for the created RsrcLoaderDmn.
    *  \param cfgId RsrcLoaderDmn's configuration id.
    */
@@ -51,12 +52,10 @@ public:
 private:
   NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
-  RsrcStore<Daemon> &daemonRsrc = RsrcStore<Daemon>::getInstance();
-  RsrcStore<RsrcFolderLoaderDmn> &rsrcFolderLoaderDmnRsrc = RsrcStore<RsrcFolderLoaderDmn>::getInstance();
   RsrcStore<RsrcLoader> &rsrcLoaderRsrc = RsrcStore<RsrcLoader>::getInstance();
 
 };
 
 }  // namespace zbe
 
-#endif  // ZBE_FACTORIES_IMPLEMENTATIONS_DAEMONS_RSRCFOLDERLOADERDMNFTRY_H_
+#endif  // ZBE_FACTORIES_IMPLEMENTATIONS_RSRCFTRY_H_

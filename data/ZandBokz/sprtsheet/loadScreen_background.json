@@ -1,0 +1,11 @@
+{
+  "name": "img.loadScreen.background",
+  "sprtdefs" : [
+    {
+      "name" : "static",
+      "img" : "loadScreen.background",
+      "scale" : [0.7, 0.7],
+      "drawOffset" : [-0.1, -0.1]
+    }
+  ]
+}

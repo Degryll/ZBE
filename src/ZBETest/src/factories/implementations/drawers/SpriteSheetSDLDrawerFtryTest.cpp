@@ -27,7 +27,7 @@ TEST(SpriteSheetSDLDrawerFtry, Create) {
   auto cfg = std::make_shared<json>();
   (*cfg)["window"] = "Ventanuco";
   auto wd = std::make_shared<zbe::SDLWindow>("Esto es una prueba!", 600, 400);
-  windowRsrc.insert("Ventanuco", wd);
+  windowRsrc.insert("SDLWindow.Ventanuco", wd);
 
   uint64_t cfgId = SysIdGenerator::getId();
   configRsrc.insert(cfgId, cfg);
@@ -38,7 +38,7 @@ TEST(SpriteSheetSDLDrawerFtry, Create) {
 
   EXPECT_EQ(0, zbe::SysError::getNErrors()) << "Must be no config errors.";
 
-  uint64_t outId = dict.get("Drawer.SpriteSheetSDLDrawerFtryTestName");
+  uint64_t outId = dict.get("Behavior.SpriteSheetSDLDrawerFtryTestName");
   uint64_t swdId = dict.get("SSSDLDrawer.SpriteSheetSDLDrawerFtryTestName");
 
   ASSERT_NE(0, outId) << "Must create a Drawer with given name";

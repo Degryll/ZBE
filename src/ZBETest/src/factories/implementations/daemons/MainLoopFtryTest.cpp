@@ -108,7 +108,7 @@ TEST(MainLoopFtryTest, build) {
   daemonRsrc.insert("Daemon.reactD"s, reactD);
   daemonRsrc.insert("Daemon.drawD"s, drawD);
   daemonRsrc.insert("Daemon.postD"s, postD);
-  timeRsrc.insert("Time.contextT"s, contextT);
+  timeRsrc.insert("ContextTime.contextT"s, contextT);
   MainLoopFtry mlf;
   mlf.create("MainLoopFtryTestName", cfgId);
   mlf.setup("MainLoopFtryTestName", cfgId);

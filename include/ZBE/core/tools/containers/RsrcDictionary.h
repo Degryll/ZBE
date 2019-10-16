@@ -58,10 +58,26 @@ class ZBEAPI RsrcDictionary {
     T get(std::string name) {
       auto it = l.find(name);
       if (it == l.end()) {
-        SysError::setError("Resource id not found.");
+        SysError::setError("Resource id not found:" + name);
         return (0);
       } else {
         return (it->second);
+      }
+    }
+
+    /** \brief Removes an entry and returns its value.
+     *  \param name of the entry.
+     *  \return The entry value.
+     */
+    T remove(std::string name) {
+      auto it = l.find(name);
+      if (it == l.end()) {
+        SysError::setError("Resource not found.");
+        return (T());
+      } else {
+        auto aux = it->second;
+        l.erase(it);
+        return (aux);
       }
     }
 
@@ -118,10 +134,26 @@ class ZBEAPI IdRsrcDictionary {
     uint64_t get(uint64_t local) {
       auto it = l.find(local);
       if (it == l.end()) {
-        SysError::setError("Resource id not found.");
+        SysError::setError("Resource id not found:" + std::to_string(local));
         return (0);
       } else {
         return (it->second);
+      }
+    }
+
+    /** \brief Removes an entry and returns its value.
+     *  \param local id of the entry.
+     *  \return The entry value.
+     */
+    uint64_t remove(uint64_t local) {
+      auto it = l.find(local);
+      if (it == l.end()) {
+        SysError::setError("Resource id not found:" + std::to_string(local));
+        return (0);
+      } else {
+        auto aux = it->second;
+        l.erase(it);
+        return (aux);
       }
     }
 

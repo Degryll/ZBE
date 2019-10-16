@@ -58,7 +58,7 @@ void SpriteSheetSDLDrawerFtry<T>::create(std::string name, uint64_t) {
   using namespace std::string_literals;
 
   std::shared_ptr<SpriteSheetSDLDrawer<T> > ss = std::make_shared<SpriteSheetSDLDrawer<T> >();
-  drawerRsrc.insert("Drawer."s + name, ss);
+  drawerRsrc.insert("Behavior."s + name, ss);
   SSSDLDrawerRsrc.insert("SSSDLDrawer."s + name, ss);
 }
 
@@ -72,7 +72,7 @@ void SpriteSheetSDLDrawerFtry<T>::setup(std::string name, uint64_t cfgId) {
     auto j = *cfg;
     if (j["window"].is_string()){
       std::string windowName = j["window"].get<std::string>();
-      auto w = windowRsrc.get(windowName);
+      auto w = windowRsrc.get("SDLWindow."s + windowName);
 
       auto ssd = SSSDLDrawerRsrc.get("SSSDLDrawer."s + name);
       ssd->setWindow(w);

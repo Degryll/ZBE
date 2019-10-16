@@ -14,7 +14,7 @@ namespace zbe {
    using namespace std::string_literals;
 
    std::shared_ptr<SingleTextSDLDrawer> ss = std::make_shared<SingleTextSDLDrawer>();
-   drawerRsrc.insert("Drawer."s + name, ss);
+   drawerRsrc.insert("Behavior."s + name, ss);
    STSDLDrawerRsrc.insert("STSDLDrawer."s + name, ss);
  }
 

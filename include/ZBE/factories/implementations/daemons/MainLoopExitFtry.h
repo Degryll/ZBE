@@ -55,6 +55,7 @@ private:
   RsrcStore<MainLoop> &mainLoopRsrc = RsrcStore<MainLoop>::getInstance();
   RsrcStore<MainLoopExit> &mainLoopExitRsrc = RsrcStore<MainLoopExit>::getInstance();
   RsrcStore<Value<int64_t> > &valueRsrc = RsrcStore<Value<int64_t> >::getInstance();
+  RsrcDictionary<uint64_t>& uintStore = RsrcDictionary<uint64_t>::getInstance();
 };
 
 }  // namespace zbe

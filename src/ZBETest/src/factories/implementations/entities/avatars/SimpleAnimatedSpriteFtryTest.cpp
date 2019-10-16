@@ -22,18 +22,19 @@ TEST(SimpleAnimatedSpriteFtry, Create) {
   using namespace nlohmann;
   using namespace std::string_literals;
 
-  using TFSAS = TicketedForwardList<SimpleAnimatedSprite>;
+  using TFLAECAS = TicketedForwardList<AvatarEntityContainer<AnimatedSprite> >;
 
   auto& dict = NameRsrcDictionary::getInstance();
   auto& configRsrc = RsrcStore<json>::getInstance();
-  auto& sasStore = RsrcStore<SimpleAnimatedSprite>::getInstance();
+  auto& sasPtrStore = RsrcStore<SimpleAnimatedSprite*>::getInstance();
   auto& intStore = RsrcDictionary<int64_t>::getInstance();
+  auto& uintStore = RsrcDictionary<uint64_t>::getInstance();
   auto& ticketStore = RsrcStore<Ticket>::getInstance();
   auto& doubleStore = RsrcDictionary<double>::getInstance();
-  auto& listStore = RsrcStore<TFSAS>::getInstance();
+  auto& listStore = RsrcStore<TFLAECAS>::getInstance();
   auto& timeRsrc = RsrcStore<ContextTime>::getInstance();
 
-  auto list = std::make_shared<TFSAS>();
+  auto list = std::make_shared<TFLAECAS>();
   listStore.insert("Tedefresas.sasftrytest.list",list);
 
   std::shared_ptr<zbetest::MockedContextTime> contextTime = std::make_shared<zbetest::MockedContextTime>();
@@ -62,29 +63,32 @@ TEST(SimpleAnimatedSpriteFtry, Create) {
   intStore.insert("sasftrytest.y", 20);
   intStore.insert("sasftrytest.w", 30);
   intStore.insert("sasftrytest.h", 40);
-  intStore.insert("sasftrytest.graphics", 5);
+  uintStore.insert("sasftrytest.graphics", 5);
 
   uint64_t cfgId = configRsrc.insert(cfg);
 
-  SimpleAnimSprtFtry<TFSAS, LIST_NAMESPACE> sasFtry;
+  SimpleAnimSprtFtry<TFLAECAS, LIST_NAMESPACE> sasFtry;
 
   sasFtry.create("SimpleAnimatedSpriteFtryTestName", cfgId);
 
-  uint64_t outId = dict.get("SimpleAnimatedSprite.SimpleAnimatedSpriteFtryTestName");
+  uint64_t outId = dict.get("SimpleAnimatedSpritePtr.SimpleAnimatedSpriteFtryTestName");
   ASSERT_NE(0, outId) << "Must create an entity with given name";
-  auto createdEntity = sasStore.get(outId);
+
+  auto createdEntity = sasPtrStore.get(outId);
   EXPECT_EQ(0, zbe::SysError::getNErrors()) << "Must be no stored errors 1.";
 
   sasFtry.setup("SimpleAnimatedSpriteFtryTestName", cfgId);
 
-  auto setupEntity = sasStore.get(outId);
+  auto setupEntity = sasPtrStore.get(outId);
   EXPECT_EQ(1, zbe::SysError::getNErrors()) << "After setup, there is no entity in the store.";
   zbe::SysError::clear();
 
   EXPECT_EQ(0, zbe::SysError::getNErrors()) << "Must be no errors.";
 
   auto it = list->begin();
-  auto outEntity = *it;
+  AnimatedSprite* outEntity;
+  assignAvatar(*it, &outEntity);
+  //auto outEntity = *it;
 
   EXPECT_EQ(0, zbe::SysError::getNErrors()) << "Must be no stored errors 2.";
 
@@ -100,7 +104,7 @@ TEST(SimpleAnimatedSpriteFtry, Create) {
 
   dict.clear();
   configRsrc.clear();
-  sasStore.clear();
+  sasPtrStore.clear();
   intStore.clear();
   ticketStore.clear();
   doubleStore.clear();
