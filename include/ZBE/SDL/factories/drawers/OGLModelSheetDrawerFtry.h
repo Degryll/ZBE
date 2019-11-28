@@ -87,7 +87,7 @@ void OGLModelSheetDrawerFtry<T>::setup(std::string name, uint64_t cfgId) {
       p = (uint64_t)intStore.get(pidName);
 
       auto ssd = oGLMSDrawerRsrc.get("OGLMSDrawer."s + name);
-      ssd->setWindow(w, p);
+      ssd->setConfig(w, p);
     } else {
       SysError::setError("OGLModelSheetDrawer config for programId: "s + j["programId"].get<std::string>() + ": must be a string."s);
     }

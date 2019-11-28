@@ -20,6 +20,8 @@
 
 #include "ZBE/core/entities/AvatarEntity.h"
 
+#include "ZBE/tools/graphics/Camera.h"
+
 #include "ZBE/entities/avatars/implementations/SimpleSingleModel.h"
 #include "ZBE/entities/avatars/SingleModel.h"
 
@@ -27,9 +29,8 @@
 
 #include "ZBE/OGL/graphics/implementations/SingleModelOGLModelSheet.h"
 #include "ZBE/OGL/drawers/OGLModelSheetDrawer.h"
-#include "ZBE/OGL/daemons/OGLModelSheetPreDrawer.h"
-#include "ZBE/OGL/daemons/OGLModelSheetPosDrawer.h"
-
+#include "ZBE/OGL/daemons/OGLPreDrawer.h"
+#include "ZBE/OGL/daemons/OGLPostDraw.h"
 
 
 namespace ludo {

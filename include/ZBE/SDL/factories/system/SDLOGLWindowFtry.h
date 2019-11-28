@@ -1,6 +1,6 @@
 /**
  * Copyright 2012 Batis Degryll Ludo
- * @file SDLWindowFtry.h
+ * @file SDLOGLWindowFtry.h
  * @since 2019-07-23
  * @date 2019-07-23
  * @author Degryll
@@ -19,7 +19,7 @@
 
 #include "ZBE/core/tools/containers/RsrcStore.h"
 
-#include "ZBE/SDL/system/SDLWindow.h"
+#include "ZBE/SDL/OGL/SDLOGLWindow.h"
 
 #include "ZBE/factories/Factory.h"
 
@@ -29,7 +29,7 @@ namespace zbe {
 
 /** \brief Factory for SDLWindow.
  */
-class ZBEAPI SDLWindowFtry : virtual public Factory {
+class ZBEAPI SDLOGLWindowFtry : virtual public Factory {
 public:
 
   /** \brief Builds a SDLWindow.
@@ -49,7 +49,7 @@ private:
   RsrcDictionary<std::string>& strStore = RsrcDictionary<std::string>::getInstance();
   RsrcDictionary<int64_t>& intStore = RsrcDictionary<int64_t>::getInstance();
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
-  RsrcStore<SDLWindow> &sdlWindowRsrc = RsrcStore<SDLWindow>::getInstance();
+  RsrcStore<SDLOGLWindow> &sdloglWindowRsrc = RsrcStore<SDLOGLWindow>::getInstance();
 };
 
 }  // namespace zbe

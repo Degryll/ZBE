@@ -1,5 +1,7 @@
 #include "ludo/opengltest.h"
 
+#include <unordered_map>
+
 namespace ludo {
 
 const float PI = 3.14159f;
@@ -101,33 +103,34 @@ std::vector<GLfloat> traspose(std::vector<GLfloat> viewMat){
 
 int opengltest(int, char** ) {
   using namespace zbe;
-  //std::shared_ptr<SDLWindow> window = std::make_shared<SDLWindow>("Veamos", 1000, 1000);
+  printf("unordere double: %d\n", sizeof(std::unordered_map<uint64_t, std::shared_ptr<Value<double> > >));
+  printf("unordere char: %d\n", sizeof(std::unordered_map<uint64_t, std::shared_ptr<Value<char> > >));
    std::shared_ptr<SDLOGLWindow> window = std::make_shared<SDLOGLWindow>("Veamos", 1000, 1000);
 
-   GLfloat projection[] = {
-     0.0f, 0.0f, 0.0f, 0.0f,
-     0.0f, 0.0f, 0.0f, 0.0f,
-     0.0f, 0.0f, 0.0f, 0.0f,
-     0.0f, 0.0f, 0.0f, 0.0f
-   };
-
-   std::vector<GLfloat> viewMatRaw {
-     1.0f, 0.0f, 0.0f, 0.0f,
-     0.0f, 1.0f, 0.0f, 0.0f,
-     0.0f, 0.0f, 1.0f, -5.0f,
-     0.0f, 0.0f, 0.0f, 1.0f
-   };
+   // GLfloat projection[] = {
+   //   0.0f, 0.0f, 0.0f, 0.0f,
+   //   0.0f, 0.0f, 0.0f, 0.0f,
+   //   0.0f, 0.0f, 0.0f, 0.0f,
+   //   0.0f, 0.0f, 0.0f, 0.0f
+   // };
+   //
+   // std::vector<GLfloat> viewMatRaw {
+   //   1.0f, 0.0f, 0.0f, 0.0f,
+   //   0.0f, 1.0f, 0.0f, 0.0f,
+   //   0.0f, 0.0f, 1.0f, -5.0f,
+   //   0.0f, 0.0f, 0.0f, 1.0f
+   // };
 
    // glm::mat4 auxViewMat = glm::lookAt(glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
    // GLfloat* viewMat = glm::value_ptr(auxViewMat);
-   for(auto val : viewMatRaw) {
-     printf("%f, ", val);
-   }
-   printf("\n------------------------------\n");
-   std::vector<GLfloat> viewMat = traspose(viewMatRaw);
-   for(auto val : viewMat) {
-     printf("%f, ", val);
-   }
+   // for(auto val : viewMatRaw) {
+   //   printf("%f, ", val);
+   // }
+   // printf("\n------------------------------\n");
+   // std::vector<GLfloat> viewMat = traspose(viewMatRaw);
+   // for(auto val : viewMat) {
+   //   printf("%f, ", val);
+   // }
    printf("\n------------------------------\n");
    glm::mat4 auxViewMat = glm::lookAt(glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
    GLfloat* viewMat1 = glm::value_ptr(auxViewMat);
@@ -136,7 +139,9 @@ int opengltest(int, char** ) {
      printf("%f, ", val);
    }
 
-   set_perspective(projection, 120.0, 1.0, 1.0, 50.0);
+   std::shared_ptr<Camera> cam = std::make_shared<Camera>();
+
+   cam->set_perspective(120.0, 1.0, 1.0, 50.0);
 
    float a = 0.0f;
 
@@ -152,8 +157,8 @@ int opengltest(int, char** ) {
    uint64_t cubeTex = window->getTextureStore()->loadImg("data/images/ludo/arrow_r_000_512.png");
    uint64_t floorTex = window->getTextureStore()->loadImg("data/images/ludo/orb_001_512.png");
 
-   std::shared_ptr<std::vector<GLfloat> > projectionV = std::make_shared<std::vector<GLfloat> >(projection, projection + (sizeof(projection)/sizeof(GLfloat)));
-   std::shared_ptr<std::vector<GLfloat> > viewV = std::make_shared<std::vector<GLfloat> >(viewMatGenerated);
+   //std::shared_ptr<std::vector<GLfloat> > projectionV = std::make_shared<std::vector<GLfloat> >(projection, projection + (sizeof(projection)/sizeof(GLfloat)));
+   //std::shared_ptr<std::vector<GLfloat> > viewV = std::make_shared<std::vector<GLfloat> >(viewMatGenerated);
 
    std::shared_ptr<SingleModelOGLModelSheet> modelSheet1 = std::make_shared<SingleModelOGLModelSheet>(window, models[1], floorTex);
    std::shared_ptr<SingleModelOGLModelSheet> modelSheet2 = std::make_shared<SingleModelOGLModelSheet>(window, models[0], cubeTex);
@@ -178,9 +183,10 @@ int opengltest(int, char** ) {
    std::shared_ptr<AvatarEntityContainer<SingleModel> > aecSm1 = std::make_shared<AvatarEntityContainer<SingleModel> >(std::make_shared<AvatarEntityFixed<SingleModel> >(sm1));
    std::shared_ptr<AvatarEntityContainer<SingleModel> > aecSm2 = std::make_shared<AvatarEntityContainer<SingleModel> >(std::make_shared<AvatarEntityFixed<SingleModel> >(sm2));
 
-   OGLModelSheetPreDrawer preDraw(window, shaderId, projectionV, viewV);
+   OGLPreDrawer preDraw(window, shaderId, cam);
+   OGLPostDraw posDraw(window);
+
    OGLModelSheetDrawer<SingleModel> draw(window, shaderId);
-   OGLModelSheetPosDrawer posDraw;
 
    if(SysError::getNErrors()>0){
      printf("Postion!: %s\n", SysError::getFirstErrorString().c_str());
@@ -203,10 +209,7 @@ int opengltest(int, char** ) {
          lastTime += CLOCKS_PER_SEC;
      }
 
-     auxViewMat = glm::lookAt(glm::vec3(sin(a) * 5.0f, cos(a*4) * 1.0f + 2.0f, cos(a) * 5.0f), glm::vec3(cos(a), 0.0f, cos(a)), glm::vec3(0.0f, 1.0f, 0.0f));
-     viewMat1 = glm::value_ptr(auxViewMat);
-     viewMatGenerated = std::vector<GLfloat>(viewMat1, viewMat1 + 16);
-     (*viewV) = viewMatGenerated;
+     cam->lookAt(Vector3D({sin(a) * 5.0f, cos(a*4) * 1.0f + 2.0f, cos(a) * 5.0f}), Vector3D({cos(a), 0.0f, cos(a)}), Vector3D({0.0f, 1.0f, 0.0f}));
 
      //position = {cos(a)*60.0f, sin(a)*60.0f, 30.0f};
      position = {0.0f, 0.0f, 0.0f};

@@ -274,7 +274,10 @@
 		<Unit filename="../../../include/ZBE/OAL/tools/OALUtils.h" />
 		<Unit filename="../../../include/ZBE/OGL/daemons/OGLModelSheetPosDrawer.h" />
 		<Unit filename="../../../include/ZBE/OGL/daemons/OGLModelSheetPreDrawer.h" />
+		<Unit filename="../../../include/ZBE/OGL/daemons/OGLPostDraw.h" />
+		<Unit filename="../../../include/ZBE/OGL/daemons/OGLPreDrawer.h" />
 		<Unit filename="../../../include/ZBE/OGL/drawers/OGLModelSheetDrawer.h" />
+		<Unit filename="../../../include/ZBE/OGL/factories/daemons/OGLPostDrawFtry.h" />
 		<Unit filename="../../../include/ZBE/OGL/graphics/OGLModel.h" />
 		<Unit filename="../../../include/ZBE/OGL/graphics/OGLModelSheet.h" />
 		<Unit filename="../../../include/ZBE/OGL/graphics/implementations/SingleModelOGLModelSheet.h" />
@@ -511,6 +514,7 @@
 		<Unit filename="../../../include/ZBE/resources/loaders/RsrcLoader.h" />
 		<Unit filename="../../../include/ZBE/resources/loaders/implementations/JSONAppLoader.h" />
 		<Unit filename="../../../include/ZBE/system/SystemResources.h" />
+		<Unit filename="../../../include/ZBE/tools/graphics/Camera.h" />
 		<Unit filename="../../../src/ZBE/JSON/factories/JSONFactories.cpp" />
 		<Unit filename="../../../src/ZBE/JSON/graphics/JSONGraphicsLoaders.cpp" />
 		<Unit filename="../../../src/ZBE/JSON/resources/JSONAudioDefLoader.cpp" />
@@ -520,8 +524,11 @@
 		<Unit filename="../../../src/ZBE/OAL/system/OALAudioStore.cpp" />
 		<Unit filename="../../../src/ZBE/OAL/tools/OALUtils.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/OGL/SDLOGLWindow.cpp" />
+		<Unit filename="../../../src/ZBE/SDL/OGL/daemons/OGLPreDrawer.cpp" />
+		<Unit filename="../../../src/ZBE/SDL/OGL/factories/daemons/OGLPostDrawFtry.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/daemons/BasicPostLoopSDLDaemon.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/daemons/BasicPreLoopSDLDaemon.cpp" />
+		<Unit filename="../../../src/ZBE/SDL/daemons/IOPreLoopSDL.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/daemons/SDLOGLWindowDaemon.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/daemons/SDLWindowDaemon.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/drawers/RotatedSpriteSDLDrawer.cpp" />
@@ -588,6 +595,7 @@
 		<Unit filename="../../../src/ZBE/resources/contextname.cpp" />
 		<Unit filename="../../../src/ZBE/resources/loaders/RsrcFolderLoader.cpp" />
 		<Unit filename="../../../src/ZBE/resources/loaders/implementations/JSONAppLoader.cpp" />
+		<Unit filename="../../../src/ZBE/tools/graphics/Camera.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

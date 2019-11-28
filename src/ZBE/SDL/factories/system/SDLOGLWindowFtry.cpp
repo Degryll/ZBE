@@ -1,0 +1,93 @@
+/**
+ * Copyright 2012 Batis Degryll Ludo
+ * @file SDLOGLWindowFtry.cpp
+ * @since 2019-07-23
+ * @date 2019-07-23
+ * @author Ludo Degryll Batis
+ * @brief Factory for SDLWindow.
+ */
+
+#include "ZBE/SDL/factories/system/SDLOGLWindowFtry.h"
+
+namespace zbe {
+
+void SDLOGLWindowFtry::create(std::string name, uint64_t) {
+  using namespace std::string_literals;
+
+  auto sdlwin = std::make_shared<SDLOGLWindow>();
+  sdloglWindowRsrc.insert("SDLOGLWindow."s + name, sdlwin);
+}
+
+void SDLOGLWindowFtry::setup(std::string name, uint64_t cfgId) {
+  using namespace std::string_literals;
+  using namespace nlohmann;
+  std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+  if(cfg) {
+    auto j = *cfg;
+    json title = j["title"];
+    json x = j["x"];
+    json y = j["y"];
+    json w = j["w"];
+    json h = j["h"];
+    json wflags = j["wflags"];
+    json rflags = j["rflags"];
+    if(!title.is_string()) {
+      SysError::setError("Bad config for SDLOGLWindowFtry - title."s + title.get<std::string>());
+      return;
+    }
+    if(!x.is_string()) {
+      SysError::setError("Bad config for SDLOGLWindowFtry - x."s + x.get<std::string>());
+      return;
+    }
+    if(!y.is_string()) {
+      SysError::setError("Bad config for SDLOGLWindowFtry - y."s + y.get<std::string>());
+      return;
+    }
+    if(!w.is_string()) {
+      SysError::setError("Bad config for SDLOGLWindowFtry - w."s + w.get<std::string>());
+      return;
+    }
+    if(!h.is_string()) {
+      SysError::setError("Bad config for SDLOGLWindowFtry - h."s + h.get<std::string>());
+      return;
+    }
+    if(!wflags.is_string()) {
+      SysError::setError("Bad config for SDLOGLWindowFtry - wflags."s + wflags.get<std::string>());
+      return;
+    }
+    if(!rflags.is_string()) {
+      SysError::setError("Bad config for SDLOGLWindowFtry - rflags."s + rflags.get<std::string>());
+      return;
+    }
+
+    auto aux = j["title"].get<std::string>();
+    std::string ctitle = strStore.get(aux);
+    aux = j["x"].get<std::string>();
+    uint64_t cx = (uint64_t)intStore.get(aux);
+    aux = j["y"].get<std::string>();
+    uint64_t cy = (uint64_t)intStore.get(aux);
+    aux = j["w"].get<std::string>();
+    uint64_t cw = (uint64_t)intStore.get(aux);
+    aux = j["h"].get<std::string>();
+    uint64_t ch = (uint64_t)intStore.get(aux);
+    aux = j["wflags"].get<std::string>();
+    uint64_t cwflags = (uint64_t)intStore.get(aux);
+    aux = j["rflags"].get<std::string>();
+    uint64_t crflags = (uint64_t)intStore.get(aux);
+
+    auto sdloglwin = sdloglWindowRsrc.get("SDLOGLWindow."s + name);
+    sdloglwin->setTitle(ctitle.c_str());
+    sdloglwin->setX(cx);
+    sdloglwin->setY(cy);
+    sdloglwin->setWidth(cw);
+    sdloglwin->setHeight(ch);
+    sdloglwin->setWindow_flags(cwflags);
+    sdloglwin->setRenderer_flags(crflags);
+    sdloglwin->run();
+  } else {
+    SysError::setError("SDLOGLWindowFtry config for "s + name + " not found."s);
+  }
+}
+
+}  // namespace zbe

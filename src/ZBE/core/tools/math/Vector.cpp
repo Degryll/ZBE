@@ -19,4 +19,8 @@ Vector<3> reflect(Vector<3> ray, const Vector<3> &normal){
     return ray.reflect(normal);
 }
 
+Vector<3> cross(Vector<3> lhs, const Vector<3>& rhs) {
+ return (lhs.cross(rhs));
+}
+
 }  // namespace

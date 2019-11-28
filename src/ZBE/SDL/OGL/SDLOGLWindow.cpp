@@ -20,13 +20,13 @@ const GLuint VT_POS = 1;
 //----- SDLOGLWindow -----//
 
   void GLAPIENTRY
-MessageCallback( GLenum source,
+MessageCallback( GLenum ,//source,
                  GLenum type,
-                 GLuint id,
+                 GLuint ,//id,
                  GLenum severity,
-                 GLsizei length,
+                 GLsizei ,//length,
                  const GLchar* message,
-                 const void* userParam )
+                 const void* )//userParam )
 {
   fprintf( stderr, "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
            ( type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : "" ),
@@ -150,7 +150,7 @@ uint64_t OGLModelStore::loadModel(const GLfloat *vertexData, const GLuint *index
   //Create VBO
   glGenBuffers( 1, &vbo);
   glBindBuffer( GL_ARRAY_BUFFER, vbo);
-  // (3 + 2) * 4 : (pos + tex) * nvertex
+  // (3 + 2) * vSize : (pos + tex) * nvertex
   glBufferData( GL_ARRAY_BUFFER, (3 + 2) * vSize * sizeof(GLfloat), vertexData, GL_STATIC_DRAW );
 
   glEnableVertexAttribArray(V_POS);
