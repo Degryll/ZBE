@@ -507,6 +507,7 @@
 		<Unit filename="../../../include/ZBE/factories/implementations/events/handlers/time/DaemonRecurrentTimeHandlerFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/events/handlers/time/DaemonTimeHandlerFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/events/handlers/time/TicketEraserFtry.h" />
+		<Unit filename="../../../include/ZBE/factories/implementations/tools/graphics/CameraFtry.h" />
 		<Unit filename="../../../include/ZBE/graphics/MultiSpriteSheet.h" />
 		<Unit filename="../../../include/ZBE/resources/contextnames.h" />
 		<Unit filename="../../../include/ZBE/resources/loaders/RsrcDefLoader.h" />
@@ -592,6 +593,7 @@
 		<Unit filename="../../../src/ZBE/factories/implementations/events/handlers/time/DaemonRecurrentTimeHandlerFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/events/handlers/time/DaemonTimeHandlerFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/events/handlers/time/TicketEraserFtry.cpp" />
+		<Unit filename="../../../src/ZBE/factories/implementations/tools/graphics/CameraFtry.cpp" />
 		<Unit filename="../../../src/ZBE/resources/contextname.cpp" />
 		<Unit filename="../../../src/ZBE/resources/loaders/RsrcFolderLoader.cpp" />
 		<Unit filename="../../../src/ZBE/resources/loaders/implementations/JSONAppLoader.cpp" />

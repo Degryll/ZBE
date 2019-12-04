@@ -118,6 +118,16 @@ void Entity::setInt(uint64_t id, std::shared_ptr<Value<int64_t> >  val) {
   }
 }
 
+void Entity::setVector3D(uint64_t id, std::shared_ptr<Value<Vector3D> > val) {
+  auto it = v3v.find(id);
+  if (it != v3v.end()) {
+    SysError::setError("Overriding entity int value not allowed.");
+  } else {
+    v3v[id] = val;
+  }
+}
+
+
 std::shared_ptr<Value<double> >  Entity::getDouble(uint64_t id) {
   auto it = dv.find(id);
   if (it == dv.end()) {
@@ -156,6 +166,17 @@ std::shared_ptr<Value<int64_t> >  Entity::getInt(uint64_t id) {
   } else {
     return (iv[id]);
   }
+}
+
+std::shared_ptr<Value<Vector3D> > Entity::getVector3D(uint64_t id) {
+  auto it = v3v.find(id);
+  if (it == v3v.end()) {
+    SysError::setError("Entity has no int value at given index " +  std::to_string(id) + ".");
+    return (std::shared_ptr<Value<Vector3D> >());
+  } else {
+    return (v3v[id]);
+  }
+
 }
 
 }  // namespace zbe

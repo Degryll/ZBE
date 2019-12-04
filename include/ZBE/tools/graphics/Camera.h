@@ -11,14 +11,12 @@
 #define ZBE_TOOLS_GRAPHICS_CAMERA_H_
 
 #include <vector>
-
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-//#include <glm/gtx/hash.hpp>
-
+#include <memory>
 
 #include "ZBE/core/tools/math/Vector.h"
 #include "ZBE/core/tools/math/math.h"
+
+#include "ZBE/core/tools/shared/Value.h"
 
 namespace zbe {
 
@@ -26,7 +24,7 @@ namespace zbe {
  */
 class ZBEAPI Camera {
 public:
-  Camera() : transform(16, 0), projection(16, 0) {
+  Camera() : eye(), target(), up(), transform(16, 0), projection(16, 0) {
     transform[0] = 1;
     transform[5] = 1;
     transform[10] = 1;
@@ -35,17 +33,34 @@ public:
 
   ~Camera() {}
 
+  void setEyeValue(std::shared_ptr<Value<Vector3D> > eye) {
+    this->eye = eye;
+  }
+
+  void setTargetValue(std::shared_ptr<Value<Vector3D> > target) {
+    this->target = target;
+  }
+
+  void setUpValue(std::shared_ptr<Value<Vector3D> > up) {
+    this->up = up;
+  }
+
   void setFrustum(float left, float right, float bottom, float top, float near, float far);
 
   void set_perspective(float fov, float aspect, float znear, float zfar);
 
-  void lookAt(Vector3D eye, Vector3D center, Vector3D up);
+  void lookAt(Vector3D eye, Vector3D target, Vector3D up);
+
+  void update();
 
   std::vector<float>& getTransformMat() { return transform; }
 
   std::vector<float>& getProjectionMat() { return projection; }
 
 private:
+  std::shared_ptr<Value<Vector3D> > eye;
+  std::shared_ptr<Value<Vector3D> > target;
+  std::shared_ptr<Value<Vector3D> > up;
   std::vector<float> transform;
   std::vector<float> projection;
 };

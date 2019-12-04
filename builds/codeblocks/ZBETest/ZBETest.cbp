@@ -326,6 +326,7 @@
 		<Unit filename="../../../src/ZBETest/src/resources/loaders/ImgFolderLoaderTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/resources/loaders/RsrcLoadTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/resources/loaders/implementations/JSONAppLoaderTest.cpp" />
+		<Unit filename="../../../src/ZBETest/src/tools/graphics/CameraTest.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

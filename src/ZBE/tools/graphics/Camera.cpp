@@ -30,8 +30,12 @@ namespace zbe {
   }
 
 
-  void Camera::lookAt(Vector3D eye, Vector3D center, Vector3D up)  {
-    Vector3D  f = (center - eye).normalize();
+  void Camera::update()  {
+    lookAt(eye->get(),target->get(), up->get());
+  }
+
+  void Camera::lookAt(Vector3D eye, Vector3D target, Vector3D up)  {
+    Vector3D  f = (target - eye).normalize();
     Vector3D  u = up.normalize();
     Vector3D  s = cross(f, u).normalize();
     u = cross(s, f);

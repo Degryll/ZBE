@@ -210,6 +210,7 @@ int opengltest(int, char** ) {
      }
 
      cam->lookAt(Vector3D({sin(a) * 5.0f, cos(a*4) * 1.0f + 2.0f, cos(a) * 5.0f}), Vector3D({cos(a), 0.0f, cos(a)}), Vector3D({0.0f, 1.0f, 0.0f}));
+     cam->set_perspective(90.0 + (30.0*sin(2*a)), 1.0, 1.0, 50.0);
 
      //position = {cos(a)*60.0f, sin(a)*60.0f, 30.0f};
      position = {0.0f, 0.0f, 0.0f};

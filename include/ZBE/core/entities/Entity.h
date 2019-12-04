@@ -16,6 +16,7 @@
 #include <unordered_map>
 
 #include "ZBE/core/tools/shared/Value.h"
+#include "ZBE/core/tools/math/Vector.h"
 #include "ZBE/core/tools/containers/Ticket.h"
 
 #include "ZBE/core/entities/avatars/Avatar.h"
@@ -30,7 +31,7 @@ class ZBEAPI Entity : virtual public Avatar {
   public:
     /** \brief Empty constructor.
       */
-    Entity() : tl(), dv(), fv(), uv(), iv() {}
+    Entity() : tl(), dv(), fv(), uv(), iv(), v3v() {}
     /** \brief The destructor make sure the entity is marked as ERASED in every Ticket.
       */
     virtual ~Entity();
@@ -106,6 +107,14 @@ class ZBEAPI Entity : virtual public Avatar {
      */
     void setInt(uint64_t id, std::shared_ptr<Value<int64_t> > val);
 
+    /** \brief Sets a Value<Vector3D> at identifier id.
+     * This method should be called only once per id.
+     *  \param id identifier
+     *  \param val Value<Vector3D> to be set.
+     *  \sa getInt, setUint, setDouble, setFloat
+     */
+    void setVector3D(uint64_t id, std::shared_ptr<Value<Vector3D> > val);
+
     /** \brief Returns the Value<double> associated the identifier id.
      *  \param id identifier
      *  \return Value<double>.
@@ -134,14 +143,26 @@ class ZBEAPI Entity : virtual public Avatar {
      */
     std::shared_ptr<Value<float> > getFloat(uint64_t id);
 
+    /** \brief Returns the Value<Vector3D> associated the identifier id.
+     *  \param id identifier
+     *  \return Value<Vector3D>.
+     *  \sa setFloat, getDouble, getUint, getInt
+     */
+    std::shared_ptr<Value<Vector3D> > getVector3D(uint64_t id);
+
   private:
 
     std::unordered_map<uint64_t, std::shared_ptr<Ticket> > tl;
+
+    /* WARNING */
+    /* If you are going to add more attribs here, look for a way to make it generic */
+    /* We haver already tried it ... good luck */
 
     std::unordered_map<uint64_t, std::shared_ptr<Value<double> > > dv;
     std::unordered_map<uint64_t, std::shared_ptr<Value<float> > > fv;
     std::unordered_map<uint64_t, std::shared_ptr<Value<uint64_t> > > uv;
     std::unordered_map<uint64_t, std::shared_ptr<Value<int64_t> > > iv;
+    std::unordered_map<uint64_t, std::shared_ptr<Value<Vector3D> > > v3v;
 };
 
 template<unsigned n>
