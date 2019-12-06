@@ -13,7 +13,7 @@ namespace zbe {
 
 void CameraFtry::create(std::string name, uint64_t) {
   using namespace std::string_literals;
-  uint64_t id = cameraRsrc.insert("Camera."s + name, std::make_shared<Camera>());
+  cameraRsrc.insert("Camera."s + name, std::make_shared<Camera>());
 }
 
 void CameraFtry::setup(std::string name, uint64_t cfgId) {
