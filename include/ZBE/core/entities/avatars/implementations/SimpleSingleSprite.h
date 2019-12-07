@@ -20,7 +20,7 @@ namespace zbe {
 
 /** \brief This define an avatar that can be drawn.
  */
-class SimpleSingleSprite : virtual public SingleSprite {
+class ZBEAPI SimpleSingleSprite : virtual public SingleSprite {
 public:
   /** \brief Empty Constructor.
   */

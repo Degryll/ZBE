@@ -20,7 +20,7 @@ namespace zbe {
 
 /** \brief Implementation that adapts an Drawable to a SingleSprite.
  */
-class TextDrawableSingleTextSpriteAdaptor : public Adaptor<SingleTextSprite> {
+class ZBEAPI TextDrawableSingleTextSpriteAdaptor : public Adaptor<SingleTextSprite> {
 public:
   TextDrawableSingleTextSpriteAdaptor(const TextDrawableSingleTextSpriteAdaptor&) = delete;
   void operator=(const TextDrawableSingleTextSpriteAdaptor&) = delete;

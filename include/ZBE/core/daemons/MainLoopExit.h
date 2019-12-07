@@ -24,7 +24,7 @@ namespace zbe {
 
 /** \brief Daemon capable of end a MainLoop
  */
-class MainLoopExit : virtual public Daemon {
+class ZBEAPI MainLoopExit : virtual public Daemon {
 public:
 
   /** \brief Builds an empty MainLoopExit.

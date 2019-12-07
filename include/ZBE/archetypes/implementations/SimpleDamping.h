@@ -18,7 +18,7 @@ namespace zbe {
 
 /** \brief Simple implementation of the Damping interface.
  */
-class SimpleDamping : virtual public Damping {
+class ZBEAPI SimpleDamping : virtual public Damping {
 public:
   /** \brief Empty constructor. Set the damping factor to 1.0.
    */

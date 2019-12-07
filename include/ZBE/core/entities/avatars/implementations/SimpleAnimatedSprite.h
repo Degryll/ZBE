@@ -22,7 +22,7 @@ namespace zbe {
 
 /** \brief This define an avatar that can be drawn in any direction with different animations.
  */
-class SimpleAnimatedSprite : virtual public AnimatedSprite, public SimpleStatedSprite {
+class ZBEAPI SimpleAnimatedSprite : virtual public AnimatedSprite, public SimpleStatedSprite {
 
 public:
 

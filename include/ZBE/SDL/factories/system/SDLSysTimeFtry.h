@@ -27,7 +27,7 @@ namespace zbe {
 
 /** \brief Configures SysTime to use and SDLTimer.
  */
-class SDLSysTimeFtry : virtual public Factory {
+class ZBEAPI SDLSysTimeFtry : virtual public Factory {
 public:
 
   /** \brief Empty constructor

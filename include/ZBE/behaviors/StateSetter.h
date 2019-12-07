@@ -24,7 +24,7 @@ namespace zbe {
 
 /** \brief Sets a given state to the entity.
  */
-class StateSetter : virtual public Behavior<Stated> {
+class ZBEAPI StateSetter : virtual public Behavior<Stated> {
 public:
 
   /** \brief Empty constructor.

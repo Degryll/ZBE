@@ -137,7 +137,7 @@
 				<Option working_dir="../../../../ZBE" />
 				<Option object_output="obj/Debug/" />
 				<Option type="3" />
-				<Option compiler="mingw_64-bit_compiler-810" />
+				<Option compiler="msys2_mingw_64-bit_compiler-920" />
 				<Option createDefFile="1" />
 				<Option createStaticLib="1" />
 				<Compiler>
@@ -200,7 +200,7 @@
 				<Option working_dir="../../../../ZBE" />
 				<Option object_output="obj/Release/" />
 				<Option type="3" />
-				<Option compiler="mingw_64-bit_compiler-810" />
+				<Option compiler="msys2_mingw_64-bit_compiler-920" />
 				<Option createDefFile="1" />
 				<Option createStaticLib="1" />
 				<Compiler>

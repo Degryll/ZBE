@@ -227,7 +227,7 @@ int opengltest(int, char** ) {
      sm2->setOrientation(orientation);
      sm2->setAngle(angle);
 
-     glClearColor(cos(a), 0.2f, 0.5f, 0.0f);
+     glClearColor(cos(a/100.0), 0.2f, 0.5f, 0.0f);
      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
      preDraw.run();

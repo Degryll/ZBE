@@ -22,7 +22,7 @@ namespace zbe {
 
 /** \brief Input handler capable of run a daemon.
  */
-class DaemonIH : public InputHandler {
+class ZBEAPI DaemonIH : public InputHandler {
 public:
 
   /** \brief Constructs a DaemonIH from a daemon.

@@ -1,6 +1,6 @@
 /**
  * Copyright 2012 Batis Degryll Ludo
- * @file InteractionEvGnFtry.h
+ * @file TimeEventGnFtry.h
  * @since 2019-07-01
  * @date 2019-07-01
  * @author Ludo Degryll Batis
@@ -35,8 +35,10 @@ namespace zbe {
 
 /** \brief Factory for TimeEventGenerators.
  */
-class TimeEventGnFtry : virtual public Factory {
+class ZBEAPI TimeEventGnFtry : virtual public Factory {
 public:
+
+//  ~TimeEventGnFtry() {}
 
   /** \brief Builds a TimeEventGenerators.
    *  \param name Name for the created MainLoopFtry.

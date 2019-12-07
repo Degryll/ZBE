@@ -21,7 +21,7 @@ namespace zbe {
 
 /** \brief Implementation that adapts an Drawable to a AnimatedSprite.
  */
-class Element2DAnimatedSpriteAdaptor : public Adaptor<AnimatedSprite> {
+class ZBEAPI Element2DAnimatedSpriteAdaptor : public Adaptor<AnimatedSprite> {
 public:
   Element2DAnimatedSpriteAdaptor(const Element2DAnimatedSpriteAdaptor&) = delete; //<! Avoid copy
   void operator=(const Element2DAnimatedSpriteAdaptor&) = delete; //<! Avoid copy

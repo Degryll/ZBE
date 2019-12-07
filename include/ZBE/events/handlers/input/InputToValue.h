@@ -23,7 +23,7 @@ namespace zbe {
 
 /** \brief Handler that stores input value to a Value<double>
  */
-class InputToValue : public InputHandler {
+class ZBEAPI InputToValue : public InputHandler {
 public:
   InputToValue(const InputToValue&) = delete; //!< Deleted copy constructor.
   void operator=(const InputToValue&) = delete; //!< Deleted operator.

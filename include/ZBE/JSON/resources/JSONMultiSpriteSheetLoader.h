@@ -40,7 +40,7 @@ public:
   */
  void load(std::filesystem::path filePath) {
    std::ifstream ifs(filePath);
-   JSONGraphicsLoaders::getInstance().JSONMultiSpriteSheetFileLoad(ifs);
+   jsongl.JSONMultiSpriteSheetFileLoad(ifs);
  }
 
  /** \brief Tells if a file extension is loadable.
@@ -51,6 +51,9 @@ public:
    static const std::filesystem::path ext(".json");
    return (ext.compare(extension) == 0);
  }
+
+private:
+  JSONGraphicsLoaders& jsongl = JSONGraphicsLoaders::getInstance();
 
 };
 

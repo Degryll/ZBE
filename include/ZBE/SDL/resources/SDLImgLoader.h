@@ -12,6 +12,8 @@
 #ifndef ZBE_SDL_RESOURCES_SDLIMGLOADER_H_
 #define ZBE_SDL_RESOURCES_SDLIMGLOADER_H_
 
+#include <cstdio>
+
 #include <filesystem>
 #include <memory>
 
@@ -65,7 +67,7 @@ public:
   *  \return An id to the image loaded.
   */
  void load(std::filesystem::path filePath) {
-    uint64_t imgId = imgStore->loadImg(filePath.c_str());  // TODO test with ut8
+    uint64_t imgId = imgStore->loadImg(filePath.u8string().c_str());  // TODO test with ut8
     if(imgId > 0) {
       std::filesystem::path defFilePath = generateDefPath(filePath);
       imgDefLoader->loadRsrcDef(defFilePath, imgId);

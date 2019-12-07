@@ -25,7 +25,7 @@ namespace zbe {
 
 /** \brief Implements a behavior that kills the entity when it reaches a state lower than a nummber.
  */
-class StateLTEraser : virtual public Behavior<Avatar, Stated> {
+class ZBEAPI StateLTEraser : virtual public Behavior<Avatar, Stated> {
 public:
 
   /** \brief Empty constructor.

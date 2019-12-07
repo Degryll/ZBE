@@ -24,7 +24,7 @@ namespace zbe {
 /** \brief JSON implementation of a RsrcDefLoader for images.
  */
 class ZBEAPI JSONImgDefLoader : public RsrcDefLoader {
-
+public:
  /** \brief Load an image definition
   *  \param url Image definition file to be loaded.
   *  \param imgId Associated image id
@@ -32,7 +32,7 @@ class ZBEAPI JSONImgDefLoader : public RsrcDefLoader {
   */
  void loadRsrcDef(const std::filesystem::path& url, uint64_t imgId) {
    std::ifstream ifs(url);
-   JSONGraphicsLoaders::getInstance().JSONImgDefFileLoad(ifs, imgId);
+   jsongl.JSONImgDefFileLoad(ifs, imgId);
  }
 
  /** \brief Returns the file extension.
@@ -42,7 +42,8 @@ class ZBEAPI JSONImgDefLoader : public RsrcDefLoader {
    static const std::filesystem::path p(".json");
    return p;
  }
-
+private:
+  JSONGraphicsLoaders& jsongl = JSONGraphicsLoaders::getInstance();
 };
 
 }  // namespace zbe

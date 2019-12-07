@@ -20,7 +20,7 @@ namespace zbe {
 
 /** \brief Simple implementation of the State interface.
  */
-class SimpleState : public State {
+class ZBEAPI SimpleState : public State {
 public:
 
   /** \brief Constructs a SimpleState with a state value (default 0).

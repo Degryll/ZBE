@@ -20,7 +20,7 @@ namespace zbe {
 
 /** @brief This defines an avatar capable of resize a referenced area with given proportions.
  */
-class BaseResizableArea : virtual public Resizable {
+class ZBEAPI BaseResizableArea : virtual public Resizable {
   public:
     BaseResizableArea(const BaseResizableArea&) = delete; //<! Avoid copy
     void operator=(const BaseResizableArea&) = delete; //<! Avoid copy

@@ -16,7 +16,7 @@ namespace zbe {
 
 /** \brief Defines an avatar that can be resized.
  */
-class Resizable {
+class ZBEAPI Resizable {
   public:
     using Base = void;//!< inheritance info
 
@@ -34,7 +34,7 @@ class Resizable {
      */
     virtual double getSize() = 0;
 
-    /** \brief Increase entity size with given increment.
+    /** \brief Increase entity size with given increment. TODO por qué?
      * \param size The desired increment
      */
     void increaseSize(double increment) {
