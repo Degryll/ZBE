@@ -235,7 +235,7 @@ int opengltest(int, char** ) {
      draw.apply(aecSm2);
      posDraw.run();
 
-     window->glSwap();
+     //window->glSwap();
 //    window->present();
   }
 
