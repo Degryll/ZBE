@@ -10,11 +10,6 @@
 #ifndef DEGRYLLMAIN_H_
 #define DEGRYLLMAIN_H_
 
-#include <iostream>
-#include <cstdio>
-
-//#include <SDL2/SDL.h>
-
 int degryllmain(int argc, char* argv[]);
 
 #endif  // DEGRYLLMAIN_H_
