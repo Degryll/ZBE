@@ -23,7 +23,8 @@ public:
 
 TEST(Erase, apply) {
     bool check = false;
-    auto *e = new EntityMock(check);
+//    auto *e = new EntityMock(check);
+    std::shared_ptr<EntityMock> e = std::make_shared<EntityMock>(check);
     auto *ba = new zbe::BaseAvatar(e);
     auto aefa = std::make_shared<zbe::AvatarEntityFixed<zbe::Avatar> >(ba);
     std::shared_ptr<zbe::AvatarEntityContainer<zbe::Avatar> > aec  = std::make_shared<zbe::AvatarEntityContainer<zbe::Avatar> >(aefa);
@@ -36,7 +37,7 @@ TEST(Erase, apply) {
 
     EXPECT_TRUE(check) << "setERASED should be called.";
 
-    delete e;
+//    delete e;
     //delete ba;  // AvatarEntityFixed deletes it
 }
 

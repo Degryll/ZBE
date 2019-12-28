@@ -258,6 +258,7 @@
 		<Unit filename="../../../src/ZBETest/src/core/entities/AvatarEntityTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/core/entities/EntityTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/core/entities/avatars/InteractionerTest.cpp" />
+		<Unit filename="../../../src/ZBETest/src/core/entities/avatars/implementations/BaseAvatarTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/core/events/CollisionEventGeneratorTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/core/events/EventStoreTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/core/events/EventsTest.cpp" />

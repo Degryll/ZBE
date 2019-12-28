@@ -179,4 +179,76 @@ std::shared_ptr<Value<Vector3D> > Entity::getVector3D(uint64_t id) {
 
 }
 
+/*************************/
+
+_Entity2::~_Entity2() {
+  for(auto it = tl.begin(); it != tl.end(); it++) {
+    it->second->setERASED();
+  }
+}
+
+void _Entity2::addTicket(uint64_t id, std::shared_ptr<Ticket> ticket) {
+  auto it = tl.find(id);
+  if (it != tl.end()) {
+    SysError::setError("Ticket in Entity list is not found.");
+  }
+  tl[id] = ticket;
+}
+
+void _Entity2::replaceTicket(uint64_t id, std::shared_ptr<Ticket> ticket) {
+  auto it = tl.find(id);
+  if (it != tl.end()) {
+    ticket->setState(it->second->getState());
+    it->second->setERASED();
+  }
+  tl[id] = ticket;
+}
+
+void _Entity2::setACTIVE(uint64_t id) {
+  auto it = tl.find(id);
+  if (it == tl.end()) {
+    SysError::setError("Ticket in Entity list is not found.");
+  } else {
+    it->second->setACTIVE();
+  }
+}
+
+inline void _Entity2::setACTIVE() {
+  for(auto& t : tl){
+    t.second->setACTIVE();
+  }
+}
+
+void _Entity2::setINACTIVE(uint64_t id) {
+  auto it = tl.find(id);
+  if (it == tl.end()) {
+    SysError::setError("Ticket in Entity list is not found.");
+  } else {
+    it->second->setINACTIVE();
+  }
+}
+
+inline void _Entity2::setINACTIVE() {
+  for(auto& t : tl){
+    t.second->setINACTIVE();
+  }
+}
+
+void _Entity2::setERASED(uint64_t id) {
+  auto it = tl.find(id);
+  if (it == tl.end()) {
+    SysError::setError("Ticket in Entity list is not found.");
+  } else {
+    it->second->setERASED();
+    tl.erase(it);
+  }
+}
+
+inline void _Entity2::setERASED() {
+  for(auto& t : tl){
+    t.second->setERASED();
+  }
+  tl.clear();
+}
+
 }  // namespace zbe

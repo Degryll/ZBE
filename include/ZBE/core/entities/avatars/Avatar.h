@@ -14,6 +14,7 @@
 #include <memory>
 
 #include "ZBE/core/tools/containers/Ticket.h"
+#include "ZBE/core/tools/shared/Value.h"
 
 #include "ZBE/core/system/system.h"
 
@@ -21,13 +22,13 @@ namespace zbe {
 
 /** \brief This define an avatar that can be used to deactivate/activate or erase the corresponding entity.
  */
-struct Avatar {
-
+class Avatar {
+public:
     using Base = void; //!< Inheritance info.
 
     /** \brief Virtual destructor.
      */
-    virtual ~Avatar(){}
+    virtual ~Avatar() {}
 
     /** \brief Register a new Ticket.
      *  \param id Id to identify the ticket origin.
@@ -68,6 +69,32 @@ struct Avatar {
      */
     virtual void setERASED() = 0;
 };
+
+template <unsigned n, typename T, typename... Ts>
+class _Avatar : virtual public _Avatar<n, T>, virtual public _Avatar<n+1, Ts...> {
+public:
+  using Base = _Avatar<n+1, Ts...>;
+  virtual ~_Avatar() {}
+};
+
+template <unsigned n, typename T>
+class _Avatar<n, T> : virtual public Avatar {
+public:
+  using Base = Avatar;
+  virtual ~_Avatar() {}
+
+//  virtual std::shared_ptr<Value<T> > get() = 0;
+//  {
+//    return (n+1, std::shared_ptr<zbe::Value<T> >());
+//  }
+
+};
+
+template<typename T, typename... Ts>
+using MAvatar = _Avatar<sizeof...(Ts)+1, T, Ts...>;
+
+template<typename T>
+using SAvatar = _Avatar<1, T>;
 
 }  // namespace zbe
 

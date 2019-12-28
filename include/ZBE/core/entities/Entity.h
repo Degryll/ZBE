@@ -27,7 +27,7 @@ namespace zbe {
 
 /** \brief Define the basic functionality of every entity.
  */
-class ZBEAPI Entity : virtual public Avatar {
+class ZBEAPI Entity {
   public:
     /** \brief Empty constructor.
       */
@@ -81,7 +81,10 @@ class ZBEAPI Entity : virtual public Avatar {
      *  \param val Value<double> to be set.
      *  \sa getDobule, setFloat, setUint, setInt
      */
-    void setDouble(uint64_t id, std::shared_ptr<Value<double> > val);
+     void setDouble(uint64_t id, std::shared_ptr<Value<double> > val);
+     template<typename T>
+     typename std::enable_if<std::is_same<double, T>::value, void>::type
+     set(uint64_t id, std::shared_ptr<Value<T> > val) {setDouble(id, val);}
 
     /** \brief Sets a Value<float> at identifier id.
      * This method should be called only once per id.
@@ -89,7 +92,10 @@ class ZBEAPI Entity : virtual public Avatar {
      *  \param val Value<float> to be set.
      *  \sa getFloat, setDouble, setUint, setInt
      */
-    void setFloat(uint64_t id, std::shared_ptr<Value<float> > val);
+     void setFloat(uint64_t id, std::shared_ptr<Value<float> > val);
+     template<typename T>
+     typename std::enable_if<std::is_same<float, T>::value, void>::type
+     set(uint64_t id, std::shared_ptr<Value<T> > val) {setFloat(id, val);}
 
     /** \brief Sets a Value<uint64_t> at identifier id.
      * This method should be called only once per id.
@@ -97,7 +103,10 @@ class ZBEAPI Entity : virtual public Avatar {
      *  \param val Value<uint64_t> to be set.
      *  \sa getUint, setInt, setDouble, setFloat
      */
-    void setUint(uint64_t id, std::shared_ptr<Value<uint64_t> > val);
+     void setUint(uint64_t id, std::shared_ptr<Value<uint64_t> > val);
+     template<typename T>
+     typename std::enable_if<std::is_same<uint64_t, T>::value, void>::type
+     set(uint64_t id, std::shared_ptr<Value<T> > val) {setUint(id, val);}
 
     /** \brief Sets a Value<int64_t> at identifier id.
      * This method should be called only once per id.
@@ -106,6 +115,9 @@ class ZBEAPI Entity : virtual public Avatar {
      *  \sa getInt, setUint, setDouble, setFloat
      */
     void setInt(uint64_t id, std::shared_ptr<Value<int64_t> > val);
+    template<typename T>
+    typename std::enable_if<std::is_same<int64_t, T>::value, void>::type
+    set(uint64_t id, std::shared_ptr<Value<T> > val) {setInt(id, val);}
 
     /** \brief Sets a Value<Vector3D> at identifier id.
      * This method should be called only once per id.
@@ -114,6 +126,9 @@ class ZBEAPI Entity : virtual public Avatar {
      *  \sa getInt, setUint, setDouble, setFloat
      */
     void setVector3D(uint64_t id, std::shared_ptr<Value<Vector3D> > val);
+    template<typename T>
+    typename std::enable_if<std::is_same<Vector3D, T>::value, void>::type
+    set(uint64_t id, std::shared_ptr<Value<T> > val) {setVector3D(id, val);}
 
     /** \brief Returns the Value<double> associated the identifier id.
      *  \param id identifier
@@ -121,13 +136,22 @@ class ZBEAPI Entity : virtual public Avatar {
      *  \sa setDouble, getFloat, getUint, getInt
      */
     std::shared_ptr<Value<double> > getDouble(uint64_t id);
+    template<typename T, typename U>
+    typename std::enable_if<std::is_same<T, double>::value && std::is_same<U, std::shared_ptr<Value<T> >>::value, U>::type
+    get(uint64_t id) {return getDouble(id);}
 
     /** \brief Returns the Value<uint64_t> associated the identifier id.
      *  \param id identifier
      *  \return Value<uint64_t>.
      *  \sa setUint, getInt, getDouble, getFloat
      */
-    std::shared_ptr<Value<uint64_t> > getUint(uint64_t id);
+     std::shared_ptr<Value<uint64_t> > getUint(uint64_t id);
+    template<typename T, typename U>
+    typename std::enable_if<std::is_same<T, uint64_t>::value && std::is_same<U, std::shared_ptr<Value<T> >>::value, U>::type
+    get(uint64_t id) {return getUint(id);}
+//     template<typename T>
+//     typename std::enable_if<std::is_same<uint64_t, T>::value, std::shared_ptr<Value<T> > >::value
+//     get(uint64_t id) {return getUint(id);}
 
     /** \brief Returns the Value<int64_t> associated the identifier id.
      *  \param id identifier
@@ -135,6 +159,12 @@ class ZBEAPI Entity : virtual public Avatar {
      *  \sa setInt, getUint, getDouble, getFloat
      */
     std::shared_ptr<Value<int64_t> > getInt(uint64_t id);
+    template<typename T, typename U>
+    typename std::enable_if<std::is_same<T, int64_t>::value && std::is_same<U, std::shared_ptr<Value<T> >>::value, U>::type
+    get(uint64_t id) {return getInt(id);}
+//     template<typename T>
+//     typename std::enable_if<std::is_same<int64_t, T>::value, std::shared_ptr<Value<T> > >::value
+//     get(uint64_t id) {return getInt(id);}
 
     /** \brief Returns the Value<float> associated the identifier id.
      *  \param id identifier
@@ -142,6 +172,12 @@ class ZBEAPI Entity : virtual public Avatar {
      *  \sa setFloat, getDouble, getUint, getInt
      */
     std::shared_ptr<Value<float> > getFloat(uint64_t id);
+    template<typename T, typename U>
+    typename std::enable_if<std::is_same<T, float>::value && std::is_same<U, std::shared_ptr<Value<T> >>::value, U>::type
+    get(uint64_t id) {return getFloat(id);}
+//    template<typename T>
+//    typename std::enable_if<std::is_same<float, T>::value, std::shared_ptr<Value<T> > >::value
+//    get(uint64_t id) {return getFloat(id);}
 
     /** \brief Returns the Value<Vector3D> associated the identifier id.
      *  \param id identifier
@@ -149,14 +185,19 @@ class ZBEAPI Entity : virtual public Avatar {
      *  \sa setFloat, getDouble, getUint, getInt
      */
     std::shared_ptr<Value<Vector3D> > getVector3D(uint64_t id);
+    template<typename T, typename U>
+    typename std::enable_if<std::is_same<T, Vector3D>::value && std::is_same<U, std::shared_ptr<Value<T> >>::value, U>::type
+    get(uint64_t id) {return getVector3D(id);}
+//    template<typename T>
+//    typename std::enable_if<std::is_same<Vector3D, T>::value, std::shared_ptr<Value<T> > >::value
+//    get(uint64_t id) {return getVector3D(id);}
 
   private:
-
     std::unordered_map<uint64_t, std::shared_ptr<Ticket> > tl;
 
     /* WARNING */
     /* If you are going to add more attribs here, look for a way to make it generic */
-    /* We haver already tried it ... good luck */
+    /* We have already tried it ... good luck */
 
     std::unordered_map<uint64_t, std::shared_ptr<Value<double> > > dv;
     std::unordered_map<uint64_t, std::shared_ptr<Value<float> > > fv;
@@ -171,6 +212,78 @@ struct EntityIds {
 
  std::shared_ptr<Entity> e;
  std::array<uint64_t, n> ids;
+};
+
+/*****************************/
+/** \brief Define the basic functionality of every entity.
+ */
+class _Entity2 : virtual public Avatar {
+public:
+  /** \brief Empty constructor.
+    */
+  _Entity2() : tl() {}
+
+  /** \brief The destructor make sure the entity is marked as ERASED in every Ticket.
+    */
+  virtual ~_Entity2();
+
+  /** \brief Register a new Ticket from a list.
+   *  \param id Id to identify the list.
+   *  \param ticket The ticket to be stored.
+   */
+  void addTicket(uint64_t id, std::shared_ptr<Ticket> ticket);
+
+  /** \brief Register a new Ticket, if there is a ticket on the id, will be replaced.
+   *  \param id Id to identify the ticket origin.
+   *  \param ticket The ticket to be stored.
+   */
+  void replaceTicket(uint64_t id, std::shared_ptr<Ticket> ticket);
+
+  /** \brief Change the state of this entity in the list identified by id to ACTIVE.
+   *  \param id Id to identify the list.
+   */
+  void setACTIVE(uint64_t id);
+
+  /** \brief Change the state of this entity in the list identified by id to INACTIVE.
+   *  \param id Id to identify the list.
+   */
+  void setINACTIVE(uint64_t id);
+
+  /** \brief Change the state of this entity in the list identified by id to ACTIVE.
+   *  \param id Id to identify the list.
+   */
+  void setERASED(uint64_t id);
+
+  /** \brief Change the state of this entity for all list to ACTIVE.
+   */
+  void setACTIVE();
+
+  /** \brief Change the state of this entity for all list to INACTIVE.
+   */
+  void setINACTIVE();
+
+  /** \brief Change the state of this entity for all list to ERASED.
+   */
+  void setERASED();
+
+private:
+  std::unordered_map<uint64_t, std::shared_ptr<Ticket> > tl;
+};
+
+template <typename T>
+class _Entity {
+protected:
+  std::unordered_map<uint64_t, std::shared_ptr<Value<T> > > v;
+};
+
+template <typename T, typename ...Ts>
+class Entity2 : public Entity2<T>, public Entity2<Ts...> {
+};
+
+template <typename T>
+class Entity2<T> : virtual public _Entity<T>, public _Entity2 {
+  template <typename U = T>
+  std::shared_ptr<Value<U> > get(uint64_t id) {return _Entity<U>::v[id];}
 };
 
 }  // namespace zbe

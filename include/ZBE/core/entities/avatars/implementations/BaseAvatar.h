@@ -21,6 +21,7 @@
 
 namespace zbe {
 
+
 /** \brief Base implementation of avatar that uses an Entity.
  */
 struct BaseAvatar : virtual public Avatar {
@@ -28,7 +29,7 @@ struct BaseAvatar : virtual public Avatar {
     BaseAvatar(const BaseAvatar&) = delete; //!< Avoid copy.
     void operator=(const BaseAvatar&) = delete; //!< Avoid copy.
 
-    BaseAvatar(Entity * entity): e(entity) {}
+    BaseAvatar(std::shared_ptr<Entity> entity): e(entity) {}
 
     /** \brief Register a new Ticket from a list.
      *  \param id Id to identify the list.
@@ -86,8 +87,67 @@ struct BaseAvatar : virtual public Avatar {
     }
 
   private:
-    Entity * e;
+    std::shared_ptr<Entity> e;
 };
+
+template <unsigned n, typename T, typename... Ts>
+class _BaseAvatar : virtual public _Avatar<n, T, Ts...>,
+                    virtual public BaseAvatar,
+                            public _BaseAvatar<n, T>,
+                            public _BaseAvatar<n-1, Ts...>  {
+public:
+  _BaseAvatar(std::shared_ptr<Entity> entity, std::array<uint64_t, n> ids) : BaseAvatar(entity), _BaseAvatar<n, T>(entity, ids[0]), _BaseAvatar<n-1, Ts...>(entity, ids.begin()+1) {}
+
+//  _BaseAvatar(std::shared_ptr<Entity> entity, std::initializer_list<int> il,
+//              typename std::enable_if<(il.size() == (sizeof...(Ts)+1)), int>::type * = nullptr)
+//   : _BaseAvatar(entity, *(il.begin())), _BaseAvatar(entity, (il.begin()+1)) {}
+//
+//
+//  _BaseAvatar(std::shared_ptr<Entity> entity, std::initializer_list<int> il, typename std::enable_if<(il.size() != (sizeof...(Ts)+1)), int>::type * = nullptr)
+//    {static_assert(true, "Initializer list must have the same number of elements as types in BaseAvatar.");}
+
+  ~_BaseAvatar() {}
+
+  template <unsigned m, typename U>
+  std::shared_ptr<Value<U> > get() {
+    return (this->_BaseAvatar<m, U>::get());
+  };
+
+protected:
+  template <unsigned m = n>
+  _BaseAvatar(std::shared_ptr<Entity> entity, typename std::array<uint64_t, m>::iterator idsi, typename std::enable_if<(m!=2)>::type * = nullptr) : BaseAvatar(entity), _BaseAvatar<m, T>(entity, *idsi), _BaseAvatar<m-1, Ts...>(entity, idsi+1) {}
+  template <unsigned m = n>
+  _BaseAvatar(std::shared_ptr<Entity> entity, typename std::array<uint64_t, m>::iterator idsi, typename std::enable_if<!(m!=2), int>::type * = nullptr) : BaseAvatar(entity), _BaseAvatar<m, T>(entity, *idsi), _BaseAvatar<m-1, Ts...>(entity, *(++idsi)) {}
+
+//  _BaseAvatar(std::shared_ptr<Entity> entity, std::initializer_list<int>::iterator ili, typename std::enable_if<(sizeof...(Ts)!=0), int>::type * = nullptr) : _BaseAvatar(entity, *ili), _BaseAvatar(entity, (ili+1)) {}
+//  _BaseAvatar(std::shared_ptr<Entity> entity, std::initializer_list<int>::iterator ili, typename std::enable_if<(sizeof...(Ts)==0), int>::type * = nullptr) : _BaseAvatar(entity, *ili) {}
+};
+
+template <unsigned n, typename T>
+class _BaseAvatar<n, T> : virtual public _Avatar<n, T>, virtual public BaseAvatar {
+public:
+  _BaseAvatar(std::shared_ptr<Entity> entity, uint64_t id) : BaseAvatar(entity), v(entity->get<T, std::shared_ptr<zbe::Value<T> > >(id)) {}
+
+  // template <typename E>
+  // BaseAvatar(std::shared_ptr<E> entity, uint64_t id) : BaseAvatar(entity), v(e->get<T>(id)) {}
+
+  ~_BaseAvatar() {}
+
+  template <unsigned m = n, typename U = T>
+  std::shared_ptr<Value<U> > get() {
+//    return (m+1, v); unsigned a = m
+    return (v);
+  };
+
+private:
+  std::shared_ptr<Value<T> > v;
+};
+
+template<typename T, typename... Ts>
+using MBaseAvatar = MAvatar<T, Ts...>;
+
+template<typename T>
+using SBaseAvatar = SAvatar<T>;
 
 }  // namespace zbe
 

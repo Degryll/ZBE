@@ -62,7 +62,8 @@ TEST(StateLTEraserBhvFtryTest, build) {
   ssbf.setup("StateLTEraserBhvFtryTestName", cfgId);
 
   bool check = false;
-  auto *e = new EntityMock(check);
+//  auto *e = new EntityMock(check);
+  std::shared_ptr<EntityMock> e = std::make_shared<EntityMock>(check);
   auto *ba = new zbe::BaseAvatar(e);
   auto *ss = new zbe::SimpleState(15);
   auto *bs = new zbe::BaseStated(ss);
@@ -96,7 +97,7 @@ TEST(StateLTEraserBhvFtryTest, build) {
   stateLTEraserRsrc.clear();
   behaviorRsrc.clear();
 
-  delete e;
+//  delete e;
   //delete ba;  // AvatarEntityFixed deletes it
   delete ss;
   //delete bs;  // AvatarEntityFixed deletes it
