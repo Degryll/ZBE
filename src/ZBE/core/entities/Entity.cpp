@@ -44,7 +44,7 @@ void Entity::setACTIVE(uint64_t id) {
   }
 }
 
-inline void Entity::setACTIVE() {
+void Entity::setACTIVE() {
   for(auto& t : tl){
     t.second->setACTIVE();
   }
@@ -59,7 +59,7 @@ void Entity::setINACTIVE(uint64_t id) {
   }
 }
 
-inline void Entity::setINACTIVE() {
+void Entity::setINACTIVE() {
   for(auto& t : tl){
     t.second->setINACTIVE();
   }
@@ -75,7 +75,7 @@ void Entity::setERASED(uint64_t id) {
   }
 }
 
-inline void Entity::setERASED() {
+void Entity::setERASED() {
   for(auto& t : tl){
     t.second->setERASED();
   }

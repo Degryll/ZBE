@@ -43,19 +43,20 @@ TEST(BaseAvatar, Usage) {
   EXPECT_EQ(-1, e->getInt(0)->get()) << "First int value is -1.";
   EXPECT_EQ(3, e->getInt(1)->get()) << "Second int value is 3";
 
-  zbe::_BaseAvatar<1, double> ba1(e, {1});
-  auto d1 = ba1.get<1, double>();
+  std::shared_ptr<zbe::_Avatar<1, double> > ba1 = std::make_shared<zbe::_BaseAvatar<1, double> >(e, 1);
+  //zbe::_BaseAvatar<1, double> ba1(e, 1);
+  auto d1 = ba1->get<1, double>();
   d1->set(0.1);
 
   EXPECT_DOUBLE_EQ(0.1,  e->getDouble(1)->get()) << "Second double value now is 0.1.";
-
-  zbe::_BaseAvatar<3, double, uint64_t, uint64_t> ba3(e, {1, 1, 0});
+  std::shared_ptr<zbe::_Avatar<3, double, uint64_t, uint64_t> > ba3 = std::make_shared<zbe::_BaseAvatar<3, double, uint64_t, uint64_t> >(e, std::array<uint64_t, 3>({1, 1, 0}));
+  //zbe::_BaseAvatar<3, double, uint64_t, uint64_t> ba3(e, {1, 1, 0});
 //  auto d3 = ba3._BaseAvatar<3, double>::get();
-  auto d3 = ba3.get<3, double>();
+  auto d3 = ba3->get<3, double>();
   d3->set(4.2);
-  auto u1 = ba3.get<2, uint64_t>();
+  auto u1 = ba3->get<2, uint64_t>();
   u1->set(73);
-  auto u0 = ba3.get<1, uint64_t>();
+  auto u0 = ba3->get<1, uint64_t>();
   u0->set(24);
 
   EXPECT_DOUBLE_EQ(4.2,  e->getDouble(1)->get()) << "Second double value now is 4.2.";

@@ -71,23 +71,45 @@ public:
 };
 
 template <unsigned n, typename T, typename... Ts>
-class _Avatar : virtual public _Avatar<n, T>, virtual public _Avatar<n+1, Ts...> {
+class _Avatar : virtual public _Avatar<n, T>, virtual public _Avatar<n-1, Ts...> {
 public:
   using Base = _Avatar<n+1, Ts...>;
+  //_Avatar() : _Avatar<n, T>(nullptr, nullptr) {}
   virtual ~_Avatar() {}
+
+  template <unsigned m, typename U>
+  std::shared_ptr<Value<U> > get() {
+    return (this->_Avatar<m, U>::get());
+  }
 };
 
 template <unsigned n, typename T>
 class _Avatar<n, T> : virtual public Avatar {
 public:
   using Base = Avatar;
+  _Avatar(const _Avatar&) = delete;
+  void operator=(const _Avatar&) = delete;
+
   virtual ~_Avatar() {}
 
-//  virtual std::shared_ptr<Value<T> > get() = 0;
-//  {
-//    return (n+1, std::shared_ptr<zbe::Value<T> >());
-//  }
+  template <unsigned m = n, typename U = T>
+  std::shared_ptr<Value<U> > get() {
+   return ((*subGetter)(instance));
+  }
 
+protected:
+  using SubGetter = std::shared_ptr<Value<T> > (*)(void*);
+  void setup(SubGetter subGetter, void *instance) {
+    this->subGetter = subGetter;
+    this->instance = instance;
+  }
+  //_Avatar() = delete;
+   _Avatar() : subGetter(nullptr), instance(nullptr) {}
+  //   static_assert(false, "_Avatar empty constructor called.");
+  // }
+  _Avatar(SubGetter subGetter, void *instance) : subGetter(subGetter), instance(instance) {}
+  SubGetter subGetter;
+  void *instance;
 };
 
 template<typename T, typename... Ts>
