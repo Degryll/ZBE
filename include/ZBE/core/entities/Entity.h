@@ -214,14 +214,35 @@ struct EntityIds {
  std::array<uint64_t, n> ids;
 };
 
+class _Entity2;
+
+template <typename T, typename... Ts>
+class _Entity : public _Entity<T>, public _Entity<Ts...> {
+public:
+  _Entity() : _Entity2(this) {}
+
+  template <typename U>
+  void set(uint64_t id, std::shared_ptr<Value<U> > val) {
+    this->_Entity<U>::set(id, val);
+  }
+
+  template <typename U>
+  std::shared_ptr<Value<U> > get(uint64_t id) {
+    return (this->_Entity<U>::get(id));
+  }
+};
+
 /*****************************/
 /** \brief Define the basic functionality of every entity.
  */
-class _Entity2 : virtual public Avatar {
+class ZBEAPI _Entity2 {
 public:
-  /** \brief Empty constructor.
-    */
-  _Entity2() : tl() {}
+//  /** \brief Empty constructor.
+//    */
+//  _Entity2() : tl() {}
+
+  _Entity2(const _Entity2&) = delete;
+  void operator=(const _Entity2&) = delete;
 
   /** \brief The destructor make sure the entity is marked as ERASED in every Ticket.
     */
@@ -266,25 +287,80 @@ public:
    */
   void setERASED();
 
+
+//  template<typename T>
+//  void set(uint64_t id, std::shared_ptr<Value<T> > val) {
+//    ((_Entity<T>*)instance)->set(id, val);
+//  }
+
+  /** \brief Returns the Value<double> associated the identifier id.
+     *  \param id identifier
+     *  \return Value<double>.
+     *  \sa setDouble, getFloat, getUint, getInt
+     */
+    //std::shared_ptr<Value<double> > getDouble(uint64_t id);
+//    template<typename T, typename U>
+//    typename std::enable_if<std::is_same<T, double>::value && std::is_same<U, std::shared_ptr<Value<T> >>::value, U>::type
+//    get(uint64_t id) {return getDouble(id);}
+//    template<typename T>
+//    std::shared_ptr<Value<T> > get(uint64_t id) {
+//      return (((_Entity<T>*)instance)->get(id));
+//    }
+
+    template<typename T>
+    std::shared_ptr<Value<T> > get(uint64_t id) {return (((_Entity<T>*)instance)->_Entity<T>::get(id));}
+
+protected:
+  _Entity2(void *instance) : tl(), instance(instance) {}
+//  void setup(void *instance) {
+//    this->instance = instance;
+//  }
+
 private:
   std::unordered_map<uint64_t, std::shared_ptr<Ticket> > tl;
+  void *instance;
 };
 
 template <typename T>
-class _Entity {
-protected:
+class _Entity<T> : virtual public _Entity2 {
+public:
+  _Entity() : _Entity2(this), v() {}
+
+  template <typename U = T>
+  std::shared_ptr<Value<U> > get(uint64_t id) {
+    auto it = v.find(id);
+    if (it == v.end()) {
+      SysError::setError("Entity has no double value at given index " +  std::to_string(id) + ".");
+      return (std::shared_ptr<Value<U> >());
+    } else {
+      return (v[id]);
+    }
+  }
+
+  template <typename U = T>
+  void set(uint64_t id, std::shared_ptr<Value<U> > val) {
+  auto it = v.find(id);
+  if (it != v.end()) {
+    SysError::setError("Overriding entity int value not allowed.");
+  } else {
+    v[id] = val;
+  }
+}
+
+
+private:
   std::unordered_map<uint64_t, std::shared_ptr<Value<T> > > v;
 };
 
-template <typename T, typename ...Ts>
-class Entity2 : public Entity2<T>, public Entity2<Ts...> {
-};
-
-template <typename T>
-class Entity2<T> : virtual public _Entity<T>, public _Entity2 {
-  template <typename U = T>
-  std::shared_ptr<Value<U> > get(uint64_t id) {return _Entity<U>::v[id];}
-};
+//template <typename T, typename ...Ts>
+//class Entity2 : public Entity2<T>, public Entity2<Ts...> {
+//};
+//
+//template <typename T>
+//class Entity2<T> : virtual public _Entity<T>, public _Entity2 {
+//  template <typename U = T>
+//  std::shared_ptr<Value<U> > get(uint64_t id) {return _Entity<U>::v[id];}
+//};
 
 }  // namespace zbe
 

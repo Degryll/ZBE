@@ -13,13 +13,13 @@
 
 namespace StateLTEraserTest {
 
-class EntityMock : public zbe::Entity {
+class EntityMock : public zbe::_Entity2 {
 public:
-  EntityMock(bool& check) : check(check) {}
+  EntityMock(bool& check) : _Entity2(this), check(check) {}
 
   void setERASED() {
     check = true;
-    Entity::setERASED();
+    _Entity2::setERASED();
   }
   bool& check;
 };

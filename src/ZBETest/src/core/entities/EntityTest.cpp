@@ -123,4 +123,48 @@ TEST(Entity, values) {
   zbe::SysError::clear();
 }
 
+
+TEST(Entity2, values) {
+  EXPECT_EQ(0,zbe::SysError::getNErrors()) << "Initialy no errors.";
+
+  std::shared_ptr<zbe::_Entity<double, uint64_t, int64_t> > _e = std::make_shared<zbe::_Entity<double, uint64_t, int64_t> >();
+  std::shared_ptr<zbe::_Entity2> e = _e;
+  std::shared_ptr<zbe::Value<double> >  vald1 = std::make_shared<zbe::SimpleValue<double> >(0.0);
+  std::shared_ptr<zbe::Value<double> >  vald2 = std::make_shared<zbe::SimpleValue<double> >(1.0);
+  std::shared_ptr<zbe::Value<uint64_t> >  valu1 = std::make_shared<zbe::SimpleValue<uint64_t> >(42);
+  std::shared_ptr<zbe::Value<uint64_t> >  valu2 = std::make_shared<zbe::SimpleValue<uint64_t> >(37);
+  std::shared_ptr<zbe::Value<int64_t> >  vali1 = std::make_shared<zbe::SimpleValue<int64_t> >(-1);
+  std::shared_ptr<zbe::Value<int64_t> >  vali2 = std::make_shared<zbe::SimpleValue<int64_t> >(3);
+
+  _e->set<double>(0, vald1);
+  _e->set<double>(1, vald2);
+
+  _e->set<uint64_t>(0, valu1);
+  _e->set<uint64_t>(1, valu2);
+
+  _e->set<int64_t>(0, vali1);
+  _e->set<int64_t>(1, vali2);
+
+  EXPECT_DOUBLE_EQ(0.0,  e->get<double>(0)->get()) << "First double value is 0.0.";
+  EXPECT_DOUBLE_EQ(1.0,  e->get<double>(1)->get()) << "Second double value is 1.0";
+  EXPECT_EQ(42, e->get<uint64_t>(0)->get()) << "First uint value is 42.";
+  EXPECT_EQ(37, e->get<uint64_t>(1)->get()) << "Second uint value is 37";
+  EXPECT_EQ(-1, e->get<int64_t>(0)->get()) << "First int value is -1.";
+  EXPECT_EQ(3, e->get<int64_t>(1)->get()) << "Second int value is 3";
+
+
+  e->get<double>(0)->set(-3.0);
+  valu1->set(84);
+  auto v = e->get<int64_t>(1);
+  v->set(-30);
+
+  EXPECT_DOUBLE_EQ(-3.0,  e->get<double>(0)->get()) << "First double value now is -3.0.";
+  EXPECT_EQ(84, e->get<uint64_t>(0)->get()) << "First uint value now is 84.";
+  EXPECT_EQ(-30, e->get<int64_t>(1)->get()) << "First uint value now is -30.";
+
+  EXPECT_EQ(0,zbe::SysError::getNErrors()) << "No error ocurred.";
+
+  zbe::SysError::clear();
+}
+
 }  // namespace EntityTest
