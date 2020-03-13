@@ -13,30 +13,17 @@
 #include "ZBE/core/tools/containers/RsrcStore.h"
 #include "ZBE/core/tools/containers/RsrcDictionary.h"
 
-#include "ZBE/core/entities/AvatarEntity.h"
-#include "ZBE/core/entities/Entity.h"
 #include "ZBE/core/entities/avatars/Avatar.h"
 #include "ZBE/core/entities/avatars/implementations/BaseAvatar.h"
-
-#include "ZBE/entities/avatars/Stated.h"
-#include "ZBE/entities/avatars/implementations/BaseStated.h"
-#include "ZBE/archetypes/implementations/SimpleState.h"
+#include "ZBE/core/entities/Entity.h"
+#include "ZBE/core/tools/shared/implementations/SimpleValue.h"
 #include "ZBE/behaviors/StateLTEraser.h"
+
+#include "testutils/DummyTicket.h"
 
 #include "ZBE/factories/implementations/behaviors/StateLTEraserBhvFtry.h"
 
 namespace StateLTEraserBhvFtryTest {
-
-class EntityMock : public zbe::Entity {
-public:
-  EntityMock(bool& check) : check(check) {}
-
-  void setERASED() {
-    check = true;
-    Entity::setERASED();
-  }
-  bool& check;
-};
 
 TEST(StateLTEraserBhvFtryTest, build) {
   EXPECT_EQ(0, zbe::SysError::getNErrors()) << "Initially no errors.";
@@ -48,7 +35,7 @@ TEST(StateLTEraserBhvFtryTest, build) {
   auto& intStore = RsrcDictionary<int64_t>::getInstance();
   auto &configRsrc = RsrcStore<json>::getInstance();
   auto &stateLTEraserRsrc = RsrcStore<StateLTEraser>::getInstance();
-  auto &behaviorRsrc = RsrcStore<Behavior<Avatar, Stated> >::getInstance();
+  auto &behaviorRsrc = RsrcStore<Behavior<int64_t> >::getInstance();
 
   auto cfg = std::make_shared<json>();
   (*cfg)["limit"] = "StateLTEraserLimit";
@@ -61,46 +48,48 @@ TEST(StateLTEraserBhvFtryTest, build) {
   ssbf.create("StateLTEraserBhvFtryTestName", cfgId);
   ssbf.setup("StateLTEraserBhvFtryTestName", cfgId);
 
-  bool check = false;
-//  auto *e = new EntityMock(check);
-  std::shared_ptr<EntityMock> e = std::make_shared<EntityMock>(check);
-  auto *ba = new zbe::BaseAvatar(e);
-  auto *ss = new zbe::SimpleState(15);
-  auto *bs = new zbe::BaseStated(ss);
-  auto aefa = std::make_shared<zbe::AvatarEntityFixed<zbe::Avatar> >(ba);
-  auto aefs = std::make_shared<zbe::AvatarEntityFixed<zbe::Stated> >(bs);
-  std::shared_ptr<zbe::AvatarEntityContainer<zbe::Avatar, zbe::Stated> > aec  = std::make_shared<zbe::AvatarEntityContainer<zbe::Avatar, zbe::Stated> >(aefa, aefs);
+
+  auto ent = std::make_shared<zbe::Entity>();
+  auto ticket1 = std::make_shared<zbetest::DummyTicket>();
+  ent->addTicket(1, ticket1);
+  auto ticket2 = std::make_shared<zbetest::DummyTicket>();
+  ent->addTicket(2, ticket2);
+  std::shared_ptr<zbe::Value<int64_t> > state = std::make_shared<zbe::SimpleValue<int64_t> >(15);
+
+  ent->setInt(1, state);
+
+  std::shared_ptr<zbe::SAvatar<int64_t> > avatar = std::make_shared<zbe::SBaseAvatar<int64_t> >(ent, 1);
+
 
   EXPECT_EQ(0, zbe::SysError::getNErrors()) << "Must be no config errors.";
 
   uint64_t outId = dict.get("Behavior.StateLTEraserBhvFtryTestName");
-  std::shared_ptr<Behavior<Avatar, Stated> > outBhv = behaviorRsrc.get(outId);
+  std::shared_ptr<Behavior<int64_t> > outBhv = behaviorRsrc.get(outId);
 
   uint64_t ssbId = dict.get("StateLTEraser.StateLTEraserBhvFtryTestName");
 
   ASSERT_NE(0, outId) << "Must create a Behavior with given name";
   ASSERT_NE(0, ssbId) << "Must create a StateLTEraser with given name";
 
-  EXPECT_FALSE(check) << "Initially setERASED is not called.";
 
-  outBhv->apply(aec);
+  EXPECT_TRUE(ticket1->isACTIVE()) << "Initially ticket1 must be active.";
+  EXPECT_TRUE(ticket2->isACTIVE()) << "Initially ticket2 must be active.";
 
-  EXPECT_FALSE(check) << "setERASED should'n be called.";
+  outBhv->apply(avatar);
 
-  ss->setState(5);
-  outBhv->apply(aec);
+  EXPECT_TRUE(ticket1->isACTIVE()) << "Still, the ticket1 must be active.";
+  EXPECT_TRUE(ticket2->isACTIVE()) << "Still, the ticket2 must be active.";
 
-  EXPECT_TRUE(check) << "setERASED should be called.";
+  state->set(5);
+  outBhv->apply(avatar);
+
+  EXPECT_TRUE(ticket1->isERASED()) << "Finaly ticket1 must be erased.";
+  EXPECT_TRUE(ticket2->isERASED()) << "Finaly ticket2 must be erased.";
 
   configRsrc.clear();
   dict.clear();
   stateLTEraserRsrc.clear();
   behaviorRsrc.clear();
-
-//  delete e;
-  //delete ba;  // AvatarEntityFixed deletes it
-  delete ss;
-  //delete bs;  // AvatarEntityFixed deletes it
 
   zbe::SysError::clear();
 }

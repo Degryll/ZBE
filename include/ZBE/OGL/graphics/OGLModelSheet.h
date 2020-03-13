@@ -20,7 +20,7 @@ namespace zbe {
 
 /** \brief Interface capable of generate a sprite from a given entity.
  */
-template<typename T>
+template<typename T, typename ...Ts>
 class OGLModelSheet {
 public:
 
@@ -31,7 +31,7 @@ public:
   /** \brief Generate a sprite from a given entity.
    *  \return generated sprite
    **/
-  virtual OGLModel generateSprite(T* a) = 0;
+  virtual OGLModel generateSprite(std::shared_ptr<MAvatar<T, Ts...> > avatar) = 0;
 
 };
 

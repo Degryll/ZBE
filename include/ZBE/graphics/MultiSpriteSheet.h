@@ -11,6 +11,7 @@
 #define ZBE_GRAPHICS_MULTISPRITESHEET_H_
 
 #include <stdint.h>
+#include <memory>
 #include <vector>
 
 #include "ZBE/core/tools/graphics/SpriteSheet.h"
@@ -19,8 +20,7 @@
 #include "ZBE/core/tools/math/Vector.h"
 #include "ZBE/core/tools/math/Point.h"
 #include "ZBE/core/tools/math/Region.h"
-#include "ZBE/core/entities/AvatarEntity.h"
-#include "ZBE/core/entities/avatars/AnimatedSprite.h"
+#include "ZBE/core/entities/avatars/Avatar.h"
 
 #include "ZBE/core/system/system.h"
 
@@ -65,7 +65,7 @@ struct ZBEAPI SprtDef {
 
 /** \brief Tool capable of generate a sprite from a AnimatedSprite.
  */
-class ZBEAPI MultiSpriteSheet : public SpriteSheet<AnimatedSprite> {
+class ZBEAPI MultiSpriteSheet : public SpriteSheet<uint64_t, int64_t, double, Vector2D, Vector2D> {
 public:
 
   /** \brief Parametriced constructor
@@ -86,19 +86,29 @@ public:
   /** \brief Generate a sprite from a given entity.
    *  \return generated sprite
    **/
-  Sprite generateSprite(AnimatedSprite* a) {
+  Sprite generateSprite(std::shared_ptr<MAvatar<uint64_t, int64_t, double, Vector2D, Vector2D> > avatar) {
     SprtDef& usedSD = defaultSD;
-    int64_t state = a->getState();
+    int64_t state = avatar->get<4, int64_t>()->get();
     if(state>=0 && state<size) {
         usedSD = spriteDefintions[state];
     }
-    uint64_t time = a->getTime() % (usedSD.img.frameAmount * usedSD.img.frameTime);
+    auto cTime = avatar->getContextTime();
+    // uint64_t time = a->getTime() % (usedSD.img.frameAmount * usedSD.img.frameTime);
+    // TODO ensure that we are using the right time: getTotalTime?
+    uint64_t time = cTime->getTotalTime() % (usedSD.img.frameAmount * usedSD.img.frameTime);
     uint64_t frame = time/usedSD.img.frameTime;
     Region2D src(usedSD.img.region.p + (usedSD.img.regionOffset *  frame), usedSD.img.region.v);
-    Region2D dst({(double)a->getX() + usedSD.drawOffset.x, (double)a->getY() + usedSD.drawOffset.y}, {(double)a->getW() * usedSD.scale.x, (double)a->getH() * usedSD.scale.y});
-    Sprite s(src, dst, a->getDegrees(), usedSD.img.imgSrcId);
+    auto size = avatar->get<2, Vector2D>()->get();
+    auto pos = avatar->get<1, Vector2D>()->get();
+    Region2D dst({(double)pos.x + usedSD.drawOffset.x, (double)pos.y + usedSD.drawOffset.y}, {(double)size.x * usedSD.scale.x, (double)size.y * usedSD.scale.y});
+    Sprite s(src, dst, avatar->get<3, double>()->get(), usedSD.img.imgSrcId);
     return s;
+    return Sprite(Region2D(), Region2D(), 0.0, 0);
   }
+
+  // Sprite generateSprite(int) {
+  //     return Sprite(Region2D(), Region2D(), 0.0, 0);
+  // }
 
   void setSprite(int64_t index, SprtDef sd){
     if(index >= 0 && index < size){

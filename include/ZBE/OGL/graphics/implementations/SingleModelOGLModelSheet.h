@@ -30,7 +30,9 @@ namespace zbe {
 
 /** \brief Interface capable of generate a sprite from a given entity.
  */
-class SingleModelOGLModelSheet : public OGLModelSheet<SingleModel> {
+// Point3D position, Vector3D orientation, float angle, float scale, uint64_t graphicsID
+// Vector3D position, Vector3D orientation, double angle, double scale, uint64_t graphicsID
+class SingleModelOGLModelSheet : public OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> {
 public:
   SingleModelOGLModelSheet(const SingleModelOGLModelSheet&) = delete;
   void operator=(const SingleModelOGLModelSheet&) = delete;
@@ -47,13 +49,13 @@ public:
   /** \brief Generate a sprite from a given entity.
    *  \return generated sprite
    **/
-  OGLModel generateSprite(SingleModel* sModel) {
-    Point3D pos = sModel->getPosition();
+  OGLModel generateSprite(std::shared_ptr<MAvatar<uint64_t, double, double, Vector3D, Vector3D> > avatar) {
+    Vector3D pos = avatar->get<1, Vector3D>()->get();
     glm::vec3 glPos(pos.x, pos.y, pos.z);
-    Vector3D ori = sModel->getOrientation();
+    Vector3D ori = avatar->get<2, Vector3D>()->get();
     glm::vec3 glOri(ori.x, ori.y, ori.z);
-    float angle = sModel->getAngle();
-    float baseScale = sModel->getScale();
+    float angle = (float) avatar->get<3, double>()->get();
+    float baseScale = (float) avatar->get<4, double>()->get();;
     glm::mat4 mat(1.0);
 
     glm::mat4 translate = glm::translate(glm::mat4(1.0f), glPos);

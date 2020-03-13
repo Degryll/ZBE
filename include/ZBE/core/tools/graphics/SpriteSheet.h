@@ -11,8 +11,11 @@
 #define ZBE_CORE_TOOLS_GRAPHICS_SPRITESHEET_H_
 
 #include <cstdint>
+#include <memory>
 
 #include "ZBE/core/tools/graphics/Sprite.h"
+
+#include "ZBE/core/entities/avatars/Avatar.h"
 
 #include "ZBE/core/system/system.h"
 
@@ -20,7 +23,7 @@ namespace zbe {
 
 /** \brief Interface capable of generate a sprite from a given entity.
  */
-template<typename T>
+template<typename T, typename ...Ts>
 class SpriteSheet {
 public:
 
@@ -31,7 +34,7 @@ public:
   /** \brief Generate a sprite from a given entity.
    *  \return generated sprite
    **/
-  virtual Sprite generateSprite(T* a) = 0;
+  virtual Sprite generateSprite(std::shared_ptr<MAvatar<T, Ts...> > avatar) = 0;
 
 };
 

@@ -7,7 +7,13 @@
 #include <GL/glew.h>
 
 #include "ZBE/core/tools/containers/RsrcDictionary.h"
-#include "ZBE/entities/avatars/SingleModel.h"
+
+#include "ZBE/core/tools/shared/Value.h"
+#include "ZBE/core/tools/shared/implementations/SimpleValue.h"
+
+#include "ZBE/core/entities/avatars/Avatar.h"
+#include "ZBE/core/entities/avatars/implementations/BaseAvatar.h"
+#include "ZBE/core/entities/Entity.h"
 
 #include "ZBE/SDL/drawers/SpriteSheetSDLDrawer.h"
 
@@ -25,9 +31,9 @@ TEST(OGLModelSheetDrawerFtry, Create) {
   using namespace std::string_literals;
   auto& dict = NameRsrcDictionary::getInstance();
   auto& configRsrc = RsrcStore<json>::getInstance();
-  auto& oGLMSDrawerRsrc = RsrcStore<OGLModelSheetDrawer<SingleModel> >::getInstance();
+  auto& oGLMSDrawerRsrc = RsrcStore<OGLModelSheetDrawer<5, uint64_t, double, double, Vector3D, Vector3D> >::getInstance();
   auto& windowRsrc = RsrcStore<SDLOGLWindow>::getInstance();
-  auto& drawerRsrc = RsrcStore<Behavior<SingleModel> >::getInstance();
+  auto& drawerRsrc = RsrcStore<Behavior<uint64_t, double, double, Vector3D, Vector3D> >::getInstance();
   auto& intStore = RsrcDictionary<int64_t>::getInstance();
 
   std::vector<ShaderDef> shaderDefs;
@@ -48,7 +54,7 @@ TEST(OGLModelSheetDrawerFtry, Create) {
   uint64_t cfgId = SysIdGenerator::getId();
   configRsrc.insert(cfgId, cfg);
 
-  OGLModelSheetDrawerFtry<SingleModel> ssSDLdf;
+  OGLModelSheetDrawerFtry<5, uint64_t, double, double, Vector3D, Vector3D> ssSDLdf;
   ssSDLdf.create("OGLModelSheetDrawerFtryTestName", cfgId);
   ssSDLdf.setup("OGLModelSheetDrawerFtryTestName", cfgId);
 

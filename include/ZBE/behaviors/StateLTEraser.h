@@ -25,7 +25,7 @@ namespace zbe {
 
 /** \brief Implements a behavior that kills the entity when it reaches a state lower than a nummber.
  */
-class ZBEAPI StateLTEraser : virtual public Behavior<Avatar, Stated> {
+class ZBEAPI StateLTEraser : virtual public Behavior<int64_t> {
 public:
 
   /** \brief Empty constructor.
@@ -43,14 +43,9 @@ public:
 
   /** \brief Erases given entity if its stata is less that expected one.
    */
-  void apply(std::shared_ptr<AvatarEntityContainer<Avatar, Stated> > entity) {
-    zbe::Stated* stated;
-    std::shared_ptr<zbe::AvatarEntityContainer<zbe::Stated> > aecs = entity;
-    assignAvatar(aecs, &stated);
-    Avatar* avatar;
-    std::shared_ptr<zbe::AvatarEntityContainer<zbe::Avatar> > aeca = entity;
-    assignAvatar(aeca, &avatar);
-    if(stated->getState() < limit){
+  void apply(std::shared_ptr<SAvatar<int64_t> > avatar) {
+    auto state = avatar->get<1, int64_t>();
+    if((*state).get() < limit){
       avatar->setERASED();
     }
   }

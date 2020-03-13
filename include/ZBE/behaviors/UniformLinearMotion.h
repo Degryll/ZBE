@@ -14,39 +14,75 @@
 
 #include "ZBE/core/behaviors/Behavior.h"
 #include "ZBE/core/tools/math/math.h"
-#include "ZBE/core/tools/math/Point.h"
-#include "ZBE/core/entities/AvatarEntity.h"
+//#include "ZBE/core/tools/math/Point.h"
+#include "ZBE/core/tools/math/Vector.h"
+#include "ZBE/core/entities/avatars/Avatar.h"
 #include "ZBE/core/system/SysTime.h"
 
-#include "ZBE/entities/avatars/Movable.h"
+//#include "ZBE/entities/avatars/Movable.h"
 
 #include "ZBE/core/system/system.h"
 
 namespace zbe {
+/*TODO make this a template.
+template<unsigned s>
+class UniformLinearMotion : virtual public Behavior<Vector<s>, Vector<s> > { ... }
+We have tried this but:
+"void apply(std::shared_ptr<MAvatar<Vector<s>, Vector<s> > > avatar) {
+  std::shared_ptr<Vector<s> > p = avatar->get<1, Vector<s> >();
+  ..."
+Throw an error in this line:
+std::shared_ptr<Vector<s> > p = avatar->get<1, Vector<s> >();
+*/
 
 /** \brief Define the minimal functions of every behavior.
  */
-template<unsigned s>
-class UniformLinearMotion : virtual public Behavior<Movable<s>  > {
+class UniformLinearMotion2D : virtual public Behavior<Vector<2>, Vector<2> > {
   public:
-    UniformLinearMotion(const UniformLinearMotion&) = delete;
-    void operator=(const UniformLinearMotion&) = delete;
+    UniformLinearMotion2D(const UniformLinearMotion2D&) = delete;
+    void operator=(const UniformLinearMotion2D&) = delete;
 
     /** \brief Default constructor.
      */
-    UniformLinearMotion() : contextTime(zbe::SysTime::getInstance()) {}
+    UniformLinearMotion2D() : contextTime(zbe::SysTime::getInstance()) {}
 
     /** \brief Virtual destructor.
      */
-    virtual ~UniformLinearMotion() {}
+    virtual ~UniformLinearMotion2D() {}
 
     /** \brief Makes the entity move in a straight line
      */
-    void apply(std::shared_ptr<AvatarEntityContainer<Movable<s> > > aec) {
-      Movable<s>* avatar;
-      assignAvatar(aec, &avatar);
-      Point<s>& p = avatar->getPosition();
-      p += (avatar->getVelocity() * contextTime->getCurrentTime()) * zbe::INVERSE_SECOND;
+    void apply(std::shared_ptr<MAvatar<Vector<2>, Vector<2> > > avatar) {
+      auto vvel = AvtUtil::get<1, Vector<2> >(avatar);
+      auto vpos = AvtUtil::get<2, Vector<2> >(avatar);
+      vpos->set(vpos->get() + (vvel->get() * contextTime->getCurrentTime()) * zbe::INVERSE_SECOND);
+    }
+
+  private:
+    std::shared_ptr<ContextTime> contextTime;
+};
+
+/** \brief Define the minimal functions of every behavior.
+ */
+class UniformLinearMotion3D : virtual public Behavior<Vector3D, Vector3D > {
+  public:
+    UniformLinearMotion3D(const UniformLinearMotion3D&) = delete;
+    void operator=(const UniformLinearMotion3D&) = delete;
+
+    /** \brief Default constructor.
+     */
+    UniformLinearMotion3D() : contextTime(zbe::SysTime::getInstance()) {}
+
+    /** \brief Virtual destructor.
+     */
+    virtual ~UniformLinearMotion3D() {}
+
+    /** \brief Makes the entity move in a straight line
+     */
+    void apply(std::shared_ptr<MAvatar<Vector3D, Vector3D > > avatar) {
+      auto vpos = avatar->get<1, Vector3D>();
+      auto vvel = avatar->get<2, Vector3D>();
+      vpos->set(vpos->get() + (vvel->get() * contextTime->getCurrentTime()) * zbe::INVERSE_SECOND);
     }
 
   private:

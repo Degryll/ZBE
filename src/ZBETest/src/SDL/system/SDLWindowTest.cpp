@@ -21,7 +21,7 @@ namespace SDLWindowTest {
     EXPECT_EQ(2, imgId2) << "Second id for the second image.";
     EXPECT_EQ(3, imgId3) << "Third id for the third image.";
 
-    EXPECT_EQ(0, zbe::SysError::getNErrors()) << "Finally no errors.";
+    EXPECT_EQ(0, zbe::SysError::getNErrors()) << "Finally no errors but:" << zbe::SysError::getFirstErrorString();
     zbe::SysError::clear();
   }
 

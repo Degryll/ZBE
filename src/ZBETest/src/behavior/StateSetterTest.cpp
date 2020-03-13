@@ -2,30 +2,32 @@
 
 #include <memory>
 
-#include "ZBE/core/entities/AvatarEntity.h"
-#include "ZBE/entities/avatars/Stated.h"
-#include "ZBE/entities/avatars/implementations/BaseStated.h"
-#include "ZBE/archetypes/implementations/SimpleState.h"
+
+#include "ZBE/core/entities/avatars/Avatar.h"
+#include "ZBE/core/entities/avatars/implementations/BaseAvatar.h"
+#include "ZBE/core/entities/Entity.h"
+#include "ZBE/core/tools/shared/implementations/SimpleValue.h"
+
 #include "ZBE/behaviors/StateSetter.h"
 
 namespace StateSetterTest {
 
 TEST(StateSetter, apply) {
-    auto *ss = new zbe::SimpleState(15);
-    auto *bs = new zbe::BaseStated(ss);
-    auto aefs = std::make_shared<zbe::AvatarEntityFixed<zbe::Stated> >(bs);
-    std::shared_ptr<zbe::AvatarEntityContainer<zbe::Stated> > aec  = std::make_shared<zbe::AvatarEntityContainer<zbe::Stated> >(aefs);
+
+    std::shared_ptr<zbe::Entity> ent = std::make_shared<zbe::Entity>();
+    std::shared_ptr<zbe::Value<int64_t> > state = std::make_shared<zbe::SimpleValue<int64_t> >(15);
+
+    ent->setInt(1, state);
+
+    std::shared_ptr<zbe::SAvatar<int64_t> > avatar = std::make_shared<zbe::SBaseAvatar<int64_t> >(ent, 1);
 
     zbe::StateSetter s(10);
 
-    EXPECT_EQ(15, ss->getState()) << "Initially state.";
+    EXPECT_EQ(15, state->get()) << "Initially state.";
 
-    s.apply(aec);
+    s.apply(avatar);
 
-    EXPECT_EQ(10, ss->getState()) << "After apply the behavior, the state has changed.";
-
-    delete ss;
-    //delete bs;  // AvatarEntityFixed deletes it
+    EXPECT_EQ(10, state->get()) << "After apply the behavior, the state has changed.";
 }
 
 }  // namespace StateSetterTest

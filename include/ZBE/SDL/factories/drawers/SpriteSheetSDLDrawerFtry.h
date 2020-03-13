@@ -31,7 +31,7 @@ namespace zbe {
 
 /** \brief Factory for Sprite Sheet SDL Drawer
  */
-template<typename T>
+template<unsigned idx, typename T, typename ...Ts>
 class SpriteSheetSDLDrawerFtry : virtual public Factory {
 public:
   /** \brief Builds a SpriteSheet SDL Drawer.
@@ -48,22 +48,22 @@ public:
 
 private:
   RsrcStore<nlohmann::json>& configRsrc = RsrcStore<nlohmann::json>::getInstance();
-  RsrcStore<Behavior<T> >& drawerRsrc = RsrcStore<Behavior<T> >::getInstance();
-  RsrcStore<SpriteSheetSDLDrawer<T> >& SSSDLDrawerRsrc = RsrcStore<SpriteSheetSDLDrawer<T> >::getInstance();
+  RsrcStore<Behavior<T, Ts...> >& drawerRsrc = RsrcStore<Behavior<T, Ts...> >::getInstance();
+  RsrcStore<SpriteSheetSDLDrawer<idx, T, Ts...> >& SSSDLDrawerRsrc = RsrcStore<SpriteSheetSDLDrawer<idx, T, Ts...> >::getInstance();
   RsrcStore<SDLWindow>& windowRsrc = RsrcStore<SDLWindow>::getInstance();
 };
 
-template<typename T>
-void SpriteSheetSDLDrawerFtry<T>::create(std::string name, uint64_t) {
+template<unsigned idx, typename T, typename ...Ts>
+void SpriteSheetSDLDrawerFtry<idx, T, Ts...>::create(std::string name, uint64_t) {
   using namespace std::string_literals;
 
-  std::shared_ptr<SpriteSheetSDLDrawer<T> > ss = std::make_shared<SpriteSheetSDLDrawer<T> >();
+  std::shared_ptr<SpriteSheetSDLDrawer<idx, T, Ts...> > ss = std::make_shared<SpriteSheetSDLDrawer<idx, T, Ts...> >();
   drawerRsrc.insert("Behavior."s + name, ss);
   SSSDLDrawerRsrc.insert("SSSDLDrawer."s + name, ss);
 }
 
-template<typename T>
-void SpriteSheetSDLDrawerFtry<T>::setup(std::string name, uint64_t cfgId) {
+template<unsigned idx, typename T, typename ...Ts>
+void SpriteSheetSDLDrawerFtry<idx, T, Ts...>::setup(std::string name, uint64_t cfgId) {
   using namespace std::string_literals;
   using namespace nlohmann;
   std::shared_ptr<json> cfg = configRsrc.get(cfgId);

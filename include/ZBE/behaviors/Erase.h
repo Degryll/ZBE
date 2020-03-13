@@ -13,7 +13,6 @@
 #include <memory>
 
 #include "ZBE/core/behaviors/Behavior.h"
-#include "ZBE/core/entities/AvatarEntity.h"
 #include "ZBE/core/entities/avatars/Avatar.h"
 
 #include "ZBE/core/system/system.h"
@@ -22,7 +21,7 @@ namespace zbe {
 
 /** \brief Erase given avatar.
  */
-class ZBEAPI Erase : virtual public Behavior<Avatar> {
+class ZBEAPI Erase : virtual public Behavior<void> {
   public:
 
     /** \brief Virtual destructor.
@@ -31,9 +30,7 @@ class ZBEAPI Erase : virtual public Behavior<Avatar> {
 
     /** \brief Erase given avatar.
      */
-    void apply(std::shared_ptr<AvatarEntityContainer<Avatar> > aec) {
-      Avatar* avatar;
-      assignAvatar(aec, &avatar);
+    void apply(std::shared_ptr<Avatar> avatar) {
       avatar->setERASED();
     }
 };

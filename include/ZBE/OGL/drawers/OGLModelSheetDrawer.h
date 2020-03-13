@@ -32,8 +32,8 @@ namespace zbe {
 
 /** \brief class ZBEAPI that know how to draw using SpriteSheets.
  */
-template<typename T>
-class OGLModelSheetDrawer : public Behavior<T> {
+template<unsigned idx, typename T, typename ...Ts>
+class OGLModelSheetDrawer : public Behavior<T, Ts...> {
   public:
     OGLModelSheetDrawer(const OGLModelSheetDrawer&) = delete; //!< Avoid copy.
     void operator=(const OGLModelSheetDrawer&) = delete; //!< Avoid copy.
@@ -41,13 +41,13 @@ class OGLModelSheetDrawer : public Behavior<T> {
     /** \brief Empty constructor
      */
     OGLModelSheetDrawer()
-      : gProgramID(), window(nullptr), rsOglMs(RsrcStore<OGLModelSheet<T> >::getInstance()) {}
+      : gProgramID(), window(nullptr), rsOglMs(RsrcStore<OGLModelSheet<T, Ts...> >::getInstance()) {}
 
     /** \brief Create a new drawer in the given context.
      *  \param window A SDLwindow with its context.
      */
     OGLModelSheetDrawer(std::shared_ptr<SDLOGLWindow> window, uint64_t programId)
-      : gProgramID(window->getShaderStore()->getShader(programId)), window(window), rsOglMs(RsrcStore<OGLModelSheet<T> >::getInstance()) {}
+      : gProgramID(window->getShaderStore()->getShader(programId)), window(window), rsOglMs(RsrcStore<OGLModelSheet<T, Ts...> >::getInstance()) {}
 
     /** \brief Destructor.
      */
@@ -56,10 +56,11 @@ class OGLModelSheetDrawer : public Behavior<T> {
     /** \brief Draws the given entity.
      *  \param The entity to be drawn.
      */
-    void apply(std::shared_ptr<AvatarEntityContainer<T> > entity) {
-      T* avatar;
-      assignAvatar(entity, &avatar);
-      std::shared_ptr<OGLModelSheet<T> > oglMs = rsOglMs.get(avatar->getGraphics());
+    void apply(std::shared_ptr<MAvatar<T, Ts...> > avatar) {
+      std::shared_ptr<_Avatar<idx, uint64_t> > av = avatar;
+      auto val = av->get();
+      uint64_t gId = val->get();
+      std::shared_ptr<OGLModelSheet<T, Ts...> > oglMs = rsOglMs.get(gId);
       OGLModel model = oglMs->generateSprite(avatar);
       GLuint modelViewLoc = glGetUniformLocation(gProgramID, "model" );
       glUniformMatrix4fv(modelViewLoc, 1, false, (GLfloat*) glm::value_ptr(model.modelMat));
@@ -82,7 +83,7 @@ class OGLModelSheetDrawer : public Behavior<T> {
     GLuint gProgramID;
     std::shared_ptr<SDLOGLWindow> window;  //!< A SDL window with its context.
     //std::shared_ptr<SDLImageStore> imgStore; //!< Where the images are stored.
-    RsrcStore<OGLModelSheet<T> >& rsOglMs; //!< Resource manager instance.
+    RsrcStore<OGLModelSheet<T, Ts...> >& rsOglMs; //!< Resource manager instance.
 };
 
 }  // namespace zbe

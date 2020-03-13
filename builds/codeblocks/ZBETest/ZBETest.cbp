@@ -225,6 +225,7 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="../../../src/ZBETest/include/testutils/DummyTicket.h" />
 		<Unit filename="../../../src/ZBETest/include/testutils/MockedContextTime.h" />
 		<Unit filename="../../../src/ZBETest/src/JSON/graphics/JSONGraphicsLoadersTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/OAL/resources/OALAudioLoaderTest.cpp" />

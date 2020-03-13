@@ -50,7 +50,7 @@ public:
 private:
   RsrcDictionary<int64_t>& intStore = RsrcDictionary<int64_t>::getInstance();
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
-  RsrcStore<Behavior<Avatar, Stated> > &behaviorRsrc = RsrcStore<Behavior<Avatar, Stated> >::getInstance();
+  RsrcStore<Behavior<int64_t> > &behaviorRsrc = RsrcStore<Behavior<int64_t> >::getInstance();
   RsrcStore<StateLTEraser> &StateLTEraserRsrc = RsrcStore<StateLTEraser>::getInstance();
 };
 

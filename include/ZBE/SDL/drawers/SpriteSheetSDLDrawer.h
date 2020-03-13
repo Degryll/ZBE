@@ -11,6 +11,8 @@
 #define ZBE_SDL_DRAWERS_SPRITESHEETSDLDRAWER_H_
 
 #include <memory>
+#include <cstdint>
+
 #include <SDL2/SDL.h>
 
 #include "ZBE/core/behaviors/Behavior.h"
@@ -30,8 +32,8 @@ namespace zbe {
 
 /** \brief class that know how to draw using SpriteSheets.
  */
-template<typename T>
-class SpriteSheetSDLDrawer : public Behavior<T> {
+template<unsigned idx, typename T, typename ...Ts>
+class SpriteSheetSDLDrawer : public Behavior<T, Ts...> {
   public:
     SpriteSheetSDLDrawer(const SpriteSheetSDLDrawer&) = delete; //!< Avoid copy.
     void operator=(const SpriteSheetSDLDrawer&) = delete; //!< Avoid copy.
@@ -39,13 +41,13 @@ class SpriteSheetSDLDrawer : public Behavior<T> {
     /** \brief Empty constructor.
      */
     SpriteSheetSDLDrawer()
-      : window(nullptr), imgStore(nullptr), rmss(RsrcStore<SpriteSheet<T> >::getInstance()) {}
+      : window(nullptr), imgStore(nullptr), rmss(RsrcStore<SpriteSheet<T, Ts...> >::getInstance()) {}
 
     /** \brief Create a new drawer in the given context.
      *  \param window A SDLwindow with its context.
      */
     SpriteSheetSDLDrawer(std::shared_ptr<SDLWindow> window)
-      : window(window), imgStore(window->getImgStore()), rmss(RsrcStore<SpriteSheet<T> >::getInstance()) {}
+      : window(window), imgStore(window->getImgStore()), rmss(RsrcStore<SpriteSheet<T, Ts...> >::getInstance()) {}
 
     /** \brief Destructor.
      */
@@ -59,16 +61,17 @@ class SpriteSheetSDLDrawer : public Behavior<T> {
       imgStore = window->getImgStore();
     }
 
-
     /** \brief Draws the given entity.
      *  \param The entity to be drawn.
      */
-    void apply(std::shared_ptr<AvatarEntityContainer<T> > entity) {
-      T* avatar;
-      assignAvatar(entity, &avatar);
-      std::shared_ptr<SpriteSheet<T> > sst = rmss.get(avatar->getGraphics());
-      Sprite s = sst->generateSprite(avatar);
+    void apply(std::shared_ptr<MAvatar<T, Ts...> > avatar) {
+      std::shared_ptr<_Avatar<idx, uint64_t> > av = avatar;
+      auto val = av->get();
+      uint64_t gId = val->get();
+      std::shared_ptr<SpriteSheet<T, Ts...> > sst = rmss.get(gId);
 
+      Sprite s = sst->generateSprite(avatar);
+      
       SDL_Rect src = convert2SDLRect(s.src);
       SDL_Rect dst = convert2SDLRect(s.dst);
 
@@ -81,7 +84,7 @@ class SpriteSheetSDLDrawer : public Behavior<T> {
   private:
     std::shared_ptr<SDLWindow> window;  //!< A SDL window with its context.
     std::shared_ptr<SDLImageStore> imgStore; //!< Where the images are stored.
-    RsrcStore<SpriteSheet<T> >& rmss; //!< Resource manager instance.
+    RsrcStore<SpriteSheet<T, Ts...> >& rmss; //!< Resource manager instance.
 };
 
 }  // namespace zbe

@@ -50,7 +50,7 @@ public:
 private:
   JSONGraphicsLoaders() {}
 
-  RsrcStore<zbe::SpriteSheet<zbe::AnimatedSprite> >& rsrcAnimSprt = RsrcStore<zbe::SpriteSheet<zbe::AnimatedSprite> >::getInstance();
+  RsrcStore<zbe::SpriteSheet<uint64_t, int64_t, double, Vector2D, Vector2D> >& rsrcAnimSprt = RsrcStore<zbe::SpriteSheet<uint64_t, int64_t, double, Vector2D, Vector2D> >::getInstance();
   RsrcStore<ImgDef>& rsrcImgDef = RsrcStore<ImgDef>::getInstance();
   NameRsrcDictionary& nrd = NameRsrcDictionary::getInstance();
 };

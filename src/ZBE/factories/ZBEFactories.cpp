@@ -11,14 +11,14 @@
 
 #include "ZBE/factories/implementations/GenericFtry.h"
 
-#include "ZBE/core/entities/AvatarEntity.h"
+#include "ZBE/core/entities/avatars/Avatar.h"
 
 #include "ZBE/core/tools/containers/RsrcStore.h"
 #include "ZBE/core/tools/containers/TicketedForwardList.h"
 
 #include "ZBE/factories/implementations/daemons/BehaviorDmnFtry.h"
 
-#include "ZBE/core/entities/avatars/AnimatedSprite.h"
+//#include "ZBE/core/entities/avatars/AnimatedSprite.h"
 #include "ZBE/factories/implementations/entities/avatars/SimpleAnimSprtFtry.h"
 
 namespace zbe {
@@ -27,13 +27,13 @@ void ZBEFactories::load() {
   static const char listName[] = "List";
 
   auto& factories = RsrcStore<Factory>::getInstance();
-  using AnimList = TicketedForwardList<AEC<AnimatedSprite> >;
-  using AnimFtry = SimpleAnimSprtFtry<AnimList, listName>;
-  using AnimDrwr = BehaviorDmnFtry<AnimList, AnimatedSprite>;
+  using AnimList = TicketedForwardList<MAvatar<uint64_t, int64_t, double, Vector2D, Vector2D> >;
+  //using AnimFtry = SimpleAnimSprtFtry<AnimList, listName>;
+  using AnimDrwr = BehaviorDmnFtry<AnimList, uint64_t, int64_t, double, Vector2D, Vector2D>;
 
   factories.insert("DrawerAnimSprtFtry", std::make_shared<AnimDrwr>());
   factories.insert("TFAECAnimSprtFtry" , std::make_shared<SimpleGenericFtry<AnimList> >(listName));
-  factories.insert("SimpleAnimSprtFtry", std::make_shared<AnimFtry>());
+  //factories.insert("SimpleAnimSprtFtry", std::make_shared<AnimFtry>());
 }
 
 }  // namespace zbe

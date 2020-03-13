@@ -118,15 +118,41 @@ void Entity::setInt(uint64_t id, std::shared_ptr<Value<int64_t> >  val) {
   }
 }
 
+void Entity::setBool(uint64_t id, std::shared_ptr<Value<bool> >  val) {
+  auto it = bv.find(id);
+  if (it != bv.end()) {
+    SysError::setError("Overriding entity bool value not allowed.");
+  } else {
+    bv[id] = val;
+  }
+}
+
 void Entity::setVector3D(uint64_t id, std::shared_ptr<Value<Vector3D> > val) {
   auto it = v3v.find(id);
   if (it != v3v.end()) {
-    SysError::setError("Overriding entity int value not allowed.");
+    SysError::setError("Overriding entity Vector3D value not allowed.");
   } else {
     v3v[id] = val;
   }
 }
 
+void Entity::setVector2D(uint64_t id, std::shared_ptr<Value<Vector2D> > val) {
+  auto it = v2v.find(id);
+  if (it != v2v.end()) {
+    SysError::setError("Overriding entity Vector2D value not allowed.");
+  } else {
+    v2v[id] = val;
+  }
+}
+
+void Entity::setString(uint64_t id, std::shared_ptr<Value<std::string> > val) {
+  auto it = sv.find(id);
+  if (it != sv.end()) {
+    SysError::setError("Overriding entity String value not allowed.");
+  } else {
+    sv[id] = val;
+  }
+}
 
 std::shared_ptr<Value<double> >  Entity::getDouble(uint64_t id) {
   auto it = dv.find(id);
@@ -168,87 +194,52 @@ std::shared_ptr<Value<int64_t> >  Entity::getInt(uint64_t id) {
   }
 }
 
+std::shared_ptr<Value<bool> >  Entity::getBool(uint64_t id) {
+  auto it = bv.find(id);
+  if (it == bv.end()) {
+    SysError::setError("Entity has no bool value at given index " +  std::to_string(id) + ".");
+    return (std::shared_ptr<Value<bool> >());
+  } else {
+    return (bv[id]);
+  }
+}
+
 std::shared_ptr<Value<Vector3D> > Entity::getVector3D(uint64_t id) {
   auto it = v3v.find(id);
   if (it == v3v.end()) {
-    SysError::setError("Entity has no int value at given index " +  std::to_string(id) + ".");
+    SysError::setError("Entity has no Vector3D value at given index " +  std::to_string(id) + ".");
     return (std::shared_ptr<Value<Vector3D> >());
   } else {
     return (v3v[id]);
   }
-
 }
 
-/*************************/
-
-_Entity2::~_Entity2() {
-  for(auto it = tl.begin(); it != tl.end(); it++) {
-    it->second->setERASED();
-  }
-}
-
-void _Entity2::addTicket(uint64_t id, std::shared_ptr<Ticket> ticket) {
-  auto it = tl.find(id);
-  if (it != tl.end()) {
-    SysError::setError("Ticket in Entity list is not found.");
-  }
-  tl[id] = ticket;
-}
-
-void _Entity2::replaceTicket(uint64_t id, std::shared_ptr<Ticket> ticket) {
-  auto it = tl.find(id);
-  if (it != tl.end()) {
-    ticket->setState(it->second->getState());
-    it->second->setERASED();
-  }
-  tl[id] = ticket;
-}
-
-void _Entity2::setACTIVE(uint64_t id) {
-  auto it = tl.find(id);
-  if (it == tl.end()) {
-    SysError::setError("Ticket in Entity list is not found.");
+std::shared_ptr<Value<Vector2D> > Entity::getVector2D(uint64_t id) {
+  auto it = v2v.find(id);
+  if (it == v2v.end()) {
+    SysError::setError("Entity has no Vector2D value at given index " +  std::to_string(id) + ".");
+    return (std::shared_ptr<Value<Vector2D> >());
   } else {
-    it->second->setACTIVE();
+    return (v2v[id]);
   }
 }
 
-inline void _Entity2::setACTIVE() {
-  for(auto& t : tl){
-    t.second->setACTIVE();
-  }
-}
-
-void _Entity2::setINACTIVE(uint64_t id) {
-  auto it = tl.find(id);
-  if (it == tl.end()) {
-    SysError::setError("Ticket in Entity list is not found.");
+std::shared_ptr<Value<std::string> > Entity::getString(uint64_t id) {
+  auto it = sv.find(id);
+  if (it == sv.end()) {
+    SysError::setError("Entity has no string value at given index " +  std::to_string(id) + ".");
+    return (std::shared_ptr<Value<std::string> >());
   } else {
-    it->second->setINACTIVE();
+    return (sv[id]);
   }
 }
 
-inline void _Entity2::setINACTIVE() {
-  for(auto& t : tl){
-    t.second->setINACTIVE();
-  }
+void Entity::setContextTime(std::shared_ptr<ContextTime> cTime) {
+  this->cTime = cTime;
 }
 
-void _Entity2::setERASED(uint64_t id) {
-  auto it = tl.find(id);
-  if (it == tl.end()) {
-    SysError::setError("Ticket in Entity list is not found.");
-  } else {
-    it->second->setERASED();
-    tl.erase(it);
-  }
-}
-
-inline void _Entity2::setERASED() {
-  for(auto& t : tl){
-    t.second->setERASED();
-  }
-  tl.clear();
+std::shared_ptr<ContextTime> Entity::getContextTime() {
+  return cTime;
 }
 
 }  // namespace zbe

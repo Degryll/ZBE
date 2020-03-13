@@ -2,13 +2,14 @@
 
 #include <memory>
 
-#include "ZBE/core/entities/AvatarEntity.h"
-#include "ZBE/entities/avatars/implementations/BaseMovable.h"
-#include "ZBE/archetypes/implementations/SimpleMobile.h"
+#include "ZBE/core/entities/avatars/Avatar.h"
+#include "ZBE/core/entities/avatars/implementations/BaseAvatar.h"
+#include "ZBE/core/entities/Entity.h"
 #include "ZBE/behaviors/UniformLinearMotion.h"
 #include "ZBE/core/tools/math/math.h"
 #include "ZBE/core/tools/time/Timer.h"
 #include "ZBE/core/system/SysTime.h"
+#include "ZBE/core/tools/shared/implementations/SimpleValue.h"
 
 namespace UniformLinearMotionTest {
 
@@ -25,41 +26,41 @@ class DummyTimer : public zbe::Timer {
     int i = 0;
 };
 
-TEST(UniformLinearMotion, apply) {
+TEST(UniformLinearMotion2D, apply) {
     std::shared_ptr<zbe::SysTime> sysTime = zbe::SysTime::getInstance();
     sysTime->setMaxFrameTime(zbe::SECOND);
 
     auto sysTimer = std::make_shared<DummyTimer>();
     sysTime->setSystemTimer(sysTimer);
 
-    zbe::SimpleMobile<2> m({3.0, 5.0},{7.0, 11.0});
-    zbe::BaseMovable<2> * bm = new zbe::BaseMovable<2>(&m);
-    std::shared_ptr<zbe::AvatarEntityFixed<zbe::Movable<2> > > memock = std::make_shared<zbe::AvatarEntityFixed<zbe::Movable<2> > >();
-    memock->setAvatar(bm);
-    zbe::UniformLinearMotion<2> bulma;
+    std::shared_ptr<zbe::Entity> ent = std::make_shared<zbe::Entity>();
+    std::shared_ptr<zbe::Value<zbe::Vector<2> > > pos = std::make_shared<zbe::SimpleValue<zbe::Vector<2> > >(zbe::Vector<2>{3.0, 5.0});
+    std::shared_ptr<zbe::Value<zbe::Vector<2> > > vel = std::make_shared<zbe::SimpleValue<zbe::Vector<2> > >(zbe::Vector<2>{7.0, 11.0});
 
+    ent->setVector2D(1, pos);
+    ent->setVector2D(2, vel);
 
-    EXPECT_EQ(3.0,m.getPosition()[0]) << "Initial Position X.";
-    EXPECT_EQ(5.0,m.getPosition()[1]) << "Initial Position Y.";
+    zbe::UniformLinearMotion2D bulma;
 
     sysTime->update();
     sysTime->update();
     sysTime->setEventTime(zbe::SECOND);
 
-    std::shared_ptr<zbe::AvatarEntityContainer<zbe::Movable<2> > > aec;
-    wrapAEC(&aec, memock);
-    bulma.apply(aec);
+    std::array<uint64_t, 2> a1{ {1, 2} };
+    std::shared_ptr<zbe::MAvatar<zbe::Vector<2>, zbe::Vector<2> > > avatar = std::make_shared<zbe::MBaseAvatar<zbe::Vector<2>, zbe::Vector<2> > >(ent, a1);
 
-    EXPECT_EQ(10.0,m.getPosition()[0]) << "Position X.";
-    EXPECT_EQ(16.0,m.getPosition()[1]) << "Position Y.";
+    bulma.apply(avatar);
+
+    EXPECT_EQ(10.0,pos->get()[0]) << "Position X.";
+    EXPECT_EQ(16.0,pos->get()[1]) << "Position Y.";
 
     sysTime->update();
     sysTime->setEventTime(1.5*zbe::SECOND);
 
-    bulma.apply(aec);
+    bulma.apply(avatar);
 
-    EXPECT_EQ(13.5,m.getPosition()[0]) << "Position X.";
-    EXPECT_EQ(21.5,m.getPosition()[1]) << "Position Y.";
+    EXPECT_EQ(13.5,pos->get()[0]) << "Position X.";
+    EXPECT_EQ(21.5,pos->get()[1]) << "Position Y.";
 }
 
 }  // namespace UniformLinearMotionTest

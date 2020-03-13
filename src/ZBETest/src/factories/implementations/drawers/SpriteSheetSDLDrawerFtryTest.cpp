@@ -4,7 +4,13 @@
 #include <cstdint>
 
 #include "ZBE/core/tools/containers/RsrcDictionary.h"
-#include "ZBE/core/entities/avatars/SingleSprite.h"
+
+#include "ZBE/core/tools/shared/Value.h"
+#include "ZBE/core/tools/shared/implementations/SimpleValue.h"
+
+#include "ZBE/core/entities/avatars/Avatar.h"
+#include "ZBE/core/entities/avatars/implementations/BaseAvatar.h"
+#include "ZBE/core/entities/Entity.h"
 
 #include "ZBE/SDL/drawers/SpriteSheetSDLDrawer.h"
 
@@ -18,11 +24,12 @@ TEST(SpriteSheetSDLDrawerFtry, Create) {
   using namespace zbe;
   using namespace nlohmann;
   using namespace std::string_literals;
+
   auto& dict = NameRsrcDictionary::getInstance();
   auto& configRsrc = RsrcStore<json>::getInstance();
-  auto& sssDrawerRsrc = zbe::RsrcStore<zbe::SpriteSheetSDLDrawer<SingleSprite> >::getInstance();
+  auto& sssDrawerRsrc = zbe::RsrcStore<zbe::SpriteSheetSDLDrawer<5, uint64_t, int64_t, double, Vector2D, Vector2D> >::getInstance();
   auto& windowRsrc = RsrcStore<zbe::SDLWindow>::getInstance();
-  auto& drawerRsrc = RsrcStore<Behavior<SingleSprite> >::getInstance();
+  auto& drawerRsrc = RsrcStore<Behavior<uint64_t, int64_t, double, Vector2D, Vector2D> >::getInstance();
 
   auto cfg = std::make_shared<json>();
   (*cfg)["window"] = "Ventanuco";
@@ -32,7 +39,7 @@ TEST(SpriteSheetSDLDrawerFtry, Create) {
   uint64_t cfgId = SysIdGenerator::getId();
   configRsrc.insert(cfgId, cfg);
 
-  SpriteSheetSDLDrawerFtry<SingleSprite> ssSDLdf;
+  SpriteSheetSDLDrawerFtry<5, uint64_t, int64_t, double, Vector2D, Vector2D> ssSDLdf;
   ssSDLdf.create("SpriteSheetSDLDrawerFtryTestName", cfgId);
   ssSDLdf.setup("SpriteSheetSDLDrawerFtryTestName", cfgId);
 

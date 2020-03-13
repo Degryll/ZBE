@@ -22,7 +22,7 @@ TEST(SingleTextSDLDrawerFtry, Create) {
   auto& configRsrc = RsrcStore<json>::getInstance();
   auto& STSDrawerRsrc = zbe::RsrcStore<zbe::SingleTextSDLDrawer>::getInstance();
   auto& windowRsrc = RsrcStore<zbe::SDLWindow>::getInstance();
-  auto& drawerRsrc = RsrcStore<Behavior<SingleTextSprite> >::getInstance();
+  auto& drawerRsrc = RsrcStore<Behavior<std::string, uint64_t, Vector2D, Vector2D> >::getInstance();
 
   auto cfg = std::make_shared<json>();
   (*cfg)["window"] = "Ventanuco";

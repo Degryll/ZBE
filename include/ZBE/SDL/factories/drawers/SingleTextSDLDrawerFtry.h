@@ -46,7 +46,7 @@ public:
 
 private:
   RsrcStore<nlohmann::json>& configRsrc = RsrcStore<nlohmann::json>::getInstance();
-  RsrcStore<Behavior<SingleTextSprite> >& drawerRsrc = RsrcStore<Behavior<SingleTextSprite> >::getInstance();
+  RsrcStore<Behavior<std::string, uint64_t, Vector2D, Vector2D> >& drawerRsrc = RsrcStore<Behavior<std::string, uint64_t, Vector2D, Vector2D> >::getInstance();
   RsrcStore<SingleTextSDLDrawer>& STSDLDrawerRsrc = RsrcStore<SingleTextSDLDrawer>::getInstance();
   RsrcStore<SDLWindow>& windowRsrc = RsrcStore<SDLWindow>::getInstance();
 };

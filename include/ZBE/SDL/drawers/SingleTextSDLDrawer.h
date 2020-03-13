@@ -25,7 +25,7 @@ namespace zbe {
 
 /** \brief This draws a simple sprite (an image).
  */
-class ZBEAPI SingleTextSDLDrawer : public Behavior<SingleTextSprite> {
+class ZBEAPI SingleTextSDLDrawer : public Behavior<std::string, uint64_t, Vector2D, Vector2D> {
   public:
     SingleTextSDLDrawer(const SingleTextSDLDrawer&) = delete; //!< Avoid copy.
     void operator=(const SingleTextSDLDrawer&) = delete; //!< Avoid copy.
@@ -56,7 +56,28 @@ class ZBEAPI SingleTextSDLDrawer : public Behavior<SingleTextSprite> {
     /** \brief Draws the given entity.
      *  \param The entity to be drawn.
      */
-    void apply(std::shared_ptr<AvatarEntityContainer<SingleTextSprite> > entity);
+    void apply(std::shared_ptr<MAvatar<std::string, uint64_t, Vector2D, Vector2D> > avatar) {
+      SDL_Texture* t = textFontStore->renderText(avatar->get<3, uint64_t>()->get(), avatar->get<4, std::string>()->get().c_str());
+
+      int tw, th, aw, ah;
+      SDL_QueryTexture(t, NULL,NULL, &tw, &th);
+      SDL_Rect src,dst;
+      auto dim = avatar->get<2, Vector2D>()->get();
+      aw = (int)dim.x;
+      ah = (int)dim.y;
+      src.w = std::min(tw,aw);
+      src.h = std::min(th,ah);
+      dst.w = src.w;
+      dst.h = src.h;
+      src.x = 0;
+      src.y = 0;
+      auto pos = avatar->get<1, Vector2D>()->get();
+      dst.x = (int)pos.x + (aw - dst.w);
+      dst.y = (int)pos.y + (ah - dst.h);
+
+      window->render(t, &src, &dst);
+      SDL_DestroyTexture(t);
+    }
 
   private:
     std::shared_ptr<SDLWindow> window;  //!< A SDL window with its context.

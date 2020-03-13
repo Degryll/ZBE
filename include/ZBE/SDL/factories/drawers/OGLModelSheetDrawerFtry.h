@@ -33,7 +33,7 @@ namespace zbe {
 
 /** \brief Factory for Single Text SDL Drawer
  */
-template<typename T>
+template<unsigned idx, typename T, typename ...Ts>
 class OGLModelSheetDrawerFtry : virtual public Factory {
 public:
   /** \brief Builds a SingleText SDL Drawer.
@@ -50,23 +50,23 @@ public:
 
 private:
   RsrcStore<nlohmann::json>& configRsrc = RsrcStore<nlohmann::json>:: getInstance();
-  RsrcStore<Behavior<T> >& drawerRsrc = RsrcStore<Behavior<T> >::getInstance();
-  RsrcStore<OGLModelSheetDrawer<T> >& oGLMSDrawerRsrc = RsrcStore<OGLModelSheetDrawer<T> >::getInstance();
+  RsrcStore<Behavior<T, Ts...> >& drawerRsrc = RsrcStore<Behavior<T, Ts...> >::getInstance();
+  RsrcStore<OGLModelSheetDrawer<idx, T, Ts...> >& oGLMSDrawerRsrc = RsrcStore<OGLModelSheetDrawer<idx, T, Ts...> >::getInstance();
   RsrcStore<SDLOGLWindow>& windowRsrc = RsrcStore<SDLOGLWindow>::getInstance();
   RsrcDictionary<int64_t>& intStore = RsrcDictionary<int64_t>::getInstance();
 };
 
-template<typename T>
-void OGLModelSheetDrawerFtry<T>::create(std::string name, uint64_t) {
+template<unsigned idx, typename T, typename ...Ts>
+void OGLModelSheetDrawerFtry<idx, T, Ts...>::create(std::string name, uint64_t) {
   using namespace std::string_literals;
 
-  std::shared_ptr<OGLModelSheetDrawer<T> > ss = std::make_shared<OGLModelSheetDrawer<T> >();
+  std::shared_ptr<OGLModelSheetDrawer<idx, T, Ts...> > ss = std::make_shared<OGLModelSheetDrawer<idx, T, Ts...> >();
   drawerRsrc.insert("Drawer."s + name, ss);
   oGLMSDrawerRsrc.insert("OGLMSDrawer."s + name, ss);
 }
 
-template<typename T>
-void OGLModelSheetDrawerFtry<T>::setup(std::string name, uint64_t cfgId) {
+template<unsigned idx, typename T, typename ...Ts>
+void OGLModelSheetDrawerFtry<idx, T, Ts...>::setup(std::string name, uint64_t cfgId) {
   using namespace std::string_literals;
   using namespace nlohmann;
   std::shared_ptr<json> cfg = configRsrc.get(cfgId);

@@ -16,9 +16,13 @@
 #include "ZBE/core/tools/containers/Ticket.h"
 #include "ZBE/core/tools/shared/Value.h"
 
+#include "ZBE/core/entities/Entity.h"
+
 #include "ZBE/core/system/system.h"
 
 namespace zbe {
+
+class Avatar;
 
 /** \brief This define an avatar that can be used to deactivate/activate or erase the corresponding entity.
  */
@@ -68,6 +72,19 @@ public:
     /** \brief Change the state of this avatar for all list to ERASED.
      */
     virtual void setERASED() = 0;
+
+    /** \brief Access the underliying entity (if allowed)
+     */
+    virtual std::shared_ptr<Entity> getEntity() = 0;
+
+    /** \brief Changes the contextTime of this entity to the value of cTime.
+     *  \param cTime Value to put in the Entity's cTime
+     */
+    virtual void setContextTime(std::shared_ptr<ContextTime> cTime) = 0;
+
+    /** \brief Returns the context time of the Entity.
+     */
+    virtual std::shared_ptr<ContextTime> getContextTime() = 0;
 };
 
 template <unsigned n, typename T, typename... Ts>
@@ -87,7 +104,7 @@ template <unsigned n, typename T>
 class _Avatar<n, T> : virtual public Avatar {
 public:
   using Base = Avatar;
-  _Avatar(const _Avatar&) = delete;
+  _Avatar(const _Avatar& rhs) : subGetter(rhs.subGetter), instance(rhs.instance) {}
   void operator=(const _Avatar&) = delete;
 
   virtual ~_Avatar() {}
@@ -117,6 +134,13 @@ using MAvatar = _Avatar<sizeof...(Ts)+1, T, Ts...>;
 
 template<typename T>
 using SAvatar = _Avatar<1, T>;
+
+namespace AvtUtil {
+  template<uint64_t idx, typename T>
+  inline std::shared_ptr<zbe::Value<T> > get(std::shared_ptr<_Avatar<idx, T> > avatar) {
+    return avatar->get();
+  }
+}
 
 }  // namespace zbe
 

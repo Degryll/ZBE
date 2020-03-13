@@ -16,7 +16,9 @@
 #include "ZBE/core/tools/containers/RsrcStore.h"
 #include "ZBE/core/tools/containers/RsrcDictionary.h"
 
-#include "ZBE/core/entities/AvatarEntity.h"
+#include "ZBE/core/entities/avatars/Avatar.h"
+#include "ZBE/core/entities/avatars/implementations/BaseAvatar.h"
+#include "ZBE/core/entities/Entity.h"
 
 #include "ZBE/core/daemons/Daemon.h"
 
@@ -28,18 +30,11 @@
 
 namespace BehaviorDmnFtryTest {
 
-struct DummyAvatar {
-  using Base = void;
-  int val = 0;
-};
-
-class DummyBehavior : public zbe::Behavior<DummyAvatar> {
+class DummyBehavior : public zbe::Behavior<uint64_t> {
 public:
-  void apply(std::shared_ptr<zbe::AvatarEntityContainer<DummyAvatar> > aec) {
-    DummyAvatar* da;
-    assignAvatar(aec, &da);
-    //aec->get()->setAvatar(&da);
-    da->val = 1;
+  void apply(std::shared_ptr<zbe::SAvatar<uint64_t> > avatar) {
+    //void zbe::Behavior<T>::apply(std::shared_ptr<zbe::_Avatar<1, T> >) [with T = zbe::_Avatar<1, long unsigned int>]’|
+    avatar->get<1, uint64_t>()->set(1);
   }
 };
 
@@ -52,8 +47,9 @@ TEST(BehaviorDmnFtryTest, build) {
   auto &dict = NameRsrcDictionary::getInstance();
   auto &configRsrc = RsrcStore<json>::getInstance();
   auto &daemonRsrc = RsrcStore<Daemon>::getInstance();
-  auto &listRsrc = RsrcTicketedFAEC<DummyAvatar>::getInstance();
-  auto &behaviorRsrc = RsrcStore<Behavior<DummyAvatar> >::getInstance();
+  //auto &listRsrc = RsrcTicketedFAEC<DummyAvatar>::getInstance();
+  auto &listRsrc = RsrcStore<TicketedForwardList<SAvatar<uint64_t> > >::getInstance();
+  auto &behaviorRsrc = RsrcStore<Behavior<uint64_t> >::getInstance();
 
   auto cfg = std::make_shared<json>();
   (*cfg)["behavior"] = "dummyb";
@@ -63,34 +59,29 @@ TEST(BehaviorDmnFtryTest, build) {
   configRsrc.insert(cfgId, cfg);
 
   auto db = std::make_shared<DummyBehavior>();
+  behaviorRsrc.insert("Behavior.dummyb"s, db);
 
-  uint64_t dbId = SysIdGenerator::getId();
-  behaviorRsrc.insert(dbId, db);
-  dict.insert("Behavior.dummyb"s, dbId);
+  auto list = std::make_shared<TicketedForwardList<SAvatar<uint64_t> > >();
 
-  auto list = std::make_shared<TicketedFAEC<DummyAvatar> >();
+  std::shared_ptr<zbe::Entity> ent1 = std::make_shared<zbe::Entity>();
+  std::shared_ptr<zbe::Value<uint64_t> > state1 = std::make_shared<zbe::SimpleValue<uint64_t> >(15);
 
-  DummyAvatar* da1 = new DummyAvatar();
-  DummyAvatar* da2 = new DummyAvatar();
-  DummyAvatar* da3 = new DummyAvatar();
+  ent1->setUint(1, state1);
 
-  auto aeFixed1 = std::make_shared<AvatarEntityFixed<DummyAvatar> >(da1);
-  auto aeContainer1 = std::make_shared<AvatarEntityContainer<DummyAvatar> >(aeFixed1);
+  std::shared_ptr<zbe::Entity> ent2 = std::make_shared<zbe::Entity>();
+  std::shared_ptr<zbe::Value<uint64_t> > state2 = std::make_shared<zbe::SimpleValue<uint64_t> >(25);
 
-  auto aeFixed2 = std::make_shared<AvatarEntityFixed<DummyAvatar> >(da2);
-  auto aeContainer2 = std::make_shared<AvatarEntityContainer<DummyAvatar> >(aeFixed2);
+  ent2->setUint(1, state2);
 
-  // auto aeFixed3 = std::make_shared<AvatarEntityFixed<DummyAvatar> >(da3)
-  // auto aeContainer3 = std::make_shared<AvatarEntityContainer<DummyAvatar> >(aeFixed3)
+  std::shared_ptr<zbe::SAvatar<uint64_t> > avatar1 = std::make_shared<zbe::SBaseAvatar<uint64_t> >(ent1, 1);
+  std::shared_ptr<zbe::SAvatar<uint64_t> > avatar2 = std::make_shared<zbe::SBaseAvatar<uint64_t> >(ent2, 1);
 
-  list->push_front(aeContainer1);
-  list->push_front(aeContainer2);
+  list->push_front(avatar1);
+  list->push_front(avatar2);
 
-  uint64_t listId = SysIdGenerator::getId();
-  listRsrc.insert(listId, list);
-  dict.insert("List.dummyl"s, listId);
+  listRsrc.insert("List.dummyl"s, list);
 
-  BehaviorDmnFtry<TicketedFAEC<DummyAvatar>, DummyAvatar> bdf;
+  BehaviorDmnFtry<TicketedForwardList<SAvatar<uint64_t> >, uint64_t> bdf;
   bdf.create("BehaviorDmnFtryTestName", cfgId);
   bdf.setup("BehaviorDmnFtryTestName", cfgId);
 
@@ -101,15 +92,13 @@ TEST(BehaviorDmnFtryTest, build) {
 
   ASSERT_NE(0, outId) << "Must create a daemon with given name";
 
-  EXPECT_EQ(0, da1->val) << "da1 val is initially 0.";
-  EXPECT_EQ(0, da2->val) << "da2 val is initially 0.";
-  EXPECT_EQ(0, da3->val) << "da3 val is initially 0.";
+  EXPECT_EQ(15, state1->get()) << "First value is initially 15.";
+  EXPECT_EQ(25, state2->get()) << "Second value is initially 25.";
 
   outDmn->run();
 
-  EXPECT_EQ(1, da1->val) << "Behavior must modfy da1";
-  EXPECT_EQ(1, da2->val) << "Behavior must modfy da2";
-  EXPECT_EQ(0, da3->val) << "Behavior must NOT modfy da3";
+  EXPECT_EQ(1, state1->get()) << "Behavior must modfy value to 1.";
+  EXPECT_EQ(1, state2->get()) << "Behavior must modfy value to 1.";
 
   configRsrc.clear();
   dict.clear();
