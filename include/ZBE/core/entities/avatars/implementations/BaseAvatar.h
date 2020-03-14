@@ -140,6 +140,11 @@ public:
 
   virtual ~_BaseAvatar() {}
 
+  template <unsigned m, typename U>
+  std::shared_ptr<Value<U> > get() {
+    return (this->_Avatar<m, U>::get());
+  }
+
 protected:
   template <unsigned m = n>
   _BaseAvatar(std::shared_ptr<Entity> entity, typename std::array<uint64_t, m>::iterator idsi, typename std::enable_if<(m!=2)>::type * = nullptr) : A(entity), _BaseAvatar<A, m, T>(entity, *idsi), _BaseAvatar<A, m-1, Ts...>(entity, idsi+1) {}
@@ -154,7 +159,7 @@ public:
   _BaseAvatar(std::shared_ptr<Entity> entity, uint64_t id)
    : A(entity),
      _Avatar<n, T>(&_BaseAvatar::getImpl, (void*)this),
-     v(entity->get<T, std::shared_ptr<zbe::Value<T> > >(id)) {
+     v(entity->get<T>(id)) {
        setup();
      }
  _BaseAvatar(std::shared_ptr<Entity> entity, typename std::array<uint64_t, 1>::iterator idsi)
@@ -172,7 +177,7 @@ public:
 
 protected:
   void setup() {
-    _Avatar<n, T>::setup(&_BaseAvatar::getImpl, (void*)this);
+    _Avatar<n, T>::setup(&_BaseAvatar<n, T>::getImpl, (void*)this);
   }
 private:
   std::shared_ptr<Value<T> > v;
