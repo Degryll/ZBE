@@ -18,11 +18,12 @@
 #include "ZBE/core/tools/shared/implementations/SimpleValue.h"
 #include "ZBE/core/tools/shared/Value.h"
 
-#include "ZBE/core/entities/AvatarEntity.h"
+#include "ZBE/core/entities/avatars/Avatar.h"
+#include "ZBE/core/entities/avatars/implementations/BaseAvatar.h"
 
 #include "ZBE/tools/graphics/Camera.h"
 
-#include "ZBE/entities/avatars/implementations/SimpleSingleModel.h"
+//#include "ZBE/entities/avatars/implementations/SimpleSingleModel.h"
 #include "ZBE/entities/avatars/SingleModel.h"
 
 #include "ZBE/SDL/OGL/SDLOGLWindow.h"

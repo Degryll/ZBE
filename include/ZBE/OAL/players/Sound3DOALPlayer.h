@@ -13,12 +13,12 @@
 #include <memory>
 
 #include "ZBE/core/behaviors/Behavior.h"
-#include "ZBE/core/entities/AvatarEntity.h"
 #include "ZBE/core/system/SysError.h"
+#include "ZBE/core/entities/avatars/Avatar.h"
+#include "ZBE/core/tools/math/Vector.h"
 
 #include "ZBE/OAL/system/OALAudioStore.h"
 #include "ZBE/OAL/tools/OALUtils.h"
-#include "ZBE/OAL/entities/avatars/Sound3D.h"
 
 #include "ZBE/core/system/system.h"
 
@@ -26,8 +26,11 @@ namespace zbe {
 
 /** \brief A behavior that plays 3d sounds.
  */
-class ZBEAPI Sound3DOALPlayer : public Behavior<Sound3D> {
+class ZBEAPI Sound3DOALPlayer : public Behavior<uint64_t, uint64_t, uint64_t, Vector3D, Vector3D> {
 public:
+
+  const static uint64_t NEW = 0, PLAYING = 1, STOPPED = 2;
+
   Sound3DOALPlayer(std::shared_ptr<OALAudioStore> store) : store(store) {}
 
   /** \brief Virtual destructor.
@@ -36,7 +39,7 @@ public:
 
   /** \brief Plays the Sound3D.
    */
-  void apply(std::shared_ptr<AvatarEntityContainer<Sound3D> > aec);
+  void apply(std::shared_ptr<MAvatar<uint64_t, uint64_t, uint64_t, Vector3D, Vector3D> > avatar);
 
 private:
   std::shared_ptr<OALAudioStore> store;

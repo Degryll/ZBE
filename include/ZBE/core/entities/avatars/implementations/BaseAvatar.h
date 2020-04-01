@@ -12,6 +12,7 @@
 
 #include <cstdint>
 #include <memory>
+#include <assert.h>
 
 #include "ZBE/core/tools/containers/Ticket.h"
 #include "ZBE/core/entities/Entity.h"
