@@ -18,8 +18,8 @@
 #include <SDL2/SDL.h>
 
 #include "ZBE/SDL/starters/SDL_Starter.h"
-#include "ZBE/core/io/Input.h"
-#include "ZBE/core/io/InputBuffer.h"
+#include "ZBE/core/io/inputBuffer.h"
+#include "ZBE/core/io/inputTextBuffer.h"
 #include "ZBE/core/system/SysTime.h"
 
 #include "ZBE/core/system/system.h"
@@ -50,18 +50,25 @@ public:
    */
   std::shared_ptr<InputBuffer> getInputBuffer() {return inputBuffer;}
 
+  /** \brief Returns the InputTextBuffer where the input text info will be written.
+   *  \return The InputTextBuffer.
+   */
+  std::shared_ptr<InputTextBuffer> getInputTextBuffer() {return inputTextBuffer;}
+
   /** \brief Distribute SDL events in the appropriate structures of the system.
    */
   void run();
 
 private:
-  SDLEventDispatcher() : sdl(SDL_Starter::getInstance(SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC | SDL_INIT_GAMECONTROLLER | SDL_INIT_EVENTS)), inputBuffer(std::make_shared<InputBuffer>()), contextTime(SysTime::getInstance()) {}
+  SDLEventDispatcher() : sdl(SDL_Starter::getInstance(SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC | SDL_INIT_GAMECONTROLLER | SDL_INIT_EVENTS)), inputBuffer(std::make_shared<InputBuffer>()), inputTextBuffer(std::make_shared<InputTextBuffer>()), contextTime(SysTime::getInstance()) {}
 
   bool tryKeyboardEvent(SDL_Event &event);
 
   bool tryMouseEvent(SDL_Event &event);
 
   void setState(uint32_t key, float value, int64_t time);
+
+  void setTextInput(std::string text, int64_t time);
 
   void setMouseButtonState(SDL_Event &event, float value);
 
@@ -73,6 +80,7 @@ private:
 
   SDL_Starter &sdl;
   std::shared_ptr<InputBuffer> inputBuffer;
+  std::shared_ptr<InputTextBuffer> inputTextBuffer;
   std::shared_ptr<ContextTime> contextTime;
 };
 

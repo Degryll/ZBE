@@ -18,11 +18,14 @@
 #include "ZBE/core/daemons/Daemon.h"
 
 #include "ZBE/core/io/InputBuffer.h"
+#include "ZBE/core/io/InputTextBuffer.h"
 #include "ZBE/core/io/InputStatus.h"
+#include "ZBE/core/io/InputText.h"
 #include "ZBE/core/system/SysTime.h"
-#include "ZBE/core/events/handlers/InputHandler.h"
+#include "ZBE/core/events/handlers/TextHandler.h"
 #include "ZBE/core/events/EventStore.h"
 #include "ZBE/core/events/InputEvent.h"
+#include "ZBE/core/events/TextEvent.h"
 #include "ZBE/core/events/generators/util/InputStatusManager.h"
 
 #include "ZBE/core/system/system.h"
@@ -38,7 +41,7 @@ namespace zbe {
 
       /** \brief Default constructor.
        */
-      InputEventGenerator(std::shared_ptr<InputBuffer> inputBuffer) : inputBuffer(inputBuffer), managers(), contextTime(zbe::SysTime::getInstance()) {}
+      InputEventGenerator(std::shared_ptr<InputBuffer> inputBuffer, std::shared_ptr<InputTextBuffer> inputTextBuffer = nullptr, int eventId = 0, std::shared_ptr<TextHandler> handler = nullptr) : inputBuffer(inputBuffer), inputTextBuffer(inputTextBuffer), managers(), eventId(eventId), store(EventStore::getInstance()), handler(handler), contextTime(zbe::SysTime::getInstance()) {}
 
       /** \brief Empty destructor.
        */
@@ -54,7 +57,11 @@ namespace zbe {
 
     private:
       std::shared_ptr<InputBuffer> inputBuffer;
+      std::shared_ptr<InputTextBuffer> inputTextBuffer;
       std::vector<std::shared_ptr<InputStatusManager> > managers;
+      uint64_t eventId;
+      EventStore &store;
+      std::shared_ptr<TextHandler> handler;
       std::shared_ptr<ContextTime> contextTime;
   };
 

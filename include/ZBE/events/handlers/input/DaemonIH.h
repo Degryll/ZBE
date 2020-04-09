@@ -28,7 +28,7 @@ public:
   /** \brief Constructs a DaemonIH from a daemon.
  	 *  \param daemon daemon to be executed.
 	 */
-	DaemonIH():d(nullptr) {}
+	DaemonIH() : d(nullptr) {}
 
   /** \brief Constructs a DaemonIH from a daemon.
 	 *  \param daemon daemon to be executed.

@@ -10,6 +10,7 @@
 #include "ZBE/SDL/system/SDLEventDispatcher.h"
 
 #include "ZBE/core/tools/math/math.h"
+#include "ZBE/core/io/Input.h"
 #include "ZBE/core/io/InputStatus.h"
 
 namespace zbe {
@@ -34,6 +35,9 @@ inline bool SDLEventDispatcher::tryKeyboardEvent(SDL_Event &event){
   } else if (event.type == SDL_KEYUP) {
     setState(getEquivalentToSDL(event.key.keysym.sym), 0.0f, event.key.timestamp);
     return true;
+  } else if (event.type == SDL_TEXTINPUT) {
+    setTextInput(event.text.text, event.text.timestamp);
+    return true;
   }
   return false;
 }
@@ -55,12 +59,20 @@ inline bool SDLEventDispatcher::tryMouseEvent(SDL_Event &event){
   return false;
 }
 
-inline void SDLEventDispatcher::setState(uint32_t key, float value, int64_t time){
+inline void SDLEventDispatcher::setState(uint32_t key, float value, int64_t time) {
   int64_t zbeTime = MILITOZBETU(time);
   int64_t gameTime = zbeTime - contextTime->getLostTime();
   int64_t storeTime = quantizeTime(gameTime) + zbe::TIME_QUANTUM;
   InputStatus is(key, value, storeTime);
   inputBuffer->insert(is);
+}
+
+inline void SDLEventDispatcher::setTextInput(std::string text, int64_t time) {
+  int64_t zbeTime = MILITOZBETU(time);
+  int64_t gameTime = zbeTime - contextTime->getLostTime();
+  int64_t storeTime = quantizeTime(gameTime) + zbe::TIME_QUANTUM;
+  InputText it(text, storeTime);
+  inputTextBuffer->insert(it);
 }
 
 inline void SDLEventDispatcher::setMouseButtonState(SDL_Event &event, float value) {

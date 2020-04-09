@@ -15,6 +15,7 @@
 #include <array>
 #include <string>
 #include <unordered_map>
+#include <vector>
 
 #include "ZBE/core/tools/shared/Value.h"
 #include "ZBE/core/tools/math/Vector.h"
@@ -32,7 +33,7 @@ class ZBEAPI Entity {
   public:
     /** \brief Empty constructor.
      */
-    Entity() : tl(), cTime(SysTime::getInstance()), dv(), fv(), uv(), iv(), bv(), v3v(), v2v(), sv() {}
+    Entity() : tl(), cTime(SysTime::getInstance()), dv(), fv(), uv(), iv(), bv(), v3v(), v2v(), sv(), svv() {}
 
     /** \brief The destructor make sure the entity is marked as ERASED in every Ticket.
      */
@@ -175,6 +176,17 @@ class ZBEAPI Entity {
     typename std::enable_if<std::is_same<std::string, T>::value, void>::type
     set(uint64_t id, std::shared_ptr<Value<T> > val) {setString(id, val);}
 
+    /** \brief Sets a Value<std::vector<std::string> > at identifier id.
+     * This method should be called only once per id.
+     *  \param id identifier
+     *  \param val Value<std::vector<std::string> > to be set.
+     *  \sa getInt, setUint, setDouble, setFloat, setString
+     */
+    void setStringVector(uint64_t id, std::shared_ptr<Value<std::vector<std::string> > > val);
+    template<typename T>
+    typename std::enable_if<std::is_same<std::vector<std::string> , T>::value, void>::type
+    set(uint64_t id, std::shared_ptr<Value<T> > val) {setStringVector(id, val);}
+
     /** \brief Returns the Value<double> associated the identifier id.
      *  \param id identifier
      *  \return Value<double>.
@@ -255,6 +267,16 @@ class ZBEAPI Entity {
     typename std::enable_if<std::is_same<T, std::string>::value && std::is_same<U, std::shared_ptr<Value<T> > >::value, U>::type
     get(uint64_t id) {return getString(id);}
 
+    /** \brief Returns the Value<std::vector<std::string> > associated the identifier id.
+     *  \param id identifier
+     *  \return Value<std::vector<std::string> >.
+     *  \sa setFloat, getDouble, getUint, getInt, getString
+     */
+    std::shared_ptr<Value<std::vector<std::string> > > getStringVector(uint64_t id);
+    template<typename T, typename U>
+    typename std::enable_if<std::is_same<T, std::vector<std::string> >::value && std::is_same<U, std::shared_ptr<Value<T> > >::value, U>::type
+    get(uint64_t id) {return getStringVector(id);}
+
   private:
     std::unordered_map<uint64_t, std::shared_ptr<Ticket> > tl;
 
@@ -272,6 +294,7 @@ class ZBEAPI Entity {
     std::unordered_map<uint64_t, std::shared_ptr<Value<Vector3D> > > v3v;
     std::unordered_map<uint64_t, std::shared_ptr<Value<Vector2D> > > v2v;
     std::unordered_map<uint64_t, std::shared_ptr<Value<std::string> > > sv;
+    std::unordered_map<uint64_t, std::shared_ptr<Value<std::vector<std::string> > > > svv;
 };
 
 template<unsigned n>

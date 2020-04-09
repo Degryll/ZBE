@@ -40,16 +40,17 @@ public:
   /** brief Returns the value.
    *  return value;
    */
-  T get() {
+  T& get() {
     return v;
   }
 
-  /** brief Modifies stored value by the param received.
-   *  param value Value to add.
-   */
-  void add(T value) {
-    v += value;
-  }
+// TODO no funciona con vector
+//  /** brief Modifies stored value by the param received.
+//   *  param value Value to add.
+//   */
+//  void add(T value) {
+//    v += value;
+//  }
 
 private:
   T v;

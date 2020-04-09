@@ -25,12 +25,12 @@ public:
   /** brief Returns the value.
    *  return value;
    */
-  virtual T get() = 0;
+  virtual T& get() = 0;
 
   /** brief Returns the value.
    *  return value;
    */
-  T operator()() {
+  T& operator()() {
     return get();
   }
 
@@ -39,10 +39,11 @@ public:
    */
   virtual void set(T value) = 0;
 
-  /** brief Modifies stored value by the param received.
-   *  param value Value to add.
-   */
-  virtual void add(T value) = 0;
+// TODO no funciona con vector
+//  /** brief Modifies stored value by the param received.
+//   *  param value Value to add.
+//   */
+//  virtual void add(T value) = 0;
 };
 
 }  // namespace zbe

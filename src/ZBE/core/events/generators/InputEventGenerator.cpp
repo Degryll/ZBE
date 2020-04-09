@@ -19,6 +19,15 @@ void InputEventGenerator::run() {
       manager->generate(input);
     }
   } // for each currentInput
+
+  if (handler != nullptr) {
+    std::vector<InputText> itv;
+    inputTextBuffer->getRange(contextTime->getInitFrameTime(), contextTime->getEndFrameTime(), itv);
+    for(auto input : itv) {
+      TextEvent* e = new TextEvent(eventId, input.getTime(), input.getText(), handler);
+      store.storeEvent(e);
+    } // for each currentInput
+  }
 }
 
 }  // namespace zbe

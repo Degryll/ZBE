@@ -1,6 +1,8 @@
 #include "degryllmain.h"
 
 #include <cstdio>
+#include <cstdint>
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -9,522 +11,240 @@
 
 //#include "ZBE/core/zbe.h"
 #include "ZBE/core/entities/Entity.h"
+#include "ZBE/core/entities/avatars/Avatar.h"
+#include "ZBE/core/entities/avatars/implementations/BaseAvatar.h"
 #include "ZBE/SDL/OGL/SDLOGLWindow.h"
+#include "ZBE/core/tools/shared/Value.h"
+#include "ZBE/core/tools/shared/implementations/SimpleValue.h"
+//#include "ZBE/core/events/handlers/InputHandler.h"
+//#include "ZBE/core/entities/avatars/Avatar.h"
 
+#include "ZBE/core/tools/containers/TicketedForwardList.h"
 
-//std::string text;
-//std::vector<std::string> historial;
+#include "ZBE/core/daemons/MainLoop.h"
+#include "ZBE/core/daemons/Daemon.h"
+#include "ZBE/core/daemons/DaemonMaster.h"
+#include "ZBE/core/daemons/Punishers.h"
 
-class Console : public zbe::Entity {
-public:
-  Console() : historial(), text(), current(0) {}
+#include "ZBE/core/io/Input.h"
 
-  void addutf8(std::string utf8) {
-    if (SDL_strlen(utf8.c_str()) == 0 || utf8.c_str()[0] == '\n') return;
-    text += utf8;
-    current = historial.size();
-  }
-  void removeglyph() {
-    while(1) {
-      if (text.size()==0) {
-        break;
-      }
-      if ((text.back() & 0x80) == 0x00) {
-        /* One byte */
-        text.pop_back();
-        break;
-      }
-      if ((text.back() & 0xC0) == 0x80) {
-        /* Byte from the multibyte sequence */
-        text.pop_back();
-      }
-      if ((text.back() & 0xC0) == 0xC0) {
-        /* First byte of multibyte sequence */
-        text.pop_back();
-        break;
-      }
-    }  // while(1)
-  }
-  void execute() {
-    historial.push_back(text);
-    text.clear();
-    current++;
-  }
-  int first() { return std::max(0, current - 10); }
-  int last() { return (current); }
-  std::string getLine(size_t lineno) {
-    using namespace std::string_literals;
-    return (">> "s + historial[lineno]);
-  }
-  std::string command() {
-    using namespace std::string_literals;
-    return (">> "s + text);
-  }
+#include "ZBE/core/events/generators/util/InputStatusManager.h"
+#include "ZBE/core/events/generators/InputEventGenerator.h"
+//#include "ZBE/core/events/generators/TimeEventGenerator.h"
 
-  void lookup() {current = std::max(0, current-1);}
-  void lookdown() {current = std::min(int(historial.size()), current+1);}
+#include "ZBE/SDL/tools/SDLTimer.h"
+#include "ZBE/SDL/daemons/BasicPreLoopSDLDaemon.h"
+#include "ZBE/SDL/daemons/BasicPostLoopSDLDaemon.h"
+#include "ZBE/SDL/drawers/ConsoleTextSDLDrawer.h"
+#include "ZBE/core/daemons/MainLoopExit.h"
+#include "ZBE/events/handlers/input/DaemonIH.h"
+#include "ZBE/events/handlers/input/AddText.h"
 
-private:
-  std::vector<std::string> historial;
-  std::string text;
-  int current;
-};
+#include "ZBE/entities/implementations/Console.h"
+
+//class Console : public zbe::Entity {
+//public:
+//  Console() : vh(std::make_shared<zbe::SimpleValue<std::vector<std::string> > >()),
+//              vc(std::make_shared<zbe::SimpleValue<std::string> >("")),
+//              vl(std::make_shared<zbe::SimpleValue<int64_t> >(0)) {}
+//
+//  void addutf8(std::string utf8) {
+//    if (SDL_strlen(utf8.c_str()) == 0 || utf8.c_str()[0] == '\n') return;
+////    text += utf8;
+//    vc->set(vc->get() + utf8);
+////    current = historial.size();
+//    vl->set(vh->get().size());
+//  }
+//
+//  void removeglyph() {
+//    while(1) {
+//      if (vc->get().size()==0) {
+//        break;
+//      }
+//      if ((vc->get().back() & 0x80) == 0x00) {
+//        /* One byte */
+//        vc->get().pop_back();
+//        break;
+//      }
+//      if ((vc->get().back() & 0xC0) == 0x80) {
+//        /* Byte from the multibyte sequence */
+//        vc->get().pop_back();
+//      }
+//      if ((vc->get().back() & 0xC0) == 0xC0) {
+//        /* First byte of multibyte sequence */
+//        vc->get().pop_back();
+//        break;
+//      }
+//    }  // while(1)
+//  }
+//
+//  void execute() {
+//    vh->get().push_back(vc->get());
+//    vc->get().clear();
+////    current++;
+//    vl->set(vl->get() + 1);
+//  }
+//  int first() { return std::max(0ll, vl->get() - 10); }
+//  int last() { return (vl->get()); }
+//  std::string getLine(size_t lineno) {
+//    using namespace std::string_literals;
+//    return (">> "s + vh->get()[lineno]);
+//  }
+//  std::string command() {
+//    using namespace std::string_literals;
+//    return (">> "s + vc->get());
+//  }
+//
+//  void lookup() {vl->set(std::max(0ll, vl->get()-1));}
+//  void lookdown() {vl->set(std::min(int64_t(vh->get().size()), vl->get()+1));}
+//
+//private:
+//  std::shared_ptr<zbe::Value<std::vector<std::string> > > vh;
+//  std::shared_ptr<zbe::Value<std::string> > vc;
+//  std::shared_ptr<zbe::Value<int64_t> > vl;
+//};
+
+//int degryllmain(int, char*[]) {
+//  printf("Hola Mundo!\n");
+//
+//  std::shared_ptr<zbe::SDLOGLWindow> window = std::make_shared<zbe::SDLOGLWindow>("Console", 50, 50, 640, 480);
+//
+//  auto fs = window->getFontStore();
+//  auto fid = fs->loadFont("data\\fonts\\Hack-Regular.ttf", 14, {192, 192, 192, 255});
+//
+//  glClearColor(0, 0, 0, 0);
+////  SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+//
+//  Console c;
+//
+//  bool quit = false;
+//  SDL_Event event;
+//
+//  while (!quit) {
+//    window->clear();
+//
+//    SDL_WaitEvent(&event);
+//
+//    switch (event.type) {
+//      case SDL_QUIT:
+//        quit = true;
+//        break;
+//      case SDL_MOUSEWHEEL:
+//        if (event.wheel.y > 0) {
+//          c.lookup();
+//        } else if (event.wheel.y < 0) {
+//          c.lookdown();
+//        }
+//        break;
+//      case SDL_KEYDOWN:
+//        switch (event.key.keysym.sym) {
+//          case SDLK_ESCAPE:
+//            quit = true;
+//            break;
+//          case SDLK_RETURN:
+//            c.execute();
+//            break;
+//          case SDLK_BACKSPACE:
+//            c.removeglyph();
+//            break;
+//          case SDLK_a:
+//            printf("A pulsada.\n");
+//            break;
+//        }
+//        break;
+//        case SDL_TEXTINPUT:
+//          c.addutf8(event.text.text);
+//          break;
+//    }
+//
+//    int w = 0;
+//    int h = 0;
+//    int posy = 0;
+//    for(int i = c.first(); i < c.last(); i++) {
+//      SDL_Texture* texture = fs->renderText(fid, c.getLine(i).c_str());
+////      SDL_Surface *surface = TTF_RenderUTF8_Shaded(font, c.getLine(i).c_str(), cf, cb);
+////      SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+//      SDL_QueryTexture(texture, 0, 0, &w, &h);
+//      SDL_Rect dst = {0, posy, w, h};
+//      window->render(texture, nullptr, &dst);
+//      posy += h;
+//
+////      SDL_FreeSurface(surface);
+//      SDL_DestroyTexture(texture);
+//    }
+//
+//    SDL_Texture* texture = fs->renderText(fid, c.command().c_str());
+////    SDL_Surface *surface = TTF_RenderUTF8_Shaded(font, c.command().c_str(), cf, cb);
+////    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+//    SDL_QueryTexture(texture, 0, 0, &w, &h);
+//    SDL_Rect dst = {0, posy, w, h};
+//
+//    window->render(texture, nullptr, &dst);
+////    SDL_FreeSurface(surface);
+//    SDL_DestroyTexture(texture);
+//
+//    window->present();
+//  }
+//
+//  return (0);
+//}
 
 int degryllmain(int, char*[]) {
-  printf("Hola Mundo!\n");
-
+  const uint64_t INPUTEVENT = 1;
+  const uint64_t TEXTEVENT = 2;
   std::shared_ptr<zbe::SDLOGLWindow> window = std::make_shared<zbe::SDLOGLWindow>("Console", 50, 50, 640, 480);
-
-//  SDL_Init(SDL_INIT_VIDEO);
-//  TTF_Init();
-
-//  SDL_Window * window = SDL_CreateWindow("Console",
-//      SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640,
-//      480, 0);
-
   auto fs = window->getFontStore();
   auto fid = fs->loadFont("data\\fonts\\Hack-Regular.ttf", 14, {192, 192, 192, 255});
 
-//  SDL_Renderer * renderer = SDL_CreateRenderer(window, -1, 0);
-//  TTF_Font *font = TTF_OpenFont("data\\fonts\\Hack-Regular.ttf", 14);
-//  SDL_Color cf = {192, 192, 192, 255};
-//  SDL_Color cb = {0, 0, 0, 255};
+  std::shared_ptr<zbe::DaemonMaster> pre = std::make_shared<zbe::DaemonMaster>();
+  std::shared_ptr<zbe::DaemonMaster> post = std::make_shared<zbe::DaemonMaster>();
+  std::shared_ptr<zbe::DaemonMaster> event = std::make_shared<zbe::DaemonMaster>();
+  std::shared_ptr<zbe::DaemonMaster> common = std::make_shared<zbe::DaemonMaster>();
+  std::shared_ptr<zbe::DaemonMaster> react = std::make_shared<zbe::DaemonMaster>();
+  std::shared_ptr<zbe::DaemonMaster> draw = std::make_shared<zbe::DaemonMaster>();
+  std::shared_ptr<zbe::MainLoop> loop = std::make_shared<zbe::MainLoop>(pre, post, event, common, react, draw);
 
-  glClearColor(0, 0, 0, 0);
-//  SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+  std::shared_ptr<zbe::Daemon> preLoopSDL = std::make_shared<zbe::BasicPreLoopSDLDaemon>(window);
+  pre->addDaemon(preLoopSDL);
+  std::shared_ptr<zbe::Daemon> postLoopSDL = std::make_shared<zbe::BasicPostLoopSDLDaemon>(window);
+  post->addDaemon(postLoopSDL);
 
-  Console c;
 
-  bool quit = false;
-  SDL_Event event;
+  auto sysTimer = std::make_shared<zbe::SDLTimer>(true);
+  std::shared_ptr<zbe::SysTime> sysTime = zbe::SysTime::getInstance();
+  sysTime->setSystemTimer(sysTimer);
 
-  while (!quit) {
-    window->clear();
-//    SDL_RenderClear(renderer);
-//    glClear(GL_COLOR_BUFFER_BIT);
+  zbe::SDLEventDispatcher& sdlEDispatcher = zbe::SDLEventDispatcher::getInstance();
+  std::shared_ptr<zbe::InputBuffer> inputBuffer = sdlEDispatcher.getInputBuffer();
+  std::shared_ptr<zbe::InputTextBuffer> inputTextBuffer = sdlEDispatcher.getInputTextBuffer();
 
-    SDL_WaitEvent(&event);
+  std::shared_ptr<zbe::Value<uint64_t> > fidv = std::make_shared<zbe::SimpleValue<uint64_t> >(fid);
+  std::shared_ptr<zbe::Value<std::string> > vc = std::make_shared<zbe::SimpleValue<std::string> >();
+  std::shared_ptr<zbe::Value<int64_t> > vl = std::make_shared<zbe::SimpleValue<int64_t> >();
+  std::shared_ptr<zbe::Value<std::vector<std::string> > > vh = std::make_shared<zbe::SimpleValue<std::vector<std::string> > >();
+  std::shared_ptr<zbe::Console> console = std::make_shared<zbe::Console>(fidv, vc, vl, vh);
+  std::shared_ptr<zbe::TextHandler> addText = std::make_shared<zbe::AddText>(vc, vl, vh);
 
-    switch (event.type) {
-      case SDL_QUIT:
-        quit = true;
-        break;
-      case SDL_MOUSEWHEEL:
-        if (event.wheel.y > 0) {
-          c.lookup();
-        } else if (event.wheel.y < 0) {
-          c.lookdown();
-        }
-        break;
-      case SDL_KEYDOWN:
-        switch (event.key.keysym.sym) {
-          case SDLK_ESCAPE:
-            quit = true;
-            break;
-          case SDLK_RETURN:
-            c.execute();
-            break;
-          case SDLK_BACKSPACE:
-//            while(1) {
-//              if (text.size()==0) {
-//                break;
-//              }
-//              if ((text.back() & 0x80) == 0x00) {
-//                /* One byte */
-//                text.pop_back();
-//                break;
-//              }
-//              if ((text.back() & 0xC0) == 0x80) {
-//                /* Byte from the multibyte sequence */
-//                text.pop_back();
-//              }
-//              if ((text.back() & 0xC0) == 0xC0) {
-//                /* First byte of multibyte sequence */
-//                text.pop_back();
-//                break;
-//              }
-//            }
-            c.removeglyph();
-            break;
-        }
-        break;
-        case SDL_TEXTINPUT:
-//          if (SDL_strlen(event.text.text) == 0 || event.text.text[0] == '\n')// || markedRect.w < 0)
-//              break;
-//          text += event.text.text;
-          c.addutf8(event.text.text);
-          //fprintf(stderr, "Keyboard: text input \"%s\"\n", event.text.text);
+  std::shared_ptr<zbe::InputEventGenerator> ieg = std::make_shared<zbe::InputEventGenerator>(inputBuffer, inputTextBuffer, TEXTEVENT, addText);
+  std::shared_ptr<zbe::MappedInputStatusManager> ism = std::make_shared<zbe::MappedInputStatusManager>(INPUTEVENT);
+  ieg->addManager(ism);
 
-          //if (SDL_strlen(text) + SDL_strlen(event.text.text) < sizeof(text))
-          //    SDL_strlcat(text, event.text.text, sizeof(text));
+  event->addDaemon(ieg);
 
-          //fprintf(stderr, "text inputed: %s\n", text);
+  auto exitv = std::make_shared<zbe::SimpleValue<int64_t> >();
+  std::shared_ptr<zbe::Daemon> exitd = std::make_shared<zbe::MainLoopExit>(loop, exitv, 42);
+  zbe::DaemonIH exitih(exitd);
+  ism->addHandler(zbe::ZBEK_ESCAPE, &exitih);
 
-          // After text inputed, we can clear up markedText because it
-          // is committed
-          //markedText[0] = 0;
-          //Redraw();
-          break;
-    }
+  std::shared_ptr<zbe::MAvatar<uint64_t, std::string, int64_t, std::vector<std::string> > > cavatar = std::make_shared<zbe::MBaseAvatar<uint64_t, std::string, int64_t, std::vector<std::string> > >(console, {1, 1, 1, 1});
+  auto cdl = std::make_shared<zbe::TicketedForwardList<zbe::MAvatar<uint64_t, std::string, int64_t, std::vector<std::string> > > >();
+  cdl->push_front(cavatar);
+  std::shared_ptr<zbe::Daemon> drawerDaemon = std::make_shared<zbe::BehaviorDaemon<zbe::ConsoleTextDrawer, zbe::TicketedForwardList<zbe::MAvatar<uint64_t, std::string, int64_t, std::vector<std::string> > > > >(std::make_shared<zbe::ConsoleTextDrawer>(window), cdl);
+  draw->addDaemon(drawerDaemon);
 
-    int w = 0;
-    int h = 0;
-    int posy = 0;
-    for(int i = c.first(); i < c.last(); i++) {
-      SDL_Texture* texture = fs->renderText(fid, c.getLine(i).c_str());
-//      SDL_Surface *surface = TTF_RenderUTF8_Shaded(font, c.getLine(i).c_str(), cf, cb);
-//      SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
-      SDL_QueryTexture(texture, 0, 0, &w, &h);
-      SDL_Rect dst = {0, posy, w, h};
-      window->render(texture, nullptr, &dst);
-//      SDL_RenderCopy(renderer, texture, 0, &dst);
-      posy += h;
 
-//      SDL_FreeSurface(surface);
-      SDL_DestroyTexture(texture);
 
-    }
+  loop->run();
 
-    SDL_Texture* texture = fs->renderText(fid, c.command().c_str());
-//    SDL_Surface *surface = TTF_RenderUTF8_Shaded(font, c.command().c_str(), cf, cb);
-//    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
-    SDL_QueryTexture(texture, 0, 0, &w, &h);
-    SDL_Rect dst = {0, posy, w, h};
-
-    window->render(texture, nullptr, &dst);
-//    SDL_RenderCopy(renderer, texture, 0, &dst);
-//    SDL_FreeSurface(surface);
-    SDL_DestroyTexture(texture);
-
-//    window->glSwap();
-    window->present();
-//    SDL_RenderPresent(renderer);
-  }
-
-//  TTF_CloseFont(font);
-//  SDL_DestroyRenderer(renderer);
-//  SDL_DestroyWindow(window);
-//  TTF_Quit();
-//  SDL_Quit();
-
-  getchar();
-  return (0);
+  return 0;
 }
-
-///*
-//  Copyright (C) 1997-2013 Sam Lantinga <slouken@libsdl.org>
-//  This software is provided 'as-is', without any express or implied
-//  warranty.  In no event will the authors be held liable for any damages
-//  arising from the use of this software.
-//  Permission is granted to anyone to use this software for any purpose,
-//  including commercial applications, and to alter it and redistribute it
-//  freely.
-//*/
-///* A simple program to test the Input Method support in the SDL library (2.0+) */
-//
-//#include <stdlib.h>
-//#include <stdio.h>
-//#include <string.h>
-//
-//#include "SDL2/SDL.h"
-//#include "SDL2/SDL_ttf.h"
-//
-////#include "SDL2/SDL_test_common.h"
-//
-//#define DEFAULT_WINDOW_WIDTH 640
-//#define DEFAULT_PTSIZE  30
-////#define DEFAULT_FONT    "/System/Library/Fonts/华文细黑.ttf"
-//#define DEFAULT_FONT    "data/fonts/Hack-Regular.ttf"
-//#define MAX_TEXT_LENGTH 256
-//
-//static SDL_Renderer * renderer;
-//
-////static SDLTest_CommonState *state;
-//static SDL_Rect textRect, markedRect;
-////static SDL_Color lineColor = {0,0,0,0};
-////static SDL_Color backColor = {255,255,255,0};
-//static SDL_Color textColor = {0,0,0,0};
-//static char text[MAX_TEXT_LENGTH], markedText[SDL_TEXTEDITINGEVENT_TEXT_SIZE];
-//static int cursor = 0;
-//static TTF_Font *font;
-//
-//size_t utf8_length(unsigned char c)
-//{
-//    c = (unsigned char)(0xff & c);
-//    if (c < 0x80)
-//        return 1;
-//    else if ((c >> 5) ==0x6)
-//        return 2;
-//    else if ((c >> 4) == 0xe)
-//        return 3;
-//    else if ((c >> 3) == 0x1e)
-//        return 4;
-//    else
-//        return 0;
-//}
-//
-//char *utf8_next(char *p)
-//{
-//    size_t len = utf8_length(*p);
-//    size_t i = 0;
-//    if (!len)
-//        return 0;
-//
-//    for (; i < len; ++i)
-//    {
-//        ++p;
-//        if (!*p)
-//            return 0;
-//    }
-//    return p;
-//}
-//
-//char *utf8_advance(char *p, size_t distance)
-//{
-//    size_t i = 0;
-//    for (; i < distance && p; ++i)
-//    {
-//        p = utf8_next(p);
-//    }
-//    return p;
-//}
-//
-//void usage()
-//{
-//    printf("usage: testime [--font fontfile]\n");
-//    exit(0);
-//}
-//
-//void InitInput() {
-//    /* Prepare a rect for text input */
-//    textRect.x = textRect.y = 100;
-//    textRect.w = DEFAULT_WINDOW_WIDTH - 2 * textRect.x;
-//    textRect.h = 50;
-//
-//    text[0] = 0;
-//    markedRect = textRect;
-//    markedText[0] = 0;
-//
-//    SDL_StartTextInput();
-//}
-//
-//void CleanupVideo() {
-//    SDL_StopTextInput();
-//    TTF_CloseFont(font);
-//    TTF_Quit();
-//}
-//
-//
-//void _Redraw(SDL_Renderer * renderer) {
-//    int w = 0, h = textRect.h;
-//    SDL_Rect cursorRect, underlineRect;
-//
-//    SDL_SetRenderDrawColor(renderer, 255,255,255,255);
-//    SDL_RenderFillRect(renderer,&textRect);
-//
-//    if (*text)
-//    {
-//        SDL_Surface *textSur = TTF_RenderUTF8_Blended(font, text, textColor);
-//        SDL_Rect dest = {textRect.x, textRect.y, textSur->w, textSur->h };
-//
-//        SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer,textSur);
-//        SDL_FreeSurface(textSur);
-//
-//        SDL_RenderCopy(renderer,texture,NULL,&dest);
-//        SDL_DestroyTexture(texture);
-//        TTF_SizeUTF8(font, text, &w, &h);
-//    }
-//
-//    markedRect.x = textRect.x + w;
-//    markedRect.w = textRect.w - w;
-//    if (markedRect.w < 0)
-//    {
-//        // Stop text input because we cannot hold any more characters
-//        SDL_StopTextInput();
-//        return;
-//    }
-//    else
-//    {
-//        SDL_StartTextInput();
-//    }
-//
-//    cursorRect = markedRect;
-//    cursorRect.w = 2;
-//    cursorRect.h = h;
-//
-//    SDL_SetRenderDrawColor(renderer, 255,255,255,255);
-//    SDL_RenderFillRect(renderer,&markedRect);
-//
-//    if (markedText[0])
-//    {
-//        if (cursor)
-//        {
-//            char *p = utf8_advance(markedText, cursor);
-//            char c = 0;
-//            if (!p)
-//                p = &markedText[strlen(markedText)];
-//
-//            c = *p;
-//            *p = 0;
-//            TTF_SizeUTF8(font, markedText, &w, 0);
-//            cursorRect.x += w;
-//            *p = c;
-//        }
-//        SDL_Surface *textSur = TTF_RenderUTF8_Blended(font, markedText, textColor);
-//        SDL_Rect dest = {markedRect.x, markedRect.y, textSur->w, textSur->h };
-//        TTF_SizeUTF8(font, markedText, &w, &h);
-//        SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer,textSur);
-//        SDL_FreeSurface(textSur);
-//
-//        SDL_RenderCopy(renderer,texture,NULL,&dest);
-//        SDL_DestroyTexture(texture);
-//
-//        underlineRect = markedRect;
-//        underlineRect.y += (h - 2);
-//        underlineRect.h = 2;
-//        underlineRect.w = w;
-//
-//        SDL_SetRenderDrawColor(renderer, 0,0,0,0);
-//        SDL_RenderFillRect(renderer,&markedRect);
-//    }
-//
-//    SDL_SetRenderDrawColor(renderer, 0,0,0,0);
-//    SDL_RenderFillRect(renderer,&cursorRect);
-//
-//    SDL_SetTextInputRect(&markedRect);
-//}
-//
-//void Redraw() {
-//        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
-//        SDL_RenderClear(renderer);
-//
-//        _Redraw(renderer);
-//
-//        SDL_RenderPresent(renderer);
-////    }
-//}
-//
-//int degryllmain(int, char *[]) {
-//    int done;
-//    SDL_Event event;
-//    const char *fontname = DEFAULT_FONT;
-//
-//    SDL_Init(SDL_INIT_VIDEO);
-//
-//    /* Initialize fonts */
-//    TTF_Init();
-//
-//    font = TTF_OpenFont(fontname, DEFAULT_PTSIZE);
-//    if (! font)
-//    {
-//        fprintf(stderr, "Failed to find font: %s\n", TTF_GetError());
-//        exit(-1);
-//    }
-//
-//    printf("Using font: %s\n", fontname);
-//    atexit(SDL_Quit);
-//
-//    InitInput();
-//    /* Create the windows and initialize the renderers */
-//    SDL_Window * window = SDL_CreateWindow("Console", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, DEFAULT_WINDOW_WIDTH, 480, 0);
-//    renderer = SDL_CreateRenderer(window, -1, 0);
-//    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
-//    SDL_SetRenderDrawColor(renderer, 0xA0, 0xA0, 0xA0, 0xFF);
-//    SDL_RenderClear(renderer);
-//
-//    Redraw();
-//    /* Main render loop */
-//    done = 0;
-//    while (!done) {
-//        /* Check for events */
-//        while (SDL_PollEvent(&event)) {
-//            //SDLTest_CommonEvent(state, &event, &done);
-//            switch(event.type) {
-//                case SDL_KEYDOWN: {
-//                    switch (event.key.keysym.sym)
-//                    {
-//                        case SDLK_RETURN:
-//                             text[0]=0x00;
-//                             Redraw();
-//                             break;
-//                        case SDLK_BACKSPACE:
-//                             {
-//                                 int textlen=SDL_strlen(text);
-//
-//                                 do {
-//                                     if (textlen==0)
-//                                     {
-//                                         break;
-//                                     }
-//                                     if ((text[textlen-1] & 0x80) == 0x00)
-//                                     {
-//                                         /* One byte */
-//                                         text[textlen-1]=0x00;
-//                                         break;
-//                                     }
-//                                     if ((text[textlen-1] & 0xC0) == 0x80)
-//                                     {
-//                                         /* Byte from the multibyte sequence */
-//                                         text[textlen-1]=0x00;
-//                                         textlen--;
-//                                     }
-//                                     if ((text[textlen-1] & 0xC0) == 0xC0)
-//                                     {
-//                                         /* First byte of multibyte sequence */
-//                                         text[textlen-1]=0x00;
-//                                         break;
-//                                     }
-//                                 } while(1);
-//
-//                                 Redraw();
-//                             }
-//                             break;
-//                    }
-//
-//                    if (done)
-//                    {
-//                        break;
-//                    }
-//
-//                    fprintf(stderr,
-//                            "Keyboard: scancode 0x%08X = %s, keycode 0x%08X = %s\n",
-//                            event.key.keysym.scancode,
-//                            SDL_GetScancodeName(event.key.keysym.scancode),
-//                            event.key.keysym.sym, SDL_GetKeyName(event.key.keysym.sym));
-//                    break;
-//
-//                case SDL_TEXTINPUT:
-//                    if (SDL_strlen(event.text.text) == 0 || event.text.text[0] == '\n' ||
-//                        markedRect.w < 0)
-//                        break;
-//
-//                    fprintf(stderr, "Keyboard: text input \"%s\"\n", event.text.text);
-//
-//                    if (SDL_strlen(text) + SDL_strlen(event.text.text) < sizeof(text))
-//                        SDL_strlcat(text, event.text.text, sizeof(text));
-//
-//                    fprintf(stderr, "text inputed: %s\n", text);
-//
-//                    // After text inputed, we can clear up markedText because it
-//                    // is committed
-//                    markedText[0] = 0;
-//                    Redraw();
-//                    break;
-//
-//                case SDL_TEXTEDITING:
-//                    fprintf(stderr, "text editing \"%s\", selected range (%d, %d)\n",
-//                            event.edit.text, event.edit.start, event.edit.length);
-//
-//                    strcpy(markedText, event.edit.text);
-//                    cursor = event.edit.start;
-//                    Redraw();
-//                    break;
-//                }
-//                break;
-//
-//            }
-//        }
-//    }
-//    CleanupVideo();
-//    return 0;
-//}

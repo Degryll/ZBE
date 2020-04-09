@@ -154,6 +154,15 @@ void Entity::setString(uint64_t id, std::shared_ptr<Value<std::string> > val) {
   }
 }
 
+void Entity::setStringVector(uint64_t id, std::shared_ptr<Value<std::vector<std::string> > > val) {
+  auto it = svv.find(id);
+  if (it != svv.end()) {
+    SysError::setError("Overriding entity String vector value not allowed.");
+  } else {
+    svv[id] = val;
+  }
+}
+
 std::shared_ptr<Value<double> >  Entity::getDouble(uint64_t id) {
   auto it = dv.find(id);
   if (it == dv.end()) {
@@ -231,6 +240,16 @@ std::shared_ptr<Value<std::string> > Entity::getString(uint64_t id) {
     return (std::shared_ptr<Value<std::string> >());
   } else {
     return (sv[id]);
+  }
+}
+
+std::shared_ptr<Value<std::vector<std::string> > > Entity::getStringVector(uint64_t id) {
+  auto it = svv.find(id);
+  if (it == svv.end()) {
+    SysError::setError("Entity has no string value at given index " +  std::to_string(id) + ".");
+    return (std::shared_ptr<Value<std::vector<std::string> > >());
+  } else {
+    return (svv[id]);
   }
 }
 
