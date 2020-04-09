@@ -12,9 +12,10 @@
 
 #include <cstdint>
 
-#include "ZBE/OGL/graphics/OGLModel.h"
-
+#include "ZBE/core/entities/avatars/Avatar.h"
 #include "ZBE/core/system/system.h"
+
+#include "ZBE/OGL/graphics/OGLModel.h"
 
 namespace zbe {
 
