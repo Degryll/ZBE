@@ -20,7 +20,7 @@ namespace zbe {
 
 /** \brief This implements an entity that can be drawn.
  */
-class ZBEAPI SimpleDrawable : virtual public Drawable {
+class SimpleDrawable : virtual public Drawable {
 public:
   /** \brief Construct a SimpleDrawable with its top-left corner, width and height, and a index of the graphic resources.
    *  \param x The left coordinate.

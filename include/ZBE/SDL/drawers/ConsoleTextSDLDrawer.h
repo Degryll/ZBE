@@ -25,7 +25,7 @@ namespace zbe {
 
 /** \brief This draws a simple sprite (an image).
  */
-class ZBEAPI ConsoleTextDrawer : public Behavior<uint64_t, std::string, int64_t, std::vector<std::string> > {
+class ConsoleTextDrawer : public Behavior<uint64_t, std::string, int64_t, std::vector<std::string> > {
   public:
     ConsoleTextDrawer(const ConsoleTextDrawer&) = delete; //!< Avoid copy.
     void operator=(const ConsoleTextDrawer&) = delete; //!< Avoid copy.
@@ -59,10 +59,10 @@ class ZBEAPI ConsoleTextDrawer : public Behavior<uint64_t, std::string, int64_t,
     void apply(std::shared_ptr<MAvatar<uint64_t, std::string, int64_t, std::vector<std::string> > > avatar) {
       using namespace std::string_literals;
 
-      auto vh = avatar->get<1, std::vector<std::string> >()->get();
-      auto vc = avatar->get<2, std::string>()->get();
-      auto vl = avatar->get<3, int64_t>()->get();
       auto fid = avatar->get<4, uint64_t>()->get();
+      auto vc = avatar->get<3, std::string>()->get();
+      auto vl = avatar->get<2, int64_t>()->get();
+      auto vh = avatar->get<1, std::vector<std::string> >()->get();
 
       int ini = std::max(0ll, vl - 10);
       int fin = vl;

@@ -1,0 +1,13 @@
+print("New Move");
+
+def myMove(posx, posy, velx, vely, acelx, acely, time) {
+  vely = 50;
+  posy = posy + vely * time;
+  if (posy > 400) {
+    posy = 300;
+  }
+}
+
+movebehavior.setFunction(myMove);
+
+// chai movebehavior.setFunction(fun(a,b,c,d,e,f,t){d=50;b=b+d*t;if(b>400){d=300;}})

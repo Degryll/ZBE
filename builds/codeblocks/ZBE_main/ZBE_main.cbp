@@ -22,6 +22,7 @@
 					<Add option="-isystem ../../../extlibs/json" />
 					<Add option="-isystem ../../../extlibs/glm/0.9.9.0" />
 					<Add option="-isystem ../../../extlibs/tinyobjloader" />
+					<Add option="-isystem ../../../extlibs\ChaiScript-6.1.0" />
 					<Add option="-std=c++17" />
 					<Add option="-D_GLIBCXX_USE_CXX11_ABI=0" />
 					<Add directory="../../../src/ZBE_main/include" />
@@ -43,6 +44,7 @@
 					<Add directory="../../../extlibs/SDL2_net/2.0.1/include" />
 					<Add directory="../../../extlibs/OALSoft/1.18.2/include" />
 					<Add directory="../../../extlibs/stb_vorbis" />
+					<Add directory="../../../extlibs/ChaiScript-6.1.0/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
@@ -81,6 +83,7 @@
 					<Add option="-isystem ../../../extlibs/json" />
 					<Add option="-isystem ../../../extlibs/glm/0.9.9.0" />
 					<Add option="-isystem ../../../extlibs/tinyobjloader" />
+					<Add option="-isystem ../../../extlibs/ChaiScript-6.1.0/include" />
 					<Add option="-std=c++17" />
 					<Add option="-D_GLIBCXX_USE_CXX11_ABI=0" />
 					<Add directory="../../../src/ZBE_main/include" />
@@ -101,6 +104,7 @@
 					<Add directory="../../../extlibs/tinyobjloader" />
 					<Add directory="../../../extlibs/OALSoft/1.18.2/include" />
 					<Add directory="../../../extlibs/stb_vorbis" />
+					<Add directory="../../../extlibs/ChaiScript-6.1.0/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -144,6 +148,7 @@
 					<Add option="-isystem ../../../extlibs/json" />
 					<Add option="-isystem ../../../extlibs/glm/0.9.9.0" />
 					<Add option="-isystem ../../../extlibs/tinyobjloader" />
+					<Add option="-isystem ../../../extlibs\ChaiScript-6.1.0" />
 					<Add option="-std=c++17" />
 					<Add option="`sdl-config --cflags --libs`" />
 					<Add directory="../../../src/ZBE_main/include" />
@@ -165,6 +170,7 @@
 					<Add directory="../../../extlibs/OALSoft/1.18.2/include" />
 					<Add directory="../../../extlibs/stb_vorbis" />
 					<Add directory="../../../extlibs/SDL2_net/2.0.1/include" />
+					<Add directory="../../../extlibs/ChaiScript-6.1.0/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
@@ -202,6 +208,7 @@
 					<Add option="-isystem ../../../extlibs/json" />
 					<Add option="-isystem ../../../extlibs/glm/0.9.9.0" />
 					<Add option="-isystem ../../../extlibs/tinyobjloader" />
+					<Add option="-isystem ../../../extlibs\ChaiScript-6.1.0" />
 					<Add option="-std=c++17" />
 					<Add option="`sdl-config --cflags --libs`" />
 					<Add directory="../../../src/ZBE_main/include" />
@@ -222,6 +229,7 @@
 					<Add directory="../../../extlibs/OALSoft/1.18.2/include" />
 					<Add directory="../../../extlibs/stb_vorbis" />
 					<Add directory="../../../extlibs/SDL2_net/2.0.1/include" />
+					<Add directory="../../../extlibs/ChaiScript-6.1.0/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />

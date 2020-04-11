@@ -22,7 +22,7 @@ namespace zbe {
 /** \brief Implements the interface of an object that interacts with other objects.
  *  Please, if inherit from this class, use PO for naming.
  */
-class ZBEAPI SimplePhysicalObject : virtual public PhysicalObject {
+class SimplePhysicalObject : virtual public PhysicalObject {
 public:
   /** \brief Construct a physicalObject with his actuators list.
    *  \param actuatorsList Index list of actuators.

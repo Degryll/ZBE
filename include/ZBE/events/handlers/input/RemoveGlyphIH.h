@@ -22,7 +22,7 @@ namespace zbe {
 
 /** \brief Input handler capable of run a daemon.
  */
-class ZBEAPI RemoveGlyphIH : public InputHandler {
+class RemoveGlyphIH : public InputHandler {
 public:
 
   /** \brief Constructs a RemoveGlyphIH from a daemon.
@@ -45,26 +45,28 @@ public:
 	/** \brief run daemon.
 	 *  \param state not used
 	 */
-	void run(uint32_t, float) {
-    while(1) {
-      if (vc->get().size()==0) {
-        break;
-      }
-      if ((vc->get().back() & 0x80) == 0x00) {
-        /* One byte */
-        vc->get().pop_back();
-        break;
-      }
-      if ((vc->get().back() & 0xC0) == 0x80) {
-        /* Byte from the multibyte sequence */
-        vc->get().pop_back();
-      }
-      if ((vc->get().back() & 0xC0) == 0xC0) {
-        /* First byte of multibyte sequence */
-        vc->get().pop_back();
-        break;
-      }
-    }  // while(1)
+	void run(uint32_t, float state) {
+	  if (state) {
+      while(1) {
+        if (vc->get().size()==0) {
+          break;
+        }
+        if ((vc->get().back() & 0x80) == 0x00) {
+          /* One byte */
+          vc->get().pop_back();
+          break;
+        }
+        if ((vc->get().back() & 0xC0) == 0x80) {
+          /* Byte from the multibyte sequence */
+          vc->get().pop_back();
+        }
+        if ((vc->get().back() & 0xC0) == 0xC0) {
+          /* First byte of multibyte sequence */
+          vc->get().pop_back();
+          break;
+        }
+      }  // while(1)
+    }  // if state
 	}
 
 private:

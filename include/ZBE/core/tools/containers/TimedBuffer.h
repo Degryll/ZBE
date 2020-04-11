@@ -36,6 +36,8 @@ public:
    */
   inline void insert(T const& element) {buffer.insert(TimedElement<T>(element, element.getTime()));}
 
+  uint64_t size() {return buffer.size();}
+
   /** \brief Will insert in the given store all TimedElements created
    *    in the given time range. All elements with time less than or equal to initT will be discarded.
    *  \param initT Initial time. All elements with time less than or equal to initT will be discarded.
@@ -53,9 +55,12 @@ void TimedBuffer<T>::getRange(uint64_t initT, uint64_t endT, std::vector<T>& sto
   TimedElement<T> upper(initT);
   buffer.erase(buffer.begin(),buffer.upper_bound(upper));
   if(!buffer.empty()){
+//    printf("no empty %llu\n", buffer.size()); fflush(stdout);
     auto it = buffer.begin();
     uint64_t first = it->getTime();
+//    printf("first %llu\n", first); fflush(stdout);
     for(; it != buffer.end(); ++it) {
+//      printf("getTime %llu\n", it->getTime()); fflush(stdout);
       if((it->getTime() > endT) || (it->getTime() != first)) {
         break;
       }

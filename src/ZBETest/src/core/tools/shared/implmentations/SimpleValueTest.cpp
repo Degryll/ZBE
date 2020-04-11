@@ -19,10 +19,10 @@ TEST(SimpleValue, GetSetInt) {
   EXPECT_EQ(7, (*val)()) << "Integer value is 7";
   EXPECT_EQ(7, val->get()) << "Integer value is 7";
 
-  val->add(35);
+  //val->add(35);
 
-  EXPECT_EQ(42, (*val)()) << "Integer value is the answer to life, the universe and everything";
-  EXPECT_EQ(42, val->get()) << "Integer value is the answer to life, the universe and everything";
+//  EXPECT_EQ(42, (*val)()) << "Integer value is the answer to life, the universe and everything";
+//  EXPECT_EQ(42, val->get()) << "Integer value is the answer to life, the universe and everything";
 }
 
 TEST(SimpleValue, GetSetChar) {
@@ -35,11 +35,11 @@ TEST(SimpleValue, GetSetChar) {
 
   EXPECT_EQ(7, (*val)()) << "Char value is 7";
   EXPECT_EQ(7, val->get()) << "Char value is 7";
-
-  val->add(35);
-
-  EXPECT_EQ(42, (*val)()) << "Char value is the answer to life, the universe and everything";
-  EXPECT_EQ(42, val->get()) << "Char value is the answer to life, the universe and everything";
+// [TODO] on todo tipo puede ser "sumado". i.e. vector de strings
+//  val->add(35);
+//
+//  EXPECT_EQ(42, (*val)()) << "Char value is the answer to life, the universe and everything";
+//  EXPECT_EQ(42, val->get()) << "Char value is the answer to life, the universe and everything";
 }
 
 } // namespace SimpleValueTest

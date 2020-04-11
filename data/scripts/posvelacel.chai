@@ -1,0 +1,7 @@
+print("Position Velocity Aceleration");
+posv.setX(320);
+posv.setY(300);
+velv.setX(20);
+velv.setY(0);
+acelv.setX(0);
+acelv.setY(0);

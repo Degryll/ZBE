@@ -24,7 +24,7 @@ namespace zbe {
 
 /** \brief This draws a simple sprite (an image).
  */
-class ZBEAPI SingleSpriteSDLDrawer : public Behavior<SingleSprite> {
+class ZBEAPI SingleSpriteSDLDrawer : public Behavior<uint64_t, Vector2D, Vector2D> {
   public:
     SingleSpriteSDLDrawer(const SingleSpriteSDLDrawer&) = delete; //!< Avoid copy.
     void operator=(const SingleSpriteSDLDrawer&) = delete; //!< Avoid copy.
@@ -32,7 +32,7 @@ class ZBEAPI SingleSpriteSDLDrawer : public Behavior<SingleSprite> {
     /** \brief Create a new drawer in the given context.
      *  \param window A SDLwindow with its context.
      */
-    SingleSpriteSDLDrawer(std::shared_ptr<zbe::SDLWindow> window, SDLImageStore* imgStore) : window(window), imgStore(imgStore) {}
+    SingleSpriteSDLDrawer(std::shared_ptr<SDLWindow> window) : window(window), imgStore(window->getImgStore()) {}
 
     /** \brief Destructor.
      */
@@ -41,11 +41,11 @@ class ZBEAPI SingleSpriteSDLDrawer : public Behavior<SingleSprite> {
     /** \brief Draws the given entity.
      *  \param The entity to be drawn.
      */
-    void apply(std::shared_ptr<AvatarEntityContainer<SingleSprite> > entity);
+    void apply(std::shared_ptr<MAvatar<uint64_t, Vector2D, Vector2D> > avatar);
 
   private:
-    std::shared_ptr<zbe::SDLWindow> window;  //!< A SDL window with its context.
-    SDLImageStore* imgStore; //!< Where the images are stored.
+    std::shared_ptr<SDLWindow> window;  //!< A SDL window with its context.
+    std::shared_ptr<SDLImageStore> imgStore; //!< Where the images are stored.
 };
 
 }  // namespace zbe

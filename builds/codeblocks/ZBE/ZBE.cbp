@@ -353,6 +353,7 @@
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleWideMobile.h" />
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleWideMobileAPO.h" />
 		<Unit filename="../../../include/ZBE/behaviors/Bounce.h" />
+		<Unit filename="../../../include/ZBE/behaviors/CustomMotion.h" />
 		<Unit filename="../../../include/ZBE/behaviors/Erase.h" />
 		<Unit filename="../../../include/ZBE/behaviors/StateLTEraser.h" />
 		<Unit filename="../../../include/ZBE/behaviors/StateSetter.h" />
@@ -488,7 +489,7 @@
 		<Unit filename="../../../include/ZBE/events/handlers/input/InputToValue.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/input/RemoveGlyphIH.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/input/ScrollDownIH.h" />
-		<Unit filename="../../../include/ZBE/events/handlers/input/ScrollUpIH.h" />
+		<Unit filename="../../../include/ZBE/events/handlers/input/ScrollIH.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/time/DaemonRecurrentTimeHandler.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/time/DaemonTimeHandler.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/time/TicketEraser.h" />
@@ -545,7 +546,7 @@
 		<Unit filename="../../../src/ZBE/SDL/daemons/SDLOGLWindowDaemon.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/daemons/SDLWindowDaemon.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/drawers/RotatedSpriteSDLDrawer.cpp" />
-		<Unit filename="../../../src/ZBE/SDL/drawers/SimpleSpriteSDLDrawer.cpp" />
+		<Unit filename="../../../src/ZBE/SDL/drawers/SingleSpriteSDLDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/drawers/StatedSpriteSDLDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/factories/SDLFactories.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/factories/SDLOGLWindowDmnFtry.cpp" />

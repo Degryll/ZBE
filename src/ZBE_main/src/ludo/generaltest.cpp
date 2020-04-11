@@ -16,6 +16,7 @@
 #include "ZBE/SDL/daemons/BasicPostLoopSDLDaemon.h"
 #include "ZBE/SDL/daemons/BasicPreLoopSDLDaemon.h"
 
+#include "ZBE/core/io/Input.h"
 
 #include "ludo/events/handlers/LudoHandlers.h"
 
