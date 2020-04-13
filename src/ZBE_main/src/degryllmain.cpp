@@ -350,9 +350,9 @@ int degryllmain2(int, char*[]) {
   std::shared_ptr<zbe::SDLOGLImGuiWindow> window = std::make_shared<zbe::SDLOGLImGuiWindow>("Console", WINDOWPOSX, WINDOWPOSY, WIDHT, HEIGHT);
 
   auto is = window->getImgStore();
-  auto gid = is->loadImg("data\\images\\degryll\\isotetris\\sueloG.png");
+  auto gid = is->loadImg("data/images/degryll/isotetris/sueloG.png");
   auto fs = window->getFontStore();
-  auto fid = fs->loadFont("data\\fonts\\Hack-Regular.ttf", FONTSIZE, {FONTWHITE, FONTWHITE, FONTWHITE, FONTOPACITY});
+  auto fid = fs->loadFont("data/fonts/Hack-Regular.ttf", FONTSIZE, {FONTWHITE, FONTWHITE, FONTWHITE, FONTOPACITY});
 
 //  IMGUI_CHECKVERSION();
 //  ImGui::CreateContext();

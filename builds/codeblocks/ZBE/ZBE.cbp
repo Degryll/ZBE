@@ -65,6 +65,8 @@
 					<Add library="GLEW" />
 					<Add library="stdc++fs" />
 					<Add library="openal" />
+					<Add library="pthread" />
+					<Add library="dl" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/linux64/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/lib" />
@@ -124,6 +126,8 @@
 					<Add library="GLEW" />
 					<Add library="stdc++fs" />
 					<Add library="openal" />
+					<Add library="pthread" />
+					<Add library="dl" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/linux64/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/lib" />

@@ -69,7 +69,7 @@ class ConsoleTextDrawer : public Behavior<uint64_t, std::string, int64_t, std::v
         ImGui::ShowDemoWindow(&show_demo_window);
 
 
-      int ini = std::max(0ll, vl - 10);
+      int ini = std::max(0ll, vl - 10ll);
       int fin = vl;
       int posy = 0;
 
