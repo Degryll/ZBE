@@ -64,7 +64,7 @@ class ConsoleTextDrawer : public Behavior<uint64_t, std::string, int64_t, std::v
       auto vl = avatar->get<2, int64_t>()->get();
       auto vh = avatar->get<1, std::vector<std::string> >()->get();
 
-      int ini = std::max(0ll, vl - 10);
+      int ini = std::max(0ll, vl - 10ll);
       int fin = vl;
       int posy = 0;
 
