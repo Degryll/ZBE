@@ -210,6 +210,7 @@
 					<Add option="-isystem ../../../extlibs/glm/0.9.9.0" />
 					<Add option="-std=c++17" />
 					<Add option="-isystem ../../../extlibs/stb_vorbis/" />
+					<Add option="-isystem ../../../extlibs/imgui-1.76" />
 					<Add option="-D_GLIBCXX_USE_CXX11_ABI=0" />
 					<Add option="-DZBE_EXPORTS" />
 					<Add directory="../../../include" />
@@ -234,6 +235,8 @@
 					<Add directory="../../../extlibs/OALSoft/1.18.2/include" />
 					<Add directory="../../../extlibs/stb_vorbis" />
 					<Add directory="../../../extlibs/glm/0.9.9.0" />
+					<Add directory="../../../extlibs/imgui-1.76" />
+					<Add directory="../../../extlibs/imgui-1.76/examples" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -260,6 +263,13 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="../../../extlibs/imgui-1.75/imgui.h" />
+		<Unit filename="../../../extlibs/imgui-1.76/examples/imgui_impl_opengl3.cpp" />
+		<Unit filename="../../../extlibs/imgui-1.76/examples/imgui_impl_sdl.cpp" />
+		<Unit filename="../../../extlibs/imgui-1.76/imgui.cpp" />
+		<Unit filename="../../../extlibs/imgui-1.76/imgui_demo.cpp" />
+		<Unit filename="../../../extlibs/imgui-1.76/imgui_draw.cpp" />
+		<Unit filename="../../../extlibs/imgui-1.76/imgui_widgets.cpp" />
 		<Unit filename="../../../extlibs/lodePNG/lodepng.cpp" />
 		<Unit filename="../../../include/ZBE/JSON/graphics/JSONGraphicsLoaders.h" />
 		<Unit filename="../../../include/ZBE/JSON/resources/JSONAudioDefLoader.h" />
@@ -272,15 +282,15 @@
 		<Unit filename="../../../include/ZBE/OAL/resources/OALAudioLoader.h" />
 		<Unit filename="../../../include/ZBE/OAL/system/OALAudioStore.h" />
 		<Unit filename="../../../include/ZBE/OAL/tools/OALUtils.h" />
-		<Unit filename="../../../include/ZBE/OGL/daemons/OGLModelSheetPosDrawer.h" />
-		<Unit filename="../../../include/ZBE/OGL/daemons/OGLModelSheetPreDrawer.h" />
 		<Unit filename="../../../include/ZBE/OGL/daemons/OGLPostDraw.h" />
 		<Unit filename="../../../include/ZBE/OGL/daemons/OGLPreDrawer.h" />
+		<Unit filename="../../../include/ZBE/OGL/daemons/SimpleImGuiTest.h" />
 		<Unit filename="../../../include/ZBE/OGL/drawers/OGLModelSheetDrawer.h" />
 		<Unit filename="../../../include/ZBE/OGL/factories/daemons/OGLPostDrawFtry.h" />
 		<Unit filename="../../../include/ZBE/OGL/graphics/OGLModel.h" />
 		<Unit filename="../../../include/ZBE/OGL/graphics/OGLModelSheet.h" />
 		<Unit filename="../../../include/ZBE/OGL/graphics/implementations/SingleModelOGLModelSheet.h" />
+		<Unit filename="../../../include/ZBE/SDL/OGL/ImGui/SDLOGLImGuiWindow.h" />
 		<Unit filename="../../../include/ZBE/SDL/OGL/SDLOGLWindow.h" />
 		<Unit filename="../../../include/ZBE/SDL/daemons/BasicPostLoopSDLDaemon.h" />
 		<Unit filename="../../../include/ZBE/SDL/daemons/BasicPreLoopSDLDaemon.h" />

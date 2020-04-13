@@ -47,7 +47,7 @@ public:
    *  Creates a non configured SDLWindow.
    *  \sa run, setTitle, setX, setY, setWidth, setHeight, setWindow_flags, setRenderer_flags
    */
-  SDLWindow() : title(nullptr), x(), y(), width(), height(), window_flags(), renderer_flags(), sdl(SDL_Starter::getInstance(SDL_INIT_VIDEO)), window(nullptr), renderer(nullptr), output(nullptr), imgStore(nullptr), fontStore(nullptr) {}
+  SDLWindow() : title(nullptr), x(), y(), width(), height(), window_flags(), renderer_flags(), sdl(SDL_Starter::getInstance(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER)), window(nullptr), renderer(nullptr), output(nullptr), imgStore(nullptr), fontStore(nullptr) {}
 
   /** \brief Creates a new SDLWindow and a Renderer.
    *
@@ -222,13 +222,14 @@ public:
     SDL_RenderReadPixels(renderer, nullptr, SDL_PIXELFORMAT_BGR888, data, pitch);
   }
 
-protected:
   /** \brief Returns internal SDL_Window.
    *  \return internal SDL_Window.
    */
   SDL_Window* getSDL_Window() {
     return window;
   }
+
+protected:
 
   /** \brief Checks if the window is correctly created
    */

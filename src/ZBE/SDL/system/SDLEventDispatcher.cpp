@@ -22,14 +22,15 @@ SDLEventDispatcher::~SDLEventDispatcher() {
 void SDLEventDispatcher::run() {
   SDL_Event event;
   while (SDL_PollEvent(&event)) {
-    if (event.type == SDL_KEYDOWN || event.type == SDL_KEYUP) {
+    ImGui_ImplSDL2_ProcessEvent(&event);
+//    if (event.type == SDL_KEYDOWN || event.type == SDL_KEYUP) {
 //      printf("%u -> %u\n", event.key.keysym.sym, event.key.timestamp); fflush(stdout);
-    } else {
+//    } else {
 //      printf("%d x %d -> %u\n", event.motion.x, event.motion.y, event.key.timestamp); fflush(stdout);
-    }
-    if (!tryKeyboardEvent(event)) {
-      tryMouseEvent(event);
-    }
+//    }
+//    if (!tryKeyboardEvent(event)) {
+//      tryMouseEvent(event);
+//    }
   }
 }
 

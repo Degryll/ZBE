@@ -64,6 +64,11 @@ class ConsoleTextDrawer : public Behavior<uint64_t, std::string, int64_t, std::v
       auto vl = avatar->get<2, int64_t>()->get();
       auto vh = avatar->get<1, std::vector<std::string> >()->get();
 
+      // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
+      if (show_demo_window)
+        ImGui::ShowDemoWindow(&show_demo_window);
+
+
       int ini = std::max(0ll, vl - 10);
       int fin = vl;
       int posy = 0;
@@ -90,6 +95,8 @@ class ConsoleTextDrawer : public Behavior<uint64_t, std::string, int64_t, std::v
   private:
     std::shared_ptr<SDLWindow> window;  //!< A SDL window with its context.
     std::shared_ptr<SDLTextFontStore> textFontStore; //!< Where the images are stored.
+
+    bool show_demo_window = true;
 };
 
 }  // namespace zbe

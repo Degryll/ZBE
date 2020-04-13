@@ -66,11 +66,11 @@ public:
 	void run(uint32_t, float state) {
 	  if (state) {
       std::string text = vc->get();
-      std::string prefix("chai");
+      std::string prefix("chai ");
       if (!text.compare(0, prefix.size(), prefix)) {
         chai->eval(text.substr(prefix.size()).c_str());
       }
-      std::string file("file");
+      std::string file("file ");
       if (!text.compare(0, file.size(), file)) {
         std::string content = get_file_contents(text.substr(file.size()).c_str());
         chai->eval(content);

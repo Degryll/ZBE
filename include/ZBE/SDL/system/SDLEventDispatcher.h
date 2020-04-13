@@ -15,6 +15,9 @@
 #include <map>
 #include <memory>
 
+#include <imgui.h>
+#include <imgui_impl_sdl.h>
+
 #include <SDL2/SDL.h>
 
 #include "ZBE/SDL/starters/SDL_Starter.h"

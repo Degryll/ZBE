@@ -14,7 +14,7 @@
 namespace zbe {
 
 void BasicPreLoopSDLDaemon::run(){
-  BasicPreLoopSDLDaemon::window->clear();
+  window->clear();
   sdlEventDist.run();
 }
 

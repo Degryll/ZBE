@@ -84,6 +84,8 @@
 					<Add option="-isystem ../../../extlibs/glm/0.9.9.0" />
 					<Add option="-isystem ../../../extlibs/tinyobjloader" />
 					<Add option="-isystem ../../../extlibs/ChaiScript-6.1.0/include" />
+					<Add option="-isystem ../../../extlibs/imgui-1.76" />
+					<Add option="-isystem ../../../extlibs/imgui-1.76/examples" />
 					<Add option="-std=c++17" />
 					<Add option="-D_GLIBCXX_USE_CXX11_ABI=0" />
 					<Add directory="../../../src/ZBE_main/include" />
@@ -105,6 +107,8 @@
 					<Add directory="../../../extlibs/OALSoft/1.18.2/include" />
 					<Add directory="../../../extlibs/stb_vorbis" />
 					<Add directory="../../../extlibs/ChaiScript-6.1.0/include" />
+					<Add directory="../../../extlibs/imgui-1.76" />
+					<Add directory="../../../extlibs/imgui-1.76/examples" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -261,6 +265,12 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="../../../extlibs/imgui-1.76/examples/imgui_impl_opengl3.cpp" />
+		<Unit filename="../../../extlibs/imgui-1.76/examples/imgui_impl_sdl.cpp" />
+		<Unit filename="../../../extlibs/imgui-1.76/imgui.cpp" />
+		<Unit filename="../../../extlibs/imgui-1.76/imgui_demo.cpp" />
+		<Unit filename="../../../extlibs/imgui-1.76/imgui_draw.cpp" />
+		<Unit filename="../../../extlibs/imgui-1.76/imgui_widgets.cpp" />
 		<Unit filename="../../../extlibs/lodePNG/lodepng.cpp" />
 		<Unit filename="../../../src/ZBE_main/include/batis/entities/GameBoard.h" />
 		<Unit filename="../../../src/ZBE_main/include/batis/entities/Sign.h" />

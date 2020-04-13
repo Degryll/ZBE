@@ -10,6 +10,11 @@
 #include "ZBE/SDL/OGL/SDLOGLWindow.h"
 
 #include <fstream>
+
+#include <imgui.h>
+#include <imgui_impl_sdl.h>
+#include <imgui_impl_opengl3.h>
+
 #include "lodepng.h"
 
 namespace zbe {
@@ -34,17 +39,20 @@ MessageCallback( GLenum ,//source,
 }
 
 void SDLOGLWindow::createGLContext() {
-  SDL_GLContext gContext = SDL_GL_CreateContext(getSDL_Window());
-  if( gContext == NULL ) {
-     SysError::setError(std::string("ERROR: SDL could not create an OGL context. SDL ERROR: ") + SDL_GetError());
-  }
   //Use OpenGL 3.1 core
+  const char* glsl_version = "#version 130";
+  SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, 0);
   SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, ZBE_GL_MAJOR_VERSION );
   SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, ZBE_GL_MINOR_VERSION );
   SDL_GL_SetAttribute( SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE );
 
-
-  SDL_GL_SetSwapInterval(0);
+  //SDL_GLContext gContext = SDL_GL_CreateContext(getSDL_Window());
+  if( glContext == NULL ) {
+     SysError::setError(std::string("ERROR: SDL could not create an OGL context. SDL ERROR: ") + SDL_GetError());
+  }
+  SDL_GL_MakeCurrent(getSDL_Window(), glContext);
+  SDL_GL_SetSwapInterval(1); // Enable vsync
+  //SDL_GL_SetSwapInterval(0);
 
   glewExperimental = GL_TRUE;
   GLenum glewError = glewInit();
@@ -54,13 +62,32 @@ void SDLOGLWindow::createGLContext() {
 
 // During init, enable debug output
 glEnable              ( GL_DEBUG_OUTPUT );
-glDebugMessageCallback( MessageCallback, 0 );
+//glDebugMessageCallback( MessageCallback, 0 );
 
   //glEnable(GL_TEXTURE_2D);printf("Pista a 0x%x\n", glGetError()); fflush(stdout);
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_CULL_FACE);
   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
   //glCullFace(GL_FRONT_AND_BACK);
+
+//  IMGUI_CHECKVERSION();
+//  ImGui::CreateContext();
+//
+//  ImGuiIO& io = ImGui::GetIO(); (void)io;
+//  //io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+//  //io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+//
+////  // Setup Platform/Renderer bindings
+////  ImGui_ImplSDL2_InitForOpenGL(getSDL_Window(), glContext);
+////  ImGui_ImplOpenGL3_Init(glsl_version);
+//
+//  // Setup Dear ImGui style
+//  ImGui::StyleColorsDark();
+//  //ImGui::StyleColorsClassic();
+//
+//  // Setup Platform/Renderer bindings
+//  ImGui_ImplSDL2_InitForOpenGL(getSDL_Window(), glContext);
+//  ImGui_ImplOpenGL3_Init(glsl_version);
 }
 
 //----- OGLTextureStore -----//

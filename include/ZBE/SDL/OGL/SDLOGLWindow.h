@@ -31,7 +31,7 @@
 namespace zbe {
 
 const int ZBE_GL_MAJOR_VERSION = 3;
-const int ZBE_GL_MINOR_VERSION = 3;
+const int ZBE_GL_MINOR_VERSION = 0;
 
 class ZBEAPI OGLTextureStore;
 class ZBEAPI OGLModelStore;
@@ -55,7 +55,7 @@ public:
    *  \param window_flags Flags for the SDLOGLWindow creation. Default no flags.
    *  \param rederer_flags Flags for the Renderer creation. Default no flags.
    */
-  SDLOGLWindow(const char* title, int width, int height, Uint32 window_flags = 0, Uint32 rederer_flags = 0) : SDLWindow(title, width, height, window_flags | SDL_WINDOW_OPENGL, rederer_flags), texStore(std::make_shared<OGLTextureStore>()), modelStore(std::make_shared<OGLModelStore>()), shaderStore(std::make_shared<OGLShaderStore>()) {
+  SDLOGLWindow(const char* title, int width, int height, Uint32 window_flags = 0, Uint32 renderer_flags = 0) : SDLWindow(title, width, height, window_flags | SDL_WINDOW_OPENGL, renderer_flags), glContext(SDL_GL_CreateContext(getSDL_Window())), texStore(std::make_shared<OGLTextureStore>()), modelStore(std::make_shared<OGLModelStore>()), shaderStore(std::make_shared<OGLShaderStore>()) {
     createGLContext();
   }
 
@@ -70,7 +70,7 @@ public:
    *  \param window_flags Flags for the SDLOGLWindow creation. Default no flags.
    *  \param rederer_flags Flags for the Renderer creation. Default no flags.
    */
-  SDLOGLWindow(const char* title, int x, int y, int width, int height, Uint32 window_flags = 0, Uint32 rederer_flags = 0) : SDLWindow(title, x, y, width, height, window_flags | SDL_WINDOW_OPENGL, rederer_flags), texStore(std::make_shared<OGLTextureStore>()), modelStore(std::make_shared<OGLModelStore>()), shaderStore(std::make_shared<OGLShaderStore>()){
+  SDLOGLWindow(const char* title, int x, int y, int width, int height, Uint32 window_flags = 0, Uint32 renderer_flags = 0) : SDLWindow(title, x, y, width, height, window_flags | SDL_WINDOW_OPENGL, renderer_flags), glContext(SDL_GL_CreateContext(getSDL_Window())), texStore(std::make_shared<OGLTextureStore>()), modelStore(std::make_shared<OGLModelStore>()), shaderStore(std::make_shared<OGLShaderStore>()){
     createGLContext();
   }
 
@@ -92,12 +92,18 @@ public:
 
   /** \brief Swap Open GL buffers.
    */
+  void present() {SDL_GL_SwapWindow(getSDL_Window());}
   void glSwap() {SDL_GL_SwapWindow(getSDL_Window());}
+
+  SDL_GLContext getGLContext() {
+    return glContext;
+  }
 
 private:
 
   void createGLContext();
 
+  SDL_GLContext glContext;
   std::shared_ptr<OGLTextureStore> texStore;
   std::shared_ptr<OGLModelStore> modelStore;
   std::shared_ptr<OGLShaderStore> shaderStore;

@@ -19,8 +19,8 @@ SDLWindow::SDLWindow(const char* title, int width, int height, Uint32 SDLWindow_
   : SDLWindow(title, 0, 0, width, height, SDLWindow_flags, renderer_flags) {}
 
 SDLWindow::SDLWindow(const char* title, int x, int y, int width, int height, Uint32 window_flags, Uint32 renderer_flags)
-       : title(nullptr), x(), y(), width(), height(), window_flags(), renderer_flags(),
-         sdl(SDL_Starter::getInstance(SDL_INIT_VIDEO)), window(SDL_CreateWindow(title, x, y, width, height, window_flags)),
+       : title(title), x(x), y(y), width(width), height(height), window_flags(window_flags), renderer_flags(renderer_flags),
+         sdl(SDL_Starter::getInstance(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER)), window(SDL_CreateWindow(title, x, y, width, height, window_flags)),
          renderer(SDL_CreateRenderer(window, -1, renderer_flags)),
          output(SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, width, height)),
          imgStore(std::make_shared<SDLImageStore>(renderer)), fontStore(std::make_shared<SDLTextFontStore>(imgStore, renderer)) {
@@ -31,7 +31,7 @@ SDLWindow::SDLWindow(const char* title, int x, int y, int width, int height, Uin
 SDLWindow::~SDLWindow() {
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
-  sdl.quitSubSystem(SDL_INIT_VIDEO);
+  sdl.quitSubSystem(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER);
 }
 
 void SDLWindow::run() {
