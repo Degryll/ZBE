@@ -52,6 +52,8 @@
 					<Add directory="../../../extlibs/SDL2/2.0.8/include/SDL2" />
 					<Add directory="../../../extlibs/OALSoft/1.18.2/include" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/include" />
+					<Add directory="../../../extlibs/imgui-1.76" />
+					<Add directory="../../../extlibs/imgui-1.76/examples" />
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
@@ -112,6 +114,8 @@
 					<Add directory="../../../extlibs/SDL2_net/2.0.1/include" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/include/SDL2" />
 					<Add directory="../../../extlibs/OALSoft/1.18.2/include" />
+					<Add directory="../../../extlibs/imgui-1.76" />
+					<Add directory="../../../extlibs/imgui-1.76/examples" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
