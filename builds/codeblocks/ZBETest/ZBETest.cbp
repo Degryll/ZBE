@@ -38,6 +38,8 @@
 					<Add directory="../../../extlibs/GLEW/2.1.0/include" />
 					<Add directory="../../../extlibs/OALSoft/1.18.2/include" />
 					<Add directory="../../../extlibs/glm/0.9.9.0" />
+					<Add directory="../../../extlibs/imgui-1.76" />
+					<Add directory="../../../extlibs/imgui-1.76/examples" />
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
@@ -78,6 +80,7 @@
 					<Add option="-isystem ../../../extlibs/json" />
 					<Add option="-isystem ../../../extlibs/glm/0.9.9.0" />
 					<Add option="-isystem ../../../extlibs/stb_vorbis" />
+					<Add option="-isystem ../../../extlibs/imgui-1.76" />
 					<Add directory="../../../src/ZBETest/include" />
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/googletest/1.7.0/include" />
@@ -92,6 +95,8 @@
 					<Add directory="../../../extlibs/GLEW/2.1.0/include" />
 					<Add directory="../../../extlibs/OALSoft/1.18.2/include" />
 					<Add directory="../../../extlibs/glm/0.9.9.0" />
+					<Add directory="../../../extlibs/imgui-1.76" />
+					<Add directory="../../../extlibs/imgui-1.76/examples" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -146,6 +151,8 @@
 					<Add directory="../../../extlibs/GLEW/2.1.0/include" />
 					<Add directory="../../../extlibs/OALSoft/1.18.2/include" />
 					<Add directory="../../../extlibs/glm/0.9.9.0" />
+					<Add directory="../../../extlibs/imgui-1.76" />
+					<Add directory="../../../extlibs/imgui-1.76/examples" />
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
@@ -160,7 +167,7 @@
 					<Add library="glew32" />
 					<Add library="openGL32" />
 					<Add directory="../../../extlibs/googletest/2017-05-14/lib/win64" />
-					<Add directory="../../../extlibs/SDL2/2.0.5/x86_64-w64-mingw32/lib" />
+					<Add directory="../../../extlibs/SDL2/2.0.8/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.1/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.14/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_net/2.0.1/x86_64-w64-mingw32/lib" />
@@ -197,6 +204,8 @@
 					<Add directory="../../../extlibs/GLEW/2.1.0/include" />
 					<Add directory="../../../extlibs/OALSoft/1.18.2/include" />
 					<Add directory="../../../extlibs/glm/0.9.9.0" />
+					<Add directory="../../../extlibs/imgui-1.76" />
+					<Add directory="../../../extlibs/imgui-1.76/examples" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -211,7 +220,7 @@
 					<Add library="glew32" />
 					<Add library="openGL32" />
 					<Add directory="../../../extlibs/googletest/2017-05-14/lib/win64" />
-					<Add directory="../../../extlibs/SDL2/2.0.5/x86_64-w64-mingw32/lib" />
+					<Add directory="../../../extlibs/SDL2/2.0.8/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.1/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.14/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_net/2.0.1/x86_64-w64-mingw32/lib" />
@@ -224,6 +233,12 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="../../../extlibs/imgui-1.76/examples/imgui_impl_opengl3.cpp" />
+		<Unit filename="../../../extlibs/imgui-1.76/examples/imgui_impl_sdl.cpp" />
+		<Unit filename="../../../extlibs/imgui-1.76/imgui.cpp" />
+		<Unit filename="../../../extlibs/imgui-1.76/imgui_demo.cpp" />
+		<Unit filename="../../../extlibs/imgui-1.76/imgui_draw.cpp" />
+		<Unit filename="../../../extlibs/imgui-1.76/imgui_widgets.cpp" />
 		<Unit filename="../../../src/ZBETest/include/testutils/DummyTicket.h" />
 		<Unit filename="../../../src/ZBETest/include/testutils/MockedContextTime.h" />
 		<Unit filename="../../../src/ZBETest/src/JSON/graphics/JSONGraphicsLoadersTest.cpp" />

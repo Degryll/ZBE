@@ -67,7 +67,6 @@
 					<Add library="GLEW" />
 					<Add library="stdc++fs" />
 					<Add library="openal" />
-					<Add library="pthread" />
 					<Add library="dl" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/linux64/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />
@@ -92,6 +91,7 @@
 					<Add option="-std=c++17" />
 					<Add option="`sdl-config --cflags --libs`" />
 					<Add option="-isystem ../../../extlibs/stb_vorbis/" />
+					<Add option="-isystem ../../../extlibs\imgui-1.76" />
 					<Add directory="../../../include" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/include" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/include" />
@@ -130,7 +130,6 @@
 					<Add library="GLEW" />
 					<Add library="stdc++fs" />
 					<Add library="openal" />
-					<Add library="pthread" />
 					<Add library="dl" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/linux64/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />
@@ -160,6 +159,7 @@
 					<Add option="-isystem ../../../extlibs/glm/0.9.9.0" />
 					<Add option="-std=c++17" />
 					<Add option="-isystem ../../../extlibs/stb_vorbis/" />
+					<Add option="-isystem ../../../extlibs/imgui-1.76" />
 					<Add option="-DZBE_EXPORTS" />
 					<Add directory="../../../include" />
 					<Add directory="../../../src" />
@@ -279,6 +279,8 @@
 		<Unit filename="../../../extlibs/imgui-1.76/imgui_draw.cpp" />
 		<Unit filename="../../../extlibs/imgui-1.76/imgui_widgets.cpp" />
 		<Unit filename="../../../extlibs/lodePNG/lodepng.cpp" />
+		<Unit filename="../../../include/ZBE/ImGui/daemons/ImGuiPostLoopDaemon.h" />
+		<Unit filename="../../../include/ZBE/ImGui/daemons/ImGuiPreLoopDaemon.h" />
 		<Unit filename="../../../include/ZBE/JSON/graphics/JSONGraphicsLoaders.h" />
 		<Unit filename="../../../include/ZBE/JSON/resources/JSONAudioDefLoader.h" />
 		<Unit filename="../../../include/ZBE/JSON/resources/JSONImgDefLoader.h" />
@@ -558,8 +560,6 @@
 		<Unit filename="../../../src/ZBE/SDL/OGL/SDLOGLWindow.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/OGL/daemons/OGLPreDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/OGL/factories/daemons/OGLPostDrawFtry.cpp" />
-		<Unit filename="../../../src/ZBE/SDL/daemons/BasicPostLoopSDLDaemon.cpp" />
-		<Unit filename="../../../src/ZBE/SDL/daemons/BasicPreLoopSDLDaemon.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/daemons/IOPreLoopSDL.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/daemons/SDLOGLWindowDaemon.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/daemons/SDLWindowDaemon.cpp" />

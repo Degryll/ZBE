@@ -21,42 +21,45 @@
 #include "ZBE/core/system/system.h"
 
 namespace zbe {
-  /** \brief
+/** \brief
+ */
+class BasicPreLoopSDLDaemon : public Daemon {
+public:
+
+  BasicPreLoopSDLDaemon(const BasicPreLoopSDLDaemon&) = delete; //!< Avoid copy.
+  void operator=(const BasicPreLoopSDLDaemon&) = delete; //!< Avoid copy.
+
+  /** \brief Empty constructor.
    */
-  class ZBEAPI BasicPreLoopSDLDaemon : public Daemon {
-    public:
+  BasicPreLoopSDLDaemon(): window(nullptr), sdlEventDist(zbe::SDLEventDispatcher::getInstance()) {}
 
-      BasicPreLoopSDLDaemon(const BasicPreLoopSDLDaemon&) = delete; //!< Avoid copy.
-      void operator=(const BasicPreLoopSDLDaemon&) = delete; //!< Avoid copy.
+  /** \brief Builds a BasicPostLoopSDLDaemon from a window.
+   *  \param window windo to use.
+   */
+  BasicPreLoopSDLDaemon(std::shared_ptr<zbe::SDLWindow> window): window(window), sdlEventDist(zbe::SDLEventDispatcher::getInstance()) {}
 
-      /** \brief Empty constructor.
-       */
-      BasicPreLoopSDLDaemon(): window(nullptr), sdlEventDist(zbe::SDLEventDispatcher::getInstance()) {}
+  /** \brief Destroys the BasicPreLoopSDLDaemon
+   */
+  virtual ~BasicPreLoopSDLDaemon() {}
 
-      /** \brief Builds a BasicPostLoopSDLDaemon from a window.
-       *  \param window windo to use.
-       */
-      BasicPreLoopSDLDaemon(std::shared_ptr<zbe::SDLWindow> window): window(window), sdlEventDist(zbe::SDLEventDispatcher::getInstance()) {}
+  /** \brief Sets the window. Use with empty constructor.
+   *  \param window windo to use.
+   */
+  void setWindow(std::shared_ptr<zbe::SDLWindow> window) {
+    this->window = window;
+  }
 
-      /** \brief Destroys the BasicPreLoopSDLDaemon
-       */
-      virtual ~BasicPreLoopSDLDaemon() {}
+  /** \brief Runs the daemon.
+   */
+  inline void run() {
+    window->clear();
+    sdlEventDist.run();
+  }
 
-      /** \brief Sets the window. Use with empty constructor.
-       *  \param window windo to use.
-       */
-      void setWindow(std::shared_ptr<zbe::SDLWindow> window) {
-        this->window = window;
-      }
-
-      /** \brief Runs the daemon.
-       */
-      void run();
-
-    private:
-      std::shared_ptr<zbe::SDLWindow> window;
-      zbe::SDLEventDispatcher& sdlEventDist;
-  };
+private:
+  std::shared_ptr<zbe::SDLWindow> window;
+  zbe::SDLEventDispatcher& sdlEventDist;
+};
 
 }  // namespace zbe
 

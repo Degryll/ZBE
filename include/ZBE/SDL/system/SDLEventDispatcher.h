@@ -60,7 +60,20 @@ public:
 
   /** \brief Distribute SDL events in the appropriate structures of the system.
    */
-  void run();
+  inline void run() {
+    SDL_Event event;
+    while (SDL_PollEvent(&event)) {
+      ImGui_ImplSDL2_ProcessEvent(&event);
+  //    if (event.type == SDL_KEYDOWN || event.type == SDL_KEYUP) {
+  //      printf("%u -> %u\n", event.key.keysym.sym, event.key.timestamp); fflush(stdout);
+  //    } else {
+  //      printf("%d x %d -> %u\n", event.motion.x, event.motion.y, event.key.timestamp); fflush(stdout);
+  //    }
+      if (!tryKeyboardEvent(event)) {
+        tryMouseEvent(event);
+      }
+    }
+  }
 
 private:
   SDLEventDispatcher() : sdl(SDL_Starter::getInstance(SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC | SDL_INIT_GAMECONTROLLER | SDL_INIT_EVENTS)), inputBuffer(std::make_shared<InputBuffer>()), inputTextBuffer(std::make_shared<InputTextBuffer>()), contextTime(SysTime::getInstance()) {}

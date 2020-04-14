@@ -61,6 +61,9 @@
 
 #include "ZBE/SDL/starters/SDL_Starter.h"
 
+#include "ZBE/ImGui/daemons/ImGuiPreLoopDaemon.h"
+#include "ZBE/ImGui/daemons/ImGuiPostLoopDaemon.h"
+
 #include "ZBE/entities/implementations/Console.h"
 
 class ChaiWarp {
@@ -188,20 +191,28 @@ void test(double &posx, double &, double &velx, double &, double &, double &, do
 //  ImGuiIO io;
 //};
 
-int degryllmain(int, char*[]) {
+int degryllmain2(int, char*[]) {
   const int WINDOWPOSX = 50;
   const int WINDOWPOSY = 50;
   const int WIDHT = 640;
   const int HEIGHT = 480;
-  zbe::SDLOGLImGuiWindow window("Console", WINDOWPOSX, WINDOWPOSY, WIDHT, HEIGHT);
+  std::shared_ptr<zbe::SDLOGLImGuiWindow> window = std::make_shared<zbe::SDLOGLImGuiWindow>("Console", WINDOWPOSX, WINDOWPOSY, WIDHT, HEIGHT);
 
   zbe::SDLEventDispatcher& sdlEDispatcher = zbe::SDLEventDispatcher::getInstance();
   std::shared_ptr<zbe::InputBuffer> inputBuffer = sdlEDispatcher.getInputBuffer();
   std::shared_ptr<zbe::InputTextBuffer> inputTextBuffer = sdlEDispatcher.getInputTextBuffer();
 
+  std::shared_ptr<zbe::Daemon> preLoopSDL = std::make_shared<zbe::BasicPreLoopSDLDaemon>(window);
+  std::shared_ptr<zbe::ImGuiPreLoopDaemon> imguipre =std::make_shared<zbe::ImGuiPreLoopDaemon>(window);
+
+  std::shared_ptr<zbe::Daemon> postLoopSDL = std::make_shared<zbe::BasicPostLoopSDLDaemon>(window);
+  std::shared_ptr<zbe::ImGuiPostLoopDaemon> imguipos =std::make_shared<zbe::ImGuiPostLoopDaemon>(window);
+
+  std::shared_ptr<zbe::SimpleImGuiTest> imguidrawer =std::make_shared<zbe::SimpleImGuiTest>(window);
+
   bool show_demo_window = true;
   bool show_another_window = false;
-  ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+  //ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
   float fps[100];
   for(auto& f : fps) {
    f = .0f;
@@ -222,97 +233,101 @@ int degryllmain(int, char*[]) {
 //      ImGui_ImplSDL2_ProcessEvent(&event);
 //      if (event.type == SDL_QUIT)
 //        done = true;
-//      if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_CLOSE && event.window.windowID == SDL_GetWindowID(window.getSDL_Window()))
+//      if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_CLOSE && event.window.windowID == SDL_GetWindowID(window->getSDL_Window()))
 //        done = true;
 //    }
 
-//    sdlEDispatcher.run();
-    SDL_Event event;
-    while (SDL_PollEvent(&event)) {
-      ImGui_ImplSDL2_ProcessEvent(&event);
-    }
+    //sdlEDispatcher.run();
+    preLoopSDL->run();
+    imguipre->run();
+//    SDL_Event event;
+//    while (SDL_PollEvent(&event)) {
+//      ImGui_ImplSDL2_ProcessEvent(&event);
+//    }
+    imguidrawer->run();
+//    // Start the Dear ImGui frame
+//    ImGui_ImplOpenGL3_NewFrame();
+//    ImGui_ImplSDL2_NewFrame(window->getSDL_Window());
+//    ImGui::NewFrame();
+//
+//    // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
+//    if (show_demo_window)
+//      ImGui::ShowDemoWindow(&show_demo_window);
+//
+//    // 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
+//    {
+//      static float f = 0.0f;
+//      static int counter = 0;
+//
+//      ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
+//
+//      ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
+//      ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
+//      ImGui::Checkbox("Another Window", &show_another_window);
+//
+//      ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
+//      ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
+//
+//      if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
+//        counter++;
+//      ImGui::SameLine();
+//      ImGui::Text("counter = %d", counter);
+//
+//      ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+//      //const float my_values[] = { 0.2f, 0.1f, 1.0f, 0.5f, 0.9f, 2.2f };
+//      for(int i = 0; i < 99; i++) {
+//        fps[i] = fps[i+1];
+//      }
+//      fps[99] = ImGui::GetIO().Framerate;
+//      ImGui::PlotLines("FPS", fps, IM_ARRAYSIZE(fps));
+//
+//      ImGui::Separator();
+//
+//      const float footer_height_to_reserve = ImGui::GetStyle().ItemSpacing.y + ImGui::GetFrameHeightWithSpacing(); // 1 separator, 1 input text
+//      ImGui::BeginChild("ScrollingRegion", ImVec2(0, -footer_height_to_reserve), false, ImGuiWindowFlags_HorizontalScrollbar); // Leave room for 1 separator + 1 InputText
+//      ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(4,1)); // Tighten spacing
+//
+//      ImGui::TextUnformatted("Hola");
+//      ImGui::TextUnformatted("comando1");
+//      ImGui::TextUnformatted("comando con parametros");
+//      ImGui::TextUnformatted("chai print(\"Hola\")");
+//      ImGui::TextUnformatted("file data\\scripts\\hello.chai");
+//      ImGui::TextUnformatted(InputBuf);
+//      ImGui::TextUnformatted("Adios");
+//
+//      if (ImGui::InputText("Input", InputBuf, IM_ARRAYSIZE(InputBuf))){
+//          ;
+////        char* s = InputBuf;
+////        Strtrim(s);
+////        if (s[0])
+////            ExecCommand(s);
+////        strcpy(s, "");
+////        reclaim_focus = true;
+//      }
+//
+//      ImGui::PopStyleVar();
+//      ImGui::EndChild();
+//      ImGui::End();
+//    }
+//
+//    // 3. Show another simple window.
+//    if (show_another_window) {
+//      ImGui::Begin("Another Window", &show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
+//      ImGui::Text("Hello from another window!");
+//      if (ImGui::Button("Close Me"))
+//          show_another_window = false;
+//      ImGui::End();
+//    }
 
-    // Start the Dear ImGui frame
-    ImGui_ImplOpenGL3_NewFrame();
-    ImGui_ImplSDL2_NewFrame(window.getSDL_Window());
-    ImGui::NewFrame();
-
-    // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
-    if (show_demo_window)
-      ImGui::ShowDemoWindow(&show_demo_window);
-
-    // 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
-    {
-      static float f = 0.0f;
-      static int counter = 0;
-
-      ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
-
-      ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
-      ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
-      ImGui::Checkbox("Another Window", &show_another_window);
-
-      ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-      ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
-
-      if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
-        counter++;
-      ImGui::SameLine();
-      ImGui::Text("counter = %d", counter);
-
-      ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-      //const float my_values[] = { 0.2f, 0.1f, 1.0f, 0.5f, 0.9f, 2.2f };
-      for(int i = 0; i < 99; i++) {
-        fps[i] = fps[i+1];
-      }
-      fps[99] = ImGui::GetIO().Framerate;
-      ImGui::PlotLines("FPS", fps, IM_ARRAYSIZE(fps));
-
-      ImGui::Separator();
-
-      const float footer_height_to_reserve = ImGui::GetStyle().ItemSpacing.y + ImGui::GetFrameHeightWithSpacing(); // 1 separator, 1 input text
-      ImGui::BeginChild("ScrollingRegion", ImVec2(0, -footer_height_to_reserve), false, ImGuiWindowFlags_HorizontalScrollbar); // Leave room for 1 separator + 1 InputText
-      ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(4,1)); // Tighten spacing
-
-      ImGui::TextUnformatted("Hola");
-      ImGui::TextUnformatted("comando1");
-      ImGui::TextUnformatted("comando con parametros");
-      ImGui::TextUnformatted("chai print(\"Hola\")");
-      ImGui::TextUnformatted("file data\\scripts\\hello.chai");
-      ImGui::TextUnformatted(InputBuf);
-      ImGui::TextUnformatted("Adios");
-
-      if (ImGui::InputText("Input", InputBuf, IM_ARRAYSIZE(InputBuf))){
-          ;
-//        char* s = InputBuf;
-//        Strtrim(s);
-//        if (s[0])
-//            ExecCommand(s);
-//        strcpy(s, "");
-//        reclaim_focus = true;
-      }
-
-      ImGui::PopStyleVar();
-      ImGui::EndChild();
-      ImGui::End();
-    }
-
-    // 3. Show another simple window.
-    if (show_another_window) {
-      ImGui::Begin("Another Window", &show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
-      ImGui::Text("Hello from another window!");
-      if (ImGui::Button("Close Me"))
-          show_another_window = false;
-      ImGui::End();
-    }
-
-    // Rendering
-    ImGui::Render();
-    glViewport(0, 0, window.getDisplayX(), window.getDisplayY());
-    glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
-    glClear(GL_COLOR_BUFFER_BIT);
-    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-    SDL_GL_SwapWindow(window.getSDL_Window());
+    postLoopSDL->run();
+//    // Rendering
+//    ImGui::Render();
+//    glViewport(0, 0, window->getDisplayX(), window->getDisplayY());
+//    glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
+//    glClear(GL_COLOR_BUFFER_BIT);
+//    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+//    SDL_GL_SwapWindow(window->getSDL_Window());
+    imguipos->run();
   }
 
   // Cleanup
@@ -320,14 +335,14 @@ int degryllmain(int, char*[]) {
   ImGui_ImplSDL2_Shutdown();
   ImGui::DestroyContext();
 
-  SDL_GL_DeleteContext(window.getGLContext());
-  SDL_DestroyWindow(window.getSDL_Window());
+  SDL_GL_DeleteContext(window->getGLContext());
+  SDL_DestroyWindow(window->getSDL_Window());
   SDL_Quit();
 
   return 0;
 }
 
-int degryllmain2(int, char*[]) {
+int degryllmain(int, char*[]) {
   const int WINDOWPOSX = 50;
   const int WINDOWPOSY = 50;
   const int WIDHT = 1280;
@@ -384,8 +399,14 @@ int degryllmain2(int, char*[]) {
 
   std::shared_ptr<zbe::Daemon> preLoopSDL = std::make_shared<zbe::BasicPreLoopSDLDaemon>(window);
   pre->addDaemon(preLoopSDL);
-  std::shared_ptr<zbe::Daemon> postLoopSDL = std::make_shared<zbe::BasicPostLoopSDLDaemon>(window);
-  post->addDaemon(postLoopSDL);
+  std::shared_ptr<zbe::ImGuiPreLoopDaemon> imguipre =std::make_shared<zbe::ImGuiPreLoopDaemon>(window);
+  pre->addDaemon(imguipre);
+
+//  std::shared_ptr<zbe::Daemon> postLoopSDL = std::make_shared<zbe::BasicPostLoopSDLDaemon>(window);
+//  post->addDaemon(postLoopSDL);
+
+  std::shared_ptr<zbe::ImGuiPostLoopDaemon> imguipos =std::make_shared<zbe::ImGuiPostLoopDaemon>(window);
+  post->addDaemon(imguipos);
 
   auto sysTimer = std::make_shared<zbe::SDLTimer>(true);
   std::shared_ptr<zbe::SysTime> sysTime = zbe::SysTime::getInstance();

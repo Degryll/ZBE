@@ -49,7 +49,9 @@ public:
 
   /** \brief Runs the daemon.
    */
-  void run();
+  void run() {
+    window->present();
+  }
 private:
   std::shared_ptr<zbe::SDLWindow> window;
 };

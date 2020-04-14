@@ -19,10 +19,10 @@
 namespace zbe {
 
 /**
- * @class ZBEAPI SDL_Starter
+ * @class SDL_Starter
  * @brief Used to init SDL subsystems only once.
  */
-class ZBEAPI SDL_Starter {
+class SDL_Starter {
 public:
   SDL_Starter(SDL_Starter const&)    = delete;  //!< Needed for singleton.
   void operator=(SDL_Starter const&) = delete;  //!< Needed for singleton.

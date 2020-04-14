@@ -26,7 +26,7 @@
 
 #include "ZBE/tools/graphics/Camera.h"
 
-#include "ZBE/SDL/OGL/SDLOGLWindow.h"
+#include "ZBE/SDL/OGL/ImGui/SDLOGLImGuiWindow.h"
 
 namespace zbe {
 
@@ -35,7 +35,7 @@ namespace zbe {
 class SimpleImGuiTest : public Daemon {
 public:
 
-  SimpleImGuiTest(std::shared_ptr<SDLOGLWindow> window) : window(window) {}
+  SimpleImGuiTest(std::shared_ptr<SDLOGLImGuiWindow> window) : window(window) {}
 
   /** \brief Destructor.
    */
@@ -44,20 +44,18 @@ public:
   /** \brief Do the actual Daemon job.
    */
   void run() {
-    ImGui_ImplOpenGL3_NewFrame();
-    ImGui_ImplSDL2_NewFrame(window->getSDL_Window());
-    ImGui::NewFrame();
-
     ImGui::Begin("Hello, world!");
+    ImGui::Checkbox("Demo Window", &show_demo_window);
     ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
     ImGui::End();
-    ImGui::Render();
-    glClear(GL_COLOR_BUFFER_BIT);
-    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+    if (show_demo_window)
+      ImGui::ShowDemoWindow(&show_demo_window);
   }
 
 private:
   std::shared_ptr<SDLOGLWindow> window;
+  bool show_demo_window = true;
 };
 
 }  // namespace zbe

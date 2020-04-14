@@ -40,7 +40,7 @@ namespace zbe {
  */
 class SDLOGLImGuiWindow : public SDLOGLWindow {
 public:
-  SDLOGLImGuiWindow(const char* title, int x, int y, int width, int height, Uint32 window_flags = 0, Uint32 rederer_flags = 0) : SDLOGLWindow(title, x, y, width, height, window_flags | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI, rederer_flags)/*, gl_context(SDL_GL_CreateContext(this->getSDL_Window()))*/, io() {
+  SDLOGLImGuiWindow(const char* title, int x, int y, int width, int height, Uint32 window_flags = 0, Uint32 rederer_flags = 0) : SDLOGLWindow(title, x, y, width, height, window_flags | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI, rederer_flags), io() {
     const char* glsl_version = "#version 130";
 
     // Setup Dear ImGui context
