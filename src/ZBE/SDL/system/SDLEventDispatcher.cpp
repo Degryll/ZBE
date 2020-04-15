@@ -34,7 +34,7 @@ SDLEventDispatcher::~SDLEventDispatcher() {
 //  }
 //}
 
-inline bool SDLEventDispatcher::tryKeyboardEvent(SDL_Event &event){
+bool SDLEventDispatcher::tryKeyboardEvent(SDL_Event &event){
   if (event.type == SDL_KEYDOWN) {
 //    printf("key down\n"); fflush(stdout);
     setState(getEquivalentToSDL(event.key.keysym.sym), 1.0f, event.key.timestamp);
@@ -51,7 +51,7 @@ inline bool SDLEventDispatcher::tryKeyboardEvent(SDL_Event &event){
   return false;
 }
 
-inline bool SDLEventDispatcher::tryMouseEvent(SDL_Event &event){
+bool SDLEventDispatcher::tryMouseEvent(SDL_Event &event){
   if (event.type == SDL_MOUSEBUTTONDOWN) {
 //    printf("Button down\n"); fflush(stdout);
     setMouseButtonState(event, 1.0f);
@@ -72,7 +72,7 @@ inline bool SDLEventDispatcher::tryMouseEvent(SDL_Event &event){
   return false;
 }
 
-inline void SDLEventDispatcher::setState(uint32_t key, float value, int64_t time) {
+void SDLEventDispatcher::setState(uint32_t key, float value, int64_t time) {
   int64_t zbeTime = MILITOZBETU(time);
   int64_t gameTime = zbeTime - contextTime->getLostTime();
   int64_t storeTime = quantizeTime(gameTime) + zbe::TIME_QUANTUM;
@@ -82,7 +82,7 @@ inline void SDLEventDispatcher::setState(uint32_t key, float value, int64_t time
 //  printf("after %llu\n", inputBuffer->size()); fflush(stdout);
 }
 
-inline void SDLEventDispatcher::setTextInput(std::string text, int64_t time) {
+void SDLEventDispatcher::setTextInput(std::string text, int64_t time) {
   int64_t zbeTime = MILITOZBETU(time);
   int64_t gameTime = zbeTime - contextTime->getLostTime();
   int64_t storeTime = quantizeTime(gameTime) + zbe::TIME_QUANTUM;
@@ -91,7 +91,7 @@ inline void SDLEventDispatcher::setTextInput(std::string text, int64_t time) {
   inputTextBuffer->insert(it);
 }
 
-inline void SDLEventDispatcher::setMouseButtonState(SDL_Event &event, float value) {
+void SDLEventDispatcher::setMouseButtonState(SDL_Event &event, float value) {
   uint64_t key = 0;
   switch (event.button.button) {
     case SDL_BUTTON_LEFT:
@@ -115,12 +115,12 @@ inline void SDLEventDispatcher::setMouseButtonState(SDL_Event &event, float valu
   setState(key,value,event.key.timestamp);
 }
 
-inline void SDLEventDispatcher::setMouseWheelState(SDL_Event &event) {
+void SDLEventDispatcher::setMouseWheelState(SDL_Event &event) {
   setState(ZBEK_MOUSE_WHEEL_X,event.wheel.x,event.key.timestamp);
   setState(ZBEK_MOUSE_WHEEL_Y,event.wheel.y,event.key.timestamp);
 }
 
-inline void SDLEventDispatcher::setMouseCoordsState(SDL_Event &event) {
+void SDLEventDispatcher::setMouseCoordsState(SDL_Event &event) {
   setState(ZBEK_MOUSE_OFFSET_X,event.motion.x,event.key.timestamp);
   setState(ZBEK_MOUSE_OFFSET_Y,event.motion.y,event.key.timestamp);
 }
