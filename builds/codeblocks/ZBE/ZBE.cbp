@@ -281,6 +281,7 @@
 		<Unit filename="../../../extlibs/lodePNG/lodepng.cpp" />
 		<Unit filename="../../../include/ZBE/ImGui/daemons/ImGuiPostLoopDaemon.h" />
 		<Unit filename="../../../include/ZBE/ImGui/daemons/ImGuiPreLoopDaemon.h" />
+		<Unit filename="../../../include/ZBE/ImGui/events/ImGuiEventWatcher.h" />
 		<Unit filename="../../../include/ZBE/JSON/graphics/JSONGraphicsLoaders.h" />
 		<Unit filename="../../../include/ZBE/JSON/resources/JSONAudioDefLoader.h" />
 		<Unit filename="../../../include/ZBE/JSON/resources/JSONImgDefLoader.h" />
@@ -312,6 +313,9 @@
 		<Unit filename="../../../include/ZBE/SDL/drawers/SingleTextSDLDrawer.h" />
 		<Unit filename="../../../include/ZBE/SDL/drawers/SpriteSheetSDLDrawer.h" />
 		<Unit filename="../../../include/ZBE/SDL/drawers/StatedSpriteSDLDrawer.h" />
+		<Unit filename="../../../include/ZBE/SDL/events/KeyMouseEventWatcher.h" />
+		<Unit filename="../../../include/ZBE/SDL/events/SDLEventDispatcher.h" />
+		<Unit filename="../../../include/ZBE/SDL/events/SDLEventWatcher.h" />
 		<Unit filename="../../../include/ZBE/SDL/factories/SDLFactories.h" />
 		<Unit filename="../../../include/ZBE/SDL/factories/SDLOGLWindowDmnFtry.h" />
 		<Unit filename="../../../include/ZBE/SDL/factories/SDLWindowDmnFtry.h" />
@@ -325,7 +329,6 @@
 		<Unit filename="../../../include/ZBE/SDL/factories/system/SDLWindowFtry.h" />
 		<Unit filename="../../../include/ZBE/SDL/resources/SDLImgLoader.h" />
 		<Unit filename="../../../include/ZBE/SDL/starters/SDL_Starter.h" />
-		<Unit filename="../../../include/ZBE/SDL/system/SDLEventDispatcher.h" />
 		<Unit filename="../../../include/ZBE/SDL/system/SDLNetDispatcher.h" />
 		<Unit filename="../../../include/ZBE/SDL/system/SDLSocket.h" />
 		<Unit filename="../../../include/ZBE/SDL/system/SDLWindow.h" />
@@ -404,6 +407,7 @@
 		<Unit filename="../../../include/ZBE/core/entities/avatars/implementations/SimpleStatedSprite.h" />
 		<Unit filename="../../../include/ZBE/core/events/Event.h" />
 		<Unit filename="../../../include/ZBE/core/events/EventStore.h" />
+		<Unit filename="../../../include/ZBE/core/events/EventWatcher.h" />
 		<Unit filename="../../../include/ZBE/core/events/InputEvent.h" />
 		<Unit filename="../../../include/ZBE/core/events/InteractionEvent.h" />
 		<Unit filename="../../../include/ZBE/core/events/NetEvent.h" />
@@ -576,7 +580,6 @@
 		<Unit filename="../../../src/ZBE/SDL/factories/system/SDLSysTimeFtry.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/factories/system/SDLWindowFtry.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/starters/SDL_Starter.cpp" />
-		<Unit filename="../../../src/ZBE/SDL/system/SDLEventDispatcher.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/system/SDLNetDispatcher.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/system/SDLSocket.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/system/SDLWindow.cpp" />

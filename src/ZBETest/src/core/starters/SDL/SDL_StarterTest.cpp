@@ -3,6 +3,8 @@
 #include "ZBE/SDL/starters/SDL_Starter.h"
 
 TEST(SDL_Starter, CheckSubsystems) {
+  zbe::SDL_Starter &aux = zbe::SDL_Starter::getInstance(SDL_INIT_VIDEO);
+  aux.quit();  // shutdown any possible subsystem initialized
   zbe::SDL_Starter &sdl1 = zbe::SDL_Starter::getInstance(SDL_INIT_VIDEO);
 
   Uint32 ssi = SDL_WasInit(SDL_INIT_EVERYTHING);

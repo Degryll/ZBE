@@ -2,17 +2,16 @@
  * Copyright 2016 Batis Degryll Ludo
  * @file SDLEventDispatcher.h
  * @since 2016-04-27
- * @date 2018-02-25
- * @author Ludo
+ * @date 2020-04-16
+ * @author Ludo Degryll
  * @brief Dispatcher for sdl events.
  */
 
-#ifndef ZBE_SDL_SYSTEM_SDLEVENTDISPATCHER_H
-#define ZBE_SDL_SYSTEM_SDLEVENTDISPATCHER_H
+#ifndef ZBE_SDL_EVENTS_SDLEVENTDISPATCHER_H
+#define ZBE_SDL_EVENTS_SDLEVENTDISPATCHER_H
 
 #include <cstdint>
-#include <list>
-#include <map>
+#include <forward_list>
 #include <memory>
 
 #include <imgui.h>
@@ -21,6 +20,7 @@
 #include <SDL2/SDL.h>
 
 #include "ZBE/SDL/starters/SDL_Starter.h"
+#include "ZBE/SDL/events/SDLEventWatcher.h"
 #include "ZBE/core/io/InputBuffer.h"
 #include "ZBE/core/io/InputTextBuffer.h"
 #include "ZBE/core/system/SysTime.h"
@@ -38,7 +38,9 @@ public:
 
   /** \brief Destructor. It will shutdown SDL subsystems.
    */
-  ~SDLEventDispatcher();
+  ~SDLEventDispatcher() {
+    sdl.quitSubSystem(SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC | SDL_INIT_GAMECONTROLLER | SDL_INIT_EVENTS);
+  }
 
   /** \brief Singleton implementation.
    *  \return The only instance of the SDLEventDispatcher.
@@ -58,48 +60,52 @@ public:
    */
   std::shared_ptr<InputTextBuffer> getInputTextBuffer() {return inputTextBuffer;}
 
+  void addWatcher(std::shared_ptr<SDLEventWatcher> watcher) {
+    watcher->set(inputBuffer, inputTextBuffer, contextTime);
+    watchers.push_front(watcher);
+  }
+
   /** \brief Distribute SDL events in the appropriate structures of the system.
    */
   inline void run() {
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
-      ImGui_ImplSDL2_ProcessEvent(&event);
-  //    if (event.type == SDL_KEYDOWN || event.type == SDL_KEYUP) {
-  //      printf("%u -> %u\n", event.key.keysym.sym, event.key.timestamp); fflush(stdout);
-  //    } else {
-  //      printf("%d x %d -> %u\n", event.motion.x, event.motion.y, event.key.timestamp); fflush(stdout);
-  //    }
-      if (!tryKeyboardEvent(event)) {
-        tryMouseEvent(event);
+      for(auto& w : watchers) {
+        w->watch(event);
       }
+      //ImGui_ImplSDL2_ProcessEvent(&event);
+//      if (!tryKeyboardEvent(event)) {
+//        tryMouseEvent(event);
+//      }
     }
   }
 
 private:
-  SDLEventDispatcher() : sdl(SDL_Starter::getInstance(SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC | SDL_INIT_GAMECONTROLLER | SDL_INIT_EVENTS)), inputBuffer(std::make_shared<InputBuffer>()), inputTextBuffer(std::make_shared<InputTextBuffer>()), contextTime(SysTime::getInstance()) {}
+  SDLEventDispatcher() : sdl(SDL_Starter::getInstance(SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC | SDL_INIT_GAMECONTROLLER | SDL_INIT_EVENTS)), inputBuffer(std::make_shared<InputBuffer>()), inputTextBuffer(std::make_shared<InputTextBuffer>()), contextTime(SysTime::getInstance()), watchers() {}
 
-  bool tryKeyboardEvent(SDL_Event &event);
-
-  bool tryMouseEvent(SDL_Event &event);
-
-  void setState(uint32_t key, float value, int64_t time);
-
-  void setTextInput(std::string text, int64_t time);
-
-  void setMouseButtonState(SDL_Event &event, float value);
-
-  void setMouseWheelState(SDL_Event &event);
-
-  void setMouseCoordsState(SDL_Event &event);
-
-  uint32_t getEquivalentToSDL(SDL_Keycode k) {return (k);}
+//  bool tryKeyboardEvent(SDL_Event &event);
+//
+//  bool tryMouseEvent(SDL_Event &event);
+//
+//  void setState(uint32_t key, float value, int64_t time);
+//
+//  void setTextInput(std::string text, int64_t time);
+//
+//  void setMouseButtonState(SDL_Event &event, float value);
+//
+//  void setMouseWheelState(SDL_Event &event);
+//
+//  void setMouseCoordsState(SDL_Event &event);
+//
+//  uint32_t getEquivalentToSDL(SDL_Keycode k) {return (k);}
 
   SDL_Starter &sdl;
   std::shared_ptr<InputBuffer> inputBuffer;
   std::shared_ptr<InputTextBuffer> inputTextBuffer;
   std::shared_ptr<ContextTime> contextTime;
+  std::forward_list<std::shared_ptr<SDLEventWatcher> > watchers;
 };
 
 }  // namespace zbe
 
-#endif  // ZBE_SDL_SYSTEM_SDLEVENTDISPATCHER_H
+#endif  // ZBE_SDL_EVENTS_SDLEVENTDISPATCHER_H

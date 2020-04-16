@@ -63,6 +63,9 @@
 
 #include "ZBE/ImGui/daemons/ImGuiPreLoopDaemon.h"
 #include "ZBE/ImGui/daemons/ImGuiPostLoopDaemon.h"
+#include "ZBE/SDL/events/SDLEventWatcher.h"
+#include "ZBE/SDL/events/KeyMouseEventWatcher.h"
+#include "ZBE/ImGui/events/ImGuiEventWatcher.h"
 
 #include "ZBE/entities/implementations/Console.h"
 
@@ -199,6 +202,11 @@ int degryllmain2(int, char*[]) {
   std::shared_ptr<zbe::SDLOGLImGuiWindow> window = std::make_shared<zbe::SDLOGLImGuiWindow>("Console", WINDOWPOSX, WINDOWPOSY, WIDHT, HEIGHT);
 
   zbe::SDLEventDispatcher& sdlEDispatcher = zbe::SDLEventDispatcher::getInstance();
+  std::shared_ptr<zbe::SDLEventWatcher> watcher1 = std::make_shared<zbe::ImGuiEventWatcher>();
+  std::shared_ptr<zbe::SDLEventWatcher> watcher2 = std::make_shared<zbe::KeyMouseEventWatcher>();
+  sdlEDispatcher.addWatcher(watcher1);
+  sdlEDispatcher.addWatcher(watcher2);
+
   std::shared_ptr<zbe::InputBuffer> inputBuffer = sdlEDispatcher.getInputBuffer();
   std::shared_ptr<zbe::InputTextBuffer> inputTextBuffer = sdlEDispatcher.getInputTextBuffer();
 
@@ -413,6 +421,11 @@ int degryllmain(int, char*[]) {
   sysTime->setSystemTimer(sysTimer);
 
   zbe::SDLEventDispatcher& sdlEDispatcher = zbe::SDLEventDispatcher::getInstance();
+  std::shared_ptr<zbe::SDLEventWatcher> watcher1 = std::make_shared<zbe::ImGuiEventWatcher>();
+  std::shared_ptr<zbe::SDLEventWatcher> watcher2 = std::make_shared<zbe::KeyMouseEventWatcher>();
+  sdlEDispatcher.addWatcher(watcher1);
+  sdlEDispatcher.addWatcher(watcher2);
+
   std::shared_ptr<zbe::InputBuffer> inputBuffer = sdlEDispatcher.getInputBuffer();
   std::shared_ptr<zbe::InputTextBuffer> inputTextBuffer = sdlEDispatcher.getInputTextBuffer();
 

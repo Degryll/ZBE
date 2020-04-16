@@ -24,7 +24,7 @@
 #include "ZBE/core/system/SysError.h"
 #include "ZBE/core/daemons/Punishers.h"
 #include "ZBE/SDL/tools/SDLTimer.h"
-#include "ZBE/SDL/system/SDLEventDispatcher.h"
+#include "ZBE/SDL/events/SDLEventDispatcher.h"
 #include "ZBE/SDL/system/SDLWindow.h"
 #include "ZBE/SDL/drawers/SingleSpriteSDLDrawer.h"
 #include "ZBE/entities/adaptors/SimpleDrawableSingleSpriteAdaptor.h"

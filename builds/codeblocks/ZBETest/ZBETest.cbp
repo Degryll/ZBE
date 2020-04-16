@@ -248,6 +248,7 @@
 		<Unit filename="../../../src/ZBETest/src/SDL/StatedSpriteSDLDrawerTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/SDL/daemons/SDLOGLWindowDaemonTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/SDL/daemons/SDLWindowDaemonTest.cpp" />
+		<Unit filename="../../../src/ZBETest/src/SDL/events/SDLEventDispatcherTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/SDL/factories/BasicPostLoopSDLDaemonFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/SDL/factories/BasicPreLoopSDLDaemonFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/SDL/factories/SDLImgLoaderFtryTest.cpp" />
@@ -287,7 +288,6 @@
 		<Unit filename="../../../src/ZBETest/src/core/io/InputStatusTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/core/starters/SDL/SDL_StarterTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/core/system/LoggerTest.cpp" />
-		<Unit filename="../../../src/ZBETest/src/core/system/SDL/SDLEventDispatcherTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/core/system/SysErrorTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/core/system/SysIdGeneratorTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/core/system/SysTimeTest.cpp" />

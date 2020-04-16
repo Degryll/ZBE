@@ -16,7 +16,7 @@
 
 #include "ZBE/core/daemons/Daemon.h"
 #include "ZBE/SDL/system/SDLWindow.h"
-#include "ZBE/SDL/system/SDLEventDispatcher.h"
+#include "ZBE/SDL/events/SDLEventDispatcher.h"
 
 #include "ZBE/core/system/system.h"
 

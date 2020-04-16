@@ -4,7 +4,9 @@
 #include <climits>
 #include "ZBE/core/io/InputBuffer.h"
 #include "ZBE/core/io/InputStatus.h"
-#include "ZBE/SDL/system/SDLEventDispatcher.h"
+#include "ZBE/SDL/events/SDLEventDispatcher.h"
+#include "ZBE/SDL/events/SDLEventWatcher.h"
+#include "ZBE/SDL/events/KeyMouseEventWatcher.h"
 
 TEST(SDLEventDispatcher, SDLEventDispatcher) {
   //  SDL context initialization
@@ -16,7 +18,6 @@ TEST(SDLEventDispatcher, SDLEventDispatcher) {
   user_event0.type = SDL_KEYDOWN;
   user_event0.key.keysym.sym = SDLK_RIGHT;
   user_event0.key.timestamp = 1;
-  printf("timestamp: %u\n", user_event0.key.timestamp); fflush(stdout);
   SDL_Event user_event1 = {};
   user_event1.type = SDL_KEYUP;
   user_event1.key.keysym.sym = SDLK_LEFT;
@@ -31,9 +32,10 @@ TEST(SDLEventDispatcher, SDLEventDispatcher) {
   SDL_PushEvent(&user_event1);
   SDL_PushEvent(&user_event2);
 
+  std::shared_ptr<zbe::SDLEventWatcher> watcher = std::make_shared<zbe::KeyMouseEventWatcher>();
   zbe::SDLEventDispatcher &sed = zbe::SDLEventDispatcher::getInstance();
+  sed.addWatcher(watcher);
   std::shared_ptr<zbe::InputBuffer> ib = sed.getInputBuffer();
-  printf("INI:\n"); fflush(stdout);
   sed.run();
   std::vector<zbe::InputStatus> input;
   // So 4 outputs are expected
