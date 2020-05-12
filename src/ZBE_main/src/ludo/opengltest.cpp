@@ -233,7 +233,7 @@ int opengltest(int, char** ) {
   clock_t currentTime, lastTime = CLOCKS_PER_SEC;
   int nframes = 0;
   while(true) {
-    a += 0.0001f;
+    a += 0.0100f;
 
 
     currentTime = clock();

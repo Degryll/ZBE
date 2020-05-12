@@ -532,6 +532,7 @@
 		<Unit filename="../../../include/ZBE/factories/implementations/daemons/RsrcFolderLoaderDmnFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/daemons/RsrcLoaderDmnFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/daemons/StateMachineDmnFtry.h" />
+		<Unit filename="../../../include/ZBE/factories/implementations/entities/avatars/BaseAvatarFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/entities/avatars/SimpleAnimSprtFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/events/generators/InteractionEvGnFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/events/generators/TimeEventGnFtry.h" />
