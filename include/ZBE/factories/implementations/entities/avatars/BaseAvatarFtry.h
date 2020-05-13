@@ -81,7 +81,7 @@ private:
 
 
 template<typename T, typename... Ts>
-void BaseAvatarFtry<T, Ts...>::create(std::string name, uint64_t cfgId) {
+void BaseAvatarFtry<T, Ts...>::create(std::string name, uint64_t) {
   using namespace std::string_literals;
   using namespace nlohmann;
   std::shared_ptr<MBaseAvatar<T, Ts...> > avt = std::make_shared<MBaseAvatar<T, Ts...> >();
@@ -89,7 +89,7 @@ void BaseAvatarFtry<T, Ts...>::create(std::string name, uint64_t cfgId) {
 }
 
 template<typename T>
-void BaseAvatarFtry<T>::create(std::string name, uint64_t cfgId) {
+void BaseAvatarFtry<T>::create(std::string name, uint64_t) {
   using namespace std::string_literals;
   using namespace nlohmann;
   std::shared_ptr<SBaseAvatar<T> > avt = std::make_shared<SBaseAvatar<T> >();

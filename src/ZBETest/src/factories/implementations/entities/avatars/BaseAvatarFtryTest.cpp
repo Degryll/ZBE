@@ -50,6 +50,11 @@ TEST(BaseAvatarFtry, Create) {
   listStoreDUU.insert("List.testlistDUU1", listDUU1);
   listStoreDUU.insert("List.testlistDUU2", listDUU2);
 
+  EXPECT_TRUE(listD1->empty()) << "Initialy must be no elements in list testlistd1";
+  EXPECT_TRUE(listD2->empty()) << "Initialy must be no elements in list testlistd2";
+  EXPECT_TRUE(listDUU1->empty()) << "Initialy must be no elements in list testlistDUU1";
+  EXPECT_TRUE(listDUU2->empty()) << "Initialy must be no elements in list testlistDUU1";
+
   dict.insert("Attribs.D1",0);
   dict.insert("Attribs.D2",1);
   dict.insert("Attribs.U1",0);
@@ -143,6 +148,11 @@ TEST(BaseAvatarFtry, Create) {
 
   baseAvatarStoreD.get("BaseAvatar.BaseAvatarFtryTestAVTD");
   baseAvatarStoreDUU.get("BaseAvatar.BaseAvatarFtryTestAVTDUU");
+
+  EXPECT_FALSE(listD1->empty()) << "Must be elements in list testlistd1";
+  EXPECT_FALSE(listD2->empty()) << "Must be elements in list testlistd2";
+  EXPECT_FALSE(listDUU1->empty()) << "Must be elements in list testlistDUU1";
+  EXPECT_FALSE(listDUU2->empty()) << "Must be elements in list testlistDUU1";
 
   // Must generate two errors: Tow for dictionary and two for the RsrcStores
   EXPECT_EQ(4,zbe::SysError::getNErrors()) << "Must be no leftovers. Just 4 errors";
