@@ -117,9 +117,11 @@ TEST(BaseAvatarFtry, Create) {
   BaseAvatarFtry<double, uint64_t, uint64_t> bafDUU;
 
   bafD.create("BaseAvatarFtryTestAVTD", cfgIdD);
+  EXPECT_TRUE(baseAvatarStoreD.contains("BaseAvatar.BaseAvatarFtryTestAVTD")) << "BaseAvatarFtryTestAVTD must be created.";
   bafD.setup("BaseAvatarFtryTestAVTD", cfgIdD);
 
   bafDUU.create("BaseAvatarFtryTestAVTDUU", cfgIdDUU);
+  EXPECT_TRUE(baseAvatarStoreDUU.contains("BaseAvatar.BaseAvatarFtryTestAVTDUU")) << "BaseAvatarFtryTestAVTDUU must be created.";
   bafDUU.setup("BaseAvatarFtryTestAVTDUU", cfgIdDUU);
 
   std::shared_ptr<zbe::SBaseAvatar<double> > ba1 = std::make_shared<zbe::SBaseAvatar<double> >();
@@ -144,19 +146,15 @@ TEST(BaseAvatarFtry, Create) {
   EXPECT_EQ(24, e->getUint(0)->get()) << "First uint value now is 24.";
   EXPECT_EQ(73, e->getUint(1)->get()) << "Second uint value now is 73";
 
-  EXPECT_EQ(0,zbe::SysError::getNErrors()) << "Must be no errors but:" + zbe::SysError::getFirstErrorString();
-
-  baseAvatarStoreD.get("BaseAvatar.BaseAvatarFtryTestAVTD");
-  baseAvatarStoreDUU.get("BaseAvatar.BaseAvatarFtryTestAVTDUU");
-
   EXPECT_FALSE(listD1->empty()) << "Must be elements in list testlistd1";
   EXPECT_FALSE(listD2->empty()) << "Must be elements in list testlistd2";
   EXPECT_FALSE(listDUU1->empty()) << "Must be elements in list testlistDUU1";
   EXPECT_FALSE(listDUU2->empty()) << "Must be elements in list testlistDUU1";
 
-  // Must generate two errors: Tow for dictionary and two for the RsrcStores
-  EXPECT_EQ(4,zbe::SysError::getNErrors()) << "Must be no leftovers. Just 4 errors";
+  EXPECT_FALSE(baseAvatarStoreD.contains("BaseAvatar.BaseAvatarFtryTestAVTD")) << "Must be no leftovers.";
+  EXPECT_FALSE(baseAvatarStoreDUU.contains("BaseAvatar.BaseAvatarFtryTestAVTDUU")) << "Must be no leftovers.";
 
+  EXPECT_EQ(0,zbe::SysError::getNErrors()) << "Must be no errors but:" + zbe::SysError::getFirstErrorString();
   zbe::SysError::clear();
 
 }

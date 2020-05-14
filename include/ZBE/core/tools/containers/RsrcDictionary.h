@@ -81,6 +81,16 @@ class ZBEAPI RsrcDictionary {
       }
     }
 
+    /** \brief Returns true if a resource named "name" exist in this dictionary. False otherwise.
+     *  \param name Name to identify the resource.
+     *  \return True if a resource named "name" exist in this dictionary. False otherwise.
+     *  \sa get
+     */
+    bool contains(std::string name) {
+      auto it = l.find(name);
+      return (it != l.end());
+    }
+
     /** \brief Clear the container.
      */
     void clear() {

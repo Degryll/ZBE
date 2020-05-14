@@ -105,6 +105,24 @@ class RsrcStore {
       return (this->get(id));
     }
 
+    /** \brief Returns true if a resource identify by id exist in this store. False otherwise.
+     *  \param id Id to identify the resource.
+     *  \return true if a resource identify by id exist in this store. False otherwise.
+     */
+    bool contains(uint64_t id);
+
+    /** \brief Returns true if a resource named "name" exist in this store. False otherwise.
+     *  \param name Name to identify the resource.
+     *  \return true if a resource named "name" exist in this store. False otherwise.
+     */
+    bool contains(std::string name) {
+      if (!dict.contains(name)) {
+        return false;
+      }
+      uint64_t id = dict.get(name);
+      return (this->contains(id));
+    }
+
     /** \brief Clear the container.
     */
     void clear() {
@@ -127,6 +145,12 @@ std::shared_ptr<T> RsrcStore<T>::get(uint64_t id) {
   } else {
     return (it->second);
   }
+}
+
+template <typename T>
+bool RsrcStore<T>::contains(uint64_t id) {
+  auto it = l.find(id);
+  return(it != l.end());
 }
 
 template <typename T>
