@@ -51,7 +51,9 @@ TEST(JSONAppLoader, load) {
   EXPECT_EQ(0, zbe::SysError::getNErrors()) << "Initially no errors.";
 
   auto& intStore    = zbe::RsrcDictionary<int64_t>::getInstance();
+  auto& uintStore    = zbe::RsrcDictionary<uint64_t>::getInstance();
   auto& doubleStore  = zbe::RsrcDictionary<double>::getInstance();
+  auto& flaotStore  = zbe::RsrcDictionary<float>::getInstance();
   auto& stringStore = zbe::RsrcDictionary<std::string>::getInstance();
 
   auto& rsrcFtry = zbe::RsrcStore<zbe::Factory>::getInstance();
@@ -87,6 +89,12 @@ TEST(JSONAppLoader, load) {
   EXPECT_EQ(aux, *(rsrcJson.get(dmyFtry3->createCfgId["dmy3_3"]))) << "Must have received the proper json.";
   EXPECT_EQ(42, intStore.get("cagando")) << "Must load first int";
   EXPECT_EQ(0, intStore.get("ojete")) << "Must load second int";
+
+  EXPECT_EQ(0, intStore.get("ZERAPIO")) << "Must load ZERAPIO as int";
+  EXPECT_EQ(0, uintStore.get("ZERAPIO")) << "Must load ZERAPIO as uint";
+  EXPECT_FLOAT_EQ(0.0, doubleStore.get("ZERAPIO")) << "Must load ZERAPIO as double";
+  EXPECT_FLOAT_EQ(0.0, flaotStore.get("ZERAPIO")) << "Must load ZERAPIO as float";
+  //EXPECT_EQ("0", stringStore.get("ZERAPIO")) << "Must load ZERAPIO as string";
 
   EXPECT_FLOAT_EQ(2.71828,doubleStore.get("math.e")) << "Must load first float";
   EXPECT_FLOAT_EQ(3.14159,doubleStore.get("math.pi")) << "Must load second float";

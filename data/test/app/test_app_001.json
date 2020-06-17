@@ -8,7 +8,8 @@
     "math.e": 2.71828,
     "math.pi": 3.14159,
     "era.necesario" : "y Blas",
-    "san" : "sacabo"
+    "san" : "sacabo",
+    "ZERAPIO" : {"type":"uifd", "value":0}
   },
   "phases" : [ {
       "description" : "",
