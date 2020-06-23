@@ -103,6 +103,13 @@ TEST(JSONAppLoader, load) {
   EXPECT_EQ("sacabo",stringStore.get("san")) << "Must load second string";
 
   EXPECT_EQ(0, zbe::SysError::getNErrors()) << "Finally no errors.";
+
+  intStore.clear();
+  uintStore.clear();
+  doubleStore.clear();
+  flaotStore.clear();
+  stringStore.clear();
+
   zbe::SysError::clear();
 }
 
