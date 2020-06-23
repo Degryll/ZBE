@@ -28,9 +28,6 @@ bool OALAudioLoader::isLoadable(std::filesystem::path extension) {
 std::filesystem::path OALAudioLoader::generateDefPath(const std::filesystem::path& p) {
   std::filesystem::path ext = audioDefLoader->getExtension();
   std::filesystem::path out = p;
-  printf("%s\n",ext.u8string().c_str());fflush(stdout);
-  printf("%s\n",out.u8string().c_str());fflush(stdout);
-  printf("%s\n",(out.replace_extension(ext)).u8string().c_str());fflush(stdout);
   return (out.replace_extension(ext));
 }
 

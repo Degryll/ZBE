@@ -46,7 +46,7 @@ ALCchar* OALContextDaemon::getLastAudioDevice(const ALCchar *devices) {
 
   while (device && *device != '\0' && next && *next != '\0') {
     strcpy(out, (char*)device);
-    fprintf(stdout, "%s\n", device);
+    //fprintf(stdout, "%s\n", device);
     len = strlen(device);
     device += (len + 1);
     next += (len + 2);

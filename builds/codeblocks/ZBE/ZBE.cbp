@@ -183,6 +183,8 @@
 					<Add directory="../../../extlibs/OALSoft/1.18.2/include" />
 					<Add directory="../../../extlibs/stb_vorbis" />
 					<Add directory="../../../extlibs/glm/0.9.9.0" />
+					<Add directory="../../../extlibs/imgui-1.76" />
+					<Add directory="../../../extlibs/imgui-1.76/examples" />
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
@@ -532,6 +534,7 @@
 		<Unit filename="../../../include/ZBE/factories/implementations/daemons/RsrcFolderLoaderDmnFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/daemons/RsrcLoaderDmnFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/daemons/StateMachineDmnFtry.h" />
+		<Unit filename="../../../include/ZBE/factories/implementations/entities/EntityFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/entities/avatars/BaseAvatarFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/entities/avatars/SimpleAnimSprtFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/events/generators/InteractionEvGnFtry.h" />
@@ -620,6 +623,7 @@
 		<Unit filename="../../../src/ZBE/factories/implementations/daemons/RsrcFolderLoaderDmnFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/daemons/RsrcLoaderDmnFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/daemons/StateMachineDmnFtry.cpp" />
+		<Unit filename="../../../src/ZBE/factories/implementations/entities/EntityFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/events/generators/TimeEventGnFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/events/handlers/input/BroadcastIHFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/events/handlers/input/DaemonClickIHFtry.cpp" />
@@ -634,10 +638,6 @@
 		<Unit filename="../../../src/ZBE/resources/loaders/implementations/JSONAppLoader.cpp" />
 		<Unit filename="../../../src/ZBE/tools/graphics/Camera.cpp" />
 		<Extensions>
-			<code_completion />
-			<envvars />
-			<debugger />
-			<lib_finder disable_auto="1" />
 			<DoxyBlocks>
 				<comment_style block="0" line="0" />
 				<doxyfile_project />
@@ -647,6 +647,7 @@
 				<doxyfile_dot />
 				<general />
 			</DoxyBlocks>
+			<lib_finder disable_auto="1" />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

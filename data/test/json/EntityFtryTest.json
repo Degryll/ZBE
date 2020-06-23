@@ -1,0 +1,38 @@
+{
+    "double": {
+      "double1":"nameOfDouble1",
+      "double2":[0.987654321]
+    },
+    "float": {
+      "float1":"nameOfFloat1",
+      "float2":[0.987654321]
+    },
+    "uint": {
+      "uint1":"nameOfUint1",
+      "uint2":[987654321]
+    },
+    "int": {
+      "int1":"nameOfInt1",
+      "int2":[-987654321]
+    },
+    "bool": {
+      "bool1":"nameOfBool1",
+      "bool2":false
+    },
+    "V2D": {
+      "V2D1":"nameOfV2D1",
+      "V2D2":[1.234567,"nameOfDouble2"]
+    },
+    "V3D": {
+      "V3D1":"nameOfV3D1",
+      "V3D2":["nameOfDouble3", 1.234567, -7.1]
+    },
+    "String": {
+      "string1":"nameOfString1",
+      "string2":["This is a string"]
+    },
+    "VString":  {
+      "VString1":"nameOfVString1",
+      "VString2":["nameOfString2",["I do not have free will"]]
+    }
+}

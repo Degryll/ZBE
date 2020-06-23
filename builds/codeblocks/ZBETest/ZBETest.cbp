@@ -326,6 +326,7 @@
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/drawers/OGLModelSheetDrawerFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/drawers/SingleTextSDLDrawerFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/drawers/SpriteSheetSDLDrawerFtryTest.cpp" />
+		<Unit filename="../../../src/ZBETest/src/factories/implementations/entities/EntityFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/entities/avatars/BaseAvatarFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/entities/avatars/SimpleAnimatedSpriteFtryTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/factories/implementations/events/TimeEventFactoriesTest.cpp" />
@@ -345,10 +346,6 @@
 		<Unit filename="../../../src/ZBETest/src/resources/loaders/RsrcLoadTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/resources/loaders/implementations/JSONAppLoaderTest.cpp" />
 		<Unit filename="../../../src/ZBETest/src/tools/graphics/CameraTest.cpp" />
-		<Extensions>
-			<code_completion />
-			<envvars />
-			<debugger />
-		</Extensions>
+		<Extensions />
 	</Project>
 </CodeBlocks_project_file>
