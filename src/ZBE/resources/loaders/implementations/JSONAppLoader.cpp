@@ -58,6 +58,32 @@ void JSONAppLoader::loadLiteralConfig(std::string name, json& value) {
   } else if (value.is_string()) {
     std::string aux = value.get<std::string>();
     stringStore.insert(name, aux);
+  } else if (value.is_object()) {
+    std::string type = value["type"].get<std::string>();
+    bool hasType = false;
+    if(type.find("u") != std::string::npos) {
+        uintStore.insert(name, value["value"].get<uint64_t>());
+        hasType = true;
+    }
+    if(type.find("i") != std::string::npos) {
+        intStore.insert(name, value["value"].get<uint64_t>());
+        hasType = true;
+    }
+    if(type.find("f") != std::string::npos) {
+        floatStore.insert(name, value["value"].get<float>());
+        hasType = true;
+    }
+    if(type.find("d") != std::string::npos) {
+        doubleStore.insert(name, value["value"].get<double>());
+        hasType = true;
+    }
+//    if(type.find("s") != std::string::npos) {
+//        stringStore.insert(name, value["value"].get<std::string>());
+//        hasType = true;
+//    }
+    if(!hasType) {
+        SysError::setError(std::string("ERROR: Json failed to parse. Key ") + name + std::string(" contains an invalid value type. Value: ") + value.dump());
+    }
   } else {
     SysError::setError(std::string("ERROR: Json failed to parse. Key ") + name + std::string(" contains invalid value. Its neither an integer, float or string. Value: ") + value.dump());
   }

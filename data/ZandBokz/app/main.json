@@ -181,19 +181,12 @@
             "behavior" : "loadScreen.screenDrawer"
           }
         },
-        {"factory": "SimpleAnimSprtFtry",
+        {"factory": "SpriteAvtFtry",
           "name": "loadScreen.bgEnt",
           "config" : {
-            "lists" : ["loadScreen.drawList"],
-            "contexttime": "DEFAULT",
-            "time": "ZERO",
-            "state": "state.static",
-            "degrees": "ZEROF",
-            "x": "ZERO",
-            "y": "ZERO",
-            "w": "width",
-            "h": "height",
-            "graphics": "img.loadScreen.background"
+            "entity" : "ruben curra",
+            "attribIndexes" : ["TODO", "Crear constantes con los indices"],
+            "lists":[{"loadScreen.drawList":"TODO dale un nombre a idx del ticket"}]
           }
         }
       ]

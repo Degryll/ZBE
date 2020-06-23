@@ -66,6 +66,7 @@ private:
   RsrcDictionary<int64_t>& intStore = RsrcDictionary<int64_t>::getInstance();
   RsrcDictionary<uint64_t>& uintStore = RsrcDictionary<uint64_t>::getInstance();
   RsrcDictionary<double>& doubleStore = RsrcDictionary<double>::getInstance();
+  RsrcDictionary<float>& floatStore = RsrcDictionary<float>::getInstance();
   RsrcDictionary<std::string>& stringStore = RsrcDictionary<std::string>::getInstance();
 
   std::forward_list<FtryData> appLists;
