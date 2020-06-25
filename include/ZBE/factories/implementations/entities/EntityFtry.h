@@ -50,6 +50,11 @@ public:
 private:
   RsrcDictionary<int64_t>& intStore = RsrcDictionary<int64_t>::getInstance();
   RsrcDictionary<uint64_t>& uintStore = RsrcDictionary<uint64_t>::getInstance();
+  RsrcDictionary<double>& doubleStore = RsrcDictionary<double>::getInstance();
+  RsrcDictionary<float>& floatStore = RsrcDictionary<float>::getInstance();
+  RsrcDictionary<bool>& boolStore = RsrcDictionary<bool>::getInstance();
+  RsrcDictionary<std::string>& stringStore = RsrcDictionary<std::string>::getInstance();
+
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
 
   RsrcStore<Entity> &entityRsrc = RsrcStore<Entity>::getInstance();
@@ -64,14 +69,14 @@ private:
   RsrcStore<Value<std::vector<std::string> > > &valueVSRsrc = RsrcStore<Value<std::vector<std::string> > >::getInstance();
 
   template <typename T>
-  T parseArrayElement(nlohmann::json value, RsrcStore<Value<T> > &valueRsrc) {
+  T parseArrayElement(nlohmann::json value, RsrcDictionary<T> &literalStore) {
     using namespace std::string_literals;
     if (value.is_string()) {
         //auto s = value.get<std::string>();
         //auto sp = valueRsrc.get(s);
         //auto sr = sp->get();
         //return sr;
-      return valueRsrc.get(value.get<std::string>())->get();
+      return literalStore.get(value.get<std::string>());
     } else if(value.is_array() && (value.size() == 1)
            && ((std::is_floating_point<T>::value && value.at(0).is_number_float())
               ||(std::is_integral<T>::value && value.at(0).is_number_integer())
@@ -89,10 +94,13 @@ private:
   }
 
   template <typename T>
-  inline std::shared_ptr<Value<T> > parseSingleValue(nlohmann::json value, RsrcStore<Value<T> > &valueRsrc) {
+  inline std::shared_ptr<Value<T> > parseSingleValue(nlohmann::json value, RsrcStore<Value<T> > &valueRsrc, RsrcDictionary<T> &literalStore) {
     using namespace std::string_literals;
     if (value.is_string()) {
       return valueRsrc.get(value.get<std::string>());
+    } else if(value.is_array() && (value.size() == 1)
+         ||(!std::is_same<T, std::string>::value && value.at(0).is_string())) {
+      return std::make_shared<SimpleValue<T> >(literalStore.get(value.at(0).get<std::string>()));
     } else if(value.is_array() && (value.size() == 1)
       && ((std::is_floating_point<T>::value && value.at(0).is_number_float())
          ||(std::is_integral<T>::value && value.at(0).is_number_integer())
@@ -100,8 +108,8 @@ private:
          ||(std::is_same<T, std::string>::value && value.at(0).is_string()))){
       return std::make_shared<SimpleValue<T> >(value.at(0).get<T>());
     } else if((std::is_floating_point<T>::value && value.is_number_float())
-           ||(std::is_integral<T>::value && value.is_number_integer())
-           ||(std::is_same<T, bool>::value && value.is_boolean())) {
+         ||(std::is_integral<T>::value && value.is_number_integer())
+         ||(std::is_same<T, bool>::value && value.is_boolean())) {
       return std::make_shared<SimpleValue<T> >(value.get<T>());
     } else {
       SysError::setError("EntityFtry parseValue error: "s + value.get<std::string>() + " is invalid."s);
@@ -110,10 +118,10 @@ private:
   }
 
   template <typename T>
-  inline void parse(nlohmann::json cfg, RsrcStore<Value<T> > &valueRsrc, std::shared_ptr<Entity> e) {
+  inline void parse(nlohmann::json cfg, RsrcStore<Value<T> > &valueRsrc, RsrcDictionary<T> &literalStore, std::shared_ptr<Entity> e) {
       for (auto item : cfg.items()) {
         auto id = uintStore.get(item.key());
-        e->set<T>(id, parseSingleValue(item.value(), valueRsrc));
+        e->set<T>(id, parseSingleValue(item.value(), valueRsrc, literalStore));
         // por si generalizamos
         // if (item.value().is_array() && item.value().size() > 1){
         //   e.set<T>(id, parseMultiValue<T, item.value().size()>(item.value(), valueRsrc));
@@ -130,7 +138,7 @@ private:
     } else if (cfg.is_array() && (cfg.size() == 3)) {
       auto c = 0;
       for (auto item : cfg.items()) {
-        val->get()[c++] = parseArrayElement(item.value(), valueDRsrc);
+        val->get()[c++] = parseArrayElement(item.value(), doubleStore);
       }
     }
     return val;
@@ -143,7 +151,7 @@ private:
     } else if (cfg.is_array() && (cfg.size() == 2)) {
       auto c = 0;
       for (auto item : cfg.items()) {
-        val->get()[c++] = parseArrayElement(item.value(), valueDRsrc);
+        val->get()[c++] = parseArrayElement(item.value(), doubleStore);
       }
     }
     return val;
@@ -156,7 +164,7 @@ private:
     } else if (cfg.is_array()) {
       auto c = 0;
       for (auto item : cfg.items()) {
-        val->get().emplace_back(parseArrayElement<std::string>(item.value(), valueSRsrc));
+        val->get().emplace_back(parseArrayElement<std::string>(item.value(), stringStore));
       }
     }
     return val;

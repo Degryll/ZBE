@@ -7,6 +7,8 @@
  * @brief Daemon capable of load all base factories.
  */
 
+#include <string>
+
 #include "ZBE/core/zbe.h"
 
 #include "ZBE/core/daemons/VoidDaemon.h"
@@ -15,11 +17,15 @@
 
 #include "ZBE/core/tools/containers/RsrcStore.h"
 
+#include "ZBE/core/tools/math/Vector.h"
+
 #include "ZBE/core/tools/shared/Value.h"
 #include "ZBE/core/tools/shared/implementations/SimpleValue.h"
 
 #include "ZBE/factories/implementations/RsrcFtry.h"
 #include "ZBE/factories/implementations/GenericFtry.h"
+
+#include "ZBE/factories/implementations/entities/EntityFtry.h"
 
 #include "ZBE/factories/implementations/behaviors/StateLTEraserBhvFtry.h"
 #include "ZBE/factories/implementations/behaviors/StateSetterBhvFtry.h"
@@ -52,11 +58,18 @@ void BaseFactories::load() {
   RsrcStore<ContextTime>::getInstance().insert("ContextTime.DEFAULT", SysTime::getInstance());
   RsrcStore<Daemon>::getInstance().insert("Daemon.DEFAULT", std::make_shared<VoidDaemon>());
 
+  // --- Entities
+  factories.insert("EntityFtry", std::make_shared<EntityFtry>());
+
   // --- Values
-  factories.insert("ValueUFtry", std::make_shared<GenericFtry<Value<uint64_t>,SimpleValue<uint64_t>>>("ValueU","SimpleValueU"));
-  factories.insert("ValueIFtry", std::make_shared<GenericFtry<Value<int64_t>,SimpleValue<int64_t>>>("ValueI","SimpleValueI"));
-  factories.insert("ValueDFtry", std::make_shared<GenericFtry<Value<double>,SimpleValue<double>>>("ValueD","SimpleValueD"));
-  factories.insert("ValueFFtry", std::make_shared<GenericFtry<Value<float>,SimpleValue<float>>>("ValueF","SimpleValueF"));
+  factories.insert("ValueUFtry", std::make_shared<GenericFtry<Value<uint64_t>,SimpleValue<uint64_t>> >("ValueU","SimpleValueU"));
+  factories.insert("ValueIFtry", std::make_shared<GenericFtry<Value<int64_t>,SimpleValue<int64_t> > >("ValueI","SimpleValueI"));
+  factories.insert("ValueDFtry", std::make_shared<GenericFtry<Value<double>,SimpleValue<double> > >("ValueD","SimpleValueD"));
+  factories.insert("ValueFFtry", std::make_shared<GenericFtry<Value<float>,SimpleValue<float> > >("ValueF","SimpleValueF"));
+
+  factories.insert("ValueSFtry", std::make_shared<GenericFtry<Value<std::string>,SimpleValue<std::string> > >("ValueS","SimpleValueS"));
+  factories.insert("ValueV2DFtry", std::make_shared<GenericFtry<Value<Vector2D>,SimpleValue<Vector2D> > >("ValueV2D","SimpleValueV2D"));
+  factories.insert("ValueV3DFtry", std::make_shared<GenericFtry<Value<Vector3D>,SimpleValue<Vector3D> > >("ValueV3D","SimpleValueV3S"));
 
   // --- Daemons
   factories.insert("MainLoopExitFtry", std::make_shared<MainLoopExitFtry>());

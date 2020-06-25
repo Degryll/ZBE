@@ -2,20 +2,29 @@
   "meta" : {
     "description" : "Zandbokz entry point Nos falta guardar SysTime en DEFAULT (common resource)"
   },
+  "ids" : [
+    "TODO", "esto", "debería", "autogenerar", "ids", "Quizás", "queramos", "poner", "limitaciones", "de", "rango"
+  ],
   "literals" : {
     "window_title":"Zandbokz",
+    "ZERO" : {"type":"uifd", "value":0},
+    "width" : {"type":"uifd", "value":1024},
+    "height" : {"type":"uifd", "value":768},
+    "gidIdx" : 1000,
+    "stateIdx" : 1010,
+    "degreesIdx" : 1020,
+    "positionIdx" : 1030,
+    "sizeIdx" : 1040,
+    "drawticket" : 2000,
     "state.static" : 0,
-    "ZERO" : 0,
-    "ZEROF" : 0.0,
-    "width" : 1024,
-    "height": 768,
     "testwflags": 0,
     "testrflags": 0,
     "timeEventId" : 1,
     "mainInitialState" : 0,
     "mainExitState" : 1,
     "loadScreen.toMenu": 1,
-    "loadScreen.loadTime" : 262144
+    "loadScreen.loadTime" : 262144,
+    "TODOindices":""
   },
   "phases":[
       {
@@ -86,6 +95,32 @@
           "config" : {
             "loader" : "zandbokz.mssLoader",
             "url" : "data/ZandBokz/sprtsheet"
+          }
+        }
+      ]
+    },
+    {
+      "description" : "Creating entity",
+      "factories" : [
+        {"factory": "EntityFtry",
+          "name": "loadingLogo",
+          "description" : "El logo que se muestra en la pantalla de carga",
+          "realValues" : {
+          },
+          "config" : {
+            "uint": {
+              "gidIdx":["img.loadScreen.background"]
+            },
+            "int": {
+              "stateIdx":["state.static"]
+            },
+            "double": {
+              "degreesIdx":["ZERO"]
+            },
+            "V2D": {
+              "positionIdx":["ZERO", "ZERO"],
+              "sizeIdx":[1024.0, 768.0]
+            }
           }
         }
       ]
@@ -183,10 +218,11 @@
         },
         {"factory": "SpriteAvtFtry",
           "name": "loadScreen.bgEnt",
+          "cosas" : "uint64_t, int64_t, double, Vector2D, Vector2D",
           "config" : {
-            "entity" : "ruben curra",
-            "attribIndexes" : ["TODO", "Crear constantes con los indices"],
-            "lists":[{"loadScreen.drawList":"TODO dale un nombre a idx del ticket"}]
+            "entity" : "loadingLogo",
+            "attribIndexes" : ["gidIdx", "stateIdx", "degreesIdx", "sizeIdx", "positionIdx"],
+            "lists":{"loadScreen.drawList":"drawticket"}
           }
         }
       ]
