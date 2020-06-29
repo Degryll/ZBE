@@ -84,7 +84,7 @@
 					<Add library="SDL2_ttf" />
 					<Add library="SDL2_net" />
 					<Add directory="../../../lib" />
-					<Add directory="../../../extlibs/SDL2/2.0.5/x86_64-w64-mingw32/lib" />
+					<Add directory="../../../extlibs/SDL2/2.0.8/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.1/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.14/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_net/2.0.1/x86_64-w64-mingw32/lib" />
@@ -171,10 +171,6 @@
 		</Compiler>
 		<Unit filename="../../../src/ZandBokz/include/zandbokz.h" />
 		<Unit filename="../../../src/ZandBokz/src/zandbokz.cpp" />
-		<Extensions>
-			<code_completion />
-			<debugger />
-			<envvars />
-		</Extensions>
+		<Extensions />
 	</Project>
 </CodeBlocks_project_file>
