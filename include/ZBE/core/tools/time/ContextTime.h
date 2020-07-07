@@ -166,7 +166,6 @@ public:
       lostTime += (realFrameTime - maxFrameTime);
       frame = maxFrameTime;
     }
-
     endT = total;
     eventT = initT;
     currentT = eventT - initT;

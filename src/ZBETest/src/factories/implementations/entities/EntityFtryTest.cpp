@@ -35,11 +35,16 @@ TEST (EntityFtry, Create) {
   auto &valueSRsrc = RsrcStore<Value<std::string> >::getInstance();
   auto &valueVSRsrc = RsrcStore<Value<std::vector<std::string> > >::getInstance();
 
+  //auto &intStore = RsrcDictionary<int64_t>::getInstance();
+  //auto &uintStore = RsrcDictionary<uint64_t>::getInstance();
+  auto &doubleStore = RsrcDictionary<double>::getInstance();
+  //auto &floatStore = RsrcDictionary<float>::getInstance();
+  //auto &boolStore = RsrcDictionary<bool>::getInstance();
+  auto &stringStore = RsrcDictionary<std::string>::getInstance();
+
   auto &configRsrc = RsrcStore<nlohmann::json>::getInstance();
 
   valueDRsrc.insert("nameOfDouble1", std::make_shared<SimpleValue<double> >(SimpleValue<double>(1.2345)));
-  valueDRsrc.insert("nameOfDouble2", std::make_shared<SimpleValue<double> >(SimpleValue<double>(1.23456)));
-  valueDRsrc.insert("nameOfDouble3", std::make_shared<SimpleValue<double> >(SimpleValue<double>(1.234567)));
   valueFRsrc.insert("nameOfFloat1", std::make_shared<SimpleValue<float> >(SimpleValue<float>(2.3456f)));
   valueURsrc.insert("nameOfUint1", std::make_shared<SimpleValue<uint64_t> >(SimpleValue<uint64_t>(45678)));
   valueIRsrc.insert("nameOfInt1", std::make_shared<SimpleValue<int64_t> >(SimpleValue<int64_t>(-56789)));
@@ -47,11 +52,16 @@ TEST (EntityFtry, Create) {
   valueV2Rsrc.insert("nameOfV2D1", std::make_shared<SimpleValue<Vector2D> >(SimpleValue<Vector2D>(Vector2D({6.0, 789.0}))));
   valueV3Rsrc.insert("nameOfV3D1", std::make_shared<SimpleValue<Vector3D> >(SimpleValue<Vector3D>(Vector3D({6.0, 789.0, 0.123}))));
   valueSRsrc.insert("nameOfString1", std::make_shared<SimpleValue<std::string> >(SimpleValue<std::string>("This is another string")));
-  valueSRsrc.insert("nameOfString2", std::make_shared<SimpleValue<std::string> >(SimpleValue<std::string>("This is a third string")));
   valueVSRsrc.insert("nameOfVString1", std::make_shared<SimpleValue<std::vector<std::string> > >(SimpleValue<std::vector<std::string> >(std::vector<std::string>{"The first string for vector", "The second"})));
+
+  doubleStore.insert("literalOfDouble3", 3.4567);
+  doubleStore.insert("nameOfDouble2", 1.23456);
+  doubleStore.insert("nameOfDouble3", 1.234567);
+  stringStore.insert("nameOfString2", "This is a third string");
 
   dict.insert("double1", 1);
   dict.insert("double2", 2);
+  dict.insert("double3", 19);
   dict.insert("float1", 3);
   dict.insert("float2", 4);
   dict.insert("uint1", 5);
@@ -72,17 +82,20 @@ TEST (EntityFtry, Create) {
   std::ifstream ifs("data/test/json/EntityFtryTest.json");
   json appCfg;
   ifs >> appCfg;
-
   uint64_t cfgId = configRsrc.insert(std::make_shared<json>(appCfg));
+
   zbe::EntityFtry ef;
   ef.create("DummyEntity", cfgId);
   ef.setup("DummyEntity", cfgId);
+
   uint64_t eId = dict.get("Entity.DummyEntity");
   ASSERT_NE(0, eId) << "Must create an Entity with given name";
 
   auto e = entityRsrc.get(eId);
+
   EXPECT_EQ(1.2345,e->getDouble(1)->get()) << "First double loaded";
   EXPECT_EQ(0.987654321,e->getDouble(2)->get()) << "Second double loaded";
+  EXPECT_EQ(3.4567,e->getDouble(19)->get()) << "third double loaded";
 
   EXPECT_EQ(2.3456f,e->getFloat(3)->get()) << "First float loaded";
   EXPECT_EQ(0.987654321f,e->getFloat(4)->get()) << "Second float loaded";
@@ -127,11 +140,8 @@ TEST (EntityFtry, Create) {
   valueV3Rsrc.clear();
   valueSRsrc.clear();
   valueVSRsrc.clear();
-
   configRsrc.clear();
-
   entityRsrc.clear();
-
   dict.clear();
   zbe::SysError::clear();
 }

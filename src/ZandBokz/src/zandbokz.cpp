@@ -19,19 +19,19 @@
 int main(int /*argc*/, char** /*argv*/) {
    using namespace zbe;
    printf("Hello ZandBokz\n");
-
    BaseFactories::load();
    SDLFactories::load();
    ZBEFactories::load();
    JSONFactories::load();
-
    // Load App.
+   std::cout << SysError::getFirstErrorString() << "\n";
    JSONAppLoader appLoader;
    appLoader.load("data/ZandBokz/app/main.json");
-
    std::cout << SysError::getFirstErrorString() << "\n";
    // Run App.
-   RsrcStore<Daemon>::getInstance().get("Daemon.Main")->run();
+   auto d = RsrcStore<Daemon>::getInstance().get("Daemon.Main");
+   std::cout << SysError::getFirstErrorString() << "\n";
+   d->run();
    return 0;
 
 
@@ -43,23 +43,23 @@ int main(int /*argc*/, char** /*argv*/) {
             // Instanciar pintadores
             // Cargar carpetas de recursos
           // Cargar la siguiente aplicacion.
-            // Factoría propias del juego.
+            // Factoria propias del juego.
             // Instaciar demonios RsrcLoader para segunda aplicacion
 
       // Cargar segunda aplicacion: Menu.
-        // ¿Tenemos factorias para las cosas que crean menus?
+        // Tenemos factorias para las cosas que crean menus?
 
       // Cargar segunda aplicacion: juego.
 
     // Desarrollos necesarios
-      // ¿Cambiar factories por general? Necesitamos cargar assets en esa fase.
+      // Cambiar factories por general? Necesitamos cargar assets en esa fase.
       // Factorias de ContextTime:SubordinateTime
       // Avatares nuevos: Todos construidos a partir de un Entity.
       // Declarar en CommonFactories factorias para:
         // values X
         // listas V
       // cambiar el campo "lists" del main.json por "containers" e incluir en el factorias de values.
-      // ¿Tenemos un demonio vacio?
+      // Tenemos un demonio vacio?
       // Factorias sistema de menus
       // Factorias BasicPreLoopSDLDaemon/BasicPostLoopSDLDaemon
       // Quizas todas las factorias de entidades iniciales deban dejar tickets de estas en un RsrcStore de tickets.
@@ -67,9 +67,9 @@ int main(int /*argc*/, char** /*argv*/) {
     // Desarrollos deseados
       // Expandir interfaz de RsrcLoader para poder preguntar estado.
       // * Cada RsrcLoader es responsable de anotar su estado. struct done/total/msgId
-      // Añadir descripcion a factoria en json
+      // Agregar descripcion a factoria en json
       // CommonResources incluye recursos por defecto en RsrcStores.
-        // Ejemplo: "ContexTime.SysTime" siempre contiene el singleto de SysTime. (Quizás justo este ejemplo sea malo. No podemos jugarnosla a meter SysTime en un shared_ptr)
+        // Ejemplo: "ContexTime.SysTime" siempre contiene el singleto de SysTime. (Quizas justo este ejemplo sea malo. No podemos jugarnosla a meter SysTime en un shared_ptr)
         // ... pues resulta que SysTime::getInstance() devuelve uns shared_ptr.
 
     // Chorrandeces

@@ -1,7 +1,8 @@
 {
     "double": {
       "double1":"nameOfDouble1",
-      "double2":[0.987654321]
+      "double2":[0.987654321],
+      "double3":["literalOfDouble3"]
     },
     "float": {
       "float1":"nameOfFloat1",

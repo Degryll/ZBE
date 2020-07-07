@@ -22,11 +22,9 @@ void EntityFtry::setup(std::string name, uint64_t cfgId) {
   using namespace std::string_literals;
   using namespace nlohmann;
   std::shared_ptr<json> cfg = configRsrc.get(cfgId);
-
   if(cfg) {
     auto j = *cfg;
     auto e = entityRsrc.get("Entity."s + name);
-
     if (j.find("double") != j.end())  { parse(j["double"],  valueDRsrc, doubleStore, e); }
     if (j.find("float") != j.end())   { parse(j["float"],   valueFRsrc, floatStore, e); }
     if (j.find("uint") != j.end())    { parse(j["uint"],    valueURsrc, uintStore, e); }

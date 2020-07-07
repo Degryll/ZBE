@@ -99,7 +99,7 @@ private:
     if (value.is_string()) {
       return valueRsrc.get(value.get<std::string>());
     } else if(value.is_array() && (value.size() == 1)
-         ||(!std::is_same<T, std::string>::value && value.at(0).is_string())) {
+         &&(std::is_same_v<T, std::string> == false) && (value.at(0).is_string())) {
       return std::make_shared<SimpleValue<T> >(literalStore.get(value.at(0).get<std::string>()));
     } else if(value.is_array() && (value.size() == 1)
       && ((std::is_floating_point<T>::value && value.at(0).is_number_float())
@@ -162,7 +162,6 @@ private:
     if (cfg.is_string()) {
       val = valueVSRsrc.get(cfg.get<std::string>());
     } else if (cfg.is_array()) {
-      auto c = 0;
       for (auto item : cfg.items()) {
         val->get().emplace_back(parseArrayElement<std::string>(item.value(), stringStore));
       }

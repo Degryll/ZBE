@@ -17,7 +17,7 @@ namespace zbe {
 
 /** \brief Daemon that does nothing.
  */
-class ZBEAPI VoidDaemon : public Daemon {
+class VoidDaemon : public Daemon {
 public:
 
   /** \brief Do nothing.

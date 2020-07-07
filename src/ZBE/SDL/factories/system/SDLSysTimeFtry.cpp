@@ -22,7 +22,7 @@ void SDLSysTimeFtry::create(std::string, uint64_t) {
 void SDLSysTimeFtry::setup(std::string, uint64_t) {
   using namespace std::string_literals;
   auto timer = timerRsrc.get("Timer.DEFAULT"s);
-  SysTime::getInstance()->setSystemTimer(timer);
+  st->setSystemTimer(timer);
 }
 
 } // namespace zbe

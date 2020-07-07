@@ -12,6 +12,16 @@
 
 #include <string>
 
+#include "ZBE/factories/Factory.h"
+
+#include "ZBE/SDL/factories/system/SDLWindowFtry.h"
+#include "ZBE/SDL/factories/resources/SDLImgLoaderFtry.h"
+#include "ZBE/SDL/factories/system/SDLSysTimeFtry.h"
+#include "ZBE/SDL/factories/drawers/SpriteSheetSDLDrawerFtry.h"
+#include "ZBE/SDL/factories/daemons/BasicPreLoopSDLDaemonFtry.h"
+#include "ZBE/SDL/factories/daemons/BasicPostLoopSDLDaemonFtry.h"
+
+#include "ZBE/core/tools/containers/RsrcStore.h"
 #include "ZBE/core/daemons/Daemon.h"
 #include "ZBE/core/system/system.h"
 
@@ -31,7 +41,16 @@ public:
 
   /** \brief It loads all factories.
   */
-  static void load();
+  static void load(){
+    auto& factories = RsrcStore<Factory>::getInstance();
+    factories.insert("SDLWindowFtry", std::make_shared<SDLWindowFtry>());
+    factories.insert("SDLImgLoaderFtry", std::make_shared<SDLImgLoaderFtry>());
+    factories.insert("SDLSysTimeFtry", std::make_shared<SDLSysTimeFtry>());
+    factories.insert("SpriteSheetSDLDrawerFtry", std::make_shared<SpriteSheetSDLDrawerFtry<5, uint64_t, int64_t, double, Vector2D, Vector2D> >());
+
+    factories.insert("BasicPreLoopSDLDaemonFtry", std::make_shared<BasicPreLoopSDLDaemonFtry>());
+    factories.insert("BasicPostLoopSDLDaemonFtry", std::make_shared<BasicPostLoopSDLDaemonFtry>());
+  }
 
 };
 

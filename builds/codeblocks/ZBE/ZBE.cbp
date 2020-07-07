@@ -284,6 +284,7 @@
 		<Unit filename="../../../include/ZBE/ImGui/daemons/ImGuiPostLoopDaemon.h" />
 		<Unit filename="../../../include/ZBE/ImGui/daemons/ImGuiPreLoopDaemon.h" />
 		<Unit filename="../../../include/ZBE/ImGui/events/ImGuiEventWatcher.h" />
+		<Unit filename="../../../include/ZBE/JSON/factories/JSONFactories.h" />
 		<Unit filename="../../../include/ZBE/JSON/graphics/JSONGraphicsLoaders.h" />
 		<Unit filename="../../../include/ZBE/JSON/resources/JSONAudioDefLoader.h" />
 		<Unit filename="../../../include/ZBE/JSON/resources/JSONImgDefLoader.h" />
@@ -557,7 +558,6 @@
 		<Unit filename="../../../include/ZBE/resources/loaders/implementations/JSONAppLoader.h" />
 		<Unit filename="../../../include/ZBE/system/SystemResources.h" />
 		<Unit filename="../../../include/ZBE/tools/graphics/Camera.h" />
-		<Unit filename="../../../src/ZBE/JSON/factories/JSONFactories.cpp" />
 		<Unit filename="../../../src/ZBE/JSON/graphics/JSONGraphicsLoaders.cpp" />
 		<Unit filename="../../../src/ZBE/JSON/resources/JSONAudioDefLoader.cpp" />
 		<Unit filename="../../../src/ZBE/OAL/daemons/OALContextDaemon.cpp" />
@@ -574,7 +574,6 @@
 		<Unit filename="../../../src/ZBE/SDL/drawers/RotatedSpriteSDLDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/drawers/SingleSpriteSDLDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/drawers/StatedSpriteSDLDrawer.cpp" />
-		<Unit filename="../../../src/ZBE/SDL/factories/SDLFactories.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/factories/SDLOGLWindowDmnFtry.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/factories/SDLWindowDmnFtry.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/factories/daemons/BasicPostLoopSDLDaemonFtry.cpp" />
@@ -611,9 +610,7 @@
 		<Unit filename="../../../src/ZBE/core/tools/time/ContextTime.cpp" />
 		<Unit filename="../../../src/ZBE/daemons/RsrcFolderLoaderDmn.cpp" />
 		<Unit filename="../../../src/ZBE/daemons/RsrcLoaderDmn.cpp" />
-		<Unit filename="../../../src/ZBE/factories/BaseFactories.cpp" />
 		<Unit filename="../../../src/ZBE/factories/CommonFactories.cpp" />
-		<Unit filename="../../../src/ZBE/factories/ZBEFactories.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/RsrcFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/behaviors/StateLTEraserBhvFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/behaviors/StateSetterBhvFtry.cpp" />

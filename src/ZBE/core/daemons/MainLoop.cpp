@@ -18,6 +18,7 @@ void MainLoop::run() {
     // Pre daemon
     contextTime->update();
     dPre->run();
+
     // Inner loop
     while (contextTime->isFrameRemaining()) {
       // Timed events generator daemon

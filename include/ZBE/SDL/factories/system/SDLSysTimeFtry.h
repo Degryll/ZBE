@@ -51,6 +51,8 @@ private:
   RsrcStore<SDLTimer> &sdlTimerRsrc = RsrcStore<SDLTimer>::getInstance();
   RsrcStore<ContextTime> &contextTimeRsrc = RsrcStore<ContextTime>::getInstance();
   NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();
+
+  std::shared_ptr<SysTime> st = SysTime::getInstance();
 };
 
 } // namespace zbe

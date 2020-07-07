@@ -45,7 +45,7 @@ public:
 
   /** \brief Destructor.
    */
-  ~MainLoop() {}
+  ~MainLoop() = default;
 
   /** \brief It will run until stop() is called.
    *  For each frame it will:

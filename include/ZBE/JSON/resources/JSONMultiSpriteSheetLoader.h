@@ -25,7 +25,7 @@ namespace zbe {
 
 /** \brief SDL implementation of ImgLoader.
 */
-class ZBEAPI JSONMultiSpriteSheetLoader : public RsrcLoader {
+class JSONMultiSpriteSheetLoader : public RsrcLoader {
 public:
 
  /** \brief Builds an SDLImgLoader from a SDLImageStore and the file extension supported (PNG by default)
