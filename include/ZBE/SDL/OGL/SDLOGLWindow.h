@@ -33,82 +33,6 @@ namespace zbe {
 const int ZBE_GL_MAJOR_VERSION = 3;
 const int ZBE_GL_MINOR_VERSION = 0;
 
-class ZBEAPI OGLTextureStore;
-class ZBEAPI OGLModelStore;
-class ZBEAPI OGLShaderStore;
-
-/**
- * @class ZBEAPI SDLOGLWindow
- * @brief Used to create windows using SDL 2.0. with OpenGL support.
- */
-class ZBEAPI SDLOGLWindow : public SDLWindow {
-public:
-  SDLOGLWindow(const SDLOGLWindow&) = delete;  //!< Does not make sense to "copy" a SDLOGLWindow.
-  void operator=(const SDLOGLWindow&) = delete;  //!< Does not make sense to "copy" a SDLOGLWindow.
-
-  /** \brief Creates a new SDLOGLWindow and a Renderer.
-   *
-   *  Creates a new SDLOGLWindow and a Renderer with the size and flags specified.
-   *  \param title Title of the Window.
-   *  \param width Width of the Window.
-   *  \param height Height of the Window.
-   *  \param window_flags Flags for the SDLOGLWindow creation. Default no flags.
-   *  \param rederer_flags Flags for the Renderer creation. Default no flags.
-   */
-  SDLOGLWindow(const char* title, int width, int height, Uint32 window_flags = 0, Uint32 renderer_flags = 0) : SDLWindow(title, width, height, window_flags | SDL_WINDOW_OPENGL, renderer_flags), glContext(SDL_GL_CreateContext(getSDL_Window())), texStore(std::make_shared<OGLTextureStore>()), modelStore(std::make_shared<OGLModelStore>()), shaderStore(std::make_shared<OGLShaderStore>()) {
-    createGLContext();
-  }
-
-  /** \brief Creates a new SDLOGLWindow and a Renderer in a specific position.
-   *
-   *  Creates a new SDLOGLWindow and a Renderer with the position, size and flags specified.
-   *  \param title Title of the Window.
-   *  \param x X coordinates of the initial position of the window.
-   *  \param y Y coordinates of the initial position of the window..
-   *  \param width Width of the Window.
-   *  \param height Height of the Window.
-   *  \param window_flags Flags for the SDLOGLWindow creation. Default no flags.
-   *  \param rederer_flags Flags for the Renderer creation. Default no flags.
-   */
-  SDLOGLWindow(const char* title, int x, int y, int width, int height, Uint32 window_flags = 0, Uint32 renderer_flags = 0) : SDLWindow(title, x, y, width, height, window_flags | SDL_WINDOW_OPENGL, renderer_flags), glContext(SDL_GL_CreateContext(getSDL_Window())), texStore(std::make_shared<OGLTextureStore>()), modelStore(std::make_shared<OGLModelStore>()), shaderStore(std::make_shared<OGLShaderStore>()){
-    createGLContext();
-  }
-
-  /** \brief Free resources and destroy the Renderer and the SDLOGLWindow.
-   */
-  ~SDLOGLWindow() {};
-
-  /** \brief internal OGLTextureStore getter
-   */
-  std::shared_ptr<OGLTextureStore> getTextureStore() {return (texStore);}
-
-  /** \brief internal OGLTextureStore getter
-   */
-  std::shared_ptr<OGLModelStore> getModelStore() {return (modelStore);}
-
-  /** \brief internal OGLTextureStore getter
-   */
-  std::shared_ptr<OGLShaderStore> getShaderStore() {return (shaderStore);}
-
-  /** \brief Swap Open GL buffers.
-   */
-  void present() {SDL_GL_SwapWindow(getSDL_Window());}
-  void glSwap() {SDL_GL_SwapWindow(getSDL_Window());}
-
-  SDL_GLContext getGLContext() {
-    return glContext;
-  }
-
-private:
-
-  void createGLContext();
-
-  SDL_GLContext glContext;
-  std::shared_ptr<OGLTextureStore> texStore;
-  std::shared_ptr<OGLModelStore> modelStore;
-  std::shared_ptr<OGLShaderStore> shaderStore;
-};
-
 class ZBEAPI OGLTextureStore {
 public:
     OGLTextureStore(const OGLTextureStore&) = delete; //!< Delete copy constructor
@@ -152,8 +76,15 @@ public:
      */
     GLuint getTexture(uint64_t id);
 
+    /** \brief Store a texture id;
+     *  \param The texture id to store.
+     *  \return the zbe id of the stored gl texture id.
+     *  \sa loadImg()
+     */
+    uint64_t storeTexture(const GLuint tex);
+
 private:
-  uint64_t storeTexture(const GLuint tex);
+
   void overwriteTexture(uint64_t index, const GLuint tex);
   GLuint _createTexture(const GLvoid *data, unsigned w, unsigned h);
   std::vector<unsigned char> loadPNG(const char* filename, unsigned &width, unsigned &height);
@@ -161,6 +92,7 @@ private:
   std::vector<GLuint> texCollection;  //!< Collection of textures.
   std::mutex m;                       //!< Mutex to avoid race conditions.
 };
+
 
 class ZBEAPI OGLModelStore {
 public:
@@ -173,10 +105,12 @@ public:
 
     uint64_t loadModel(const GLfloat *vertexData, const GLuint *indexData, int vSize ,int iSize);
 
+    uint64_t storeModel(const GLuint vao, const GLsizei nvertex);
+
     std::tuple<GLuint, GLsizei> getModel(uint64_t id);
 
 private:
-  uint64_t storeModel(const GLuint vao, const GLsizei nvertex);
+
   std::vector<std::tuple<GLuint, GLsizei> > modelCollection;  //!< Collection of textures.
   std::mutex m;
 };
@@ -209,6 +143,105 @@ private:
 
   std::vector<GLuint> programCollection;  //!< Collection of textures.
   std::mutex m;
+};
+
+
+/**
+ * @class ZBEAPI SDLOGLWindow
+ * @brief Used to create windows using SDL 2.0. with OpenGL support.
+ */
+class ZBEAPI SDLOGLWindow : public SDLWindow {
+public:
+  SDLOGLWindow(const SDLOGLWindow&) = delete;  //!< Does not make sense to "copy" a SDLOGLWindow.
+  void operator=(const SDLOGLWindow&) = delete;  //!< Does not make sense to "copy" a SDLOGLWindow.
+
+  /** \brief Creates a new SDLOGLWindow and a Renderer.
+   *
+   *  Creates a new SDLOGLWindow and a Renderer with the size and flags specified.
+   *  \param title Title of the Window.
+   *  \param width Width of the Window.
+   *  \param height Height of the Window.
+   *  \param window_flags Flags for the SDLOGLWindow creation. Default no flags.
+   *  \param rederer_flags Flags for the Renderer creation. Default no flags.
+   */
+  SDLOGLWindow() : SDLWindow(), texStore(), modelStore(), shaderStore() {}
+
+  /** \brief Creates a new SDLOGLWindow and a Renderer.
+   *
+   *  Creates a new SDLOGLWindow and a Renderer with the size and flags specified.
+   *  \param title Title of the Window.
+   *  \param width Width of the Window.
+   *  \param height Height of the Window.
+   *  \param window_flags Flags for the SDLOGLWindow creation. Default no flags.
+   *  \param rederer_flags Flags for the Renderer creation. Default no flags.
+   */
+  SDLOGLWindow(const char* title, int width, int height, Uint32 window_flags = 0, Uint32 renderer_flags = 0) : SDLWindow(title, width, height, window_flags | SDL_WINDOW_OPENGL, renderer_flags), glContext(SDL_GL_CreateContext(getSDL_Window())), texStore(), modelStore(), shaderStore() {
+    createGLContext();
+  }
+
+  /** \brief Creates a new SDLOGLWindow and a Renderer in a specific position.
+   *
+   *  Creates a new SDLOGLWindow and a Renderer with the position, size and flags specified.
+   *  \param title Title of the Window.
+   *  \param x X coordinates of the initial position of the window.
+   *  \param y Y coordinates of the initial position of the window..
+   *  \param width Width of the Window.
+   *  \param height Height of the Window.
+   *  \param window_flags Flags for the SDLOGLWindow creation. Default no flags.
+   *  \param rederer_flags Flags for the Renderer creation. Default no flags.
+   */
+  SDLOGLWindow(const char* title, int x, int y, int width, int height, Uint32 window_flags = 0, Uint32 renderer_flags = 0) : SDLWindow(title, x, y, width, height, window_flags | SDL_WINDOW_OPENGL, renderer_flags), glContext(SDL_GL_CreateContext(getSDL_Window())), texStore(), modelStore(), shaderStore(){
+    createGLContext();
+  }
+
+  /** \brief Free resources and destroy the Renderer and the SDLOGLWindow.
+   */
+  ~SDLOGLWindow() {};
+
+  /** \brief Sets the window flags
+   *  \param window_flags The widnow flags, like borderless, resizable, etc.
+   *  \sa run, setTitle, setX, setY, setWidth, setHeight, setRenderer_flags
+   */
+  virtual void setWindow_flags(Uint32 window_flags) override { SDLWindow::setWindow_flags(window_flags | SDL_WINDOW_OPENGL);}
+
+  /** \brief Creates the widnows (use only width empty constructor and setters)
+   *  \sa setTitle, setX, setY, setWidth, setHeight, setWindow_flags
+   */
+  void run() {
+    SDLWindow::run();
+    glContext = SDL_GL_CreateContext(getSDL_Window());
+    createGLContext();
+  }
+
+  /** \brief internal OGLTextureStore getter
+   */
+  OGLTextureStore* getTextureStore() {return (&texStore);}
+
+  /** \brief internal OGLTextureStore getter
+   */
+  OGLModelStore* getModelStore() {return (&modelStore);}
+
+  /** \brief internal OGLTextureStore getter
+   */
+  OGLShaderStore* getShaderStore() {return (&shaderStore);}
+
+  /** \brief Swap Open GL buffers.
+   */
+  void present() {SDL_GL_SwapWindow(getSDL_Window());}
+  void glSwap() {SDL_GL_SwapWindow(getSDL_Window());}
+
+  SDL_GLContext getGLContext() {
+    return glContext;
+  }
+
+private:
+
+  void createGLContext();
+
+  SDL_GLContext glContext;
+  OGLTextureStore texStore;
+  OGLModelStore modelStore;
+  OGLShaderStore shaderStore;
 };
 
 }  // namespace zbe

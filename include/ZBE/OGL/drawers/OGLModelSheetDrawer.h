@@ -61,7 +61,7 @@ class OGLModelSheetDrawer : public Behavior<T, Ts...> {
       auto val = av->get();
       uint64_t gId = val->get();
       std::shared_ptr<OGLModelSheet<T, Ts...> > oglMs = rsOglMs.get(gId);
-      OGLModel model = oglMs->generateSprite(avatar);
+      OGLModel model = oglMs->generateModel(avatar);
       GLuint modelViewLoc = glGetUniformLocation(gProgramID, "model" );
       glUniformMatrix4fv(modelViewLoc, 1, false, (GLfloat*) glm::value_ptr(model.modelMat));
 

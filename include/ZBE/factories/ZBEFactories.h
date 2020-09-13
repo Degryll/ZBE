@@ -50,7 +50,8 @@ public:
 
     auto& factories = RsrcStore<Factory>::getInstance();
 
-    factories.insert("SpriteAvtFtry", std::make_shared<BaseAvatarFtry<uint64_t, int64_t, double, Vector2D, Vector2D> >());
+    factories.insert("Drawable2DAvtFtry", std::make_shared<BaseAvatarFtry<uint64_t, int64_t, double, Vector2D, Vector2D> >());
+    factories.insert("Drawable3DAvtFtry", std::make_shared<BaseAvatarFtry<uint64_t, double,  double, Vector3D, Vector3D> >());
 
     factories.insert("DrawerAnimSprtFtry", std::make_shared<AnimDrwr>());
     factories.insert("TFAECAnimSprtFtry" , std::make_shared<SimpleGenericFtry<AnimList> >(listName));

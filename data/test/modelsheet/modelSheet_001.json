@@ -1,0 +1,9 @@
+{
+  "name" : "player_001",
+  "modeldefs" : [
+    {
+      "name" : "stay",
+      "graphics" : "modelName"
+    }
+  ]
+}

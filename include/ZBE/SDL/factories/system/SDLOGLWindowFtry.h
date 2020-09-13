@@ -7,8 +7,8 @@
  * @brief Factory for SDLWindow.
  */
 
-#ifndef ZBE_SDL_FACTORIES_SDLWINDOWFTRY_H_
-#define ZBE_SDL_FACTORIES_SDLWINDOWFTRY_H_
+#ifndef ZBE_SDL_FACTORIES_SDLOLGWINDOWFTRY_H_
+#define ZBE_SDL_FACTORIES_SDLOLGWINDOWFTRY_H_
 
 #include <string>
 #include <cstdint>
@@ -54,4 +54,4 @@ private:
 
 }  // namespace zbe
 
-#endif  // ZBE_SDL_FACTORIES_SDLWINDOWFTRY_H_
+#endif  // ZBE_SDL_FACTORIES_SDLOLGWINDOWFTRY_H_

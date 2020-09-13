@@ -7,14 +7,15 @@
  * @brief Daemon capable of load all common factories.
  */
 
-#ifndef ZBE_FACTORIES_SDLFACTORIES_H_
-#define ZBE_FACTORIES_SDLFACTORIES_H_
+#ifndef ZBE_SDL_FACTORIES_SDLFACTORIES_H_
+#define ZBE_SDL_FACTORIES_SDLFACTORIES_H_
 
 #include <string>
 
 #include "ZBE/factories/Factory.h"
 
 #include "ZBE/SDL/factories/system/SDLWindowFtry.h"
+#include "ZBE/SDL/factories/system/SDLOGLWindowFtry.h"
 #include "ZBE/SDL/factories/resources/SDLImgLoaderFtry.h"
 #include "ZBE/SDL/factories/system/SDLSysTimeFtry.h"
 #include "ZBE/SDL/factories/drawers/SpriteSheetSDLDrawerFtry.h"
@@ -44,6 +45,7 @@ public:
   static void load(){
     auto& factories = RsrcStore<Factory>::getInstance();
     factories.insert("SDLWindowFtry", std::make_shared<SDLWindowFtry>());
+    factories.insert("SDLOGLWindowFtry", std::make_shared<SDLOGLWindowFtry>());
     factories.insert("SDLImgLoaderFtry", std::make_shared<SDLImgLoaderFtry>());
     factories.insert("SDLSysTimeFtry", std::make_shared<SDLSysTimeFtry>());
     factories.insert("SpriteSheetSDLDrawerFtry", std::make_shared<SpriteSheetSDLDrawerFtry<5, uint64_t, int64_t, double, Vector2D, Vector2D> >());
@@ -56,4 +58,4 @@ public:
 
 }  // namespace zbe
 
-#endif  // ZBE_FACTORIES_SDLFACTORIES_H_
+#endif  // ZBE_SDL_FACTORIES_SDLFACTORIES_H_

@@ -216,7 +216,7 @@
             "behavior" : "loadScreen.screenDrawer"
           }
         },
-        {"factory": "SpriteAvtFtry",
+        {"factory": "Drawable2DAvtFtry",
           "name": "loadScreen.bgEnt",
           "cosas" : "uint64_t, int64_t, double, Vector2D, Vector2D",
           "config" : {

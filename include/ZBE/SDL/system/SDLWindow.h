@@ -111,7 +111,7 @@ public:
    *  \param window_flags The widnow flags, like borderless, resizable, etc.
    *  \sa run, setTitle, setX, setY, setWidth, setHeight, setRenderer_flags
    */
-  void setWindow_flags(Uint32 window_flags) {this->window_flags = window_flags;}
+  virtual void setWindow_flags(Uint32 window_flags) {this->window_flags = window_flags;}
 
   /** \brief Sets the renderer flags
    *  \param renderer_flags The renderer flags

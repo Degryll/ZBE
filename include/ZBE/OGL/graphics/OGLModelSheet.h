@@ -32,7 +32,7 @@ public:
   /** \brief Generate a sprite from a given entity.
    *  \return generated sprite
    **/
-  virtual OGLModel generateSprite(std::shared_ptr<MAvatar<T, Ts...> > avatar) = 0;
+  virtual OGLModel generateModel(std::shared_ptr<MAvatar<T, Ts...> > avatar) = 0;
 
 };
 

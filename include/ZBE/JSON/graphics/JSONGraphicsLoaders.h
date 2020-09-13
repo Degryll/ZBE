@@ -28,6 +28,10 @@
 
 #include "ZBE/core/system/system.h"
 
+#include "ZBE/SDL/OGL/SDLOGLWindow.h"
+#include "ZBE/OGL/graphics/OGLGraphics.h"
+#include "ZBE/OGL/graphics/implementations/SingleModelOGLModelSheet.h"
+
 namespace zbe {
 
 class ZBEAPI JSONGraphicsLoaders {
@@ -47,12 +51,16 @@ public:
 
   void JSONMultiSpriteSheetFileLoad(std::istream& is);
 
+  void JSONSimpleModelSheetFileLoad(std::istream& is, std::shared_ptr<SDLOGLWindow> window);
+
 private:
   JSONGraphicsLoaders() {}
 
   RsrcStore<zbe::SpriteSheet<uint64_t, int64_t, double, Vector2D, Vector2D> >& rsrcAnimSprt = RsrcStore<zbe::SpriteSheet<uint64_t, int64_t, double, Vector2D, Vector2D> >::getInstance();
   RsrcStore<ImgDef>& rsrcImgDef = RsrcStore<ImgDef>::getInstance();
   NameRsrcDictionary& nrd = NameRsrcDictionary::getInstance();
+  //RsrcStore<OGLGraphics>& graphicsStore = RsrcStore<OGLGraphics>::getInstance();
+  RsrcStore<SimpleOGLModelSheet>& rsrcSimpleModel = RsrcStore<SimpleOGLModelSheet>::getInstance();
 };
 
 }  // namespace zbe

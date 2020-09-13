@@ -35,6 +35,8 @@
 					<Add directory="../../../extlibs/SDL2_net/2.0.1/include" />
 					<Add directory="../../../extlibs/imgui-1.76" />
 					<Add directory="../../../extlibs/imgui-1.76/examples" />
+					<Add directory="../../../extlibs/tinygltf" />
+					<Add directory="../../../extlibs/stb_image" />
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
@@ -76,6 +78,8 @@
 					<Add directory="../../../extlibs/SDL2_net/2.0.1/include" />
 					<Add directory="../../../extlibs/imgui-1.76" />
 					<Add directory="../../../extlibs/imgui-1.76/examples" />
+					<Add directory="../../../extlibs/tinygltf" />
+					<Add directory="../../../extlibs/stb_image" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -112,11 +116,32 @@
 					<Add option="-std=c++17" />
 					<Add directory="../../../src/ZandBokz/include" />
 					<Add directory="../../../include" />
-					<Add directory="../../../extlibs/IteratorTypeErasure/IteratorTypeErasure/any_iterator" />
-					<Add directory="../../../extlibs/SDL2/2.0.8/include" />
+					<Add directory="../../../extlibs/SDL2/2.0.8/linux64/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/include" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/include" />
+					<Add directory="../../../src" />
+					<Add directory="include/ZBE/core/io" />
+					<Add directory="../../../extlibs/utf8cpp/source" />
+					<Add directory="../../../extlibs/boost_1_57_0" />
+					<Add directory="../../../extlibs/IteratorTypeErasure/IteratorTypeErasure/any_iterator" />
+					<Add directory="include/ZBE/core/daemons" />
+					<Add directory="include/ZBE/core/behaviors" />
+					<Add directory="include/ZBE/core/io/SDL" />
+					<Add directory="include/ZBE/core/system/SDL" />
+					<Add directory="include/ZBE/events/handlers/input" />
+					<Add directory="../../../extlibs/json" />
+					<Add directory="../../../extlibs/GLEW/2.1.0/include" />
+					<Add directory="../../../extlibs/lodePNG" />
+					<Add directory="../../../extlibs/glm/0.9.9.0" />
+					<Add directory="../../../extlibs/stb_vorbis" />
 					<Add directory="../../../extlibs/SDL2_net/2.0.1/include" />
+					<Add directory="../../../extlibs/SDL2/2.0.8/include/SDL2" />
+					<Add directory="../../../extlibs/OALSoft/1.18.2/include" />
+					<Add directory="../../../extlibs/SDL2/2.0.8/include" />
+					<Add directory="../../../extlibs/imgui-1.76" />
+					<Add directory="../../../extlibs/imgui-1.76/examples" />
+					<Add directory="../../../extlibs/tinygltf" />
+					<Add directory="../../../extlibs/stb_image" />
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
@@ -147,11 +172,31 @@
 					<Add option="-std=c++17" />
 					<Add directory="../../../src/ZandBokz/include" />
 					<Add directory="../../../include" />
-					<Add directory="../../../extlibs/IteratorTypeErasure/IteratorTypeErasure/any_iterator" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/include" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/include" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/include" />
+					<Add directory="../../../src" />
+					<Add directory="include/ZBE/core/io" />
+					<Add directory="../../../extlibs/utf8cpp/source" />
+					<Add directory="../../../extlibs/boost_1_57_0" />
+					<Add directory="../../../extlibs/IteratorTypeErasure/IteratorTypeErasure/any_iterator" />
+					<Add directory="include/ZBE/core/daemons" />
+					<Add directory="include/ZBE/core/behaviors" />
+					<Add directory="include/ZBE/core/io/SDL" />
+					<Add directory="include/ZBE/core/system/SDL" />
+					<Add directory="include/ZBE/events/handlers/input" />
+					<Add directory="../../../extlibs/json" />
+					<Add directory="../../../extlibs/GLEW/2.1.0/include" />
+					<Add directory="../../../extlibs/lodePNG" />
+					<Add directory="../../../extlibs/glm/0.9.9.0" />
+					<Add directory="../../../extlibs/stb_vorbis" />
 					<Add directory="../../../extlibs/SDL2_net/2.0.1/include" />
+					<Add directory="../../../extlibs/SDL2/2.0.8/include/SDL2" />
+					<Add directory="../../../extlibs/OALSoft/1.18.2/include" />
+					<Add directory="../../../extlibs/imgui-1.76" />
+					<Add directory="../../../extlibs/imgui-1.76/examples" />
+					<Add directory="../../../extlibs/tinygltf" />
+					<Add directory="../../../extlibs/stb_image" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -172,9 +217,14 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add directory="../../../extlibs/tinygltf" />
+			<Add directory="../../../extlibs/stb_image" />
 		</Compiler>
 		<Unit filename="../../../src/ZandBokz/include/zandbokz.h" />
 		<Unit filename="../../../src/ZandBokz/src/zandbokz.cpp" />
-		<Extensions />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

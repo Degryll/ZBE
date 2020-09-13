@@ -79,13 +79,32 @@ void JSONGraphicsLoaders::JSONMultiSpriteSheetFileLoad(std::istream& is) {
         sprtSheet->setDefaultSprite(sprtDef);
       }
     }
-    uint64_t id = SysIdGenerator::getId();
-    rsrcAnimSprt.insert(id, sprtSheet);
-    nrd.insert(name, id);
+    rsrcAnimSprt.insert(name, sprtSheet);
   } catch (json::parse_error &e) {
     SysError::setError(std::string("ERROR: Json failed to parse: ") + std::string(e.what()));
   } catch (nlohmann::detail::type_error &e) {
     SysError::setError(std::string("ERROR: Json failed to load MultiSpriteSheet because: ") + std::string(e.what()));
+  }
+}
+
+void JSONGraphicsLoaders::JSONSimpleModelSheetFileLoad(std::istream& is, std::shared_ptr<SDLOGLWindow> window) {
+  using namespace std::string_literals;
+  json j;
+  try {
+    is >> j;
+    std::string name = j["name"];
+    json modeldefs = j["modeldefs"];
+    json modeldef =  modeldefs[0];
+    std::string graphicsName = modeldef["name"];
+    std::shared_ptr<SimpleOGLModelSheet> modelSheet = std::make_shared<SimpleOGLModelSheet>(window, nrd.get("graphics."s + graphicsName));
+    // for (auto modeldef : modeldefs) {
+    // TODO necesitaremos añadir múltiples definiciones de model a un solo OGLModelSheet en el futuro.
+    // }
+    rsrcSimpleModel.insert(name, modelSheet);
+  } catch (json::parse_error &e) {
+    SysError::setError(std::string("ERROR: Json failed to parse: ") + std::string(e.what()));
+  } catch (nlohmann::detail::type_error &e) {
+    SysError::setError(std::string("ERROR: Json failed to load SimpleModelSheet because: ") + std::string(e.what()));
   }
 }
 

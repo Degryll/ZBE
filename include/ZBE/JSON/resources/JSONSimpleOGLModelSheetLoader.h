@@ -1,37 +1,41 @@
 /**
 * Copyright 2015 Batis Degryll Ludo
-* @file JSONMultiSpriteSheetLoader.h
-* @since 2018-04-19
-* @date 2018-04-19
+* @file JSONSimpleOGLModelSheetLoader.h
+* @since 2020-09-03
+* @date 2020-09-03
 * @author Batis Degryll Ludo
-* @brief JSON loader for MultiSpriteSheet's
+* @brief JSON loader for SimpleModelOGLModelSheet's
 * Test on ZBETest/resources/loaders/ImgAndDEfloadTest.cpp
 */
 
-#ifndef ZBE_JSON_RESOURCES_LOADERS_JSONMULTISPRITESHEETLOADER_H_
-#define ZBE_JSON_RESOURCES_LOADERS_JSONMULTISPRITESHEETLOADER_H_
+#ifndef ZBE_JSON_RESOURCES_LOADERS_JSONSIMPLEOGLMODELSHEETLOADER_H_
+#define ZBE_JSON_RESOURCES_LOADERS_JSONSIMPLEOGLMODELSHEETLOADER_H_
 
 #include <filesystem>
 #include <fstream>
 #include <iostream>
 
 #include "ZBE/JSON/graphics/JSONGraphicsLoaders.h"
-
+#include "ZBE/SDL/OGL/SDLOGLWindow.h"
 #include "ZBE/resources/loaders/RsrcLoader.h"
 
 
 namespace zbe {
 
-/** \brief SDL implementation of ImgLoader.
+/** \brief JSON loader for SimpleModelOGLModelSheet's
 */
-class JSONMultiSpriteSheetLoader : public RsrcLoader {
+class JSONSimpleOGLModelSheetLoader : public RsrcLoader {
 public:
 
- /** \brief Builds an SDLImgLoader from a SDLImageStore and the file extension supported (PNG by default)
-  *  \imgStore SDLImgLoader to use.
-  *  \extension Extension supported. PNG by default.
+ /** \brief Empty constructir. Creted object needs to be setup
   */
- JSONMultiSpriteSheetLoader() {}
+ JSONSimpleOGLModelSheetLoader() : window() {}
+
+ /* \brief It sets up the window to be used.
+ */
+ void setWindow(std::shared_ptr<SDLOGLWindow> window) {
+   this->window = window;
+ }
 
  /** \brief Load an image
   *  \param filePath Path to image file.
@@ -39,7 +43,7 @@ public:
   */
  void load(std::filesystem::path filePath) {
    std::ifstream ifs(filePath);
-   jsongl.JSONMultiSpriteSheetFileLoad(ifs);
+   jsongl.JSONSimpleModelSheetFileLoad(ifs, window);
  }
 
  /** \brief Tells if a file extension is loadable.
@@ -52,10 +56,11 @@ public:
  }
 
 private:
+  std::shared_ptr<SDLOGLWindow> window;
   JSONGraphicsLoaders& jsongl = JSONGraphicsLoaders::getInstance();
 
 };
 
 }  // namespace zbe
 
-#endif  // ZBE_JSON_RESOURCES_LOADERS_JSONMULTISPRITESHEETLOADER_H_
+#endif  // ZBE_JSON_RESOURCES_LOADERS_JSONSIMPLEOGLMODELSHEETLOADER_H_

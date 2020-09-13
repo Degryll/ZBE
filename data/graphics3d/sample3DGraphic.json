@@ -1,0 +1,12 @@
+{
+"name" : "flatland",
+"capability" : "001",
+"graphicdefs" : [
+  {
+    "name" : "floor",
+    "model" : "squarePlate",
+    "texture" : "plain_grass_001",
+    "texDefinition" : ["fullTex","topLeft"]
+  }
+]
+}

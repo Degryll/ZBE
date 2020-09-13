@@ -12,6 +12,7 @@
 #include "ZBE/core/zbe.h"
 #include "ZBE/factories/BaseFactories.h"
 #include "ZBE/factories/ZBEFactories.h"
+#include "ZBE/glTF/GLTFFactories.h"
 #include "ZBE/JSON/factories/JSONFactories.h"
 #include "ZBE/SDL/factories/SDLFactories.h"
 #include "ZBE/resources/loaders/implementations/JSONAppLoader.h"
@@ -21,6 +22,7 @@ int main(int /*argc*/, char** /*argv*/) {
    printf("Hello ZandBokz\n");
    BaseFactories::load();
    SDLFactories::load();
+   GLTFFactories::load();
    ZBEFactories::load();
    JSONFactories::load();
    // Load App.

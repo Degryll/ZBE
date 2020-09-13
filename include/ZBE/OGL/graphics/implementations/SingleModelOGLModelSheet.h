@@ -1,14 +1,14 @@
 /**
  * Copyright 2012 Batis Degryll Ludo
- * @file SingleModelOGLModelSheet.h
+ * @file SimpleOGLModelSheet.h
  * @since 2018-06-09
  * @date 2018-06-09
  * @author Degryll Ludo Batis
  * @brief Interface capable of generate a sprite from a given entity.
  */
 
-#ifndef ZBE_OGL_GRAPHICS_IMPLEMENTATIONS_SINGLEMODELOGLMODELSHEET_H_
-#define ZBE_OGL_GRAPHICS_IMPLEMENTATIONS_SINGLEMODELOGLMODELSHEET_H_
+#ifndef ZBE_OGL_GRAPHICS_IMPLEMENTATIONS_SIMPLEOGLMODELSHEET_H_
+#define ZBE_OGL_GRAPHICS_IMPLEMENTATIONS_SIMPLEOGLMODELSHEET_H_
 
 #include <cstdint>
 #include <memory>
@@ -17,10 +17,11 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "ZBE/entities/avatars/SingleModel.h"
+#include "ZBE/core/tools/containers/RsrcStore.h"
 
 #include "ZBE/OGL/graphics/OGLModel.h"
 #include "ZBE/OGL/graphics/OGLModelSheet.h"
+#include "ZBE/OGL/graphics/OGLGraphics.h"
 
 #include "ZBE/SDL/OGL/SDLOGLWindow.h"
 
@@ -32,24 +33,29 @@ namespace zbe {
  */
 // Point3D position, Vector3D orientation, float angle, float scale, uint64_t graphicsID
 // Vector3D position, Vector3D orientation, double angle, double scale, uint64_t graphicsID
-class SingleModelOGLModelSheet : public OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> {
+class SimpleOGLModelSheet : public OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> {
 public:
-  SingleModelOGLModelSheet(const SingleModelOGLModelSheet&) = delete;
-  void operator=(const SingleModelOGLModelSheet&) = delete;
+  SimpleOGLModelSheet(const SimpleOGLModelSheet&) = delete;
+  void operator=(const SimpleOGLModelSheet&) = delete;
 
-  SingleModelOGLModelSheet(std::shared_ptr<SDLOGLWindow> window, uint64_t modelId, uint64_t texId)
+  SimpleOGLModelSheet(std::shared_ptr<SDLOGLWindow> window, uint64_t modelId, uint64_t texId)
     : vao(std::get<0>(window->getModelStore()->getModel(modelId))), nvertex(std::get<1>(window->getModelStore()->getModel(modelId))), textures() {
       textures.push_back(window->getTextureStore()->getTexture(texId));
-    }
+  }
+
+  SimpleOGLModelSheet(std::shared_ptr<SDLOGLWindow> window, uint64_t graphicsId)
+    : graphic(RsrcStore<OGLGraphics>::getInstance().get(graphicsId)), vao(graphic->vao), nvertex(graphic->nvertex), textures{graphic->texid} {
+      //textures.push_back(graphic.texid);
+  }
 
   /** \brief Virtual destructor
   */
-  virtual ~SingleModelOGLModelSheet() {} //!< Virtual destrutor.
+  virtual ~SimpleOGLModelSheet() {} //!< Virtual destrutor.
 
   /** \brief Generate a sprite from a given entity.
    *  \return generated sprite
    **/
-  OGLModel generateSprite(std::shared_ptr<MAvatar<uint64_t, double, double, Vector3D, Vector3D> > avatar) {
+  OGLModel generateModel(std::shared_ptr<MAvatar<uint64_t, double, double, Vector3D, Vector3D> > avatar) {
     Vector3D pos = avatar->get<1, Vector3D>()->get();
     glm::vec3 glPos(pos.x, pos.y, pos.z);
     Vector3D ori = avatar->get<2, Vector3D>()->get();
@@ -67,6 +73,7 @@ public:
   };
 
 private:
+  std::shared_ptr<OGLGraphics> graphic;
   GLuint vao;
   GLsizei nvertex;
   std::vector<GLuint> textures;
@@ -74,4 +81,4 @@ private:
 
 }  // namespace zbe
 
-#endif  // ZBE_OGL_GRAPHICS_IMPLEMENTATIONS_SINGLEMODELOGLMODELSHEET_H_
+#endif  // ZBE_OGL_GRAPHICS_IMPLEMENTATIONS_SIMPLEOGLMODELSHEET_H_

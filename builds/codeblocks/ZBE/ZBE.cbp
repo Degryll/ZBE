@@ -54,6 +54,8 @@
 					<Add directory="../../../extlibs/SDL2/2.0.8/include" />
 					<Add directory="../../../extlibs/imgui-1.76" />
 					<Add directory="../../../extlibs/imgui-1.76/examples" />
+					<Add directory="../../../extlibs/tinygltf" />
+					<Add directory="../../../extlibs/stb_image" />
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
@@ -116,6 +118,8 @@
 					<Add directory="../../../extlibs/OALSoft/1.18.2/include" />
 					<Add directory="../../../extlibs/imgui-1.76" />
 					<Add directory="../../../extlibs/imgui-1.76/examples" />
+					<Add directory="../../../extlibs/tinygltf" />
+					<Add directory="../../../extlibs/stb_image" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -185,6 +189,8 @@
 					<Add directory="../../../extlibs/glm/0.9.9.0" />
 					<Add directory="../../../extlibs/imgui-1.76" />
 					<Add directory="../../../extlibs/imgui-1.76/examples" />
+					<Add directory="../../../extlibs/tinygltf" />
+					<Add directory="../../../extlibs/stb_image" />
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
@@ -247,6 +253,8 @@
 					<Add directory="../../../extlibs/glm/0.9.9.0" />
 					<Add directory="../../../extlibs/imgui-1.76" />
 					<Add directory="../../../extlibs/imgui-1.76/examples" />
+					<Add directory="../../../extlibs/tinygltf" />
+					<Add directory="../../../extlibs/stb_image" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -272,6 +280,8 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
+			<Add directory="../../../extlibs/tinygltf" />
+			<Add directory="../../../extlibs/stb_image" />
 		</Compiler>
 		<Unit filename="../../../extlibs/imgui-1.75/imgui.h" />
 		<Unit filename="../../../extlibs/imgui-1.76/examples/imgui_impl_opengl3.cpp" />
@@ -289,6 +299,8 @@
 		<Unit filename="../../../include/ZBE/JSON/resources/JSONAudioDefLoader.h" />
 		<Unit filename="../../../include/ZBE/JSON/resources/JSONImgDefLoader.h" />
 		<Unit filename="../../../include/ZBE/JSON/resources/JSONMultiSpriteSheetLoader.h" />
+		<Unit filename="../../../include/ZBE/JSON/resources/JSONSimpleOGLModelSheetLoader.h" />
+		<Unit filename="../../../include/ZBE/JSON/resources/JSONSimpleOGLModelSheetLoaderFtry.h" />
 		<Unit filename="../../../include/ZBE/OAL/daemons/OALContextDaemon.h" />
 		<Unit filename="../../../include/ZBE/OAL/entities/avatars/Sound3D.h" />
 		<Unit filename="../../../include/ZBE/OAL/entities/avatars/implementations/BaseSound3D.h" />
@@ -301,6 +313,7 @@
 		<Unit filename="../../../include/ZBE/OGL/daemons/SimpleImGuiTest.h" />
 		<Unit filename="../../../include/ZBE/OGL/drawers/OGLModelSheetDrawer.h" />
 		<Unit filename="../../../include/ZBE/OGL/factories/daemons/OGLPostDrawFtry.h" />
+		<Unit filename="../../../include/ZBE/OGL/graphics/OGLGraphics.h" />
 		<Unit filename="../../../include/ZBE/OGL/graphics/OGLModel.h" />
 		<Unit filename="../../../include/ZBE/OGL/graphics/OGLModelSheet.h" />
 		<Unit filename="../../../include/ZBE/OGL/graphics/implementations/SingleModelOGLModelSheet.h" />
@@ -550,6 +563,9 @@
 		<Unit filename="../../../include/ZBE/factories/implementations/events/handlers/time/DaemonTimeHandlerFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/events/handlers/time/TicketEraserFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/tools/graphics/CameraFtry.h" />
+		<Unit filename="../../../include/ZBE/glTF/GLTFFactories.h" />
+		<Unit filename="../../../include/ZBE/glTF/resources/GlTFResourceLoader.h" />
+		<Unit filename="../../../include/ZBE/glTF/resources/GlTFResourceLoaderFtry.h" />
 		<Unit filename="../../../include/ZBE/graphics/MultiSpriteSheet.h" />
 		<Unit filename="../../../include/ZBE/resources/contextnames.h" />
 		<Unit filename="../../../include/ZBE/resources/loaders/RsrcDefLoader.h" />
@@ -560,6 +576,7 @@
 		<Unit filename="../../../include/ZBE/tools/graphics/Camera.h" />
 		<Unit filename="../../../src/ZBE/JSON/graphics/JSONGraphicsLoaders.cpp" />
 		<Unit filename="../../../src/ZBE/JSON/resources/JSONAudioDefLoader.cpp" />
+		<Unit filename="../../../src/ZBE/JSON/resources/JSONSimpleOGLModelSheetLoaderFtry.cpp" />
 		<Unit filename="../../../src/ZBE/OAL/daemons/OALContextDaemon.cpp" />
 		<Unit filename="../../../src/ZBE/OAL/players/Sound3DOALPlayer.cpp" />
 		<Unit filename="../../../src/ZBE/OAL/resources/OALAudioLoader.cpp" />
@@ -580,6 +597,7 @@
 		<Unit filename="../../../src/ZBE/SDL/factories/daemons/BasicPreLoopSDLDaemonFtry.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/factories/drawers/SingleTextSDLDrawerFtry.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/factories/resources/SDLImgLoaderFtry.cpp" />
+		<Unit filename="../../../src/ZBE/SDL/factories/system/SDLOGLWindowFtry.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/factories/system/SDLSysTimeFtry.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/factories/system/SDLWindowFtry.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/starters/SDL_Starter.cpp" />
@@ -630,6 +648,7 @@
 		<Unit filename="../../../src/ZBE/factories/implementations/events/handlers/time/DaemonTimeHandlerFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/events/handlers/time/TicketEraserFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/tools/graphics/CameraFtry.cpp" />
+		<Unit filename="../../../src/ZBE/glTF/resources/GlTFResourceLoaderFtry.cpp" />
 		<Unit filename="../../../src/ZBE/resources/contextname.cpp" />
 		<Unit filename="../../../src/ZBE/resources/loaders/RsrcFolderLoader.cpp" />
 		<Unit filename="../../../src/ZBE/resources/loaders/implementations/JSONAppLoader.cpp" />
@@ -645,6 +664,8 @@
 				<general />
 			</DoxyBlocks>
 			<lib_finder disable_auto="1" />
+			<code_completion />
+			<debugger />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>
