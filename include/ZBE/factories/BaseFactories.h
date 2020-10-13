@@ -33,6 +33,7 @@
 #include "ZBE/factories/implementations/events/handlers/actuators/StateChangerAtorFtry.h"
 #include "ZBE/factories/implementations/events/generators/TimeEventGnFtry.h"
 
+#include "ZBE/core/tools/shared/implementations/SimpleValue.h"
 #include "ZBE/core/tools/containers/RsrcStore.h"
 #include "ZBE/core/daemons/Daemon.h"
 #include "ZBE/core/daemons/VoidDaemon.h"
@@ -64,14 +65,7 @@ public:
     factories.insert("EntityFtry", std::make_shared<EntityFtry>());
 
     // --- Values
-    factories.insert("ValueUFtry", std::make_shared<GenericFtry<Value<uint64_t>,SimpleValue<uint64_t>> >("ValueU","SimpleValueU"));
-    factories.insert("ValueIFtry", std::make_shared<GenericFtry<Value<int64_t>,SimpleValue<int64_t> > >("ValueI","SimpleValueI"));
-    factories.insert("ValueDFtry", std::make_shared<GenericFtry<Value<double>,SimpleValue<double> > >("ValueD","SimpleValueD"));
-    factories.insert("ValueFFtry", std::make_shared<GenericFtry<Value<float>,SimpleValue<float> > >("ValueF","SimpleValueF"));
-
-    factories.insert("ValueSFtry", std::make_shared<GenericFtry<Value<std::string>,SimpleValue<std::string> > >("ValueS","SimpleValueS"));
-    factories.insert("ValueV2DFtry", std::make_shared<GenericFtry<Value<Vector2D>,SimpleValue<Vector2D> > >("ValueV2D","SimpleValueV2D"));
-    factories.insert("ValueV3DFtry", std::make_shared<GenericFtry<Value<Vector3D>,SimpleValue<Vector3D> > >("ValueV3D","SimpleValueV3S"));
+    factories.insert("SimpleValueFtry", std::make_shared<SimpleValueFtry>());
 
     // --- Daemons
     factories.insert("MainLoopExitFtry", std::make_shared<MainLoopExitFtry>());

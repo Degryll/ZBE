@@ -297,6 +297,8 @@
 		<Unit filename="../../../include/ZBE/JSON/factories/JSONFactories.h" />
 		<Unit filename="../../../include/ZBE/JSON/graphics/JSONGraphicsLoaders.h" />
 		<Unit filename="../../../include/ZBE/JSON/resources/JSONAudioDefLoader.h" />
+		<Unit filename="../../../include/ZBE/JSON/resources/JSONGLSLProgramLoader.h" />
+		<Unit filename="../../../include/ZBE/JSON/resources/JSONGLSLProgramLoaderFtry.h" />
 		<Unit filename="../../../include/ZBE/JSON/resources/JSONImgDefLoader.h" />
 		<Unit filename="../../../include/ZBE/JSON/resources/JSONMultiSpriteSheetLoader.h" />
 		<Unit filename="../../../include/ZBE/JSON/resources/JSONSimpleOGLModelSheetLoader.h" />
@@ -312,11 +314,14 @@
 		<Unit filename="../../../include/ZBE/OGL/daemons/OGLPreDrawer.h" />
 		<Unit filename="../../../include/ZBE/OGL/daemons/SimpleImGuiTest.h" />
 		<Unit filename="../../../include/ZBE/OGL/drawers/OGLModelSheetDrawer.h" />
+		<Unit filename="../../../include/ZBE/OGL/drawers/OGLModelSheetDrawerFtry.h" />
+		<Unit filename="../../../include/ZBE/OGL/factories/OGLFactories.h" />
 		<Unit filename="../../../include/ZBE/OGL/factories/daemons/OGLPostDrawFtry.h" />
+		<Unit filename="../../../include/ZBE/OGL/factories/daemons/OGLPreDrawFtry.h" />
 		<Unit filename="../../../include/ZBE/OGL/graphics/OGLGraphics.h" />
 		<Unit filename="../../../include/ZBE/OGL/graphics/OGLModel.h" />
 		<Unit filename="../../../include/ZBE/OGL/graphics/OGLModelSheet.h" />
-		<Unit filename="../../../include/ZBE/OGL/graphics/implementations/SingleModelOGLModelSheet.h" />
+		<Unit filename="../../../include/ZBE/OGL/graphics/implementations/SimpleOGLModelSheet.h" />
 		<Unit filename="../../../include/ZBE/SDL/OGL/ImGui/SDLOGLImGuiWindow.h" />
 		<Unit filename="../../../include/ZBE/SDL/OGL/SDLOGLWindow.h" />
 		<Unit filename="../../../include/ZBE/SDL/daemons/BasicPostLoopSDLDaemon.h" />
@@ -562,7 +567,6 @@
 		<Unit filename="../../../include/ZBE/factories/implementations/events/handlers/time/DaemonRecurrentTimeHandlerFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/events/handlers/time/DaemonTimeHandlerFtry.h" />
 		<Unit filename="../../../include/ZBE/factories/implementations/events/handlers/time/TicketEraserFtry.h" />
-		<Unit filename="../../../include/ZBE/factories/implementations/tools/graphics/CameraFtry.h" />
 		<Unit filename="../../../include/ZBE/glTF/GLTFFactories.h" />
 		<Unit filename="../../../include/ZBE/glTF/resources/GlTFResourceLoader.h" />
 		<Unit filename="../../../include/ZBE/glTF/resources/GlTFResourceLoaderFtry.h" />
@@ -576,6 +580,7 @@
 		<Unit filename="../../../include/ZBE/tools/graphics/Camera.h" />
 		<Unit filename="../../../src/ZBE/JSON/graphics/JSONGraphicsLoaders.cpp" />
 		<Unit filename="../../../src/ZBE/JSON/resources/JSONAudioDefLoader.cpp" />
+		<Unit filename="../../../src/ZBE/JSON/resources/JSONGLSLProgramLoaderFtry.cpp" />
 		<Unit filename="../../../src/ZBE/JSON/resources/JSONSimpleOGLModelSheetLoaderFtry.cpp" />
 		<Unit filename="../../../src/ZBE/OAL/daemons/OALContextDaemon.cpp" />
 		<Unit filename="../../../src/ZBE/OAL/players/Sound3DOALPlayer.cpp" />
@@ -585,6 +590,7 @@
 		<Unit filename="../../../src/ZBE/SDL/OGL/SDLOGLWindow.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/OGL/daemons/OGLPreDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/OGL/factories/daemons/OGLPostDrawFtry.cpp" />
+		<Unit filename="../../../src/ZBE/SDL/OGL/factories/daemons/OGLPreDrawFtry.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/daemons/IOPreLoopSDL.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/daemons/SDLOGLWindowDaemon.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/daemons/SDLWindowDaemon.cpp" />
@@ -624,6 +630,7 @@
 		<Unit filename="../../../src/ZBE/core/system/SysIdGenerator.cpp" />
 		<Unit filename="../../../src/ZBE/core/tools/math/Vector.cpp" />
 		<Unit filename="../../../src/ZBE/core/tools/math/collisions/intersections.cpp" />
+		<Unit filename="../../../src/ZBE/core/tools/shared/implementations/SimpleValue.cpp" />
 		<Unit filename="../../../src/ZBE/core/tools/text/utf8.cpp" />
 		<Unit filename="../../../src/ZBE/core/tools/time/ContextTime.cpp" />
 		<Unit filename="../../../src/ZBE/daemons/RsrcFolderLoaderDmn.cpp" />
@@ -647,12 +654,12 @@
 		<Unit filename="../../../src/ZBE/factories/implementations/events/handlers/time/DaemonRecurrentTimeHandlerFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/events/handlers/time/DaemonTimeHandlerFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/events/handlers/time/TicketEraserFtry.cpp" />
-		<Unit filename="../../../src/ZBE/factories/implementations/tools/graphics/CameraFtry.cpp" />
 		<Unit filename="../../../src/ZBE/glTF/resources/GlTFResourceLoaderFtry.cpp" />
 		<Unit filename="../../../src/ZBE/resources/contextname.cpp" />
 		<Unit filename="../../../src/ZBE/resources/loaders/RsrcFolderLoader.cpp" />
 		<Unit filename="../../../src/ZBE/resources/loaders/implementations/JSONAppLoader.cpp" />
 		<Unit filename="../../../src/ZBE/tools/graphics/Camera.cpp" />
+		<Unit filename="../../../src/ZBE/tools/graphics/CameraFtry.cpp" />
 		<Extensions>
 			<DoxyBlocks>
 				<comment_style block="0" line="0" />

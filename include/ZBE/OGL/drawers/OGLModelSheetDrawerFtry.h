@@ -7,8 +7,8 @@
  * @brief Factory for Single OGL Model Sheet Drawer
  */
 
-#ifndef ZBE_SDL_FACTORIES_DRAWERS_OGLMODELSHEETDRAWERFTRY_H_
-#define ZBE_SDL_FACTORIES_DRAWERS_OGLMODELSHEETDRAWERFTRY_H_
+#ifndef ZBE_OGL_DRAWERS_OGLMODELSHEETSDLDRAWERFTRY_H_
+#define ZBE_OGL_DRAWERS_OGLMODELSHEETSDLDRAWERFTRY_H_
 
 #include <string>
 
@@ -21,7 +21,7 @@
 
 #include "ZBE/core/behaviors/Behavior.h"
 
-#include "ZBE/OGL/graphics/implementations/SingleModelOGLModelSheet.h"
+#include "ZBE/OGL/graphics/implementations/SimpleOGLModelSheet.h"
 #include "ZBE/OGL/drawers/OGLModelSheetDrawer.h"
 #include "ZBE/SDL/OGL/SDLOGLWindow.h"
 
@@ -53,7 +53,7 @@ private:
   RsrcStore<Behavior<T, Ts...> >& drawerRsrc = RsrcStore<Behavior<T, Ts...> >::getInstance();
   RsrcStore<OGLModelSheetDrawer<idx, T, Ts...> >& oGLMSDrawerRsrc = RsrcStore<OGLModelSheetDrawer<idx, T, Ts...> >::getInstance();
   RsrcStore<SDLOGLWindow>& windowRsrc = RsrcStore<SDLOGLWindow>::getInstance();
-  RsrcDictionary<int64_t>& intStore = RsrcDictionary<int64_t>::getInstance();
+  RsrcDictionary<uint64_t>& uintStore = RsrcDictionary<uint64_t>::getInstance();
 };
 
 template<unsigned idx, typename T, typename ...Ts>
@@ -61,7 +61,7 @@ void OGLModelSheetDrawerFtry<idx, T, Ts...>::create(std::string name, uint64_t) 
   using namespace std::string_literals;
 
   std::shared_ptr<OGLModelSheetDrawer<idx, T, Ts...> > ss = std::make_shared<OGLModelSheetDrawer<idx, T, Ts...> >();
-  drawerRsrc.insert("Drawer."s + name, ss);
+  drawerRsrc.insert("Behavior."s + name, ss);
   oGLMSDrawerRsrc.insert("OGLMSDrawer."s + name, ss);
 }
 
@@ -71,27 +71,22 @@ void OGLModelSheetDrawerFtry<idx, T, Ts...>::setup(std::string name, uint64_t cf
   using namespace nlohmann;
   std::shared_ptr<json> cfg = configRsrc.get(cfgId);
 
-  std::shared_ptr<SDLOGLWindow> w;
-  uint64_t p;
-
   if(cfg) {
     auto j = *cfg;
     if (j["window"].is_string()){
      std::string windowName = j["window"].get<std::string>();
-     w = windowRsrc.get(windowName);
+     auto w = windowRsrc.get("SDLOGLWindow."s + windowName);
+       if (j["programId"].is_string()){
+         std::string pidName = j["programId"].get<std::string>();
+         auto p = uintStore.get(pidName);
+         auto ssd = oGLMSDrawerRsrc.get("OGLMSDrawer."s + name);
+         ssd->setConfig(w, p);
+       } else {
+         SysError::setError("OGLModelSheetDrawer config for programId must be a string."s);
+       }
     } else {
       SysError::setError("OGLModelSheetDrawer config for window: "s + j["window"].get<std::string>() + ": must be a string."s);
     }
-    if (j["programId"].is_string()){
-      std::string pidName = j["programId"].get<std::string>();
-      p = (uint64_t)intStore.get(pidName);
-
-      auto ssd = oGLMSDrawerRsrc.get("OGLMSDrawer."s + name);
-      ssd->setConfig(w, p);
-    } else {
-      SysError::setError("OGLModelSheetDrawer config for programId: "s + j["programId"].get<std::string>() + ": must be a string."s);
-    }
-
   } else {
     SysError::setError("OGLModelSheetDrawer config for "s + name + " not found."s);
   }
@@ -99,4 +94,4 @@ void OGLModelSheetDrawerFtry<idx, T, Ts...>::setup(std::string name, uint64_t cf
 
 }  // namespace zbe
 
-#endif  // ZBE_FACTORIES_IMPLEMENTATIONS_SDL_DRAWERS_OGLMODELSHEETDRAWERFTRY_H_
+#endif  // ZBE_OGL_DRAWERS_OGLMODELSHEETSDLDRAWERFTRY_H_

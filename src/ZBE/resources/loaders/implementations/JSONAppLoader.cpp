@@ -8,6 +8,7 @@
  */
 
 #include "ZBE/resources/loaders/implementations/JSONAppLoader.h"
+#include <cstdio>
 
 namespace zbe {
 
@@ -30,9 +31,11 @@ void JSONAppLoader::load(std::filesystem::path filePath) {
         appFactories.push_front(readFactoryConfig(ftryCfg));
       }
       for(auto ftryData : appFactories) {
+        printf("Calling create on factory %s\n", ftryData.name.c_str());fflush(stdout);
         ftryData.ftry->create(ftryData.name, ftryData.cfgId);
       }
       for(auto ftryData : appFactories) {
+        printf("Calling setup on factory %s\n", ftryData.name.c_str());fflush(stdout);
         ftryData.ftry->setup(ftryData.name, ftryData.cfgId);
       }
       appFactories.clear();
@@ -102,6 +105,7 @@ JSONAppLoader::FtryData JSONAppLoader::readFactoryConfig(json ftryCfg) {
   aux = ftryCfg["name"];
   if(aux.is_string()) {
     fd.name = aux.get<std::string>();
+    printf("Loading factory %s\n", fd.name.c_str());fflush(stdout);
   } else {
     SysError::setError(std::string("ERROR: Json failed to parse. \"name\" is not a string."));
   }

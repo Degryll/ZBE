@@ -45,9 +45,21 @@ public:
     this->up = up;
   }
 
+  void setPerspectiveValues(
+      std::shared_ptr<Value<float> > fov,
+      std::shared_ptr<Value<float> > aspect,
+      std::shared_ptr<Value<float> > znear,
+      std::shared_ptr<Value<float> > zfar) {
+
+    this->fov = fov;
+    this->aspect = aspect;
+    this->znear = znear;
+    this->zfar = zfar;
+  }
+
   void setFrustum(float left, float right, float bottom, float top, float near, float far);
 
-  void set_perspective(float fov, float aspect, float znear, float zfar);
+  void setPerspective(float fov, float aspect, float znear, float zfar);
 
   void lookAt(Vector3D eye, Vector3D target, Vector3D up);
 
@@ -61,6 +73,12 @@ private:
   std::shared_ptr<Value<Vector3D> > eye;
   std::shared_ptr<Value<Vector3D> > target;
   std::shared_ptr<Value<Vector3D> > up;
+
+  std::shared_ptr<Value<float> > fov;
+  std::shared_ptr<Value<float> > aspect;
+  std::shared_ptr<Value<float> > znear;
+  std::shared_ptr<Value<float> > zfar;
+
   std::vector<float> transform;
   std::vector<float> projection;
 };

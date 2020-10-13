@@ -1,0 +1,306 @@
+{
+  "meta" : {
+    "description" : "Zandbokz entry point Nos falta guardar SysTime en DEFAULT (common resource)"
+  },
+  "ids" : [
+    "TODO", "esto", "debería", "autogenerar", "ids", "Quizás", "queramos", "poner", "limitaciones", "de", "rango"
+  ],
+  "literals" : {
+    "window_title":"Zandbokz",
+    "ZERO" : {"type":"uifd", "value":0},
+    "ONE" : {"type":"uifd", "value":1},
+    "NEGATIVEONE" : {"type":"ifd", "value":-1},
+    "width" : {"type":"uifd", "value":1024},
+    "height" : {"type":"uifd", "value":768},
+    "gidIdx" : 1000,
+    "stateIdx" : 1010,
+    "degreesIdx" : 1020,
+    "positionIdx" : 1030,
+    "sizeIdx" : 1040,
+    "scaleIdx" : 1050,
+    "orientationIdx" : 1060,
+    "drawticket" : 2000,
+    "state.static" : 0,
+    "testwflags": 0,
+    "testrflags": 0,
+    "timeEventId" : 1,
+    "mainInitialState" : 0,
+    "mainExitState" : 1,
+    "loadScreen.toMenu": 1,
+    "loadScreen.loadTime" : 262144,
+    "cam.fov" :{"type":"f", "value":90.0},
+    "cam.aspect" :{"type":"f", "value":1.333333},
+    "cam.znear" :{"type":"f", "value":1.0},
+    "cam.zfar" :{"type":"f", "value":50.0},
+    "TODOindices":""
+  },
+  "phases":[
+      {
+        "description" : "Loading los valiu",
+        "factories" : [
+          {
+            "factory" : "SimpleValueFtry",
+            "name" : "zandbokz",
+            "config" : {
+              "int" : {
+                "loadState" : ["mainInitialState"]
+              },
+              "float" : {
+                "fov" : ["cam.fov"],
+                "aspect" : ["cam.aspect"],
+                "znear" : ["cam.znear"],
+                "zfar" : ["cam.zfar"]
+              },
+              "V3D" : {
+                "camEye" : [0.0, 3.0, 15.0],
+                "camTarget" : [0.0, 0.0, 0.0],
+                "camTargetOld" : [1.0, 0.0, 1.0],
+                "camUp" : [0.0, 1.0, 0.0]
+              }
+            }
+          }
+        ]
+      },
+      {
+      "description" : "Loading initial lists and high priority structures (window).",
+      "factories" : [
+        {
+          "factory": "TFAECModelFtry",
+          "description" : "do some serious sheet",
+          "name": "loadScreen.drawList",
+          "config" : {}
+        },
+        {
+          "factory": "CameraFtry",
+          "name": "loadScreen.cam",
+          "config" : {
+            "eye" : "zandbokz.camEye",
+            "target" : "zandbokz.camTarget",
+            "up" : "zandbokz.camUp",
+            "fov" : "zandbokz.fov",
+            "aspect" : "zandbokz.aspect",
+            "znear" : "zandbokz.znear",
+            "zfar" : "zandbokz.zfar"
+          }
+        },
+        {
+          "factory" : "SDLOGLWindowFtry",
+          "name" : "zandbokz.mainwindow",
+          "config" : {
+            "title" : "window_title",
+            "x" : "ZERO",
+            "y" : "ZERO",
+            "w" : "width",
+            "h" : "height",
+            "wflags":"testwflags",
+            "rflags":"testrflags"
+          }
+        }]
+      },
+      {
+      "description" : "Creating resource loaders.",
+      "factories" : [
+        {
+          "factory": "GlTFResourceLoaderFtry",
+          "name":"zandbokz.gltfLoader",
+          "config" : {
+            "window" : "zandbokz.mainwindow"
+          }
+        },
+        {
+          "factory": "JSONSimpleOGLModelSheetLoaderFtry",
+          "name":"zandbokz.msLoader",
+          "config" : {
+            "window" : "zandbokz.mainwindow"
+          }
+        },
+        {
+          "factory": "JSONGLSLProgramLoaderFtry",
+          "name":"zandbokz.glslLoader",
+          "config" : {
+            "window" : "zandbokz.mainwindow"
+          }
+        }
+      ]
+    },
+    {
+      "description" : "Loading images.",
+      "factories" : [
+        {
+          "factory": "RsrcFtry",
+          "name":"zandbokz.modelLoader",
+          "config" : {
+            "loader" : "zandbokz.gltfLoader",
+            "url" : "data/ZandBokz/models/gltf"
+          }
+        },
+        {
+          "factory": "RsrcFtry",
+          "name":"zandbokz.programLoader",
+          "config" : {
+            "loader" : "zandbokz.glslLoader",
+            "url" : "data/ZandBokz/programs"
+          }
+        }
+      ]
+    },
+    {
+      "description" : "Loading sprite sheets.",
+      "factories" : [
+        {
+          "factory": "RsrcFtry",
+          "name":"zandbokz.modelSheetLoader",
+          "config" : {
+            "loader" : "zandbokz.msLoader",
+            "url" : "data/ZandBokz/modelsheets"
+          }
+        }
+      ]
+    },
+    {
+      "description" : "Creating entity",
+      "factories" : [
+        {"factory": "EntityFtry",
+          "name": "loadingLogo",
+          "description" : "El logo que se muestra en la pantalla de carga",
+          "config" : {
+            "uint": {
+              "gidIdx":["logo"]
+            },
+            "double": {
+              "degreesIdx":["ZERO"],
+              "scaleIdx":["ONE"]
+            },
+            "V3D": {
+              "positionIdx":[1.0, 0.0, 0.0],
+              "orientationIdx":[1.0, 0.0, 0.0]
+            }
+          }
+        },
+        {"factory": "EntityFtry",
+          "name": "cameraController",
+          "description" : "TODO: Entidad asociada a la camara",
+          "TODO" : {
+            "eye" : "zandbokz.camEye",
+            "target" : "zandbokz.camTarget",
+            "up" : "zandbokz.camUp",
+            "fov" : "zandbokz.fov",
+            "aspect" : "zandbokz.aspect",
+            "znear" : "zandbokz.znear",
+            "zfar" : "zandbokz.zfar"
+          },
+          "TODO2" : {
+            "cosas" : "comportamiento ad hoc que mueva la camara o usar uno de los genericos que teniamos revisado"
+          },
+          "config" : {
+            "double": {
+              "fovIdx":"ZERO",
+              "bleble":["ONE"]
+            },
+            "V3D": {
+              "camUpId":"",
+              "orientationIdx":[1.0, 0.0, 0.0]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "description" : "Loading load screen...",
+      "factories" : [
+        {"factory": "MasterDmnFtry",
+          "name": "Main",
+          "config" : {
+            "daemons": [
+              "zandbokz.MainLoop"
+            ]
+          }
+        },
+        {"factory": "MainLoopFtry",
+          "name": "zandbokz.MainLoop",
+          "config" : {
+            "preDaemon":"loadScreen.PreDaemon",
+            "preDaemonDesc":"done",
+            "eventDaemon":"loadScreen.eventGenerator",
+            "eventDaemonDesc":"done",
+            "commonDaemon":"DEFAULT",
+            "commonDaemonDesc":"nada?vacio?",
+            "reactDaemon":"DEFAULT",
+            "reactDaemonDesc":"si hay evento de tiempo: se llama al exit... pero esto lo hace el eventStore.manage(): que esto se queda vacio",
+            "drawDaemon":"loadScreen.drawDaemon",
+            "drawDaemonDesc":"Pues a pintar la pantalla de carga",
+            "postDaemon":"loadScreen.PostDaemon",
+            "postDaemonDesc":"Hacer cosas de sdl",
+            "contextTime":"DEFAULT",
+            "contextTimeDesc":"el systime"
+          }
+        },
+        {"factory": "SDLSysTimeFtry",
+          "name": "loadScreen.SDLSysTime",
+          "config" : {}
+        },
+        {"factory": "OGLPreDrawFtry",
+          "name": "loadScreen.PreDaemon",
+          "config" : {
+            "window" : "zandbokz.mainwindow",
+            "camera" : "loadScreen.cam",
+            "programId": "base_program"
+          }
+        },
+        {"factory": "OGLPostDrawFtry",
+          "name": "loadScreen.PostDaemon",
+          "config" : {
+            "window" : "zandbokz.mainwindow"
+          }
+        },
+        {"factory": "TimeEventGnFtry",
+          "name": "loadScreen.eventGenerator",
+          "config" : {
+            "eventId" : "timeEventId",
+            "contextTime" : "DEFAULT"
+          }
+        },
+        {"factory": "MainLoopExitFtry",
+          "name": "loadScreen.exitDaemon",
+          "config" : {
+            "mainloop" : "zandbokz.MainLoop",
+            "valueHolder" : "zandbokz.loadState",
+            "outValue" : "mainExitState"
+          }
+        },
+        {"factory": "DaemonTimeHandlerFtry",
+          "name": "loadScreen.exitHandler",
+          "config" : {
+            "generator" : "loadScreen.eventGenerator",
+            "time" : "loadScreen.loadTime",
+            "dmn" : "loadScreen.exitDaemon"
+          }
+        },
+        {"factory": "OGLModelSheetDrawerFtry",
+          "name": "loadScreen.screenDrawer",
+          "description" : "comportamiento que pintara la pantalla. Faltan tipos",
+          "config" : {
+            "window" : "zandbokz.mainwindow",
+            "programId" : "base_program"
+          }
+        },
+        {"factory": "DrawerModelDaemonFtry",
+          "name": "loadScreen.drawDaemon",
+          "description" : "demonio que pintara la pantalla. Faltan tipos",
+          "config" : {
+            "list" : "loadScreen.drawList",
+            "behavior" : "loadScreen.screenDrawer"
+          }
+        },
+        {"factory": "Drawable3DAvtFtry",
+          "name": "loadScreen.bgEnt",
+          "config" : {
+            "entity" : "loadingLogo",
+            "attribIndexes" : ["gidIdx", "scaleIdx", "degreesIdx", "orientationIdx", "positionIdx"],
+            "lists":{"loadScreen.drawList":"drawticket"}
+          }
+        }
+      ]
+    }
+  ]
+}

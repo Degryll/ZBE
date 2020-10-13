@@ -10,6 +10,7 @@
 #include "ZBE/SDL/OGL/SDLOGLWindow.h"
 
 #include <fstream>
+#include <cstdio>
 
 #include <imgui.h>
 #include <imgui_impl_sdl.h>
@@ -59,16 +60,17 @@ void SDLOGLWindow::createGLContext() {
   if( glewError != GLEW_OK ) {
     SysError::setError(std::string("ERROR: Error initializing GLEW: ") + std::string((char*)glewGetErrorString( glewError )));
   }
-
-// During init, enable debug output
-glEnable              ( GL_DEBUG_OUTPUT );
-//glDebugMessageCallback( MessageCallback, 0 );
+  glClearColor(1.0,1.0,0.0,0.0);
+  // During init, enable debug output
+  glEnable              ( GL_DEBUG_OUTPUT );
+  glDebugMessageCallback( MessageCallback, 0 );
 
   //glEnable(GL_TEXTURE_2D);printf("Pista a 0x%x\n", glGetError()); fflush(stdout);
   glEnable(GL_DEPTH_TEST);
+  // TODO habilitar cull face. Que no queremos repetirnos.
   glEnable(GL_CULL_FACE);
   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-  //glCullFace(GL_FRONT_AND_BACK);
+  glCullFace(GL_BACK);
 
 //  IMGUI_CHECKVERSION();
 //  ImGui::CreateContext();
@@ -223,7 +225,8 @@ uint64_t OGLShaderStore::loadShader(std::vector<ShaderDef> shaderDefs) {
   glBindAttribLocation(gProgramID, V_POS, "pos" );
   glBindAttribLocation(gProgramID, VT_POS, "texCoord" );
 
-  for(ShaderDef sd : shaderDefs){
+  for(ShaderDef sd : shaderDefs) {
+    printf("Shaderdefs: %s\n", sd.filename.c_str()); fflush(stdout);
     std::string content = readFile(sd.filename.c_str());
     const char* c_content = content.c_str();
     compileShader(gProgramID, &(c_content), sd.type);
@@ -277,19 +280,20 @@ void OGLShaderStore::printProgramLog(GLuint /*program*/) {
   // }
 }
 
-void OGLShaderStore::printShaderLog(GLuint /*shader*/) {
+void OGLShaderStore::printShaderLog(GLuint shader) {
   //TODO use logger
-  // if( glIsShader( shader ) ) {
-  //     int infoLogLength = 0;
-  //     int maxLength = infoLogLength;
-  //     glGetShaderiv( shader, GL_INFO_LOG_LENGTH, &maxLength );
-  //     char* infoLog = new char[ maxLength ];
-  //     glGetShaderInfoLog( shader, maxLength, &infoLogLength, infoLog );
-  //     if( infoLogLength > 0 ){ printf( "%s\n", infoLog );}
-  //     delete[] infoLog;
-  // } else {
-  //     printf( "Name %d is not a shader\n", shader );
-  // }
+  printf( "Shader compilation error:\n");
+  if( glIsShader( shader ) ) {
+      int infoLogLength = 0;
+      int maxLength = infoLogLength;
+      glGetShaderiv( shader, GL_INFO_LOG_LENGTH, &maxLength );
+      char* infoLog = new char[ maxLength ];
+      glGetShaderInfoLog( shader, maxLength, &infoLogLength, infoLog );
+      if( infoLogLength > 0 ){ printf( "%s\n", infoLog );}
+      delete[] infoLog;
+  } else {
+      printf( "Name %d is not a shader\n", shader );
+  }
 }
 
 void OGLShaderStore::linkProgram(GLuint gProgramID) {

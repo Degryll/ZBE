@@ -15,6 +15,7 @@
 #include "ZBE/glTF/GLTFFactories.h"
 #include "ZBE/JSON/factories/JSONFactories.h"
 #include "ZBE/SDL/factories/SDLFactories.h"
+#include "ZBE/OGL/factories/OGLFactories.h"
 #include "ZBE/resources/loaders/implementations/JSONAppLoader.h"
 
 int main(int /*argc*/, char** /*argv*/) {
@@ -22,13 +23,14 @@ int main(int /*argc*/, char** /*argv*/) {
    printf("Hello ZandBokz\n");
    BaseFactories::load();
    SDLFactories::load();
+   OGLFactories::load();
    GLTFFactories::load();
    ZBEFactories::load();
    JSONFactories::load();
    // Load App.
    std::cout << SysError::getFirstErrorString() << "\n";
    JSONAppLoader appLoader;
-   appLoader.load("data/ZandBokz/app/main.json");
+   appLoader.load("data/ZandBokz/app/main_001.json");
    std::cout << SysError::getFirstErrorString() << "\n";
    // Run App.
    auto d = RsrcStore<Daemon>::getInstance().get("Daemon.Main");

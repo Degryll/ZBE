@@ -13,6 +13,7 @@
 #include <string>
 
 #include "ZBE/JSON/resources/JSONImgDefLoader.h"
+#include "ZBE/JSON/resources/JSONGLSLProgramLoaderFtry.h"
 #include "ZBE/JSON/resources/JSONMultiSpriteSheetLoader.h"
 #include "ZBE/JSON/resources/JSONSimpleOGLModelSheetLoaderFtry.h"
 
@@ -46,6 +47,8 @@ public:
     factories.insert("JSONImgDefLoaderFtry"s, std::make_shared<GenericFtry<RsrcDefLoader, JSONImgDefLoader> >("RsrcDefLoader", "JSONImgDefLoader"));
     factories.insert("JSONMultiSprtSheetLoaderFtry"s, std::make_shared<GenericFtry<RsrcLoader, JSONMultiSpriteSheetLoader> >("RsrcLoader", "JSONMultiSpriteSheetLoader"));
     factories.insert("JSONSimpleOGLModelSheetLoaderFtry"s, std::make_shared<JSONSimpleOGLModelSheetLoaderFtry>());
+    factories.insert("JSONGLSLProgramLoaderFtry"s, std::make_shared<JSONGLSLProgramLoaderFtry>());
+
   }
 
 };

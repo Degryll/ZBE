@@ -93,14 +93,46 @@ void JSONGraphicsLoaders::JSONSimpleModelSheetFileLoad(std::istream& is, std::sh
   try {
     is >> j;
     std::string name = j["name"];
-    json modeldefs = j["modeldefs"];
-    json modeldef =  modeldefs[0];
-    std::string graphicsName = modeldef["name"];
+    json graphicdefs = j["graphicdefs"];
+    json graphicdef =  graphicdefs[0];
+    std::string graphicsName = graphicdef["name"];
     std::shared_ptr<SimpleOGLModelSheet> modelSheet = std::make_shared<SimpleOGLModelSheet>(window, nrd.get("graphics."s + graphicsName));
-    // for (auto modeldef : modeldefs) {
+    // for (auto graphicdef : graphicdefs) {
     // TODO necesitaremos añadir múltiples definiciones de model a un solo OGLModelSheet en el futuro.
     // }
-    rsrcSimpleModel.insert(name, modelSheet);
+    rsrcModelSheet.insert(name, modelSheet);
+  } catch (json::parse_error &e) {
+    SysError::setError(std::string("ERROR: Json failed to parse: ") + std::string(e.what()));
+  } catch (nlohmann::detail::type_error &e) {
+    SysError::setError(std::string("ERROR: Json failed to load SimpleModelSheet because: ") + std::string(e.what()));
+  }
+}
+
+void JSONGraphicsLoaders::JSONGLSLProgramFileLoad(std::istream& is, std::shared_ptr<SDLOGLWindow> window) {
+  using namespace std::string_literals;
+  json j;
+  try {
+    is >> j;
+    std::string name = j["name"];
+    json shaderFiles = j["shaderfiles"];
+    std::vector<ShaderDef> shaderDefs;
+    for (auto fileurl : shaderFiles) {
+      std::string fileurlStr = fileurl.get<std::string>();
+      std::size_t pos = fileurlStr.rfind(".");
+      std::string ext = fileurlStr.substr(pos+1);
+      if (ext.compare("vs"s) == 0) {
+        shaderDefs.push_back(ShaderDef{fileurlStr, GL_VERTEX_SHADER});
+      } else if (ext.compare("fs"s) == 0) {
+        shaderDefs.push_back(ShaderDef{fileurlStr, GL_FRAGMENT_SHADER});
+      } else if (ext.compare("gs"s) == 0) {
+        shaderDefs.push_back(ShaderDef{fileurlStr, GL_GEOMETRY_SHADER});
+      }
+    }  // for
+    auto programid = window->getShaderStore()->loadShader(shaderDefs);
+    auto gProgramID = window->getShaderStore()->getShader(programid);
+    printf("Rsrc loader ogl programId %u\n", gProgramID); fflush(stdout);
+    uintStore.insert(name, programid);
+
   } catch (json::parse_error &e) {
     SysError::setError(std::string("ERROR: Json failed to parse: ") + std::string(e.what()));
   } catch (nlohmann::detail::type_error &e) {

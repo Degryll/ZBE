@@ -30,7 +30,8 @@
 
 #include "ZBE/SDL/OGL/SDLOGLWindow.h"
 #include "ZBE/OGL/graphics/OGLGraphics.h"
-#include "ZBE/OGL/graphics/implementations/SingleModelOGLModelSheet.h"
+#include "ZBE/OGL/graphics/OGLModelSheet.h"
+#include "ZBE/OGL/graphics/implementations/SimpleOGLModelSheet.h"
 
 namespace zbe {
 
@@ -53,14 +54,16 @@ public:
 
   void JSONSimpleModelSheetFileLoad(std::istream& is, std::shared_ptr<SDLOGLWindow> window);
 
+  void JSONGLSLProgramFileLoad(std::istream& is, std::shared_ptr<SDLOGLWindow> window);
+
 private:
   JSONGraphicsLoaders() {}
 
   RsrcStore<zbe::SpriteSheet<uint64_t, int64_t, double, Vector2D, Vector2D> >& rsrcAnimSprt = RsrcStore<zbe::SpriteSheet<uint64_t, int64_t, double, Vector2D, Vector2D> >::getInstance();
   RsrcStore<ImgDef>& rsrcImgDef = RsrcStore<ImgDef>::getInstance();
   NameRsrcDictionary& nrd = NameRsrcDictionary::getInstance();
-  //RsrcStore<OGLGraphics>& graphicsStore = RsrcStore<OGLGraphics>::getInstance();
-  RsrcStore<SimpleOGLModelSheet>& rsrcSimpleModel = RsrcStore<SimpleOGLModelSheet>::getInstance();
+  RsrcDictionary<uint64_t>& uintStore = RsrcDictionary<uint64_t>::getInstance();
+  RsrcStore<OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> >& rsrcModelSheet = RsrcStore<OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> >::getInstance();
 };
 
 }  // namespace zbe

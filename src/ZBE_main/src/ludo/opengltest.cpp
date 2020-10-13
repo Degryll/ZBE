@@ -142,8 +142,17 @@ int opengltest(int, char** ) {
   }
 
   std::shared_ptr<Camera> cam = std::make_shared<Camera>();
-
-  cam->set_perspective(120.0, 1.0, 1.0, 50.0);
+  auto eye = std::make_shared<SimpleValue<Vector3D> >();
+  auto target = std::make_shared<SimpleValue<Vector3D> >();
+  auto up = std::make_shared<SimpleValue<Vector3D> >();
+  auto fov = std::make_shared<SimpleValue<float> >(120.0f);
+  auto aspect = std::make_shared<SimpleValue<float> >(1.0f);
+  auto znear = std::make_shared<SimpleValue<float> >(1.0f);
+  auto zfar = std::make_shared<SimpleValue<float> >(50.0f);
+  cam->setEyeValue(eye);//
+  cam->setTargetValue(target);//
+  cam->setUpValue(up);//
+  cam->setPerspectiveValues(fov, aspect, znear, zfar);
 
   float a = 0.0f;
 
@@ -162,8 +171,8 @@ int opengltest(int, char** ) {
   //std::shared_ptr<std::vector<GLfloat> > projectionV = std::make_shared<std::vector<GLfloat> >(projection, projection + (sizeof(projection)/sizeof(GLfloat)));
   //std::shared_ptr<std::vector<GLfloat> > viewV = std::make_shared<std::vector<GLfloat> >(viewMatGenerated);
 
-  std::shared_ptr<SingleModelOGLModelSheet> modelSheet1 = std::make_shared<SingleModelOGLModelSheet>(window, models[1], floorTex);
-  std::shared_ptr<SingleModelOGLModelSheet> modelSheet2 = std::make_shared<SingleModelOGLModelSheet>(window, models[0], cubeTex);
+  std::shared_ptr<SimpleOGLModelSheet> modelSheet1 = std::make_shared<SimpleOGLModelSheet>(window, models[1], floorTex);
+  std::shared_ptr<SimpleOGLModelSheet> modelSheet2 = std::make_shared<SimpleOGLModelSheet>(window, models[0], cubeTex);
 
 
   // std::shared_ptr<MAvatar<uint64_t, double, double, Vector3D, Vector3D> > avatar
@@ -244,8 +253,16 @@ int opengltest(int, char** ) {
       lastTime += CLOCKS_PER_SEC;
     }
 
-    cam->lookAt(Vector3D({sin(a) * 5.0f, cos(a*4) * 1.0f + 2.0f, cos(a) * 5.0f}), Vector3D({cos(a), 0.0f, cos(a)}), Vector3D({0.0f, 1.0f, 0.0f}));
-    cam->set_perspective(90.0 + (30.0*sin(2*a)), 1.0, 1.0, 50.0);
+    eye->set(Vector3D({sin(a) * 5.0f, cos(a*4) * 1.0f + 2.0f, cos(a) * 5.0f}));
+    target->set(Vector3D({cos(a), 0.0f, cos(a)}));
+    up->set(Vector3D({0.0f, 1.0f, 0.0f}));
+    fov->set(90.0 + (30.0*sin(2*a)));
+    aspect->set(1.0);
+    znear->set(1.0);
+    zfar->set(50.0);
+
+    //cam->lookAt(Vector3D({sin(a) * 5.0f, cos(a*4) * 1.0f + 2.0f, cos(a) * 5.0f}), Vector3D({cos(a), 0.0f, cos(a)}), Vector3D({0.0f, 1.0f, 0.0f}));
+    //cam->setPerspective(90.0 + (30.0*sin(2*a)), 1.0, 1.0, 50.0);
 
     scale1 = 1.0f + 0.5*cos(a);
     scale2 = 1.0f + 0.7*sin(a);
@@ -269,7 +286,7 @@ int opengltest(int, char** ) {
 
 
     glClearColor(cos(a/100.0), 0.2f, 0.5f, 0.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     preDraw.run();
     draw->apply(avatar1);

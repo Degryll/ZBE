@@ -28,7 +28,7 @@
 
 #include "ZBE/SDL/OGL/SDLOGLWindow.h"
 
-#include "ZBE/OGL/graphics/implementations/SingleModelOGLModelSheet.h"
+#include "ZBE/OGL/graphics/implementations/SimpleOGLModelSheet.h"
 #include "ZBE/OGL/drawers/OGLModelSheetDrawer.h"
 #include "ZBE/OGL/daemons/OGLPreDrawer.h"
 #include "ZBE/OGL/daemons/OGLPostDraw.h"

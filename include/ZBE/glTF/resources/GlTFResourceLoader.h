@@ -12,6 +12,8 @@
 #ifndef ZBE_GLTF_RESOURCES_GLTFRESOURCELOADER_H_
 #define ZBE_GLTF_RESOURCES_GLTFRESOURCELOADER_H_
 
+#include <cstdio>
+
 #include <algorithm>
 #include <filesystem>
 #include <memory>
@@ -68,6 +70,59 @@ void setup(OGLTextureStore* texStore,  OGLModelStore* modelStore) {
 bool isLoadable(std::filesystem::path extension) {
   return (ext.compare(extension) == 0);
 }
+// void load(std::filesystem::path filePath) {
+//   using namespace std::string_literals;
+//   GLfloat vertexData[] = {
+//     // front
+//     -0.5f, -0.5f,  0.5f, 0.0f, 0.0f,
+//     0.5f, -0.5f,  0.5f, 1.0f, 0.0f,
+//     0.5f,  0.5f,  0.5f, 1.0f, 1.0f,
+//     0.5f,  0.5f,  0.5f, 1.0f, 1.0f,
+//     -0.5f,  0.5f,  0.5f, 0.0f, 1.0f,
+//     -0.5f, -0.5f,  0.5f, 0.0f, 0.0f,
+//     // back
+//     0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
+//     -0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
+//     -0.5f,  0.5f, -0.5f, 1.0f, 1.0f,
+//     -0.5f,  0.5f, -0.5f, 1.0f, 1.0f,
+//     0.5f,  0.5f, -0.5f, 0.0f, 1.0f,
+//     0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
+//     // left
+//     -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
+//     -0.5f, -0.5f,  0.5f, 1.0f, 0.0f,
+//     -0.5f,  0.5f,  0.5f, 1.0f, 1.0f,
+//     -0.5f,  0.5f,  0.5f, 1.0f, 1.0f,
+//     -0.5f,  0.5f, -0.5f, 0.0f, 1.0f,
+//     -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
+//     // right
+//     0.5f, -0.5f,  0.5f, 0.0f, 0.0f,
+//     0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
+//     0.5f,  0.5f, -0.5f, 1.0f, 1.0f,
+//     0.5f,  0.5f, -0.5f, 1.0f, 1.0f,
+//     0.5f,  0.5f,  0.5f, 0.0f, 1.0f,
+//     0.5f, -0.5f,  0.5f, 0.0f, 0.0f,
+//     // top
+//     -0.5f, 0.5f,  0.5f, 0.0f, 0.0f,
+//     0.5f, 0.5f,  0.5f, 1.0f, 0.0f,
+//     0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
+//     0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
+//     -0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
+//     -0.5f, 0.5f,  0.5f, 0.0f, 0.0f,
+//     // bottom
+//     -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
+//     0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
+//     0.5f, -0.5f,  0.5f, 1.0f, 1.0f,
+//     0.5f, -0.5f,  0.5f, 1.0f, 1.0f,
+//     -0.5f, -0.5f,  0.5f, 0.0f, 1.0f,
+//     -0.5f, -0.5f, -0.5f, 0.0f, 0.0f
+//   };
+//
+//   GLuint indexData[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35 };
+//   auto modelIdx = modelStore->loadModel(vertexData, indexData, 36, 36);
+//   auto tupla = modelStore->getModel(modelIdx);
+//   uint64_t cubeTex = texStore->loadImg("data/images/ludo/arrow_r_000_512.png");
+//   graphicsStore.insert("graphics.Cube"s, std::make_shared<OGLGraphics>(OGLGraphics{std::get<0>(tupla), std::get<1>(tupla), cubeTex}));
+// }
 
 void load(std::filesystem::path filePath) {
   using namespace std::string_literals;
@@ -96,7 +151,6 @@ void load(std::filesystem::path filePath) {
   GLsizei nvertex = model.accessors[model.meshes[0].primitives[0].indices].count;
   uint64_t modelId = modelStore->storeModel(vao, nvertex);
   dict.insert("model."s + modelName, modelId);
-
   GLuint texId = bindTextures(model);
 
   // TODO This name will be replaced for another name extracted from a model sheet.
@@ -177,6 +231,8 @@ void bindMesh(std::vector<GLuint> vbos, tinygltf::Model &model, /*tinygltf::Mesh
     // std::cout << "buffer.data.size = " << buffer.data.size() << ", bufferview.byteOffset = " << bufferView.byteOffset << std::endl;
 
     glBufferData(bufferView.target, bufferView.byteLength, &buffer.data.at(0) + bufferView.byteOffset, GL_STATIC_DRAW);
+    float* aux = (float*)(&buffer.data.at(0) + bufferView.byteOffset);
+    printf("%f %f %f\n", aux[0], aux[1], aux[2]);
   }
 
   for (size_t i = 0; i < mesh.primitives.size(); ++i) {
@@ -195,8 +251,8 @@ void bindMesh(std::vector<GLuint> vbos, tinygltf::Model &model, /*tinygltf::Mesh
 
       int vaa = -1;
       if (attrib.first.compare("POSITION") == 0) vaa = 0;
-      if (attrib.first.compare("NORMAL") == 0) vaa = 1;
-      if (attrib.first.compare("TEXCOORD_0") == 0) vaa = 2;
+      if (attrib.first.compare("TEXCOORD_0") == 0) vaa = 1;
+      if (attrib.first.compare("NORMAL") == 0) vaa = 2;
       if (vaa > -1) {
         glEnableVertexAttribArray(vaa);
         glVertexAttribPointer(vaa, size, accessor.componentType,

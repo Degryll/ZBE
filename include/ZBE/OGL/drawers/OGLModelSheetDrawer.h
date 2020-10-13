@@ -12,6 +12,8 @@
 
 #include <memory>
 
+#include <cstdio>
+
 #include <GL/glew.h>
 
 #include <glm/glm.hpp>
@@ -40,8 +42,7 @@ class OGLModelSheetDrawer : public Behavior<T, Ts...> {
 
     /** \brief Empty constructor
      */
-    OGLModelSheetDrawer()
-      : gProgramID(), window(nullptr), rsOglMs(RsrcStore<OGLModelSheet<T, Ts...> >::getInstance()) {}
+    OGLModelSheetDrawer() : gProgramID() {}
 
     /** \brief Create a new drawer in the given context.
      *  \param window A SDLwindow with its context.
@@ -62,6 +63,7 @@ class OGLModelSheetDrawer : public Behavior<T, Ts...> {
       uint64_t gId = val->get();
       std::shared_ptr<OGLModelSheet<T, Ts...> > oglMs = rsOglMs.get(gId);
       OGLModel model = oglMs->generateModel(avatar);
+      printf("Drawer apply ogl programId %u\n", gProgramID); fflush(stdout);
       GLuint modelViewLoc = glGetUniformLocation(gProgramID, "model" );
       glUniformMatrix4fv(modelViewLoc, 1, false, (GLfloat*) glm::value_ptr(model.modelMat));
 
@@ -69,7 +71,8 @@ class OGLModelSheetDrawer : public Behavior<T, Ts...> {
       glBindTexture(GL_TEXTURE_2D, model.textures[0]);
       glBindVertexArray(model.vao);
 
-      glDrawElements( GL_TRIANGLES, model.nvertex, GL_UNSIGNED_INT, NULL );
+      //glDrawElements( GL_TRIANGLES, model.nvertex, GL_UNSIGNED_INT, NULL );
+      glDrawElements( GL_TRIANGLES, model.nvertex, GL_UNSIGNED_BYTE, NULL );
 
       glBindVertexArray(0);
     }
@@ -77,13 +80,14 @@ class OGLModelSheetDrawer : public Behavior<T, Ts...> {
     void setConfig(std::shared_ptr<SDLOGLWindow> window, uint64_t programId) {
       this->window = window;
       gProgramID = window->getShaderStore()->getShader(programId);
+      printf("Drawer ogl programId %u\n", gProgramID); fflush(stdout);
     }
 
   private:
     GLuint gProgramID;
-    std::shared_ptr<SDLOGLWindow> window;  //!< A SDL window with its context.
+    std::shared_ptr<SDLOGLWindow> window = nullptr;  //!< A SDL window with its context.
     //std::shared_ptr<SDLImageStore> imgStore; //!< Where the images are stored.
-    RsrcStore<OGLModelSheet<T, Ts...> >& rsOglMs; //!< Resource manager instance.
+    RsrcStore<OGLModelSheet<T, Ts...> >& rsOglMs  = RsrcStore<OGLModelSheet<T, Ts...> >::getInstance(); //!< Resource manager instance.
 };
 
 }  // namespace zbe

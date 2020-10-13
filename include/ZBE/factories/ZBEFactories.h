@@ -45,8 +45,11 @@ public:
   static void load(){
     static const char listName[] = "List";
     using AnimList = TicketedForwardList<MAvatar<uint64_t, int64_t, double, Vector2D, Vector2D> >;
-
     using AnimDrwr = BehaviorDmnFtry<AnimList, uint64_t, int64_t, double, Vector2D, Vector2D>;
+
+    using ModelList = TicketedForwardList<MAvatar<uint64_t, double, double, Vector3D, Vector3D> >;
+    using ModelDrwr = BehaviorDmnFtry<ModelList, uint64_t, double, double, Vector3D, Vector3D>;
+
 
     auto& factories = RsrcStore<Factory>::getInstance();
 
@@ -55,7 +58,9 @@ public:
 
     factories.insert("DrawerAnimSprtFtry", std::make_shared<AnimDrwr>());
     factories.insert("TFAECAnimSprtFtry" , std::make_shared<SimpleGenericFtry<AnimList> >(listName));
-    //factories.insert("SimpleAnimSprtFtry", std::make_shared<AnimFtry>());
+
+    factories.insert("DrawerModelDaemonFtry", std::make_shared<ModelDrwr>());
+    factories.insert("TFAECModelFtry" , std::make_shared<SimpleGenericFtry<ModelList> >(listName));
   }
 };
 

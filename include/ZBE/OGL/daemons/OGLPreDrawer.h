@@ -12,6 +12,8 @@
 
 #include <memory>
 
+#include <cstdio>
+
 #include <GL/glew.h>
 
 #include "ZBE/core/tools/math/math.h"
@@ -31,6 +33,8 @@ namespace zbe {
 class ZBEAPI OGLPreDrawer : public Daemon {
 public:
 
+  OGLPreDrawer() : gProgramID(0),  cam() {}
+
   OGLPreDrawer(std::shared_ptr<SDLOGLWindow> window, uint64_t programId, std::shared_ptr<Camera> cam)
     : gProgramID(window->getShaderStore()->getShader(programId)),  cam(cam) {}
 
@@ -41,6 +45,14 @@ public:
   /** \brief Do the actual Daemon job.
    */
   void run();
+
+  void setProgram(std::shared_ptr<SDLOGLWindow> window, uint64_t programId) {
+    gProgramID = window->getShaderStore()->getShader(programId);
+  }
+
+  void setCamera(std::shared_ptr<Camera> cam) {
+    this->cam = cam;
+  }
 
 private:
   GLuint gProgramID;

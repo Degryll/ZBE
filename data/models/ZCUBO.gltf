@@ -1,0 +1,108 @@
+{
+  "accessors": [{
+    "bufferView": 0,
+    "byteOffset": 0,
+    "componentType": 5123,
+    "count": 900,
+    "type": "SCALAR",
+    "max": [899],
+    "min": [0]
+  }, {
+    "bufferView": 1,
+    "byteOffset": 0,
+    "componentType": 5126,
+    "count": 900,
+    "type": "VEC3",
+    "max": [1.0000014305114746, 1.0000008344650269, 1.0000007152557373],
+    "min": [-1.0000017881393433, -1.0000019073486328, -1.000001311302185]
+  }, {
+    "bufferView": 1,
+    "byteOffset": 12,
+    "componentType": 5126,
+    "count": 900,
+    "type": "VEC3",
+    "max": [1.0000044107437134, 1.0000044107437134, 1.0000044107437134],
+    "min": [-1.0000044107437134, -1.0000044107437134, -1.0000044107437134]
+  }, {
+    "bufferView": 1,
+    "byteOffset": 24,
+    "componentType": 5126,
+    "count": 900,
+    "type": "VEC2",
+    "max": [1, 1],
+    "min": [0, -1.1920928955078125E-07]
+  }],
+  "asset": {
+    "generator": "Aspose.3D 20.9.1",
+    "version": "2.0"
+  },
+  "buffers": [{
+    "uri": "buffer.bin",
+    "byteLength": 3382664
+  }],
+  "bufferViews": [{
+    "buffer": 0,
+    "byteOffset": 0,
+    "byteLength": 1800,
+    "target": 34963
+  }, {
+    "buffer": 0,
+    "byteOffset": 1804,
+    "byteLength": 28800,
+    "byteStride": 32,
+    "target": 34962
+  }, {
+    "buffer": 0,
+    "byteOffset": 30608,
+    "byteLength": 3352052
+  }],
+  "images": [{
+    "mimeType": "image/png",
+    "bufferView": 2
+  }],
+  "materials": [{
+    "pbrMetallicRoughness": {
+      "baseColorFactor": [1, 1, 1, 1],
+      "baseColorTexture": {
+        "index": 0,
+        "texCoord": 0
+      },
+      "metallicFactor": 0.3381817936897278,
+      "roughnessFactor": 0.4000000059604645
+    },
+    "emissiveFactor": [0, 0, 0],
+    "alphaMode": "OPAQUE",
+    "doubleSided": true
+  }],
+  "meshes": [{
+    "primitives": [{
+      "attributes": {
+        "POSITION": 1,
+        "NORMAL": 2,
+        "TEXCOORD_0": 3
+      },
+      "indices": 0,
+      "material": 0,
+      "mode": 4
+    }]
+  }],
+  "nodes": [{
+    "matrix": [8.940693643211262E-07, -5.662441751042024E-07, 1.000000029802031, 0, 1.0000000298021874, -1.1920932507791804E-07, -9.238720330984052E-07, 0, 8.940723006389817E-08, 1.0000000298024538, 5.364414743525003E-07, 0, 0, 0, 0, 1],
+    "mesh": 0,
+    "name": "CPU"
+  }],
+  "samplers": [{
+    "magFilter": 9729,
+    "minFilter": 9729,
+    "wrapS": 10497,
+    "wrapT": 10497
+  }],
+  "scene": 0,
+  "scenes": [{
+    "nodes": [0]
+  }],
+  "textures": [{
+    "sampler": 0,
+    "source": 0
+  }]
+}

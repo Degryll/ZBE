@@ -33,7 +33,7 @@ void JSONSimpleOGLModelSheetLoaderFtry::setup(std::string name, uint64_t cfgId) 
     }
 
     auto winname = j["window"].get<std::string>();
-    auto win = sdlWindowRsrc.get("SDLWindow."s + winname);
+    auto win = sdlOGLWindowRsrc.get("SDLOGLWindow."s + winname);
 
     auto jsoglmsl = jsoglmslRsrc.get("JSONSimpleOGLModelSheetLoader."s + name);
     jsoglmsl->setWindow(win);

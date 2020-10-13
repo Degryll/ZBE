@@ -22,7 +22,7 @@ namespace zbe {
     projection[15] = 0;
   }
 
-  void Camera::set_perspective(float fov, float aspect, float znear, float zfar) {
+  void Camera::setPerspective(float fov, float aspect, float znear, float zfar) {
     float tangent = tan(float(TORADIANS) * (fov / 2.0f));
     float height = znear * tangent;
     float width = height * aspect;
@@ -31,6 +31,7 @@ namespace zbe {
 
 
   void Camera::update()  {
+    setPerspective(fov->get(), aspect->get(), znear->get(), zfar->get());
     lookAt(eye->get(),target->get(), up->get());
   }
 

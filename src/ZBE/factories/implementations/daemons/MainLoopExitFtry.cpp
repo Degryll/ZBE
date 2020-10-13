@@ -52,7 +52,7 @@ void MainLoopExitFtry::setup(std::string name, uint64_t cfgId) {
     }
     auto mle = mainLoopExitRsrc.get("MainLoopExit."s + name);
     auto ml = mainLoopRsrc.get("MainLoop."s + mainloopName.get<std::string>());
-    auto valueHolder = valueRsrc.get("ValueI."s + valueHolderName.get<std::string>());
+    auto valueHolder = valueRsrc.get(valueHolderName.get<std::string>());
     uint64_t value = uintStore.get(outValueName.get<std::string>());
     mle->setMainLoop(ml);
     mle->setValue(valueHolder);
