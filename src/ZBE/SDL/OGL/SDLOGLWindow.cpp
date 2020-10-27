@@ -226,7 +226,6 @@ uint64_t OGLShaderStore::loadShader(std::vector<ShaderDef> shaderDefs) {
   glBindAttribLocation(gProgramID, VT_POS, "texCoord" );
 
   for(ShaderDef sd : shaderDefs) {
-    printf("Shaderdefs: %s\n", sd.filename.c_str()); fflush(stdout);
     std::string content = readFile(sd.filename.c_str());
     const char* c_content = content.c_str();
     compileShader(gProgramID, &(c_content), sd.type);

@@ -14,7 +14,7 @@
 
 namespace zbe {
 
-struct OGLGraphics {
+struct ZBEAPI OGLGraphics {
     GLuint vao;
     GLsizei nvertex; // Sera una coleccion offset/nvertex
     GLuint texid; // Sera una coleccion

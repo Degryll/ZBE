@@ -68,10 +68,11 @@ class SpriteSheetSDLDrawer : public Behavior<T, Ts...> {
       std::shared_ptr<_Avatar<idx, uint64_t> > av = avatar;
       auto val = av->get();
       uint64_t gId = val->get();
+
       std::shared_ptr<SpriteSheet<T, Ts...> > sst = rmss.get(gId);
 
       Sprite s = sst->generateSprite(avatar);
-      
+
       SDL_Rect src = convert2SDLRect(s.src);
       SDL_Rect dst = convert2SDLRect(s.dst);
 

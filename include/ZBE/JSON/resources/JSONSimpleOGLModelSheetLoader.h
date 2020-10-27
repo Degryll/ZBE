@@ -19,18 +19,18 @@
 #include "ZBE/SDL/OGL/SDLOGLWindow.h"
 #include "ZBE/resources/loaders/RsrcLoader.h"
 
+#include "ZBE/core/system/system.h"
 
 namespace zbe {
 
 /** \brief JSON loader for SimpleModelOGLModelSheet's
 */
-class JSONSimpleOGLModelSheetLoader : public RsrcLoader {
+class ZBEAPI JSONSimpleOGLModelSheetLoader : public RsrcLoader {
 public:
 
  /** \brief Empty constructir. Creted object needs to be setup
   */
- JSONSimpleOGLModelSheetLoader() : window() {}
-
+JSONSimpleOGLModelSheetLoader() = default;
  /* \brief It sets up the window to be used.
  */
  void setWindow(std::shared_ptr<SDLOGLWindow> window) {
@@ -41,10 +41,7 @@ public:
   *  \param filePath Path to image file.
   *  \return An id to the image loaded.
   */
- void load(std::filesystem::path filePath) {
-   std::ifstream ifs(filePath);
-   jsongl.JSONSimpleModelSheetFileLoad(ifs, window);
- }
+ void load(std::filesystem::path filePath);
 
  /** \brief Tells if a file extension is loadable.
   *  \param extension Image file extension.
@@ -56,8 +53,10 @@ public:
  }
 
 private:
-  std::shared_ptr<SDLOGLWindow> window;
-  JSONGraphicsLoaders& jsongl = JSONGraphicsLoaders::getInstance();
+  std::shared_ptr<SDLOGLWindow> window = nullptr;
+  RsrcStore<zbe::SpriteSheet<uint64_t, int64_t, double, Vector2D, Vector2D> >& rsrcAnimSprt = RsrcStore<zbe::SpriteSheet<uint64_t, int64_t, double, Vector2D, Vector2D> >::getInstance();
+  RsrcStore<zbe::OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> >& rsrcModelSheet = RsrcStore<zbe::OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> >::getInstance();
+  NameRsrcDictionary& nrd = NameRsrcDictionary::getInstance();
 
 };
 

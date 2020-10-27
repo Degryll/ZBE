@@ -578,10 +578,12 @@
 		<Unit filename="../../../include/ZBE/resources/loaders/implementations/JSONAppLoader.h" />
 		<Unit filename="../../../include/ZBE/system/SystemResources.h" />
 		<Unit filename="../../../include/ZBE/tools/graphics/Camera.h" />
+		<Unit filename="../../../include/ZBE/tools/graphics/CameraFtry.h" />
 		<Unit filename="../../../src/ZBE/JSON/graphics/JSONGraphicsLoaders.cpp" />
 		<Unit filename="../../../src/ZBE/JSON/resources/JSONAudioDefLoader.cpp" />
 		<Unit filename="../../../src/ZBE/JSON/resources/JSONGLSLProgramLoaderFtry.cpp" />
-		<Unit filename="../../../src/ZBE/JSON/resources/JSONSimpleOGLModelSheetLoaderFtry.cpp" />
+		<Unit filename="../../../src/ZBE/JSON/resources/JSONMultiSpriteSheetLoader.cpp" />
+		<Unit filename="../../../src/ZBE/JSON/resources/JSONSimpleOGLModelSheetLoader.cpp" />
 		<Unit filename="../../../src/ZBE/OAL/daemons/OALContextDaemon.cpp" />
 		<Unit filename="../../../src/ZBE/OAL/players/Sound3DOALPlayer.cpp" />
 		<Unit filename="../../../src/ZBE/OAL/resources/OALAudioLoader.cpp" />
@@ -671,8 +673,6 @@
 				<general />
 			</DoxyBlocks>
 			<lib_finder disable_auto="1" />
-			<code_completion />
-			<debugger />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

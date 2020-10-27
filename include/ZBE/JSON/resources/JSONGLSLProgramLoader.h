@@ -41,7 +41,7 @@ public:
   */
  void load(std::filesystem::path filePath) {
    std::ifstream ifs(filePath);
-   jsongl.JSONGLSLProgramFileLoad(ifs, window);
+   JSONGraphicsLoaders::JSONGLSLProgramFileLoad(ifs, window, uintStore);
  }
 
  /** \brief Tells if a file extension is loadable.
@@ -55,7 +55,7 @@ public:
 
 private:
   std::shared_ptr<SDLOGLWindow> window;
-  JSONGraphicsLoaders& jsongl = JSONGraphicsLoaders::getInstance();
+  RsrcDictionary<uint64_t>& uintStore = RsrcDictionary<uint64_t>::getInstance();
 
 };
 

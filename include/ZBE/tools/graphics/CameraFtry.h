@@ -28,7 +28,7 @@ namespace zbe {
 
 /** \brief Factory for OGLPreDrawer
  */
-class CameraFtry : virtual public Factory {
+class ZBEAPI CameraFtry : virtual public Factory {
 public:
 
   /** \brief Builds a Camera.

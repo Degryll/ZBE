@@ -34,38 +34,40 @@
 #include "ZBE/OGL/graphics/implementations/SimpleOGLModelSheet.h"
 
 namespace zbe {
+namespace JSONGraphicsLoaders{
 
-class ZBEAPI JSONGraphicsLoaders {
-public:
-  using json = nlohmann::json;
+//class ZBEAPI JSONGraphicsLoaders {
+//public:
+//  using json = nlohmann::json;
+//
+//  static JSONGraphicsLoaders& getInstance() {
+//    static JSONGraphicsLoaders instance;
+//    return instance;
+//  }
 
-  static JSONGraphicsLoaders& getInstance() {
-    static JSONGraphicsLoaders instance;
-    return instance;
-  }
+  ZBEAPI ImgDef JSONImgDefLoad(nlohmann::json j, uint64_t graphicsId);
 
-  ImgDef JSONImgDefLoad(json j, uint64_t graphicsId);
+  ZBEAPI void JSONImgDefFileLoad(std::istream& is, uint64_t graphicsId, RsrcStore<ImgDef>& rsrcImgDef, NameRsrcDictionary& nrd);
 
-  void JSONImgDefFileLoad(std::istream& is, uint64_t graphicsId);
+  ZBEAPI SprtDef JSONSprtDefLoad(nlohmann::json j, RsrcStore<ImgDef>& rsrcImgDef, NameRsrcDictionary& nrd);
 
-  SprtDef JSONSprtDefLoad(json j);
+  ZBEAPI void JSONMultiSpriteSheetFileLoad(std::istream& is, RsrcStore<zbe::SpriteSheet<uint64_t, int64_t, double, Vector2D, Vector2D> >& rsrcAnimSprt, NameRsrcDictionary& nrd, RsrcStore<zbe::OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> >& rsrcModelSheet, RsrcStore<ImgDef>& rsrcImgDef);
 
-  void JSONMultiSpriteSheetFileLoad(std::istream& is);
+  ZBEAPI void JSONSimpleModelSheetFileLoad(std::istream& is, std::shared_ptr<SDLOGLWindow> window, RsrcStore<zbe::SpriteSheet<uint64_t, int64_t, double, Vector2D, Vector2D> >& rsrcAnimSprt, NameRsrcDictionary& nrd, RsrcStore<zbe::OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> >& rsrcModelSheet);
 
-  void JSONSimpleModelSheetFileLoad(std::istream& is, std::shared_ptr<SDLOGLWindow> window);
+  ZBEAPI void JSONGLSLProgramFileLoad(std::istream& is, std::shared_ptr<SDLOGLWindow> window, RsrcDictionary<uint64_t>& uintStore);
 
-  void JSONGLSLProgramFileLoad(std::istream& is, std::shared_ptr<SDLOGLWindow> window);
+// private:
+//  JSONGraphicsLoaders() {}
 
-private:
-  JSONGraphicsLoaders() {}
-
-  RsrcStore<zbe::SpriteSheet<uint64_t, int64_t, double, Vector2D, Vector2D> >& rsrcAnimSprt = RsrcStore<zbe::SpriteSheet<uint64_t, int64_t, double, Vector2D, Vector2D> >::getInstance();
-  RsrcStore<ImgDef>& rsrcImgDef = RsrcStore<ImgDef>::getInstance();
-  NameRsrcDictionary& nrd = NameRsrcDictionary::getInstance();
-  RsrcDictionary<uint64_t>& uintStore = RsrcDictionary<uint64_t>::getInstance();
-  RsrcStore<OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> >& rsrcModelSheet = RsrcStore<OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> >::getInstance();
-};
-
+//  RsrcStore<zbe::SpriteSheet<uint64_t, int64_t, double, Vector2D, Vector2D> >& rsrcAnimSprt = RsrcStore<zbe::SpriteSheet<uint64_t, int64_t, double, Vector2D, Vector2D> >::getInstance();
+//  RsrcStore<ImgDef>& rsrcImgDef = RsrcStore<ImgDef>::getInstance();
+//  NameRsrcDictionary& nrd = NameRsrcDictionary::getInstance();
+//  RsrcDictionary<uint64_t>& uintStore = RsrcDictionary<uint64_t>::getInstance();
+//  RsrcStore<int>& rsrcModelSheet = RsrcStore<int>::getInstance();
+  //RsrcStore<zbe::OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> >& rsrcModelSheet = RsrcStore<zbe::OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> >::getInstance();
+//};
+}  // namespace JSONGraphicsLoaders
 }  // namespace zbe
 
 #endif  // ZBE_JSON_GRAPHICS_JSONGRAPHICSLOADERS_H_

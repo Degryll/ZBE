@@ -7,11 +7,13 @@
  * @brief Functions to load image properties from json files.
  */
 
+#include <cstdio>
 #include "ZBE/JSON/graphics/JSONGraphicsLoaders.h"
 
 namespace zbe {
+namespace JSONGraphicsLoaders {
 
-ImgDef JSONGraphicsLoaders::JSONImgDefLoad(json j, uint64_t graphicsId) {
+ImgDef JSONImgDefLoad(nlohmann::json j, uint64_t graphicsId) {
   try {
     uint64_t frameTime = j["frameTime"];
     unsigned frameAmount = j["frameAmount"];
@@ -24,7 +26,8 @@ ImgDef JSONGraphicsLoaders::JSONImgDefLoad(json j, uint64_t graphicsId) {
   }
 }
 
-void JSONGraphicsLoaders::JSONImgDefFileLoad(std::istream& is, uint64_t graphicsId) {
+void JSONImgDefFileLoad(std::istream& is, uint64_t graphicsId, RsrcStore<ImgDef>& rsrcImgDef, NameRsrcDictionary& nrd) {
+  using namespace nlohmann;
   json j;
   try {
     is >> j;
@@ -45,7 +48,7 @@ void JSONGraphicsLoaders::JSONImgDefFileLoad(std::istream& is, uint64_t graphics
 
 }
 
-SprtDef JSONGraphicsLoaders::JSONSprtDefLoad(json j) {
+SprtDef JSONSprtDefLoad(nlohmann::json j, RsrcStore<ImgDef>& rsrcImgDef, NameRsrcDictionary& nrd) {
   try {
     std::string imgName = j["img"];
     uint64_t imgDefId = nrd.get(cn::IMGDEF + cn::SEPARATOR + imgName);
@@ -64,7 +67,8 @@ SprtDef JSONGraphicsLoaders::JSONSprtDefLoad(json j) {
   return SprtDef();  // TODO create default ImgDef & image.
 }
 
-void JSONGraphicsLoaders::JSONMultiSpriteSheetFileLoad(std::istream& is) {
+void JSONMultiSpriteSheetFileLoad(std::istream& is, RsrcStore<zbe::SpriteSheet<uint64_t, int64_t, double, Vector2D, Vector2D> >& rsrcAnimSprt, NameRsrcDictionary& nrd, RsrcStore<zbe::OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> >& rsrcModelSheet, RsrcStore<ImgDef>& rsrcImgDef) {
+  using namespace nlohmann;
   json j;
   try {
     is >> j;
@@ -73,7 +77,7 @@ void JSONGraphicsLoaders::JSONMultiSpriteSheetFileLoad(std::istream& is) {
     std::shared_ptr<MultiSpriteSheet> sprtSheet = std::make_shared<MultiSpriteSheet>(sprtDefs.size());
     for (auto sprtNode : sprtDefs) {
       std::string stateName = sprtNode["name"];
-      SprtDef sprtDef = JSONSprtDefLoad(sprtNode);
+      SprtDef sprtDef = JSONSprtDefLoad(sprtNode, rsrcImgDef, nrd);
       sprtSheet->setSprite(nrd.get(cn::STATE + cn::SEPARATOR + stateName), sprtDef);
       if (!sprtNode["default"].is_null() && sprtNode["default"]) {
         sprtSheet->setDefaultSprite(sprtDef);
@@ -87,8 +91,9 @@ void JSONGraphicsLoaders::JSONMultiSpriteSheetFileLoad(std::istream& is) {
   }
 }
 
-void JSONGraphicsLoaders::JSONSimpleModelSheetFileLoad(std::istream& is, std::shared_ptr<SDLOGLWindow> window) {
+void JSONSimpleModelSheetFileLoad(std::istream& is, std::shared_ptr<SDLOGLWindow> window, RsrcStore<zbe::SpriteSheet<uint64_t, int64_t, double, Vector2D, Vector2D> >& rsrcAnimSprt, NameRsrcDictionary& nrd, RsrcStore<zbe::OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> >& rsrcModelSheet) {
   using namespace std::string_literals;
+  using namespace nlohmann;
   json j;
   try {
     is >> j;
@@ -96,7 +101,8 @@ void JSONGraphicsLoaders::JSONSimpleModelSheetFileLoad(std::istream& is, std::sh
     json graphicdefs = j["graphicdefs"];
     json graphicdef =  graphicdefs[0];
     std::string graphicsName = graphicdef["name"];
-    std::shared_ptr<SimpleOGLModelSheet> modelSheet = std::make_shared<SimpleOGLModelSheet>(window, nrd.get("graphics."s + graphicsName));
+    std::shared_ptr<SimpleOGLModelSheet> modelSheet = std::make_shared<SimpleOGLModelSheet>(window, "graphics."s + graphicsName);
+
     // for (auto graphicdef : graphicdefs) {
     // TODO necesitaremos añadir múltiples definiciones de model a un solo OGLModelSheet en el futuro.
     // }
@@ -108,8 +114,9 @@ void JSONGraphicsLoaders::JSONSimpleModelSheetFileLoad(std::istream& is, std::sh
   }
 }
 
-void JSONGraphicsLoaders::JSONGLSLProgramFileLoad(std::istream& is, std::shared_ptr<SDLOGLWindow> window) {
+void JSONGLSLProgramFileLoad(std::istream& is, std::shared_ptr<SDLOGLWindow> window, RsrcDictionary<uint64_t>& uintStore) {
   using namespace std::string_literals;
+  using namespace nlohmann;
   json j;
   try {
     is >> j;
@@ -130,7 +137,6 @@ void JSONGraphicsLoaders::JSONGLSLProgramFileLoad(std::istream& is, std::shared_
     }  // for
     auto programid = window->getShaderStore()->loadShader(shaderDefs);
     auto gProgramID = window->getShaderStore()->getShader(programid);
-    printf("Rsrc loader ogl programId %u\n", gProgramID); fflush(stdout);
     uintStore.insert(name, programid);
 
   } catch (json::parse_error &e) {
@@ -140,4 +146,5 @@ void JSONGraphicsLoaders::JSONGLSLProgramFileLoad(std::istream& is, std::shared_
   }
 }
 
+}  // namespace JSONGraphicsLoaders
 }  // namespace zbe

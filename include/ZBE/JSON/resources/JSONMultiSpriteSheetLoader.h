@@ -19,28 +19,26 @@
 
 #include "ZBE/resources/loaders/RsrcLoader.h"
 
+#include "ZBE/core/system/system.h"
 
 namespace zbe {
 
 /** \brief SDL implementation of ImgLoader.
 */
-class JSONMultiSpriteSheetLoader : public RsrcLoader {
+class ZBEAPI JSONMultiSpriteSheetLoader : public RsrcLoader {
 public:
 
  /** \brief Builds an SDLImgLoader from a SDLImageStore and the file extension supported (PNG by default)
   *  \imgStore SDLImgLoader to use.
   *  \extension Extension supported. PNG by default.
   */
- JSONMultiSpriteSheetLoader() {}
+ JSONMultiSpriteSheetLoader() = default;
 
  /** \brief Load an image
   *  \param filePath Path to image file.
   *  \return An id to the image loaded.
   */
- void load(std::filesystem::path filePath) {
-   std::ifstream ifs(filePath);
-   jsongl.JSONMultiSpriteSheetFileLoad(ifs);
- }
+ void load(std::filesystem::path filePath);
 
  /** \brief Tells if a file extension is loadable.
   *  \param extension Image file extension.
@@ -52,8 +50,10 @@ public:
  }
 
 private:
-  JSONGraphicsLoaders& jsongl = JSONGraphicsLoaders::getInstance();
-
+  RsrcStore<zbe::SpriteSheet<uint64_t, int64_t, double, Vector2D, Vector2D> >& rsrcAnimSprt = RsrcStore<zbe::SpriteSheet<uint64_t, int64_t, double, Vector2D, Vector2D> >::getInstance();
+  NameRsrcDictionary& nrd = NameRsrcDictionary::getInstance();
+  RsrcStore<zbe::OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> >& rsrcModelSheet = RsrcStore<zbe::OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> >::getInstance();
+  RsrcStore<ImgDef>& rsrcImgDef = RsrcStore<ImgDef>::getInstance();
 };
 
 }  // namespace zbe

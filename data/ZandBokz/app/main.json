@@ -28,6 +28,20 @@
   },
   "phases":[
       {
+        "description" : "Loading los valiu",
+        "factories" : [
+          {
+            "factory" : "SimpleValueFtry",
+            "name" : "zandbokz",
+            "config" : {
+              "int" : {
+                "loadState" : ["mainInitialState"]
+              }
+            }
+          }
+        ]
+      },
+      {
       "description" : "Loading initial lists and high priority structures (window).",
       "factories" : [
         {
@@ -153,13 +167,6 @@
             "postDaemonDesc":"Hacer cosas de sdl",
             "contextTime":"DEFAULT",
             "contextTimeDesc":"el systime"
-          }
-        },
-        {
-          "factory" : "ValueIFtry",
-          "name" : "zandbokz.loadState",
-          "config" : {
-            "value" : "mainInitialState"
           }
         },
         {"factory": "SDLSysTimeFtry",

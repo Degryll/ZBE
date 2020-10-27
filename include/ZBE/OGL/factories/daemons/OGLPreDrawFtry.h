@@ -34,7 +34,7 @@ namespace zbe {
 
 /** \brief Factory for OGLPreDrawer
  */
-class OGLPreDrawFtry : virtual public Factory {
+class ZBEAPI OGLPreDrawFtry : virtual public Factory {
 public:
 
   /** \brief Builds a OGLPreDraw.

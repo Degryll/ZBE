@@ -32,7 +32,7 @@ public:
   */
  void loadRsrcDef(const std::filesystem::path& url, uint64_t imgId) {
    std::ifstream ifs(url);
-   jsongl.JSONImgDefFileLoad(ifs, imgId);
+   JSONGraphicsLoaders::JSONImgDefFileLoad(ifs, imgId, rsrcImgDef, nrd);
  }
 
  /** \brief Returns the file extension.
@@ -43,7 +43,9 @@ public:
    return p;
  }
 private:
-  JSONGraphicsLoaders& jsongl = JSONGraphicsLoaders::getInstance();
+  RsrcStore<ImgDef>& rsrcImgDef = RsrcStore<ImgDef>::getInstance();
+  NameRsrcDictionary& nrd = NameRsrcDictionary::getInstance();
+
 };
 
 }  // namespace zbe

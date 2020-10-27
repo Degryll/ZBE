@@ -14,7 +14,6 @@ namespace zbe {
 void OGLPreDrawer::run() {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   cam->update();
-  printf("Predrawer ogl programId %u\n", gProgramID); fflush(stdout);
   glUseProgram(gProgramID);
   GLuint projectLoc = glGetUniformLocation(gProgramID, "projection" );
   GLuint viewLoc = glGetUniformLocation(gProgramID, "view" );

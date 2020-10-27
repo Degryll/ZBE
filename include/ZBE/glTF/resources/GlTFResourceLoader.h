@@ -131,7 +131,7 @@ void load(std::filesystem::path filePath) {
   std::string err;
   std::string warn;
 
-  bool res = loader.LoadASCIIFromFile(&model, &err, &warn, filePath.c_str());
+  bool res = loader.LoadASCIIFromFile(&model, &err, &warn, filePath.u8string());
 
   //SysError::setError(std::string("ERROR: Json failed to parse. Key ") + name + std::string(" contains an invalid value type. Value: ") + value.dump());
   if (!warn.empty()) {
@@ -231,8 +231,8 @@ void bindMesh(std::vector<GLuint> vbos, tinygltf::Model &model, /*tinygltf::Mesh
     // std::cout << "buffer.data.size = " << buffer.data.size() << ", bufferview.byteOffset = " << bufferView.byteOffset << std::endl;
 
     glBufferData(bufferView.target, bufferView.byteLength, &buffer.data.at(0) + bufferView.byteOffset, GL_STATIC_DRAW);
-    float* aux = (float*)(&buffer.data.at(0) + bufferView.byteOffset);
-    printf("%f %f %f\n", aux[0], aux[1], aux[2]);
+//    float* aux = (float*)(&buffer.data.at(0) + bufferView.byteOffset);
+//    printf("%f %f %f\n", aux[0], aux[1], aux[2]);
   }
 
   for (size_t i = 0; i < mesh.primitives.size(); ++i) {

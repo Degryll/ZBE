@@ -31,12 +31,8 @@ namespace zbe {
 
 /** \brief Interface capable of generate a sprite from a given entity.
  */
-// Point3D position, Vector3D orientation, float angle, float scale, uint64_t graphicsID
-// Vector3D position, Vector3D orientation, double angle, double scale, uint64_t graphicsID
-class SimpleOGLModelSheet : public OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> {
+class ZBEAPI SimpleOGLModelSheet : public OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> {
 public:
-  SimpleOGLModelSheet(const SimpleOGLModelSheet&) = delete;
-  void operator=(const SimpleOGLModelSheet&) = delete;
 
   SimpleOGLModelSheet(std::shared_ptr<SDLOGLWindow> window, uint64_t modelId, uint64_t texId)
     : vao(std::get<0>(window->getModelStore()->getModel(modelId))), nvertex(std::get<1>(window->getModelStore()->getModel(modelId))), textures() {
@@ -44,9 +40,10 @@ public:
   }
 
   SimpleOGLModelSheet(std::shared_ptr<SDLOGLWindow> window, uint64_t graphicsId)
-    : graphic(RsrcStore<OGLGraphics>::getInstance().get(graphicsId)), vao(graphic->vao), nvertex(graphic->nvertex), textures{graphic->texid} {
-      //textures.push_back(graphic.texid);
-  }
+    : graphic(RsrcStore<OGLGraphics>::getInstance().get(graphicsId)), vao(graphic->vao), nvertex(graphic->nvertex), textures{graphic->texid} {}
+
+  SimpleOGLModelSheet(std::shared_ptr<SDLOGLWindow> window, std::string graphicsId)
+    : graphic(RsrcStore<OGLGraphics>::getInstance().get(graphicsId)), vao(graphic->vao), nvertex(graphic->nvertex), textures{graphic->texid} {}
 
   /** \brief Virtual destructor
   */
