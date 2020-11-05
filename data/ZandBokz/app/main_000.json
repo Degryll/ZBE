@@ -8,8 +8,6 @@
   "literals" : {
     "window_title":"Zandbokz",
     "ZERO" : {"type":"uifd", "value":0},
-    "ONE" : {"type":"uifd", "value":1},
-    "NEGATIVEONE" : {"type":"ifd", "value":-1},
     "width" : {"type":"uifd", "value":1024},
     "height" : {"type":"uifd", "value":768},
     "gidIdx" : 1000,
@@ -17,8 +15,6 @@
     "degreesIdx" : 1020,
     "positionIdx" : 1030,
     "sizeIdx" : 1040,
-    "scaleIdx" : 1050,
-    "orientationIdx" : 1060,
     "drawticket" : 2000,
     "state.static" : 0,
     "testwflags": 0,
@@ -28,10 +24,6 @@
     "mainExitState" : 1,
     "loadScreen.toMenu": 1,
     "loadScreen.loadTime" : 262144,
-    "cam.fov" :{"type":"f", "value":90.0},
-    "cam.aspect" :{"type":"f", "value":1.333333},
-    "cam.znear" :{"type":"f", "value":1.0},
-    "cam.zfar" :{"type":"f", "value":50.0},
     "TODOindices":""
   },
   "phases":[
@@ -44,18 +36,6 @@
             "config" : {
               "int" : {
                 "loadState" : ["mainInitialState"]
-              },
-              "float" : {
-                "fov" : ["cam.fov"],
-                "aspect" : ["cam.aspect"],
-                "znear" : ["cam.znear"],
-                "zfar" : ["cam.zfar"]
-              },
-              "V3D" : {
-                "camEye" : [0.0, 3.0, 15.0],
-                "camTarget" : [0.0, 0.0, 0.0],
-                "camTargetOld" : [1.0, 0.0, 1.0],
-                "camUp" : [0.0, 1.0, 0.0]
               }
             }
           }
@@ -65,26 +45,13 @@
       "description" : "Loading initial lists and high priority structures (window).",
       "factories" : [
         {
-          "factory": "TFAECModelFtry",
+          "factory": "TFAECAnimSprtFtry",
           "description" : "do some serious sheet",
           "name": "loadScreen.drawList",
           "config" : {}
         },
         {
-          "factory": "CameraFtry",
-          "name": "loadScreen.cam",
-          "config" : {
-            "eye" : "zandbokz.camEye",
-            "target" : "zandbokz.camTarget",
-            "up" : "zandbokz.camUp",
-            "fov" : "zandbokz.fov",
-            "aspect" : "zandbokz.aspect",
-            "znear" : "zandbokz.znear",
-            "zfar" : "zandbokz.zfar"
-          }
-        },
-        {
-          "factory" : "SDLOGLWindowFtry",
+          "factory" : "SDLWindowFtry",
           "name" : "zandbokz.mainwindow",
           "config" : {
             "title" : "window_title",
@@ -101,25 +68,22 @@
       "description" : "Creating resource loaders.",
       "factories" : [
         {
-          "factory": "GlTFResourceLoaderFtry",
-          "name":"zandbokz.gltfLoader",
+          "factory": "JSONImgDefLoaderFtry",
+          "name":"zandbokz.JSONImgDefLoader",
+          "config" : {}
+        },
+        {
+          "factory": "SDLImgLoaderFtry",
+          "name":"zandbokz.SDLJSONImgLoader",
           "config" : {
-            "window" : "zandbokz.mainwindow"
+            "window" : "zandbokz.mainwindow",
+            "imgdef" : "zandbokz.JSONImgDefLoader"
           }
         },
         {
-          "factory": "JSONSimpleOGLModelSheetLoaderFtry",
-          "name":"zandbokz.msLoader",
-          "config" : {
-            "window" : "zandbokz.mainwindow"
-          }
-        },
-        {
-          "factory": "JSONGLSLProgramLoaderFtry",
-          "name":"zandbokz.glslLoader",
-          "config" : {
-            "window" : "zandbokz.mainwindow"
-          }
+          "factory": "JSONMultiSprtSheetLoaderFtry",
+          "name":"zandbokz.mssLoader",
+          "config" : {}
         }
       ]
     },
@@ -128,18 +92,10 @@
       "factories" : [
         {
           "factory": "RsrcFtry",
-          "name":"zandbokz.modelLoader",
+          "name":"zandbokz.imgLoader",
           "config" : {
-            "loader" : "zandbokz.gltfLoader",
-            "url" : "data/ZandBokz/models/gltf"
-          }
-        },
-        {
-          "factory": "RsrcFtry",
-          "name":"zandbokz.programLoader",
-          "config" : {
-            "loader" : "zandbokz.glslLoader",
-            "url" : "data/ZandBokz/programs"
+            "loader" : "zandbokz.SDLJSONImgLoader",
+            "url" : "data/ZandBokz/img"
           }
         }
       ]
@@ -149,10 +105,10 @@
       "factories" : [
         {
           "factory": "RsrcFtry",
-          "name":"zandbokz.modelSheetLoader",
+          "name":"zandbokz.sprtSheetLoader",
           "config" : {
-            "loader" : "zandbokz.msLoader",
-            "url" : "data/ZandBokz/modelsheets"
+            "loader" : "zandbokz.mssLoader",
+            "url" : "data/ZandBokz/sprtsheet"
           }
         }
       ]
@@ -163,43 +119,21 @@
         {"factory": "EntityFtry",
           "name": "loadingLogo",
           "description" : "El logo que se muestra en la pantalla de carga",
+          "realValues" : {
+          },
           "config" : {
             "uint": {
-              "gidIdx":["logo"]
+              "gidIdx":["img.loadScreen.background"]
+            },
+            "int": {
+              "stateIdx":["state.static"]
             },
             "double": {
-              "degreesIdx":[70.0],
-              "scaleIdx":[4.0]
+              "degreesIdx":["ZERO"]
             },
-            "V3D": {
-              "positionIdx":[1.0, 0.0, 0.0],
-              "orientationIdx":[1.0, 0.0, 0.0]
-            }
-          }
-        },
-        {"factory": "EntityFtry",
-          "name": "cameraController",
-          "description" : "TODO: Entidad asociada a la camara",
-          "TODO" : {
-            "eye" : "zandbokz.camEye",
-            "target" : "zandbokz.camTarget",
-            "up" : "zandbokz.camUp",
-            "fov" : "zandbokz.fov",
-            "aspect" : "zandbokz.aspect",
-            "znear" : "zandbokz.znear",
-            "zfar" : "zandbokz.zfar"
-          },
-          "TODO2" : {
-            "cosas" : "comportamiento ad hoc que mueva la camara o usar uno de los genericos que teniamos revisado"
-          },
-          "config" : {
-            "double": {
-              "fovIdx":"ZERO",
-              "bleble":["ONE"]
-            },
-            "V3D": {
-              "camUpId":"",
-              "orientationIdx":[1.0, 0.0, 0.0]
+            "V2D": {
+              "positionIdx":["ZERO", "ZERO"],
+              "sizeIdx":[1024.0, 768.0]
             }
           }
         }
@@ -239,15 +173,13 @@
           "name": "loadScreen.SDLSysTime",
           "config" : {}
         },
-        {"factory": "OGLPreDrawFtry",
+        {"factory": "BasicPreLoopSDLDaemonFtry",
           "name": "loadScreen.PreDaemon",
           "config" : {
-            "window" : "zandbokz.mainwindow",
-            "camera" : "loadScreen.cam",
-            "programId": "base_program"
+            "window" : "zandbokz.mainwindow"
           }
         },
-        {"factory": "OGLPostDrawFtry",
+        {"factory": "BasicPostLoopSDLDaemonFtry",
           "name": "loadScreen.PostDaemon",
           "config" : {
             "window" : "zandbokz.mainwindow"
@@ -276,15 +208,14 @@
             "dmn" : "loadScreen.exitDaemon"
           }
         },
-        {"factory": "OGLModelSheetDrawerFtry",
+        {"factory": "SpriteSheetSDLDrawerFtry",
           "name": "loadScreen.screenDrawer",
           "description" : "comportamiento que pintara la pantalla. Faltan tipos",
           "config" : {
-            "window" : "zandbokz.mainwindow",
-            "programId" : "base_program"
+            "window" : "zandbokz.mainwindow"
           }
         },
-        {"factory": "DrawerModelDaemonFtry",
+        {"factory": "DrawerAnimSprtFtry",
           "name": "loadScreen.drawDaemon",
           "description" : "demonio que pintara la pantalla. Faltan tipos",
           "config" : {
@@ -292,11 +223,12 @@
             "behavior" : "loadScreen.screenDrawer"
           }
         },
-        {"factory": "Drawable3DAvtFtry",
+        {"factory": "Drawable2DAvtFtry",
           "name": "loadScreen.bgEnt",
+          "cosas" : "uint64_t, int64_t, double, Vector2D, Vector2D",
           "config" : {
             "entity" : "loadingLogo",
-            "attribIndexes" : ["gidIdx", "scaleIdx", "degreesIdx", "orientationIdx", "positionIdx"],
+            "attribIndexes" : ["gidIdx", "stateIdx", "degreesIdx", "sizeIdx", "positionIdx"],
             "lists":{"loadScreen.drawList":"drawticket"}
           }
         }

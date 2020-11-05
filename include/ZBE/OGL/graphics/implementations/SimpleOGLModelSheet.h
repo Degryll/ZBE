@@ -40,10 +40,10 @@ public:
   }
 
   SimpleOGLModelSheet(std::shared_ptr<SDLOGLWindow> window, uint64_t graphicsId)
-    : graphic(RsrcStore<OGLGraphics>::getInstance().get(graphicsId)), vao(graphic->vao), nvertex(graphic->nvertex), textures{graphic->texid} {}
+    : graphic(RsrcStore<OGLGraphics>::getInstance().get(graphicsId)), vao(graphic->vao), textures{graphic->texid}, mode(graphic->mode), nvertex(graphic->nvertex), type(graphic->type), offset(graphic->offset) {}
 
-  SimpleOGLModelSheet(std::shared_ptr<SDLOGLWindow> window, std::string graphicsId)
-    : graphic(RsrcStore<OGLGraphics>::getInstance().get(graphicsId)), vao(graphic->vao), nvertex(graphic->nvertex), textures{graphic->texid} {}
+  SimpleOGLModelSheet(std::shared_ptr<SDLOGLWindow> window, std::string graphicsName)
+    : graphic(RsrcStore<OGLGraphics>::getInstance().get(graphicsName)), vao(graphic->vao), textures{graphic->texid}, mode(graphic->mode), nvertex(graphic->nvertex), type(graphic->type), offset(graphic->offset) {}
 
   /** \brief Virtual destructor
   */
@@ -66,14 +66,17 @@ public:
     glm::mat4 scale     = glm::scale(    glm::mat4(1.0f), glm::vec3(baseScale));
     glm::mat4 m = translate * scale * rotate;
 
-    return OGLModel(vao, nvertex, textures, m);
+    return OGLModel(vao, textures, mode, nvertex, type, offset, m);
   };
 
 private:
   std::shared_ptr<OGLGraphics> graphic;
   GLuint vao;
-  GLsizei nvertex;
   std::vector<GLuint> textures;
+  GLenum  mode;
+  GLsizei nvertex;
+  GLenum  type;
+  const GLvoid* offset;
 };
 
 }  // namespace zbe

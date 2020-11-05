@@ -45,7 +45,6 @@
 
 #include "ZBE/OGL/graphics/OGLGraphics.h"
 
-
 namespace zbe {
 
 class ZBEAPI GlTFResourceLoader : public RsrcLoader {
@@ -70,59 +69,6 @@ void setup(OGLTextureStore* texStore,  OGLModelStore* modelStore) {
 bool isLoadable(std::filesystem::path extension) {
   return (ext.compare(extension) == 0);
 }
-// void load(std::filesystem::path filePath) {
-//   using namespace std::string_literals;
-//   GLfloat vertexData[] = {
-//     // front
-//     -0.5f, -0.5f,  0.5f, 0.0f, 0.0f,
-//     0.5f, -0.5f,  0.5f, 1.0f, 0.0f,
-//     0.5f,  0.5f,  0.5f, 1.0f, 1.0f,
-//     0.5f,  0.5f,  0.5f, 1.0f, 1.0f,
-//     -0.5f,  0.5f,  0.5f, 0.0f, 1.0f,
-//     -0.5f, -0.5f,  0.5f, 0.0f, 0.0f,
-//     // back
-//     0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
-//     -0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
-//     -0.5f,  0.5f, -0.5f, 1.0f, 1.0f,
-//     -0.5f,  0.5f, -0.5f, 1.0f, 1.0f,
-//     0.5f,  0.5f, -0.5f, 0.0f, 1.0f,
-//     0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
-//     // left
-//     -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
-//     -0.5f, -0.5f,  0.5f, 1.0f, 0.0f,
-//     -0.5f,  0.5f,  0.5f, 1.0f, 1.0f,
-//     -0.5f,  0.5f,  0.5f, 1.0f, 1.0f,
-//     -0.5f,  0.5f, -0.5f, 0.0f, 1.0f,
-//     -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
-//     // right
-//     0.5f, -0.5f,  0.5f, 0.0f, 0.0f,
-//     0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
-//     0.5f,  0.5f, -0.5f, 1.0f, 1.0f,
-//     0.5f,  0.5f, -0.5f, 1.0f, 1.0f,
-//     0.5f,  0.5f,  0.5f, 0.0f, 1.0f,
-//     0.5f, -0.5f,  0.5f, 0.0f, 0.0f,
-//     // top
-//     -0.5f, 0.5f,  0.5f, 0.0f, 0.0f,
-//     0.5f, 0.5f,  0.5f, 1.0f, 0.0f,
-//     0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
-//     0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
-//     -0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
-//     -0.5f, 0.5f,  0.5f, 0.0f, 0.0f,
-//     // bottom
-//     -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
-//     0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
-//     0.5f, -0.5f,  0.5f, 1.0f, 1.0f,
-//     0.5f, -0.5f,  0.5f, 1.0f, 1.0f,
-//     -0.5f, -0.5f,  0.5f, 0.0f, 1.0f,
-//     -0.5f, -0.5f, -0.5f, 0.0f, 0.0f
-//   };
-//
-//   GLuint indexData[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35 };
-//   auto modelIdx = modelStore->loadModel(vertexData, indexData, 36, 36);
-//   auto tupla = modelStore->getModel(modelIdx);
-//   uint64_t cubeTex = texStore->loadImg("data/images/ludo/arrow_r_000_512.png");
-//   graphicsStore.insert("graphics.Cube"s, std::make_shared<OGLGraphics>(OGLGraphics{std::get<0>(tupla), std::get<1>(tupla), cubeTex}));
-// }
 
 void load(std::filesystem::path filePath) {
   using namespace std::string_literals;
@@ -133,7 +79,6 @@ void load(std::filesystem::path filePath) {
 
   bool res = loader.LoadASCIIFromFile(&model, &err, &warn, filePath.u8string());
 
-  //SysError::setError(std::string("ERROR: Json failed to parse. Key ") + name + std::string(" contains an invalid value type. Value: ") + value.dump());
   if (!warn.empty()) {
     SysError::setError(std::string("WARNING: GlTFResourceLoader:") + warn);
   }
@@ -150,11 +95,16 @@ void load(std::filesystem::path filePath) {
   auto modelName = model.meshes[0].name;
   GLsizei nvertex = model.accessors[model.meshes[0].primitives[0].indices].count;
   uint64_t modelId = modelStore->storeModel(vao, nvertex);
+
+  GLenum  mode = model.meshes[0].primitives[0].mode;
+  GLenum  type = model.accessors[model.meshes[0].primitives[0].indices].componentType;
+  const GLvoid* offset = (GLvoid*)(model.accessors[model.meshes[0].primitives[0].indices].byteOffset);
+
   dict.insert("model."s + modelName, modelId);
   GLuint texId = bindTextures(model);
 
   // TODO This name will be replaced for another name extracted from a model sheet.
-  graphicsStore.insert("graphics."s + modelName, std::make_shared<OGLGraphics>(OGLGraphics{vao, nvertex, texId}));
+  graphicsStore.insert("graphics."s + modelName, std::make_shared<OGLGraphics>(OGLGraphics{vao, texId, mode, nvertex, type, offset}));
 }
 
 private:
@@ -227,17 +177,32 @@ void bindMesh(std::vector<GLuint> vbos, tinygltf::Model &model, /*tinygltf::Mesh
     glGenBuffers(1, &vbo);
     vbos.push_back(vbo);
     glBindBuffer(bufferView.target, vbo);
+printf("target buffer: %d\n", bufferView.target);
 
     // std::cout << "buffer.data.size = " << buffer.data.size() << ", bufferview.byteOffset = " << bufferView.byteOffset << std::endl;
 
     glBufferData(bufferView.target, bufferView.byteLength, &buffer.data.at(0) + bufferView.byteOffset, GL_STATIC_DRAW);
-//    float* aux = (float*)(&buffer.data.at(0) + bufferView.byteOffset);
-//    printf("%f %f %f\n", aux[0], aux[1], aux[2]);
+if(i == 4) {
+float* aux = (float*)(&buffer.data.at(0) + bufferView.byteOffset);
+printf("Text %u\n%f, %f\n%f, %f\n%f, %f\n", i, aux[0], aux[1], aux[2], aux[3], aux[4], aux[5]);
+printf("%f, %f\n%f, %f\n%f, %f\n", i, aux[6], aux[7], aux[8], aux[9], aux[10], aux[11]);
+printf("%f, %f\n%f, %f\n%f, %f\n", i, aux[12], aux[13], aux[14], aux[15], aux[16], aux[17]);
+}
+if(i == 1) {
+float* aux = (float*)(&buffer.data.at(0) + bufferView.byteOffset);
+printf("Pos %u\n%f, %f, %f\n%f, %f, %f\n%f, %f, %f\n", i, aux[0], aux[1], aux[2], aux[3], aux[4], aux[5], aux[6], aux[7], aux[9]);
+}
   }
 
   for (size_t i = 0; i < mesh.primitives.size(); ++i) {
     tinygltf::Primitive primitive = mesh.primitives[i];
     tinygltf::Accessor indexAccessor = model.accessors[primitive.indices];
+
+//#define BUFFER_OFFSET(i) ((char *)NULL + (i))
+
+printf("primitives: %d(%d) - byteOffset: %p\n", mesh.primitives.size(), i,  (char *)NULL + (indexAccessor.byteOffset));
+//BUFFER_OFFSET(indexAccessor.byteOffset)
+
 
     for (auto &attrib : primitive.attributes) {
       tinygltf::Accessor accessor = model.accessors[attrib.second];
@@ -250,14 +215,15 @@ void bindMesh(std::vector<GLuint> vbos, tinygltf::Model &model, /*tinygltf::Mesh
       }
 
       int vaa = -1;
-      if (attrib.first.compare("POSITION") == 0) vaa = 0;
-      if (attrib.first.compare("TEXCOORD_0") == 0) vaa = 1;
-      if (attrib.first.compare("NORMAL") == 0) vaa = 2;
+      if (attrib.first.compare("POSITION") == 0) { vaa = 0; }
+      if (attrib.first.compare("NORMAL") == 0) { vaa = 2; }
+      if (attrib.first.compare("TEXCOORD_0") == 0) { vaa = 1; }
       if (vaa > -1) {
         glEnableVertexAttribArray(vaa);
         glVertexAttribPointer(vaa, size, accessor.componentType,
                               accessor.normalized ? GL_TRUE : GL_FALSE,
                               byteStride, (const GLvoid *)(accessor.byteOffset));
+printf("Attrib: %d buffer: %d size: %d Stride: %d Offset: %d\n", vaa, accessor.bufferView, size, byteStride,  accessor.byteOffset);fflush(stdout);
       } else {
         std::cout << "vaa missing: " << attrib.first << std::endl;
       }

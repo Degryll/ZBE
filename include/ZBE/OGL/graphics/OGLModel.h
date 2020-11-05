@@ -24,14 +24,18 @@ namespace zbe {
  */
 struct ZBEAPI OGLModel {
 
-  OGLModel() : vao(), nvertex(), textures(), modelMat() {}
+  // OGLModel() = default;
 
-  OGLModel(GLuint vao, GLsizei nvertex, std::vector<GLuint> textures, glm::mat4 modelMat) : vao(vao), nvertex(nvertex), textures(textures), modelMat(modelMat) {}
+  OGLModel(GLuint vao, std::vector<GLuint> textures, GLenum  mode, GLsizei nvertex, GLenum  type, const GLvoid* offset, glm::mat4 modelMat) : vao(vao), textures(textures), mode(mode), nvertex(nvertex), type(type), offset(offset), modelMat(modelMat) {}
 
   GLuint vao; //!<
-  GLsizei nvertex;
   std::vector<GLuint> textures;
+  GLsizei nvertex;
   glm::mat4 modelMat;
+
+  GLenum  mode;
+  GLenum  type;
+  const GLvoid* offset;
 };
 
 }  // namespace zbe

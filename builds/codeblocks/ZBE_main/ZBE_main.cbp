@@ -45,6 +45,8 @@
 					<Add directory="../../../extlibs/OALSoft/1.18.2/include" />
 					<Add directory="../../../extlibs/stb_vorbis" />
 					<Add directory="../../../extlibs/ChaiScript-6.1.0/include" />
+					<Add directory="../../../extlibs/tinygltf" />
+					<Add directory="../../../extlibs/stb_image" />
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
@@ -60,6 +62,8 @@
 					<Add library="openGL32" />
 					<Add library="vulkan-1" />
 					<Add library="OpenAL32" />
+					<Add library="glfw3" />
+					<Add library="glfw" />
 					<Add directory="../../../lib" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.1/x86_64-w64-mingw32/lib" />
@@ -109,6 +113,8 @@
 					<Add directory="../../../extlibs/ChaiScript-6.1.0/include" />
 					<Add directory="../../../extlibs/imgui-1.76" />
 					<Add directory="../../../extlibs/imgui-1.76/examples" />
+					<Add directory="../../../extlibs/tinygltf" />
+					<Add directory="../../../extlibs/stb_image" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -125,6 +131,8 @@
 					<Add library="glew32" />
 					<Add library="vulkan-1" />
 					<Add library="OpenAL32" />
+					<Add library="glfw3" />
+					<Add library="glfw" />
 					<Add directory="../../../lib" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.1/x86_64-w64-mingw32/lib" />
@@ -177,6 +185,8 @@
 					<Add directory="../../../extlibs/ChaiScript-6.1.0/include" />
 					<Add directory="../../../extlibs/imgui-1.76" />
 					<Add directory="../../../extlibs/imgui-1.76/examples" />
+					<Add directory="../../../extlibs/tinygltf" />
+					<Add directory="../../../extlibs/stb_image" />
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
@@ -193,6 +203,7 @@
 					<Add library="openal" />
 					<Add library="pthread" />
 					<Add library="dl" />
+					<Add library="glfw" />
 					<Add directory="../../../lib" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/linux64/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />
@@ -240,6 +251,8 @@
 					<Add directory="../../../extlibs/ChaiScript-6.1.0/include" />
 					<Add directory="../../../extlibs/imgui-1.76" />
 					<Add directory="../../../extlibs/imgui-1.76/examples" />
+					<Add directory="../../../extlibs/tinygltf" />
+					<Add directory="../../../extlibs/stb_image" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -257,6 +270,7 @@
 					<Add library="openal" />
 					<Add library="pthread" />
 					<Add library="dl" />
+					<Add library="glfw" />
 					<Add directory="../../../lib" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/linux64/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />
@@ -316,6 +330,9 @@
 		<Unit filename="../../../src/ZBE_main/include/ludo/sdlaudiotest.h" />
 		<Unit filename="../../../src/ZBE_main/include/ludomain.h" />
 		<Unit filename="../../../src/ZBE_main/include/testing.h" />
+		<Unit filename="../../../src/ZBE_main/include/tinygltf/gltfmain.h" />
+		<Unit filename="../../../src/ZBE_main/include/tinygltf/shaders.h" />
+		<Unit filename="../../../src/ZBE_main/include/tinygltf/window.h" />
 		<Unit filename="../../../src/ZBE_main/src/batismain.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/degryllmain.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/gamemain.cpp" />
@@ -326,6 +343,9 @@
 		<Unit filename="../../../src/ZBE_main/src/ludomain.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/main.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/testing.cpp" />
+		<Unit filename="../../../src/ZBE_main/src/tinygltf/gltfmain.cpp" />
+		<Unit filename="../../../src/ZBE_main/src/tinygltf/shaders.cpp" />
+		<Unit filename="../../../src/ZBE_main/src/tinygltf/window.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
