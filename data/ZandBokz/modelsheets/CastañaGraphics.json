@@ -1,0 +1,9 @@
+{
+"name" : "Castaña",
+"capability" : "001",
+"graphicdefs" : [
+  {
+    "name" : "Plane"
+  }
+]
+}
