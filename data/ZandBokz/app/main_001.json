@@ -31,7 +31,7 @@
     "cam.fov" :{"type":"f", "value":90.0},
     "cam.aspect" :{"type":"f", "value":1.333333},
     "cam.znear" :{"type":"f", "value":1.0},
-    "cam.zfar" :{"type":"f", "value":50.0},
+    "cam.zfar" :{"type":"f", "value":150.0},
     "TODOindices":""
   },
   "phases":[
@@ -131,7 +131,8 @@
           "name":"zandbokz.modelLoader",
           "config" : {
             "loader" : "zandbokz.gltfLoader",
-            "url" : "data/ZandBokz/models/gltf"
+            "url" : "data/ZandBokz/models/gltf",
+            "urlBack" : "data/graphics3d"
           }
         },
         {
@@ -165,11 +166,11 @@
           "description" : "El logo que se muestra en la pantalla de carga",
           "config" : {
             "uint": {
-              "gidIdx":["logo"]
+              "gidIdx":["Castaña"]
             },
             "double": {
               "degreesIdx":[70.0],
-              "scaleIdx":[4.0]
+              "scaleIdx":[1.0]
             },
             "V3D": {
               "positionIdx":[1.0, 0.0, 0.0],

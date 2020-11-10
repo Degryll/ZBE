@@ -168,7 +168,7 @@ void bindMesh(std::vector<GLuint> vbos, tinygltf::Model &model, /*tinygltf::Mesh
                    attributes            property            (they are all equal for a given
                    primitive).
                  */
-    }
+    }  // if bufferView.target == 0
 
     const tinygltf::Buffer &buffer = model.buffers[bufferView.buffer];
     // std::cout << "bufferview.target " << bufferView.target << std::endl;
@@ -177,31 +177,13 @@ void bindMesh(std::vector<GLuint> vbos, tinygltf::Model &model, /*tinygltf::Mesh
     glGenBuffers(1, &vbo);
     vbos.push_back(vbo);
     glBindBuffer(bufferView.target, vbo);
-printf("target buffer: %d\n", bufferView.target);
-
-    // std::cout << "buffer.data.size = " << buffer.data.size() << ", bufferview.byteOffset = " << bufferView.byteOffset << std::endl;
 
     glBufferData(bufferView.target, bufferView.byteLength, &buffer.data.at(0) + bufferView.byteOffset, GL_STATIC_DRAW);
-if(i == 4) {
-float* aux = (float*)(&buffer.data.at(0) + bufferView.byteOffset);
-printf("Text %u\n%f, %f\n%f, %f\n%f, %f\n", i, aux[0], aux[1], aux[2], aux[3], aux[4], aux[5]);
-printf("%f, %f\n%f, %f\n%f, %f\n", i, aux[6], aux[7], aux[8], aux[9], aux[10], aux[11]);
-printf("%f, %f\n%f, %f\n%f, %f\n", i, aux[12], aux[13], aux[14], aux[15], aux[16], aux[17]);
-}
-if(i == 1) {
-float* aux = (float*)(&buffer.data.at(0) + bufferView.byteOffset);
-printf("Pos %u\n%f, %f, %f\n%f, %f, %f\n%f, %f, %f\n", i, aux[0], aux[1], aux[2], aux[3], aux[4], aux[5], aux[6], aux[7], aux[9]);
-}
-  }
+  }  // for model.bufferViews
 
   for (size_t i = 0; i < mesh.primitives.size(); ++i) {
     tinygltf::Primitive primitive = mesh.primitives[i];
     tinygltf::Accessor indexAccessor = model.accessors[primitive.indices];
-
-//#define BUFFER_OFFSET(i) ((char *)NULL + (i))
-
-printf("primitives: %d(%d) - byteOffset: %p\n", mesh.primitives.size(), i,  (char *)NULL + (indexAccessor.byteOffset));
-//BUFFER_OFFSET(indexAccessor.byteOffset)
 
 
     for (auto &attrib : primitive.attributes) {
@@ -223,7 +205,6 @@ printf("primitives: %d(%d) - byteOffset: %p\n", mesh.primitives.size(), i,  (cha
         glVertexAttribPointer(vaa, size, accessor.componentType,
                               accessor.normalized ? GL_TRUE : GL_FALSE,
                               byteStride, (const GLvoid *)(accessor.byteOffset));
-printf("Attrib: %d buffer: %d size: %d Stride: %d Offset: %d\n", vaa, accessor.bufferView, size, byteStride,  accessor.byteOffset);fflush(stdout);
       } else {
         std::cout << "vaa missing: " << attrib.first << std::endl;
       }

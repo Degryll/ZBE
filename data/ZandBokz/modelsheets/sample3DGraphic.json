@@ -1,9 +1,0 @@
-{
-"name" : "logo",
-"capability" : "001",
-"graphicdefs" : [
-  {
-    "name" : "Cube"
-  }
-]
-}

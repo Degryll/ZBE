@@ -93,6 +93,7 @@ private:
       in.close();
       return(contents);
     } else {
+			// TODO Use System & logger
       printf("Fichero %s no encontrado.\n", filename);
       return ("");
     }

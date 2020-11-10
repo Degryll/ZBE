@@ -121,15 +121,15 @@
    "buffers" : [
       {
          "byteLength" : 1800,
-         "uri" : "data/ZandBokz/models/bin/Cube.bin"
+         "uri" : "Cube.bin"
       }
    ],
    "images" : [
       {
-         "uri" : "data/ZandBokz/img/Cube_BaseColor.png"
+         "uri" : "Cube_BaseColor.png"
       },
       {
-         "uri" : "data/ZandBokz/img/Cube_MetallicRoughness.png"
+         "uri" : "Cube_MetallicRoughness.png"
       }
    ],
    "materials" : [

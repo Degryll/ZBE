@@ -345,7 +345,7 @@ static void error_callback(int error, const char *description) {
 int gltfmain(int argc, char **argv) {
   std::cout << get_current_dir() << std::endl;
   //std::string filename = "../../../models/Cube/Cube.gltf";
-  std::string filename = "./data/graphics3d/Cube.gltf";
+  std::string filename = "./data/graphics3d/ZCUBO.glb.gltf";
 
   if (argc > 1) {
     filename = argv[1];

@@ -71,11 +71,6 @@ class OGLModelSheetDrawer : public Behavior<T, Ts...> {
       glActiveTexture(GL_TEXTURE0);
       glBindTexture(GL_TEXTURE_2D, model.textures[0]);
       glBindVertexArray(model.vao);
-      printf("byte: %d, short: %d, int: %d \n", GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, GL_UNSIGNED_INT); fflush(stdout);
-      printf("mode: %d count: %d type: %d\n", GL_TRIANGLES, model.nvertex, GL_UNSIGNED_BYTE); fflush(stdout);
-      // TODO: GL_UNSIGNED_SHORT debe cambiarse por algo leido del modelo: indexAccessor.componentType
-      // TODO: ese null del final no guta a ludo.
-      //glDrawElements( GL_TRIANGLES, model.nvertex, GL_UNSIGNED_SHORT, NULL );
       glDrawElements( model.mode, model.nvertex, model.type, model.offset );
 
       glBindVertexArray(0);
