@@ -60,7 +60,7 @@ void SDLOGLWindow::createGLContext() {
   if( glewError != GLEW_OK ) {
     SysError::setError(std::string("ERROR: Error initializing GLEW: ") + std::string((char*)glewGetErrorString( glewError )));
   }
-  glClearColor(1.0,1.0,0.0,0.0);
+  glClearColor(0.5,0.5,0.5,0.0);
   // During init, enable debug output
   glEnable              ( GL_DEBUG_OUTPUT );
   glDebugMessageCallback( MessageCallback, 0 );

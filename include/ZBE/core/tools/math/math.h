@@ -24,6 +24,10 @@ static const int PROJ_MAT4 = 16;
  */
 static const double PI = 3.14159265358979323846;
 
+/** \brief The value of PI as 3.14159265358979323846.
+ */
+static const double TAU = 2.0*PI;
+
 /** \brief Multiply an angle in degrees by TORADIANS to get the angle in radians.
     \sa TODEGREE
  */

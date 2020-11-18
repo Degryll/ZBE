@@ -399,6 +399,7 @@
 		<Unit filename="../../../include/ZBE/behaviors/Bounce.h" />
 		<Unit filename="../../../include/ZBE/behaviors/CustomMotion.h" />
 		<Unit filename="../../../include/ZBE/behaviors/Erase.h" />
+		<Unit filename="../../../include/ZBE/behaviors/SineOscillator.h" />
 		<Unit filename="../../../include/ZBE/behaviors/StateLTEraser.h" />
 		<Unit filename="../../../include/ZBE/behaviors/StateSetter.h" />
 		<Unit filename="../../../include/ZBE/behaviors/UniformLinearMotion.h" />
@@ -613,6 +614,7 @@
 		<Unit filename="../../../src/ZBE/SDL/system/SDLSocket.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/system/SDLWindow.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/tools/SDLTimer.cpp" />
+		<Unit filename="../../../src/ZBE/behaviors/SineOscillator.cpp" />
 		<Unit filename="../../../src/ZBE/core/daemons/DaemonMaster.cpp" />
 		<Unit filename="../../../src/ZBE/core/daemons/MainLoop.cpp" />
 		<Unit filename="../../../src/ZBE/core/daemons/StateMachineDaemon.cpp" />
@@ -673,6 +675,8 @@
 				<general />
 			</DoxyBlocks>
 			<lib_finder disable_auto="1" />
+			<code_completion />
+			<debugger />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

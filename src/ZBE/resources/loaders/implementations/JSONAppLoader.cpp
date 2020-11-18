@@ -31,9 +31,11 @@ void JSONAppLoader::load(std::filesystem::path filePath) {
         appFactories.push_front(readFactoryConfig(ftryCfg));
       }
       for(auto ftryData : appFactories) {
+        printf("Calling create on factory %s\n", ftryData.name.c_str());fflush(stdout);
         ftryData.ftry->create(ftryData.name, ftryData.cfgId);
       }
       for(auto ftryData : appFactories) {
+        printf("Calling setup on factory %s\n", ftryData.name.c_str());fflush(stdout);
         ftryData.ftry->setup(ftryData.name, ftryData.cfgId);
       }
       appFactories.clear();

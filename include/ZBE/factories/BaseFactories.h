@@ -39,6 +39,8 @@
 #include "ZBE/core/daemons/VoidDaemon.h"
 #include "ZBE/core/system/system.h"
 
+#include "ZBE/behaviors/SineOscillator.h"
+
 namespace zbe {
 
 /** \brief Daemon capable of load all base factories.
@@ -73,6 +75,9 @@ public:
     factories.insert("MasterDmnFtry", std::make_shared<MasterDmnFtry>());
     factories.insert("StateMachineDmnFtry", std::make_shared<StateMachineDmnFtry>());
     factories.insert("RsrcFolderLoaderDmnFtry", std::make_shared<RsrcFolderLoaderDmnFtry>());
+
+    // --- Behaviors
+    factories.insert("SineOscillatorFtry", std::make_shared<SineOscillatorFtry>());
 
     // --- Events
     // --- --- Event generators

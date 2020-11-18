@@ -20,6 +20,8 @@
     "scaleIdx" : 1050,
     "orientationIdx" : 1060,
     "drawticket" : 2000,
+    "fovticket" : 3000,
+    "fovIdx" : 3100,
     "state.static" : 0,
     "testwflags": 0,
     "testrflags": 0,
@@ -27,11 +29,14 @@
     "mainInitialState" : 0,
     "mainExitState" : 1,
     "loadScreen.toMenu": 1,
-    "loadScreen.loadTime" : 262144,
+    "loadScreen.loadTime" : 2621440,
     "cam.fov" :{"type":"f", "value":90.0},
     "cam.aspect" :{"type":"f", "value":1.333333},
     "cam.znear" :{"type":"f", "value":1.0},
     "cam.zfar" :{"type":"f", "value":150.0},
+    "cam.fovMin" :{"type":"f", "value":30.0},
+    "cam.fovMax" :{"type":"f", "value":120.0},
+    "cam.fovPeriod" :{"type":"i", "value":65536},
     "TODOindices":""
   },
   "phases":[
@@ -68,6 +73,12 @@
           "factory": "TFAECModelFtry",
           "description" : "do some serious sheet",
           "name": "loadScreen.drawList",
+          "config" : {}
+        },
+        {
+          "factory": "TFAECFloatAvtFtry",
+          "description" : "do some serious sheet",
+          "name": "loadScreen.sineList",
           "config" : {}
         },
         {
@@ -166,21 +177,21 @@
           "description" : "El logo que se muestra en la pantalla de carga",
           "config" : {
             "uint": {
-              "gidIdx":["Castaña"]
+              "gidIdx":["Pepino"]
             },
             "double": {
-              "degreesIdx":[70.0],
-              "scaleIdx":[1.0]
+              "degreesIdx":[50.0],
+              "scaleIdx":[1.5]
             },
             "V3D": {
-              "positionIdx":[1.0, 0.0, 0.0],
-              "orientationIdx":[1.0, 0.0, 0.0]
+              "positionIdx":[1.0, 1.0, 0.0],
+              "orientationIdx":[0.5, 0.5, 0.5]
             }
           }
         },
         {"factory": "EntityFtry",
           "name": "cameraController",
-          "description" : "TODO: Entidad asociada a la camara",
+          "description" : "Entidad asociada a la camara",
           "TODO" : {
             "eye" : "zandbokz.camEye",
             "target" : "zandbokz.camTarget",
@@ -190,18 +201,11 @@
             "znear" : "zandbokz.znear",
             "zfar" : "zandbokz.zfar"
           },
-          "TODO2" : {
-            "cosas" : "comportamiento ad hoc que mueva la camara o usar uno de los genericos que teniamos revisado"
-          },
           "config" : {
-            "double": {
-              "fovIdx":"ZERO",
-              "bleble":["ONE"]
+            "float": {
+              "fovIdx":"zandbokz.fov"
             },
-            "V3D": {
-              "camUpId":"",
-              "orientationIdx":[1.0, 0.0, 0.0]
-            }
+            "TODO": "asociar todos los values de la camara"
           }
         }
       ]
@@ -217,6 +221,14 @@
             ]
           }
         },
+        {"factory": "MasterDmnFtry",
+          "name": "Behaviors",
+          "config" : {
+            "daemons": [
+              "loadScreen.sineDaemon"
+            ]
+          }
+        },
         {"factory": "MainLoopFtry",
           "name": "zandbokz.MainLoop",
           "config" : {
@@ -224,7 +236,7 @@
             "preDaemonDesc":"done",
             "eventDaemon":"loadScreen.eventGenerator",
             "eventDaemonDesc":"done",
-            "commonDaemon":"DEFAULT",
+            "commonDaemon":"Behaviors",
             "commonDaemonDesc":"nada?vacio?",
             "reactDaemon":"DEFAULT",
             "reactDaemonDesc":"si hay evento de tiempo: se llama al exit... pero esto lo hace el eventStore.manage(): que esto se queda vacio",
@@ -285,6 +297,16 @@
             "programId" : "base_program"
           }
         },
+        {"factory": "SineOscillatorFtry",
+          "name": "loadScreen.sine",
+          "description" : "Comportamiento que menea el fov",
+          "config" : {
+            "min" : "cam.fovMin",
+            "max" : "cam.fovMax",
+            "contextTime" : "DEFAULT",
+            "period" : "cam.fovPeriod"
+          }
+        },
         {"factory": "DrawerModelDaemonFtry",
           "name": "loadScreen.drawDaemon",
           "description" : "demonio que pintara la pantalla. Faltan tipos",
@@ -293,12 +315,28 @@
             "behavior" : "loadScreen.screenDrawer"
           }
         },
+        {"factory": "FloatAvtDaemonFtry",
+          "name": "loadScreen.sineDaemon",
+          "description" : "demonio que menea el fov",
+          "config" : {
+            "list" : "loadScreen.sineList",
+            "behavior" : "loadScreen.sine"
+          }
+        },
         {"factory": "Drawable3DAvtFtry",
           "name": "loadScreen.bgEnt",
           "config" : {
             "entity" : "loadingLogo",
             "attribIndexes" : ["gidIdx", "scaleIdx", "degreesIdx", "orientationIdx", "positionIdx"],
             "lists":{"loadScreen.drawList":"drawticket"}
+          }
+        },
+        {"factory": "FloatAvtFtry",
+          "name": "loadScreen.camFov",
+          "config" : {
+            "entity" : "cameraController",
+            "attribIndexes" : ["fovIdx"],
+            "lists":{"loadScreen.sineList":"fovticket"}
           }
         }
       ]
