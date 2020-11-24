@@ -77,7 +77,8 @@ public:
     factories.insert("RsrcFolderLoaderDmnFtry", std::make_shared<RsrcFolderLoaderDmnFtry>());
 
     // --- Behaviors
-    factories.insert("SineOscillatorFtry", std::make_shared<SineOscillatorFtry>());
+    factories.insert("SineOscillatorFFtry", std::make_shared<SineOscillatorFFtry>());
+    factories.insert("SineOscillatorV3DFtry", std::make_shared<SineOscillatorV3DFtry>());
 
     // --- Events
     // --- --- Event generators

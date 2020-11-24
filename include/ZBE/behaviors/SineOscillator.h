@@ -26,13 +26,13 @@
 
 namespace zbe {
 
-class SineOscillatorFtry;
+class SineOscillatorFFtry;
 
 /** \brief Oscillates given avatar's value.
  */
-class SineOscillator : virtual public Behavior<float> {
+class SineOscillatorF : virtual public Behavior<float> {
 public:
-  friend class SineOscillatorFtry;
+  friend class SineOscillatorFFtry;
 
   /** \brief base constructor
   *   \param min Min range value
@@ -40,11 +40,11 @@ public:
   *   \param cTime Local time
   *   \param period Oscillation period
   */
-  SineOscillator(float min, float max, std::shared_ptr<ContextTime> cTime, float period) : min(min), max(max), cTime(cTime), period(period) {}
+  SineOscillatorF(float min, float max, std::shared_ptr<ContextTime> cTime, float period) : min(min), max(max), cTime(cTime), period(period) {}
 
   /** \brief Virtual destructor.
    */
-  virtual ~SineOscillator() = default;
+  virtual ~SineOscillatorF() = default;
 
   /** \brief Oscillates given avatar.
   *   \param avatar avatar to oscillate
@@ -64,7 +64,7 @@ public:
   void setPeriod(std::shared_ptr<ContextTime> cTime, int64_t period) {this->cTime = cTime; this->period = period;}
 
 private:
-  SineOscillator() : min(-1.0f), max(1.0f), cTime(nullptr), period(0) {}
+  SineOscillatorF() : min(-1.0f), max(1.0f), cTime(nullptr), period(0) {}
 
   float min;
   float max;
@@ -72,9 +72,9 @@ private:
   int64_t period;
 };
 
-/** \brief Factory for SineOscillator.
+/** \brief Factory for SineOscillatorF.
  */
-class ZBEAPI SineOscillatorFtry : virtual public Factory {
+class ZBEAPI SineOscillatorFFtry : virtual public Factory {
 public:
   /** \brief Builds a SineOscillator.
    *  \param name Name for the created SineOscillator.
@@ -95,7 +95,89 @@ private:
   RsrcStore<ContextTime>& cTimeRsrc = RsrcStore<ContextTime>::getInstance();
   RsrcStore<nlohmann::json>& configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<Behavior<float> >& behaviorRsrc = RsrcStore<Behavior<float> >::getInstance();
-  RsrcStore<SineOscillator>& sineOscillatorRsrc = RsrcStore<SineOscillator>::getInstance();
+  RsrcStore<SineOscillatorF>& sineOscillatorFRsrc = RsrcStore<SineOscillatorF>::getInstance();
+};
+
+class SineOscillatorV3DFtry;
+
+/** \brief Oscillates given avatar's value.
+ */
+class SineOscillatorV3D : virtual public Behavior<Vector3D> {
+public:
+  friend class SineOscillatorV3DFtry;
+
+  /** \brief base constructor
+  *   \param min Min range value
+  *   \param max Max range value
+  *   \param cTime Local time
+  *   \param period Oscillation period
+  */
+  SineOscillatorV3D(float min, float max, std::shared_ptr<ContextTime> cTime, float period, int64_t component) : min(min), max(max), cTime(cTime), period(period) {}
+
+  /** \brief Virtual destructor.
+   */
+  virtual ~SineOscillatorV3D() = default;
+
+  /** \brief Oscillates given avatar.
+  *   \param avatar avatar to oscillate
+   */
+  void apply(std::shared_ptr<SAvatar<Vector3D> > avatar) final;
+
+  /** \brief sets min & max range values
+  *   \param min Min range value
+  *   \param max Max range value
+  */
+  void setRange(float min, float max) {this->min = min; this->max = max;}
+
+  /** \brief sets period and context time to use.
+  *   \param cTime Local time
+  *   \param period Oscillation period
+  */
+  void setPeriod(std::shared_ptr<ContextTime> cTime, int64_t period) {this->cTime = cTime; this->period = period;}
+
+  /** \brief sets component to modify.
+  *   \param cTime Local time
+  *   \param period Oscillation period
+  */
+  void setComponent(int64_t component) {
+    assert(component>=0 && component<=2);
+    this->component = component;
+  }
+
+private:
+  SineOscillatorV3D() : min(-1.0f), max(1.0f), cTime(nullptr), period(0) {}
+
+  float min;
+  float max;
+  std::shared_ptr<ContextTime> cTime;
+  int64_t period;
+  int64_t component;
+};
+
+/** \brief Factory for SineOscillatorV3D.
+ */
+class ZBEAPI SineOscillatorV3DFtry : virtual public Factory {
+public:
+  /** \brief Builds a SineOscillator.
+   *  \param name Name for the created SineOscillator.
+   *  \param cfgId SineOscillator's configuration id.
+   */
+  void create(std::string name, uint64_t cfgId);
+
+  /** \brief Setup the desired tool. The tool will be complete after this step.
+   *  \param name Name of the tool.
+   *  \param cfgId Tool's configuration id.
+   */
+  void setup(std::string name, uint64_t cfgId);
+
+private:
+
+  RsrcDictionary<float>& floatStore = RsrcDictionary<float>::getInstance();
+  RsrcDictionary<int64_t>& intStore = RsrcDictionary<int64_t>::getInstance();
+  RsrcStore<ContextTime>& cTimeRsrc = RsrcStore<ContextTime>::getInstance();
+  RsrcStore<nlohmann::json>& configRsrc = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<Behavior<Vector3D> >& behaviorRsrc = RsrcStore<Behavior<Vector3D> >::getInstance();
+  RsrcStore<SineOscillatorV3D>& sineOscillatorFRsrc = RsrcStore<SineOscillatorV3D>::getInstance();
 };
 
 }  // namespace zbe

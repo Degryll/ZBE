@@ -24,7 +24,7 @@ static const int PROJ_MAT4 = 16;
  */
 static const double PI = 3.14159265358979323846;
 
-/** \brief The value of PI as 3.14159265358979323846.
+/** \brief The value of TAU as 2 * PI (= 6. 2831853071795864769252867)
  */
 static const double TAU = 2.0*PI;
 

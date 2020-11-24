@@ -1,0 +1,9 @@
+{
+"name" : "ZCube",
+"capability" : "001",
+"graphicdefs" : [
+  {
+    "name" : "Cube.005"
+  }
+]
+}

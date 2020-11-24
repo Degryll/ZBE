@@ -42,7 +42,6 @@
     "model.coordMin" :{"type":"f", "value":-10.0},
     "model.coordMax" :{"type":"f", "value":10.0},
     "model.coordPeriod" :{"type":"i", "value":45751},
-    "model.sineComponent" : 0,
     "TODOindices":""
   },
   "phases":[
@@ -88,7 +87,7 @@
           "config" : {}
         },
         {
-          "factory": "TFAECV3DAvtFtry",
+          "factory": "TFAECFloatAvtFtry",
           "description" : "do some serious sheet",
           "name": "loadScreen.coordOscillatorList",
           "config" : {}
@@ -310,7 +309,7 @@
             "programId" : "base_program"
           }
         },
-        {"factory": "SineOscillatorFFtry",
+        {"factory": "SineOscillatorFtry",
           "name": "loadScreen.fovOscillator",
           "description" : "Comportamiento que menea el fov",
           "config" : {
@@ -320,15 +319,14 @@
             "period" : "cam.fovPeriod"
           }
         },
-        {"factory": "SineOscillatorV3DFtry",
+        {"factory": "SineOscillatorFtry",
           "name": "loadScreen.coordOscillator",
           "description" : "Comportamiento que menea el obojeto",
           "config" : {
             "min" : "model.coordMin",
-            "max" : "model.coordMax",
+            "max" : "model.coordMin",
             "contextTime" : "DEFAULT",
-            "period" : "model.coordPeriod",
-            "component" : "model.sineComponent"
+            "period" : "model.coordPeriod"
           }
         },
         {"factory": "DrawerModelDaemonFtry",
@@ -347,7 +345,7 @@
             "behavior" : "loadScreen.fovOscillator"
           }
         },
-        {"factory": "V3DAvtDaemonFtry",
+        {"factory": "FloatAvtDaemonFtry",
           "name": "loadScreen.coordOscillatorDaemon",
           "description" : "demonio que menea el fov",
           "config" : {
@@ -369,14 +367,6 @@
             "entity" : "cameraController",
             "attribIndexes" : ["fovIdx"],
             "lists":{"loadScreen.fovOscillatorList":"fovticket"}
-          }
-        },
-        {"factory": "V3DAvtFtry",
-          "name": "loadScreen.logoX",
-          "config" : {
-            "entity" : "loadingLogo",
-            "attribIndexes" : ["positionIdx"],
-            "lists":{"loadScreen.coordOscillatorList":"xticket"}
           }
         }
       ]

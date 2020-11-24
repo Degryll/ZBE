@@ -53,11 +53,16 @@ public:
     using FloatAvtList = TicketedForwardList<SAvatar<float> >;
     using FloatAvtBhvr = BehaviorDmnFtry<FloatAvtList, float>;
 
+    using V3DAvtList = TicketedForwardList<SAvatar<Vector3D> >;
+    using V3DAvtBhvr = BehaviorDmnFtry<V3DAvtList, Vector3D>;
+
     auto& factories = RsrcStore<Factory>::getInstance();
 
     factories.insert("Drawable2DAvtFtry", std::make_shared<BaseAvatarFtry<uint64_t, int64_t, double, Vector2D, Vector2D> >());
     factories.insert("Drawable3DAvtFtry", std::make_shared<BaseAvatarFtry<uint64_t, double,  double, Vector3D, Vector3D> >());
+
     factories.insert("FloatAvtFtry", std::make_shared<BaseAvatarFtry<float> >());
+    factories.insert("V3DAvtFtry", std::make_shared<BaseAvatarFtry<Vector3D> >());
 
     factories.insert("DrawerAnimSprtFtry", std::make_shared<AnimDrwr>());
     factories.insert("TFAECAnimSprtFtry" , std::make_shared<SimpleGenericFtry<AnimList> >(listName));
@@ -67,6 +72,9 @@ public:
 
     factories.insert("FloatAvtDaemonFtry", std::make_shared<FloatAvtBhvr>());
     factories.insert("TFAECFloatAvtFtry" , std::make_shared<SimpleGenericFtry<FloatAvtList> >(listName));
+
+    factories.insert("V3DAvtDaemonFtry", std::make_shared<V3DAvtBhvr>());
+    factories.insert("TFAECV3DAvtFtry" , std::make_shared<SimpleGenericFtry<V3DAvtList> >(listName));
   }
 };
 

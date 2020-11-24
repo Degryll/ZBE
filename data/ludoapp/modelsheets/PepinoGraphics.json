@@ -1,0 +1,9 @@
+{
+"name" : "Pepino",
+"capability" : "001",
+"graphicdefs" : [
+  {
+    "name" : "Circle.003"
+  }
+]
+}
