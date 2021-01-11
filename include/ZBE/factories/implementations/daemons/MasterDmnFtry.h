@@ -19,6 +19,7 @@
 
 #include "ZBE/core/tools/containers/RsrcStore.h"
 #include "ZBE/core/tools/containers/RsrcDictionary.h"
+#include "ZBE/core/tools/containers/Ticket.h"
 
 #include "ZBE/core/daemons/Daemon.h"
 #include "ZBE/core/daemons/DaemonMaster.h"
@@ -51,6 +52,7 @@ private:
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<Daemon> &daemonRsrc = RsrcStore<Daemon>::getInstance();
   RsrcStore<DaemonMaster> &dmnMasterRsrc = RsrcStore<DaemonMaster>::getInstance();
+  RsrcStore<Ticket> &ticketRsrc = RsrcStore<Ticket>::getInstance();
 
 };
 

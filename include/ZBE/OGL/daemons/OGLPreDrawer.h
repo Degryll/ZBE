@@ -25,6 +25,7 @@
 #include "ZBE/tools/graphics/Camera.h"
 
 #include "ZBE/SDL/OGL/SDLOGLWindow.h"
+#include "ZBE/SDL/events/SDLEventDispatcher.h"
 
 namespace zbe {
 
@@ -54,9 +55,14 @@ public:
     this->cam = cam;
   }
 
+  void setSDLEventDispatcher(std::shared_ptr<SDLEventDispatcher> sdled) {
+    this->sdled = sdled;
+  }
+
 private:
   GLuint gProgramID;
   std::shared_ptr<Camera> cam;
+  std::shared_ptr<SDLEventDispatcher> sdled;
 };
 
 }  // namespace zbe

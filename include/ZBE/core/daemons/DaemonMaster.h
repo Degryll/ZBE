@@ -15,6 +15,7 @@
 #include <vector>
 
 #include "ZBE/core/daemons/Daemon.h"
+#include "ZBE/core/tools/containers/TicketedForwardList.h"
 
 #include "ZBE/core/system/system.h"
 
@@ -25,13 +26,9 @@ namespace zbe {
 class ZBEAPI DaemonMaster : public Daemon {
 public:
 
-  /** \brief Empty constructor.
-   */
-  DaemonMaster() : daemonList() {}
-
   /** \brief Destructor and the contained Daemons.
    */
-  ~DaemonMaster() {}
+  ~DaemonMaster() = default;
 
   /** \brief It will run all Daemons added to this DaemonMaster.
    */
@@ -43,10 +40,12 @@ public:
    * \return void
    *
    */
-  void addDaemon(std::shared_ptr<Daemon> daemon) {daemonList.push_back(daemon);}
+  std::shared_ptr<Ticket> addDaemon(std::shared_ptr<Daemon> daemon) {
+    return daemonList.push_front(daemon);
+  }
 
 private:
-  std::vector<std::shared_ptr<Daemon> > daemonList;
+  TicketedForwardList<Daemon> daemonList;
 };
 
 }  // namespace zbe

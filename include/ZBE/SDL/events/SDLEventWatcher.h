@@ -25,9 +25,7 @@ namespace zbe {
 class SDLEventWatcher {
 public:
 
-  virtual ~SDLEventWatcher() {};  //!< Empty destructor
-
-  virtual void set(std::shared_ptr<InputBuffer>, std::shared_ptr<InputTextBuffer> inputTextBuffer, std::shared_ptr<ContextTime> contextTime) = 0;
+  virtual ~SDLEventWatcher() = default;  //!< Empty destructor
 
   /** \brief React to the Event received.
    */

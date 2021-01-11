@@ -43,6 +43,14 @@ inline void TimerTicket::setERASED() {
   }
 }
 
+inline void TimerTicket::toggle() {
+  if(s == ACTIVE) {
+    s = INACTIVE;
+  } else if(s == INACTIVE) {
+    s = ACTIVE;
+  }
+}  //!< Set the state as state.
+
 inline void TimerTicket::setState(State state) {
   if(state == ACTIVE) this->setACTIVE();
   if(state == INACTIVE) this->setINACTIVE();

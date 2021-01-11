@@ -11,12 +11,11 @@
 #define ZBE_SDL_EVENTS_KEYMOUSEEVENTWATCHER_H
 
 #include <cstdint>
-//#include <list>
-//#include <map>
-//#include <memory>
+#include <nlohmann/json.hpp>
 
 #include <SDL2/SDL.h>
 
+#include "ZBE/SDL/events/SDLEventDispatcher.h"
 #include "ZBE/SDL/events/SDLEventWatcher.h"
 #include "ZBE/core/io/Input.h"
 #include "ZBE/core/io/InputBuffer.h"
@@ -26,24 +25,21 @@
 
 #include "ZBE/core/system/system.h"
 
+#include "ZBE/factories/Factory.h"
+
 namespace zbe {
+
+class KeyMouseEventWatcherFtry;
 
 /** \brief Dispatcher for sdl events.
  */
 class KeyMouseEventWatcher : public SDLEventWatcher {
 public:
-
-  KeyMouseEventWatcher() : inputBuffer(), inputTextBuffer(), contextTime() {}
+  friend class KeyMouseEventWatcherFtry;
 
   /** \brief Empty Destructor
    */
-  ~KeyMouseEventWatcher() {}
-
-  void set(std::shared_ptr<InputBuffer> inputBuffer, std::shared_ptr<InputTextBuffer> inputTextBuffer, std::shared_ptr<ContextTime> contextTime) {
-    this->inputBuffer = inputBuffer;
-    this->inputTextBuffer = inputTextBuffer;
-    this->contextTime = contextTime;
-  }
+  ~KeyMouseEventWatcher() = default;
 
   void watch(SDL_Event event) {
     if (!tryKeyboardEvent(event)) {
@@ -52,6 +48,14 @@ public:
   }
 
 private:
+  KeyMouseEventWatcher() : inputBuffer(), inputTextBuffer(), contextTime() {}
+
+  void set(std::shared_ptr<InputBuffer> inputBuffer, std::shared_ptr<InputTextBuffer> inputTextBuffer, std::shared_ptr<ContextTime> contextTime) {
+    this->inputBuffer = inputBuffer;
+    this->inputTextBuffer = inputTextBuffer;
+    this->contextTime = contextTime;
+  }
+
   uint32_t getEquivalentToSDL(SDL_Keycode k) {return (k);}
 
   bool tryKeyboardEvent(SDL_Event &event){
@@ -138,6 +142,84 @@ private:
   std::shared_ptr<InputBuffer> inputBuffer;
   std::shared_ptr<InputTextBuffer> inputTextBuffer;
   std::shared_ptr<ContextTime> contextTime;
+};
+
+class KeyMouseEventWatcherFtry : public Factory {
+public:
+
+  /** \brief Builds a SDLWindow.
+   *  \param name Name for the created SDLWindow.
+   *  \param cfgId SDLWindow's configuration id.
+   */
+  void create(std::string name, uint64_t) {
+    using namespace std::string_literals;
+
+    auto kmew = std::shared_ptr<KeyMouseEventWatcher>(new KeyMouseEventWatcher);
+    kmewRsrc.insert("KeyMouseEventWatcher."s + name, kmew);
+  }
+
+  /** \brief Setup the desired tool. The tool will be complete after this step.
+   *  \param name Name of the tool.
+   *  \param cfgId Tool's configuration id.
+   */
+  void setup(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    auto cfg = configRsrc.get(cfgId);
+
+    if(cfg) {
+      auto j = *cfg;
+      if(!j["window"].is_string()) {
+        SysError::setError("KeyMouseEventWatcher config for window: "s + j["window"].get<std::string>() + ": must be a window name."s);
+        return;
+      }
+      if(!j["contextTime"].is_string()) {
+        SysError::setError("KeyMouseEventWatcher config for contextTime: "s + j["contextTime"].get<std::string>() + ": must be a context time name."s);
+        return;
+      }
+
+      std::string windowName = j["window"].get<std::string>();
+      if(!ibuffRsrc.contains("SDLOGLWindow."s + windowName + ".InputBuffer")) {
+        SysError::setError("KeyMouseEventWatcher config for window: "s + windowName + ".InputBuffer does not exits."s);
+        return;
+      }
+      if(!itBuffRsrc.contains("SDLOGLWindow."s + windowName + ".InputTextBuffer")) {
+        SysError::setError("KeyMouseEventWatcher config for window: "s + windowName + ".InputTextBuffer does not exits."s);
+        return;
+      }
+      if(!sdlEDRsrc.contains("SDLOGLWindow."s + windowName + ".SDLEventDispatcher")) {
+        SysError::setError("KeyMouseEventWatcher config for window: "s + windowName + ".SDLEventDispatcher does not exits."s);
+        return;
+      }
+
+      std::string contextTimeName = j["contextTime"].get<std::string>();
+      if(!cTimeRsrc.contains("ContextTime."s + contextTimeName)) {
+        SysError::setError("InputEventGeneratorFtry config for contextTime: "s + contextTimeName + " does not exits."s);
+        return;
+      }
+
+      auto kmew = kmewRsrc.get("KeyMouseEventWatcher."s + name);
+      auto ibuff = ibuffRsrc.get("SDLOGLWindow."s + windowName + ".InputBuffer");
+      auto itbuff = itBuffRsrc.get("SDLOGLWindow."s + windowName + ".InputTextBuffer");
+      auto ed = sdlEDRsrc.get("SDLOGLWindow."s + windowName + ".SDLEventDispatcher");
+      auto cTime = cTimeRsrc.get("ContextTime."s + contextTimeName);
+      kmew->set(ibuff, itbuff, cTime);
+      ed->addWatcher(kmew);
+
+    } else {
+      SysError::setError("KeyMouseEventWatcherFtry config for "s + name + " not found."s);
+    }
+
+  }
+
+private:
+  RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<KeyMouseEventWatcher> &kmewRsrc = RsrcStore<KeyMouseEventWatcher>::getInstance();
+  RsrcStore<InputBuffer>& ibuffRsrc = RsrcStore<InputBuffer>::getInstance();
+  RsrcStore<InputTextBuffer>& itBuffRsrc = RsrcStore<InputTextBuffer>::getInstance();
+  RsrcStore<ContextTime>& cTimeRsrc = RsrcStore<ContextTime>::getInstance();
+  RsrcStore<SDLEventDispatcher>& sdlEDRsrc = RsrcStore<SDLEventDispatcher>::getInstance();
+
 };
 
 }  // namespace zbe

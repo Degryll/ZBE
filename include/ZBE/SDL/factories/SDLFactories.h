@@ -22,6 +22,8 @@
 #include "ZBE/SDL/factories/daemons/BasicPreLoopSDLDaemonFtry.h"
 #include "ZBE/SDL/factories/daemons/BasicPostLoopSDLDaemonFtry.h"
 
+#include "ZBE/SDL/events/KeyMouseEventWatcher.h"
+
 #include "ZBE/core/tools/containers/RsrcStore.h"
 #include "ZBE/core/daemons/Daemon.h"
 #include "ZBE/core/system/system.h"
@@ -52,6 +54,8 @@ public:
 
     factories.insert("BasicPreLoopSDLDaemonFtry", std::make_shared<BasicPreLoopSDLDaemonFtry>());
     factories.insert("BasicPostLoopSDLDaemonFtry", std::make_shared<BasicPostLoopSDLDaemonFtry>());
+
+    factories.insert("KeyMouseEventWatcherFtry", std::make_shared<KeyMouseEventWatcherFtry>());
   }
 
 };

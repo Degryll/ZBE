@@ -16,6 +16,15 @@ void SDLOGLWindowFtry::create(std::string name, uint64_t) {
 
   auto sdlwin = std::make_shared<SDLOGLWindow>();
   sdloglWindowRsrc.insert("SDLOGLWindow."s + name, sdlwin);
+
+  auto sdlED = std::make_shared<SDLEventDispatcher>();
+  sdlEvenDWindowRsrc.insert("SDLOGLWindow."s + name + ".SDLEventDispatcher", sdlED);
+
+  auto ib = std::make_shared<InputBuffer>();
+  ibuffRsrc.insert("SDLOGLWindow."s + name + ".InputBuffer", ib);
+
+  auto itb = std::make_shared<InputTextBuffer>();
+  itBuffRsrc.insert("SDLOGLWindow."s + name + ".InputTextBuffer", itb);
 }
 
 void SDLOGLWindowFtry::setup(std::string name, uint64_t cfgId) {

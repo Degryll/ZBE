@@ -19,6 +19,7 @@
 #include "ZBE/core/tools/math/Region.h"
 #include "ZBE/core/tools/shared/Value.h"
 #include "ZBE/core/tools/time/ContextTime.h"
+#include "ZBE/core/io/Input.h"
 
 namespace zbe {
 
@@ -46,6 +47,7 @@ using RsrcJointAE = RsrcStore<JointAE<T> >;  //!< Shortened name for RsrcStore<J
 template <typename ...Avatars>
 using RsrcJointAEC = RsrcStore<JointAEC<Avatars...> >;  //!< Shortened name for RsrcStore<JointAEC<Avatars...> >
 
+void init(RsrcDictionary<ZBE_K>& zbekRsrc = RsrcDictionary<ZBE_K>::getInstance());
 }  // namespace zbe
 
 #endif  // ZBE_CORE_ZBE_H_

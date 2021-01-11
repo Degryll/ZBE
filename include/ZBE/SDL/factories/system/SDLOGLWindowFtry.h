@@ -15,15 +15,16 @@
 
 #include <nlohmann/json.hpp>
 
+#include "ZBE/core/system/system.h"
 #include "ZBE/core/system/SysError.h"
-
 #include "ZBE/core/tools/containers/RsrcStore.h"
+#include "ZBE/core/io/InputBuffer.h"
+#include "ZBE/core/io/InputTextBuffer.h"
 
 #include "ZBE/SDL/OGL/SDLOGLWindow.h"
+#include "ZBE/SDL/events/SDLEventDispatcher.h"
 
 #include "ZBE/factories/Factory.h"
-
-#include "ZBE/core/system/system.h"
 
 namespace zbe {
 
@@ -50,6 +51,9 @@ private:
   RsrcDictionary<int64_t>& intStore = RsrcDictionary<int64_t>::getInstance();
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<SDLOGLWindow> &sdloglWindowRsrc = RsrcStore<SDLOGLWindow>::getInstance();
+  RsrcStore<SDLEventDispatcher> &sdlEvenDWindowRsrc = RsrcStore<SDLEventDispatcher>::getInstance();
+  RsrcStore<InputBuffer>& ibuffRsrc = RsrcStore<InputBuffer>::getInstance();
+  RsrcStore<InputTextBuffer>& itBuffRsrc = RsrcStore<InputTextBuffer>::getInstance();
 };
 
 }  // namespace zbe

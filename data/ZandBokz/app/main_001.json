@@ -21,13 +21,13 @@
     "orientationIdx" : 1060,
     "drawticket" : 2000,
     "fovticket" : 3000,
-    "xticket" : 4000,
-    "yticket" : 4001,
+    "positionTicket" : 4000,
     "fovIdx" : 3100,
     "state.static" : 0,
     "testwflags": 0,
     "testrflags": 0,
     "timeEventId" : 1,
+    "inputEventId" : 84,
     "mainInitialState" : 0,
     "mainExitState" : 1,
     "loadScreen.toMenu": 1,
@@ -42,6 +42,10 @@
     "model.coordMin" :{"type":"f", "value":-10.0},
     "model.coordMax" :{"type":"f", "value":10.0},
     "model.coordPeriod" :{"type":"i", "value":45751},
+    "model.fixedForwardVelocity" :{"type":"v3", "value":[0.0,0.0,-50.0]},
+    "model.fixedBackwardVelocity" :{"type":"v3", "value":[0.0,0.0,50.0]},
+    "model.fixedLeftVelocity" :{"type":"v3", "value":[-50.0,0.0,0.0]},
+    "model.fixedRightVelocity" :{"type":"v3", "value":[50.0,0.0,0.0]},
     "model.sineComponent" : 0,
     "TODOindices":""
   },
@@ -94,6 +98,12 @@
           "config" : {}
         },
         {
+          "factory": "TFAECV3DAvtFtry",
+          "description" : "do some serious sheet",
+          "name": "loadScreen.camMoveList",
+          "config" : {}
+        },
+        {
           "factory": "CameraFtry",
           "name": "loadScreen.cam",
           "config" : {
@@ -123,6 +133,22 @@
       {
       "description" : "Creating resource loaders.",
       "factories" : [
+        { "factory": "KeyMouseEventWatcherFtry",
+          "name":"loadScreen.KBMWatcher",
+          "config" : {
+            "window" : "zandbokz.mainwindow",
+            "contextTime" : "DEFAULT"
+          }
+        },
+        { "factory": "InputEventGeneratorFtry",
+          "name":"loadScreen.inputEventGenerator",
+          "config" : {
+            "eventId":"inputEventId",
+            "contextTime":"DEFAULT",
+            "inputBuffer":"SDLOGLWindow.zandbokz.mainwindow.InputBuffer",
+            "inputTextBuffer":"SDLOGLWindow.zandbokz.mainwindow.InputTextBuffer"
+          }
+        },
         {
           "factory": "GlTFResourceLoaderFtry",
           "name":"zandbokz.gltfLoader",
@@ -217,6 +243,9 @@
             "float": {
               "fovIdx":"zandbokz.fov"
             },
+            "V3D": {
+              "positionIdx":"zandbokz.camEye"
+            },
             "TODO": "asociar todos los values de la camara"
           }
         }
@@ -234,11 +263,23 @@
           }
         },
         {"factory": "MasterDmnFtry",
-          "name": "Behaviors",
+          "name": "loadScreen.eventGenerator",
+          "config" : {
+            "daemons": [
+              "loadScreen.timeEventGenerator",
+              "loadScreen.inputEventGenerator"
+            ]
+          }
+        },
+        {"factory": "MasterDmnFtry",
+          "name": "BehaviorsMD",
           "config" : {
             "daemons": [
               "loadScreen.fovOscillatorDaemon",
               "loadScreen.coordOscillatorDaemon"
+            ],
+            "disabledDaemons": [
+              "loadScreen.goForwardDaemon"
             ]
           }
         },
@@ -249,7 +290,7 @@
             "preDaemonDesc":"done",
             "eventDaemon":"loadScreen.eventGenerator",
             "eventDaemonDesc":"done",
-            "commonDaemon":"Behaviors",
+            "commonDaemon":"BehaviorsMD",
             "commonDaemonDesc":"nada?vacio?",
             "reactDaemon":"DEFAULT",
             "reactDaemonDesc":"si hay evento de tiempo: se llama al exit... pero esto lo hace el eventStore.manage(): que esto se queda vacio",
@@ -280,7 +321,7 @@
           }
         },
         {"factory": "TimeEventGnFtry",
-          "name": "loadScreen.eventGenerator",
+          "name": "loadScreen.timeEventGenerator",
           "config" : {
             "eventId" : "timeEventId",
             "contextTime" : "DEFAULT"
@@ -297,7 +338,7 @@
         {"factory": "DaemonTimeHandlerFtry",
           "name": "loadScreen.exitHandler",
           "config" : {
-            "generator" : "loadScreen.eventGenerator",
+            "generator" : "loadScreen.timeEventGenerator",
             "time" : "loadScreen.loadTime",
             "dmn" : "loadScreen.exitDaemon"
           }
@@ -331,6 +372,14 @@
             "component" : "model.sineComponent"
           }
         },
+        {"factory": "FixedUniformLinearMotion3DFtry",
+          "name": "loadScreen.goForward",
+          "description" : "Comportamiento que menea el obojeto to palante",
+          "config" : {
+            "velocity" : "model.fixedForwardVelocity",
+            "contextTime" : "DEFAULT"
+          }
+        },
         {"factory": "DrawerModelDaemonFtry",
           "name": "loadScreen.drawDaemon",
           "description" : "demonio que pintara la pantalla. Faltan tipos",
@@ -355,6 +404,14 @@
             "behavior" : "loadScreen.coordOscillator"
           }
         },
+        {"factory": "V3DAvtDaemonFtry",
+          "name": "loadScreen.goForwardDaemon",
+          "description" : "demonio que menea la camara",
+          "config" : {
+            "list" : "loadScreen.camMoveList",
+            "behavior" : "loadScreen.goForward"
+          }
+        },
         {"factory": "Drawable3DAvtFtry",
           "name": "loadScreen.bgEnt",
           "config" : {
@@ -372,11 +429,30 @@
           }
         },
         {"factory": "V3DAvtFtry",
+          "name": "loadScreen.camEye",
+          "config" : {
+            "entity" : "cameraController",
+            "attribIndexes" : ["positionIdx"],
+            "lists":{"loadScreen.camMoveList":"positionTicket"}
+          }
+        },
+        {"factory": "V3DAvtFtry",
           "name": "loadScreen.logoX",
           "config" : {
             "entity" : "loadingLogo",
             "attribIndexes" : ["positionIdx"],
-            "lists":{"loadScreen.coordOscillatorList":"xticket"}
+            "lists":{"loadScreen.coordOscillatorList":"positionTicket"}
+          }
+        }
+      ]
+    }, {"description" : "Setting controls",
+      "factories" : [
+        {"factory": "TicketTogglerIHFtry",
+          "name": "loadScreen.goForwardInputH",
+          "config" : {
+            "ticket" : "BehaviorsMD.loadScreen.goForwardDaemon.ticket",
+            "inputEventGenerator" : "loadScreen.inputEventGenerator",
+            "key":"ZBEK_w"
           }
         }
       ]

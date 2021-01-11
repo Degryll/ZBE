@@ -41,6 +41,14 @@ public:
 
   inline void setState(State state) {s = state;}  //!< Set the state as state.
 
+  inline void toggle() {
+    if(s == ACTIVE) {
+      s = INACTIVE;
+    } else if(s == INACTIVE) {
+      s = ACTIVE;
+    }
+  }  //!< Set the state as state.
+
   inline bool isACTIVE()    {return (s == ACTIVE);}    //!< True if state is ACTIVE.
   inline bool isNotACTIVE() {return (s != ACTIVE);}    //!< True if state is not ACTIVE, either INACTIVE or ERASED.
   inline bool isINACTIVE()  {return (s == INACTIVE);}  //!< True if state is INACTIVE.

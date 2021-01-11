@@ -444,7 +444,6 @@
 		<Unit filename="../../../include/ZBE/core/events/generators/util/CollisionData.h" />
 		<Unit filename="../../../include/ZBE/core/events/generators/util/CollisionObject.h" />
 		<Unit filename="../../../include/ZBE/core/events/generators/util/CollisionSelector.h" />
-		<Unit filename="../../../include/ZBE/core/events/generators/util/InputStatusManager.h" />
 		<Unit filename="../../../include/ZBE/core/events/generators/util/InputTextManager.h" />
 		<Unit filename="../../../include/ZBE/core/events/generators/util/IntersectionCollisionSelector.h" />
 		<Unit filename="../../../include/ZBE/core/events/generators/util/ReactObject.h" />
@@ -536,6 +535,7 @@
 		<Unit filename="../../../include/ZBE/events/handlers/input/RemoveGlyphIH.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/input/ScrollDownIH.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/input/ScrollIH.h" />
+		<Unit filename="../../../include/ZBE/events/handlers/input/TicketTogglerIH.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/time/DaemonRecurrentTimeHandler.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/time/DaemonTimeHandler.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/time/TicketEraser.h" />
@@ -637,8 +637,10 @@
 		<Unit filename="../../../src/ZBE/core/tools/shared/implementations/SimpleValue.cpp" />
 		<Unit filename="../../../src/ZBE/core/tools/text/utf8.cpp" />
 		<Unit filename="../../../src/ZBE/core/tools/time/ContextTime.cpp" />
+		<Unit filename="../../../src/ZBE/core/zbe.cpp" />
 		<Unit filename="../../../src/ZBE/daemons/RsrcFolderLoaderDmn.cpp" />
 		<Unit filename="../../../src/ZBE/daemons/RsrcLoaderDmn.cpp" />
+		<Unit filename="../../../src/ZBE/events/handlers/input/TicketToggler.cpp" />
 		<Unit filename="../../../src/ZBE/factories/CommonFactories.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/RsrcFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/behaviors/StateLTEraserBhvFtry.cpp" />

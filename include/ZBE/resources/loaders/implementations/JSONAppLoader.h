@@ -21,6 +21,7 @@
 #include "ZBE/resources/loaders/RsrcLoader.h"
 #include "ZBE/core/tools/containers/RsrcDictionary.h"
 #include "ZBE/core/tools/containers/RsrcStore.h"
+#include "ZBE/core/tools/math/Vector.h"
 
 namespace zbe {
 
@@ -62,6 +63,9 @@ private:
 
   RsrcStore<json>& cfgStore = RsrcStore<json>::getInstance();
   RsrcStore<Factory>& ftryStore = RsrcStore<Factory>::getInstance();
+
+  RsrcDictionary<Vector2D>& v2dStore = RsrcDictionary<Vector2D>::getInstance();
+  RsrcDictionary<Vector3D>& v3dStore = RsrcDictionary<Vector3D>::getInstance();
 
   RsrcDictionary<int64_t>& intStore = RsrcDictionary<int64_t>::getInstance();
   RsrcDictionary<uint64_t>& uintStore = RsrcDictionary<uint64_t>::getInstance();

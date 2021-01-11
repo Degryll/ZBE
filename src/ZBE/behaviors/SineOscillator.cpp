@@ -25,7 +25,6 @@ void SineOscillatorFFtry::create(std::string name, uint64_t cfgId) {
   std::shared_ptr<SineOscillatorF> so = std::shared_ptr<SineOscillatorF>(new SineOscillatorF);  // std::make_shared<SineOscillator>();
   behaviorRsrc.insert("Behavior."s + name, so);
   sineOscillatorFRsrc.insert("SineOscillatorF."s + name, so);
-
 }
 
 void SineOscillatorFFtry::setup(std::string name, uint64_t cfgId) {

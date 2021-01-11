@@ -53,6 +53,7 @@ bool JSONAppLoader::isLoadable(std::filesystem::path extension) {
 }
 
 void JSONAppLoader::loadLiteralConfig(std::string name, json& value) {
+  using namespace std::string_literals;
   if(value.is_number_integer()) {
     intStore.insert(name, value.get<int64_t>());
     uintStore.insert(name, value.get<uint64_t>());
@@ -64,21 +65,40 @@ void JSONAppLoader::loadLiteralConfig(std::string name, json& value) {
   } else if (value.is_object()) {
     std::string type = value["type"].get<std::string>();
     bool hasType = false;
-    if(type.find("u") != std::string::npos) {
-        uintStore.insert(name, value["value"].get<uint64_t>());
-        hasType = true;
-    }
-    if(type.find("i") != std::string::npos) {
-        intStore.insert(name, value["value"].get<uint64_t>());
-        hasType = true;
-    }
-    if(type.find("f") != std::string::npos) {
-        floatStore.insert(name, value["value"].get<float>());
-        hasType = true;
-    }
-    if(type.find("d") != std::string::npos) {
-        doubleStore.insert(name, value["value"].get<double>());
-        hasType = true;
+
+    if(type.find("v3") != std::string::npos) {
+      auto x = value["value"][0].get<double>();
+      auto y = value["value"][1].get<double>();
+      auto z = value["value"][2].get<double>();
+      v3dStore.insert(name, Vector3D{x, y, z});
+      doubleStore.insert(name + ".x"s, x);
+      doubleStore.insert(name + ".y"s, y);
+      doubleStore.insert(name + ".z"s, z);
+      hasType = true;
+    } else if(type.find("v2") != std::string::npos) {
+      auto x = value["value"][0].get<double>();
+      auto y = value["value"][1].get<double>();
+      v2dStore.insert(name, Vector2D{x, y});
+      doubleStore.insert(name + ".x"s, x);
+      doubleStore.insert(name + ".y"s, y);
+      hasType = true;
+    } else {
+      if(type.find("u") != std::string::npos) {
+          uintStore.insert(name, value["value"].get<uint64_t>());
+          hasType = true;
+      }
+      if(type.find("i") != std::string::npos) {
+          intStore.insert(name, value["value"].get<int64_t>());
+          hasType = true;
+      }
+      if(type.find("f") != std::string::npos) {
+          floatStore.insert(name, value["value"].get<float>());
+          hasType = true;
+      }
+      if(type.find("d") != std::string::npos) {
+          doubleStore.insert(name, value["value"].get<double>());
+          hasType = true;
+      }
     }
 //    if(type.find("s") != std::string::npos) {
 //        stringStore.insert(name, value["value"].get<std::string>());

@@ -59,7 +59,7 @@ class ZBEAPI RsrcDictionary {
       auto it = l.find(name);
       if (it == l.end()) {
         SysError::setError("Resource id not found:" + name);
-        return (0);
+        return T();
       } else {
         return (it->second);
       }

@@ -33,6 +33,9 @@
 #include "ZBE/factories/implementations/events/handlers/actuators/StateChangerAtorFtry.h"
 #include "ZBE/factories/implementations/events/generators/TimeEventGnFtry.h"
 
+#include "ZBE/events/handlers/input/TicketTogglerIH.h"
+
+#include "ZBE/core/events/generators/InputEventGenerator.h"
 #include "ZBE/core/tools/shared/implementations/SimpleValue.h"
 #include "ZBE/core/tools/containers/RsrcStore.h"
 #include "ZBE/core/daemons/Daemon.h"
@@ -40,6 +43,7 @@
 #include "ZBE/core/system/system.h"
 
 #include "ZBE/behaviors/SineOscillator.h"
+#include "ZBE/behaviors/UniformLinearMotion.h"
 
 namespace zbe {
 
@@ -75,10 +79,12 @@ public:
     factories.insert("MasterDmnFtry", std::make_shared<MasterDmnFtry>());
     factories.insert("StateMachineDmnFtry", std::make_shared<StateMachineDmnFtry>());
     factories.insert("RsrcFolderLoaderDmnFtry", std::make_shared<RsrcFolderLoaderDmnFtry>());
+    factories.insert("InputEventGeneratorFtry", std::make_shared<InputEventGeneratorFtry>());
 
     // --- Behaviors
     factories.insert("SineOscillatorFFtry", std::make_shared<SineOscillatorFFtry>());
     factories.insert("SineOscillatorV3DFtry", std::make_shared<SineOscillatorV3DFtry>());
+    factories.insert("FixedUniformLinearMotion3DFtry", std::make_shared<FixedUniformLinearMotion3DFtry>());
 
     // --- Events
     // --- --- Event generators
@@ -89,6 +95,8 @@ public:
     factories.insert("DaemonClickIHFtry", std::make_shared<DaemonClickIHFtry>());
     factories.insert("DaemonIHFtry", std::make_shared<DaemonIHFtry>());
     factories.insert("InputToValueFtry", std::make_shared<InputToValueFtry>());
+    factories.insert("TicketTogglerIHFtry", std::make_shared<TicketTogglerIHFtry>());
+    
     // --- --- Event time handlers
     factories.insert("DaemonRecurrentTimeHandlerFtry", std::make_shared<DaemonRecurrentTimeHandlerFtry>());
     factories.insert("DaemonTimeHandlerFtry", std::make_shared<DaemonTimeHandlerFtry>());

@@ -26,9 +26,9 @@ public:
 
   /** \brief Empty Destructor
    */
-  ~ImGuiEventWatcher() {}
+  virtual ~ImGuiEventWatcher() = default;
 
-  void set(std::shared_ptr<InputBuffer>, std::shared_ptr<InputTextBuffer>, std::shared_ptr<ContextTime>) {}
+  //void set(std::shared_ptr<InputBuffer>, std::shared_ptr<InputTextBuffer>, std::shared_ptr<ContextTime>) {}
 
   void watch(SDL_Event event) {
     ImGui_ImplSDL2_ProcessEvent(&event);

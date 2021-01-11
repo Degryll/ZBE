@@ -20,6 +20,7 @@
 
 int main(int /*argc*/, char** /*argv*/) {
    using namespace zbe;
+   init();
    printf("Hello ZandBokz\n");
    BaseFactories::load();
    SDLFactories::load();

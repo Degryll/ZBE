@@ -31,14 +31,28 @@ void MasterDmnFtry::setup(std::string name, uint64_t cfgId) {
 
   if(cfg) {
     auto j = *cfg;
-    json daemons = j["daemons"];
     auto dm = dmnMasterRsrc.get("DaemonMaster."s + name);
+
+    json daemons = j["daemons"];
     for (auto daemon : daemons) {
       if (daemon.is_string()) {
         uint64_t dId = dict.get("Daemon."s + daemon.get<std::string>());
-        dm->addDaemon(daemonRsrc.get(dId));
+        auto ticket = dm->addDaemon(daemonRsrc.get(dId));
+        ticketRsrc.insert(name + "."s + daemon.get<std::string>() + ".ticket"s, ticket);
       } else {
-        SysError::setError("MasterDmnFtry config for "s + name + " not found."s);
+        SysError::setError("MasterDmnFtry config for "s + name + " not valid."s);
+      }
+    }
+
+    daemons = j["disabledDaemons"];
+    for (auto daemon : daemons) {
+      if (daemon.is_string()) {
+        uint64_t dId = dict.get("Daemon."s + daemon.get<std::string>());
+        auto ticket = dm->addDaemon(daemonRsrc.get(dId));
+        ticketRsrc.insert(name+"."s + daemon.get<std::string>() + ".ticket"s, ticket);
+        ticket->setINACTIVE();
+      } else {
+        SysError::setError("MasterDmnFtry config for "s + name + " (disabled) not valid."s);
       }
     }
   } else {

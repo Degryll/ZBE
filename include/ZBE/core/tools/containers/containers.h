@@ -13,5 +13,6 @@
 #include "ZBE/core/tools/containers/ListJoint.h"
 #include "ZBE/core/tools/containers/TicketedForwardList.h"
 #include "ZBE/core/tools/containers/RsrcStore.h"
+#include "ZBE/core/tools/containers/RsrcDictionary.h"
 
 #endif  // ZBE_CORE_TOOLS_CONTAINERS_CONTAINERS_H_

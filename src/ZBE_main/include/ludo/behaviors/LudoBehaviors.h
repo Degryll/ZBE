@@ -4,10 +4,10 @@
  * @since 2017-02-25
  * @date 2018-07-30
  * @author Ludo
- * @brief Collection of zbe::InputHandler && zbe::TimeHandler for ludomain.
+ * @brief 
  */
-#ifndef LUDO_EVENTS_HANDLERS_LUDOBEHAVIORS_H
-#define LUDO_EVENTS_HANDLERS_LUDOBEHAVIORS_H
+#ifndef LUDO_BEHAVIORS_LUDOBEHAVIORS_H
+#define LUDO_BEHAVIORS_LUDOBEHAVIORS_H
 
 #include <cstdio>
 #include <memory>
@@ -16,4 +16,4 @@ namespace ludo {
 
 } //namespace ludo
 
-#endif //LUDO_EVENTS_HANDLERS_LUDOBEHAVIORS_H
+#endif //LUDO_BEHAVIORS_LUDOBEHAVIORS_H

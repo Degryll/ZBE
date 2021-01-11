@@ -24,6 +24,7 @@
 #include "ZBE/core/daemons/Daemon.h"
 
 #include "ZBE/SDL/OGL/SDLOGLWindow.h"
+#include "ZBE/SDL/events/SDLEventDispatcher.h"
 
 #include "ZBE/factories/Factory.h"
 
@@ -57,6 +58,7 @@ private:
   RsrcStore<Daemon> &daemonRsrc = RsrcStore<Daemon>::getInstance();
   RsrcStore<OGLPreDrawer> &oglPreDrawRsrc = RsrcStore<OGLPreDrawer>::getInstance();
   RsrcDictionary<uint64_t>& uintStore = RsrcDictionary<uint64_t>::getInstance();
+  RsrcStore<SDLEventDispatcher> &sdlEvenDWindowRsrc = RsrcStore<SDLEventDispatcher>::getInstance();
 };
 
 }  // namespace zbe

@@ -14,8 +14,8 @@
 #include <forward_list>
 #include <memory>
 
-#include <imgui.h>
-#include <imgui_impl_sdl.h>
+// #include <imgui.h>
+// #include <imgui_impl_sdl.h>
 
 #include <SDL2/SDL.h>
 
@@ -36,6 +36,8 @@ public:
   SDLEventDispatcher(SDLEventDispatcher const&)    = delete;  //!< Needed for singleton.
   void operator=(SDLEventDispatcher const&) = delete;  //!< Needed for singleton.
 
+  SDLEventDispatcher() : sdl(SDL_Starter::getInstance(SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC | SDL_INIT_GAMECONTROLLER | SDL_INIT_EVENTS)), /*inputBuffer(std::make_shared<InputBuffer>()), inputTextBuffer(std::make_shared<InputTextBuffer>()), contextTime(SysTime::getInstance()),*/ watchers() {}
+
   /** \brief Destructor. It will shutdown SDL subsystems.
    */
   ~SDLEventDispatcher() {
@@ -49,19 +51,8 @@ public:
     static SDLEventDispatcher instance;
     return (instance);
   }
-
-  /** \brief Returns the InputBuffer where the input info will be written.
-   *  \return The InputBuffer.
-   */
-  std::shared_ptr<InputBuffer> getInputBuffer() {return inputBuffer;}
-
-  /** \brief Returns the InputTextBuffer where the input text info will be written.
-   *  \return The InputTextBuffer.
-   */
-  std::shared_ptr<InputTextBuffer> getInputTextBuffer() {return inputTextBuffer;}
-
   void addWatcher(std::shared_ptr<SDLEventWatcher> watcher) {
-    watcher->set(inputBuffer, inputTextBuffer, contextTime);
+    // watcher->set(inputBuffer, inputTextBuffer, contextTime);
     watchers.push_front(watcher);
   }
 
@@ -73,36 +64,12 @@ public:
       for(auto& w : watchers) {
         w->watch(event);
       }
-      //ImGui_ImplSDL2_ProcessEvent(&event);
-//      if (!tryKeyboardEvent(event)) {
-//        tryMouseEvent(event);
-//      }
     }
   }
 
 private:
-  SDLEventDispatcher() : sdl(SDL_Starter::getInstance(SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC | SDL_INIT_GAMECONTROLLER | SDL_INIT_EVENTS)), inputBuffer(std::make_shared<InputBuffer>()), inputTextBuffer(std::make_shared<InputTextBuffer>()), contextTime(SysTime::getInstance()), watchers() {}
-
-//  bool tryKeyboardEvent(SDL_Event &event);
-//
-//  bool tryMouseEvent(SDL_Event &event);
-//
-//  void setState(uint32_t key, float value, int64_t time);
-//
-//  void setTextInput(std::string text, int64_t time);
-//
-//  void setMouseButtonState(SDL_Event &event, float value);
-//
-//  void setMouseWheelState(SDL_Event &event);
-//
-//  void setMouseCoordsState(SDL_Event &event);
-//
-//  uint32_t getEquivalentToSDL(SDL_Keycode k) {return (k);}
 
   SDL_Starter &sdl;
-  std::shared_ptr<InputBuffer> inputBuffer;
-  std::shared_ptr<InputTextBuffer> inputTextBuffer;
-  std::shared_ptr<ContextTime> contextTime;
   std::forward_list<std::shared_ptr<SDLEventWatcher> > watchers;
 };
 

@@ -48,12 +48,14 @@ void OGLPreDrawFtry::setup(std::string name, uint64_t cfgId) {
     auto pidName = programId.get<std::string>();
 
     auto win = sdloglWindowRsrc.get("SDLOGLWindow."s + winname);
+    auto sdled = sdlEvenDWindowRsrc.get("SDLOGLWindow."s + winname + ".SDLEventDispatcher");
     auto cam = cameraRsrc.get("Camera."s + camname);
     auto p = uintStore.get(pidName);
 
     auto oglPreDraw = oglPreDrawRsrc.get("OGLPreDraw."s + name);
     oglPreDraw->setProgram(win, p);
     oglPreDraw->setCamera(cam);
+    oglPreDraw->setSDLEventDispatcher(sdled);
   } else {
     SysError::setError("OGLPreDrawFtry config for "s + name + " not found."s);
   }

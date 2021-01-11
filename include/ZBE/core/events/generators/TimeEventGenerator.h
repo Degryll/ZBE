@@ -59,7 +59,8 @@ public:
 
   void setACTIVE();    //!< Set the state as ACTIVE.
   void setINACTIVE();  //!< Set the state as INACTIVE.
-  void setERASED();    //!< Set the state as ERASED.
+  void setERASED();    //!< Set the state as ERASED
+  void toggle();  //!< Set the state as state.
 
   void setState(State state);  //!< Set the state as state.
 

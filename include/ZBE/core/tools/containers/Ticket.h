@@ -30,6 +30,8 @@ public:
 
   virtual void setState(State state) = 0;  //!< Set the state as state.
 
+  virtual void toggle() = 0;  //!< Set the state as state.
+
   virtual bool isACTIVE() = 0;     //!< True if state is ACTIVE.
   virtual bool isNotACTIVE() = 0;  //!< True if state is not ACTIVE, either INACTIVE or ERASED.
   virtual bool isINACTIVE() = 0;   //!< True if state is INACTIVE.
