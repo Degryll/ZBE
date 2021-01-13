@@ -203,7 +203,7 @@ class ZBEAPI InputEventGenerator : virtual public Daemon {
      */
     void run();
     inline HandlerTicket addHandler(uint32_t inputId, std::shared_ptr<InputHandler> handler) {
-      mism.addHandler(inputId, handler);
+      return mism.addHandler(inputId, handler);
     }
 
     /** Remove a handler from an input event.

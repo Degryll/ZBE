@@ -61,7 +61,7 @@ private:
   std::shared_ptr<Ticket> ticket;
 };
 
-class TicketTogglerIHFtry : public Factory {
+class ZBEAPI TicketTogglerIHFtry : public Factory {
 
   /** \brief Builds a SDLWindow.
    *  \param name Name for the created SDLWindow.

@@ -135,7 +135,7 @@ private:
 
 /** \brief Factory for FixedUniformLinearMotion3DFtry.
  */
-class ZBEAPI FixedUniformLinearMotion3DFtry : virtual public Factory {
+class FixedUniformLinearMotion3DFtry : virtual public Factory {
 public:
   /** \brief Builds a FixedUniformLinearMotion3D.
    *  \param name Name for the created FixedUniformLinearMotion3D.
