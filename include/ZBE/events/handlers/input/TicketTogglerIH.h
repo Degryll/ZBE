@@ -10,6 +10,7 @@
 #ifndef ZBE_EVENTS_HANDLERS_IICKETTOGGLERIH_H_
 #define ZBE_EVENTS_HANDLERS_IICKETTOGGLERIH_H_
 
+#include <cstdio>
 #include <cstdlib>
 #include <memory>
 #include <nlohmann/json.hpp>
@@ -52,7 +53,9 @@ public:
     * param status value from input.
    */
   void run(uint32_t, float status) {
+    printf("Toggle from %i\n", ticket->getState());fflush(stdout);
     ticket->toggle();
+    printf("Toggled to %i\n", ticket->getState());fflush(stdout);
   }
 
 private:

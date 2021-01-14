@@ -10,6 +10,7 @@
 #ifndef ZBE_SDL_EVENTS_KEYMOUSEEVENTWATCHER_H
 #define ZBE_SDL_EVENTS_KEYMOUSEEVENTWATCHER_H
 
+#include <cstdio>
 #include <cstdint>
 #include <nlohmann/json.hpp>
 
@@ -60,9 +61,11 @@ private:
 
   bool tryKeyboardEvent(SDL_Event &event){
     if (event.type == SDL_KEYDOWN) {
+      printf("Down! %i\n", getEquivalentToSDL(event.key.keysym.sym));fflush(stdout);
       setState(getEquivalentToSDL(event.key.keysym.sym), 1.0f, event.key.timestamp);
       return true;
     } else if (event.type == SDL_KEYUP) {
+      printf("Up! %i\n", getEquivalentToSDL(event.key.keysym.sym));fflush(stdout);
       setState(getEquivalentToSDL(event.key.keysym.sym), 0.0f, event.key.timestamp);
       return true;
     } else if (event.type == SDL_TEXTINPUT) {

@@ -12,6 +12,7 @@
     "NEGATIVEONE" : {"type":"ifd", "value":-1},
     "width" : {"type":"uifd", "value":1024},
     "height" : {"type":"uifd", "value":768},
+
     "gidIdx" : 1000,
     "stateIdx" : 1010,
     "degreesIdx" : 1020,
@@ -19,10 +20,14 @@
     "sizeIdx" : 1040,
     "scaleIdx" : 1050,
     "orientationIdx" : 1060,
-    "drawticket" : 2000,
-    "fovticket" : 3000,
-    "positionTicket" : 4000,
+    "drawticket" : 1070,
+    "positionTicket" : 1080,
+
     "fovIdx" : 3100,
+    "targetIdx" : 3100,
+    "fovticket" : 3200,
+    "targetTicket" : 3300,
+
     "state.static" : 0,
     "testwflags": 0,
     "testrflags": 0,
@@ -35,7 +40,7 @@
     "cam.fov" :{"type":"f", "value":90.0},
     "cam.aspect" :{"type":"f", "value":1.333333},
     "cam.znear" :{"type":"f", "value":1.0},
-    "cam.zfar" :{"type":"f", "value":150.0},
+    "cam.zfar" :{"type":"f", "value":1500.0},
     "cam.fovMin" :{"type":"f", "value":30.0},
     "cam.fovMax" :{"type":"f", "value":120.0},
     "cam.fovPeriod" :{"type":"i", "value":65536},
@@ -244,7 +249,8 @@
               "fovIdx":"zandbokz.fov"
             },
             "V3D": {
-              "positionIdx":"zandbokz.camEye"
+              "positionIdx":"zandbokz.camEye",
+              "targetIdx":"zandbokz.camTarget"
             },
             "TODO": "asociar todos los values de la camara"
           }
@@ -279,7 +285,10 @@
               "loadScreen.coordOscillatorDaemon"
             ],
             "disabledDaemons": [
-              "loadScreen.goForwardDaemon"
+              "loadScreen.goForwardDaemon",
+              "loadScreen.goBackwardDaemon",
+              "loadScreen.goLeftDaemon",
+              "loadScreen.goRightDaemon"
             ]
           }
         },
@@ -380,6 +389,30 @@
             "contextTime" : "DEFAULT"
           }
         },
+        {"factory": "FixedUniformLinearMotion3DFtry",
+          "name": "loadScreen.goBackward",
+          "description" : "Comportamiento que menea el obojeto to patras",
+          "config" : {
+            "velocity" : "model.fixedBackwardVelocity",
+            "contextTime" : "DEFAULT"
+          }
+        },
+        {"factory": "FixedUniformLinearMotion3DFtry",
+          "name": "loadScreen.goLeft",
+          "description" : "Comportamiento que menea el obojeto pa la siniestra",
+          "config" : {
+            "velocity" : "model.fixedLeftVelocity",
+            "contextTime" : "DEFAULT"
+          }
+        },
+        {"factory": "FixedUniformLinearMotion3DFtry",
+          "name": "loadScreen.goRight",
+          "description" : "Comportamiento que menea el obojeto pa la diestra",
+          "config" : {
+            "velocity" : "model.fixedRightVelocity",
+            "contextTime" : "DEFAULT"
+          }
+        },
         {"factory": "DrawerModelDaemonFtry",
           "name": "loadScreen.drawDaemon",
           "description" : "demonio que pintara la pantalla. Faltan tipos",
@@ -412,6 +445,30 @@
             "behavior" : "loadScreen.goForward"
           }
         },
+        {"factory": "V3DAvtDaemonFtry",
+          "name": "loadScreen.goBackwardDaemon",
+          "description" : "demonio que menea la camara",
+          "config" : {
+            "list" : "loadScreen.camMoveList",
+            "behavior" : "loadScreen.goBackward"
+          }
+        },
+        {"factory": "V3DAvtDaemonFtry",
+          "name": "loadScreen.goLeftDaemon",
+          "description" : "demonio que menea la camara",
+          "config" : {
+            "list" : "loadScreen.camMoveList",
+            "behavior" : "loadScreen.goLeft"
+          }
+        },
+        {"factory": "V3DAvtDaemonFtry",
+          "name": "loadScreen.goRightDaemon",
+          "description" : "demonio que menea la camara",
+          "config" : {
+            "list" : "loadScreen.camMoveList",
+            "behavior" : "loadScreen.goRight"
+          }
+        },
         {"factory": "Drawable3DAvtFtry",
           "name": "loadScreen.bgEnt",
           "config" : {
@@ -437,6 +494,14 @@
           }
         },
         {"factory": "V3DAvtFtry",
+          "name": "loadScreen.camTarget",
+          "config" : {
+            "entity" : "cameraController",
+            "attribIndexes" : ["targetIdx"],
+            "lists":{"loadScreen.camMoveList":"targetTicket"}
+          }
+        },
+        {"factory": "V3DAvtFtry",
           "name": "loadScreen.logoX",
           "config" : {
             "entity" : "loadingLogo",
@@ -453,6 +518,30 @@
             "ticket" : "BehaviorsMD.loadScreen.goForwardDaemon.ticket",
             "inputEventGenerator" : "loadScreen.inputEventGenerator",
             "key":"ZBEK_w"
+          }
+        },
+        {"factory": "TicketTogglerIHFtry",
+          "name": "loadScreen.goBackwardInputH",
+          "config" : {
+            "ticket" : "BehaviorsMD.loadScreen.goBackwardDaemon.ticket",
+            "inputEventGenerator" : "loadScreen.inputEventGenerator",
+            "key":"ZBEK_s"
+          }
+        },
+        {"factory": "TicketTogglerIHFtry",
+          "name": "loadScreen.goLeftInputH",
+          "config" : {
+            "ticket" : "BehaviorsMD.loadScreen.goLeftDaemon.ticket",
+            "inputEventGenerator" : "loadScreen.inputEventGenerator",
+            "key":"ZBEK_a"
+          }
+        },
+        {"factory": "TicketTogglerIHFtry",
+          "name": "loadScreen.goRightInputH",
+          "config" : {
+            "ticket" : "BehaviorsMD.loadScreen.goRightDaemon.ticket",
+            "inputEventGenerator" : "loadScreen.inputEventGenerator",
+            "key":"ZBEK_d"
           }
         }
       ]
