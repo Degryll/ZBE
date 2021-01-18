@@ -25,6 +25,7 @@ SDLWindow::SDLWindow(const char* title, int x, int y, int width, int height, Uin
          output(SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, width, height)),
          imgStore(std::make_shared<SDLImageStore>(renderer)), fontStore(std::make_shared<SDLTextFontStore>(imgStore, renderer)) {
 
+  SDL_CaptureMouse(SDL_TRUE);
   checkWidowCreation();
 }
 
