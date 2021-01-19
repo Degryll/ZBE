@@ -60,11 +60,11 @@ private:
   uint32_t getEquivalentToSDL(SDL_Keycode k) {return (k);}
 
   bool tryKeyboardEvent(SDL_Event &event){
-    if (event.type == SDL_KEYDOWN) {
+    if (event.type == SDL_KEYDOWN && event.key.repeat == 0) {
       printf("Down! %i\n", getEquivalentToSDL(event.key.keysym.sym));fflush(stdout);
       setState(getEquivalentToSDL(event.key.keysym.sym), 1.0f, event.key.timestamp);
       return true;
-    } else if (event.type == SDL_KEYUP) {
+    } else if (event.type == SDL_KEYUP && event.key.repeat == 0) {
       printf("Up! %i\n", getEquivalentToSDL(event.key.keysym.sym));fflush(stdout);
       setState(getEquivalentToSDL(event.key.keysym.sym), 0.0f, event.key.timestamp);
       return true;

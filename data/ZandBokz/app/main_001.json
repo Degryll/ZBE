@@ -41,8 +41,8 @@
     "cam.aspect" :{"type":"f", "value":1.333333},
     "cam.znear" :{"type":"f", "value":1.0},
     "cam.zfar" :{"type":"f", "value":1500.0},
-    "cam.fovMin" :{"type":"f", "value":30.0},
-    "cam.fovMax" :{"type":"f", "value":120.0},
+    "cam.fovMin" :{"type":"f", "value":90.0},
+    "cam.fovMax" :{"type":"f", "value":100.0},
     "cam.fovPeriod" :{"type":"i", "value":65536},
     "model.coordMin" :{"type":"f", "value":-10.0},
     "model.coordMax" :{"type":"f", "value":10.0},
@@ -217,7 +217,7 @@
       "factories" : [
         {"factory": "EntityFtry",
           "name": "loadingLogo",
-          "description" : "El logo que se muestra en la pantalla de carga",
+          "description" : "Pepinazo",
           "config" : {
             "uint": {
               "gidIdx":["Pepino"]
@@ -227,8 +227,25 @@
               "scaleIdx":[1.5]
             },
             "V3D": {
-              "positionIdx":[1.0, 1.0, 0.0],
+              "positionIdx":[1.0, 10.0, 0.0],
               "orientationIdx":[0.5, 0.5, 0.5]
+            }
+          }
+        },
+        {"factory": "EntityFtry",
+          "name": "Suelo",
+          "description" : "El logo que se muestra en la pantalla de carga",
+          "config" : {
+            "uint": {
+              "gidIdx":["Plane"]
+            },
+            "double": {
+              "degreesIdx":[0.0],
+              "scaleIdx":[200.0]
+            },
+            "V3D": {
+              "positionIdx":[0.0, 0.0, 0.0],
+              "orientationIdx":[0.0, 1.0, 0.0]
             }
           }
         },
@@ -473,6 +490,14 @@
           "name": "loadScreen.bgEnt",
           "config" : {
             "entity" : "loadingLogo",
+            "attribIndexes" : ["gidIdx", "scaleIdx", "degreesIdx", "orientationIdx", "positionIdx"],
+            "lists":{"loadScreen.drawList":"drawticket"}
+          }
+        },
+        {"factory": "Drawable3DAvtFtry",
+          "name": "loadScreen.sueloEnt",
+          "config" : {
+            "entity" : "Suelo",
             "attribIndexes" : ["gidIdx", "scaleIdx", "degreesIdx", "orientationIdx", "positionIdx"],
             "lists":{"loadScreen.drawList":"drawticket"}
           }
