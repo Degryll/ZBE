@@ -14,13 +14,25 @@ namespace zbe {
 void InputEventGenerator::run() {
   std::vector<InputStatus> currentInput;
   inputBuffer->getRange(contextTime->getInitFrameTime(), contextTime->getEndFrameTime(), currentInput);
-  for(auto input : currentInput) {
-    mism.generate(input);
-  } // for each currentInput
+  auto it = currentInput.begin();
+  while (it != currentInput.end() && ! mism.generate(*it)){
+    ++it;
+  }
+
+  if (it!= currentInput.end()) {
+    auto time = it->getTime();
+    ++it;
+    for(; it != currentInput.end(); ++it) {
+      if (it->getTime()!=time) {
+        break;
+      }
+      mism.generate(*it);
+    } // for each currentInput
+  }
 
   if (handler != nullptr) {
     std::vector<InputText> itv;
-    inputTextBuffer->getRange(contextTime->getInitFrameTime(), contextTime->getEndFrameTime(), itv);
+    inputTextBuffer->getFirstInRange(contextTime->getInitFrameTime(), contextTime->getEndFrameTime(), itv);
     for(auto input : itv) {
       TextEvent* e = new TextEvent(eventId, input.getTime(), input.getText(), handler);
       store.storeEvent(e);

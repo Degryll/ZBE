@@ -61,11 +61,9 @@ private:
 
   bool tryKeyboardEvent(SDL_Event &event){
     if (event.type == SDL_KEYDOWN && event.key.repeat == 0) {
-      printf("Down! %i\n", getEquivalentToSDL(event.key.keysym.sym));fflush(stdout);
       setState(getEquivalentToSDL(event.key.keysym.sym), 1.0f, event.key.timestamp);
       return true;
     } else if (event.type == SDL_KEYUP && event.key.repeat == 0) {
-      printf("Up! %i\n", getEquivalentToSDL(event.key.keysym.sym));fflush(stdout);
       setState(getEquivalentToSDL(event.key.keysym.sym), 0.0f, event.key.timestamp);
       return true;
     } else if (event.type == SDL_TEXTINPUT) {
@@ -96,6 +94,7 @@ private:
     int64_t zbeTime = MILITOZBETU(time);
     int64_t gameTime = zbeTime - contextTime->getLostTime();
     int64_t storeTime = quantizeTime(gameTime) + zbe::TIME_QUANTUM;
+    //TODO: Ampliar la depuración a partir de aqui. El evento lo estamos registrando.
     InputStatus is(key, value, storeTime);
     inputBuffer->insert(is);
   }

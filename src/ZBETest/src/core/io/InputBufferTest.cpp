@@ -24,7 +24,7 @@ TEST (InputBuffer, insert) {
 
   std::vector<zbe::InputStatus> store;
 
-  buf.getRange(25,35,store);
+  buf.getFirstInRange(25,35,store);
 
   EXPECT_EQ(2,store.size()) << "just status c & d are stored";
   EXPECT_EQ(30,store.at(0).getTime()) << "c = 30";
@@ -34,7 +34,7 @@ TEST (InputBuffer, insert) {
 
   store.clear();
 
-  buf.getRange(35,55,store);
+  buf.getFirstInRange(35,55,store);
 
   EXPECT_EQ(1,store.size()) << "just status e stored";
   EXPECT_EQ(40,store.at(0).getTime()) << "e = 40";

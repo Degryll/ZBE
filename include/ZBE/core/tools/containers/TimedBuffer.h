@@ -45,6 +45,7 @@ public:
    *  \param store Store with all the elements in the given range.
    */
   void getRange(uint64_t initT, uint64_t endT, std::vector<T>& store);
+  void getFirstInRange(uint64_t initT, uint64_t endT, std::vector<T>& store);
 
 private:
   std::multiset< TimedElement<T> > buffer;
@@ -52,6 +53,22 @@ private:
 
 template <typename T>
 void TimedBuffer<T>::getRange(uint64_t initT, uint64_t endT, std::vector<T>& store) {
+  TimedElement<T> upper(initT);
+  buffer.erase(buffer.begin(),buffer.upper_bound(upper));
+  if(!buffer.empty()){
+    auto it = buffer.begin();
+    for(auto& te : buffer) {
+      if(te.getTime() > endT) {
+        break;
+      }
+      store.push_back(te.getElement());
+    }
+  }  // if buffer not empty
+}
+
+
+template <typename T>
+void TimedBuffer<T>::getFirstInRange(uint64_t initT, uint64_t endT, std::vector<T>& store) {
   TimedElement<T> upper(initT);
   buffer.erase(buffer.begin(),buffer.upper_bound(upper));
   if(!buffer.empty()){

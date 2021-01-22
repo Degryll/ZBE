@@ -13,7 +13,7 @@ namespace zbe {
 
 void NetEventGenerator::run() {
   std::vector<NetMessage> msgs;
-  netBuffer->getRange(contextTime->getInitFrameTime(), contextTime->getEndFrameTime(), msgs);
+  netBuffer->getFirstInRange(contextTime->getInitFrameTime(), contextTime->getEndFrameTime(), msgs);
   for(auto msg : msgs) {
     SDLSocket s = msg.getSocket();
     NetEvent* e = new NetEvent(eventId, msg.getTime(), msg.getSequence(), s, msg.getMsg(), s.getHandler());

@@ -50,7 +50,7 @@ public:
    *  Implementation dependant.
    *  \param is InputStatus to check
    */
-  virtual void generate(const InputStatus& is) = 0;
+  virtual bool generate(const InputStatus& is) = 0;
 protected:
   template <typename IteratorA, typename IteratorB, typename IteratorC>
   inline bool range_contains(IteratorA from, const IteratorB& end, const IteratorC& candidate) {
@@ -139,14 +139,17 @@ public:
     }
   }
 
-  void generate(const InputStatus& is) {
+  bool generate(const InputStatus& is) {
+    bool is_generated = false;
     auto hit = handlers.find(is.getId());
-    if (hit != handlers.end()) {
+    if (hit != handlers.end() && !hit->second.active.empty()) {
+        is_generated = true;
         for(auto& h : hit->second.active) {
           InputEvent* e = new InputEvent(eventId, is.getTime(), is.getId(), is.getStatus(), h.get()); // TODO repensar ese shared_ptr reconvertido a puntero
           store.storeEvent(e);
         }
     }
+    return is_generated;
   }
 
   inline void setEventID(int eventId) {
@@ -172,7 +175,7 @@ class ZBEAPI AnyInputStatusManager : public InputStatusManager {
 public:
   virtual ~AnyInputStatusManager() {}
 
-  virtual void generate(const InputStatus& is) = 0;
+  virtual bool generate(const InputStatus& is) = 0;
 
 };
 

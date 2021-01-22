@@ -39,7 +39,7 @@ TEST(SDLEventDispatcher, SDLEventDispatcher) {
   sed.run();
   std::vector<zbe::InputStatus> input;
   // So 4 outputs are expected
-  ib->getRange(0, UINT_MAX, input);
+  ib->getFirstInRange(0, UINT_MAX, input);
   EXPECT_EQ(input.size(),4)<< "4 inputStatus must be found";
 
   SDL_Quit();

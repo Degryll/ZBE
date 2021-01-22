@@ -34,6 +34,7 @@
 #include "ZBE/factories/implementations/events/generators/TimeEventGnFtry.h"
 
 #include "ZBE/events/handlers/input/TicketTogglerIH.h"
+#include "ZBE/events/handlers/input/KeyDownTicketEnablerIH.h"
 
 #include "ZBE/core/events/generators/InputEventGenerator.h"
 #include "ZBE/core/tools/shared/implementations/SimpleValue.h"
@@ -96,7 +97,8 @@ public:
     factories.insert("DaemonIHFtry", std::make_shared<DaemonIHFtry>());
     factories.insert("InputToValueFtry", std::make_shared<InputToValueFtry>());
     factories.insert("TicketTogglerIHFtry", std::make_shared<TicketTogglerIHFtry>());
-    
+    factories.insert("KeyDownTicketEnablerIHFtry", std::make_shared<KeyDownTicketEnablerIHFtry>());
+
     // --- --- Event time handlers
     factories.insert("DaemonRecurrentTimeHandlerFtry", std::make_shared<DaemonRecurrentTimeHandlerFtry>());
     factories.insert("DaemonTimeHandlerFtry", std::make_shared<DaemonTimeHandlerFtry>());

@@ -36,7 +36,7 @@
     "mainInitialState" : 0,
     "mainExitState" : 1,
     "loadScreen.toMenu": 1,
-    "loadScreen.loadTime" : 2621440,
+    "loadScreen.loadTime" : 26214400,
     "cam.fov" :{"type":"f", "value":90.0},
     "cam.aspect" :{"type":"f", "value":1.333333},
     "cam.znear" :{"type":"f", "value":1.0},
@@ -537,7 +537,7 @@
       ]
     }, {"description" : "Setting controls",
       "factories" : [
-        {"factory": "TicketTogglerIHFtry",
+        {"factory": "KeyDownTicketEnablerIHFtry",
           "name": "loadScreen.goForwardInputH",
           "config" : {
             "ticket" : "BehaviorsMD.loadScreen.goForwardDaemon.ticket",
@@ -545,7 +545,7 @@
             "key":"ZBEK_w"
           }
         },
-        {"factory": "TicketTogglerIHFtry",
+        {"factory": "KeyDownTicketEnablerIHFtry",
           "name": "loadScreen.goBackwardInputH",
           "config" : {
             "ticket" : "BehaviorsMD.loadScreen.goBackwardDaemon.ticket",
@@ -553,7 +553,7 @@
             "key":"ZBEK_s"
           }
         },
-        {"factory": "TicketTogglerIHFtry",
+        {"factory": "KeyDownTicketEnablerIHFtry",
           "name": "loadScreen.goLeftInputH",
           "config" : {
             "ticket" : "BehaviorsMD.loadScreen.goLeftDaemon.ticket",
@@ -561,7 +561,7 @@
             "key":"ZBEK_a"
           }
         },
-        {"factory": "TicketTogglerIHFtry",
+        {"factory": "KeyDownTicketEnablerIHFtry",
           "name": "loadScreen.goRightInputH",
           "config" : {
             "ticket" : "BehaviorsMD.loadScreen.goRightDaemon.ticket",

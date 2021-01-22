@@ -1,14 +1,14 @@
 /**
  * Copyright 2012 Batis Degryll Ludo
- * @file TicketTogglerIH.h
+ * @file KeyDownTicketEnablerIH.h
  * @since 2017-07-05
  * @date 2017-07-05
  * @author Batis Degrill Ludo
  * @brief Handler that stores input value to a Value<double>
  */
 
-#ifndef ZBE_EVENTS_HANDLERS_TICKETTOGGLERIH_H_
-#define ZBE_EVENTS_HANDLERS_TICKETTOGGLERIH_H_
+#ifndef ZBE_EVENTS_HANDLERS_KEYDOWNTICKETENABLERIH_H_
+#define ZBE_EVENTS_HANDLERS_KEYDOWNTICKETENABLERIH_H_
 
 #include <cstdio>
 #include <cstdlib>
@@ -29,18 +29,18 @@
 
 namespace zbe {
 
-class TicketTogglerIHFtry;
+class KeyDownTicketEnablerIHFtry;
 
 /** \brief Handler that stores input value to a Value<double>
  */
-class TicketTogglerIH : public InputHandler {
+class KeyDownTicketEnablerIH : public InputHandler {
 public:
-  friend class TicketTogglerIHFtry;
+  friend class KeyDownTicketEnablerIHFtry;
 
   /** brief Parametrized constructor
     * param value where to store input.
    */
-  TicketTogglerIH(std::shared_ptr<Ticket> ticket) : ticket(ticket) {}
+  KeyDownTicketEnablerIH(std::shared_ptr<Ticket> ticket) : ticket(ticket) {}
 
   /** \brief Set Value<double> where input will be stored.
    *  \param value where input will be stored.
@@ -53,18 +53,21 @@ public:
     * param status value from input.
    */
   void run(uint32_t, float status) {
-    printf("Toggle from %i\n", ticket->getState());fflush(stdout);
-    ticket->toggle();
-    printf("Toggled to %i\n", ticket->getState());fflush(stdout);
+    if (status < 0.5) {
+      ticket->setINACTIVE();
+    } else {
+      ticket->setACTIVE();
+    }
+
   }
 
 private:
-  TicketTogglerIH() : ticket(nullptr) {}
+  KeyDownTicketEnablerIH() : ticket(nullptr) {}
 
   std::shared_ptr<Ticket> ticket;
 };
 
-class ZBEAPI TicketTogglerIHFtry : public Factory {
+class ZBEAPI KeyDownTicketEnablerIHFtry : public Factory {
 
   /** \brief Builds a SDLWindow.
    *  \param name Name for the created SDLWindow.
@@ -82,7 +85,7 @@ private:
   RsrcStore<nlohmann::json> &configRsrc    = RsrcStore<nlohmann::json>::getInstance();
   RsrcDictionary<std::string>& strStore    = RsrcDictionary<std::string>::getInstance();
   RsrcDictionary<ZBE_K>& keyStore          = RsrcDictionary<ZBE_K>::getInstance();
-  RsrcStore<TicketTogglerIH>& ttihRsrc     = RsrcStore<TicketTogglerIH>::getInstance();
+  RsrcStore<KeyDownTicketEnablerIH>& ttihRsrc     = RsrcStore<KeyDownTicketEnablerIH>::getInstance();
   RsrcStore<InputHandler>& ihRsrc          = RsrcStore<InputHandler>::getInstance();
   RsrcStore<Ticket>& ticketStore           = RsrcStore<Ticket>::getInstance();
   RsrcStore<InputEventGenerator>& iegStore = RsrcStore<InputEventGenerator>::getInstance();
@@ -90,4 +93,4 @@ private:
 
 }  // namespace zbe
 
-#endif  // ZBE_EVENTS_HANDLERS_TICKETTOGGLERIH_H_
+#endif  // ZBE_EVENTS_HANDLERS_KEYDOWNTICKETENABLERIH_H_
