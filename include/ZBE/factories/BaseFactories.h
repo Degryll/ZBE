@@ -86,6 +86,7 @@ public:
     factories.insert("SineOscillatorFFtry", std::make_shared<SineOscillatorFFtry>());
     factories.insert("SineOscillatorV3DFtry", std::make_shared<SineOscillatorV3DFtry>());
     factories.insert("FixedUniformLinearMotion3DFtry", std::make_shared<FixedUniformLinearMotion3DFtry>());
+    factories.insert("RelativeUniformLinearMotion3DFtry", std::make_shared<RelativeUniformLinearMotion3DFtry>());
 
     // --- Events
     // --- --- Event generators

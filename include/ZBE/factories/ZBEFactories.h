@@ -20,6 +20,7 @@
 
 #include "ZBE/core/entities/avatars/Avatar.h"
 #include "ZBE/core/entities/avatars/implementations/BaseAvatar.h"
+#include "ZBE/core/entities/avatars/implementations/CustomAvatars.h"
 
 #include "ZBE/core/tools/containers/RsrcStore.h"
 #include "ZBE/core/tools/containers/TicketedForwardList.h"
@@ -56,14 +57,24 @@ public:
     using V3DAvtList = TicketedForwardList<SAvatar<Vector3D> >;
     using V3DAvtBhvr = BehaviorDmnFtry<V3DAvtList, Vector3D>;
 
+    using ThreeV3DAvtList = TicketedForwardList<MAvatar<Vector3D, Vector3D, Vector3D> >;
+    using ThreeV3DAvtBhvr = BehaviorDmnFtry<ThreeV3DAvtList, Vector3D, Vector3D, Vector3D>;
+
+    using PosVel3DAvtList = TicketedForwardList<MAvatar<Vector3D, Vector3D> >;
+    using PosVel3DAvtBhvr = BehaviorDmnFtry<PosVel3DAvtList, Vector3D, Vector3D>;
+
     auto& factories = RsrcStore<Factory>::getInstance();
 
+    // Avatars
     factories.insert("Drawable2DAvtFtry", std::make_shared<BaseAvatarFtry<uint64_t, int64_t, double, Vector2D, Vector2D> >());
     factories.insert("Drawable3DAvtFtry", std::make_shared<BaseAvatarFtry<uint64_t, double,  double, Vector3D, Vector3D> >());
 
     factories.insert("FloatAvtFtry", std::make_shared<BaseAvatarFtry<float> >());
     factories.insert("V3DAvtFtry", std::make_shared<BaseAvatarFtry<Vector3D> >());
 
+    factories.insert("TargetToDirAvtFtry", std::make_shared<TargetToDirAvtFtry>());
+
+    // Daemons & List
     factories.insert("DrawerAnimSprtFtry", std::make_shared<AnimDrwr>());
     factories.insert("TFAECAnimSprtFtry" , std::make_shared<SimpleGenericFtry<AnimList> >(listName));
 
@@ -75,6 +86,12 @@ public:
 
     factories.insert("V3DAvtDaemonFtry", std::make_shared<V3DAvtBhvr>());
     factories.insert("TFAECV3DAvtFtry" , std::make_shared<SimpleGenericFtry<V3DAvtList> >(listName));
+
+    factories.insert("ThreeV3DAvtDaemonFtry", std::make_shared<ThreeV3DAvtBhvr>());
+    factories.insert("TFAECThreeV3DAvtFtry" , std::make_shared<SimpleGenericFtry<ThreeV3DAvtList> >(listName));
+
+    factories.insert("PosVel3DAvtDaemonFtry", std::make_shared<PosVel3DAvtBhvr>());
+    factories.insert("TFAECPosVelV3DAvtFtry" , std::make_shared<SimpleGenericFtry<PosVel3DAvtList> >(listName));
   }
 };
 

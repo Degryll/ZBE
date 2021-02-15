@@ -20,7 +20,7 @@ template <typename T>
 class Value {
 public:
 
-  virtual ~Value(){} //<! Virtual destructor
+  virtual ~Value() = default; //<! Virtual destructor
 
   /** brief Returns the value.
    *  return value;

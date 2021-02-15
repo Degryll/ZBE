@@ -98,13 +98,18 @@ public:
   std::shared_ptr<Value<U> > get() {
     return (this->_Avatar<m, U>::get());
   }
+
+  template <unsigned m, typename U>
+  void set(U value) {
+    this->_Avatar<m, U>::set(value);
+  }
 };
 
 template <unsigned n, typename T>
 class _Avatar<n, T> : virtual public Avatar {
 public:
   using Base = Avatar;
-  _Avatar(const _Avatar& rhs) : subGetter(rhs.subGetter), instance(rhs.instance) {}
+  _Avatar(const _Avatar& rhs) : subGetter(rhs.subGetter), subSetter(rhs.subSetter), instance(rhs.instance) {}
   void operator=(const _Avatar&) = delete;
 
   virtual ~_Avatar() {}
@@ -114,18 +119,26 @@ public:
    return ((*subGetter)(instance));
   }
 
+  template <unsigned m = n, typename U = T>
+  void set(U value) {
+   (*subSetter)(instance, value);
+  }
+
 protected:
   using SubGetter = std::shared_ptr<Value<T> > (*)(void*);
-  void setup(SubGetter subGetter, void *instance) {
+  using SubSetter = void (*)(void*, T);
+  void setup(SubGetter subGetter, SubSetter subSetter, void *instance) {
     this->subGetter = subGetter;
+    this->subSetter = subSetter;
     this->instance = instance;
   }
   //_Avatar() = delete;
-   _Avatar() : subGetter(nullptr), instance(nullptr) {}
+   _Avatar() : subGetter(nullptr), subSetter(nullptr), instance(nullptr) {}
   //   static_assert(false, "_Avatar empty constructor called.");
   // }
-  _Avatar(SubGetter subGetter, void *instance) : subGetter(subGetter), instance(instance) {}
+  _Avatar(SubGetter subGetter, SubSetter subSetter, void *instance) : subGetter(subGetter), subSetter(subSetter), instance(instance) {}
   SubGetter subGetter;
+  SubSetter subSetter;
   void *instance;
 };
 

@@ -97,6 +97,53 @@ class UniformLinearMotion3D : virtual public Behavior<Vector3D, Vector3D > {
     std::shared_ptr<ContextTime> contextTime;
 };
 
+
+/** \brief Define the minimal functions of every behavior.
+ */
+class RelativeUniformLinearMotion3D : virtual public Behavior<Vector3D, Vector3D, Vector3D > {
+  public:
+    RelativeUniformLinearMotion3D(const RelativeUniformLinearMotion3D&) = delete;
+    void operator=(const RelativeUniformLinearMotion3D&) = delete;
+
+    /** \brief Default constructor.
+     */
+    RelativeUniformLinearMotion3D() : contextTime(zbe::SysTime::getInstance()) {}
+
+    /** \brief Virtual destructor.
+     */
+    virtual ~RelativeUniformLinearMotion3D() {}
+
+    void setContextTime(std::shared_ptr<ContextTime> contextTime) {
+      this->contextTime = contextTime;
+    }
+
+    void setVelocity(Vector3D velocity) {
+      vel = velocity;
+    }
+
+    /** \brief Makes the entity move in a straight line
+     */
+    void apply(std::shared_ptr<MAvatar<Vector3D, Vector3D, Vector3D > > avatar) {
+      auto vpos = avatar->get<1, Vector3D>();
+      auto vdir = avatar->get<2, Vector3D>();
+      auto vup = avatar->get<3, Vector3D>();
+      auto nx = cross(vdir->get(), vup->get());
+
+      Vector3D vx = nx * vel[0];
+      Vector3D vy = vup->get() * vel[1];
+      Vector3D vz = vdir->get() * vel[2];
+
+      Vector3D v = vx + vy + vz;
+
+      avatar->set<1, Vector3D>(vpos->get() + (v * contextTime->getCurrentTime()) * zbe::INVERSE_SECOND);
+    }
+
+  private:
+    std::shared_ptr<ContextTime> contextTime;
+    Vector3D vel;
+};
+
+
 /** \brief Define the minimal functions of every behavior.
  */
 class FixedUniformLinearMotion3D : virtual public Behavior<Vector3D > {
@@ -125,7 +172,8 @@ public:
    */
   void apply(std::shared_ptr<MAvatar<Vector3D> > avatar) {
     auto vpos = avatar->get<1, Vector3D>();
-    vpos->set(vpos->get() + (vvel * contextTime->getCurrentTime()) * zbe::INVERSE_SECOND);
+    //vpos->set(vpos->get() + (vvel * contextTime->getCurrentTime()) * zbe::INVERSE_SECOND);
+    avatar->set<1, Vector3D>(vpos->get() + (vvel * contextTime->getCurrentTime()) * zbe::INVERSE_SECOND);
   }
 
 private:
@@ -202,6 +250,75 @@ private:
   RsrcStore<FixedUniformLinearMotion3D>& fulm3dRsrc = RsrcStore<FixedUniformLinearMotion3D>::getInstance();
 };
 
+/** \brief Factory for FixedUniformLinearMotion3DFtry.
+ */
+class RelativeUniformLinearMotion3DFtry : virtual public Factory {
+public:
+  /** \brief Builds a FixedUniformLinearMotion3D.
+   *  \param name Name for the created FixedUniformLinearMotion3D.
+   *  \param cfgId FixedUniformLinearMotion3D's configuration id.
+   */
+  void create(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    std::shared_ptr<RelativeUniformLinearMotion3D> rulm3d = std::shared_ptr<RelativeUniformLinearMotion3D>(new RelativeUniformLinearMotion3D);
+    behaviorRsrc.insert("Behavior."s + name, rulm3d);
+    rulm3dRsrc.insert("RelativeUniformLinearMotion3D."s + name, rulm3d);
+  }
+
+  /** \brief Setup the desired tool. The tool will be complete after this step.
+   *  \param name Name of the tool.
+   *  \param cfgId Tool's configuration id.
+   */
+  void setup(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+    if(cfg) {
+      auto j = *cfg;
+      if (!j["velocity"].is_string()) {
+        SysError::setError("RelativeUniformLinearMotion3DFtry config for velocity: "s + j["velocity"].get<std::string>() + ": must be a literal vector name."s);
+        return;
+      }
+      if (!j["contextTime"].is_string()) {
+        SysError::setError("RelativeUniformLinearMotion3DFtry config for contextTime: "s + j["limit"].get<std::string>() + ": must be a literal context time name."s);
+        return;
+      }
+
+      std::string velocityName = j["velocity"].get<std::string>();
+      if(!vecStore.contains(velocityName)) {
+        SysError::setError("RelativeUniformLinearMotion3DFtry config for velocity: "s + velocityName + " is not a vector literal."s);
+        return;
+      }
+
+      std::string cTimeName = j["contextTime"].get<std::string>();
+      if(!cTimeRsrc.contains("ContextTime."s + cTimeName)) {
+        SysError::setError("RelativeUniformLinearMotion3DFtry config for contextTime: "s + cTimeName + " is not a context time name."s);
+        return;
+      }
+
+      auto vel = vecStore.get(velocityName);
+      std::shared_ptr<ContextTime> cTime = cTimeRsrc.get("ContextTime."s + cTimeName);
+      auto rulm3d = rulm3dRsrc.get("RelativeUniformLinearMotion3D."s + name);
+
+      rulm3d->setVelocity(vel);
+      rulm3d->setContextTime(cTime);
+
+    } else {
+      SysError::setError("RelativeUniformLinearMotion3DFtry config for "s + name + " not found."s);
+    }
+
+  }
+
+private:
+
+  RsrcStore<nlohmann::json>& configRsrc = RsrcStore<nlohmann::json>::getInstance();
+  RsrcDictionary<Vector3D>& vecStore = RsrcDictionary<Vector3D>::getInstance();
+  RsrcStore<ContextTime>& cTimeRsrc = RsrcStore<ContextTime>::getInstance();
+  RsrcStore<Behavior<Vector3D, Vector3D, Vector3D> >& behaviorRsrc = RsrcStore<Behavior<Vector3D, Vector3D, Vector3D> >::getInstance();
+  RsrcStore<RelativeUniformLinearMotion3D>& rulm3dRsrc = RsrcStore<RelativeUniformLinearMotion3D>::getInstance();
+};
+
 /** \brief Factory for UniformLinearMotion3DFtry.
  */
 class ZBEAPI UniformLinearMotion3DFtry : virtual public Factory {
@@ -245,7 +362,6 @@ public:
     } else {
       SysError::setError("UniformLinearMotion3DFtry config for "s + name + " not found."s);
     }
-
   }
 
 private:

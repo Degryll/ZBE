@@ -423,6 +423,7 @@
 		<Unit filename="../../../include/ZBE/core/entities/avatars/SingleSprite.h" />
 		<Unit filename="../../../include/ZBE/core/entities/avatars/StatedSprite.h" />
 		<Unit filename="../../../include/ZBE/core/entities/avatars/implementations/BaseAvatar.h" />
+		<Unit filename="../../../include/ZBE/core/entities/avatars/implementations/CustomAvatars.h" />
 		<Unit filename="../../../include/ZBE/core/entities/avatars/implementations/SimpleAnimatedSprite.h" />
 		<Unit filename="../../../include/ZBE/core/entities/avatars/implementations/SimpleRotatedSprite.h" />
 		<Unit filename="../../../include/ZBE/core/entities/avatars/implementations/SimpleSingleSprite.h" />

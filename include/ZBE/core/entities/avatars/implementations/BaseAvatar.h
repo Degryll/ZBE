@@ -1,6 +1,6 @@
 /**
  * Copyright 2012 Batis Degryll Ludo
- * @file Avatar.h
+ * @file BaseAvatar.h
  * @since 2017-04-12
  * @date 2018-02-25
  * @author Ludo Batis Degryll
@@ -190,13 +190,13 @@ public:
   _BaseAvatar() : A(), _Avatar<n, T>(), v() { setCallback();}
   _BaseAvatar(std::shared_ptr<Entity> entity, uint64_t id)
    : A(entity),
-     _Avatar<n, T>(&_BaseAvatar::getImpl, (void*)this),
+     _Avatar<n, T>(&_BaseAvatar::getImpl, &_BaseAvatar::setImpl, (void*)this),
      v(entity->get<T, std::shared_ptr<zbe::Value<T> > >(id)) {
        setCallback();
      }
  _BaseAvatar(std::shared_ptr<Entity> entity, typename std::array<uint64_t, 1>::iterator idsi)
   : A(entity),
-    _Avatar<n, T>(&_BaseAvatar::getImpl, (void*)this),
+    _Avatar<n, T>(&_BaseAvatar::getImpl, &_BaseAvatar::setImpl, (void*)this),
     v(entity->get<T, std::shared_ptr<zbe::Value<T> > >(*idsi)) {
       setCallback();
     }
@@ -205,23 +205,29 @@ public:
 
   void setupEntity(std::shared_ptr<Entity> entity, uint64_t id) {
     A::setupEntity(entity);
-    _Avatar<n, T>::setup(&_BaseAvatar::getImpl, (void*)this);
+    _Avatar<n, T>::setup(&_BaseAvatar::getImpl, &_BaseAvatar::setImpl, (void*)this);
     v = entity->get<T, std::shared_ptr<zbe::Value<T> > >(id);
   }
 
   void setupEntity(std::shared_ptr<Entity> entity, typename std::array<uint64_t, 1>::iterator idsi) {
     A::setupEntity(entity);
-    _Avatar<n, T>::setup(&_BaseAvatar::getImpl, (void*)this);
+    _Avatar<n, T>::setup(&_BaseAvatar::getImpl, &_BaseAvatar::setImpl, (void*)this);
     v = entity->get<T, std::shared_ptr<zbe::Value<T> > >(*idsi);
   }
 
   static std::shared_ptr<Value<T> > getImpl(void *instance) {
+    //TODO asegurarse de que este casting es en tiempo de compilación (static cast?)
     return (((_BaseAvatar<A, n, T>*)instance)->v);
+  }
+
+  static void setImpl(void *instance, T value) {
+    //TODO asegurarse de que este casting es en tiempo de compilación (static cast?)
+    ((_BaseAvatar<A, n, T>*)instance)->v->set(value);
   }
 
 protected:
   void setCallback() {
-    _Avatar<n, T>::setup(&_BaseAvatar::getImpl, (void*)this);
+    _Avatar<n, T>::setup(&_BaseAvatar::getImpl, &_BaseAvatar::setImpl, (void*)this);
   }
 private:
   std::shared_ptr<Value<T> > v;

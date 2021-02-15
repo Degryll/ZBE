@@ -234,6 +234,15 @@ class _VECTOR {
       return (*this);
     }
 
+    /** \brief Modifies this vector setting module to 1.0.
+     *
+     * \return Normalized vector.
+     */
+    friend _VECTOR normalize(_VECTOR rhs)  {
+      return rhs.normalize();
+    }
+
+
     /**
      * \fn _VECTOtypename R::reflect
      * \param normal Vector normal to the collision plane.
@@ -546,7 +555,9 @@ class Vector<3> : public _VECTOR<3> {
      * \return A vector with the cross product.
      * \sa cross().
      */
-    friend Vector<3> cross(Vector<3> lhs, const Vector<3>& rhs);
+    friend Vector<3> cross(Vector<3> lhs, const Vector<3>& rhs) {
+      return (lhs.cross(rhs));
+    }
 
 };
 

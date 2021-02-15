@@ -22,11 +22,15 @@
     "orientationIdx" : 1060,
     "drawticket" : 1070,
     "positionTicket" : 1080,
+    "camPosVelTicket" : 1090,
 
     "fovIdx" : 3100,
-    "targetIdx" : 3100,
-    "fovticket" : 3200,
-    "targetTicket" : 3300,
+    "targetIdx" : 3200,
+    "upwardsIdx" : 3300,
+    "fovticket" : 3400,
+    "targetTicket" : 3500,
+    "camScaleIdx" : 3600,
+    "upwardsTicket" : 3700,
 
     "state.static" : 0,
     "testwflags": 0,
@@ -38,6 +42,7 @@
     "loadScreen.toMenu": 1,
     "loadScreen.loadTime" : 26214400,
     "cam.fov" :{"type":"f", "value":90.0},
+    "cam.scale" :{"type":"f", "value":50.0},
     "cam.aspect" :{"type":"f", "value":1.333333},
     "cam.znear" :{"type":"f", "value":1.0},
     "cam.zfar" :{"type":"f", "value":1500.0},
@@ -47,8 +52,8 @@
     "model.coordMin" :{"type":"f", "value":-10.0},
     "model.coordMax" :{"type":"f", "value":10.0},
     "model.coordPeriod" :{"type":"i", "value":45751},
-    "model.fixedForwardVelocity" :{"type":"v3", "value":[0.0,0.0,-50.0]},
-    "model.fixedBackwardVelocity" :{"type":"v3", "value":[0.0,0.0,50.0]},
+    "model.fixedForwardVelocity" :{"type":"v3", "value":[0.0,0.0,50.0]},
+    "model.fixedBackwardVelocity" :{"type":"v3", "value":[0.0,0.0,-50.0]},
     "model.fixedLeftVelocity" :{"type":"v3", "value":[-50.0,0.0,0.0]},
     "model.fixedRightVelocity" :{"type":"v3", "value":[50.0,0.0,0.0]},
     "model.sineComponent" : 0,
@@ -67,13 +72,14 @@
               },
               "float" : {
                 "fov" : ["cam.fov"],
+                "camScale" : ["cam.scale"],
                 "aspect" : ["cam.aspect"],
                 "znear" : ["cam.znear"],
                 "zfar" : ["cam.zfar"]
               },
               "V3D" : {
                 "camEye" : [0.0, 3.0, 15.0],
-                "camTarget" : [0.0, 0.0, 0.0],
+                "camTarget" : [0.0, 3.0, 0.0],
                 "camTargetOld" : [1.0, 0.0, 1.0],
                 "camUp" : [0.0, 1.0, 0.0]
               }
@@ -103,7 +109,7 @@
           "config" : {}
         },
         {
-          "factory": "TFAECV3DAvtFtry",
+          "factory": "TFAECThreeV3DAvtFtry",
           "description" : "do some serious sheet",
           "name": "loadScreen.camMoveList",
           "config" : {}
@@ -263,11 +269,13 @@
           },
           "config" : {
             "float": {
-              "fovIdx":"zandbokz.fov"
+              "fovIdx":"zandbokz.fov",
+              "camScaleIdx":"zandbokz.camScale"
             },
             "V3D": {
               "positionIdx":"zandbokz.camEye",
-              "targetIdx":"zandbokz.camTarget"
+              "targetIdx":"zandbokz.camTarget",
+              "upwardsIdx":"zandbokz.camUp"
             },
             "TODO": "asociar todos los values de la camara"
           }
@@ -398,7 +406,7 @@
             "component" : "model.sineComponent"
           }
         },
-        {"factory": "FixedUniformLinearMotion3DFtry",
+        {"factory": "RelativeUniformLinearMotion3DFtry",
           "name": "loadScreen.goForward",
           "description" : "Comportamiento que menea el obojeto to palante",
           "config" : {
@@ -406,7 +414,7 @@
             "contextTime" : "DEFAULT"
           }
         },
-        {"factory": "FixedUniformLinearMotion3DFtry",
+        {"factory": "RelativeUniformLinearMotion3DFtry",
           "name": "loadScreen.goBackward",
           "description" : "Comportamiento que menea el obojeto to patras",
           "config" : {
@@ -414,7 +422,7 @@
             "contextTime" : "DEFAULT"
           }
         },
-        {"factory": "FixedUniformLinearMotion3DFtry",
+        {"factory": "RelativeUniformLinearMotion3DFtry",
           "name": "loadScreen.goLeft",
           "description" : "Comportamiento que menea el obojeto pa la siniestra",
           "config" : {
@@ -422,7 +430,7 @@
             "contextTime" : "DEFAULT"
           }
         },
-        {"factory": "FixedUniformLinearMotion3DFtry",
+        {"factory": "RelativeUniformLinearMotion3DFtry",
           "name": "loadScreen.goRight",
           "description" : "Comportamiento que menea el obojeto pa la diestra",
           "config" : {
@@ -454,7 +462,7 @@
             "behavior" : "loadScreen.coordOscillator"
           }
         },
-        {"factory": "V3DAvtDaemonFtry",
+        {"factory": "ThreeV3DAvtDaemonFtry",
           "name": "loadScreen.goForwardDaemon",
           "description" : "demonio que menea la camara",
           "config" : {
@@ -462,7 +470,7 @@
             "behavior" : "loadScreen.goForward"
           }
         },
-        {"factory": "V3DAvtDaemonFtry",
+        {"factory": "ThreeV3DAvtDaemonFtry",
           "name": "loadScreen.goBackwardDaemon",
           "description" : "demonio que menea la camara",
           "config" : {
@@ -470,7 +478,7 @@
             "behavior" : "loadScreen.goBackward"
           }
         },
-        {"factory": "V3DAvtDaemonFtry",
+        {"factory": "ThreeV3DAvtDaemonFtry",
           "name": "loadScreen.goLeftDaemon",
           "description" : "demonio que menea la camara",
           "config" : {
@@ -478,7 +486,7 @@
             "behavior" : "loadScreen.goLeft"
           }
         },
-        {"factory": "V3DAvtDaemonFtry",
+        {"factory": "ThreeV3DAvtDaemonFtry",
           "name": "loadScreen.goRightDaemon",
           "description" : "demonio que menea la camara",
           "config" : {
@@ -510,20 +518,15 @@
             "lists":{"loadScreen.fovOscillatorList":"fovticket"}
           }
         },
-        {"factory": "V3DAvtFtry",
-          "name": "loadScreen.camEye",
+        {"factory": "TargetToDirAvtFtry",
+          "name": "loadScreen.camPosVel",
           "config" : {
             "entity" : "cameraController",
-            "attribIndexes" : ["positionIdx"],
-            "lists":{"loadScreen.camMoveList":"positionTicket"}
-          }
-        },
-        {"factory": "V3DAvtFtry",
-          "name": "loadScreen.camTarget",
-          "config" : {
-            "entity" : "cameraController",
-            "attribIndexes" : ["targetIdx"],
-            "lists":{"loadScreen.camMoveList":"targetTicket"}
+            "positionIdx" : "positionIdx",
+            "targetIdx" : "targetIdx",
+            "upwardsIdx" : "upwardsIdx",
+            "scaleIdx" : "camScaleIdx",
+            "lists":{"loadScreen.camMoveList":"camPosVelTicket"}
           }
         },
         {"factory": "V3DAvtFtry",
