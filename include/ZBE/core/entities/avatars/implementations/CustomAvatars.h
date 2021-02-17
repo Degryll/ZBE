@@ -21,7 +21,7 @@
 
 #include "ZBE/core/entities/Entity.h"
 #include "ZBE/core/entities/avatars/Avatar.h"
-#include "ZBE/core/entities/avatars/Implementations/BaseAvatar.h"
+#include "ZBE/core/entities/avatars/implementations/BaseAvatar.h"
 
 #include "ZBE/core/system/system.h"
 

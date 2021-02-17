@@ -160,12 +160,15 @@
 					<Add library="SDL2_net" />
 					<Add library="GL" />
 					<Add library="GLEW" />
+					<Add library="OpenGL" />
+					<Add library="openal" />
 					<Add directory="../../../lib" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/linux64/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.12/x86_64-linux-gcc/lib" />
 					<Add directory="../../../extlibs/SDL2_net/2.0.1/linux/lib" />
 					<Add directory="../../../extlibs/GLEW/2.1.0/linux/lib" />
+					<Add directory="../../../../../../../usr/lib" />
 				</Linker>
 			</Target>
 			<Target title="Release-Linux64">
@@ -219,9 +222,8 @@
 					<Add library="SDL2_net" />
 					<Add library="GL" />
 					<Add library="GLEW" />
-					<Add library="glew32" />
-					<Add library="opengl32" />
-					<Add library="OpenAL32" />
+					<Add library="OpenGL" />
+					<Add library="openal" />
 					<Add directory="../../../lib" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/linux64/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />

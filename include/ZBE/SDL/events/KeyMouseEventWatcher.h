@@ -94,7 +94,7 @@ private:
     int64_t zbeTime = MILITOZBETU(time);
     int64_t gameTime = zbeTime - contextTime->getLostTime();
     int64_t storeTime = quantizeTime(gameTime) + zbe::TIME_QUANTUM;
-    //TODO: Ampliar la depuración a partir de aqui. El evento lo estamos registrando.
+    //TODO: Ampliar la depuraciï¿½n a partir de aqui. El evento lo estamos registrando.
     InputStatus is(key, value, storeTime);
     inputBuffer->insert(is);
   }
@@ -137,6 +137,8 @@ private:
   }
 
   void setMouseCoordsState(SDL_Event &event) {
+    // TODO 4x!! Relativo y asoluto.
+    // Luego handlers.
     setState(ZBEK_MOUSE_OFFSET_X,event.motion.x,event.key.timestamp);
     setState(ZBEK_MOUSE_OFFSET_Y,event.motion.y,event.key.timestamp);
   }
