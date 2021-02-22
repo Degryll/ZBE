@@ -40,6 +40,7 @@
 #include "ZBE/core/tools/shared/implementations/SimpleValue.h"
 #include "ZBE/core/tools/containers/RsrcStore.h"
 #include "ZBE/core/daemons/Daemon.h"
+#include "ZBE/daemons/OnceDaemon.h"
 #include "ZBE/core/daemons/VoidDaemon.h"
 #include "ZBE/core/system/system.h"
 
@@ -78,6 +79,7 @@ public:
     factories.insert("MainLoopExitFtry", std::make_shared<MainLoopExitFtry>());
     factories.insert("MainLoopFtry", std::make_shared<MainLoopFtry>());
     factories.insert("MasterDmnFtry", std::make_shared<MasterDmnFtry>());
+    factories.insert("OnceDaemonFtry", std::make_shared<OnceDaemonFtry>());
     factories.insert("StateMachineDmnFtry", std::make_shared<StateMachineDmnFtry>());
     factories.insert("RsrcFolderLoaderDmnFtry", std::make_shared<RsrcFolderLoaderDmnFtry>());
     factories.insert("InputEventGeneratorFtry", std::make_shared<InputEventGeneratorFtry>());

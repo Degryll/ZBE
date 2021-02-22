@@ -468,6 +468,7 @@
 		<Unit filename="../../../include/ZBE/core/system/SysIdGenerator.h" />
 		<Unit filename="../../../include/ZBE/core/system/SysTime.h" />
 		<Unit filename="../../../include/ZBE/core/system/system.h" />
+		<Unit filename="../../../include/ZBE/core/tools/Parametric.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/ListJoint.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/RsrcDictionary.h" />
 		<Unit filename="../../../include/ZBE/core/tools/containers/RsrcStore.h" />
@@ -493,6 +494,7 @@
 		<Unit filename="../../../include/ZBE/core/tools/time/Timer.h" />
 		<Unit filename="../../../include/ZBE/core/tools/tools.h" />
 		<Unit filename="../../../include/ZBE/core/zbe.h" />
+		<Unit filename="../../../include/ZBE/daemons/OnceDaemon.h" />
 		<Unit filename="../../../include/ZBE/daemons/RsrcFolderLoaderDmn.h" />
 		<Unit filename="../../../include/ZBE/daemons/RsrcLoaderDmn.h" />
 		<Unit filename="../../../include/ZBE/entities/ActiveElement2D.h" />
@@ -535,6 +537,7 @@
 		<Unit filename="../../../include/ZBE/events/handlers/input/InputToValue.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/input/KeyDownTicketEnablerIH.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/input/RemoveGlyphIH.h" />
+		<Unit filename="../../../include/ZBE/events/handlers/input/RotationIH.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/input/ScrollDownIH.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/input/ScrollIH.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/input/TicketTogglerIH.h" />

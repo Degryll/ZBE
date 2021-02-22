@@ -16,6 +16,7 @@
 
 #include "ZBE/core/system/SysError.h"
 #include "ZBE/core/tools/containers/TicketedElement.h"
+#include "ZBE/core/tools/containers/Ticket.h"
 
 #include "ZBE/core/system/system.h"
 

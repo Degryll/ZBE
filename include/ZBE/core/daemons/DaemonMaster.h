@@ -16,6 +16,7 @@
 
 #include "ZBE/core/daemons/Daemon.h"
 #include "ZBE/core/tools/containers/TicketedForwardList.h"
+#include "ZBE/core/tools/containers/Ticket.h"
 
 #include "ZBE/core/system/system.h"
 
