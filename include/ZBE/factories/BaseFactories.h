@@ -34,6 +34,7 @@
 #include "ZBE/factories/implementations/events/generators/TimeEventGnFtry.h"
 
 #include "ZBE/events/handlers/input/TicketTogglerIH.h"
+#include "ZBE/events/handlers/input/ParametricActivatorIH.h"
 #include "ZBE/events/handlers/input/KeyDownTicketEnablerIH.h"
 
 #include "ZBE/core/events/generators/InputEventGenerator.h"
@@ -46,6 +47,7 @@
 
 #include "ZBE/behaviors/SineOscillator.h"
 #include "ZBE/behaviors/UniformLinearMotion.h"
+#include "ZBE/behaviors/Rotation.h"
 
 namespace zbe {
 
@@ -89,6 +91,7 @@ public:
     factories.insert("SineOscillatorV3DFtry", std::make_shared<SineOscillatorV3DFtry>());
     factories.insert("FixedUniformLinearMotion3DFtry", std::make_shared<FixedUniformLinearMotion3DFtry>());
     factories.insert("RelativeUniformLinearMotion3DFtry", std::make_shared<RelativeUniformLinearMotion3DFtry>());
+    factories.insert("Rotation3DFtry", std::make_shared<Rotation3DFtry>());
 
     // --- Events
     // --- --- Event generators
@@ -100,6 +103,7 @@ public:
     factories.insert("DaemonIHFtry", std::make_shared<DaemonIHFtry>());
     factories.insert("InputToValueFtry", std::make_shared<InputToValueFtry>());
     factories.insert("TicketTogglerIHFtry", std::make_shared<TicketTogglerIHFtry>());
+    factories.insert("ParametricActivatorIHFtry", std::make_shared<ParametricActivatorIHFtry>());
     factories.insert("KeyDownTicketEnablerIHFtry", std::make_shared<KeyDownTicketEnablerIHFtry>());
 
     // --- --- Event time handlers

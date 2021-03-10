@@ -138,9 +138,10 @@ class RsrcStore {
 
 template <typename T>
 std::shared_ptr<T> RsrcStore<T>::get(uint64_t id) {
+  using namespace std::string_literals;
   auto it = l.find(id);
   if (it == l.end()) {
-    SysError::setError("Resource not found.");
+    SysError::setError("GET: Resource not found "s + std::to_string(id));
     return (std::shared_ptr<T>());
   } else {
     return (it->second);
@@ -155,9 +156,10 @@ bool RsrcStore<T>::contains(uint64_t id) {
 
 template <typename T>
 std::shared_ptr<T> RsrcStore<T>::remove(uint64_t id) {
+  using namespace std::string_literals;
   auto it = l.find(id);
   if (it == l.end()) {
-    SysError::setError("Resource not found.");
+    SysError::setError("REMOVE: Resource not found "s + std::to_string(id));
     return (std::shared_ptr<T>());
   } else {
     auto aux = it->second;

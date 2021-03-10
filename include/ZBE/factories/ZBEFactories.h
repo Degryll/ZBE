@@ -63,6 +63,12 @@ public:
     using PosVel3DAvtList = TicketedForwardList<MAvatar<Vector3D, Vector3D> >;
     using PosVel3DAvtBhvr = BehaviorDmnFtry<PosVel3DAvtList, Vector3D, Vector3D>;
 
+    using TwoV3DAvtList = TicketedForwardList<MAvatar<Vector3D, Vector3D> >;
+    using TwoV3DAvtBhvr = BehaviorDmnFtry<TwoV3DAvtList, Vector3D, Vector3D>;
+
+    using LookAtAvtList = TicketedForwardList<MAvatar<Vector3D, Vector3D, Vector3D> >;
+    using LookAtAvtBhvr = BehaviorDmnFtry<LookAtAvtList, Vector3D, Vector3D, Vector3D>;
+
     auto& factories = RsrcStore<Factory>::getInstance();
 
     // Avatars
@@ -73,6 +79,8 @@ public:
     factories.insert("V3DAvtFtry", std::make_shared<BaseAvatarFtry<Vector3D> >());
 
     factories.insert("TargetToDirAvtFtry", std::make_shared<TargetToDirAvtFtry>());
+    factories.insert("LookAtToPitchAvtFtry", std::make_shared<LookAtToPitchAvtFtry>());
+    factories.insert("LookAtToYawAvtFtry", std::make_shared<LookAtToYawAvtFtry>());
 
     // Daemons & List
     factories.insert("DrawerAnimSprtFtry", std::make_shared<AnimDrwr>());
@@ -90,8 +98,14 @@ public:
     factories.insert("ThreeV3DAvtDaemonFtry", std::make_shared<ThreeV3DAvtBhvr>());
     factories.insert("TFAECThreeV3DAvtFtry" , std::make_shared<SimpleGenericFtry<ThreeV3DAvtList> >(listName));
 
+    factories.insert("TwoV3DAvtDaemonFtry", std::make_shared<TwoV3DAvtBhvr>());
+    factories.insert("TFAECTwoV3DAvtFtry" , std::make_shared<SimpleGenericFtry<TwoV3DAvtList> >(listName));
+
     factories.insert("PosVel3DAvtDaemonFtry", std::make_shared<PosVel3DAvtBhvr>());
     factories.insert("TFAECPosVelV3DAvtFtry" , std::make_shared<SimpleGenericFtry<PosVel3DAvtList> >(listName));
+
+    factories.insert("LookAtAvtDaemonFtry", std::make_shared<LookAtAvtBhvr>());
+    factories.insert("TFAECLookAtAvtFtry" , std::make_shared<SimpleGenericFtry<LookAtAvtList> >(listName));
   }
 };
 

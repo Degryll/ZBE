@@ -74,23 +74,24 @@ public:
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
     if(cfg) {
       auto j = *cfg;
-      if (!j["daemon"].is_string()) {
+      if (!j["Daemon"].is_string()) {
         SysError::setError("OnceDaemon " + name + " config for daemon must be a string."s);
         return;
       }
-      if (!j["daemonMaster"].is_string()) {
+      if (!j["DaemonMaster"].is_string()) {
         SysError::setError("OnceDaemon " + name + " config for daemonMaster must be a string."s);
         return;
       }
 
-      std::string daemonName = j["daemon"].get<std::string>();
-      auto d = daemonStore.get("daemon."+daemonName);
+      std::string daemonName = j["Daemon"].get<std::string>();
+      auto d = daemonStore.get("Daemon."+daemonName);
 
-      std::string daemonMasterName = j["daemonMaster"].get<std::string>();
-      auto dm = daemonMasterStore.get("daemonMaster."+daemonMasterName);
+      std::string daemonMasterName = j["DaemonMaster"].get<std::string>();
+      auto dm = daemonMasterStore.get("DaemonMaster."+daemonMasterName);
 
       auto od = onceDaemonStore.get("OnceDaemon."s + name);
       auto t = dm->addDaemon(od);
+      ticketStore.insert(daemonMasterName + "."s + name + ".ticket"s, t);
 
       od->setDaemon(d);
       od->setTicket(t);
@@ -104,6 +105,7 @@ private:
   RsrcStore<OnceDaemon>& onceDaemonStore = RsrcStore<OnceDaemon>::getInstance();
   RsrcStore<Daemon>& daemonStore = RsrcStore<Daemon>::getInstance();
   RsrcStore<DaemonMaster>& daemonMasterStore = RsrcStore<DaemonMaster>::getInstance();
+  RsrcStore<Ticket>& ticketStore = RsrcStore<Ticket>::getInstance();
 };
 
 }  // namespace zbe

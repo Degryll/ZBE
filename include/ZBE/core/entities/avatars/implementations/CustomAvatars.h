@@ -29,14 +29,11 @@
 
 namespace zbe{
 
-//Nombre para el avatar!!! (que towardsAvatar, observerAvatar, lookatAvatar, )
 // Convierte de una entidad con lookAt a un avatar de posicion y velocidad.
 
 class TargetToDirAvt : public MAvatar<Vector3D, Vector3D, Vector3D>, AvatarImp {
 public:
-//TODO el avatar hace lo que tiene que hacer, ahora es el comportamiento el que tiene que hacer la magia
-//TODO añadir un vector UP
-//TODO comportamiento será el encargado de coger los datos de este este avatar y hacer transformaciones de espacios vectoriales
+
   /** \brief
    */
    void setupEntity(std::shared_ptr<Entity> entity, uint64_t positionidx, uint64_t targetidx, uint64_t upwardsidx, uint64_t scaleidx) {
@@ -47,7 +44,7 @@ public:
      position = entity->getVector3D(positionidx);
      target = entity->getVector3D(targetidx);
      upwards = entity->getVector3D(upwardsidx);
-     scale = entity->getFloat(scaleidx);
+     scale = entity->getFloat(scaleidx); //TODO sobra scale? borrar en toda la clase?
    }
 
    static std::shared_ptr<Value<Vector3D> > getPosition(void *instance) {
@@ -110,6 +107,118 @@ private:
   std::shared_ptr<Value<float> > scale;
 };
 
+class LookAtToPitchAvt : public MAvatar<Vector3D, Vector3D>, AvatarImp {
+public:
+
+  /** \brief
+   */
+   void setupEntity(std::shared_ptr<Entity> entity, uint64_t positionidx, uint64_t targetidx, uint64_t upwardsidx) {
+     AvatarImp::setupEntity(entity);
+     _Avatar<1, Vector3D>::setup(&getTarget, &setTarget, (void*)this);
+     _Avatar<2, Vector3D>::setup(&getRotation, &setRotation, (void*)this);
+     position = entity->getVector3D(positionidx);
+     target = entity->getVector3D(targetidx);
+     upwards = entity->getVector3D(upwardsidx);
+   }
+
+   static std::shared_ptr<Value<Vector3D> > getTarget(void *instance) {
+     auto& position = ((LookAtToPitchAvt*)instance)->position;
+     auto& target =   ((LookAtToPitchAvt*)instance)->target;
+     auto p = position->get();
+     auto t = target->get();
+     auto r = std::make_shared<SimpleValue<Vector3D> >();
+     r->set(t - p);
+     return r;
+   }
+
+   static std::shared_ptr<Value<Vector3D> > getRotation(void *instance) {
+     auto& position = ((LookAtToPitchAvt*)instance)->position;
+     auto& target =   ((LookAtToPitchAvt*)instance)->target;
+     auto& upwards =    ((LookAtToPitchAvt*)instance)->upwards;
+     auto& _dxu =    ((LookAtToPitchAvt*)instance)->dxu;
+     auto d = target->get() - position->get();
+     auto u = upwards->get();
+     _dxu = cross(d, u);
+     auto r = std::make_shared<SimpleValue<Vector3D> >();
+     r->set(_dxu);
+     return r;
+   }
+
+   static void setTarget(void *instance, Vector3D target) {
+     auto& _position = ((LookAtToPitchAvt*)instance)->position;
+     auto& _target =  ((LookAtToPitchAvt*)instance)->target;
+     auto& _upwards =    ((LookAtToPitchAvt*)instance)->upwards;
+     auto& _dxu =    ((LookAtToPitchAvt*)instance)->dxu;
+     auto newd = target;
+     auto u = cross(_dxu, newd).normalize();
+     _target->set(target + _position->get());
+     _upwards->set(u);
+   }
+
+   static void setRotation(void*, Vector3D) {
+     // TODO Repensar si tiene sentido realizar alguna conversión en este punto o incluir asserts para evitar que sea llamado.
+   }
+
+   std::shared_ptr<Entity> getEntity() {
+     assert(false);
+   }
+
+private:
+
+  std::shared_ptr<Value<Vector3D> > position;
+  std::shared_ptr<Value<Vector3D> > target;
+  std::shared_ptr<Value<Vector3D> > upwards;
+  Vector3D dxu;
+};
+
+class LookAtToYawAvt : public MAvatar<Vector3D, Vector3D>, AvatarImp {
+public:
+
+  /** \brief
+   */
+   void setupEntity(std::shared_ptr<Entity> entity, uint64_t positionidx, uint64_t targetidx, uint64_t upwardsidx) {
+     AvatarImp::setupEntity(entity);
+     _Avatar<1, Vector3D>::setup(&getTarget, &setTarget, (void*)this);
+     _Avatar<2, Vector3D>::setup(&getRotation, &setRotation, (void*)this);
+     position = entity->getVector3D(positionidx);
+     target = entity->getVector3D(targetidx);
+     upwards = entity->getVector3D(upwardsidx);
+   }
+
+   static std::shared_ptr<Value<Vector3D> > getTarget(void *instance) {
+     auto& position = ((LookAtToYawAvt*)instance)->position;
+     auto& target =   ((LookAtToYawAvt*)instance)->target;
+     auto p = position->get();
+     auto t = target->get();
+     auto r = std::make_shared<SimpleValue<Vector3D> >();
+     r->set(t - p);
+     return r;
+   }
+
+   static std::shared_ptr<Value<Vector3D> > getRotation(void *instance) {
+     return ((LookAtToYawAvt*)instance)->upwards;
+   }
+
+   static void setTarget(void *instance, Vector3D target) {
+     auto& _target =  ((LookAtToYawAvt*)instance)->target;
+     _target->set(target);
+   }
+
+   static void setRotation(void*, Vector3D) {
+     // TODO Repensar si tiene sentido realizar alguna conversión en este punto o incluir asserts para evitar que sea llamado.
+   }
+
+   std::shared_ptr<Entity> getEntity() {
+     assert(false);
+   }
+
+private:
+
+  std::shared_ptr<Value<Vector3D> > position;
+  std::shared_ptr<Value<Vector3D> > target;
+  std::shared_ptr<Value<Vector3D> > upwards;
+};
+
 class TargetToDirAvtFtry : public Factory {
   /** \brief Builds a TargetToDirAvt.
    *  \param name Name for the created TargetToDirAvt.
@@ -164,8 +273,7 @@ class TargetToDirAvtFtry : public Factory {
         return;
       }
 
-// TODO coger datos de la entidad y no de stores. Patanes!
-std::shared_ptr<Entity> ent = entityRsrc.get("Entity."s + entityName);
+      std::shared_ptr<Entity> ent = entityRsrc.get("Entity."s + entityName);
 
       std::string positionIdxName = j["positionIdx"].get<std::string>();
       if(!dict.contains(positionIdxName)) {
@@ -199,19 +307,14 @@ std::shared_ptr<Entity> ent = entityRsrc.get("Entity."s + entityName);
 
       auto listsCfg = j["lists"];
       for (auto& listCfg : listsCfg.items()) {
-printf("1\n");fflush(stdout);
         if (!listCfg.value().is_string()) {
           SysError::setError("TargetToDirAvt " + name + " config for lists must contain strings. But is "s + listCfg.value().type_name());
           return;
         }
-        printf("2: %s : %s\n",listCfg.key().c_str(), listCfg.value().get<std::string>().c_str());fflush(stdout);
         auto list = listStore.get("List." + listCfg.key());
-        printf("3\n");fflush(stdout);
         auto ticket = list->push_front(avt);
-printf("4\n");fflush(stdout);
         ent->addTicket(dict.get(listCfg.value().get<std::string>()), ticket);
       }
-printf("5\n");fflush(stdout);
       ttdavtRsrc.remove("TargetToDirAvt."s + name);
     } else {
       SysError::setError("Avatar config for "s + name + " not found."s);
@@ -221,12 +324,210 @@ printf("5\n");fflush(stdout);
 private:
   NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();
   RsrcStore<nlohmann::json> &configRsrc    = RsrcStore<nlohmann::json>::getInstance();
-  RsrcDictionary<std::string>& strStore    = RsrcDictionary<std::string>::getInstance();
-  RsrcStore<Vector3D>& v3dStore            = RsrcStore<Vector3D>::getInstance();
   RsrcStore<TargetToDirAvt>& ttdavtRsrc    = RsrcStore<TargetToDirAvt>::getInstance();
   RsrcStore<Entity>& entityRsrc            = RsrcStore<Entity>::getInstance();
   RsrcStore<TicketedForwardList<MAvatar<Vector3D, Vector3D, Vector3D> > >& listStore = RsrcStore<TicketedForwardList<MAvatar<Vector3D, Vector3D, Vector3D> > >::getInstance();
 };
+
+class LookAtToPitchAvtFtry : public Factory {
+  /** \brief Builds a LookAtToPitchAvt.
+   *  \param name Name for the created LookAtToPitchAvt.
+   *  \param cfgId LookAtToPitchAvt's configuration id.
+   */
+  void create(std::string name, uint64_t){
+    using namespace std::string_literals;
+
+    auto latpavt = std::make_shared<LookAtToPitchAvt>();
+    latpAvtStore.insert("LookAtToPitchAvt."s + name, latpavt);
+  }
+
+  /** \brief Setup the desired tool. The tool will be complete after this step.
+   *  \param name Name of the tool.
+   *  \param cfgId Tool's configuration id.
+   */
+  void setup(std::string name, uint64_t cfgId){
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configStore.get(cfgId);
+    if(cfg) {
+      auto j = *cfg;
+      if (!j["entity"].is_string()) {
+        SysError::setError("LookAtToPitchAvtFtry " + name + " config for entity must be a string."s);
+        return;
+      }
+      if (!j["lists"].is_object()) {
+        SysError::setError("LookAtToPitchAvtFtry " + name + " config for lists must be an object. But is "s + j["lists"].type_name());
+        return;
+      }
+      if (!j["positionIdx"].is_string()) {
+        SysError::setError("LookAtToPitchAvtFtry " + name + " config for positionIdx must be a string."s);
+        return;
+      }
+      if (!j["targetIdx"].is_string()) {
+        SysError::setError("LookAtToPitchAvtFtry " + name + " config for targetIdx must be a string."s);
+        return;
+      }
+      if (!j["upwardsIdx"].is_string()) {
+        SysError::setError("LookAtToPitchAvtFtry " + name + " config for upwardsIdx must be a string."s);
+        return;
+      }
+
+      std::string entityName = j["entity"].get<std::string>();
+      if(!entityStore.contains("Entity."s + entityName)) {
+        SysError::setError("LookAtToPitchAvtFtry config for entity: "s + entityName + " is not an entity name."s);
+        return;
+      }
+
+      std::shared_ptr<Entity> ent = entityStore.get("Entity."s + entityName);
+
+      std::string positionIdxName = j["positionIdx"].get<std::string>();
+      if(!dict.contains(positionIdxName)) {
+        SysError::setError("LookAtToPitchAvtFtry config for positionIdx: "s + positionIdxName + " is not an positionIdx name."s);
+        return;
+      }
+      std::string targetIdxName = j["targetIdx"].get<std::string>();
+      if(!dict.contains(targetIdxName)) {
+        SysError::setError("LookAtToPitchAvtFtry config for targetIdx: "s + targetIdxName + " is not an targetIdx name."s);
+        return;
+      }
+      std::string upwardsIdxName = j["upwardsIdx"].get<std::string>();
+      if(!dict.contains(upwardsIdxName)) {
+        SysError::setError("LookAtToPitchAvtFtry config for upwardsIdx: "s + upwardsIdxName + " is not an upwardsIdx name."s);
+        return;
+      }
+
+      uint64_t positionIdx = dict.get(positionIdxName);
+      uint64_t targetIdx = dict.get(targetIdxName);
+      uint64_t upwardsIdx = dict.get(upwardsIdxName);
+
+      std::shared_ptr<LookAtToPitchAvt> avt = latpAvtStore.get("LookAtToPitchAvt."s + name);
+
+      avt->setupEntity(ent, positionIdx, targetIdx, upwardsIdx);
+
+      auto listsCfg = j["lists"];
+      for (auto& listCfg : listsCfg.items()) {
+        if (!listCfg.value().is_string()) {
+          SysError::setError("LookAtToPitchAvt " + name + " config for lists must contain strings. But is "s + listCfg.value().type_name());
+          return;
+        }
+        auto list = listStore.get("List." + listCfg.key());
+        auto ticket = list->push_front(avt);
+        ent->addTicket(dict.get(listCfg.value().get<std::string>()), ticket);
+      }
+      latpAvtStore.remove("LookAtToPitchAvt."s + name);
+    } else {
+      SysError::setError("Avatar config for "s + name + " not found."s);
+    }
+  }
+
+private:
+  NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();
+  RsrcStore<nlohmann::json> &configStore    = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<LookAtToPitchAvt>& latpAvtStore    = RsrcStore<LookAtToPitchAvt>::getInstance();
+  RsrcStore<Entity>& entityStore            = RsrcStore<Entity>::getInstance();
+  RsrcStore<TicketedForwardList<MAvatar<Vector3D, Vector3D> > >& listStore = RsrcStore<TicketedForwardList<MAvatar<Vector3D, Vector3D> > >::getInstance();
+};
+
+class LookAtToYawAvtFtry : public Factory {
+  /** \brief Builds a LookAtToYawAvt.
+   *  \param name Name for the created LookAtToYawAvt.
+   *  \param cfgId LookAtToYawAvt's configuration id.
+   */
+  void create(std::string name, uint64_t){
+    using namespace std::string_literals;
+
+    auto latpavt = std::make_shared<LookAtToYawAvt>();
+    latpAvtStore.insert("LookAtToYawAvt."s + name, latpavt);
+  }
+
+  /** \brief Setup the desired tool. The tool will be complete after this step.
+   *  \param name Name of the tool.
+   *  \param cfgId Tool's configuration id.
+   */
+  void setup(std::string name, uint64_t cfgId){
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configStore.get(cfgId);
+
+    if(cfg) {
+      auto j = *cfg;
+      if (!j["entity"].is_string()) {
+        SysError::setError("LookAtToYawAvtFtry " + name + " config for entity must be a string."s);
+        return;
+      }
+      if (!j["lists"].is_object()) {
+        SysError::setError("LookAtToYawAvtFtry " + name + " config for lists must be an object. But is "s + j["lists"].type_name());
+        return;
+      }
+      if (!j["positionIdx"].is_string()) {
+        SysError::setError("LookAtToYawAvtFtry " + name + " config for positionIdx must be a string."s);
+        return;
+      }
+      if (!j["targetIdx"].is_string()) {
+        SysError::setError("LookAtToYawAvtFtry " + name + " config for targetIdx must be a string."s);
+        return;
+      }
+      if (!j["upwardsIdx"].is_string()) {
+        SysError::setError("LookAtToYawAvtFtry " + name + " config for upwardsIdx must be a string."s);
+        return;
+      }
+
+      std::string entityName = j["entity"].get<std::string>();
+      if(!entityStore.contains("Entity."s + entityName)) {
+        SysError::setError("LookAtToYawAvtFtry config for entity: "s + entityName + " is not an entity name."s);
+        return;
+      }
+
+      std::shared_ptr<Entity> ent = entityStore.get("Entity."s + entityName);
+
+      std::string positionIdxName = j["positionIdx"].get<std::string>();
+      if(!dict.contains(positionIdxName)) {
+        SysError::setError("LookAtToYawAvtFtry config for positionIdx: "s + positionIdxName + " is not an positionIdx name."s);
+        return;
+      }
+      std::string targetIdxName = j["targetIdx"].get<std::string>();
+      if(!dict.contains(targetIdxName)) {
+        SysError::setError("LookAtToYawAvtFtry config for targetIdx: "s + targetIdxName + " is not an targetIdx name."s);
+        return;
+      }
+      std::string upwardsIdxName = j["upwardsIdx"].get<std::string>();
+      if(!dict.contains(upwardsIdxName)) {
+        SysError::setError("LookAtToYawAvtFtry config for upwardsIdx: "s + upwardsIdxName + " is not an upwardsIdx name."s);
+        return;
+      }
+
+      uint64_t positionIdx = dict.get(positionIdxName);
+      uint64_t targetIdx = dict.get(targetIdxName);
+      uint64_t upwardsIdx = dict.get(upwardsIdxName);
+
+      std::shared_ptr<LookAtToYawAvt> avt = latpAvtStore.get("LookAtToYawAvt."s + name);
+
+      avt->setupEntity(ent, positionIdx, targetIdx, upwardsIdx);
+
+      auto listsCfg = j["lists"];
+      for (auto& listCfg : listsCfg.items()) {
+        if (!listCfg.value().is_string()) {
+          SysError::setError("LookAtToYawAvt " + name + " config for lists must contain strings. But is "s + listCfg.value().type_name());
+          return;
+        }
+        auto list = listStore.get("List." + listCfg.key());
+        auto ticket = list->push_front(avt);
+        ent->addTicket(dict.get(listCfg.value().get<std::string>()), ticket);
+      }
+      latpAvtStore.remove("LookAtToYawAvt."s + name);
+    } else {
+      SysError::setError("Avatar config for "s + name + " not found."s);
+    }
+  }
+
+private:
+  NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();
+  RsrcStore<nlohmann::json> &configStore    = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<LookAtToYawAvt>& latpAvtStore    = RsrcStore<LookAtToYawAvt>::getInstance();
+  RsrcStore<Entity>& entityStore            = RsrcStore<Entity>::getInstance();
+  RsrcStore<TicketedForwardList<MAvatar<Vector3D, Vector3D> > >& listStore = RsrcStore<TicketedForwardList<MAvatar<Vector3D, Vector3D> > >::getInstance();
+};
+
 
 }  // namespace zbe
 

@@ -31,6 +31,8 @@
     "targetTicket" : 3500,
     "camScaleIdx" : 3600,
     "upwardsTicket" : 3700,
+    "camYawTicket" :3800,
+    "camPitchTicket" :3900,
 
     "state.static" : 0,
     "testwflags": 0,
@@ -56,6 +58,8 @@
     "model.fixedBackwardVelocity" :{"type":"v3", "value":[0.0,0.0,-50.0]},
     "model.fixedLeftVelocity" :{"type":"v3", "value":[-50.0,0.0,0.0]},
     "model.fixedRightVelocity" :{"type":"v3", "value":[50.0,0.0,0.0]},
+    "model.pitch" :{"type":"f", "value":-0.01},
+    "model.yaw" :{"type":"f", "value":-0.01},
     "model.sineComponent" : 0,
     "TODOindices":""
   },
@@ -94,6 +98,18 @@
           "factory": "TFAECModelFtry",
           "description" : "do some serious sheet",
           "name": "loadScreen.drawList",
+          "config" : {}
+        },
+        {
+          "factory": "TFAECTwoV3DAvtFtry",
+          "description" : "do some serious sheet",
+          "name": "loadScreen.pitchList",
+          "config" : {}
+        },
+        {
+          "factory": "TFAECTwoV3DAvtFtry",
+          "description" : "do some serious sheet",
+          "name": "loadScreen.yawList",
           "config" : {}
         },
         {
@@ -406,6 +422,20 @@
             "component" : "model.sineComponent"
           }
         },
+        {"factory": "Rotation3DFtry",
+          "name": "loadScreen.pitchBhv",
+          "description" : "Comportamiento que menea el obojeto mirando parriba y pabajo",
+          "config" : {
+             "sensibility" : "model.pitch"
+          }
+        },
+        {"factory": "Rotation3DFtry",
+          "name": "loadScreen.yawBhv",
+          "description" : "Comportamiento que menea el bobobojeto mirando pa diestra y siniestra",
+          "config" : {
+             "sensibility" : "model.yaw"
+          }
+        },
         {"factory": "RelativeUniformLinearMotion3DFtry",
           "name": "loadScreen.goForward",
           "description" : "Comportamiento que menea el obojeto to palante",
@@ -436,6 +466,38 @@
           "config" : {
             "velocity" : "model.fixedRightVelocity",
             "contextTime" : "DEFAULT"
+          }
+        },
+        {"factory": "OnceDaemonFtry",
+          "name": "loadScreen.oncePitchDaemon",
+          "description" : "demonio girara la camara una vez y se va",
+          "config" : {
+            "Daemon" : "loadScreen.pitchDaemon",
+            "DaemonMaster" : "BehaviorsMD"
+          }
+        },
+        {"factory": "OnceDaemonFtry",
+          "name": "loadScreen.onceYawDaemon",
+          "description" : "demonio girara la camara una vez y se va",
+          "config" : {
+            "Daemon" : "loadScreen.yawDaemon",
+            "DaemonMaster" : "BehaviorsMD"
+          }
+        },
+        {"factory": "TwoV3DAvtDaemonFtry",
+          "name": "loadScreen.pitchDaemon",
+          "description" : "demonio girara la camara",
+          "config" : {
+            "list" : "loadScreen.pitchList",
+            "behavior" : "loadScreen.pitchBhv"
+          }
+        },
+        {"factory": "TwoV3DAvtDaemonFtry",
+          "name": "loadScreen.yawDaemon",
+          "description" : "demonio girara la camara",
+          "config" : {
+            "list" : "loadScreen.yawList",
+            "behavior" : "loadScreen.yawBhv"
           }
         },
         {"factory": "DrawerModelDaemonFtry",
@@ -529,6 +591,28 @@
             "lists":{"loadScreen.camMoveList":"camPosVelTicket"}
           }
         },
+        {"factory": "LookAtToPitchAvtFtry",
+          "name": "loadScreen.camPitch",
+          "config" : {
+            "entity" : "cameraController",
+            "positionIdx" : "positionIdx",
+            "targetIdx" : "targetIdx",
+            "upwardsIdx" : "upwardsIdx",
+            "scaleIdx" : "camScaleIdx",
+            "lists":{"loadScreen.pitchList":"camPitchTicket"}
+          }
+        },
+        {"factory": "LookAtToYawAvtFtry",
+          "name": "loadScreen.camYaw",
+          "config" : {
+            "entity" : "cameraController",
+            "positionIdx" : "positionIdx",
+            "targetIdx" : "targetIdx",
+            "upwardsIdx" : "upwardsIdx",
+            "scaleIdx" : "camScaleIdx",
+            "lists":{"loadScreen.yawList":"camYawTicket"}
+          }
+        },
         {"factory": "V3DAvtFtry",
           "name": "loadScreen.logoX",
           "config" : {
@@ -570,6 +654,24 @@
             "ticket" : "BehaviorsMD.loadScreen.goRightDaemon.ticket",
             "inputEventGenerator" : "loadScreen.inputEventGenerator",
             "key":"ZBEK_d"
+          }
+        },
+        {"factory": "ParametricActivatorIHFtry",
+          "name": "loadScreen.pitchInputH",
+          "config" : {
+            "ticket" : "BehaviorsMD.loadScreen.oncePitchDaemon.ticket",
+            "parametric" : "loadScreen.pitchBhv",
+            "inputEventGenerator" : "loadScreen.inputEventGenerator",
+            "key":"ZBEK_MOUSE_OFFSET_Y"
+          }
+        },
+        {"factory": "ParametricActivatorIHFtry",
+          "name": "loadScreen.yawInputH",
+          "config" : {
+            "ticket" : "BehaviorsMD.loadScreen.onceYawDaemon.ticket",
+            "parametric" : "loadScreen.yawBhv",
+            "inputEventGenerator" : "loadScreen.inputEventGenerator",
+            "key":"ZBEK_MOUSE_OFFSET_X"
           }
         }
       ]

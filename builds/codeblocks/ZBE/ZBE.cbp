@@ -399,6 +399,7 @@
 		<Unit filename="../../../include/ZBE/behaviors/Bounce.h" />
 		<Unit filename="../../../include/ZBE/behaviors/CustomMotion.h" />
 		<Unit filename="../../../include/ZBE/behaviors/Erase.h" />
+		<Unit filename="../../../include/ZBE/behaviors/Rotation.h" />
 		<Unit filename="../../../include/ZBE/behaviors/SineOscillator.h" />
 		<Unit filename="../../../include/ZBE/behaviors/StateLTEraser.h" />
 		<Unit filename="../../../include/ZBE/behaviors/StateSetter.h" />
@@ -536,6 +537,7 @@
 		<Unit filename="../../../include/ZBE/events/handlers/input/ExecuteCommandIH.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/input/InputToValue.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/input/KeyDownTicketEnablerIH.h" />
+		<Unit filename="../../../include/ZBE/events/handlers/input/ParametricActivatorIH.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/input/RemoveGlyphIH.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/input/RotationIH.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/input/ScrollDownIH.h" />
@@ -646,6 +648,7 @@
 		<Unit filename="../../../src/ZBE/daemons/RsrcFolderLoaderDmn.cpp" />
 		<Unit filename="../../../src/ZBE/daemons/RsrcLoaderDmn.cpp" />
 		<Unit filename="../../../src/ZBE/events/handlers/input/KeyDownTicketEnablerIH.cpp" />
+		<Unit filename="../../../src/ZBE/events/handlers/input/ParametricActivatorIH.cpp" />
 		<Unit filename="../../../src/ZBE/events/handlers/input/TicketTogglerIH.cpp" />
 		<Unit filename="../../../src/ZBE/factories/CommonFactories.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/RsrcFtry.cpp" />

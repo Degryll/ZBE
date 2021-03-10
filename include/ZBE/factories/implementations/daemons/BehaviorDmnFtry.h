@@ -89,10 +89,10 @@ void BehaviorDmnFtry<L, E...>::setup(std::string name, uint64_t cfgId) {
 
     std::string bname = j["behavior"].get<std::string>();
     std::string lname = j["list"].get<std::string>();
-    uint64_t bId = dict.get("Behavior."s + bname);
+    //uint64_t bId = dict.get("Behavior."s + bname);
     uint64_t lId = dict.get("List."s + lname);
     auto dm = behaviorDmnRsrc.get("BehaviorDaemon."s + name);
-    dm->setPunish(behaviorRsrc.get(bId));
+    dm->setPunish(behaviorRsrc.get("Behavior."s + bname));
     dm->setList(listRsrc.get(lId));
   } else {
     SysError::setError("BehaviorDmnFtry config for "s + name + " not found."s);
