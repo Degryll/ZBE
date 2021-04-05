@@ -397,6 +397,7 @@
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleWideMobile.h" />
 		<Unit filename="../../../include/ZBE/archetypes/implementations/SimpleWideMobileAPO.h" />
 		<Unit filename="../../../include/ZBE/behaviors/Bounce.h" />
+		<Unit filename="../../../include/ZBE/behaviors/BulletCreatorBhv.h" />
 		<Unit filename="../../../include/ZBE/behaviors/CustomMotion.h" />
 		<Unit filename="../../../include/ZBE/behaviors/Erase.h" />
 		<Unit filename="../../../include/ZBE/behaviors/Rotation.h" />
@@ -495,6 +496,7 @@
 		<Unit filename="../../../include/ZBE/core/tools/time/Timer.h" />
 		<Unit filename="../../../include/ZBE/core/tools/tools.h" />
 		<Unit filename="../../../include/ZBE/core/zbe.h" />
+		<Unit filename="../../../include/ZBE/creators/BulletCreator.h" />
 		<Unit filename="../../../include/ZBE/daemons/OnceDaemon.h" />
 		<Unit filename="../../../include/ZBE/daemons/RsrcFolderLoaderDmn.h" />
 		<Unit filename="../../../include/ZBE/daemons/RsrcLoaderDmn.h" />
@@ -530,6 +532,7 @@
 		<Unit filename="../../../include/ZBE/events/handlers/actuators/DaemonSelectorAtor.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/actuators/EraserAtor.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/actuators/StateChangerAtor.h" />
+		<Unit filename="../../../include/ZBE/events/handlers/input/ActivatorIH.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/input/AddText.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/input/BroadcastIH.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/input/DaemonClickIH.h" />
@@ -621,6 +624,7 @@
 		<Unit filename="../../../src/ZBE/SDL/system/SDLSocket.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/system/SDLWindow.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/tools/SDLTimer.cpp" />
+		<Unit filename="../../../src/ZBE/behaviors/BulletCreatorBhv.cpp" />
 		<Unit filename="../../../src/ZBE/behaviors/SineOscillator.cpp" />
 		<Unit filename="../../../src/ZBE/core/daemons/DaemonMaster.cpp" />
 		<Unit filename="../../../src/ZBE/core/daemons/MainLoop.cpp" />
@@ -645,8 +649,10 @@
 		<Unit filename="../../../src/ZBE/core/tools/text/utf8.cpp" />
 		<Unit filename="../../../src/ZBE/core/tools/time/ContextTime.cpp" />
 		<Unit filename="../../../src/ZBE/core/zbe.cpp" />
+		<Unit filename="../../../src/ZBE/creators/BulletCreator.cpp" />
 		<Unit filename="../../../src/ZBE/daemons/RsrcFolderLoaderDmn.cpp" />
 		<Unit filename="../../../src/ZBE/daemons/RsrcLoaderDmn.cpp" />
+		<Unit filename="../../../src/ZBE/events/handlers/input/ActivatorIH.cpp" />
 		<Unit filename="../../../src/ZBE/events/handlers/input/KeyDownTicketEnablerIH.cpp" />
 		<Unit filename="../../../src/ZBE/events/handlers/input/ParametricActivatorIH.cpp" />
 		<Unit filename="../../../src/ZBE/events/handlers/input/TicketTogglerIH.cpp" />

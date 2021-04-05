@@ -1,14 +1,14 @@
 /**
  * Copyright 2012 Batis Degryll Ludo
- * @file ParametricActivatorIH.h
+ * @file ActivatorIH.h
  * @since 2017-07-05
  * @date 2017-07-05
  * @author Batis Degrill Ludo
  * @brief Handler that stores input value to a Value<double>
  */
 
-#ifndef ZBE_EVENTS_HANDLERS_PARAMETRICACTIVATORIH_H_
-#define ZBE_EVENTS_HANDLERS_PARAMETRICACTIVATORIH_H_
+#ifndef ZBE_EVENTS_HANDLERS_ACTIVATORIH_H_
+#define ZBE_EVENTS_HANDLERS_ACTIVATORIH_H_
 
 #include <cstdio>
 #include <cstdlib>
@@ -19,7 +19,6 @@
 
 #include "ZBE/core/tools/containers/RsrcStore.h"
 #include "ZBE/core/tools/containers/Ticket.h"
-#include "ZBE/core/tools/Parametric.h"
 
 #include "ZBE/core/events/generators/InputEventGenerator.h"
 #include "ZBE/core/events/handlers/InputHandler.h"
@@ -30,18 +29,18 @@
 
 namespace zbe {
 
-class ParametricActivatorIHFtry;
+class ActivatorIHFtry;
 
 /** \brief Handler that stores input value to a Value<double>
  */
-class ParametricActivatorIH : public InputHandler {
+class ActivatorIH : public InputHandler {
 public:
-  friend class ParametricActivatorIHFtry;
+  friend class ActivatorIHFtry;
 
   /** brief Parametrized constructor
     * param value where to store input.
    */
-  ParametricActivatorIH(std::shared_ptr<Ticket> ticket, std::shared_ptr<Parametric<float> > parametric) : ticket(ticket), parametric(parametric) {}
+  ActivatorIH(std::shared_ptr<Ticket> ticket) : ticket(ticket) {}
 
   /** \brief Set Value<double> where input will be stored.
    *  \param ticket ticket to be activated
@@ -50,28 +49,21 @@ public:
     this->ticket = ticket;
   }
 
-  /** \brief Set Value<double> where input will be stored.
-   *  \param parametric parametric to be set
-   */
-  void setParametric(std::shared_ptr<Parametric<float> > parametric) {
-    this->parametric = parametric;
-  }
-
   /** brief stores input value to the value.
     * param status value from input.
    */
   void run(uint32_t, float status) {
-    ticket->setACTIVE();
-    parametric->set(status);
+    if (!status) {
+      ticket->setACTIVE();
+    }
   }
 
 private:
-  ParametricActivatorIH() : ticket(nullptr), parametric(nullptr) {}
-  std::shared_ptr<Parametric<float> > parametric;
+  ActivatorIH() : ticket(nullptr) {}
   std::shared_ptr<Ticket> ticket;
 };
 
-class ZBEAPI ParametricActivatorIHFtry : public Factory {
+class ZBEAPI ActivatorIHFtry : public Factory {
 
 
   void create(std::string name, uint64_t cfgId);
@@ -86,13 +78,12 @@ private:
   RsrcStore<nlohmann::json> &configStore         = RsrcStore<nlohmann::json>::getInstance();
   RsrcDictionary<std::string>& strDict           = RsrcDictionary<std::string>::getInstance();
   RsrcDictionary<ZBE_K>& keyDict                 = RsrcDictionary<ZBE_K>::getInstance();
-  RsrcStore<ParametricActivatorIH>& paihStore    = RsrcStore<ParametricActivatorIH>::getInstance();
+  RsrcStore<ActivatorIH>& paihStore              = RsrcStore<ActivatorIH>::getInstance();
   RsrcStore<InputHandler>& ihStore               = RsrcStore<InputHandler>::getInstance();
   RsrcStore<Ticket>& ticketStore                 = RsrcStore<Ticket>::getInstance();
   RsrcStore<InputEventGenerator>& iegStore       = RsrcStore<InputEventGenerator>::getInstance();
-  RsrcStore<Parametric<float> >& parametricStore = RsrcStore<Parametric<float> >::getInstance();
 };
 
 }  // namespace zbe
 
-#endif  // ZBE_EVENTS_HANDLERS_PARAMETRICACTIVATORIH_H_
+#endif  // ZBE_EVENTS_HANDLERS_ACTIVATORIH_H_

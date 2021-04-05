@@ -321,7 +321,7 @@ private:
 
 /** \brief Factory for UniformLinearMotion3DFtry.
  */
-class ZBEAPI UniformLinearMotion3DFtry : virtual public Factory {
+class UniformLinearMotion3DFtry : virtual public Factory {
 public:
   /** \brief Builds a UniformLinearMotion3D.
    *  \param name Name for the created UniformLinearMotion3D.
@@ -329,7 +329,7 @@ public:
    */
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
-    std::shared_ptr<FixedUniformLinearMotion3D> fulm3d = std::shared_ptr<FixedUniformLinearMotion3D>(new FixedUniformLinearMotion3D);
+    std::shared_ptr<UniformLinearMotion3D> fulm3d = std::shared_ptr<UniformLinearMotion3D>(new UniformLinearMotion3D);
     behaviorRsrc.insert("Behavior."s + name, fulm3d);
     fulm3dRsrc.insert("UniformLinearMotion3D."s + name, fulm3d);
   }
@@ -369,8 +369,8 @@ private:
   RsrcStore<nlohmann::json>& configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcDictionary<Vector3D>& vecStore = RsrcDictionary<Vector3D>::getInstance();
   RsrcStore<ContextTime>& cTimeRsrc = RsrcStore<ContextTime>::getInstance();
-  RsrcStore<Behavior<Vector3D> >& behaviorRsrc = RsrcStore<Behavior<Vector3D> >::getInstance();
-  RsrcStore<FixedUniformLinearMotion3D>& fulm3dRsrc = RsrcStore<FixedUniformLinearMotion3D>::getInstance();
+  RsrcStore<Behavior<Vector3D, Vector3D> >& behaviorRsrc = RsrcStore<Behavior<Vector3D, Vector3D> >::getInstance();
+  RsrcStore<UniformLinearMotion3D>& fulm3dRsrc = RsrcStore<UniformLinearMotion3D>::getInstance();
 };
 
 /** \brief Factory for UniformLinearMotion2DFtry.

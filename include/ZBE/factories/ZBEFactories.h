@@ -79,6 +79,7 @@ public:
     factories.insert("V3DAvtFtry", std::make_shared<BaseAvatarFtry<Vector3D> >());
 
     factories.insert("TargetToDirAvtFtry", std::make_shared<TargetToDirAvtFtry>());
+    factories.insert("PosTargetToPosDirAvtFtry", std::make_shared<PosTargetToPosDirAvtFtry>());
     factories.insert("LookAtToPitchAvtFtry", std::make_shared<LookAtToPitchAvtFtry>());
     factories.insert("LookAtToYawAvtFtry", std::make_shared<LookAtToYawAvtFtry>());
 
@@ -106,6 +107,8 @@ public:
 
     factories.insert("LookAtAvtDaemonFtry", std::make_shared<LookAtAvtBhvr>());
     factories.insert("TFAECLookAtAvtFtry" , std::make_shared<SimpleGenericFtry<LookAtAvtList> >(listName));
+
+    factories.insert("TwoV3DAvtFtry", std::make_shared<BaseAvatarFtry<Vector3D, Vector3D> >());
   }
 };
 

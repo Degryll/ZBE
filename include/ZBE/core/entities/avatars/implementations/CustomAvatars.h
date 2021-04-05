@@ -30,7 +30,8 @@
 namespace zbe{
 
 // Convierte de una entidad con lookAt a un avatar de posicion y velocidad.
-
+// TODO: copiar TargetToDirAvt y quitarle el up
+// TODO: pero antes probar si podemos usar el de tres vectores
 class TargetToDirAvt : public MAvatar<Vector3D, Vector3D, Vector3D>, AvatarImp {
 public:
 
@@ -106,6 +107,59 @@ private:
   std::shared_ptr<Value<Vector3D> > upwards;
   std::shared_ptr<Value<float> > scale;
 };
+
+class PosTargetToPosDirAvt : public MAvatar<Vector3D, Vector3D>, AvatarImp {
+public:
+
+  /** \brief
+   */
+   void setupEntity(std::shared_ptr<Entity> entity, uint64_t positionidx, uint64_t targetidx) {
+     AvatarImp::setupEntity(entity);
+     _Avatar<1, Vector3D>::setup(&getPosition, &setPosition, (void*)this);
+     _Avatar<2, Vector3D>::setup(&getDirection, &setDirection, (void*)this);
+     position = entity->getVector3D(positionidx);
+     target = entity->getVector3D(targetidx);
+   }
+
+   static std::shared_ptr<Value<Vector3D> > getPosition(void *instance) {
+     return ((PosTargetToPosDirAvt*)instance)->position;
+   }
+
+   static std::shared_ptr<Value<Vector3D> > getDirection(void *instance) {
+     auto& position = ((PosTargetToPosDirAvt*)instance)->position;
+     auto& target =   ((PosTargetToPosDirAvt*)instance)->target;
+     auto p = position->get();
+     auto t = target->get();
+     auto v = (t - p).normalize();// * s;
+     auto r = std::make_shared<SimpleValue<Vector3D> >();
+     r->set(v);
+     return r;
+   }
+
+   static void setPosition(void *instance, Vector3D position) {
+     auto& _position = ((PosTargetToPosDirAvt*)instance)->position;
+     auto& _target =  ((PosTargetToPosDirAvt*)instance)->target;
+     auto p = _position->get();
+     auto t = _target->get();
+     auto offset = t - p;
+     _position->set(position);
+     _target->set(position + offset);
+   }
+
+   static void setDirection(void*, Vector3D) {
+     assert(false);
+   }
+
+   std::shared_ptr<Entity> getEntity() {
+     assert(false);
+   }
+
+
+private:
+  std::shared_ptr<Value<Vector3D> > position;
+  std::shared_ptr<Value<Vector3D> > target;
+};
+
 
 class LookAtToPitchAvt : public MAvatar<Vector3D, Vector3D>, AvatarImp {
 public:
@@ -327,6 +381,96 @@ private:
   RsrcStore<TargetToDirAvt>& ttdavtRsrc    = RsrcStore<TargetToDirAvt>::getInstance();
   RsrcStore<Entity>& entityRsrc            = RsrcStore<Entity>::getInstance();
   RsrcStore<TicketedForwardList<MAvatar<Vector3D, Vector3D, Vector3D> > >& listStore = RsrcStore<TicketedForwardList<MAvatar<Vector3D, Vector3D, Vector3D> > >::getInstance();
+};
+
+class PosTargetToPosDirAvtFtry : public Factory {
+  /** \brief Builds a TargetToDirAvt.
+   *  \param name Name for the created TargetToDirAvt.
+   *  \param cfgId TargetToDirAvt's configuration id.
+   */
+  void create(std::string name, uint64_t){
+    using namespace std::string_literals;
+
+    auto ttdavt = std::make_shared<PosTargetToPosDirAvt>();
+    pttpdavtStore.insert("PosTargetToPosDirAvt."s + name, ttdavt);
+  }
+
+  /** \brief Setup the desired tool. The tool will be complete after this step.
+   *  \param name Name of the tool.
+   *  \param cfgId Tool's configuration id.
+   */
+  void setup(std::string name, uint64_t cfgId){
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+    if(cfg) {
+      auto j = *cfg;
+      if (!j["entity"].is_string()) {
+        SysError::setError("PosTargetToPosDirAvtFtry " + name + " config for entity must be a string."s);
+        return;
+      }
+      if (!j["lists"].is_object()) {
+        SysError::setError("PosTargetToPosDirAvtFtry " + name + " config for lists must be an object. But is "s + j["lists"].type_name());
+        return;
+      }
+      if (!j["positionIdx"].is_string()) {
+        SysError::setError("PosTargetToPosDirAvtFtry " + name + " config for positionIdx must be a string."s);
+        return;
+      }
+      if (!j["targetIdx"].is_string()) {
+        SysError::setError("PosTargetToPosDirAvtFtry " + name + " config for targetIdx must be a string."s);
+        return;
+      }
+
+      std::string entityName = j["entity"].get<std::string>();
+      if(!entityRsrc.contains("Entity."s + entityName)) {
+        SysError::setError("PosTargetToPosDirAvtFtry config for entity: "s + entityName + " is not an entity name."s);
+        return;
+      }
+
+      std::shared_ptr<Entity> ent = entityRsrc.get("Entity."s + entityName);
+
+      std::string positionIdxName = j["positionIdx"].get<std::string>();
+      if(!dict.contains(positionIdxName)) {
+        SysError::setError("PosTargetToPosDirAvtFtry config for positionIdx: "s + positionIdxName + " is not an positionIdx name."s);
+        return;
+      }
+      std::string targetIdxName = j["targetIdx"].get<std::string>();
+      if(!dict.contains(targetIdxName)) {
+        SysError::setError("PosTargetToPosDirAvtFtry config for targetIdx: "s + targetIdxName + " is not an targetIdx name."s);
+        return;
+      }
+
+      uint64_t positionIdx = dict.get(positionIdxName);
+      uint64_t targetIdx = dict.get(targetIdxName);
+
+      std::shared_ptr<PosTargetToPosDirAvt> avt = pttpdavtStore.get("PosTargetToPosDirAvt."s + name);
+
+      avt->setupEntity(ent, positionIdx, targetIdx);
+
+      auto listsCfg = j["lists"];
+      for (auto& listCfg : listsCfg.items()) {
+        if (!listCfg.value().is_string()) {
+          SysError::setError("PosTargetToPosDirAvt " + name + " config for lists must contain strings. But is "s + listCfg.value().type_name());
+          return;
+        }
+        auto list = listStore.get("List." + listCfg.key());
+        auto ticket = list->push_front(avt);
+        ent->addTicket(dict.get(listCfg.value().get<std::string>()), ticket);
+      }
+      pttpdavtStore.remove("PosTargetToPosDirAvt."s + name);
+    } else {
+      SysError::setError("Avatar config for "s + name + " not found."s);
+    }
+  }
+
+private:
+  NameRsrcDictionary &dict                                                 = NameRsrcDictionary::getInstance();
+  RsrcStore<nlohmann::json> &configRsrc                                    = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<PosTargetToPosDirAvt>& pttpdavtStore                            = RsrcStore<PosTargetToPosDirAvt>::getInstance();
+  RsrcStore<Entity>& entityRsrc                                            = RsrcStore<Entity>::getInstance();
+  RsrcStore<TicketedForwardList<MAvatar<Vector3D, Vector3D> > >& listStore = RsrcStore<TicketedForwardList<MAvatar<Vector3D, Vector3D> > >::getInstance();
 };
 
 class LookAtToPitchAvtFtry : public Factory {

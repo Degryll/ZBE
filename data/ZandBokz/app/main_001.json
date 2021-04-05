@@ -23,6 +23,8 @@
     "drawticket" : 1070,
     "positionTicket" : 1080,
     "camPosVelTicket" : 1090,
+    "ULM3DTicket" : 1100,
+    "BulletCreatorTicket" : 1200,
 
     "fovIdx" : 3100,
     "targetIdx" : 3200,
@@ -33,6 +35,7 @@
     "upwardsTicket" : 3700,
     "camYawTicket" :3800,
     "camPitchTicket" :3900,
+    "bullet.speedIdx" : 4000,
 
     "state.static" : 0,
     "testwflags": 0,
@@ -61,6 +64,7 @@
     "model.pitch" :{"type":"f", "value":-0.01},
     "model.yaw" :{"type":"f", "value":-0.01},
     "model.sineComponent" : 0,
+    "bullet.speed" : {"type":"d", "value":100.0},
     "TODOindices":""
   },
   "phases":[
@@ -128,6 +132,18 @@
           "factory": "TFAECThreeV3DAvtFtry",
           "description" : "do some serious sheet",
           "name": "loadScreen.camMoveList",
+          "config" : {}
+        },
+        {
+          "factory": "TFAECTwoV3DAvtFtry",
+          "description" : "Uniform linear motion list",
+          "name": "loadScreen.ULM3DList",
+          "config" : {}
+        },
+        {
+          "factory": "TFAECTwoV3DAvtFtry",
+          "description" : "do some serious sam",
+          "name": "loadScreen.BulletCreatorList",
           "config" : {}
         },
         {
@@ -323,7 +339,8 @@
           "config" : {
             "daemons": [
               "loadScreen.fovOscillatorDaemon",
-              "loadScreen.coordOscillatorDaemon"
+              "loadScreen.coordOscillatorDaemon",
+              "loadScreen.ULM3DDaemon"
             ],
             "disabledDaemons": [
               "loadScreen.goForwardDaemon",
@@ -468,6 +485,38 @@
             "contextTime" : "DEFAULT"
           }
         },
+        {"factory": "UniformLinearMotion3DFtry",
+          "name": "loadScreen.ULM3DBhv",
+          "description" : "Comportamiento que menea la bala palante",
+          "config" : {
+            "contextTime" : "DEFAULT"
+          }
+        },
+        {"factory": "BulletCreatorFtry",
+          "name": "loadScreen.BulletCreator",
+          "description" : "Creador de balas",
+          "config" : {
+            "speed" : "bullet.speed",
+            "speedIdx" : "bullet.speedIdx",
+            "gid" : "Castaña",
+            "gidIdx" : "gidIdx",
+            "rotation" : "ZERO",
+            "rotationIdx" : "degreesIdx",
+            "scale" : "ONE",
+            "scaleIdx" : "scaleIdx",
+            "positionIdx" : "positionIdx",
+            "directionIdx" : "orientationIdx",
+            "graphicList" : {"loadScreen.drawList":"drawticket"},
+            "behaviorList" : {"loadScreen.ULM3DList":"ULM3DTicket"}
+          }
+        },
+        {"factory": "BulletCreatorBhvFtry",
+          "name": "loadScreen.BulletCreatorBhv",
+          "description" : "Comportamiento que crea balas",
+          "config" : {
+            "creator" : "loadScreen.BulletCreator"
+          }
+        },
         {"factory": "OnceDaemonFtry",
           "name": "loadScreen.oncePitchDaemon",
           "description" : "demonio girara la camara una vez y se va",
@@ -481,6 +530,14 @@
           "description" : "demonio girara la camara una vez y se va",
           "config" : {
             "Daemon" : "loadScreen.yawDaemon",
+            "DaemonMaster" : "BehaviorsMD"
+          }
+        },
+        {"factory": "OnceDaemonFtry",
+          "name": "loadScreen.OnceBulletCreatorDmn",
+          "description" : "demonio girara la camara una vez y se va",
+          "config" : {
+            "Daemon" : "loadScreen.shotDaemon",
             "DaemonMaster" : "BehaviorsMD"
           }
         },
@@ -498,6 +555,14 @@
           "config" : {
             "list" : "loadScreen.yawList",
             "behavior" : "loadScreen.yawBhv"
+          }
+        },
+        {"factory": "TwoV3DAvtDaemonFtry",
+          "name": "loadScreen.shotDaemon",
+          "description" : "demonio girara la camara",
+          "config" : {
+            "list" : "loadScreen.BulletCreatorList",
+            "behavior" : "loadScreen.BulletCreatorBhv"
           }
         },
         {"factory": "DrawerModelDaemonFtry",
@@ -556,6 +621,14 @@
             "behavior" : "loadScreen.goRight"
           }
         },
+        {"factory": "TwoV3DAvtDaemonFtry",
+          "name": "loadScreen.ULM3DDaemon",
+          "description" : "demonio mueve la bala",
+          "config" : {
+            "list" : "loadScreen.ULM3DList",
+            "behavior" : "loadScreen.ULM3DBhv"
+          }
+        },
         {"factory": "Drawable3DAvtFtry",
           "name": "loadScreen.bgEnt",
           "config" : {
@@ -589,6 +662,15 @@
             "upwardsIdx" : "upwardsIdx",
             "scaleIdx" : "camScaleIdx",
             "lists":{"loadScreen.camMoveList":"camPosVelTicket"}
+          }
+        },
+        {"factory": "PosTargetToPosDirAvtFtry",
+          "name": "loadScreen.camPosDir",
+          "config" : {
+            "entity" : "cameraController",
+            "positionIdx" : "positionIdx",
+            "targetIdx" : "targetIdx",
+            "lists":{"loadScreen.BulletCreatorList":"BulletCreatorTicket"}
           }
         },
         {"factory": "LookAtToPitchAvtFtry",
@@ -672,6 +754,14 @@
             "parametric" : "loadScreen.yawBhv",
             "inputEventGenerator" : "loadScreen.inputEventGenerator",
             "key":"ZBEK_MOUSE_OFFSET_X"
+          }
+        },
+        {"factory": "ActivatorIHFtry",
+          "name": "loadScreen.BulletCreatorIH",
+          "config" : {
+            "ticket" : "BehaviorsMD.loadScreen.OnceBulletCreatorDmn.ticket",
+            "inputEventGenerator" : "loadScreen.inputEventGenerator",
+            "key":"ZBEK_MOUSE_LEFT"
           }
         }
       ]

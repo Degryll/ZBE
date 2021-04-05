@@ -72,7 +72,7 @@ class ZBEAPI RsrcDictionary {
     T remove(std::string name) {
       auto it = l.find(name);
       if (it == l.end()) {
-        SysError::setError("Resource not found.");
+        SysError::setError("Resource id not found:" + name);
         return (T());
       } else {
         auto aux = it->second;

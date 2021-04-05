@@ -156,7 +156,6 @@ void BaseAvatarFtry<T, Ts...>::setup(std::string name, uint64_t cfgId) {
         SysError::setError("Avatar " + name + " config for lists must contain strings. But is "s + listCfg.value().type_name());
         return;
       }
-      printf("2: %s : %s\n",listCfg.key().c_str(), listCfg.value().get<std::string>().c_str());fflush(stdout);
       auto list = listStore.get("List." + listCfg.key());
       auto ticket = list->push_front(avt);
       ent->addTicket(dict.get(listCfg.value().get<std::string>()), ticket);

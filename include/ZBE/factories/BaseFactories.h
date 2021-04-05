@@ -35,6 +35,7 @@
 
 #include "ZBE/events/handlers/input/TicketTogglerIH.h"
 #include "ZBE/events/handlers/input/ParametricActivatorIH.h"
+#include "ZBE/events/handlers/input/ActivatorIH.h"
 #include "ZBE/events/handlers/input/KeyDownTicketEnablerIH.h"
 
 #include "ZBE/core/events/generators/InputEventGenerator.h"
@@ -48,6 +49,9 @@
 #include "ZBE/behaviors/SineOscillator.h"
 #include "ZBE/behaviors/UniformLinearMotion.h"
 #include "ZBE/behaviors/Rotation.h"
+#include "ZBE/behaviors/BulletCreatorBhv.h"
+
+#include "ZBE/creators/BulletCreator.h"
 
 namespace zbe {
 
@@ -91,7 +95,9 @@ public:
     factories.insert("SineOscillatorV3DFtry", std::make_shared<SineOscillatorV3DFtry>());
     factories.insert("FixedUniformLinearMotion3DFtry", std::make_shared<FixedUniformLinearMotion3DFtry>());
     factories.insert("RelativeUniformLinearMotion3DFtry", std::make_shared<RelativeUniformLinearMotion3DFtry>());
+    factories.insert("UniformLinearMotion3DFtry", std::make_shared<UniformLinearMotion3DFtry>());
     factories.insert("Rotation3DFtry", std::make_shared<Rotation3DFtry>());
+    factories.insert("BulletCreatorBhvFtry", std::make_shared<BulletCreatorBhvFtry>());
 
     // --- Events
     // --- --- Event generators
@@ -104,12 +110,16 @@ public:
     factories.insert("InputToValueFtry", std::make_shared<InputToValueFtry>());
     factories.insert("TicketTogglerIHFtry", std::make_shared<TicketTogglerIHFtry>());
     factories.insert("ParametricActivatorIHFtry", std::make_shared<ParametricActivatorIHFtry>());
+    factories.insert("ActivatorIHFtry", std::make_shared<ActivatorIHFtry>());
     factories.insert("KeyDownTicketEnablerIHFtry", std::make_shared<KeyDownTicketEnablerIHFtry>());
 
     // --- --- Event time handlers
     factories.insert("DaemonRecurrentTimeHandlerFtry", std::make_shared<DaemonRecurrentTimeHandlerFtry>());
     factories.insert("DaemonTimeHandlerFtry", std::make_shared<DaemonTimeHandlerFtry>());
     factories.insert("TicketEraserFtry", std::make_shared<TicketEraserFtry>());
+
+    // --- --- creators
+    factories.insert("BulletCreatorFtry", std::make_shared<BulletCreatorFtry>());
 
     // --- Others
     factories.insert("RsrcFtry", std::make_shared<RsrcFtry>());
