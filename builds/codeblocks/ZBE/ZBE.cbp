@@ -649,7 +649,6 @@
 		<Unit filename="../../../src/ZBE/core/tools/text/utf8.cpp" />
 		<Unit filename="../../../src/ZBE/core/tools/time/ContextTime.cpp" />
 		<Unit filename="../../../src/ZBE/core/zbe.cpp" />
-		<Unit filename="../../../src/ZBE/creators/BulletCreator.cpp" />
 		<Unit filename="../../../src/ZBE/daemons/RsrcFolderLoaderDmn.cpp" />
 		<Unit filename="../../../src/ZBE/daemons/RsrcLoaderDmn.cpp" />
 		<Unit filename="../../../src/ZBE/events/handlers/input/ActivatorIH.cpp" />
@@ -692,6 +691,8 @@
 				<general />
 			</DoxyBlocks>
 			<lib_finder disable_auto="1" />
+			<code_completion />
+			<debugger />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>
