@@ -21,6 +21,8 @@
 #include "ZBE/core/tools/containers/RsrcDictionary.h"
 
 #include "ZBE/core/events/handlers/InputHandler.h"
+#include "ZBE/core/events/generators/InputEventGenerator.h"
+#include "ZBE/core/io/Input.h"
 
 #include "ZBE/events/handlers/input/DaemonIH.h"
 
@@ -48,11 +50,13 @@ public:
   void setup(std::string name, uint64_t cfgId);
 
 private:
-  NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();
-  RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
-  RsrcStore<InputHandler> &inputRsrc = RsrcStore<InputHandler>::getInstance();
-  RsrcStore<DaemonIH> &dcihRsrc = RsrcStore<DaemonIH>::getInstance();
-  RsrcStore<Daemon> &daemonRsrc = RsrcStore<Daemon>::getInstance();
+  NameRsrcDictionary &dict                 = NameRsrcDictionary::getInstance();
+  RsrcStore<nlohmann::json> &configRsrc    = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<InputHandler> &inputRsrc       = RsrcStore<InputHandler>::getInstance();
+  RsrcStore<DaemonIH> &dcihRsrc            = RsrcStore<DaemonIH>::getInstance();
+  RsrcStore<Daemon> &daemonStore           = RsrcStore<Daemon>::getInstance();
+  RsrcDictionary<ZBE_K> &keyDict           = RsrcDictionary<ZBE_K>::getInstance();
+  RsrcStore<InputEventGenerator> &iegStore = RsrcStore<InputEventGenerator>::getInstance();
 };
 
 }  // namespace zbe

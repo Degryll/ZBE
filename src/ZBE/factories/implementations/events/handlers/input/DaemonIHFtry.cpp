@@ -30,14 +30,49 @@ void DaemonIHFtry::setup(std::string name, uint64_t cfgId) {
 
     if(cfg) {
       auto j = *cfg;
-      json daemonCfg = j["daemon"];
-      auto dcih = dcihRsrc.get("DaemonIH."s + name);
-      if (daemonCfg.is_string()){
-        std::string daemonName = daemonCfg.get<std::string>();
-        dcih->setDaemon(daemonRsrc.get("Daemon."s + daemonName));
-      } else {
-        SysError::setError("DaemonIH handler daemon config for "s + name + " is invalid."s);
+
+      if (!j["daemon"].is_string()) {
+        SysError::setError("DaemonIH config for daemon: "s + j["daemon"].get<std::string>() + ": must be a daemon name."s);
+        return;
       }
+
+      std::string daemonName = j["daemon"].get<std::string>();
+      if(!daemonStore.contains("Daemon."s + daemonName)) {
+        SysError::setError("DaemonIH config for daemon: "s + daemonName + " is not a daemon name."s);
+        return;
+      }
+
+      if (!j["inputEventGenerator"].is_string()) {
+        SysError::setError("DaemonIHFtry config for inputEventGenerator: "s + j["inputEventGenerator"].get<std::string>() + ": must be an inputEventGenerator name."s);
+        return;
+      }
+
+      std::string inputEventGeneratorName = j["inputEventGenerator"].get<std::string>();
+      if(!iegStore.contains("InputEventGenerator."s + inputEventGeneratorName)) {
+        SysError::setError("DaemonIHFtry config for inputEventGenerator: "s + inputEventGeneratorName + " is not an inputEventGenerator name."s);
+        return;
+      }
+
+      if (!j["key"].is_string()) {
+        SysError::setError("DaemonIHFtry config for key: "s + j["key"].get<std::string>() + ": must be a key name."s);
+        return;
+      }
+
+      std::string keyName = j["key"].get<std::string>();
+      if(!keyDict.contains(keyName)) {
+        SysError::setError("DaemonIHFtry config for key: "s + keyName + " is not a key name."s);
+        return;
+      }
+
+      auto daemon = daemonStore.get("Daemon."s + daemonName);
+      auto ieg    = iegStore.get("InputEventGenerator."s + inputEventGeneratorName);
+      auto key    = keyDict.get(keyName);
+      auto ih   = dcihRsrc.get("DaemonIH."s + name);
+
+      ih->setDaemon(daemon);
+      ieg->addHandler(key, ih);
+
+
     } else {
       SysError::setError("DaemonIH config for "s + name + " not found."s);
     }

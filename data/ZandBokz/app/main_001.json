@@ -403,7 +403,7 @@
           }
         },
         {"factory": "DaemonTimeHandlerFtry",
-          "name": "loadScreen.exitHandler",
+          "name": "loadScreen.exitTimeHandler",
           "config" : {
             "generator" : "loadScreen.timeEventGenerator",
             "time" : "loadScreen.loadTime",
@@ -762,6 +762,14 @@
             "ticket" : "BehaviorsMD.loadScreen.OnceBulletCreatorDmn.ticket",
             "inputEventGenerator" : "loadScreen.inputEventGenerator",
             "key":"ZBEK_MOUSE_LEFT"
+          }
+        },
+        {"factory": "DaemonIHFtry",
+          "name": "loadScreen.exitKeyHandler",
+          "config" : {
+            "daemon" : "loadScreen.exitDaemon",
+            "inputEventGenerator" : "loadScreen.inputEventGenerator",
+            "key":"ZBEK_ESCAPE"
           }
         }
       ]
