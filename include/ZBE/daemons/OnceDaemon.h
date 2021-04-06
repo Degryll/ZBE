@@ -91,8 +91,9 @@ public:
 
       auto od = onceDaemonStore.get("OnceDaemon."s + name);
       auto t = dm->addDaemon(od);
+      t->setINACTIVE();
       ticketStore.insert(daemonMasterName + "."s + name + ".ticket"s, t);
-
+      
       od->setDaemon(d);
       od->setTicket(t);
     } else {
