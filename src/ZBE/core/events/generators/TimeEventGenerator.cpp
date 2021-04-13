@@ -73,7 +73,6 @@ bool TimerTicket::increaseTime(int64_t increment) {
 
 void TimeEventGenerator::run() {
   timers.erase(timers.begin(),timers.upper_bound(TimerData(0,contextTime->getInitFrameTime())));
-
   int64_t v = 0;
   auto it = timers.begin();
   if (timers.size() > 0) {

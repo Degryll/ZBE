@@ -17,6 +17,8 @@
 #include "ZBE/core/tools/shared/Value.h"
 #include "ZBE/core/tools/shared/implementations/SimpleValue.h"
 #include "ZBE/core/tools/containers/TicketedForwardList.h"
+#include "ZBE/core/events/generators/TimeEventGenerator.h"
+#include "ZBE/events/handlers/time/EntityEraser.h"
 
 namespace zbe {
 
@@ -57,7 +59,10 @@ public:
     graphicList(),
     behaviorList(),
     graphicListStore(RsrcStore<GraphicList>::getInstance()),
-    behaviorListStore(RsrcStore<BehaviorList>::getInstance()) {}
+    behaviorListStore(RsrcStore<BehaviorList>::getInstance()),
+    teg(),
+    time(),
+    ticketId() {}
 
   void operator()(Vector3D position, Vector3D direction) {
       using namespace std::string_literals;
@@ -92,6 +97,9 @@ public:
         auto ticket = list->push_front(bhvAvt);
         e->addTicket(listref.second, ticket);
       }
+      std::shared_ptr<EntityEraser> ee = std::make_shared<EntityEraser>(e);
+      auto ticket = teg->addRelativeTimer(ee, time);
+      e->addTicket(ticketId, ticket);
   }
 
   void setSpeed(double speed, uint64_t idx) {
@@ -130,6 +138,12 @@ public:
     this->behaviorList = behaviorList;
   }
 
+  void setTeg(std::shared_ptr<TimeEventGenerator> teg, uint64_t time, uint64_t ticketId) {
+    this->teg = teg;
+    this->time = time;
+    this->ticketId = ticketId;
+  }
+
 private:
   using GraphicList = TicketedForwardList<MAvatar<uint64_t, double, double, Vector3D, Vector3D> >;
   using BehaviorList = TicketedForwardList<MAvatar<Vector3D, Vector3D> >;
@@ -147,6 +161,9 @@ private:
   std::vector<std::pair<std::string, uint64_t>> behaviorList;
   RsrcStore<GraphicList> &graphicListStore = RsrcStore<GraphicList>::getInstance();
   RsrcStore<BehaviorList> &behaviorListStore = RsrcStore<BehaviorList>::getInstance();
+  std::shared_ptr<TimeEventGenerator> teg;
+  uint64_t time;
+  uint64_t ticketId;
 };
 
 class BulletCreatorFtry : virtual public Factory {
@@ -224,6 +241,21 @@ public:
         return;
       }
 
+      if (!j["teg"].is_string()) {
+        SysError::setError("BulletCreatorFtry config for timeEventGenerator: must be an timeEventGenerator name."s);
+        return;
+      }
+
+      if (!j["time"].is_string()) {
+        SysError::setError("BulletCreatorFtry config for time: must be a time name."s);
+        return;
+      }
+
+      if (!j["ticketId"].is_string()) {
+        SysError::setError("BulletCreatorFtry config for ticketId: must be a ticketId name."s);
+        return;
+      }
+
       std::string speedName = j["speed"].get<std::string>();
       if(!doubleDict.contains(speedName)) {
         SysError::setError("BulletCreatorFtry  " + name + " config for speed: "s + speedName + " is not a double literal."s);
@@ -284,6 +316,24 @@ public:
         return;
       }
 
+      std::string timeEventGeneratorName = j["teg"].get<std::string>();
+      if(!tegStore.contains("TimeEventGenerator."s + timeEventGeneratorName)) {
+        SysError::setError("BulletCreatorFtry config for timeEventGenerator: "s + timeEventGeneratorName + " is not an timeEventGenerator name."s);
+        return;
+      }
+
+      std::string timeName = j["time"].get<std::string>();
+      if(!uintDict.contains(timeName)) {
+        SysError::setError("BulletCreatorFtry config for time: "s + timeName + " is not a time name."s);
+        return;
+      }
+
+      std::string ticketIdName = j["ticketId"].get<std::string>();
+      if(!uintDict.contains(ticketIdName)) {
+        SysError::setError("BulletCreatorFtry config for ticketId: "s + ticketIdName + " is not a ticketId name."s);
+        return;
+      }
+
       if (j["graphicList"].empty()){
         SysError::setError("BulletCreatorFtry " + name + "  config for graphicList is empty"s);
         return;
@@ -341,9 +391,15 @@ public:
         behaviorList.emplace_back(bListCfg.key(), tid);
       }
       bc->setBehaviorList(behaviorList);
+
+      auto teg = tegStore.get("TimeEventGenerator."s + timeEventGeneratorName);
+      auto time = uintDict.get(timeName);
+      auto ticketId = uintDict.get(ticketIdName);
+      bc-> setTeg(teg, time, ticketId);
     } else {
       SysError::setError("BulletCreatorFtry config for "s + name + " not found."s);
     }
+
   }
 
 private:
@@ -351,6 +407,7 @@ private:
   RsrcStore<BulletCreator> &bulletCreatorStore = RsrcStore<BulletCreator>::getInstance();
   RsrcDictionary<uint64_t> &uintDict = RsrcDictionary<uint64_t>::getInstance();
   RsrcDictionary<double> &doubleDict = RsrcDictionary<double>::getInstance();
+  RsrcStore<TimeEventGenerator> &tegStore = RsrcStore<TimeEventGenerator>::getInstance();
 
 };
 

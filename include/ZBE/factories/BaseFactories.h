@@ -37,6 +37,7 @@
 #include "ZBE/events/handlers/input/ParametricActivatorIH.h"
 #include "ZBE/events/handlers/input/ActivatorIH.h"
 #include "ZBE/events/handlers/input/KeyDownTicketEnablerIH.h"
+#include "ZBE/events/handlers/time/EntityEraser.h"
 
 #include "ZBE/core/events/generators/InputEventGenerator.h"
 #include "ZBE/core/tools/shared/implementations/SimpleValue.h"
@@ -117,6 +118,7 @@ public:
     factories.insert("DaemonRecurrentTimeHandlerFtry", std::make_shared<DaemonRecurrentTimeHandlerFtry>());
     factories.insert("DaemonTimeHandlerFtry", std::make_shared<DaemonTimeHandlerFtry>());
     factories.insert("TicketEraserFtry", std::make_shared<TicketEraserFtry>());
+    factories.insert("EntityEraserFtry", std::make_shared<EntityEraserFtry>());
 
     // --- --- creators
     factories.insert("BulletCreatorFtry", std::make_shared<BulletCreatorFtry>());

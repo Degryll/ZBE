@@ -113,8 +113,18 @@ class ZBEAPI TimeEventGenerator : virtual public Daemon {
      * \return return A ticket used to modify or erase the timer.
      * \sa eraseTimer
      */
-    inline std::shared_ptr<TimerTicket> addTimer(std::shared_ptr<TimeHandler> handler, int64_t time) {
+    inline std::shared_ptr<TimerTicket> addAbsoluteTimer(std::shared_ptr<TimeHandler> handler, int64_t time) {
       return (std::make_shared<TimerTicket>(timers.insert(TimerData(handler,quantizeTime(time))), timers, eventId, contextTime));
+    }
+
+    /** Add a new Timer that only triggers onces.
+     * \param id Id of the Timer, to identify the action to accomplish when the event is triggered
+     * \param time The amount of time to wait until the time event is triggered
+     * \return return A ticket used to modify or erase the timer.
+     * \sa eraseTimer
+     */
+    inline std::shared_ptr<TimerTicket> addRelativeTimer(std::shared_ptr<TimeHandler> handler, int64_t time) {
+      return addAbsoluteTimer(handler, contextTime->getEventTime() + time);
     }
 
     /** Set the event id that created events will have.

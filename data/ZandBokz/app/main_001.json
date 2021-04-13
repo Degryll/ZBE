@@ -12,6 +12,7 @@
     "NEGATIVEONE" : {"type":"ifd", "value":-1},
     "width" : {"type":"uifd", "value":1024},
     "height" : {"type":"uifd", "value":768},
+    "second" : {"type":"uifd", "value":65536},
 
     "gidIdx" : 1000,
     "stateIdx" : 1010,
@@ -25,6 +26,7 @@
     "camPosVelTicket" : 1090,
     "ULM3DTicket" : 1100,
     "BulletCreatorTicket" : 1200,
+    "lifespan" : 65536,
 
     "fovIdx" : 3100,
     "targetIdx" : 3200,
@@ -36,6 +38,7 @@
     "camYawTicket" :3800,
     "camPitchTicket" :3900,
     "bullet.speedIdx" : 4000,
+    "timeHandlerTicket" : 4100,
 
     "state.static" : 0,
     "testwflags": 0,
@@ -329,7 +332,7 @@
           "name": "loadScreen.eventGenerator",
           "config" : {
             "daemons": [
-              "loadScreen.timeEventGenerator",
+              "loadScreen.TimeEventGenerator",
               "loadScreen.inputEventGenerator"
             ]
           }
@@ -388,7 +391,7 @@
           }
         },
         {"factory": "TimeEventGnFtry",
-          "name": "loadScreen.timeEventGenerator",
+          "name": "loadScreen.TimeEventGenerator",
           "config" : {
             "eventId" : "timeEventId",
             "contextTime" : "DEFAULT"
@@ -405,7 +408,7 @@
         {"factory": "DaemonTimeHandlerFtry",
           "name": "loadScreen.exitTimeHandler",
           "config" : {
-            "generator" : "loadScreen.timeEventGenerator",
+            "generator" : "loadScreen.TimeEventGenerator",
             "time" : "loadScreen.loadTime",
             "dmn" : "loadScreen.exitDaemon"
           }
@@ -507,7 +510,10 @@
             "positionIdx" : "positionIdx",
             "directionIdx" : "orientationIdx",
             "graphicList" : {"loadScreen.drawList":"drawticket"},
-            "behaviorList" : {"loadScreen.ULM3DList":"ULM3DTicket"}
+            "behaviorList" : {"loadScreen.ULM3DList":"ULM3DTicket"},
+            "teg" : "loadScreen.TimeEventGenerator",
+            "time" : "lifespan",
+            "ticketId" : "timeHandlerTicket"
           }
         },
         {"factory": "BulletCreatorBhvFtry",

@@ -48,7 +48,7 @@ void DaemonTimeHandlerFtry::setup(std::string name, uint64_t cfgId) {
     auto dth = dmnTimeHandlerRsrc.remove("DaemonTimeHandler."s + name);
     dth->setDaemon(daemon);
 
-    teg->addTimer(dth, time);
+    teg->addAbsoluteTimer(dth, time);
 
   } else {
     SysError::setError("DaemonTimeHandlerFtry config for "s + name + " not found."s);
