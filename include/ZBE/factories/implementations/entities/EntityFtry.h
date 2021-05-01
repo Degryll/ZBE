@@ -54,6 +54,7 @@ private:
   RsrcDictionary<float>& floatStore = RsrcDictionary<float>::getInstance();
   RsrcDictionary<bool>& boolStore = RsrcDictionary<bool>::getInstance();
   RsrcDictionary<std::string>& stringStore = RsrcDictionary<std::string>::getInstance();
+  RsrcStore<ContextTime>& cTimeRsrc = RsrcStore<ContextTime>::getInstance();
 
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
 

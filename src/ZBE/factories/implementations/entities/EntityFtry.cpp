@@ -34,6 +34,21 @@ void EntityFtry::setup(std::string name, uint64_t cfgId) {
     if (j.find("V3D") != j.end())     { parseV3D(j["V3D"],              e); }
     if (j.find("String") != j.end())  { parse(j["String"],  valueSRsrc, stringStore, e); }
     if (j.find("VString") != j.end()) { parseVString(j["VString"],      e); }
+
+    if (!j["contextTime"].is_string()) {
+      SysError::setError("Entity config for contextTime: must be a literal context time name."s);
+      return;
+    }
+
+    std::string cTimeName = j["contextTime"].get<std::string>();
+    if(!cTimeRsrc.contains("ContextTime."s + cTimeName)) {
+      SysError::setError("Entity config for contextTime: is not a context time name."s);
+      return;
+    }
+
+    auto cTime = cTimeRsrc.get("ContextTime."s + cTimeName);
+    e->setContextTime(cTime);
+
   } else {
     SysError::setError("EntityFtry config for "s + name + " not found."s);
   }

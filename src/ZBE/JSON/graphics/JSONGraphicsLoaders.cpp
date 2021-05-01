@@ -9,6 +9,8 @@
 
 #include <cstdio>
 #include "ZBE/JSON/graphics/JSONGraphicsLoaders.h"
+#include "ZBE/OGL/graphics/implementations/SpriteOGLModelSheet.h"
+#include "ZBE/OGL/graphics/implementations/SimpleOGLModelSheet.h"
 
 namespace zbe {
 namespace JSONGraphicsLoaders {
@@ -19,7 +21,9 @@ ImgDef JSONImgDefLoad(nlohmann::json j, uint64_t graphicsId) {
     unsigned frameAmount = j["frameAmount"];
     Region2D region({j["region"][0],j["region"][1]},{j["region"][2],j["region"][3]});
     Vector2D regionOffset({j["regionOffset"][0],j["regionOffset"][1]});
-    return ImgDef(graphicsId, frameTime, frameAmount, region, regionOffset);
+    Region2D texCoord({j["texCoord"][0],j["texCoord"][1]},{j["texCoord"][2],j["texCoord"][3]});
+    Vector2D texCoordOffset({j["texCoordOffset"][0],j["texCoordOffset"][1]});
+    return ImgDef(graphicsId, frameTime, frameAmount, region, regionOffset, texCoord, texCoordOffset);
   } catch(nlohmann::detail::type_error &e) {
     SysError::setError(std::string("ERROR: Json failed to load ImgDef for id ") +  std::to_string(graphicsId) + std::string(" because: ") + std::string(e.what()));
     return ImgDef(graphicsId);
@@ -65,6 +69,36 @@ SprtDef JSONSprtDefLoad(nlohmann::json j, RsrcStore<ImgDef>& rsrcImgDef, NameRsr
     SysError::setError(std::string("ERROR: Json failed to load MultiSpriteSheet because: ") + std::string(e.what()));
   }
   return SprtDef();  // TODO create default ImgDef & image.
+}
+
+void JSONSpriteOGLModelSheetFileLoad(std::istream& is, std::shared_ptr<SDLOGLWindow> window, RsrcStore<OGLModelSheet<uint64_t, Vector2D, Vector2D>>& rsrcAnimSprt, NameRsrcDictionary& nrd, RsrcStore<zbe::OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> >& rsrcModelSheet, RsrcStore<ImgDef>& rsrcImgDef) {
+  using namespace nlohmann;
+  json j;
+  try {
+    is >> j;
+    std::string name = j["name"];
+    json sprtDefs = j["sprtdefs"];
+    std::shared_ptr<SpriteOGLModelSheet> sprtSheet = std::make_shared<SpriteOGLModelSheet>(window);
+    // TODO : De momento solo vamos a soportar un sprite.
+    //for (auto sprtNode : sprtDefs) {
+
+    if (sprtDefs.is_array() && sprtDefs.size() >= 1) {
+      auto sprtNode = sprtDefs[0];
+      std::string stateName = sprtNode["name"];
+      SprtDef sprtDef = JSONSprtDefLoad(sprtNode, rsrcImgDef, nrd);
+      sprtSheet->setSprite(sprtDef);
+      if (sprtDefs.size() > 1) {
+        SysError::setError(std::string("ERROR: Invalid number of elements in sprtDefs"));
+      }
+    } else {
+      SysError::setError(std::string("ERROR: sprtDefs is empty"));
+    }
+    rsrcAnimSprt.insert(name, sprtSheet);
+  } catch (json::parse_error &e) {
+    SysError::setError(std::string("ERROR: Json failed to parse: ") + std::string(e.what()));
+  } catch (nlohmann::detail::type_error &e) {
+    SysError::setError(std::string("ERROR: Json failed to load MultiSpriteSheet because: ") + std::string(e.what()));
+  }
 }
 
 void JSONMultiSpriteSheetFileLoad(std::istream& is, RsrcStore<zbe::SpriteSheet<uint64_t, int64_t, double, Vector2D, Vector2D> >& rsrcAnimSprt, NameRsrcDictionary& nrd, RsrcStore<zbe::OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> >& rsrcModelSheet, RsrcStore<ImgDef>& rsrcImgDef) {

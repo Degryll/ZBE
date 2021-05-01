@@ -46,11 +46,11 @@ class CustomMotion : virtual public Behavior<Vector<s>, Vector<s>, Vector<s> > {
 
     /** \brief Default constructor.
      */
-    CustomMotion() : contextTime(zbe::SysTime::getInstance()), f() {}
+    CustomMotion() : f() {}
 
     /** \brief Virtual destructor.
      */
-    virtual ~CustomMotion() {}
+    virtual ~CustomMotion() = default;
 
 //    void setFunction(std::function<void(std::shared_ptr<Value<Vector<s> > >, std::shared_ptr<Value<Vector<s> > >, std::shared_ptr<Value<Vector<s> > >, std::shared_ptr<ContextTime> contextTime)> f) {
     void setFunction(std::function<void(double&, double&, double&, double&, double&, double&, double)> f) {
@@ -66,6 +66,7 @@ class CustomMotion : virtual public Behavior<Vector<s>, Vector<s>, Vector<s> > {
       Vector<s> acel = vacl->get();
       Vector<s> vel = vvel->get();
       Vector<s> pos = vpos->get();
+      auto contextTime = avatar->getContextTime();
       f(pos.x, pos.y, vel.x, vel.y, acel.x, acel.y, contextTime->getCurrentTime() * zbe::INVERSE_SECOND);
       vacl->set(acel);
       vvel->set(vel);
@@ -74,7 +75,6 @@ class CustomMotion : virtual public Behavior<Vector<s>, Vector<s>, Vector<s> > {
     }
 
   private:
-    std::shared_ptr<ContextTime> contextTime;
 //    std::function<void(std::shared_ptr<Value<Vector<s> > >, std::shared_ptr<Value<Vector<s> > >, std::shared_ptr<Value<Vector<s> > >, std::shared_ptr<ContextTime> contextTime)> f;
     std::function<void(double&, double&, double&, double&, double&, double&, double)> f;
 };

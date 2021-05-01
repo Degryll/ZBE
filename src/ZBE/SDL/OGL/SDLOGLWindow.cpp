@@ -90,6 +90,8 @@ void SDLOGLWindow::createGLContext() {
 //  // Setup Platform/Renderer bindings
 //  ImGui_ImplSDL2_InitForOpenGL(getSDL_Window(), glContext);
 //  ImGui_ImplOpenGL3_Init(glsl_version);
+
+  modelStore.loadDefault();
 }
 
 //----- OGLTextureStore -----//
@@ -171,9 +173,9 @@ uint64_t OGLModelStore::loadModel(const GLfloat *vertexData, const GLuint *index
   GLuint vbo = 0;
   GLuint ibo = 0;
   GLuint vao = 0;
-
   //Create VAO
   glGenVertexArrays(1, &vao);
+
   glBindVertexArray(vao);
 
   //Create VBO
@@ -195,6 +197,7 @@ uint64_t OGLModelStore::loadModel(const GLfloat *vertexData, const GLuint *index
   glBindVertexArray(0);
 
   return storeModel(vao, iSize);
+
 }
 
 std::tuple<GLuint, GLsizei> OGLModelStore::getModel(uint64_t id) {

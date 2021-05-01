@@ -26,12 +26,13 @@ struct ZBEAPI OGLModel {
 
   // OGLModel() = default;
 
-  OGLModel(GLuint vao, std::vector<GLuint> textures, GLenum  mode, GLsizei nvertex, GLenum  type, const GLvoid* offset, glm::mat4 modelMat) : vao(vao), textures(textures), mode(mode), nvertex(nvertex), type(type), offset(offset), modelMat(modelMat) {}
+  OGLModel(GLuint vao, std::vector<GLuint> textures, GLenum  mode, GLsizei nvertex, GLenum  type, const GLvoid* offset, glm::mat4 modelMat, glm::mat4 texCoordMat) : vao(vao), textures(textures), mode(mode), nvertex(nvertex), type(type), offset(offset), modelMat(modelMat), texCoordMat(texCoordMat) {}
 
   GLuint vao; //!<
   std::vector<GLuint> textures;
   GLsizei nvertex;
   glm::mat4 modelMat;
+  glm::mat4 texCoordMat;
 
   GLenum  mode;
   GLenum  type;

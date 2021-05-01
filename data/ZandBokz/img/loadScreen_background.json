@@ -6,7 +6,9 @@
     "frameTime" : 10,
     "frameAmount" : 1,
     "region" : [0.0,0.0,360.0,257.0],
-    "regionOffset" : [0.5,0.5]
+    "regionOffset" : [0.5,0.5],
+    "texCoord" : [0.0,0.0,1.0,1.0],
+    "texCoordOffset" : [0.0,0.0]
   }
 ]
 }

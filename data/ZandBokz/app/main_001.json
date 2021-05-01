@@ -260,6 +260,7 @@
           "name": "loadingLogo",
           "description" : "Pepinazo",
           "config" : {
+            "contextTime":"DEFAULT",
             "uint": {
               "gidIdx":["Pepino"]
             },
@@ -277,6 +278,7 @@
           "name": "Suelo",
           "description" : "El logo que se muestra en la pantalla de carga",
           "config" : {
+            "contextTime":"DEFAULT",
             "uint": {
               "gidIdx":["Plane"]
             },
@@ -303,6 +305,7 @@
             "zfar" : "zandbokz.zfar"
           },
           "config" : {
+            "contextTime":"DEFAULT",
             "float": {
               "fovIdx":"zandbokz.fov",
               "camScaleIdx":"zandbokz.camScale"
@@ -513,7 +516,8 @@
             "behaviorList" : {"loadScreen.ULM3DList":"ULM3DTicket"},
             "teg" : "loadScreen.TimeEventGenerator",
             "time" : "lifespan",
-            "ticketId" : "timeHandlerTicket"
+            "ticketId" : "timeHandlerTicket",
+            "contextTime" : "DEFAULT"
           }
         },
         {"factory": "BulletCreatorBhvFtry",

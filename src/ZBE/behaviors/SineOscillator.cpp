@@ -14,6 +14,7 @@ namespace zbe {
 
 void SineOscillatorF::apply(std::shared_ptr<SAvatar<float> > avatar) {
   auto value = avatar->get<1, float>();
+  auto cTime = avatar->getContextTime();
   float div = (cTime->getTotalTime()/(float)period)*TAU;
   float cosine = cos(div);
   float newVal = ((cosine+1.0)/2.0)*(max-min)+min;
@@ -42,10 +43,6 @@ void SineOscillatorFFtry::setup(std::string name, uint64_t cfgId) {
       SysError::setError("SineOscillatorFFtry config for max: "s + j["max"].get<std::string>() + ": must be a literal float name."s);
       return;
     }
-    if (!j["contextTime"].is_string()) {
-      SysError::setError("SineOscillatorFFtry config for contextTime: "s + j["limit"].get<std::string>() + ": must be a literal context time name."s);
-      return;
-    }
     if (!j["period"].is_string()) {
       SysError::setError("SineOscillatorFFtry config for period: "s + j["period"].get<std::string>() + ": must be a literal int64_t name."s);
       return;
@@ -63,12 +60,6 @@ void SineOscillatorFFtry::setup(std::string name, uint64_t cfgId) {
       return;
     }
 
-    std::string cTimeName = j["contextTime"].get<std::string>();
-    if(!cTimeRsrc.contains("ContextTime."s + cTimeName)) {
-      SysError::setError("SineOscillatorFFtry config for contextTime: "s + cTimeName + " is not a context time name."s);
-      return;
-    }
-
     std::string periodName = j["period"].get<std::string>();
     if(!intStore.contains(periodName)) {
       SysError::setError("SineOscillatorFFtry config for period: "s + periodName + " is not a int64_t literal."s);
@@ -77,12 +68,11 @@ void SineOscillatorFFtry::setup(std::string name, uint64_t cfgId) {
 
     float min = floatStore.get(minName);
     float max = floatStore.get(maxName);
-    std::shared_ptr<ContextTime> cTime = cTimeRsrc.get("ContextTime."s + cTimeName);
     int64_t period = intStore.get(periodName);
     auto so = sineOscillatorFRsrc.get("SineOscillatorF."s + name);
 
     so->setRange(min, max);
-    so->setPeriod(cTime, period);
+    so->setPeriod(period);
 
   } else {
     SysError::setError("SineOscillatorFFtry config for "s + name + " not found."s);
@@ -92,6 +82,7 @@ void SineOscillatorFFtry::setup(std::string name, uint64_t cfgId) {
 
 void SineOscillatorV3D::apply(std::shared_ptr<SAvatar<Vector3D> > avatar) {
   auto value = avatar->get<1, Vector3D>();
+  auto cTime = avatar->getContextTime();
   float div = (cTime->getTotalTime()/(float)period)*TAU;
   float cosine = cos(div);
   float newVal = ((cosine+1.0)/2.0)*(max-min)+min;
@@ -121,10 +112,6 @@ void SineOscillatorV3DFtry::setup(std::string name, uint64_t cfgId) {
       SysError::setError("SineOscillatorV3DFtry config for max: "s + j["max"].get<std::string>() + ": must be a literal float name."s);
       return;
     }
-    if (!j["contextTime"].is_string()) {
-      SysError::setError("SineOscillatorV3DFtry config for contextTime: "s + j["limit"].get<std::string>() + ": must be a literal context time name."s);
-      return;
-    }
     if (!j["period"].is_string()) {
       SysError::setError("SineOscillatorV3DFtry config for period: "s + j["period"].get<std::string>() + ": must be a literal int64_t name."s);
       return;
@@ -146,12 +133,6 @@ void SineOscillatorV3DFtry::setup(std::string name, uint64_t cfgId) {
       return;
     }
 
-    std::string cTimeName = j["contextTime"].get<std::string>();
-    if(!cTimeRsrc.contains("ContextTime."s + cTimeName)) {
-      SysError::setError("SineOscillatorV3Dtry config for contextTime: "s + cTimeName + " is not a context time name."s);
-      return;
-    }
-
     std::string periodName = j["period"].get<std::string>();
     if(!intStore.contains(periodName)) {
       SysError::setError("SineOscillatorV3Dtry config for period: "s + periodName + " is not a int64_t literal."s);
@@ -166,13 +147,12 @@ void SineOscillatorV3DFtry::setup(std::string name, uint64_t cfgId) {
 
     float min = floatStore.get(minName);
     float max = floatStore.get(maxName);
-    std::shared_ptr<ContextTime> cTime = cTimeRsrc.get("ContextTime."s + cTimeName);
     int64_t period = intStore.get(periodName);
     int64_t component = intStore.get(componentName);
     auto so = sineOscillatorFRsrc.get("SineOscillatorV3D."s + name);
 
     so->setRange(min, max);
-    so->setPeriod(cTime, period);
+    so->setPeriod(period);
     so->setComponent(component);
 
   } else {

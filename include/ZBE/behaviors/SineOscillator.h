@@ -40,7 +40,7 @@ public:
   *   \param cTime Local time
   *   \param period Oscillation period
   */
-  SineOscillatorF(float min, float max, std::shared_ptr<ContextTime> cTime, float period) : min(min), max(max), cTime(cTime), period(period) {}
+  SineOscillatorF(float min, float max, float period) : min(min), max(max), period(period) {}
 
   /** \brief Virtual destructor.
    */
@@ -61,14 +61,13 @@ public:
   *   \param cTime Local time
   *   \param period Oscillation period
   */
-  void setPeriod(std::shared_ptr<ContextTime> cTime, int64_t period) {this->cTime = cTime; this->period = period;}
+  void setPeriod(int64_t period) {this->period = period;}
 
 private:
-  SineOscillatorF() : min(-1.0f), max(1.0f), cTime(nullptr), period(0) {}
+  SineOscillatorF() : min(-1.0f), max(1.0f), period(0) {}
 
   float min;
   float max;
-  std::shared_ptr<ContextTime> cTime;
   int64_t period;
 };
 
@@ -92,7 +91,6 @@ private:
 
   RsrcDictionary<float>& floatStore = RsrcDictionary<float>::getInstance();
   RsrcDictionary<int64_t>& intStore = RsrcDictionary<int64_t>::getInstance();
-  RsrcStore<ContextTime>& cTimeRsrc = RsrcStore<ContextTime>::getInstance();
   RsrcStore<nlohmann::json>& configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<Behavior<float> >& behaviorRsrc = RsrcStore<Behavior<float> >::getInstance();
   RsrcStore<SineOscillatorF>& sineOscillatorFRsrc = RsrcStore<SineOscillatorF>::getInstance();
@@ -112,7 +110,7 @@ public:
   *   \param cTime Local time
   *   \param period Oscillation period
   */
-  SineOscillatorV3D(float min, float max, std::shared_ptr<ContextTime> cTime, float period, int64_t component) : min(min), max(max), cTime(cTime), period(period) {}
+  SineOscillatorV3D(float min, float max, float period, int64_t component) : min(min), max(max), period(period) {}
 
   /** \brief Virtual destructor.
    */
@@ -133,7 +131,7 @@ public:
   *   \param cTime Local time
   *   \param period Oscillation period
   */
-  void setPeriod(std::shared_ptr<ContextTime> cTime, int64_t period) {this->cTime = cTime; this->period = period;}
+  void setPeriod(int64_t period) {this->period = period;}
 
   /** \brief sets component to modify.
   *   \param cTime Local time
@@ -145,11 +143,10 @@ public:
   }
 
 private:
-  SineOscillatorV3D() : min(-1.0f), max(1.0f), cTime(nullptr), period(0) {}
+  SineOscillatorV3D() : min(-1.0f), max(1.0f), period(0) {}
 
   float min;
   float max;
-  std::shared_ptr<ContextTime> cTime;
   int64_t period;
   int64_t component;
 };
@@ -174,7 +171,6 @@ private:
 
   RsrcDictionary<float>& floatStore = RsrcDictionary<float>::getInstance();
   RsrcDictionary<int64_t>& intStore = RsrcDictionary<int64_t>::getInstance();
-  RsrcStore<ContextTime>& cTimeRsrc = RsrcStore<ContextTime>::getInstance();
   RsrcStore<nlohmann::json>& configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<Behavior<Vector3D> >& behaviorRsrc = RsrcStore<Behavior<Vector3D> >::getInstance();
   RsrcStore<SineOscillatorV3D>& sineOscillatorFRsrc = RsrcStore<SineOscillatorV3D>::getInstance();

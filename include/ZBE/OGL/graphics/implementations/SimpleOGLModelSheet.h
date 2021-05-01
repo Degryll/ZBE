@@ -47,7 +47,7 @@ public:
 
   /** \brief Virtual destructor
   */
-  virtual ~SimpleOGLModelSheet() {} //!< Virtual destrutor.
+  virtual ~SimpleOGLModelSheet() = default; //!< Virtual destrutor.
 
   /** \brief Generate a sprite from a given entity.
    *  \return generated sprite
@@ -66,7 +66,7 @@ public:
     glm::mat4 scale     = glm::scale(    glm::mat4(1.0f), glm::vec3(baseScale));
     glm::mat4 m = translate * scale * rotate;
 
-    return OGLModel(vao, textures, mode, nvertex, type, offset, m);
+    return OGLModel(vao, textures, mode, nvertex, type, offset, m, glm::mat4(1.0f));
   };
 
 private:

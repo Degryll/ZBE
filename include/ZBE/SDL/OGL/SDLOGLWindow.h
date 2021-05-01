@@ -9,8 +9,8 @@
  *  - OGLTextureStore:
  */
 
-#ifndef ZBE_SDL_SYSTEM_SDLOGLWINDOW_H_
-#define ZBE_SDL_SYSTEM_SDLOGLWINDOW_H_
+#ifndef ZBE_SDL_OGL_SDLOGLWINDOW_H_
+#define ZBE_SDL_OGL_SDLOGLWINDOW_H_
 
 #include <memory>
 #include <mutex>
@@ -22,6 +22,7 @@
 #include <SDL2/SDL_opengl.h>
 
 #include "ZBE/core/system/SysError.h"
+#include "ZBE/core/tools/containers/RsrcDictionary.h"
 
 #include "ZBE/SDL/starters/SDL_Starter.h"
 #include "ZBE/SDL/system/SDLWindow.h"
@@ -99,9 +100,22 @@ public:
     OGLModelStore(const OGLModelStore&) = delete; //!< Delete copy constructor
     void operator=(const OGLModelStore&) = delete; //!< Delete assing aperator
 
-    OGLModelStore() : modelCollection(), m() {};
+    OGLModelStore() = default;
 
-    ~OGLModelStore() {};
+    ~OGLModelStore() = default;
+
+    void loadDefault() {
+            using namespace std::string_literals;
+            GLfloat m[] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+                           1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+                           0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+                           1.0f, 1.0f, 0.0f, 1.0f, 1.0f};
+            GLuint i[] = {0, 1, 2, 1, 2, 3};
+            uint64_t id = loadModel(m, i, 4, 6);
+      // printf("DEBUG - pi \n");fflush(stdout);
+      //       uint64_t id = storeModel(vao, 6);
+            dict.insert("model.DEFAULT2D"s, id);
+    }
 
     uint64_t loadModel(const GLfloat *vertexData, const GLuint *indexData, int vSize ,int iSize);
 
@@ -110,7 +124,7 @@ public:
     std::tuple<GLuint, GLsizei> getModel(uint64_t id);
 
 private:
-
+  NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();
   std::vector<std::tuple<GLuint, GLsizei> > modelCollection;  //!< Collection of textures.
   std::mutex m;
 };
@@ -246,4 +260,4 @@ private:
 
 }  // namespace zbe
 
-#endif  // ZBE_SDL_SYSTEM_SDLOGLWINDOW_H_
+#endif  // ZBE_SDL_OGL_SDLOGLWINDOW_H_

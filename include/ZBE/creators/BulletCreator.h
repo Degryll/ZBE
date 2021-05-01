@@ -19,6 +19,7 @@
 #include "ZBE/core/tools/containers/TicketedForwardList.h"
 #include "ZBE/core/events/generators/TimeEventGenerator.h"
 #include "ZBE/events/handlers/time/EntityEraser.h"
+#include "ZBE/core/tools/time/ContextTime.h"
 
 namespace zbe {
 
@@ -62,7 +63,8 @@ public:
     behaviorListStore(RsrcStore<BehaviorList>::getInstance()),
     teg(),
     time(),
-    ticketId() {}
+    ticketId(),
+    cTime() {}
 
   void operator()(Vector3D position, Vector3D direction) {
       using namespace std::string_literals;
@@ -100,6 +102,7 @@ public:
       std::shared_ptr<EntityEraser> ee = std::make_shared<EntityEraser>(e);
       auto ticket = teg->addRelativeTimer(ee, time);
       e->addTicket(ticketId, ticket);
+      e->setContextTime(cTime);
   }
 
   void setSpeed(double speed, uint64_t idx) {
@@ -144,6 +147,10 @@ public:
     this->ticketId = ticketId;
   }
 
+  void setContextTime(std::shared_ptr<ContextTime> cTime) {
+    this->cTime = cTime;
+  }
+
 private:
   using GraphicList = TicketedForwardList<MAvatar<uint64_t, double, double, Vector3D, Vector3D> >;
   using BehaviorList = TicketedForwardList<MAvatar<Vector3D, Vector3D> >;
@@ -164,6 +171,7 @@ private:
   std::shared_ptr<TimeEventGenerator> teg;
   uint64_t time;
   uint64_t ticketId;
+  std::shared_ptr<ContextTime> cTime;
 };
 
 class BulletCreatorFtry : virtual public Factory {
@@ -251,6 +259,11 @@ public:
         return;
       }
 
+      if (!j["contextTime"].is_string()) {
+        SysError::setError("BulletCreatorFtry config for contextTime: must be a context time name."s);
+        return;
+      }
+
       if (!j["ticketId"].is_string()) {
         SysError::setError("BulletCreatorFtry config for ticketId: must be a ticketId name."s);
         return;
@@ -328,6 +341,12 @@ public:
         return;
       }
 
+      std::string cTimeName = j["contextTime"].get<std::string>();
+      if(!cTimeRsrc.contains("ContextTime."s + cTimeName)) {
+        SysError::setError("BulletCreatorFtry config for contextTime: "s + timeName + " is not a context time name."s);
+        return;
+      }
+
       std::string ticketIdName = j["ticketId"].get<std::string>();
       if(!uintDict.contains(ticketIdName)) {
         SysError::setError("BulletCreatorFtry config for ticketId: "s + ticketIdName + " is not a ticketId name."s);
@@ -368,6 +387,9 @@ public:
       auto directionIdx = uintDict.get(directionIdxName);
       bc->setDirectionId(directionIdx);
 
+      auto cTime = cTimeRsrc.get("ContextTime."s + cTimeName);
+      bc->setContextTime(cTime);
+
       std::vector<std::pair<std::string, uint64_t>> graphicList;
       auto graphicListsCfg = j["graphicList"];
       for (auto& gListCfg : graphicListsCfg.items()) {
@@ -395,7 +417,8 @@ public:
       auto teg = tegStore.get("TimeEventGenerator."s + timeEventGeneratorName);
       auto time = uintDict.get(timeName);
       auto ticketId = uintDict.get(ticketIdName);
-      bc-> setTeg(teg, time, ticketId);
+      bc->setTeg(teg, time, ticketId);
+
     } else {
       SysError::setError("BulletCreatorFtry config for "s + name + " not found."s);
     }
@@ -406,6 +429,7 @@ private:
   RsrcStore<nlohmann::json> &configStore = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<BulletCreator> &bulletCreatorStore = RsrcStore<BulletCreator>::getInstance();
   RsrcDictionary<uint64_t> &uintDict = RsrcDictionary<uint64_t>::getInstance();
+  RsrcStore<ContextTime>& cTimeRsrc = RsrcStore<ContextTime>::getInstance();
   RsrcDictionary<double> &doubleDict = RsrcDictionary<double>::getInstance();
   RsrcStore<TimeEventGenerator> &tegStore = RsrcStore<TimeEventGenerator>::getInstance();
 

@@ -18,7 +18,6 @@
 #include "ZBE/core/tools/math/Vector.h"
 #include "ZBE/core/tools/Parametric.h"
 #include "ZBE/core/entities/avatars/Avatar.h"
-#include "ZBE/core/system/SysTime.h"
 
 #include "ZBE/core/system/system.h"
 
@@ -103,7 +102,7 @@ public:
 
       std::string sensibilityName = j["sensibility"].get<std::string>();
       if(!floatDict.contains(sensibilityName)) {
-        SysError::setError("Rotation3DFtry config for contextTime: "s + sensibilityName + " is not a context time name."s);
+        SysError::setError("Rotation3DFtry config for sensibility: "s + sensibilityName + " is not a sensibility name."s);
         return;
       }
       float sensibility = floatDict.get(sensibilityName);

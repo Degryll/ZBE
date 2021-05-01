@@ -70,7 +70,7 @@ public:
 
   /** \brief It loads all factories.
   */
-  static void load(){
+  static void load() {
     auto& factories = RsrcStore<Factory>::getInstance();
 
     RsrcStore<ContextTime>::getInstance().insert("ContextTime.DEFAULT", SysTime::getInstance());
@@ -96,7 +96,8 @@ public:
     factories.insert("SineOscillatorV3DFtry", std::make_shared<SineOscillatorV3DFtry>());
     factories.insert("FixedUniformLinearMotion3DFtry", std::make_shared<FixedUniformLinearMotion3DFtry>());
     factories.insert("RelativeUniformLinearMotion3DFtry", std::make_shared<RelativeUniformLinearMotion3DFtry>());
-    factories.insert("UniformLinearMotion3DFtry", std::make_shared<UniformLinearMotion3DFtry>());
+    factories.insert("UniformLinearMotion3DFtry", std::make_shared<GenericFtry<Behavior<Vector3D, Vector3D>, UniformLinearMotion3D>>("Behavior", "UniformLinearMotion3D"));
+    factories.insert("UniformLinearMotion2DFtry", std::make_shared<GenericFtry<Behavior<Vector2D, Vector2D>, UniformLinearMotion2D>>("Behavior", "UniformLinearMotion2D"));
     factories.insert("Rotation3DFtry", std::make_shared<Rotation3DFtry>());
     factories.insert("BulletCreatorBhvFtry", std::make_shared<BulletCreatorBhvFtry>());
 

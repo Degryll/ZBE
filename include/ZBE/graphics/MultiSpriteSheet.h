@@ -24,44 +24,9 @@
 
 #include "ZBE/core/system/system.h"
 
+#include "ZBE/resources/definitions.h"
+
 namespace zbe {
-
-const Vector2D DFLT_SCALE = {1.0, 1.0};
-const Vector2D DFLT_OFFSET = {0.0, 0.0};
-
-/** \brief Definition of graphical data asociated to an image.
- */
-struct ZBEAPI ImgDef {
-
-  ImgDef(uint64_t imgSrcId, uint64_t frameTime, unsigned frameAmount, Region2D region, Vector2D regionOffset)
-    : imgSrcId(imgSrcId),
-      frameTime(frameTime),
-      frameAmount(frameAmount),
-      region(region),
-      regionOffset(regionOffset) {}
-
-  ImgDef(uint64_t imgSrcId = 0) : imgSrcId(imgSrcId), frameTime(SECOND), frameAmount(1), region({0.0,0.0},{1.0,1.0}), regionOffset({0.0,0.0}){}
-
-  uint64_t imgSrcId;
-  uint64_t frameTime;
-  unsigned frameAmount;
-  Region2D region;
-  Vector2D regionOffset;
-
-};
-
-/** \brief Definition of a partial sprite.
- */
-struct ZBEAPI SprtDef {
-
-    SprtDef(ImgDef img = 0, Vector2D drawOffset = DFLT_OFFSET, Vector2D scale = DFLT_SCALE)
-      : img(img), drawOffset(drawOffset), scale(scale) {}
-
-    ImgDef img;
-    Vector2D drawOffset;
-    Vector2D scale;
-
-};
 
 /** \brief Tool capable of generate a sprite from a AnimatedSprite.
  */
@@ -103,7 +68,7 @@ public:
     Region2D dst({(double)pos.x + usedSD.drawOffset.x, (double)pos.y + usedSD.drawOffset.y}, {(double)size.x * usedSD.scale.x, (double)size.y * usedSD.scale.y});
     Sprite s(src, dst, avatar->get<3, double>()->get(), usedSD.img.imgSrcId);
     return s;
-    return Sprite(Region2D(), Region2D(), 0.0, 0);
+    //return Sprite(Region2D(), Region2D(), 0.0, 0);
   }
 
   // Sprite generateSprite(int) {
