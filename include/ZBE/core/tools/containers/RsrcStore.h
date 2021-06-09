@@ -11,6 +11,7 @@
 #define ZBE_CORE_TOOLS_CONTAINERS_RSRCSTORE_H_
 
 #include <memory>
+#include <cstdio>
 
 #include <map>
 
@@ -130,7 +131,7 @@ class RsrcStore {
     }
 
   private:
-    RsrcStore() : l() {};  //!< Needed for singleton.
+    RsrcStore() : l() {} //!< Needed for singleton.
 
     std::map<uint64_t, std::shared_ptr<T> > l;  //!< Map that associates resources with ids.
     NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();  //!< Nuevo, maho y reshulón-----------------

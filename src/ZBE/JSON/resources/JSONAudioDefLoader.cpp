@@ -19,9 +19,9 @@ void JSONAudioDefLoader::loadRsrcDef(const std::filesystem::path& url, uint64_t 
     std::string name = j["name"];
     nrd.insert(cn::AUDIO + cn::SEPARATOR + name, audioId);
   } catch (json::parse_error &e) {
-    SysError::setError(std::string("ERROR: Json failed to parse: ") + std::string(e.what()));
+    SysError::setError(std::string("JSONAudioDefLoader - ERROR: Json failed to parse: ") + std::string(e.what()));
   } catch (nlohmann::detail::type_error &e) {
-    SysError::setError(std::string("ERROR: Json failed to load audio def for id ") + std::to_string(audioId) + std::string(" because: ") + std::string(e.what()));
+    SysError::setError(std::string("JSONAudioDefLoader - ERROR: Json failed to load audio def for id ") + std::to_string(audioId) + std::string(" because: ") + std::string(e.what()));
   }
 }
 

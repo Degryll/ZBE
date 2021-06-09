@@ -26,8 +26,6 @@
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/rotate_vector.hpp>
 
-
-
 namespace zbe {
 
 /** \brief Define the minimal functions of every behavior.

@@ -37,6 +37,8 @@
 					<Add directory="../../../extlibs/imgui-1.76/examples" />
 					<Add directory="../../../extlibs/tinygltf" />
 					<Add directory="../../../extlibs/stb_image" />
+					<Add directory="../../../extlibs/GLEW/2.1.0/include" />
+					<Add directory="../../../extlibs/glm/0.9.9.0" />
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
@@ -243,9 +245,6 @@
 		</Linker>
 		<Unit filename="../../../src/ZandBokz/include/zandbokz.h" />
 		<Unit filename="../../../src/ZandBokz/src/zandbokz.cpp" />
-		<Extensions>
-			<code_completion />
-			<debugger />
-		</Extensions>
+		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

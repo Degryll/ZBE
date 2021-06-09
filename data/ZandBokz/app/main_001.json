@@ -68,6 +68,8 @@
     "model.yaw" :{"type":"f", "value":-0.01},
     "model.sineComponent" : 0,
     "bullet.speed" : {"type":"d", "value":100.0},
+    "crosshairsPos" :{"type":"v2", "value":[0.0,0.0]},
+    "crosshairsSize" :{"type":"v2", "value":[0.25,0.25]},
     "TODOindices":""
   },
   "phases":[
@@ -105,6 +107,12 @@
           "factory": "TFAECModelFtry",
           "description" : "do some serious sheet",
           "name": "loadScreen.drawList",
+          "config" : {}
+        },
+        {
+          "factory": "TFAECSimpleSpriteFtry",
+          "description" : "do some serious sheet pero en dos de",
+          "name": "loadScreen.drawList2D",
           "config" : {}
         },
         {
@@ -203,8 +211,28 @@
           }
         },
         {
+          "factory": "JSONImgDefLoaderFtry",
+          "name":"zandbokz.JSONImgDefLoader",
+          "config" : {}
+        },
+        {
+          "factory": "OGLImgLoaderFtry",
+          "name":"zandbokz.oiLoader",
+          "config" : {
+            "window" : "zandbokz.mainwindow",
+            "imgdef" : "zandbokz.JSONImgDefLoader"
+          }
+        },
+        {
           "factory": "JSONSimpleOGLModelSheetLoaderFtry",
           "name":"zandbokz.msLoader",
+          "config" : {
+            "window" : "zandbokz.mainwindow"
+          }
+        },
+        {
+          "factory": "JSONSpriteOGLModelSheetLoaderFtry",
+          "name":"zandbokz.sLoader",
           "config" : {
             "window" : "zandbokz.mainwindow"
           }
@@ -219,8 +247,24 @@
       ]
     },
     {
-      "description" : "Loading images.",
+      "description" : "Loading sprite sheets.",
       "factories" : [
+        {
+          "factory": "RsrcFtry",
+          "name":"zandbokz.modelSheetLoader",
+          "config" : {
+            "loader" : "zandbokz.msLoader",
+            "url" : "data/ZandBokz/modelsheets"
+          }
+        },
+        {
+          "factory": "RsrcFtry",
+          "name":"zandbokz.spriteLoader",
+          "config" : {
+            "loader" : "zandbokz.sLoader",
+            "url" : "data/ZandBokz/sprtsheet"
+          }
+        },
         {
           "factory": "RsrcFtry",
           "name":"zandbokz.modelLoader",
@@ -232,23 +276,18 @@
         },
         {
           "factory": "RsrcFtry",
+          "name":"zandbokz.oglImgLoader",
+          "config" : {
+            "loader" : "zandbokz.oiLoader",
+            "url" : "data/ZandBokz/imgdef"
+          }
+        },
+        {
+          "factory": "RsrcFtry",
           "name":"zandbokz.programLoader",
           "config" : {
             "loader" : "zandbokz.glslLoader",
             "url" : "data/ZandBokz/programs"
-          }
-        }
-      ]
-    },
-    {
-      "description" : "Loading sprite sheets.",
-      "factories" : [
-        {
-          "factory": "RsrcFtry",
-          "name":"zandbokz.modelSheetLoader",
-          "config" : {
-            "loader" : "zandbokz.msLoader",
-            "url" : "data/ZandBokz/modelsheets"
           }
         }
       ]
@@ -317,6 +356,20 @@
             },
             "TODO": "asociar todos los values de la camara"
           }
+        },
+        {"factory": "EntityFtry",
+          "name": "crosshairs",
+          "description" : "Entidad asociada a la mirilla",
+          "config" : {
+            "contextTime":"DEFAULT",
+            "V2D": {
+              "positionIdx":["crosshairsPos"],
+              "sizeIdx":["crosshairsSize"]
+            },
+            "uint": {
+              "gidIdx":["img.loadScreen.crosshairs"]
+            }
+          }
         }
       ]
     },
@@ -367,7 +420,7 @@
             "commonDaemonDesc":"nada?vacio?",
             "reactDaemon":"DEFAULT",
             "reactDaemonDesc":"si hay evento de tiempo: se llama al exit... pero esto lo hace el eventStore.manage(): que esto se queda vacio",
-            "drawDaemon":"loadScreen.drawDaemon",
+            "drawDaemon":"loadScreen.masterDrawDaemon",
             "drawDaemonDesc":"Pues a pintar la pantalla de carga",
             "postDaemon":"loadScreen.PostDaemon",
             "postDaemonDesc":"Hacer cosas de sdl",
@@ -422,6 +475,14 @@
           "config" : {
             "window" : "zandbokz.mainwindow",
             "programId" : "base_program"
+          }
+        },
+        {"factory": "OGLSpriteSheetDrawerFtry",
+          "name": "loadScreen.screenDrawer2D",
+          "description" : "comportamiento que pintara la pantalla. Faltan tipos",
+          "config" : {
+            "window" : "zandbokz.mainwindow",
+            "programId" : "base_program2D"
           }
         },
         {"factory": "SineOscillatorFFtry",
@@ -575,12 +636,49 @@
             "behavior" : "loadScreen.BulletCreatorBhv"
           }
         },
+        {"factory": "MasterDmnFtry",
+          "name": "loadScreen.masterDrawDaemon",
+          "description" : "demonio que pintara la pantalla. Faltan tipos",
+          "config" : {
+            "daemons": [
+              "loadScreen.drawDaemon2D",
+              "loadScreen.shadersSetter2D",
+              "loadScreen.drawDaemon3D",
+              "loadScreen.shadersSetter3D"
+            ]
+          }
+        },
+        {"factory": "ShadersSetter2DFtry",
+          "name": "loadScreen.shadersSetter2D",
+          "description" : "shadersSetter2D",
+          "config" : {
+            "window" : "zandbokz.mainwindow",
+            "gProgramID" : "base_program2D"
+          }
+        },
+        {"factory": "ShadersSetter3DFtry",
+          "name": "loadScreen.shadersSetter3D",
+          "description" : "shadersSetter3D",
+          "config" : {
+            "window" : "zandbokz.mainwindow",
+            "gProgramID" : "base_program",
+            "camera" : "loadScreen.cam"
+          }
+        },
         {"factory": "DrawerModelDaemonFtry",
-          "name": "loadScreen.drawDaemon",
+          "name": "loadScreen.drawDaemon3D",
           "description" : "demonio que pintara la pantalla. Faltan tipos",
           "config" : {
             "list" : "loadScreen.drawList",
             "behavior" : "loadScreen.screenDrawer"
+          }
+        },
+        {"factory": "SimpleSpriteDrwrDaemonFtry",
+          "name": "loadScreen.drawDaemon2D",
+          "description" : "demonio que pintara la pantalla en 2D. Faltan tipos",
+          "config" : {
+            "list" : "loadScreen.drawList2D",
+            "behavior" : "loadScreen.screenDrawer2D"
           }
         },
         {"factory": "FloatAvtDaemonFtry",
@@ -653,6 +751,14 @@
             "entity" : "Suelo",
             "attribIndexes" : ["gidIdx", "scaleIdx", "degreesIdx", "orientationIdx", "positionIdx"],
             "lists":{"loadScreen.drawList":"drawticket"}
+          }
+        },
+        {"factory": "DrawableSimple2DAvtFtry",
+          "name": "loadScreen.crosshairsavt",
+          "config" : {
+            "entity" : "crosshairs",
+            "attribIndexes" : ["gidIdx", "sizeIdx", "positionIdx"],
+            "lists":{"loadScreen.drawList2D":"drawticket"}
           }
         },
         {"factory": "FloatAvtFtry",

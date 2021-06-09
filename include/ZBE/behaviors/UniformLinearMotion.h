@@ -10,6 +10,8 @@
 #ifndef ZBE_BEHAVIORS_UNIFORMLINEARMOTION_H_
 #define ZBE_BEHAVIORS_UNIFORMLINEARMOTION_H_
 
+#include <nlohmann/json.hpp>
+
 #include <memory>
 
 #include "ZBE/core/behaviors/Behavior.h"
@@ -22,6 +24,8 @@
 #include "ZBE/core/system/system.h"
 
 #include "ZBE/factories/Factory.h"
+#include "ZBE/core/tools/containers/RsrcStore.h"
+#include "ZBE/core/tools/containers/RsrcDictionary.h"
 
 namespace zbe {
 /*TODO make this a template.

@@ -68,6 +68,8 @@ private:
   RsrcStore<Value<Vector3D> > &valueV3Rsrc = RsrcStore<Value<Vector3D> >::getInstance();
   RsrcStore<Value<std::string> > &valueSRsrc = RsrcStore<Value<std::string> >::getInstance();
   RsrcStore<Value<std::vector<std::string> > > &valueVSRsrc = RsrcStore<Value<std::vector<std::string> > >::getInstance();
+  RsrcDictionary<Vector2D> &literalStoreV2D = RsrcDictionary<Vector2D>::getInstance();
+  RsrcDictionary<Vector3D> &literalStoreV3D = RsrcDictionary<Vector3D>::getInstance();
 
   template <typename T>
   T parseArrayElement(nlohmann::json value, RsrcDictionary<T> &literalStore) {
@@ -136,6 +138,9 @@ private:
     std::shared_ptr<zbe::Value<Vector3D> > val = std::make_shared<zbe::SimpleValue<Vector3D> >();
     if (cfg.is_string()) {
       val = valueV3Rsrc.get(cfg.get<std::string>());
+    } else if(cfg.is_array() && (cfg.size() == 1)
+           && (cfg.at(0).is_string())) {
+      return std::make_shared<SimpleValue<Vector3D> >(literalStoreV3D.get(cfg.at(0).get<std::string>()));
     } else if (cfg.is_array() && (cfg.size() == 3)) {
       auto c = 0;
       for (auto item : cfg.items()) {
@@ -149,6 +154,9 @@ private:
     std::shared_ptr<zbe::Value<Vector2D> > val = std::make_shared<zbe::SimpleValue<Vector2D> >();
     if (cfg.is_string()) {
       val = valueV2Rsrc.get(cfg.get<std::string>());
+    } else if(cfg.is_array() && (cfg.size() == 1)
+           && (cfg.at(0).is_string())) {
+      return std::make_shared<SimpleValue<Vector2D> >(literalStoreV2D.get(cfg.at(0).get<std::string>()));
     } else if (cfg.is_array() && (cfg.size() == 2)) {
       auto c = 0;
       for (auto item : cfg.items()) {

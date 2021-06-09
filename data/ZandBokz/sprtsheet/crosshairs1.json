@@ -1,0 +1,11 @@
+{
+  "name": "img.loadScreen.crosshairs",
+  "sprtdefs" : [
+    {
+      "name" : "static",
+      "img" : "loadScreen.crosshairs",
+      "scale" : [1.0, 1.0],
+      "drawOffset" : [0.0, 0.0]
+    }
+  ]
+}

@@ -43,7 +43,7 @@ public:
 
   /** \brief Destroys the PunisherDaemon and the contained punisher.
    */
-  virtual ~PunisherDaemon() {}
+  virtual ~PunisherDaemon() = default;
 
   void setPunish(std::shared_ptr<P> punish) {
     this->punish = punish;

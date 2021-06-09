@@ -222,6 +222,10 @@ public:
     SDL_RenderReadPixels(renderer, nullptr, SDL_PIXELFORMAT_BGR888, data, pitch);
   }
 
+  void getDrawableSize(int *w, int *h) {
+    SDL_GL_GetDrawableSize(window, w, h);
+  }
+
   /** \brief Returns internal SDL_Window.
    *  \return internal SDL_Window.
    */

@@ -30,7 +30,7 @@ public:
 
  /** \brief Empty constructir. Creted object needs to be setup
   */
-JSONSimpleOGLModelSheetLoader() = default;
+//JSONSimpleOGLModelSheetLoader() = default;
  /* \brief It sets up the window to be used.
  */
  void setWindow(std::shared_ptr<SDLOGLWindow> window) {
@@ -57,7 +57,7 @@ private:
   RsrcStore<zbe::SpriteSheet<uint64_t, int64_t, double, Vector2D, Vector2D> >& rsrcAnimSprt = RsrcStore<zbe::SpriteSheet<uint64_t, int64_t, double, Vector2D, Vector2D> >::getInstance();
   RsrcStore<zbe::OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> >& rsrcModelSheet = RsrcStore<zbe::OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> >::getInstance();
   NameRsrcDictionary& nrd = NameRsrcDictionary::getInstance();
-
+  RsrcStore<OGLGraphics> &graphicsStore = RsrcStore<OGLGraphics>::getInstance();
 };
 
 }  // namespace zbe

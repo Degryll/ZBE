@@ -15,11 +15,11 @@ void OGLPreDrawer::run() {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   sdled->run();
   cam->update();
-  glUseProgram(gProgramID);
-  GLuint projectLoc = glGetUniformLocation(gProgramID, "projection" );
-  GLuint viewLoc = glGetUniformLocation(gProgramID, "view" );
-  glUniformMatrix4fv(projectLoc, 1, true, cam->getProjectionMat().data());
-  glUniformMatrix4fv(viewLoc, 1, false, cam->getTransformMat().data());
+  // glUseProgram(gProgramID);
+  // GLuint projectLoc = glGetUniformLocation(gProgramID, "projection" );
+  // GLuint viewLoc = glGetUniformLocation(gProgramID, "view" );
+  // glUniformMatrix4fv(projectLoc, 1, true, cam->getProjectionMat().data());
+  // glUniformMatrix4fv(viewLoc, 1, false, cam->getTransformMat().data());
 }
 
 }  // namespace zbe

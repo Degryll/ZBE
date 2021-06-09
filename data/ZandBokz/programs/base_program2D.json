@@ -1,0 +1,4 @@
+{
+  "name" : "base_program2D",
+  "shaderfiles" : ["data/ZandBokz/shaders/base_vertex2D.vs", "data/ZandBokz/shaders/base_fragment2D.fs"]
+}

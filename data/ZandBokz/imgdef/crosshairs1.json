@@ -1,0 +1,14 @@
+{
+"name" : "loadScreen",
+"imgdefs" : [
+  {
+    "name" : "crosshairs",
+    "frameTime" : 10,
+    "frameAmount" : 1,
+    "region" : [0.0,0.0,256.0,256.0],
+    "regionOffset" : [0.0,0.0],
+    "texCoord" : [0.0,0.0,1.0,1.0],
+    "texCoordOffset" : [0.0,0.0]
+  }
+]
+}

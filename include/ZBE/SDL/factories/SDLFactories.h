@@ -17,6 +17,7 @@
 #include "ZBE/SDL/factories/system/SDLWindowFtry.h"
 #include "ZBE/SDL/factories/system/SDLOGLWindowFtry.h"
 #include "ZBE/SDL/factories/resources/SDLImgLoaderFtry.h"
+#include "ZBE/OGL/resources/OGLImgLoader.h"
 #include "ZBE/SDL/factories/system/SDLSysTimeFtry.h"
 #include "ZBE/SDL/factories/drawers/SpriteSheetSDLDrawerFtry.h"
 #include "ZBE/SDL/factories/daemons/BasicPreLoopSDLDaemonFtry.h"
@@ -49,6 +50,7 @@ public:
     factories.insert("SDLWindowFtry", std::make_shared<SDLWindowFtry>());
     factories.insert("SDLOGLWindowFtry", std::make_shared<SDLOGLWindowFtry>());
     factories.insert("SDLImgLoaderFtry", std::make_shared<SDLImgLoaderFtry>());
+    factories.insert("OGLImgLoaderFtry", std::make_shared<OGLImgLoaderFtry>());
     factories.insert("SDLSysTimeFtry", std::make_shared<SDLSysTimeFtry>());
     factories.insert("SpriteSheetSDLDrawerFtry", std::make_shared<SpriteSheetSDLDrawerFtry<5, uint64_t, int64_t, double, Vector2D, Vector2D> >());
 

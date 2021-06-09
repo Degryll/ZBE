@@ -19,6 +19,7 @@
 #include "ZBE/OGL/factories/daemons/OGLPostDrawFtry.h"
 #include "ZBE/OGL/factories/daemons/OGLPreDrawFtry.h"
 #include "ZBE/OGL/daemons/OGLPreDrawer.h"
+#include "ZBE/OGL/daemons/ShadersSetter.h"
 
 #include "ZBE/core/tools/containers/RsrcStore.h"
 
@@ -46,6 +47,9 @@ public:
     factories.insert("OGLPostDrawFtry", std::make_shared<OGLPostDrawFtry>());
     factories.insert("OGLPreDrawFtry" , std::make_shared<OGLPreDrawFtry>());
     factories.insert("OGLModelSheetDrawerFtry" , std::make_shared<OGLModelSheetDrawerFtry<5, uint64_t, double,  double, Vector3D, Vector3D> >());
+    factories.insert("OGLSpriteSheetDrawerFtry" , std::make_shared<OGLModelSheetDrawerFtry<3, uint64_t, Vector2D, Vector2D> >());
+    factories.insert("ShadersSetter2DFtry", std::make_shared<ShadersSetter2DFtry>());
+    factories.insert("ShadersSetter3DFtry", std::make_shared<ShadersSetter3DFtry>());
   }
 
 };

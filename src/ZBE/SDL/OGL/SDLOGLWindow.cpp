@@ -71,7 +71,7 @@ void SDLOGLWindow::createGLContext() {
   glEnable(GL_CULL_FACE);
   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
   glCullFace(GL_BACK);
-
+  glEnable (GL_BLEND); glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 //  IMGUI_CHECKVERSION();
 //  ImGui::CreateContext();
 //
@@ -222,7 +222,6 @@ uint64_t OGLModelStore::storeModel(const GLuint vao, const GLsizei nvertex) {
 //----- OGLShaderStore -----//
 
 uint64_t OGLShaderStore::loadShader(std::vector<ShaderDef> shaderDefs) {
-
   GLuint gProgramID = glCreateProgram();
 
   glBindAttribLocation(gProgramID, V_POS, "pos" );

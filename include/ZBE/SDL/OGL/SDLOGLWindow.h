@@ -106,14 +106,12 @@ public:
 
     void loadDefault() {
             using namespace std::string_literals;
-            GLfloat m[] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-                           1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
-                           0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+            GLfloat m[] = {-1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
+                           1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+                           -1.0f, 1.0f, 0.0f, 0.0f, 1.0f,
                            1.0f, 1.0f, 0.0f, 1.0f, 1.0f};
-            GLuint i[] = {0, 1, 2, 1, 2, 3};
+            GLuint i[] = {0, 1, 2, 1, 3, 2};
             uint64_t id = loadModel(m, i, 4, 6);
-      // printf("DEBUG - pi \n");fflush(stdout);
-      //       uint64_t id = storeModel(vao, 6);
             dict.insert("model.DEFAULT2D"s, id);
     }
 

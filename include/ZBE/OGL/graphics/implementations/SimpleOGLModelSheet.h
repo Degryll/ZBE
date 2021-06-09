@@ -34,16 +34,9 @@ namespace zbe {
 class ZBEAPI SimpleOGLModelSheet : public OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> {
 public:
 
-  SimpleOGLModelSheet(std::shared_ptr<SDLOGLWindow> window, uint64_t modelId, uint64_t texId)
-    : vao(std::get<0>(window->getModelStore()->getModel(modelId))), nvertex(std::get<1>(window->getModelStore()->getModel(modelId))), textures() {
-      textures.push_back(window->getTextureStore()->getTexture(texId));
-  }
-
-  SimpleOGLModelSheet(std::shared_ptr<SDLOGLWindow> window, uint64_t graphicsId)
-    : graphic(RsrcStore<OGLGraphics>::getInstance().get(graphicsId)), vao(graphic->vao), textures{graphic->texid}, mode(graphic->mode), nvertex(graphic->nvertex), type(graphic->type), offset(graphic->offset) {}
-
-  SimpleOGLModelSheet(std::shared_ptr<SDLOGLWindow> window, std::string graphicsName)
-    : graphic(RsrcStore<OGLGraphics>::getInstance().get(graphicsName)), vao(graphic->vao), textures{graphic->texid}, mode(graphic->mode), nvertex(graphic->nvertex), type(graphic->type), offset(graphic->offset) {}
+  SimpleOGLModelSheet(std::shared_ptr<SDLOGLWindow> window, uint64_t modelId, uint64_t texId);
+  SimpleOGLModelSheet(std::shared_ptr<SDLOGLWindow> window, uint64_t graphicsId, RsrcStore<OGLGraphics> &graphicsStore);
+  SimpleOGLModelSheet(std::shared_ptr<SDLOGLWindow> window, std::string graphicsName, RsrcStore<OGLGraphics> &graphicsStore);
 
   /** \brief Virtual destructor
   */
@@ -52,22 +45,7 @@ public:
   /** \brief Generate a sprite from a given entity.
    *  \return generated sprite
    **/
-  OGLModel generateModel(std::shared_ptr<MAvatar<uint64_t, double, double, Vector3D, Vector3D> > avatar) {
-    Vector3D pos = avatar->get<1, Vector3D>()->get();
-    glm::vec3 glPos(pos.x, pos.y, pos.z);
-    Vector3D ori = avatar->get<2, Vector3D>()->get();
-    glm::vec3 glOri(ori.x, ori.y, ori.z);
-    float angle = (float) avatar->get<3, double>()->get();
-    float baseScale = (float) avatar->get<4, double>()->get();;
-    glm::mat4 mat(1.0);
-
-    glm::mat4 translate = glm::translate(glm::mat4(1.0f), glPos);
-    glm::mat4 rotate    = glm::rotate(   glm::mat4(1.0f), angle, glOri);
-    glm::mat4 scale     = glm::scale(    glm::mat4(1.0f), glm::vec3(baseScale));
-    glm::mat4 m = translate * scale * rotate;
-
-    return OGLModel(vao, textures, mode, nvertex, type, offset, m, glm::mat4(1.0f));
-  };
+  OGLModel generateModel(std::shared_ptr<MAvatar<uint64_t, double, double, Vector3D, Vector3D> > avatar);
 
 private:
   std::shared_ptr<OGLGraphics> graphic;

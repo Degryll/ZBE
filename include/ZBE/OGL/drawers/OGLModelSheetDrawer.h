@@ -52,7 +52,7 @@ class OGLModelSheetDrawer : public Behavior<T, Ts...> {
 
     /** \brief Destructor.
      */
-    ~OGLModelSheetDrawer() {}
+    ~OGLModelSheetDrawer() = default;
 
     /** \brief Draws the given entity.
      *  \param The entity to be drawn.
@@ -62,17 +62,15 @@ class OGLModelSheetDrawer : public Behavior<T, Ts...> {
       auto val = av->get();
       uint64_t gId = val->get();
       std::shared_ptr<OGLModelSheet<T, Ts...> > oglMs = rsOglMs.get(gId);
-
       OGLModel model = oglMs->generateModel(avatar);
-
-      GLuint modelViewLoc = glGetUniformLocation(gProgramID, "model" );
+      GLuint modelViewLoc = glGetUniformLocation(gProgramID, "modelMat" );
       glUniformMatrix4fv(modelViewLoc, 1, false, (GLfloat*) glm::value_ptr(model.modelMat));
-
+      GLuint texCoordLoc = glGetUniformLocation(gProgramID, "texCoordMat" );
+      glUniformMatrix4fv(texCoordLoc, 1, false, (GLfloat*) glm::value_ptr(model.texCoordMat));
       glActiveTexture(GL_TEXTURE0);
       glBindTexture(GL_TEXTURE_2D, model.textures[0]);
       glBindVertexArray(model.vao);
       glDrawElements( model.mode, model.nvertex, model.type, model.offset );
-
       glBindVertexArray(0);
     }
 

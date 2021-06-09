@@ -31,6 +31,7 @@ void RsrcFtry::create(std::string name, uint64_t cfgId) {
     }
     auto rl = rsrcLoaderRsrc.get("RsrcLoader."s + loaderName.get<std::string>());
     RsrcFolderLoader rsrcfl(rl);
+
     rsrcfl.load(url);
   } else {
     SysError::setError("RsrcFtry config for "s + name + " not found."s);

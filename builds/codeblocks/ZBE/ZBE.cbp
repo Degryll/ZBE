@@ -303,6 +303,7 @@
 		<Unit filename="../../../include/ZBE/JSON/resources/JSONMultiSpriteSheetLoader.h" />
 		<Unit filename="../../../include/ZBE/JSON/resources/JSONSimpleOGLModelSheetLoader.h" />
 		<Unit filename="../../../include/ZBE/JSON/resources/JSONSimpleOGLModelSheetLoaderFtry.h" />
+		<Unit filename="../../../include/ZBE/JSON/resources/JSONSpriteOGLModelSheetLoader.h" />
 		<Unit filename="../../../include/ZBE/OAL/daemons/OALContextDaemon.h" />
 		<Unit filename="../../../include/ZBE/OAL/entities/avatars/Sound3D.h" />
 		<Unit filename="../../../include/ZBE/OAL/entities/avatars/implementations/BaseSound3D.h" />
@@ -312,6 +313,7 @@
 		<Unit filename="../../../include/ZBE/OAL/tools/OALUtils.h" />
 		<Unit filename="../../../include/ZBE/OGL/daemons/OGLPostDraw.h" />
 		<Unit filename="../../../include/ZBE/OGL/daemons/OGLPreDrawer.h" />
+		<Unit filename="../../../include/ZBE/OGL/daemons/ShadersSetter.h" />
 		<Unit filename="../../../include/ZBE/OGL/daemons/SimpleImGuiTest.h" />
 		<Unit filename="../../../include/ZBE/OGL/drawers/OGLModelSheetDrawer.h" />
 		<Unit filename="../../../include/ZBE/OGL/drawers/OGLModelSheetDrawerFtry.h" />
@@ -580,7 +582,6 @@
 		<Unit filename="../../../include/ZBE/factories/implementations/events/handlers/time/TicketEraserFtry.h" />
 		<Unit filename="../../../include/ZBE/glTF/GLTFFactories.h" />
 		<Unit filename="../../../include/ZBE/glTF/resources/GlTFResourceLoader.h" />
-		<Unit filename="../../../include/ZBE/glTF/resources/GlTFResourceLoaderFtry.h" />
 		<Unit filename="../../../include/ZBE/graphics/MultiSpriteSheet.h" />
 		<Unit filename="../../../include/ZBE/resources/contextnames.h" />
 		<Unit filename="../../../include/ZBE/resources/definitions.h" />
@@ -593,14 +594,17 @@
 		<Unit filename="../../../include/ZBE/tools/graphics/CameraFtry.h" />
 		<Unit filename="../../../src/ZBE/JSON/graphics/JSONGraphicsLoaders.cpp" />
 		<Unit filename="../../../src/ZBE/JSON/resources/JSONAudioDefLoader.cpp" />
-		<Unit filename="../../../src/ZBE/JSON/resources/JSONGLSLProgramLoaderFtry.cpp" />
+		<Unit filename="../../../src/ZBE/JSON/resources/JSONGLSLProgramLoader.cpp" />
 		<Unit filename="../../../src/ZBE/JSON/resources/JSONMultiSpriteSheetLoader.cpp" />
 		<Unit filename="../../../src/ZBE/JSON/resources/JSONSimpleOGLModelSheetLoader.cpp" />
+		<Unit filename="../../../src/ZBE/JSON/resources/JSONSpriteOGLModelSheetLoader.cpp" />
 		<Unit filename="../../../src/ZBE/OAL/daemons/OALContextDaemon.cpp" />
 		<Unit filename="../../../src/ZBE/OAL/players/Sound3DOALPlayer.cpp" />
 		<Unit filename="../../../src/ZBE/OAL/resources/OALAudioLoader.cpp" />
 		<Unit filename="../../../src/ZBE/OAL/system/OALAudioStore.cpp" />
 		<Unit filename="../../../src/ZBE/OAL/tools/OALUtils.cpp" />
+		<Unit filename="../../../src/ZBE/OGL/daemons/ShadersSetter.cpp" />
+		<Unit filename="../../../src/ZBE/OGL/graphics/implementations/SimpleOGLModelSheet.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/OGL/SDLOGLWindow.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/OGL/daemons/OGLPreDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/OGL/factories/daemons/OGLPostDrawFtry.cpp" />
@@ -675,7 +679,7 @@
 		<Unit filename="../../../src/ZBE/factories/implementations/events/handlers/time/DaemonRecurrentTimeHandlerFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/events/handlers/time/DaemonTimeHandlerFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/events/handlers/time/TicketEraserFtry.cpp" />
-		<Unit filename="../../../src/ZBE/glTF/resources/GlTFResourceLoaderFtry.cpp" />
+		<Unit filename="../../../src/ZBE/glTF/resources/GlTFResourceLoader.cpp" />
 		<Unit filename="../../../src/ZBE/resources/contextname.cpp" />
 		<Unit filename="../../../src/ZBE/resources/loaders/RsrcFolderLoader.cpp" />
 		<Unit filename="../../../src/ZBE/resources/loaders/implementations/JSONAppLoader.cpp" />

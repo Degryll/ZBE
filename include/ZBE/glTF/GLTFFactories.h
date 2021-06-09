@@ -14,10 +14,10 @@
 
 #include "ZBE/factories/Factory.h"
 
-#include "ZBE/glTF/resources/GlTFResourceLoaderFtry.h"
-
 #include "ZBE/core/tools/containers/RsrcStore.h"
 #include "ZBE/core/system/system.h"
+
+#include "ZBE/glTF/resources/GLTFResourceLoader.h"
 
 namespace zbe {
 

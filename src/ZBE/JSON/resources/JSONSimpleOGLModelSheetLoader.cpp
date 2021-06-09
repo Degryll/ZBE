@@ -18,8 +18,7 @@ namespace zbe {
    */
   void JSONSimpleOGLModelSheetLoader::load(std::filesystem::path filePath) {
     std::ifstream ifs(filePath);
-
-    JSONGraphicsLoaders::JSONSimpleModelSheetFileLoad(ifs, window, rsrcAnimSprt, nrd, rsrcModelSheet);
+    JSONGraphicsLoaders::JSONSimpleModelSheetFileLoad(ifs, window, rsrcAnimSprt, nrd, rsrcModelSheet, graphicsStore);
     //JSONGraphicsLoaders::JSONMultiSpriteSheetFileLoad(ifs, rsrcAnimSprt, nrd, rsrcModelSheet, rsrcImgDef);
   }
 }  // namespace zbe
