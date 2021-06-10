@@ -11,7 +11,7 @@
 #define ZBE_RESOURCES_DEFINITIONS_H_
 
 #include "ZBE/core/tools/math/objects.h"
-#include "ZBE/core/tools/math/region.h"
+#include "ZBE/core/tools/math/Region.h"
 #include "ZBE/core/tools/math/Vector.h"
 
 namespace zbe {

@@ -17,7 +17,7 @@
 #include "ZBE/core/tools/containers/RsrcStore.h"
 #include "ZBE/core/system/system.h"
 
-#include "ZBE/glTF/resources/GLTFResourceLoader.h"
+#include "ZBE/glTF/resources/GlTFResourceLoader.h"
 
 namespace zbe {
 
