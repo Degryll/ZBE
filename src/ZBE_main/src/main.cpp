@@ -5,7 +5,9 @@
 #include "ludomain.h"
 #include "gamemain.h"
 #include "testing.h"
-#include "tinygltf/gltfmain.h"
+#include "tempmain.h"
+//#include "tinygltf/gltfmain.h"
+int gltfmain(int argc, char **argv){}
 
 int main(int argc, char* argv[]) {
   int option;
@@ -16,10 +18,11 @@ int main(int argc, char* argv[]) {
   printf("4 - gamemain\n");
   printf("5 - testing\n");
   printf("6 - gltf test\n");
+  printf("7 - temporal prueba interacciones main\n");
   printf("0 - salir\n");
   printf("--:");
   int readAmount = scanf ("%d",&option);
-  while (readAmount!=1 || option<0 || option>6) {
+  while (readAmount!=1 || option<0 || option>7) {
     printf("Introduzca una opcion... que valga: ");
     readAmount = scanf ("%d",&option);
   }
@@ -43,6 +46,9 @@ int main(int argc, char* argv[]) {
     break;
     case 6:
       out = gltfmain(argc,argv);
+    break;
+    case 7:
+      out = tempmain(argc,argv);
     break;
     case 0:
       printf("�Y para que has venido?\n");

@@ -43,7 +43,7 @@
 #include "game/events/handlers/StepInputHandler.h"
 #include "game/events/handlers/ExitInputHandler.h"
 #include "game/events/handlers/GameBallBouncer.h"
-#include "game/events/handlers/TtpHandler.h"
+//#include "game/events/handlers/TtpHandler.h" // header not working
 
 #include "ZBE/core/daemons/MainLoop.h"
 #include "ZBE/SDL/daemons/BasicPreLoopSDLDaemon.h"

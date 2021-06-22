@@ -227,8 +227,11 @@ int opengltest(int, char** ) {
   std::array<uint64_t, 5> a2{ {1, 2, 1, 2, 1} };
   std::shared_ptr<MAvatar<uint64_t, double, double, Vector3D, Vector3D> > avatar2 = std::make_shared<MBaseAvatar<uint64_t, double, double, Vector3D, Vector3D> >(ent2, a2);
 
-  OGLPreDrawer preDraw(window, shaderId, cam);
-  OGLPostDraw posDraw(window);
+  OGLPreDrawer preDraw;//(window, shaderId, cam);
+  preDraw.setProgram(window, shaderId);
+  preDraw.setCamera(cam);
+  OGLPostDraw posDraw;
+  posDraw.setWindow(window);
 
   auto draw = std::make_shared<OGLModelSheetDrawer<5, uint64_t, double, double, Vector3D, Vector3D> >(window, shaderId);
 

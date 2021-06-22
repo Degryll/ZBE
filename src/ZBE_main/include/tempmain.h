@@ -1,0 +1,1 @@
+int tempmain (int, char **);

@@ -131,8 +131,6 @@
 					<Add library="glew32" />
 					<Add library="vulkan-1" />
 					<Add library="OpenAL32" />
-					<Add library="glfw3" />
-					<Add library="glfw" />
 					<Add directory="../../../lib" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.1/x86_64-w64-mingw32/lib" />
@@ -329,6 +327,7 @@
 		<Unit filename="../../../src/ZBE_main/include/ludo/opengltest.h" />
 		<Unit filename="../../../src/ZBE_main/include/ludo/sdlaudiotest.h" />
 		<Unit filename="../../../src/ZBE_main/include/ludomain.h" />
+		<Unit filename="../../../src/ZBE_main/include/tempmain.h" />
 		<Unit filename="../../../src/ZBE_main/include/testing.h" />
 		<Unit filename="../../../src/ZBE_main/include/tinygltf/gltfmain.h" />
 		<Unit filename="../../../src/ZBE_main/include/tinygltf/shaders.h" />
@@ -336,20 +335,19 @@
 		<Unit filename="../../../src/ZBE_main/src/batismain.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/degryllmain.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/gamemain.cpp" />
+		<Unit filename="../../../src/ZBE_main/src/ludo/apptest.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/ludo/generaltest.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/ludo/openaltest.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/ludo/opengltest.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/ludo/sdlaudiotest.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/ludomain.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/main.cpp" />
+		<Unit filename="../../../src/ZBE_main/src/tempmain.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/testing.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/tinygltf/gltfmain.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/tinygltf/shaders.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/tinygltf/window.cpp" />
 		<Extensions>
-			<code_completion />
-			<envvars />
-			<debugger />
 			<lib_finder disable_auto="1" />
 		</Extensions>
 	</Project>
