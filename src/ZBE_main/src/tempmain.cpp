@@ -1,7 +1,10 @@
 #include "tempmain.h"
 #include <cstdint>
-#include "ZBE/core/tools/math/Vector.h"
 #include <variant>
+#include <vector>
+
+#include "ZBE/core/tools/math/Vector.h"
+#include "ZBE/core/tools/containers/TicketedForwardList.h"
 
 struct CollisionData {
   int64_t time;
@@ -41,65 +44,93 @@ public:
   virtual ReactObject getReactObject() = 0;
 };
 
-template <typename IData, typename ...Ts>
-class Interactionator : public Interactioner<IData, Ts...> {
-public:
-  std::vector<InteractionEvent<IData>> getCollision(int64_t timeLimit) {
-    std::vector<InteractionEvent<IData>> out;
-    long best = timeLimit;
-    for(auto iner : iners) {
-      std::variant<Ts...> v = iner->getShape();
-      IData data = selector.select(this->getShape(), iner.getShape, best);
-      InteractionEvent<IData> ie {data, this->getReactorObject(), iner->getReactObject()}
-      if(data.time == best) {
-        out.push_back(ie);
-      } else if(data.time < best) {
-        out.clear();
-        out.push_back(ie);
-      }
-    }
-  }
-
-  void setSelector(InteractionSelector<IData, Ts...> selector) {
-    this->selector = selector;
-  }
-
-  void setIners(TicketedForwardList<std::shared_ptr<Interactioner<Ts...>>> iners) {
-    this->iners = iners;
-  }
-
-private:
-  InteractionSelector<IData, Ts...> selector;
-  TicketedForwardList<std::shared_ptr<Interactioner<Ts...>>> iners;
-};
-
 template<class... Ts> struct overloaded : Ts... { using Ts::operator()...; };
 template<class... Ts> overloaded(Ts...) -> overloaded<Ts...>;
 
-template<typename IData, typename ...Ts>
+template<typename IData, typename Overloaded, typename ...Ts>
 class InteractionSelector {
 public:
   bool select(std::variant<Ts...> i1, std::variant<Ts...> i2, int64_t timeLimit, IData &data) {
     return std::visit(getOverloaded(), i1, i2, timeLimit, data);
+    TODO Esto ^ dice valueless_by_exception. 
   }
 
-  virtual overloaded<Ts...> getOverloaded() = 0;
+  virtual Overloaded getOverloaded() = 0;
 };
 
+template <typename IData, typename Overloaded, typename ...Ts>
+class Interactionator : public Interactioner<Ts...> {
+public:
+  std::vector<InteractionEvent<IData>> getCollision(int64_t timeLimit) {
+    std::vector<InteractionEvent<IData>> out;
+    long best = timeLimit;
+    for(auto iner : *iners) {
+      std::variant<Ts...> v = iner->getShape();
+      IData data;
+      if (selector->select(this->getShape(), iner->getShape(), best, data)) {
+        InteractionEvent<IData> ie {data, this->getReactObject(), iner->getReactObject()};
+        if(data.time == best) {
+          out.push_back(ie);
+        } else if(data.time < best) {
+          out.clear();
+          out.push_back(ie);
+        }
+      }
+    }  // for iners
+    return out;
+  }
 
-class BasePhysicsSelector : public InteractionSelector<CollisionData, Sphere, Box, Ray> {
+  void setSelector(std::unique_ptr<InteractionSelector<IData, Overloaded, Ts...>> selector) {
+    this->selector = std::move(selector);
+  }
+
+  void setIners(std::shared_ptr<zbe::TicketedForwardList<Interactioner<Ts...>>> iners) {
+    this->iners = iners;
+  }
+
+private:
+  //  TODO Esto es un tipo abstracto, tiene que ser un unique_ptr
+  std::unique_ptr<InteractionSelector<IData, Overloaded, Ts...>> selector;
+  std::shared_ptr<zbe::TicketedForwardList<Interactioner<Ts...>>> iners;
+};
+
+class SphereSphere {
+public:
+  bool operator()(Sphere arg1, Sphere arg2, int64_t timelimit, CollisionData &data) {
+    data.time = 3.0;
+    data.point = arg1.center;
+    return true;
+  }
+};
+
+class SphereBox {
+public:
+  bool operator()(Sphere arg1, Box arg2, int64_t timelimit, CollisionData &data) {
+    data.time = 4.0;
+    data.point = arg1.center;
+    return true;
+  }
+};
+
+class SphereRay {
+public:
+  bool operator()(Sphere arg1, Ray arg2, int64_t timelimit, CollisionData &data) {
+    data.time = 5.0;
+    data.point = arg1.center;
+    return true;
+  }
+};
+
+using BasePhysicsOverloaded = overloaded<SphereSphere, SphereBox, SphereRay>;
+
+class BasePhysicsSelector : public InteractionSelector<CollisionData, BasePhysicsOverloaded, Sphere, Box, Ray> {
 protected:
-  overloaded<...Ts> getOverloaded() {
-    return overloaded {
-         [](Sphere arg1, Sphere arg2, int64_t timelimit, CollisionData &data) {data.time = 3.0; data.point = arg1.center; return true;},
-         [](Sphere arg1, Box arg2, int64_t timelimit, CollisionData &data) {data.time = 4.0; data.point = arg1.center; return true;},
-         [](Sphere arg1, Ray arg2, int64_t timelimit, CollisionData &data) {data.time = 5.0; data.point = arg1.center; return true;}
-    };
+  virtual BasePhysicsOverloaded getOverloaded() {
+    return BasePhysicsOverloaded {SphereSphere{}, SphereBox{}, SphereRay{}};
   }  // getOverloaded
 };
 
-
-class SampleInteractionator : public Interactionator<CollisionData, Sphere, Box, Ray> {
+class SampleInteractionator : public Interactionator<CollisionData, BasePhysicsOverloaded, Sphere, Box, Ray> {
 public:
   std::variant<Sphere, Box, Ray> getShape() {
     return Sphere{{3.0, 7.0, 4.0}, 4.2};
@@ -124,28 +155,28 @@ class InteractionerRay : public Interactioner<Sphere, Box, Ray> {
 
 int tempmain (int, char **) {
   // Crear lista
-  TicketedForwardList<std::shared_ptr<Interactioner<Sphere, Box, Ray>>> iners;
+  std::shared_ptr<zbe::TicketedForwardList<Interactioner<Sphere, Box, Ray>>> iners = std::make_shared<zbe::TicketedForwardList<Interactioner<Sphere, Box, Ray>>>();
   // Crear los Interactioner
   auto inerRay1 = std::make_shared<InteractionerRay>();
   auto inerBox1 = std::make_shared<InteractionerBox>();
   auto inerBox2 = std::make_shared<InteractionerBox>();
   // Añadirlos a la lista
-  iners.push_back(inerRay1);
-  iners.push_back(inerBox1);
-  iners.push_back(inerBox2);
+  iners->push_front(inerRay1);
+  iners->push_front(inerBox1);
+  iners->push_front(inerBox2);
   // Crear el selector
-  BasePhysicsSelector selector;
+  std::unique_ptr<InteractionSelector<CollisionData, overloaded<SphereSphere, SphereBox, SphereRay>, Sphere, Box, Ray>> selector = std::make_unique<BasePhysicsSelector>();
   // Crear el interactionator
   SampleInteractionator inator;
   // Añadir la lista al Interactionator
   inator.setIners(iners);
   // Áñadir el selector al interactionator
-  inator.setSelector(selector);
+  inator.setSelector(std::move(selector));
   // Pedirle los eventos al interactionator
   auto iEs = inator.getCollision(256);
   // Comerse un cachopo
 
-  for( ie: iEs) {
+  for(auto& ie: iEs) {
     printf("time: %d, point: %lf, %lf, %lf\n", ie.data.time, ie.data.point.x, ie.data.point.y, ie.data.point.z);
   }
 
