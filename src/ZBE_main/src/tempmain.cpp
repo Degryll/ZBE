@@ -12,6 +12,7 @@
 #include <typeinfo>
 #include <iostream>
 #include <string>
+#include <functional>
 
 #include "ZBE/core/tools/math/Vector.h"
 #include "ZBE/core/tools/containers/TicketedForwardList.h"
@@ -756,14 +757,14 @@ template<typename ...Traits>
 class Actor;
 
 template<typename Trait>
-class Actor;
+class Actor<Trait>;
 
 template<typename ...Traits>
 class Reactor : public Reactor<Traits>... {
 public:
 
   template <typename U>
-  void setReaction(std::function<void(Trait)> reaction) {
+  void setReaction(std::function<void(U)> reaction) {
     this->Reactor<U>::setReaction(reaction);
   }
 
@@ -787,7 +788,7 @@ public:
       reaction(trait);
     }
 private:
-  void noReaction(Trait) {}
+  static void noReaction(Trait) {}
   std::function<void(Trait)> reaction;
 };
 
@@ -822,10 +823,12 @@ class Actor<Trait> {
 public:
 
   //using subAct = void (*)(void*, Waiter<T>*);
-  using subAct = std::function<void(void*, Reactor<Traits>*)>;
+  using subAct = std::function<void(void*, Reactor<Trait>*)>;
 
   Actor() : sa(noAct), val() {}
-  Actor(std::pair<Trait, std::function<void(void*, Reactor<Trait>*)>> valFun) : sa(valFun.get<1>()), val(valFun.get<0>()) {
+  Actor(std::pair<Trait, std::function<void(void*, Reactor<Trait>*)>> valFun) : sa(std::get<1>(valFun)), val(std::get<0>(valFun)) {
+
+  //Actor(std::pair<Trait, std::function<void(void*, Reactor<Trait>*)>> valFun) : sa(valFun.get<1>()), val(valFun.get<0>()) {
     //std::cout << "Thing: " << val << std::endl;
   }
 
@@ -834,7 +837,7 @@ public:
       return val;
   }
 
-  void setTrait(U trait, std::function<void(void*, Reactor<U>*)> sa) {
+  void setTrait(Trait trait, std::function<void(void*, Reactor<Trait>*)> sa) {
     this->val = trait;
     this->sa = sa;
   }
@@ -843,17 +846,13 @@ public:
     return sa;
   }
 
-  void* getSelf() {
-    return self;
-  }
-
   void act(Reactor<Trait>* reactor) {
     //printf("MIDNAI\n");fflush(stdout);
-    sa(self, reactor);
+    sa(this, reactor);
   }
 
 protected:
-  Actor(Trait val, subAct sa, void* self) : sa(sa), val(val), self(self) {
+  Actor(Trait val, subAct sa) : sa(sa), val(val) {
     //std::cout << "Thing: " << val << std::endl;
   }
 
@@ -871,16 +870,18 @@ private:
 template<typename Trait>
 struct ReactionPrint {
   void operator()(Trait trait){
-      std::cout << typeid(trait).name() << trait << std::endl;
+      std::cout << typeid(trait).name() << "are you sure?" << trait << std::endl;
   }
-}
+};
 
 template<typename Trait>
 struct EnabledTrait {
   void operator()(void* self, Reactor<Trait>* reactor){
-    reactor->react(((Actor<Trait>*)self)->get<Trait>());
+    Actor<Trait>* typedSelf = (Actor<Trait>*)self;
+    auto trait = typedSelf->get();
+    reactor->react(trait);
   }
-}
+};
 
 // ------------------------ WIP 5 END ---------------------------- //
 
@@ -1188,7 +1189,16 @@ int tempmain (int, char **) {
   reactor.setReaction<int>(ReactionPrint<int>());
   reactor.setReaction<double>(ReactionPrint<double>());
   reactor.setReaction<long>(ReactionPrint<long>());
-  reactor.setReaction<float>(ReactionPrint<float>());
+  reactor.setReaction<float>(ReactionP987rint<float>());
+
+  /* TODO propuesta de composición de reacciones en cadena.
+  Requiere un orden estricto de ejecucion (fifo/lifo)
+  ReactionSequence<int> tatat;
+  tatat.addReaction(lowerLife);
+  tatat.addReaction(changeColor);
+  tatat.addReaction(startBlink);
+  reactor.setReaction<int>(tatat);
+  */
 
   reactor.callActor(nicolasCage);
 
