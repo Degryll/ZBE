@@ -446,16 +446,25 @@ public:
 template<typename T, typename ...Ts>
 class Things : public Things<T>, public Things<Ts...> {
 public:
-  Things(T val, Ts... vals) : Things<T>(val), Things<Ts...>(vals...) {}
+  Things() = default;
+  Things(T val, Ts... vals) : Things<T>(val), Things<Ts...>(vals...) {
+    //std::cout << "Things: " << val << std::endl;
+  }
+
+  // template <typename ...Us>
+  // Things(const Things<Us...>& t)
+  // : Things<Us>(
+  //   t.Things<Us>::get()
+  // )... {}
 
   template <typename U>
-  U get() {
+  const U get() {
     return (this->Things<U>::get());
   }
 
   template <typename U>
   void act(Waiter<U>* w) {
-    printf("NONAINO\n");fflush(stdout);
+    //printf("NONAINO\n");fflush(stdout);
     this->Things<U>::act(w);
   }
 };
@@ -463,31 +472,36 @@ public:
 template<typename T>
 class Things<T> {
 public:
-  Things() : val(), sa(&noAct) {}
-  Things(T val) : val(val), sa(&noAct) {}
+  Things() : sa(&noAct), val() {}
+  Things(T val) : sa(&noAct), val(val) {
+    //std::cout << "Thing: " << val << std::endl;
+  }
 
-  template<typename V = T>
-  V get() {
+  //template<typename V = T>
+  const T get() {
+      //std::cout << "get: " << val << std::endl;
       return val;
   }
 
   void act(Waiter<T>* w) {
-    printf("MIDNAI\n");fflush(stdout);
-    sa(this, w);
+    //printf("MIDNAI\n");fflush(stdout);
+    sa(self, w);
   }
 protected:
   using subAct = void (*)(void*, Waiter<T>*);
-  void setAct(subAct sa) {
+  void setAct(subAct sa, void* self) {
     this->sa = sa;
+    this->self = self;
   }
 
 private:
-  static void noAct(void*, Waiter<T>*) {printf("NONAI\n");fflush(stdout);}
+  static void noAct(void*, Waiter<T>*) {}
   subAct sa;
   T val;
+  void* self;
 };
 
-class A : public Waiter<int, double, long, float> {
+class AWaiter : public Waiter<int, double, long, float> {
 public:
   virtual void react(int val) {
     printf("int %d\n", val);fflush(stdout);
@@ -496,7 +510,7 @@ public:
     printf("double %lf\n", val);fflush(stdout);
   }
   virtual void react(long val) {
-    printf("long %d\n", val);fflush(stdout);
+    printf("long %ld\n", val);fflush(stdout);
   }
   virtual void react(float val) {
     printf("float %f\n", val);fflush(stdout);
@@ -506,10 +520,11 @@ public:
 class BThing : public Things<int, double, long, float> {
 public:
   BThing(int val) : Things<int, double, long, float>(val,0.0,0l,0.0f) {
-    this->Things<int>::setAct(&actI);
+    //std::cout << "BThing: " << val << std::endl;
+    this->Things<int>::setAct(&actI, this);
   }
   static void actI(void* self, Waiter<int>* w) {
-    printf("DALE B int\n");fflush(stdout);
+    //printf("DALE B int\n");fflush(stdout);
     w->react(((BThing*)self)->get<int>());
   }
 };
@@ -517,19 +532,119 @@ public:
 class CThing : public Things<int, double, long, float> {
 public:
   CThing(double dval, long lval) : Things<int, double, long, float>(0,dval,lval,0.0f) {
-    this->Things<double>::setAct(&actD);
-    this->Things<long>::setAct(&actL);
+    //std::cout << "CThing d: " << dval << std::endl;
+    //std::cout << "CThing l: " << lval << std::endl;
+    this->Things<double>::setAct(&actD, this);
+    this->Things<long>::setAct(&actL, this);
   }
 
   static void actD(void* self, Waiter<double>* w) {
-    printf("DALE C double\n");fflush(stdout);
+    //printf("DALE C double\n");fflush(stdout);
     w->react(((CThing*)self)->get<double>());
   }
 
   static void actL(void* self, Waiter<long>* w) {
-    printf("DALE C long\n");fflush(stdout);
+    //printf("DALE C long\n");fflush(stdout);
     w->react(((CThing*)self)->get<long>());
   }
+};
+
+
+
+class DWaiterThing : public Waiter<int, double, long, float>,  public Things<int, double, long, float>{
+public:
+  DWaiterThing(int val) : Things<int, double, long, float>(val,0.0,0l,0.0f) {
+    //std::cout << "BThing: " << val << std::endl;
+    this->Things<int>::setAct(&actI, this);
+  }
+  static void actI(void* self, Waiter<int>* w) {
+    //printf("DALE B int\n");fflush(stdout);
+    w->react(((DWaiterThing*)self)->get<int>());
+  }
+
+  virtual void react(int val) {
+    printf("int %d\n", val);fflush(stdout);
+  }
+  virtual void react(double val) {
+    printf("double %lf\n", val);fflush(stdout);
+  }
+  virtual void react(long val) {
+    printf("long %ld\n", val);fflush(stdout);
+  }
+  virtual void react(float val) {
+    printf("float %f\n", val);fflush(stdout);
+  }
+};
+
+class EWaiterThing : public Waiter<int, double, long, float>,  public Things<int, double, long, float>{
+public:
+  EWaiterThing(double dval, long lval) : Things<int, double, long, float>(0,dval,lval,0.0f) {
+    //std::cout << "CThing d: " << dval << std::endl;
+    //std::cout << "CThing l: " << lval << std::endl;
+    this->Things<double>::setAct(&actD, this);
+    this->Things<long>::setAct(&actL, this);
+  }
+
+  static void actD(void* self, Waiter<double>* w) {
+    //printf("DALE C double\n");fflush(stdout);
+    w->react(((EWaiterThing*)self)->get<double>());
+  }
+
+  static void actL(void* self, Waiter<long>* w) {
+    //printf("DALE C long\n");fflush(stdout);
+    w->react(((EWaiterThing*)self)->get<long>());
+  }
+
+  virtual void react(int val) {
+    printf("int %d\n", val);fflush(stdout);
+  }
+  virtual void react(double val) {
+    printf("double %lf\n", val);fflush(stdout);
+  }
+  virtual void react(long val) {
+    printf("long %ld\n", val);fflush(stdout);
+  }
+  virtual void react(float val) {
+    printf("float %f\n", val);fflush(stdout);
+  }
+
+};
+
+class FWaiterThing : public Waiter<char, int, double, long, float>,  public Things<uint64_t, int, double, long, float>{
+public:
+  FWaiterThing(double dval, long lval) : Things<uint64_t, int, double, long, float>(0,0,dval,lval,0.0f) {
+    //std::cout << "CThing d: " << dval << std::endl;
+    //std::cout << "CThing l: " << lval << std::endl;
+    this->Things<double>::setAct(&actD, this);
+    this->Things<long>::setAct(&actL, this);
+  }
+
+  static void actD(void* self, Waiter<double>* w) {
+    //printf("DALE C double\n");fflush(stdout);
+    w->react(((FWaiterThing*)self)->get<double>());
+  }
+
+  static void actL(void* self, Waiter<long>* w) {
+    //printf("DALE C long\n");fflush(stdout);
+    w->react(((FWaiterThing*)self)->get<long>());
+  }
+
+  virtual void react(int val) {
+    printf("int %d\n", val);fflush(stdout);
+  }
+  virtual void react(double val) {
+    printf("double %lf\n", val);fflush(stdout);
+  }
+  virtual void react(long val) {
+    printf("long %ld\n", val);fflush(stdout);
+  }
+  virtual void react(float val) {
+    printf("float %f\n", val);fflush(stdout);
+  }
+  virtual void react(char val) {
+    printf("char %c\n", val);fflush(stdout);
+  }
+
 };
 
 // -------------------
@@ -866,12 +981,42 @@ int tempmain (int, char **) {
 
   printf("WIP 3\n");fflush(stdout);
 
-  A* a = new A();
+  // WIP 3 TEST 1
+  AWaiter* a = new AWaiter();
   BThing* b = new BThing{42};
-  CThing* c = new CThing{42.0, 7};
+  CThing* c = new CThing{42.03, 7};
 
   a->hazCosas(b);
   a->hazCosas(c);
+
+  // WIP 3 TEST 2
+  DWaiterThing* d = new DWaiterThing{27};
+  EWaiterThing* e = new EWaiterThing{18.46, 3};
+
+  d->hazCosas(e);
+  e->hazCosas(d);
+
+  d->hazCosas(b);
+  d->hazCosas(c);
+
+  e->hazCosas(b);
+  e->hazCosas(c);
+
+  a->hazCosas(d);
+  a->hazCosas(e);
+
+  // WIP 3 TEST 3
+  // FWaiterThing* f = new FWaiterThing{202.001, 1945};
+  // //Things<int, double, long, float>& ew = *e;
+  // Things<int, double, long, float> ew2;
+  // Things<char, int, double, long, float>* ewrapper = new Things<char, int, double, long, float>(ew2);
+  // f->hazCosas(ewrapper);
+
+  /*
+Construir objetos que sean Waiter<int, double, long, float> y Things<int, double, long, float> simultaneamente. (Teniendo en cuenta la posibilidad de tipos distintos de Waiter y Things)
+Hacer reaccionar en uno y otro sentido varios de estos objetos.
+
+  */
 
   // printf("WIP 4\n");fflush(stdout);
   //
