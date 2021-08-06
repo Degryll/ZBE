@@ -421,7 +421,7 @@ class Brick : RO<Form<Box>, Interest<Bounceables, Explotables>, Hitable, Bombize
 //   T val;
 // };
 
-template<typename T, typename ...Ts>
+template<typename ...Ts>
 class Things;
 
 template<typename T>
@@ -443,19 +443,23 @@ public:
     virtual void react(T) = 0;
 };
 
-template<typename T, typename ...Ts>
-class Things : public Things<T>, public Things<Ts...> {
+template<typename ...Ts>
+class Things : public Things<Ts>... {
 public:
   Things() = default;
-  Things(T val, Ts... vals) : Things<T>(val), Things<Ts...>(vals...) {
+  Things(Ts... vals) : Things<Ts>(vals)... {
     //std::cout << "Things: " << val << std::endl;
   }
 
-  // template <typename ...Us>
-  // Things(const Things<Us...>& t)
-  // : Things<Us>(
-  //   t.Things<Us>::get()
-  // )... {}
+  template <typename ...Us>
+  Things(Things<Us...> t)
+  : Things<Us>(
+    t.Things<Us>::get(),
+    t.Things<Us>::getAct(),
+    t.Things<Us>::getSelf()
+  )... {
+    printf("Things wrapped\n");fflush(stdout);
+  }
 
   template <typename U>
   const U get() {
@@ -472,8 +476,11 @@ public:
 template<typename T>
 class Things<T> {
 public:
-  Things() : sa(&noAct), val() {}
-  Things(T val) : sa(&noAct), val(val) {
+
+  using subAct = void (*)(void*, Waiter<T>*);
+
+  Things() : sa(&noAct), val(), self(nullptr) {}
+  Things(T val) : sa(&noAct), val(val), self(nullptr) {
     //std::cout << "Thing: " << val << std::endl;
   }
 
@@ -483,12 +490,25 @@ public:
       return val;
   }
 
+  subAct getAct() {
+    return sa;
+  }
+
+  void* getSelf() {
+    return self;
+  }
+
   void act(Waiter<T>* w) {
     //printf("MIDNAI\n");fflush(stdout);
     sa(self, w);
   }
 protected:
-  using subAct = void (*)(void*, Waiter<T>*);
+
+  Things(T val, subAct sa, void* self) : sa(sa), val(val), self(self) {
+    //std::cout << "Thing: " << val << std::endl;
+    printf("Things valsa %p\n", sa);fflush(stdout);
+  }
+
   void setAct(subAct sa, void* self) {
     this->sa = sa;
     this->self = self;
@@ -583,16 +603,25 @@ public:
     //std::cout << "CThing l: " << lval << std::endl;
     this->Things<double>::setAct(&actD, this);
     this->Things<long>::setAct(&actL, this);
+    printf("EThings acts %p %p\n", &actD, &actL);fflush(stdout);
   }
 
   static void actD(void* self, Waiter<double>* w) {
-    //printf("DALE C double\n");fflush(stdout);
-    w->react(((EWaiterThing*)self)->get<double>());
+    printf("DALE C double\n");fflush(stdout);
+    auto& selfo = *((EWaiterThing*)self);
+    printf("Pre dao 1 %p\n", self);fflush(stdout);
+    auto a = selfo.get<double>();
+    printf("Pre dao 2\n");fflush(stdout);
+    auto& wo = *w;
+    printf("Pre dao 3\n");fflush(stdout);
+    wo.react(a);
+    printf("Dao double\n");fflush(stdout);
   }
 
   static void actL(void* self, Waiter<long>* w) {
-    //printf("DALE C long\n");fflush(stdout);
+    printf("DALE C long\n");fflush(stdout);
     w->react(((EWaiterThing*)self)->get<long>());
+    printf("Dao long\n");fflush(stdout);
   }
 
   virtual void react(int val) {
@@ -721,6 +750,140 @@ public:
 // };
 
 // ------------------------ WIP 4 END ---------------------------- //
+
+// -------------------------- WIP 5 ------------------------------ //
+template<typename ...Traits>
+class Actor;
+
+template<typename Trait>
+class Actor;
+
+template<typename ...Traits>
+class Reactor : public Reactor<Traits>... {
+public:
+
+  template <typename U>
+  void setReaction(std::function<void(Trait)> reaction) {
+    this->Reactor<U>::setReaction(reaction);
+  }
+
+  void callActor(Actor<Traits...>*  actor) {
+    //std::initializer_list<int>{ (reactor->act(std::shared_ptr<WeakAvatarEntityContainer<Bases> >(rObject)), 0)... };
+    std::initializer_list<int>{(actor->act((Reactor<Traits>*)this), 0)... };
+    //(this->hazCosa<Ts>(cosas.get<Ts>()), ...);
+  }
+};
+
+template<typename Trait>
+class Reactor<Trait> {
+public:
+    Reactor() : reaction(noReaction) {}
+    //Reactor(std::function<void(Trait)> reaction) : reaction(reaction) {}
+
+    void setReaction(std::function<void(Trait)> reaction) {
+      this->reaction = reaction;
+    }
+    void react(Trait trait) {
+      reaction(trait);
+    }
+private:
+  void noReaction(Trait) {}
+  std::function<void(Trait)> reaction;
+};
+
+template<typename ...Traits>
+class Actor : public Actor<Traits>... {
+public:
+  Actor() = default;
+  Actor(std::pair<Traits, std::function<void(void*, Reactor<Traits>*)>>... valFun) : Actor<Traits>(valFun)... {
+    //std::cout << "Things: " << val << std::endl;
+  }
+
+  template <typename U>
+  const U get() {
+    return (this->Actor<U>::get());
+  }
+
+  template <typename U>
+  void act(Reactor<U>* reactor) {
+    //printf("NONAINO\n");fflush(stdout);
+    this->Actor<U>::act(reactor);
+  }
+
+  template <typename U>
+  void setTrait(U trait, std::function<void(void*, Reactor<U>*)> sa) {
+    //printf("NONAINO\n");fflush(stdout);
+    this->Actor<U>::setTrait(trait, sa);
+  }
+};
+
+template<typename Trait>
+class Actor<Trait> {
+public:
+
+  //using subAct = void (*)(void*, Waiter<T>*);
+  using subAct = std::function<void(void*, Reactor<Traits>*)>;
+
+  Actor() : sa(noAct), val() {}
+  Actor(std::pair<Trait, std::function<void(void*, Reactor<Trait>*)>> valFun) : sa(valFun.get<1>()), val(valFun.get<0>()) {
+    //std::cout << "Thing: " << val << std::endl;
+  }
+
+  const Trait get() {
+      //std::cout << "get: " << val << std::endl;
+      return val;
+  }
+
+  void setTrait(U trait, std::function<void(void*, Reactor<U>*)> sa) {
+    this->val = trait;
+    this->sa = sa;
+  }
+
+  subAct getAct() {
+    return sa;
+  }
+
+  void* getSelf() {
+    return self;
+  }
+
+  void act(Reactor<Trait>* reactor) {
+    //printf("MIDNAI\n");fflush(stdout);
+    sa(self, reactor);
+  }
+
+protected:
+  Actor(Trait val, subAct sa, void* self) : sa(sa), val(val), self(self) {
+    //std::cout << "Thing: " << val << std::endl;
+  }
+
+  void setAct(subAct sa, void* self) {
+    this->sa = sa;
+    this->self = self;
+  }
+
+private:
+  static void noAct(void*, Reactor<Trait>*) {}
+  subAct sa;
+  Trait val;
+};
+
+template<typename Trait>
+struct ReactionPrint {
+  void operator()(Trait trait){
+      std::cout << typeid(trait).name() << trait << std::endl;
+  }
+}
+
+template<typename Trait>
+struct EnabledTrait {
+  void operator()(void* self, Reactor<Trait>* reactor){
+    reactor->react(((Actor<Trait>*)self)->get<Trait>());
+  }
+}
+
+// ------------------------ WIP 5 END ---------------------------- //
+
 template <typename IData>
 struct InteractionEvent {
   IData data;
@@ -1006,11 +1169,28 @@ int tempmain (int, char **) {
   a->hazCosas(e);
 
   // WIP 3 TEST 3
-  // FWaiterThing* f = new FWaiterThing{202.001, 1945};
-  // //Things<int, double, long, float>& ew = *e;
-  // Things<int, double, long, float> ew2;
-  // Things<char, int, double, long, float>* ewrapper = new Things<char, int, double, long, float>(ew2);
-  // f->hazCosas(ewrapper);
+  FWaiterThing* f = new FWaiterThing{202.001, 1945};
+  Things<int, double, long, float>& ew = *e;
+  //Things<int, double, long, float> ew2;
+  Things<char, int, double, long, float>* ewrapper = new Things<char, int, double, long, float>(ew);
+  printf("WIP 3 COSAS MOLONAS\n");fflush(stdout);
+  f->hazCosas(ewrapper);
+
+  // WIP 3 TEST 4 la venganza
+  // WIP 3 TEST 4 ha sido procrastiando
+
+  // WIP 5
+  Actor<int, double, long, float>* nicolasCage = new Actor<int, double, long, float>();
+  nicolasCage->setTrait<double>(0.75, EnabledTrait<double>());
+  nicolasCage->setTrait<int>(327, EnabledTrait<int>());
+
+  Reactor<int, double, long, float> reactor;
+  reactor.setReaction<int>(ReactionPrint<int>());
+  reactor.setReaction<double>(ReactionPrint<double>());
+  reactor.setReaction<long>(ReactionPrint<long>());
+  reactor.setReaction<float>(ReactionPrint<float>());
+
+  reactor.callActor(nicolasCage);
 
   /*
 Construir objetos que sean Waiter<int, double, long, float> y Things<int, double, long, float> simultaneamente. (Teniendo en cuenta la posibilidad de tipos distintos de Waiter y Things)
