@@ -1,0 +1,1 @@
+int tempcleanmain (int, char **);

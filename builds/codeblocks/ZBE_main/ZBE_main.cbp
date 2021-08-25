@@ -327,6 +327,7 @@
 		<Unit filename="../../../src/ZBE_main/include/ludo/opengltest.h" />
 		<Unit filename="../../../src/ZBE_main/include/ludo/sdlaudiotest.h" />
 		<Unit filename="../../../src/ZBE_main/include/ludomain.h" />
+		<Unit filename="../../../src/ZBE_main/include/tempcleanmain.h" />
 		<Unit filename="../../../src/ZBE_main/include/tempmain.h" />
 		<Unit filename="../../../src/ZBE_main/include/testing.h" />
 		<Unit filename="../../../src/ZBE_main/include/tinygltf/gltfmain.h" />
@@ -342,6 +343,7 @@
 		<Unit filename="../../../src/ZBE_main/src/ludo/sdlaudiotest.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/ludomain.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/main.cpp" />
+		<Unit filename="../../../src/ZBE_main/src/tempcleanmain.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/tempmain.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/testing.cpp" />
 		<Unit filename="../../../src/ZBE_main/src/tinygltf/gltfmain.cpp" />
@@ -349,6 +351,8 @@
 		<Unit filename="../../../src/ZBE_main/src/tinygltf/window.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
+			<code_completion />
+			<debugger />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>
