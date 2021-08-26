@@ -50,7 +50,7 @@ int main(int argc, char* argv[]) {
       out = gltfmain(argc,argv);
     break;
     case 7:
-      out = tempmain(argc,argv);
+      out = temp::tempmain(argc,argv);
     break;
     case 8:
       out = tempcleanmain(argc,argv);

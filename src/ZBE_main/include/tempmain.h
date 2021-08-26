@@ -1,1 +1,3 @@
-int tempmain (int, char **);
+namespace temp {
+  int tempmain (int, char **);  
+}
