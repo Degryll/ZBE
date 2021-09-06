@@ -53,7 +53,7 @@ int main(int argc, char* argv[]) {
       out = temp::tempmain(argc,argv);
     break;
     case 8:
-      out = tempcleanmain(argc,argv);
+      out = tempclean::tempcleanmain(argc,argv);
     break;
     case 0:
       printf("�Y para que has venido?\n");

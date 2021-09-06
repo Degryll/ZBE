@@ -17,9 +17,48 @@
 #include "ZBE/core/tools/math/Vector.h"
 #include "ZBE/core/tools/containers/TicketedForwardList.h"
 
+namespace tempclean {
+
+struct Solid {
+  double hardness = 0.0;
+  double density = 0.0;
+
+  friend std::ostream & operator << (std::ostream &out, const Solid &s)
+  {
+    out << "Solid (" << s.hardness << ", "  << s.density << ")";
+    return out;
+  }
+};
+
+struct Alive {
+  int life = 1;
+  friend std::ostream & operator << (std::ostream &out, const Alive &s)
+  {
+    out << "Alive (" << s.life << ")";
+    return out;
+  }
+};
+
+struct Furulatrix {
+  int level = 10;
+  double ratio = 1.0;
+
+  friend std::ostream & operator << (std::ostream &out, const Furulatrix &s)
+  {
+    out << "Furulatrix (" << s.level << ", "  << s.ratio << ")";
+    return out;
+  }
+};
+
 struct CollisionData {
   int64_t time{0};
   zbe::Vector3D point{0.0, 0.0, 0.0};
+
+  friend std::ostream & operator << (std::ostream &out, const CollisionData &s)
+  {
+    out << "CollisionData (" << s.time << ", (" << s.point[0] << ", "<< s.point[1] << ", "<< s.point[2] << "))";
+    return out;
+  }
 };
 
 struct Sphere {
@@ -55,80 +94,82 @@ struct Ray {
   }
 };
 
-template<typename ...Traits>
+template<typename IData, typename ...Traits>
 class Actor;
 
-template<typename Trait>
-class Actor<Trait>;
+template<typename IData, typename Trait>
+class Actor<IData, Trait>;
 
-template<typename ...Traits>
-class Reactor : public Reactor<Traits>... {
+template<typename IData, typename ...Traits>
+class Reactor : public Reactor<IData, Traits>... {
 public:
-  Reactor(const Reactor& rhs) : Reactor<Traits>(rhs)... {};
-  Reactor() : Reactor<Traits>()... {};
+  Reactor(const Reactor& rhs) : Reactor<IData, Traits>(rhs)... {};
+  Reactor() : Reactor<IData, Traits>()... {};
 
   template <typename U>
-  void setReaction(std::function<void(U)> reaction) {
-    this->Reactor<U>::setReaction(reaction);
+  void setReaction(std::function<void(IData, U)> reaction) {
+    this->Reactor<IData, U>::setReaction(reaction);
   }
 
-  void callActor(Actor<Traits...>*  actor) {
-    std::initializer_list<int>{(actor->act((Reactor<Traits>*)this), 0)... };
+  void callActor(Actor<IData, Traits...>*  actor, IData data) {
+    std::initializer_list<int>{(actor->act((Reactor<IData, Traits>*)this, data), 0)... };
   }
 };
 
-template<typename Trait>
-class Reactor<Trait> {
+template<typename IData, typename Trait>
+class Reactor<IData, Trait> {
 public:
     Reactor(const Reactor& rhs) : reaction(rhs.reaction) {}
     Reactor() : reaction(noReaction) {}
 
-    void setReaction(std::function<void(Trait)> reaction) {
+    void setReaction(std::function<void(IData, Trait)> reaction) {
       this->reaction = reaction;
     }
-    void react(Trait trait) {
-      reaction(trait);
+    void react(IData data, Trait trait) {
+      reaction(data, trait);
     }
 private:
-  static void noReaction(Trait) {}
-  std::function<void(Trait)> reaction;
+  static void noReaction(IData, Trait) {}
+  std::function<void(IData, Trait)> reaction;
 };
 
-template<typename ...Traits>
-class Actor : public Actor<Traits>... {
+// TODO añadir typename IData, a tos laos.
+
+template<typename IData, typename ...Traits>
+class Actor : public Actor<IData, Traits>... {
 public:
-  Actor() : Actor<Traits>()... {};
-  Actor(std::pair<Traits, std::function<void(void*, Reactor<Traits>*)>>... valFun) : Actor<Traits>(valFun)... {}
+  Actor() : Actor<IData, Traits>()... {};
+  Actor(std::pair<Traits, std::function<void(void*, Reactor<IData, Traits>*, IData)>>... valFun) : Actor<IData, Traits>(valFun)... {}
 
   template <typename U>
   const U get() {
-    return (this->Actor<U>::get());
+    return (this->Actor<IData, U>::get());
   }
 
   template <typename U>
-  void act(Reactor<U>* reactor) {
-    this->Actor<U>::act(reactor);
+  void act(Reactor<IData, U>* reactor, IData data) {
+    this->Actor<IData, U>::act(reactor, data);
   }
 
   template <typename U>
-  void setTrait(U trait, std::function<void(void*, Reactor<U>*)> sa) {
-    this->Actor<U>::setTrait(trait, sa);
+  void setTrait(U trait, std::function<void(void*, Reactor<IData, U>*, IData)> sa) {
+    this->Actor<IData, U>::setTrait(trait, sa);
   }
 };
 
-template<typename Trait>
-class Actor<Trait> {
+template<typename IData, typename Trait>
+class Actor<IData, Trait> {
 public:
-  using subAct = std::function<void(void*, Reactor<Trait>*)>;
+  using subAct = std::function<void(void*, Reactor<IData, Trait>*, IData)>;
 
   Actor() : sa(noAct), val() {}
-  Actor(std::pair<Trait, std::function<void(void*, Reactor<Trait>*)>> valFun) : sa(std::get<1>(valFun)), val(std::get<0>(valFun)) {}
+  Actor(std::pair<Trait, std::function<void(void*, Reactor<IData, Trait>*, IData)>> valFun) : sa(std::get<1>(valFun)), val(std::get<0>(valFun)) {}
 
   const Trait get() {
       return val;
   }
 
-  void setTrait(Trait trait, std::function<void(void*, Reactor<Trait>*)> sa) {
+  void setTrait(Trait trait, std::function<void(void*, Reactor<IData, Trait>*, IData)> sa) {
     this->val = trait;
     this->sa = sa;
   }
@@ -137,8 +178,8 @@ public:
     return sa;
   }
 
-  void act(Reactor<Trait>* reactor) {
-    sa(this, reactor);
+  void act(Reactor<IData, Trait>* reactor, IData data) {
+    sa(this, reactor, data);
   }
 
 protected:
@@ -151,46 +192,47 @@ protected:
   }
 
 private:
-  static void noAct(void*, Reactor<Trait>*) {}
+  static void noAct(void*, Reactor<IData, Trait>*, IData) {}
   subAct sa;
   Trait val;
 };
 
-template<typename Trait>
+template<typename IData, typename Trait>
 struct ReactionPrint {
-  void operator()(Trait trait){
+  void operator() (IData data, Trait trait){
       std::cout << "Typeid name: " << typeid(trait).name() << " With value " << trait << std::endl;
+      std::cout << "Interaction data: " << data << std::endl;
   }
 };
 
-template<typename Trait>
+template<typename IData, typename Trait>
 struct EnabledTrait {
-  void operator()(void* self, Reactor<Trait>* reactor){
-    Actor<Trait>* typedSelf = (Actor<Trait>*)self;
+  void operator()(void* self, Reactor<IData, Trait>* reactor, IData data) {
+    Actor<IData, Trait>* typedSelf = (Actor<IData, Trait>*)self;
     auto trait = typedSelf->get();
-    reactor->react(trait);
+    reactor->react(data, trait);
   }
 };
 
 // ------------------------ WIP 5 END ---------------------------- //
 
-template <typename IData, typename ...Traits>
+template <typename IData, typename ActorType, typename ReactorType>
 struct InteractionEvent {
   IData data;
-  Actor<Traits...> actor;
-  Reactor<Traits...> reactor;
+  ActorType actor;
+  ReactorType reactor;
   void manage() {
-    reactor.callActor(&actor);
+    reactor.callActor(&actor, data);
   }
 };
 
-template <typename ...Ts>
+template <typename ActorType, typename ReactorType, typename ...Ts>
 class Interactioner {
 public:
   virtual ~Interactioner() = default;
   virtual std::variant<Ts...> getShape() = 0;
-  virtual Actor<Ts...> getActor() = 0;
-  virtual Reactor<Ts...> getReactor() = 0;
+  virtual ActorType getActor() = 0;
+  virtual ReactorType getReactor() = 0;
 };
 
 template<class... Ts> struct overloaded : Ts... { using Ts::operator()...; };
@@ -207,11 +249,11 @@ public:
   virtual Overloaded getOverloaded() = 0;
 };
 
-template <typename IData, typename Overloaded, typename ...Ts>
-class Interactionator : public Interactioner<Ts...> {
+template <typename IData, typename ActorType, typename ReactorType, typename Overloaded, typename ...Ts>
+class Interactionator : public Interactioner<ActorType, ReactorType, Ts...> {
 public:
-  std::vector<InteractionEvent<IData, Ts...>> getCollision(int64_t timeLimit) {
-    std::vector<InteractionEvent<IData, Ts...>> out;
+  std::vector<InteractionEvent<IData, ActorType, ReactorType>> getCollision(int64_t timeLimit) {
+    std::vector<InteractionEvent<IData, ActorType, ReactorType>> out;
     std::variant<int64_t> vbest = timeLimit;
     for(auto iner : *iners) {
       std::variant<Ts...> v = iner->getShape();
@@ -219,8 +261,8 @@ public:
       if (selector->select(this->getShape(), iner->getShape(), vbest, vdata)) {
         IData data = std::get<IData>(vdata);
         int64_t best = std::get<int64_t>(vbest);
-        InteractionEvent<IData, Ts...> iea {data, this->getActor(), iner->getReactor()};
-        InteractionEvent<IData, Ts...> ieb {data, iner->getActor(), this->getReactor()};
+        InteractionEvent<IData, ActorType, ReactorType> iea {data, this->getActor(), iner->getReactor()};
+        InteractionEvent<IData, ActorType, ReactorType> ieb {data, iner->getActor(), this->getReactor()};
 printf("best: %ld, data.time: %ld\n", best, data.time);
         if(data.time == best) {
           out.push_back(iea);
@@ -240,14 +282,14 @@ printf("best: %ld, data.time: %ld\n", best, data.time);
     this->selector = std::move(selector);
   }
 
-  void setIners(std::shared_ptr<zbe::TicketedForwardList<Interactioner<Ts...>>> iners) {
+  void setIners(std::shared_ptr<zbe::TicketedForwardList<Interactioner<ActorType, ReactorType, Ts...>>> iners) {
     this->iners = iners;
   }
 
 private:
   //  TODO Esto es un tipo abstracto, tiene que ser un unique_ptr
   std::unique_ptr<InteractionSelector<IData, Overloaded, Ts...>> selector{};
-  std::shared_ptr<zbe::TicketedForwardList<Interactioner<Ts...>>> iners{};
+  std::shared_ptr<zbe::TicketedForwardList<Interactioner<ActorType, ReactorType, Ts...>>> iners{};
 };
 
 class SphereSphere {
@@ -352,74 +394,79 @@ protected:
 };
 
 // TODO aquí hay dos clases iguales, por si no lo has notao.
-class CustomInteractioner : public Interactioner<Sphere, Box, Ray> {
+
+template<typename ActorType, typename ReactorType>
+class CustomInteractioner : public Interactioner<ActorType, ReactorType, Sphere, Box, Ray> {
 public:
-  CustomInteractioner(std::variant<Sphere, Box, Ray> shape, Actor<Sphere, Box, Ray> actor, Reactor<Sphere, Box, Ray> reactor) :shape(shape), actor(actor), reactor(reactor) {}
+  CustomInteractioner(std::variant<Sphere, Box, Ray> shape, ActorType actor, ReactorType reactor) :shape(shape), actor(actor), reactor(reactor) {}
 
   std::variant<Sphere, Box, Ray> getShape() {
     return shape;
   }
 
-  Actor<Sphere, Box, Ray> getActor() {return actor;}
+  ActorType getActor() {return actor;}
 
-  Reactor<Sphere, Box, Ray> getReactor() {return reactor;}
+  ReactorType getReactor() {return reactor;}
 
 private:
   std::variant<Sphere, Box, Ray> shape;
-  Actor<Sphere, Box, Ray> actor;
-  Reactor<Sphere, Box, Ray> reactor;
+  ActorType actor;
+  ReactorType reactor;
 };
 
 
-class CustomSampleInteractionator : public Interactionator<CollisionData, BasePhysicsOverloaded, Sphere, Box, Ray>  {
+template<typename ActorType, typename ReactorType>
+class CustomSampleInteractionator : public Interactionator<CollisionData, ActorType, ReactorType, BasePhysicsOverloaded, Sphere, Box, Ray>  {
 public:
 
-  CustomSampleInteractionator(std::variant<Sphere, Box, Ray> shape, Actor<Sphere, Box, Ray> actor, Reactor<Sphere, Box, Ray> reactor) :shape(shape), actor(actor), reactor(reactor) {}
+  CustomSampleInteractionator(std::variant<Sphere, Box, Ray> shape, ActorType actor, ReactorType reactor) :shape(shape), actor(actor), reactor(reactor) {}
 
   std::variant<Sphere, Box, Ray> getShape() {
     return shape;
   }
 
-  Actor<Sphere, Box, Ray> getActor() {return actor;}
+  ActorType getActor() {return actor;}
 
-  Reactor<Sphere, Box, Ray> getReactor() {return reactor;}
+  ReactorType getReactor() {return reactor;}
 
 private:
   std::variant<Sphere, Box, Ray> shape;
-  Actor<Sphere, Box, Ray> actor;
-  Reactor<Sphere, Box, Ray> reactor;
+  ActorType actor;
+  ReactorType reactor;
 };
 
 int tempcleanmain (int, char **) {
+  using CustomActor = Actor<CollisionData, Solid, Alive, Furulatrix>;
+  using CustomReactor = Reactor<CollisionData, Solid, Alive, Furulatrix>;
 
   // Crear lista
-  std::shared_ptr<zbe::TicketedForwardList<Interactioner<Sphere, Box, Ray>>> iners = std::make_shared<zbe::TicketedForwardList<Interactioner<Sphere, Box, Ray>>>();
+  std::shared_ptr<zbe::TicketedForwardList<Interactioner<CustomActor, CustomReactor, Sphere, Box, Ray>>> iners = std::make_shared<zbe::TicketedForwardList<Interactioner<CustomActor, CustomReactor, Sphere, Box, Ray>>>();
 
 
   // Actors y Reactors
 
-  Reactor<Sphere, Box, Ray> reactor;
-  reactor.setReaction<Sphere>(ReactionPrint<Sphere>());
-  reactor.setReaction<Box>(ReactionPrint<Box>());
-  reactor.setReaction<Ray>(ReactionPrint<Ray>());
+  CustomReactor reactor;
+  reactor.setReaction<Solid>(ReactionPrint<CollisionData, Solid>());
+  reactor.setReaction<Alive>(ReactionPrint<CollisionData, Alive>());
+  reactor.setReaction<Furulatrix>(ReactionPrint<CollisionData, Furulatrix>());
 
-  Actor<Sphere, Box, Ray> actorRay1;
-  actorRay1.setTrait<Ray>(Ray{{1.1, 2.2, 0.0}, {3.3, 4.4, 0.0}}, EnabledTrait<Ray>());
+  CustomActor actor1;
+  actor1.setTrait<Solid>(Solid{1.0,0.5}, EnabledTrait<CollisionData, Solid>());
 
-  Actor<Sphere, Box, Ray> actorBox1;
-  actorBox1.setTrait<Box>(Box{{1.0, 2.0, 0.0}, {3.0, 4.0, 0.0}}, EnabledTrait<Box>());
+  CustomActor actor2;
+  actor2.setTrait<Alive>(Alive{1}, EnabledTrait<CollisionData, Alive>());
 
-  Actor<Sphere, Box, Ray> actorBox2;
-  actorBox2.setTrait<Box>(Box{{1.0, 2.0, 0.0}, {3.0, 4.0, 0.0}}, EnabledTrait<Box>());
+  CustomActor actor3;
+  actor3.setTrait<Solid>(Solid{7.0,0.5}, EnabledTrait<CollisionData, Solid>());
 
-  Actor<Sphere, Box, Ray> actorSphere1;
-  actorSphere1.setTrait<Sphere>(Sphere{{3.0, 7.0, 4.0}, 4.2}, EnabledTrait<Sphere>());
+  CustomActor actor4;
+  actor4.setTrait<Furulatrix>(Furulatrix{}, EnabledTrait<CollisionData, Furulatrix>());
 
   // Crear los Interactioner
   // Reconstruir
-  auto inerRay1 = std::make_shared<CustomInteractioner>(Ray{{1.1, 2.2, 0.0}, {3.3, 4.4, 0.0}}, actorRay1, reactor);
-  auto inerBox1 = std::make_shared<CustomInteractioner>(Box{{1.0, 2.0, 0.0}, {3.0, 4.0, 0.0}}, actorBox1, reactor);
-  auto inerBox2 = std::make_shared<CustomInteractioner>(Box{{1.0, 2.0, 0.0}, {3.0, 4.0, 0.0}}, actorBox2, reactor);
+  auto inerRay1 = std::make_shared<CustomInteractioner<CustomActor, CustomReactor>>(Ray{{1.1, 2.2, 0.0}, {3.3, 4.4, 0.0}}, actor1, reactor);
+  auto inerBox1 = std::make_shared<CustomInteractioner<CustomActor, CustomReactor>>(Box{{1.0, 2.0, 0.0}, {3.0, 4.0, 0.0}}, actor2, reactor);
+  auto inerBox2 = std::make_shared<CustomInteractioner<CustomActor, CustomReactor>>(Box{{1.0, 2.0, 0.0}, {3.0, 4.0, 0.0}}, actor3, reactor);
   // hasta aquí
 
   // Añadirlos a la lista
@@ -431,7 +478,7 @@ int tempcleanmain (int, char **) {
 
   // Crear el interactionator
   // Reconstruir
-  CustomSampleInteractionator inator(Sphere{{3.0, 7.0, 4.0}, 4.2}, actorSphere1, reactor);
+  CustomSampleInteractionator inator(Sphere{{3.0, 7.0, 4.0}, 4.2}, actor4, reactor);
   // hasta aquí
 
   // Añadir la lista al Interactionator
@@ -462,4 +509,5 @@ int tempcleanmain (int, char **) {
   // reactor.callActor(nicolasCage);
 
   return 0;
+}
 }
