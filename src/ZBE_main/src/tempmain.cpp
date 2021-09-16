@@ -39,23 +39,49 @@ Pozo: Mata.
 */
 
 class Movil {
-  zbe::Vector3D v;
+public:
+  virtual zbe::Vector3D getVel() = 0;
 
-  friend std::ostream & operator << (std::ostream &out, const Movil &s)
-  {
-    out << "Movil (" << s.v[0] << ", "<< s.v[1] << ", "<< s.v[2] << ")";
+  friend std::ostream & operator << (std::ostream &out, const std::shared_ptr<Movil> s) {
+    auto v = s->getVel();
+    out << "Movil (" << v[0] << ", "<< v[1] << ", "<< v[2] << ")";
     return out;
   }
 };
 
-class Vivo {
-  int vidas;
+class AvtMovil : public Movil {
+public:
+  AvtMovil(std::shared_ptr<zbe::SAvatar<zbe::Vector3D>> avt) : avt(avt) {}
 
-  friend std::ostream & operator << (std::ostream &out, const Vivo &s)
-  {
-    out << "Vivo (" << s.vidas << ")";
+  zbe::Vector3D getVel() {
+    return zbe::AvtUtil::get<1, zbe::Vector3D>(avt)->get();
+  }
+
+private:
+  std::shared_ptr<zbe::SAvatar<zbe::Vector3D>> avt;
+};
+
+class Vivo {
+public:
+  virtual int getVidas() = 0;
+
+  friend std::ostream & operator << (std::ostream &out, std::shared_ptr<Vivo> s) {
+    out << "Vivo (" << s->getVidas() << ")";
     return out;
   }
+
+};
+
+class AvtVivo : public Vivo {
+public:
+  AvtVivo(std::shared_ptr<zbe::SAvatar<int>> avt) : avt(avt) {}
+
+  int getVidas() {
+    return zbe::AvtUtil::get<1, int>(avt)->get();
+  }
+
+private:
+  std::shared_ptr<zbe::SAvatar<int>> avt;
 };
 
 class Solido {
@@ -197,7 +223,7 @@ public:
   }
 
   template <typename U>
-  void setReaction(std::function<void(IData, U)> reaction) {
+  void setReaction(std::function<void(IData, std::shared_ptr<U>)> reaction) {
     this->Reactor<IData, U>::setReaction(reaction);
   }
 
@@ -217,10 +243,10 @@ public:
     Reactor() : reaction(noReaction) {}
     Reactor(const Reactor& rhs) : reaction(rhs.reaction) {}
 
-    void setReaction(std::function<void(IData, Trait)> reaction) {
+    void setReaction(std::function<void(IData, std::shared_ptr<Trait>)> reaction) {
       this->reaction = reaction;
     }
-    void react(IData data, Trait trait) {
+    void react(IData data, std::shared_ptr<Trait> trait) {
       reaction(data, trait);
     }
 
@@ -229,8 +255,8 @@ public:
     }
 
 private:
-  static void noReaction(IData, Trait) {}
-  std::function<void(IData, Trait)> reaction;
+  static void noReaction(IData, std::shared_ptr<Trait>) {}
+  std::function<void(IData, std::shared_ptr<Trait>)> reaction;
 };
 
 // template<typename IData>
@@ -269,7 +295,7 @@ public:
 
 
   template <typename U>
-  void setTrait(U trait, std::function<void(void*, Reactor<IData, U>*, IData)> sa) {
+  void setTrait(std::shared_ptr<U> trait, std::function<void(void*, Reactor<IData, U>*, IData)> sa) {
     this->Actor<IData, U>::setTrait(trait, sa);
   }
 
@@ -285,13 +311,13 @@ public:
   using subAct = std::function<void(void*, Reactor<IData, Trait>*, IData)>;
 
   Actor() : sa(noAct), val() {}
-  Actor(std::pair<Trait, std::function<void(void*, Reactor<IData, Trait>*, IData)>> valFun) : sa(std::get<1>(valFun)), val(std::get<0>(valFun)) {}
+  Actor(std::pair<std::shared_ptr<Trait>, std::function<void(void*, Reactor<IData, Trait>*, IData)>> valFun) : sa(std::get<1>(valFun)), val(std::get<0>(valFun)) {}
 
-  const Trait get() {
+  const std::shared_ptr<Trait> get() {
       return val;
   }
 
-  void setTrait(Trait trait, std::function<void(void*, Reactor<IData, Trait>*, IData)> sa) {
+  void setTrait(std::shared_ptr<Trait> trait, std::function<void(void*, Reactor<IData, Trait>*, IData)> sa) {
     this->val = trait;
     this->sa = sa;
   }
@@ -310,7 +336,7 @@ public:
   }
 
 protected:
-  Actor(Trait val, subAct sa) : sa(sa), val(val) {
+  Actor(std::shared_ptr<Trait> val, subAct sa) : sa(sa), val(val) {
   }
 
   void setAct(subAct sa, void* self) {
@@ -321,7 +347,7 @@ protected:
 private:
   static void noAct(void*, Reactor<IData, Trait>*, IData) {}
   subAct sa;
-  Trait val;
+  std::shared_ptr<Trait> val;
 };
 
 // TODO reactionPrintBuilder->buildReaction(act);
@@ -329,7 +355,7 @@ private:
 template<typename IData, typename Trait, typename Base, typename ...Bases>
 struct ReactionPrint {
   ReactionPrint(std::shared_ptr<zbe::MAvatar<Base, Bases...>> avt) : avt(avt) {}
-  void operator() (IData data, Trait trait){
+  void operator() (IData data, std::shared_ptr<Trait> trait){
       std::cout << "Typeid name: " << typeid(trait).name() << " With value " << trait << std::endl;
       std::cout << "Interaction data: " << data << std::endl;
       auto val = zbe::AvtUtil::get<2, Base >(avt);
@@ -343,7 +369,7 @@ private:
 template<typename IData, typename Trait, typename Base>
 struct ReactionPrint<IData, Trait, Base> {
   ReactionPrint(std::shared_ptr<zbe::SAvatar<Base>> avt) : avt(avt) {}
-  void operator() (IData data, Trait trait){
+  void operator() (IData data, std::shared_ptr<Trait> trait){
       std::cout << "Typeid name: " << typeid(trait).name() << " With value " << trait << std::endl;
       std::cout << "Interaction data: " << data << std::endl;
       auto val = zbe::AvtUtil::get<1, Base >(avt);
@@ -614,8 +640,8 @@ int tempmain (int, char **) {
   std::shared_ptr<zbe::MAvatar<zbe::Vector3D, zbe::Vector3D>> shapeBoxAvt = std::make_shared<zbe::MBaseAvatar<zbe::Vector3D, zbe::Vector3D>>(ent, lBox);
   std::shared_ptr<zbe::MAvatar<zbe::Vector3D, zbe::Vector3D>> shapeRayAvt = std::make_shared<zbe::MBaseAvatar<zbe::Vector3D, zbe::Vector3D>>(ent, lRay);
 
-  // Esto por si solo no se puede
-  // Hace falta un wrapper
+
+  // TODO hacer pruebas con tipos con avatar (Vivo o Movil)
   using ActorBola = Actor<CollisionData, Rompe>;
   using ActorLadrillo = Actor<CollisionData, Solido>;
   using ActorBorde = Actor<CollisionData, Solido>;
@@ -640,16 +666,16 @@ int tempmain (int, char **) {
   // Futurible InteractionAvatar<Avatar<A,B,C>,CollisionData, Rompe, Casca, LoQuesea>
 
   ActorBola aBola;
-  aBola.setTrait(Rompe{}, EnabledTrait<CollisionData, Rompe>());
+  aBola.setTrait(std::make_shared<Rompe>(), EnabledTrait<CollisionData, Rompe>());
 
   ActorLadrillo aLadrillo;
-  aLadrillo.setTrait(Solido{}, EnabledTrait<CollisionData, Solido>());
+  aLadrillo.setTrait(std::make_shared<Solido>(), EnabledTrait<CollisionData, Solido>());
 
   ActorBorde aBorde;
-  aBorde.setTrait(Solido{}, EnabledTrait<CollisionData, Solido>());
+  aBorde.setTrait(std::make_shared<Solido>(), EnabledTrait<CollisionData, Solido>());
 
   ActorPozo aPozo;
-  aPozo.setTrait(Mata{}, EnabledTrait<CollisionData, Mata>());
+  aPozo.setTrait(std::make_shared<Mata>(), EnabledTrait<CollisionData, Mata>());
 
   WholeActor waBola(aBola);
   WholeActor waLadrillo(aLadrillo);
