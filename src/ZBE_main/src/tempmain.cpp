@@ -20,72 +20,29 @@
 #include "ZBE/core/entities/avatars/implementations/BaseAvatar.h"
 #include "ZBE/core/entities/Entity.h"
 #include "ZBE/core/tools/shared/implementations/SimpleValue.h"
+#include "ZBE/core/events/interactionSystem.h"
 
 namespace temp {
-/*
-
-Bola: Movil, Vivo y Rompe
-
-N ladrillos: Vivo, Solido
-
-Bordes: Solido
-
-Pozo: Mata.
-
----------------
-
-
-
-*/
-
-class Movil {
-public:
-  virtual zbe::Vector3D getVel() = 0;
-
-  friend std::ostream & operator << (std::ostream &out, const std::shared_ptr<Movil> s) {
-    auto v = s->getVel();
-    out << "Movil (" << v[0] << ", "<< v[1] << ", "<< v[2] << ")";
-    return out;
-  }
-};
-
-class AvtMovil : public Movil {
-public:
-  AvtMovil(std::shared_ptr<zbe::SAvatar<zbe::Vector3D>> avt) : avt(avt) {}
-
-  zbe::Vector3D getVel() {
-    return zbe::AvtUtil::get<1, zbe::Vector3D>(avt)->get();
-  }
-
-private:
-  std::shared_ptr<zbe::SAvatar<zbe::Vector3D>> avt;
-};
 
 class Vivo {
 public:
-  virtual int getVidas() = 0;
+  Vivo(int vidas) : vidas(vidas) {}
+
+  int getVidas() {
+    return this->vidas;
+  }
 
   friend std::ostream & operator << (std::ostream &out, std::shared_ptr<Vivo> s) {
     out << "Vivo (" << s->getVidas() << ")";
     return out;
   }
-
-};
-
-class AvtVivo : public Vivo {
-public:
-  AvtVivo(std::shared_ptr<zbe::SAvatar<int>> avt) : avt(avt) {}
-
-  int getVidas() {
-    return zbe::AvtUtil::get<1, int>(avt)->get();
-  }
-
 private:
-  std::shared_ptr<zbe::SAvatar<int>> avt;
+  int vidas;
 };
 
 class Solido {
-  friend std::ostream & operator << (std::ostream &out, const Solido &s)
+public:
+  friend std::ostream & operator << (std::ostream &out, const Solido&)
   {
     out << "Solido";
     return out;
@@ -93,7 +50,8 @@ class Solido {
 };
 
 class Mata {
-  friend std::ostream & operator << (std::ostream &out, const Mata &s)
+public:
+  friend std::ostream & operator << (std::ostream &out, const Mata&)
   {
     out << "Mata";
     return out;
@@ -101,11 +59,35 @@ class Mata {
 };
 
 class Rompe {
-  friend std::ostream & operator << (std::ostream &out, const Rompe &s)
+public:
+  friend std::ostream & operator << (std::ostream &out, const Rompe&)
   {
     out << "Rompe";
     return out;
   }
+};
+
+template<typename Trait>
+class SimpleTraitAvt : public zbe::SAvatar<Trait>, zbe::AvatarImp {
+public:
+    SimpleTraitAvt(std::shared_ptr<zbe::Entity> entity) {
+      setupEntity(entity);
+    }
+
+    void setupEntity(std::shared_ptr<zbe::Entity> entity) {
+      AvatarImp::setupEntity(entity);
+      zbe::_Avatar<1, Trait>::setup(&getTrait, &setTrait, (void*)this);
+    }
+
+    static std::shared_ptr<zbe::Value<Trait>> getTrait(void*) {
+      return std::make_shared<zbe::SimpleValue<Trait>>(Trait());
+    }
+
+    static void setTrait(void*, Trait) {}
+
+    std::shared_ptr<zbe::Entity> getEntity() {
+      assert(false);
+    }
 };
 
 struct CollisionData {
@@ -121,6 +103,7 @@ struct CollisionData {
 
 class Sphere {
 public:
+  virtual ~Sphere() = default;
 
   virtual zbe::Vector3D getCenter() = 0;
   virtual double getRadius() = 0;
@@ -153,6 +136,7 @@ private:
 
 class Box {
 public:
+  virtual ~Box() = default;
   virtual zbe::Vector3D getA() = 0;
   virtual zbe::Vector3D getB() = 0;
 
@@ -181,6 +165,7 @@ private:
 
 class Ray {
 public:
+  virtual ~Ray() = default;
   virtual zbe::Vector3D getPoint() = 0;
   virtual zbe::Vector3D getDirection() = 0;
 
@@ -205,302 +190,15 @@ private:
   std::shared_ptr<zbe::MAvatar<zbe::Vector3D, zbe::Vector3D>> avt;
 };
 
-template<typename IData, typename ...Traits>
-class Actor;
-
-template<typename IData, typename Trait>
-class Actor<IData, Trait>;
-
-template<typename IData, typename ...Traits>
-class Reactor : public Reactor<IData, Traits>... {
+template <typename S, typename ...Ss>
+class SimpleShape : public zbe::Shape<Ss...> {
 public:
-  Reactor() : Reactor<IData, Traits>()... {};
-  Reactor(const Reactor& rhs) : Reactor<IData, Traits>(rhs)... {};
-
-  template <typename ...U>
-  Reactor(Reactor<IData, U...> payload) : Reactor<IData, Traits>()... {
-    std::initializer_list<int>{(this->Reactor<IData, U>::setPayload(payload) , 0)... };
-  }
-
-  template <typename U>
-  void setReaction(std::function<void(IData, std::shared_ptr<U>)> reaction) {
-    this->Reactor<IData, U>::setReaction(reaction);
-  }
-
-  template <typename U>
-  void setPayload(Reactor<IData, U> payload) {
-    this->Reactor<IData, U>::setPayload(payload);
-  }
-
-  void callActor(Actor<IData, Traits...>*  actor, IData data) {
-    std::initializer_list<int>{(actor->act((Reactor<IData, Traits>*)this, data), 0)... };
-  }
-};
-
-template<typename IData, typename Trait>
-class Reactor<IData, Trait> {
-public:
-    Reactor() : reaction(noReaction) {}
-    Reactor(const Reactor& rhs) : reaction(rhs.reaction) {}
-
-    void setReaction(std::function<void(IData, std::shared_ptr<Trait>)> reaction) {
-      this->reaction = reaction;
-    }
-    void react(IData data, std::shared_ptr<Trait> trait) {
-      reaction(data, trait);
-    }
-
-    void setPayload(Reactor<IData, Trait> payload) {
-      this->reaction = payload.reaction;
-    }
-
+  SimpleShape(std::shared_ptr<S> s) : s(s) {};
+  std::variant<std::shared_ptr<Ss>...> getShape() {
+    return s;
+  };
 private:
-  static void noReaction(IData, std::shared_ptr<Trait>) {}
-  std::function<void(IData, std::shared_ptr<Trait>)> reaction;
-};
-
-// template<typename IData>
-// class Reactor<IData, void> {
-// public:
-//     Reactor() : reaction(noReaction) {}
-//
-// private:
-//   static void noReaction(IData, Trait) {}
-//   std::function<void(IData, Trait)> reaction;
-// };
-
-
-template<typename IData, typename ...Traits>
-class Actor : public Actor<IData, Traits>... {
-public:
-  Actor() : Actor<IData, Traits>()... {};
-
-  // Construtor.... wrapper?
-  template <typename ...U>
-  Actor(Actor<IData, U...> payload) : Actor<IData, Traits>()...  {
-    std::initializer_list<int>{(this->Actor<IData, U>::setPayload(payload) , 0)... };
-  }
-
-  Actor(std::pair<Traits, std::function<void(void*, Reactor<IData, Traits>*, IData)>>... valFun) : Actor<IData, Traits>(valFun)... {}
-
-  template <typename U>
-  const U get() {
-    return (this->Actor<IData, U>::get());
-  }
-
-  template <typename U>
-  void act(Reactor<IData, U>* reactor, IData data) {
-    this->Actor<IData, U>::act(reactor, data);
-  }
-
-
-  template <typename U>
-  void setTrait(std::shared_ptr<U> trait, std::function<void(void*, Reactor<IData, U>*, IData)> sa) {
-    this->Actor<IData, U>::setTrait(trait, sa);
-  }
-
-  template <typename U>
-  void setPayload(Actor<IData, U> payload) {
-    this->Actor<IData, U>::setPayload(payload);
-  }
-};
-
-template<typename IData, typename Trait>
-class Actor<IData, Trait> {
-public:
-  using subAct = std::function<void(void*, Reactor<IData, Trait>*, IData)>;
-
-  Actor() : sa(noAct), val() {}
-  Actor(std::pair<std::shared_ptr<Trait>, std::function<void(void*, Reactor<IData, Trait>*, IData)>> valFun) : sa(std::get<1>(valFun)), val(std::get<0>(valFun)) {}
-
-  const std::shared_ptr<Trait> get() {
-      return val;
-  }
-
-  void setTrait(std::shared_ptr<Trait> trait, std::function<void(void*, Reactor<IData, Trait>*, IData)> sa) {
-    this->val = trait;
-    this->sa = sa;
-  }
-
-  subAct getAct() {
-    return sa;
-  }
-
-  void act(Reactor<IData, Trait>* reactor, IData data) {
-    sa(this, reactor, data);
-  }
-
-  void setPayload(Actor<IData, Trait> payload) {
-    this->sa = payload.sa;
-    this->val = payload.val;
-  }
-
-protected:
-  Actor(std::shared_ptr<Trait> val, subAct sa) : sa(sa), val(val) {
-  }
-
-  void setAct(subAct sa, void* self) {
-    this->sa = sa;
-    this->self = self;
-  }
-
-private:
-  static void noAct(void*, Reactor<IData, Trait>*, IData) {}
-  subAct sa;
-  std::shared_ptr<Trait> val;
-};
-
-// TODO reactionPrintBuilder->buildReaction(act);
-
-template<typename IData, typename Trait, typename Base, typename ...Bases>
-struct ReactionPrint {
-  ReactionPrint(std::shared_ptr<zbe::MAvatar<Base, Bases...>> avt) : avt(avt) {}
-  void operator() (IData data, std::shared_ptr<Trait> trait){
-      std::cout << "Typeid name: " << typeid(trait).name() << " With value " << trait << std::endl;
-      std::cout << "Interaction data: " << data << std::endl;
-      auto val = zbe::AvtUtil::get<2, Base >(avt);
-      //auto val = avt->get<1, uint64_t>()->get();
-      std::cout << "First avt data: " << val << std::endl;
-  }
-private:
-  std::shared_ptr<zbe::MAvatar<Base, Bases...>> avt;
-};
-
-template<typename IData, typename Trait, typename Base>
-struct ReactionPrint<IData, Trait, Base> {
-  ReactionPrint(std::shared_ptr<zbe::SAvatar<Base>> avt) : avt(avt) {}
-  void operator() (IData data, std::shared_ptr<Trait> trait){
-      std::cout << "Typeid name: " << typeid(trait).name() << " With value " << trait << std::endl;
-      std::cout << "Interaction data: " << data << std::endl;
-      auto val = zbe::AvtUtil::get<1, Base >(avt);
-      std::cout << "First avt data: " << val << std::endl;
-  }
-private:
-  std::shared_ptr<zbe::SAvatar<Base>> avt;
-};
-
-// En algún momento querremos cambiar los tipos del actor o reactor dinámicamente.
-// Y por lo tanto cambiara como el resto de objetos reaccionan con nostros y nosotros con ellos
-// Esto se puede resolver haciendo este EnabledTrait que dependa de un avatar similar a Reaction Print.
-// En función de los datos del avatar, cumpliremos un tipo o no.
-// Ejemplo. La bola del zombienoid, por un itme, pasa a no colisionar con los ladrillos.
-// Los ladrillos se rompen con la colisión con la bola, pero la bola no está interesada en los ladrillos.
-// Su reactor no atiende a los ladrillos.
-// ----------------------
-// Dado que es esta función la que pasa el valor del trait al reactor,
-// no sería necesario que el actor almacenase este valor, sino que podría alamacenarlo esta funcion u objeto callable
-// o podría leerla de un avatar.
-// Esto eliminaría la necesidad de andar pasando el self.
-
-template<typename IData, typename Trait>
-struct EnabledTrait {
-  void operator()(void* self, Reactor<IData, Trait>* reactor, IData data) {
-    Actor<IData, Trait>* typedSelf = (Actor<IData, Trait>*)self;
-    auto trait = typedSelf->get();
-    reactor->react(data, trait);
-  }
-};
-
-// ------------------------ WIP 5 END ---------------------------- //
-
-template <typename IData, typename ActorType, typename ReactorType>
-struct InteractionEvent {
-  IData data;
-  ActorType actor;
-  ReactorType reactor;
-  void manage() {
-    reactor.callActor(&actor, data);
-  }
-};
-
-template<typename ActorType, typename ReactorType, typename ...Shapes>
-class Interactioner {
-public:
-  Interactioner(std::variant<std::shared_ptr<Shapes>...> shape) :shape(shape), actor(), reactor() {}
-  Interactioner(std::variant<std::shared_ptr<Shapes>...> shape, ActorType actor, ReactorType reactor) :shape(shape), actor(actor), reactor(reactor) {}
-
-  std::variant<std::shared_ptr<Shapes>...> getShape() {
-    return shape;
-  }
-
-  ActorType getActor() {return actor;}
-
-  ReactorType getReactor() {return reactor;}
-
-  template<typename U>
-  void setActor(U actor) {
-    this->actor = ActorType(actor);
-  }
-
-  template<typename U>
-  void setReactor(U actor) {
-    this->reactor = ReactorType(actor);
-  }
-
-private:
-  std::variant<std::shared_ptr<Shapes>...> shape;
-  ActorType actor;
-  ReactorType reactor;
-};
-
-template<class... Shapes> struct overloaded : Shapes... { using Shapes::operator()...; };
-template<class... Shapes> overloaded(Shapes...) -> overloaded<Shapes...>;
-
-template<typename IData, typename Overloaded, typename ...Shapes>
-class InteractionSelector {
-public:
-  virtual ~InteractionSelector() = default;
-  bool select(std::variant<std::shared_ptr<Shapes>...> i1, std::variant<std::shared_ptr<Shapes>...> i2, std::variant<int64_t> timeLimit, std::variant<IData>& data) {
-    return std::visit(getOverloaded(), i1, i2, timeLimit, data);
-  }
-
-  virtual Overloaded getOverloaded() = 0;
-};
-
-template <typename IData, typename ActorType, typename ReactorType, typename Overloaded, typename ...Shapes>
-class Interactionator : public Interactioner<ActorType, ReactorType, Shapes...> {
-public:
-  Interactionator(std::variant<std::shared_ptr<Shapes>...> shape) : Interactioner<ActorType, ReactorType, std::shared_ptr<Shapes>...>(shape) {}
-  Interactionator(std::variant<std::shared_ptr<Shapes>...> shape, ActorType actor, ReactorType reactor) : Interactioner<ActorType, ReactorType, Shapes...>(shape, actor, reactor) {}
-
-  std::vector<InteractionEvent<IData, ActorType, ReactorType>> getCollision(int64_t timeLimit) {
-    std::vector<InteractionEvent<IData, ActorType, ReactorType>> out;
-    std::variant<int64_t> vbest = timeLimit;
-    for(auto iner : *iners) {
-      std::variant<std::shared_ptr<Shapes>...> v = iner->getShape();
-      std::variant<IData> vdata;
-      if (selector->select(this->getShape(), iner->getShape(), vbest, vdata)) {
-        IData data = std::get<IData>(vdata);
-        int64_t best = std::get<int64_t>(vbest);
-        InteractionEvent<IData, ActorType, ReactorType> iea {data, this->getActor(), iner->getReactor()};
-        InteractionEvent<IData, ActorType, ReactorType> ieb {data, iner->getActor(), this->getReactor()};
-printf("best: %ld, data.time: %ld\n", best, data.time);
-        if(data.time == best) {
-          out.push_back(iea);
-          out.push_back(ieb);
-        } else if(data.time < best) {
-          vbest = data.time;
-          out.clear();
-          out.push_back(iea);
-          out.push_back(ieb);
-        }
-      }
-    }  // for iners
-    return out;
-  }
-
-  void setSelector(std::unique_ptr<InteractionSelector<IData, Overloaded, Shapes...>> selector) {
-    this->selector = std::move(selector);
-  }
-
-  void setIners(std::shared_ptr<zbe::TicketedForwardList<Interactioner<ActorType, ReactorType, Shapes...>>> iners) {
-    this->iners = iners;
-  }
-
-private:
-  //  TODO Esto es un tipo abstracto, tiene que ser un unique_ptr
-  std::unique_ptr<InteractionSelector<IData, Overloaded, Shapes...>> selector{};
-  std::shared_ptr<zbe::TicketedForwardList<Interactioner<ActorType, ReactorType, Shapes...>>> iners{};
+  std::shared_ptr<S> s;
 };
 
 class SphereSphere {
@@ -593,9 +291,11 @@ public:
   }
 };
 
-using BasePhysicsOverloaded = overloaded<SphereSphere, SphereBox, SphereRay, BoxSphere, BoxBox, BoxRay, RaySphere, RayBox, RayRay>;
 
-class BasePhysicsSelector : public InteractionSelector<CollisionData, BasePhysicsOverloaded, Sphere, Box, Ray> {
+// Habría que dejar documentado como se construye esto en alguna parte del core
+using BasePhysicsOverloaded = zbe::overloaded<SphereSphere, SphereBox, SphereRay, BoxSphere, BoxBox, BoxRay, RaySphere, RayBox, RayRay>;
+
+class BasePhysicsSelector : public zbe::InteractionSelector<CollisionData, BasePhysicsOverloaded, Sphere, Box, Ray> {
 public:
   virtual ~BasePhysicsSelector() = default;
 protected:
@@ -604,8 +304,51 @@ protected:
   }  // getOverloaded
 };
 
+template<typename IData, typename Trait, typename Base, typename ...Bases>
+struct ReactionPrint {
+  ReactionPrint(std::shared_ptr<zbe::MAvatar<Base, Bases...>> avt) : avt(avt) {}
+  void operator() (IData data, Trait trait){
+      std::cout << "Typeid name: " << typeid(trait).name() << " With value " << trait << std::endl;
+      std::cout << "Interaction data: " << data << std::endl;
+      auto val = zbe::AvtUtil::get<2, Base >(avt);
+      //auto val = avt->get<1, uint64_t>()->get();
+      std::cout << "First avt data: " << val << std::endl;
+  }
+private:
+  std::shared_ptr<zbe::MAvatar<Base, Bases...>> avt;
+};
+
+template<typename IData, typename Trait, typename Base>
+struct ReactionPrint<IData, Trait, Base> {
+  ReactionPrint(std::shared_ptr<zbe::SAvatar<Base>> avt) : avt(avt) {}
+  void operator() (IData data, Trait trait){
+      std::cout << "Typeid name: " << typeid(trait).name() << " With value " << trait << std::endl;
+      std::cout << "Interaction data: " << data << std::endl;
+      auto val = zbe::AvtUtil::get<1, Base >(avt);
+      std::cout << "First avt data: " << val << std::endl;
+  }
+private:
+  std::shared_ptr<zbe::SAvatar<Base>> avt;
+};
+
+template<typename IData, typename Trait>
+class AvtEnabledTrait {
+public:
+  AvtEnabledTrait(std::shared_ptr<zbe::SAvatar<Trait>> avt) : avt(avt) {}
+  void operator()(zbe::Reactor<IData, Trait>* reactor, IData data) {
+    auto trait = avt->get()->get();
+    reactor->react(data, trait);
+  }
+private:
+  std::shared_ptr<zbe::SAvatar<Trait>> avt;
+};
+
 int tempmain (int, char **) {
   std::shared_ptr<zbe::Entity> ent = std::make_shared<zbe::Entity>();
+
+  // std::shared_ptr<zbe::MAvatar<zbe::Vector3D, zbe::Vector3D>> avtRay
+  // std::shared_ptr<zbe::MAvatar<zbe::Vector3D, zbe::Vector3D>> avtBox
+  // std::shared_ptr<zbe::MAvatar<zbe::Vector3D, double>> avtSphere
 
   // Reaction values & indexes
   std::shared_ptr<zbe::Value<uint64_t>> valuint = std::make_shared<zbe::SimpleValue<uint64_t>>(8);
@@ -614,7 +357,9 @@ int tempmain (int, char **) {
   ent->setUint(0, valuint);
   std::array<uint64_t, 2> lreaction{ {0, 0} };
 
+
   // Shape values & indexes
+
   std::shared_ptr<zbe::Value<zbe::Vector3D>> valVec13 = std::make_shared<zbe::SimpleValue<zbe::Vector3D>>(zbe::Vector3D{ 1.0,  2.0,  3.0});
   std::shared_ptr<zbe::Value<zbe::Vector3D>> valVec46 = std::make_shared<zbe::SimpleValue<zbe::Vector3D>>(zbe::Vector3D{ 4.0,  5.0,  6.0});
   std::shared_ptr<zbe::Value<zbe::Vector3D>> valVec79 = std::make_shared<zbe::SimpleValue<zbe::Vector3D>>(zbe::Vector3D{ 7.0,  8.0,  9.0});
@@ -640,69 +385,63 @@ int tempmain (int, char **) {
   std::shared_ptr<zbe::MAvatar<zbe::Vector3D, zbe::Vector3D>> shapeBoxAvt = std::make_shared<zbe::MBaseAvatar<zbe::Vector3D, zbe::Vector3D>>(ent, lBox);
   std::shared_ptr<zbe::MAvatar<zbe::Vector3D, zbe::Vector3D>> shapeRayAvt = std::make_shared<zbe::MBaseAvatar<zbe::Vector3D, zbe::Vector3D>>(ent, lRay);
 
+  std::shared_ptr<Sphere> avtSphere1 = std::make_shared<AvtSphere>(shapeSphereAvt);
+  std::shared_ptr<Sphere> avtSphere2 = std::make_shared<AvtSphere>(shapeSphereAvt2);
+  std::shared_ptr<Box> avtBox = std::make_shared<AvtBox>(shapeBoxAvt);
+  std::shared_ptr<Ray> avtRay = std::make_shared<AvtRay>(shapeRayAvt);
 
-  // TODO hacer pruebas con tipos con avatar (Vivo o Movil)
-  using ActorBola = Actor<CollisionData, Rompe>;
-  using ActorLadrillo = Actor<CollisionData, Solido>;
-  using ActorBorde = Actor<CollisionData, Solido>;
-  using ActorPozo = Actor<CollisionData, Mata>;
+  auto sphereShape1 = std::make_shared<SimpleShape<Sphere, Sphere, Box, Ray>>(avtSphere1);
+  auto sphereShape2 = std::make_shared<SimpleShape<Sphere, Sphere, Box, Ray>>(avtSphere2);
 
-  // using ActorMarkRuffalo = Actor<CollisionData, Mata, Rompe>;
+  auto boxShape = std::make_shared<SimpleShape<Box, Sphere, Box, Ray>>(avtBox);
+  auto rayShape = std::make_shared<SimpleShape<Ray, Sphere, Box, Ray>>(avtRay);
 
-  using ReactorBola = Reactor<CollisionData, Solido, Mata>;
-  using ReactorLadrillo = Reactor<CollisionData, Rompe>;
+  // TODO construir funciones que sustituyen a esto.
+  // using ActorBola = Actor<CollisionData, Rompe>;
+  // using ActorLadrillo = Actor<CollisionData, Solido>;
+  // using ActorBorde = Actor<CollisionData, Solido>;
+  // using ActorPozo = Actor<CollisionData, Mata>;
+
+  //using ReactorBola = Reactor<CollisionData, Solido, Mata>;
+  //using ReactorLadrillo = Reactor<CollisionData, Rompe>;
   //using ReactorBorde = Reactor<CollisionData>; // Parece que no es necesario
 
-  using WholeActor = Actor<CollisionData, Vivo, Solido, Mata, Rompe>;
-  using Wholereactor = Reactor<CollisionData, Vivo, Solido, Mata, Rompe>;
+  //using CustomShape = zbe::Shape<Sphere, Box, Ray>;
+  using CustomActor = zbe::Actor<CollisionData, Vivo, Solido, Mata, Rompe>;
+  using CustomReactor = zbe::Reactor<CollisionData, Vivo, Solido, Mata, Rompe>;
 
-  using WholeInteractioner = Interactioner<WholeActor, Wholereactor, Sphere, Box, Ray>;
-  using WholeInteractionator = Interactionator<CollisionData, WholeActor, Wholereactor, BasePhysicsOverloaded, Sphere, Box, Ray>;
+  using CustomInteractioner = zbe::Interactioner<CustomActor, CustomReactor, Sphere, Box, Ray>;
+  using CustomInteractionator = zbe::Interactionator<CollisionData, CustomActor, CustomReactor, BasePhysicsOverloaded, Sphere, Box, Ray>;
 
   // Crear lista
-  std::shared_ptr<zbe::TicketedForwardList<WholeInteractioner>> iners = std::make_shared<zbe::TicketedForwardList<WholeInteractioner>>();
+  std::shared_ptr<zbe::TicketedForwardList<CustomInteractioner>> iners = std::make_shared<zbe::TicketedForwardList<CustomInteractioner>>();
 
-  // Actors y Reactors
-  // Futurible InteractionAvatar<Avatar<A,B,C>,CollisionData, Rompe, Casca, LoQuesea>
+  //
+  CustomActor caBola;
+  caBola.setTrait<Rompe>(AvtEnabledTrait<CollisionData, Rompe>(std::make_shared<SimpleTraitAvt<Rompe>>(ent)));
+  CustomActor caLadrillo;
+  caLadrillo.setTrait<Solido>(AvtEnabledTrait<CollisionData, Solido>(std::make_shared<SimpleTraitAvt<Solido>>(ent)));
+  CustomActor caBorde;
+  caBorde.setTrait<Solido>(AvtEnabledTrait<CollisionData, Solido>(std::make_shared<SimpleTraitAvt<Solido>>(ent)));
+  CustomActor caPozo;
+  caPozo.setTrait<Mata>(AvtEnabledTrait<CollisionData, Mata>(std::make_shared<SimpleTraitAvt<Mata>>(ent)));
 
-  ActorBola aBola;
-  aBola.setTrait(std::make_shared<Rompe>(), EnabledTrait<CollisionData, Rompe>());
+  CustomReactor crBola;
+  crBola.setReaction<Solido>(ReactionPrint<CollisionData, Solido, uint64_t, double>(reactionAvt));
+  crBola.setReaction<Mata>(ReactionPrint<CollisionData, Mata, uint64_t, double>(reactionAvt));
 
-  ActorLadrillo aLadrillo;
-  aLadrillo.setTrait(std::make_shared<Solido>(), EnabledTrait<CollisionData, Solido>());
+  CustomReactor crLadrillo;
+  crLadrillo.setReaction<Rompe>(ReactionPrint<CollisionData, Rompe, uint64_t, double>(reactionAvt));
 
-  ActorBorde aBorde;
-  aBorde.setTrait(std::make_shared<Solido>(), EnabledTrait<CollisionData, Solido>());
+  CustomReactor crBorde;
+  CustomReactor crPozo;
 
-  ActorPozo aPozo;
-  aPozo.setTrait(std::make_shared<Mata>(), EnabledTrait<CollisionData, Mata>());
+  auto inerLadrilloRedondo = std::make_shared<CustomInteractioner>(sphereShape2, caLadrillo, crLadrillo);
+  auto inerLadrilloCuadrao = std::make_shared<CustomInteractioner>(boxShape, caLadrillo, crLadrillo);
+  auto inerBordeCasiCuadrao = std::make_shared<CustomInteractioner>(boxShape, caBorde, crBorde);
+  auto inerPozoNoRedondo = std::make_shared<CustomInteractioner>(boxShape, caPozo, crPozo);
 
-  WholeActor waBola(aBola);
-  WholeActor waLadrillo(aLadrillo);
-  WholeActor waBorde(aBorde);
-  WholeActor waPozo(aPozo);
-
-  ReactorBola rBola;
-  rBola.setReaction<Solido>(ReactionPrint<CollisionData, Solido, uint64_t, double>(reactionAvt));
-  rBola.setReaction<Mata>(ReactionPrint<CollisionData, Mata, uint64_t, double>(reactionAvt));
-
-  ReactorLadrillo rLadrillo;
-  rLadrillo.setReaction(ReactionPrint<CollisionData, Rompe, uint64_t, double>(reactionAvt));
-
-  Wholereactor wrBola(rBola);
-  Wholereactor wrLadrillo(rLadrillo);
-  Wholereactor wrBorde;
-  Wholereactor wrPozo;
-
-  // Crear los Interactioner
-  // Reconstruir
-  //auto inerBolaEsferica = std::make_shared<WholeInteractioner>(Ray{{1.1, 2.2, 0.0}, {3.3, 4.4, 0.0}}, actor1, reactor);
-  auto inerLadrilloRedondo = std::make_shared<WholeInteractioner>(std::make_shared<AvtSphere>(shapeSphereAvt2), waLadrillo, wrLadrillo);
-  auto inerLadrilloCuadrao = std::make_shared<WholeInteractioner>(std::make_shared<AvtBox>(shapeBoxAvt), waLadrillo, wrLadrillo);
-  auto inerBordeCasiCuadrao = std::make_shared<WholeInteractioner>(std::make_shared<AvtBox>(shapeBoxAvt), waBorde, wrBorde);
-  auto inerPozoNoRedondo = std::make_shared<WholeInteractioner>(std::make_shared<AvtBox>(shapeBoxAvt), waPozo, wrPozo);
-
-  // auto inerBox3 = std::make_shared<WholeInteractioner>(Box{{1.0, 2.0, 0.0}, {3.0, 4.0, 0.0}});
+  // auto inerBox3 = std::make_shared<CustomInteractioner>(Box{{1.0, 2.0, 0.0}, {3.0, 4.0, 0.0}});
   // inerBox3.setActor(actor3);
   // inerBox3.setReactor(reactor);
 
@@ -715,13 +454,13 @@ int tempmain (int, char **) {
   iners->push_front(inerBordeCasiCuadrao);
   iners->push_front(inerPozoNoRedondo);
   // Crear el selector
-  std::unique_ptr<InteractionSelector<CollisionData, BasePhysicsOverloaded, Sphere, Box, Ray>> selector = std::make_unique<BasePhysicsSelector>();
+  std::unique_ptr<zbe::InteractionSelector<CollisionData, BasePhysicsOverloaded, Sphere, Box, Ray>> selector = std::make_unique<BasePhysicsSelector>();
 
   // Crear el interactionator
   // Reconstruir
-  std::shared_ptr<Sphere> avtSphere = std::make_shared<AvtSphere>(shapeSphereAvt);
-  std::variant<std::shared_ptr<Sphere>, std::shared_ptr<Box>, std::shared_ptr<Ray>> varAvtSphere = avtSphere;
-  WholeInteractionator inatorBolaEsferica(varAvtSphere, waBola, wrBola);
+  //std::shared_ptr<Sphere> avtSphere = std::make_shared<AvtSphere>(shapeSphereAvt);
+  //std::variant<std::shared_ptr<Sphere>, std::shared_ptr<Box>, std::shared_ptr<Ray>> varAvtSphere = avtSphere;
+  CustomInteractionator inatorBolaEsferica(sphereShape1, 7, caBola, crBola);
   // hasta aquí
 
   // Añadir la lista al Interactionator
@@ -734,36 +473,9 @@ int tempmain (int, char **) {
 
   for(auto& ie: iEs) {
     // Aquí tenemos que meter lo de después
-    printf("time: %lld, point: %lf, %lf, %lf\n", ie.data.time, ie.data.point.x, ie.data.point.y, ie.data.point.z);fflush(stdout);
+    printf("time: %ld, point: %lf, %lf, %lf\n", ie.data.time, ie.data.point.x, ie.data.point.y, ie.data.point.z);fflush(stdout);
     ie.manage();
   }
-
-// TODO:
-// Hacer Actor/Reactor/Shape saquen su información de un avatar
-
-// Blahblah
-//TODO:
-//  InteractionEventGenerator
-//  Pieza que va a recibir un Avatar<...>
-//
-//PENSAR EN ESTO:
-//  Avatar<Vector3D, Vector3D> avt;
-//  Interactioner<ActorType, ReactorType, Sphere, Box, Ray>;
-//  ReactionPrint<CollisionData, Solido>()
-
-
-  // lo de después
-  // Actor<int, double, long, float>* nicolasCage = new Actor<int, double, long, float>();
-  // nicolasCage->setTrait<double>(0.75, EnabledTrait<double>());
-  // nicolasCage->setTrait<int>(327, EnabledTrait<int>());
-  //
-  // Reactor<int, double, long, float> reactor;
-  // reactor.setReaction<int>(ReactionPrint<int>());
-  // reactor.setReaction<double>(ReactionPrint<double>());
-  // reactor.setReaction<long>(ReactionPrint<long>());
-  // reactor.setReaction<float>(ReactionPrint<float>());
-
-  // reactor.callActor(nicolasCage);
 
   return 0;
 }
