@@ -12,7 +12,7 @@
 
 namespace zbe {
 
-bool CollisionSelector::select(std::shared_ptr<CollisionObject> param1, std::shared_ptr<CollisionObject> param2, int64_t& time, CollisionData *data) {
+bool CollisionSelector::select(std::shared_ptr<CollisionObject> param1, std::shared_ptr<CollisionObject> param2, int64_t& time, OldCollisionData *data) {
   return (param2->accept(this, *param1, time, data));
 }
 

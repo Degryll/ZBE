@@ -535,6 +535,47 @@ occured, and the normal into parameters.
  */
 ZBEAPI bool IntersectionMovingSphereInsideAABB3D(Sphere sphere, Vector3D direction, AABB3D box, int64_t& time, Point3D& point, Vector<3>& normal);  //!< 3D allias of IntersectionMovingNSphereInsideAABB.
 
+/** \brief Tells if a moving 3d sphere and a another moving 3d sphere intersects (sphere moving
+outside sphere) and stores the time of the "collision", the coordinates where it
+occured, and the normal into parameters.
+ *  \param sphere1 Sphere.
+ *  \param velocity1 moving velocity of s1.
+ *  \param sphere2 Sphere.
+ *  \param velocity2 moving velocity of s2.
+ *  \param time Initialy it has a limit time, if the collision happens before that time, this value is updated to the collision time.
+ *  \param point Intersection location.
+ *  \param normal Stores the collision point's normal.
+ */
+template<unsigned dim>
+bool intersectionMovingNSphereOutsideMovingNSphere(NSphere<dim> sphere1, Vector<dim> velocity1, NSphere<dim> sphere2, Vector<dim> velocity2, int64_t& time, Point<dim>& point, Vector<dim>& normal) {
+  Vector<dim> velocity =  velocity1 - velocity2;
+  bool result = intersectionMovingNSphereOutsideNSphere(sphere1, velocity, sphere2, time, point, normal);
+  if(result) {
+    point = point + (velocity2 * time);
+  }
+}
+
+/** \brief Tells if a moving 3d sphere and a another sphere intersects (sphere moving
+outside sphere) and stores the time of the "collision", the coordinates where it
+occured, and the normal into parameters.
+ *  \param sphere1 Sphere.
+ *  \param velocity1 moving velocity of s1.
+ *  \param sphere2 Sphere.
+ *  \param time Initialy it has a limit time, if the collision happens before that time, this value is updated to the collision time.
+ *  \param point Intersection location.
+ *  \param normal Stores the collision point's normal.
+ */
+template<unsigned dim>
+bool intersectionMovingNSphereOutsideNSphere(NSphere<dim> sphere1, Vector<dim> velocity1, NSphere<dim> sphere2, int64_t& time, Point<dim>& point, Vector<dim>& normal) {
+  Ray<dim> ray{sphere1.c, velocity1};
+  sphere2.r += sphere1.r;
+  bool result = intersectionRayNSphere(ray, sphere2, time, point);
+  if(result) {
+    point += sphere1.r * (sphere2.c - point).normalize();
+    normal = point - sphere2.c;
+  }
+}
+
 }  // namespace zbe
 
 #endif  // ZBE_CORE_TOOLS_MATH_COLLISIONS_INTERSECTIONS_H_

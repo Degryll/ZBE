@@ -7,8 +7,8 @@
  * @brief Data of a collision.
  */
 
-#ifndef ZBE_CORE_EVENTS_GENERATORS_UTIL_COLLISIONDATA_H_
-#define ZBE_CORE_EVENTS_GENERATORS_UTIL_COLLISIONDATA_H_
+#ifndef ZBE_CORE_EVENTS_GENERATORS_UTIL_OLDCOLLISIONDATA_H_
+#define ZBE_CORE_EVENTS_GENERATORS_UTIL_OLDCOLLISIONDATA_H_
 
 #include "ZBE/core/tools/math/Vector.h"
 #include "ZBE/core/tools/math/Point.h"
@@ -21,19 +21,19 @@ namespace zbe {
  *
  *  For now, the information stored is just the point of collision.
  */
-class ZBEAPI CollisionData {
+class ZBEAPI OldCollisionData {
   public:
     /** \brief Parametrized constructor
      *
      *  Build the collision data with the point of the collision.
      */
-    CollisionData() : p(), n() {}
+    OldCollisionData() : p(), n() {}
 
     /** \brief Parametrized constructor
      *
      *  Build the collision data with the point of the collision.
      */
-    CollisionData(const Point2D& point, const Vector2D& normal) : p(point), n(normal) {}
+    OldCollisionData(const Point2D& point, const Vector2D& normal) : p(point), n(normal) {}
 
     /** \brief Returns the point associated with the collision.
      *
@@ -67,4 +67,4 @@ class ZBEAPI CollisionData {
 
 }  // namespace zbe
 
-#endif  // ZBE_CORE_EVENTS_GENERATORS_UTIL_COLLISIONDATA_H_
+#endif  // ZBE_CORE_EVENTS_GENERATORS_UTIL_OLDCOLLISIONDATA_H_

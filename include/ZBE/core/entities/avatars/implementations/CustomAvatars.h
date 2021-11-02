@@ -15,6 +15,7 @@
 #include <nlohmann/json.hpp>
 
 #include "ZBE/core/tools/containers/RsrcStore.h"
+#include "ZBE/core/tools/math/math.h"
 
 #include "ZBE/core/tools/shared/Value.h"
 #include "ZBE/core/tools/shared/implementations/SimpleValue.h"
@@ -158,6 +159,71 @@ public:
 private:
   std::shared_ptr<Value<Vector3D> > position;
   std::shared_ptr<Value<Vector3D> > target;
+};
+
+class DerivedCosVelAvt : public MAvatar<Vector3D, Vector3D>, AvatarImp {
+public:
+
+  /** \brief
+   */
+   void setupEntity(std::shared_ptr<Entity> entity, uint64_t positionidx) {
+     AvatarImp::setupEntity(entity);
+     _Avatar<1, Vector3D>::setup(&getPosition, &setPosition, (void*)this);
+     _Avatar<2, Vector3D>::setup(&getVelocity, &setVelocity, (void*)this);
+     position = entity->getVector3D(positionidx);
+     cTime = entity->getContextTime();
+   }
+
+   static std::shared_ptr<Value<Vector3D> > getPosition(void *instance) {
+     return ((DerivedCosVelAvt*)instance)->position;
+   }
+
+   static std::shared_ptr<Value<Vector3D> > getVelocity(void *instance) {
+     auto dcv = (DerivedCosVelAvt*)instance;
+     auto& position = dcv->position;
+     auto p = position->get();
+     auto time = dcv->cTime->getTotalTime();
+     float div = (time / (float)dcv->period) * TAU;
+     float cosine = cos(div);
+     float newVal = ((cosine + 1.0) / 2.0) * (dcv->max - dcv->min) + dcv->min;
+     Vector3D v{0.0, 0.0, 0.0};
+     v[dcv->component] = newVal / time;
+     auto r = std::make_shared<SimpleValue<Vector3D> >();
+     r->set(v);
+     return r;
+   }
+
+   static void setPosition(void *instance, Vector3D position) {
+     auto& _position = ((DerivedCosVelAvt*)instance)->position;
+     auto p = _position->get();
+     _position->set(position);
+   }
+
+   static void setVelocity(void*, Vector3D) {
+     assert(false);
+   }
+
+   std::shared_ptr<Entity> getEntity() {
+     assert(false);
+   }
+
+   void setRange(float min, float max) {this->min = min; this->max = max;}
+
+   void setPeriod(int64_t period) {this->period = period;}
+
+   void setComponent(int64_t component) {
+     assert(component>=0 && component<=2);
+     this->component = component;
+   }
+
+private:
+  std::shared_ptr<Value<Vector3D> > position;
+  std::shared_ptr<ContextTime> cTime;
+
+  float min;
+  float max;
+  int64_t period;
+  int64_t component;
 };
 
 
@@ -471,6 +537,134 @@ private:
   RsrcStore<PosTargetToPosDirAvt>& pttpdavtStore                            = RsrcStore<PosTargetToPosDirAvt>::getInstance();
   RsrcStore<Entity>& entityRsrc                                            = RsrcStore<Entity>::getInstance();
   RsrcStore<TicketedForwardList<MAvatar<Vector3D, Vector3D> > >& listStore = RsrcStore<TicketedForwardList<MAvatar<Vector3D, Vector3D> > >::getInstance();
+};
+
+//-----
+class DerivedCosVelAvtFtry : public Factory {
+  /** \brief Builds a TargetToDirAvt.
+   *  \param name Name for the created TargetToDirAvt.
+   *  \param cfgId TargetToDirAvt's configuration id.
+   */
+  void create(std::string name, uint64_t){
+    using namespace std::string_literals;
+
+    auto dcv = std::make_shared<DerivedCosVelAvt>();
+    dcvStore.insert("DerivedCosVelAvt."s + name, dcv);
+  }
+
+  /** \brief Setup the desired tool. The tool will be complete after this step.
+   *  \param name Name of the tool.
+   *  \param cfgId Tool's configuration id.
+   */
+  void setup(std::string name, uint64_t cfgId){
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+    if(cfg) {
+      auto j = *cfg;
+      if (!j["entity"].is_string()) {
+        SysError::setError("DerivedCosVelAvtFtry " + name + " config for entity must be a string."s);
+        return;
+      }
+      if (!j["lists"].is_object()) {
+        SysError::setError("DerivedCosVelAvtFtry " + name + " config for lists must be an object. But is "s + j["lists"].type_name());
+        return;
+      }
+      if (!j["positionIdx"].is_string()) {
+        SysError::setError("DerivedCosVelAvtFtry " + name + " config for positionIdx must be a string."s);
+        return;
+      }
+      if (!j["min"].is_string()) {
+        SysError::setError("DerivedCosVelAvtFtry config for min: "s + j["min"].get<std::string>() + ": must be a literal float name."s);
+        return;
+      }
+      if (!j["max"].is_string()) {
+        SysError::setError("DerivedCosVelAvtFtry config for max: "s + j["max"].get<std::string>() + ": must be a literal float name."s);
+        return;
+      }
+      if (!j["period"].is_string()) {
+        SysError::setError("DerivedCosVelAvtFtry config for period: "s + j["period"].get<std::string>() + ": must be a literal int64_t name."s);
+        return;
+      }
+      if (!j["component"].is_string()) {
+        SysError::setError("DerivedCosVelAvtFtry config for component: "s + j["component"].get<std::string>() + ": must be a literal int64_t name."s);
+        return;
+      }
+
+      std::string entityName = j["entity"].get<std::string>();
+      if(!entityRsrc.contains("Entity."s + entityName)) {
+        SysError::setError("DerivedCosVelAvtFtry config for entity: "s + entityName + " is not an entity name."s);
+        return;
+      }
+
+      std::string positionIdxName = j["positionIdx"].get<std::string>();
+      if(!dict.contains(positionIdxName)) {
+        SysError::setError("DerivedCosVelAvtFtry config for positionIdx: "s + positionIdxName + " is not an positionIdx name."s);
+        return;
+      }
+
+      std::string minName = j["min"].get<std::string>();
+      if(!floatDict.contains(minName)) {
+        SysError::setError("DerivedCosVelAvtFtry config for min: "s + minName + " is not a float literal."s);
+        return;
+      }
+
+      std::string maxName = j["max"].get<std::string>();
+      if(!floatDict.contains(maxName)) {
+        SysError::setError("DerivedCosVelAvtFtry config for max: "s + maxName + " is not a float literal."s);
+        return;
+      }
+
+      std::string periodName = j["period"].get<std::string>();
+      if(!intDict.contains(periodName)) {
+        SysError::setError("DerivedCosVelAvtFtry config for period: "s + periodName + " is not a int64_t literal."s);
+        return;
+      }
+
+      std::string componentName = j["component"].get<std::string>();
+      if(!intDict.contains(componentName)) {
+        SysError::setError("SineOscillatorV3Dtry config for period: "s + periodName + " is not a int64_t literal."s);
+        return;
+      }
+
+      std::shared_ptr<Entity> ent = entityRsrc.get("Entity."s + entityName);
+      float min = floatDict.get(minName);
+      float max = floatDict.get(maxName);
+      int64_t period = intDict.get(periodName);
+      int64_t component = intDict.get(componentName);
+      uint64_t positionIdx = dict.get(positionIdxName);
+      auto dcv = dcvStore.get("DerivedCosVelAvt."s + name);
+
+      dcv->setupEntity(ent, positionIdx);
+      dcv->setRange(min, max);
+      dcv->setPeriod(period);
+      dcv->setComponent(component);
+
+      auto listsCfg = j["lists"];
+      for (auto& listCfg : listsCfg.items()) {
+        if (!listCfg.value().is_string()) {
+          SysError::setError("DerivedCosVelAvtFtry " + name + " config for lists must contain strings. But is "s + listCfg.value().type_name());
+          return;
+        }
+        auto list = listStore.get("List." + listCfg.key());
+        auto ticket = list->push_front(dcv);
+        ent->addTicket(dict.get(listCfg.value().get<std::string>()), ticket);
+      }
+      dcvStore.remove("PosTargetToPosDirAvt."s + name);
+    } else {
+      SysError::setError("DerivedCosVelAvtFtry config for "s + name + " not found."s);
+    }
+  }
+
+private:
+  RsrcDictionary<float>& floatDict = RsrcDictionary<float>::getInstance();
+  RsrcDictionary<int64_t>& intDict = RsrcDictionary<int64_t>::getInstance();
+  NameRsrcDictionary &dict                                       = NameRsrcDictionary::getInstance();
+  RsrcStore<nlohmann::json> &configRsrc                          = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<DerivedCosVelAvt>& dcvStore                          = RsrcStore<DerivedCosVelAvt>::getInstance();
+  RsrcStore<Entity>& entityRsrc                                  = RsrcStore<Entity>::getInstance();
+  RsrcStore<TicketedForwardList<MAvatar<Vector3D> > >& listStore = RsrcStore<TicketedForwardList<MAvatar<Vector3D> > >::getInstance();
 };
 
 class LookAtToPitchAvtFtry : public Factory {

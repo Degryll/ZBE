@@ -7,6 +7,7 @@
  * @brief A container to store events. It will store only the sooner event (or events) and will discard every other.
  */
 
+#include <iostream>
 #include "ZBE/core/events/EventStore.h"
 
 namespace zbe {
@@ -25,7 +26,7 @@ EventStore& EventStore::getInstance() {
 }
 
 void EventStore::clearInstantStore() {
-  clearStore(instantStore );
+  clearStore(instantStore);
 }
 
 void EventStore::clearTimedStore() {
@@ -43,13 +44,17 @@ void EventStore::clearStore() {
 }
 
 void EventStore::storeEvent(Event* e) {
-  if(e->getTime() == bettertime){
+  std::cout << "Bettertime: " << bettertime << " e->getTime(): " << e->getTime() << std::endl;
+  if(e->getTime() == bettertime) {
+    std::cout << "Its the same"<< std::endl;
     timedStore.push_front(e);
-  } else if (e->getTime() < bettertime){
+  } else if (e->getTime() < bettertime) {
+    std::cout << "Its better"<< std::endl;
     clearTimedStore();
     bettertime = e->getTime();
     timedStore.push_front(e);
   } else {
+    std::cout << "NOPE"<< std::endl;
     delete e;
   }
 }
@@ -64,7 +69,7 @@ void EventStore::manageCurrent() {
 }
 
 void EventStore::manageStore(std::forward_list<Event*>& store) {
-  for(auto e : store){
+  for(auto e : store) {
     e->manage();
   }
   clearStore(store);

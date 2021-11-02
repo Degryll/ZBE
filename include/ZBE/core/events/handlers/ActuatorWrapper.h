@@ -32,7 +32,7 @@ class ActuatorWrapper {
 
     /** \brief Calls the Actuator's run method.
     */
-    virtual void run(std::shared_ptr<TEnt> container, std::shared_ptr<ReactObject<R> > rObject, CollisionData* cData) = 0;
+    virtual void run(std::shared_ptr<TEnt> container, std::shared_ptr<ReactObject<R> > rObject, OldCollisionData* cData) = 0;
 
 };
 
@@ -55,7 +55,7 @@ public:
 
   /** \brief Calls the Actuator's run method.
   */
-  void run(std::shared_ptr<TEnt> entity, std::shared_ptr<ReactObject<R> > rObject, CollisionData* cData) {
+  void run(std::shared_ptr<TEnt> entity, std::shared_ptr<ReactObject<R> > rObject, OldCollisionData* cData) {
     std::shared_ptr<TAct> act = std::make_shared<TAct>(entity);
     a->run(act,rObject,cData);
   }

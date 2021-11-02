@@ -89,7 +89,6 @@ public:
     factories.insert("OnceDaemonFtry", std::make_shared<OnceDaemonFtry>());
     factories.insert("StateMachineDmnFtry", std::make_shared<StateMachineDmnFtry>());
     factories.insert("RsrcFolderLoaderDmnFtry", std::make_shared<RsrcFolderLoaderDmnFtry>());
-    factories.insert("InputEventGeneratorFtry", std::make_shared<InputEventGeneratorFtry>());
 
     // --- Behaviors
     factories.insert("SineOscillatorFFtry", std::make_shared<SineOscillatorFFtry>());
@@ -104,6 +103,8 @@ public:
     // --- Events
     // --- --- Event generators
     factories.insert("TimeEventGnFtry", std::make_shared<TimeEventGnFtry>());
+    factories.insert("InputEventGeneratorFtry", std::make_shared<InputEventGeneratorFtry>());
+
 
     // --- --- Event input handlers
     factories.insert("BroadcastIHFtry", std::make_shared<BroadcastIHFtry>());

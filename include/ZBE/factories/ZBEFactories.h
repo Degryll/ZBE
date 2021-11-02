@@ -86,6 +86,7 @@ public:
     factories.insert("PosTargetToPosDirAvtFtry", std::make_shared<PosTargetToPosDirAvtFtry>());
     factories.insert("LookAtToPitchAvtFtry", std::make_shared<LookAtToPitchAvtFtry>());
     factories.insert("LookAtToYawAvtFtry", std::make_shared<LookAtToYawAvtFtry>());
+    factories.insert("DerivedCosVelAvtFtry", std::make_shared<DerivedCosVelAvtFtry>());
 
     // Daemons & List
     factories.insert("DrawerAnimSprtFtry", std::make_shared<AnimDrwr>());

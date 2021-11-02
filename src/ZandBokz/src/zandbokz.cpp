@@ -18,6 +18,11 @@
 #include "ZBE/OGL/factories/OGLFactories.h"
 #include "ZBE/resources/loaders/implementations/JSONAppLoader.h"
 
+#include "ZBE/core/events/interactionSystem.h"
+#include "ZBE/core/events/interactionFunctions.h"
+#include "ZBE/core/events/shapes.h"
+#include "ZBE/core/events/traits.h"
+
 int main(int /*argc*/, char** /*argv*/) {
    using namespace zbe;
    init();
@@ -28,6 +33,19 @@ int main(int /*argc*/, char** /*argv*/) {
    GLTFFactories::load();
    ZBEFactories::load();
    JSONFactories::load();
+
+   // Esto deberia ir a un ZandBokzFactories.h
+   // template <typename Selector, typename Overloaded, typename IData, typename ActorType, typename ReactorType, typename ...Shapes>
+   using ZandBokzOverloaded = zbe::overloaded<zbe::MovingSphereFunctor>;
+   using ZandBokzSelector = zbe::BaseSelector<zbe::InteractionSelector<zbe::CollisionData3D, ZandBokzOverloaded, zbe::MovingSphere>, ZandBokzOverloaded, zbe::MovingSphereFunctor>;
+   using Solid = zbe::EmptyTrait;
+
+   using ActorType = zbe::Actor<zbe::CollisionData3D, Solid>;
+   using ReactorType = zbe::Reactor<zbe::CollisionData3D, Solid>;
+
+   auto& factories = RsrcStore<Factory>::getInstance();
+   factories.insert("MovingSphereCollideEventGeneratorFtry", std::make_shared<InteractionEventGeneratorFtry<ZandBokzSelector, ZandBokzOverloaded, zbe::CollisionData3D, ActorType, ReactorType, zbe::MovingSphere> >());
+
    // Load App.
    std::cout << SysError::getFirstErrorString() << "\n";
    JSONAppLoader appLoader;
