@@ -281,7 +281,7 @@ class ZBEAPI InputEventGenerator : virtual public Daemon {
     std::shared_ptr<ContextTime> contextTime;
 };
 
-class ZBEAPI InputEventGeneratorFtry : public Factory {
+class ZBEAPI InputEventGeneratorFtry : public .Factory {
 public:
 
   /** \brief Builds a InputEventGenerator.

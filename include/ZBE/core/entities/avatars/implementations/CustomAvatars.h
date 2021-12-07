@@ -24,6 +24,7 @@
 #include "ZBE/core/entities/avatars/Avatar.h"
 #include "ZBE/core/entities/avatars/implementations/BaseAvatar.h"
 
+#include "ZBE/core/events/shapes.h"
 #include "ZBE/core/system/system.h"
 
 #include "ZBE/factories/Factory.h"
@@ -218,6 +219,65 @@ public:
 
 private:
   std::shared_ptr<Value<Vector3D> > position;
+  std::shared_ptr<ContextTime> cTime;
+
+  float min;
+  float max;
+  int64_t period;
+  int64_t component;
+};
+
+class DerivedPosMovingSphereAvt : public SAvatar<MovingSphere>, AvatarImp {
+public:
+
+  /** \brief
+   */
+   void setupEntity(std::shared_ptr<Entity> entity, uint64_t positionidx, uint64_t radiusidx) {
+     AvatarImp::setupEntity(entity);
+     _Avatar<1, MovingSphere>::setup(&getSphere, &setSphere, (void*)this);
+     position = entity->getVector3D(positionidx);
+     radius = entity->getFloat(radiusidx);
+     cTime = entity->getContextTime();
+   }
+
+   static std::shared_ptr<Value<MovingSphere> > getSphere(void *instance) {
+     auto  dpmsa = (DerivedPosMovingSphereAvt*)instance;
+     auto& position = dpmsa->position;
+     auto p = position->get();
+     auto r = dpmsa->radius->get();
+     auto time = dpmsa->cTime->getTotalTime();
+     float div = (time / (float)dpmsa->period) * TAU;
+     float cosine = cos(div);
+     float newVal = ((cosine + 1.0) / 2.0) * (dpmsa->max - dpmsa->min) + dpmsa->min;
+     Vector3D v{0.0, 0.0, 0.0};
+     v[dpmsa->component] = newVal / time;
+     Sphere s(p.toPoint(), r);
+     MovingSphere ms{s, v};
+     auto out = std::make_shared<SimpleValue<MovingSphere> >();
+     out->set(ms);
+     return out;
+   }
+
+   static void setSphere(void *instance, MovingSphere position) {
+     assert(false);
+   }
+
+   std::shared_ptr<Entity> getEntity() {
+     assert(false);
+   }
+
+   void setRange(float min, float max) {this->min = min; this->max = max;}
+
+   void setPeriod(int64_t period) {this->period = period;}
+
+   void setComponent(int64_t component) {
+     assert(component>=0 && component<=2);
+     this->component = component;
+   }
+
+private:
+  std::shared_ptr<Value<Vector3D> > position;
+  std::shared_ptr<Value<float> > radius;
   std::shared_ptr<ContextTime> cTime;
 
   float min;
@@ -624,7 +684,7 @@ class DerivedCosVelAvtFtry : public Factory {
 
       std::string componentName = j["component"].get<std::string>();
       if(!intDict.contains(componentName)) {
-        SysError::setError("SineOscillatorV3Dtry config for period: "s + periodName + " is not a int64_t literal."s);
+        SysError::setError("DerivedCosVelAvtFtry config for period: "s + periodName + " is not a int64_t literal."s);
         return;
       }
 
@@ -651,7 +711,7 @@ class DerivedCosVelAvtFtry : public Factory {
         auto ticket = list->push_front(dcv);
         ent->addTicket(dict.get(listCfg.value().get<std::string>()), ticket);
       }
-      dcvStore.remove("PosTargetToPosDirAvt."s + name);
+      dcvStore.remove("DerivedCosVelAvt."s + name);
     } else {
       SysError::setError("DerivedCosVelAvtFtry config for "s + name + " not found."s);
     }
@@ -665,6 +725,145 @@ private:
   RsrcStore<DerivedCosVelAvt>& dcvStore                          = RsrcStore<DerivedCosVelAvt>::getInstance();
   RsrcStore<Entity>& entityRsrc                                  = RsrcStore<Entity>::getInstance();
   RsrcStore<TicketedForwardList<MAvatar<Vector3D> > >& listStore = RsrcStore<TicketedForwardList<MAvatar<Vector3D> > >::getInstance();
+};
+
+
+class DerivedPosMovingSphereAvtFtry : public Factory {
+  /** \brief Builds a TargetToDirAvt.
+   *  \param name Name for the created TargetToDirAvt.
+   *  \param cfgId TargetToDirAvt's configuration id.
+   */
+  void create(std::string name, uint64_t){
+    using namespace std::string_literals;
+
+    auto dpmsa = std::make_shared<DerivedPosMovingSphereAvt>();
+    dpmsavtStore.insert("DerivedPosMovingSphereAvt."s + name, dpmsa);
+  }
+
+  /** \brief Setup the desired tool. The tool will be complete after this step.
+   *  \param name Name of the tool.
+   *  \param cfgId Tool's configuration id.
+   */
+  void setup(std::string name, uint64_t cfgId){
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+    if(cfg) {
+      auto j = *cfg;
+      if (!j["entity"].is_string()) {
+        SysError::setError("DerivedPosMovingSphereAvtFtry " + name + " config for entity must be a string."s);
+        return;
+      }
+      if (!j["lists"].is_object()) {
+        SysError::setError("DerivedPosMovingSphereAvtFtry " + name + " config for lists must be an object. But is "s + j["lists"].type_name());
+        return;
+      }
+      if (!j["positionIdx"].is_string()) {
+        SysError::setError("DerivedPosMovingSphereAvtFtry " + name + " config for positionIdx must be a string."s);
+        return;
+      }
+      if (!j["radiusIdx"].is_string()) {
+        SysError::setError("DerivedPosMovingSphereAvtFtry " + name + " config for positionIdx must be a string."s);
+        return;
+      }
+      if (!j["min"].is_string()) {
+        SysError::setError("DerivedPosMovingSphereAvtFtry config for min: "s + j["min"].get<std::string>() + ": must be a literal float name."s);
+        return;
+      }
+      if (!j["max"].is_string()) {
+        SysError::setError("DerivedPosMovingSphereAvtFtry config for max: "s + j["max"].get<std::string>() + ": must be a literal float name."s);
+        return;
+      }
+      if (!j["period"].is_string()) {
+        SysError::setError("DerivedPosMovingSphereAvtFtry config for period: "s + j["period"].get<std::string>() + ": must be a literal int64_t name."s);
+        return;
+      }
+      if (!j["component"].is_string()) {
+        SysError::setError("DerivedPosMovingSphereAvtFtry config for component: "s + j["component"].get<std::string>() + ": must be a literal int64_t name."s);
+        return;
+      }
+
+      std::string entityName = j["entity"].get<std::string>();
+      if(!entityRsrc.contains("Entity."s + entityName)) {
+        SysError::setError("DerivedPosMovingSphereAvtFtry config for entity: "s + entityName + " is not an entity name."s);
+        return;
+      }
+
+      std::string positionIdxName = j["positionIdx"].get<std::string>();
+      if(!dict.contains(positionIdxName)) {
+        SysError::setError("DerivedPosMovingSphereAvtFtry config for positionIdx: "s + positionIdxName + " is not an positionIdx name."s);
+        return;
+      }
+
+      std::string radiusIdxName = j["radiusIdx"].get<std::string>();
+      if(!dict.contains(radiusIdxName)) {
+        SysError::setError("DerivedPosMovingSphereAvtFtry config for radiusIdx: "s + radiusIdxName + " is not an positionIdx name."s);
+        return;
+      }
+
+      std::string minName = j["min"].get<std::string>();
+      if(!floatDict.contains(minName)) {
+        SysError::setError("DerivedPosMovingSphereAvtFtry config for min: "s + minName + " is not a float literal."s);
+        return;
+      }
+
+      std::string maxName = j["max"].get<std::string>();
+      if(!floatDict.contains(maxName)) {
+        SysError::setError("DerivedPosMovingSphereAvtFtry config for max: "s + maxName + " is not a float literal."s);
+        return;
+      }
+
+      std::string periodName = j["period"].get<std::string>();
+      if(!intDict.contains(periodName)) {
+        SysError::setError("DerivedPosMovingSphereAvtFtry config for period: "s + periodName + " is not a int64_t literal."s);
+        return;
+      }
+
+      std::string componentName = j["component"].get<std::string>();
+      if(!intDict.contains(componentName)) {
+        SysError::setError("DerivedPosMovingSphereAvtFtry config for period: "s + periodName + " is not a int64_t literal."s);
+        return;
+      }
+
+      std::shared_ptr<Entity> ent = entityRsrc.get("Entity."s + entityName);
+      float min = floatDict.get(minName);
+      float max = floatDict.get(maxName);
+      int64_t period = intDict.get(periodName);
+      int64_t component = intDict.get(componentName);
+      uint64_t positionIdx = dict.get(positionIdxName);
+      uint64_t radiusIdx = dict.get(radiusIdxName);
+      auto dpmsa = dpmsavtStore.get("DerivedPosMovingSphereAvtFtry."s + name);
+
+      dpmsa->setupEntity(ent, positionIdx, radiusIdx);
+      dpmsa->setRange(min, max);
+      dpmsa->setPeriod(period);
+      dpmsa->setComponent(component);
+
+      auto listsCfg = j["lists"];
+      for (auto& listCfg : listsCfg.items()) {
+        if (!listCfg.value().is_string()) {
+          SysError::setError("DerivedPosMovingSphereAvtFtry " + name + " config for lists must contain strings. But is "s + listCfg.value().type_name());
+          return;
+        }
+        auto list = listStore.get("List." + listCfg.key());
+        auto ticket = list->push_front(dpmsa);
+        ent->addTicket(dict.get(listCfg.value().get<std::string>()), ticket);
+      }
+      dpmsavtStore.remove("DerivedPosMovingSphereAvt."s + name);
+    } else {
+      SysError::setError("DerivedPosMovingSphereAvtFtry config for "s + name + " not found."s);
+    }
+  }
+
+private:
+  RsrcDictionary<float>& floatDict = RsrcDictionary<float>::getInstance();
+  RsrcDictionary<int64_t>& intDict = RsrcDictionary<int64_t>::getInstance();
+  NameRsrcDictionary &dict                                       = NameRsrcDictionary::getInstance();
+  RsrcStore<nlohmann::json> &configRsrc                          = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<DerivedPosMovingSphereAvt>& dpmsavtStore                   = RsrcStore<DerivedPosMovingSphereAvt>::getInstance();
+  RsrcStore<Entity>& entityRsrc                                  = RsrcStore<Entity>::getInstance();
+  RsrcStore<TicketedForwardList<MAvatar<MovingSphere> > >& listStore = RsrcStore<TicketedForwardList<MAvatar<MovingSphere> > >::getInstance();
 };
 
 class LookAtToPitchAvtFtry : public Factory {

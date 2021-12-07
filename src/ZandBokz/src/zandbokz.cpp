@@ -23,6 +23,8 @@
 #include "ZBE/core/events/shapes.h"
 #include "ZBE/core/events/traits.h"
 
+#include "ZBE/JSON/JSONFtry.h"
+
 int main(int /*argc*/, char** /*argv*/) {
    using namespace zbe;
    init();

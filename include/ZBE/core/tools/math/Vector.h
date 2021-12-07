@@ -193,6 +193,14 @@ class _VECTOR {
       return (out);
     }
 
+    /** \brief Returns this vector as a Point.
+     * \return this vector as a Point.
+     */
+    _POINT<dim> toPoint() {
+      _POINT<dim> p;
+      return p + (*this);
+    }
+
 
     /** \brief Compute the Vector Module.
      *

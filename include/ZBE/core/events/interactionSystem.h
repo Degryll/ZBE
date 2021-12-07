@@ -14,10 +14,11 @@
 #include <iostream>
 #include <variant>
 
-#include "ZBE/core/system/system.h"
 #include "ZBE/core/daemons/Daemon.h"
+#include "ZBE/core/entities/avatars/Avatar.h"
 #include "ZBE/core/events/Event.h"
 #include "ZBE/core/events/EventStore.h"
+#include "ZBE/core/system/system.h"
 #include "ZBE/core/tools/containers/TicketedForwardList.h"
 
 namespace zbe {
@@ -59,6 +60,7 @@ class Reactor<IData, Trait> {
 public:
     Reactor() : reaction(noReaction) {}
     Reactor(const Reactor& rhs) : reaction(rhs.reaction) {}
+    static void noReaction(IData, Trait) {}
 
     void setReaction(std::function<void(IData, Trait)> reaction) {
       this->reaction = reaction;
@@ -77,7 +79,6 @@ public:
     }
 
 private:
-  static void noReaction(IData, Trait) {}
   std::function<void(IData, Trait)> reaction;
 };
 
@@ -114,6 +115,7 @@ template<typename IData, typename Trait>
 class Actor<IData, Trait> {
 public:
   using subAct = std::function<void(Reactor<IData, Trait>*, IData)>;
+  static void noAct(Reactor<IData, Trait>*, IData) {}
 
   Actor() : sa(noAct) {}
   Actor(std::function<void(Reactor<IData, Trait>*, IData)> sa) : sa(sa) {}
@@ -142,7 +144,6 @@ protected:
   }
 
 private:
-  static void noAct(Reactor<IData, Trait>*, IData) {}
   subAct sa;
 };
 
@@ -217,6 +218,17 @@ struct InteractionEvent : public Event {
   void manage() {
     reactor.callActor(&actor, data);
   }
+};
+
+template <typename S, typename ...Shapes>
+class AvtShape : public zbe::Shape<Shapes...> {
+public:
+  AvtShape(std::shared_ptr<SAvatar<S> avt) : avt(avt) {};
+  std::variant<std::shared_ptr<Shapes>...> getShape() {
+    return avt->get();
+  };
+private:
+  std::shared_ptr<SAvatar<S> avt;
 };
 
 template<typename ActorType, typename ReactorType, typename ...Shapes>
