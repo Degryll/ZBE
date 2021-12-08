@@ -40,39 +40,39 @@ public:
     }
   }
 
-  void addDoubleCfg(std::pair<uint64_t, std::function<std::shared_ptr<Value<double>>(std::shared_ptr<MAvatar<T...>>)> cfg) {
+  void addCfg(std::pair<uint64_t, std::function<std::shared_ptr<Value<double>>(std::shared_ptr<MAvatar<T...>>)> cfg) {
     dCfgList.push_front(cfg);
   }
 
-  void addFloatCfg(std::pair<uint64_t, std::function<std::shared_ptr<Value<float>>(std::shared_ptr<MAvatar<T...>>)> cfg) {
+  void addCfg(std::pair<uint64_t, std::function<std::shared_ptr<Value<float>>(std::shared_ptr<MAvatar<T...>>)> cfg) {
     fCfgList.push_front(cfg);
   }
 
-  void addUintCfg(std::pair<uint64_t, std::function<std::shared_ptr<Value<uint64_t>>(std::shared_ptr<MAvatar<T...>>)> cfg) {
+  void addCfg(std::pair<uint64_t, std::function<std::shared_ptr<Value<uint64_t>>(std::shared_ptr<MAvatar<T...>>)> cfg) {
     uCfgList.push_front(cfg);
   }
 
-  void addIntCfg(std::pair<uint64_t, std::function<std::shared_ptr<Value<int64_t>>(std::shared_ptr<MAvatar<T...>>)> cfg) {
+  void addCfg(std::pair<uint64_t, std::function<std::shared_ptr<Value<int64_t>>(std::shared_ptr<MAvatar<T...>>)> cfg) {
     iCfgList.push_front(cfg);
   }
 
-  void addBoolCfg(std::pair<uint64_t, std::function<std::shared_ptr<Value<bool>>(std::shared_ptr<MAvatar<T...>>)> cfg) {
+  void addCfg(std::pair<uint64_t, std::function<std::shared_ptr<Value<bool>>(std::shared_ptr<MAvatar<T...>>)> cfg) {
     bCfgList.push_front(cfg);
   }
 
-  void addVector3DCfg(std::pair<uint64_t, std::function<std::shared_ptr<Value<Vector3D>>(std::shared_ptr<MAvatar<T...>>)> cfg) {
+  void addCfg(std::pair<uint64_t, std::function<std::shared_ptr<Value<Vector3D>>(std::shared_ptr<MAvatar<T...>>)> cfg) {
     v3CfgList.push_front(cfg);
   }
 
-  void addVector2DCfg(std::pair<uint64_t, std::function<std::shared_ptr<Value<Vector2D>>(std::shared_ptr<MAvatar<T...>>)> cfg) {
+  void addCfg(std::pair<uint64_t, std::function<std::shared_ptr<Value<Vector2D>>(std::shared_ptr<MAvatar<T...>>)> cfg) {
     v2CfgList.push_front(cfg);
   }
 
-  void addStringCfg(std::pair<uint64_t, std::function<std::shared_ptr<Value<std::string>>(std::shared_ptr<MAvatar<T...>>)> cfg) {
+  void addCfg(std::pair<uint64_t, std::function<std::shared_ptr<Value<std::string>>(std::shared_ptr<MAvatar<T...>>)> cfg) {
     sCfgList.push_front(cfg);
   }
 
-  void addStringListCfg(std::pair<uint64_t, std::function<std::shared_ptr<Value<std::vector<std:string>>>(std::shared_ptr<MAvatar<T...>>)> cfg) {
+  void addCfg(std::pair<uint64_t, std::function<std::shared_ptr<Value<std::vector<std:string>>>(std::shared_ptr<MAvatar<T...>>)> cfg) {
     slCfgList.push_front(cfg);
   }
 
@@ -287,21 +287,13 @@ template<typename ...T>
 class ZBEAPI EntityBuilderFtry : public Factory {
 public:
 
-  /** \brief Builds a EntityBuilder.
-   *  \param name Name for the created EntityBuilder.
-   *  \param cfgId EntityBuilder's configuration id.
-   */
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     std::shared_ptr<EntityBuilder<T...>> eb = std::make_shared<EntityBuilder<T...>>();
     mainRsrc.insert("Function."s + name, eb);
-    iegRsrc.insert("EntityBuilder."s + name, eb);
+    specificRsrc.insert("EntityBuilder."s + name, eb);
   }
 
-  /** \brief Setup the desired tool. The tool will be complete after this step.
-   *  \param name Name of the tool.
-   *  \param cfgId Tool's configuration id.
-   */
   void setup(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     using namespace nlohmann;
@@ -311,98 +303,67 @@ public:
       SysError::setError("EntityBuilderFtry config for "s + name + " not found."s);
       return;
     }
+    auto eb = specificRsrc.get("EntityBuilder."s + name);
     auto j = *cfg;
-    if ( j["double"].is_array()) {
-      auto dcfg = j["double"];
-      for (auto item : dcfg.items()) {
-        auto key = item.key();
-        auto valBuilder = JSONFactory::readFromStore(RsrcStore<T> store, json cfg, std::string parameter, std::string factoryName); TODO: falta corregir estos parámetros
-        TODO: Y lo que salga del store se mete en el builder con ddDoubleCfg.
-      }
-    } else if(JSONFactory::contains("double")) {
-      SysError::setError("EntityBuilderFtry config for double, if present, must be a array."s);
+
+    if(!addCfgList<double>()
+    || !addCfgList<float>()
+    || !addCfgList<uint64_t>()
+    || !addCfgList<int64_t>()
+    || !addCfgList<bool>()ç
+    || !addCfgList<Vector3D>()
+    || !addCfgList<Vector2D>()
+    || !addCfgList<std::string>())
+    || !addCfgList<std::vector<std::string>>>()) {
       return;
+    };
+
+    if (j["builders"].is_array()) {
+      TODO : leer y poner builders.
+    } else if(j.contains("builders")) {
+      SysError::setError("EntityBuilderFtry config for builders, if present, must be a array."s);
     }
-
-    // auto j = *cfg;
-    // if (!j["eventId"].is_string()) {
-    //   SysError::setError("InputEventGeneratorFtry config for eventId: "s + j["eventId"].get<std::string>() + ": must be a unsigned integer literal."s);
-    //   return;
-    // }
-    //
-    // if (!j["contextTime"].is_string()) {
-    //   SysError::setError("InputEventGeneratorFtry config for contextTime: "s + j["contextTime"].get<std::string>() + ": must be an context time name."s);
-    //   return;
-    // }
-    //
-    // if (!j["inputBuffer"].is_string()) {
-    //   SysError::setError("InputEventGeneratorFtry config for inputBuffer: "s + j["inputBuffer"].get<std::string>() + ": must be an inputBuffer name."s);
-    //   return;
-    // }
-    //
-    // if (!j["inputTextBuffer"].is_string()) {
-    //   SysError::setError("InputEventGeneratorFtry config for inputTextBuffer: "s + j["inputTextBuffer"].get<std::string>() + ": must be an inputTextBuffer."s);
-    //   return;
-    // }
-    //
-    // std::string eventIdName = j["eventId"].get<std::string>();
-    // if(!uintStore.contains(eventIdName)) {
-    //   SysError::setError("InputEventGeneratorFtry config for eventId: "s + eventIdName + " does not exits."s);
-    //   return;
-    // }
-    //
-    // std::string contextTimeName = j["contextTime"].get<std::string>();
-    // if(!cTimeRsrc.contains("ContextTime."s + contextTimeName)) {
-    //   SysError::setError("InputEventGeneratorFtry config for contextTime: "s + contextTimeName + " does not exits."s);
-    //   return;
-    // }
-    //
-    // std::string inputBufferName = j["inputBuffer"].get<std::string>();
-    // if(!ibuffRsrc.contains(inputBufferName)) {
-    //   SysError::setError("InputEventGeneratorFtry config for inputBuffer: "s + inputBufferName + " does not exits."s);
-    //   return;
-    // }
-    //
-    // std::string inputTextBufferName = j["inputTextBuffer"].get<std::string>();
-    // if(!itBuffRsrc.contains(inputTextBufferName)) {
-    //   SysError::setError("InputEventGeneratorFtry config for : "s + inputTextBufferName + " does not exits."s);
-    //   return;
-    // }
-    //
-    // uint64_t eventId = uintStore.get(eventIdName);
-    // auto cTime = cTimeRsrc.get("ContextTime."s + contextTimeName);
-    // auto inputBuffer = ibuffRsrc.get(inputBufferName);
-    // auto inputTextBuffer = itBuffRsrc.get(inputTextBufferName);
-    // auto ieg = iegRsrc.get("InputEventGenerator."s + name);
-
-
-    if (auto val = JSONFactory::readFromStore<double>()) {
-        std::cout << "create2(true) returned " << *val << '\n';
-    }
-
-    ieg->setEventID(eventId);
-    ieg->setInputBuffer(inputBuffer);
-    ieg->setInputTextBuffer(inputTextBuffer);
-    ieg->setContextTime(cTime);
   }
 
 private:
-  template<LT>
-  using PairList = std::forward_list<std::pair<uint64_t, std::function<Value<LT>(std::shared_ptr<MAvatar<T...>>)>>>;
+
+  template<VT>
+  bool addCfgList(json& j, std::string type std::shared_ptr<EntityBuilder<T...>> eb) {
+    if ( j[type].is_array()) {
+      auto dcfg = j[type];
+      for (auto item : dcfg.items()) {
+        auto key = item.key();
+        if(auto valueBuilder = JSONFactory::readFromStore<ValueBuilder<double>>(doubleBuilderStore, dcfg, key, "EntityBuilderFtry"s)) {
+          eb->addDoubleCfg(valueBuilder);
+        } else {
+          SysError::setError("EntityBuilderFtry config for " + type + " " + key +" is not a " + type + " value builder name."s);
+          return false;
+        }
+      }
+    } else if(j.contains(type)) {
+      SysError::setError("EntityBuilderFtry config for " + type + ", if present, must be a array."s);
+      return false;
+    }
+    return true;
+  }
+
+  template<VT>
+  using ValueBuilder = std::function<Value<VT>(std::shared_ptr<MAvatar<T...>>)>;
+  template<VT>
+  using PairList = std::forward_list<std::pair<uint64_t, ValueBuilder<VT>>>;
   RsrcStore<nlohmann::json>& configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<std::function<void(std::shared_ptr<MAvatar<T...>>)>>& mainRsrc = RsrcStore<std::function<void(std::shared_ptr<MAvatar<T...>>)>>::getInstance();
   RsrcStore<EntityBuilder<T...>>& specificRsrc = RsrcStore<EntityBuilder<T...>>::getInstance();
-  // TODO potencialmente caca.
-  RsrcStore<PairList<double>> dCfgListRsrc;
-  RsrcStore<PairList<float>> fCfgListRsrc;
-  RsrcStore<PairList<uint64_t>> uCfgListRsrc;
-  RsrcStore<PairList<int64_t>> iCfgListRsrc;
-  RsrcStore<PairList<bool>> bCfgListRsrc;
-  RsrcStore<PairList<Vector3D>> v3CfgListRsrc;
-  RsrcStore<PairList<Vector2D>> v2CfgListRsrc;
-  RsrcStore<PairList<std::string>> sCfgListRsrc;
-  RsrcStore<PairList<std::vector<std::string>>> slCfgListRsrc;
-  // TODO potencialmente caca fin.
+
+  RsrcStore<ValueBuilder<double>> doubleBuilderStore = RsrcStore<ValueBuilder<double>>::getInstance();
+  RsrcStore<ValueBuilder<float>> floatBuilderStore = RsrcStore<ValueBuilder<float>>::getInstance();
+  RsrcStore<ValueBuilder<uint64_t>> uintBuilderStore = RsrcStore<ValueBuilder<uint64_t>>::getInstance();
+  RsrcStore<ValueBuilder<int64_t>> intBuilderStore = RsrcStore<ValueBuilder<int64_t>>::getInstance();
+  RsrcStore<ValueBuilder<bool>> boolBuilderStore = RsrcStore<ValueBuilder<bool>>::getInstance();
+  RsrcStore<ValueBuilder<Vector3D>> v3DBuilderStore = RsrcStore<ValueBuilder<Vector3D>>::getInstance();
+  RsrcStore<ValueBuilder<Vector2D>> v2DBuilderStore = RsrcStore<ValueBuilder<Vector2D>>::getInstance();
+  RsrcStore<ValueBuilder<std::string>> stringBuilderStore = RsrcStore<ValueBuilder<std::string>>::getInstance();
+  RsrcStore<ValueBuilder<std::vector<std::string>>> vStringBuilderStore = RsrcStore<ValueBuilder<std::vector<std::string>>>::getInstance();
 
   RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
 
