@@ -17,10 +17,10 @@
 namespace zbe {
 
 template<typename ...T>
-class EntityBuilder {
+class EntityBldr {
 public:
 
-  EntityBuilder() = default;
+  EntityBldr() = default;
 
   void operator()(std::shared_ptr<MAvatar<T...>> avt) {
     std::shared_ptr<Entity> ent = std::make_shared<Entity>();
@@ -40,43 +40,43 @@ public:
     }
   }
 
-  void addCfg(std::pair<uint64_t, std::function<std::shared_ptr<Value<double>>(std::shared_ptr<MAvatar<T...>>)> cfg) {
+  void addValueBldr(std::pair<uint64_t, std::function<std::shared_ptr<Value<double>>(std::shared_ptr<MAvatar<T...>>)> cfg) {
     dCfgList.push_front(cfg);
   }
 
-  void addCfg(std::pair<uint64_t, std::function<std::shared_ptr<Value<float>>(std::shared_ptr<MAvatar<T...>>)> cfg) {
+  void addValueBldr(std::pair<uint64_t, std::function<std::shared_ptr<Value<float>>(std::shared_ptr<MAvatar<T...>>)> cfg) {
     fCfgList.push_front(cfg);
   }
 
-  void addCfg(std::pair<uint64_t, std::function<std::shared_ptr<Value<uint64_t>>(std::shared_ptr<MAvatar<T...>>)> cfg) {
+  void addValueBldr(std::pair<uint64_t, std::function<std::shared_ptr<Value<uint64_t>>(std::shared_ptr<MAvatar<T...>>)> cfg) {
     uCfgList.push_front(cfg);
   }
 
-  void addCfg(std::pair<uint64_t, std::function<std::shared_ptr<Value<int64_t>>(std::shared_ptr<MAvatar<T...>>)> cfg) {
+  void addValueBldr(std::pair<uint64_t, std::function<std::shared_ptr<Value<int64_t>>(std::shared_ptr<MAvatar<T...>>)> cfg) {
     iCfgList.push_front(cfg);
   }
 
-  void addCfg(std::pair<uint64_t, std::function<std::shared_ptr<Value<bool>>(std::shared_ptr<MAvatar<T...>>)> cfg) {
+  void addValueBldr(std::pair<uint64_t, std::function<std::shared_ptr<Value<bool>>(std::shared_ptr<MAvatar<T...>>)> cfg) {
     bCfgList.push_front(cfg);
   }
 
-  void addCfg(std::pair<uint64_t, std::function<std::shared_ptr<Value<Vector3D>>(std::shared_ptr<MAvatar<T...>>)> cfg) {
+  void addValueBldr(std::pair<uint64_t, std::function<std::shared_ptr<Value<Vector3D>>(std::shared_ptr<MAvatar<T...>>)> cfg) {
     v3CfgList.push_front(cfg);
   }
 
-  void addCfg(std::pair<uint64_t, std::function<std::shared_ptr<Value<Vector2D>>(std::shared_ptr<MAvatar<T...>>)> cfg) {
+  void addValueBldr(std::pair<uint64_t, std::function<std::shared_ptr<Value<Vector2D>>(std::shared_ptr<MAvatar<T...>>)> cfg) {
     v2CfgList.push_front(cfg);
   }
 
-  void addCfg(std::pair<uint64_t, std::function<std::shared_ptr<Value<std::string>>(std::shared_ptr<MAvatar<T...>>)> cfg) {
+  void addValueBldr(std::pair<uint64_t, std::function<std::shared_ptr<Value<std::string>>(std::shared_ptr<MAvatar<T...>>)> cfg) {
     sCfgList.push_front(cfg);
   }
 
-  void addCfg(std::pair<uint64_t, std::function<std::shared_ptr<Value<std::vector<std:string>>>(std::shared_ptr<MAvatar<T...>>)> cfg) {
+  void addValueBldr(std::pair<uint64_t, std::function<std::shared_ptr<Value<std::vector<std:string>>>(std::shared_ptr<MAvatar<T...>>)> cfg) {
     slCfgList.push_front(cfg);
   }
 
-  void addBuilder(std::function<void(std::shared_ptr<Entity>)> builder) {
+  void addBldr(std::function<void(std::shared_ptr<Entity>)> builder) {
     builder.push_back(builder);
   }
 
@@ -104,7 +104,7 @@ private:
 };
 
 template<typename IData, typename ActorType, typename ReactorType, typename ...Shapes>
-class InteractionerBuilder {
+class InteractionerBldr {
 public:
   using Iner = zbe::Interactioner<ActorType, ReactorType, Shapes...>;
   void operator()(std::shared_ptr<Entity> ent) {
@@ -119,15 +119,15 @@ public:
     }
   }
 
-  void setActorBuilder(std::function<ActorType(std::shared_ptr<Entity>)> actorBuilder) {
+  void setActorBldr(std::function<ActorType(std::shared_ptr<Entity>)> actorBuilder) {
     this->actorBuilder = actorBuilder;
   }
 
-  void setReactorBuilder(std::function<ReactorType(std::shared_ptr<Entity>)> reactorBuilder) {
+  void setReactorBldr(std::function<ReactorType(std::shared_ptr<Entity>)> reactorBuilder) {
     this->reactorBuilder = reactorBuilder;
   }
 
-  void setShapeBuilder(std::function<std::shared_ptr<ShapeType>(std::shared_ptr<Entity>)> shapeBuilder) {
+  void setShapeBldr(std::function<std::shared_ptr<ShapeType>(std::shared_ptr<Entity>)> shapeBuilder) {
     this->shapeBuilder = shapeBuilder;
   }
 
@@ -143,7 +143,7 @@ private:
 };
 
 template<typename IData, typename ActorType, typename ReactorType, typename ...Shapes>
-class InteractionatorBuilder {
+class InteractionatorBldr {
 public:
   using Inator = zbe::Interactionator<ActorType, ReactorType, Shapes...>;
   void operator()(std::shared_ptr<Entity> ent) {
@@ -160,15 +160,15 @@ public:
     }
   }
 
-  void setActorBuilder(std::function<ActorType(std::shared_ptr<Entity>)> actorBuilder) {
+  void setActorBldr(std::function<ActorType(std::shared_ptr<Entity>)> actorBuilder) {
     this->actorBuilder = actorBuilder;
   }
 
-  void setReactorBuilder(std::function<ReactorType(std::shared_ptr<Entity>)> reactorBuilder) {
+  void setReactorBldr(std::function<ReactorType(std::shared_ptr<Entity>)> reactorBuilder) {
     this->reactorBuilder = reactorBuilder;
   }
 
-  void setShapeBuilder(std::function<std::shared_ptr<ShapeType>(std::shared_ptr<Entity>)> shapeBuilder) {
+  void setShapeBldr(std::function<std::shared_ptr<ShapeType>(std::shared_ptr<Entity>)> shapeBuilder) {
     this->shapeBuilder = shapeBuilder;
   }
 
@@ -189,7 +189,7 @@ private:
 };
 
 template<typename IData, typename ...Traits>
-class ActorBuilder : ActorBuilder<Traits...> {
+class ActorBldr : ActorBldr<Traits...> {
   Actor<IData, Traits...> operator()(std::shared_ptr<Entity> ent) {
     Actor<IData, Traits...> actor;
     std::initializer_list<int>{(actor.setTrait<Traits>(buildFunct<Traits>(ent)) , 0)... };
@@ -197,17 +197,17 @@ class ActorBuilder : ActorBuilder<Traits...> {
 
   template<typename U>
   std::function<void(Reactor<IData, U>*, IData)> buildFunct(std::shared_ptr<Entity> ent) {
-    this->ActorBuilder<IData, U>::buildFunct(ent);
+    this->ActorBldr<IData, U>::buildFunct(ent);
   }
 };
 
 template<typename IData, typename Trait>
-class ActorBuilder<IData, Trait> {
+class ActorBldr<IData, Trait> {
 public:
   using TraitFunct = std::function<void(Reactor<IData, Trait>*, IData)>;
   using SubBuild = std::function<TraitFunct(std::shared_ptr<Entity> ent)>;
 
-  ActorBuilder() : sb([](){return Actor<IData, Trait>::noAct;}) {}
+  ActorBldr() : sb([](){return Actor<IData, Trait>::noAct;}) {}
 
 
   Actor<IData, Trait> operator() (std::shared_ptr<Entity> ent) {
@@ -227,7 +227,7 @@ private:
 };
 
 template<typename IData, typename ...Traits>
-class ReactorBuilder : ReactorBuilder<IData, Trait...> {
+class ReactorBldr : ReactorBldr<IData, Trait...> {
   Reactor<IData, Traits...> operator()(std::shared_ptr<Entity> ent) {
     Reactor<IData, Traits...> reactor;
     std::initializer_list<int>{(setReaction.setTrait<Traits>(buildFunct<Traits>(ent)) , 0)... };
@@ -235,17 +235,17 @@ class ReactorBuilder : ReactorBuilder<IData, Trait...> {
 
   template<typename U>
   std::function<void(IData, U)> buildFunct(std::shared_ptr<Entity> ent) {
-    this->ReactorBuilder<IData, U>::buildFunct(ent);
+    this->ReactorBldr<IData, U>::buildFunct(ent);
   }
 };
 
 template<typename IData, typename Trait>
-class ReactorBuilder<IData, Trait> {
+class ReactorBldr<IData, Trait> {
 public:
   using ReactFunct = std::function<void(IData, Trait)>;
   using SubBuild = std::function<ReactFunct(std::shared_ptr<Entity> ent)>;
 
-  ReactorBuilder() : sb([](){return Reactor<IData, Trait>::noReaction;}) {}
+  ReactorBldr() : sb([](){return Reactor<IData, Trait>::noReaction;}) {}
 
 
   Reactor<IData, Trait> operator() (std::shared_ptr<Entity> ent) {
@@ -265,11 +265,11 @@ private:
 };
 
 template<typename S, typename ...Shapes>
-class ShapeBuilder {
+class ShapeBldr {
 public:
   using SubBuild = std::function<std:shared_ptr<SAvatar<S>>(std::shared_ptr<Entity> ent)>;
 
-  ShapeBuilder() : sb([](){assert(false); return nullptr;});
+  ShapeBldr() : sb([](){assert(false); return nullptr;});
   std::shared_ptr<Shape<Shapes...>> operator()(std::shared_ptr<Entity> ent) {
     std:shared_ptr<SAvatar<S>> avt = sb(ent);
     return std::make_shared<AvtShape<S, Shapes...>>(avt);
@@ -284,14 +284,14 @@ private:
 };
 
 template<typename ...T>
-class ZBEAPI EntityBuilderFtry : public Factory {
+class ZBEAPI EntityBldrFtry : public Factory {
 public:
 
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
-    std::shared_ptr<EntityBuilder<T...>> eb = std::make_shared<EntityBuilder<T...>>();
+    std::shared_ptr<EntityBldr<T...>> eb = std::make_shared<EntityBldr<T...>>();
     mainRsrc.insert("Function."s + name, eb);
-    specificRsrc.insert("EntityBuilder."s + name, eb);
+    specificRsrc.insert("EntityBldr."s + name, eb);
   }
 
   void setup(std::string name, uint64_t cfgId) {
@@ -300,41 +300,49 @@ public:
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
 
     if(!cfg) {
-      SysError::setError("EntityBuilderFtry config for "s + name + " not found."s);
+      SysError::setError("EntityBldrFtry config for "s + name + " not found."s);
       return;
     }
-    auto eb = specificRsrc.get("EntityBuilder."s + name);
+    auto eb = specificRsrc.get("EntityBldr."s + name);
     auto j = *cfg;
 
-    if(!addCfgList<double>()
-    || !addCfgList<float>()
-    || !addCfgList<uint64_t>()
-    || !addCfgList<int64_t>()
-    || !addCfgList<bool>()ç
-    || !addCfgList<Vector3D>()
-    || !addCfgList<Vector2D>()
-    || !addCfgList<std::string>())
-    || !addCfgList<std::vector<std::string>>>()) {
+    if(!addList2Bldr<double>(j, eb)
+    || !addList2Bldr<float>(j, eb)
+    || !addList2Bldr<uint64_t>(j, eb)
+    || !addList2Bldr<int64_t>(j, eb)
+    || !addList2Bldr<bool>(j, eb)
+    || !addList2Bldr<Vector3D>(j, eb)
+    || !addList2Bldr<Vector2D>(j, eb)
+    || !addList2Bldr<std::string>(j, eb)
+    || !addList2Bldr<std::vector<std::string>>>(j, eb)) {
       return;
     };
 
     if (j["builders"].is_array()) {
-      TODO : leer y poner builders.
+      auto builders = j["builders"];
+      for(auto it : builders) {
+        auto name = it.get<std::string>();
+        if(!extraBuilderStore.contains("Builders."s + name)) {
+          SysError::setError("EntityBldrFtry builders config " + name + " inside Builders. is not an adecuate builder name."s);
+          return;
+        }
+        eb->addBldr(extraBuilderStore.get("Builders."s + name));
+      }
     } else if(j.contains("builders")) {
-      SysError::setError("EntityBuilderFtry config for builders, if present, must be a array."s);
+      SysError::setError("EntityBldrFtry config for builders, if present, must be a array."s);
     }
   }
 
 private:
 
   template<VT>
-  bool addCfgList(json& j, std::string type std::shared_ptr<EntityBuilder<T...>> eb) {
-    if ( j[type].is_array()) {
+  bool addList2Bldr(json& j, std::string type std::shared_ptr<EntityBldr<T...>> eb) {
+    if (j[type].is_object()) {
       auto dcfg = j[type];
       for (auto item : dcfg.items()) {
         auto key = item.key();
-        if(auto valueBuilder = JSONFactory::readFromStore<ValueBuilder<double>>(doubleBuilderStore, dcfg, key, "EntityBuilderFtry"s)) {
-          eb->addDoubleCfg(valueBuilder);
+        if(auto valueBuilder = JSONFactory::readFromStore<ValueBldr<double>>(doubleBuilderStore, dcfg, "Builders."s, key, "EntityBldrFtry"s)) {
+          eb->addValueBldr(valueBuilder);
         } else {
           SysError::setError("EntityBuilderFtry config for " + type + " " + key +" is not a " + type + " value builder name."s);
           return false;
@@ -348,22 +356,24 @@ private:
   }
 
   template<VT>
-  using ValueBuilder = std::function<Value<VT>(std::shared_ptr<MAvatar<T...>>)>;
+  using ValueBldr = std::function<Value<VT>(std::shared_ptr<MAvatar<T...>>)>;
   template<VT>
-  using PairList = std::forward_list<std::pair<uint64_t, ValueBuilder<VT>>>;
+  using PairList = std::forward_list<std::pair<uint64_t, ValueBldr<VT>>>;
   RsrcStore<nlohmann::json>& configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<std::function<void(std::shared_ptr<MAvatar<T...>>)>>& mainRsrc = RsrcStore<std::function<void(std::shared_ptr<MAvatar<T...>>)>>::getInstance();
-  RsrcStore<EntityBuilder<T...>>& specificRsrc = RsrcStore<EntityBuilder<T...>>::getInstance();
+  RsrcStore<EntityBldr<T...>>& specificRsrc = RsrcStore<EntityBldr<T...>>::getInstance();
 
-  RsrcStore<ValueBuilder<double>> doubleBuilderStore = RsrcStore<ValueBuilder<double>>::getInstance();
-  RsrcStore<ValueBuilder<float>> floatBuilderStore = RsrcStore<ValueBuilder<float>>::getInstance();
-  RsrcStore<ValueBuilder<uint64_t>> uintBuilderStore = RsrcStore<ValueBuilder<uint64_t>>::getInstance();
-  RsrcStore<ValueBuilder<int64_t>> intBuilderStore = RsrcStore<ValueBuilder<int64_t>>::getInstance();
-  RsrcStore<ValueBuilder<bool>> boolBuilderStore = RsrcStore<ValueBuilder<bool>>::getInstance();
-  RsrcStore<ValueBuilder<Vector3D>> v3DBuilderStore = RsrcStore<ValueBuilder<Vector3D>>::getInstance();
-  RsrcStore<ValueBuilder<Vector2D>> v2DBuilderStore = RsrcStore<ValueBuilder<Vector2D>>::getInstance();
-  RsrcStore<ValueBuilder<std::string>> stringBuilderStore = RsrcStore<ValueBuilder<std::string>>::getInstance();
-  RsrcStore<ValueBuilder<std::vector<std::string>>> vStringBuilderStore = RsrcStore<ValueBuilder<std::vector<std::string>>>::getInstance();
+  RsrcStore<ValueBldr<double>> doubleBldrStore = RsrcStore<ValueBldr<double>>::getInstance();
+  RsrcStore<ValueBldr<float>> floatBldrStore = RsrcStore<ValueBldr<float>>::getInstance();
+  RsrcStore<ValueBldr<uint64_t>> uintBldrStore = RsrcStore<ValueBldr<uint64_t>>::getInstance();
+  RsrcStore<ValueBldr<int64_t>> intBldrStore = RsrcStore<ValueBldr<int64_t>>::getInstance();
+  RsrcStore<ValueBldr<bool>> boolBldrStore = RsrcStore<ValueBldr<bool>>::getInstance();
+  RsrcStore<ValueBldr<Vector3D>> v3DBldrStore = RsrcStore<ValueBldr<Vector3D>>::getInstance();
+  RsrcStore<ValueBldr<Vector2D>> v2DBldrStore = RsrcStore<ValueBldr<Vector2D>>::getInstance();
+  RsrcStore<ValueBldr<std::string>> stringBldrStore = RsrcStore<ValueBldr<std::string>>::getInstance();
+  RsrcStore<ValueBldr<std::vector<std::string>>> vStringBldrStore = RsrcStore<ValueBldr<std::vector<std::string>>>::getInstance();
+
+  RsrcStore<std::function<void(std::shared_ptr<Entity>)>> extraBldrStore = RsrcStore<std::function<void(std::shared_ptr<Entity>)>>::getInstance();
 
   RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
 
@@ -371,9 +381,7 @@ private:
 
 };
 
-
-TODO: InteractionerBuilderFtry
-TODO: MetaBuilderFtry
+TODO: InteractionerBldrFtry
 TODO: Ftryses a saco de cada builder que hay aquí.
 TODO: Construir Subuilders en ZandBokz.
 

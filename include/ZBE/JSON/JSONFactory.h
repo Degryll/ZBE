@@ -45,7 +45,7 @@ std::optional<std::shared_ptr<T>> function readFromStore(RsrcStore<T> store, jso
 }
 
 template<typename T>
-std::optional<std::shared_ptr<T>> function readFromDcit(RsrcDictionary<T> dict, json cfg, std::string parameter, std::string factoryName) {
+std::optional<std::shared_ptr<T>> function readFromDcit(RsrcDictionary<T> dict, json cfg, std::string prefix, std::string parameter, std::string factoryName) {
   if (!cfg[parameter].is_string()) {
     SysError::setError(factoryname + " config for "s, parameter, ": "s + cfg[parameter].get<std::string>() + ": must be a "s + typeid(T).name() + " literal."s);
     //throw JSONCfgException(factoryname + " config for "s, parameter, ": "s + cfg[parameter].get<std::string>() + ": must be a "s + typeid(T).name() + " literal."s);
@@ -53,13 +53,13 @@ std::optional<std::shared_ptr<T>> function readFromDcit(RsrcDictionary<T> dict, 
   }
 
   std::string paramName = j[parameter].get<std::string>();
-  if(!store.contains(paramName)) {
-    SysError::setError(factoryname + " config for ", parameter, ": "s + paramName + " does not exist."s);
+  if(!store.contains(prefix+paramName)) {
+    SysError::setError(factoryname + " config for ", parameter, ": "s + paramName + "inside " + prefix + " does not exist."s);
     //throw JSONCfgException(factoryname + " config for ", parameter, ": "s + paramName + " does not exist."s);
     return std::nullopt;
   }
 
-  return dict.get(paramName);
+  return dict.get(prefix+paramName);
 }
 
 // template<typename T>
