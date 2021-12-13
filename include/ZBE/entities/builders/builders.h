@@ -146,6 +146,11 @@ template<typename IData, typename ActorType, typename ReactorType, typename ...S
 class InteractionatorBldr {
 public:
   using Inator = zbe::Interactionator<ActorType, ReactorType, Shapes...>;
+  using InatorList = std::shared_ptr<zbe::TicketedForwardList<Iner>>;
+  using ActorTypeBldr = std::function<ActorType(std::shared_ptr<Entity>) >;
+  using ReactorTypeBldr = std::function<ReactorType(std::shared_ptr<Entity>) >;
+  using ShapeBldr = std::function<std::shared_ptr<Shape<Shapes...>>(std::shared_ptr<Entity>) >;
+
   void operator()(std::shared_ptr<Entity> ent) {
     ActorType actor = actorBuilder(ent);
     ReactorType reactor = reactorBuilder(ent);
@@ -160,32 +165,32 @@ public:
     }
   }
 
-  void setActorBldr(std::function<ActorType(std::shared_ptr<Entity>)> actorBuilder) {
+  void setActorBldr(ActorTypeBldr actorBuilder) {
     this->actorBuilder = actorBuilder;
   }
 
-  void setReactorBldr(std::function<ReactorType(std::shared_ptr<Entity>)> reactorBuilder) {
+  void setReactorBldr(ReactorTypeBldr reactorBuilder) {
     this->reactorBuilder = reactorBuilder;
   }
 
-  void setShapeBldr(std::function<std::shared_ptr<ShapeType>(std::shared_ptr<Entity>)> shapeBuilder) {
+  void setShapeBldr(ShapeBldr shapeBuilder) {
     this->shapeBuilder = shapeBuilder;
   }
 
-  void addInerList(uint64_t idx, std::shared_ptr<zbe::TicketedForwardList<Iner>> list) {
+  void addInerList(uint64_t idx, InatorList list) {
     inerLists.push_front(std::pair<uint64_t, std::shared_ptr<zbe::TicketedForwardList<Iner>>>(idx, list));
   }
 
-  void setInternalInerList(std::shared_ptr<zbe::TicketedForwardList<Iner>> internalInerList) {
+  void setInternalInerList(InatorList internalInerList) {
     this->internalInerList = internalInerList;
   }
 
 private:
-  std::function<ActorType(std::shared_ptr<Entity>) > actorBuilder;
-  std::function<ReactorType(std::shared_ptr<Entity>) > reactorBuilder;
-  std::function<std::shared_ptr<Shape<Shapes...>>(std::shared_ptr<Entity>) > shapeBuilder;
-  std::forward_list<std::pair<uint64_t, std::shared_ptr<zbe::TicketedForwardList<Iner>>>> inerLists;
-  std::shared_ptr<zbe::TicketedForwardList<Iner>>> internalInerList;
+  ActorTypeBldr actorBuilder;
+  ReactorTypeBldr reactorBuilder;
+  ReactorTypeBldr shapeBuilder;
+  std::forward_list<std::pair<uint64_t, InatorList>> inerLists;
+  InatorList internalInerList;
 };
 
 template<typename IData, typename ...Traits>
@@ -283,6 +288,21 @@ private:
   SubBuild sb;
 };
 
+// "cfg" :{
+//   "double" : {
+//     "idxLitName" : "cars.velBuilder",
+//     "idxBlahName" : "cars.blahBuilder"
+//   },
+//   "uint" : true,
+//   "Vector3D" : [
+//     {"idxLitName" : "cars.velBuilder"}
+//   ],
+//   "builders": [
+//     "maingame.wallnutInteractionerBuilder",
+//     "maingame.wallnutGraphicsBuilder"
+//   ]
+// }
+
 template<typename ...T>
 class ZBEAPI EntityBldrFtry : public Factory {
 public:
@@ -343,6 +363,7 @@ private:
         auto key = item.key();
         if(auto valueBuilder = JSONFactory::readFromStore<ValueBldr<double>>(doubleBuilderStore, dcfg, "Builders."s, key, "EntityBldrFtry"s)) {
           eb->addValueBldr(valueBuilder);
+          return true;
         } else {
           SysError::setError("EntityBuilderFtry config for " + type + " " + key +" is not a " + type + " value builder name."s);
           return false;
@@ -379,6 +400,76 @@ private:
 
   std::deque<std::function<void(std::shared_ptr<Entity>)>> builders;
 
+};
+
+template<typename IData, typename ActorType, typename ReactorType, typename ...Shapes>
+class InteractionatorBldrFcry {
+public:
+    /* TODO borra esto
+    using Inator = zbe::Interactionator<ActorType, ReactorType, Shapes...>;
+    using InatorList = std::shared_ptr<zbe::TicketedForwardList<Iner>>;
+    using ActorTypeBldr = std::function<ActorType(std::shared_ptr<Entity>) >;
+    using ReactorTypeBldr = std::function<ReactorType(std::shared_ptr<Entity>) >;
+    using ShapeBldr = std::function<std::shared_ptr<Shape<Shapes...>>(std::shared_ptr<Entity>) >;
+    */
+  void create(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    std::shared_ptr<InteractionatorBldr<IData, ActorType, ReactorType, Shapes...>> inatorb = std::make_shared<InteractionatorBldr<IData, ActorType, ReactorType, Shapes...>>();
+    mainRsrc.insert("Function."s + name, eb);
+    specificRsrc.insert("InteractionatorBldr."s + name, eb);
+  }
+
+  void setup(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+    if(!cfg) {
+      SysError::setError("InteractionatorBldrFcry config for "s + name + " not found."s);
+      return;
+    }
+    auto inatorb = specificRsrc.get("InteractionatorBldr."s + name);
+    auto j = *cfg;
+    auto actorBuilder = JSONFactory::readFromStore<InteractionatorBldr::ActorTypeBldr>(actorBldrRsrc, j, "actorbuilder"s, "InteractionatorBldr"s);
+    if(!actorBuilder) {
+      SysError::setError("InteractionatorBldrFcry config for actorbuilder is invalid"s);
+      return;
+    }
+    auto reactorBuilder = JSONFactory::readFromStore<InteractionatorBldr::ReactorTypeBldr>(reactorBldrRsrc, j, "reactorbuilder"s, "InteractionatorBldr"s);
+    if(!actorBuilder) {
+      SysError::setError("InteractionatorBldrFcry config for reactorbuilder is invalid"s);
+      return;
+    }
+    auto shapeBuilder = JSONFactory::readFromStore<InteractionatorBldr::ShapeBldr>(shapeRsrc, j, "shapebuilder"s, "InteractionatorBldr"s);
+    if(!actorBuilder) {
+      SysError::setError("InteractionatorBldrFcry config for shapebuilder is invalid"s);
+      return;
+    }
+    auto list = JSONFactory::readFromStore<InteractionatorBldr::InatorList>(listRsrc, j, "interactioners"s, "InteractionatorBldr"s);
+    if(!actorBuilder) {
+      SysError::setError("InteractionatorBldrFcry config for shapebuilder is invalid"s);
+      return;
+    }
+
+    inatorb->setActorBldr(actorBuilder);
+    inatorb->setReactorBldr(reactorBuilder);
+    inatorb->setShapeBldr(shapeBuilder);
+    inatorb->setInternalInerList(list);
+
+    JSONFactory::loadAllIdexed(listRsrc, j, "list"s, "InteractionatorBldr"s, [&](uint64_t idx, InatorList list) {
+      inatorb->addInerList(idx, list);
+    });
+
+  }
+private:
+  RsrcStore<nlohmann::json>& configRsrc = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<std::function<void(std::shared_ptr<MAvatar<T...>>)>>& mainRsrc = RsrcStore<std::function<void(std::shared_ptr<MAvatar<T...>>)>>::getInstance();
+  RsrcStore<EntityBldr<T...>>& specificRsrc = RsrcStore<EntityBldr<T...>>::getInstance();
+
+  RsrcStore<InatorList>& listRsrc = RsrcStore<EntityBldr<InatorList>::getInstance();
+  RsrcStore<ActorTypeBldr>& actorBldrRsrc = RsrcStore<ActorTypeBldr>::getInstance();
+  RsrcStore<ReactorTypeBldr>& reactorBldrRsrc = RsrcStore<ReactorTypeBldr>::getInstance();
+  RsrcStore<ShapeBldr>& shapeBldrRsrc = RsrcStore<ShapeBldr>::getInstance();
 };
 
 TODO: InteractionerBldrFtry

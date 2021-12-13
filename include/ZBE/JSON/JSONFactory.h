@@ -26,6 +26,27 @@ namespace JSONFactory {
 //   std::string msg;
 // };
 
+//JSONFactory::loadAll(listRsrc, j, "list"s, "InteractionatorBldr"s, () => {});
+
+template<typename T>
+JSONFactory::loadAllIdexed(RsrcStore<T> store, json cfg, std::string parameter, std::string factoryName, std::function<bool(uint64_t, std::shared_ptr<T>)> callback) {
+  if (cfg[parameter].is_object()) {
+    auto arrayCfg = cfg[type];
+    for (auto item : arrayCfg.items()) {
+      auto key = item.key();
+      if(auto valueBuilder = JSONFactory::readFromStore<ValueBldr<double>>(store, arrayCfg, key, factoryName)) {
+        TODO: Solicitamos idx al diccionario;
+        return callback(idx, valueBuilder);
+      } else {
+        return false;
+      }
+    }
+  } else if(cfg.contains(type)) {
+    return false;
+  }
+  return true;
+}
+
 template<typename T>
 std::optional<std::shared_ptr<T>> function readFromStore(RsrcStore<T> store, json cfg, std::string parameter, std::string factoryName) {
   if (!cfg[parameter].is_string()) {
