@@ -29,17 +29,25 @@ namespace JSONFactory {
 //JSONFactory::loadAll(listRsrc, j, "list"s, "InteractionatorBldr"s, () => {});
 
 template<typename T>
-JSONFactory::loadAllIdexed(RsrcStore<T> store, json cfg, std::string parameter, std::string factoryName, std::function<bool(uint64_t, std::shared_ptr<T>)> callback) {
+JSONFactory::loadAllIndexed(RsrcStore<T>& store, RsrcDictionary<uint64_t>& uintDict, json cfg, std::string parameter, std::string factoryName, std::function<bool(uint64_t, std::shared_ptr<T>)> callback) {
+  RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
   if (cfg[parameter].is_object()) {
     auto arrayCfg = cfg[type];
     for (auto item : arrayCfg.items()) {
       auto key = item.key();
-      if(auto valueBuilder = JSONFactory::readFromStore<ValueBldr<double>>(store, arrayCfg, key, factoryName)) {
-        TODO: Solicitamos idx al diccionario;
-        return callback(idx, valueBuilder);
+      if(auto element = JSONFactory::readFromStore<ValueBldr<double>>(store, arrayCfg, key, factoryName)) {
+        if(uintDict.contains(key)) {
+            uint64_t idx = uintDict.get(key);
+            if(!callback(idx, element)) {
+              return false;
+            }
+        } else {
+          return false;
+        }
       } else {
         return false;
       }
+      //TODO: estos if hay que darles una vuelta. O dos.
     }
   } else if(cfg.contains(type)) {
     return false;

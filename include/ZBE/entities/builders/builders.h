@@ -456,10 +456,9 @@ public:
     inatorb->setShapeBldr(shapeBuilder);
     inatorb->setInternalInerList(list);
 
-    JSONFactory::loadAllIdexed(listRsrc, j, "list"s, "InteractionatorBldr"s, [&](uint64_t idx, InatorList list) {
+    JSONFactory::loadAllIndexed(listRsrc, j, "list"s, "InteractionatorBldr"s, [&](uint64_t idx, InatorList list) {
       inatorb->addInerList(idx, list);
     });
-
   }
 private:
   RsrcStore<nlohmann::json>& configRsrc = RsrcStore<nlohmann::json>::getInstance();
@@ -472,7 +471,9 @@ private:
   RsrcStore<ShapeBldr>& shapeBldrRsrc = RsrcStore<ShapeBldr>::getInstance();
 };
 
-TODO: InteractionerBldrFtry
+
+
+TODO: InteractionerBldrFtry Done
 TODO: Ftryses a saco de cada builder que hay aquí.
 TODO: Construir Subuilders en ZandBokz.
 
