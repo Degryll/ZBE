@@ -29,25 +29,25 @@ namespace JSONFactory {
 //JSONFactory::loadAll(listRsrc, j, "list"s, "InteractionatorBldr"s, () => {});
 
 template<typename T>
-JSONFactory::loadAllIndexed(RsrcStore<T>& store, RsrcDictionary<uint64_t>& uintDict, json cfg, std::string parameter, std::string factoryName, std::function<bool(uint64_t, std::shared_ptr<T>)> callback) {
+bool JSONFactory::loadAllIndexed(RsrcStore<T>& store, RsrcDictionary<uint64_t>& uintDict, json cfg, std::string parameter, std::string factoryName, std::function<bool(uint64_t, std::shared_ptr<T>)> callback) {
   RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
   if (cfg[parameter].is_object()) {
     auto arrayCfg = cfg[type];
     for (auto item : arrayCfg.items()) {
       auto key = item.key();
-      if(auto element = JSONFactory::readFromStore<ValueBldr<double>>(store, arrayCfg, key, factoryName)) {
-        if(uintDict.contains(key)) {
-            uint64_t idx = uintDict.get(key);
-            if(!callback(idx, element)) {
-              return false;
-            }
-        } else {
-          return false;
-        }
-      } else {
+      auto element = JSONFactory::readFromStore<ValueBldr<double>>(store, arrayCfg, key, factoryName)
+      if(!) {
+        SysError::setError(factoryname + " config for "s, parameter, ": "s + cfg[parameter].get<std::string>() + " contains a non valid tool name:"s + key);
         return false;
       }
-      //TODO: estos if hay que darles una vuelta. O dos.
+      if(!uintDict.contains(key)) {
+        SysError::setError(factoryname + " config for "s, parameter, ": "s + cfg[parameter].get<std::string>() + " contains a non valid index name:"s + key);
+        return false;
+      }
+      uint64_t idx = uintDict.get(key);
+      if(!callback(idx, element)) {
+        return false;
+      }
     }
   } else if(cfg.contains(type)) {
     return false;

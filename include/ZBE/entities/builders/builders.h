@@ -204,6 +204,11 @@ class ActorBldr : ActorBldr<Traits...> {
   std::function<void(Reactor<IData, U>*, IData)> buildFunct(std::shared_ptr<Entity> ent) {
     this->ActorBldr<IData, U>::buildFunct(ent);
   }
+
+  template<typename U>
+  void setBuildFunct(ActorBldr<IData, U>::SubBuild sb) {
+    this->ActorBldr<IData, U>::setBuildFunct(ent);
+  }
 };
 
 template<typename IData, typename Trait>
@@ -241,6 +246,11 @@ class ReactorBldr : ReactorBldr<IData, Trait...> {
   template<typename U>
   std::function<void(IData, U)> buildFunct(std::shared_ptr<Entity> ent) {
     this->ReactorBldr<IData, U>::buildFunct(ent);
+  }
+
+  template<typename U>
+  void setBuildFunct(ReactorBldr<IData, U>::SubBuild sb) {
+    this->ReactorBldr<IData, U>::setBuildFunct(ent);
   }
 };
 
@@ -288,20 +298,70 @@ private:
   SubBuild sb;
 };
 
-// "cfg" :{
-//   "double" : {
-//     "idxLitName" : "cars.velBuilder",
-//     "idxBlahName" : "cars.blahBuilder"
-//   },
-//   "uint" : true,
-//   "Vector3D" : [
-//     {"idxLitName" : "cars.velBuilder"}
-//   ],
-//   "builders": [
-//     "maingame.wallnutInteractionerBuilder",
-//     "maingame.wallnutGraphicsBuilder"
-//   ]
-// }
+
+factoies.inser("MyActorBuilder", shared<ActorBldrFctry<A,B,C>>("AType","BType","CType"));
+
+
+template<typename IData, typename Trait>
+class ActorBldrFctryHelper {
+public:
+  TODO: Esto va a ser un callable.
+  //ActorBldrFctryHelper(std::string traitCfgName) : traitCfgName(traitCfgName) {} //ActorBldrFctryHelper("AType")
+  addTraitBuilder(std::string traitCfgName, auto cfg, auto actorBldr) {
+    tiene que controlar que no exista la entrada en la config Y ESO NO ES MALO.
+    store<builder<Trait>> buildeStore = getInstance();
+    de cfg sacamos name;
+    string builderName = cfg.get(traitCfgName);
+    auto  bldr = buildeStore.get(builderName); Si esto no existe SI ES MALO.
+    actorBldr->setTraitBuildr(actorBldr);
+  }
+
+  void setName(std::string traitCfgName) {
+    this->traitCfgName = traitCfgName;
+  }
+private:
+  std::string traitCfgName;
+  store<builder<Trait>> buildeStore = getInstance();
+}
+
+template<typename IData, typename ...Traits>
+class ActorBldrFctry {
+  ActorBldrFctry(initializer_list a)  {
+    //initializer_list((ActorBldrFctryHelper<Traits>, 0)...);
+  }
+
+  void create(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    std::shared_ptr<ActorBldr<T...>> ab = std::make_shared<ActorBldr<T...>>();
+    mainRsrc.insert("Function."s + name, ab);
+    specificRsrc.insert("ActorBldr."s + name, ab);
+  }
+
+  void setup(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+    if(!cfg) {
+      SysError::setError("ActorBldrFtry config for "s + name + " not found."s);
+      return;
+    }
+    auto ab = specificRsrc.get("ActorBldrFtry."s + name);
+    auto j = *cfg;
+    initializer_list((ActorBldrFctryHelper<Traits>(traitCfgName, cfg, ab), 0)...);
+  }
+
+};
+
+template<typename IData, typename ...Traits>
+class ReactorBldrFctry {
+  TODO
+};
+
+template<typename S, typename ...Shapes>
+class ShapeBldrFcry {
+  TODO
+};
 
 template<typename ...T>
 class ZBEAPI EntityBldrFtry : public Factory {
@@ -405,18 +465,11 @@ private:
 template<typename IData, typename ActorType, typename ReactorType, typename ...Shapes>
 class InteractionatorBldrFcry {
 public:
-    /* TODO borra esto
-    using Inator = zbe::Interactionator<ActorType, ReactorType, Shapes...>;
-    using InatorList = std::shared_ptr<zbe::TicketedForwardList<Iner>>;
-    using ActorTypeBldr = std::function<ActorType(std::shared_ptr<Entity>) >;
-    using ReactorTypeBldr = std::function<ReactorType(std::shared_ptr<Entity>) >;
-    using ShapeBldr = std::function<std::shared_ptr<Shape<Shapes...>>(std::shared_ptr<Entity>) >;
-    */
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     std::shared_ptr<InteractionatorBldr<IData, ActorType, ReactorType, Shapes...>> inatorb = std::make_shared<InteractionatorBldr<IData, ActorType, ReactorType, Shapes...>>();
     mainRsrc.insert("Function."s + name, eb);
-    specificRsrc.insert("InteractionatorBldr."s + name, eb);
+    specificRsrc.insert("InteractionatorBldr."s + name, inatorb);
   }
 
   void setup(std::string name, uint64_t cfgId) {
@@ -458,6 +511,7 @@ public:
 
     JSONFactory::loadAllIndexed(listRsrc, j, "list"s, "InteractionatorBldr"s, [&](uint64_t idx, InatorList list) {
       inatorb->addInerList(idx, list);
+      return true;
     });
   }
 private:
@@ -472,6 +526,63 @@ private:
 };
 
 
+
+template<typename IData, typename ActorType, typename ReactorType, typename ...Shapes>
+class InteractionerBldrFcry {
+public:
+  void create(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    std::shared_ptr<InteractionerBldr<IData, ActorType, ReactorType, Shapes...>> inerb = std::make_shared<InteractionerBldr<IData, ActorType, ReactorType, Shapes...>>();
+    mainRsrc.insert("Function."s + name, inerb);
+    specificRsrc.insert("InteractionerBldr."s + name, inerb);
+  }
+
+  void setup(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+    if(!cfg) {
+      SysError::setError("InteractionerBldrFcry config for "s + name + " not found."s);
+      return;
+    }
+    auto inerb = specificRsrc.get("InteractionerBldr."s + name);
+    auto j = *cfg;
+    auto actorBuilder = JSONFactory::readFromStore<InteractionerBldr::ActorTypeBldr>(actorBldrRsrc, j, "actorbuilder"s, "InteractionerBldr"s);
+    if(!actorBuilder) {
+      SysError::setError("InteractionerBldrFcry config for actorbuilder is invalid"s);
+      return;
+    }
+    auto reactorBuilder = JSONFactory::readFromStore<InteractionerBldr::ReactorTypeBldr>(reactorBldrRsrc, j, "reactorbuilder"s, "InteractionerBldr"s);
+    if(!actorBuilder) {
+      SysError::setError("InteractionerBldrFcry config for reactorbuilder is invalid"s);
+      return;
+    }
+    auto shapeBuilder = JSONFactory::readFromStore<InteractionerBldr::ShapeBldr>(shapeRsrc, j, "shapebuilder"s, "InteractionerBldr"s);
+    if(!actorBuilder) {
+      SysError::setError("InteractionerBldrFcry config for shapebuilder is invalid"s);
+      return;
+    }
+
+    inerb->setActorBldr(actorBuilder);
+    inerb->setReactorBldr(reactorBuilder);
+    inerb->setShapeBldr(shapeBuilder);
+
+    JSONFactory::loadAllIndexed(listRsrc, j, "list"s, "InteractionerBldr"s, [&](uint64_t idx, InatorList list) {
+      inerb->addInerList(idx, list);
+      return true;
+    });
+  }
+private:
+  RsrcStore<nlohmann::json>& configRsrc = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<std::function<void(std::shared_ptr<MAvatar<T...>>)>>& mainRsrc = RsrcStore<std::function<void(std::shared_ptr<MAvatar<T...>>)>>::getInstance();
+  RsrcStore<EntityBldr<T...>>& specificRsrc = RsrcStore<EntityBldr<T...>>::getInstance();
+
+  RsrcStore<InatorList>& listRsrc = RsrcStore<EntityBldr<InatorList>::getInstance();
+  RsrcStore<ActorTypeBldr>& actorBldrRsrc = RsrcStore<ActorTypeBldr>::getInstance();
+  RsrcStore<ReactorTypeBldr>& reactorBldrRsrc = RsrcStore<ReactorTypeBldr>::getInstance();
+  RsrcStore<ShapeBldr>& shapeBldrRsrc = RsrcStore<ShapeBldr>::getInstance();
+};
 
 TODO: InteractionerBldrFtry Done
 TODO: Ftryses a saco de cada builder que hay aquí.
