@@ -223,12 +223,12 @@ struct InteractionEvent : public Event {
 template <typename S, typename ...Shapes>
 class AvtShape : public zbe::Shape<Shapes...> {
 public:
-  AvtShape(std::shared_ptr<SAvatar<S> avt) : avt(avt) {};
+  AvtShape(std::shared_ptr<SAvatar<S>> avt) : avt(avt) {};
   std::variant<std::shared_ptr<Shapes>...> getShape() {
     return avt->get();
   };
 private:
-  std::shared_ptr<SAvatar<S> avt;
+  std::shared_ptr<SAvatar<S>> avt;
 };
 
 template<typename ActorType, typename ReactorType, typename ...Shapes>

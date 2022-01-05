@@ -23,10 +23,15 @@
 #include "ZBE/core/events/shapes.h"
 #include "ZBE/core/events/traits.h"
 
-#include "ZBE/JSON/JSONFtry.h"
+#include "ZBE/JSON/JSONFactory.h"
+
+#include "ZandBokz/include/zandbokz.h"
+#include "ZandBokz/include/ZandBokzFactories.h"
+#include "ZandBokz/include/ZandBokzInteractionSystem.h"
 
 int main(int /*argc*/, char** /*argv*/) {
    using namespace zbe;
+   using namespace zandbokz;
    init();
    printf("Hello ZandBokz\n");
    BaseFactories::load();
@@ -35,6 +40,7 @@ int main(int /*argc*/, char** /*argv*/) {
    GLTFFactories::load();
    ZBEFactories::load();
    JSONFactories::load();
+   ZandBokzFactories::load();
 
    // Esto deberia ir a un ZandBokzFactories.h
    // template <typename Selector, typename Overloaded, typename IData, typename ActorType, typename ReactorType, typename ...Shapes>

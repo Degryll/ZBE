@@ -21,7 +21,7 @@ class EntityBldr {
 public:
 
   EntityBldr() = default;
-
+TODO: parece que hace falta el caso para un solo T. Con SAvatar
   void operator()(std::shared_ptr<MAvatar<T...>> avt) {
     std::shared_ptr<Entity> ent = std::make_shared<Entity>();
 
@@ -249,8 +249,8 @@ class ReactorBldr : ReactorBldr<IData, Trait...> {
   }
 
   template<typename U>
-  void setBuildFunct(ReactorBldr<IData, U>::SubBuild sb) {
-    this->ReactorBldr<IData, U>::setBuildFunct(ent);
+  void setReactionBuilder(ReactorBldr<IData, U>::SubBuild sb) {
+    this->ReactorBldr<IData, U>::setReactionBuilder(ent);
   }
 };
 
@@ -272,7 +272,7 @@ public:
     return sb(ent);
   }
 
-  void setBuildFunct(SubBuild sb) {
+  void setReactionBuilder(SubBuild sb) {
     this->sb = sb;
   }
 private:
@@ -298,37 +298,32 @@ private:
   SubBuild sb;
 };
 
-
-factoies.inser("MyActorBuilder", shared<ActorBldrFctry<A,B,C>>("AType","BType","CType"));
-
-
-template<typename IData, typename Trait>
-class ActorBldrFctryHelper {
-public:
-  TODO: Esto va a ser un callable.
-  //ActorBldrFctryHelper(std::string traitCfgName) : traitCfgName(traitCfgName) {} //ActorBldrFctryHelper("AType")
-  addTraitBuilder(std::string traitCfgName, auto cfg, auto actorBldr) {
-    tiene que controlar que no exista la entrada en la config Y ESO NO ES MALO.
-    store<builder<Trait>> buildeStore = getInstance();
-    de cfg sacamos name;
-    string builderName = cfg.get(traitCfgName);
-    auto  bldr = buildeStore.get(builderName); Si esto no existe SI ES MALO.
-    actorBldr->setTraitBuildr(actorBldr);
-  }
-
-  void setName(std::string traitCfgName) {
-    this->traitCfgName = traitCfgName;
-  }
-private:
-  std::string traitCfgName;
-  store<builder<Trait>> buildeStore = getInstance();
-}
-
 template<typename IData, typename ...Traits>
-class ActorBldrFctry {
-  ActorBldrFctry(initializer_list a)  {
-    //initializer_list((ActorBldrFctryHelper<Traits>, 0)...);
+class ActorBldrFtry : public Factory {
+public:
+  template<typename U>
+  void addTraitBuilder(std::string traitCfgName, auto cfg, auto actorBldr, bool& failed) {
+    auto& builderStore = RsrcStore<ActorBldr<IData, Trait>::SubBuild>::getInstance();
+    if(failed) {return;}
+    if(!cfg.contains(traitCfgName)) {
+      return;
+    }
+    if(cfg[traitCfgName].is_string()) {
+      SysError::setError("ActorBldrFtry config for "s + traitCfgName + " must be an string");
+      failed = true;
+      return;
+    }
+    std::string builderName = cfg[traitCfgName].get<std::string>();
+    if(buildeStore.contains(builderName)) {
+      SysError::setError("ActorBldrFtry config for "s + traitCfgName + " is not a builder name");
+      failed = true;
+      return;
+    }
+    auto bldr = buildeStore.get(builderName);
+    actorBldr->setTraitBuildr(bldr);
   }
+
+  ActorBldrFtry(std::initializer_list names) :traitCfgNames(names)  {}
 
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
@@ -346,25 +341,107 @@ class ActorBldrFctry {
       SysError::setError("ActorBldrFtry config for "s + name + " not found."s);
       return;
     }
-    auto ab = specificRsrc.get("ActorBldrFtry."s + name);
+    auto ab = specificRsrc.get("ActorBldr."s + name);
     auto j = *cfg;
-    initializer_list((ActorBldrFctryHelper<Traits>(traitCfgName, cfg, ab), 0)...);
+    int i = 0;
+    bool failed = false;
+    RsrcStore<ActorBldr<IData, Trait>::SubBuild>
+    initializer_list((addTraitBuilder<Traits>(RsrcStore<U>, traitCfgNames[i++], cfg, ab, failed), 0)...);
   }
 
+private:
+  std::initializer_list traitCfgNames;
 };
 
 template<typename IData, typename ...Traits>
-class ReactorBldrFctry {
-  TODO
+class ReactorBldrFtry : public Factory {
+public:
+  template<typename U>
+  void addReactionBuilder(/*RsrcStore<U> builderStore,*/ std::string traitCfgName, auto cfg, auto reactorBldr, bool& failed) {
+    auto& builderStore = RsrcStore<ReactorBldr<IData, Trait>::SubBuild>::getInstance();
+    if(failed) {return;}
+    if(!cfg.contains(traitCfgName)) {
+      return;
+    }
+    if(cfg[traitCfgName].is_string()) {
+      SysError::setError("ReactorBldrFtry config for "s + traitCfgName + " must be an string");
+      failed = true;
+      return;
+    }
+    std::string builderName = cfg[traitCfgName].get<std::string>();
+    if(buildeStore.contains(builderName)) {
+      SysError::setError("ReactorBldrFtry config for "s + traitCfgName + " is not a builder name");
+      failed = true;
+      return;
+    }
+    auto bldr = buildeStore.get(builderName);
+    reactorBldr->setReactionBuilder(bldr);
+  }
+
+  ReactorBldrFtry(std::initializer_list names) :traitCfgNames(names)  {}
+
+  void create(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    std::shared_ptr<ActorBldr<T...>> ab = std::make_shared<ActorBldr<T...>>();
+    mainRsrc.insert("Function."s + name, ab);
+    specificRsrc.insert("ReactorBldr."s + name, ab);
+  }
+
+  void setup(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+    if(!cfg) {
+      SysError::setError("ReactorBldrFtry config for "s + name + " not found."s);
+      return;
+    }
+    auto ab = specificRsrc.get("ReactorBldr."s + name);
+    auto j = *cfg;
+    int i = 0;
+    bool failed = false;
+    initializer_list((addReactionBuilder<Traits>(traitCfgNames[i++], cfg, ab, failed), 0)...);
+  }
+
+private:
+  std::initializer_list traitCfgNames;
 };
 
 template<typename S, typename ...Shapes>
-class ShapeBldrFcry {
-  TODO
+class ShapeBldrFtry {
+public:
+  void create(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    std::shared_ptr<ShapeBldr<T...>> sb = std::make_shared<ShapeBldr<T...>>();
+    mainRsrc.insert("Function."s + name, sb);
+    specificRsrc.insert("ShapeBldr."s + name, sb);
+  }
+
+  void setup(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+    if(!cfg) {
+      SysError::setError("ShapeBldrFtry config for "s + name + " not found."s);
+      return;
+    }
+    auto sb = specificRsrc.get("ShapeBldr."s + name);
+    auto j = *cfg;
+    if(auto shapeBuilderFunct = JSONFactory::readFromStore<ShapeBldr<S, Shapes...>::SubBuild>(shapeBuilderFunctStore, j, "type."s, key, "ShapeBldrFtry"s)) {
+      eb->addValueBldr(valueBuilder);
+      return true;
+    } else {
+      SysError::setError("ShapeBldrFtry config for type is not a shape builder function name."s);
+      return false;
+    }
+  }
+private:
+  RsrcStore<ShapeBldr<S, Shapes...>::SubBuild> shapeBuilderFunctStore = RsrcStore<ShapeBldr<S, Shapes...>::SubBuild>::getInstance();
 };
 
 template<typename ...T>
-class ZBEAPI EntityBldrFtry : public Factory {
+class EntityBldrFtry : public Factory {
 public:
 
   void create(std::string name, uint64_t cfgId) {
@@ -421,7 +498,7 @@ private:
       auto dcfg = j[type];
       for (auto item : dcfg.items()) {
         auto key = item.key();
-        if(auto valueBuilder = JSONFactory::readFromStore<ValueBldr<double>>(doubleBuilderStore, dcfg, "Builders."s, key, "EntityBldrFtry"s)) {
+        if(auto valueBuilder = JSONFactory::readFromStore<ValueBldr<double>>(doubleBldrStore, dcfg, "Builders."s, key, "EntityBldrFtry"s)) {
           eb->addValueBldr(valueBuilder);
           return true;
         } else {
@@ -463,7 +540,7 @@ private:
 };
 
 template<typename IData, typename ActorType, typename ReactorType, typename ...Shapes>
-class InteractionatorBldrFcry {
+class InteractionatorBldrFtry : public Factory {
 public:
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
@@ -478,29 +555,29 @@ public:
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
 
     if(!cfg) {
-      SysError::setError("InteractionatorBldrFcry config for "s + name + " not found."s);
+      SysError::setError("InteractionatorBldrFtry config for "s + name + " not found."s);
       return;
     }
     auto inatorb = specificRsrc.get("InteractionatorBldr."s + name);
     auto j = *cfg;
     auto actorBuilder = JSONFactory::readFromStore<InteractionatorBldr::ActorTypeBldr>(actorBldrRsrc, j, "actorbuilder"s, "InteractionatorBldr"s);
     if(!actorBuilder) {
-      SysError::setError("InteractionatorBldrFcry config for actorbuilder is invalid"s);
+      SysError::setError("InteractionatorBldrFtry config for actorbuilder is invalid"s);
       return;
     }
     auto reactorBuilder = JSONFactory::readFromStore<InteractionatorBldr::ReactorTypeBldr>(reactorBldrRsrc, j, "reactorbuilder"s, "InteractionatorBldr"s);
     if(!actorBuilder) {
-      SysError::setError("InteractionatorBldrFcry config for reactorbuilder is invalid"s);
+      SysError::setError("InteractionatorBldrFtry config for reactorbuilder is invalid"s);
       return;
     }
     auto shapeBuilder = JSONFactory::readFromStore<InteractionatorBldr::ShapeBldr>(shapeRsrc, j, "shapebuilder"s, "InteractionatorBldr"s);
     if(!actorBuilder) {
-      SysError::setError("InteractionatorBldrFcry config for shapebuilder is invalid"s);
+      SysError::setError("InteractionatorBldrFtry config for shapebuilder is invalid"s);
       return;
     }
     auto list = JSONFactory::readFromStore<InteractionatorBldr::InatorList>(listRsrc, j, "interactioners"s, "InteractionatorBldr"s);
     if(!actorBuilder) {
-      SysError::setError("InteractionatorBldrFcry config for shapebuilder is invalid"s);
+      SysError::setError("InteractionatorBldrFtry config for shapebuilder is invalid"s);
       return;
     }
 
@@ -509,7 +586,7 @@ public:
     inatorb->setShapeBldr(shapeBuilder);
     inatorb->setInternalInerList(list);
 
-    JSONFactory::loadAllIndexed(listRsrc, j, "list"s, "InteractionatorBldr"s, [&](uint64_t idx, InatorList list) {
+    JSONFactory::loadAllIndexed(listRsrc, uintDict, j, "list"s, "InteractionatorBldr"s, [&](uint64_t idx, InatorList list) {
       inatorb->addInerList(idx, list);
       return true;
     });
@@ -523,12 +600,13 @@ private:
   RsrcStore<ActorTypeBldr>& actorBldrRsrc = RsrcStore<ActorTypeBldr>::getInstance();
   RsrcStore<ReactorTypeBldr>& reactorBldrRsrc = RsrcStore<ReactorTypeBldr>::getInstance();
   RsrcStore<ShapeBldr>& shapeBldrRsrc = RsrcStore<ShapeBldr>::getInstance();
+  RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
 };
 
 
 
 template<typename IData, typename ActorType, typename ReactorType, typename ...Shapes>
-class InteractionerBldrFcry {
+class InteractionerBldrFtry : public Factory {
 public:
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
@@ -543,24 +621,24 @@ public:
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
 
     if(!cfg) {
-      SysError::setError("InteractionerBldrFcry config for "s + name + " not found."s);
+      SysError::setError("InteractionerBldrFtry config for "s + name + " not found."s);
       return;
     }
     auto inerb = specificRsrc.get("InteractionerBldr."s + name);
     auto j = *cfg;
     auto actorBuilder = JSONFactory::readFromStore<InteractionerBldr::ActorTypeBldr>(actorBldrRsrc, j, "actorbuilder"s, "InteractionerBldr"s);
     if(!actorBuilder) {
-      SysError::setError("InteractionerBldrFcry config for actorbuilder is invalid"s);
+      SysError::setError("InteractionerBldrFtry config for actorbuilder is invalid"s);
       return;
     }
     auto reactorBuilder = JSONFactory::readFromStore<InteractionerBldr::ReactorTypeBldr>(reactorBldrRsrc, j, "reactorbuilder"s, "InteractionerBldr"s);
     if(!actorBuilder) {
-      SysError::setError("InteractionerBldrFcry config for reactorbuilder is invalid"s);
+      SysError::setError("InteractionerBldrFtry config for reactorbuilder is invalid"s);
       return;
     }
     auto shapeBuilder = JSONFactory::readFromStore<InteractionerBldr::ShapeBldr>(shapeRsrc, j, "shapebuilder"s, "InteractionerBldr"s);
     if(!actorBuilder) {
-      SysError::setError("InteractionerBldrFcry config for shapebuilder is invalid"s);
+      SysError::setError("InteractionerBldrFtry config for shapebuilder is invalid"s);
       return;
     }
 
@@ -568,7 +646,7 @@ public:
     inerb->setReactorBldr(reactorBuilder);
     inerb->setShapeBldr(shapeBuilder);
 
-    JSONFactory::loadAllIndexed(listRsrc, j, "list"s, "InteractionerBldr"s, [&](uint64_t idx, InatorList list) {
+    JSONFactory::loadAllIndexed(listRsrc, uintDict, j, "list"s, "InteractionerBldr"s, [&](uint64_t idx, InatorList list) {
       inerb->addInerList(idx, list);
       return true;
     });
@@ -582,11 +660,8 @@ private:
   RsrcStore<ActorTypeBldr>& actorBldrRsrc = RsrcStore<ActorTypeBldr>::getInstance();
   RsrcStore<ReactorTypeBldr>& reactorBldrRsrc = RsrcStore<ReactorTypeBldr>::getInstance();
   RsrcStore<ShapeBldr>& shapeBldrRsrc = RsrcStore<ShapeBldr>::getInstance();
+  RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
 };
-
-TODO: InteractionerBldrFtry Done
-TODO: Ftryses a saco de cada builder que hay aquí.
-TODO: Construir Subuilders en ZandBokz.
 
 }  // namespace zbe
 
