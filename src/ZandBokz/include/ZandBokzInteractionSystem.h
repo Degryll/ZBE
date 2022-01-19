@@ -15,6 +15,11 @@
 
 namespace zandbokz {
 
+// template<typename ...T>
+// struct TypeContainer {using Type = T...};
+// using ZBTraits = TypeContainer<CollisionData3D, Solid>::Type;
+
+// zandbokz interaction types
 using ZandBokzPhysicsOverloaded = zbe::overloaded<zbe::MovingSphereFunctor>;
 
 class ZandBokzPhysicsSelector : public zbe::InteractionSelector<zbe::CollisionData3D, ZandBokzPhysicsOverloaded, zbe::MovingSphere> {
@@ -28,10 +33,32 @@ protected:
 
 struct Solid {};
 
-using ZandBokzActor = zbe::Actor<zbe::CollisionData3D, Solid>;
-using ZandBokzReactor = zbe::Reactor<zbe::CollisionData3D, Solid>;
+using Actor = zbe::Actor<zbe::CollisionData3D, Solid>;
+using Reactor = zbe::Reactor<zbe::CollisionData3D, Solid>;
+using Shapes = zbe::Shapes<zbe::MovingSphere>;
 
-using ZandBokzIEGFtry = zbe::InteractionEventGeneratorFtry<ZandBokzPhysicsSelector, ZandBokzPhysicsOverloaded, zbe::CollisionData3D, ZandBokzActor, ZandBokzReactor, zbe::MovingSphere>;
+using Iner = zbe::Interactioner<ActorType, ReactorType, Shapes...>;
+using Inator = zbe::Interactionator<ActorType, ReactorType, Shapes...>;
+
+using IEG = InteractionEventGenerator<ZandBokzPhysicsSelector, ZandBokzPhysicsOverloaded, zbe::CollisionData3D, ZandBokzActor, ZandBokzReactor, zbe::MovingSphere>;
+
+// zandbokz interaction types builders
+using ActorBldr = zbe::ActorBldr<CollisionData3D, Solid>;
+using ReactorBldr = zbe::ReactorBldr<CollisionData3D, Solid>;
+using ShapeBldr = zbe::ShapeBldr<zbe::MovingSphere>;
+
+using InerBldr = InteractionerBldr<ActorType, ReactorType, Shapes...>;
+using InatorBldr = InteractionatorBldr<ActorType, ReactorType, Shapes...>;
+
+// zandbokz interaction types builders factories
+using ActorBldrFtry = zbe::ActorBldrFtry<CollisionData3D, Solid>;
+using ReactorBldrFtry = zbe::ActorBldrFtry<CollisionData3D, Solid>;
+using ShapeBldrFtry = zbe::ShapeBldrFtry<zbe::MovingSphere>;
+
+using InerBldrFtry = InteractionerBldrFtry<ActorType, ReactorType, Shapes...>;
+using InatorBldrFtry = InteractionatorBldrFtry<ActorType, ReactorType, Shapes...>;
+
+using ZandBokzIEGFtry = zbe::InteractionEventGeneratorFtry<ZandBokzPhysicsSelector, ZandBokzPhysicsOverloaded, zbe::CollisionData3D, ZandBokzActor, ZandBokzReactor, zbe::MovingSphere
 
 }  // namespace zandbokz
 

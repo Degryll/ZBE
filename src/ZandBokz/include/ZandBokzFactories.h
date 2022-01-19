@@ -42,12 +42,15 @@ public:
     auto& factories = zbe::RsrcStore<zbe::Factory>::getInstance();
 
     factories.insert("ZandBokzIEGFtry", std::make_shared<ZandBokzIEGFtry>());
-    // factories.insert("InteractionerBldrFtry", ...);
-    // factories.insert("InteractionatorBldrFtry", ...);
-    // factories.insert("EntityBldrFtry", ...);
-    // factories.insert("ShapeBldrFtry", ...);
-    // factories.insert("ReactorBldrFtry", ...);
-    // factories.insert("ActorBldrFtry", ...);
+    //factories.insert("EntityBldrFtry", ...);
+
+    factories.insert("ActorBldrFtry", std::make_shared<ActorBldrFtry>());
+    factories.insert("ReactorBldrFtry", std::make_shared<ReactorBldrFtry>());
+    factories.insert("ShapeBldrFtry", std::make_shared<ShapeBldrFtry>());
+
+    factories.insert("InerBldrFtry", std::make_shared<InerBldrFtry>());
+    factories.insert("InatorBldrFtry", std::make_shared<InatorBldrFtry>());
+
   }
 
 };
