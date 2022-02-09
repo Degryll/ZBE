@@ -39,13 +39,14 @@ public:
   /** \brief It loads all factories.
   */
   static void load() {
+    using namespace std::string_literals;
     auto& factories = zbe::RsrcStore<zbe::Factory>::getInstance();
 
-    factories.insert("ZandBokzIEGFtry", std::make_shared<ZandBokzIEGFtry>());
+    factories.insert("IEGFtry", std::make_shared<IEGFtry>());
     //factories.insert("EntityBldrFtry", ...);
 
-    factories.insert("ActorBldrFtry", std::make_shared<ActorBldrFtry>());
-    factories.insert("ReactorBldrFtry", std::make_shared<ReactorBldrFtry>());
+    factories.insert("ActorBldrFtry", std::make_shared<ActorBldrFtry>(std::initializer_list<std::string>{"solid"s}));
+    factories.insert("ReactorBldrFtry", std::make_shared<ReactorBldrFtry>(std::initializer_list<std::string>{"solid"s}));
     factories.insert("ShapeBldrFtry", std::make_shared<ShapeBldrFtry>());
 
     factories.insert("InerBldrFtry", std::make_shared<InerBldrFtry>());

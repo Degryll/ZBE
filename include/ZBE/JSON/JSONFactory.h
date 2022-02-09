@@ -23,7 +23,7 @@ namespace zbe {
 namespace JSONFactory {
 
 template<typename T>
-std::optional<std::shared_ptr<T>> readFromStore(RsrcStore<T> store, json cfg, std::string parameter, std::string factoryName) {
+std::optional<std::shared_ptr<T>> readFromStore(RsrcStore<T>& store, json cfg, std::string parameter, std::string factoryName) {
   using namespace std::string_literals;
   if (!cfg[parameter].is_string()) {
     SysError::setError(factoryName + " config for "s + parameter + ": "s + cfg[parameter].get<std::string>() + ": must be a "s + typeid(T).name() + " literal."s);
@@ -40,7 +40,7 @@ std::optional<std::shared_ptr<T>> readFromStore(RsrcStore<T> store, json cfg, st
 }
 
 template<typename T>
-std::optional<std::shared_ptr<T>> readFromDcit(RsrcDictionary<T> dict, json cfg, std::string prefix, std::string parameter, std::string factoryName) {
+std::optional<std::shared_ptr<T>> readFromDcit(RsrcDictionary<T>& dict, json cfg, std::string prefix, std::string parameter, std::string factoryName) {
   using namespace std::string_literals;
   if (!cfg[parameter].is_string()) {
     SysError::setError(factoryName + " config for "s + parameter + ": "s + cfg[parameter].get<std::string>() + ": must be a "s + typeid(T).name() + " literal."s);
@@ -73,7 +73,7 @@ bool loadAllIndexed(RsrcStore<T>& store, RsrcDictionary<uint64_t>& uintDict, jso
         return false;
       }
       uint64_t idx = uintDict.get(key);
-      if(!callback(idx, element)) {
+      if(!callback(idx, *element)) {
         return false;
       }
     }

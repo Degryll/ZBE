@@ -20,6 +20,7 @@
 #include "ZBE/core/events/EventStore.h"
 #include "ZBE/core/system/system.h"
 #include "ZBE/core/tools/containers/TicketedForwardList.h"
+#include "ZBE/core/tools/tools.h"
 
 namespace zbe {
 
@@ -41,14 +42,14 @@ public:
   }
 
   template <typename U>
-  void setReaction(std::function<void(IData, U)> reaction) {
+  void setReaction(std::shared_ptr<Funct<void,IData, U>> reaction) {
     this->Reactor<IData, U>::setReaction(reaction);
   }
 
-  template <typename U>
-  void setPayload(Reactor<IData, U> payload) {
-    this->Reactor<IData, U>::setPayload(payload);
-  }
+  // template <typename U>
+  // void setPayload(Reactor<IData, U> payload) {
+  //   this->Reactor<IData, U>::setPayload(payload);
+  // }
 
   void callActor(Actor<IData, Traits...>*  actor, IData data) {
     std::initializer_list<int>{(actor->act((Reactor<IData, Traits>*)this, data), 0)... };
@@ -62,7 +63,7 @@ public:
     Reactor(const Reactor& rhs) : reaction(rhs.reaction) {}
     static void noReaction(IData, Trait) {}
 
-    void setReaction(std::function<void(IData, Trait)> reaction) {
+    void setReaction(std::shared_ptr<Funct<void,IData, Trait>> reaction) {
       this->reaction = reaction;
     }
 
@@ -70,16 +71,16 @@ public:
       reaction(data, trait);
     }
 
-    void setPayload(Reactor<IData, Trait> payload) {
-      this->reaction = payload.reaction;
-    }
+    // void setPayload(Reactor<IData, Trait> payload) {
+    //   this->reaction = payload.reaction;
+    // }
 
     void callActor(Actor<IData, Trait>*  actor, IData data) {
       actor->act(this, data);
     }
 
 private:
-  std::function<void(IData, Trait)> reaction;
+  std::shared_ptr<Funct<void,IData, Trait>> reaction;
 };
 
 template<typename IData, typename ...Traits>
@@ -88,12 +89,12 @@ public:
   Actor() : Actor<IData, Traits>()... {};
 
   // Construtor.... wrapper?
-  template <typename ...U>
-  Actor(Actor<IData, U...> payload) : Actor<IData, Traits>()...  {
-    std::initializer_list<int>{(this->Actor<IData, U>::setPayload(payload) , 0)... };
-  }
+  // template <typename ...U>
+  // Actor(Actor<IData, U...> payload) : Actor<IData, Traits>()...  {
+  //   std::initializer_list<int>{(this->Actor<IData, U>::setPayload(payload) , 0)... };
+  // }
 
-  Actor(std::function<void(Reactor<IData, Traits>*, IData)>... sa) : Actor<IData, Traits>(sa)... {}
+  Actor(std::shared_ptr<Funct<void, Reactor<IData, Traits>*, IData>>... sa) : Actor<IData, Traits>(sa)... {}
 
   template <typename U>
   void act(Reactor<IData, U>* reactor, IData data) {
@@ -101,26 +102,26 @@ public:
   }
 
   template <typename U>
-  void setTrait(std::function<void(Reactor<IData, U>*, IData)> sa) {
+  void setTrait(std::shared_ptr<Funct<void, Reactor<IData, U>*, IData>> sa) {
     this->Actor<IData, U>::setTrait(sa);
   }
 
-  template <typename U>
-  void setPayload(Actor<IData, U> payload) {
-    this->Actor<IData, U>::setPayload(payload);
-  }
+  // template <typename U>
+  // void setPayload(Actor<IData, U> payload) {
+  //   this->Actor<IData, U>::setPayload(payload);
+  // }
 };
 
 template<typename IData, typename Trait>
 class Actor<IData, Trait> {
 public:
-  using subAct = std::function<void(Reactor<IData, Trait>*, IData)>;
+  using subAct = std::shared_ptr<Funct<void, Reactor<IData, Trait>*, IData>>;
   static void noAct(Reactor<IData, Trait>*, IData) {}
 
-  Actor() : sa(noAct) {}
-  Actor(std::function<void(Reactor<IData, Trait>*, IData)> sa) : sa(sa) {}
+  Actor() : sa(std::make_shared<WrapperFunct<void, Reactor<IData, Trait>*, IData>>(noAct)) {}
+  Actor(std::shared_ptr<Funct<void,Reactor<IData, Trait>*, IData>> sa) : sa(sa) {}
 
-  void setTrait(std::function<void(Reactor<IData, Trait>*, IData)> sa) {
+  void setTrait(std::shared_ptr<Funct<void, Reactor<IData, Trait>*, IData>> sa) {
     this->sa = sa;
   }
 
@@ -129,12 +130,12 @@ public:
   }
 
   void act(Reactor<IData, Trait>* reactor, IData data) {
-    sa(reactor, data);
+    (*sa)(reactor, data);
   }
 
-  void setPayload(Actor<IData, Trait> payload) {
-    this->sa = payload.sa;
-  }
+  // void setPayload(Actor<IData, Trait> payload) {
+  //   this->sa = payload.sa;
+  // }
 
 protected:
   //Actor(subAct sa) : sa(sa){  }
@@ -223,9 +224,11 @@ struct InteractionEvent : public Event {
 template <typename S, typename ...Shapes>
 class AvtShape : public zbe::Shape<Shapes...> {
 public:
-  AvtShape(std::shared_ptr<SAvatar<S>> avt) : avt(avt) {};
+
+  AvtShape(std::shared_ptr<SAvatar<S>> avt) : avt(avt) {}
+
   std::variant<std::shared_ptr<Shapes>...> getShape() {
-    return avt->get();
+    return std::make_shared<S>(avt->get()->get());
   };
 private:
   std::shared_ptr<SAvatar<S>> avt;

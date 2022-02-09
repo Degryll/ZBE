@@ -553,6 +553,7 @@ bool intersectionMovingNSphereOutsideMovingNSphere(NSphere<dim> sphere1, Vector<
   if(result) {
     point = point + (velocity2 * time);
   }
+  return result;
 }
 
 /** \brief Tells if a moving 3d sphere and a another sphere intersects (sphere moving
@@ -574,6 +575,7 @@ bool intersectionMovingNSphereOutsideNSphere(NSphere<dim> sphere1, Vector<dim> v
     point += sphere1.r * (sphere2.c - point).normalize();
     normal = point - sphere2.c;
   }
+  return result;
 }
 
 }  // namespace zbe
