@@ -40,6 +40,8 @@ using Shapes = zbe::Shape<zbe::MovingSphere>;
 using Iner = zbe::Interactioner<Actor, Reactor, zbe::MovingSphere>;
 using Inator = zbe::Interactionator<Actor, Reactor, zbe::MovingSphere>;
 
+using InatorList = zbe::TicketedForwardList<Inator>;
+
 using IEG = zbe::InteractionEventGenerator<PhysicsSelector, PhysicsOverloaded, zbe::CollisionData3D, Actor, Reactor, zbe::MovingSphere>;
 
 // zandbokz interaction types builders

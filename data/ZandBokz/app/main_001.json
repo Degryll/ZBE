@@ -45,6 +45,7 @@
     "testrflags": 0,
     "timeEventId" : 1,
     "inputEventId" : 84,
+    "interactionEventId" : 42,
     "mainInitialState" : 0,
     "mainExitState" : 1,
     "loadScreen.toMenu": 1,
@@ -155,6 +156,12 @@
           "factory": "TFAECTwoV3DAvtFtry",
           "description" : "do some serious sam",
           "name": "loadScreen.BulletCreatorList",
+          "config" : {}
+        },
+        {
+          "factory": "InatorListFtry",
+          "description" : "a platipus? perry the platipus!!!",
+          "name": "loadScreen.inatorListFtry",
           "config" : {}
         },
         {
@@ -388,8 +395,9 @@
           "name": "loadScreen.eventGenerator",
           "config" : {
             "daemons": [
-              "loadScreen.TimeEventGenerator",
-              "loadScreen.inputEventGenerator"
+              "loadScreen.timeEventGenerator",
+              "loadScreen.inputEventGenerator",
+              "loadScreen.interactionEventGenerator"
             ]
           }
         },
@@ -446,8 +454,16 @@
             "window" : "zandbokz.mainwindow"
           }
         },
+        {"factory": "IEGFtry",
+          "name": "loadScreen.interactionEventGenerator",
+          "config" : {
+            "eventId" : "interactionEventId",
+            "contextTime" : "DEFAULT",
+            "interactionators" : "loadScreen.inatorListFtry"
+          }
+        },
         {"factory": "TimeEventGnFtry",
-          "name": "loadScreen.TimeEventGenerator",
+          "name": "loadScreen.timeEventGenerator",
           "config" : {
             "eventId" : "timeEventId",
             "contextTime" : "DEFAULT"
@@ -464,7 +480,7 @@
         {"factory": "DaemonTimeHandlerFtry",
           "name": "loadScreen.exitTimeHandler",
           "config" : {
-            "generator" : "loadScreen.TimeEventGenerator",
+            "generator" : "loadScreen.timeEventGenerator",
             "time" : "loadScreen.loadTime",
             "dmn" : "loadScreen.exitDaemon"
           }
@@ -575,7 +591,7 @@
             "directionIdx" : "orientationIdx",
             "graphicList" : {"loadScreen.drawList":"drawticket"},
             "behaviorList" : {"loadScreen.ULM3DList":"ULM3DTicket"},
-            "teg" : "loadScreen.TimeEventGenerator",
+            "teg" : "loadScreen.timeEventGenerator",
             "time" : "lifespan",
             "ticketId" : "timeHandlerTicket",
             "contextTime" : "DEFAULT"

@@ -15,6 +15,7 @@
 #include <memory>
 
 #include "ZBE/factories/Factory.h"
+#include "ZBE/factories/genericFactoryConstants.h"
 #include "ZBE/core/tools/containers/RsrcStore.h"
 #include "ZBE/core/events/interactionSystem.h"
 #include "ZBE/entities/builders/builders.h"
@@ -41,6 +42,10 @@ public:
   static void load() {
     using namespace std::string_literals;
     auto& factories = zbe::RsrcStore<zbe::Factory>::getInstance();
+
+    factories.insert("InatorListFtry" , std::make_shared<zbe::SimpleGenericFtry<InatorList> >(zbe::factories::listName));
+
+    //TODO: no encuentra la lista ¿Instancias multiples de sigletones o problemas de tipos?
 
     factories.insert("IEGFtry", std::make_shared<IEGFtry>());
     //factories.insert("EntityBldrFtry", ...);
