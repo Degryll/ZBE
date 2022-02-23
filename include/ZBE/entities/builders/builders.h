@@ -20,14 +20,41 @@
 #include "ZBE/core/events/interactionSystem.h"
 #include "ZBE/core/system/system.h"
 #include "ZBE/core/tools/tools.h"
+#include "ZBE/JSON/JSONFactory.h"
 
 namespace zbe {
 
+
+class EntityBldr : public Funct<void> {
+public:
+  void operator()() {
+    std::shared_ptr<Entity> ent = std::make_shared<Entity>();
+    for(auto& builder : builders) {
+      (*builder)(ent);
+    }
+    ent->setContextTime(contextTime);
+  }
+
+  void addBldr(std::shared_ptr<Funct<void, std::shared_ptr<Entity>>> builder) {
+    builders.push_back(builder);
+  }
+
+  void setContextTime(std::shared_ptr<ContextTime> contextTime) {
+    this->contextTime = contextTime;
+  }
+
+private:
+  std::deque<std::shared_ptr<Funct<void, std::shared_ptr<Entity>>>> builders;
+  std::shared_ptr<ContextTime> contextTime;
+};
+
+
+
 template<typename T, typename ...Ts>
-class EntityBldr : public Funct<void, std::shared_ptr<MAvatar<T, Ts...>>> {
+class BehaviorEntityBldr : public Funct<void, std::shared_ptr<MAvatar<T, Ts...>>> {
 public:
 
-  EntityBldr() = default;
+  BehaviorEntityBldr() = default;
 
   void operator()(std::shared_ptr<MAvatar<T, Ts...>> avt) {
     std::shared_ptr<Entity> ent = std::make_shared<Entity>();
@@ -46,7 +73,6 @@ public:
       (*builder)(ent);
     }
   }
-
   void addValueBldr(std::pair<uint64_t, std::shared_ptr<Funct<std::shared_ptr<Value<double>>, std::shared_ptr<MAvatar<T, Ts...>>>>> cfg) {
     dCfgList.push_front(cfg);
   }
@@ -111,10 +137,10 @@ private:
 };
 
 template<typename T>
-class EntityBldr<T> : public Funct<void, std::shared_ptr<SAvatar<T>>> {
+class BehaviorEntityBldr<T> : public Funct<void, std::shared_ptr<SAvatar<T>>> {
 public:
 
-  EntityBldr() = default;
+  BehaviorEntityBldr() = default;
 
   void operator()(std::shared_ptr<SAvatar<T>> avt) {
     std::shared_ptr<Entity> ent = std::make_shared<Entity>();
@@ -196,6 +222,250 @@ private:
   std::deque<std::shared_ptr<Funct<void, std::shared_ptr<Entity>>>> builders;
 
 };
+
+class EntitySetter : public Funct<void, std::shared_ptr<Entity>> {
+public:
+  void operator()(std::shared_ptr<Entity> ent) {
+    addValues<double>(ent, newDoubleValues, sharedDoubleValues);
+    addValues<float>(ent, newFloatValues, sharedFloatValues);
+    addValues<uint64_t>(ent, newUintValues, sharedUintValues);
+    addValues<int64_t>(ent, newIntValues, sharedIntValues);
+    addValues<bool>(ent, newBoolValues, sharedBoolValues);
+    addValues<Vector3D>(ent, newVector3DValues, sharedVector3DValues);
+    addValues<Vector2D>(ent, newVector2DValues, sharedVector2DValues);
+    addValues<std::string>(ent, newStringValues, sharedStringValues);
+    addValues<std::vector<std::string>>(ent, newVStringValues, sharedVStringValues);
+  }
+
+
+  void setNewDoubleValue(uint64_t index, double val ) {
+    newDoubleValues.push_front(std::pair(index, val));
+  }
+
+  void setSharedDoubleValue(uint64_t index, std::shared_ptr<Value<double>> val ) {
+    sharedDoubleValues.push_front(std::pair(index, val));
+  }
+
+  template<typename T>
+  typename std::enable_if<std::is_same<double, T>::value, void>::type
+  setNewValue(uint64_t index, double val) {setNewDoubleValue(index, val);}
+
+  template<typename T>
+  typename std::enable_if<std::is_same<double, T>::value, void>::type
+  setSharedValue(uint64_t index, std::shared_ptr<Value<double>> val) {setSharedDoubleValue(index, val);}
+
+  void setNewFloatValue(uint64_t index, float val ) {
+    newFloatValues.push_front(std::pair(index, val));
+  }
+
+  void setSharedFloatValue(uint64_t index, std::shared_ptr<Value<float>> val ) {
+    sharedFloatValues.push_front(std::pair(index, val));
+  }
+
+  template<typename T>
+  typename std::enable_if<std::is_same<float, T>::value, void>::type
+  setNewValue(uint64_t index, float val) {setNewFloatValue(index, val);}
+
+  template<typename T>
+  typename std::enable_if<std::is_same<float, T>::value, void>::type
+  setSharedValue(uint64_t index, std::shared_ptr<Value<float>> val) {setSharedFloatValue(index, val);}
+
+  void setNewUintValue(uint64_t index, uint64_t val ) {
+    newUintValues.push_front(std::pair(index, val));
+  }
+
+  void setSharedUintValue(uint64_t index, std::shared_ptr<Value<uint64_t>> val ) {
+    sharedUintValues.push_front(std::pair(index, val));
+  }
+
+  template<typename T>
+  typename std::enable_if<std::is_same<uint64_t, T>::value, void>::type
+  setNewValue(uint64_t index, uint64_t val) {setNewUintValue(index, val);}
+
+  template<typename T>
+  typename std::enable_if<std::is_same<uint64_t, T>::value, void>::type
+  setSharedValue(uint64_t index, std::shared_ptr<Value<uint64_t>> val) {setSharedUintValue(index, val);}
+
+  void setNewIntValue(uint64_t index, int64_t val ) {
+    newIntValues.push_front(std::pair(index, val));
+  }
+
+  void setSharedIntValue(uint64_t index, std::shared_ptr<Value<int64_t>> val ) {
+    sharedIntValues.push_front(std::pair(index, val));
+  }
+
+  template<typename T>
+  typename std::enable_if<std::is_same<int64_t, T>::value, void>::type
+  setNewValue(uint64_t index, double val) {setNewIntValue(index, val);}
+
+  template<typename T>
+  typename std::enable_if<std::is_same<int64_t, T>::value, void>::type
+  setSharedValue(uint64_t index, std::shared_ptr<Value<int64_t>> val) {setSharedIntValue(index, val);}
+
+  void setNewBoolValue(uint64_t index, bool val ) {
+    newBoolValues.push_front(std::pair(index, val));
+  }
+
+  void setSharedBoolValue(uint64_t index, std::shared_ptr<Value<bool>> val ) {
+    sharedBoolValues.push_front(std::pair(index, val));
+  }
+
+  template<typename T>
+  typename std::enable_if<std::is_same<bool, T>::value, void>::type
+  setNewValue(uint64_t index, bool val) {setNewBoolValue(index, val);}
+
+  template<typename T>
+  typename std::enable_if<std::is_same<bool, T>::value, void>::type
+  setSharedValue(uint64_t index, std::shared_ptr<Value<bool>> val) {setSharedBoolValue(index, val);}
+
+  void setNewVector3DValue(uint64_t index, Vector3D val ) {
+    newVector3DValues.push_front(std::pair(index, val));
+  }
+
+  void setSharedVector3DValue(uint64_t index, std::shared_ptr<Value<Vector3D>> val ) {
+    sharedVector3DValues.push_front(std::pair(index, val));
+  }
+
+  template<typename T>
+  typename std::enable_if<std::is_same<Vector3D, T>::value, void>::type
+  setNewValue(uint64_t index, Vector3D val) {setNewVector3DValue(index, val);}
+
+  template<typename T>
+  typename std::enable_if<std::is_same<Vector3D, T>::value, void>::type
+  setSharedValue(uint64_t index, std::shared_ptr<Value<Vector3D>> val) {setSharedVector3DValue(index, val);}
+
+  void setNewVector2DValue(uint64_t index, Vector2D val ) {
+    newVector2DValues.push_front(std::pair(index, val));
+  }
+
+  void setSharedVector2DValue(uint64_t index, std::shared_ptr<Value<Vector2D>> val ) {
+    sharedVector2DValues.push_front(std::pair(index, val));
+  }
+
+  template<typename T>
+  typename std::enable_if<std::is_same<Vector2D, T>::value, void>::type
+  setNewValue(uint64_t index, Vector2D val) {setNewVector2DValue(index, val);}
+
+  template<typename T>
+  typename std::enable_if<std::is_same<Vector2D, T>::value, void>::type
+  setSharedValue(uint64_t index, std::shared_ptr<Value<Vector2D>> val) {setSharedVector2DValue(index, val);}
+
+  void setNewStringValue(uint64_t index, std::string val ) {
+    newStringValues.push_front(std::pair(index, val));
+  }
+
+  void setSharedStringValue(uint64_t index, std::shared_ptr<Value<std::string>> val ) {
+    sharedStringValues.push_front(std::pair(index, val));
+  }
+
+  template<typename T>
+  typename std::enable_if<std::is_same<std::string, T>::value, void>::type
+  setNewValue(uint64_t index, std::string val) {setNewStringValue(index, val);}
+
+  template<typename T>
+  typename std::enable_if<std::is_same<std::string, T>::value, void>::type
+  setSharedValue(uint64_t index, std::shared_ptr<Value<std::string>> val) {setSharedStringValue(index, val);}
+
+  void setNewVStringValue(uint64_t index, std::vector<std::string> val ) {
+    newVStringValues.push_front(std::pair(index, val));
+  }
+
+  void setSharedVStringValue(uint64_t index, std::shared_ptr<Value<std::vector<std::string>>> val ) {
+    sharedVStringValues.push_front(std::pair(index, val));
+  }
+
+  template<typename T>
+  typename std::enable_if<std::is_same<std::vector<std::string>, T>::value, void>::type
+  setNewValue(uint64_t index, std::vector<std::string> val) {setNewVStringValue(index, val);}
+
+  template<typename T>
+  typename std::enable_if<std::is_same<std::vector<std::string>, T>::value, void>::type
+  setSharedValue(uint64_t index, std::shared_ptr<Value<std::vector<std::string>>> val) {setSharedVStringValue(index, val);}
+
+private:
+
+  template<typename U>
+  void addValues(std::shared_ptr<Entity> ent, std::forward_list<std::pair<uint64_t, U>>& newValues, std::forward_list<std::pair<uint64_t, std::shared_ptr<Value<U>>>>& sharedValues) {
+    for(auto& nv : newValues) {
+      ent->set<U>(nv.first, std::make_shared<SimpleValue<U>>(nv.second));
+    }
+    for(auto& sv : sharedValues) {
+      ent->set<U>(sv.first, sv.second);
+    }
+  }
+
+  std::forward_list<std::pair<uint64_t, double>> newDoubleValues;
+  std::forward_list<std::pair<uint64_t, std::shared_ptr<Value<double>>>> sharedDoubleValues;
+  std::forward_list<std::pair<uint64_t, float>> newFloatValues;
+  std::forward_list<std::pair<uint64_t, std::shared_ptr<Value<float>>>> sharedFloatValues;
+  std::forward_list<std::pair<uint64_t, uint64_t>> newUintValues;
+  std::forward_list<std::pair<uint64_t, std::shared_ptr<Value<uint64_t>>>> sharedUintValues;
+  std::forward_list<std::pair<uint64_t, int64_t>> newIntValues;
+  std::forward_list<std::pair<uint64_t, std::shared_ptr<Value<int64_t>>>> sharedIntValues;
+  std::forward_list<std::pair<uint64_t, bool>> newBoolValues;
+  std::forward_list<std::pair<uint64_t, std::shared_ptr<Value<bool>>>> sharedBoolValues;
+  std::forward_list<std::pair<uint64_t, Vector3D>> newVector3DValues;
+  std::forward_list<std::pair<uint64_t, std::shared_ptr<Value<Vector3D>>>> sharedVector3DValues;
+  std::forward_list<std::pair<uint64_t, Vector2D>> newVector2DValues;
+  std::forward_list<std::pair<uint64_t, std::shared_ptr<Value<Vector2D>>>> sharedVector2DValues;
+  std::forward_list<std::pair<uint64_t, std::string>> newStringValues;
+  std::forward_list<std::pair<uint64_t, std::shared_ptr<Value<std::string>>>> sharedStringValues;
+  std::forward_list<std::pair<uint64_t, std::vector<std::string>>> newVStringValues;
+  std::forward_list<std::pair<uint64_t, std::shared_ptr<Value<std::vector<std::string>>>>> sharedVStringValues;
+};
+
+template<typename T, typename...Ts>
+class AvatarBldr : Funct<void, std::shared_ptr<Entity>> {
+public:
+  void operator()(std::shared_ptr<Entity> ent) {
+    std::shared_ptr<MBaseAvatar<T, Ts...> > avt = std::make_shared<MBaseAvatar<T, Ts...> >();
+    avt->setupEntity(ent, idxArr);
+    for(auto indexNList : indexNLists) {
+      auto ticket = indexNList.second->push_front(avt);
+      ent->addTicket(indexNList.first, ticket);
+    }
+  }
+
+  void setIdxArr(std::array<uint64_t, expectedIndexes> idxArr) {
+    this->idxArr = idxArr;
+  }
+
+  void addIndexNlist(uint64_t index, std::shared_ptr<TicketedForwardList<MAvatar<T, Ts...>>> list) {
+    indexNLists.push_back({index, list});
+  }
+
+private:
+  static const int expectedIndexes = sizeof...(Ts) + 1;
+  std::array<uint64_t, expectedIndexes> idxArr;
+  std::std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<MAvatar<T, Ts...>>>>> indexNLists;
+}
+
+template<typename T>
+class AvatarBldr<T> : Funct<void, std::shared_ptr<Entity>> {
+public:
+  void operator()(std::shared_ptr<Entity> ent) {
+    std::shared_ptr<SBaseAvatar<T> > avt = std::make_shared<SBaseAvatar<T> >();
+    avt->setupEntity(ent, idx);
+    for(auto indexNList : indexNLists) {
+      auto ticket = indexNList.second->push_front(avt);
+      ent->addTicket(indexNList.first, ticket);
+    }
+  }
+
+  void setIdx(uint64_t idx) {
+    this->idx = idx;
+  }
+
+  void addIndexNlist(uint64_t index, std::shared_ptr<TicketedForwardList<MAvatar<T, Ts...>>> list) {
+    indexNLists.push_back({index, list});
+  }
+
+private:
+  uint64_t idx;
+  std::std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<SAvatar<T>>>>> indexNLists;
+}
+
+TODO: Factory
 
 template<typename IData, typename ActorType, typename ReactorType, typename ...Shapes>
 class InteractionerBldr : public Funct<void, std::shared_ptr<Entity>> {
@@ -455,7 +725,7 @@ public:
   void setup(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     using namespace nlohmann;
-    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+    std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);
 
     if(!cfg) {
       SysError::setError("ActorBldrFtry config for "s + name + " not found."s);
@@ -515,7 +785,7 @@ public:
   void setup(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     using namespace nlohmann;
-    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+    std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);
 
     if(!cfg) {
       SysError::setError("ReactorBldrFtry config for "s + name + " not found."s);
@@ -543,14 +813,14 @@ public:
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     std::shared_ptr<ShapeBldr<S, Shapes...>> sb = std::make_shared<ShapeBldr<S, Shapes...>>();
-    mainRsrc.insert("Function."s + name, sb);  // TODO revisar si funciona
+    mainRsrc.insert("Function."s + name, sb);
     specificRsrc.insert("ShapeBldr."s + name, sb);
   }
 
   void setup(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     using namespace nlohmann;
-    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+    std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);
 
     if(!cfg) {
       SysError::setError("ShapeBldrFtry config for "s + name + " not found."s);
@@ -575,13 +845,12 @@ private:
   RsrcStore<ShapeBldr<S, Shapes...>>& specificRsrc = RsrcStore<ShapeBldr<S, Shapes...>>::getInstance();
 };
 
-template<typename T, typename ...Ts>
 class EntityBldrFtry : public Factory {
 public:
 
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
-    std::shared_ptr<EntityBldr<T, Ts...>> eb = std::make_shared<EntityBldr<T, Ts...>>();
+    std::shared_ptr<EntityBldr> eb = std::make_shared<EntityBldr>();
     mainRsrc.insert("Function."s + name, eb);
     specificRsrc.insert("EntityBldr."s + name, eb);
   }
@@ -589,13 +858,239 @@ public:
   void setup(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     using namespace nlohmann;
-    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+    std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);
 
     if(!cfg) {
       SysError::setError("EntityBldrFtry config for "s + name + " not found."s);
       return;
     }
-    auto eb = specificRsrc.get("EntityBldr."s + name);
+    auto eb = specificRsrc.get("EntityBldrFtry."s + name);
+    auto j = *cfg;
+
+    if (j["builders"].is_array()) {
+      auto builders = j["builders"];
+      for(auto it : builders) {
+        auto name = it.get<std::string>();
+        if(!extraBldrStore.contains("Builders."s + name)) {
+          SysError::setError("EntityBldrFtry builders config " + name + " inside Builders. is not an adecuate builder name."s);
+          return;
+        }
+        eb->addBldr(extraBldrStore.get("Builders."s + name));
+      }
+    } else if(j.contains("builders")) {
+      SysError::setError("EntityBldrFtry config for builders, if present, must be a array."s);
+    }
+
+    auto contextTime = JSONFactory::readFromStore<ContextTime>(cTimeRsrc, j, "ContextTime."s + "contextTime"s, "EntityBldrFtry"s);
+    if(!contextTime) {
+      SysError::setError("EntityBldrFtry config for contextTime is invalid"s);
+      return;
+    }
+    eb->setContextTime(*contextTime);
+  }
+
+private:
+
+  RsrcStore<nlohmann::json>& configRsrc = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<Funct<void>>& mainRsrc = RsrcStore<Funct<void>>::getInstance();
+  RsrcStore<EntityBldr>& specificRsrc = RsrcStore<EntityBldr>::getInstance();
+  RsrcStore<Funct<void, std::shared_ptr<Entity>>>& extraBldrStore = RsrcStore<Funct<void, std::shared_ptr<Entity>>>::getInstance();
+  RsrcStore<ContextTime>& cTimeRsrc = RsrcStore<ContextTime>::getInstance();
+
+};
+
+class EntitySetterFtry : virtual public Factory {
+public:
+
+  void create(std::string name, uint64_t) {
+    using namespace std::string_literals;
+    std::shared_ptr<EntitySetter> e = std::make_shared<EntitySetter>();
+    mainRsrc.insert(factories::functionName + factories::separator  + name, e);
+    specificRsrc.insert("EntitySetter."s + name, e);
+  }
+
+  void setup(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+    if(cfg) {
+      auto j = *cfg;
+      auto es = specificRsrc.get("EntitySetter."s + name);
+      if (j.find("double") != j.end())  { parse(j["double"],  valueDRsrc, doubleStore, es); }
+      if (j.find("float") != j.end())   { parse(j["float"],   valueFRsrc, floatStore, es); }
+      if (j.find("uint") != j.end())    { parse(j["uint"],    valueURsrc, uintStore, es); }
+      if (j.find("int") != j.end())     { parse(j["int"],     valueIRsrc, intStore, es); }
+      if (j.find("bool") != j.end())    { parse(j["bool"],    valueBRsrc, boolStore, es); }
+      if (j.find("V2D") != j.end())     { parseV2D(j["V2D"],              es); }
+      if (j.find("V3D") != j.end())     { parseV3D(j["V3D"],              es); }
+      if (j.find("String") != j.end())  { parse(j["String"],  valueSRsrc, stringStore, es); }
+      if (j.find("VString") != j.end()) { parseVString(j["VString"],      es); }
+    } else {
+      SysError::setError("EntitySetter config for "s + name + " not found."s);
+    }
+  }
+
+private:
+  RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
+
+  RsrcDictionary<int64_t>& intStore = RsrcDictionary<int64_t>::getInstance();
+  RsrcDictionary<uint64_t>& uintStore = RsrcDictionary<uint64_t>::getInstance();
+  RsrcDictionary<double>& doubleStore = RsrcDictionary<double>::getInstance();
+  RsrcDictionary<float>& floatStore = RsrcDictionary<float>::getInstance();
+  RsrcDictionary<bool>& boolStore = RsrcDictionary<bool>::getInstance();
+  RsrcDictionary<std::string>& stringStore = RsrcDictionary<std::string>::getInstance();
+  RsrcStore<ContextTime>& cTimeRsrc = RsrcStore<ContextTime>::getInstance();
+
+  RsrcStore<Funct<void, std::shared_ptr<Entity>>>& mainRsrc = RsrcStore<Funct<void, std::shared_ptr<Entity>>>::getInstance();
+  RsrcStore<EntitySetter>& specificRsrc = RsrcStore<EntitySetter>::getInstance();
+
+  RsrcStore<Funct<void, std::shared_ptr<Entity>>>& extraBldrStore = RsrcStore<Funct<void, std::shared_ptr<Entity>>>::getInstance();
+
+  RsrcStore<Value<double> > &valueDRsrc = RsrcStore<Value<double> >::getInstance();
+  RsrcStore<Value<float> > &valueFRsrc = RsrcStore<Value<float> >::getInstance();
+  RsrcStore<Value<uint64_t> > &valueURsrc = RsrcStore<Value<uint64_t> >::getInstance();
+  RsrcStore<Value<int64_t> > &valueIRsrc = RsrcStore<Value<int64_t> >::getInstance();
+  RsrcStore<Value<bool> > &valueBRsrc = RsrcStore<Value<bool> >::getInstance();
+  RsrcStore<Value<Vector2D> > &valueV2Rsrc = RsrcStore<Value<Vector2D> >::getInstance();
+  RsrcStore<Value<Vector3D> > &valueV3Rsrc = RsrcStore<Value<Vector3D> >::getInstance();
+  RsrcStore<Value<std::string> > &valueSRsrc = RsrcStore<Value<std::string> >::getInstance();
+  RsrcStore<Value<std::vector<std::string> > > &valueVSRsrc = RsrcStore<Value<std::vector<std::string> > >::getInstance();
+  RsrcDictionary<Vector2D> &literalStoreV2D = RsrcDictionary<Vector2D>::getInstance();
+  RsrcDictionary<Vector3D> &literalStoreV3D = RsrcDictionary<Vector3D>::getInstance();
+
+  template <typename T>
+  T parseArrayElement(nlohmann::json value, RsrcDictionary<T> &literalStore) {
+    using namespace std::string_literals;
+    if (value.is_string()) {
+        //auto s = value.get<std::string>();
+        //auto sp = valueRsrc.get(s);
+        //auto sr = sp->get();
+        //return sr;
+      return literalStore.get(value.get<std::string>());
+    } else if(value.is_array() && (value.size() == 1)
+           && ((std::is_floating_point<T>::value && value.at(0).is_number_float())
+              ||(std::is_integral<T>::value && value.at(0).is_number_integer())
+              ||(std::is_same<T, bool>::value && value.at(0).is_boolean())
+              ||(std::is_same<T, std::string>::value && value.at(0).is_string()))) {
+      return value.at(0).get<T>();
+    } else if((std::is_floating_point<T>::value && value.is_number_float())
+           ||(std::is_integral<T>::value && value.is_number_integer())
+           ||(std::is_same<T, bool>::value && value.is_boolean())) {
+      return value.get<T>();
+    } else {
+        SysError::setError("EntitySetter parseArrayElement error: "s + value.get<std::string>() + " has invalid type."s);
+        return T();
+    }
+  }
+
+  template <typename T>
+  inline void parse(nlohmann::json cfg, RsrcStore<Value<T> > &valueRsrc, RsrcDictionary<T> &literalStore, std::shared_ptr<EntitySetter> es) {
+    using namespace std::string_literals;
+    for (auto item : cfg.items()) {
+      auto id = uintStore.get(item.key());
+      //es->set<T>(id, parseSingleValue(item.value(), valueRsrc, literalStore));
+      auto cfgValue = item.value();
+      if (cfgValue.is_string()) {
+        es->setSharedValue<T>(id, valueRsrc.get(cfgValue.get<std::string>()));
+      } else if(cfgValue.is_array() && (cfgValue.size() == 1)
+           &&(std::is_same_v<T, std::string> == false) && (cfgValue.at(0).is_string())) {
+        es->setNewValue<T>(id, literalStore.get(cfgValue.at(0).get<std::string>()));
+      } else if(cfgValue.is_array() && (cfgValue.size() == 1)
+        && ((std::is_floating_point<T>::value && cfgValue.at(0).is_number_float())
+           ||(std::is_integral<T>::value && cfgValue.at(0).is_number_integer())
+           ||(std::is_same<T, bool>::value && cfgValue.at(0).is_boolean())
+           ||(std::is_same<T, std::string>::value && cfgValue.at(0).is_string()))){
+        es->setNewValue<T>(id, cfgValue.at(0).get<T>());
+      } else if((std::is_floating_point<T>::value && cfgValue.is_number_float())
+           ||(std::is_integral<T>::value && cfgValue.is_number_integer())
+           ||(std::is_same<T, bool>::value && cfgValue.is_boolean())) {
+        es->setNewValue<T>(id, cfgValue.get<T>());
+      } else {
+        SysError::setError("EntitySetter parseValue error: "s + cfgValue.get<std::string>() + " is invalid."s);
+      }
+    }
+  }
+
+  inline void parseV3D(nlohmann::json cfg, std::shared_ptr<EntitySetter> es) {
+    for (auto item : cfg.items()) {
+      auto cfgValue = item.value();
+      auto id = uintStore.get(item.key());
+      std::shared_ptr<zbe::Value<Vector3D> > val = std::make_shared<zbe::SimpleValue<Vector3D> >();
+      if (cfgValue.is_string()) {
+        es->setSharedValue<Vector3D>(id, valueV3Rsrc.get(cfgValue.get<std::string>()));
+      } else if(cfgValue.is_array() && (cfgValue.size() == 1)
+             && (cfgValue.at(0).is_string())) {
+        es->setNewValue<Vector3D>(id, literalStoreV3D.get(cfgValue.at(0).get<std::string>()));
+      } else if (cfgValue.is_array() && (cfgValue.size() == 3)) {
+        auto c = 0;
+        Vector3D val;
+        for (auto item : cfgValue.items()) {
+          val[c++] = parseArrayElement(item.value(), doubleStore);
+        }
+        es->setNewValue<Vector3D>(id, val);
+      }
+    }
+  }
+
+  inline void parseV2D(nlohmann::json cfg, std::shared_ptr<EntitySetter> es) {
+    for (auto item : cfg.items()) {
+      auto cfgValue = item.value();
+      auto id = uintStore.get(item.key());
+      std::shared_ptr<zbe::Value<Vector2D> > val = std::make_shared<zbe::SimpleValue<Vector2D> >();
+      if (cfgValue.is_string()) {
+        es->setSharedValue<Vector2D>(id, valueV2Rsrc.get(cfgValue.get<std::string>()));
+      } else if(cfgValue.is_array() && (cfgValue.size() == 1)
+             && (cfgValue.at(0).is_string())) {
+        es->setNewValue<Vector2D>(id, literalStoreV2D.get(cfgValue.at(0).get<std::string>()));
+      } else if (cfgValue.is_array() && (cfgValue.size() == 2)) {
+        auto c = 0;
+        Vector2D val;
+        for (auto item : cfgValue.items()) {
+          val[c++] = parseArrayElement(item.value(), doubleStore);
+        }
+        es->setNewValue<Vector2D>(id, val);
+      }
+    }
+  }
+
+  inline void parseVString(nlohmann::json cfg, std::shared_ptr<EntitySetter> es) {
+    for (auto item : cfg.items()) {
+      auto cfgValue = item.value();
+      auto id = uintStore.get(item.key());
+      if (cfgValue.is_string()) {
+        es->setSharedValue<std::vector<std::string>>(id, valueVSRsrc.get(cfgValue.get<std::string>()));
+      } else if (cfgValue.is_array()) {
+        std::vector<std::string> val;
+        for (auto item : cfgValue.items()) {
+          val.emplace_back(parseArrayElement<std::string>(item.value(), stringStore));
+        }
+        es->setNewValue<std::vector<std::string>>(id, val);
+      }
+    }
+  }
+};
+
+template<typename T, typename ...Ts>
+class BehaviorEntityBldrFtry : public Factory {
+public:
+
+  void create(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    std::shared_ptr<BehaviorEntityBldr<T, Ts...>> eb = std::make_shared<BehaviorEntityBldr<T, Ts...>>();
+    mainRsrc.insert("Function."s + name, eb);
+    specificRsrc.insert("BehaviorEntityBldr."s + name, eb);
+  }
+
+  void setup(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);
+
+    if(!cfg) {
+      SysError::setError("BehaviorEntityBldrFtry config for "s + name + " not found."s);
+      return;
+    }
+    auto eb = specificRsrc.get("BehaviorEntityBldr."s + name);
     auto j = *cfg;
 
     if(!addList2Bldr<double>(j, eb)
@@ -615,26 +1110,26 @@ public:
       for(auto it : builders) {
         auto name = it.get<std::string>();
         if(!extraBldrStore.contains("Builders."s + name)) {
-          SysError::setError("EntityBldrFtry builders config " + name + " inside Builders. is not an adecuate builder name."s);
+          SysError::setError("BehaviorEntityBldrFtry builders config " + name + " inside Builders. is not an adecuate builder name."s);
           return;
         }
         eb->addBldr(extraBldrStore.get("Builders."s + name));
       }
     } else if(j.contains("builders")) {
-      SysError::setError("EntityBldrFtry config for builders, if present, must be a array."s);
+      SysError::setError("BehaviorEntityBldrFtry config for builders, if present, must be a array."s);
     }
   }
 
 private:
 
   template<typename VT>
-  bool addList2Bldr(json& j, std::string type, std::shared_ptr<EntityBldr<VT>> eb) {
+  bool addList2Bldr(nlohmann::json& j, std::string type, std::shared_ptr<BehaviorEntityBldr<VT>> eb) {
     using namespace std::string_literals;
     if (j[type].is_object()) {
       auto dcfg = j[type];
       for (auto item : dcfg.items()) {
         auto key = item.key();
-        if(auto valueBuilder = JSONFactory::readFromStore<ValueBldr<double>>(doubleBldrStore, dcfg, "Builders."s, key, "EntityBldrFtry"s)) {
+        if(auto valueBuilder = JSONFactory::readFromStore<ValueBldr<double>>(doubleBldrStore, dcfg, "Builders."s, key, "BehaviorEntityBldrFtry"s)) {
           eb->addValueBldr(valueBuilder);
           return true;
         } else {
@@ -655,48 +1150,48 @@ private:
   using PairList = std::forward_list<std::pair<uint64_t, ValueBldr<VT>>>;
   RsrcStore<nlohmann::json>& configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<Funct<void, std::shared_ptr<MAvatar<T, Ts...>>>>& mainRsrc = RsrcStore<Funct<void, std::shared_ptr<MAvatar<T, Ts...>>>>::getInstance();
-  RsrcStore<EntityBldr<T, Ts...>>& specificRsrc = RsrcStore<EntityBldr<T, Ts...>>::getInstance();
+  RsrcStore<BehaviorEntityBldr<T, Ts...>>& specificRsrc = RsrcStore<BehaviorEntityBldr<T, Ts...>>::getInstance();
 
-  RsrcStore<ValueBldr<double>> doubleBldrStore = RsrcStore<ValueBldr<double>>::getInstance();
-  RsrcStore<ValueBldr<float>> floatBldrStore = RsrcStore<ValueBldr<float>>::getInstance();
-  RsrcStore<ValueBldr<uint64_t>> uintBldrStore = RsrcStore<ValueBldr<uint64_t>>::getInstance();
-  RsrcStore<ValueBldr<int64_t>> intBldrStore = RsrcStore<ValueBldr<int64_t>>::getInstance();
-  RsrcStore<ValueBldr<bool>> boolBldrStore = RsrcStore<ValueBldr<bool>>::getInstance();
-  RsrcStore<ValueBldr<Vector3D>> v3DBldrStore = RsrcStore<ValueBldr<Vector3D>>::getInstance();
-  RsrcStore<ValueBldr<Vector2D>> v2DBldrStore = RsrcStore<ValueBldr<Vector2D>>::getInstance();
-  RsrcStore<ValueBldr<std::string>> stringBldrStore = RsrcStore<ValueBldr<std::string>>::getInstance();
-  RsrcStore<ValueBldr<std::vector<std::string>>> vStringBldrStore = RsrcStore<ValueBldr<std::vector<std::string>>>::getInstance();
+  RsrcStore<ValueBldr<double>>& doubleBldrStore = RsrcStore<ValueBldr<double>>::getInstance();
+  RsrcStore<ValueBldr<float>>& floatBldrStore = RsrcStore<ValueBldr<float>>::getInstance();
+  RsrcStore<ValueBldr<uint64_t>>& uintBldrStore = RsrcStore<ValueBldr<uint64_t>>::getInstance();
+  RsrcStore<ValueBldr<int64_t>>& intBldrStore = RsrcStore<ValueBldr<int64_t>>::getInstance();
+  RsrcStore<ValueBldr<bool>>& boolBldrStore = RsrcStore<ValueBldr<bool>>::getInstance();
+  RsrcStore<ValueBldr<Vector3D>>& v3DBldrStore = RsrcStore<ValueBldr<Vector3D>>::getInstance();
+  RsrcStore<ValueBldr<Vector2D>>& v2DBldrStore = RsrcStore<ValueBldr<Vector2D>>::getInstance();
+  RsrcStore<ValueBldr<std::string>>& stringBldrStore = RsrcStore<ValueBldr<std::string>>::getInstance();
+  RsrcStore<ValueBldr<std::vector<std::string>>>& vStringBldrStore = RsrcStore<ValueBldr<std::vector<std::string>>>::getInstance();
 
-  RsrcStore<Funct<void, std::shared_ptr<Entity>>> extraBldrStore = RsrcStore<Funct<void, std::shared_ptr<Entity>>>::getInstance();
+  RsrcStore<Funct<void, std::shared_ptr<Entity>>>& extraBldrStore = RsrcStore<Funct<void, std::shared_ptr<Entity>>>::getInstance();
 
   RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
 
-  std::deque<Funct<void, std::shared_ptr<Entity>>> builders;
+  //std::deque<Funct<void, std::shared_ptr<Entity>>> builders;
 
 };
 
 
 template<typename T>
-class EntityBldrFtry<T> : public Factory {
+class BehaviorEntityBldrFtry<T> : public Factory {
 public:
 
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
-    std::shared_ptr<EntityBldr<T>> eb = std::make_shared<EntityBldr<T>>();
+    std::shared_ptr<BehaviorEntityBldr<T>> eb = std::make_shared<BehaviorEntityBldr<T>>();
     mainRsrc.insert("Function."s + name, eb);
-    specificRsrc.insert("EntityBldr."s + name, eb);
+    specificRsrc.insert("BehaviorEntityBldr."s + name, eb);
   }
 
   void setup(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     using namespace nlohmann;
-    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+    std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);
 
     if(!cfg) {
-      SysError::setError("EntityBldrFtry config for "s + name + " not found."s);
+      SysError::setError("BehaviorEntityBldrFtry config for "s + name + " not found."s);
       return;
     }
-    auto eb = specificRsrc.get("EntityBldr."s + name);
+    auto eb = specificRsrc.get("BehaviorEntityBldr."s + name);
     auto j = *cfg;
 
     if(!addList2Bldr<double>(j, eb)
@@ -716,26 +1211,26 @@ public:
       for(auto it : builders) {
         auto name = it.get<std::string>();
         if(!extraBldrStore.contains("Builders."s + name)) {
-          SysError::setError("EntityBldrFtry builders config " + name + " inside Builders. is not an adecuate builder name."s);
+          SysError::setError("BehaviorEntityBldrFtry builders config " + name + " inside Builders. is not an adecuate builder name."s);
           return;
         }
         eb->addBldr(extraBldrStore.get("Builders."s + name));
       }
     } else if(j.contains("builders")) {
-      SysError::setError("EntityBldrFtry config for builders, if present, must be a array."s);
+      SysError::setError("BehaviorEntityBldrFtry config for builders, if present, must be a array."s);
     }
   }
 
 private:
 
   template<typename VT>
-  bool addList2Bldr(json& j, std::string type, std::shared_ptr<EntityBldr<VT>> eb) {
+  bool addList2Bldr(nlohmann::json& j, std::string type, std::shared_ptr<BehaviorEntityBldr<VT>> eb) {
     using namespace std::string_literals;
     if (j[type].is_object()) {
       auto dcfg = j[type];
       for (auto item : dcfg.items()) {
         auto key = item.key();
-        if(auto valueBuilder = JSONFactory::readFromStore<ValueBldr<double>>(doubleBldrStore, dcfg, "Builders."s, key, "EntityBldrFtry"s)) {
+        if(auto valueBuilder = JSONFactory::readFromStore<ValueBldr<double>>(doubleBldrStore, dcfg, "Builders."s, key, "BehaviorEntityBldrFtry"s)) {
           eb->addValueBldr(valueBuilder);
           return true;
         } else {
@@ -756,23 +1251,23 @@ private:
   using PairList = std::forward_list<std::pair<uint64_t, ValueBldr<VT>>>;
   RsrcStore<nlohmann::json>& configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<Funct<void, std::shared_ptr<SAvatar<T>>>>& mainRsrc = RsrcStore<Funct<void, std::shared_ptr<SAvatar<T>>>>::getInstance();
-  RsrcStore<EntityBldr<T>>& specificRsrc = RsrcStore<EntityBldr<T>>::getInstance();
+  RsrcStore<BehaviorEntityBldr<T>>& specificRsrc = RsrcStore<BehaviorEntityBldr<T>>::getInstance();
 
-  RsrcStore<ValueBldr<double>> doubleBldrStore = RsrcStore<ValueBldr<double>>::getInstance();
-  RsrcStore<ValueBldr<float>> floatBldrStore = RsrcStore<ValueBldr<float>>::getInstance();
-  RsrcStore<ValueBldr<uint64_t>> uintBldrStore = RsrcStore<ValueBldr<uint64_t>>::getInstance();
-  RsrcStore<ValueBldr<int64_t>> intBldrStore = RsrcStore<ValueBldr<int64_t>>::getInstance();
-  RsrcStore<ValueBldr<bool>> boolBldrStore = RsrcStore<ValueBldr<bool>>::getInstance();
-  RsrcStore<ValueBldr<Vector3D>> v3DBldrStore = RsrcStore<ValueBldr<Vector3D>>::getInstance();
-  RsrcStore<ValueBldr<Vector2D>> v2DBldrStore = RsrcStore<ValueBldr<Vector2D>>::getInstance();
-  RsrcStore<ValueBldr<std::string>> stringBldrStore = RsrcStore<ValueBldr<std::string>>::getInstance();
-  RsrcStore<ValueBldr<std::vector<std::string>>> vStringBldrStore = RsrcStore<ValueBldr<std::vector<std::string>>>::getInstance();
+  RsrcStore<ValueBldr<double>>& doubleBldrStore = RsrcStore<ValueBldr<double>>::getInstance();
+  RsrcStore<ValueBldr<float>>& floatBldrStore = RsrcStore<ValueBldr<float>>::getInstance();
+  RsrcStore<ValueBldr<uint64_t>>& uintBldrStore = RsrcStore<ValueBldr<uint64_t>>::getInstance();
+  RsrcStore<ValueBldr<int64_t>>& intBldrStore = RsrcStore<ValueBldr<int64_t>>::getInstance();
+  RsrcStore<ValueBldr<bool>>& boolBldrStore = RsrcStore<ValueBldr<bool>>::getInstance();
+  RsrcStore<ValueBldr<Vector3D>>& v3DBldrStore = RsrcStore<ValueBldr<Vector3D>>::getInstance();
+  RsrcStore<ValueBldr<Vector2D>>& v2DBldrStore = RsrcStore<ValueBldr<Vector2D>>::getInstance();
+  RsrcStore<ValueBldr<std::string>>& stringBldrStore = RsrcStore<ValueBldr<std::string>>::getInstance();
+  RsrcStore<ValueBldr<std::vector<std::string>>>& vStringBldrStore = RsrcStore<ValueBldr<std::vector<std::string>>>::getInstance();
 
-  RsrcStore<Funct<void, std::shared_ptr<Entity>>> extraBldrStore = RsrcStore<Funct<void, std::shared_ptr<Entity>>>::getInstance();
+  RsrcStore<Funct<void, std::shared_ptr<Entity>>>& extraBldrStore = RsrcStore<Funct<void, std::shared_ptr<Entity>>>::getInstance();
 
   RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
 
-  std::deque<Funct<void, std::shared_ptr<Entity>>> builders;
+  //std::deque<Funct<void, std::shared_ptr<Entity>>> builders;
 
 };
 
@@ -790,7 +1285,7 @@ public:
   void setup(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     using namespace nlohmann;
-    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+    std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);
 
     if(!cfg) {
       SysError::setError("InteractionatorBldrFtry config for "s + name + " not found."s);
@@ -860,7 +1355,7 @@ public:
   void setup(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     using namespace nlohmann;
-    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+    std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);
 
     if(!cfg) {
       SysError::setError("InteractionerBldrFtry config for "s + name + " not found."s);

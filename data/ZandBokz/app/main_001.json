@@ -300,6 +300,45 @@
       ]
     },
     {
+      "description" : "Entity builders",
+      "factories" : [
+        {
+          "factory" : "EntityBldrFtry",
+          "name" : "zandbokz.pepinobuilder",
+          "config" : {
+            "builders" : ["zandbokz.pepinovalues"]
+          }
+        },
+        {
+          "factory" :"EntitySetterFtry",
+          "name" : "zandbokz.pepinovalues",
+          "config" : {
+            "values" :{
+              "contextTime":"DEFAULT",
+              "uint": {
+                "gidIdx":["Pepino"]
+              },
+              "double": {
+                "degreesIdx":[50.0],
+                "scaleIdx":[1.5]
+              },
+              "V3D": {
+                "positionIdx":[-1.0, -10.0, 0.0],
+                "orientationIdx":[0.5, 0.5, 0.5]
+              }
+            }
+          }
+        },
+        {
+          "factory" :"AvtBuilderFtry",
+          "name" : "zandbokz.pepinoapintar",
+          "config" : {
+          }
+        }
+      ],
+      "calls" : ["zandbokz.pepinobuilder"]
+    },
+    {
       "description" : "Creating entity",
       "factories" : [
         {"factory": "EntityFtry",

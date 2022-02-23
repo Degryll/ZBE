@@ -21,6 +21,7 @@
 namespace zbe {
 
 namespace JSONFactory {
+using namespace nlohmann;
 
 template<typename T>
 std::optional<std::shared_ptr<T>> readFromStore(RsrcStore<T>& store, json cfg, std::string parameter, std::string factoryName) {

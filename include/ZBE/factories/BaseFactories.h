@@ -47,6 +47,8 @@
 #include "ZBE/core/daemons/VoidDaemon.h"
 #include "ZBE/core/system/system.h"
 
+#include "ZBE/entities/builders/builders.h"
+
 #include "ZBE/behaviors/SineOscillator.h"
 #include "ZBE/behaviors/UniformLinearMotion.h"
 #include "ZBE/behaviors/Rotation.h"
@@ -75,6 +77,10 @@ public:
 
     RsrcStore<ContextTime>::getInstance().insert("ContextTime.DEFAULT", SysTime::getInstance());
     RsrcStore<Daemon>::getInstance().insert("Daemon.DEFAULT", std::make_shared<VoidDaemon>());
+
+    // --- Builders
+    factories.insert("EntityBldrFtry", std::make_shared<EntityBldrFtry>());
+    factories.insert("EntitySetterFtry", std::make_shared<EntitySetterFtry>());
 
     // --- Entities
     factories.insert("EntityFtry", std::make_shared<EntityFtry>());

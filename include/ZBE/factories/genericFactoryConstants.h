@@ -11,9 +11,15 @@
 #ifndef ZBE_FACTORIES_GENERICFACTORYCONSTANTS_H_
 #define ZBE_FACTORIES_GENERICFACTORYCONSTANTS_H_
 
+#include <string>
+
 namespace zbe {
   namespace factories {
-    static const char listName[] = "List";
+    using namespace std::string_literals;
+
+    static const std::string listName = "List"s;
+    static const std::string functionName = "Function"s;
+    static const std::string separator = "."s;
   }
 }  // namespace zbe
 

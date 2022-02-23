@@ -21,6 +21,8 @@
 #include "ZBE/core/system/system.h"
 #include "ZBE/core/tools/containers/TicketedForwardList.h"
 #include "ZBE/core/tools/tools.h"
+#include "ZBE/factories/Factory.h"
+#include "ZBE/factories/genericFactoryConstants.h"
 
 namespace zbe {
 
@@ -432,18 +434,18 @@ public:
       int64_t eventId = intStore.get(eventIdName);
 
       std::string interactionatorsName = j["interactionators"].get<std::string>();
-      if(!atorListStore.contains(interactionatorsName)) {
+      if(!atorListStore.contains(zbe::factories::listName + "."s + interactionatorsName)) {
         SysError::setError("InteractionEventGeneratorFtry config for eventId: "s + interactionatorsName + " is not a interactionators lsit name."s);
         return;
       }
-      auto ators = atorListStore.get("InteractionEventGenerator."s + interactionatorsName);
+      auto ators = atorListStore.get(zbe::factories::listName + "."s + interactionatorsName);
 
       std::string contextTimeName = j["contextTime"].get<std::string>();
-      if(!timeStore.contains(contextTimeName)) {
+      if(!timeStore.contains("ContextTime."s + contextTimeName)) {
         SysError::setError("InteractionEventGeneratorFtry config for contextTime: "s + contextTimeName + " is not a context time name."s);
         return;
       }
-      auto contextTime = timeStore.get(eventIdName);
+      auto contextTime = timeStore.get("ContextTime."s + contextTimeName);
 
       auto ieg = iegStore.get("InteractionEventGenerator."s + name);
 
