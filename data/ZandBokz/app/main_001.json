@@ -333,6 +333,8 @@
           "factory" :"AvtBuilderFtry",
           "name" : "zandbokz.pepinoapintar",
           "config" : {
+            "attribIndexes" : ["gidIdx", "scaleIdx", "degreesIdx", "orientationIdx", "positionIdx"],
+            "lists":{"loadScreen.drawList":"drawticket"}
           }
         }
       ],

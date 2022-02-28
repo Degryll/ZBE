@@ -84,6 +84,28 @@ bool loadAllIndexed(RsrcStore<T>& store, RsrcDictionary<uint64_t>& uintDict, jso
   return true;
 }
 
+template<typename T, unsigned n>
+std::optional<std::array<T, n>> loadLiteralArray(RsrcDictionary<T>& dict, json cfg, std::string paramName, std::string factoryName) {
+
+  if (!cfg.is_array()) {
+    SysError::setError(factoryName + " config for " + paramName + " must be an array."s);
+    return std::nullopt;
+  }
+
+  if(cfg.size() != expectedIndexes) {
+    SysError::setError(factoryName + " config for " + paramName + " must have "s + std::to_string(n) + " elements");
+    return std::nullopt;
+  }
+
+  std::array<T, n> arr;
+  int i = 0;
+  for (auto& name : cfg.items()) {
+    arr[i] = dict.get(name.value().get<std::string>());
+    i++;
+  }
+  return arr;
+}
+
 }  // namespace JSONFactory
 
 }  // namespace zbe

@@ -414,7 +414,7 @@ private:
   std::forward_list<std::pair<uint64_t, std::shared_ptr<Value<std::vector<std::string>>>>> sharedVStringValues;
 };
 
-template<typename T, typename...Ts>
+template<typename T, typename ...Ts>
 class AvatarBldr : Funct<void, std::shared_ptr<Entity>> {
 public:
   void operator()(std::shared_ptr<Entity> ent) {
@@ -438,7 +438,8 @@ private:
   static const int expectedIndexes = sizeof...(Ts) + 1;
   std::array<uint64_t, expectedIndexes> idxArr;
   std::std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<MAvatar<T, Ts...>>>>> indexNLists;
-}
+
+};
 
 template<typename T>
 class AvatarBldr<T> : Funct<void, std::shared_ptr<Entity>> {
@@ -456,6 +457,10 @@ public:
     this->idx = idx;
   }
 
+  void setIdxArr(std::array<uint64_t, 1> idxArr) {
+    this->idx = idxArr[0];
+  }
+
   void addIndexNlist(uint64_t index, std::shared_ptr<TicketedForwardList<MAvatar<T, Ts...>>> list) {
     indexNLists.push_back({index, list});
   }
@@ -463,9 +468,51 @@ public:
 private:
   uint64_t idx;
   std::std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<SAvatar<T>>>>> indexNLists;
+
+};
+
+template<typename... Ts>
+class AvatarBldr : public Factory {
+public:
+  void create(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    std::shared_ptr<AvatarBldr<Ts...>> ab = std::make_shared<AvatarBldr<Ts...>>();
+    mainRsrc.insert("Function."s + name, ab);
+    specificRsrc.insert("AvatarBldr."s + name, ab);
+  }
+
+  void setup(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);
+
+    if(!cfg) {
+      SysError::setError("AvatarBldrFtry config for "s + name + " not found."s);
+      return;
+    }
+    auto ab = specificRsrc.get("AvatarBldr."s + name);
+    auto j = *cfg;
+
+    std::optional<std::array<T, expectedIndexes>> arr = loadLiteralArray(uintDict, cfg["attribIndexes"], "attribIndexes", "AvatarBldrFtry");
+    if(!arr) {
+      return;
+    }
+    ab->setIdxArr(*arr);
+
+    JSONFactory::loadAllIndexed<typename TicketedForwardList<MAvatar<T, Ts...>>>(listRsrc, uintDict, j, "lists"s, "AvatarBldrFtry"s,
+        [&](uint64_t idx, std::shared_ptr<typename InatorBldr::InerList> list) {
+          ab->addIndexNlist(idx, list);
+          return true;
+        }
+    );
+  }
+
+private:
+  static const int expectedIndexes = sizeof...(Ts);
+  RsrcStore<TicketedForwardList<MAvatar<T, Ts...>>>& listRsrc = RsrcStore<TicketedForwardList<MAvatar<T, Ts...>>>::getInstance();
+  RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
 }
 
-TODO: Factory
 
 template<typename IData, typename ActorType, typename ReactorType, typename ...Shapes>
 class InteractionerBldr : public Funct<void, std::shared_ptr<Entity>> {
@@ -1319,7 +1366,7 @@ public:
     inatorb->setShapeBldr(*shapeBuilder);
     inatorb->setInternalInerList(*list);
 
-    JSONFactory::loadAllIndexed<typename InatorBldr::InerList>(listInerRsrc, uintDict, j, "list"s, "InteractionatorBldr"s,
+    JSONFactory::loadAllIndexed<typename InatorBldr::InerList>(listInerRsrc, uintDict, j, "lists"s, "InteractionatorBldrFtry"s,
         [&](uint64_t idx, std::shared_ptr<typename InatorBldr::InerList> list) {
           inatorb->addInerList(idx, list);
           return true;
@@ -1383,7 +1430,7 @@ public:
     inerb->setReactorBldr(*reactorBuilder);
     inerb->setShapeBldr(*shapeBuilder);
 
-    JSONFactory::loadAllIndexed<typename InerBldr::InerList>(listRsrc, uintDict, j, "list"s, "InteractionerBldr"s,
+    JSONFactory::loadAllIndexed<typename InerBldr::InerList>(listRsrc, uintDict, j, "lists"s, "InteractionerBldrFtry"s,
         [&](uint64_t idx, std::shared_ptr<typename InerBldr::InerList> list) {
           inerb->addInerList(idx, list);
           return true;
