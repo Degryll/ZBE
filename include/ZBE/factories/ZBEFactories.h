@@ -28,6 +28,8 @@
 #include "ZBE/core/daemons/Daemon.h"
 #include "ZBE/core/system/system.h"
 
+#include "ZBE/entities/builders/builders.h"
+
 namespace zbe {
 
 /** \brief Daemon capable of load all base factories.
@@ -71,8 +73,15 @@ public:
 
     using LookAtAvtList = TicketedForwardList<MAvatar<Vector3D, Vector3D, Vector3D> >;
     using LookAtAvtBhvr = BehaviorDmnFtry<LookAtAvtList, Vector3D, Vector3D, Vector3D>;
-
+    //TODO: Sigue con segmentation fault
     auto& factories = RsrcStore<Factory>::getInstance();
+    // Builders
+    factories.insert("Drawable2DAvtBldrFtry", std::make_shared<AvatarBldrFtry<uint64_t, int64_t, double, Vector2D, Vector2D>>());
+    factories.insert("Drawable3DAvtBldrFtry", std::make_shared<AvatarBldrFtry<uint64_t, double,  double, Vector3D, Vector3D>>());
+    factories.insert("DrawableSimple2DAvtBldrFtry", std::make_shared<AvatarBldrFtry<uint64_t, int64_t, double, Vector2D, Vector2D>>());
+
+    factories.insert("FloatAvtBldrFtry", std::make_shared<AvatarBldrFtry<uint64_t, int64_t, double, Vector2D, Vector2D>>());
+    factories.insert("V3DAvtBldrFtry", std::make_shared<AvatarBldrFtry<uint64_t, int64_t, double, Vector2D, Vector2D>>());
 
     // Avatars
     factories.insert("Drawable2DAvtFtry", std::make_shared<BaseAvatarFtry<uint64_t, int64_t, double, Vector2D, Vector2D> >());

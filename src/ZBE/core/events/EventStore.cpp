@@ -44,17 +44,13 @@ void EventStore::clearStore() {
 }
 
 void EventStore::storeEvent(Event* e) {
-  std::cout << "Bettertime: " << bettertime << " e->getTime(): " << e->getTime() << std::endl;
   if(e->getTime() == bettertime) {
-    std::cout << "Its the same"<< std::endl;
     timedStore.push_front(e);
   } else if (e->getTime() < bettertime) {
-    std::cout << "Its better"<< std::endl;
     clearTimedStore();
     bettertime = e->getTime();
     timedStore.push_front(e);
   } else {
-    std::cout << "NOPE"<< std::endl;
     delete e;
   }
 }

@@ -434,11 +434,11 @@ public:
       int64_t eventId = intStore.get(eventIdName);
 
       std::string interactionatorsName = j["interactionators"].get<std::string>();
-      if(!atorListStore.contains(zbe::factories::listName + "."s + interactionatorsName)) {
+      if(!atorListStore.contains(zbe::factories::listName + zbe::factories::separator + interactionatorsName)) {
         SysError::setError("InteractionEventGeneratorFtry config for eventId: "s + interactionatorsName + " is not a interactionators lsit name."s);
         return;
       }
-      auto ators = atorListStore.get(zbe::factories::listName + "."s + interactionatorsName);
+      auto ators = atorListStore.get(zbe::factories::listName + zbe::factories::separator + interactionatorsName);
 
       std::string contextTimeName = j["contextTime"].get<std::string>();
       if(!timeStore.contains("ContextTime."s + contextTimeName)) {

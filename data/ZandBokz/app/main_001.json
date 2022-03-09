@@ -306,31 +306,29 @@
           "factory" : "EntityBldrFtry",
           "name" : "zandbokz.pepinobuilder",
           "config" : {
-            "builders" : ["zandbokz.pepinovalues"]
+            "contextTime":"DEFAULT",
+            "builders" : ["zandbokz.pepinovalues", "zandbokz.pepinoapintar"]
           }
         },
         {
           "factory" :"EntitySetterFtry",
           "name" : "zandbokz.pepinovalues",
           "config" : {
-            "values" :{
-              "contextTime":"DEFAULT",
-              "uint": {
-                "gidIdx":["Pepino"]
-              },
-              "double": {
-                "degreesIdx":[50.0],
-                "scaleIdx":[1.5]
-              },
-              "V3D": {
-                "positionIdx":[-1.0, -10.0, 0.0],
-                "orientationIdx":[0.5, 0.5, 0.5]
-              }
+            "uint": {
+              "gidIdx":["Pepino"]
+            },
+            "double": {
+              "degreesIdx":[50.0],
+              "scaleIdx":[1.5]
+            },
+            "V3D": {
+              "positionIdx":[-1.0, -10.0, 0.0],
+              "orientationIdx":[0.5, 0.5, 0.5]
             }
           }
         },
         {
-          "factory" :"AvtBuilderFtry",
+          "factory" :"Drawable3DAvtBldrFtry",
           "name" : "zandbokz.pepinoapintar",
           "config" : {
             "attribIndexes" : ["gidIdx", "scaleIdx", "degreesIdx", "orientationIdx", "positionIdx"],

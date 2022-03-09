@@ -17,6 +17,8 @@
 
 
 #include "ZBE/core/entities/Entity.h"
+#include "ZBE/core/entities/avatars/Avatar.h"
+#include "ZBE/core/entities/avatars/implementations/BaseAvatar.h"
 #include "ZBE/core/events/interactionSystem.h"
 #include "ZBE/core/system/system.h"
 #include "ZBE/core/tools/tools.h"
@@ -415,10 +417,12 @@ private:
 };
 
 template<typename T, typename ...Ts>
-class AvatarBldr : Funct<void, std::shared_ptr<Entity>> {
+class AvatarBldr : public Funct<void, std::shared_ptr<Entity>> {
 public:
+  static const int expectedIndexes = sizeof...(Ts) + 1;
+  using AvtBaseType = MAvatar<T, Ts...>;
   void operator()(std::shared_ptr<Entity> ent) {
-    std::shared_ptr<MBaseAvatar<T, Ts...> > avt = std::make_shared<MBaseAvatar<T, Ts...> >();
+    std::shared_ptr<AvtImplType> avt = std::make_shared<AvtImplType>();
     avt->setupEntity(ent, idxArr);
     for(auto indexNList : indexNLists) {
       auto ticket = indexNList.second->push_front(avt);
@@ -430,22 +434,23 @@ public:
     this->idxArr = idxArr;
   }
 
-  void addIndexNlist(uint64_t index, std::shared_ptr<TicketedForwardList<MAvatar<T, Ts...>>> list) {
+  void addIndexNlist(uint64_t index, std::shared_ptr<TicketedForwardList<AvtBaseType>> list) {
     indexNLists.push_back({index, list});
   }
 
 private:
-  static const int expectedIndexes = sizeof...(Ts) + 1;
+  using AvtImplType = MBaseAvatar<T, Ts...>;
   std::array<uint64_t, expectedIndexes> idxArr;
-  std::std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<MAvatar<T, Ts...>>>>> indexNLists;
+  std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> indexNLists;
 
 };
 
 template<typename T>
-class AvatarBldr<T> : Funct<void, std::shared_ptr<Entity>> {
+class AvatarBldr<T> : public Funct<void, std::shared_ptr<Entity>> {
 public:
+  using AvtBaseType = SAvatar<T>;
   void operator()(std::shared_ptr<Entity> ent) {
-    std::shared_ptr<SBaseAvatar<T> > avt = std::make_shared<SBaseAvatar<T> >();
+    std::shared_ptr<AvtImplType> avt = std::make_shared<AvtImplType>();
     avt->setupEntity(ent, idx);
     for(auto indexNList : indexNLists) {
       auto ticket = indexNList.second->push_front(avt);
@@ -461,18 +466,19 @@ public:
     this->idx = idxArr[0];
   }
 
-  void addIndexNlist(uint64_t index, std::shared_ptr<TicketedForwardList<MAvatar<T, Ts...>>> list) {
+  void addIndexNlist(uint64_t index, std::shared_ptr<TicketedForwardList<AvtBaseType>> list) {
     indexNLists.push_back({index, list});
   }
 
 private:
+  using AvtImplType = SBaseAvatar<T>;
   uint64_t idx;
-  std::std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<SAvatar<T>>>>> indexNLists;
+  std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> indexNLists;
 
 };
 
 template<typename... Ts>
-class AvatarBldr : public Factory {
+class AvatarBldrFtry : public Factory {
 public:
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
@@ -493,14 +499,14 @@ public:
     auto ab = specificRsrc.get("AvatarBldr."s + name);
     auto j = *cfg;
 
-    std::optional<std::array<T, expectedIndexes>> arr = loadLiteralArray(uintDict, cfg["attribIndexes"], "attribIndexes", "AvatarBldrFtry");
+    std::optional<std::array<uint64_t, expectedIndexes>> arr = JSONFactory::loadLiteralArray<uint64_t, expectedIndexes>(uintDict, j["attribIndexes"], "attribIndexes", "AvatarBldrFtry");
     if(!arr) {
       return;
     }
     ab->setIdxArr(*arr);
 
-    JSONFactory::loadAllIndexed<typename TicketedForwardList<MAvatar<T, Ts...>>>(listRsrc, uintDict, j, "lists"s, "AvatarBldrFtry"s,
-        [&](uint64_t idx, std::shared_ptr<typename InatorBldr::InerList> list) {
+    JSONFactory::loadAllIndexed<TicketedForwardList<typename AvatarBldr<Ts...>::AvtBaseType>>(listRsrc, uintDict, j, zbe::factories::listName, "lists"s, "AvatarBldrFtry"s,
+        [&](uint64_t idx, std::shared_ptr<ListType> list) {
           ab->addIndexNlist(idx, list);
           return true;
         }
@@ -509,9 +515,14 @@ public:
 
 private:
   static const int expectedIndexes = sizeof...(Ts);
-  RsrcStore<TicketedForwardList<MAvatar<T, Ts...>>>& listRsrc = RsrcStore<TicketedForwardList<MAvatar<T, Ts...>>>::getInstance();
+  using FunctionType = Funct<void, std::shared_ptr<Entity>>;
+  using ListType = TicketedForwardList<typename AvatarBldr<Ts...>::AvtBaseType>;
+  RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
+  RsrcStore<AvatarBldr<Ts...>>& specificRsrc = RsrcStore<AvatarBldr<Ts...>>::getInstance();
+  RsrcStore<ListType>& listRsrc = RsrcStore<ListType>::getInstance();
   RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
-}
+};
 
 
 template<typename IData, typename ActorType, typename ReactorType, typename ...Shapes>
@@ -789,7 +800,7 @@ private:
   std::vector<std::string> traitCfgNames;
   using ActorType = Actor<IData, Traits...>;
   using FunctionType= Funct<ActorType, std::shared_ptr<Entity>>;
-  RsrcStore<nlohmann::json> &configRsrc                          = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
   RsrcStore<ActorBldr<IData, Traits...>>& specificRsrc = RsrcStore<ActorBldr<IData, Traits...>>::getInstance();
 };
@@ -875,11 +886,11 @@ public:
     }
     auto sb = specificRsrc.get("ShapeBldr."s + name);
     auto j = *cfg;
-    if(auto shapeBuilderFunct = JSONFactory::readFromStore<typename ShapeBldr<S, Shapes...>::SubBuild>(shapeBuilderFunctStore, j, "type."s, "ShapeBldrFtry"s)) {
+    if(auto shapeBuilderFunct = JSONFactory::loadParamCfgStore<typename ShapeBldr<S, Shapes...>::SubBuild>(shapeBuilderFunctStore, j, zbe::factories::functionName, "shapetype", "ShapeBldrFtry"s)) {
       sb->setBuildFunct(*shapeBuilderFunct);
       return;
     } else {
-      SysError::setError("ShapeBldrFtry config for type is not a shape builder function name."s);
+      SysError::setError("ShapeBldrFtry config for shapetype is not a shape builder function name."s);
       return;
     }
   }
@@ -911,24 +922,25 @@ public:
       SysError::setError("EntityBldrFtry config for "s + name + " not found."s);
       return;
     }
-    auto eb = specificRsrc.get("EntityBldrFtry."s + name);
+    auto eb = specificRsrc.get("EntityBldr."s + name);
     auto j = *cfg;
 
     if (j["builders"].is_array()) {
       auto builders = j["builders"];
       for(auto it : builders) {
         auto name = it.get<std::string>();
-        if(!extraBldrStore.contains("Builders."s + name)) {
+        auto storedName = zbe::factories::functionName + zbe::factories::separator + name;
+        if(!extraBldrStore.contains(storedName)) {
           SysError::setError("EntityBldrFtry builders config " + name + " inside Builders. is not an adecuate builder name."s);
           return;
         }
-        eb->addBldr(extraBldrStore.get("Builders."s + name));
+        eb->addBldr(extraBldrStore.get(storedName));
       }
     } else if(j.contains("builders")) {
       SysError::setError("EntityBldrFtry config for builders, if present, must be a array."s);
     }
 
-    auto contextTime = JSONFactory::readFromStore<ContextTime>(cTimeRsrc, j, "ContextTime."s + "contextTime"s, "EntityBldrFtry"s);
+    auto contextTime = JSONFactory::loadParamCfgStore<ContextTime>(cTimeRsrc, j, zbe::factories::contextimeName, "contextTime"s, "EntityBldrFtry"s);
     if(!contextTime) {
       SysError::setError("EntityBldrFtry config for contextTime is invalid"s);
       return;
@@ -1176,7 +1188,7 @@ private:
       auto dcfg = j[type];
       for (auto item : dcfg.items()) {
         auto key = item.key();
-        if(auto valueBuilder = JSONFactory::readFromStore<ValueBldr<double>>(doubleBldrStore, dcfg, "Builders."s, key, "BehaviorEntityBldrFtry"s)) {
+        if(auto valueBuilder = JSONFactory::loadParamCfgStore<ValueBldr<double>>(doubleBldrStore, dcfg, "Builders."s, key, "BehaviorEntityBldrFtry"s)) {
           eb->addValueBldr(valueBuilder);
           return true;
         } else {
@@ -1277,7 +1289,7 @@ private:
       auto dcfg = j[type];
       for (auto item : dcfg.items()) {
         auto key = item.key();
-        if(auto valueBuilder = JSONFactory::readFromStore<ValueBldr<double>>(doubleBldrStore, dcfg, "Builders."s, key, "BehaviorEntityBldrFtry"s)) {
+        if(auto valueBuilder = JSONFactory::loadParamCfgStore<ValueBldr<double>>(doubleBldrStore, dcfg, "Builders."s, key, "BehaviorEntityBldrFtry"s)) {
           eb->addValueBldr(valueBuilder);
           return true;
         } else {
@@ -1340,22 +1352,22 @@ public:
     }
     auto inatorb = specificRsrc.get("InteractionatorBldr."s + name);
     auto j = *cfg;
-    auto actorBuilder = JSONFactory::readFromStore<typename InatorBldr::ActorTypeBldr>(actorBldrRsrc, j, "actorbuilder"s, "InteractionatorBldr"s);
+    auto actorBuilder = JSONFactory::loadParamCfgStore<typename InatorBldr::ActorTypeBldr>(actorBldrRsrc, j, zbe::factories::functionName, "actorbuilder"s, "InteractionatorBldrFtry"s);
     if(!actorBuilder) {
       SysError::setError("InteractionatorBldrFtry config for actorbuilder is invalid"s);
       return;
     }
-    auto reactorBuilder = JSONFactory::readFromStore<typename InatorBldr::ReactorTypeBldr>(reactorBldrRsrc, j, "reactorbuilder"s, "InteractionatorBldr"s);
+    auto reactorBuilder = JSONFactory::loadParamCfgStore<typename InatorBldr::ReactorTypeBldr>(reactorBldrRsrc, j, zbe::factories::functionName, "reactorbuilder"s, "InteractionatorBldrFtry"s);
     if(!reactorBuilder) {
       SysError::setError("InteractionatorBldrFtry config for reactorbuilder is invalid"s);
       return;
     }
-    auto shapeBuilder = JSONFactory::readFromStore<typename InatorBldr::ShapeBldr>(shapeBldrRsrc, j, "shapebuilder"s, "InteractionatorBldr"s);
+    auto shapeBuilder = JSONFactory::loadParamCfgStore<typename InatorBldr::ShapeBldr>(shapeBldrRsrc, j, zbe::factories::functionName, "shapebuilder"s, "InteractionatorBldrFtry"s);
     if(!shapeBuilder) {
       SysError::setError("InteractionatorBldrFtry config for shapebuilder is invalid"s);
       return;
     }
-    auto list = JSONFactory::readFromStore<typename InatorBldr::InerList>(listInerRsrc, j, "interactioners"s, "InteractionatorBldr"s);
+    auto list = JSONFactory::loadParamCfgStore<typename InatorBldr::InerList>(listInerRsrc, j, zbe::factories::listName, "interactioners"s, "InteractionatorBldrFtry"s);
     if(!list) {
       SysError::setError("InteractionatorBldrFtry config for shapebuilder is invalid"s);
       return;
@@ -1366,7 +1378,7 @@ public:
     inatorb->setShapeBldr(*shapeBuilder);
     inatorb->setInternalInerList(*list);
 
-    JSONFactory::loadAllIndexed<typename InatorBldr::InerList>(listInerRsrc, uintDict, j, "lists"s, "InteractionatorBldrFtry"s,
+    JSONFactory::loadAllIndexed<typename InatorBldr::InerList>(listInerRsrc, uintDict, j, zbe::factories::listName, "lists"s, "InteractionatorBldrFtry"s,
         [&](uint64_t idx, std::shared_ptr<typename InatorBldr::InerList> list) {
           inatorb->addInerList(idx, list);
           return true;
@@ -1410,17 +1422,17 @@ public:
     }
     auto inerb = specificRsrc.get("InteractionerBldr."s + name);
     auto j = *cfg;
-    auto actorBuilder = JSONFactory::readFromStore<typename InerBldr::ActorTypeBldr>(actorBldrRsrc, j, "actorbuilder"s, "InteractionerBldr"s);
+    auto actorBuilder = JSONFactory::loadParamCfgStore<typename InerBldr::ActorTypeBldr>(actorBldrRsrc, j, zbe::factories::functionName, "actorbuilder"s, "InteractionerBldr"s);
     if(!actorBuilder) {
       SysError::setError("InteractionerBldrFtry config for actorbuilder is invalid"s);
       return;
     }
-    auto reactorBuilder = JSONFactory::readFromStore<typename InerBldr::ReactorTypeBldr>(reactorBldrRsrc, j, "reactorbuilder"s, "InteractionerBldr"s);
+    auto reactorBuilder = JSONFactory::loadParamCfgStore<typename InerBldr::ReactorTypeBldr>(reactorBldrRsrc, j, zbe::factories::functionName, "reactorbuilder"s, "InteractionerBldr"s);
     if(!actorBuilder) {
       SysError::setError("InteractionerBldrFtry config for reactorbuilder is invalid"s);
       return;
     }
-    auto shapeBuilder = JSONFactory::readFromStore<typename InerBldr::ShapeBldr>(shapeBldrRsrc, j, "shapebuilder"s, "InteractionerBldr"s);
+    auto shapeBuilder = JSONFactory::loadParamCfgStore<typename InerBldr::ShapeBldr>(shapeBldrRsrc, j, zbe::factories::functionName, "shapebuilder"s, "InteractionerBldr"s);
     if(!actorBuilder) {
       SysError::setError("InteractionerBldrFtry config for shapebuilder is invalid"s);
       return;
@@ -1430,7 +1442,7 @@ public:
     inerb->setReactorBldr(*reactorBuilder);
     inerb->setShapeBldr(*shapeBuilder);
 
-    JSONFactory::loadAllIndexed<typename InerBldr::InerList>(listRsrc, uintDict, j, "lists"s, "InteractionerBldrFtry"s,
+    JSONFactory::loadAllIndexed<typename InerBldr::InerList>(listRsrc, uintDict, j, zbe::factories::listName, "lists"s, "InteractionerBldrFtry"s,
         [&](uint64_t idx, std::shared_ptr<typename InerBldr::InerList> list) {
           inerb->addInerList(idx, list);
           return true;
