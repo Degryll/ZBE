@@ -70,7 +70,7 @@ public:
     }
 
     void react(IData data, Trait trait) {
-      reaction(data, trait);
+      (*reaction)(data, trait);
     }
 
     // void setPayload(Reactor<IData, Trait> payload) {
@@ -164,7 +164,7 @@ private:
 // Esto eliminaría la necesidad de andar pasando el self.
 
 template<typename IData, typename Trait>
-class AvtEnabledTrait {
+class AvtEnabledTrait : public Funct<void, Reactor<IData, Trait>*, IData>  {
 public:
   AvtEnabledTrait(std::shared_ptr<SAvatar<Trait>> avt) : avt(avt) {}
   void operator()(Reactor<IData, Trait>* reactor, IData data) {
@@ -173,6 +173,15 @@ public:
   }
 private:
   std::shared_ptr<SAvatar<Trait>> avt;
+};
+
+template<typename IData, typename Trait>
+class EnabledEmptyTrait : public Funct<void, Reactor<IData, Trait>*, IData> {
+public:
+  void operator()(Reactor<IData, Trait>* reactor, IData data) {
+    Trait t;
+    reactor->react(data, t);
+  }
 };
 
 // Esta implementacion se mantiene como documentacion.

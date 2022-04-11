@@ -23,9 +23,8 @@ namespace zbe {
 namespace JSONFactory {
 using namespace nlohmann;
 
-
 template<typename T, typename Store>
-std::optional<std::shared_ptr<T>> loadParamStr(Store& store, std::string prefix, std::string parameter, std::string factoryName) {
+std::optional<typename Store::StoredType> loadParamStrP(Store& store, std::string prefix, std::string parameter, std::string factoryName) {
   using namespace std::string_literals;
   std::string paramName = prefix + zbe::factories::separator + parameter;
   if(!store.contains(paramName)) {
@@ -37,13 +36,34 @@ std::optional<std::shared_ptr<T>> loadParamStr(Store& store, std::string prefix,
 }
 
 template<typename T, typename Store>
-std::optional<std::shared_ptr<T>> loadParamCfg(Store& store, json cfg, std::string prefix, std::string parameter, std::string factoryName) {
+std::optional<typename Store::StoredType> loadParamCfgP(Store& store, json cfg, std::string prefix, std::string parameter, std::string factoryName) {
   using namespace std::string_literals;
   if (!cfg[parameter].is_string()) {
     SysError::setError(factoryName + " config for "s + parameter + " must be a string."s);
     return std::nullopt;
   }
-  return loadParamStr<T, Store>(store, prefix, cfg[parameter].get<std::string>(), factoryName);
+  return loadParamStrP<T, Store>(store, prefix, cfg[parameter].get<std::string>(), factoryName);
+}
+
+template<typename T, typename Store>
+std::optional<typename Store::StoredType> loadParamStr(Store& store, std::string parameter, std::string factoryName) {
+  using namespace std::string_literals;
+  if(!store.contains(parameter)) {
+    SysError::setError(factoryName + " config for " + parameter + " does not exist."s);
+    return std::nullopt;
+  }
+
+  return store.get(parameter);
+}
+
+template<typename T, typename Store>
+std::optional<typename Store::StoredType> loadParamCfg(Store& store, json cfg, std::string parameter, std::string factoryName) {
+  using namespace std::string_literals;
+  if (!cfg[parameter].is_string()) {
+    SysError::setError(factoryName + " config for "s + parameter + " must be a string."s);
+    return std::nullopt;
+  }
+  return loadParamStr<T, Store>(store, cfg[parameter].get<std::string>(), factoryName);
 }
 
 template<typename T>
@@ -52,12 +72,23 @@ const auto loadParamCfgStore = loadParamCfg<T, RsrcStore<T>>;
 template<typename T>
 const auto loadParamCfgDict = loadParamCfg<T, RsrcDictionary<T>>;
 
-
 template<typename T>
 const auto loadParamStrStore = loadParamStr<T, RsrcStore<T>>;
 
 template<typename T>
 const auto loadParamStrDict = loadParamStr<T, RsrcDictionary<T>>;
+
+template<typename T>
+const auto loadParamCfgStoreP = loadParamCfgP<T, RsrcStore<T>>;
+
+template<typename T>
+const auto loadParamCfgDictP = loadParamCfgP<T, RsrcDictionary<T>>;
+
+template<typename T>
+const auto loadParamStrStoreP = loadParamStrP<T, RsrcStore<T>>;
+
+template<typename T>
+const auto loadParamStrDictP = loadParamStrP<T, RsrcDictionary<T>>;
 
 
 // template<typename T>
@@ -116,7 +147,7 @@ bool loadAllIndexed(RsrcStore<T>& store, RsrcDictionary<uint64_t>& uintDict, jso
       //   return false;
       // }
 
-      auto element = loadParamStrStore<T>(store, prefix, key, factoryName);
+      auto element = loadParamStrStoreP<T>(store, prefix, key, factoryName);
       if(!element) {
         SysError::setError(factoryName + " config for "s + parameter + " contains a non valid element name:"s + key);
         return false;

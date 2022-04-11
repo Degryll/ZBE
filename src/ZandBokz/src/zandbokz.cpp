@@ -25,13 +25,16 @@
 
 #include "ZBE/JSON/JSONFactory.h"
 
-#include "ZandBokz/include/zandbokz.h"
-#include "ZandBokz/include/ZandBokzFactories.h"
-#include "ZandBokz/include/ZandBokzInteractionSystem.h"
+#include "zandbokz.h"
+#include "ZandBokzFactories.h"
+#include "ZandBokzInteractionSystem.h"
 
 int main(int /*argc*/, char** /*argv*/) {
+
    using namespace zbe;
    using namespace zandbokz;
+   using namespace std::string_literals;
+
    init();
    printf("Hello ZandBokz\n");
    BaseFactories::load();

@@ -41,6 +41,7 @@ using Iner = zbe::Interactioner<Actor, Reactor, zbe::MovingSphere>;
 using Inator = zbe::Interactionator<Actor, Reactor, zbe::MovingSphere>;
 
 using InatorList = zbe::TicketedForwardList<Inator>;
+using InerList = zbe::TicketedForwardList<Iner>;
 
 using IEG = zbe::InteractionEventGenerator<PhysicsSelector, PhysicsOverloaded, zbe::CollisionData3D, Actor, Reactor, zbe::MovingSphere>;
 
@@ -49,16 +50,16 @@ using ActorBldr = zbe::ActorBldr<zbe::CollisionData3D, Solid>;
 using ReactorBldr = zbe::ReactorBldr<zbe::CollisionData3D, Solid>;
 using ShapeBldr = zbe::ShapeBldr<zbe::MovingSphere, zbe::MovingSphere>;
 
-using InerBldr = zbe::InteractionerBldr<Actor, Reactor, zbe::MovingSphere>;
-using InatorBldr = zbe::InteractionatorBldr<Actor, Reactor, zbe::MovingSphere>;
+using InerBldr = zbe::InteractionerBldr<zbe::CollisionData3D, Actor, Reactor, zbe::MovingSphere>;
+using InatorBldr = zbe::InteractionatorBldr<zbe::CollisionData3D, Actor, Reactor, zbe::MovingSphere>;
 
 // zandbokz interaction types builders factories
 using ActorBldrFtry = zbe::ActorBldrFtry<zbe::CollisionData3D, Solid>;
 using ReactorBldrFtry = zbe::ActorBldrFtry<zbe::CollisionData3D, Solid>;
 using ShapeBldrFtry = zbe::ShapeBldrFtry<zbe::MovingSphere, zbe::MovingSphere>;
 
-using InatorBldrFtry = zbe::InteractionatorBldrFtry<Actor, Reactor, zbe::MovingSphere>;
-using InerBldrFtry = zbe::InteractionerBldrFtry<Actor, Reactor, zbe::MovingSphere>;
+using InatorBldrFtry = zbe::InteractionatorBldrFtry<zbe::CollisionData3D, Actor, Reactor, zbe::MovingSphere>;
+using InerBldrFtry = zbe::InteractionerBldrFtry<zbe::CollisionData3D, Actor, Reactor, zbe::MovingSphere>;
 
 using IEGFtry = zbe::InteractionEventGeneratorFtry<PhysicsSelector, PhysicsOverloaded, zbe::CollisionData3D, Actor, Reactor, zbe::MovingSphere>;
 

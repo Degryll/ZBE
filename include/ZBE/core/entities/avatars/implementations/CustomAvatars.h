@@ -36,7 +36,6 @@ namespace zbe{
 // TODO: pero antes probar si podemos usar el de tres vectores
 class TargetToDirAvt : public MAvatar<Vector3D, Vector3D, Vector3D>, AvatarImp {
 public:
-
   /** \brief
    */
    void setupEntity(std::shared_ptr<Entity> entity, uint64_t positionidx, uint64_t targetidx, uint64_t upwardsidx, uint64_t scaleidx) {
@@ -399,6 +398,575 @@ private:
   std::shared_ptr<Value<Vector3D> > upwards;
 };
 
+class TargetToDirAvtBldr : public Funct<void, std::shared_ptr<Entity>> {
+public:
+  using AvtBaseType = MAvatar<Vector3D, Vector3D, Vector3D>;
+  void operator()(std::shared_ptr<Entity> ent) {
+    std::shared_ptr<TargetToDirAvt> avt = std::make_shared<TargetToDirAvt>();
+    avt->setupEntity(ent, positionidx, targetidx,upwardsidx, scaleidx);
+    for(auto indexNList : indexNLists) {
+      auto ticket = indexNList.second->push_front(avt);
+      ent->addTicket(indexNList.first, ticket);
+    }
+  }
+
+  void setIdxs(uint64_t positionidx, uint64_t targetidx, uint64_t upwardsidx, uint64_t scaleidx) {
+      this->positionidx = positionidx;
+      this->targetidx = targetidx;
+      this->upwardsidx = upwardsidx;
+      this->scaleidx = scaleidx;
+  }
+
+  void addIndexNlist(uint64_t index, std::shared_ptr<TicketedForwardList<AvtBaseType>> list) {
+    indexNLists.push_back({index, list});
+  }
+
+private:
+  uint64_t positionidx;
+  uint64_t targetidx;
+  uint64_t upwardsidx;
+  uint64_t scaleidx;
+  std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> indexNLists;
+};
+
+
+class PosTargetToPosDirAvtBldr : public Funct<void, std::shared_ptr<Entity>> {
+public:
+  using AvtBaseType = MAvatar<Vector3D, Vector3D>;
+  void operator()(std::shared_ptr<Entity> ent) {
+    std::shared_ptr<PosTargetToPosDirAvt> avt = std::make_shared<PosTargetToPosDirAvt>();
+
+    avt->setupEntity(ent, positionidx, targetidx);
+    for(auto indexNList : indexNLists) {
+      auto ticket = indexNList.second->push_front(avt);
+      ent->addTicket(indexNList.first, ticket);
+    }
+  }
+
+  void setIdxs(uint64_t positionidx, uint64_t targetidx) {
+      this->positionidx = positionidx;
+      this->targetidx = targetidx;
+  }
+
+  void addIndexNlist(uint64_t index, std::shared_ptr<TicketedForwardList<AvtBaseType>> list) {
+    indexNLists.push_back({index, list});
+  }
+
+private:
+  uint64_t positionidx;
+  uint64_t targetidx;
+  std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> indexNLists;
+};
+
+
+class DerivedCosVelAvtBldr : public Funct<void, std::shared_ptr<Entity>> {
+public:
+  using AvtBaseType = MAvatar<Vector3D, Vector3D>;
+  void operator()(std::shared_ptr<Entity> ent) {
+    std::shared_ptr<DerivedCosVelAvt> avt = std::make_shared<DerivedCosVelAvt>();
+    avt->setRange(min, max);
+    avt->setPeriod(period);
+    avt->setComponent(component);
+
+    avt->setupEntity(ent, positionidx);
+    for(auto indexNList : indexNLists) {
+      auto ticket = indexNList.second->push_front(avt);
+      ent->addTicket(indexNList.first, ticket);
+    }
+  }
+
+  void setIdx(uint64_t positionidx) {
+      this->positionidx = positionidx;
+  }
+
+  void addIndexNlist(uint64_t index, std::shared_ptr<TicketedForwardList<AvtBaseType>> list) {
+    indexNLists.push_back({index, list});
+  }
+
+  void setRange(float min, float max) {this->min = min; this->max = max;}
+
+  void setPeriod(int64_t period) {this->period = period;}
+
+  void setComponent(int64_t component) {
+    assert(component>=0 && component<=2);
+    this->component = component;
+  }
+
+private:
+    float min;
+    float max;
+    int64_t period;
+    int64_t component;
+    uint64_t positionidx;
+    std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> indexNLists;
+};
+
+class DerivedPosMovingSphereAvtBldr : public Funct<void, std::shared_ptr<Entity>> {
+public:
+  using AvtBaseType = SAvatar<MovingSphere>;
+  void operator()(std::shared_ptr<Entity> ent) {
+    std::shared_ptr<DerivedPosMovingSphereAvt> avt = std::make_shared<DerivedPosMovingSphereAvt>();
+    avt->setRange(min, max);
+    avt->setPeriod(period);
+    avt->setComponent(component);
+
+    avt->setupEntity(ent, positionidx, radiusidx);
+    for(auto indexNList : indexNLists) {
+      auto ticket = indexNList.second->push_front(avt);
+      ent->addTicket(indexNList.first, ticket);
+    }
+  }
+
+  void setIdxs(uint64_t positionidx, uint64_t radiusidx) {
+      this->positionidx = positionidx;
+      this->radiusidx = radiusidx;
+  }
+
+  void addIndexNlist(uint64_t index, std::shared_ptr<TicketedForwardList<AvtBaseType>> list) {
+    indexNLists.push_back({index, list});
+  }
+
+
+  void setRange(float min, float max) {this->min = min; this->max = max;}
+
+  void setPeriod(int64_t period) {this->period = period;}
+
+  void setComponent(int64_t component) {
+    assert(component>=0 && component<=2);
+    this->component = component;
+  }
+
+private:
+ float min;
+ float max;
+ int64_t period;
+ int64_t component;
+ uint64_t positionidx;
+ uint64_t radiusidx;
+ std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> indexNLists;
+};
+
+class LookAtToPitchAvtBldr : public Funct<void, std::shared_ptr<Entity>> {
+public:
+  using AvtBaseType = MAvatar<Vector3D, Vector3D>;
+  void operator()(std::shared_ptr<Entity> ent) {
+    std::shared_ptr<LookAtToPitchAvt> avt = std::make_shared<LookAtToPitchAvt>();
+    avt->setupEntity(ent, positionidx, targetidx,upwardsidx);
+    for(auto indexNList : indexNLists) {
+      auto ticket = indexNList.second->push_front(avt);
+      ent->addTicket(indexNList.first, ticket);
+    }
+  }
+
+  void setIdxs(uint64_t positionidx, uint64_t targetidx, uint64_t upwardsidx) {
+      this->positionidx = positionidx;
+      this->targetidx = targetidx;
+      this->upwardsidx = upwardsidx;
+  }
+
+  void addIndexNlist(uint64_t index, std::shared_ptr<TicketedForwardList<AvtBaseType>> list) {
+    indexNLists.push_back({index, list});
+  }
+
+private:
+  uint64_t positionidx;
+  uint64_t targetidx;
+  uint64_t upwardsidx;
+  std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> indexNLists;
+};
+
+class LookAtToYawAvtBldr : public Funct<void, std::shared_ptr<Entity>> {
+public:
+  using AvtBaseType = MAvatar<Vector3D, Vector3D>;
+  void operator()(std::shared_ptr<Entity> ent) {
+    std::shared_ptr<LookAtToPitchAvt> avt = std::make_shared<LookAtToPitchAvt>();
+    avt->setupEntity(ent, positionidx, targetidx,upwardsidx);
+    for(auto indexNList : indexNLists) {
+      auto ticket = indexNList.second->push_front(avt);
+      ent->addTicket(indexNList.first, ticket);
+    }
+  }
+
+  void setIdxs(uint64_t positionidx, uint64_t targetidx, uint64_t upwardsidx) {
+      this->positionidx = positionidx;
+      this->targetidx = targetidx;
+      this->upwardsidx = upwardsidx;
+  }
+
+  void addIndexNlist(uint64_t index, std::shared_ptr<TicketedForwardList<AvtBaseType>> list) {
+    indexNLists.push_back({index, list});
+  }
+
+private:
+  uint64_t positionidx;
+  uint64_t targetidx;
+  uint64_t upwardsidx;
+  std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> indexNLists;
+};
+
+//---------------------------- NUEVAS
+
+class TargetToDirAvtBldrFtry : public Factory {
+public:
+  void create(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    std::shared_ptr<TargetToDirAvtBldr> ttdab = std::make_shared<TargetToDirAvtBldr>();
+    mainRsrc.insert("Function."s + name, ttdab);
+    specificRsrc.insert("TargetToDirAvtBldr."s + name, ttdab);
+  }
+
+  void setup(std::string name, uint64_t cfgId){
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+    if(cfg) {
+      auto j = *cfg;
+
+      auto ttdab = specificRsrc.get("TargetToDirAvtBldr."s + name);
+
+      auto positionIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionIdx"s, "TargetToDirAvtBldrFtry"s);
+      if(!positionIdx) {
+        return;
+      }
+      auto targetIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "targetIdx"s, "TargetToDirAvtBldrFtry"s);
+      if(!targetIdx) {
+        return;
+      }
+      auto upwardsIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "upwardsIdx"s, "TargetToDirAvtBldrFtry"s);
+      if(!upwardsIdx) {
+        return;
+      }
+      auto scaleIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "scaleIdx"s, "TargetToDirAvtBldrFtry"s);
+      if(!scaleIdx) {
+        return;
+      }
+
+      ttdab->setIdxs(*positionIdx, *targetIdx, *upwardsIdx, *scaleIdx);
+
+      JSONFactory::loadAllIndexed<TicketedForwardList<typename TargetToDirAvtBldr::AvtBaseType>>(listRsrc, uintDict, j, zbe::factories::listName, "lists"s, "TargetToDirAvtBldrFtry"s,
+          [&](uint64_t idx, std::shared_ptr<ListType> list) {
+            ttdab->addIndexNlist(idx, list);
+            return true;
+          }
+      );
+
+    } else {
+      SysError::setError("TargetToDirAvtBldrFtry config for "s + name + " not found."s);
+    }
+  }
+
+private:
+  using FunctionType = Funct<void, std::shared_ptr<Entity>>;
+  using ListType = TicketedForwardList<typename TargetToDirAvtBldr::AvtBaseType>;
+  NameRsrcDictionary &uintDict = NameRsrcDictionary::getInstance();
+  RsrcStore<nlohmann::json> &configRsrc    = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<TargetToDirAvtBldr>& specificRsrc    = RsrcStore<TargetToDirAvtBldr>::getInstance();
+  RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
+  RsrcStore<ListType>& listRsrc = RsrcStore<ListType>::getInstance();
+};
+
+
+class PosTargetToPosDirAvtBldrFtry : public Factory {
+public:
+  void create(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    std::shared_ptr<PosTargetToPosDirAvtBldr> pttpdvb = std::make_shared<PosTargetToPosDirAvtBldr>();
+    mainRsrc.insert("Function."s + name, pttpdvb);
+    specificRsrc.insert("PosTargetToPosDirAvtBldr."s + name, pttpdvb);
+  }
+
+  void setup(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+    if(cfg) {
+      auto j = *cfg;
+
+      auto pttpdvb = specificRsrc.get("PosTargetToPosDirAvtBldr."s + name);
+
+      auto positionIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionIdx"s, "PosTargetToPosDirAvtBldrFtry"s);
+      if(!positionIdx) {
+        return;
+      }
+      auto targetIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "targetIdx"s, "PosTargetToPosDirAvtBldrFtry"s);
+      if(!targetIdx) {
+        return;
+      }
+
+      pttpdvb->setIdxs(*positionIdx, *targetIdx);
+
+      JSONFactory::loadAllIndexed<TicketedForwardList<typename PosTargetToPosDirAvtBldr::AvtBaseType>>(listRsrc, uintDict, j, zbe::factories::listName, "lists"s, "PosTargetToPosDirAvtBldrFtry"s,
+          [&](uint64_t idx, std::shared_ptr<ListType> list) {
+            pttpdvb->addIndexNlist(idx, list);
+            return true;
+          }
+      );
+
+    } else {
+      SysError::setError("PosTargetToPosDirAvtBldrFtry config for "s + name + " not found."s);
+    }
+  }
+
+private:
+  using FunctionType = Funct<void, std::shared_ptr<Entity>>;
+  using ListType = TicketedForwardList<typename PosTargetToPosDirAvtBldr::AvtBaseType>;
+  NameRsrcDictionary &uintDict = NameRsrcDictionary::getInstance();
+  RsrcStore<nlohmann::json> &configRsrc    = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<PosTargetToPosDirAvtBldr>& specificRsrc    = RsrcStore<PosTargetToPosDirAvtBldr>::getInstance();
+  RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
+  RsrcStore<ListType>& listRsrc = RsrcStore<ListType>::getInstance();
+};
+
+
+class DerivedCosVelAvtBldrFtry : public Factory {
+public:
+  void create(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    std::shared_ptr<DerivedCosVelAvtBldr> dcvab = std::make_shared<DerivedCosVelAvtBldr>();
+    mainRsrc.insert("Function."s + name, dcvab);
+    specificRsrc.insert("DerivedCosVelAvtBldr."s + name, dcvab);
+  }
+
+  void setup(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+    if(cfg) {
+      auto j = *cfg;
+
+      auto dcvab = specificRsrc.get("DerivedCosVelAvtBldr."s + name);
+
+      auto positionIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionIdx"s, "DerivedCosVelAvtBldrFtry"s);
+      if(!positionIdx) {
+        return;
+      }
+      auto min = JSONFactory::loadParamCfgDict<float>(floatDict, j, "min"s, "DerivedCosVelAvtBldrFtry"s);
+      if(!min) {
+        return;
+      }
+      auto max = JSONFactory::loadParamCfgDict<float>(floatDict, j, "max"s, "DerivedCosVelAvtBldrFtry"s);
+      if(!max) {
+        return;
+      }
+      auto period = JSONFactory::loadParamCfgDict<int64_t>(intDict, j, "period"s, "DerivedCosVelAvtBldrFtry"s);
+      if(!period) {
+        return;
+      }
+      auto component = JSONFactory::loadParamCfgDict<int64_t>(intDict, j, "component"s, "DerivedCosVelAvtBldrFtry"s);
+      if(!component) {
+        return;
+      }
+      dcvab->setIdx(*positionIdx);
+      dcvab->setRange(*min, *max);
+      dcvab->setPeriod(*period);
+      dcvab->setComponent(*component);
+
+      JSONFactory::loadAllIndexed<TicketedForwardList<typename DerivedCosVelAvtBldr::AvtBaseType>>(listRsrc, uintDict, j, zbe::factories::listName, "lists"s, "DerivedCosVelAvtBldrFtry"s,
+          [&](uint64_t idx, std::shared_ptr<ListType> list) {
+            dcvab->addIndexNlist(idx, list);
+            return true;
+          }
+      );
+
+    } else {
+      SysError::setError("DerivedCosVelAvtBldrFtry config for "s + name + " not found."s);
+    }
+  }
+
+private:
+  using FunctionType = Funct<void, std::shared_ptr<Entity>>;
+  using ListType = TicketedForwardList<typename PosTargetToPosDirAvtBldr::AvtBaseType>;
+  RsrcDictionary<float>& floatDict = RsrcDictionary<float>::getInstance();
+  RsrcDictionary<int64_t>& intDict = RsrcDictionary<int64_t>::getInstance();
+  RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
+  RsrcStore<nlohmann::json> &configRsrc                          = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<TicketedForwardList<DerivedCosVelAvtBldr::AvtBaseType>>& listRsrc = RsrcStore<TicketedForwardList<DerivedCosVelAvtBldr::AvtBaseType>>::getInstance();
+  RsrcStore<DerivedCosVelAvtBldr>& specificRsrc    = RsrcStore<DerivedCosVelAvtBldr>::getInstance();
+  RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
+};
+
+class DerivedPosMovingSphereAvtBldrFtry : public Factory {
+public:
+  void create(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    std::shared_ptr<DerivedPosMovingSphereAvtBldr> dpmsa = std::make_shared<DerivedPosMovingSphereAvtBldr>();
+    mainRsrc.insert("Function."s + name, dpmsa);
+    specificRsrc.insert("DerivedPosMovingSphereAvtBldr."s + name, dpmsa);
+  }
+
+  void setup(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+    if(cfg) {
+      auto j = *cfg;
+
+      auto dpmsa = specificRsrc.get("DerivedPosMovingSphereAvtBldr."s + name);
+
+      auto positionIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionIdx"s, "DerivedPosMovingSphereAvtBldrFtry"s);
+      if(!positionIdx) {
+        return;
+      }
+      auto radiusidx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "radiusIdx"s, "DerivedPosMovingSphereAvtBldrFtry"s);
+      if(!positionIdx) {
+        return;
+      }
+      auto min = JSONFactory::loadParamCfgDict<float>(floatDict, j, "min"s, "DerivedPosMovingSphereAvtBldrFtry"s);
+      if(!min) {
+        return;
+      }
+      auto max = JSONFactory::loadParamCfgDict<float>(floatDict, j, "max"s, "DerivedPosMovingSphereAvtBldrFtry"s);
+      if(!max) {
+        return;
+      }
+      auto period = JSONFactory::loadParamCfgDict<int64_t>(intDict, j, "period"s, "DerivedPosMovingSphereAvtBldrFtry"s);
+      if(!period) {
+        return;
+      }
+      auto component = JSONFactory::loadParamCfgDict<int64_t>(intDict, j, "component"s, "DerivedPosMovingSphereAvtBldrFtry"s);
+      if(!component) {
+        return;
+      }
+      dpmsa->setIdxs(*positionIdx, *radiusidx);
+      dpmsa->setRange(*min, *max);
+      dpmsa->setPeriod(*period);
+      dpmsa->setComponent(*component);
+
+      JSONFactory::loadAllIndexed<TicketedForwardList<typename DerivedPosMovingSphereAvtBldr::AvtBaseType>>(listRsrc, uintDict, j, zbe::factories::listName, "lists"s, "DerivedPosMovingSphereAvtBldrFtry"s,
+          [&](uint64_t idx, std::shared_ptr<ListType> list) {
+            dpmsa->addIndexNlist(idx, list);
+            return true;
+          }
+      );
+
+    } else {
+      SysError::setError("DerivedPosMovingSphereAvtBldrFtry config for "s + name + " not found."s);
+    }
+  }
+
+private:
+  using FunctionType = Funct<void, std::shared_ptr<Entity>>;
+  using ListType = TicketedForwardList<DerivedPosMovingSphereAvtBldr::AvtBaseType>;
+  RsrcDictionary<float>& floatDict = RsrcDictionary<float>::getInstance();
+  RsrcDictionary<int64_t>& intDict = RsrcDictionary<int64_t>::getInstance();
+  RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
+  RsrcStore<nlohmann::json> &configRsrc                          = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<ListType>& listRsrc = RsrcStore<ListType>::getInstance();
+  RsrcStore<DerivedPosMovingSphereAvtBldr>& specificRsrc    = RsrcStore<DerivedPosMovingSphereAvtBldr>::getInstance();
+  RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
+};
+
+class LookAtToPitchAvtBldrFtry : public Factory {
+public:
+  void create(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    std::shared_ptr<LookAtToPitchAvtBldr> latpab = std::make_shared<LookAtToPitchAvtBldr>();
+    mainRsrc.insert("Function."s + name, latpab);
+    specificRsrc.insert("LookAtToPitchAvtBldr."s + name, latpab);
+  }
+  void setup(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+    if(cfg) {
+      auto j = *cfg;
+
+      auto latpab = specificRsrc.get("LookAtToPitchAvtBldr."s + name);
+
+      auto positionIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionIdx"s, "LookAtToPitchAvtBldrFtry"s);
+      if(!positionIdx) {
+        return;
+      }
+      auto targetidx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "targetidx"s, "LookAtToPitchAvtBldrFtry"s);
+      if(!targetidx) {
+        return;
+      }
+      auto upwardsidx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "upwardsidx"s, "LookAtToPitchAvtBldrFtry"s);
+      if(!upwardsidx) {
+        return;
+      }
+      latpab->setIdxs(*positionIdx, *targetidx, *upwardsidx);
+
+      JSONFactory::loadAllIndexed<TicketedForwardList<typename LookAtToPitchAvtBldr::AvtBaseType>>(listRsrc, uintDict, j, zbe::factories::listName, "lists"s, "LookAtToPitchAvtBldrFtry"s,
+          [&](uint64_t idx, std::shared_ptr<ListType> list) {
+            latpab->addIndexNlist(idx, list);
+            return true;
+          }
+      );
+    } else {
+      SysError::setError("LookAtToPitchAvtBldrFtry config for "s + name + " not found."s);
+    }
+  }
+private:
+  using FunctionType = Funct<void, std::shared_ptr<Entity>>;
+  using ListType = TicketedForwardList<LookAtToPitchAvtBldr::AvtBaseType>;
+  RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
+  RsrcStore<nlohmann::json> &configRsrc                          = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<ListType>& listRsrc = RsrcStore<ListType>::getInstance();
+  RsrcStore<LookAtToPitchAvtBldr>& specificRsrc    = RsrcStore<LookAtToPitchAvtBldr>::getInstance();
+  RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
+};
+
+class LookAtToYawAvtBldrFtry : public Factory {
+public:
+  void create(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    std::shared_ptr<LookAtToYawAvtBldr> latyab = std::make_shared<LookAtToYawAvtBldr>();
+    mainRsrc.insert("Function."s + name, latyab);
+    specificRsrc.insert("LookAtToYawAvtBldr."s + name, latyab);
+  }
+  void setup(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+    if(cfg) {
+      auto j = *cfg;
+
+      auto latyab = specificRsrc.get("LookAtToYawAvtBldr."s + name);
+
+      auto positionIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionIdx"s, "LookAtToYawAvtBldrFtry"s);
+      if(!positionIdx) {
+        return;
+      }
+      auto targetidx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "targetidx"s, "LookAtToYawAvtBldrFtry"s);
+      if(!targetidx) {
+        return;
+      }
+      auto upwardsidx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "upwardsidx"s, "LookAtToYawAvtBldrFtry"s);
+      if(!upwardsidx) {
+        return;
+      }
+      latyab->setIdxs(*positionIdx, *targetidx, *upwardsidx);
+
+      JSONFactory::loadAllIndexed<TicketedForwardList<typename DerivedCosVelAvtBldr::AvtBaseType>>(listRsrc, uintDict, j, zbe::factories::listName, "lists"s, "LookAtToYawAvtBldrFtry"s,
+          [&](uint64_t idx, std::shared_ptr<ListType> list) {
+            latyab->addIndexNlist(idx, list);
+            return true;
+          }
+      );
+
+    } else {
+      SysError::setError("LookAtToYawAvtBldrFtry config for "s + name + " not found."s);
+    }
+  }
+private:
+  using FunctionType = Funct<void, std::shared_ptr<Entity>>;
+  using ListType = TicketedForwardList<LookAtToYawAvtBldr::AvtBaseType>;
+  RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
+  RsrcStore<nlohmann::json> &configRsrc                          = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<ListType >& listRsrc = RsrcStore<ListType >::getInstance();
+  RsrcStore<LookAtToYawAvtBldr>& specificRsrc    = RsrcStore<LookAtToYawAvtBldr>::getInstance();
+  RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
+};
+
+
+//---------------------------- NUEVAS
 class TargetToDirAvtFtry : public Factory {
   /** \brief Builds a TargetToDirAvt.
    *  \param name Name for the created TargetToDirAvt.

@@ -28,6 +28,7 @@ namespace zbe {
 template <typename T>
 class RsrcStore {
   public:
+    using StoredType = std::shared_ptr<T>;
     RsrcStore(RsrcStore const&)    = delete;  //!< Needed for singleton.
     void operator=(RsrcStore const&) = delete;  //!< Needed for singleton.
 
@@ -51,7 +52,8 @@ class RsrcStore {
       } else if (id == 0) {
         SysError::setError("Using zero as id is potentialy dangerous");
       }
-      l[id] = resource;
+      //l[id] = resource;
+      l.insert_or_assign(id, resource);
     }
 
     /** \brief Associates a resource with a name.

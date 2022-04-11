@@ -46,7 +46,8 @@ public:
 
   /** \brief It loads all factories.
   */
-  static void load(){
+  static void load() {
+    using namespace std::string_literals;
     using AnimList = TicketedForwardList<MAvatar<uint64_t, int64_t, double, Vector2D, Vector2D> >;
     using AnimDrwr = BehaviorDmnFtry<AnimList, uint64_t, int64_t, double, Vector2D, Vector2D>;
 
@@ -73,15 +74,24 @@ public:
 
     using LookAtAvtList = TicketedForwardList<MAvatar<Vector3D, Vector3D, Vector3D> >;
     using LookAtAvtBhvr = BehaviorDmnFtry<LookAtAvtList, Vector3D, Vector3D, Vector3D>;
-    //TODO: Sigue con segmentation fault
+
     auto& factories = RsrcStore<Factory>::getInstance();
+    for(int i = 0;i<100;i++) {
+        factories.insert(std::to_string(i)+"Ftry"s , std::make_shared<SimpleGenericFtry<int> >(factories::listName));
+    }
     // Builders
     factories.insert("Drawable2DAvtBldrFtry", std::make_shared<AvatarBldrFtry<uint64_t, int64_t, double, Vector2D, Vector2D>>());
     factories.insert("Drawable3DAvtBldrFtry", std::make_shared<AvatarBldrFtry<uint64_t, double,  double, Vector3D, Vector3D>>());
     factories.insert("DrawableSimple2DAvtBldrFtry", std::make_shared<AvatarBldrFtry<uint64_t, int64_t, double, Vector2D, Vector2D>>());
+    factories.insert("V3DAvtBldrFtry", std::make_shared<AvatarBldrFtry<Vector3D> >());
+    factories.insert("FloatAvtBldrFtry", std::make_shared<AvatarBldrFtry<float> >());
 
-    factories.insert("FloatAvtBldrFtry", std::make_shared<AvatarBldrFtry<uint64_t, int64_t, double, Vector2D, Vector2D>>());
-    factories.insert("V3DAvtBldrFtry", std::make_shared<AvatarBldrFtry<uint64_t, int64_t, double, Vector2D, Vector2D>>());
+    factories.insert("TargetToDirAvtBldrFtry", std::make_shared<TargetToDirAvtBldrFtry>());
+    factories.insert("PosTargetToPosDirAvtBldrFtry", std::make_shared<PosTargetToPosDirAvtBldrFtry>());
+    factories.insert("DerivedCosVelAvtBldrFtry", std::make_shared<DerivedCosVelAvtBldrFtry>());
+    factories.insert("DerivedPosMovingSphereAvtBldrFtry", std::make_shared<DerivedPosMovingSphereAvtBldrFtry>());
+    factories.insert("LookAtToPitchAvtBldrFtry", std::make_shared<LookAtToPitchAvtBldrFtry>());
+    factories.insert("LookAtToYawAvtBldrFtry", std::make_shared<LookAtToYawAvtBldrFtry>());
 
     // Avatars
     factories.insert("Drawable2DAvtFtry", std::make_shared<BaseAvatarFtry<uint64_t, int64_t, double, Vector2D, Vector2D> >());

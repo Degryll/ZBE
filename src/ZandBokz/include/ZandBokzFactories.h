@@ -20,7 +20,8 @@
 #include "ZBE/core/events/interactionSystem.h"
 #include "ZBE/entities/builders/builders.h"
 
-#include "ZandBokz/include/ZandBokzInteractionSystem.h"
+#include "ZandBokzInteractionSystem.h"
+#include "ZandBokzCustomAvatars.h"
 
 
 namespace zandbokz {
@@ -35,27 +36,26 @@ public:
   */
   void run() {
     load();
-  };
+  }
 
   /** \brief It loads all factories.
   */
   static void load() {
     using namespace std::string_literals;
     auto& factories = zbe::RsrcStore<zbe::Factory>::getInstance();
-
-    factories.insert("InatorListFtry" , std::make_shared<zbe::SimpleGenericFtry<InatorList> >(zbe::factories::listName));
-
-    //TODO: no encuentra la lista ¿Instancias multiples de sigletones o problemas de tipos?
+    factories.insert("InatorListFtry", std::make_shared<zbe::SimpleGenericFtry<InatorList> >(zbe::factories::listName));
+    factories.insert("InerListFtry", std::make_shared<zbe::SimpleGenericFtry<InerList> >(zbe::factories::listName));
 
     factories.insert("IEGFtry", std::make_shared<IEGFtry>());
-    //factories.insert("EntityBldrFtry", ...);
+
+    factories.insert("InerBldrFtry", std::make_shared<InerBldrFtry>());
+    factories.insert("InatorBldrFtry", std::make_shared<InatorBldrFtry>());
 
     factories.insert("ActorBldrFtry", std::make_shared<ActorBldrFtry>(std::initializer_list<std::string>{"solid"s}));
     factories.insert("ReactorBldrFtry", std::make_shared<ReactorBldrFtry>(std::initializer_list<std::string>{"solid"s}));
     factories.insert("ShapeBldrFtry", std::make_shared<ShapeBldrFtry>());
 
-    factories.insert("InerBldrFtry", std::make_shared<InerBldrFtry>());
-    factories.insert("InatorBldrFtry", std::make_shared<InatorBldrFtry>());
+    factories.insert("MovingSphereAvtBldrFtry", std::make_shared<MovingSphereAvtBldrFtry>());
 
   }
 

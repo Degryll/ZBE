@@ -647,18 +647,11 @@ public:
   using TraitFunct = Funct<void, Reactor<IData, Trait>*, IData>;
   using SubBuild = Funct<std::shared_ptr<TraitFunct>, std::shared_ptr<Entity>>;
 
-  ActorBldr() : sb(
-    std::make_shared<
-      WrapperFunct<
-        std::shared_ptr<TraitFunct>,
-        std::shared_ptr<Entity>
-      >
-    >([]
-      (std::shared_ptr<Entity>)
-      {return std::make_shared<WrapperFunct<void, Reactor<IData, Trait>*, IData>>(Actor<IData, Trait>::noAct);
-      }
-    )
-  ) {}
+  ActorBldr() : sb(std::make_shared<WrapperFunct<std::shared_ptr<TraitFunct>,std::shared_ptr<Entity>>>([](std::shared_ptr<Entity>){
+                    return std::make_shared<WrapperFunct<void, Reactor<IData, Trait>*, IData>>(Actor<IData, Trait>::noAct);
+                })) {
+
+  }
 
   Actor<IData, Trait> operator() (std::shared_ptr<Entity> ent) {
     Actor<IData, Trait> actor;
@@ -677,6 +670,15 @@ private:
   std::shared_ptr<SubBuild> sb;
 };
 
+template<typename IData, typename Trait>
+class EnabledEmptyTraitBldr : public Funct<std::shared_ptr<Funct<void, Reactor<IData, Trait>*, IData>>, std::shared_ptr<Entity>> {
+public:
+  std::shared_ptr<Funct<void, Reactor<IData, Trait>*, IData>> operator()(std::shared_ptr<Entity>) {
+    return std::make_shared<EnabledEmptyTrait<IData, Trait>>();
+  }
+};
+
+// Use SimpleGenericFtry for this EnabledEmptyTraitBldr
 
 template<typename IData, typename Trait, typename ...Traits>
 class ReactorBldr : public Funct<Reactor<IData, Trait, Traits...>, std::shared_ptr<Entity>>, public ReactorBldr<IData, Trait>, public ReactorBldr<IData, Traits>... {
@@ -764,13 +766,17 @@ public:
       return;
     }
     std::string builderName = cfg[traitCfgName].get<std::string>();
-    if(builderStore.contains(builderName)) {
-      SysError::setError("ActorBldrFtry config for "s + traitCfgName + " is not a builder name");
-      failed = true;
-      return;
+    if(!builderName.compare("ENABLED"s)) {
+        actorBldr->setTraitBuildr(std::make_shared<EnabledEmptyTraitBldr<IData, U>>());
+    } else {
+      if(builderStore.contains(builderName)) {
+        SysError::setError("ActorBldrFtry config for "s + traitCfgName + " is not a builder name");
+        failed = true;
+        return;
+      }
+      auto bldr = builderStore.get(builderName);
+      actorBldr->setTraitBuildr(bldr);
     }
-    auto bldr = builderStore.get(builderName);
-    actorBldr->setTraitBuildr(bldr);
   }
 
   void create(std::string name, uint64_t cfgId) {
@@ -886,7 +892,7 @@ public:
     }
     auto sb = specificRsrc.get("ShapeBldr."s + name);
     auto j = *cfg;
-    if(auto shapeBuilderFunct = JSONFactory::loadParamCfgStore<typename ShapeBldr<S, Shapes...>::SubBuild>(shapeBuilderFunctStore, j, zbe::factories::functionName, "shapetype", "ShapeBldrFtry"s)) {
+    if(auto shapeBuilderFunct = JSONFactory::loadParamCfgStoreP<typename ShapeBldr<S, Shapes...>::SubBuild>(shapeBuilderFunctStore, j, zbe::factories::functionName, "shapetype", "ShapeBldrFtry"s)) {
       sb->setBuildFunct(*shapeBuilderFunct);
       return;
     } else {
@@ -940,7 +946,7 @@ public:
       SysError::setError("EntityBldrFtry config for builders, if present, must be a array."s);
     }
 
-    auto contextTime = JSONFactory::loadParamCfgStore<ContextTime>(cTimeRsrc, j, zbe::factories::contextimeName, "contextTime"s, "EntityBldrFtry"s);
+    auto contextTime = JSONFactory::loadParamCfgStoreP<ContextTime>(cTimeRsrc, j, zbe::factories::contextimeName, "contextTime"s, "EntityBldrFtry"s);
     if(!contextTime) {
       SysError::setError("EntityBldrFtry config for contextTime is invalid"s);
       return;
@@ -1188,7 +1194,7 @@ private:
       auto dcfg = j[type];
       for (auto item : dcfg.items()) {
         auto key = item.key();
-        if(auto valueBuilder = JSONFactory::loadParamCfgStore<ValueBldr<double>>(doubleBldrStore, dcfg, "Builders."s, key, "BehaviorEntityBldrFtry"s)) {
+        if(auto valueBuilder = JSONFactory::loadParamCfgStoreP<ValueBldr<double>>(doubleBldrStore, dcfg, "Builders."s, key, "BehaviorEntityBldrFtry"s)) {
           eb->addValueBldr(valueBuilder);
           return true;
         } else {
@@ -1289,7 +1295,7 @@ private:
       auto dcfg = j[type];
       for (auto item : dcfg.items()) {
         auto key = item.key();
-        if(auto valueBuilder = JSONFactory::loadParamCfgStore<ValueBldr<double>>(doubleBldrStore, dcfg, "Builders."s, key, "BehaviorEntityBldrFtry"s)) {
+        if(auto valueBuilder = JSONFactory::loadParamCfgStoreP<ValueBldr<double>>(doubleBldrStore, dcfg, "Builders."s, key, "BehaviorEntityBldrFtry"s)) {
           eb->addValueBldr(valueBuilder);
           return true;
         } else {
@@ -1352,22 +1358,22 @@ public:
     }
     auto inatorb = specificRsrc.get("InteractionatorBldr."s + name);
     auto j = *cfg;
-    auto actorBuilder = JSONFactory::loadParamCfgStore<typename InatorBldr::ActorTypeBldr>(actorBldrRsrc, j, zbe::factories::functionName, "actorbuilder"s, "InteractionatorBldrFtry"s);
+    auto actorBuilder = JSONFactory::loadParamCfgStoreP<typename InatorBldr::ActorTypeBldr>(actorBldrRsrc, j, zbe::factories::functionName, "actorbuilder"s, "InteractionatorBldrFtry"s);
     if(!actorBuilder) {
       SysError::setError("InteractionatorBldrFtry config for actorbuilder is invalid"s);
       return;
     }
-    auto reactorBuilder = JSONFactory::loadParamCfgStore<typename InatorBldr::ReactorTypeBldr>(reactorBldrRsrc, j, zbe::factories::functionName, "reactorbuilder"s, "InteractionatorBldrFtry"s);
+    auto reactorBuilder = JSONFactory::loadParamCfgStoreP<typename InatorBldr::ReactorTypeBldr>(reactorBldrRsrc, j, zbe::factories::functionName, "reactorbuilder"s, "InteractionatorBldrFtry"s);
     if(!reactorBuilder) {
       SysError::setError("InteractionatorBldrFtry config for reactorbuilder is invalid"s);
       return;
     }
-    auto shapeBuilder = JSONFactory::loadParamCfgStore<typename InatorBldr::ShapeBldr>(shapeBldrRsrc, j, zbe::factories::functionName, "shapebuilder"s, "InteractionatorBldrFtry"s);
+    auto shapeBuilder = JSONFactory::loadParamCfgStoreP<typename InatorBldr::ShapeBldr>(shapeBldrRsrc, j, zbe::factories::functionName, "shapebuilder"s, "InteractionatorBldrFtry"s);
     if(!shapeBuilder) {
       SysError::setError("InteractionatorBldrFtry config for shapebuilder is invalid"s);
       return;
     }
-    auto list = JSONFactory::loadParamCfgStore<typename InatorBldr::InerList>(listInerRsrc, j, zbe::factories::listName, "interactioners"s, "InteractionatorBldrFtry"s);
+    auto list = JSONFactory::loadParamCfgStoreP<typename InatorBldr::InerList>(listInerRsrc, j, zbe::factories::listName, "interactioners"s, "InteractionatorBldrFtry"s);
     if(!list) {
       SysError::setError("InteractionatorBldrFtry config for shapebuilder is invalid"s);
       return;
@@ -1422,17 +1428,17 @@ public:
     }
     auto inerb = specificRsrc.get("InteractionerBldr."s + name);
     auto j = *cfg;
-    auto actorBuilder = JSONFactory::loadParamCfgStore<typename InerBldr::ActorTypeBldr>(actorBldrRsrc, j, zbe::factories::functionName, "actorbuilder"s, "InteractionerBldr"s);
+    auto actorBuilder = JSONFactory::loadParamCfgStoreP<typename InerBldr::ActorTypeBldr>(actorBldrRsrc, j, zbe::factories::functionName, "actorbuilder"s, "InteractionerBldr"s);
     if(!actorBuilder) {
       SysError::setError("InteractionerBldrFtry config for actorbuilder is invalid"s);
       return;
     }
-    auto reactorBuilder = JSONFactory::loadParamCfgStore<typename InerBldr::ReactorTypeBldr>(reactorBldrRsrc, j, zbe::factories::functionName, "reactorbuilder"s, "InteractionerBldr"s);
-    if(!actorBuilder) {
+    auto reactorBuilder = JSONFactory::loadParamCfgStoreP<typename InerBldr::ReactorTypeBldr>(reactorBldrRsrc, j, zbe::factories::functionName, "reactorbuilder"s, "InteractionerBldr"s);
+    if(!reactorBuilder) {
       SysError::setError("InteractionerBldrFtry config for reactorbuilder is invalid"s);
       return;
     }
-    auto shapeBuilder = JSONFactory::loadParamCfgStore<typename InerBldr::ShapeBldr>(shapeBldrRsrc, j, zbe::factories::functionName, "shapebuilder"s, "InteractionerBldr"s);
+    auto shapeBuilder = JSONFactory::loadParamCfgStoreP<typename InerBldr::ShapeBldr>(shapeBldrRsrc, j, zbe::factories::functionName, "shapebuilder"s, "InteractionerBldr"s);
     if(!actorBuilder) {
       SysError::setError("InteractionerBldrFtry config for shapebuilder is invalid"s);
       return;

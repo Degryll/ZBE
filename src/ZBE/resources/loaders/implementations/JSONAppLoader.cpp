@@ -40,7 +40,6 @@ void JSONAppLoader::load(std::filesystem::path filePath) {
       json calls = phase["calls"];
       for(auto& call : calls) {
         checkAndCall(call, phase);
-
       }
     }
   } catch (json::parse_error &e) {
