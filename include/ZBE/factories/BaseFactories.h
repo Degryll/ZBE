@@ -127,6 +127,8 @@ public:
     factories.insert("DaemonTimeHandlerFtry", std::make_shared<DaemonTimeHandlerFtry>());
     factories.insert("TicketEraserFtry", std::make_shared<TicketEraserFtry>());
     factories.insert("EntityEraserFtry", std::make_shared<EntityEraserFtry>());
+    factories.insert("EntityEraserBldrFtry", std::make_shared<GenericFtry<Funct<std::shared_ptr<TimeHandler>, std::shared_ptr<Entity>>, EntityEraserBldr> >(factories::functionName, "EntityEraserBldr"));
+    factories.insert("EntityTimerBldrFtry", std::make_shared<EntityTimerBldrFtry>());
 
     // --- --- creators
     factories.insert("BulletCreatorFtry", std::make_shared<BulletCreatorFtry>());

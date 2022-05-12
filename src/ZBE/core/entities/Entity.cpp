@@ -176,7 +176,7 @@ std::shared_ptr<Value<double> >  Entity::getDouble(uint64_t id) {
 std::shared_ptr<Value<float> >  Entity::getFloat(uint64_t id) {
   auto it = fv.find(id);
   if (it == fv.end()) {
-    SysError::setError("Entity has no double value at given index " +  std::to_string(id) + ".");
+    SysError::setError("Entity has no float value at given index " +  std::to_string(id) + ".");
     return (std::shared_ptr<Value<float> >());
   } else {
     return (fv[id]);

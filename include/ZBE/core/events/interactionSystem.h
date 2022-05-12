@@ -63,7 +63,7 @@ class Reactor<IData, Trait> {
 public:
     Reactor() : reaction(noReaction) {}
     Reactor(const Reactor& rhs) : reaction(rhs.reaction) {}
-    static void noReaction(IData, Trait) {}
+    static std::shared_ptr<Funct<void,IData, Trait>> noReaction;
 
     void setReaction(std::shared_ptr<Funct<void,IData, Trait>> reaction) {
       this->reaction = reaction;
@@ -82,8 +82,12 @@ public:
     }
 
 private:
+  static void noReactionCallable(IData, Trait) {}
   std::shared_ptr<Funct<void,IData, Trait>> reaction;
 };
+
+template<typename IData, typename Trait>
+std::shared_ptr<Funct<void,IData, Trait>> Reactor<IData, Trait>::noReaction = std::make_shared<WrapperFunct<void, IData, Trait>>(Reactor<IData, Trait>::noReactionCallable);
 
 template<typename IData, typename ...Traits>
 class Actor : public Actor<IData, Traits>... {

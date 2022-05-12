@@ -84,12 +84,14 @@ public:
     factories.insert("Drawable3DAvtBldrFtry", std::make_shared<AvatarBldrFtry<uint64_t, double,  double, Vector3D, Vector3D>>());
     factories.insert("DrawableSimple2DAvtBldrFtry", std::make_shared<AvatarBldrFtry<uint64_t, int64_t, double, Vector2D, Vector2D>>());
     factories.insert("V3DAvtBldrFtry", std::make_shared<AvatarBldrFtry<Vector3D> >());
+    factories.insert("TwoV3DAvtBldrFtry", std::make_shared<AvatarBldrFtry<Vector3D, Vector3D> >());
     factories.insert("FloatAvtBldrFtry", std::make_shared<AvatarBldrFtry<float> >());
 
     factories.insert("TargetToDirAvtBldrFtry", std::make_shared<TargetToDirAvtBldrFtry>());
     factories.insert("PosTargetToPosDirAvtBldrFtry", std::make_shared<PosTargetToPosDirAvtBldrFtry>());
     factories.insert("DerivedCosVelAvtBldrFtry", std::make_shared<DerivedCosVelAvtBldrFtry>());
     factories.insert("DerivedPosMovingSphereAvtBldrFtry", std::make_shared<DerivedPosMovingSphereAvtBldrFtry>());
+    factories.insert("DerivedPosMovingSphereAvtShapeBldrFtry", std::make_shared<DerivedPosMovingSphereAvtShapeBldrFtry>());
     factories.insert("LookAtToPitchAvtBldrFtry", std::make_shared<LookAtToPitchAvtBldrFtry>());
     factories.insert("LookAtToYawAvtBldrFtry", std::make_shared<LookAtToYawAvtBldrFtry>());
 

@@ -226,7 +226,7 @@ private:
   int64_t component;
 };
 
-class DerivedPosMovingSphereAvt : public SAvatar<MovingSphere>, AvatarImp {
+class DerivedPosMovingSphereAvt : public SAvatar<MovingSphere>, public AvatarImp {
 public:
 
   /** \brief
@@ -501,7 +501,44 @@ private:
     std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> indexNLists;
 };
 
+class DerivedPosMovingSphereAvtShapeBldr : public Funct<std::shared_ptr<SAvatar<MovingSphere>>, std::shared_ptr<Entity>> {
+// This class where c&p from DerivedPosMovingSphereAvtBldr removing list managment
+public:
+  using AvtBaseType = SAvatar<MovingSphere>;
+  std::shared_ptr<SAvatar<MovingSphere>> operator()(std::shared_ptr<Entity> ent) {
+    std::shared_ptr<DerivedPosMovingSphereAvt> avt = std::make_shared<DerivedPosMovingSphereAvt>();
+    avt->setRange(min, max);
+    avt->setPeriod(period);
+    avt->setComponent(component);
+    avt->setupEntity(ent, positionidx, radiusidx);
+    return avt;
+  }
+
+  void setIdxs(uint64_t positionidx, uint64_t radiusidx) {
+      this->positionidx = positionidx;
+      this->radiusidx = radiusidx;
+  }
+
+  void setRange(float min, float max) {this->min = min; this->max = max;}
+
+  void setPeriod(int64_t period) {this->period = period;}
+
+  void setComponent(int64_t component) {
+    assert(component>=0 && component<=2);
+    this->component = component;
+  }
+
+private:
+ float min;
+ float max;
+ int64_t period;
+ int64_t component;
+ uint64_t positionidx;
+ uint64_t radiusidx;
+};
+
 class DerivedPosMovingSphereAvtBldr : public Funct<void, std::shared_ptr<Entity>> {
+// This class where c&p to DerivedPosMovingSphereAvtShapeBldr
 public:
   using AvtBaseType = SAvatar<MovingSphere>;
   void operator()(std::shared_ptr<Entity> ent) {
@@ -788,7 +825,73 @@ private:
   RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
 };
 
+class DerivedPosMovingSphereAvtShapeBldrFtry : public Factory {
+// This class where c&p from DerivedPosMovingSphereAvtBldrFtry removing list managment
+public:
+  void create(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    std::shared_ptr<DerivedPosMovingSphereAvtShapeBldr> dpmsa = std::make_shared<DerivedPosMovingSphereAvtShapeBldr>();
+    mainRsrc.insert("Function."s + name, dpmsa);
+    specificRsrc.insert("DerivedPosMovingSphereAvtShapeBldr."s + name, dpmsa);
+  }
+
+  void setup(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+    if(cfg) {
+      auto j = *cfg;
+
+      auto dpmsa = specificRsrc.get("DerivedPosMovingSphereAvtShapeBldr."s + name);
+
+      auto positionIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionIdx"s, "DerivedPosMovingSphereAvtShapeBldrFtry"s);
+      if(!positionIdx) {
+        return;
+      }
+      auto radiusidx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "radiusIdx"s, "DerivedPosMovingSphereAvtShapeBldrFtry"s);
+      if(!positionIdx) {
+        return;
+      }
+      auto min = JSONFactory::loadParamCfgDict<float>(floatDict, j, "min"s, "DerivedPosMovingSphereAvtShapeBldrFtry"s);
+      if(!min) {
+        return;
+      }
+      auto max = JSONFactory::loadParamCfgDict<float>(floatDict, j, "max"s, "DerivedPosMovingSphereAvtShapeBldrFtry"s);
+      if(!max) {
+        return;
+      }
+      auto period = JSONFactory::loadParamCfgDict<int64_t>(intDict, j, "period"s, "DerivedPosMovingSphereAvtShapeBldrFtry"s);
+      if(!period) {
+        return;
+      }
+      auto component = JSONFactory::loadParamCfgDict<int64_t>(intDict, j, "component"s, "DerivedPosMovingSphereAvtShapeBldrFtry"s);
+      if(!component) {
+        return;
+      }
+      dpmsa->setIdxs(*positionIdx, *radiusidx);
+      dpmsa->setRange(*min, *max);
+      dpmsa->setPeriod(*period);
+      dpmsa->setComponent(*component);
+
+    } else {
+      SysError::setError("DerivedPosMovingSphereAvtShapeBldrFtry config for "s + name + " not found."s);
+    }
+  }
+
+private:
+  using FunctionType = Funct<std::shared_ptr<SAvatar<MovingSphere>>, std::shared_ptr<Entity>>;
+  using ListType = TicketedForwardList<DerivedPosMovingSphereAvtShapeBldr::AvtBaseType>;
+  RsrcDictionary<float>& floatDict = RsrcDictionary<float>::getInstance();
+  RsrcDictionary<int64_t>& intDict = RsrcDictionary<int64_t>::getInstance();
+  RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
+  RsrcStore<nlohmann::json> &configRsrc                          = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<DerivedPosMovingSphereAvtShapeBldr>& specificRsrc    = RsrcStore<DerivedPosMovingSphereAvtShapeBldr>::getInstance();
+  RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
+};
+
 class DerivedPosMovingSphereAvtBldrFtry : public Factory {
+// This class where c&p to DerivedPosMovingSphereAvtShapeBldrFtry
 public:
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;

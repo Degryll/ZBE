@@ -55,7 +55,7 @@ using InatorBldr = zbe::InteractionatorBldr<zbe::CollisionData3D, Actor, Reactor
 
 // zandbokz interaction types builders factories
 using ActorBldrFtry = zbe::ActorBldrFtry<zbe::CollisionData3D, Solid>;
-using ReactorBldrFtry = zbe::ActorBldrFtry<zbe::CollisionData3D, Solid>;
+using ReactorBldrFtry = zbe::ReactorBldrFtry<zbe::CollisionData3D, Solid>;
 using ShapeBldrFtry = zbe::ShapeBldrFtry<zbe::MovingSphere, zbe::MovingSphere>;
 
 using InatorBldrFtry = zbe::InteractionatorBldrFtry<zbe::CollisionData3D, Actor, Reactor, zbe::MovingSphere>;

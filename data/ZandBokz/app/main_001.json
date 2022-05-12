@@ -55,7 +55,7 @@
     "cam.aspect" :{"type":"f", "value":1.333333},
     "cam.znear" :{"type":"f", "value":1.0},
     "cam.zfar" :{"type":"f", "value":1500.0},
-    "cam.fovMin" :{"type":"f", "value":90.0},
+    "cam.fovMin" :{"type":"f", "value":99.5},
     "cam.fovMax" :{"type":"f", "value":100.0},
     "cam.fovPeriod" :{"type":"i", "value":65536},
     "model.coordMin" :{"type":"f", "value":-100.0},
@@ -195,6 +195,13 @@
             "wflags":"testwflags",
             "rflags":"testrflags"
           }
+        },
+        {"factory": "TimeEventGnFtry",
+          "name": "loadScreen.timeEventGenerator",
+          "config" : {
+            "eventId" : "timeEventId",
+            "contextTime" : "DEFAULT"
+          }
         }]
       },
       {
@@ -313,7 +320,7 @@
           "name" : "zandbokz.pepinobuilder",
           "config" : {
             "contextTime":"DEFAULT",
-            "builders" : ["zandbokz.pepinovalues", "zandbokz.pepinoapintar", "zandbokz.pepinoabailar"]
+            "builders" : ["zandbokz.pepinovalues", "zandbokz.pepinoapintar", "zandbokz.pepinoabailar", "zandbokz.pepinosolidosocializa"]
           }
         },
         {
@@ -325,8 +332,10 @@
             },
             "double": {
               "degreesIdx":[50.0],
-              "scaleIdx":[1.5],
-              "sizeIdx":[50]
+              "scaleIdx":[1.5]
+            },
+            "float": {
+              "sizeIdx":[50.0]
             },
             "V3D": {
               "positionIdx":[-1.0, -10.0, 0.0],
@@ -360,9 +369,7 @@
         {
           "factory" :"ReactorBldrFtry",
           "name" : "zandbokz.reactorpepinosolido",
-          "config" : {
-            TODO: no está encontrando esto.
-          }
+          "config" : {}
         },
         {
           "factory" :"ShapeBldrFtry",
@@ -382,8 +389,123 @@
           }
         },
         {
-          "factory" :"DerivedPosMovingSphereAvtBldrFtry",
+          "factory" :"DerivedPosMovingSphereAvtShapeBldrFtry",
           "name" : "zandbokz.pepinorocoso",
+          "config" : {
+            "positionIdx" : "positionIdx",
+            "radiusIdx" : "sizeIdx",
+            "min" : "model.coordMin",
+            "max" : "model.coordMax",
+            "period" : "model.coordPeriod",
+            "component" : "model.sineComponent"
+          }
+        },
+        {
+          "factory" : "CopyVelFtry",
+          "name" : "zandbokz.copyvel",
+          "config" : {
+            "speed" : "bullet.speed"
+          }
+        },
+        {
+          "factory" : "CopyPosFtry",
+          "name" : "zandbokz.copypos",
+          "config" : {}
+        },
+        {
+          "factory" : "BehaviorEntityBldrFtry",
+          "name" : "zandbokz.dropcastaña",
+          "config" : {
+            "contextTime":"DEFAULT",
+            "builders" : ["zandbokz.castañavalues", "zandbokz.castañaapintar", "zandbokz.castañaefimera", "zandbokz.castañapalante", "zandbokz.castañasolidosocializa"],
+            "Vector3D" : {
+              "positionIdx" : "zandbokz.copypos",
+              "orientationIdx" : "zandbokz.copyvel"
+            }
+          }
+        },
+        {
+          "factory" : "EntityEraserBldrFtry",
+          "name" : "zandbokz.borrator",
+          "config" : {
+          }
+        },
+        {
+          "factory" : "EntityTimerBldrFtry",
+          "name" : "zandbokz.castañaefimera",
+          "config" : {
+            "handlerbuilder":"zandbokz.borrator",
+            "teg" : "loadScreen.timeEventGenerator",
+            "time" : "lifespan",
+            "ticketId" : "timeHandlerTicket",
+            "contextTime" : "DEFAULT"
+          }
+        },
+        {
+          "factory" :"EntitySetterFtry",
+          "name" : "zandbokz.castañavalues",
+          "config" : {
+            "uint": {
+              "gidIdx":["Castaña"]
+            },
+            "double": {
+              "degreesIdx":[50.0],
+              "scaleIdx":[1.5],
+              "sizeIdx":[50.0]
+            },
+            "V3D": {
+              "orientationIdx":[0.5, 0.5, 0.5]
+            }
+          }
+        },
+        {
+          "factory" :"Drawable3DAvtBldrFtry",
+          "name" : "zandbokz.castañaapintar",
+          "config" : {
+            "attribIndexes" : ["gidIdx", "scaleIdx", "degreesIdx", "orientationIdx", "positionIdx"],
+            "lists":{"loadScreen.drawList":"drawticket"}
+          }
+        },
+        {
+          "factory" :"TwoV3DAvtBldrFtry",
+          "name" : "zandbokz.castañapalante",
+          "config" : {
+            "attribIndexes" : ["orientationIdx", "positionIdx"],
+            "lists":{"loadScreen.ULM3DList":"ULM3DTicket"}
+          }
+        },
+        {
+          "factory" :"ActorBldrFtry",
+          "name" : "zandbokz.actorcastañasolido",
+          "config" : {
+            "solid" : "ENABLED"
+          }
+        },
+        {
+          "factory" :"ReactorBldrFtry",
+          "name" : "zandbokz.reactorcastañasolido",
+          "config" : {}
+        },
+        {
+          "factory" :"ShapeBldrFtry",
+          "name" : "zandbokz.aspectocastañasolido",
+          "config" : {
+            "shapetype" : "zandbokz.castañarocoso"
+          }
+        },
+        {
+          "factory" :"InerBldrFtry",
+          "name" : "zandbokz.castañasolidosocializa",
+          "config" : {
+            "actorbuilder" : "zandbokz.actorcastañasolido",
+            "reactorbuilder" : "zandbokz.reactorcastañasolido",
+            "shapebuilder" : "zandbokz.aspectocastañasolido",
+            "lists" : ["loadScreen.inerListFtry"]
+          }
+        },
+        {
+          "factory" :"DerivedPosMovingSphereAvtShapeBldrFtry",
+          "name" : "zandbokz.castañarocoso",
           "config" : {
             "positionIdx" : "positionIdx",
             "radiusIdx" : "sizeIdx",
@@ -559,13 +681,6 @@
             "interactionators" : "loadScreen.inatorListFtry"
           }
         },
-        {"factory": "TimeEventGnFtry",
-          "name": "loadScreen.timeEventGenerator",
-          "config" : {
-            "eventId" : "timeEventId",
-            "contextTime" : "DEFAULT"
-          }
-        },
         {"factory": "MainLoopExitFtry",
           "name": "loadScreen.exitDaemon",
           "config" : {
@@ -721,7 +836,7 @@
           "name": "loadScreen.OnceBulletCreatorDmn",
           "description" : "demonio girara la camara una vez y se va",
           "config" : {
-            "Daemon" : "loadScreen.shotDaemon",
+            "Daemon" : "loadScreen.shotDaemonB",
             "DaemonMaster" : "BehaviorsMD"
           }
         },
@@ -747,6 +862,14 @@
           "config" : {
             "list" : "loadScreen.BulletCreatorList",
             "behavior" : "loadScreen.BulletCreatorBhv"
+          }
+        },
+        {"factory": "FunctOverAvtListDmnFtry",
+          "name": "loadScreen.shotDaemonB",
+          "description" : "demonio girara la camara",
+          "config" : {
+            "list" : "loadScreen.BulletCreatorList",
+            "function" : "zandbokz.dropcastaña"
           }
         },
         {"factory": "MasterDmnFtry",

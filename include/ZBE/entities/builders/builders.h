@@ -60,6 +60,7 @@ public:
 
   void operator()(std::shared_ptr<MAvatar<T, Ts...>> avt) {
     std::shared_ptr<Entity> ent = std::make_shared<Entity>();
+    ent->setContextTime(contextTime);
 
     addValues<double>(ent, dCfgList, avt);
     addValues<float>(ent, fCfgList, avt);
@@ -115,12 +116,17 @@ public:
     builders.push_back(builder);
   }
 
+  void setContextTime(std::shared_ptr<ContextTime> contextTime) {
+    this->contextTime = contextTime;
+  }
+
 private:
 
   template<typename U>
   void addValues(std::shared_ptr<Entity> ent, std::forward_list<std::pair<uint64_t, std::shared_ptr<Funct<std::shared_ptr<Value<U>>, std::shared_ptr<MAvatar<T, Ts...>>>>>> cfgl, std::shared_ptr<MAvatar<T, Ts...>> avt) {
     for(auto& cfg : cfgl) {
-      ent->set<U>(cfg.first, cfg.second(avt));
+      std::shared_ptr<Funct<std::shared_ptr<Value<U>>, std::shared_ptr<MAvatar<T, Ts...>>>> second = cfg.second;
+      ent->set<U>(cfg.first, (*second)(avt)); //*(cfg.second)
     }
   }
 
@@ -135,6 +141,7 @@ private:
   std::forward_list<std::pair<uint64_t, std::shared_ptr<Funct<std::shared_ptr<Value<std::vector<std::string>>>, std::shared_ptr<MAvatar<T, Ts...>>>>>> slCfgList;
 
   std::deque<std::shared_ptr<Funct<void, std::shared_ptr<Entity>>>> builders;
+  std::shared_ptr<ContextTime> contextTime;
 
 };
 
@@ -691,13 +698,13 @@ public:
   }
 
   template<typename U>
-  std::shared_ptr<Funct<void(IData, U)>> buildFunct(std::shared_ptr<Entity> ent) {
-    return (*this->ReactorBldr<IData, U>::buildFunct)(ent);
+  std::shared_ptr<Funct<void, IData, U>> buildFunct(std::shared_ptr<Entity> ent) {
+    return this->ReactorBldr<IData, U>::buildFunct(ent);
   }
 
   template<typename U>
   void setReactionBuilder(std::shared_ptr<typename ReactorBldr<IData, U>::SubBuild> sb) {
-    (*this->ReactorBldr<IData, U>::setReactionBuilder)(sb);
+    this->ReactorBldr<IData, U>::setReactionBuilder(sb);
   }
 };
 
@@ -705,10 +712,9 @@ template<typename IData, typename Trait>
 class ReactorBldr<IData, Trait> : public Funct<Reactor<IData, Trait>, std::shared_ptr<Entity>> {
 public:
   using ReactFunct = Funct<void, IData, Trait>;
-  using SubBuild = Funct<ReactFunct, std::shared_ptr<Entity>>;
+  using SubBuild = Funct<std::shared_ptr<ReactFunct>, std::shared_ptr<Entity>>;
 
-  ReactorBldr() : sb(std::make_shared<WrapperFunct<ReactFunct, std::shared_ptr<Entity>>>([](std::shared_ptr<Entity>){return Reactor<IData, Trait>::noReaction;})) {}
-
+  ReactorBldr() : sb(std::make_shared<WrapperFunct<std::shared_ptr<ReactFunct>, std::shared_ptr<Entity>>>(noReactionSubBuild)) {}
 
   Reactor<IData, Trait> operator() (std::shared_ptr<Entity> ent) {
     Reactor<IData, Trait> reactor;
@@ -723,6 +729,9 @@ public:
     this->sb = sb;
   }
 private:
+  static std::shared_ptr<ReactFunct> noReactionSubBuild(std::shared_ptr<Entity>) {
+    return Reactor<IData, Trait>::noReaction;
+  }
   std::shared_ptr<SubBuild> sb;
 };
 
@@ -760,7 +769,7 @@ public:
     if(!cfg.contains(traitCfgName)) {
       return;
     }
-    if(cfg[traitCfgName].is_string()) {
+    if(!cfg[traitCfgName].is_string()) {
       SysError::setError("ActorBldrFtry config for "s + traitCfgName + " must be an string"s);
       failed = true;
       return;
@@ -841,7 +850,7 @@ public:
 
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
-    std::shared_ptr<ActorBldr<Traits...>> ab = std::make_shared<ActorBldr<Traits...>>();
+    std::shared_ptr<ReactorBldr<IData, Traits...>> ab = std::make_shared<ReactorBldr<IData, Traits...>>();
     mainRsrc.insert("Function."s + name, ab);
     specificRsrc.insert("ReactorBldr."s + name, ab);
   }
@@ -859,7 +868,7 @@ public:
     auto j = *cfg;
     int i = 0;
     bool failed = false;
-    std::initializer_list((addReactionBuilder<Traits>(traitCfgNames[i++], cfg, ab, failed), 0)...);
+    std::initializer_list<int>({(addReactionBuilder<Traits>(traitCfgNames[i++], j, ab, failed), 0)...});
   }
 
 private:
@@ -937,7 +946,7 @@ public:
         auto name = it.get<std::string>();
         auto storedName = zbe::factories::functionName + zbe::factories::separator + name;
         if(!extraBldrStore.contains(storedName)) {
-          SysError::setError("EntityBldrFtry builders config " + name + " inside Builders. is not an adecuate builder name."s);
+          SysError::setError("EntityBldrFtry builders config " + name + " (" + storedName + "). is not an adecuate builder name."s);
           return;
         }
         eb->addBldr(extraBldrStore.get(storedName));
@@ -1071,7 +1080,7 @@ private:
            ||(std::is_same<T, bool>::value && cfgValue.is_boolean())) {
         es->setNewValue<T>(id, cfgValue.get<T>());
       } else {
-        SysError::setError("EntitySetter parseValue error: "s + cfgValue.get<std::string>() + " is invalid."s);
+        SysError::setError("EntitySetter parseValue error: "s + item.key() + " is invalid."s);
       }
     }
   }
@@ -1135,6 +1144,80 @@ private:
   }
 };
 
+// template<typename VT, typename T, typename ...Ts>
+// std::shared_ptr<Funct<std::shared_ptr<Value<VT>>, std::shared_ptr<MAvatar<T, Ts...>>>> buildValueBldr(nlohmann::json cfg) {
+//   if(cfg["copy"] es numero) {
+//       //return BuildCopyValueBldr<VT, T, TS...>(cfg["copy"]);
+//   }
+// }
+
+// Necesitamos llamar a los get del avatar según un indice en tiempo de ejecución y no de compilación como tenemos ahora.
+// Ñapa:
+// Operador coma simulando un cadena de "or" con un valor que se arrastra a la siguiente llamada y
+// esta solo se ejecuta si la anterior no ha encontrado nada....
+// O algo mejor. por dió que se nos ocurra algo mejor.
+//
+// Si no encontramos una forma genérica lo hacemos manualmente. No nos engorilemos con esto.
+
+template<typename VT, unsigned n, typename T, typename ...Ts>
+struct BuildCopyValueBldr : public Funct<std::shared_ptr<Value<VT>>, std::shared_ptr<MAvatar<T, Ts...>>> {
+  std::shared_ptr<Value<VT>> operator()(std::shared_ptr<MAvatar<T, Ts...>> avt) {
+    auto val = AvtUtil::get<n, VT>(avt)->get();
+    return std::make_shared<SimpleValue<VT>>(val);
+  }
+};
+
+template<unsigned n, typename T, typename ...Ts>
+class BuildCopyVectModuleBldr : public Funct<std::shared_ptr<Value<Vector3D>>, std::shared_ptr<MAvatar<T, Ts...>>> {
+public:
+  std::shared_ptr<Value<Vector3D>> operator()(std::shared_ptr<MAvatar<T, Ts...>> avt) {
+    auto val = AvtUtil::get<n, Vector3D>(avt)->get();
+    return std::make_shared<SimpleValue<Vector3D>>(val.normalize()*module);
+  }
+  void setVectorModule(double module) {
+    this->module = module;
+  }
+private:
+  double module;
+};
+
+template<unsigned n, typename T, typename ...Ts>
+class BuildCopyVectModuleBldrFtry : public Factory {
+public:
+  void create(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    std::shared_ptr<BuildCopyVectModuleBldr<n, T, Ts...>> bcvmb = std::make_shared<BuildCopyVectModuleBldr<n, T, Ts...>>();
+    mainRsrc.insert("Function."s + name, bcvmb);
+    specificRsrc.insert("BuildCopyVectModuleBldr."s + name, bcvmb);
+  }
+
+  void setup(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);
+
+    if(!cfg) {
+      SysError::setError("BehaviorEntityBldrFtry config for "s + name + " not found."s);
+      return;
+    }
+    auto bcvmb = specificRsrc.get("BuildCopyVectModuleBldr."s + name);
+    auto j = *cfg;
+    auto speed = JSONFactory::loadParamCfgDict<double>(doubleDict, j, "speed"s, "EntityTimerBldrFtry"s);
+    if(!time) {
+      SysError::setError("BehaviorEntityBldr config for speed is invalid"s);
+      return;
+    }
+    bcvmb->setVectorModule(*speed);
+  }
+
+private:
+  RsrcStore<nlohmann::json>& configRsrc = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<Funct<std::shared_ptr<Value<Vector3D>>, std::shared_ptr<MAvatar<T, Ts...>>>>& mainRsrc = RsrcStore<Funct<std::shared_ptr<Value<Vector3D>>, std::shared_ptr<MAvatar<T, Ts...>>>>::getInstance();
+  RsrcStore<BuildCopyVectModuleBldr<n, T, Ts...>>& specificRsrc = RsrcStore<BuildCopyVectModuleBldr<n, T, Ts...>>::getInstance();
+  RsrcDictionary<double>& doubleDict = RsrcDictionary<double>::getInstance();
+};
+
+
 template<typename T, typename ...Ts>
 class BehaviorEntityBldrFtry : public Factory {
 public:
@@ -1158,27 +1241,34 @@ public:
     auto eb = specificRsrc.get("BehaviorEntityBldr."s + name);
     auto j = *cfg;
 
-    if(!addList2Bldr<double>(j, eb)
-    || !addList2Bldr<float>(j, eb)
-    || !addList2Bldr<uint64_t>(j, eb)
-    || !addList2Bldr<int64_t>(j, eb)
-    || !addList2Bldr<bool>(j, eb)
-    || !addList2Bldr<Vector3D>(j, eb)
-    || !addList2Bldr<Vector2D>(j, eb)
-    || !addList2Bldr<std::string>(j, eb)
-    || !addList2Bldr<std::vector<std::string>>>(j, eb)) {
+    if(!addList2Bldr<double>(j, "double"s, eb)
+    || !addList2Bldr<float>(j, "float"s, eb)
+    || !addList2Bldr<uint64_t>(j, "uint64_t"s, eb)
+    || !addList2Bldr<int64_t>(j, "int64_t"s, eb)
+    || !addList2Bldr<bool>(j, "bool"s, eb)
+    || !addList2Bldr<Vector3D>(j, "Vector3D"s, eb)
+    || !addList2Bldr<Vector2D>(j, "Vector2D"s, eb)
+    || !addList2Bldr<std::string>(j, "String"s, eb)
+    || !addList2Bldr<std::vector<std::string>>(j, "VString"s, eb)) {
       return;
-    };
+    }
+    auto contextTime = JSONFactory::loadParamCfgStoreP<ContextTime>(cTimeRsrc, j, zbe::factories::contextimeName, "contextTime"s, "BehaviorEntityBldrFtry"s);
+    if(!contextTime) {
+      SysError::setError("BehaviorEntityBldrFtry config for contextTime is invalid"s);
+      return;
+    }
+    eb->setContextTime(*contextTime);
 
     if (j["builders"].is_array()) {
       auto builders = j["builders"];
       for(auto it : builders) {
         auto name = it.get<std::string>();
-        if(!extraBldrStore.contains("Builders."s + name)) {
-          SysError::setError("BehaviorEntityBldrFtry builders config " + name + " inside Builders. is not an adecuate builder name."s);
+        auto storedName = zbe::factories::functionName + zbe::factories::separator + name;
+        if(!extraBldrStore.contains(storedName)) {
+          SysError::setError("BehaviorEntityBldrFtry builders config " + name + " (" + storedName + "). is not an adecuate builder name."s);
           return;
         }
-        eb->addBldr(extraBldrStore.get("Builders."s + name));
+        eb->addBldr(extraBldrStore.get(storedName));
       }
     } else if(j.contains("builders")) {
       SysError::setError("BehaviorEntityBldrFtry config for builders, if present, must be a array."s);
@@ -1188,22 +1278,36 @@ public:
 private:
 
   template<typename VT>
-  bool addList2Bldr(nlohmann::json& j, std::string type, std::shared_ptr<BehaviorEntityBldr<VT>> eb) {
+  bool addList2Bldr(nlohmann::json& j, std::string type, std::shared_ptr<BehaviorEntityBldr<T, Ts...>> eb) {
     using namespace std::string_literals;
+    if(!j.contains(type)) {
+      return true;
+    }
     if (j[type].is_object()) {
       auto dcfg = j[type];
       for (auto item : dcfg.items()) {
         auto key = item.key();
-        if(auto valueBuilder = JSONFactory::loadParamCfgStoreP<ValueBldr<double>>(doubleBldrStore, dcfg, "Builders."s, key, "BehaviorEntityBldrFtry"s)) {
-          eb->addValueBldr(valueBuilder);
-          return true;
-        } else {
-          SysError::setError("EntityBuilderFtry config for " + type + " " + key +" is not a " + type + " value builder name."s);
+        auto idx = JSONFactory::loadParamStrDict<uint64_t>(uintDict, key, "BehaviorEntityBldrFtry"s);
+        if(!idx) {
+          SysError::setError("BehaviorEntityBldrFtry config for " + type + " " + key +" is not an uint name."s);
           return false;
         }
+        // auto valueCfg = item.value();
+        // if(auto valueCfg.is_object()) {
+        //   auto valueBuilder = buildValueBldr<VT>(valueCfg);
+        //   eb->addValueBldr({*idx, valueBuilder});
+        // } else {
+          auto valueBuilder = JSONFactory::loadParamCfgStoreP<ValueBldr<VT>>(RsrcStore<ValueBldr<VT>>::getInstance(), dcfg, zbe::factories::functionName, key, "BehaviorEntityBldrFtry"s);
+          if(valueBuilder) {
+            eb->addValueBldr({*idx, *valueBuilder});
+          } else {
+            SysError::setError("BehaviorEntityBldrFtry config for " + type + " contains invalida values name."s);
+            return false;
+          }
+        // }
       }
-    } else if(j.contains(type)) {
-      SysError::setError("EntityBuilderFtry config for " + type + ", if present, must be a array."s);
+    } else {
+      SysError::setError("BehaviorEntityBldrFtry config for " + type + ", if present, must be an object."s);
       return false;
     }
     return true;
@@ -1217,21 +1321,9 @@ private:
   RsrcStore<Funct<void, std::shared_ptr<MAvatar<T, Ts...>>>>& mainRsrc = RsrcStore<Funct<void, std::shared_ptr<MAvatar<T, Ts...>>>>::getInstance();
   RsrcStore<BehaviorEntityBldr<T, Ts...>>& specificRsrc = RsrcStore<BehaviorEntityBldr<T, Ts...>>::getInstance();
 
-  RsrcStore<ValueBldr<double>>& doubleBldrStore = RsrcStore<ValueBldr<double>>::getInstance();
-  RsrcStore<ValueBldr<float>>& floatBldrStore = RsrcStore<ValueBldr<float>>::getInstance();
-  RsrcStore<ValueBldr<uint64_t>>& uintBldrStore = RsrcStore<ValueBldr<uint64_t>>::getInstance();
-  RsrcStore<ValueBldr<int64_t>>& intBldrStore = RsrcStore<ValueBldr<int64_t>>::getInstance();
-  RsrcStore<ValueBldr<bool>>& boolBldrStore = RsrcStore<ValueBldr<bool>>::getInstance();
-  RsrcStore<ValueBldr<Vector3D>>& v3DBldrStore = RsrcStore<ValueBldr<Vector3D>>::getInstance();
-  RsrcStore<ValueBldr<Vector2D>>& v2DBldrStore = RsrcStore<ValueBldr<Vector2D>>::getInstance();
-  RsrcStore<ValueBldr<std::string>>& stringBldrStore = RsrcStore<ValueBldr<std::string>>::getInstance();
-  RsrcStore<ValueBldr<std::vector<std::string>>>& vStringBldrStore = RsrcStore<ValueBldr<std::vector<std::string>>>::getInstance();
-
   RsrcStore<Funct<void, std::shared_ptr<Entity>>>& extraBldrStore = RsrcStore<Funct<void, std::shared_ptr<Entity>>>::getInstance();
-
   RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
-
-  //std::deque<Funct<void, std::shared_ptr<Entity>>> builders;
+  RsrcStore<ContextTime>& cTimeRsrc = RsrcStore<ContextTime>::getInstance();
 
 };
 
@@ -1275,11 +1367,12 @@ public:
       auto builders = j["builders"];
       for(auto it : builders) {
         auto name = it.get<std::string>();
-        if(!extraBldrStore.contains("Builders."s + name)) {
-          SysError::setError("BehaviorEntityBldrFtry builders config " + name + " inside Builders. is not an adecuate builder name."s);
+        auto storedName = zbe::factories::functionName + zbe::factories::separator + name;
+        if(!extraBldrStore.contains(storedName)) {
+          SysError::setError("BehaviorEntityBldrFtry builders config " + name + " (" + storedName + "). is not an adecuate builder name."s);
           return;
         }
-        eb->addBldr(extraBldrStore.get("Builders."s + name));
+        eb->addBldr(extraBldrStore.get(storedName));
       }
     } else if(j.contains("builders")) {
       SysError::setError("BehaviorEntityBldrFtry config for builders, if present, must be a array."s);
@@ -1295,7 +1388,7 @@ private:
       auto dcfg = j[type];
       for (auto item : dcfg.items()) {
         auto key = item.key();
-        if(auto valueBuilder = JSONFactory::loadParamCfgStoreP<ValueBldr<double>>(doubleBldrStore, dcfg, "Builders."s, key, "BehaviorEntityBldrFtry"s)) {
+        if(auto valueBuilder = JSONFactory::loadParamCfgStoreP<ValueBldr<double>>(doubleBldrStore, dcfg, zbe::factories::functionName, key, "BehaviorEntityBldrFtry"s)) {
           eb->addValueBldr(valueBuilder);
           return true;
         } else {
@@ -1466,6 +1559,96 @@ private:
   RsrcStore<typename InerBldr::ReactorTypeBldr>& reactorBldrRsrc = RsrcStore<typename InerBldr::ReactorTypeBldr>::getInstance();
   RsrcStore<typename InerBldr::ShapeBldr>& shapeBldrRsrc = RsrcStore<typename InerBldr::ShapeBldr>::getInstance();
   RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
+};
+
+class EntityTimerBldr : public Funct<void, std::shared_ptr<Entity>> {
+public:
+  void operator()(std::shared_ptr<Entity> ent) {
+    auto ticket = teg->addRelativeTimer((*handlerBuilder)(ent), time);
+    ent->addTicket(ticketId, ticket);
+  }
+
+  void setHandlerBuilder(std::shared_ptr<Funct<std::shared_ptr<TimeHandler>, std::shared_ptr<Entity>>> handlerBuilder) {
+    this->handlerBuilder = handlerBuilder;
+  }
+
+  void setTeg(std::shared_ptr<TimeEventGenerator> teg, uint64_t time, uint64_t ticketId) {
+    this->teg = teg;
+    this->time = time;
+    this->ticketId = ticketId;
+  }
+
+private:
+  std::shared_ptr<Funct<std::shared_ptr<TimeHandler>, std::shared_ptr<Entity>>> handlerBuilder;
+  std::shared_ptr<TimeEventGenerator> teg;
+  uint64_t time;
+  uint64_t ticketId;
+};
+
+class EntityTimerBldrFtry : public Factory {
+public:
+  void create(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    std::shared_ptr<EntityTimerBldr> etb = std::make_shared<EntityTimerBldr>();
+    mainRsrc.insert("Function."s + name, etb);
+    specificRsrc.insert("EntityTimerBldr."s + name, etb);
+  }
+
+  void setup(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);
+
+    if(!cfg) {
+      SysError::setError("EntityTimerBldrFtry config for "s + name + " not found."s);
+      return;
+    }
+    auto etb = specificRsrc.get("EntityTimerBldr."s + name);
+    auto j = *cfg;
+
+    auto handlerBldr = JSONFactory::loadParamCfgStoreP<HandlerBldrType>(handlerBldrRsrc, j, zbe::factories::functionName, "handlerbuilder"s, "EntityTimerBldrFtry"s);
+    if(!handlerBldr) {
+      SysError::setError("EntityTimerBldrFtry config for handlerbuilder is invalid"s);
+      return;
+    }
+    etb->setHandlerBuilder(*handlerBldr);
+
+    auto contextTime = JSONFactory::loadParamCfgStoreP<ContextTime>(cTimeRsrc, j, zbe::factories::contextimeName, "contextTime"s, "EntityTimerBldrFtry"s);
+    if(!contextTime) {
+      SysError::setError("EntityTimerBldrFtry config for contextTime is invalid"s);
+      return;
+    }
+
+    auto teg = JSONFactory::loadParamCfgStoreP<TimeEventGenerator>(tegRsrc, j, "TimeEventGenerator"s, "teg"s, "EntityTimerBldrFtry"s);
+    if(!teg) {
+      SysError::setError("EntityTimerBldrFtry config for teg is invalid"s);
+      return;
+    }
+
+    auto time = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "time"s, "EntityTimerBldrFtry"s);
+    if(!time) {
+      SysError::setError("EntityTimerBldrFtry config for time is invalid"s);
+      return;
+    }
+
+    auto ticketId = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "ticketId"s, "EntityTimerBldrFtry"s);
+    if(!ticketId) {
+      SysError::setError("EntityTimerBldrFtry config for time is invalid"s);
+      return;
+    }
+    etb->setTeg(*teg, *time, *ticketId);
+  }
+
+private:
+  using HandlerBldrType = Funct<std::shared_ptr<TimeHandler>, std::shared_ptr<Entity>>;
+  RsrcStore<nlohmann::json>& configRsrc = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<Funct<void, std::shared_ptr<Entity>>>& mainRsrc = RsrcStore<Funct<void, std::shared_ptr<Entity>>>::getInstance();
+  RsrcStore<EntityTimerBldr>& specificRsrc = RsrcStore<EntityTimerBldr>::getInstance();
+
+  RsrcStore<ContextTime>& cTimeRsrc = RsrcStore<ContextTime>::getInstance();
+  RsrcStore<TimeEventGenerator>& tegRsrc = RsrcStore<TimeEventGenerator>::getInstance();
+  RsrcStore<HandlerBldrType>& handlerBldrRsrc = RsrcStore<HandlerBldrType>::getInstance();
+  RsrcDictionary<uint64_t> &uintDict = RsrcDictionary<uint64_t>::getInstance();
 };
 
 }  // namespace zbe

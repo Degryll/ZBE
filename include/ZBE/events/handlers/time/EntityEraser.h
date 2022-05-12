@@ -20,6 +20,7 @@
 #include "ZBE/core/system/SysError.h"
 #include "ZBE/core/system/SysIdGenerator.h"
 
+#include "ZBE/core/tools/tools.h"
 #include "ZBE/core/tools/containers/RsrcStore.h"
 #include "ZBE/core/tools/containers/RsrcDictionary.h"
 #include "ZBE/core/entities/Entity.h"
@@ -109,6 +110,12 @@ private:
   RsrcStore<Entity> &entityStore = RsrcStore<Entity>::getInstance();
   RsrcStore<TimeHandler> &timeStore = RsrcStore<TimeHandler>::getInstance();
   RsrcStore<EntityEraser> &timeEraserStore = RsrcStore<EntityEraser>::getInstance();
+};
+
+class EntityEraserBldr : public Funct<std::shared_ptr<TimeHandler>, std::shared_ptr<Entity>> {
+  std::shared_ptr<TimeHandler> operator()(std::shared_ptr<Entity> ent) {
+      return std::make_shared<EntityEraser>(ent);
+  }
 };
 
 }  // namespace zbe
