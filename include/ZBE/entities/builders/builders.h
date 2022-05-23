@@ -15,7 +15,6 @@
 #include <string>
 #include <initializer_list>
 
-
 #include "ZBE/core/entities/Entity.h"
 #include "ZBE/core/entities/avatars/Avatar.h"
 #include "ZBE/core/entities/avatars/implementations/BaseAvatar.h"
@@ -545,7 +544,6 @@ public:
     ReactorType reactor = (*reactorBuilder)(ent);
     std::shared_ptr<Shape<Shapes...>> shape = (*shapeBuilder)(ent);
     auto iner = std::make_shared<Iner>(shape, actor, reactor);
-
     for(auto pair : inerLists) {
       auto ticket = pair.second->push_front(iner);
       ent->addTicket(pair.first, ticket);
@@ -719,6 +717,7 @@ public:
   Reactor<IData, Trait> operator() (std::shared_ptr<Entity> ent) {
     Reactor<IData, Trait> reactor;
     reactor.setReaction((*sb)(ent));
+    return reactor;
   }
 
   std::shared_ptr<ReactFunct> buildFunct(std::shared_ptr<Entity> ent) {
@@ -1514,7 +1513,6 @@ public:
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);
-
     if(!cfg) {
       SysError::setError("InteractionerBldrFtry config for "s + name + " not found."s);
       return;
@@ -1536,11 +1534,9 @@ public:
       SysError::setError("InteractionerBldrFtry config for shapebuilder is invalid"s);
       return;
     }
-
     inerb->setActorBldr(*actorBuilder);
     inerb->setReactorBldr(*reactorBuilder);
     inerb->setShapeBldr(*shapeBuilder);
-
     JSONFactory::loadAllIndexed<typename InerBldr::InerList>(listRsrc, uintDict, j, zbe::factories::listName, "lists"s, "InteractionerBldrFtry"s,
         [&](uint64_t idx, std::shared_ptr<typename InerBldr::InerList> list) {
           inerb->addInerList(idx, list);

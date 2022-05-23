@@ -38,12 +38,19 @@ int main(int /*argc*/, char** /*argv*/) {
    init();
    printf("Hello ZandBokz\n");
    BaseFactories::load();
+   printf("Base loaded\n");
    SDLFactories::load();
+   printf("SDL\n");
    OGLFactories::load();
+   printf("OGL\n");
    GLTFFactories::load();
+   printf("GLTF\n");
    ZBEFactories::load();
+   printf("ZBE\n");
    JSONFactories::load();
+   printf("JSON\n");
    ZandBokzFactories::load();
+   printf("ZandBokz\n");
 
    // Esto deberia ir a un ZandBokzFactories.h
    // template <typename Selector, typename Overloaded, typename IData, typename ActorType, typename ReactorType, typename ...Shapes>
@@ -56,7 +63,6 @@ int main(int /*argc*/, char** /*argv*/) {
 
    auto& factories = RsrcStore<Factory>::getInstance();
    factories.insert("MovingSphereCollideEventGeneratorFtry", std::make_shared<InteractionEventGeneratorFtry<ZandBokzSelector, ZandBokzOverloaded, zbe::CollisionData3D, ActorType, ReactorType, zbe::MovingSphere> >());
-
    // Load App.
    std::cout << SysError::getFirstErrorString() << "\n";
    JSONAppLoader appLoader;

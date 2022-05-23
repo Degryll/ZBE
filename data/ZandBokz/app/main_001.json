@@ -26,8 +26,7 @@
     "camPosVelTicket" : 1090,
     "ULM3DTicket" : 1100,
     "BulletCreatorTicket" : 1200,
-    "lifespan" : 165536,
-
+    "lifespan" : 33107200,
     "fovIdx" : 3100,
     "targetIdx" : 3200,
     "upwardsIdx" : 3300,
@@ -68,7 +67,7 @@
     "model.pitch" :{"type":"f", "value":-0.01},
     "model.yaw" :{"type":"f", "value":-0.01},
     "model.sineComponent" : 0,
-    "bullet.speed" : {"type":"d", "value":100.0},
+    "bullet.speed" : {"type":"d", "value":200.0},
     "crosshairsPos" :{"type":"v2", "value":[0.0,0.0]},
     "crosshairsSize" :{"type":"v2", "value":[0.25,0.25]},
     "TODOindices":""
@@ -320,7 +319,8 @@
           "name" : "zandbokz.pepinobuilder",
           "config" : {
             "contextTime":"DEFAULT",
-            "builders" : ["zandbokz.pepinovalues", "zandbokz.pepinoapintar", "zandbokz.pepinoabailar", "zandbokz.pepinosolidosocializa"]
+            "builders" : ["zandbokz.pepinovalues", "zandbokz.pepinoapintar", "zandbokz.pepinoabailar", "zandbokz.pepinosolidosocializa"],
+            "buildersBack" : ["zandbokz.pepinovalues", "zandbokz.pepinoapintar", "zandbokz.pepinoabailar", "zandbokz.pepinosolidosocializa"]
           }
         },
         {
@@ -450,7 +450,7 @@
             },
             "double": {
               "degreesIdx":[50.0],
-              "scaleIdx":[1.5],
+              "scaleIdx":[0.5],
               "sizeIdx":[50.0]
             },
             "V3D": {
@@ -628,6 +628,9 @@
               "loadScreen.coordOscillatorDaemon",
               "loadScreen.ULM3DDaemon"
             ],
+            "pruebas" : {
+              "castañaporframe" : "loadScreen.shotDaemonB"
+            },
             "disabledDaemons": [
               "loadScreen.goForwardDaemon",
               "loadScreen.goBackwardDaemon",
@@ -866,7 +869,7 @@
         },
         {"factory": "FunctOverAvtListDmnFtry",
           "name": "loadScreen.shotDaemonB",
-          "description" : "demonio girara la camara",
+          "description" : "demonio caga castañas",
           "config" : {
             "list" : "loadScreen.BulletCreatorList",
             "function" : "zandbokz.dropcastaña"

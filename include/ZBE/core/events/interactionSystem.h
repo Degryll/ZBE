@@ -62,6 +62,7 @@ template<typename IData, typename Trait>
 class Reactor<IData, Trait> {
 public:
     Reactor() : reaction(noReaction) {}
+    Reactor(std::shared_ptr<Funct<void,IData, Trait>> reaction) : reaction(reaction) {}
     Reactor(const Reactor& rhs) : reaction(rhs.reaction) {}
     static std::shared_ptr<Funct<void,IData, Trait>> noReaction;
 
