@@ -23,24 +23,23 @@
 					<Add option="-isystem ../../../extlibs/glm/0.9.9.0/glm" />
 					<Add option="-std=c++17" />
 					<Add option="-D_GLIBCXX_USE_CXX11_ABI=0" />
-					<Add directory="../../../src/ZandBokz/include" />
-					<Add directory="../../../include" />
-					<Add directory="../../../extlibs/utf8cpp/source" />
-					<Add directory="../../../extlibs/boost_1_57_0" />
-					<Add directory="../../../extlibs/IteratorTypeErasure/IteratorTypeErasure/any_iterator" />
-					<Add directory="../../../extlibs/SDL2/2.0.5/x86_64-w64-mingw32/include" />
-					<Add directory="../../../extlibs/SDL2/2.0.5/x86_64-w64-mingw32/include/SDL2" />
+					<Add directory="../../../extlibs/SDL2/2.0.8/include" />
+					<Add directory="../../../extlibs/SDL2/2.0.8/include/SDL2" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.1/x86_64-w64-mingw32/include" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.14/x86_64-w64-mingw32/include" />
 					<Add directory="../../../extlibs/SDL2_net/2.0.1/include" />
+					<Add directory="../../../extlibs/GLEW/2.1.0/include" />
 					<Add directory="../../../extlibs/imgui-1.76" />
 					<Add directory="../../../extlibs/imgui-1.76/examples" />
 					<Add directory="../../../extlibs/tinygltf" />
 					<Add directory="../../../extlibs/stb_image" />
-					<Add directory="../../../extlibs/GLEW/2.1.0/include" />
 					<Add directory="../../../extlibs/glm/0.9.9.0" />
+					<Add directory="../../../include" />
+					<Add directory="../../../src/ZandBokz/include" />
+					<Add directory="../../../extlibs/utf8cpp/source" />
 				</Compiler>
 				<Linker>
+					<Add option="-s" />
 					<Add option="-m64" />
 					<Add library="mingw32" />
 					<Add library="ZBE_x64d" />
@@ -49,12 +48,15 @@
 					<Add library="SDL2_image" />
 					<Add library="SDL2_ttf" />
 					<Add library="SDL2_net" />
+					<Add library="glew32" />
+					<Add library="openGL32" />
 					<Add directory="../../../lib" />
-					<Add directory="../../../extlibs/SDL2/2.0.5/x86_64-w64-mingw32/lib" />
+					<Add directory="../../../extlibs/SDL2/2.0.8/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.1/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.14/x86_64-w64-mingw32/lib" />
 					<Add directory="../../../extlibs/SDL2_net/2.0.1/x86_64-w64-mingw32/lib" />
-					<Add directory="../../../extlibs/GLEW/2.1.0/linux/lib" />
+					<Add directory="../../../extlibs/GLEW/2.1.0/windows/lib/Release/x64" />
+					<Add directory="../../../extlibs/OALSoft/1.18.2/windows/lib" />
 				</Linker>
 			</Target>
 			<Target title="Release-Win64">
@@ -70,21 +72,19 @@
 					<Add option="-isystem ../../../extlibs/glm/0.9.9.0/glm" />
 					<Add option="-std=c++17" />
 					<Add option="-D_GLIBCXX_USE_CXX11_ABI=0" />
-					<Add directory="../../../src/ZandBokz/include" />
-					<Add directory="../../../include" />
-					<Add directory="../../../extlibs/boost_1_57_0" />
-					<Add directory="../../../extlibs/IteratorTypeErasure/IteratorTypeErasure/any_iterator" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/include" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/include/SDL2" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.1/x86_64-w64-mingw32/include" />
 					<Add directory="../../../extlibs/SDL2_ttf/2.0.14/x86_64-w64-mingw32/include" />
 					<Add directory="../../../extlibs/SDL2_net/2.0.1/include" />
+					<Add directory="../../../extlibs/GLEW/2.1.0/include" />
 					<Add directory="../../../extlibs/imgui-1.76" />
 					<Add directory="../../../extlibs/imgui-1.76/examples" />
 					<Add directory="../../../extlibs/tinygltf" />
 					<Add directory="../../../extlibs/stb_image" />
-					<Add directory="../../../extlibs/GLEW/2.1.0/include" />
 					<Add directory="../../../extlibs/glm/0.9.9.0" />
+					<Add directory="../../../include" />
+					<Add directory="../../../src/ZandBokz/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -247,9 +247,6 @@
 		<Unit filename="../../../src/ZandBokz/include/ZandBokzInteractionSystem.h" />
 		<Unit filename="../../../src/ZandBokz/include/zandbokz.h" />
 		<Unit filename="../../../src/ZandBokz/src/zandbokz.cpp" />
-		<Extensions>
-			<code_completion />
-			<debugger />
-		</Extensions>
+		<Extensions />
 	</Project>
 </CodeBlocks_project_file>
