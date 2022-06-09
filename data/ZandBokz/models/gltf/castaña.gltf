@@ -8,50 +8,26 @@
         {
             "name" : "Scene",
             "nodes" : [
-                0,
-                1,
-                2
+                0
             ]
         }
     ],
     "nodes" : [
         {
-            "name" : "Light",
-            "rotation" : [
-                0.16907575726509094,
-                0.7558803558349609,
-                -0.27217137813568115,
-                0.570947527885437
-            ],
-            "translation" : [
-                4.076245307922363,
-                5.903861999511719,
-                -1.0054539442062378
-            ]
-        },
-        {
-            "name" : "Camera",
-            "rotation" : [
-                0.483536034822464,
-                0.33687159419059753,
-                -0.20870360732078552,
-                0.7804827094078064
-            ],
-            "translation" : [
-                7.358891487121582,
-                4.958309173583984,
-                6.925790786743164
-            ]
-        },
-        {
             "mesh" : 0,
-            "name" : "Chestnut"
+            "name" : "Chestnut",
+            "rotation" : [
+                1,
+                0,
+                0,
+                -1.3435885648505064e-07
+            ]
         }
     ],
     "materials" : [
         {
             "doubleSided" : true,
-            "name" : "Material.001",
+            "name" : "Material.005",
             "pbrMetallicRoughness" : {
                 "baseColorTexture" : {
                     "index" : 0,
@@ -64,7 +40,7 @@
     ],
     "meshes" : [
         {
-            "name" : "Chestnut",
+            "name" : "Chestnut.002",
             "primitives" : [
                 {
                     "attributes" : {
@@ -94,29 +70,29 @@
         {
             "bufferView" : 0,
             "componentType" : 5126,
-            "count" : 942,
+            "count" : 924,
             "max" : [
-                0.4888739585876465,
-                0.5754897594451904,
-                0.2439141869544983
+                0.5005834102630615,
+                0.5000002384185791,
+                0.2560322880744934
             ],
             "min" : [
-                -0.5122921466827393,
-                -0.4245101511478424,
-                -0.26746469736099243
+                -0.5005826950073242,
+                -0.4999997913837433,
+                -0.2553465962409973
             ],
             "type" : "VEC3"
         },
         {
             "bufferView" : 1,
             "componentType" : 5126,
-            "count" : 942,
+            "count" : 924,
             "type" : "VEC3"
         },
         {
             "bufferView" : 2,
             "componentType" : 5126,
-            "count" : 942,
+            "count" : 924,
             "type" : "VEC2"
         },
         {
@@ -129,28 +105,28 @@
     "bufferViews" : [
         {
             "buffer" : 0,
-            "byteLength" : 11304,
+            "byteLength" : 11088,
             "byteOffset" : 0
         },
         {
             "buffer" : 0,
-            "byteLength" : 11304,
-            "byteOffset" : 11304
+            "byteLength" : 11088,
+            "byteOffset" : 11088
         },
         {
             "buffer" : 0,
-            "byteLength" : 7536,
-            "byteOffset" : 22608
+            "byteLength" : 7392,
+            "byteOffset" : 22176
         },
         {
             "buffer" : 0,
             "byteLength" : 5304,
-            "byteOffset" : 30144
+            "byteOffset" : 29568
         }
     ],
     "buffers" : [
         {
-            "byteLength" : 35448,
+            "byteLength" : 34872,
             "uri" : "casta\u00f1a.bin"
         }
     ]
