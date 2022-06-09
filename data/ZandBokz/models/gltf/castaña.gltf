@@ -8,19 +8,44 @@
         {
             "name" : "Scene",
             "nodes" : [
-                0
+                0,
+                1,
+                2
             ]
         }
     ],
     "nodes" : [
         {
-            "mesh" : 0,
-            "name" : "Chestnut",
+            "name" : "Light",
+            "rotation" : [
+                0.16907575726509094,
+                0.7558803558349609,
+                -0.27217137813568115,
+                0.570947527885437
+            ],
             "translation" : [
-                -6.454966068267822,
-                0,
-                0
+                4.076245307922363,
+                5.903861999511719,
+                -1.0054539442062378
             ]
+        },
+        {
+            "name" : "Camera",
+            "rotation" : [
+                0.483536034822464,
+                0.33687159419059753,
+                -0.20870360732078552,
+                0.7804827094078064
+            ],
+            "translation" : [
+                7.358891487121582,
+                4.958309173583984,
+                6.925790786743164
+            ]
+        },
+        {
+            "mesh" : 0,
+            "name" : "Chestnut"
         }
     ],
     "materials" : [
@@ -69,29 +94,29 @@
         {
             "bufferView" : 0,
             "componentType" : 5126,
-            "count" : 939,
+            "count" : 942,
             "max" : [
-                3.710239887237549,
-                9.229485511779785,
-                1.3386601209640503
+                0.4888739585876465,
+                0.5754897594451904,
+                0.2439141869544983
             ],
             "min" : [
-                -6.570603370666504,
-                -1.0393829345703125,
-                -3.912623405456543
+                -0.5122921466827393,
+                -0.4245101511478424,
+                -0.26746469736099243
             ],
             "type" : "VEC3"
         },
         {
             "bufferView" : 1,
             "componentType" : 5126,
-            "count" : 939,
+            "count" : 942,
             "type" : "VEC3"
         },
         {
             "bufferView" : 2,
             "componentType" : 5126,
-            "count" : 939,
+            "count" : 942,
             "type" : "VEC2"
         },
         {
@@ -104,28 +129,28 @@
     "bufferViews" : [
         {
             "buffer" : 0,
-            "byteLength" : 11268,
+            "byteLength" : 11304,
             "byteOffset" : 0
         },
         {
             "buffer" : 0,
-            "byteLength" : 11268,
-            "byteOffset" : 11268
+            "byteLength" : 11304,
+            "byteOffset" : 11304
         },
         {
             "buffer" : 0,
-            "byteLength" : 7512,
-            "byteOffset" : 22536
+            "byteLength" : 7536,
+            "byteOffset" : 22608
         },
         {
             "buffer" : 0,
             "byteLength" : 5304,
-            "byteOffset" : 30048
+            "byteOffset" : 30144
         }
     ],
     "buffers" : [
         {
-            "byteLength" : 35352,
+            "byteLength" : 35448,
             "uri" : "casta\u00f1a.bin"
         }
     ]
