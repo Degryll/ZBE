@@ -15,17 +15,7 @@
     "nodes" : [
         {
             "mesh" : 0,
-            "name" : "Circle.003",
-            "scale" : [
-                0.10000000149011612,
-                0.10000000149011612,
-                0.10000000149011612
-            ],
-            "translation" : [
-                0,
-                0,
-                -8
-            ]
+            "name" : "Circle.003"
         }
     ],
     "materials" : [
@@ -74,63 +64,63 @@
         {
             "bufferView" : 0,
             "componentType" : 5126,
-            "count" : 21830,
+            "count" : 2706,
             "max" : [
-                1.6537307500839233,
-                5.428763389587402,
-                1.6451773643493652
+                0.14955298602581024,
+                0.4999999403953552,
+                0.1485605537891388
             ],
             "min" : [
-                -1.641845703125,
-                -5.6520795822143555,
-                -1.7425397634506226
+                -0.14821062982082367,
+                -0.49999287724494934,
+                -0.157657653093338
             ],
             "type" : "VEC3"
         },
         {
             "bufferView" : 1,
             "componentType" : 5126,
-            "count" : 21830,
+            "count" : 2706,
             "type" : "VEC3"
         },
         {
             "bufferView" : 2,
             "componentType" : 5126,
-            "count" : 21830,
+            "count" : 2706,
             "type" : "VEC2"
         },
         {
             "bufferView" : 3,
             "componentType" : 5123,
-            "count" : 32532,
+            "count" : 5850,
             "type" : "SCALAR"
         }
     ],
     "bufferViews" : [
         {
             "buffer" : 0,
-            "byteLength" : 261960,
+            "byteLength" : 32472,
             "byteOffset" : 0
         },
         {
             "buffer" : 0,
-            "byteLength" : 261960,
-            "byteOffset" : 261960
+            "byteLength" : 32472,
+            "byteOffset" : 32472
         },
         {
             "buffer" : 0,
-            "byteLength" : 174640,
-            "byteOffset" : 523920
+            "byteLength" : 21648,
+            "byteOffset" : 64944
         },
         {
             "buffer" : 0,
-            "byteLength" : 65064,
-            "byteOffset" : 698560
+            "byteLength" : 11700,
+            "byteOffset" : 86592
         }
     ],
     "buffers" : [
         {
-            "byteLength" : 763624,
+            "byteLength" : 98292,
             "uri" : "pepino.bin"
         }
     ]
