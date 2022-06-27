@@ -294,6 +294,7 @@
 		<Unit filename="../../../include/ZBE/ImGui/daemons/ImGuiPostLoopDaemon.h" />
 		<Unit filename="../../../include/ZBE/ImGui/daemons/ImGuiPreLoopDaemon.h" />
 		<Unit filename="../../../include/ZBE/ImGui/events/ImGuiEventWatcher.h" />
+		<Unit filename="../../../include/ZBE/JSON/JSONFactory.h" />
 		<Unit filename="../../../include/ZBE/JSON/factories/JSONFactories.h" />
 		<Unit filename="../../../include/ZBE/JSON/graphics/JSONGraphicsLoaders.h" />
 		<Unit filename="../../../include/ZBE/JSON/resources/JSONAudioDefLoader.h" />
@@ -434,7 +435,6 @@
 		<Unit filename="../../../include/ZBE/core/entities/avatars/implementations/SimpleStatedSprite.h" />
 		<Unit filename="../../../include/ZBE/core/events/Event.h" />
 		<Unit filename="../../../include/ZBE/core/events/EventStore.h" />
-		<Unit filename="../../../include/ZBE/core/events/EventWatcher.h" />
 		<Unit filename="../../../include/ZBE/core/events/InputEvent.h" />
 		<Unit filename="../../../include/ZBE/core/events/InteractionEvent.h" />
 		<Unit filename="../../../include/ZBE/core/events/NetEvent.h" />
@@ -459,6 +459,10 @@
 		<Unit filename="../../../include/ZBE/core/events/handlers/NetHandler.h" />
 		<Unit filename="../../../include/ZBE/core/events/handlers/TextHandler.h" />
 		<Unit filename="../../../include/ZBE/core/events/handlers/TimeHandler.h" />
+		<Unit filename="../../../include/ZBE/core/events/interactionFunctions.h" />
+		<Unit filename="../../../include/ZBE/core/events/interactionSystem.h" />
+		<Unit filename="../../../include/ZBE/core/events/shapes.h" />
+		<Unit filename="../../../include/ZBE/core/events/traits.h" />
 		<Unit filename="../../../include/ZBE/core/io/FileHandler.h" />
 		<Unit filename="../../../include/ZBE/core/io/Input.h" />
 		<Unit filename="../../../include/ZBE/core/io/InputBuffer.h" />
@@ -528,6 +532,7 @@
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/SimpleBounceable.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/SimpleSingleModel.h" />
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/ValuedSingleModel.h" />
+		<Unit filename="../../../include/ZBE/entities/builders/builders.h" />
 		<Unit filename="../../../include/ZBE/entities/implementations/Console.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/actuators/BouncerAtor.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/actuators/ConditionalEraserAtor.h" />
@@ -537,6 +542,7 @@
 		<Unit filename="../../../include/ZBE/events/handlers/input/ActivatorIH.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/input/AddText.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/input/BroadcastIH.h" />
+		<Unit filename="../../../include/ZBE/events/handlers/input/CommonInputHandlers.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/input/DaemonClickIH.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/input/DaemonIH.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/input/ExecuteCommandIH.h" />
@@ -696,6 +702,8 @@
 				<general />
 			</DoxyBlocks>
 			<lib_finder disable_auto="1" />
+			<code_completion />
+			<debugger />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>
