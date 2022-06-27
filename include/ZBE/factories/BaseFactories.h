@@ -37,6 +37,7 @@
 #include "ZBE/events/handlers/input/ParametricActivatorIH.h"
 #include "ZBE/events/handlers/input/ActivatorIH.h"
 #include "ZBE/events/handlers/input/KeyDownTicketEnablerIH.h"
+#include "ZBE/events/handlers/input/CommonInputHandlers.h"
 #include "ZBE/events/handlers/time/EntityEraser.h"
 
 #include "ZBE/core/events/generators/InputEventGenerator.h"
@@ -46,6 +47,8 @@
 #include "ZBE/daemons/OnceDaemon.h"
 #include "ZBE/core/daemons/VoidDaemon.h"
 #include "ZBE/core/system/system.h"
+
+#include "ZBE/entities/builders/builders.h"
 
 #include "ZBE/behaviors/SineOscillator.h"
 #include "ZBE/behaviors/UniformLinearMotion.h"
@@ -76,6 +79,10 @@ public:
     RsrcStore<ContextTime>::getInstance().insert("ContextTime.DEFAULT", SysTime::getInstance());
     RsrcStore<Daemon>::getInstance().insert("Daemon.DEFAULT", std::make_shared<VoidDaemon>());
 
+    // --- Builders
+    factories.insert("EntityBldrFtry", std::make_shared<EntityBldrFtry>());
+    factories.insert("EntitySetterFtry", std::make_shared<EntitySetterFtry>());
+
     // --- Entities
     factories.insert("EntityFtry", std::make_shared<EntityFtry>());
 
@@ -89,7 +96,6 @@ public:
     factories.insert("OnceDaemonFtry", std::make_shared<OnceDaemonFtry>());
     factories.insert("StateMachineDmnFtry", std::make_shared<StateMachineDmnFtry>());
     factories.insert("RsrcFolderLoaderDmnFtry", std::make_shared<RsrcFolderLoaderDmnFtry>());
-    factories.insert("InputEventGeneratorFtry", std::make_shared<InputEventGeneratorFtry>());
 
     // --- Behaviors
     factories.insert("SineOscillatorFFtry", std::make_shared<SineOscillatorFFtry>());
@@ -104,6 +110,8 @@ public:
     // --- Events
     // --- --- Event generators
     factories.insert("TimeEventGnFtry", std::make_shared<TimeEventGnFtry>());
+    factories.insert("InputEventGeneratorFtry", std::make_shared<InputEventGeneratorFtry>());
+
 
     // --- --- Event input handlers
     factories.insert("BroadcastIHFtry", std::make_shared<BroadcastIHFtry>());
@@ -114,12 +122,17 @@ public:
     factories.insert("ParametricActivatorIHFtry", std::make_shared<ParametricActivatorIHFtry>());
     factories.insert("ActivatorIHFtry", std::make_shared<ActivatorIHFtry>());
     factories.insert("KeyDownTicketEnablerIHFtry", std::make_shared<KeyDownTicketEnablerIHFtry>());
+    factories.insert("V3DKeyValueSetterIHFtry", std::make_shared<KeyValueSetterIHFtry<Vector3D>>());
+
 
     // --- --- Event time handlers
     factories.insert("DaemonRecurrentTimeHandlerFtry", std::make_shared<DaemonRecurrentTimeHandlerFtry>());
     factories.insert("DaemonTimeHandlerFtry", std::make_shared<DaemonTimeHandlerFtry>());
     factories.insert("TicketEraserFtry", std::make_shared<TicketEraserFtry>());
-    factories.insert("EntityEraserFtry", std::make_shared<EntityEraserFtry>());
+    factories.insert("EntityEraserTHFtry", std::make_shared<EntityEraserTHFtry>());
+    factories.insert("EntityEraserTHBldrFtry", std::make_shared<GenericFtry<Funct<std::shared_ptr<TimeHandler>, std::shared_ptr<Entity>>, EntityEraserTHBldr> >(factories::functionName, "EntityEraserTHBldr"));
+    factories.insert("EntityTimerBldrFtry", std::make_shared<EntityTimerBldrFtry>());
+
 
     // --- --- creators
     factories.insert("BulletCreatorFtry", std::make_shared<BulletCreatorFtry>());
