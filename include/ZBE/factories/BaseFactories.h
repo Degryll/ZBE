@@ -47,8 +47,6 @@
 #include "ZBE/core/daemons/VoidDaemon.h"
 #include "ZBE/core/system/system.h"
 
-#include "ZBE/entities/builders/builders.h"
-
 #include "ZBE/behaviors/SineOscillator.h"
 #include "ZBE/behaviors/UniformLinearMotion.h"
 #include "ZBE/behaviors/Rotation.h"
@@ -78,10 +76,6 @@ public:
     RsrcStore<ContextTime>::getInstance().insert("ContextTime.DEFAULT", SysTime::getInstance());
     RsrcStore<Daemon>::getInstance().insert("Daemon.DEFAULT", std::make_shared<VoidDaemon>());
 
-    // --- Builders
-    factories.insert("EntityBldrFtry", std::make_shared<EntityBldrFtry>());
-    factories.insert("EntitySetterFtry", std::make_shared<EntitySetterFtry>());
-
     // --- Entities
     factories.insert("EntityFtry", std::make_shared<EntityFtry>());
 
@@ -95,6 +89,7 @@ public:
     factories.insert("OnceDaemonFtry", std::make_shared<OnceDaemonFtry>());
     factories.insert("StateMachineDmnFtry", std::make_shared<StateMachineDmnFtry>());
     factories.insert("RsrcFolderLoaderDmnFtry", std::make_shared<RsrcFolderLoaderDmnFtry>());
+    factories.insert("InputEventGeneratorFtry", std::make_shared<InputEventGeneratorFtry>());
 
     // --- Behaviors
     factories.insert("SineOscillatorFFtry", std::make_shared<SineOscillatorFFtry>());
@@ -109,8 +104,6 @@ public:
     // --- Events
     // --- --- Event generators
     factories.insert("TimeEventGnFtry", std::make_shared<TimeEventGnFtry>());
-    factories.insert("InputEventGeneratorFtry", std::make_shared<InputEventGeneratorFtry>());
-
 
     // --- --- Event input handlers
     factories.insert("BroadcastIHFtry", std::make_shared<BroadcastIHFtry>());
@@ -127,8 +120,6 @@ public:
     factories.insert("DaemonTimeHandlerFtry", std::make_shared<DaemonTimeHandlerFtry>());
     factories.insert("TicketEraserFtry", std::make_shared<TicketEraserFtry>());
     factories.insert("EntityEraserFtry", std::make_shared<EntityEraserFtry>());
-    factories.insert("EntityEraserBldrFtry", std::make_shared<GenericFtry<Funct<std::shared_ptr<TimeHandler>, std::shared_ptr<Entity>>, EntityEraserBldr> >(factories::functionName, "EntityEraserBldr"));
-    factories.insert("EntityTimerBldrFtry", std::make_shared<EntityTimerBldrFtry>());
 
     // --- --- creators
     factories.insert("BulletCreatorFtry", std::make_shared<BulletCreatorFtry>());
