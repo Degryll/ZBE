@@ -99,6 +99,7 @@ private:
   RsrcStore<FunctOverAvtListDmn<F,L>>& specificRsrc = RsrcStore<FunctOverAvtListDmn<F,L>>::getInstance();
   RsrcStore<L>& listRsrc = RsrcStore<L>::getInstance();
   RsrcStore<F>& functRsrc = RsrcStore<F>::getInstance();
+
   //RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
 };
 

@@ -94,6 +94,8 @@ public:
     factories.insert("DerivedPosMovingSphereAvtShapeBldrFtry", std::make_shared<DerivedPosMovingSphereAvtShapeBldrFtry>());
     factories.insert("LookAtToPitchAvtBldrFtry", std::make_shared<LookAtToPitchAvtBldrFtry>());
     factories.insert("LookAtToYawAvtBldrFtry", std::make_shared<LookAtToYawAvtBldrFtry>());
+    //factories.insert("MovingSphereAvtBldrFtry", std::make_shared<MovingSphereAvtBldrFtry>());
+    factories.insert("MovingSphereAvtShapeBldrFtry", std::make_shared<MovingSphereAvtShapeBldrFtry>());
 
     // Avatars
     factories.insert("Drawable2DAvtFtry", std::make_shared<BaseAvatarFtry<uint64_t, int64_t, double, Vector2D, Vector2D> >());
@@ -139,6 +141,7 @@ public:
     factories.insert("TFAECLookAtAvtFtry" , std::make_shared<SimpleGenericFtry<LookAtAvtList> >(factories::listName));
 
     factories.insert("TwoV3DAvtFtry", std::make_shared<BaseAvatarFtry<Vector3D, Vector3D> >());
+
   }
 };
 

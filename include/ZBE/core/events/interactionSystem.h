@@ -285,7 +285,7 @@ private:
 class RayRay {
 public:
   bool operator()(std::shared_ptr<Ray> , std::shared_ptr<Ray> , int64_t , CollisionData &data) {
-    printf("RayRay\n");fflush(stdout);
+    fprintf(f,"RayRay\n");fflush(stdout);
     data.time = 5;
     data.point = zbe::Vector3D{4.0,2.0,0.0};
     return true;
@@ -313,7 +313,9 @@ class InteractionSelector {
 public:
   virtual ~InteractionSelector() = default;
   bool select(std::shared_ptr<Shape<Shapes...>> i1, std::shared_ptr<Shape<Shapes...>> i2, std::variant<int64_t> timeLimit, std::variant<IData>& data) {
-    return std::visit(getOverloaded(), i1->getShape(), i2->getShape(), timeLimit, data);
+    auto a = i1->getShape();
+    auto b = i2->getShape();
+    return std::visit(getOverloaded(), a, b, timeLimit, data);
   }
 
   virtual Overloaded getOverloaded() = 0;
@@ -362,10 +364,9 @@ public:
   }
 
   void run() {
-    int64_t totalTime = contextTime->getRemainTime();
-
+    int64_t timeLimit = contextTime->getRemainTime();
     for(auto iator : (*ators)) {
-      getCollision(iator, totalTime);
+      getCollision(iator, timeLimit);
     }
   }
 
@@ -384,13 +385,14 @@ private:
     auto iners = ator->getIners();
     for(auto iner : *iners) {
       std::variant<IData> vdata;
-      if (selector->select(ator->getShape(), iner->getShape(), vbest, vdata)) {
+      auto a = ator->getShape();
+      auto b = iner->getShape();
+      if (selector->select(a, b, vbest, vdata)) {
         IData data = std::get<IData>(vdata);
         int64_t best = data.time;
         vbest = best;
-        std::cout << "InteractionEG time: " << best << std::endl;
-        auto iea = new InteractionEvent<IData, ActorType, ReactorType>(id, best, data, ator->getActor(), iner->getReactor());
-        auto ieb = new InteractionEvent<IData, ActorType, ReactorType>(id, best, data, iner->getActor(), ator->getReactor());
+        auto iea = new InteractionEvent<IData, ActorType, ReactorType>(id, contextTime->getEventTime() + best, data, ator->getActor(), iner->getReactor());
+        auto ieb = new InteractionEvent<IData, ActorType, ReactorType>(id, contextTime->getEventTime() + best, data, iner->getActor(), ator->getReactor());
         this->es.storeEvent(iea);
         this->es.storeEvent(ieb);
       }

@@ -40,7 +40,7 @@
     ],
     "meshes" : [
         {
-            "name" : "Chestnut.001",
+            "name" : "Chestnut",
             "primitives" : [
                 {
                     "attributes" : {

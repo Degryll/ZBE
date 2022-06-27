@@ -99,7 +99,7 @@ public:
         auto ticket = list->push_front(bhvAvt);
         e->addTicket(listref.second, ticket);
       }
-      std::shared_ptr<EntityEraser> ee = std::make_shared<EntityEraser>(e);
+      std::shared_ptr<EntityEraserTH> ee = std::make_shared<EntityEraserTH>(e);
       auto ticket = teg->addRelativeTimer(ee, time);
       e->addTicket(ticketId, ticket);
       e->setContextTime(cTime);

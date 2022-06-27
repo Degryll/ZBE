@@ -226,6 +226,195 @@ private:
   int64_t component;
 };
 
+class MovingSphereAvt : public SAvatar<MovingSphere>, public AvatarImp {
+public:
+  void setupEntity(std::shared_ptr<Entity> entity, uint64_t positionidx, uint64_t velocityidx, uint64_t radiusidx) {
+    AvatarImp::setupEntity(entity);
+    _Avatar<1, MovingSphere>::setup(&getSphere, &setSphere, (void*)this);
+    position = entity->getVector3D(positionidx);
+    velocity = entity->getVector3D(velocityidx);
+    radius = entity->getFloat(radiusidx);
+    cTime = entity->getContextTime();
+  }
+
+  static std::shared_ptr<Value<MovingSphere> > getSphere(void *instance) {
+    auto  msa = (MovingSphereAvt*)instance;
+    auto& position = msa->position;
+    auto& velocity = msa->velocity;
+    auto p = position->get();
+    auto v = velocity->get();
+    auto r = msa->radius->get();
+    auto time = msa->cTime->getTotalTime();
+    Sphere s(p.toPoint(), r);
+    MovingSphere ms{s, v};
+    auto out = std::make_shared<SimpleValue<MovingSphere> >();
+    out->set(ms);
+    return out;
+  }
+
+  static void setSphere(void *instance, MovingSphere position) {
+    assert(false);
+  }
+
+  std::shared_ptr<Entity> getEntity() {
+    assert(false);
+  }
+
+private:
+ std::shared_ptr<Value<Vector3D> > position;
+ std::shared_ptr<Value<Vector3D> > velocity;
+ std::shared_ptr<Value<float> > radius;
+ std::shared_ptr<ContextTime> cTime;
+};
+
+
+
+class MovingSphereAvtShapeBldr  : public Funct<std::shared_ptr<SAvatar<MovingSphere>>, std::shared_ptr<Entity>> {
+public:
+  using AvtBaseType = SAvatar<MovingSphere>;
+  std::shared_ptr<SAvatar<MovingSphere>> operator()(std::shared_ptr<Entity> ent) {
+    std::shared_ptr<MovingSphereAvt> avt = std::make_shared<MovingSphereAvt>();
+    avt->setupEntity(ent, positionidx, velocityidx, radiusidx);
+    return avt;
+  }
+
+  void setIdxs(uint64_t positionidx, uint64_t velocityidx, uint64_t radiusidx) {
+      this->positionidx = positionidx;
+      this->velocityidx = velocityidx;
+      this->radiusidx = radiusidx;
+  }
+
+private:
+ uint64_t positionidx;
+ uint64_t velocityidx;
+ uint64_t radiusidx;
+};
+
+
+class MovingSphereAvtShapeBldrFtry : public Factory {
+// This class where c&p from DerivedPosMovingSphereAvtBldrFtry removing list managment
+public:
+  void create(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    std::shared_ptr<MovingSphereAvtShapeBldr> msasb = std::make_shared<MovingSphereAvtShapeBldr>();
+    mainRsrc.insert("Function."s + name, msasb);
+    specificRsrc.insert("MovingSphereAvtShapeBldr."s + name, msasb);
+  }
+
+  void setup(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+    if(cfg) {
+      auto j = *cfg;
+
+      auto msasb = specificRsrc.get("MovingSphereAvtShapeBldr."s + name);
+
+      auto positionIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionIdx"s, "MovingSphereAvtShapeBldrFtry"s);
+      if(!positionIdx) {
+        return;
+      }
+      auto velocityIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "velocityIdx"s, "MovingSphereAvtShapeBldrFtry"s);
+      if(!velocityIdx) {
+        return;
+      }
+      auto radiusidx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "radiusIdx"s, "MovingSphereAvtShapeBldrFtry"s);
+      if(!positionIdx) {
+        return;
+      }
+      msasb->setIdxs(*positionIdx, *velocityIdx, *radiusidx);
+
+    } else {
+      SysError::setError("MovingSphereAvtShapeBldrFtry config for "s + name + " not found."s);
+    }
+  }
+
+private:
+  using FunctionType = Funct<std::shared_ptr<SAvatar<MovingSphere>>, std::shared_ptr<Entity>>;
+  using ListType = TicketedForwardList<MovingSphereAvtShapeBldr::AvtBaseType>;
+  RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
+  RsrcStore<nlohmann::json> &configRsrc                          = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<MovingSphereAvtShapeBldr>& specificRsrc    = RsrcStore<MovingSphereAvtShapeBldr>::getInstance();
+  RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
+};
+
+class MovingSphereAvtBldr : public Funct<std::shared_ptr<SAvatar<MovingSphere>>, std::shared_ptr<Entity>> {
+public:
+  using AvtBaseType = SAvatar<MovingSphere>;
+  std::shared_ptr<SAvatar<MovingSphere>> operator()(std::shared_ptr<Entity> ent) {
+    std::shared_ptr<MovingSphereAvt> avt = std::make_shared<MovingSphereAvt>();
+    avt->setupEntity(ent, positionidx, velocityidx, radiusidx);
+    for(auto indexNList : indexNLists) {
+      auto ticket = indexNList.second->push_front(avt);
+      ent->addTicket(indexNList.first, ticket);
+    }
+  }
+
+  void setIdxs(uint64_t positionidx, uint64_t velocityidx, uint64_t radiusidx) {
+      this->positionidx = positionidx;
+      this->velocityidx = velocityidx;
+      this->radiusidx = radiusidx;
+  }
+
+  void addIndexNlist(uint64_t index, std::shared_ptr<TicketedForwardList<AvtBaseType>> list) {
+    indexNLists.push_back({index, list});
+  }
+
+private:
+ uint64_t positionidx;
+ uint64_t velocityidx;
+ uint64_t radiusidx;
+ std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> indexNLists;
+};
+
+class MovingSphereAvtBldrFtry : public Factory {
+public:
+  void create(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    std::shared_ptr<MovingSphereAvtBldr> msab = std::make_shared<MovingSphereAvtBldr>();
+    mainRsrc.insert("Function."s + name, msab);
+    specificRsrc.insert("MovingSphereAvtBldr."s + name, msab);
+  }
+
+  void setup(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+    if(cfg) {
+      auto j = *cfg;
+
+      auto msab = specificRsrc.get("MovingSphereAvtBldr."s + name);
+
+      auto positionIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionIdx"s, "MovingSphereAvtBldrFtry"s);
+      if(!positionIdx) {
+        return;
+      }
+      auto velocityIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "velocityIdx"s, "MovingSphereAvtBldrFtry"s);
+      if(!positionIdx) {
+        return;
+      }
+      auto radiusidx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "radiusIdx"s, "MovingSphereAvtBldrFtry"s);
+      if(!positionIdx) {
+        return;
+      }
+      msab->setIdxs(*positionIdx, *velocityIdx, *radiusidx);
+
+    } else {
+      SysError::setError("MovingSphereAvtBldrFtry config for "s + name + " not found."s);
+    }
+  }
+
+private:
+  using FunctionType = Funct<std::shared_ptr<SAvatar<MovingSphere>>, std::shared_ptr<Entity>>;
+  using ListType = TicketedForwardList<MovingSphereAvtBldr::AvtBaseType>;
+  RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
+  RsrcStore<nlohmann::json> &configRsrc                          = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<MovingSphereAvtBldr>& specificRsrc    = RsrcStore<MovingSphereAvtBldr>::getInstance();
+  RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
+};
+
 class DerivedPosMovingSphereAvt : public SAvatar<MovingSphere>, public AvatarImp {
 public:
 

@@ -553,6 +553,9 @@ bool intersectionMovingNSphereOutsideMovingNSphere(NSphere<dim> sphere1, Vector<
   if(result) {
     point = point + (velocity2 * time);
   }
+  //TODO: Hay hacer una reacción (botar o eliminar... más sencillo eliminar)
+  //printf("Collide? %d\n", result);fflush(stdout);
+  //printf("Point %lf %lf %lf\n", point.x, point.y,point.z);fflush(stdout);
   return result;
 }
 

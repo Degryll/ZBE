@@ -30,10 +30,11 @@ class EntityBldr : public Funct<void> {
 public:
   void operator()() {
     std::shared_ptr<Entity> ent = std::make_shared<Entity>();
+    ent->setContextTime(contextTime);
     for(auto& builder : builders) {
       (*builder)(ent);
     }
-    ent->setContextTime(contextTime);
+
   }
 
   void addBldr(std::shared_ptr<Funct<void, std::shared_ptr<Entity>>> builder) {
@@ -579,6 +580,7 @@ public:
   using Inator = Interactionator<ActorType, ReactorType, Shapes...>;
   using Iner = Interactioner<ActorType, ReactorType, Shapes...>;
   using InerList = TicketedForwardList<Iner>;
+  using InatorList = TicketedForwardList<Inator>;
   using ActorTypeBldr = Funct<ActorType, std::shared_ptr<Entity>>;
   using ReactorTypeBldr = Funct<ReactorType, std::shared_ptr<Entity>>;
   using ShapeBldr = Funct<std::shared_ptr<Shape<Shapes...>>, std::shared_ptr<Entity>>;
@@ -592,6 +594,11 @@ public:
     inator->setIners(internalInerList);
 
     for(auto pair : inerLists) {
+      auto ticket = pair.second->push_front(inator);
+      ent->addTicket(pair.first, ticket);
+    }
+
+    for(auto pair : inatorLists) {
       auto ticket = pair.second->push_front(inator);
       ent->addTicket(pair.first, ticket);
     }
@@ -613,6 +620,10 @@ public:
     inerLists.push_front(std::pair<uint64_t, std::shared_ptr<TicketedForwardList<Iner>>>(idx, list));
   }
 
+  void addInatorList(uint64_t idx, std::shared_ptr<InatorList> list) {
+    inatorLists.push_front(std::pair<uint64_t, std::shared_ptr<TicketedForwardList<Inator>>>(idx, list));
+  }
+
   void setInternalInerList(std::shared_ptr<InerList> internalInerList) {
     this->internalInerList = internalInerList;
   }
@@ -622,6 +633,7 @@ private:
   std::shared_ptr<ReactorTypeBldr> reactorBuilder;
   std::shared_ptr<ShapeBldr> shapeBuilder;
   std::forward_list<std::pair<uint64_t, std::shared_ptr<InerList>>> inerLists;
+  std::forward_list<std::pair<uint64_t, std::shared_ptr<InatorList>>> inatorLists;
   std::shared_ptr<InerList> internalInerList;
 };
 
@@ -830,18 +842,19 @@ public:
     if(!cfg.contains(traitCfgName)) {
       return;
     }
-    if(cfg[traitCfgName].is_string()) {
-      SysError::setError("ReactorBldrFtry config for "s + traitCfgName + " must be an string");
+    if(!cfg[traitCfgName].is_string()) {
+      SysError::setError("ReactorBldrFtry config for "s + traitCfgName + " must be an string but is " + cfg[traitCfgName].dump());
       failed = true;
       return;
     }
     std::string builderName = cfg[traitCfgName].get<std::string>();
-    if(builderStore.contains(builderName)) {
+    auto storedName = zbe::factories::functionName + zbe::factories::separator + builderName;
+    if(!builderStore.contains(storedName )) {
       SysError::setError("ReactorBldrFtry config for "s + traitCfgName + " is not a builder name");
       failed = true;
       return;
     }
-    auto bldr = builderStore.get(builderName);
+    auto bldr = builderStore.get(storedName );
     reactorBldr->setReactionBuilder(bldr);
   }
 
@@ -1476,9 +1489,16 @@ public:
     inatorb->setShapeBldr(*shapeBuilder);
     inatorb->setInternalInerList(*list);
 
-    JSONFactory::loadAllIndexed<typename InatorBldr::InerList>(listInerRsrc, uintDict, j, zbe::factories::listName, "lists"s, "InteractionatorBldrFtry"s,
+    JSONFactory::loadAllIndexed<typename InatorBldr::InerList>(listInerRsrc, uintDict, j, zbe::factories::listName, "inerlists"s, "InteractionatorBldrFtry"s,
         [&](uint64_t idx, std::shared_ptr<typename InatorBldr::InerList> list) {
           inatorb->addInerList(idx, list);
+          return true;
+        }
+    );
+
+    JSONFactory::loadAllIndexed<typename InatorBldr::InatorList>(listAtorRsrc, uintDict, j, zbe::factories::listName, "inatorlists"s, "InteractionatorBldrFtry"s,
+        [&](uint64_t idx, std::shared_ptr<typename InatorBldr::InatorList> list) {
+          inatorb->addInatorList(idx, list);
           return true;
         }
     );
