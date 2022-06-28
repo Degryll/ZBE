@@ -22,6 +22,7 @@
 					<Add option="-isystem ../../../extlibs/json" />
 					<Add option="-isystem ../../../extlibs/glm/0.9.9.0/glm" />
 					<Add option="-std=c++17" />
+					<Add option="-Og" />
 					<Add option="-D_GLIBCXX_USE_CXX11_ABI=0" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/include" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/include/SDL2" />
@@ -247,9 +248,6 @@
 		<Unit filename="../../../src/ZandBokz/include/ZandBokzInteractionSystem.h" />
 		<Unit filename="../../../src/ZandBokz/include/zandbokz.h" />
 		<Unit filename="../../../src/ZandBokz/src/zandbokz.cpp" />
-		<Extensions>
-			<code_completion />
-			<debugger />
-		</Extensions>
+		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

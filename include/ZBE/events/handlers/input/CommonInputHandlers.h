@@ -67,7 +67,7 @@ private:
 };
 
 template<typename T>
-class ZBEAPI KeyValueSetterIHFtry : public Factory {
+class KeyValueSetterIHFtry : public Factory {
 
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
