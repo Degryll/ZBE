@@ -1,0 +1,215 @@
+{
+    "asset" : {
+        "generator" : "Khronos glTF Blender I/O v0.9.36",
+        "version" : "2.0"
+    },
+    "scene" : 0,
+    "scenes" : [
+        {
+            "name" : "Scene",
+            "nodes" : [
+                0
+            ]
+        }
+    ],
+    "nodes" : [
+        {
+            "mesh" : 0,
+            "name" : "fuedafl",
+            "scale" : [
+                0.29943200945854187,
+                0.29943200945854187,
+                0.29943200945854187
+            ]
+        }
+    ],
+    "materials" : [
+        {
+            "doubleSided" : true,
+            "name" : "ruedas",
+            "pbrMetallicRoughness" : {
+                "baseColorTexture" : {
+                    "index" : 0,
+                    "texCoord" : 0
+                },
+                "metallicFactor" : 0,
+                "roughnessFactor" : 1
+            }
+        },
+        {
+            "doubleSided" : true,
+            "name" : "Carro",
+            "pbrMetallicRoughness" : {
+                "baseColorTexture" : {
+                    "index" : 1,
+                    "texCoord" : 0
+                },
+                "metallicFactor" : 0.46666666865348816,
+                "roughnessFactor" : 0.19999998807907104
+            }
+        }
+    ],
+    "meshes" : [
+        {
+            "name" : "ruedafl",
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "POSITION" : 0,
+                        "NORMAL" : 1,
+                        "TEXCOORD_0" : 2
+                    },
+                    "indices" : 3,
+                    "material" : 0
+                },
+                {
+                    "attributes" : {
+                        "POSITION" : 4,
+                        "NORMAL" : 5,
+                        "TEXCOORD_0" : 6
+                    },
+                    "indices" : 7,
+                    "material" : 1
+                }
+            ]
+        }
+    ],
+    "textures" : [
+        {
+            "source" : 0
+        },
+        {
+            "source" : 1
+        }
+    ],
+    "images" : [
+        {
+            "mimeType" : "image/png",
+            "name" : "ruedas_color",
+            "uri" : "ruedas_color.png"
+        },
+        {
+            "mimeType" : "image/png",
+            "name" : "Carro Base Color",
+            "uri" : "Carro Base Color.png"
+        }
+    ],
+    "accessors" : [
+        {
+            "bufferView" : 0,
+            "componentType" : 5126,
+            "count" : 4486,
+            "max" : [
+                3.2279675006866455,
+                0.2837773561477661,
+                2.8687148094177246
+            ],
+            "min" : [
+                -4.572032928466797,
+                -1.616222858428955,
+                -2.868725299835205
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 1,
+            "componentType" : 5126,
+            "count" : 4486,
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 2,
+            "componentType" : 5126,
+            "count" : 4486,
+            "type" : "VEC2"
+        },
+        {
+            "bufferView" : 3,
+            "componentType" : 5123,
+            "count" : 7632,
+            "type" : "SCALAR"
+        },
+        {
+            "bufferView" : 4,
+            "componentType" : 5126,
+            "count" : 3038,
+            "max" : [
+                5.487967491149902,
+                1.7234342098236084,
+                2.6843976974487305
+            ],
+            "min" : [
+                -5.917502403259277,
+                -0.7662234306335449,
+                -2.684408187866211
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 5,
+            "componentType" : 5126,
+            "count" : 3038,
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 6,
+            "componentType" : 5126,
+            "count" : 3038,
+            "type" : "VEC2"
+        },
+        {
+            "bufferView" : 7,
+            "componentType" : 5123,
+            "count" : 6090,
+            "type" : "SCALAR"
+        }
+    ],
+    "bufferViews" : [
+        {
+            "buffer" : 0,
+            "byteLength" : 53832,
+            "byteOffset" : 0
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 53832,
+            "byteOffset" : 53832
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 35888,
+            "byteOffset" : 107664
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 15264,
+            "byteOffset" : 143552
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 36456,
+            "byteOffset" : 158816
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 36456,
+            "byteOffset" : 195272
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 24304,
+            "byteOffset" : 231728
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 12180,
+            "byteOffset" : 256032
+        }
+    ],
+    "buffers" : [
+        {
+            "byteLength" : 268212,
+            "uri" : "carro.bin"
+        }
+    ]
+}
