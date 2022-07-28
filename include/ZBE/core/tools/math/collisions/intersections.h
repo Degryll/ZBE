@@ -581,6 +581,8 @@ bool intersectionMovingNSphereOutsideNSphere(NSphere<dim> sphere1, Vector<dim> v
   return result;
 }
 
+// ----------------------------- Triangles
+
 }  // namespace zbe
 
 #endif  // ZBE_CORE_TOOLS_MATH_COLLISIONS_INTERSECTIONS_H_

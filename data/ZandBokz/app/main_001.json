@@ -126,6 +126,12 @@
           "config" : {}
         },
         {
+          "factory": "TFOALAvtFtry",
+          "description" : "lista para audio",
+          "name": "loadScreen.audiolist",
+          "config" : {}
+        },
+        {
           "factory": "TFAECTwoV3DAvtFtry",
           "description" : "do some serious sheet",
           "name": "loadScreen.pitchList",
@@ -230,6 +236,24 @@
             "contextTime":"DEFAULT",
             "inputBuffer":"SDLOGLWindow.zandbokz.mainwindow.InputBuffer",
             "inputTextBuffer":"SDLOGLWindow.zandbokz.mainwindow.InputTextBuffer"
+          }
+        },
+        {
+          "factory": "OALudioStoreFtry",
+          "name":"zandbokz.audiostore",
+          "config" : {}
+        },
+        {
+          "factory": "JSONAudioDefLoaderFtry",
+          "name":"zandbokz.JSONAudioDefLoader",
+          "config" : {}
+        },
+        {
+          "factory": "OALAudioLoaderFtry",
+          "name":"zandbokz.oalLoader",
+          "config" : {
+            "audiodef" : "zandbokz.JSONAudioDefLoader",
+            "audiostore" : "zandbokz.audiostore"
           }
         },
         {
@@ -817,6 +841,13 @@
             "programId" : "base_program2D"
           }
         },
+        {"factory": "Sound3DOALPlayerFtry",
+          "name": "loadScreen.audioplayer",
+          "description" : "comportamiento que reproduce sonidos",
+          "config" : {
+            "audiostore" : "zandbokz.audiostore"
+          }
+        },
         {"factory": "SineOscillatorFFtry",
           "name": "loadScreen.fovOscillator",
           "description" : "Comportamiento que menea el fov",
@@ -981,6 +1012,7 @@
           "description" : "demonio que pintara la pantalla. Faltan tipos",
           "config" : {
             "daemons": [
+              "loadScreen.audioplayerDaemon",
               "loadScreen.drawDaemon2D",
               "loadScreen.shadersSetter2D",
               "loadScreen.drawDaemon3D",
@@ -1019,6 +1051,14 @@
           "config" : {
             "list" : "loadScreen.drawList2D",
             "behavior" : "loadScreen.screenDrawer2D"
+          }
+        },
+        {"factory": "OALPlayerDaemon",
+          "name": "loadScreen.audioplayerDaemon",
+          "description" : "demonio que reproducira audio",
+          "config" : {
+            "list" : "loadScreen.audiolist",
+            "behavior" : "loadScreen.audioplayer"
           }
         },
         {"factory": "FloatAvtDaemonFtry",

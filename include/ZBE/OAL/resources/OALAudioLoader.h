@@ -12,36 +12,35 @@
 
 #include <filesystem>
 #include <memory>
+#include <nlohmann/json.hpp>
+
+#include "ZBE/core/tools/containers/RsrcStore.h"
 
 #include "ZBE/resources/loaders/RsrcLoader.h"
 #include "ZBE/resources/loaders/RsrcDefLoader.h"
 
 #include "ZBE/OAL/system/OALAudioStore.h"
+#include "ZBE/factories/Factory.h"
+#include "ZBE/JSON/JSONFactory.h"
 
 namespace zbe {
 
-/** \brief RsrcLoader implementation caplable of load ogg files into OAL system.
-*/
 class ZBEAPI OALAudioLoader : public RsrcLoader {
 public:
 
- /** \brief Builds an OALAudioLoader from a OALAudioStore
-  *  \audioStore OALAudioLoader to use.
-  */
- OALAudioLoader(std::shared_ptr<OALAudioStore> audioStore, std::shared_ptr<RsrcDefLoader> audioDefLoader)
-   : audioStore(audioStore), audioDefLoader(audioDefLoader) {}
+  OALAudioLoader() : audioStore(), audioDefLoader() {}
 
- /** \brief Load an audio file
-  *  \param filePath Path to image file.
-  *  \return An id to the image loaded.
-  */
- void load(std::filesystem::path filePath);
+  OALAudioLoader(std::shared_ptr<OALAudioStore> audioStore, std::shared_ptr<RsrcDefLoader> audioDefLoader)
+    : audioStore(audioStore), audioDefLoader(audioDefLoader) {}
 
- /** \brief Tells if a file extension is loadable.
-  *  \param extension Image file extension.
-  *  \return True if the extensions is loadable.
-  */
- bool isLoadable(std::filesystem::path extension);
+  void setUp(std::shared_ptr<OALAudioStore> audioStore, std::shared_ptr<RsrcDefLoader> audioDefLoader) {
+    this->audioStore = audioStore;
+    this->audioDefLoader = audioDefLoader;
+  }  
+
+  void load(std::filesystem::path filePath);
+
+  bool isLoadable(std::filesystem::path extension);
 
 private:
 
@@ -51,6 +50,50 @@ private:
  std::shared_ptr<RsrcDefLoader> audioDefLoader;
  static std::filesystem::path ext;
 
+};
+
+class ZBEAPI OALAudioLoaderFtry : public Factory {
+public:
+   void create(std::string name, uint64_t) {
+     using namespace std::string_literals;
+
+     auto loader = std::make_shared<OALAudioLoader>();
+     specificRsrc.insert("OALAudioLoader."s + name, loader);
+     mainRsrc.insert("RsrcLoader."s + name, loader);
+   }
+
+   void setup(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+    if(!cfg) {
+      SysError::setError("OALAudioLoaderFtry config for "s + name + " not found."s);
+      return;
+    }
+    auto oalal = specificRsrc.get("OALAudioLoader."s + name);
+    auto j = *cfg;
+
+    auto defLoader = JSONFactory::loadParamCfgStoreP<RsrcDefLoader>(rsrcDefLoaderRsrc, j, "RsrcDefLoader", "audiodef"s, "OALAudioLoaderFtry"s);
+    if(!defLoader) {
+      SysError::setError("OALAudioLoaderFtry config for audiodef is invalid"s);
+      return;
+    }
+
+    auto audioStore = JSONFactory::loadParamCfgStoreP<OALAudioStore>(audioStoreRsrc, j, "OALAudioStore", "audiostore"s, "OALAudioLoaderFtry"s);
+    if(!audioStore) {
+      SysError::setError("OALAudioLoaderFtry config for audiostore is invalid"s);
+      return;
+    }
+
+    oalal->setUp(*audioStore, *defLoader);
+   }
+
+private:
+  RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<OALAudioLoader> &specificRsrc = RsrcStore<OALAudioLoader>::getInstance();
+  RsrcStore<RsrcLoader> &mainRsrc = RsrcStore<RsrcLoader>::getInstance();
+  RsrcStore<RsrcDefLoader> &rsrcDefLoaderRsrc = RsrcStore<RsrcDefLoader>::getInstance();
+  RsrcStore<OALAudioStore> &audioStoreRsrc = RsrcStore<OALAudioStore>::getInstance();
 };
 
 }  // namespace zbe

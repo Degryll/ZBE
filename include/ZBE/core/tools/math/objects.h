@@ -359,6 +359,10 @@ struct AABB<3> {
 
 using AABB3D = AABB<3>;  //!< An alias to AABB<3>.
 
+struct Triangle {
+  Point3D a, b, c;
+};
+
 }  // namespace zbe
 
 #endif  // ZBE_CORE_TOOLS_MATH_OBJECTS_H_

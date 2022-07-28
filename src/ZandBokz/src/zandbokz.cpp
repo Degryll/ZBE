@@ -16,6 +16,7 @@
 #include "ZBE/JSON/factories/JSONFactories.h"
 #include "ZBE/SDL/factories/SDLFactories.h"
 #include "ZBE/OGL/factories/OGLFactories.h"
+#include "ZBE/OAL/factories/OALFactories.h"
 #include "ZBE/resources/loaders/implementations/JSONAppLoader.h"
 
 #include "ZBE/core/events/interactionSystem.h"
@@ -45,6 +46,8 @@ int main(int /*argc*/, char** /*argv*/) {
    printf("OGL\n");
    GLTFFactories::load();
    printf("GLTF\n");
+   OALFactories::load();
+   printf("OAL\n");
    ZBEFactories::load();
    printf("ZBE\n");
    JSONFactories::load();

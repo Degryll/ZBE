@@ -51,6 +51,7 @@ void Sound3DOALPlayer::apply(std::shared_ptr<MAvatar<uint64_t, uint64_t, uint64_
     alGetSourcei(source, AL_SOURCE_STATE, &source_state);
     if(source_state == AL_STOPPED) {
       stateV->set(STOPPED);
+      // TODO ¿Eliminar avatar?
     } else {
       source = (ALuint)sourceV->get();
       alSource3f(source, AL_POSITION, p.x, p.y, p.z);
@@ -59,6 +60,33 @@ void Sound3DOALPlayer::apply(std::shared_ptr<MAvatar<uint64_t, uint64_t, uint64_
   } else {
     SysError::setError(std::string("ERROR: Sound avatar with audio id ") + std::to_string(id) + std::string(" has an unexpected state"));
   }
+}
+
+void Sound3DOALPlayerFtry::create(std::string name, uint64_t cfgId){
+  using namespace std::string_literals;
+
+  std::shared_ptr<Sound3DOALPlayer> s3daolp = std::shared_ptr<Sound3DOALPlayer>(new Sound3DOALPlayer);
+  mainRsrc.insert("Behavior."s + name, s3daolp);
+  specificRsrc.insert("Sound3DOALPlayer."s + name, s3daolp);
+}
+
+void Sound3DOALPlayerFtry::setup(std::string name, uint64_t cfgId){
+  using namespace std::string_literals;
+  using namespace nlohmann;
+  std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+  if(!cfg) {
+    SysError::setError("Sound3DOALPlayerFtry config for "s + name + " not found."s);
+    return;
+  }
+  auto j = *cfg;
+  auto s3daolp = specificRsrc.get("Sound3DOALPlayer."s + name);
+  auto audioStore = JSONFactory::loadParamCfgStoreP<OALAudioStore>(audioStoreRsrc, j, "OALAudioStore", "audiostore"s, "Sound3DOALPlayerFtry"s);
+  if(!audioStore) {
+    SysError::setError("Sound3DOALPlayerFtry config for audiostore is invalid"s);
+    return;
+  }
+  s3daolp->setUp(*audioStore);
 }
 
 }  // namespace zbe

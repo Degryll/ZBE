@@ -58,6 +58,15 @@ public:
 
 using MovingSphereFunctor = MovingNSphereFunctor<3>;
 
+// bool MovingNSphereTriangle(std::shared_ptr<MovingNSphere<3>> arg1, std::shared_ptr<Triangle> arg2, int64_t time, NewCollisionData<s> &data) {
+//   data.time = time;
+//   return intersectionMovingNSphereOutsideMovingNSphere(*(arg1->getShape()), arg1->v, *(arg2->getShape()), arg2->v, data.time, data.point, data.normal);
+// }
+
+// bool MovingNSphereTriangle(std::shared_ptr<Triangle> arg1, std::shared_ptr<MovingNSphere<3>> arg2, int64_t time, NewCollisionData<s> &data) {
+//   return MovingNSphereTriangle(arg2, arg1, time, data);
+// }
+
 // template<unsigned s>
 // using typename MovingNSphereFunctor = InteractionFunctor<MovingNSphere<s>, MovingNSphere<s>>;
 

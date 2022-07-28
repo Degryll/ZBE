@@ -3,7 +3,7 @@
 #include "batismain.h"
 #include "degryllmain.h"
 #include "ludomain.h"
-#include "gamemain.h"
+//#include "gamemain.h"
 #include "testing.h"
 #include "tempmain.h"
 #include "tempcleanmain.h"
@@ -16,7 +16,7 @@ int main(int argc, char* argv[]) {
   printf("1 - batismain\n");
   printf("2 - degryllmain\n");
   printf("3 - ludomain\n");
-  printf("4 - gamemain\n");
+  printf("#4 - gamemain\n");
   printf("5 - testing\n");
   printf("6 - gltf test\n");
   printf("7 - temporal prueba interacciones\n");
@@ -41,7 +41,7 @@ int main(int argc, char* argv[]) {
       out = ludo::ludomain(argc,argv);
     break;
     case 4:
-      out = gamemain(argc,argv);
+      //out = gamemain(argc,argv);
     break;
     case 5:
       out = testing::testingmain(argc,argv);

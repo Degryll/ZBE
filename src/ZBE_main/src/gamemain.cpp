@@ -1,53 +1,53 @@
-#include <cinttypes>
-#include <iostream>
-#include <chrono>
-#include <thread>
-#include <cstdlib>
-
-#include "ZBE/core/daemons/DaemonMaster.h"
-#include "ZBE/core/entities/avatars/Interactioner.h"
-#include "ZBE/core/entities/avatars/Interactionator.h"
-#include "ZBE/core/entities/avatars/Interactioner.h"
-#include "ZBE/core/events/Event.h"
-#include "ZBE/core/events/EventStore.h"
-#include "ZBE/core/events/TimeEvent.h"
-#include "ZBE/core/events/InputEvent.h"
-#include "ZBE/core/events/InteractionEvent.h"
-#include "ZBE/core/events/generators/util/CollisionSelector.h"
-#include "ZBE/core/events/generators/util/BaseCollisionSelector.h"
-#include "ZBE/core/events/generators/InputEventGenerator.h"
-//#include "ZBE/core/events/generators/CollisionEventGenerator.h"
-#include "ZBE/core/events/generators/TimeEventGenerator.h"
-#include "ZBE/core/events/handlers/Actuator.h"
-#include "ZBE/core/system/SysTime.h"
-#include "ZBE/core/tools/time/Timer.h"
-#include "ZBE/core/system/SysError.h"
-#include "ZBE/core/daemons/Punishers.h"
-#include "ZBE/SDL/tools/SDLTimer.h"
-#include "ZBE/SDL/events/SDLEventDispatcher.h"
-#include "ZBE/SDL/system/SDLWindow.h"
-#include "ZBE/SDL/drawers/SingleSpriteSDLDrawer.h"
-#include "ZBE/entities/adaptors/SimpleDrawableSingleSpriteAdaptor.h"
-#include "ZBE/behaviors/UniformLinearMotion.h"
-#include "ZBE/behaviors/Bounce.h"
-#include "ZBE/archetypes/Mobile.h"
-#include "ZBE/archetypes/MobileAPO.h"
-
+//#include <cinttypes>
+//#include <iostream>
+//#include <chrono>
+//#include <thread>
+//#include <cstdlib>
+//
+//#include "ZBE/core/daemons/DaemonMaster.h"
+//#include "ZBE/core/entities/avatars/Interactioner.h"
+//#include "ZBE/core/entities/avatars/Interactionator.h"
+//#include "ZBE/core/entities/avatars/Interactioner.h"
+//#include "ZBE/core/events/Event.h"
+//#include "ZBE/core/events/EventStore.h"
+//#include "ZBE/core/events/TimeEvent.h"
+//#include "ZBE/core/events/InputEvent.h"
+//#include "ZBE/core/events/InteractionEvent.h"
+//#include "ZBE/core/events/generators/util/CollisionSelector.h"
+//#include "ZBE/core/events/generators/util/BaseCollisionSelector.h"
+//#include "ZBE/core/events/generators/InputEventGenerator.h"
+////#include "ZBE/core/events/generators/CollisionEventGenerator.h"
+//#include "ZBE/core/events/generators/TimeEventGenerator.h"
+//#include "ZBE/core/events/handlers/Actuator.h"
+//#include "ZBE/core/system/SysTime.h"
+//#include "ZBE/core/tools/time/Timer.h"
+//#include "ZBE/core/system/SysError.h"
+//#include "ZBE/core/daemons/Punishers.h"
+//#include "ZBE/SDL/tools/SDLTimer.h"
+//#include "ZBE/SDL/events/SDLEventDispatcher.h"
+//#include "ZBE/SDL/system/SDLWindow.h"
+//#include "ZBE/SDL/drawers/SingleSpriteSDLDrawer.h"
+//#include "ZBE/entities/adaptors/SimpleDrawableSingleSpriteAdaptor.h"
+//#include "ZBE/behaviors/UniformLinearMotion.h"
+//#include "ZBE/behaviors/Bounce.h"
+//#include "ZBE/archetypes/Mobile.h"
+//#include "ZBE/archetypes/MobileAPO.h"
+//
 #include "gamemain.h"
-#include "game/GameReactor.h"
-#include "game/entities/GameBall.h"
-#include "game/entities/GameBoard.h"
-#include "game/entities/GameBlock.h"
-#include "game/entities/adaptors/GameBallCollisionatorAdaptor.h"
-#include "game/entities/adaptors/GameBlockCollisionerAdaptor.h"
-#include "game/events/handlers/StepInputHandler.h"
-#include "game/events/handlers/ExitInputHandler.h"
-#include "game/events/handlers/GameBallBouncer.h"
-//#include "game/events/handlers/TtpHandler.h" // header not working
-
-#include "ZBE/core/daemons/MainLoop.h"
-#include "ZBE/SDL/daemons/BasicPreLoopSDLDaemon.h"
-#include "ZBE/SDL/daemons/BasicPostLoopSDLDaemon.h"
+//#include "game/GameReactor.h"
+//#include "game/entities/GameBall.h"
+//#include "game/entities/GameBoard.h"
+//#include "game/entities/GameBlock.h"
+//#include "game/entities/adaptors/GameBallCollisionatorAdaptor.h"
+//#include "game/entities/adaptors/GameBlockCollisionerAdaptor.h"
+//#include "game/events/handlers/StepInputHandler.h"
+//#include "game/events/handlers/ExitInputHandler.h"
+//#include "game/events/handlers/GameBallBouncer.h"
+////#include "game/events/handlers/TtpHandler.h" // header not working
+//
+//#include "ZBE/core/daemons/MainLoop.h"
+//#include "ZBE/SDL/daemons/BasicPreLoopSDLDaemon.h"
+//#include "ZBE/SDL/daemons/BasicPostLoopSDLDaemon.h"
 
 int gamemain(int, char** ) {
 

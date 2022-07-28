@@ -13,6 +13,7 @@
 #include <string>
 #include <optional>
 
+#include "ZBE/factories/genericFactoryConstants.h"
 #include "ZBE/factories/Factory.h"
 #include "ZBE/core/system/system.h"
 

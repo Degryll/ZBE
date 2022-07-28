@@ -14,6 +14,7 @@
 #include <memory>
 #include <string>
 #include <initializer_list>
+#include <nlohmann/json.hpp>
 
 #include "ZBE/core/entities/Entity.h"
 #include "ZBE/core/entities/avatars/Avatar.h"
@@ -34,7 +35,6 @@ public:
     for(auto& builder : builders) {
       (*builder)(ent);
     }
-
   }
 
   void addBldr(std::shared_ptr<Funct<void, std::shared_ptr<Entity>>> builder) {
