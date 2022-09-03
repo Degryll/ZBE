@@ -30,6 +30,8 @@
 #include "ZandBokzFactories.h"
 #include "ZandBokzInteractionSystem.h"
 
+#include "ZBE/OAL/daemons/OALContextDaemon.h"
+
 int main(int /*argc*/, char** /*argv*/) {
 
    using namespace zbe;
@@ -54,6 +56,10 @@ int main(int /*argc*/, char** /*argv*/) {
    printf("JSON\n");
    ZandBokzFactories::load();
    printf("ZandBokz\n");
+
+  // TODO llevar a factoria
+  OALContextDaemon oalContextDmn;
+  oalContextDmn.run();
 
    // Esto deberia ir a un ZandBokzFactories.h
    // template <typename Selector, typename Overloaded, typename IData, typename ActorType, typename ReactorType, typename ...Shapes>

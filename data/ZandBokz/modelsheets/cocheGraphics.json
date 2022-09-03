@@ -1,0 +1,9 @@
+{
+"name" : "coche",
+"capability" : "001",
+"graphicdefs" : [
+  {
+    "name" : "Cylinder.015"
+  }
+]
+}

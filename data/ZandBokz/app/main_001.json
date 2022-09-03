@@ -41,6 +41,10 @@
     "camPitchTicket" :3900,
     "bullet.speedIdx" : 4000,
     "timeHandlerTicket" : 4100,
+    "audioTicket" : 5000,
+    "sourcestateIdx" : 5010,
+    "sourceIdx" : 5020,
+    "soundstateIdx" : 5030,
 
     "state.static" : 0,
     "testwflags": 0,
@@ -329,6 +333,14 @@
         },
         {
           "factory": "RsrcFtry",
+          "name":"zandbokz.audioLoader",
+          "config" : {
+            "loader" : "zandbokz.oalLoader",
+            "url" : "data/ZandBokz/audio"
+          }
+        },
+        {
+          "factory": "RsrcFtry",
           "name":"zandbokz.oglImgLoader",
           "config" : {
             "loader" : "zandbokz.oiLoader",
@@ -445,6 +457,37 @@
           "factory" : "CopyPosFtry",
           "name" : "zandbokz.copypos",
           "config" : {}
+        },
+        {
+          "factory" : "BehaviorEntityBldrFtry",
+          "name" : "zandbokz.suenacatapun",
+          "config" : {
+            "contextTime":"DEFAULT",
+            "builders" : ["zandbokz.audiovalues", "zandbokz.suena"],
+            "Vector3D" : {
+              "positionIdx" : "zandbokz.copypos",
+              "orientationIdx" : "zandbokz.copyvel"
+            }
+          }
+        },
+        {
+          "factory" :"EntitySetterFtry",
+          "name" : "zandbokz.audiovalues",
+          "config" : {
+            "uint": {
+              "sourcestateIdx":["ZERO"],
+              "sourceIdx":["audio.whitenoise"],
+              "soundstateIdx":["ZERO"]
+            }
+          }
+        },
+        {
+          "factory" :"OALAvatarBuilderFtry",
+          "name" : "zandbokz.suena",
+          "config" : {
+            "attribIndexes" : ["sourceIdx", "sourcestateIdx", "soundstateIdx", "orientationIdx", "positionIdx"],
+            "lists":{"loadScreen.audiolist":"audioTicket"}
+          }
         },
         {
           "factory" : "BehaviorEntityBldrFtry",
@@ -845,6 +888,7 @@
           "name": "loadScreen.audioplayer",
           "description" : "comportamiento que reproduce sonidos",
           "config" : {
+            "camera" : "loadScreen.cam",
             "audiostore" : "zandbokz.audiostore"
           }
         },
@@ -971,7 +1015,8 @@
           "name": "loadScreen.OnceBulletCreatorDmn",
           "description" : "demonio girara la camara una vez y se va",
           "config" : {
-            "Daemon" : "loadScreen.shotDaemonB",
+            "DaemonBack" : "loadScreen.shotDaemonB",
+            "Daemon" : "loadScreen.masterShot",
             "DaemonMaster" : "BehaviorsMD"
           }
         },
@@ -1005,6 +1050,24 @@
           "config" : {
             "list" : "loadScreen.BulletCreatorList",
             "function" : "zandbokz.dropcastaña"
+          }
+        },
+        {"factory": "FunctOverAvtListDmnFtry",
+          "name": "loadScreen.shotSuena",
+          "description" : "demonio caga castañas",
+          "config" : {
+            "list" : "loadScreen.BulletCreatorList",
+            "function" : "zandbokz.suenacatapun"
+          }
+        },
+        {"factory": "MasterDmnFtry",
+          "name": "loadScreen.masterShot",
+          "description" : "demonio que lanza castañas y suena",
+          "config" : {
+            "daemons": [
+              "loadScreen.shotDaemonB",
+              "loadScreen.shotSuena"
+            ]
           }
         },
         {"factory": "MasterDmnFtry",

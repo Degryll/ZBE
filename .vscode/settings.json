@@ -1,0 +1,15 @@
+{
+    "cmake.configureOnOpen": true,
+    "files.associations": {
+        "*.tcc": "cpp",
+        "future": "cpp",
+        "istream": "cpp",
+        "ostream": "cpp",
+        "typeinfo": "cpp",
+        "tuple": "cpp",
+        "mutex": "cpp",
+        "streambuf": "cpp",
+        "valarray": "cpp",
+        "memory": "cpp"
+    }
+}

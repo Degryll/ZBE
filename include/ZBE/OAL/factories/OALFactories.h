@@ -45,7 +45,8 @@ public:
     factories.insert("OALAudioLoaderFtry", std::make_shared<OALAudioLoaderFtry>());
     factories.insert("OALudioStoreFtry", std::make_shared<SimpleGenericFtry<OALAudioStore>>("OALAudioStore"));
     factories.insert("JSONAudioDefLoaderFtry", std::make_shared<GenericFtry<RsrcDefLoader, JSONAudioDefLoader>>("RsrcDefLoader", "JSONAudioDefLoader"));
-    factories.insert("OALAvatarBuilder", std::make_shared<AvatarBldrFtry<uint64_t, uint64_t, uint64_t, Vector3D, Vector3D>>());
+    factories.insert("OALAvatarBuilderFtry", std::make_shared<AvatarBldrFtry<uint64_t, uint64_t, uint64_t, Vector3D, Vector3D>>());
+    //factories.insert("BehaviorEntityBldrFtry", std::make_shared<zbe::BehaviorEntityBldrFtry<zbe::Vector3D, zbe::Vector3D>>());
 
     factories.insert("OALPlayerDaemon", std::make_shared<OALDrwr>());
     factories.insert("TFOALAvtFtry", std::make_shared<SimpleGenericFtry<OALList> >(factories::listName));

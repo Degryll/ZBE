@@ -29,6 +29,8 @@
 #include "ZBE/factories/Factory.h"
 #include "ZBE/JSON/JSONFactory.h"
 
+#include "ZBE/tools/graphics/Camera.h"
+
 namespace zbe {
 
 class ZBEAPI Sound3DOALPlayerFtry;
@@ -40,7 +42,7 @@ public:
   friend class Sound3DOALPlayerFtry;
   const static uint64_t NEW = 0, PLAYING = 1, STOPPED = 2;
 
-  Sound3DOALPlayer(std::shared_ptr<OALAudioStore> store) : store(store) {}
+  Sound3DOALPlayer(std::shared_ptr<OALAudioStore> store, std::shared_ptr<Camera> cam) : store(store), cam(cam) {}
 
   ~Sound3DOALPlayer() {}
 
@@ -48,14 +50,17 @@ public:
    */
   void apply(std::shared_ptr<MAvatar<uint64_t, uint64_t, uint64_t, Vector3D, Vector3D> > avatar);
 
+  void setCamera(std::shared_ptr<Camera> cam);
+
 private:
   Sound3DOALPlayer() : store() {}
-  void setUp(std::shared_ptr<OALAudioStore> store) {
+  void setUp(std::shared_ptr<OALAudioStore> store, std::shared_ptr<Camera> cam) {
     this->store = store;
+    this->cam = cam;
   }
 
   std::shared_ptr<OALAudioStore> store;
-
+  std::shared_ptr<Camera> cam;
 };
 
 
@@ -70,6 +75,7 @@ private:
   RsrcStore<Behavior<uint64_t, uint64_t, uint64_t, Vector3D, Vector3D> >& mainRsrc = RsrcStore<Behavior<uint64_t, uint64_t, uint64_t, Vector3D, Vector3D> >::getInstance();
   RsrcStore<Sound3DOALPlayer>& specificRsrc = RsrcStore<Sound3DOALPlayer>::getInstance();
   RsrcStore<OALAudioStore> &audioStoreRsrc = RsrcStore<OALAudioStore>::getInstance();
+  RsrcStore<Camera> &cameraRsrc = RsrcStore<Camera>::getInstance();
 };
 
 }  // namespace zbe
