@@ -583,6 +583,288 @@ bool intersectionMovingNSphereOutsideNSphere(NSphere<dim> sphere1, Vector<dim> v
 
 // ----------------------------- Triangles
 
+template<unsigned dim>
+bool intersectionMovingNSphereOutsideMovingNTriangle(NSphere<dim> sphere1, Vector<dim> velocity1, Triangle triangle, Vector<dim> velocity2, int64_t& time, Point<dim>& point, Vector<dim>& normal) {
+  // Test for initial overlap or contact.
+  //-------
+  // To reach here, the sphere and triangle are initially separated.
+  // Compute the velocity of the sphere relative to the triangle.
+  //-------
+  // Compute the triangle edge directions E[], the vector U normal
+  // to the plane of the triangle,  and compute the normals to the
+  // edges in the plane of the triangle.  TODO: For a nondeforming
+  // triangle (or mesh of triangles), these quantities can all be
+  // precomputed to reduce the computational cost of the query.  Add
+  // another operator()-query that accepts the precomputed values.
+  // TODO: When the triangle is deformable, these quantities must be
+  // computed, either by the caller or here.  Optimize the code to
+  // compute the quantities on-demand (i.e. only when they are
+  // needed, but cache them for later use).
+  //-------
+  // Compute the vectors from the triangle vertices to the sphere
+  // center.
+  //-------
+  // Determine where the sphere center is located relative to the
+  // planes of the triangle offset faces of the sphere-swept volume.
+  //-------
+  // else: The ray-sphere-swept-volume contact point (if any) cannot
+  // be on a triangular face of the sphere-swept-volume.
+
+  // The sphere is moving towards the slab between the two planes
+  // of the sphere-swept volume triangular faces.  Determine whether
+  // the ray intersects the half cylinders or sphere wedges of the
+  // sphere-swept volume.
+
+  // Test for contact with half cylinders of the sphere-swept
+  // volume.  First, precompute some dot products required in the
+  // computations.  TODO: Optimize the code to compute the quantities
+  // on-demand (i.e. only when they are needed, but cache them for
+  // later use).
+  //-------
+  // Test for contact with sphere wedges of the sphere-swept
+  // volume.  We know that |V|^2 > 0 because of a previous
+  // early-exit test.
+
+
 }  // namespace zbe
 
+//--------------------------------------
+        template <typename Dummy = T>
+        typename std::enable_if<!is_arbitrary_precision<Dummy>::value, Result>::type
+        operator()(Sphere3<T> const& sphere, Vector3<T> const& sphereVelocity,
+            Triangle3<T> const& triangle, Vector3<T> const& triangleVelocity)
+        {
+            Result result{};
+
+            // Test for initial overlap or contact.
+            DCPQuery<T, Vector3<T>, Triangle3<T>> ptQuery;
+            auto ptResult = ptQuery(sphere.center, triangle);
+            T rsqr = sphere.radius * sphere.radius;
+            if (ptResult.sqrDistance <= rsqr)
+            {
+                result.intersectionType = (ptResult.sqrDistance < rsqr ? -1 : +1);
+                result.contactTime = (T)0;
+                result.contactPoint = ptResult.closest[1];
+                return result;
+            }
+
+            // To reach here, the sphere and triangle are initially separated.
+            // Compute the velocity of the sphere relative to the triangle.
+            Vector3<T> V = sphereVelocity - triangleVelocity;
+            T sqrLenV = Dot(V, V);
+            if (sqrLenV == (T)0)
+            {
+                // The sphere and triangle are separated and the sphere is not
+                // moving relative to the triangle, so there is no contact.
+                // The 'result' is already set to the correct state for this
+                // case.
+                return result;
+            }
+
+            // Compute the triangle edge directions E[], the vector U normal
+            // to the plane of the triangle,  and compute the normals to the
+            // edges in the plane of the triangle.  TODO: For a nondeforming
+            // triangle (or mesh of triangles), these quantities can all be
+            // precomputed to reduce the computational cost of the query.  Add
+            // another operator()-query that accepts the precomputed values.
+            // TODO: When the triangle is deformable, these quantities must be
+            // computed, either by the caller or here.  Optimize the code to
+            // compute the quantities on-demand (i.e. only when they are
+            // needed, but cache them for later use).
+            std::array<Vector3<T>, 3> E =
+            {
+                triangle.v[1] - triangle.v[0],
+                triangle.v[2] - triangle.v[1],
+                triangle.v[0] - triangle.v[2]
+            };
+            std::array<T, 3> sqrLenE =
+            {
+                Dot(E[0], E[0]),
+                Dot(E[1], E[1]),
+                Dot(E[2], E[2])
+            };
+            Vector3<T> U = UnitCross(E[0], E[1]);
+            std::array<Vector3<T>, 3> ExU =
+            {
+                Cross(E[0], U),
+                Cross(E[1], U),
+                Cross(E[2], U)
+            };
+
+            // Compute the vectors from the triangle vertices to the sphere
+            // center.
+            std::array<Vector3<T>,3 > Delta =
+            {
+                sphere.center - triangle.v[0],
+                sphere.center - triangle.v[1],
+                sphere.center - triangle.v[2]
+            };
+
+            // Determine where the sphere center is located relative to the
+            // planes of the triangle offset faces of the sphere-swept volume.
+            T dotUDelta0 = Dot(U, Delta[0]);
+            if (dotUDelta0 >= sphere.radius)
+            {
+                // The sphere is on the positive side of Dot(U,X-C) = r.  If
+                // the sphere will contact the sphere-swept volume at a
+                // triangular face, it can do so only on the face of the
+                // aforementioned plane.
+                T dotUV = Dot(U, V);
+                if (dotUV >= (T)0)
+                {
+                    // The sphere is moving away from, or parallel to, the
+                    // plane of the triangle.  The 'result' is already set to
+                    // the correct state for this case.
+                    return result;
+                }
+
+                T tbar = (sphere.radius - dotUDelta0) / dotUV;
+                bool foundContact = true;
+                for (int32_t i = 0; i < 3; ++i)
+                {
+                    T phi = Dot(ExU[i], Delta[i]);
+                    T psi = Dot(ExU[i], V);
+                    if (phi + psi * tbar > (T)0)
+                    {
+                        foundContact = false;
+                        break;
+                    }
+                }
+                if (foundContact)
+                {
+                    result.intersectionType = 1;
+                    result.contactTime = tbar;
+                    result.contactPoint = sphere.center + tbar * sphereVelocity;
+                    return result;
+                }
+            }
+            else if (dotUDelta0 <= -sphere.radius)
+            {
+                // The sphere is on the positive side of Dot(-U,X-C) = r.  If
+                // the sphere will contact the sphere-swept volume at a
+                // triangular face, it can do so only on the face of the
+                // aforementioned plane.
+                T dotUV = Dot(U, V);
+                if (dotUV <= (T)0)
+                {
+                    // The sphere is moving away from, or parallel to, the
+                    // plane of the triangle.  The 'result' is already set to
+                    // the correct state for this case.
+                    return result;
+                }
+
+                T tbar = (-sphere.radius - dotUDelta0) / dotUV;
+                bool foundContact = true;
+                for (int32_t i = 0; i < 3; ++i)
+                {
+                    T phi = Dot(ExU[i], Delta[i]);
+                    T psi = Dot(ExU[i], V);
+                    if (phi + psi * tbar > (T)0)
+                    {
+                        foundContact = false;
+                        break;
+                    }
+                }
+                if (foundContact)
+                {
+                    result.intersectionType = 1;
+                    result.contactTime = tbar;
+                    result.contactPoint = sphere.center + tbar * sphereVelocity;
+                    return result;
+                }
+            }
+            // else: The ray-sphere-swept-volume contact point (if any) cannot
+            // be on a triangular face of the sphere-swept-volume.
+
+            // The sphere is moving towards the slab between the two planes
+            // of the sphere-swept volume triangular faces.  Determine whether
+            // the ray intersects the half cylinders or sphere wedges of the
+            // sphere-swept volume.
+
+            // Test for contact with half cylinders of the sphere-swept
+            // volume.  First, precompute some dot products required in the
+            // computations.  TODO: Optimize the code to compute the quantities
+            // on-demand (i.e. only when they are needed, but cache them for
+            // later use).
+            std::array<T, 3> del{}, delp{}, nu{};
+            for (int32_t im1 = 2, i = 0; i < 3; im1 = i++)
+            {
+                del[i] = Dot(E[i], Delta[i]);
+                delp[im1] = Dot(E[im1], Delta[i]);
+                nu[i] = Dot(E[i], V);
+            }
+
+            for (int32_t i = 2, ip1 = 0; ip1 < 3; i = ip1++)
+            {
+                Vector3<T> hatV = V - E[i] * nu[i] / sqrLenE[i];
+                T sqrLenHatV = Dot(hatV, hatV);
+                if (sqrLenHatV > (T)0)
+                {
+                    Vector3<T> hatDelta = Delta[i] - E[i] * del[i] / sqrLenE[i];
+                    T alpha = -Dot(hatV, hatDelta);
+                    if (alpha >= (T)0)
+                    {
+                        T sqrLenHatDelta = Dot(hatDelta, hatDelta);
+                        T beta = alpha * alpha - sqrLenHatV * (sqrLenHatDelta - rsqr);
+                        if (beta >= (T)0)
+                        {
+                            T tbar = (alpha - std::sqrt(beta)) / sqrLenHatV;
+
+                            T mu = Dot(ExU[i], Delta[i]);
+                            T omega = Dot(ExU[i], hatV);
+                            if (mu + omega * tbar >= (T)0)
+                            {
+                                if (del[i] + nu[i] * tbar >= (T)0)
+                                {
+                                    if (delp[i] + nu[i] * tbar <= (T)0)
+                                    {
+                                        // The constraints are satisfied, so
+                                        // tbar is the first time of contact.
+                                        result.intersectionType = 1;
+                                        result.contactTime = tbar;
+                                        result.contactPoint = sphere.center + tbar * sphereVelocity;
+                                        return result;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Test for contact with sphere wedges of the sphere-swept
+            // volume.  We know that |V|^2 > 0 because of a previous
+            // early-exit test.
+            for (int32_t im1 = 2, i = 0; i < 3; im1 = i++)
+            {
+                T alpha = -Dot(V, Delta[i]);
+                if (alpha >= (T)0)
+                {
+                    T sqrLenDelta = Dot(Delta[i], Delta[i]);
+                    T beta = alpha * alpha - sqrLenV * (sqrLenDelta - rsqr);
+                    if (beta >= (T)0)
+                    {
+                        T tbar = (alpha - std::sqrt(beta)) / sqrLenV;
+                        if (delp[im1] + nu[im1] * tbar >= (T)0)
+                        {
+                            if (del[i] + nu[i] * tbar <= (T)0)
+                            {
+                                // The constraints are satisfied, so tbar
+                                // is the first time of contact.
+                                result.intersectionType = 1;
+                                result.contactTime = tbar;
+                                result.contactPoint = sphere.center + tbar * sphereVelocity;
+                                return result;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // The ray and sphere-swept volume do not intersect, so the sphere
+            // and triangle do not come into contact.  The 'result' is already
+            // set to the correct state for this case.
+            return result;
+        }
+//--------------------------------------
 #endif  // ZBE_CORE_TOOLS_MATH_COLLISIONS_INTERSECTIONS_H_
