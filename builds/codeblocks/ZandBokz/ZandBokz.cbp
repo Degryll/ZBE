@@ -38,6 +38,7 @@
 					<Add directory="../../../include" />
 					<Add directory="../../../src/ZandBokz/include" />
 					<Add directory="../../../extlibs/utf8cpp/source" />
+					<Add directory="../../../extlibs/OALSoft/1.18.2/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -86,6 +87,7 @@
 					<Add directory="../../../extlibs/glm/0.9.9.0" />
 					<Add directory="../../../include" />
 					<Add directory="../../../src/ZandBokz/include" />
+					<Add directory="../../../extlibs/OALSoft/1.18.2/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
