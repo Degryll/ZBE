@@ -10,6 +10,7 @@
         "mutex": "cpp",
         "streambuf": "cpp",
         "valarray": "cpp",
-        "memory": "cpp"
+        "memory": "cpp",
+        "chrono": "cpp"
     }
 }

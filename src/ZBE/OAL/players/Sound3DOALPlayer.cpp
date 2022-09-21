@@ -11,6 +11,14 @@
 
 namespace zbe {
 
+//Vector3D transformAudioPos(Vector3D p, std::vector<float>& tm) {
+//  Vector3D out;
+//  out.x = p.x * tm[0] + p.y * tm[1] + p.z * tm[2] + tm[3];
+//  out.y = p.x * tm[4] + p.y * tm[5] + p.z * tm[6] + tm[7];
+//  out.z = p.x * tm[8] + p.y * tm[9] + p.z * tm[10] + tm[11];
+//  return out;
+//}
+
 Vector3D transformAudioPos(Vector3D p, std::vector<float>& tm) {
   Vector3D out;
   out.x = p.x * tm[0] + p.y * tm[1] + p.z * tm[2] + tm[3];

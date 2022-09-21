@@ -1,4 +1,0 @@
-TODO: Revisar error OAL
-https://stackoverflow.com/questions/36001785/openal-algenbuffers-error-code-40964-solution
-
-_loadAudio en OALAudioStore da error al generar el buffer. (linea 85 alGenBuffers)

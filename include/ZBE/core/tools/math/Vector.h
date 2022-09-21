@@ -344,6 +344,17 @@ class _VECTOR {
       return (v);
     }
 
+    /** \brief Implements dot product.
+     *
+     * \param lhs First vector.
+     * \param rhs Second vector.
+     * \return Doct product.
+     * \sa operator+=(), operator-=() and operator-().
+     */
+    inline double dot(const _VECTOR& lhs, const _VECTOR& rhs) {
+      return (lhs * rhs);
+    }
+
     /** \brief calculates the resulting path of reflection of a ray or impact of an object with a plane.
      * \param normal Vector normal to the collision plane.
      * \return Vector with the ray or object path reflected.
