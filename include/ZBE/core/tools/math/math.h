@@ -65,7 +65,7 @@ static const int64_t ROUND_MASK = -TIME_QUANTUM;
 /** \brief Transforms the received time from ZBE time units to miliseconds.
  * \param time Time to convert.
  */
-inline uint64_t MILITOZBETU(uint64_t time) {
+inline int64_t MILITOZBETU(int64_t time) {
   return ((time << 16) / 1000);
 }
 
@@ -75,6 +75,15 @@ inline uint64_t MILITOZBETU(uint64_t time) {
  */
 inline int64_t quantizeTime(int64_t n) {
   return (n & ROUND_MASK);
+}
+
+/** \brief Used to round time values to its closer quantum.
+ * WARNING: does not work with negative times
+ * \param n Time to quantize.
+ */
+inline int64_t quantizeTime(double n) {
+  int64_t time = n * SECOND;
+  return quantizeTime(time);
 }
 
 /** \brief Used to compare two double values.

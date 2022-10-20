@@ -68,9 +68,9 @@ void SDLOGLWindow::createGLContext() {
   //glEnable(GL_TEXTURE_2D);printf("Pista a 0x%x\n", glGetError()); fflush(stdout);
   glEnable(GL_DEPTH_TEST);
   // TODO habilitar cull face. Que no queremos repetirnos.
-  glEnable(GL_CULL_FACE);
+  //glEnable(GL_CULL_FACE);
   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-  glCullFace(GL_BACK);
+  glCullFace(GL_FRONT_AND_BACK);
   glEnable (GL_BLEND); glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 //  IMGUI_CHECKVERSION();
 //  ImGui::CreateContext();

@@ -344,6 +344,17 @@ class _VECTOR {
       return (v);
     }
 
+    /** \brief Implements Vector divsion by a scalar.
+     *
+     * \param lhs The original Vector.
+     * \param rhs The scalar.
+     * \return A reference to the resulting Vector.
+     * \sa operator+=(), operator-=() and operator-().
+     */
+    friend _VECTOR operator/(_VECTOR lhs, double rhs) {
+      return (lhs/=rhs);
+    }
+
     /** \brief Implements dot product.
      *
      * \param lhs First vector.
@@ -351,7 +362,7 @@ class _VECTOR {
      * \return Doct product.
      * \sa operator+=(), operator-=() and operator-().
      */
-    inline double dot(const _VECTOR& lhs, const _VECTOR& rhs) {
+    friend inline double dot(const _VECTOR& lhs, const _VECTOR& rhs) {
       return (lhs * rhs);
     }
 

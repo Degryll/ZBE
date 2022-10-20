@@ -14,6 +14,7 @@
 #include <utility>
 #include <limits>
 #include <cstdint>
+#include <iostream>
 
 #include "ZBE/core/tools/math/math.h"
 #include "ZBE/core/tools/math/Point.h"
@@ -553,9 +554,6 @@ bool intersectionMovingNSphereOutsideMovingNSphere(NSphere<dim> sphere1, Vector<
   if(result) {
     point = point + (velocity2 * time);
   }
-  //TODO: Hay hacer una reacción (botar o eliminar... más sencillo eliminar)
-  //printf("Collide? %d\n", result);fflush(stdout);
-  //printf("Point %lf %lf %lf\n", point.x, point.y,point.z);fflush(stdout);
   return result;
 }
 
@@ -713,20 +711,12 @@ double distancePointTriangle(Point<dim>& point, Triangle<dim> triangle, Point<di
         }
     }
   }
-  // result.closest[0] = point;
-  // result.closest[1] = triangle.v[0] + s * edge0 + t * edge1;
-  // diff = result.closest[0] - result.closest[1];
-  // result.sqrDistance = Dot(diff, diff);
-  // result.distance = std::sqrt(result.sqrDistance);
-  // result.barycentric[0] = one - s - t;
-  // result.barycentric[1] = s;
-  // result.barycentric[2] = t;
-  // return result;
+  // TODO quizas podamos usar normales cacheadas dentro del propio objeto del trinagulo.
+
   closestpoint = triangle.a + s * edge0 + t * edge1;
   diff = point - closestpoint;
   sqrDistance = dot(diff, diff);
-  // TODO normal de verda de la buena
-  normal = {0,0,0};
+  normal = - diff.normalize();
   return sqrDistance == ZERO;
 }
 
@@ -740,8 +730,8 @@ bool intersectionMovingNSphereOutsideMovingNTriangle(NSphere<dim> sphere, Vector
 
     double rsqr = sphere.r * sphere.r;
     if (sqrDistance <= rsqr) {
-        time = 0;
-        return true;
+        //time = 0;
+        return false;
     }
 
     //-------
@@ -825,15 +815,16 @@ bool intersectionMovingNSphereOutsideMovingNTriangle(NSphere<dim> sphere, Vector
             }
         }
         if (foundContact) {
-            if(tbar<time) {
-                time = quantizeTime(tbar);
-                point = sphere.center + time * sVelocity;
-                return true;
+            auto intersectTime = quantizeTime(tbar);
+            if(intersectTime<=time) {
+                time = intersectTime;
+                point = sphere.c + time * sVelocity;
+                return true && time;
             } else {
                 return false;
             }
         }
-    } else if (dotUDelta0 <= -sphere.radius) {
+    } else if (dotUDelta0 <= -sphere.r) {
         // The sphere is on the positive side of Dot(-U,X-C) = r.  If
         // the sphere will contact the sphere-swept volume at a
         // triangular face, it can do so only on the face of the
@@ -846,7 +837,7 @@ bool intersectionMovingNSphereOutsideMovingNTriangle(NSphere<dim> sphere, Vector
             return false;
         }
 
-        double tbar = (-sphere.radius - dotUDelta0) / dotUV;
+        double tbar = (-sphere.r - dotUDelta0) / dotUV;
         bool foundContact = true;
         for (int32_t i = 0; i < 3; ++i) {
             double phi = dot(ExU[i], Delta[i]);
@@ -857,10 +848,11 @@ bool intersectionMovingNSphereOutsideMovingNTriangle(NSphere<dim> sphere, Vector
             }
         }
         if (foundContact) {
-            if(tbar<time) {
-                time = quantizeTime(tbar);
-                point = sphere.center + time * sVelocity;
-                return true;
+            auto intersectTime = quantizeTime(tbar);
+            if(intersectTime<=time) {
+                time = intersectTime;
+                point = sphere.c + time * sVelocity;
+                return true && time;
             } else {
                 return false;
             }
@@ -881,15 +873,17 @@ bool intersectionMovingNSphereOutsideMovingNTriangle(NSphere<dim> sphere, Vector
   // on-demand (i.e. only when they are needed, but cache them for
   // later use).
   //-------
+    //TODO: cambiar estos tipos por vectores.
+
     std::array<double, 3> del{}, delp{}, nu{};
     for (int32_t im1 = 2, i = 0; i < 3; im1 = i++) {
         del[i] = dot(E[i], Delta[i]);
-        delp[im1] = Dot(E[im1], Delta[i]);
-        nu[i] = Dot(E[i], V);
+        delp[im1] = dot(E[im1], Delta[i]);
+        nu[i] = dot(E[i], V);
     }
 
-    for (int32_t i = 2, ip1 = 0; ip1 < 3; i = ip1++) {
-        Vector<dim> hatV = V - E[i] * nu[i] / sqrLenE[i];
+    for (int32_t i = 2, ip1 = 0; ip1 < 3; i = ip1++) {//Vector3<T> hatV = V - E[i] * nu[i] / sqrLenE[i];
+        Vector<dim> hatV = V - E[i] * nu[i]/ sqrLenE[i];
         double sqrLenHatV = dot(hatV, hatV);
         if (sqrLenHatV > 0.0) {
             Vector<dim> hatDelta = Delta[i] - E[i] * del[i] / sqrLenE[i];
@@ -910,10 +904,11 @@ bool intersectionMovingNSphereOutsideMovingNTriangle(NSphere<dim> sphere, Vector
                                 // result.contactTime = tbar;
                                 // result.contactPoint = sphere.center + tbar * sphereVelocity;
                                 // return result;
-                                if(tbar<time) {
-                                    time = quantizeTime(tbar);
-                                    point = sphere.center + time * sVelocity;
-                                    return true;
+                                auto intersectTime = quantizeTime(tbar);
+                                if(intersectTime<=time) {
+                                    time = intersectTime;
+                                    point = sphere.c + time * sVelocity;
+                                    return true && time;
                                 } else {
                                     return false;
                                 }
@@ -945,10 +940,11 @@ bool intersectionMovingNSphereOutsideMovingNTriangle(NSphere<dim> sphere, Vector
                         // result.contactTime = tbar;
                         // result.contactPoint = sphere.center + tbar * sphereVelocity;
                         // return result;
-                        if(tbar<time) {
-                            time = quantizeTime(tbar);
-                            point = sphere.center + time * sVelocity;
-                            return true;
+                        auto intersectTime = quantizeTime(tbar);
+                        if(intersectTime<=time) {
+                            time = intersectTime;
+                            point = sphere.c + time * sVelocity;
+                            return true && time;
                         } else {
                             return false;
                         }

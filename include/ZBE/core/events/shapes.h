@@ -37,6 +37,12 @@ using MovingAABB3D = Moving<AABB3D, 3>;
 template<unsigned s>
 using MovingAABB = Moving<AABB<s>, s>;
 
+template<unsigned s>
+using MovingTriangle = Moving<Triangle<s>, s>;
+
+using MovingTriangle3D = MovingTriangle<3>;
+using MovingTriangle2D = MovingTriangle<2>;
+
 }  // namespace zbe
 
 #endif  // ZBE_CORE_EVENTS_SHAPES_H

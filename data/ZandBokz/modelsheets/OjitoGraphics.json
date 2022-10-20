@@ -1,0 +1,9 @@
+{
+"name" : "Ojito",
+"capability" : "001",
+"graphicdefs" : [
+  {
+    "name" : "Ojito"
+  }
+]
+}

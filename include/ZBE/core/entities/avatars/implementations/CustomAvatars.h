@@ -267,8 +267,6 @@ private:
  std::shared_ptr<ContextTime> cTime;
 };
 
-
-
 class MovingSphereAvtShapeBldr  : public Funct<std::shared_ptr<SAvatar<MovingSphere>>, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = SAvatar<MovingSphere>;
@@ -289,7 +287,6 @@ private:
  uint64_t velocityidx;
  uint64_t radiusidx;
 };
-
 
 class MovingSphereAvtShapeBldrFtry : public Factory {
 // This class where c&p from DerivedPosMovingSphereAvtBldrFtry removing list managment
@@ -320,7 +317,7 @@ public:
         return;
       }
       auto radiusidx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "radiusIdx"s, "MovingSphereAvtShapeBldrFtry"s);
-      if(!positionIdx) {
+      if(!radiusidx) {
         return;
       }
       msasb->setIdxs(*positionIdx, *velocityIdx, *radiusidx);
@@ -392,11 +389,11 @@ public:
         return;
       }
       auto velocityIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "velocityIdx"s, "MovingSphereAvtBldrFtry"s);
-      if(!positionIdx) {
+      if(!velocityIdx) {
         return;
       }
       auto radiusidx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "radiusIdx"s, "MovingSphereAvtBldrFtry"s);
-      if(!positionIdx) {
+      if(!radiusidx) {
         return;
       }
       msab->setIdxs(*positionIdx, *velocityIdx, *radiusidx);
@@ -414,6 +411,222 @@ private:
   RsrcStore<MovingSphereAvtBldr>& specificRsrc    = RsrcStore<MovingSphereAvtBldr>::getInstance();
   RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
 };
+
+// ------- TODO aquí estamos creando avatares , bldrs y factorias para movig triangle.
+class MovingTriangle3DAvt : public SAvatar<MovingTriangle3D>, public AvatarImp {
+public:
+  void setupEntity(std::shared_ptr<Entity> entity, uint64_t positionAidx, uint64_t positionBidx, uint64_t positionCidx, uint64_t velocityidx) {
+    AvatarImp::setupEntity(entity);
+    _Avatar<1, MovingTriangle3D>::setup(&getTriangle, &setTriangle, (void*)this);
+    positionA = entity->getVector3D(positionAidx);
+    positionB = entity->getVector3D(positionBidx);
+    positionC = entity->getVector3D(positionCidx);
+    velocity = entity->getVector3D(velocityidx);
+    cTime = entity->getContextTime();
+  }
+
+  static std::shared_ptr<Value<MovingTriangle3D> > getTriangle(void *instance) {
+    auto  mta = (MovingTriangle3DAvt*)instance;
+    auto& positionA = mta->positionA;
+    auto& positionB = mta->positionB;
+    auto& positionC = mta->positionC;
+    auto& velocity = mta->velocity;
+    auto pA = positionA->get();
+    auto pB = positionB->get();
+    auto pC = positionC->get();
+    auto v = velocity->get();
+    auto time = mta->cTime->getTotalTime();
+    Triangle3D t{pA.toPoint(), pB.toPoint(), pC.toPoint()};
+    MovingTriangle3D mt{t, v};
+    auto out = std::make_shared<SimpleValue<MovingTriangle3D> >();
+    out->set(mt);
+    return out;
+  }
+
+  static void setTriangle(void*, MovingTriangle3D ) {
+    assert(false);
+  }
+
+  std::shared_ptr<Entity> getEntity() {
+    assert(false);
+  }
+
+private:
+ std::shared_ptr<Value<Vector3D> > positionA;
+ std::shared_ptr<Value<Vector3D> > positionB;
+ std::shared_ptr<Value<Vector3D> > positionC;
+ std::shared_ptr<Value<Vector3D> > velocity;
+ std::shared_ptr<ContextTime> cTime;
+};
+
+class MovingTriangle3DAvtShapeBldr  : public Funct<std::shared_ptr<SAvatar<MovingTriangle3D>>, std::shared_ptr<Entity>> {
+public:
+  using AvtBaseType = SAvatar<MovingSphere>;
+  std::shared_ptr<SAvatar<MovingTriangle3D>> operator()(std::shared_ptr<Entity> ent) {
+    std::shared_ptr<MovingTriangle3DAvt> avt = std::make_shared<MovingTriangle3DAvt>();
+    avt->setupEntity(ent, positionAidx, positionBidx, positionCidx, velocityidx);
+    return avt;
+  }
+
+  void setIdxs(uint64_t positionAidx, uint64_t positionBidx, uint64_t positionCidx, uint64_t velocityidx) {
+      this->positionAidx = positionAidx;
+      this->positionBidx = positionBidx;
+      this->positionCidx = positionCidx;
+      this->velocityidx = velocityidx;
+  }
+
+private:
+ uint64_t positionAidx;
+ uint64_t positionBidx;
+ uint64_t positionCidx;
+ uint64_t velocityidx;
+};
+
+class MovingTriangle3DAvtShapeBldrFtry : public Factory {
+public:
+  void create(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    std::shared_ptr<MovingTriangle3DAvtShapeBldr> msasb = std::make_shared<MovingTriangle3DAvtShapeBldr>();
+    mainRsrc.insert("Function."s + name, msasb);
+    specificRsrc.insert("MovingTriangle3DAvtShapeBldr."s + name, msasb);
+  }
+
+  void setup(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+    if(cfg) {
+      auto j = *cfg;
+
+      auto msasb = specificRsrc.get("MovingTriangle3DAvtShapeBldr."s + name);
+
+      auto positionAIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionAIdx"s, "MovingTriangle3DAvtShapeBldrFtry"s);
+      if(!positionAIdx) {
+        return;
+      }
+      auto positionBIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionBIdx"s, "MovingTriangle3DAvtShapeBldrFtry"s);
+      if(!positionBIdx) {
+        return;
+      }
+      auto positionCIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionCIdx"s, "MovingTriangle3DAvtShapeBldrFtry"s);
+      if(!positionCIdx) {
+        return;
+      }
+
+      auto velocityIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "velocityIdx"s, "MovingTriangle3DAvtShapeBldrFtry"s);
+      if(!velocityIdx) {
+        return;
+      }
+      msasb->setIdxs(*positionAIdx, *positionBIdx, *positionCIdx, *velocityIdx);
+
+    } else {
+      SysError::setError("MovingTriangle3DAvtShapeBldrFtry config for "s + name + " not found."s);
+    }
+  }
+
+private:
+  using FunctionType = Funct<std::shared_ptr<SAvatar<MovingTriangle3D>>, std::shared_ptr<Entity>>;
+  using ListType = TicketedForwardList<MovingTriangle3DAvtShapeBldr::AvtBaseType>;
+  RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
+  RsrcStore<nlohmann::json> &configRsrc                          = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<MovingTriangle3DAvtShapeBldr>& specificRsrc    = RsrcStore<MovingTriangle3DAvtShapeBldr>::getInstance();
+  RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
+};
+
+class MovingTriangle3DAvtBldr : public Funct<std::shared_ptr<SAvatar<MovingTriangle3D>>, std::shared_ptr<Entity>> {
+public:
+  using AvtBaseType = SAvatar<MovingTriangle3D>;
+  std::shared_ptr<SAvatar<MovingTriangle3D>> operator()(std::shared_ptr<Entity> ent) {
+    std::shared_ptr<MovingTriangle3DAvt> avt = std::make_shared<MovingTriangle3DAvt>();
+    avt->setupEntity(ent, positionAidx, positionBidx, positionCidx, velocityidx);
+    for(auto indexNList : indexNLists) {
+      auto ticket = indexNList.second->push_front(avt);
+      ent->addTicket(indexNList.first, ticket);
+    }
+  }
+
+  void setIdxs(uint64_t positionAidx, uint64_t positionBidx, uint64_t positionCidx, uint64_t velocityidx) {
+      this->positionAidx = positionAidx;
+      this->positionBidx = positionBidx;
+      this->positionCidx = positionCidx;
+      this->velocityidx = velocityidx;
+  }
+
+  void addIndexNlist(uint64_t index, std::shared_ptr<TicketedForwardList<AvtBaseType>> list) {
+    indexNLists.push_back({index, list});
+  }
+
+private:
+ uint64_t positionAidx;
+ uint64_t positionBidx;
+ uint64_t positionCidx;
+ uint64_t velocityidx;
+ std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> indexNLists;
+};
+
+class MovingTriangle3DAvtBldrFtry : public Factory {
+public:
+  void create(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    std::shared_ptr<MovingTriangle3DAvtBldr> msab = std::make_shared<MovingTriangle3DAvtBldr>();
+    mainRsrc.insert("Function."s + name, msab);
+    specificRsrc.insert("MovingTriangle3DAvtBldr."s + name, msab);
+  }
+
+  void setup(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+    if(cfg) {
+      auto j = *cfg;
+
+      auto mtab = specificRsrc.get("MovingTriangle3DAvtBldr."s + name);
+
+      auto positionAIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionAIdx"s, "MovingTriangle3DAvtBldrFtry"s);
+      if(!positionAIdx) {
+        return;
+      }
+
+      auto positionBIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionBIdx"s, "MovingTriangle3DAvtBldrFtry"s);
+      if(!positionBIdx) {
+        return;
+      }
+
+      auto positionCIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionCIdx"s, "MovingTriangle3DAvtBldrFtry"s);
+      if(!positionCIdx) {
+        return;
+      }
+
+      auto velocityIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "velocityIdx"s, "MovingTriangle3DAvtBldrFtry"s);
+      if(!velocityIdx) {
+        return;
+      }
+
+      mtab->setIdxs(*positionAIdx, *positionBIdx, *positionCIdx, *velocityIdx);
+
+    } else {
+      SysError::setError("MovingTriangle3DAvtBldrFtry config for "s + name + " not found."s);
+    }
+  }
+
+private:
+  using FunctionType = Funct<std::shared_ptr<SAvatar<MovingTriangle3D>>, std::shared_ptr<Entity>>;
+  using ListType = TicketedForwardList<MovingTriangle3DAvtBldr::AvtBaseType>;
+  RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
+  RsrcStore<nlohmann::json> &configRsrc                          = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<MovingTriangle3DAvtBldr>& specificRsrc    = RsrcStore<MovingTriangle3DAvtBldr>::getInstance();
+  RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
+};
+
+// TODO
+// MovingTriangle3DAvtShapeBldr
+// MovingTriangle3DAvtShapeBldrFtry
+// MovingTriangle3DAvtBldr
+// MovingTriangle3DAvtBldrFtry
+
+// -----
 
 class DerivedPosMovingSphereAvt : public SAvatar<MovingSphere>, public AvatarImp {
 public:

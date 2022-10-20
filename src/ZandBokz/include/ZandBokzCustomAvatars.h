@@ -132,7 +132,10 @@ private:
   uint64_t radiusidx;
   uint64_t velocityidx;
 };
-
+// TODO esto se está declarando en DOS sitios. Aquí y en custom avatars. 
+// Se está usando esta copia y no la de customs avatars. Resulta que funciona...
+// así que habrá que ver diferencias con la de custom avatars, porque MovingTriangle3DAvt
+// Está basada en aquella y, no en esta, y no funciona.
 class MovingSphereAvtBldrFtry : public zbe::Factory {
 public:
   void create(std::string name, uint64_t cfgId) {

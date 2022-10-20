@@ -39,7 +39,7 @@
     ],
     "meshes" : [
         {
-            "name" : "Ojito",
+            "name" : "Circle",
             "primitives" : [
                 {
                     "attributes" : {

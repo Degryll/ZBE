@@ -28,8 +28,11 @@
     "velocityIdx" : 1110,
     "inerTicket" : 1200,
     "inatorTicket" : 1210,
-    "BulletCreatorTicket" : 1200,
-    "lifespan" : 33107200,
+    "BulletCreatorTicket" : 1220,
+    "positionAIdx" : 1230,
+    "positionBIdx" : 1240,
+    "positionCIdx" : 1250,
+    "lifespan" : 655360,
     "fovIdx" : 3100,
     "targetIdx" : 3200,
     "upwardsIdx" : 3300,
@@ -74,7 +77,7 @@
     "model.pitch" :{"type":"f", "value":-0.01},
     "model.yaw" :{"type":"f", "value":-0.01},
     "model.sineComponent" : 0,
-    "bullet.speed" : {"type":"d", "value":20.0},
+    "bullet.speed" : {"type":"d", "value":200.0},
     "crosshairsPos" :{"type":"v2", "value":[0.0,0.0]},
     "crosshairsSize" :{"type":"v2", "value":[0.25,0.25]},
 
@@ -365,8 +368,7 @@
           "name" : "zandbokz.pepinobuilder",
           "config" : {
             "contextTime":"DEFAULT",
-            "builders" : ["zandbokz.pepinovalues", "zandbokz.pepinoapintar", "zandbokz.pepinoabailar", "zandbokz.pepinosolidosocializa"],
-            "buildersBack" : ["zandbokz.pepinovalues", "zandbokz.pepinoapintar", "zandbokz.pepinoabailar", "zandbokz.pepinosolidosocializa"]
+            "builders" : ["zandbokz.pepinovalues", "zandbokz.pepinoapintar", "zandbokz.pepinoabailar", "zandbokz.pepinosolidosocializa"]
           }
         },
         {
@@ -384,7 +386,7 @@
               "sizeIdx":[5.0]
             },
             "V3D": {
-              "positionIdx":[-1.0, 10.0, 0.0],
+              "positionIdx":[-200.0, 10.0, -200.0],
               "orientationIdx":[1.0, 0.0, 0.0]
             }
           }
@@ -418,10 +420,17 @@
           "config" : {}
         },
         {
-          "factory" :"ShapeBldrFtry",
+          "factory" :"ShapeMSphereBldrFtry",
           "name" : "zandbokz.aspectopepinosolido",
           "config" : {
             "shapetype" : "zandbokz.pepinorocoso"
+          }
+        },
+        {
+          "factory" :"ShapeMTriangleBldrFtry",
+          "name" : "zandbokz.aspectodiostriangular",
+          "config" : {
+            "shapetype" : "zandbokz.diositorocoso"
           }
         },
         {
@@ -435,6 +444,55 @@
           }
         },
         {
+          "factory" : "EntityBldrFtry",
+          "name" : "zandbokz.diositobuilder",
+          "description" : "Está ahí, mirando. Pero no hace na",
+          "config" : {
+            "contextTime":"DEFAULT",
+            "builders" : ["zandbokz.diositovalues", "zandbokz.diositoapintar", "zandbokz.diositosolidosocializa"]
+          }
+        },
+        {
+          "factory" :"EntitySetterFtry",
+          "name" : "zandbokz.diositovalues",
+          "config" : {
+            "uint": {
+              "gidIdx":["Ojito"]
+            },
+            "double": {
+              "degreesIdx":[0.0],
+              "scaleIdx":[10.0]
+            },
+            "V3D": {
+              "positionIdx":[0.0, 50.0, 0.0],
+              "orientationIdx":[1.0, 0.0, 0.0],
+              "positionAIdx":[100.0, 0.0, 100.0],
+              "positionBIdx":[-100.0, 0.0, 100.0],
+              "positionCIdx":[100.0, 0.0, -100.0],
+              "velocityIdx":[0.0, 0.0, 0.0]
+            }
+          }
+        },
+        {
+          "factory" :"Drawable3DAvtBldrFtry",
+          "name" : "zandbokz.diositoapintar",
+          "config" : {
+            "attribIndexes" : ["gidIdx", "scaleIdx", "degreesIdx", "orientationIdx", "positionIdx"],
+            "lists":{"loadScreen.drawList":"drawticket"}
+          }
+        },
+        {
+          "factory" :"InerBldrFtry",
+          "name" : "zandbokz.diositosolidosocializa",
+          "description" : "Usamos actor y reactor del pepino porque dios se comporta como un pepino y tampoco hace nada. Al menos los pepinos son nutritivos.",
+          "config" : {
+            "actorbuilder" : "zandbokz.actorpepinosolido",
+            "reactorbuilder" : "zandbokz.reactorpepinosolido",
+            "shapebuilder" : "zandbokz.aspectodiostriangular",
+            "lists" : {"loadScreen.inerList":"inerTicket"}
+          }
+        },
+        {
           "factory" :"DerivedPosMovingSphereAvtShapeBldrFtry",
           "name" : "zandbokz.pepinorocoso",
           "config" : {
@@ -444,6 +502,16 @@
             "max" : "model.coordMax",
             "period" : "model.coordPeriod",
             "component" : "model.sineComponent"
+          }
+        },
+        {
+          "factory" :"MovingTriangle3DAvtShapeBldrFtry",
+          "name" : "zandbokz.diositorocoso",
+          "config" : {
+            "positionAIdx" : "positionAIdx",
+            "positionBIdx" : "positionBIdx",
+            "positionCIdx" : "positionCIdx",
+            "velocityIdx" : "velocityIdx"
           }
         },
         {
@@ -550,7 +618,7 @@
               "scaleIdx":[10.0]
             },
             "float": {
-              "sizeIdx":[5.0]
+              "sizeIdx":[10.0]
             },
             "V3D": {
               "orientationIdx":[0.5, 0.5, 0.5]
@@ -591,7 +659,7 @@
           }
         },
         {
-          "factory" :"ShapeBldrFtry",
+          "factory" :"ShapeMSphereBldrFtry",
           "name" : "zandbokz.aspectocastañasolido",
           "config" : {
             "shapetype" : "zandbokz.castañarocoso"
@@ -676,7 +744,7 @@
           "config" : {}
         },
         {
-          "factory" :"ShapeBldrFtry",
+          "factory" :"ShapeMSphereBldrFtry",
           "name" : "zandbokz.aspectocajasolido",
           "config" : {
             "shapetype" : "zandbokz.cajarocoso"
@@ -702,7 +770,7 @@
           }
         }
       ],
-      "calls" : ["zandbokz.pepinobuilder", "zandbokz.cajabuilder"]
+      "calls" : ["zandbokz.pepinobuilder", "zandbokz.cajabuilder", "zandbokz.diositobuilder"]
     },
     {
       "description" : "Creating entity",

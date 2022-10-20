@@ -129,7 +129,7 @@ void InteractionEventGenerator<R, IS, LN, LT>::run() {
     for(auto ionerEntity : (*inl)) {
       Interactioner<R>* ioner;
       ionerEntity->assignAvatar(&ioner);
-      if(is->select(iator->getInteractionObject(), ioner->getInteractionObject(), totalTime, &iData)) {
+      if(is->select(iator->getInteractionObject(), ioner->getInteractionObject(), totalTime, &iData)) { // & iData.time
         InteractionEvent<R>* a = new InteractionEvent<R>(eventId, contextTime->getInitFrameTime() + totalTime, iator, iData, std::shared_ptr<zbe::ReactObject<R> >(ioner->getReactObject()));
         InteractionEvent<R>* b = new InteractionEvent<R>(eventId, contextTime->getInitFrameTime() + totalTime, ioner, iData, std::shared_ptr<zbe::ReactObject<R> >(iator->getReactObject()));
         storeEvents(a,b);
