@@ -48,6 +48,10 @@ public:
     using MovilList = zbe::TicketedForwardList<Movil>;
     using MovilFunct = zbe::Funct<void, std::shared_ptr<Movil>>;
 
+    using DirectedMovil = zbe::MAvatar<zbe::Vector3D, zbe::Vector3D, zbe::Vector3D>;
+    using DirectedMovilList = zbe::TicketedForwardList<DirectedMovil>;
+    using DirectedMovilFunct = zbe::Funct<void, std::shared_ptr<DirectedMovil>>;
+
     auto& factories = zbe::RsrcStore<zbe::Factory>::getInstance();
     factories.insert("InatorListFtry", std::make_shared<zbe::SimpleGenericFtry<InatorList> >(zbe::factories::listName));
     factories.insert("InerListFtry", std::make_shared<zbe::SimpleGenericFtry<InerList> >(zbe::factories::listName));
@@ -66,13 +70,18 @@ public:
     factories.insert("MovingSphereAvtBldrFtry", std::make_shared<MovingSphereAvtBldrFtry>());
     factories.insert("MovingTriangle3DAvtBldrFtry", std::make_shared<zbe::MovingTriangle3DAvtBldrFtry>());
 
-    factories.insert("BehaviorEntityBldrFtry", std::make_shared<zbe::BehaviorEntityBldrFtry<zbe::Vector3D, zbe::Vector3D>>());
+    factories.insert("BehaviorEntityBldrFtry2V", std::make_shared<zbe::BehaviorEntityBldrFtry<zbe::Vector3D, zbe::Vector3D>>());
+    factories.insert("BehaviorEntityBldrFtry3V", std::make_shared<zbe::BehaviorEntityBldrFtry<zbe::Vector3D, zbe::Vector3D, zbe::Vector3D>>());
 
-    factories.insert("FunctOverAvtListDmnFtry", std::make_shared<zbe::FunctOverAvtListDmnFtry<MovilFunct, MovilList>>());
+    factories.insert("FunctOverAvtList2VDmnFtry", std::make_shared<zbe::FunctOverAvtListDmnFtry<MovilFunct, MovilList>>());
+    factories.insert("FunctOverAvtList3VDmnFtry", std::make_shared<zbe::FunctOverAvtListDmnFtry<DirectedMovilFunct, DirectedMovilList>>());
 
-    factories.insert("CopyVelFtry", std::make_shared<zbe::BuildCopyVectModuleBldrFtry<2, zbe::Vector3D, zbe::Vector3D>>());
+    factories.insert("CopyVec2Mod2VFtry", std::make_shared<zbe::BuildCopyVectModuleBldrFtry<2, zbe::Vector3D, zbe::Vector3D>>());
+    factories.insert("CopyVec2Mod3VFtry", std::make_shared<zbe::BuildCopyVectModuleBldrFtry<2, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D>>());
 
-    factories.insert("CopyPosFtry", std::make_shared<zbe::GenericFtry<zbe::Funct<std::shared_ptr<zbe::Value<zbe::Vector3D>>, std::shared_ptr<zbe::MAvatar<zbe::Vector3D, zbe::Vector3D>>>,zbe::BuildCopyValueBldr<zbe::Vector3D, 1, zbe::Vector3D, zbe::Vector3D> > >(zbe::factories::functionName, "BuildCopyValueBldr"));
+    factories.insert("CopyVec12VFtry", std::make_shared<zbe::GenericFtry<zbe::Funct<std::shared_ptr<zbe::Value<zbe::Vector3D>>, std::shared_ptr<zbe::MAvatar<zbe::Vector3D, zbe::Vector3D>>>,zbe::BuildCopyValueBldr<zbe::Vector3D, 1, zbe::Vector3D, zbe::Vector3D> > >(zbe::factories::functionName, "BuildCopyValueBldr"));
+    factories.insert("CopyVec13VFtry", std::make_shared<zbe::GenericFtry<zbe::Funct<std::shared_ptr<zbe::Value<zbe::Vector3D>>, std::shared_ptr<zbe::MAvatar<zbe::Vector3D, zbe::Vector3D, zbe::Vector3D>>>,zbe::BuildCopyValueBldr<zbe::Vector3D, 1, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D> > >(zbe::factories::functionName, "BuildCopyValueBldr"));
+    factories.insert("CopyVec33VFtry", std::make_shared<zbe::GenericFtry<zbe::Funct<std::shared_ptr<zbe::Value<zbe::Vector3D>>, std::shared_ptr<zbe::MAvatar<zbe::Vector3D, zbe::Vector3D, zbe::Vector3D>>>,zbe::BuildCopyValueBldr<zbe::Vector3D, 3, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D> > >(zbe::factories::functionName, "BuildCopyValueBldr"));
 
     using ZBKEntityEraserReactionBldr = zbe::EntityEraserReactionBldr<zbe::CollisionData3D, Solid>;
     using ZBKEntityEraserReactionBldrFunct = zbe::Funct<std::shared_ptr<zbe::Funct<void, zbe::CollisionData3D, Solid>>,std::shared_ptr<zbe::Entity>>;

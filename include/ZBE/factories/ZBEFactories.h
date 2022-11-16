@@ -89,6 +89,8 @@ public:
 
     factories.insert("TargetToDirAvtBldrFtry", std::make_shared<TargetToDirAvtBldrFtry>());
     factories.insert("PosTargetToPosDirAvtBldrFtry", std::make_shared<PosTargetToPosDirAvtBldrFtry>());
+    factories.insert("PosUpwardsTargetToPosUpwardsDirAvtBldrFtry", std::make_shared<PosUpwardsTargetToPosUpwardsDirAvtBldrFtry>());
+    factories.insert("PosUpwardsTargetToPosUpwardsDirAvtFtry", std::make_shared<PosUpwardsTargetToPosUpwardsDirAvtFtry>());
     factories.insert("DerivedCosVelAvtBldrFtry", std::make_shared<DerivedCosVelAvtBldrFtry>());
     factories.insert("DerivedPosMovingSphereAvtBldrFtry", std::make_shared<DerivedPosMovingSphereAvtBldrFtry>());
     factories.insert("DerivedPosMovingSphereAvtShapeBldrFtry", std::make_shared<DerivedPosMovingSphereAvtShapeBldrFtry>());

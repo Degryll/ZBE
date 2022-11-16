@@ -118,7 +118,7 @@ private:
   zbe::RsrcStore<FunctionType>& mainRsrc                                   = zbe::RsrcStore<FunctionType>::getInstance();
 };
 
-// -------- Bounce reaction 
+// -------- Bounce reaction
 
 template<typename IData, typename Trait>
 class BounceReaction : public zbe::Funct<void, IData, Trait> {
@@ -133,35 +133,39 @@ public:
  /** brief Parametrized constructor
   * param entity Entity to be erased
   */
- BounceReaction(std::shared_ptr<zbe::SAvatar<zbe::Vector3D>> avt) : avt(avt) {}
+ BounceReaction(std::shared_ptr<zbe::MAvatar<zbe::Vector3D, zbe::Vector3D>> avt) : avt(avt) {}
 
  /** brief Erases entity
   *  param time not used
   */
- void operator()(IData idata, Trait) {
-     auto val = avt->get()->get();
-     zbe::Vector3D newVal = val.reflect(idata.normal);
-     //avt->set(std::make_shared<zbe::SimpleValue<zbe::Vector3D>>(newVal));
-     avt->set(newVal);
- }
+  void operator()(IData idata, Trait) {
+    auto vval = avt->get<1, zbe::Vector3D>();
+    auto uval = avt->get<2, zbe::Vector3D>();
+    zbe::Vector3D newvVal = vval->get().reflect(idata.normal);
+    zbe::Vector3D newuVal = uval->get().reflect(idata.normal);
+    vval->set(newvVal);
+    uval->set(-newuVal);
+  }
 private:
- std::shared_ptr<zbe::SAvatar<zbe::Vector3D>> avt;
+ std::shared_ptr<zbe::MAvatar<zbe::Vector3D, zbe::Vector3D>> avt;
 };
-
+// TODO arreglando bounce
 template<typename IData, typename Trait>
 class BounceReactionBldr : public zbe::Funct<std::shared_ptr<zbe::Funct<void, IData, Trait>>, std::shared_ptr<zbe::Entity>> {
 public:
  std::shared_ptr<zbe::Funct<void, IData, Trait>> operator()(std::shared_ptr<zbe::Entity> ent){
-   auto avt = std::make_shared<zbe::SBaseAvatar<zbe::Vector3D>>();
-   avt->setupEntity(ent, idx);
+   auto avt = std::make_shared<zbe::MBaseAvatar<zbe::Vector3D, zbe::Vector3D>>();
+   avt->setupEntity(ent, {uidx, vidx});
    return std::make_shared<BounceReaction<IData, Trait>>(avt);
  }
 
- void setIdx(uint64_t idx) {
-   this->idx = idx;
+ void setIdx(uint64_t uidx, uint64_t vidx) {
+   this->vidx = vidx;
+   this->uidx = uidx;
  }
 private:
- uint64_t idx;
+ uint64_t uidx;
+ uint64_t vidx;
 };
 
 template<typename IData, typename Trait>
@@ -190,7 +194,12 @@ public:
         return;
       }
 
-      msasb->setIdx(*vectorIdx);
+      auto upwardsIdx = zbe::JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "upwardsIdx"s, "BounceReactionBldrFtry"s);
+      if(!upwardsIdx) {
+        return;
+      }
+
+      msasb->setIdx(*upwardsIdx, *vectorIdx);
 
     } else {
       zbe::SysError::setError("BounceReactionBldrFtry config for "s + name + " not found."s);
