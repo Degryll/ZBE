@@ -412,7 +412,6 @@ private:
   RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
 };
 
-// ------- TODO aquí estamos creando avatares , bldrs y factorias para movig triangle.
 class MovingTriangle3DAvt : public SAvatar<MovingTriangle3D>, public AvatarImp {
 public:
   void setupEntity(std::shared_ptr<Entity> entity, uint64_t positionAidx, uint64_t positionBidx, uint64_t positionCidx, uint64_t velocityidx) {
@@ -620,6 +619,638 @@ private:
   RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
 };
 
+class PosUpwardsTargetToPosUpwardsDirAvt : public MAvatar<Vector3D, Vector3D, Vector3D>, AvatarImp {
+/*  TODO:
+  La objetos que se pintan hacia donde se mueven tienen que tener un atributo mas asociado al movimiento: upwards.
+  La castaña heredará el upwards de la camara y este se reflejará en los comportamientos de bote.
+  El avatar de pintado de la castaña convertira esta direccion/upwards en lo que necesita el pintado.*/
+public:
+
+  /** \brief
+   */
+   void setupEntity(std::shared_ptr<Entity> entity, uint64_t positionidx, uint64_t targetidx, uint64_t upwardsidx) {
+     AvatarImp::setupEntity(entity);
+     _Avatar<1, Vector3D>::setup(&getPosition, &setPosition, (void*)this);
+     _Avatar<2, Vector3D>::setup(&getDirection, &setDirection, (void*)this);
+     _Avatar<3, Vector3D>::setup(&getUpwards, &setUpwards, (void*)this);
+     position = entity->getVector3D(positionidx);
+     target = entity->getVector3D(targetidx);
+     upwards = entity->getVector3D(upwardsidx);
+   }
+
+   static std::shared_ptr<Value<Vector3D> > getPosition(void *instance) {
+     return ((PosUpwardsTargetToPosUpwardsDirAvt*)instance)->position;
+   }
+
+   static std::shared_ptr<Value<Vector3D> > getDirection(void *instance) {
+     auto& position = ((PosUpwardsTargetToPosUpwardsDirAvt*)instance)->position;
+     auto& target =   ((PosUpwardsTargetToPosUpwardsDirAvt*)instance)->target;
+     auto p = position->get();
+     auto t = target->get();
+     auto v = (t - p).normalize();// * s;
+     auto r = std::make_shared<SimpleValue<Vector3D> >();
+     r->set(v);
+     return r;
+   }
+
+   static std::shared_ptr<Value<Vector3D> > getUpwards(void *instance) {
+     return ((PosUpwardsTargetToPosUpwardsDirAvt*)instance)->upwards;
+   }
+
+   static void setPosition(void *instance, Vector3D position) {
+     assert(false);
+   }
+
+   static void setDirection(void*, Vector3D) {
+     assert(false);
+   }
+
+   static void setUpwards(void*, Vector3D) {
+     assert(false);
+   }
+
+   std::shared_ptr<Entity> getEntity() {
+     assert(false);
+   }
+
+
+private:
+  std::shared_ptr<Value<Vector3D> > position;
+  std::shared_ptr<Value<Vector3D> > target;
+  std::shared_ptr<Value<Vector3D> > upwards;
+};
+
+
+
+class PosUpwardsTargetToPosUpwardsDirAvtFtry : public Factory {
+  void create(std::string name, uint64_t){
+    using namespace std::string_literals;
+
+    auto puttpuda = std::make_shared<PosUpwardsTargetToPosUpwardsDirAvt>();
+    puttpudaStore.insert("PosUpwardsTargetToPosUpwardsDirAvt."s + name, puttpuda);
+  }
+
+  /** \brief Setup the desired tool. The tool will be complete after this step.
+   *  \param name Name of the tool.
+   *  \param cfgId Tool's configuration id.
+   */
+  void setup(std::string name, uint64_t cfgId){
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+    if(cfg) {
+      auto j = *cfg;
+      if (!j["entity"].is_string()) {
+        SysError::setError("PosUpwardsTargetToPosUpwardsDirAvtFtry " + name + " config for entity must be a string."s);
+        return;
+      }
+      if (!j["lists"].is_object()) {
+        SysError::setError("PosUpwardsTargetToPosUpwardsDirAvtFtry " + name + " config for lists must be an object. But is "s + j["lists"].type_name());
+        return;
+      }
+      if (!j["positionIdx"].is_string()) {
+        SysError::setError("PosUpwardsTargetToPosUpwardsDirAvtFtry " + name + " config for positionIdx must be a string."s);
+        return;
+      }
+      if (!j["targetIdx"].is_string()) {
+        SysError::setError("PosUpwardsTargetToPosUpwardsDirAvtFtry " + name + " config for targetIdx must be a string."s);
+        return;
+      }
+      if (!j["upwardsIdx"].is_string()) {
+        SysError::setError("PosUpwardsTargetToPosUpwardsDirAvtFtry " + name + " config for upwardsIdx must be a string."s);
+        return;
+      }
+
+      std::string entityName = j["entity"].get<std::string>();
+      if(!entityRsrc.contains("Entity."s + entityName)) {
+        SysError::setError("PosUpwardsTargetToPosUpwardsDirAvtFtry config for entity: "s + entityName + " is not an entity name."s);
+        return;
+      }
+
+      std::shared_ptr<Entity> ent = entityRsrc.get("Entity."s + entityName);
+
+      std::string positionIdxName = j["positionIdx"].get<std::string>();
+      if(!dict.contains(positionIdxName)) {
+        SysError::setError("PosUpwardsTargetToPosUpwardsDirAvtFtry config for positionIdx: "s + positionIdxName + " is not an positionIdx name."s);
+        return;
+      }
+      std::string targetIdxName = j["targetIdx"].get<std::string>();
+      if(!dict.contains(targetIdxName)) {
+        SysError::setError("PosUpwardsTargetToPosUpwardsDirAvtFtry config for targetIdx: "s + targetIdxName + " is not an targetIdx name."s);
+        return;
+      }
+      std::string upwardsIdxName = j["upwardsIdx"].get<std::string>();
+      if(!dict.contains(upwardsIdxName)) {
+        SysError::setError("PosUpwardsTargetToPosUpwardsDirAvtFtry config for targetIdx: "s + targetIdxName + " is not an targetIdx name."s);
+        return;
+      }
+
+      uint64_t positionIdx = dict.get(positionIdxName);
+      uint64_t targetIdx = dict.get(targetIdxName);
+      uint64_t upwardsIdx = dict.get(upwardsIdxName);
+
+      std::shared_ptr<PosUpwardsTargetToPosUpwardsDirAvt> avt = puttpudaStore.get("PosUpwardsTargetToPosUpwardsDirAvt."s + name);
+
+      avt->setupEntity(ent, positionIdx, targetIdx, upwardsIdx);
+
+      auto listsCfg = j["lists"];
+      for (auto& listCfg : listsCfg.items()) {
+        if (!listCfg.value().is_string()) {
+          SysError::setError("PosUpwardsTargetToPosUpwardsDirAvt " + name + " config for lists must contain strings. But is "s + listCfg.value().type_name());
+          return;
+        }
+        auto list = listStore.get("List." + listCfg.key());
+        auto ticket = list->push_front(avt);
+        ent->addTicket(dict.get(listCfg.value().get<std::string>()), ticket);
+      }
+      puttpudaStore.remove("PosUpwardsTargetToPosUpwardsDirAvt."s + name);
+    } else {
+      SysError::setError("Avatar config for "s + name + " not found."s);
+    }
+  }
+
+private:
+  NameRsrcDictionary &dict                                                 = NameRsrcDictionary::getInstance();
+  RsrcStore<nlohmann::json> &configRsrc                                    = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<PosUpwardsTargetToPosUpwardsDirAvt>& puttpudaStore             = RsrcStore<PosUpwardsTargetToPosUpwardsDirAvt>::getInstance();
+  RsrcStore<Entity>& entityRsrc                                            = RsrcStore<Entity>::getInstance();
+  RsrcStore<TicketedForwardList<MAvatar<Vector3D, Vector3D, Vector3D> > >& listStore = RsrcStore<TicketedForwardList<MAvatar<Vector3D, Vector3D, Vector3D> > >::getInstance();
+};
+
+
+class PosUpwardsTargetToPosUpwardsDirAvtBldr : public Funct<void, std::shared_ptr<Entity>> {
+public:
+  using AvtBaseType = MAvatar<Vector3D, Vector3D, Vector3D>;
+  void operator()(std::shared_ptr<Entity> ent) {
+    std::shared_ptr<PosUpwardsTargetToPosUpwardsDirAvt> avt = std::make_shared<PosUpwardsTargetToPosUpwardsDirAvt>();
+
+    avt->setupEntity(ent, positionidx, targetidx, upwardsidx);
+    for(auto indexNList : indexNLists) {
+      auto ticket = indexNList.second->push_front(avt);
+      ent->addTicket(indexNList.first, ticket);
+    }
+  }
+
+  void setIdxs(uint64_t positionidx, uint64_t targetidx, uint64_t upwardsidx) {
+      this->positionidx = positionidx;
+      this->targetidx = targetidx;
+      this->upwardsidx = upwardsidx;
+  }
+
+  void addIndexNlist(uint64_t index, std::shared_ptr<TicketedForwardList<AvtBaseType>> list) {
+    indexNLists.push_back({index, list});
+  }
+
+private:
+  uint64_t positionidx;
+  uint64_t targetidx;
+  uint64_t upwardsidx;
+  std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> indexNLists;
+};
+
+class PosUpwardsTargetToPosUpwardsDirAvtBldrFtry : public Factory {
+public:
+  void create(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    std::shared_ptr<PosUpwardsTargetToPosUpwardsDirAvtBldr> put2pudab = std::make_shared<PosUpwardsTargetToPosUpwardsDirAvtBldr>();
+    mainRsrc.insert("Function."s + name, put2pudab);
+    specificRsrc.insert("PosUpwardsTargetToPosUpwardsDirAvtBldr."s + name, put2pudab);
+  }
+
+  void setup(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+    if(cfg) {
+      auto j = *cfg;
+
+      auto pttpdvb = specificRsrc.get("PosUpwardsTargetToPosUpwardsDirAvtBldr."s + name);
+
+      auto positionIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionIdx"s, "PosUpwardsTargetToPosUpwardsDirAvtBldrFtry"s);
+      if(!positionIdx) {
+        return;
+      }
+      auto targetIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "targetIdx"s, "PosUpwardsTargetToPosUpwardsDirAvtBldrFtry"s);
+      if(!targetIdx) {
+        return;
+      }
+      auto upwardsIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "upwardsIdx"s, "PosUpwardsTargetToPosUpwardsDirAvtBldrFtry"s);
+      if(!upwardsIdx) {
+        return;
+      }
+
+      pttpdvb->setIdxs(*positionIdx, *targetIdx, *upwardsIdx);
+
+      JSONFactory::loadAllIndexed<TicketedForwardList<typename PosUpwardsTargetToPosUpwardsDirAvtBldr::AvtBaseType>>(listRsrc, uintDict, j, zbe::factories::listName, "lists"s, "PosUpwardsTargetToPosUpwardsDirAvtBldrFtry"s,
+          [&](uint64_t idx, std::shared_ptr<ListType> list) {
+            pttpdvb->addIndexNlist(idx, list);
+            return true;
+          }
+      );
+
+    } else {
+      SysError::setError("PosUpwardsTargetToPosUpwardsDirAvtBldrFtry config for "s + name + " not found."s);
+    }
+  }
+
+private:
+  using FunctionType = Funct<void, std::shared_ptr<Entity>>;
+  using ListType = TicketedForwardList<typename PosUpwardsTargetToPosUpwardsDirAvtBldr::AvtBaseType>;
+  NameRsrcDictionary &uintDict = NameRsrcDictionary::getInstance();
+  RsrcStore<nlohmann::json> &configRsrc    = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<PosUpwardsTargetToPosUpwardsDirAvtBldr>& specificRsrc    = RsrcStore<PosUpwardsTargetToPosUpwardsDirAvtBldr>::getInstance();
+  RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
+  RsrcStore<ListType>& listRsrc = RsrcStore<ListType>::getInstance();
+};
+
+// // ---------------------- TODO PosTargetUpwardsToPosDirAngleAvt
+
+
+// class PosTargetUpwardsToPosDirAngleAvt : public MAvatar<double, Vector3D, Vector3D>, AvatarImp {
+// public:
+
+//   /** \brief
+//    */
+//    void setupEntity(std::shared_ptr<Entity> entity, uint64_t positionidx, uint64_t targetidx, uint64_t upwardsidx) {
+//      AvatarImp::setupEntity(entity);
+//      _Avatar<1, Vector3D>::setup(&getPosition, &setPosition, (void*)this);
+//      _Avatar<2, Vector3D>::setup(&getDirection, &setDirection, (void*)this);
+//      _Avatar<3, double>::setup(&getAngle, &setAngle, (void*)this);
+//      position = entity->getVector3D(positionidx);
+//      target = entity->getVector3D(targetidx);
+//      upwards = entity->getVector3D(upwardsidx);
+//    }
+
+//    static std::shared_ptr<Value<Vector3D> > getPosition(void *instance) {
+//      return ((PosTargetUpwardsToPosDirAngleAvt*)instance)->position;
+//    }
+
+//    static std::shared_ptr<Value<Vector3D> > getDirection(void *instance) {
+//      auto& position = ((PosTargetUpwardsToPosDirAngleAvt*)instance)->position;
+//      auto& target =   ((PosTargetUpwardsToPosDirAngleAvt*)instance)->target;
+//      auto p = position->get();
+//      auto t = target->get();
+//      auto v = (t - p).normalize();
+//      auto r = std::make_shared<SimpleValue<Vector3D> >();
+//      r->set(v);
+//      return r;
+//    }
+
+//    static std::shared_ptr<Value<double> > getAngle(void *instance, double angle) {
+//     //  auto& position = ((PosTargetUpwardsToPosDirAngleAvt*)instance)->position;
+//     //  auto& target =  ((PosTargetUpwardsToPosDirAngleAvt*)instance)->target;
+//     //  auto& upwards =  ((PosTargetUpwardsToPosDirAngleAvt*)instance)->upwards;
+//     //  auto p = position->get();
+//     //  auto t = target->get();
+//     //  auto u = upwards->get();
+//     //  auto d = (t - p).normalize();
+//     //  glm::mat4 rotmat = glm::orientation (detail::tvec3< T > const &Normal, detail::tvec3< T > const &Up);
+//     //  //glm::mat4 rotmat = orientation (detail::tvec3< T > const &d, detail::tvec3< T > const &u);
+//     //  glm::quat q = glm::quat_cast(rotmat);
+//     //  double angle = glm::angle(q);
+     
+     
+//      return std::make_shared<SimpleValue<double> >();
+//    }
+
+//    static void setAngle(void*, double) {
+//      assert(false);
+//    }
+
+//    static void setDirection(void*, Vector3D) {
+//      assert(false);
+//    }
+
+//    static void setPosition(void *, Vector3D) {
+//      assert(false);
+//    }
+
+//    std::shared_ptr<Entity> getEntity() {
+//      assert(false);
+//    }
+
+
+// private:
+//   std::shared_ptr<Value<Vector3D> > position;
+//   std::shared_ptr<Value<Vector3D> > target;
+//   std::shared_ptr<Value<Vector3D> > upwards;
+// };
+
+// class PosTargetUpwardsToPosDirAngleAvtBldr : public Funct<void, std::shared_ptr<Entity>> {
+// public:
+//   using AvtBaseType = MAvatar<double, Vector3D, Vector3D>;
+//   void operator()(std::shared_ptr<Entity> ent) {
+//     std::shared_ptr<PosTargetUpwardsToPosDirAngleAvt> avt = std::make_shared<PosTargetUpwardsToPosDirAngleAvt>();
+
+//     avt->setupEntity(ent, positionidx, targetidx, upwardsidx);
+//     for(auto indexNList : indexNLists) {
+//       auto ticket = indexNList.second->push_front(avt);
+//       ent->addTicket(indexNList.first, ticket);
+//     }
+//   }
+
+//   void setIdxs(uint64_t positionidx, uint64_t targetidx, uint64_t upwardsidx) {
+//       this->positionidx = positionidx;
+//       this->targetidx = targetidx;
+//       this->upwardsidx = upwardsidx;
+//   }
+
+//   void addIndexNlist(uint64_t index, std::shared_ptr<TicketedForwardList<AvtBaseType>> list) {
+//     indexNLists.push_back({index, list});
+//   }
+
+// private:
+//   uint64_t positionidx;
+//   uint64_t targetidx;
+//   uint64_t upwardsidx;
+//   std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> indexNLists;
+// };
+
+
+// class PosTargetUpwardsToPosDirAngleAvtBldrFtry : public Factory {
+// public:
+//   void create(std::string name, uint64_t cfgId) {
+//     using namespace std::string_literals;
+//     std::shared_ptr<PosTargetUpwardsToPosDirAngleAvtBldr> ptutpdaab = std::make_shared<PosTargetUpwardsToPosDirAngleAvtBldr>();
+//     mainRsrc.insert("Function."s + name, ptutpdaab);
+//     specificRsrc.insert("PosTargetUpwardsToPosDirAngleAvtBldr."s + name, ptutpdaab);
+//   }
+
+//   void setup(std::string name, uint64_t cfgId) {
+//     using namespace std::string_literals;
+//     using namespace nlohmann;
+//     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+//     if(cfg) {
+//       auto j = *cfg;
+
+//       auto ptutpdaab = specificRsrc.get("PosTargetUpwardsToPosDirAngleAvtBldr."s + name);
+
+//       auto positionIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionIdx"s, "PosTargetUpwardsToPosDirAngleAvtBldrFtry"s);
+//       if(!positionIdx) {
+//         return;
+//       }
+//       auto targetIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "targetIdx"s, "PosTargetUpwardsToPosDirAngleAvtBldrFtry"s);
+//       if(!targetIdx) {
+//         return;
+//       }
+//       auto upwardsIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "upwardsIdx"s, "PosTargetUpwardsToPosDirAngleAvtBldrFtry"s);
+//       if(!upwardsIdx) {
+//         return;
+//       }
+
+//       ptutpdaab->setIdxs(*positionIdx, *targetIdx, *upwardsIdx);
+
+//       JSONFactory::loadAllIndexed<TicketedForwardList<typename PosTargetUpwardsToPosDirAngleAvtBldr::AvtBaseType>>(listRsrc, uintDict, j, zbe::factories::listName, "lists"s, "PosTargetToPosDirAvtBldrFtry"s,
+//           [&](uint64_t idx, std::shared_ptr<ListType> list) {
+//             pttpdvb->addIndexNlist(idx, list);
+//             return true;
+//           }
+//       );
+
+//     } else {
+//       SysError::setError("PosTargetUpwardsToPosDirAngleAvtBldrFtry config for "s + name + " not found."s);
+//     }
+//   }
+
+// private:
+//   using FunctionType = Funct<void, std::shared_ptr<Entity>>;
+//   using ListType = TicketedForwardList<typename PosTargetUpwardsToPosDirAngleAvtBldr::AvtBaseType>;
+//   NameRsrcDictionary &uintDict = NameRsrcDictionary::getInstance();
+//   RsrcStore<nlohmann::json> &configRsrc    = RsrcStore<nlohmann::json>::getInstance();
+//   RsrcStore<PosTargetUpwardsToPosDirAngleAvtBldr>& specificRsrc    = RsrcStore<PosTargetUpwardsToPosDirAngleAvtBldr>::getInstance();
+//   RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
+//   RsrcStore<ListType>& listRsrc = RsrcStore<ListType>::getInstance();
+// };
+
+// // ------- TODO aquí estamos creando avatares , bldrs y factorias para movig Triangle HitBox.
+
+// class MovingTriangle3DHitboxAvt : public SAvatar<MovingTriangle3D>, public AvatarImp {
+// public:
+//   void setupEntity(std::shared_ptr<Entity> entity, uint64_t positionidx, uint64_t velocityidx, uint64_t orientationidx, uint64_t sizeidx) {
+//     AvatarImp::setupEntity(entity);
+//     _Avatar<1, MovingTriangle3D>::setup(&getTriangle, &setTriangle, (void*)this);
+//     position = entity->getVector3D(positionidx);
+//     velocity = entity->getVector3D(velocityidx);
+//     orientation = entity->getVector3D(orientationidx);
+//     size = entity->getFloat(sizeidx);
+//     cTime = entity->getContextTime();
+//   }
+
+//   static std::shared_ptr<Value<MovingTriangle3D> > getTriangle(void *instance) {
+//     auto  mtha = (MovingTriangle3DHitboxAvt*)instance;
+//     auto& position = mtha->position;
+//     auto& orientation = mtha->orientation;
+//     auto& velocity = mtha->velocity;
+//     auto& size = mtha->size;
+//     auto p = position->get();
+//     auto o = orientation->get();
+//     auto v = velocity->get();
+//     auto s = size->get();
+//     auto time = mtha->cTime->getTotalTime();
+
+//     TODO: Hemos encontrado (recordado) que no tenemos orientacion en nuestro pintado. 
+//     No mola. Hay que arreglarlo.
+//     Una vez hecho eso, hay que traer esas matematicas de translacion, escalado y rotacion aqui
+//     MAL:
+//     Si que tenemos orientación pero es incorrecta. Tenemos que calcular pitch y yaw desde el look-at
+//     https://discord.com/channels/244405112569593857/246018374587383810/1037485466531930223 
+//     Con esa lógica construimos un avatar nuevo que sustituirá a 
+//     PosTargetToPosDirAvtFtry
+
+//     Triangle3D t{triangle.a, triangle.b, triangle.c};
+//     MovingTriangle3D mt{t, v};
+//     auto out = std::make_shared<SimpleValue<MovingTriangle3D> >();
+//     out->set(mt);
+//     return out;
+//   }
+
+//   static void setTriangle(void*, MovingTriangle3D ) {
+//     assert(false);
+//   }
+
+//   std::shared_ptr<Entity> getEntity() {
+//     assert(false);
+//   }
+
+//   void setTriangleHitbox(std::shared_ptr<Triangle3D> triangle) {
+//     this->triangle = triangle;
+//   }
+  
+
+// private:
+//  std::shared_ptr<Triangle3D> triangle;
+//  std::shared_ptr<Value<Vector3D> > position;
+//  std::shared_ptr<Value<Vector3D> > velocity;
+//  std::shared_ptr<Value<Vector3D> > orientation;
+//  std::shared_ptr<Value<float> > size;
+//  std::shared_ptr<ContextTime> cTime;
+// };
+
+// class MovingTriangle3DHitboxAvtShapeBldr  : public Funct<std::shared_ptr<SAvatar<MovingTriangle3D>>, std::shared_ptr<Entity>> {
+// public:
+//   using AvtBaseType = SAvatar<MovingSphere>;
+//   std::shared_ptr<SAvatar<MovingTriangle3D>> operator()(std::shared_ptr<Entity> ent) {
+//     std::shared_ptr<MovingTriangle3DHitboxAvt> avt = std::make_shared<MovingTriangle3DHitboxAvt>();
+//     avt->setupEntity(ent, positionidx, velocityidx, orientationidx, sizeidx);
+//     return avt;
+//   }
+
+//   void setIdxs(uint64_t positionidx, uint64_t velocityidx, uint64_t orientationidx, uint64_t sizeidx) {
+//       this->positionidx = positionidx;
+//       this->velocityidx = velocityidx;
+//       this->orientationidx = orientationidx;
+//       this->sizeidx = sizeidx;
+//   }
+
+// private:
+//  uint64_t positionidx;
+//  uint64_t velocityidx;
+//  uint64_t orientationidx;
+//  uint64_t sizeidx;
+
+// };
+
+// class MovingTriangle3DHitboxAvtShapeBldrFtry : public Factory {
+// public:
+//   void create(std::string name, uint64_t cfgId) {
+//     using namespace std::string_literals;
+//     std::shared_ptr<MovingTriangle3DHitboxAvtShapeBldr> mt3hasb = std::make_shared<MovingTriangle3DHitboxAvtShapeBldr>();
+//     mainRsrc.insert("Function."s + name, mt3hasb);
+//     specificRsrc.insert("MovingTriangle3DHitboxAvtShapeBldr."s + name, msasb);
+//   }
+
+//   void setup(std::string name, uint64_t cfgId) {
+//     using namespace std::string_literals;
+//     using namespace nlohmann;
+//     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+//     if(cfg) {
+//       auto j = *cfg;
+
+//       auto mt3hasb = specificRsrc.get("MovingTriangle3DHitboxAvtShapeBldr."s + name);
+
+//       auto positionidx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionidx"s, "MovingTriangle3DHitboxAvtShapeBldrFtry"s);
+//       if(!positionidx) {
+//         return;
+//       }
+//       auto velocityidx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "velocityidx"s, "MovingTriangle3DHitboxAvtShapeBldrFtry"s);
+//       if(!velocityidx) {
+//         return;
+//       }
+//       auto orientationidx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "orientationidx"s, "MovingTriangle3DHitboxAvtShapeBldrFtry"s);
+//       if(!orientationidx) {
+//         return;
+//       }
+
+//       auto sizeidx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "sizeidx"s, "MovingTriangle3DHitboxAvtShapeBldrFtry"s);
+//       if(!sizeidx) {
+//         return;
+//       }
+//       mt3hasb->setIdxs(*positionidx, *velocityidx, *orientationidx, *sizeidx);
+
+//     } else {
+//       SysError::setError("MovingTriangle3DHitboxAvtShapeBldrFtry config for "s + name + " not found."s);
+//     }
+//   }
+
+// private:
+//   using FunctionType = Funct<std::shared_ptr<SAvatar<MovingTriangle3D>>, std::shared_ptr<Entity>>;
+//   using ListType = TicketedForwardList<MovingTriangle3DHitboxAvtShapeBldr::AvtBaseType>;
+//   RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
+//   RsrcStore<nlohmann::json> &configRsrc                          = RsrcStore<nlohmann::json>::getInstance();
+//   RsrcStore<MovingTriangle3DHitboxAvtShapeBldr>& specificRsrc    = RsrcStore<MovingTriangle3DHitboxAvtShapeBldr>::getInstance();
+//   RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
+// };
+
+// class MovingTriangle3DHitboxAvtBldr : public Funct<std::shared_ptr<SAvatar<MovingTriangle3D>>, std::shared_ptr<Entity>> {
+// public:
+//   using AvtBaseType = SAvatar<MovingTriangle3D>;
+//   std::shared_ptr<SAvatar<MovingTriangle3D>> operator()(std::shared_ptr<Entity> ent) {
+//     std::shared_ptr<MovingTriangle3DHitboxAvt> avt = std::make_shared<MovingTriangle3DHitboxAvt>();
+//     avt->setupEntity(ent, positionidx, velocityidx, orientationidx, sizeidx);
+//     for(auto indexNList : indexNLists) {
+//       auto ticket = indexNList.second->push_front(avt);
+//       ent->addTicket(indexNList.first, ticket);
+//     }
+//   }
+
+//   void setIdxs(uint64_t positionidx, uint64_t velocityidx, uint64_t orientationidx, uint64_t sizeidx) {
+//       this->positionidx = positionidx;
+//       this->velocityidx = velocityidx;
+//       this->orientationidx = orientationidx;
+//       this->sizeidx = sizeidx;
+//   }
+
+//   void addIndexNlist(uint64_t index, std::shared_ptr<TicketedForwardList<AvtBaseType>> list) {
+//     indexNLists.push_back({index, list});
+//   }
+
+// private:
+//  uint64_t positionidx;
+//  uint64_t velocityidx;
+//  uint64_t orientationidx;
+//  uint64_t sizeidx;
+//  std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> indexNLists;
+// };
+
+// class MovingTriangle3DHitboxAvtBldrFtry : public Factory {
+// public:
+//   void create(std::string name, uint64_t cfgId) {
+//     using namespace std::string_literals;
+//     std::shared_ptr<MovingTriangle3DHitboxAvtBldr> mt3hab = std::make_shared<MovingTriangle3DHitboxAvtBldr>();
+//     mainRsrc.insert("Function."s + name, mt3hab);
+//     specificRsrc.insert("MovingTriangle3DHitboxAvtBldr."s + name, msab);
+//   }
+
+//   void setup(std::string name, uint64_t cfgId) {
+//     using namespace std::string_literals;
+//     using namespace nlohmann;
+//     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+//     if(cfg) {
+//       auto j = *cfg;
+
+//       auto mt3hab = specificRsrc.get("MovingTriangle3DHitboxAvtBldr."s + name);
+
+//       auto positionidx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionidx"s, "MovingTriangle3DHitboxAvtBldrFtry"s);
+//       if(!positionidx) {
+//         return;
+//       }
+
+//       auto velocityidx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "velocityidx"s, "MovingTriangle3DHitboxAvtBldrFtry"s);
+//       if(!velocityidx) {
+//         return;
+//       }
+
+//       auto orientationidx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "orientationidx"s, "MovingTriangle3DHitboxAvtBldrFtry"s);
+//       if(!orientationidx) {
+//         return;
+//       }
+
+//       auto sizeidx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "sizeidx"s, "MovingTriangle3DHitboxAvtBldrFtry"s);
+//       if(!sizeidx) {
+//         return;
+//       }
+
+//       mt3hab->setIdxs(*positionidx, *velocityidx, *orientationidx, *sizeidx);
+
+//     } else {
+//       SysError::setError("MovingTriangle3DHitboxAvtBldrFtry config for "s + name + " not found."s);
+//     }
+//   }
+
+// private:
+//   using FunctionType = Funct<std::shared_ptr<SAvatar<MovingTriangle3D>>, std::shared_ptr<Entity>>;
+//   using ListType = TicketedForwardList<MovingTriangle3DHitboxAvtBldr::AvtBaseType>;
+//   RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
+//   RsrcStore<nlohmann::json> &configRsrc                          = RsrcStore<nlohmann::json>::getInstance();
+//   RsrcStore<MovingTriangle3DHitboxAvtBldr>& specificRsrc    = RsrcStore<MovingTriangle3DHitboxAvtBldr>::getInstance();
+//   RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
+// };
+
 // TODO
 // MovingTriangle3DAvtShapeBldr
 // MovingTriangle3DAvtShapeBldrFtry
@@ -627,6 +1258,7 @@ private:
 // MovingTriangle3DAvtBldrFtry
 
 // -----
+
 
 class DerivedPosMovingSphereAvt : public SAvatar<MovingSphere>, public AvatarImp {
 public:

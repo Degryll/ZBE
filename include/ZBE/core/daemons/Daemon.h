@@ -10,6 +10,8 @@
 #ifndef ZBE_CORE_DAEMONS_DAEMON_H
 #define ZBE_CORE_DAEMONS_DAEMON_H
 
+#include <cstdio>
+
 #include <nlohmann/json.hpp>
 
 #include "ZBE/core/system/system.h"

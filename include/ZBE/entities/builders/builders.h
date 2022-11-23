@@ -1214,12 +1214,12 @@ public:
     }
     auto bcvmb = specificRsrc.get("BuildCopyVectModuleBldr."s + name);
     auto j = *cfg;
-    auto speed = JSONFactory::loadParamCfgDict<double>(doubleDict, j, "speed"s, "EntityTimerBldrFtry"s);
+    auto module = JSONFactory::loadParamCfgDict<double>(doubleDict, j, "module"s, "EntityTimerBldrFtry"s);
     if(!time) {
-      SysError::setError("BehaviorEntityBldr config for speed is invalid"s);
+      SysError::setError("BehaviorEntityBldr config for module is invalid"s);
       return;
     }
-    bcvmb->setVectorModule(*speed);
+    bcvmb->setVectorModule(*module);
   }
 
 private:

@@ -11,12 +11,12 @@
     "VZERO"  :{"type":"v3", "value":[0.0,0.0,0.0]},
     "ONE" : {"type":"uifd", "value":1},
     "NEGATIVEONE" : {"type":"ifd", "value":-1},
-    "width" : {"type":"uifd", "value":1024},
-    "height" : {"type":"uifd", "value":768},
+    "width" : {"type":"uifd", "value":1280},
+    "height" : {"type":"uifd", "value":960},
     "second" : {"type":"uifd", "value":65536},
     "gidIdx" : 1000,
     "stateIdx" : 1010,
-    "degreesIdx" : 1020,
+    "radsIdx" : 1020,
     "positionIdx" : 1030,
     "sizeIdx" : 1040,
     "scaleIdx" : 1050,
@@ -29,6 +29,7 @@
     "inerTicket" : 1200,
     "inatorTicket" : 1210,
     "BulletCreatorTicket" : 1220,
+    "SoundCreatorTicket" : 1221,
     "positionAIdx" : 1230,
     "positionBIdx" : 1240,
     "positionCIdx" : 1250,
@@ -175,9 +176,15 @@
           "config" : {}
         },
         {
-          "factory": "TFAECTwoV3DAvtFtry",
+          "factory": "TFAECThreeV3DAvtFtry",
           "description" : "do some serious sam",
           "name": "loadScreen.BulletCreatorList",
+          "config" : {}
+        },
+        {
+          "factory": "TFAECTwoV3DAvtFtry",
+          "description" : "do some serious sam",
+          "name": "loadScreen.SoundCreatorList",
           "config" : {}
         },
         {
@@ -379,7 +386,7 @@
               "gidIdx":["Pepino"]
             },
             "double": {
-              "degreesIdx":[0.0],
+              "radsIdx":[0.0],
               "scaleIdx":[10.0]
             },
             "float": {
@@ -395,7 +402,7 @@
           "factory" :"Drawable3DAvtBldrFtry",
           "name" : "zandbokz.pepinoapintar",
           "config" : {
-            "attribIndexes" : ["gidIdx", "scaleIdx", "degreesIdx", "orientationIdx", "positionIdx"],
+            "attribIndexes" : ["gidIdx", "scaleIdx", "radsIdx", "orientationIdx", "positionIdx"],
             "lists":{"loadScreen.drawList":"drawticket"}
           }
         },
@@ -460,15 +467,15 @@
               "gidIdx":["Ojito"]
             },
             "double": {
-              "degreesIdx":[0.0],
+              "radsIdx":[0.0],
               "scaleIdx":[10.0]
             },
             "V3D": {
               "positionIdx":[0.0, 50.0, 0.0],
               "orientationIdx":[1.0, 0.0, 0.0],
-              "positionAIdx":[100.0, 0.0, 100.0],
-              "positionBIdx":[-100.0, 0.0, 100.0],
-              "positionCIdx":[100.0, 0.0, -100.0],
+              "positionAIdx":[200.0, 0.0, 200.0],
+              "positionBIdx":[-200.0, 0.0, 200.0],
+              "positionCIdx":[200.0, 0.0, -200.0],
               "velocityIdx":[0.0, 0.0, 0.0]
             }
           }
@@ -477,7 +484,7 @@
           "factory" :"Drawable3DAvtBldrFtry",
           "name" : "zandbokz.diositoapintar",
           "config" : {
-            "attribIndexes" : ["gidIdx", "scaleIdx", "degreesIdx", "orientationIdx", "positionIdx"],
+            "attribIndexes" : ["gidIdx", "scaleIdx", "radsIdx", "orientationIdx", "positionIdx"],
             "lists":{"loadScreen.drawList":"drawticket"}
           }
         },
@@ -515,26 +522,43 @@
           }
         },
         {
-          "factory" : "CopyVelFtry",
-          "name" : "zandbokz.copyvel",
+          "factory" : "CopyVec2Mod2VFtry",
+          "name" : "zandbokz.copyvel2v",
           "config" : {
-            "speed" : "bullet.speed"
+            "module" : "bullet.speed"
           }
         },
         {
-          "factory" : "CopyPosFtry",
-          "name" : "zandbokz.copypos",
+          "factory" : "CopyVec12VFtry",
+          "name" : "zandbokz.copypos2v",
           "config" : {}
         },
         {
-          "factory" : "BehaviorEntityBldrFtry",
+          "factory" : "CopyVec2Mod3VFtry",
+          "name" : "zandbokz.copyvel3v",
+          "config" : {
+            "module" : "bullet.speed"
+          }
+        },
+        {
+          "factory" : "CopyVec13VFtry",
+          "name" : "zandbokz.copypos3v",
+          "config" : {}
+        },
+        {
+          "factory" : "CopyVec33VFtry",
+          "name" : "zandbokz.copyupwards3v",
+          "config" : {}
+        },
+        {
+          "factory" : "BehaviorEntityBldrFtry2V",
           "name" : "zandbokz.suenacatapun",
           "config" : {
             "contextTime":"DEFAULT",
             "builders" : ["zandbokz.audiovalues", "zandbokz.suena"],
             "Vector3D" : {
-              "positionIdx" : "zandbokz.copypos",
-              "orientationIdx" : "zandbokz.copyvel"
+              "positionIdx" : "zandbokz.copypos2v",
+              "orientationIdx" : "zandbokz.copyvel2v"
             }
           }
         },
@@ -558,14 +582,15 @@
           }
         },
         {
-          "factory" : "BehaviorEntityBldrFtry",
+          "factory" : "BehaviorEntityBldrFtry3V",
           "name" : "zandbokz.dropcastaña",
           "config" : {
             "contextTime":"DEFAULT",
             "builders" : ["zandbokz.castañavalues", "zandbokz.castañaapintar", "zandbokz.castañaefimera", "zandbokz.castañapalante", "zandbokz.castañasolidosocializa"],
             "Vector3D" : {
-              "positionIdx" : "zandbokz.copypos",
-              "orientationIdx" : "zandbokz.copyvel"
+              "positionIdx" : "zandbokz.copypos3v",
+              "orientationIdx" : "zandbokz.copyvel3v",
+              "upwardsIdx" : "zandbokz.copyupwards3v"
             }
           }
         },
@@ -592,7 +617,8 @@
           "factory" : "BounceReactionBldrFtry",
           "name" : "zandbokz.rebotabien",
           "config" : {
-            "vectorIdx" : "orientationIdx"
+            "vectorIdx" : "orientationIdx",
+            "upwardsIdx" : "upwardsIdx"
           }
         },
         {
@@ -614,14 +640,14 @@
               "gidIdx":["Castaña"]
             },
             "double": {
-              "degreesIdx":[50.0],
+              "radsIdx":[140.0],
               "scaleIdx":[10.0]
             },
             "float": {
               "sizeIdx":[10.0]
             },
             "V3D": {
-              "orientationIdx":[0.5, 0.5, 0.5]
+              "orientationIdx":[10.5, 0.0, 0.5]
             }
           }
         },
@@ -629,7 +655,7 @@
           "factory" :"Drawable3DAvtBldrFtry",
           "name" : "zandbokz.castañaapintar",
           "config" : {
-            "attribIndexes" : ["gidIdx", "scaleIdx", "degreesIdx", "orientationIdx", "positionIdx"],
+            "attribIndexes" : ["gidIdx", "scaleIdx", "radsIdx", "orientationIdx", "positionIdx"],
             "lists":{"loadScreen.drawList":"drawticket"}
           }
         },
@@ -702,7 +728,7 @@
               "gidIdx":["ZCube"]
             },
             "double": {
-              "degreesIdx":[0.0],
+              "radsIdx":[0.7853975],
               "scaleIdx":[10.0]
             },
             "float": {
@@ -710,7 +736,7 @@
             },
             "V3D": {
               "positionIdx":[0.0, 10.0, 0.0],
-              "orientationIdx":[1.0, 0.0, 0.0],
+              "orientationIdx":[0.0, 1.0, 0.0],
               "velocityIdx": "zandbokz.cajaVel"
             }
           }
@@ -719,7 +745,7 @@
           "factory" :"Drawable3DAvtBldrFtry",
           "name" : "zandbokz.cajaapintar",
           "config" : {
-            "attribIndexes" : ["gidIdx", "scaleIdx", "degreesIdx", "orientationIdx", "positionIdx"],
+            "attribIndexes" : ["gidIdx", "scaleIdx", "radsIdx", "orientationIdx", "positionIdx"],
             "lists":{"loadScreen.drawList":"drawticket"}
           }
         },
@@ -784,7 +810,7 @@
               "gidIdx":["Plane"]
             },
             "double": {
-              "degreesIdx":[0.0],
+              "radsIdx":[0.0],
               "scaleIdx":[200.0]
             },
             "V3D": {
@@ -864,9 +890,6 @@
               "loadScreen.coordOscillatorDaemon",
               "loadScreen.ULM3DDaemon"
             ],
-            "pruebas" : {
-              "castañaporframe" : "loadScreen.shotDaemonB"
-            },
             "disabledDaemons": [
               "loadScreen.goForwardDaemon",
               "loadScreen.goBackwardDaemon",
@@ -1043,7 +1066,7 @@
             "gid" : "Castaña",
             "gidIdx" : "gidIdx",
             "rotation" : "ZERO",
-            "rotationIdx" : "degreesIdx",
+            "rotationIdx" : "radsIdx",
             "scale" : "ONE",
             "scaleIdx" : "scaleIdx",
             "positionIdx" : "positionIdx",
@@ -1083,7 +1106,6 @@
           "name": "loadScreen.OnceBulletCreatorDmn",
           "description" : "demonio girara la camara una vez y se va",
           "config" : {
-            "DaemonBack" : "loadScreen.shotDaemonB",
             "Daemon" : "loadScreen.masterShot",
             "DaemonMaster" : "BehaviorsMD"
           }
@@ -1104,27 +1126,19 @@
             "behavior" : "loadScreen.yawBhv"
           }
         },
-        {"factory": "TwoV3DAvtDaemonFtry",
+        {"factory": "FunctOverAvtList3VDmnFtry",
           "name": "loadScreen.shotDaemon",
-          "description" : "demonio girara la camara",
-          "config" : {
-            "list" : "loadScreen.BulletCreatorList",
-            "behavior" : "loadScreen.BulletCreatorBhv"
-          }
-        },
-        {"factory": "FunctOverAvtListDmnFtry",
-          "name": "loadScreen.shotDaemonB",
           "description" : "demonio caga castañas",
           "config" : {
             "list" : "loadScreen.BulletCreatorList",
             "function" : "zandbokz.dropcastaña"
           }
         },
-        {"factory": "FunctOverAvtListDmnFtry",
+        {"factory": "FunctOverAvtList2VDmnFtry",
           "name": "loadScreen.shotSuena",
           "description" : "demonio caga castañas",
           "config" : {
-            "list" : "loadScreen.BulletCreatorList",
+            "list" : "loadScreen.SoundCreatorList",
             "function" : "zandbokz.suenacatapun"
           }
         },
@@ -1133,7 +1147,7 @@
           "description" : "demonio que lanza castañas y suena",
           "config" : {
             "daemons": [
-              "loadScreen.shotDaemonB",
+              "loadScreen.shotDaemon",
               "loadScreen.shotSuena"
             ]
           }
@@ -1252,7 +1266,7 @@
           "name": "loadScreen.sueloEnt",
           "config" : {
             "entity" : "Suelo",
-            "attribIndexes" : ["gidIdx", "scaleIdx", "degreesIdx", "orientationIdx", "positionIdx"],
+            "attribIndexes" : ["gidIdx", "scaleIdx", "radsIdx", "orientationIdx", "positionIdx"],
             "lists":{"loadScreen.drawList":"drawticket"}
           }
         },
@@ -1283,13 +1297,23 @@
             "lists":{"loadScreen.camMoveList":"camPosVelTicket"}
           }
         },
-        {"factory": "PosTargetToPosDirAvtFtry",
+        { "factory" : "PosUpwardsTargetToPosUpwardsDirAvtFtry",
+          "name": "loadScreen.camPosUpDir",
+          "config" : {
+            "entity" : "cameraController",
+            "positionIdx" : "positionIdx",
+            "targetIdx" : "targetIdx",
+            "upwardsIdx" : "upwardsIdx",
+            "lists":{"loadScreen.BulletCreatorList":"BulletCreatorTicket"}
+          }
+        },
+        { "factory": "PosTargetToPosDirAvtFtry",
           "name": "loadScreen.camPosDir",
           "config" : {
             "entity" : "cameraController",
             "positionIdx" : "positionIdx",
             "targetIdx" : "targetIdx",
-            "lists":{"loadScreen.BulletCreatorList":"BulletCreatorTicket"}
+            "lists":{"loadScreen.SoundCreatorList":"SoundCreatorTicket"}
           }
         },
         {"factory": "LookAtToPitchAvtFtry",
