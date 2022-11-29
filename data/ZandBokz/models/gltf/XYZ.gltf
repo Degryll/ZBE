@@ -15,7 +15,7 @@
     "nodes" : [
         {
             "mesh" : 0,
-            "name" : "Plane"
+            "name" : "XYZ"
         }
     ],
     "materials" : [
@@ -34,7 +34,7 @@
     ],
     "meshes" : [
         {
-            "name" : "Plane",
+            "name" : "XYZ",
             "primitives" : [
                 {
                     "attributes" : {

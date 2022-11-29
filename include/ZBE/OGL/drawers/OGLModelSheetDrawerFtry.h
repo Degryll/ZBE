@@ -21,7 +21,7 @@
 
 #include "ZBE/core/behaviors/Behavior.h"
 
-#include "ZBE/OGL/graphics/implementations/SimpleOGLModelSheet.h"
+#include "ZBE/OGL/graphics/implementations/OGLModelSheets.h"
 #include "ZBE/OGL/drawers/OGLModelSheetDrawer.h"
 #include "ZBE/SDL/OGL/SDLOGLWindow.h"
 

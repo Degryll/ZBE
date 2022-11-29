@@ -72,8 +72,8 @@ public:
     using TwoV3DAvtList = TicketedForwardList<MAvatar<Vector3D, Vector3D> >;
     using TwoV3DAvtBhvr = BehaviorDmnFtry<TwoV3DAvtList, Vector3D, Vector3D>;
 
-    using LookAtAvtList = TicketedForwardList<MAvatar<Vector3D, Vector3D, Vector3D> >;
-    using LookAtAvtBhvr = BehaviorDmnFtry<LookAtAvtList, Vector3D, Vector3D, Vector3D>;
+    using LookAtAvtList = TicketedForwardList<MAvatar<uint64_t, double, Vector3D, Vector3D, Vector3D> >;
+    using LookAtAvtBhvr = BehaviorDmnFtry<LookAtAvtList, uint64_t, double, Vector3D, Vector3D, Vector3D>;
 
     auto& factories = RsrcStore<Factory>::getInstance();
     for(int i = 0;i<100;i++) {
@@ -82,6 +82,7 @@ public:
     // Builders
     factories.insert("Drawable2DAvtBldrFtry", std::make_shared<AvatarBldrFtry<uint64_t, int64_t, double, Vector2D, Vector2D>>());
     factories.insert("Drawable3DAvtBldrFtry", std::make_shared<AvatarBldrFtry<uint64_t, double,  double, Vector3D, Vector3D>>());
+    factories.insert("DrawableLookAtAvtBldrFtry", std::make_shared<AvatarBldrFtry<uint64_t, double,  Vector3D, Vector3D, Vector3D>>());
     factories.insert("DrawableSimple2DAvtBldrFtry", std::make_shared<AvatarBldrFtry<uint64_t, int64_t, double, Vector2D, Vector2D>>());
     factories.insert("V3DAvtBldrFtry", std::make_shared<AvatarBldrFtry<Vector3D> >());
     factories.insert("TwoV3DAvtBldrFtry", std::make_shared<AvatarBldrFtry<Vector3D, Vector3D> >());

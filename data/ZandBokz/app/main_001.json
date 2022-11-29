@@ -33,7 +33,7 @@
     "positionAIdx" : 1230,
     "positionBIdx" : 1240,
     "positionCIdx" : 1250,
-    "lifespan" : 655360,
+    "lifespan" : 6553600,
     "fovIdx" : 3100,
     "targetIdx" : 3200,
     "upwardsIdx" : 3300,
@@ -125,6 +125,12 @@
           "factory": "TFAECModelFtry",
           "description" : "do some serious sheet",
           "name": "loadScreen.drawList",
+          "config" : {}
+        },
+        {
+          "factory": "TFAECLookAtAvtFtry",
+          "description" : "do some serious sheet",
+          "name": "loadScreen.drawLookAtList",
           "config" : {}
         },
         {
@@ -298,6 +304,13 @@
           }
         },
         {
+          "factory": "JSONLookAtOGLModelSheetLoaderFtry",
+          "name":"zandbokz.lamsLoader",
+          "config" : {
+            "window" : "zandbokz.mainwindow"
+          }
+        },
+        {
           "factory": "JSONSpriteOGLModelSheetLoaderFtry",
           "name":"zandbokz.sLoader",
           "config" : {
@@ -322,6 +335,14 @@
           "config" : {
             "loader" : "zandbokz.msLoader",
             "url" : "data/ZandBokz/modelsheets"
+          }
+        },
+        {
+          "factory": "RsrcFtry",
+          "name":"zandbokz.lookAtModelSheetLoader",
+          "config" : {
+            "loader" : "zandbokz.lamsLoader",
+            "url" : "data/ZandBokz/lamodelsheets"
           }
         },
         {
@@ -637,6 +658,9 @@
           "name" : "zandbokz.castañavalues",
           "config" : {
             "uint": {
+              "gidIdx":["XYZ"]
+            },
+            "uintBackUp": {
               "gidIdx":["Castaña"]
             },
             "double": {
@@ -652,11 +676,11 @@
           }
         },
         {
-          "factory" :"Drawable3DAvtBldrFtry",
+          "factory" :"DrawableLookAtAvtBldrFtry",
           "name" : "zandbokz.castañaapintar",
           "config" : {
-            "attribIndexes" : ["gidIdx", "scaleIdx", "radsIdx", "orientationIdx", "positionIdx"],
-            "lists":{"loadScreen.drawList":"drawticket"}
+            "attribIndexes" : ["gidIdx", "scaleIdx", "upwardsIdx", "orientationIdx", "positionIdx"],
+            "lists":{"loadScreen.drawLookAtList":"drawticket"}
           }
         },
         {
@@ -735,7 +759,7 @@
               "sizeIdx":[5.0]
             },
             "V3D": {
-              "positionIdx":[0.0, 10.0, 0.0],
+              "positionIdx":[0.0, 100.0, 0.0],
               "orientationIdx":[0.0, 1.0, 0.0],
               "velocityIdx": "zandbokz.cajaVel"
             }
@@ -967,6 +991,14 @@
             "programId" : "base_program"
           }
         },
+        {"factory": "OGLLookAtModelSheetDrawerFtry",
+          "name": "loadScreen.screenLookAtDrawer",
+          "description" : "comportamiento que pintara la pantalla. Faltan tipos",
+          "config" : {
+            "window" : "zandbokz.mainwindow",
+            "programId" : "base_program"
+          }
+        },
         {"factory": "OGLSpriteSheetDrawerFtry",
           "name": "loadScreen.screenDrawer2D",
           "description" : "comportamiento que pintara la pantalla. Faltan tipos",
@@ -1161,6 +1193,7 @@
               "loadScreen.drawDaemon2D",
               "loadScreen.shadersSetter2D",
               "loadScreen.drawDaemon3D",
+              "loadScreen.drawLookAtDaemon3D",
               "loadScreen.shadersSetter3D"
             ]
           }
@@ -1188,6 +1221,14 @@
           "config" : {
             "list" : "loadScreen.drawList",
             "behavior" : "loadScreen.screenDrawer"
+          }
+        },
+        {"factory": "LookAtAvtDaemonFtry",
+          "name": "loadScreen.drawLookAtDaemon3D",
+          "description" : "demonio que pintara la pantalla. Faltan tipos",
+          "config" : {
+            "list" : "loadScreen.drawLookAtList",
+            "behavior" : "loadScreen.screenLookAtDrawer"
           }
         },
         {"factory": "SimpleSpriteDrwrDaemonFtry",
