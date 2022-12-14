@@ -114,16 +114,17 @@ namespace zbe {
         std::shared_ptr<std::forward_list<Triangle3D>> listT3D = std::make_shared<std::forward_list<Triangle3D>>();
 
         float* p = (float*)&buffer.data.at(0) + bufferView.byteOffset;
-        int ne = bufferView.byteLength / (sizeof(float) * 3);
+        int ne = bufferView.byteLength / (sizeof(float) * 3 * 3);
         uint64_t index;
-        for(uint64_t i; i < ne; ++i) {
+        auto modelName = model.meshes[0].name;
+        for(int i = 0; i < ne; ++i) {
           index = i*9;
           Point3D a{p[index+0],p[index+1],p[index+2]};
           Point3D b{p[index+3],p[index+4],p[index+5]};
           Point3D c{p[index+6],p[index+7],p[index+8]};
-          listT3D->push_front(Triangle3D{a,b,c});
+          Triangle3D t{a,b,c};
+          listT3D->push_front(t);
         }
-        auto modelName = model.meshes[0].name;
         triangle3DListRsrc.insert("TriangleList."s + modelName, listT3D);
       }
     }  // for model.bufferViews

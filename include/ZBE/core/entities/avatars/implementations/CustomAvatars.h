@@ -12,7 +12,13 @@
 
 #include <cstdint>
 #include <memory>
+#include <forward_list>
+// TODO: hay que sacar de aqui los avatares con dependencias de terceros.
 #include <nlohmann/json.hpp>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+// ----
 
 #include "ZBE/core/tools/containers/RsrcStore.h"
 #include "ZBE/core/tools/math/math.h"
@@ -412,6 +418,195 @@ private:
   RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
 };
 
+class MovingTriangle3DRscAvt : public SAvatar<MovingTriangle3D>, public AvatarImp {
+public:
+
+  void setupEntity(std::shared_ptr<Entity> entity, uint64_t velocityIdx, uint64_t orientationIdx, uint64_t positionIdx, uint64_t radsIdx, uint64_t sizeIdx, uint64_t e1Idx, uint64_t e2Idx) {
+    AvatarImp::setupEntity(entity);
+    _Avatar<1, MovingTriangle3D>::setup(&getTriangle, &setTriangle, (void*)this);
+    orientation = entity->getVector3D(orientationIdx);
+    velocity = entity->getVector3D(velocityIdx);
+    position = entity->getVector3D(positionIdx);
+    rads = entity->getDouble(radsIdx);
+    size = entity->getDouble(sizeIdx);
+    cTime = entity->getContextTime();
+    e1 = entity->getVector3D(e1Idx);
+    e2 = entity->getVector3D(e2Idx);
+  }
+
+  static std::shared_ptr<Value<MovingTriangle3D> > getTriangle(void *instance) {
+    auto  mtra = (MovingTriangle3DRscAvt*)instance;
+    auto& vel = mtra->velocity->get();
+    auto& ori = mtra->orientation->get();
+    auto& pos = mtra->position->get();
+    float angle = (float)mtra->rads->get();
+    float baseScale = (float)mtra->size->get();
+
+    glm::vec3 glPos(pos.x, pos.y, pos.z);
+    glm::vec3 glDir(ori.x, ori.y, ori.z);
+
+    glm::mat4 mat(1.0);
+
+    glm::mat4 translate = glm::translate(glm::mat4(1.0f), glPos);
+    glm::mat4 rotate    = glm::rotate(   glm::mat4(1.0f), angle, glDir);
+    glm::mat4 scale     = glm::scale(    glm::mat4(1.0f), glm::vec3(baseScale));
+    glm::mat4 m = translate * scale * rotate;
+    glm::vec3 a = m * glm::vec4(mtra->baseT.a.x, mtra->baseT.a.y, mtra->baseT.a.z, 1.0);
+    glm::vec3 b = m * glm::vec4(mtra->baseT.b.x, mtra->baseT.b.y, mtra->baseT.b.z, 1.0);
+    glm::vec3 c = m * glm::vec4(mtra->baseT.c.x, mtra->baseT.c.y, mtra->baseT.c.z, 1.0);
+
+    Point3D pa{a.x, a.y, a.z};
+    Point3D pb{b.x, b.y, b.z};
+    Point3D pc{c.x, c.y, c.z};
+
+    Triangle3D t{pa, pb, pc};
+    MovingTriangle3D mt{t, vel};
+    auto out = std::make_shared<SimpleValue<MovingTriangle3D> >();
+    out->set(mt);
+    Vector3D e1 = pb - pa;
+    Vector3D aux = pc - pa;
+    Vector3D norm = cross(e1, aux);
+    Vector3D e2 = cross(norm, e1);
+    
+    mtra->e1->set(e1);
+    mtra->e2->set(e2);
+    return out;
+  }
+
+  static void setTriangle(void*, MovingTriangle3D ) {
+    assert(false);
+  }
+
+  std::shared_ptr<Entity> getEntity() {
+    assert(false);
+  }
+
+  void setBaseTriangle(Triangle3D baseT) {
+    this->baseT = baseT;
+  }
+
+private:
+ std::shared_ptr<Value<Vector3D> > position;
+ std::shared_ptr<Value<Vector3D> > velocity;
+ std::shared_ptr<Value<Vector3D> > orientation;
+ std::shared_ptr<Value<double> >   rads;
+ std::shared_ptr<Value<double> >   size;
+ std::shared_ptr<Value<Vector3D> > e1;
+ std::shared_ptr<Value<Vector3D> > e2;
+
+ Triangle3D baseT;
+ std::shared_ptr<ContextTime> cTime;
+};
+
+class MovingTriangle3DRscAvtShapeBldr  : public Funct<std::shared_ptr<SAvatar<MovingTriangle3D>>, std::shared_ptr<Entity>> {
+public:
+  using AvtBaseType = SAvatar<MovingSphere>;
+  std::shared_ptr<SAvatar<MovingTriangle3D>> operator()(std::shared_ptr<Entity> ent) {
+    std::shared_ptr<MovingTriangle3DRscAvt> avt = std::make_shared<MovingTriangle3DRscAvt>();
+    avt->setupEntity(ent, velocityIdx, orientationIdx, positionIdx, radsIdx, sizeIdx, e1Idx, e2Idx);
+    avt->setBaseTriangle(baseT);
+    return avt;
+  }
+
+  void setIdxs(uint64_t velocityIdx, uint64_t orientationIdx, uint64_t positionIdx, uint64_t radsIdx, uint64_t sizeIdx, uint64_t e1Idx, uint64_t e2Idx) {
+      this->velocityIdx = velocityIdx;
+      this->orientationIdx = orientationIdx;
+      this->positionIdx = positionIdx;
+      this->radsIdx = radsIdx;
+      this->sizeIdx = sizeIdx;
+      this->e1Idx = e1Idx;
+      this->e2Idx = e2Idx;
+  }
+
+  void setBaseTriangle(Triangle3D baseT) {
+    this->baseT = baseT;
+  }
+
+private:
+  uint64_t velocityIdx;
+  uint64_t orientationIdx;
+  uint64_t positionIdx;
+  uint64_t radsIdx;
+  uint64_t sizeIdx;
+  uint64_t e1Idx;
+  uint64_t e2Idx;
+  Triangle3D baseT;
+};
+
+class MovingTriangle3DRscAvtShapeBldrFtry : public Factory {
+public:
+  void create(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    std::shared_ptr<MovingTriangle3DRscAvtShapeBldr> mt3rasb = std::make_shared<MovingTriangle3DRscAvtShapeBldr>();
+    mainRsrc.insert("Function."s + name, mt3rasb);
+    specificRsrc.insert("MovingTriangle3DRscAvtShapeBldr."s + name, mt3rasb);
+  }
+
+  void setup(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+    if(cfg) {
+      auto j = *cfg;
+
+      auto mt3rasb = specificRsrc.get("MovingTriangle3DRscAvtShapeBldr."s + name);
+
+      auto velocityIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "velocityIdx"s, "MovingTriangle3DRscAvtShapeBldrFtry"s);
+      if(!velocityIdx) {
+        return;
+      }
+      auto orientationIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "orientationIdx"s, "MovingTriangle3DRscAvtShapeBldrFtry"s);
+      if(!orientationIdx) {
+        return;
+      }
+      auto positionIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionIdx"s, "MovingTriangle3DRscAvtShapeBldrFtry"s);
+      if(!positionIdx) {
+        return;
+      }
+      auto radsIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "radsIdx"s, "MovingTriangle3DRscAvtShapeBldrFtry"s);
+      if(!radsIdx) {
+        return;
+      }
+      auto sizeIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "sizeIdx"s, "MovingTriangle3DRscAvtShapeBldrFtry"s);
+      if(!sizeIdx) {
+        return;
+      }
+      auto e1Idx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "e1Idx"s, "MovingTriangle3DRscAvtShapeBldrFtry"s);
+      if(!e1Idx) {
+        return;
+      }
+      auto e2Idx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "e2Idx"s, "MovingTriangle3DRscAvtShapeBldrFtry"s);
+      if(!e2Idx) {
+        return;
+      }
+
+      auto triangleList = JSONFactory::loadParamCfgStoreP<std::forward_list<Triangle3D>>(triangle3DListRsrc, j, "TriangleList"s, "triangle"s, "MovingTriangle3DRscAvtShapeBldrFtry"s);
+      if(!triangleList) {
+        SysError::setError("EntityTimerBldrFtry config for contextTime is invalid"s);
+        return;
+      }
+
+      mt3rasb->setIdxs(*velocityIdx, *orientationIdx, *positionIdx, *radsIdx, *sizeIdx, *e1Idx, *e2Idx);
+      mt3rasb->setBaseTriangle((*triangleList)->front());
+
+    } else {
+      SysError::setError("MovingTriangle3DRscAvtShapeBldrFtry config for "s + name + " not found."s);
+    }
+  }
+
+private:
+  using FunctionType = Funct<std::shared_ptr<SAvatar<MovingTriangle3D>>, std::shared_ptr<Entity>>;
+  using ListType = TicketedForwardList<MovingTriangle3DRscAvtShapeBldr::AvtBaseType>;
+  RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
+  RsrcStore<nlohmann::json> &configRsrc                          = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<MovingTriangle3DRscAvtShapeBldr>& specificRsrc    = RsrcStore<MovingTriangle3DRscAvtShapeBldr>::getInstance();
+  RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
+  RsrcStore<std::forward_list<Triangle3D>> &triangle3DListRsrc = RsrcStore<std::forward_list<Triangle3D>>::getInstance();
+};
+
+// TODO shape builders, factorias y demas pestes
+
 class MovingTriangle3DAvt : public SAvatar<MovingTriangle3D>, public AvatarImp {
 public:
   void setupEntity(std::shared_ptr<Entity> entity, uint64_t positionAidx, uint64_t positionBidx, uint64_t positionCidx, uint64_t velocityidx) {
@@ -434,7 +629,7 @@ public:
     auto pB = positionB->get();
     auto pC = positionC->get();
     auto v = velocity->get();
-    auto time = mta->cTime->getTotalTime();
+    //auto time = mta->cTime->getTotalTime();
     Triangle3D t{pA.toPoint(), pB.toPoint(), pC.toPoint()};
     MovingTriangle3D mt{t, v};
     auto out = std::make_shared<SimpleValue<MovingTriangle3D> >();
@@ -910,8 +1105,8 @@ private:
 //     //  //glm::mat4 rotmat = orientation (detail::tvec3< T > const &d, detail::tvec3< T > const &u);
 //     //  glm::quat q = glm::quat_cast(rotmat);
 //     //  double angle = glm::angle(q);
-     
-     
+
+
 //      return std::make_shared<SimpleValue<double> >();
 //    }
 
@@ -1051,13 +1246,13 @@ private:
 //     auto s = size->get();
 //     auto time = mtha->cTime->getTotalTime();
 
-//     TODO: Hemos encontrado (recordado) que no tenemos orientacion en nuestro pintado. 
+//     TODO: Hemos encontrado (recordado) que no tenemos orientacion en nuestro pintado.
 //     No mola. Hay que arreglarlo.
 //     Una vez hecho eso, hay que traer esas matematicas de translacion, escalado y rotacion aqui
 //     MAL:
 //     Si que tenemos orientación pero es incorrecta. Tenemos que calcular pitch y yaw desde el look-at
-//     https://discord.com/channels/244405112569593857/246018374587383810/1037485466531930223 
-//     Con esa lógica construimos un avatar nuevo que sustituirá a 
+//     https://discord.com/channels/244405112569593857/246018374587383810/1037485466531930223
+//     Con esa lógica construimos un avatar nuevo que sustituirá a
 //     PosTargetToPosDirAvtFtry
 
 //     Triangle3D t{triangle.a, triangle.b, triangle.c};
@@ -1078,7 +1273,7 @@ private:
 //   void setTriangleHitbox(std::shared_ptr<Triangle3D> triangle) {
 //     this->triangle = triangle;
 //   }
-  
+
 
 // private:
 //  std::shared_ptr<Triangle3D> triangle;

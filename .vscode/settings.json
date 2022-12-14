@@ -67,6 +67,7 @@
         "cinttypes": "cpp",
         "typeindex": "cpp",
         "variant": "cpp",
-        "bit": "cpp"
+        "bit": "cpp",
+        "zandbokz": "cpp"
     }
 }

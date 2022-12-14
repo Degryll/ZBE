@@ -43,9 +43,9 @@ OGLModel SimpleOGLModelSheet::generateModel(std::shared_ptr<MAvatar<uint64_t, do
   float baseScale = (float) avatar->get<4, double>()->get();;
   glm::mat4 mat(1.0);
 
-  glm::mat4 translate = glm::translate(glm::mat4(1.0f), glPos);
-  glm::mat4 rotate    = glm::rotate(   glm::mat4(1.0f), angle, glDir);
-  glm::mat4 scale     = glm::scale(    glm::mat4(1.0f), glm::vec3(baseScale));
+  glm::mat4 translate = glm::translate(mat, glPos);
+  glm::mat4 rotate    = glm::rotate(   mat, angle, glDir);
+  glm::mat4 scale     = glm::scale(    mat, glm::vec3(baseScale));
   glm::mat4 m = translate * scale * rotate;
 
   return OGLModel(vao, textures, mode, nvertex, type, offset, m, glm::mat4(1.0f));
@@ -86,7 +86,8 @@ OGLModel LookAtOGLModelSheet::generateModel(std::shared_ptr<MAvatar<uint64_t, do
   upw = upw.normalize();
   glm::vec3 glUpw(upw.x, upw.y, upw.z);
 
-  Vector3D nor = cross(upw, dir);
+  Vector3D nor = cross(dir, upw);
+  nor.normalize();
   glm::vec3 glNor(nor.x, nor.y, nor.z);
 
 
@@ -133,9 +134,9 @@ OGLModel LookAtOGLModelSheet::generateModel(std::shared_ptr<MAvatar<uint64_t, do
   // });
 
   glm::mat4 rotate({
-    glm::dot(glDir, x), glm::dot(glNor, x), glm::dot(glUpw, x),
-    glm::dot(glDir, y), glm::dot(glNor, y), glm::dot(glUpw, y),
-    glm::dot(glDir, z), glm::dot(glNor, z), glm::dot(glUpw, z)
+    glm::dot(glNor, x), glm::dot(glUpw, x), glm::dot(glDir, x),
+    glm::dot(glNor, y), glm::dot(glUpw, y), glm::dot(glDir, y),
+    glm::dot(glNor, z), glm::dot(glUpw, z), glm::dot(glDir, z)
   });
 
   //glm::mat4 rotate(1.0f);

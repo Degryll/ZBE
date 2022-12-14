@@ -12,7 +12,7 @@
     "ONE" : {"type":"uifd", "value":1},
     "NEGATIVEONE" : {"type":"ifd", "value":-1},
     "width" : {"type":"uifd", "value":1280},
-    "height" : {"type":"uifd", "value":960},
+    "height" : {"type":"uifd", "value":768},
     "second" : {"type":"uifd", "value":65536},
     "gidIdx" : 1000,
     "stateIdx" : 1010,
@@ -25,6 +25,7 @@
     "positionTicket" : 1080,
     "camPosVelTicket" : 1090,
     "ULM3DTicket" : 1100,
+    "gmTicket" : 1105,
     "velocityIdx" : 1110,
     "inerTicket" : 1200,
     "inatorTicket" : 1210,
@@ -49,7 +50,9 @@
     "sourcestateIdx" : 5010,
     "sourceIdx" : 5020,
     "soundstateIdx" : 5030,
-
+    "e1Idx" : 6010,
+    "e2Idx" : 6020,
+    "planePosIdx" : 6030,
     "state.static" : 0,
     "testwflags": 0,
     "testrflags": 0,
@@ -78,7 +81,8 @@
     "model.pitch" :{"type":"f", "value":-0.01},
     "model.yaw" :{"type":"f", "value":-0.01},
     "model.sineComponent" : 0,
-    "bullet.speed" : {"type":"d", "value":200.0},
+    "gravity" : {"type":"v3", "value":[0.0, -9.8, 0.0]},
+    "bullet.speed" : {"type":"d", "value":100.0},
     "crosshairsPos" :{"type":"v2", "value":[0.0,0.0]},
     "crosshairsSize" :{"type":"v2", "value":[0.25,0.25]},
 
@@ -112,7 +116,10 @@
                 "camTarget" : [0.0, 3.0, 0.0],
                 "camTargetOld" : [1.0, 0.0, 1.0],
                 "camUp" : [0.0, 1.0, 0.0],
-                "cajaVel" : [0.0, 0.0, 0.0]
+                "cajaVel" : [0.0, 0.0, 0.0],
+                "planePos" : [0.0, 50.0, 0.0],
+                "planeE1" : [0.0, 0.0, 0.0],
+                "planeE2" : [0.0, 0.0, 0.0]
               }
             }
           }
@@ -179,6 +186,12 @@
           "factory": "TFAECTwoV3DAvtFtry",
           "description" : "Uniform linear motion list",
           "name": "loadScreen.ULM3DList",
+          "config" : {}
+        },
+        {
+          "factory": "TFAECTwoV3DAvtFtry",
+          "description" : "Gravity motion list",
+          "name": "loadScreen.gmList",
           "config" : {}
         },
         {
@@ -481,6 +494,24 @@
           }
         },
         {
+          "factory" : "EntityBldrFtry",
+          "name" : "zandbokz.diositobuilder1",
+          "description" : "Está ahí, mirando. Pero no hace na",
+          "config" : {
+            "contextTime":"DEFAULT",
+            "builders" : ["zandbokz.diositovalues1", "zandbokz.diositoapintar", "zandbokz.diositosolidosocializa"]
+          }
+        },
+        {
+          "factory" : "EntityBldrFtry",
+          "name" : "zandbokz.diositobuilder2",
+          "description" : "Está ahí, mirando. Pero no hace na",
+          "config" : {
+            "contextTime":"DEFAULT",
+            "builders" : ["zandbokz.diositovalues2", "zandbokz.diositoapintar", "zandbokz.diositosolidosocializa"]
+          }
+        },
+        {
           "factory" :"EntitySetterFtry",
           "name" : "zandbokz.diositovalues",
           "config" : {
@@ -488,16 +519,64 @@
               "gidIdx":["Ojito"]
             },
             "double": {
-              "radsIdx":[0.0],
-              "scaleIdx":[10.0]
+              "radsIdx":[-1.57],
+              "scaleIdx":[100.0]
             },
             "V3D": {
-              "positionIdx":[0.0, 50.0, 0.0],
+              "positionIdx":"zandbokz.planePos",
+              "orientationIdx":[0.0, 1.0, 0.0],
+              "positionAIdx":[200.0, 0.0, 200.0],
+              "positionBIdx":[-200.0, 0.0, 200.0],
+              "positionCIdx":[200.0, 0.0, -200.0],
+              "velocityIdx":[0.0, 0.0, 0.0],
+              "e1Idx": "zandbokz.planeE1",
+              "e2Idx": "zandbokz.planeE2"
+            }
+          }
+        },
+        {
+          "factory" :"EntitySetterFtry",
+          "name" : "zandbokz.diositovalues1",
+          "config" : {
+            "uint": {
+              "gidIdx":["Ojito"]
+            },
+            "double": {
+              "radsIdx":[1.57],
+              "scaleIdx":[100.0]
+            },
+            "V3D": {
+              "positionIdx":[0.0, 0.0, -50.0],
               "orientationIdx":[1.0, 0.0, 0.0],
               "positionAIdx":[200.0, 0.0, 200.0],
               "positionBIdx":[-200.0, 0.0, 200.0],
               "positionCIdx":[200.0, 0.0, -200.0],
-              "velocityIdx":[0.0, 0.0, 0.0]
+              "velocityIdx":[0.0, 0.0, 0.0],
+              "e1Idx":[0.0, 0.0, 0.0],
+              "e2Idx":[0.0, 0.0, 0.0]
+            }
+          }
+        },
+        {
+          "factory" :"EntitySetterFtry",
+          "name" : "zandbokz.diositovalues2",
+          "config" : {
+            "uint": {
+              "gidIdx":["Ojito"]
+            },
+            "double": {
+              "radsIdx":[3.14159],
+              "scaleIdx":[100.0]
+            },
+            "V3D": {
+              "positionIdx":[0.0, 0.0, 0.0],
+              "orientationIdx":[0.0, 0.0, 1.0],
+              "positionAIdx":[200.0, 0.0, 200.0],
+              "positionBIdx":[-200.0, 0.0, 200.0],
+              "positionCIdx":[200.0, 0.0, -200.0],
+              "velocityIdx":[0.0, 0.0, 0.0],
+              "e1Idx":[0.0, 0.0, 0.0],
+              "e2Idx":[0.0, 0.0, 0.0]
             }
           }
         },
@@ -533,13 +612,17 @@
           }
         },
         {
-          "factory" :"MovingTriangle3DAvtShapeBldrFtry",
+          "factory" :"MovingTriangle3DRscAvtShapeBldrFtry",
           "name" : "zandbokz.diositorocoso",
           "config" : {
-            "positionAIdx" : "positionAIdx",
-            "positionBIdx" : "positionBIdx",
-            "positionCIdx" : "positionCIdx",
-            "velocityIdx" : "velocityIdx"
+            "positionIdx" : "positionIdx",
+            "orientationIdx" : "orientationIdx",
+            "velocityIdx" : "velocityIdx",
+            "radsIdx" : "radsIdx",
+            "sizeIdx" : "scaleIdx",
+            "e1Idx" : "e1Idx",
+            "e2Idx" : "e2Idx",
+            "triangle" : "Ojito"
           }
         },
         {
@@ -657,18 +740,18 @@
           "factory" :"EntitySetterFtry",
           "name" : "zandbokz.castañavalues",
           "config" : {
-            "uint": {
+            "uintBackUp": {
               "gidIdx":["XYZ"]
             },
-            "uintBackUp": {
+            "uint": {
               "gidIdx":["Castaña"]
             },
             "double": {
-              "radsIdx":[140.0],
-              "scaleIdx":[10.0]
+              "radsIdx":[0.0],
+              "scaleIdx":[2.0]
             },
             "float": {
-              "sizeIdx":[10.0]
+              "sizeIdx":[2.0]
             },
             "V3D": {
               "orientationIdx":[10.5, 0.0, 0.5]
@@ -759,9 +842,12 @@
               "sizeIdx":[5.0]
             },
             "V3D": {
-              "positionIdx":[0.0, 100.0, 0.0],
+              "positionIdx":[0.0, 1000.0, 0.0],
               "orientationIdx":[0.0, 1.0, 0.0],
-              "velocityIdx": "zandbokz.cajaVel"
+              "velocityIdx": "zandbokz.cajaVel",
+              "planePosIdx": "zandbokz.planePos",
+              "e1Idx": "zandbokz.planeE1",
+              "e2Idx": "zandbokz.planeE2"
             }
           }
         },
@@ -778,7 +864,10 @@
           "name" : "zandbokz.cajaamover",
           "config" : {
             "attribIndexes" : ["velocityIdx", "positionIdx"],
-            "lists":{"loadScreen.ULM3DList":"ULM3DTicket"}
+            "lists":{
+              "loadScreen.ULM3DList":"ULM3DTicket",
+              "loadScreen.gmList":"gmTicket"
+            }
           }
         },
         {
@@ -820,7 +909,7 @@
           }
         }
       ],
-      "calls" : ["zandbokz.pepinobuilder", "zandbokz.cajabuilder", "zandbokz.diositobuilder"]
+      "calls" : ["zandbokz.pepinobuilder", "zandbokz.cajabuilder", "zandbokz.diositobuilder", "zandbokz.diositobuilder1", "zandbokz.diositobuilder2"]
     },
     {
       "description" : "Creating entity",
@@ -838,7 +927,7 @@
               "scaleIdx":[200.0]
             },
             "V3D": {
-              "positionIdx":[0.0, 0.0, 0.0],
+              "positionIdx":[0.0, -10.0, 0.0],
               "orientationIdx":[0.0, 1.0, 0.0]
             }
           }
@@ -912,7 +1001,8 @@
             "daemons": [
               "loadScreen.fovOscillatorDaemon",
               "loadScreen.coordOscillatorDaemon",
-              "loadScreen.ULM3DDaemon"
+              "loadScreen.ULM3DDaemon",
+              "loadScreen.gravityDMN"
             ],
             "disabledDaemons": [
               "loadScreen.goForwardDaemon",
@@ -1048,6 +1138,13 @@
           "description" : "Comportamiento que menea el bobobojeto mirando pa diestra y siniestra",
           "config" : {
              "sensibility" : "model.yaw"
+          }
+        },
+        {"factory": "GravityMotion3DFtry",
+          "name": "loadScreen.gravityBHV",
+          "description" : "Comportamiento paquesecaiga",
+          "config" : {
+             "gravity" : "gravity"
           }
         },
         {"factory": "RelativeUniformLinearMotion3DFtry",
@@ -1261,6 +1358,14 @@
           "config" : {
             "list" : "loadScreen.coordOscillatorList",
             "behavior" : "loadScreen.coordOscillator"
+          }
+        },
+        {"factory": "TwoV3DAvtDaemonFtry",
+          "name": "loadScreen.gravityDMN",
+          "description" : "demonio pa que se caiga",
+          "config" : {
+            "list" : "loadScreen.gmList",
+            "behavior" : "loadScreen.gravityBHV"
           }
         },
         {"factory": "ThreeV3DAvtDaemonFtry",

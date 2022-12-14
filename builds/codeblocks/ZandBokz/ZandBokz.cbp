@@ -246,8 +246,10 @@
 		<Linker>
 			<Add directory="../../../extlibs/GLEW/2.1.0/linux/lib" />
 		</Linker>
+		<Unit filename="../../../src/ZandBokz/include/ZandBokzCustomAvatars.h" />
 		<Unit filename="../../../src/ZandBokz/include/ZandBokzFactories.h" />
 		<Unit filename="../../../src/ZandBokz/include/ZandBokzInteractionSystem.h" />
+		<Unit filename="../../../src/ZandBokz/include/ZandBokzReactions.h" />
 		<Unit filename="../../../src/ZandBokz/include/zandbokz.h" />
 		<Unit filename="../../../src/ZandBokz/src/zandbokz.cpp" />
 		<Extensions>

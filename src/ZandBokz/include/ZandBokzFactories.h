@@ -23,6 +23,7 @@
 #include "ZandBokzInteractionSystem.h"
 #include "ZandBokzCustomAvatars.h"
 #include "ZandBokzReactions.h"
+#include "ZandBokzBehaviors.h"
 
 namespace zandbokz {
 
@@ -90,6 +91,8 @@ public:
     
     factories.insert("ReverseDirectionReactionBldrFtry", std::make_shared<ReverseDirectionReactionBldrFtry<zbe::CollisionData3D, Solid>>());
     factories.insert("BounceReactionBldrFtry", std::make_shared<BounceReactionBldrFtry<zbe::CollisionData3D, Solid>>());
+
+    factories.insert("GravityMotion3DFtry", std::make_shared<GravityMotion3DFtry>());
 
   }
 
