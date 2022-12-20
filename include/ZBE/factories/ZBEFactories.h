@@ -75,6 +75,9 @@ public:
     using LookAtAvtList = TicketedForwardList<MAvatar<uint64_t, double, Vector3D, Vector3D, Vector3D> >;
     using LookAtAvtBhvr = BehaviorDmnFtry<LookAtAvtList, uint64_t, double, Vector3D, Vector3D, Vector3D>;
 
+    using M3DOn2DAvtList = TicketedForwardList<MAvatar<Vector2D, Vector2D, Vector3D, Vector3D, Vector3D, Vector3D, Vector3D> >;
+    using M3DOn2DAvtBhvr = BehaviorDmnFtry<M3DOn2DAvtList, Vector2D, Vector2D, Vector3D, Vector3D, Vector3D, Vector3D, Vector3D>;
+
     auto& factories = RsrcStore<Factory>::getInstance();
     for(int i = 0;i<100;i++) {
         factories.insert(std::to_string(i)+"Ftry"s , std::make_shared<SimpleGenericFtry<int> >(factories::listName));
@@ -97,6 +100,7 @@ public:
     factories.insert("DerivedPosMovingSphereAvtShapeBldrFtry", std::make_shared<DerivedPosMovingSphereAvtShapeBldrFtry>());
     factories.insert("LookAtToPitchAvtBldrFtry", std::make_shared<LookAtToPitchAvtBldrFtry>());
     factories.insert("LookAtToYawAvtBldrFtry", std::make_shared<LookAtToYawAvtBldrFtry>());
+    factories.insert("3DOn2DAvtBldrFtry", std::make_shared<AvatarBldrFtry<Vector2D, Vector2D, Vector3D, Vector3D, Vector3D, Vector3D, Vector3D> >());
     //factories.insert("MovingSphereAvtBldrFtry", std::make_shared<MovingSphereAvtBldrFtry>());
     factories.insert("MovingSphereAvtShapeBldrFtry", std::make_shared<MovingSphereAvtShapeBldrFtry>());
     factories.insert("MovingTriangle3DAvtShapeBldrFtry", std::make_shared<MovingTriangle3DAvtShapeBldrFtry>());
@@ -144,6 +148,9 @@ public:
 
     factories.insert("LookAtAvtDaemonFtry", std::make_shared<LookAtAvtBhvr>());
     factories.insert("TFAECLookAtAvtFtry" , std::make_shared<SimpleGenericFtry<LookAtAvtList> >(factories::listName));
+
+    factories.insert("3DOn2DAvtDaemonFtry", std::make_shared<M3DOn2DAvtBhvr>());
+    factories.insert("TFAEC3DOn2DAvtFtry" , std::make_shared<SimpleGenericFtry<M3DOn2DAvtList> >(factories::listName));
 
     factories.insert("TwoV3DAvtFtry", std::make_shared<BaseAvatarFtry<Vector3D, Vector3D> >());
 

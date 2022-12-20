@@ -463,8 +463,8 @@ public:
     MovingTriangle3D mt{t, vel};
     auto out = std::make_shared<SimpleValue<MovingTriangle3D> >();
     out->set(mt);
-    Vector3D e1 = pb - pa;
-    Vector3D aux = pc - pa;
+    Vector3D e1 = (pb - pa).normalize();
+    Vector3D aux = (pc - pa).normalize();
     Vector3D norm = cross(e1, aux);
     Vector3D e2 = cross(norm, e1);
     
