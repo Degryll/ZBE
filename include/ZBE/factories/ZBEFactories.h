@@ -48,6 +48,9 @@ public:
   */
   static void load() {
     using namespace std::string_literals;
+    using VoidAvtList = TicketedForwardList<Avatar>;
+    using VoidAvtBhvr = BehaviorDmnFtry<VoidAvtList, void>;
+
     using AnimList = TicketedForwardList<MAvatar<uint64_t, int64_t, double, Vector2D, Vector2D> >;
     using AnimDrwr = BehaviorDmnFtry<AnimList, uint64_t, int64_t, double, Vector2D, Vector2D>;
 
@@ -90,6 +93,7 @@ public:
     factories.insert("V3DAvtBldrFtry", std::make_shared<AvatarBldrFtry<Vector3D> >());
     factories.insert("TwoV3DAvtBldrFtry", std::make_shared<AvatarBldrFtry<Vector3D, Vector3D> >());
     factories.insert("FloatAvtBldrFtry", std::make_shared<AvatarBldrFtry<float> >());
+    factories.insert("VoidAvtBldrFtry", std::make_shared<AvatarBldrFtry<void> >());
 
     factories.insert("TargetToDirAvtBldrFtry", std::make_shared<TargetToDirAvtBldrFtry>());
     factories.insert("PosTargetToPosDirAvtBldrFtry", std::make_shared<PosTargetToPosDirAvtBldrFtry>());
@@ -122,6 +126,10 @@ public:
     factories.insert("DerivedPosMovingSphereAvtFtry", std::make_shared<DerivedPosMovingSphereAvtFtry>());
 
     // Daemons & List
+
+    factories.insert("VoidBvrDmnFtry", std::make_shared<VoidAvtBhvr>());
+    factories.insert("TFAEVoidFtry" , std::make_shared<SimpleGenericFtry<VoidAvtList> >(factories::listName));
+
     factories.insert("DrawerAnimSprtFtry", std::make_shared<AnimDrwr>());
     factories.insert("TFAECAnimSprtFtry" , std::make_shared<SimpleGenericFtry<AnimList> >(factories::listName));
 

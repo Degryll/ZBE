@@ -53,6 +53,7 @@
 #include "ZBE/behaviors/SineOscillator.h"
 #include "ZBE/behaviors/UniformLinearMotion.h"
 #include "ZBE/behaviors/Rotation.h"
+#include "ZBE/behaviors/Behaviors.h"
 #include "ZBE/behaviors/BulletCreatorBhv.h"
 
 #include "ZBE/creators/BulletCreator.h"
@@ -107,6 +108,8 @@ public:
     factories.insert("UniformLinearMotion2DOnPlane", std::make_shared<GenericFtry<Behavior<Vector2D, Vector2D, Vector3D, Vector3D, Vector3D, Vector3D, Vector3D >, UniformLinearMotion2DOnPlane>>("Behavior", "UniformLinearMotion2DOnPlane"));
     factories.insert("Rotation3DFtry", std::make_shared<Rotation3DFtry>());
     factories.insert("BulletCreatorBhvFtry", std::make_shared<BulletCreatorBhvFtry>());
+    factories.insert("TicketDeactivatorBvrFtry", std::make_shared<TicketDeactivatorBvrFtry>());
+    factories.insert("TicketActivatorBvrFtry", std::make_shared<TicketActivatorBvrFtry>());
 
     // --- Events
     // --- --- Event generators

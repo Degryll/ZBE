@@ -10,25 +10,26 @@
 #ifndef ZBE_BEHAVIORS_BEHAVIORS_H_
 #define ZBE_BEHAVIORS_BEHAVIORS_H_
 
-#include <forward_list>
+#include <array>
 #include <memory>
 
 #include "ZBE/core/behaviors/Behavior.h"
 #include "ZBE/core/entities/avatars/Avatar.h"
 
 #include "ZBE/core/system/system.h"
+#include "ZBE/factories/Factory.h"
+#include "ZBE/core/tools/containers/RsrcStore.h"
+#include "ZBE/core/tools/containers/RsrcDictionary.h"
+#include "ZBE/factories/genericFactoryConstants.h"
+#include "ZBE/JSON/JSONFactory.h"
 
 namespace zbe {
 
-class TicketEnablerBvr : virtual public Behavior<void> {
+class TicketActivatorBvr : virtual public Behavior<void> {
 public:
 
-    /** \brief Virtual destructor.
-     */
-    virtual ~Erase() {}
+    virtual ~TicketActivatorBvr() {}
 
-    /** \brief Erase given avatar.
-     */
     void apply(std::shared_ptr<Avatar> avatar) {
         for(auto& t : list ) {
             avatar->setACTIVE(t);
@@ -36,30 +37,26 @@ public:
     }
 
     void setTicketList(std::forward_list<uint64_t> list) {
-        this->list = list;1
+        this->list = list;
     }
 
 private:
     std::forward_list<uint64_t> list;
 };
 
-class TicketDisablerBvr : virtual public Behavior<void> {
+class TicketDeactivatorBvr : virtual public Behavior<void> {
 public:
 
-    /** \brief Virtual destructor.
-     */
-    virtual ~Erase() {}
+    virtual ~TicketDeactivatorBvr() {}
 
-    /** \brief Erase given avatar.
-     */
     void apply(std::shared_ptr<Avatar> avatar) {
         for(auto& t : list ) {
-            avatar->setDISABLE(t);
+            avatar->setINACTIVE(t);
         }
     }
 
     void setTicketList(std::forward_list<uint64_t> list) {
-        this->list = list;1
+        this->list = list;
     }
 
 private:
@@ -68,10 +65,81 @@ private:
 
 // TODO: buscar la forma de hacer un toggler.
 
-class BehaviorEntityBldrFtry : public Factory {
+class TicketActivatorBvrFtry : public Factory {
 public:
+  void create(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    std::shared_ptr<TicketActivatorBvr> teb = std::shared_ptr<TicketActivatorBvr>(new TicketActivatorBvr);
+    behaviorRsrc.insert("Behavior."s + name, teb);
+    tebRsrc.insert("TicketActivatorBvr."s + name, teb);
+  }
+
+  void setup(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+    if(cfg) {
+        auto j = *cfg;
+
+        auto teb = tebRsrc.get("TicketActivatorBvr."s + name);
+
+        std::optional<std::forward_list<uint64_t>> list = JSONFactory::loadLiteralList<uint64_t>(uintDict, j["tickets"], "tickets", "TicketActivatorBvrFtry");
+        if(!list) {
+            return;
+        }
+
+        teb->setTicketList(*list);
+    } else {
+        SysError::setError("TicketActivatorBvrFtry config for "s + name + " not found."s);
+    }
+  }
+
 private:
-}
+
+  RsrcStore<nlohmann::json>& configRsrc = RsrcStore<nlohmann::json>::getInstance();
+  RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
+  RsrcStore<Behavior<void> >& behaviorRsrc = RsrcStore<Behavior<void> >::getInstance();
+  RsrcStore<TicketActivatorBvr>& tebRsrc = RsrcStore<TicketActivatorBvr>::getInstance();
+};
+
+class TicketDeactivatorBvrFtry : public Factory {
+public:
+  void create(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    std::shared_ptr<TicketDeactivatorBvr> tdb = std::shared_ptr<TicketDeactivatorBvr>(new TicketDeactivatorBvr);
+    behaviorRsrc.insert("Behavior."s + name, tdb);
+    tdbRsrc.insert("TicketDeactivatorBvr."s + name, tdb);
+  }
+
+  void setup(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+    if(cfg) {
+        auto j = *cfg;
+
+        auto tdb = tdbRsrc.get("TicketDeactivatorBvr."s + name);
+
+        std::optional<std::forward_list<uint64_t>> list = JSONFactory::loadLiteralList<uint64_t>(uintDict, j["tickets"], "tickets", "TicketDeactivatorBvrFtry");
+        if(!list) {
+            return;
+        }
+
+        tdb->setTicketList(*list);
+    } else {
+        SysError::setError("TicketDeactivatorBvrFtry config for "s + name + " not found."s);
+    }
+  }
+
+private:
+
+  RsrcStore<nlohmann::json>& configRsrc = RsrcStore<nlohmann::json>::getInstance();
+  RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
+  RsrcStore<Behavior<void> >& behaviorRsrc = RsrcStore<Behavior<void> >::getInstance();
+  RsrcStore<TicketDeactivatorBvr>& tdbRsrc = RsrcStore<TicketDeactivatorBvr>::getInstance();
+};
 
 }  // namespace zbe
 

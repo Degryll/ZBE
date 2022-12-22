@@ -200,6 +200,31 @@ std::optional<std::array<T, n>> loadLiteralArray(RsrcDictionary<T>& dict, json c
   return arr;
 }
 
+template<typename T>
+std::optional<std::forward_list<T>> loadLiteralList(RsrcDictionary<T>& dict, json cfg, std::string paramName, std::string factoryName, uint min = 0, uint max = 0) {
+  using namespace std::string_literals;
+  if (!cfg.is_array()) {
+    SysError::setError(factoryName + " config for " + paramName + " must be an array."s);
+    return std::nullopt;
+  }
+
+  if(cfg.size() < min) {
+    SysError::setError(factoryName + " config for " + paramName + " must have at least "s + std::to_string(min) + " elements");
+    return std::nullopt;
+  }
+
+  if(max>0 && cfg.size() > max) {
+    SysError::setError(factoryName + " config for " + paramName + " must have no more than "s + std::to_string(max) + " elements");
+    return std::nullopt;
+  }
+
+  std::forward_list<T> list;
+  for (auto& name : cfg.items()) {
+    list.push_front(dict.get(name.value().get<std::string>()));
+  }
+  return list;
+}
+
 }  // namespace JSONFactory
 
 }  // namespace zbe

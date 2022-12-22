@@ -484,6 +484,37 @@ private:
 
 };
 
+template<>
+class AvatarBldr<void> : public Funct<void, std::shared_ptr<Entity>> {
+public:
+  using AvtBaseType = Avatar;
+  void operator()(std::shared_ptr<Entity> ent) {
+    std::shared_ptr<AvtImplType> avt = std::make_shared<AvtImplType>(ent);
+    for(auto indexNList : indexNLists) {
+      auto ticket = indexNList.second->push_front(avt);
+      ent->addTicket(indexNList.first, ticket);
+    }
+  }
+
+  void setIdx(uint64_t idx) {
+    this->idx = idx;
+  }
+
+  void setIdxArr(std::array<uint64_t, 1> idxArr) {
+    this->idx = idxArr[0];
+  }
+
+  void addIndexNlist(uint64_t index, std::shared_ptr<TicketedForwardList<AvtBaseType>> list) {
+    indexNLists.push_back({index, list});
+  }
+
+private:
+  using AvtImplType = BaseAvatar;
+  uint64_t idx;
+  std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> indexNLists;
+
+};
+
 template<typename... Ts>
 class AvatarBldrFtry : public Factory {
 public:
@@ -527,6 +558,46 @@ private:
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
   RsrcStore<AvatarBldr<Ts...>>& specificRsrc = RsrcStore<AvatarBldr<Ts...>>::getInstance();
+  RsrcStore<ListType>& listRsrc = RsrcStore<ListType>::getInstance();
+  RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
+};
+
+template<>
+class AvatarBldrFtry<void> : public Factory {
+public:
+  void create(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    std::shared_ptr<AvatarBldr<void>> ab = std::make_shared<AvatarBldr<void>>();
+    mainRsrc.insert("Function."s + name, ab);
+    specificRsrc.insert("AvatarBldr."s + name, ab);
+  }
+
+  void setup(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);
+
+    if(!cfg) {
+      SysError::setError("AvatarBldrFtry config for "s + name + " not found."s);
+      return;
+    }
+    auto ab = specificRsrc.get("AvatarBldr."s + name);
+    auto j = *cfg;
+
+    JSONFactory::loadAllIndexed<TicketedForwardList<typename AvatarBldr<void>::AvtBaseType>>(listRsrc, uintDict, j, zbe::factories::listName, "lists"s, "AvatarBldrFtry"s,
+        [&](uint64_t idx, std::shared_ptr<ListType> list) {
+          ab->addIndexNlist(idx, list);
+          return true;
+        }
+    );
+  }
+
+private:
+  using FunctionType = Funct<void, std::shared_ptr<Entity>>;
+  using ListType = TicketedForwardList<typename AvatarBldr<void>::AvtBaseType>;
+  RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
+  RsrcStore<AvatarBldr<void>>& specificRsrc = RsrcStore<AvatarBldr<void>>::getInstance();
   RsrcStore<ListType>& listRsrc = RsrcStore<ListType>::getInstance();
   RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
 };
