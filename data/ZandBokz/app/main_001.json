@@ -27,6 +27,7 @@
     "ULM3DTicket" : 1100,
     "ULM3DOn2DTicket" : 1101,
     "gmTicket" : 1105,
+    "saltaListTicket" : 1106,
     "velocityIdx" : 1110,
     "inerTicket" : 1200,
     "inatorTicket" : 1210,
@@ -56,6 +57,7 @@
     "planePosIdx" : 6030,
     "velocity2DIdx" : 6040,
     "position2DIdx" : 6050,
+    "attachonofticket" : 7000,
     "state.static" : 0,
     "testwflags": 0,
     "testrflags": 0,
@@ -84,7 +86,7 @@
     "model.pitch" :{"type":"f", "value":-0.01},
     "model.yaw" :{"type":"f", "value":-0.01},
     "model.sineComponent" : 0,
-    "gravity" : {"type":"v3", "value":[0.0, -9.8, 0.0]},
+    "gravity" : {"type":"v3", "value":[0.0, -98.0, 0.0]},
     "bullet.speed" : {"type":"d", "value":100.0},
     "crosshairsPos" :{"type":"v2", "value":[0.0,0.0]},
     "crosshairsSize" :{"type":"v2", "value":[0.25,0.25]},
@@ -93,6 +95,7 @@
     "velcajasur" :{"type":"v3", "value":[-50.0,0.0,0.0]},
     "velcajaeste" :{"type":"v3", "value":[0.0,0.0,50.0]},
     "velcajaoeste" :{"type":"v3", "value":[0.0,0.0,-50.0]},
+    "velcajasalto" :{"type":"v3", "value":[20.0,50.0,0.0]},
 
     "TODOindices":""
   },
@@ -186,6 +189,12 @@
           "config" : {}
         },
         {
+          "factory": "TFAECV3DAvtFtry",
+          "description" : "do some serious sheet",
+          "name": "loadScreen.saltaList",
+          "config" : {}
+        },
+        {
           "factory": "TFAECThreeV3DAvtFtry",
           "description" : "do some serious sheet",
           "name": "loadScreen.camMoveList",
@@ -213,6 +222,12 @@
           "factory": "TFAECTwoV3DAvtFtry",
           "description" : "do some serious sam",
           "name": "loadScreen.SoundCreatorList",
+          "config" : {}
+        },
+        {
+          "factory": "TFAEVoidFtry",
+          "description" : "do some serious sam",
+          "name": "loadScreen.attachcajaonofflist",
           "config" : {}
         },
         {
@@ -867,7 +882,7 @@
           "name" : "zandbokz.cajabuilder",
           "config" : {
             "contextTime":"DEFAULT",
-            "builders" : ["zandbokz.cajavalues", "zandbokz.cajaapintar", "zandbokz.cajaamover", "zandbokz.cajaamoverenplano","zandbokz.cajasolidosocializa"]
+            "builders" : ["zandbokz.cajavalues", "zandbokz.cajaapintar", "zandbokz.cajaamover", "zandbokz.cajaamoverenplano","zandbokz.cajasolidosocializa", "zandbokz.attachcajaonoff", "zandbokz.cajaasaltar"]
           }
         },
         {
@@ -907,15 +922,33 @@
           }
         },
         {
+          "factory" :"VoidAvtBldrFtry",
+          "name" : "zandbokz.attachcajaonoff",
+          "config" : {
+            "lists":{"loadScreen.attachcajaonofflist":"attachonofticket"}
+          }
+        },
+        {
           "factory" :"TwoV3DAvtBldrFtry",
           "name" : "zandbokz.cajaamover",
           "config" : {
             "attribIndexes" : ["velocityIdx", "positionIdx"],
             "lists":{
             },
-            "backupLists" : {
+            "deativatedlists":{
               "loadScreen.ULM3DList":"ULM3DTicket",
               "loadScreen.gmList":"gmTicket"
+
+            }
+          }
+        },
+        {
+          "factory" :"V3DAvtBldrFtry",
+          "name" : "zandbokz.cajaasaltar",
+          "config" : {
+            "attribIndexes" : ["velocityIdx"],
+            "lists":{
+              "loadScreen.saltaList":"saltaListTicket"
             }
           }
         },
@@ -1184,6 +1217,102 @@
             "contextTime" : "DEFAULT",
             "period" : "model.coordPeriod",
             "component" : "model.sineComponent"
+          }
+        },
+        {"factory": "VoidBvrDmnFtry",
+          "name": "loadScreen.attachcajaactivationsDaemon",
+          "description" : "",
+          "config" : {
+            "list" : "loadScreen.attachcajaonofflist",
+            "behavior" : "loadScreen.attachcajaactivations"
+          }
+        },
+        {"factory": "VoidBvrDmnFtry",
+          "name": "loadScreen.attachcajadeactivationsDaemon",
+          "description" : "",
+          "config" : {
+            "list" : "loadScreen.attachcajaonofflist",
+            "behavior" : "loadScreen.attachcajadeactivations"
+          }
+        },
+        {"factory": "VoidBvrDmnFtry",
+          "name": "loadScreen.dettachcajaactivationsDaemon",
+          "description" : "",
+          "config" : {
+            "list" : "loadScreen.attachcajaonofflist",
+            "behavior" : "loadScreen.dettachcajaactivations"
+          }
+        },
+        {"factory": "VoidBvrDmnFtry",
+          "name": "loadScreen.dettachcajadeactivationsDaemon",
+          "description" : "",
+          "config" : {
+            "list" : "loadScreen.attachcajaonofflist",
+            "behavior" : "loadScreen.dettachcajadeactivations"
+          }
+        },
+        {"factory": "TicketActivatorBvrFtry",
+          "name": "loadScreen.attachcajaactivations",
+          "description" : "comportamiento engancha la caja a un plano",
+          "config" : {
+            "tickets" : ["ULM3DOn2DTicket"]
+          }
+        },
+        {"factory": "TicketDeactivatorBvrFtry",
+          "name": "loadScreen.attachcajadeactivations",
+          "description" : "comportamiento engancha la caja a un plano",
+          "config" : {
+            "tickets" : ["gmTicket"]
+          }
+        },
+        {"factory": "TicketActivatorBvrFtry",
+          "name": "loadScreen.dettachcajaactivations",
+          "description" : "comportamiento engancha la caja a un plano",
+          "config" : {
+            "tickets" : ["gmTicket"]
+          }
+        },
+        {"factory": "TicketDeactivatorBvrFtry",
+          "name": "loadScreen.dettachcajadeactivations",
+          "description" : "comportamiento engancha la caja a un plano",
+          "config" : {
+            "tickets" : ["ULM3DOn2DTicket"]
+          }
+        },
+        {"factory": "MasterDmnFtry",
+          "name": "loadScreen.attachcajamaster",
+          "description" : "demonio que engancha",
+          "config" : {
+            "daemons": [
+              "loadScreen.attachcajaactivationsDaemon",
+              "loadScreen.attachcajadeactivationsDaemon"
+            ]
+          }
+        },
+        {"factory": "MasterDmnFtry",
+          "name": "loadScreen.dettachcajamaster",
+          "description" : "demonio que desengancha",
+          "config" : {
+            "daemons": [
+              "loadScreen.dettachcajaactivationsDaemon",
+              "loadScreen.dettachcajadeactivationsDaemon",
+              "loadScreen.cajaponvelocidadsaltoDmn"
+            ]
+          }
+        },
+        {"factory": "Vector3DSetterFixedBvrFtry",
+          "name": "loadScreen.cajaponvelocidadsalto",
+          "description" : "comportamiento que pone velocidad para saltar",
+          "config" : {
+            "value": "velcajasalto"
+          }
+        },
+        {"factory": "V3DAvtDaemonFtry",
+          "name": "loadScreen.cajaponvelocidadsaltoDmn",
+          "description" : "demonio que menea el fov",
+          "config" : {
+            "list" : "loadScreen.saltaList",
+            "behavior" : "loadScreen.cajaponvelocidadsalto"
           }
         },
         {"factory": "Rotation3DFtry",
@@ -1666,6 +1795,14 @@
             "daemon" : "loadScreen.exitDaemon",
             "inputEventGenerator" : "loadScreen.inputEventGenerator",
             "key":"ZBEK_ESCAPE"
+          }
+        },
+        {"factory": "DaemonIHFtry",
+          "name": "loadScreen.saltahandler",
+          "config" : {
+            "daemon" : "loadScreen.dettachcajamaster",
+            "inputEventGenerator" : "loadScreen.inputEventGenerator",
+            "key":"ZBEK_SPACE"
           }
         }
       ]

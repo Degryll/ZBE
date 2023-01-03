@@ -435,6 +435,12 @@ public:
       auto ticket = indexNList.second->push_front(avt);
       ent->addTicket(indexNList.first, ticket);
     }
+    for(auto indexNList : deactivatedIndexNLists) {
+      auto ticket = indexNList.second->push_front(avt);
+      ent->addTicket(indexNList.first, ticket);
+      // TODO crear metodo addTicket que permita pasar un bool indicando si es activo o no.
+      ent->setINACTIVE(indexNList.first);
+    }
   }
 
   void setIdxArr(std::array<uint64_t, expectedIndexes> idxArr) {
@@ -445,10 +451,15 @@ public:
     indexNLists.push_back({index, list});
   }
 
+  void addDeactivatedIndexNlist(uint64_t index, std::shared_ptr<TicketedForwardList<AvtBaseType>> list) {
+    deactivatedIndexNLists.push_back({index, list});
+  }
+
 private:
   using AvtImplType = MBaseAvatar<T, Ts...>;
   std::array<uint64_t, expectedIndexes> idxArr;
   std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> indexNLists;
+  std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> deactivatedIndexNLists;
 
 };
 
@@ -463,36 +474,11 @@ public:
       auto ticket = indexNList.second->push_front(avt);
       ent->addTicket(indexNList.first, ticket);
     }
-  }
-
-  void setIdx(uint64_t idx) {
-    this->idx = idx;
-  }
-
-  void setIdxArr(std::array<uint64_t, 1> idxArr) {
-    this->idx = idxArr[0];
-  }
-
-  void addIndexNlist(uint64_t index, std::shared_ptr<TicketedForwardList<AvtBaseType>> list) {
-    indexNLists.push_back({index, list});
-  }
-
-private:
-  using AvtImplType = SBaseAvatar<T>;
-  uint64_t idx;
-  std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> indexNLists;
-
-};
-
-template<>
-class AvatarBldr<void> : public Funct<void, std::shared_ptr<Entity>> {
-public:
-  using AvtBaseType = Avatar;
-  void operator()(std::shared_ptr<Entity> ent) {
-    std::shared_ptr<AvtImplType> avt = std::make_shared<AvtImplType>(ent);
-    for(auto indexNList : indexNLists) {
+    for(auto indexNList : deactivatedIndexNLists) {
       auto ticket = indexNList.second->push_front(avt);
       ent->addTicket(indexNList.first, ticket);
+      // TODO crear metodo addTicket que permita pasar un bool indicando si es activo o no.
+      ent->setINACTIVE(indexNList.first);
     }
   }
 
@@ -508,10 +494,57 @@ public:
     indexNLists.push_back({index, list});
   }
 
+  void addDeactivatedIndexNlist(uint64_t index, std::shared_ptr<TicketedForwardList<AvtBaseType>> list) {
+    deactivatedIndexNLists.push_back({index, list});
+  }
+
+private:
+  using AvtImplType = SBaseAvatar<T>;
+  uint64_t idx;
+  std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> indexNLists;
+  std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> deactivatedIndexNLists;
+
+};
+
+template<>
+class AvatarBldr<void> : public Funct<void, std::shared_ptr<Entity>> {
+public:
+  using AvtBaseType = Avatar;
+  void operator()(std::shared_ptr<Entity> ent) {
+    std::shared_ptr<AvtImplType> avt = std::make_shared<AvtImplType>(ent);
+    for(auto indexNList : indexNLists) {
+      auto ticket = indexNList.second->push_front(avt);
+      ent->addTicket(indexNList.first, ticket);
+    }
+    for(auto indexNList : deactivatedIndexNLists) {
+      auto ticket = indexNList.second->push_front(avt);
+      ent->addTicket(indexNList.first, ticket);
+      // TODO crear metodo addTicket que permita pasar un bool indicando si es activo o no.
+      ent->setINACTIVE(indexNList.first);
+    }
+  }
+
+  void setIdx(uint64_t idx) {
+    this->idx = idx;
+  }
+
+  void setIdxArr(std::array<uint64_t, 1> idxArr) {
+    this->idx = idxArr[0];
+  }
+
+  void addIndexNlist(uint64_t index, std::shared_ptr<TicketedForwardList<AvtBaseType>> list) {
+    indexNLists.push_back({index, list});
+  }
+
+  void addDeactivatedIndexNlist(uint64_t index, std::shared_ptr<TicketedForwardList<AvtBaseType>> list) {
+    deactivatedIndexNLists.push_back({index, list});
+  }
+
 private:
   using AvtImplType = BaseAvatar;
   uint64_t idx;
   std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> indexNLists;
+  std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> deactivatedIndexNLists;
 
 };
 
@@ -546,6 +579,13 @@ public:
     JSONFactory::loadAllIndexed<TicketedForwardList<typename AvatarBldr<Ts...>::AvtBaseType>>(listRsrc, uintDict, j, zbe::factories::listName, "lists"s, "AvatarBldrFtry"s,
         [&](uint64_t idx, std::shared_ptr<ListType> list) {
           ab->addIndexNlist(idx, list);
+          return true;
+        }
+    );
+
+    JSONFactory::loadAllIndexed<TicketedForwardList<typename AvatarBldr<Ts...>::AvtBaseType>>(listRsrc, uintDict, j, zbe::factories::listName, "deativatedlists"s, "AvatarBldrFtry"s,
+        [&](uint64_t idx, std::shared_ptr<ListType> list) {
+          ab->addDeactivatedIndexNlist(idx, list);
           return true;
         }
     );
@@ -587,6 +627,13 @@ public:
     JSONFactory::loadAllIndexed<TicketedForwardList<typename AvatarBldr<void>::AvtBaseType>>(listRsrc, uintDict, j, zbe::factories::listName, "lists"s, "AvatarBldrFtry"s,
         [&](uint64_t idx, std::shared_ptr<ListType> list) {
           ab->addIndexNlist(idx, list);
+          return true;
+        }
+    );
+
+    JSONFactory::loadAllIndexed<TicketedForwardList<typename AvatarBldr<void>::AvtBaseType>>(listRsrc, uintDict, j, zbe::factories::listName, "deativatedlists"s, "AvatarBldrFtry"s,
+        [&](uint64_t idx, std::shared_ptr<ListType> list) {
+          ab->addDeactivatedIndexNlist(idx, list);
           return true;
         }
     );

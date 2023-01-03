@@ -25,6 +25,61 @@
 
 namespace zbe {
 
+template<typename T>
+class ValueSetterFixedBvr : virtual public Behavior<T> {
+public:
+  void apply(std::shared_ptr<SAvatar<T>> avatar) {
+    auto vv = avatar->get();
+    vv->set(val);
+  }
+
+  void setValue(T val) {
+    this->val = val;
+  }
+
+private:
+  T val;
+};
+
+template<typename T>
+class ValueSetterFixedBvrFtry : public Factory {
+public:
+  void create(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    std::shared_ptr<ValueSetterFixedBvr<T>> vsfb = std::shared_ptr<ValueSetterFixedBvr<T>>(new ValueSetterFixedBvr<T>);
+    behaviorRsrc.insert("Behavior."s + name, vsfb);
+    vsfbRsrc.insert("ValueSetterFixedBvr."s + name, vsfb);
+  }
+
+  void setup(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+    if(cfg) {
+      auto j = *cfg;
+
+      auto tdb = vsfbRsrc.get("ValueSetterFixedBvr."s + name);
+
+      auto value = JSONFactory::loadParamCfgDict<T>(tDict, j, "value"s, "ValueSetterFixedBvrFtry"s);
+      if(!value) {
+        return;
+      }
+
+      tdb->setValue(*value);
+    } else {
+        SysError::setError("ValueSetterFixedBvrFtry config for "s + name + " not found."s);
+    }
+  }
+
+private:
+
+  RsrcStore<nlohmann::json>& configRsrc = RsrcStore<nlohmann::json>::getInstance();
+  RsrcDictionary<T>& tDict = RsrcDictionary<T>::getInstance();
+  RsrcStore<Behavior<T> >& behaviorRsrc = RsrcStore<Behavior<T> >::getInstance();
+  RsrcStore<ValueSetterFixedBvr<T>>& vsfbRsrc = RsrcStore<ValueSetterFixedBvr<T>>::getInstance();
+};
+
 class TicketActivatorBvr : virtual public Behavior<void> {
 public:
 
