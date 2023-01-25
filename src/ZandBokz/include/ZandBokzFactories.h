@@ -19,6 +19,7 @@
 #include "ZBE/core/tools/containers/RsrcStore.h"
 #include "ZBE/core/events/interactionSystem.h"
 #include "ZBE/entities/builders/builders.h"
+#include "ZBE/events/Reactions.h"
 
 #include "ZandBokzInteractionSystem.h"
 #include "ZandBokzCustomAvatars.h"
@@ -62,8 +63,8 @@ public:
     factories.insert("InerBldrFtry", std::make_shared<InerBldrFtry>());
     factories.insert("InatorBldrFtry", std::make_shared<InatorBldrFtry>());
 
-    factories.insert("ActorBldrFtry", std::make_shared<ActorBldrFtry>(std::initializer_list<std::string>{"solid"s}));
-    factories.insert("ReactorBldrFtry", std::make_shared<ReactorBldrFtry>(std::initializer_list<std::string>{"solid"s}));
+    factories.insert("ActorBldrFtry", std::make_shared<ActorBldrFtry>(std::initializer_list<std::string>{"solid"s, "platform"s}));
+    factories.insert("ReactorBldrFtry", std::make_shared<ReactorBldrFtry>(std::initializer_list<std::string>{"solid"s, "platform"s}));
     //factories.insert("ShapeBldrFtry", std::make_shared<ShapeBldrFtry>());
     factories.insert("ShapeMSphereBldrFtry", std::make_shared<ShapeMSphereBldrFtry>());
     factories.insert("ShapeMTriangleBldrFtry", std::make_shared<ShapeMTriangleBldrFtry>());
@@ -88,12 +89,20 @@ public:
     using ZBKEntityEraserReactionBldrFunct = zbe::Funct<std::shared_ptr<zbe::Funct<void, zbe::CollisionData3D, Solid>>,std::shared_ptr<zbe::Entity>>;
 
     factories.insert("EntityEraserReactionBldrFtry", std::make_shared<zbe::GenericFtry<ZBKEntityEraserReactionBldrFunct, ZBKEntityEraserReactionBldr>>(zbe::factories::functionName, "EntityEraserReactionBldr"));
-    
+
     factories.insert("ReverseDirectionReactionBldrFtry", std::make_shared<ReverseDirectionReactionBldrFtry<zbe::CollisionData3D, Solid>>());
     factories.insert("BounceReactionBldrFtry", std::make_shared<BounceReactionBldrFtry<zbe::CollisionData3D, Solid>>());
 
     factories.insert("GravityMotion3DFtry", std::make_shared<GravityMotion3DFtry>());
 
+    factories.insert("TicketActivatorPlatformRctBldrFtry", std::make_shared<zbe::TicketActivatorRctBldrFtry<zbe::CollisionData3D, Platform>>());
+    factories.insert("TicketDeactivatorPlatformRctBldrFtry", std::make_shared<zbe::TicketDeactivatorRctBldrFtry<zbe::CollisionData3D, Platform>>());
+
+    factories.insert("StoreValuesPlatformRctBldrFtry", std::make_shared<zbe::StoreValuesRctBldrFtry<zbe::CollisionData3D, zbe::Vector3D, 3>>());
+
+    factories.insert("MultiPlatformRctBldrFtry", std::make_shared<zbe::MultiRctBldrFtry<zbe::CollisionData3D, Platform>>());
+
+    factories.insert("PlatformTraitBldrFtry", std::make_shared<PlatformTraitBldrFtry>());
   }
 
 };

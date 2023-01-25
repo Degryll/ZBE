@@ -161,6 +161,10 @@ public:
     _BaseAvatar<A, n-1, Ts...>::setupEntity(entity, ids.begin()+1);
   }
 
+  constexpr static unsigned size() {
+    return n;
+  }
+
 protected:
 
   template <unsigned m = n>
@@ -223,6 +227,10 @@ public:
   static void setImpl(void *instance, T value) {
     //TODO asegurarse de que este casting es en tiempo de compilación (static cast?)
     ((_BaseAvatar<A, n, T>*)instance)->v->set(value);
+  }
+
+  constexpr static unsigned size() {
+    return 1;
   }
 
 protected:

@@ -300,7 +300,7 @@ public:
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     std::shared_ptr<MovingSphereAvtShapeBldr> msasb = std::make_shared<MovingSphereAvtShapeBldr>();
-    mainRsrc.insert("Function."s + name, msasb);
+    mainRsrc.insert(zbe::factories::functionName_ + name, msasb);
     specificRsrc.insert("MovingSphereAvtShapeBldr."s + name, msasb);
   }
 
@@ -376,7 +376,7 @@ public:
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     std::shared_ptr<MovingSphereAvtBldr> msab = std::make_shared<MovingSphereAvtBldr>();
-    mainRsrc.insert("Function."s + name, msab);
+    mainRsrc.insert(zbe::factories::functionName_ + name, msab);
     specificRsrc.insert("MovingSphereAvtBldr."s + name, msab);
   }
 
@@ -538,7 +538,7 @@ public:
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     std::shared_ptr<MovingTriangle3DRscAvtShapeBldr> mt3rasb = std::make_shared<MovingTriangle3DRscAvtShapeBldr>();
-    mainRsrc.insert("Function."s + name, mt3rasb);
+    mainRsrc.insert(zbe::factories::functionName_ + name, mt3rasb);
     specificRsrc.insert("MovingTriangle3DRscAvtShapeBldr."s + name, mt3rasb);
   }
 
@@ -681,7 +681,7 @@ public:
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     std::shared_ptr<MovingTriangle3DAvtShapeBldr> msasb = std::make_shared<MovingTriangle3DAvtShapeBldr>();
-    mainRsrc.insert("Function."s + name, msasb);
+    mainRsrc.insert(zbe::factories::functionName_ + name, msasb);
     specificRsrc.insert("MovingTriangle3DAvtShapeBldr."s + name, msasb);
   }
 
@@ -764,7 +764,7 @@ public:
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     std::shared_ptr<MovingTriangle3DAvtBldr> msab = std::make_shared<MovingTriangle3DAvtBldr>();
-    mainRsrc.insert("Function."s + name, msab);
+    mainRsrc.insert(zbe::factories::functionName_ + name, msab);
     specificRsrc.insert("MovingTriangle3DAvtBldr."s + name, msab);
   }
 
@@ -1009,7 +1009,7 @@ public:
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     std::shared_ptr<PosUpwardsTargetToPosUpwardsDirAvtBldr> put2pudab = std::make_shared<PosUpwardsTargetToPosUpwardsDirAvtBldr>();
-    mainRsrc.insert("Function."s + name, put2pudab);
+    mainRsrc.insert(zbe::factories::functionName_ + name, put2pudab);
     specificRsrc.insert("PosUpwardsTargetToPosUpwardsDirAvtBldr."s + name, put2pudab);
   }
 
@@ -1169,7 +1169,7 @@ private:
 //   void create(std::string name, uint64_t cfgId) {
 //     using namespace std::string_literals;
 //     std::shared_ptr<PosTargetUpwardsToPosDirAngleAvtBldr> ptutpdaab = std::make_shared<PosTargetUpwardsToPosDirAngleAvtBldr>();
-//     mainRsrc.insert("Function."s + name, ptutpdaab);
+//     mainRsrc.insert(zbe::factories::functionName_ + name, ptutpdaab);
 //     specificRsrc.insert("PosTargetUpwardsToPosDirAngleAvtBldr."s + name, ptutpdaab);
 //   }
 
@@ -1313,7 +1313,7 @@ private:
 //   void create(std::string name, uint64_t cfgId) {
 //     using namespace std::string_literals;
 //     std::shared_ptr<MovingTriangle3DHitboxAvtShapeBldr> mt3hasb = std::make_shared<MovingTriangle3DHitboxAvtShapeBldr>();
-//     mainRsrc.insert("Function."s + name, mt3hasb);
+//     mainRsrc.insert(zbe::factories::functionName_ + name, mt3hasb);
 //     specificRsrc.insert("MovingTriangle3DHitboxAvtShapeBldr."s + name, msasb);
 //   }
 
@@ -1396,7 +1396,7 @@ private:
 //   void create(std::string name, uint64_t cfgId) {
 //     using namespace std::string_literals;
 //     std::shared_ptr<MovingTriangle3DHitboxAvtBldr> mt3hab = std::make_shared<MovingTriangle3DHitboxAvtBldr>();
-//     mainRsrc.insert("Function."s + name, mt3hab);
+//     mainRsrc.insert(zbe::factories::functionName_ + name, mt3hab);
 //     specificRsrc.insert("MovingTriangle3DHitboxAvtBldr."s + name, msab);
 //   }
 
@@ -1877,7 +1877,7 @@ public:
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     std::shared_ptr<TargetToDirAvtBldr> ttdab = std::make_shared<TargetToDirAvtBldr>();
-    mainRsrc.insert("Function."s + name, ttdab);
+    mainRsrc.insert(zbe::factories::functionName_ + name, ttdab);
     specificRsrc.insert("TargetToDirAvtBldr."s + name, ttdab);
   }
 
@@ -1938,7 +1938,7 @@ public:
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     std::shared_ptr<PosTargetToPosDirAvtBldr> pttpdvb = std::make_shared<PosTargetToPosDirAvtBldr>();
-    mainRsrc.insert("Function."s + name, pttpdvb);
+    mainRsrc.insert(zbe::factories::functionName_ + name, pttpdvb);
     specificRsrc.insert("PosTargetToPosDirAvtBldr."s + name, pttpdvb);
   }
 
@@ -1991,7 +1991,7 @@ public:
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     std::shared_ptr<DerivedCosVelAvtBldr> dcvab = std::make_shared<DerivedCosVelAvtBldr>();
-    mainRsrc.insert("Function."s + name, dcvab);
+    mainRsrc.insert(zbe::factories::functionName_ + name, dcvab);
     specificRsrc.insert("DerivedCosVelAvtBldr."s + name, dcvab);
   }
 
@@ -2060,7 +2060,7 @@ public:
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     std::shared_ptr<DerivedPosMovingSphereAvtShapeBldr> dpmsa = std::make_shared<DerivedPosMovingSphereAvtShapeBldr>();
-    mainRsrc.insert("Function."s + name, dpmsa);
+    mainRsrc.insert(zbe::factories::functionName_ + name, dpmsa);
     specificRsrc.insert("DerivedPosMovingSphereAvtShapeBldr."s + name, dpmsa);
   }
 
@@ -2125,7 +2125,7 @@ public:
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     std::shared_ptr<DerivedPosMovingSphereAvtBldr> dpmsa = std::make_shared<DerivedPosMovingSphereAvtBldr>();
-    mainRsrc.insert("Function."s + name, dpmsa);
+    mainRsrc.insert(zbe::factories::functionName_ + name, dpmsa);
     specificRsrc.insert("DerivedPosMovingSphereAvtBldr."s + name, dpmsa);
   }
 
@@ -2197,7 +2197,7 @@ public:
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     std::shared_ptr<LookAtToPitchAvtBldr> latpab = std::make_shared<LookAtToPitchAvtBldr>();
-    mainRsrc.insert("Function."s + name, latpab);
+    mainRsrc.insert(zbe::factories::functionName_ + name, latpab);
     specificRsrc.insert("LookAtToPitchAvtBldr."s + name, latpab);
   }
   void setup(std::string name, uint64_t cfgId) {
@@ -2249,7 +2249,7 @@ public:
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     std::shared_ptr<LookAtToYawAvtBldr> latyab = std::make_shared<LookAtToYawAvtBldr>();
-    mainRsrc.insert("Function."s + name, latyab);
+    mainRsrc.insert(zbe::factories::functionName_ + name, latyab);
     specificRsrc.insert("LookAtToYawAvtBldr."s + name, latyab);
   }
   void setup(std::string name, uint64_t cfgId) {

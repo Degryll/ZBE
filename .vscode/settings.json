@@ -68,6 +68,11 @@
         "typeindex": "cpp",
         "variant": "cpp",
         "bit": "cpp",
-        "zandbokz": "cpp"
+        "zandbokz": "cpp",
+        "compare": "cpp",
+        "concepts": "cpp",
+        "numbers": "cpp",
+        "semaphore": "cpp",
+        "stop_token": "cpp"
     }
 }

@@ -36,7 +36,7 @@
     "positionAIdx" : 1230,
     "positionBIdx" : 1240,
     "positionCIdx" : 1250,
-    "lifespan" : 6553600,
+    "lifespan" : 165536,
     "fovIdx" : 3100,
     "targetIdx" : 3200,
     "upwardsIdx" : 3300,
@@ -473,6 +473,25 @@
           }
         },
         {
+          "factory" :"PlatformTraitBldrFtry",
+          "name" : "zandbokz.cajaesplataforma",
+          "config" : {
+            "attribIndexes" : ["positionIdx", "e2Idx", "e1Idx"]
+          }
+        },
+        {
+          "factory" :"ActorBldrFtry",
+          "name" : "zandbokz.actordiosito",
+          "config" : {
+            "solid" : "ENABLED"
+          }
+        },
+        {
+          "factory" :"ReactorBldrFtry",
+          "name" : "zandbokz.reactordiosito",
+          "config" : {}
+        },
+        {
           "factory" :"ActorBldrFtry",
           "name" : "zandbokz.actorpepinosolido",
           "config" : {
@@ -536,11 +555,65 @@
           }
         },
         {
+          "factory" : "EntityBldrFtry",
+          "name" : "zandbokz.diositobuilder3",
+          "description" : "Está ahí, mirando. Pero no hace na",
+          "config" : {
+            "contextTime":"DEFAULT",
+            "builders" : ["zandbokz.diositovalues3", "zandbokz.diositoapintar", "zandbokz.diositosolidosocializa"]
+          }
+        },
+        {
+          "factory" : "EntityBldrFtry",
+          "name" : "zandbokz.diositobuilder4",
+          "description" : "Está ahí, mirando. Pero no hace na",
+          "config" : {
+            "contextTime":"DEFAULT",
+            "builders" : ["zandbokz.diositovalues4", "zandbokz.diositoapintar", "zandbokz.diositosolidosocializa"]
+          }
+        },
+        {
+          "factory" : "EntityBldrFtry",
+          "name" : "zandbokz.diositobuilder5",
+          "description" : "Está ahí, mirando. Pero no hace na",
+          "config" : {
+            "contextTime":"DEFAULT",
+            "builders" : ["zandbokz.diositovalues5", "zandbokz.diositoapintar", "zandbokz.diositosolidosocializa"]
+          }
+        },
+        {
+          "factory" : "EntityBldrFtry",
+          "name" : "zandbokz.diositobuilder6",
+          "description" : "Está ahí, mirando. Pero no hace na",
+          "config" : {
+            "contextTime":"DEFAULT",
+            "builders" : ["zandbokz.diositovalues6", "zandbokz.diositoapintar", "zandbokz.diositosolidosocializa"]
+          }
+        },
+        {
+          "factory" : "EntityBldrFtry",
+          "name" : "zandbokz.diositobuilder7",
+          "description" : "Está ahí, mirando. Pero no hace na",
+          "config" : {
+            "contextTime":"DEFAULT",
+            "builders" : ["zandbokz.diositovalues7", "zandbokz.diositoapintar", "zandbokz.diositosolidosocializa"]
+          }
+        },
+        {
+          "factory" : "EntityBldrFtry",
+          "name" : "zandbokz.diositobuilder8",
+          "description" : "Está ahí, mirando. Pero no hace na",
+          "config" : {
+            "contextTime":"DEFAULT",
+            "builders" : ["zandbokz.diositovalues8", "zandbokz.diositoapintar", "zandbokz.diositosolidosocializa"]
+          }
+        },
+        {
           "factory" :"EntitySetterFtry",
           "name" : "zandbokz.diositovalues",
           "config" : {
             "uint": {
-              "gidIdx":["Ojito"]
+              "gidIdx":["TrianguloIsosceles"]
             },
             "double": {
               "radsIdx":[-7.57],
@@ -552,7 +625,7 @@
               "positionAIdx":[200.0, 0.0, 200.0],
               "positionBIdx":[-200.0, 0.0, 200.0],
               "positionCIdx":[200.0, 0.0, -200.0],
-              "velocityIdx":[-0.5, 0.0, 1.3],
+              "velocityIdx":[-0.1, 0.7, -0.3],
               "e1Idx": "zandbokz.planeE1",
               "e2Idx": "zandbokz.planeE2"
             }
@@ -563,7 +636,7 @@
           "name" : "zandbokz.diositovalues1",
           "config" : {
             "uint": {
-              "gidIdx":["Ojito"]
+              "gidIdx":["TrianguloIsosceles"]
             },
             "double": {
               "radsIdx":[1.57],
@@ -586,14 +659,152 @@
           "name" : "zandbokz.diositovalues2",
           "config" : {
             "uint": {
-              "gidIdx":["Ojito"]
+              "gidIdx":["TrianguloIsosceles"]
             },
             "double": {
               "radsIdx":[3.14159],
               "scaleIdx":[100.0]
             },
             "V3D": {
-              "positionIdx":[0.0, 0.0, 0.0],
+              "positionIdx":[50.0, 50.0, 50.0],
+              "orientationIdx":[0.0, 0.0, 1.0],
+              "positionAIdx":[200.0, 0.0, 200.0],
+              "positionBIdx":[-200.0, 0.0, 200.0],
+              "positionCIdx":[200.0, 0.0, -200.0],
+              "velocityIdx":[0.0, 0.0, 0.0],
+              "e1Idx":[0.0, 0.0, 0.0],
+              "e2Idx":[0.0, 0.0, 0.0]
+            }
+          }
+        },
+        {
+          "factory" :"EntitySetterFtry",
+          "name" : "zandbokz.diositovalues3",
+          "config" : {
+            "uint": {
+              "gidIdx":["TrianguloIsosceles"]
+            },
+            "double": {
+              "radsIdx":[3.14159],
+              "scaleIdx":[100.0]
+            },
+            "V3D": {
+              "positionIdx":[50.0, 51.0, 51.1],
+              "orientationIdx":[0.0, 0.0, 1.0],
+              "positionAIdx":[200.0, 0.0, 200.0],
+              "positionBIdx":[-200.0, 0.0, 200.0],
+              "positionCIdx":[200.0, 0.0, -200.0],
+              "velocityIdx":[0.0, 0.0, 0.0],
+              "e1Idx":[0.0, 0.0, 0.0],
+              "e2Idx":[0.0, 0.0, 0.0]
+            }
+          }
+        },
+        {
+          "factory" :"EntitySetterFtry",
+          "name" : "zandbokz.diositovalues4",
+          "config" : {
+            "uint": {
+              "gidIdx":["TrianguloIsosceles"]
+            },
+            "double": {
+              "radsIdx":[3.14159],
+              "scaleIdx":[100.0]
+            },
+            "V3D": {
+              "positionIdx":[50.0, 52.0, 52.2],
+              "orientationIdx":[0.0, 0.0, 1.0],
+              "positionAIdx":[200.0, 0.0, 200.0],
+              "positionBIdx":[-200.0, 0.0, 200.0],
+              "positionCIdx":[200.0, 0.0, -200.0],
+              "velocityIdx":[0.0, 0.0, 0.0],
+              "e1Idx":[0.0, 0.0, 0.0],
+              "e2Idx":[0.0, 0.0, 0.0]
+            }
+          }
+        },
+        {
+          "factory" :"EntitySetterFtry",
+          "name" : "zandbokz.diositovalues5",
+          "config" : {
+            "uint": {
+              "gidIdx":["TrianguloIsosceles"]
+            },
+            "double": {
+              "radsIdx":[3.14159],
+              "scaleIdx":[100.0]
+            },
+            "V3D": {
+              "positionIdx":[50.0, 53.0, 53.3],
+              "orientationIdx":[0.0, 0.0, 1.0],
+              "positionAIdx":[200.0, 0.0, 200.0],
+              "positionBIdx":[-200.0, 0.0, 200.0],
+              "positionCIdx":[200.0, 0.0, -200.0],
+              "velocityIdx":[0.0, 0.0, 0.0],
+              "e1Idx":[0.0, 0.0, 0.0],
+              "e2Idx":[0.0, 0.0, 0.0]
+            }
+          }
+        },
+        {
+          "factory" :"EntitySetterFtry",
+          "name" : "zandbokz.diositovalues6",
+          "config" : {
+            "uint": {
+              "gidIdx":["TrianguloIsosceles"]
+            },
+            "double": {
+              "radsIdx":[3.14159],
+              "scaleIdx":[100.0]
+            },
+            "V3D": {
+              "positionIdx":[50.0, 54.0, 54.4],
+              "orientationIdx":[0.0, 0.0, 1.0],
+              "positionAIdx":[200.0, 0.0, 200.0],
+              "positionBIdx":[-200.0, 0.0, 200.0],
+              "positionCIdx":[200.0, 0.0, -200.0],
+              "velocityIdx":[0.0, 0.0, 0.0],
+              "e1Idx":[0.0, 0.0, 0.0],
+              "e2Idx":[0.0, 0.0, 0.0]
+            }
+          }
+        },
+        {
+          "factory" :"EntitySetterFtry",
+          "name" : "zandbokz.diositovalues7",
+          "config" : {
+            "uint": {
+              "gidIdx":["TrianguloIsosceles"]
+            },
+            "double": {
+              "radsIdx":[3.14159],
+              "scaleIdx":[100.0]
+            },
+            "V3D": {
+              "positionIdx":[50.0, 55.0, 55.5],
+              "orientationIdx":[0.0, 0.0, 1.0],
+              "positionAIdx":[200.0, 0.0, 200.0],
+              "positionBIdx":[-200.0, 0.0, 200.0],
+              "positionCIdx":[200.0, 0.0, -200.0],
+              "velocityIdx":[0.0, 0.0, 0.0],
+              "e1Idx":[0.0, 0.0, 0.0],
+              "e2Idx":[0.0, 0.0, 0.0]
+            }
+          }
+        },
+        {
+          "factory" :"EntitySetterFtry",
+          "name" : "zandbokz.diositovalues8",
+          "config" : {
+            "uint": {
+              "gidIdx":["TrianguloIsosceles"]
+            },
+            "double": {
+              "radsIdx":[3.14159],
+              "scaleIdx":[100.0]
+            },
+            "V3D": {
+              "positionIdx":[50.0, 56.0, 56.6],
               "orientationIdx":[0.0, 0.0, 1.0],
               "positionAIdx":[200.0, 0.0, 200.0],
               "positionBIdx":[-200.0, 0.0, 200.0],
@@ -617,8 +828,8 @@
           "name" : "zandbokz.diositosolidosocializa",
           "description" : "Usamos actor y reactor del pepino porque dios se comporta como un pepino y tampoco hace nada. Al menos los pepinos son nutritivos.",
           "config" : {
-            "actorbuilder" : "zandbokz.actorpepinosolido",
-            "reactorbuilder" : "zandbokz.reactorpepinosolido",
+            "actorbuilder" : "zandbokz.actordiosito",
+            "reactorbuilder" : "zandbokz.reactordiosito",
             "shapebuilder" : "zandbokz.aspectodiostriangular",
             "lists" : {"loadScreen.inerList":"inerTicket"}
           }
@@ -646,7 +857,7 @@
             "sizeIdx" : "scaleIdx",
             "e1Idx" : "e1Idx",
             "e2Idx" : "e2Idx",
-            "triangle" : "Ojito"
+            "triangle" : "TrianguloIsosceles"
           }
         },
         {
@@ -755,6 +966,34 @@
           "config" : {
             "vectorIdx" : "orientationIdx",
             "upwardsIdx" : "upwardsIdx"
+          }
+        },
+        {
+          "factory" : "TicketActivatorPlatformRctBldrFtry",
+          "name" : "zandbokz.reaccionattachactivations",
+          "config" : {
+            "tickets" : ["ULM3DOn2DTicket"]
+          }
+        },
+        {
+          "factory" : "TicketDeactivatorPlatformRctBldrFtry",
+          "name" : "zandbokz.reaccionattachdeactivations",
+          "config" : {
+            "tickets" : ["gmTicket", "ULM3DTicket"]
+          }
+        },
+        {
+          "factory" : "StoreValuesPlatformRctBldrFtry",
+          "name" : "zandbokz.reaccionattachpilladelplano",
+          "config" : {
+            "idxlist" : ["e2Idx", "e1Idx", "positionIdx"]
+          }
+        },
+        {
+          "factory" : "MultiPlatformRctBldrFtry",
+          "name" : "zandbokz.reaccionmultiagarra",
+          "config" : {
+            "reactionBuilders" : ["zandbokz.reaccionattachactivations", "zandbokz.reaccionattachdeactivations", "zandbokz.reaccionattachpilladelplano"]
           }
         },
         {
@@ -882,7 +1121,7 @@
           "name" : "zandbokz.cajabuilder",
           "config" : {
             "contextTime":"DEFAULT",
-            "builders" : ["zandbokz.cajavalues", "zandbokz.cajaapintar", "zandbokz.cajaamover", "zandbokz.cajaamoverenplano","zandbokz.cajasolidosocializa", "zandbokz.attachcajaonoff", "zandbokz.cajaasaltar"]
+            "builders" : ["zandbokz.cajavalues", "zandbokz.cajaapintar", "zandbokz.cajaamover", "zandbokz.cajaamoverenplano","zandbokz.cajasocializa", "zandbokz.attachcajaonoff", "zandbokz.cajaasaltar"]
           }
         },
         {
@@ -966,13 +1205,16 @@
           "factory" :"ActorBldrFtry",
           "name" : "zandbokz.actorcajasolido",
           "config" : {
-            "solid" : "ENABLED"
+            "solid" : "ENABLED",
+            "platform" : "zandbokz.cajaesplataforma"
           }
         },
         {
           "factory" :"ReactorBldrFtry",
           "name" : "zandbokz.reactorcajasolido",
-          "config" : {}
+          "config" : {
+            "platform" : "zandbokz.reaccionmultiagarra"
+          }
         },
         {
           "factory" :"ShapeMSphereBldrFtry",
@@ -982,13 +1224,15 @@
           }
         },
         {
-          "factory" :"InerBldrFtry",
-          "name" : "zandbokz.cajasolidosocializa",
+          "factory" :"InatorBldrFtry",
+          "name" : "zandbokz.cajasocializa",
           "config" : {
             "actorbuilder" : "zandbokz.actorcajasolido",
             "reactorbuilder" : "zandbokz.reactorcajasolido",
             "shapebuilder" : "zandbokz.aspectocajasolido",
-            "lists" : {"loadScreen.inerList":"inerTicket"}
+            "interactioners" : "loadScreen.inerList",
+            "inerlists" : {"loadScreen.inerList":"inerTicket"},
+            "inatorlists" :{"loadScreen.inatorList" : "inatorTicket"}
           }
         },
         {
@@ -1001,7 +1245,8 @@
           }
         }
       ],
-      "calls" : ["zandbokz.pepinobuilder", "zandbokz.cajabuilder", "zandbokz.diositobuilder", "zandbokz.diositobuilder1", "zandbokz.diositobuilder2", "zandbokz.creaunicorniorosa"]
+      "calls" : ["zandbokz.pepinobuilder", "zandbokz.cajabuilder", "zandbokz.diositobuilder", "zandbokz.diositobuilder1", "zandbokz.diositobuilder2", "zandbokz.diositobuilder3", "zandbokz.diositobuilder4", "zandbokz.diositobuilder5", "zandbokz.diositobuilder6", "zandbokz.diositobuilder7", "zandbokz.diositobuilder8"],
+      "backupcalls" : ["zandbokz.creaunicorniorosa"]
     },
     {
       "description" : "Creating entity",
@@ -1101,7 +1346,8 @@
               "loadScreen.goForwardDaemon",
               "loadScreen.goBackwardDaemon",
               "loadScreen.goLeftDaemon",
-              "loadScreen.goRightDaemon"
+              "loadScreen.goRightDaemon",
+              "loadScreen.masterShot"
             ]
           }
         },
@@ -1697,6 +1943,14 @@
             "ticket" : "BehaviorsMD.loadScreen.goForwardDaemon.ticket",
             "inputEventGenerator" : "loadScreen.inputEventGenerator",
             "key":"ZBEK_w"
+          }
+        },
+        {"factory": "KeyDownTicketEnablerIHFtry",
+          "name": "loadScreen.ratatatatataInputH",
+          "config" : {
+            "ticket" : "BehaviorsMD.loadScreen.masterShot.ticket",
+            "inputEventGenerator" : "loadScreen.inputEventGenerator",
+            "key":"ZBEK_MOUSE_RIGHT"
           }
         },
         {"factory": "KeyDownTicketEnablerIHFtry",
