@@ -10,7 +10,6 @@
 #ifndef ZBE_CORE_TOOLS_MATH_COLLISIONS_INTERSECTIONS_H_
 #define ZBE_CORE_TOOLS_MATH_COLLISIONS_INTERSECTIONS_H_
 
-#include <cstdio>
 #include <algorithm>
 #include <utility>
 #include <limits>
@@ -727,7 +726,6 @@ template<unsigned dim>
 bool intersectionMovingNSphereOutsideMovingNTriangle(NSphere<dim> sphere, Vector<dim> sVelocity, Triangle<dim> triangle, Vector<dim> tVelocity, int64_t& time, Point<dim>& point, Vector<dim>& normal) {
     // Test for initial overlap or contact.
     double sqrDistance;
-    printf("Vel: %f, %f, %f\n", sVelocity.x, sVelocity.y, sVelocity.z);fflush(stdout);
     distancePointTriangle<dim>(sphere.c, triangle, point, normal, sqrDistance);
 
     double rsqr = sphere.r * sphere.r;
@@ -820,7 +818,7 @@ bool intersectionMovingNSphereOutsideMovingNTriangle(NSphere<dim> sphere, Vector
             auto intersectTime = quantizeTime(tbar);
             if(intersectTime<=time) {
                 time = intersectTime;
-                point = sphere.c + time * sVelocity;
+                point = sphere.c + (time * sVelocity)/SECOND;
                 return true && time;
             } else {
                 return false;
@@ -853,7 +851,7 @@ bool intersectionMovingNSphereOutsideMovingNTriangle(NSphere<dim> sphere, Vector
             auto intersectTime = quantizeTime(tbar);
             if(intersectTime<=time) {
                 time = intersectTime;
-                point = sphere.c + time * sVelocity;
+                point = sphere.c + (time * sVelocity)/SECOND;
                 return true && time;
             } else {
                 return false;
@@ -909,7 +907,7 @@ bool intersectionMovingNSphereOutsideMovingNTriangle(NSphere<dim> sphere, Vector
                                 auto intersectTime = quantizeTime(tbar);
                                 if(intersectTime<=time) {
                                     time = intersectTime;
-                                    point = sphere.c + time * sVelocity;
+                                    point = sphere.c + (time * sVelocity)/SECOND;
                                     return true && time;
                                 } else {
                                     return false;
@@ -945,7 +943,7 @@ bool intersectionMovingNSphereOutsideMovingNTriangle(NSphere<dim> sphere, Vector
                         auto intersectTime = quantizeTime(tbar);
                         if(intersectTime<=time) {
                             time = intersectTime;
-                            point = sphere.c + time * sVelocity;
+                            point = sphere.c + (time * sVelocity)/SECOND;
                             return true && time;
                         } else {
                             return false;

@@ -86,14 +86,14 @@ public:
         factories.insert(std::to_string(i)+"Ftry"s , std::make_shared<SimpleGenericFtry<int> >(factories::listName));
     }
     // Builders
-    factories.insert("Drawable2DAvtBldrFtry", std::make_shared<AvatarBldrFtry<uint64_t, int64_t, double, Vector2D, Vector2D>>());
-    factories.insert("Drawable3DAvtBldrFtry", std::make_shared<AvatarBldrFtry<uint64_t, double,  double, Vector3D, Vector3D>>());
-    factories.insert("DrawableLookAtAvtBldrFtry", std::make_shared<AvatarBldrFtry<uint64_t, double,  Vector3D, Vector3D, Vector3D>>());
-    factories.insert("DrawableSimple2DAvtBldrFtry", std::make_shared<AvatarBldrFtry<uint64_t, int64_t, double, Vector2D, Vector2D>>());
-    factories.insert("V3DAvtBldrFtry", std::make_shared<AvatarBldrFtry<Vector3D> >());
-    factories.insert("TwoV3DAvtBldrFtry", std::make_shared<AvatarBldrFtry<Vector3D, Vector3D> >());
-    factories.insert("FloatAvtBldrFtry", std::make_shared<AvatarBldrFtry<float> >());
-    factories.insert("VoidAvtBldrFtry", std::make_shared<AvatarBldrFtry<void> >());
+    factories.insert("Drawable2DAvtBldrFtry", std::make_shared<MAvatarBldrFtry<uint64_t, int64_t, double, Vector2D, Vector2D>>());
+    factories.insert("Drawable3DAvtBldrFtry", std::make_shared<MAvatarBldrFtry<uint64_t, double,  double, Vector3D, Vector3D>>());
+    factories.insert("DrawableLookAtAvtBldrFtry", std::make_shared<MAvatarBldrFtry<uint64_t, double,  Vector3D, Vector3D, Vector3D>>());
+    factories.insert("DrawableSimple2DAvtBldrFtry", std::make_shared<MAvatarBldrFtry<uint64_t, int64_t, double, Vector2D, Vector2D>>());
+    factories.insert("V3DAvtBldrFtry", std::make_shared<SAvatarBldrFtry<Vector3D> >());
+    factories.insert("TwoV3DAvtBldrFtry", std::make_shared<MAvatarBldrFtry<Vector3D, Vector3D> >());
+    factories.insert("FloatAvtBldrFtry", std::make_shared<SAvatarBldrFtry<float> >());
+    factories.insert("VoidAvtBldrFtry", std::make_shared<AvatarBldrFtry>());
 
     factories.insert("TargetToDirAvtBldrFtry", std::make_shared<TargetToDirAvtBldrFtry>());
     factories.insert("PosTargetToPosDirAvtBldrFtry", std::make_shared<PosTargetToPosDirAvtBldrFtry>());
@@ -104,7 +104,7 @@ public:
     factories.insert("DerivedPosMovingSphereAvtShapeBldrFtry", std::make_shared<DerivedPosMovingSphereAvtShapeBldrFtry>());
     factories.insert("LookAtToPitchAvtBldrFtry", std::make_shared<LookAtToPitchAvtBldrFtry>());
     factories.insert("LookAtToYawAvtBldrFtry", std::make_shared<LookAtToYawAvtBldrFtry>());
-    factories.insert("3DOn2DAvtBldrFtry", std::make_shared<AvatarBldrFtry<Vector2D, Vector2D, Vector3D, Vector3D, Vector3D, Vector3D, Vector3D> >());
+    factories.insert("3DOn2DAvtBldrFtry", std::make_shared<MDynamicAvatarBldrFtry<Vector2D, Vector2D, Vector3D, Vector3D, Vector3D, Vector3D, Vector3D> >());
     //factories.insert("MovingSphereAvtBldrFtry", std::make_shared<MovingSphereAvtBldrFtry>());
     factories.insert("MovingSphereAvtShapeBldrFtry", std::make_shared<MovingSphereAvtShapeBldrFtry>());
     factories.insert("MovingTriangle3DAvtShapeBldrFtry", std::make_shared<MovingTriangle3DAvtShapeBldrFtry>());

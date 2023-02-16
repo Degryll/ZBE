@@ -474,7 +474,7 @@
         },
         {
           "factory" :"PlatformTraitBldrFtry",
-          "name" : "zandbokz.cajaesplataforma",
+          "name" : "zandbokz.diositoesplataforma",
           "config" : {
             "attribIndexes" : ["positionIdx", "e2Idx", "e1Idx"]
           }
@@ -483,7 +483,8 @@
           "factory" :"ActorBldrFtry",
           "name" : "zandbokz.actordiosito",
           "config" : {
-            "solid" : "ENABLED"
+            "solid" : "ENABLED",
+            "platform" : "zandbokz.diositoesplataforma"
           }
         },
         {
@@ -616,16 +617,16 @@
               "gidIdx":["TrianguloIsosceles"]
             },
             "double": {
-              "radsIdx":[-7.57],
+              "radsIdx":[72.14159],
               "scaleIdx":[100.0]
             },
             "V3D": {
               "positionIdx":"zandbokz.planePos",
-              "orientationIdx":[1.0, 1.0, 0.0],
+              "orientationIdx":[1.0, 1.0, 0.33],
               "positionAIdx":[200.0, 0.0, 200.0],
               "positionBIdx":[-200.0, 0.0, 200.0],
               "positionCIdx":[200.0, 0.0, -200.0],
-              "velocityIdx":[-0.1, 0.7, -0.3],
+              "velocityIdx":[0.0, 0.0, 0.0],
               "e1Idx": "zandbokz.planeE1",
               "e2Idx": "zandbokz.planeE2"
             }
@@ -643,8 +644,8 @@
               "scaleIdx":[100.0]
             },
             "V3D": {
-              "positionIdx":[0.0, 0.0, -50.0],
-              "orientationIdx":[1.0, 0.0, 0.0],
+              "positionIdx":[0.0, 200.0, 0.0],
+              "orientationIdx":[1.0, 1.0, 0.0],
               "positionAIdx":[200.0, 0.0, 200.0],
               "positionBIdx":[-200.0, 0.0, 200.0],
               "positionCIdx":[200.0, 0.0, -200.0],
@@ -954,13 +955,6 @@
           }
         },
         {
-          "factory" : "ReverseDirectionReactionBldrFtry",
-          "name" : "zandbokz.rebotamal",
-          "config" : {
-            "vectorIdx" : "orientationIdx"
-          }
-        },
-        {
           "factory" : "BounceReactionBldrFtry",
           "name" : "zandbokz.rebotabien",
           "config" : {
@@ -986,14 +980,21 @@
           "factory" : "StoreValuesPlatformRctBldrFtry",
           "name" : "zandbokz.reaccionattachpilladelplano",
           "config" : {
-            "idxlist" : ["e2Idx", "e1Idx", "positionIdx"]
+            "idxlist" : ["planePosIdx", "e2Idx", "e1Idx"]
+          }
+        },
+        {
+          "factory" : "AttachRepositionReactionBldrFtry",
+          "name" : "zandbokz.reaccionattachrecoloca",
+          "config" : {
+            "idxlist" : ["velocity2DIdx", "position2DIdx", "velocityIdx", "positionIdx", "e2Idx", "e1Idx", "planePosIdx"]
           }
         },
         {
           "factory" : "MultiPlatformRctBldrFtry",
           "name" : "zandbokz.reaccionmultiagarra",
           "config" : {
-            "reactionBuilders" : ["zandbokz.reaccionattachactivations", "zandbokz.reaccionattachdeactivations", "zandbokz.reaccionattachpilladelplano"]
+            "reactionBuilders" : ["zandbokz.reaccionattachactivations", "zandbokz.reaccionattachdeactivations", "zandbokz.reaccionattachpilladelplano", "zandbokz.reaccionattachrecoloca"]
           }
         },
         {
@@ -1074,7 +1075,8 @@
         {
           "factory" :"ActorBldrFtry",
           "name" : "zandbokz.actorcastañasolido",
-          "config" : {
+          "config" : {},
+          "configBackup" : {
             "solid" : "ENABLED"
           }
         },
@@ -1205,8 +1207,7 @@
           "factory" :"ActorBldrFtry",
           "name" : "zandbokz.actorcajasolido",
           "config" : {
-            "solid" : "ENABLED",
-            "platform" : "zandbokz.cajaesplataforma"
+            "solid" : "ENABLED"
           }
         },
         {
@@ -1245,8 +1246,8 @@
           }
         }
       ],
-      "calls" : ["zandbokz.pepinobuilder", "zandbokz.cajabuilder", "zandbokz.diositobuilder", "zandbokz.diositobuilder1", "zandbokz.diositobuilder2", "zandbokz.diositobuilder3", "zandbokz.diositobuilder4", "zandbokz.diositobuilder5", "zandbokz.diositobuilder6", "zandbokz.diositobuilder7", "zandbokz.diositobuilder8"],
-      "backupcalls" : ["zandbokz.creaunicorniorosa"]
+      "calls" : ["zandbokz.pepinobuilder", "zandbokz.cajabuilder", "zandbokz.diositobuilder"],
+      "backupcalls" : ["zandbokz.creaunicorniorosa", "zandbokz.diositobuilder2", "zandbokz.diositobuilder3", "zandbokz.diositobuilder4", "zandbokz.diositobuilder5", "zandbokz.diositobuilder6", "zandbokz.diositobuilder7", "zandbokz.diositobuilder8"]
     },
     {
       "description" : "Creating entity",

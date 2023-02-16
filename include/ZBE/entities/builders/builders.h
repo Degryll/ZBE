@@ -423,7 +423,7 @@ private:
   std::forward_list<std::pair<uint64_t, std::shared_ptr<Value<std::vector<std::string>>>>> sharedVStringValues;
 };
 
-template<typename T, typename ...Ts>
+template<template<typename T, typename ...Ts> class AVT, typename T, typename ...Ts>
 class AvatarBldr : public Funct<void, std::shared_ptr<Entity>> {
 public:
   static const int expectedIndexes = sizeof...(Ts) + 1;
@@ -456,15 +456,15 @@ public:
   }
 
 private:
-  using AvtImplType = MBaseAvatar<T, Ts...>;
+  using AvtImplType = AVT<T, Ts...>;
   std::array<uint64_t, expectedIndexes> idxArr;
   std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> indexNLists;
   std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> deactivatedIndexNLists;
 
 };
 
-template<typename T>
-class AvatarBldr<T> : public Funct<void, std::shared_ptr<Entity>> {
+template<template<typename T> class AVT, typename T>
+class AvatarBldr<AVT, T> : public Funct<void, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = SAvatar<T>;
   void operator()(std::shared_ptr<Entity> ent) {
@@ -499,15 +499,20 @@ public:
   }
 
 private:
-  using AvtImplType = SBaseAvatar<T>;
+  using AvtImplType = AVT<T>;
   uint64_t idx;
   std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> indexNLists;
   std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> deactivatedIndexNLists;
 
 };
 
+template<typename T>
+class AvtVoid {
+  T t;
+};
+
 template<>
-class AvatarBldr<void> : public Funct<void, std::shared_ptr<Entity>> {
+class AvatarBldr<AvtVoid, void> : public Funct<void, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = Avatar;
   void operator()(std::shared_ptr<Entity> ent) {
@@ -548,12 +553,12 @@ private:
 
 };
 
-template<typename... Ts>
-class AvatarBldrFtry : public Factory {
+template<template<typename ...Ts> class AVT, typename... Ts>
+class _AvatarBldrFtry : public Factory {
 public:
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
-    std::shared_ptr<AvatarBldr<Ts...>> ab = std::make_shared<AvatarBldr<Ts...>>();
+    std::shared_ptr<AvatarBldr<AVT, Ts...>> ab = std::make_shared<AvatarBldr<AVT, Ts...>>();
     mainRsrc.insert(zbe::factories::functionName_ + name, ab);
     specificRsrc.insert("AvatarBldr."s + name, ab);
   }
@@ -576,14 +581,14 @@ public:
     }
     ab->setIdxArr(*arr);
 
-    JSONFactory::loadAllIndexed<TicketedForwardList<typename AvatarBldr<Ts...>::AvtBaseType>>(listRsrc, uintDict, j, zbe::factories::listName, "lists"s, "AvatarBldrFtry"s,
+    JSONFactory::loadAllIndexed<TicketedForwardList<typename AvatarBldr<AVT, Ts...>::AvtBaseType>>(listRsrc, uintDict, j, zbe::factories::listName, "lists"s, "AvatarBldrFtry"s,
         [&](uint64_t idx, std::shared_ptr<ListType> list) {
           ab->addIndexNlist(idx, list);
           return true;
         }
     );
 
-    JSONFactory::loadAllIndexed<TicketedForwardList<typename AvatarBldr<Ts...>::AvtBaseType>>(listRsrc, uintDict, j, zbe::factories::listName, "deativatedlists"s, "AvatarBldrFtry"s,
+    JSONFactory::loadAllIndexed<TicketedForwardList<typename AvatarBldr<AVT, Ts...>::AvtBaseType>>(listRsrc, uintDict, j, zbe::factories::listName, "deativatedlists"s, "AvatarBldrFtry"s,
         [&](uint64_t idx, std::shared_ptr<ListType> list) {
           ab->addDeactivatedIndexNlist(idx, list);
           return true;
@@ -594,20 +599,32 @@ public:
 private:
   static const int expectedIndexes = sizeof...(Ts);
   using FunctionType = Funct<void, std::shared_ptr<Entity>>;
-  using ListType = TicketedForwardList<typename AvatarBldr<Ts...>::AvtBaseType>;
+  using ListType = TicketedForwardList<typename AvatarBldr<AVT, Ts...>::AvtBaseType>;
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
-  RsrcStore<AvatarBldr<Ts...>>& specificRsrc = RsrcStore<AvatarBldr<Ts...>>::getInstance();
+  RsrcStore<AvatarBldr<AVT, Ts...>>& specificRsrc = RsrcStore<AvatarBldr<AVT, Ts...>>::getInstance();
   RsrcStore<ListType>& listRsrc = RsrcStore<ListType>::getInstance();
   RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
 };
 
-template<>
-class AvatarBldrFtry<void> : public Factory {
+template<typename ...Ts>
+using MAvatarBldrFtry = _AvatarBldrFtry<MBaseAvatar, Ts...>;
+
+template<typename T>
+using SAvatarBldrFtry = _AvatarBldrFtry<SBaseAvatar, T>;
+
+template<typename T, typename ...Ts>
+using MDynamicAvatarBldrFtry = _AvatarBldrFtry<MDynamicAvatar, T, Ts...>;
+
+template<typename T>
+using SDynamicAvatarBldrFtry = _AvatarBldrFtry<SDynamicAvatar, T>;
+
+
+class AvatarBldrFtry : public Factory {
 public:
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
-    std::shared_ptr<AvatarBldr<void>> ab = std::make_shared<AvatarBldr<void>>();
+    std::shared_ptr<AvatarBldr<AvtVoid, void>> ab = std::make_shared<AvatarBldr<AvtVoid, void>>();
     mainRsrc.insert(zbe::factories::functionName_ + name, ab);
     specificRsrc.insert("AvatarBldr."s + name, ab);
   }
@@ -624,14 +641,14 @@ public:
     auto ab = specificRsrc.get("AvatarBldr."s + name);
     auto j = *cfg;
 
-    JSONFactory::loadAllIndexed<TicketedForwardList<typename AvatarBldr<void>::AvtBaseType>>(listRsrc, uintDict, j, zbe::factories::listName, "lists"s, "AvatarBldrFtry"s,
+    JSONFactory::loadAllIndexed<TicketedForwardList<typename AvatarBldr<AvtVoid, void>::AvtBaseType>>(listRsrc, uintDict, j, zbe::factories::listName, "lists"s, "AvatarBldrFtry"s,
         [&](uint64_t idx, std::shared_ptr<ListType> list) {
           ab->addIndexNlist(idx, list);
           return true;
         }
     );
 
-    JSONFactory::loadAllIndexed<TicketedForwardList<typename AvatarBldr<void>::AvtBaseType>>(listRsrc, uintDict, j, zbe::factories::listName, "deativatedlists"s, "AvatarBldrFtry"s,
+    JSONFactory::loadAllIndexed<TicketedForwardList<typename AvatarBldr<AvtVoid, void>::AvtBaseType>>(listRsrc, uintDict, j, zbe::factories::listName, "deativatedlists"s, "AvatarBldrFtry"s,
         [&](uint64_t idx, std::shared_ptr<ListType> list) {
           ab->addDeactivatedIndexNlist(idx, list);
           return true;
@@ -641,10 +658,10 @@ public:
 
 private:
   using FunctionType = Funct<void, std::shared_ptr<Entity>>;
-  using ListType = TicketedForwardList<typename AvatarBldr<void>::AvtBaseType>;
+  using ListType = TicketedForwardList<typename AvatarBldr<AvtVoid, void>::AvtBaseType>;
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
-  RsrcStore<AvatarBldr<void>>& specificRsrc = RsrcStore<AvatarBldr<void>>::getInstance();
+  RsrcStore<AvatarBldr<AvtVoid, void>>& specificRsrc = RsrcStore<AvatarBldr<AvtVoid, void>>::getInstance();
   RsrcStore<ListType>& listRsrc = RsrcStore<ListType>::getInstance();
   RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
 };
@@ -835,7 +852,8 @@ public:
   using ReactFunct = Funct<void, IData, Trait>;
   using SubBuild = Funct<std::shared_ptr<ReactFunct>, std::shared_ptr<Entity>>;
 
-  _ReactorBldr() : sb(std::make_shared<WrapperFunct<std::shared_ptr<ReactFunct>, std::shared_ptr<Entity>>>(noReactionSubBuild)) {}
+  //_ReactorBldr() : sb(std::make_shared<WrapperFunct<std::shared_ptr<ReactFunct>, std::shared_ptr<Entity>>>(noReactionSubBuild)) {}
+  _ReactorBldr() : sb() {}
 
   virtual ~_ReactorBldr() = default;
 
@@ -846,10 +864,11 @@ public:
   void setReactionBuilder(std::shared_ptr<SubBuild> sb) {
     this->sb = sb;
   }
-protected:
+
   static std::shared_ptr<ReactFunct> noReactionSubBuild(std::shared_ptr<Entity>) {
     return Reactor<IData, Trait>::noReaction;
   }
+protected:
   std::shared_ptr<SubBuild> sb;
 };
 
@@ -993,8 +1012,11 @@ public:
   void addReactionBuilder(std::string traitCfgName, nlohmann::json cfg, std::shared_ptr<ReactorBldr<IData, Traits...>> reactorBldr, bool& failed) {
     using namespace std::string_literals;
     auto& builderStore = RsrcStore<typename ReactorBldr<IData, U>::SubBuild>::getInstance();
-    if(failed) {return;}
+    if(failed) {
+      return;
+    }
     if(!cfg.contains(traitCfgName)) {
+      reactorBldr->_ReactorBldr<IData, U>::setReactionBuilder(std::make_shared<WrapperFunct<std::shared_ptr<Funct<void, IData, U>>, std::shared_ptr<Entity>>>(_ReactorBldr<IData, U>::noReactionSubBuild));
       return;
     }
     if(!cfg[traitCfgName].is_string()) {

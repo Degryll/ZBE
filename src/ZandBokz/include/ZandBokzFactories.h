@@ -92,6 +92,7 @@ public:
 
     factories.insert("ReverseDirectionReactionBldrFtry", std::make_shared<ReverseDirectionReactionBldrFtry<zbe::CollisionData3D, Solid>>());
     factories.insert("BounceReactionBldrFtry", std::make_shared<BounceReactionBldrFtry<zbe::CollisionData3D, Solid>>());
+    factories.insert("AttachRepositionReactionBldrFtry", std::make_shared<AttachRepositionReactionBldrFtry>());
 
     factories.insert("GravityMotion3DFtry", std::make_shared<GravityMotion3DFtry>());
 

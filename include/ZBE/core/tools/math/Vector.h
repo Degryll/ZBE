@@ -585,11 +585,11 @@ class Vector<3> : public _VECTOR<3> {
      * \return A vector with the cross product.
      * \sa cross().
      */
-    friend Vector<3> cross(Vector<3> lhs, const Vector<3>& rhs) {
-      return (lhs.cross(rhs));
-    }
+    friend Vector<3> cross(Vector<3> lhs, const Vector<3>& rhs);
 
 };
+
+Vector<3> cross(Vector<3> lhs, const Vector<3>& rhs);
 
 using Vector3D = Vector<3>; //!< An alias to Vector<3>.
 

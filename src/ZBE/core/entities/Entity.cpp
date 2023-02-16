@@ -163,6 +163,87 @@ void Entity::setStringVector(uint64_t id, std::shared_ptr<Value<std::vector<std:
   }
 }
 
+void Entity::overrideDouble(uint64_t id, std::shared_ptr<Value<double> >   val) {
+  auto it = dv.find(id);
+  if (it == dv.end()) {
+    SysError::setError("Overriding entity double value require a previous value.");
+  } else {
+    dv[id] = val;
+  }
+}
+
+void Entity::overrideFloat(uint64_t id, std::shared_ptr<Value<float> >   val) {
+  auto it = fv.find(id);
+  if (it == fv.end()) {
+    SysError::setError("Overriding entity double value require a previous value.");
+  } else {
+    fv[id] = val;
+  }
+}
+
+void Entity::overrideUint(uint64_t id, std::shared_ptr<Value<uint64_t> > val) {
+  auto it = uv.find(id);
+  if (it == uv.end()) {
+    SysError::setError("Overriding entity uint value require a previous value.");
+  } else {
+    uv[id] = val;
+  }
+}
+
+void Entity::overrideInt(uint64_t id, std::shared_ptr<Value<int64_t> >  val) {
+  auto it = iv.find(id);
+  if (it == iv.end()) {
+    SysError::setError("Overriding entity int value require a previous value.");
+  } else {
+    iv[id] = val;
+  }
+}
+
+void Entity::overrideBool(uint64_t id, std::shared_ptr<Value<bool> >  val) {
+  auto it = bv.find(id);
+  if (it == bv.end()) {
+    SysError::setError("Overriding entity bool value require a previous value.");
+  } else {
+    bv[id] = val;
+  }
+}
+
+void Entity::overrideVector3D(uint64_t id, std::shared_ptr<Value<Vector3D> > val) {
+  auto it = v3v.find(id);
+  if (it == v3v.end()) {
+    SysError::setError("Overriding entity Vector3D value require a previous value.");
+  } else {
+    v3v[id] = val;
+  }
+}
+
+void Entity::overrideVector2D(uint64_t id, std::shared_ptr<Value<Vector2D> > val) {
+  auto it = v2v.find(id);
+  if (it == v2v.end()) {
+    SysError::setError("Overriding entity Vector2D value require a previous value.");
+  } else {
+    v2v[id] = val;
+  }
+}
+
+void Entity::overrideString(uint64_t id, std::shared_ptr<Value<std::string> > val) {
+  auto it = sv.find(id);
+  if (it == sv.end()) {
+    SysError::setError("Overriding entity String value require a previous value.");
+  } else {
+    sv[id] = val;
+  }
+}
+
+void Entity::overrideStringVector(uint64_t id, std::shared_ptr<Value<std::vector<std::string> > > val) {
+  auto it = svv.find(id);
+  if (it == svv.end()) {
+    SysError::setError("Overriding entity String vector value require a previous value.");
+  } else {
+    svv[id] = val;
+  }
+}
+
 std::shared_ptr<Value<double> >  Entity::getDouble(uint64_t id) {
   auto it = dv.find(id);
   if (it == dv.end()) {

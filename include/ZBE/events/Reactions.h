@@ -105,7 +105,7 @@ public:
  void operator()(IData, std::array<std::shared_ptr<Value<ValueType>>, n> trait) {
    auto ent = avt->getEntity();
    for(int i =0; i< n; i++) {
-     ent->set<ValueType>(dest[i], trait[1]);
+     ent->override<ValueType>(dest[i], trait[i]);
    }
  }
 

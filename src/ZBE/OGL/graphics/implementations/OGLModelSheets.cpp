@@ -8,6 +8,7 @@
  */
 
 #include "ZBE/OGL/graphics/implementations/OGLModelSheets.h"
+#include "ZBE/core/tools/math/math.h"
 
 namespace zbe {
   SimpleOGLModelSheet::SimpleOGLModelSheet(std::shared_ptr<SDLOGLWindow> window, uint64_t modelId, uint64_t texId)
@@ -133,11 +134,19 @@ OGLModel LookAtOGLModelSheet::generateModel(std::shared_ptr<MAvatar<uint64_t, do
   //   glm::dot(glDir, z), glm::dot(glNor, z), glm::dot(glUpw, z)
   // });
 
+  // glm::mat4 rotate({
+  //   glm::dot(glNor, x), glm::dot(glUpw, x), glm::dot(glDir, x),
+  //   glm::dot(glNor, y), glm::dot(glUpw, y), glm::dot(glDir, y),
+  //   glm::dot(glNor, z), glm::dot(glUpw, z), glm::dot(glDir, z)
+  // });
+
   glm::mat4 rotate({
-    glm::dot(glNor, x), glm::dot(glUpw, x), glm::dot(glDir, x),
-    glm::dot(glNor, y), glm::dot(glUpw, y), glm::dot(glDir, y),
-    glm::dot(glNor, z), glm::dot(glUpw, z), glm::dot(glDir, z)
+    glm::dot(glNor, x), glm::dot(glNor, y), glm::dot(glNor, z),
+    glm::dot(glUpw, x), glm::dot(glUpw, y), glm::dot(glUpw, z),
+    glm::dot(glDir, x), glm::dot(glDir, y), glm::dot(glDir, z)
   });
+
+  glm::mat4 rotate90  = glm::rotate(glm::mat4(1.0f), -(float)PI/2.0f, glm::vec3(1.0,0.0,0.0));
 
   //glm::mat4 rotate(1.0f);
 
@@ -151,7 +160,7 @@ OGLModel LookAtOGLModelSheet::generateModel(std::shared_ptr<MAvatar<uint64_t, do
   // });
 //  https://stackoverflow.com/questions/21828801/how-to-find-correct-rotation-from-one-vector-to-another
   glm::mat4 scale     = glm::scale(    glm::mat4(1.0f), glm::vec3(baseScale));
-  glm::mat4 m = translate * scale * rotate;
+  glm::mat4 m = translate * scale * rotate * rotate90;
 
   return OGLModel(vao, textures, mode, nvertex, type, offset, m, glm::mat4(1.0f));
 }

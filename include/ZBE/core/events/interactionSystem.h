@@ -43,10 +43,10 @@ public:
     std::initializer_list<int>{(this->Reactor<IData, U>::setPayload(payload) , 0)... };
   }
 
-  template <typename U>
-  void setReaction(std::shared_ptr<Funct<void,IData, U>> reaction) {
-    this->Reactor<IData, U>::setReaction(reaction);
-  }
+//  template <typename U>
+//  void setReaction(std::shared_ptr<Funct<void,IData, U>> reaction) {
+//    this->Reactor<IData, U>::setReaction(reaction);
+//  }
 
   // template <typename U>
   // void setPayload(Reactor<IData, U> payload) {
@@ -285,7 +285,6 @@ private:
 class RayRay {
 public:
   bool operator()(std::shared_ptr<Ray> , std::shared_ptr<Ray> , int64_t , CollisionData &data) {
-    fprintf(f,"RayRay\n");fflush(stdout);
     data.time = 5;
     data.point = zbe::Vector3D{4.0,2.0,0.0};
     return true;
