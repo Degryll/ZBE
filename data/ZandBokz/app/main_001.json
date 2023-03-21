@@ -11,6 +11,7 @@
     "VZERO"  :{"type":"v3", "value":[0.0,0.0,0.0]},
     "ONE" : {"type":"uifd", "value":1},
     "NEGATIVEONE" : {"type":"ifd", "value":-1},
+    "tolerance" : {"type":"fd", "value":0.01},
     "width" : {"type":"uifd", "value":1280},
     "height" : {"type":"uifd", "value":768},
     "second" : {"type":"uifd", "value":65536},
@@ -57,6 +58,11 @@
     "planePosIdx" : 6030,
     "velocity2DIdx" : 6040,
     "position2DIdx" : 6050,
+    "orientation2DIdx" : 6060,
+    "velocity2DRightSrcIdx" : 6110,
+    "velocity2DLeftSrcIdx" : 6120,
+    "velocity2DForwardSrcIdx" : 6130,
+    "velocity2DBackwardSrcIdx" : 6140,
     "attachonofticket" : 7000,
     "state.static" : 0,
     "testwflags": 0,
@@ -91,11 +97,16 @@
     "crosshairsPos" :{"type":"v2", "value":[0.0,0.0]},
     "crosshairsSize" :{"type":"v2", "value":[0.25,0.25]},
 
+    "caja.rightSpeed" : {"type":"v2", "value":[0.0,45.0]},
+    "caja.leftSpeed": {"type":"v2", "value":[0.0,-45.0]},
+    "caja.forwardSpeed" : {"type":"v2", "value":[45.0,0.0]},
+    "caja.backwardSpeed" : {"type":"v2", "value":[-45.0,0.0]},
+
     "velcajanorte" :{"type":"v3", "value":[50.0,0.0,0.0]},
     "velcajasur" :{"type":"v3", "value":[-50.0,0.0,0.0]},
     "velcajaeste" :{"type":"v3", "value":[0.0,0.0,50.0]},
     "velcajaoeste" :{"type":"v3", "value":[0.0,0.0,-50.0]},
-    "velcajasalto" :{"type":"v3", "value":[20.0,50.0,0.0]},
+    "velcajasalto" :{"type":"v3", "value":[0.0,100.0,0.0]},
 
     "TODOindices":""
   },
@@ -123,7 +134,7 @@
                 "camTargetOld" : [1.0, 0.0, 1.0],
                 "camUp" : [0.0, 1.0, 0.0],
                 "cajaVel" : [0.0, 0.0, 0.0],
-                "planePos" : [0.0, 50.0, 0.0],
+                "planePos" : [0.0, 100.0, 0.0],
                 "planeE1" : [0.0, 0.0, 0.0],
                 "planeE2" : [0.0, 0.0, 0.0]
               }
@@ -198,6 +209,12 @@
           "factory": "TFAECThreeV3DAvtFtry",
           "description" : "do some serious sheet",
           "name": "loadScreen.camMoveList",
+          "config" : {}
+        },
+        {
+          "factory": "TFAECThreeV3DAvtFtry",
+          "description" : "do some serious sheet",
+          "name": "loadScreen.camFollowList",
           "config" : {}
         },
         {
@@ -617,18 +634,21 @@
               "gidIdx":["TrianguloIsosceles"]
             },
             "double": {
-              "radsIdx":[72.14159],
-              "scaleIdx":[100.0]
+              "radsIdx":[1.57],
+              "scaleIdx":[500.0]
             },
             "V3D": {
-              "positionIdx":"zandbokz.planePos",
-              "orientationIdx":[1.0, 1.0, 0.33],
+              "positionIdx":[0.0, 100.0, 0.0],
+              "positionIdxback":"zandbokz.planePos",
+              "orientationIdx":[1.0, 0.0, 0.0],
               "positionAIdx":[200.0, 0.0, 200.0],
               "positionBIdx":[-200.0, 0.0, 200.0],
               "positionCIdx":[200.0, 0.0, -200.0],
               "velocityIdx":[0.0, 0.0, 0.0],
-              "e1Idx": "zandbokz.planeE1",
-              "e2Idx": "zandbokz.planeE2"
+              "e1Idx": [0.0, 0.0, 0.0],
+              "e2Idx": [0.0, 0.0, 0.0],
+              "e1IdxBack": "zandbokz.planeE1",
+              "e2IdxBack": "zandbokz.planeE2"
             }
           }
         },
@@ -640,12 +660,12 @@
               "gidIdx":["TrianguloIsosceles"]
             },
             "double": {
-              "radsIdx":[1.57],
+              "radsIdx":[0.0],
               "scaleIdx":[100.0]
             },
             "V3D": {
-              "positionIdx":[0.0, 200.0, 0.0],
-              "orientationIdx":[1.0, 1.0, 0.0],
+              "positionIdx":[0.0, 50.0, 0.0],
+              "orientationIdx":[1.0, 0.0, 0.0],
               "positionAIdx":[200.0, 0.0, 200.0],
               "positionBIdx":[-200.0, 0.0, 200.0],
               "positionCIdx":[200.0, 0.0, -200.0],
@@ -690,7 +710,7 @@
               "scaleIdx":[100.0]
             },
             "V3D": {
-              "positionIdx":[50.0, 51.0, 51.1],
+              "positionIdx":[150.0, 151.0, 151.1],
               "orientationIdx":[0.0, 0.0, 1.0],
               "positionAIdx":[200.0, 0.0, 200.0],
               "positionBIdx":[-200.0, 0.0, 200.0],
@@ -987,7 +1007,7 @@
           "factory" : "AttachRepositionReactionBldrFtry",
           "name" : "zandbokz.reaccionattachrecoloca",
           "config" : {
-            "idxlist" : ["velocity2DIdx", "position2DIdx", "velocityIdx", "positionIdx", "e2Idx", "e1Idx", "planePosIdx"]
+            "idxlist" : ["velocity2DIdx", "position2DIdx", "velocityIdx"]
           }
         },
         {
@@ -1123,7 +1143,7 @@
           "name" : "zandbokz.cajabuilder",
           "config" : {
             "contextTime":"DEFAULT",
-            "builders" : ["zandbokz.cajavalues", "zandbokz.cajaapintar", "zandbokz.cajaamover", "zandbokz.cajaamoverenplano","zandbokz.cajasocializa", "zandbokz.attachcajaonoff", "zandbokz.cajaasaltar"]
+            "builders" : ["zandbokz.cajavalues", "zandbokz.cajaapintar", "zandbokz.cajaamover", "zandbokz.cajaamoverenplano","zandbokz.cajasocializa", "zandbokz.attachcajaonoff", "zandbokz.cajaasaltar", "zandbokz.cajaPlanoDerecha", "zandbokz.cajaPlanoIzquierda", "zandbokz.cajaPlanoDelante", "zandbokz.cajaPlanoAtras"]
           }
         },
         {
@@ -1144,13 +1164,21 @@
               "positionIdx":[0.0, 100.0, 0.0],
               "orientationIdx":[0.0, 1.0, 0.0],
               "velocityIdx": "zandbokz.cajaVel",
-              "planePosIdx": "zandbokz.planePos",
-              "e1Idx": "zandbokz.planeE1",
-              "e2Idx": "zandbokz.planeE2"
+              "planePosIdx":[0.0, 100.0, 0.0],
+              "planePosIdxback":"zandbokz.planePos",
+              "e1Idx": [0.0, 0.0, 0.0],
+              "e2Idx": [0.0, 0.0, 0.0],
+              "e1IdxBack": "zandbokz.planeE1",
+              "e2IdxBack": "zandbokz.planeE2"
             },
             "V2D": {
               "position2DIdx":[0.0, 0.0],
-              "velocity2DIdx":[0.0, 0.0]
+              "velocity2DIdx":[0.0, 0.0],
+              "orientation2DIdx":[1.0, 0.0],
+              "velocity2DRightSrcIdx" : ["caja.rightSpeed"],
+              "velocity2DLeftSrcIdx" : ["caja.leftSpeed"],
+              "velocity2DForwardSrcIdx" : ["caja.forwardSpeed"],
+              "velocity2DBackwardSrcIdx" : ["caja.backwardSpeed"]
             }
           }
         },
@@ -1244,9 +1272,61 @@
             "velocityIdx" : "velocityIdx",
             "radiusIdx" : "sizeIdx"
           }
+        },
+        {"factory": "Add2DVelIHBldrFtry",
+          "name": "zandbokz.cajaPlanoDerecha",
+          "config" : {
+            "orientation2DIdx" : "orientation2DIdx",
+            "velocity2DIdx" : "velocity2DIdx",
+            "velocity2DsrcIds" : "velocity2DRightSrcIdx",
+            "inputEventGenerator" : "loadScreen.inputEventGenerator",
+            "multiplier" : "ONE",
+            "tolerance" : "tolerance",
+            "down" : true,
+            "key":"ZBEK_KP_6"
+          }
+        },
+        {"factory": "Add2DVelIHBldrFtry",
+          "name": "zandbokz.cajaPlanoIzquierda",
+          "config" : {
+            "orientation2DIdx" : "orientation2DIdx",
+            "velocity2DIdx" : "velocity2DIdx",
+            "velocity2DsrcIds" : "velocity2DLeftSrcIdx",
+            "inputEventGenerator" : "loadScreen.inputEventGenerator",
+            "multiplier" : "ONE",
+            "tolerance" : "tolerance",
+            "down" : true,
+            "key":"ZBEK_KP_4"
+          }
+        },
+        {"factory": "Add2DVelIHBldrFtry",
+          "name": "zandbokz.cajaPlanoDelante",
+          "config" : {
+            "orientation2DIdx" : "orientation2DIdx",
+            "velocity2DIdx" : "velocity2DIdx",
+            "velocity2DsrcIds" : "velocity2DForwardSrcIdx",
+            "inputEventGenerator" : "loadScreen.inputEventGenerator",
+            "multiplier" : "ONE",
+            "tolerance" : "tolerance",
+            "down" : true,
+            "key":"ZBEK_KP_8"
+          }
+        },
+        {"factory": "Add2DVelIHBldrFtry",
+          "name": "zandbokz.cajaPlanoAtras",
+          "config" : {
+            "orientation2DIdx" : "orientation2DIdx",
+            "velocity2DIdx" : "velocity2DIdx",
+            "velocity2DsrcIds" : "velocity2DBackwardSrcIdx",
+            "inputEventGenerator" : "loadScreen.inputEventGenerator",
+            "multiplier" : "ONE",
+            "tolerance" : "tolerance",
+            "down" : true,
+            "key":"ZBEK_KP_5"
+          }
         }
       ],
-      "calls" : ["zandbokz.pepinobuilder", "zandbokz.cajabuilder", "zandbokz.diositobuilder"],
+      "calls" : ["zandbokz.creaunicorniorosa","zandbokz.pepinobuilder", "zandbokz.cajabuilder", "zandbokz.diositobuilder", "zandbokz.diositobuilder1", "zandbokz.diositobuilder2", "zandbokz.diositobuilder3"],
       "backupcalls" : ["zandbokz.creaunicorniorosa", "zandbokz.diositobuilder2", "zandbokz.diositobuilder3", "zandbokz.diositobuilder4", "zandbokz.diositobuilder5", "zandbokz.diositobuilder6", "zandbokz.diositobuilder7", "zandbokz.diositobuilder8"]
     },
     {
@@ -1891,7 +1971,8 @@
             "targetIdx" : "targetIdx",
             "upwardsIdx" : "upwardsIdx",
             "scaleIdx" : "camScaleIdx",
-            "lists":{"loadScreen.camMoveList":"camPosVelTicket"}
+            "lists":{"loadScreen.camMoveList":"camPosVelTicket"},
+            "deativatedlists":{"loadScreen.fovOscillatorList":"fovticket"}
           }
         },
         { "factory" : "PosUpwardsTargetToPosUpwardsDirAvtFtry",
@@ -1939,19 +2020,19 @@
     }, {"description" : "Setting controls",
       "factories" : [
         {"factory": "KeyDownTicketEnablerIHFtry",
-          "name": "loadScreen.goForwardInputH",
-          "config" : {
-            "ticket" : "BehaviorsMD.loadScreen.goForwardDaemon.ticket",
-            "inputEventGenerator" : "loadScreen.inputEventGenerator",
-            "key":"ZBEK_w"
-          }
-        },
-        {"factory": "KeyDownTicketEnablerIHFtry",
           "name": "loadScreen.ratatatatataInputH",
           "config" : {
             "ticket" : "BehaviorsMD.loadScreen.masterShot.ticket",
             "inputEventGenerator" : "loadScreen.inputEventGenerator",
             "key":"ZBEK_MOUSE_RIGHT"
+          }
+        },
+        {"factory": "KeyDownTicketEnablerIHFtry",
+          "name": "loadScreen.goForwardInputH",
+          "config" : {
+            "ticket" : "BehaviorsMD.loadScreen.goForwardDaemon.ticket",
+            "inputEventGenerator" : "loadScreen.inputEventGenerator",
+            "key":"ZBEK_w"
           }
         },
         {"factory": "KeyDownTicketEnablerIHFtry",

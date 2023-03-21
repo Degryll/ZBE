@@ -79,6 +79,9 @@ public:
   PlatformTrait(Platform p) : p(p) {}
 
   void operator()(zbe::Reactor<zbe::CollisionData3D, Platform>* reactor, zbe::CollisionData3D data) {
+    auto a = (*p[0]).get();
+    auto b = (*p[1]).get();
+    auto c = (*p[2]).get();
     reactor->react(data, p);
   }
 private:
@@ -88,11 +91,15 @@ private:
 class PlatformTraitBldr : public zbe::Funct<std::shared_ptr<zbe::Funct<void, zbe::Reactor<zbe::CollisionData3D, Platform>*, zbe::CollisionData3D>>, std::shared_ptr<zbe::Entity>> {
 public:
   std::shared_ptr<zbe::Funct<void, zbe::Reactor<zbe::CollisionData3D, Platform>*, zbe::CollisionData3D>> operator()(std::shared_ptr<zbe::Entity> ent) {
-    Platform p;
+    // TODO deshaz esta barbarie
+    Platform* p = new Platform{};
     for(int i = 0; i<PLATFORMPARAMS; i++) {
-      p[i] = ent->getVector3D(idx[i]);
+      (*p)[i] = ent->getVector3D(idx[i]);
     }
-    return std::make_shared<PlatformTrait>(p);
+    
+    auto out = std::make_shared<PlatformTrait>(*p);
+    delete p;
+    return out;
   }
   void setIdxArr(std::array<uint64_t, 3> idx) {
     this->idx = idx;

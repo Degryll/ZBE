@@ -177,7 +177,7 @@ class _VECTOR {
      */
     _VECTOR<dim>& setZeros() {
       for(unsigned i = 0; i < dim; i++) {
-        data[i] = 0;
+        data[i] = 0.0;
       }
 
       return (*this);

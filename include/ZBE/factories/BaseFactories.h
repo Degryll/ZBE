@@ -38,6 +38,7 @@
 #include "ZBE/events/handlers/input/ActivatorIH.h"
 #include "ZBE/events/handlers/input/KeyDownTicketEnablerIH.h"
 #include "ZBE/events/handlers/input/CommonInputHandlers.h"
+#include "ZBE/events/handlers/input/InputHandlers.h"
 #include "ZBE/events/handlers/time/EntityEraser.h"
 
 #include "ZBE/core/events/generators/InputEventGenerator.h"
@@ -128,6 +129,7 @@ public:
     factories.insert("ActivatorIHFtry", std::make_shared<ActivatorIHFtry>());
     factories.insert("KeyDownTicketEnablerIHFtry", std::make_shared<KeyDownTicketEnablerIHFtry>());
     factories.insert("V3DKeyValueSetterIHFtry", std::make_shared<KeyValueSetterIHFtry<Vector3D>>());
+    factories.insert("Add2DVelIHBldrFtry", std::make_shared<AddVelIHBldrFtry<2>>());
 
 
     // --- --- Event time handlers

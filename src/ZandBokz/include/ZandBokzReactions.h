@@ -12,7 +12,7 @@
 
 #include <cstdint>
 #include <memory>
-
+#include <cstdio>
 #include <string>
 
 #include <nlohmann/json.hpp>
@@ -39,28 +39,22 @@ public:
   AttachRepositionReaction(const AttachRepositionReaction&) = delete; //!< Avoid copy.
   void operator=(const AttachRepositionReaction&) = delete; //!< Avoid copy.
 
+  static const int AVTSIZE = 3;
+
   /** brief Parametrized constructor
   * param avt Avatar to use
   */
-  AttachRepositionReaction(std::shared_ptr<zbe::MAvatar<zbe::Vector2D, zbe::Vector2D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D>> avatar) : avatar(avatar) {}
+  AttachRepositionReaction(std::shared_ptr<zbe::MAvatar<zbe::Vector2D, zbe::Vector2D, zbe::Vector3D>> avatar) : avatar(avatar) {}
 
   /** brief Reposition entity on plane.
   */
   void operator()(zbe::CollisionData3D cData, Platform platform) {
-    auto vplanePos = avatar->get<1, zbe::Vector3D>();
-    auto vplaneE1 = avatar->get<2, zbe::Vector3D>();
-    auto vplaneE2 = avatar->get<3, zbe::Vector3D>();
 
-    //auto vpos3D = avatar->get<4, Vector3D>();
-    //auto vvel3D = avatar->get<5, Vector3D>();
-
-    auto vpos2D = avatar->get<6, zbe::Vector2D>();
-
-    auto planePos = vplanePos->get();
-    auto planeE1 = vplaneE1->get();
-    auto planeE2 = vplaneE2->get();
-
-    //auto pos3D = vpos3D->get();
+    auto vpos2D = avatar->get<2, zbe::Vector2D>();
+    
+    auto planeE1 = platform[2]->get();
+    auto planeE2 = platform[1]->get();
+    auto planePos = platform[0]->get();
 
     auto pos2D = vpos2D->get();
 
@@ -73,10 +67,6 @@ public:
     zbe::Vector3D by = planeE2;
     zbe::Vector3D bz = zbe::cross(planeE1, planeE2).normalize();
 
-    // double x = diff * zbe::Vector3D{bx.x, by.x, bz.x};
-    // double y = diff * zbe::Vector3D{bx.y, by.y, bz.y};
-    // double z = diff * zbe::Vector3D{bx.z, by.z, bz.z};
-
     double x = diff * zbe::Vector3D{bx.x, bx.y, bx.z};
     double y = diff * zbe::Vector3D{by.x, by.y, by.z};
     double z = diff * zbe::Vector3D{bz.x, bz.y, bz.z};
@@ -84,26 +74,26 @@ public:
     zbe::Vector3D coordChange{x,y,z};
 
     zbe::Vector2D newPos2D{coordChange.x, coordChange.y};
-    avatar->set<6, zbe::Vector2D>(newPos2D);
+    avatar->set<2, zbe::Vector2D>(newPos2D);
       
   }
 private:
-  std::shared_ptr<zbe::MAvatar<zbe::Vector2D, zbe::Vector2D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D>> avatar;
+  std::shared_ptr<zbe::MAvatar<zbe::Vector2D, zbe::Vector2D, zbe::Vector3D>> avatar;
 };
 
 class AttachRepositionReactionBldr : public zbe::Funct<std::shared_ptr<zbe::Funct<void, zbe::CollisionData3D, Platform>>, std::shared_ptr<zbe::Entity>> {
 public:
   std::shared_ptr<zbe::Funct<void, zbe::CollisionData3D, Platform>> operator()(std::shared_ptr<zbe::Entity> ent){
-    auto avt = std::make_shared<zbe::MBaseAvatar<zbe::Vector2D, zbe::Vector2D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D>>();
+    auto avt = std::make_shared<zbe::MBaseAvatar<zbe::Vector2D, zbe::Vector2D, zbe::Vector3D>>();
     avt->setupEntity(ent, idxArr);
     return std::make_shared<AttachRepositionReaction>(avt);
   }
 
-  void setIdx(std::array<uint64_t, 7> idxArr) {
+  void setIdx(std::array<uint64_t, AttachRepositionReaction::AVTSIZE> idxArr) {
     this->idxArr = idxArr;
   }
 private:
-  std::array<uint64_t, 7> idxArr;
+  std::array<uint64_t, AttachRepositionReaction::AVTSIZE> idxArr;
 };
 
 class AttachRepositionReactionBldrFtry : public zbe::Factory {
@@ -125,7 +115,7 @@ public:
 
       auto arrb = specificRsrc.get("AttachRepositionReactionBldr."s + name);
 
-      std::optional<std::array<uint64_t, 7>> arr = zbe::JSONFactory::loadLiteralArray<uint64_t, 7>(uintDict, j["idxlist"], "idxlist", "StoreValuesRctBldrFtry");
+      std::optional<std::array<uint64_t, AttachRepositionReaction::AVTSIZE>> arr = zbe::JSONFactory::loadLiteralArray<uint64_t, AttachRepositionReaction::AVTSIZE>(uintDict, j["idxlist"], "idxlist", "StoreValuesRctBldrFtry");
       if(!arr) {
         return;
       }

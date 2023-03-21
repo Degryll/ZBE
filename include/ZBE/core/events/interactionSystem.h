@@ -74,10 +74,6 @@ public:
       (*reaction)(data, trait);
     }
 
-    // void setPayload(Reactor<IData, Trait> payload) {
-    //   this->reaction = payload.reaction;
-    // }
-
     void callActor(Actor<IData, Trait>*  actor, IData data) {
       actor->act(this, data);
     }
@@ -257,8 +253,8 @@ public:
   Interactioner(std::shared_ptr<Shape<Shapes...>> shape, ActorType actor, ReactorType reactor) : shape(shape), actor(actor), reactor(reactor) {}
 
   std::shared_ptr<Shape<Shapes...>> getShape()   {return shape;}
-  ActorType        getActor()   {return actor;}
-  ReactorType      getReactor() {return reactor;}
+  ActorType                         getActor()   {return actor;}
+  ReactorType                       getReactor() {return reactor;}
 
   void setShape(std::shared_ptr<Shape<Shapes...>> shape) {
     this->shape = shape;

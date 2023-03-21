@@ -545,6 +545,7 @@
 		<Unit filename="../../../include/ZBE/events/handlers/input/DaemonClickIH.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/input/DaemonIH.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/input/ExecuteCommandIH.h" />
+		<Unit filename="../../../include/ZBE/events/handlers/input/InputHandlers.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/input/InputToValue.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/input/KeyDownTicketEnablerIH.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/input/ParametricActivatorIH.h" />
