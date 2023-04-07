@@ -58,7 +58,11 @@ public:
     factories.insert("InatorListFtry", std::make_shared<zbe::SimpleGenericFtry<InatorList> >(zbe::factories::listName));
     factories.insert("InerListFtry", std::make_shared<zbe::SimpleGenericFtry<InerList> >(zbe::factories::listName));
 
-    factories.insert("IEGFtry", std::make_shared<IEGFtry>());
+    factories.insert("Inator2DListFtry", std::make_shared<zbe::SimpleGenericFtry<Inator2DList> >(zbe::factories::listName));
+    factories.insert("Iner2DListFtry", std::make_shared<zbe::SimpleGenericFtry<Iner2DList> >(zbe::factories::listName));
+
+    factories.insert("IEG3DFtry", std::make_shared<IEG3DFtry>());
+    factories.insert("IEG2DFtry", std::make_shared<IEG2DFtry>());
 
     factories.insert("InerBldrFtry", std::make_shared<InerBldrFtry>());
     factories.insert("InatorBldrFtry", std::make_shared<InatorBldrFtry>());

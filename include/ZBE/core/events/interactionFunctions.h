@@ -69,7 +69,6 @@ public:
   }
 };
 
-
 template<unsigned s>
 class MovingTriangleMovingNSphereFunctor {
 public:
@@ -85,6 +84,55 @@ public:
     return notIntersect(arg1, arg2, time, data);
   }
 };
+
+class MovingPoint2DTriangle2DFunctor {
+public:
+  bool operator()(std::shared_ptr<MovingPoint2D> movingpoint, std::shared_ptr<Triangle2D> triangle, int64_t time, NewCollisionData<2> &data){
+    NewCollisionData<2> bestData;
+    bestData.time = time;
+
+    NewCollisionData<2> currentData;
+    currentData.time = time;
+
+    Ray2D r1((*movingpoint->getShape()), movingpoint->v); // The point
+    Ray2D r2(triangle->a, triangle->b - triangle->a); // a - b
+    Ray2D r3(triangle->b, triangle->c - triangle->b); // b - c
+    Ray2D r4(triangle->c, triangle->a - triangle->c); // c - d
+
+    bool intersect1 = intersectionMovingRay2DRay2D(r1, r2, currentData.time, currentData.point, currentData.normal);
+    if (intersect1) {
+      bestData.time = currentData.time;
+      bestData.point = currentData.point;
+      bestData.normal = currentData.normal;
+    } else {
+      currentData.time = bestData.time;
+    }
+
+    bool intersect2 = intersectionMovingRay2DRay2D(r1, r3, currentData.time, currentData.point, currentData.normal);
+    if (intersect2) {
+      bestData.time = currentData.time;
+      bestData.point = currentData.point;
+      bestData.normal = currentData.normal;
+    } else {
+      currentData.time = bestData.time;
+    }
+
+    bool intersect3 = intersectionMovingRay2DRay2D(r1, r4, currentData.time, currentData.point, currentData.normal);
+    if (intersect3) {
+      bestData.time = currentData.time;
+      bestData.point = currentData.point;
+      bestData.normal = currentData.normal;
+    }
+
+    data.time = bestData.time;
+    data.point = bestData.point;
+    data.normal = bestData.normal;
+
+    return intersect1 || intersect2 || intersect3;
+  }
+};
+
+// posiblemente MovingPoint2DConvexPolygon2D
 
 using MovingSphereFunctor = MovingNSphereFunctor<3>;
 using MovingSphereMovingTriangle3DFunctor = MovingNSphereMovingTriangleFunctor<3>;

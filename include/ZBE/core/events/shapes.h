@@ -43,6 +43,12 @@ using MovingTriangle = Moving<Triangle<s>, s>;
 using MovingTriangle3D = MovingTriangle<3>;
 using MovingTriangle2D = MovingTriangle<2>;
 
+template<unsigned s>
+using MovingPoint = Moving<Point<s>, s>;
+
+using MovingPoint2D = MovingPoint<2>;
+using MovingPoint3D = MovingPoint<3>;
+
 }  // namespace zbe
 
 #endif  // ZBE_CORE_EVENTS_SHAPES_H

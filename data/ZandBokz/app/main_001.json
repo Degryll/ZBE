@@ -37,7 +37,7 @@
     "positionAIdx" : 1230,
     "positionBIdx" : 1240,
     "positionCIdx" : 1250,
-    "lifespan" : 165536,
+    "lifespan" : 1655360,
     "fovIdx" : 3100,
     "targetIdx" : 3200,
     "upwardsIdx" : 3300,
@@ -70,6 +70,7 @@
     "timeEventId" : 1,
     "inputEventId" : 84,
     "interactionEventId" : 42,
+    "interaction2DEventId" : 43,
     "mainInitialState" : 0,
     "mainExitState" : 1,
     "loadScreen.toMenu": 1,
@@ -257,6 +258,18 @@
           "factory": "InerListFtry",
           "description" : "a platipus? perry the platipus!!!",
           "name": "loadScreen.inerList",
+          "config" : {}
+        },
+        {
+          "factory": "Inator2DListFtry",
+          "description" : "a platipus? perry the platipus!!!",
+          "name": "loadScreen.inator2DList",
+          "config" : {}
+        },
+        {
+          "factory": "Iner2DListFtry",
+          "description" : "a platipus? perry the platipus!!!",
+          "name": "loadScreen.iner2DList",
           "config" : {}
         },
         {
@@ -638,17 +651,14 @@
               "scaleIdx":[500.0]
             },
             "V3D": {
-              "positionIdx":[0.0, 100.0, 0.0],
-              "positionIdxback":"zandbokz.planePos",
+              "positionIdx":"zandbokz.planePos",
               "orientationIdx":[1.0, 0.0, 0.0],
               "positionAIdx":[200.0, 0.0, 200.0],
               "positionBIdx":[-200.0, 0.0, 200.0],
               "positionCIdx":[200.0, 0.0, -200.0],
               "velocityIdx":[0.0, 0.0, 0.0],
-              "e1Idx": [0.0, 0.0, 0.0],
-              "e2Idx": [0.0, 0.0, 0.0],
-              "e1IdxBack": "zandbokz.planeE1",
-              "e2IdxBack": "zandbokz.planeE2"
+              "e1Idx": "zandbokz.planeE1",
+              "e2Idx": "zandbokz.planeE2"
             }
           }
         },
@@ -1164,12 +1174,9 @@
               "positionIdx":[0.0, 100.0, 0.0],
               "orientationIdx":[0.0, 1.0, 0.0],
               "velocityIdx": "zandbokz.cajaVel",
-              "planePosIdx":[0.0, 100.0, 0.0],
-              "planePosIdxback":"zandbokz.planePos",
-              "e1Idx": [0.0, 0.0, 0.0],
-              "e2Idx": [0.0, 0.0, 0.0],
-              "e1IdxBack": "zandbokz.planeE1",
-              "e2IdxBack": "zandbokz.planeE2"
+              "planePosIdx":"zandbokz.planePos",
+              "e1Idx": "zandbokz.planeE1",
+              "e2Idx": "zandbokz.planeE2"
             },
             "V2D": {
               "position2DIdx":[0.0, 0.0],
@@ -1469,12 +1476,20 @@
             "window" : "zandbokz.mainwindow"
           }
         },
-        {"factory": "IEGFtry",
+        {"factory": "IEG3DFtry",
           "name": "loadScreen.interactionEventGenerator",
           "config" : {
             "eventId" : "interactionEventId",
             "contextTime" : "DEFAULT",
             "interactionators" : "loadScreen.inatorList"
+          }
+        },
+        {"factory": "IEG2DFtry",
+          "name": "loadScreen.interactionEventGenerator2D",
+          "config" : {
+            "eventId" : "interaction2DEventId",
+            "contextTime" : "DEFAULT",
+            "interactionators" : "loadScreen.inator2DList"
           }
         },
         {"factory": "MainLoopExitFtry",

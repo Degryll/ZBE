@@ -137,4 +137,42 @@ bool IntersectionMovingCircleOutsideAABB2D(Circle circle, Vector2D direction, AA
   }  // if extended box collision
 }
 
+//  s1*X + o1 = s2*X + o2
+//  o1 - o2 = s2*X - s1*X
+//  o1 - o2 = x(s2 -s1) 
+//  x = (o1 - o2)/(s2-s1)
+
+bool intersectionMovingRay2DRay2D(Ray2D r1, Ray2D r2, int64_t& time, Point2D& point, Vector2D& normal) {
+        
+    double s1 = r1.d.y / r1.d.x;
+    double s2 = r2.d.y / r2.d.x;
+
+    double o1 = r1.o.y - (s1 * r1.o.x);
+    double o2 = r2.o.y - (s2 * r2.o.x);
+
+    double slopeDiff = (s2 - s1);
+    if(almost_equal(slopeDiff, 0.0)) {
+        return false;
+    }
+
+    double collisionX = (o1 - o2) / slopeDiff;
+    double collisionY = o1 + (s1 * collisionX);
+
+    point.x = collisionX;
+    point.y = collisionY;
+
+    normal.x = r2.d.y;
+    normal.y = -r2.d.x;
+
+    auto dist = point - r1.o;
+    double t = dist.x / r1.d.x;
+    auto intersectTime = quantizeTime(t);
+    if(intersectTime <= time) {
+        time = intersectTime;
+        return true && time;  // Only if time > 0
+    } else {
+        return false;
+    }
+}
+
 }  // namespace zbe

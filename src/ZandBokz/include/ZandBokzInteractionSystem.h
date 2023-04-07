@@ -15,29 +15,19 @@
 
 namespace zandbokz {
 
-// template<typename ...T>
-// struct TypeContainer {using Type = T...};
-// using ZBTraits = TypeContainer<CollisionData3D, Solid>::Type;
+// zandbokz 3d physics interaction system ------------------------------------
+using Physics3DOverloaded = zbe::overloaded<zbe::MovingSphereFunctor, zbe::MovingSphereMovingTriangle3DFunctor, zbe::MovingTriangle3DMovingSphereFunctor, zbe::NotIntersectFunctor<zbe::Triangle<3>, zbe::Triangle<3>, 3>>;
 
-// zandbokz interaction types
-using PhysicsOverloaded = zbe::overloaded<zbe::MovingSphereFunctor, zbe::MovingSphereMovingTriangle3DFunctor, zbe::MovingTriangle3DMovingSphereFunctor, zbe::NotIntersectFunctor<zbe::Triangle<3>, zbe::Triangle<3>, 3>>;
-
-class PhysicsSelector : public zbe::InteractionSelector<zbe::CollisionData3D, PhysicsOverloaded, zbe::MovingSphere, zbe::MovingTriangle3D> {
+class Physics3DSelector : public zbe::InteractionSelector<zbe::CollisionData3D, Physics3DOverloaded, zbe::MovingSphere, zbe::MovingTriangle3D> {
 public:
-  virtual ~PhysicsSelector() = default;
+  virtual ~Physics3DSelector() = default;
 protected:
-  virtual PhysicsOverloaded getOverloaded() {
-    return PhysicsOverloaded {zbe::MovingSphereFunctor{}, zbe::MovingSphereMovingTriangle3DFunctor{}, zbe::MovingTriangle3DMovingSphereFunctor{}, zbe::NotIntersectFunctor<zbe::Triangle<3>, zbe::Triangle<3>, 3>{}};
+  virtual Physics3DOverloaded getOverloaded() {
+    return Physics3DOverloaded {zbe::MovingSphereFunctor{}, zbe::MovingSphereMovingTriangle3DFunctor{}, zbe::MovingTriangle3DMovingSphereFunctor{}, zbe::NotIntersectFunctor<zbe::Triangle<3>, zbe::Triangle<3>, 3>{}};
   }
 };
 
 struct Solid {};
-
-// struct Platform {
-//   std::shared_ptr<zbe::Value<zbe::Vector3D>> position;
-//   std::shared_ptr<zbe::Value<zbe::Vector3D>> e1;
-//   std::shared_ptr<zbe::Value<zbe::Vector3D>> e2;
-// };
 
 const int PLATFORMPARAMS = 3;
 using Platform = std::array<std::shared_ptr<zbe::Value<zbe::Vector3D>>, PLATFORMPARAMS>;
@@ -52,12 +42,7 @@ using Inator = zbe::Interactionator<ZBActor, ZBReactor, zbe::MovingSphere, zbe::
 using InatorList = zbe::TicketedForwardList<Inator>;
 using InerList = zbe::TicketedForwardList<Iner>;
 
-using IEG = zbe::InteractionEventGenerator<PhysicsSelector, PhysicsOverloaded, zbe::CollisionData3D, ZBActor, ZBReactor, zbe::MovingSphere, zbe::MovingTriangle3D>;
-
-// zandbokz interaction types builders
-// using ActorBldr = zbe::ActorBldr<zbe::CollisionData3D, Solid>;
-// using ReactorBldr = zbe::ReactorBldr<zbe::CollisionData3D, Solid>;
-//using ShapeBldr = zbe::ShapeBldr<zbe::MovingSphere, zbe::MovingSphere, zbe::MovingTriangle3D>;
+using IEG3D = zbe::InteractionEventGenerator<Physics3DSelector, Physics3DOverloaded, zbe::CollisionData3D, ZBActor, ZBReactor, zbe::MovingSphere, zbe::MovingTriangle3D>;
 
 using InerBldr = zbe::InteractionerBldr<zbe::CollisionData3D, ZBActor, ZBReactor, zbe::MovingSphere, zbe::MovingTriangle3D>;
 using InatorBldr = zbe::InteractionatorBldr<zbe::CollisionData3D, ZBActor, ZBReactor, zbe::MovingSphere, zbe::MovingTriangle3D>;
@@ -71,8 +56,49 @@ using ShapeMTriangleBldrFtry = zbe::ShapeBldrFtry<zbe::MovingTriangle3D, zbe::Mo
 using InatorBldrFtry = zbe::InteractionatorBldrFtry<zbe::CollisionData3D, ZBActor, ZBReactor, zbe::MovingSphere, zbe::MovingTriangle3D>;
 using InerBldrFtry = zbe::InteractionerBldrFtry<zbe::CollisionData3D, ZBActor, ZBReactor, zbe::MovingSphere, zbe::MovingTriangle3D>;
 
-using IEGFtry = zbe::InteractionEventGeneratorFtry<PhysicsSelector, PhysicsOverloaded, zbe::CollisionData3D, ZBActor, ZBReactor, zbe::MovingSphere, zbe::MovingTriangle3D>;
+using IEG3DFtry = zbe::InteractionEventGeneratorFtry<Physics3DSelector, Physics3DOverloaded, zbe::CollisionData3D, ZBActor, ZBReactor, zbe::MovingSphere, zbe::MovingTriangle3D>;
 
+// zandbokz 2d physics interaction system ------------------------------------
+using Physics2DOverloaded = zbe::overloaded<zbe::NotIntersectFunctor<zbe::MovingPoint2D, zbe::MovingPoint2D, 2>, zbe::MovingPoint2DTriangle2DFunctor, zbe::NotIntersectFunctor<zbe::Triangle2D, zbe::MovingPoint2D, 2>, zbe::NotIntersectFunctor<zbe::Triangle2D, zbe::Triangle2D, 2>>;
+
+class Physics2DSelector : public zbe::InteractionSelector<zbe::CollisionData2D, Physics2DOverloaded, zbe::MovingPoint2D, zbe::Triangle2D> {
+public:
+  virtual ~Physics2DSelector() = default;
+protected:
+  virtual Physics2DOverloaded getOverloaded() {
+    return Physics2DOverloaded {zbe::NotIntersectFunctor<zbe::MovingPoint2D, zbe::MovingPoint2D, 2>{}, zbe::MovingPoint2DTriangle2DFunctor{}, zbe::NotIntersectFunctor<zbe::Triangle2D, zbe::MovingPoint2D, 2>{}, zbe::NotIntersectFunctor<zbe::Triangle2D, zbe::Triangle2D, 2>{}};
+  }
+};
+
+using ZB2DActor = zbe::Actor<zbe::CollisionData2D, Solid>;
+using ZB2DReactor = zbe::Reactor<zbe::CollisionData2D, Solid>;
+using Shapes2D = zbe::Shape<zbe::MovingPoint2D, zbe::Triangle2D>;
+
+using Iner2D = zbe::Interactioner<ZB2DActor, ZB2DReactor, zbe::MovingPoint2D, zbe::Triangle2D>;
+using Inator2D = zbe::Interactionator<ZB2DActor, ZB2DReactor, zbe::MovingPoint2D, zbe::Triangle2D>;
+
+using Inator2DList = zbe::TicketedForwardList<Inator2D>;
+using Iner2DList = zbe::TicketedForwardList<Iner2D>;
+
+
+using IEG2D = zbe::InteractionEventGenerator<Physics2DSelector, Physics2DOverloaded, zbe::CollisionData2D, ZBActor, ZBReactor, zbe::MovingPoint2D, zbe::Triangle2D>;
+
+using Iner2DBldr = zbe::InteractionerBldr<zbe::CollisionData2D, ZB2DActor, ZB2DReactor, zbe::MovingPoint2D, zbe::Triangle2D>;
+using Inator2DBldr = zbe::InteractionatorBldr<zbe::CollisionData2D, ZB2DActor, ZB2DReactor, zbe::MovingPoint2D, zbe::Triangle2D>;
+
+// zandbokz interaction types builders factories
+using Actor2DBldrFtry = zbe::ActorBldrFtry<zbe::CollisionData2D, Solid>;
+using Reactor2DBldrFtry = zbe::ReactorBldrFtry<zbe::CollisionData2D, Solid>;
+using ShapeMovingPoint2DBldrFtry = zbe::ShapeBldrFtry<zbe::MovingPoint2D, zbe::MovingPoint2D, zbe::Triangle2D>;
+using ShapeTriangle2DBldrFtry = zbe::ShapeBldrFtry<zbe::Triangle2D, zbe::MovingPoint2D, zbe::Triangle2D>;
+
+using Inator2DBldrFtry = zbe::InteractionatorBldrFtry<zbe::CollisionData2D, ZB2DActor, ZB2DReactor, zbe::MovingPoint2D, zbe::Triangle2D>;
+using Iner2DBldrFtry = zbe::InteractionerBldrFtry<zbe::CollisionData2D, ZB2DActor, ZB2DReactor, zbe::MovingPoint2D, zbe::Triangle2D>;
+
+using IEG2DFtry = zbe::InteractionEventGeneratorFtry<Physics2DSelector, Physics2DOverloaded, zbe::CollisionData2D, ZB2DActor, ZB2DReactor, zbe::MovingPoint2D, zbe::Triangle2D>;
+
+
+// -----------
 
 class PlatformTrait : public zbe::Funct<void, zbe::Reactor<zbe::CollisionData3D, Platform>*, zbe::CollisionData3D> {
 public:
