@@ -22,6 +22,7 @@
 
 #include "ZBE/core/tools/containers/RsrcStore.h"
 #include "ZBE/core/tools/math/math.h"
+#include "ZBE/core/tools/containers/TicketedForwardList.h"
 
 #include "ZBE/core/tools/shared/Value.h"
 #include "ZBE/core/tools/shared/implementations/SimpleValue.h"
@@ -34,6 +35,9 @@
 #include "ZBE/core/system/system.h"
 
 #include "ZBE/factories/Factory.h"
+#include "ZBE/factories/genericFactoryConstants.h"
+
+#include "ZBE/JSON/JSONFactory.h"
 
 namespace zbe{
 
@@ -167,6 +171,214 @@ private:
   std::shared_ptr<Value<Vector3D> > target;
 };
 
+class MovingPoint2DAvt : public SAvatar<MovingPoint2D>, AvatarImp {
+public:
+  void setupEntity(std::shared_ptr<Entity> entity, uint64_t positionidx, uint64_t velocityidx) {
+    AvatarImp::setupEntity(entity);
+    _Avatar<1, MovingPoint2D>::setup(&getMPoint, &setMPoint, (void*)this);
+    position = entity->getVector2D(positionidx);
+    velocity = entity->getVector2D(velocityidx);
+  }
+
+  static std::shared_ptr<Value<MovingPoint2D> > getMPoint(void *instance) {
+    auto  mpa = (MovingPoint2DAvt*)instance;
+    auto& position = mpa->position;
+    auto& velocity = mpa->velocity;
+    auto p = position->get();
+    auto v = velocity->get();
+    Point2D p2(p.toPoint());
+    MovingPoint2D mp{p2, v};
+    auto out = std::make_shared<SimpleValue<MovingPoint2D> >();
+    out->set(mp);
+    return out;
+  }
+
+  static void setMPoint(void *instance, MovingPoint2D position) {
+    assert(false);
+  }
+
+  std::shared_ptr<Entity> getEntity() {
+    assert(false);
+  }
+
+private:
+ std::shared_ptr<Value<Vector2D> > position;
+ std::shared_ptr<Value<Vector2D> > velocity;
+};
+
+class Triangle2DAvt : public SAvatar<Triangle2D>, AvatarImp {
+public:
+  void setupEntity(std::shared_ptr<Entity> entity, uint64_t aidx, uint64_t bidx, uint64_t cidx) {
+    AvatarImp::setupEntity(entity);
+    _Avatar<1, Triangle2D>::setup(&getTriangle, &setTriangle, (void*)this);
+    auto a = entity->getVector2D(aidx);
+    auto b = entity->getVector2D(bidx);
+    auto c = entity->getVector2D(cidx);
+    Triangle2D t;
+    t.a =a->get().toPoint();
+    t.b =b->get().toPoint();
+    t.c =c->get().toPoint();
+    triangle = std::make_shared<SimpleValue<Triangle2D> >();
+    triangle->set(t);
+  }
+
+  static std::shared_ptr<Value<Triangle2D> > getTriangle(void *instance) {
+    auto  t2a = (Triangle2DAvt*)instance;
+    return t2a->triangle;
+  }
+
+  static void setTriangle(void *instance, Triangle2D triangle) {
+    assert(false);
+  }
+
+  std::shared_ptr<Entity> getEntity() {
+    assert(false);
+  }
+
+private:
+  std::shared_ptr<Value<Triangle2D> > triangle;
+};
+
+// TODO: ¿Quien escribe a b y c en 2d en el triangulo?
+
+
+// -------------------------------------------- --------------------------------------------
+
+class Triangle2DShapeAvtBldr : public Funct<std::shared_ptr<SAvatar<Triangle2D>>, std::shared_ptr<Entity>> {
+public:
+  using AvtBaseType = SAvatar<Triangle2D>;
+  std::shared_ptr<SAvatar<Triangle2D>> operator()(std::shared_ptr<Entity> ent) {
+    std::shared_ptr<Triangle2DAvt> avt = std::make_shared<Triangle2DAvt>();
+    avt->setupEntity(ent, aidx, bidx, cidx);
+    return avt;
+  }
+
+  void setIdxs(uint64_t aidx, uint64_t bidx, uint64_t cidx) {
+      this->aidx = aidx;
+      this->bidx = bidx;
+      this->cidx = cidx;
+  }
+
+private:
+ uint64_t aidx;
+ uint64_t bidx;
+ uint64_t cidx;
+};
+
+class MovingPoint2DShapeAvtBldr : public Funct<std::shared_ptr<SAvatar<MovingPoint2D>>, std::shared_ptr<Entity>> {
+public:
+  using AvtBaseType = SAvatar<MovingPoint2D>;
+  std::shared_ptr<SAvatar<MovingPoint2D>> operator()(std::shared_ptr<Entity> ent) {
+    std::shared_ptr<MovingPoint2DAvt> avt = std::make_shared<MovingPoint2DAvt>();
+    avt->setupEntity(ent, positionidx, velocityIdx);
+    return avt;
+  }
+
+  void setIdxs(uint64_t positionidx, uint64_t velocityIdx) {
+      this->positionidx = positionidx;
+      this->velocityIdx = velocityIdx;
+  }
+
+private:
+ uint64_t positionidx;
+ uint64_t velocityIdx;
+};
+
+class Triangle2DShapeAvtBldrFtry : public Factory {
+public:
+  void create(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    std::shared_ptr<Triangle2DShapeAvtBldr> t2dab = std::make_shared<Triangle2DShapeAvtBldr>();
+    mainRsrc.insert(zbe::factories::functionName_ + name, t2dab);
+    specificRsrc.insert("Triangle2DShapeAvtBldr."s + name, t2dab);
+  }
+
+  void setup(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+    if(cfg) {
+      auto j = *cfg;
+
+      auto t2dab = specificRsrc.get("Triangle2DShapeAvtBldr."s + name);
+
+      auto aIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "aIdx"s, "Triangle2DShapeAvtBldrFtry"s);
+      if(!aIdx) {
+        return;
+      }
+
+      auto bIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "bIdx"s, "Triangle2DShapeAvtBldrFtry"s);
+      if(!aIdx) {
+        return;
+      }
+
+      auto cIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "cIdx"s, "Triangle2DShapeAvtBldrFtry"s);
+      if(!aIdx) {
+        return;
+      }
+
+      t2dab->setIdxs(*aIdx, *bIdx, *cIdx);
+
+    } else {
+      SysError::setError("Triangle2DShapeAvtBldrFtry config for "s + name + " not found."s);
+    }
+  }
+
+private:
+  using FunctionType = Funct<std::shared_ptr<SAvatar<Triangle2D>>, std::shared_ptr<Entity>>;
+  RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
+  RsrcStore<nlohmann::json> &configRsrc                          = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<Triangle2DShapeAvtBldr>& specificRsrc    = RsrcStore<Triangle2DShapeAvtBldr>::getInstance();
+  RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
+};
+
+class MovingPoint2DShapeAvtBldrFtry : public Factory {
+public:
+  void create(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    std::shared_ptr<MovingPoint2DShapeAvtBldr> mp2dab = std::make_shared<MovingPoint2DShapeAvtBldr>();
+    mainRsrc.insert(zbe::factories::functionName_ + name, mp2dab);
+    specificRsrc.insert("MovingPoint2DShapeAvtBldr."s + name, mp2dab);
+  }
+
+  void setup(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+    if(cfg) {
+      auto j = *cfg;
+
+      auto mp2dab = specificRsrc.get("MovingPoint2DShapeAvtBldr."s + name);
+
+      auto positionIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionIdx"s, "MovingPoint2DShapeAvtBldrFtry"s);
+      if(!positionIdx) {
+        return;
+      }
+
+      auto velocityIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "velocityIdx"s, "MovingPoint2DShapeAvtBldrFtry"s);
+      if(!velocityIdx) {
+        return;
+      }
+
+      mp2dab->setIdxs(*positionIdx, *velocityIdx);
+
+    } else {
+      SysError::setError("MovingPoint2DShapeAvtBldrFtry config for "s + name + " not found."s);
+    }
+  }
+
+private:
+  using FunctionType = Funct<std::shared_ptr<SAvatar<MovingPoint2D>>, std::shared_ptr<Entity>>;
+  RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
+  RsrcStore<nlohmann::json> &configRsrc                          = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<MovingPoint2DShapeAvtBldr>& specificRsrc    = RsrcStore<MovingPoint2DShapeAvtBldr>::getInstance();
+  RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
+};
+
+// -------------------------------------------- --------------------------------------------
+
 class DerivedCosVelAvt : public MAvatar<Vector3D, Vector3D>, AvatarImp {
 public:
 
@@ -250,7 +462,7 @@ public:
     auto p = position->get();
     auto v = velocity->get();
     auto r = msa->radius->get();
-    auto time = msa->cTime->getTotalTime();
+    //auto time = msa->cTime->getTotalTime();
     Sphere s(p.toPoint(), r);
     MovingSphere ms{s, v};
     auto out = std::make_shared<SimpleValue<MovingSphere> >();
@@ -467,7 +679,7 @@ public:
     Vector3D aux = (pc - pa);
     Vector3D norm = cross(aux, e1);
     Vector3D e2 = cross(e1, norm);
-    
+
     mtra->e1->set(e1.normalize());
     mtra->e2->set(e2.normalize());
     return out;

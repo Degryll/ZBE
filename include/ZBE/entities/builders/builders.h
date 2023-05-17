@@ -10,6 +10,7 @@
 #ifndef ZBE_ENTITIES_BUILDERS_METABUILDER_H
 #define ZBE_ENTITIES_BUILDERS_METABUILDER_H
 
+#include <cstdio>
 #include <deque>
 #include <memory>
 #include <string>
@@ -899,7 +900,7 @@ public:
   using ReactFunct = Funct<void, IData, Trait>;
   using SubBuild = Funct<std::shared_ptr<ReactFunct>, std::shared_ptr<Entity>>;
 
-  Reactor<IData, Trait> operator() (std::shared_ptr<Entity> ent, int a=0) {
+  Reactor<IData, Trait> operator() (std::shared_ptr<Entity> ent) {
     Reactor<IData, Trait> reactor;
     //reactor.setReaction((*sb)(ent));
     reactor.setReaction(_ReactorBldr<IData, Trait>::buildFunct(ent));
@@ -1650,6 +1651,7 @@ public:
       SysError::setError("InteractionatorBldrFtry config for reactorbuilder is invalid"s);
       return;
     }
+
     auto shapeBuilder = JSONFactory::loadParamCfgStoreP<typename InatorBldr::ShapeBldr>(shapeBldrRsrc, j, zbe::factories::functionName, "shapebuilder"s, "InteractionatorBldrFtry"s);
     if(!shapeBuilder) {
       SysError::setError("InteractionatorBldrFtry config for shapebuilder is invalid"s);
@@ -1726,8 +1728,9 @@ public:
       SysError::setError("InteractionerBldrFtry config for reactorbuilder is invalid"s);
       return;
     }
+
     auto shapeBuilder = JSONFactory::loadParamCfgStoreP<typename InerBldr::ShapeBldr>(shapeBldrRsrc, j, zbe::factories::functionName, "shapebuilder"s, "InteractionerBldr"s);
-    if(!actorBuilder) {
+    if(!shapeBuilder) {
       SysError::setError("InteractionerBldrFtry config for shapebuilder is invalid"s);
       return;
     }

@@ -50,7 +50,7 @@ using InatorBldr = zbe::InteractionatorBldr<zbe::CollisionData3D, ZBActor, ZBRea
 // zandbokz interaction types builders factories
 using ActorBldrFtry = zbe::ActorBldrFtry<zbe::CollisionData3D, Solid, Platform>;
 using ReactorBldrFtry = zbe::ReactorBldrFtry<zbe::CollisionData3D, Solid, Platform>;
-using ShapeMSphereBldrFtry = zbe::ShapeBldrFtry<zbe::MovingSphere, zbe::MovingSphere, zbe::MovingTriangle3D>;
+using ShapeMSphereBldrFtry   = zbe::ShapeBldrFtry<zbe::MovingSphere,     zbe::MovingSphere, zbe::MovingTriangle3D>;
 using ShapeMTriangleBldrFtry = zbe::ShapeBldrFtry<zbe::MovingTriangle3D, zbe::MovingSphere, zbe::MovingTriangle3D>;
 
 using InatorBldrFtry = zbe::InteractionatorBldrFtry<zbe::CollisionData3D, ZBActor, ZBReactor, zbe::MovingSphere, zbe::MovingTriangle3D>;
@@ -89,11 +89,11 @@ using Inator2DBldr = zbe::InteractionatorBldr<zbe::CollisionData2D, ZB2DActor, Z
 // zandbokz interaction types builders factories
 using Actor2DBldrFtry = zbe::ActorBldrFtry<zbe::CollisionData2D, Solid>;
 using Reactor2DBldrFtry = zbe::ReactorBldrFtry<zbe::CollisionData2D, Solid>;
-using ShapeMovingPoint2DBldrFtry = zbe::ShapeBldrFtry<zbe::MovingPoint2D, zbe::MovingPoint2D, zbe::Triangle2D>;
-using ShapeTriangle2DBldrFtry = zbe::ShapeBldrFtry<zbe::Triangle2D, zbe::MovingPoint2D, zbe::Triangle2D>;
+using ShapeMPoint2DBldrFtry   = zbe::ShapeBldrFtry<zbe::MovingPoint2D, zbe::MovingPoint2D, zbe::Triangle2D>;
+using ShapeTriangle2DBldrFtry = zbe::ShapeBldrFtry<zbe::Triangle2D,    zbe::MovingPoint2D, zbe::Triangle2D>;
 
 using Inator2DBldrFtry = zbe::InteractionatorBldrFtry<zbe::CollisionData2D, ZB2DActor, ZB2DReactor, zbe::MovingPoint2D, zbe::Triangle2D>;
-using Iner2DBldrFtry = zbe::InteractionerBldrFtry<zbe::CollisionData2D, ZB2DActor, ZB2DReactor, zbe::MovingPoint2D, zbe::Triangle2D>;
+using Iner2DBldrFtry   = zbe::InteractionerBldrFtry<  zbe::CollisionData2D, ZB2DActor, ZB2DReactor, zbe::MovingPoint2D, zbe::Triangle2D>;
 
 using IEG2DFtry = zbe::InteractionEventGeneratorFtry<Physics2DSelector, Physics2DOverloaded, zbe::CollisionData2D, ZB2DActor, ZB2DReactor, zbe::MovingPoint2D, zbe::Triangle2D>;
 

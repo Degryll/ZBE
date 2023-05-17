@@ -137,42 +137,33 @@ bool IntersectionMovingCircleOutsideAABB2D(Circle circle, Vector2D direction, AA
   }  // if extended box collision
 }
 
-//  s1*X + o1 = s2*X + o2
-//  o1 - o2 = s2*X - s1*X
-//  o1 - o2 = x(s2 -s1) 
-//  x = (o1 - o2)/(s2-s1)
-
 bool intersectionMovingRay2DRay2D(Ray2D r1, Ray2D r2, int64_t& time, Point2D& point, Vector2D& normal) {
-        
-    double s1 = r1.d.y / r1.d.x;
-    double s2 = r2.d.y / r2.d.x;
-
-    double o1 = r1.o.y - (s1 * r1.o.x);
-    double o2 = r2.o.y - (s2 * r2.o.x);
-
-    double slopeDiff = (s2 - s1);
-    if(almost_equal(slopeDiff, 0.0)) {
+    Vector2D d1 = r1.d;
+    Vector2D d2 = r2.d;
+    Vector2D n2 = Vector2D{d2.y, -d2.x};
+    n2.normalize();
+    
+    double h = dot((r1.o - r2.o), n2); // height of the first point of l1 on vector l2
+    double hd = dot(d1, n2);  // height differential of the vector that defines l1
+    
+    // const double threshold = 0.0f;  // A threshold where height differential is considered to correspond to parallel lines
+    // if(std::abs(hd) <= threshold) {
+    //     return false;
+    // }
+    if(almost_equal(hd, 0.0)) {
         return false;
     }
-
-    double collisionX = (o1 - o2) / slopeDiff;
-    double collisionY = o1 + (s1 * collisionX);
-
-    point.x = collisionX;
-    point.y = collisionY;
-
-    normal.x = r2.d.y;
-    normal.y = -r2.d.x;
-
-    auto dist = point - r1.o;
-    double t = dist.x / r1.d.x;
+    double t = (h/ -hd);
+    point = r1.o + (d1 * t);
     auto intersectTime = quantizeTime(t);
+
     if(intersectTime <= time) {
-        time = intersectTime;
-        return true && time;  // Only if time > 0
-    } else {
-        return false;
-    }
+      time = intersectTime;
+      normal = n2;
+      return time > 0;  // Only if time > 0
+  } else {
+      return false;
+  }
 }
 
 }  // namespace zbe

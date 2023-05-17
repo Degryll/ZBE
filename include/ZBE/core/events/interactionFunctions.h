@@ -93,11 +93,17 @@ public:
 
     NewCollisionData<2> currentData;
     currentData.time = time;
+    auto currentpoint = *movingpoint->getShape();
 
-    Ray2D r1((*movingpoint->getShape()), movingpoint->v); // The point
+    Ray2D r1((currentpoint), movingpoint->v); // The point
     Ray2D r2(triangle->a, triangle->b - triangle->a); // a - b
     Ray2D r3(triangle->b, triangle->c - triangle->b); // b - c
-    Ray2D r4(triangle->c, triangle->a - triangle->c); // c - d
+    Ray2D r4(triangle->c, triangle->a - triangle->c); // c - dç
+
+    // printf("R1 P: %lf, %lf  D: %lf, %lf\n", r1.o.x, r1.o.y, r1.d.x, r1.d.y);fflush(stdout);
+    // printf("R2 P: %lf, %lf  D: %lf, %lf\n", r2.o.x, r2.o.y, r2.d.x, r2.d.y);fflush(stdout);
+    // printf("R3 P: %lf, %lf  D: %lf, %lf\n", r3.o.x, r3.o.y, r3.d.x, r3.d.y);fflush(stdout);
+    // printf("R4 P: %lf, %lf  D: %lf, %lf\n", r4.o.x, r4.o.y, r4.d.x, r4.d.y);fflush(stdout);
 
     bool intersect1 = intersectionMovingRay2DRay2D(r1, r2, currentData.time, currentData.point, currentData.normal);
     if (intersect1) {

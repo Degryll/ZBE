@@ -50,13 +50,13 @@ public:
   */
   void operator()(zbe::CollisionData3D cData, Platform platform) {
 
-    auto vpos2D = avatar->get<2, zbe::Vector2D>();
+    //auto vpos2D = avatar->get<2, zbe::Vector2D>();
     
     auto planeE1 = platform[2]->get();
     auto planeE2 = platform[1]->get();
     auto planePos = platform[0]->get();
 
-    auto pos2D = vpos2D->get();
+    //auto pos2D = vpos2D->get();
 
     auto diff = zbe::Vector3D{cData.point.x, cData.point.y, cData.point.z} - planePos;
     zbe::Vector3D ax{1.0, 0.0, 0.0};
@@ -74,6 +74,7 @@ public:
     zbe::Vector3D coordChange{x,y,z};
 
     zbe::Vector2D newPos2D{coordChange.x, coordChange.y};
+    printf("newPos2D %lf, %lf\n", newPos2D.x, newPos2D.y);fflush(stdout);
     avatar->set<2, zbe::Vector2D>(newPos2D);
       
   }

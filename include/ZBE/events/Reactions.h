@@ -11,6 +11,7 @@
  #define ZBE_EVENTS_REACTIONS_H_
 
 #include <cstdint>
+#include <cstdio>
 #include <memory>
 
 #include <string>
@@ -375,6 +376,57 @@ private:
 
   RsrcStore<nlohmann::json> &configRsrc               = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<MultiRctBldr<IData, Trait>>& specificRsrc = RsrcStore<MultiRctBldr<IData, Trait>>::getInstance();
+  RsrcStore<FunctionType>& mainRsrc                   = RsrcStore<FunctionType>::getInstance();
+};
+
+template<typename IData, typename Trait>
+class PrintfRct : public Funct<void, IData, Trait> {
+public:
+
+  PrintfRct() = default;
+
+  void operator()(IData data, Trait trait) {
+    printf(" Interaction \n");fflush(stdout);  
+  }
+
+};
+
+template<typename IData, typename Trait>
+class PrintfRctBldr : public Funct<std::shared_ptr<Funct<void, IData, Trait>>, std::shared_ptr<Entity>> {
+public:
+  std::shared_ptr<Funct<void, IData, Trait>> operator()(std::shared_ptr<Entity> ent){
+    return std::make_shared<PrintfRct<IData, Trait>>();
+  }
+};
+
+
+template<typename IData, typename Trait>
+class PrintfRctBldrFtry : public Factory {
+public:
+  void create(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    std::shared_ptr<PrintfRctBldr<IData, Trait>> tarb = std::make_shared<PrintfRctBldr<IData, Trait>>();
+    mainRsrc.insert(zbe::factories::functionName_ + name, tarb);
+    specificRsrc.insert("PrintfRctBldr."s + name, tarb);
+  }
+
+  void setup(std::string name, uint64_t cfgId) {
+    // using namespace std::string_literals;
+    // using namespace nlohmann;
+    // std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+    // if(cfg) {
+    //   auto j = *cfg;
+    // } else {
+    //   SysError::setError("PrintfRctBldrFtry config for "s + name + " not found."s);
+    // }
+  }
+
+private:
+  using FunctionType = Funct<std::shared_ptr<Funct<void, IData, Trait>>, std::shared_ptr<Entity>>;
+
+  RsrcStore<nlohmann::json> &configRsrc               = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<PrintfRctBldr<IData, Trait>>& specificRsrc = RsrcStore<PrintfRctBldr<IData, Trait>>::getInstance();
   RsrcStore<FunctionType>& mainRsrc                   = RsrcStore<FunctionType>::getInstance();
 };
 
