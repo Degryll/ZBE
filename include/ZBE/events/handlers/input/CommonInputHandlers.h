@@ -114,7 +114,7 @@ class KeyValueSetterIHFtry : public Factory {
       return;
     }
 
-    auto value = JSONFactory::loadParamCfgStore<Value<T>>(valueStore, j, "value"s, "KeyValueSetterIHFtry"s);
+    auto value = JSONFactory::loadParamCfgStore<Value<Vector3D>>(valueStore, j, "value"s, "KeyValueSetterIHFtry"s);
     if(!value) {
       SysError::setError("KeyValueSetterIHFtry config for value is invalid"s);
       return;

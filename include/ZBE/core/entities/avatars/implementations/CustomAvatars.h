@@ -12,17 +12,10 @@
 
 #include <cstdint>
 #include <memory>
-#include <forward_list>
-// TODO: hay que sacar de aqui los avatares con dependencias de terceros.
 #include <nlohmann/json.hpp>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-// ----
 
 #include "ZBE/core/tools/containers/RsrcStore.h"
 #include "ZBE/core/tools/math/math.h"
-#include "ZBE/core/tools/containers/TicketedForwardList.h"
 
 #include "ZBE/core/tools/shared/Value.h"
 #include "ZBE/core/tools/shared/implementations/SimpleValue.h"
@@ -35,9 +28,6 @@
 #include "ZBE/core/system/system.h"
 
 #include "ZBE/factories/Factory.h"
-#include "ZBE/factories/genericFactoryConstants.h"
-
-#include "ZBE/JSON/JSONFactory.h"
 
 namespace zbe{
 
@@ -171,214 +161,6 @@ private:
   std::shared_ptr<Value<Vector3D> > target;
 };
 
-class MovingPoint2DAvt : public SAvatar<MovingPoint2D>, AvatarImp {
-public:
-  void setupEntity(std::shared_ptr<Entity> entity, uint64_t positionidx, uint64_t velocityidx) {
-    AvatarImp::setupEntity(entity);
-    _Avatar<1, MovingPoint2D>::setup(&getMPoint, &setMPoint, (void*)this);
-    position = entity->getVector2D(positionidx);
-    velocity = entity->getVector2D(velocityidx);
-  }
-
-  static std::shared_ptr<Value<MovingPoint2D> > getMPoint(void *instance) {
-    auto  mpa = (MovingPoint2DAvt*)instance;
-    auto& position = mpa->position;
-    auto& velocity = mpa->velocity;
-    auto p = position->get();
-    auto v = velocity->get();
-    Point2D p2(p.toPoint());
-    MovingPoint2D mp{p2, v};
-    auto out = std::make_shared<SimpleValue<MovingPoint2D> >();
-    out->set(mp);
-    return out;
-  }
-
-  static void setMPoint(void *instance, MovingPoint2D position) {
-    assert(false);
-  }
-
-  std::shared_ptr<Entity> getEntity() {
-    assert(false);
-  }
-
-private:
- std::shared_ptr<Value<Vector2D> > position;
- std::shared_ptr<Value<Vector2D> > velocity;
-};
-
-class Triangle2DAvt : public SAvatar<Triangle2D>, AvatarImp {
-public:
-  void setupEntity(std::shared_ptr<Entity> entity, uint64_t aidx, uint64_t bidx, uint64_t cidx) {
-    AvatarImp::setupEntity(entity);
-    _Avatar<1, Triangle2D>::setup(&getTriangle, &setTriangle, (void*)this);
-    auto a = entity->getVector2D(aidx);
-    auto b = entity->getVector2D(bidx);
-    auto c = entity->getVector2D(cidx);
-    Triangle2D t;
-    t.a =a->get().toPoint();
-    t.b =b->get().toPoint();
-    t.c =c->get().toPoint();
-    triangle = std::make_shared<SimpleValue<Triangle2D> >();
-    triangle->set(t);
-  }
-
-  static std::shared_ptr<Value<Triangle2D> > getTriangle(void *instance) {
-    auto  t2a = (Triangle2DAvt*)instance;
-    return t2a->triangle;
-  }
-
-  static void setTriangle(void *instance, Triangle2D triangle) {
-    assert(false);
-  }
-
-  std::shared_ptr<Entity> getEntity() {
-    assert(false);
-  }
-
-private:
-  std::shared_ptr<Value<Triangle2D> > triangle;
-};
-
-// TODO: ¿Quien escribe a b y c en 2d en el triangulo?
-
-
-// -------------------------------------------- --------------------------------------------
-
-class Triangle2DShapeAvtBldr : public Funct<std::shared_ptr<SAvatar<Triangle2D>>, std::shared_ptr<Entity>> {
-public:
-  using AvtBaseType = SAvatar<Triangle2D>;
-  std::shared_ptr<SAvatar<Triangle2D>> operator()(std::shared_ptr<Entity> ent) {
-    std::shared_ptr<Triangle2DAvt> avt = std::make_shared<Triangle2DAvt>();
-    avt->setupEntity(ent, aidx, bidx, cidx);
-    return avt;
-  }
-
-  void setIdxs(uint64_t aidx, uint64_t bidx, uint64_t cidx) {
-      this->aidx = aidx;
-      this->bidx = bidx;
-      this->cidx = cidx;
-  }
-
-private:
- uint64_t aidx;
- uint64_t bidx;
- uint64_t cidx;
-};
-
-class MovingPoint2DShapeAvtBldr : public Funct<std::shared_ptr<SAvatar<MovingPoint2D>>, std::shared_ptr<Entity>> {
-public:
-  using AvtBaseType = SAvatar<MovingPoint2D>;
-  std::shared_ptr<SAvatar<MovingPoint2D>> operator()(std::shared_ptr<Entity> ent) {
-    std::shared_ptr<MovingPoint2DAvt> avt = std::make_shared<MovingPoint2DAvt>();
-    avt->setupEntity(ent, positionidx, velocityIdx);
-    return avt;
-  }
-
-  void setIdxs(uint64_t positionidx, uint64_t velocityIdx) {
-      this->positionidx = positionidx;
-      this->velocityIdx = velocityIdx;
-  }
-
-private:
- uint64_t positionidx;
- uint64_t velocityIdx;
-};
-
-class Triangle2DShapeAvtBldrFtry : public Factory {
-public:
-  void create(std::string name, uint64_t cfgId) {
-    using namespace std::string_literals;
-    std::shared_ptr<Triangle2DShapeAvtBldr> t2dab = std::make_shared<Triangle2DShapeAvtBldr>();
-    mainRsrc.insert(zbe::factories::functionName_ + name, t2dab);
-    specificRsrc.insert("Triangle2DShapeAvtBldr."s + name, t2dab);
-  }
-
-  void setup(std::string name, uint64_t cfgId) {
-    using namespace std::string_literals;
-    using namespace nlohmann;
-    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
-
-    if(cfg) {
-      auto j = *cfg;
-
-      auto t2dab = specificRsrc.get("Triangle2DShapeAvtBldr."s + name);
-
-      auto aIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "aIdx"s, "Triangle2DShapeAvtBldrFtry"s);
-      if(!aIdx) {
-        return;
-      }
-
-      auto bIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "bIdx"s, "Triangle2DShapeAvtBldrFtry"s);
-      if(!aIdx) {
-        return;
-      }
-
-      auto cIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "cIdx"s, "Triangle2DShapeAvtBldrFtry"s);
-      if(!aIdx) {
-        return;
-      }
-
-      t2dab->setIdxs(*aIdx, *bIdx, *cIdx);
-
-    } else {
-      SysError::setError("Triangle2DShapeAvtBldrFtry config for "s + name + " not found."s);
-    }
-  }
-
-private:
-  using FunctionType = Funct<std::shared_ptr<SAvatar<Triangle2D>>, std::shared_ptr<Entity>>;
-  RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
-  RsrcStore<nlohmann::json> &configRsrc                          = RsrcStore<nlohmann::json>::getInstance();
-  RsrcStore<Triangle2DShapeAvtBldr>& specificRsrc    = RsrcStore<Triangle2DShapeAvtBldr>::getInstance();
-  RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
-};
-
-class MovingPoint2DShapeAvtBldrFtry : public Factory {
-public:
-  void create(std::string name, uint64_t cfgId) {
-    using namespace std::string_literals;
-    std::shared_ptr<MovingPoint2DShapeAvtBldr> mp2dab = std::make_shared<MovingPoint2DShapeAvtBldr>();
-    mainRsrc.insert(zbe::factories::functionName_ + name, mp2dab);
-    specificRsrc.insert("MovingPoint2DShapeAvtBldr."s + name, mp2dab);
-  }
-
-  void setup(std::string name, uint64_t cfgId) {
-    using namespace std::string_literals;
-    using namespace nlohmann;
-    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
-
-    if(cfg) {
-      auto j = *cfg;
-
-      auto mp2dab = specificRsrc.get("MovingPoint2DShapeAvtBldr."s + name);
-
-      auto positionIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionIdx"s, "MovingPoint2DShapeAvtBldrFtry"s);
-      if(!positionIdx) {
-        return;
-      }
-
-      auto velocityIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "velocityIdx"s, "MovingPoint2DShapeAvtBldrFtry"s);
-      if(!velocityIdx) {
-        return;
-      }
-
-      mp2dab->setIdxs(*positionIdx, *velocityIdx);
-
-    } else {
-      SysError::setError("MovingPoint2DShapeAvtBldrFtry config for "s + name + " not found."s);
-    }
-  }
-
-private:
-  using FunctionType = Funct<std::shared_ptr<SAvatar<MovingPoint2D>>, std::shared_ptr<Entity>>;
-  RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
-  RsrcStore<nlohmann::json> &configRsrc                          = RsrcStore<nlohmann::json>::getInstance();
-  RsrcStore<MovingPoint2DShapeAvtBldr>& specificRsrc    = RsrcStore<MovingPoint2DShapeAvtBldr>::getInstance();
-  RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
-};
-
-// -------------------------------------------- --------------------------------------------
-
 class DerivedCosVelAvt : public MAvatar<Vector3D, Vector3D>, AvatarImp {
 public:
 
@@ -462,7 +244,7 @@ public:
     auto p = position->get();
     auto v = velocity->get();
     auto r = msa->radius->get();
-    //auto time = msa->cTime->getTotalTime();
+    auto time = msa->cTime->getTotalTime();
     Sphere s(p.toPoint(), r);
     MovingSphere ms{s, v};
     auto out = std::make_shared<SimpleValue<MovingSphere> >();
@@ -512,7 +294,7 @@ public:
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     std::shared_ptr<MovingSphereAvtShapeBldr> msasb = std::make_shared<MovingSphereAvtShapeBldr>();
-    mainRsrc.insert(zbe::factories::functionName_ + name, msasb);
+    mainRsrc.insert("Function."s + name, msasb);
     specificRsrc.insert("MovingSphereAvtShapeBldr."s + name, msasb);
   }
 
@@ -588,7 +370,7 @@ public:
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     std::shared_ptr<MovingSphereAvtBldr> msab = std::make_shared<MovingSphereAvtBldr>();
-    mainRsrc.insert(zbe::factories::functionName_ + name, msab);
+    mainRsrc.insert("Function."s + name, msab);
     specificRsrc.insert("MovingSphereAvtBldr."s + name, msab);
   }
 
@@ -630,195 +412,6 @@ private:
   RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
 };
 
-class MovingTriangle3DRscAvt : public SAvatar<MovingTriangle3D>, public AvatarImp {
-public:
-
-  void setupEntity(std::shared_ptr<Entity> entity, uint64_t velocityIdx, uint64_t orientationIdx, uint64_t positionIdx, uint64_t radsIdx, uint64_t sizeIdx, uint64_t e1Idx, uint64_t e2Idx) {
-    AvatarImp::setupEntity(entity);
-    _Avatar<1, MovingTriangle3D>::setup(&getTriangle, &setTriangle, (void*)this);
-    orientation = entity->getVector3D(orientationIdx);
-    velocity = entity->getVector3D(velocityIdx);
-    position = entity->getVector3D(positionIdx);
-    rads = entity->getDouble(radsIdx);
-    size = entity->getDouble(sizeIdx);
-    cTime = entity->getContextTime();
-    e1 = entity->getVector3D(e1Idx);
-    e2 = entity->getVector3D(e2Idx);
-  }
-
-  static std::shared_ptr<Value<MovingTriangle3D> > getTriangle(void *instance) {
-    auto  mtra = (MovingTriangle3DRscAvt*)instance;
-    auto& vel = mtra->velocity->get();
-    auto& ori = mtra->orientation->get();
-    auto& pos = mtra->position->get();
-    float angle = (float)mtra->rads->get();
-    float baseScale = (float)mtra->size->get();
-
-    glm::vec3 glPos(pos.x, pos.y, pos.z);
-    glm::vec3 glDir(ori.x, ori.y, ori.z);
-
-    glm::mat4 mat(1.0);
-
-    glm::mat4 translate = glm::translate(glm::mat4(1.0f), glPos);
-    glm::mat4 rotate    = glm::rotate(   glm::mat4(1.0f), angle, glDir);
-    glm::mat4 scale     = glm::scale(    glm::mat4(1.0f), glm::vec3(baseScale));
-    glm::mat4 m = translate * scale * rotate;
-    glm::vec3 a = m * glm::vec4(mtra->baseT.a.x, mtra->baseT.a.y, mtra->baseT.a.z, 1.0);
-    glm::vec3 b = m * glm::vec4(mtra->baseT.b.x, mtra->baseT.b.y, mtra->baseT.b.z, 1.0);
-    glm::vec3 c = m * glm::vec4(mtra->baseT.c.x, mtra->baseT.c.y, mtra->baseT.c.z, 1.0);
-
-    Point3D pa{a.x, a.y, a.z};
-    Point3D pb{b.x, b.y, b.z};
-    Point3D pc{c.x, c.y, c.z};
-
-    Triangle3D t{pa, pb, pc};
-    MovingTriangle3D mt{t, vel};
-    auto out = std::make_shared<SimpleValue<MovingTriangle3D> >();
-    out->set(mt);
-    Vector3D e1 = (pb - pa);
-    Vector3D aux = (pc - pa);
-    Vector3D norm = cross(aux, e1);
-    Vector3D e2 = cross(e1, norm);
-
-    mtra->e1->set(e1.normalize());
-    mtra->e2->set(e2.normalize());
-    return out;
-  }
-
-  static void setTriangle(void*, MovingTriangle3D ) {
-    assert(false);
-  }
-
-  std::shared_ptr<Entity> getEntity() {
-    assert(false);
-  }
-
-  void setBaseTriangle(Triangle3D baseT) {
-    this->baseT = baseT;
-  }
-
-private:
- std::shared_ptr<Value<Vector3D> > position;
- std::shared_ptr<Value<Vector3D> > velocity;
- std::shared_ptr<Value<Vector3D> > orientation;
- std::shared_ptr<Value<double> >   rads;
- std::shared_ptr<Value<double> >   size;
- std::shared_ptr<Value<Vector3D> > e1;
- std::shared_ptr<Value<Vector3D> > e2;
-
- Triangle3D baseT;
- std::shared_ptr<ContextTime> cTime;
-};
-
-class MovingTriangle3DRscAvtShapeBldr  : public Funct<std::shared_ptr<SAvatar<MovingTriangle3D>>, std::shared_ptr<Entity>> {
-public:
-  using AvtBaseType = SAvatar<MovingSphere>;
-  std::shared_ptr<SAvatar<MovingTriangle3D>> operator()(std::shared_ptr<Entity> ent) {
-    std::shared_ptr<MovingTriangle3DRscAvt> avt = std::make_shared<MovingTriangle3DRscAvt>();
-    avt->setupEntity(ent, velocityIdx, orientationIdx, positionIdx, radsIdx, sizeIdx, e1Idx, e2Idx);
-    avt->setBaseTriangle(baseT);
-    return avt;
-  }
-
-  void setIdxs(uint64_t velocityIdx, uint64_t orientationIdx, uint64_t positionIdx, uint64_t radsIdx, uint64_t sizeIdx, uint64_t e1Idx, uint64_t e2Idx) {
-      this->velocityIdx = velocityIdx;
-      this->orientationIdx = orientationIdx;
-      this->positionIdx = positionIdx;
-      this->radsIdx = radsIdx;
-      this->sizeIdx = sizeIdx;
-      this->e1Idx = e1Idx;
-      this->e2Idx = e2Idx;
-  }
-
-  void setBaseTriangle(Triangle3D baseT) {
-    this->baseT = baseT;
-  }
-
-private:
-  uint64_t velocityIdx;
-  uint64_t orientationIdx;
-  uint64_t positionIdx;
-  uint64_t radsIdx;
-  uint64_t sizeIdx;
-  uint64_t e1Idx;
-  uint64_t e2Idx;
-  Triangle3D baseT;
-};
-
-class MovingTriangle3DRscAvtShapeBldrFtry : public Factory {
-public:
-  void create(std::string name, uint64_t cfgId) {
-    using namespace std::string_literals;
-    std::shared_ptr<MovingTriangle3DRscAvtShapeBldr> mt3rasb = std::make_shared<MovingTriangle3DRscAvtShapeBldr>();
-    mainRsrc.insert(zbe::factories::functionName_ + name, mt3rasb);
-    specificRsrc.insert("MovingTriangle3DRscAvtShapeBldr."s + name, mt3rasb);
-  }
-
-  void setup(std::string name, uint64_t cfgId) {
-    using namespace std::string_literals;
-    using namespace nlohmann;
-    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
-
-    if(cfg) {
-      auto j = *cfg;
-
-      auto mt3rasb = specificRsrc.get("MovingTriangle3DRscAvtShapeBldr."s + name);
-
-      auto velocityIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "velocityIdx"s, "MovingTriangle3DRscAvtShapeBldrFtry"s);
-      if(!velocityIdx) {
-        return;
-      }
-      auto orientationIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "orientationIdx"s, "MovingTriangle3DRscAvtShapeBldrFtry"s);
-      if(!orientationIdx) {
-        return;
-      }
-      auto positionIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionIdx"s, "MovingTriangle3DRscAvtShapeBldrFtry"s);
-      if(!positionIdx) {
-        return;
-      }
-      auto radsIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "radsIdx"s, "MovingTriangle3DRscAvtShapeBldrFtry"s);
-      if(!radsIdx) {
-        return;
-      }
-      auto sizeIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "sizeIdx"s, "MovingTriangle3DRscAvtShapeBldrFtry"s);
-      if(!sizeIdx) {
-        return;
-      }
-      auto e1Idx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "e1Idx"s, "MovingTriangle3DRscAvtShapeBldrFtry"s);
-      if(!e1Idx) {
-        return;
-      }
-      auto e2Idx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "e2Idx"s, "MovingTriangle3DRscAvtShapeBldrFtry"s);
-      if(!e2Idx) {
-        return;
-      }
-
-      auto triangleList = JSONFactory::loadParamCfgStoreP<std::forward_list<Triangle3D>>(triangle3DListRsrc, j, "TriangleList"s, "triangle"s, "MovingTriangle3DRscAvtShapeBldrFtry"s);
-      if(!triangleList) {
-        SysError::setError("EntityTimerBldrFtry config for contextTime is invalid"s);
-        return;
-      }
-
-      mt3rasb->setIdxs(*velocityIdx, *orientationIdx, *positionIdx, *radsIdx, *sizeIdx, *e1Idx, *e2Idx);
-      mt3rasb->setBaseTriangle((*triangleList)->front());
-
-    } else {
-      SysError::setError("MovingTriangle3DRscAvtShapeBldrFtry config for "s + name + " not found."s);
-    }
-  }
-
-private:
-  using FunctionType = Funct<std::shared_ptr<SAvatar<MovingTriangle3D>>, std::shared_ptr<Entity>>;
-  using ListType = TicketedForwardList<MovingTriangle3DRscAvtShapeBldr::AvtBaseType>;
-  RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
-  RsrcStore<nlohmann::json> &configRsrc                          = RsrcStore<nlohmann::json>::getInstance();
-  RsrcStore<MovingTriangle3DRscAvtShapeBldr>& specificRsrc    = RsrcStore<MovingTriangle3DRscAvtShapeBldr>::getInstance();
-  RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
-  RsrcStore<std::forward_list<Triangle3D>> &triangle3DListRsrc = RsrcStore<std::forward_list<Triangle3D>>::getInstance();
-};
-
-// TODO shape builders, factorias y demas pestes
-
 class MovingTriangle3DAvt : public SAvatar<MovingTriangle3D>, public AvatarImp {
 public:
   void setupEntity(std::shared_ptr<Entity> entity, uint64_t positionAidx, uint64_t positionBidx, uint64_t positionCidx, uint64_t velocityidx) {
@@ -841,7 +434,7 @@ public:
     auto pB = positionB->get();
     auto pC = positionC->get();
     auto v = velocity->get();
-    //auto time = mta->cTime->getTotalTime();
+    auto time = mta->cTime->getTotalTime();
     Triangle3D t{pA.toPoint(), pB.toPoint(), pC.toPoint()};
     MovingTriangle3D mt{t, v};
     auto out = std::make_shared<SimpleValue<MovingTriangle3D> >();
@@ -893,7 +486,7 @@ public:
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     std::shared_ptr<MovingTriangle3DAvtShapeBldr> msasb = std::make_shared<MovingTriangle3DAvtShapeBldr>();
-    mainRsrc.insert(zbe::factories::functionName_ + name, msasb);
+    mainRsrc.insert("Function."s + name, msasb);
     specificRsrc.insert("MovingTriangle3DAvtShapeBldr."s + name, msasb);
   }
 
@@ -976,7 +569,7 @@ public:
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     std::shared_ptr<MovingTriangle3DAvtBldr> msab = std::make_shared<MovingTriangle3DAvtBldr>();
-    mainRsrc.insert(zbe::factories::functionName_ + name, msab);
+    mainRsrc.insert("Function."s + name, msab);
     specificRsrc.insert("MovingTriangle3DAvtBldr."s + name, msab);
   }
 
@@ -1221,7 +814,7 @@ public:
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     std::shared_ptr<PosUpwardsTargetToPosUpwardsDirAvtBldr> put2pudab = std::make_shared<PosUpwardsTargetToPosUpwardsDirAvtBldr>();
-    mainRsrc.insert(zbe::factories::functionName_ + name, put2pudab);
+    mainRsrc.insert("Function."s + name, put2pudab);
     specificRsrc.insert("PosUpwardsTargetToPosUpwardsDirAvtBldr."s + name, put2pudab);
   }
 
@@ -1317,8 +910,8 @@ private:
 //     //  //glm::mat4 rotmat = orientation (detail::tvec3< T > const &d, detail::tvec3< T > const &u);
 //     //  glm::quat q = glm::quat_cast(rotmat);
 //     //  double angle = glm::angle(q);
-
-
+     
+     
 //      return std::make_shared<SimpleValue<double> >();
 //    }
 
@@ -1381,7 +974,7 @@ private:
 //   void create(std::string name, uint64_t cfgId) {
 //     using namespace std::string_literals;
 //     std::shared_ptr<PosTargetUpwardsToPosDirAngleAvtBldr> ptutpdaab = std::make_shared<PosTargetUpwardsToPosDirAngleAvtBldr>();
-//     mainRsrc.insert(zbe::factories::functionName_ + name, ptutpdaab);
+//     mainRsrc.insert("Function."s + name, ptutpdaab);
 //     specificRsrc.insert("PosTargetUpwardsToPosDirAngleAvtBldr."s + name, ptutpdaab);
 //   }
 
@@ -1458,13 +1051,13 @@ private:
 //     auto s = size->get();
 //     auto time = mtha->cTime->getTotalTime();
 
-//     TODO: Hemos encontrado (recordado) que no tenemos orientacion en nuestro pintado.
+//     TODO: Hemos encontrado (recordado) que no tenemos orientacion en nuestro pintado. 
 //     No mola. Hay que arreglarlo.
 //     Una vez hecho eso, hay que traer esas matematicas de translacion, escalado y rotacion aqui
 //     MAL:
 //     Si que tenemos orientación pero es incorrecta. Tenemos que calcular pitch y yaw desde el look-at
-//     https://discord.com/channels/244405112569593857/246018374587383810/1037485466531930223
-//     Con esa lógica construimos un avatar nuevo que sustituirá a
+//     https://discord.com/channels/244405112569593857/246018374587383810/1037485466531930223 
+//     Con esa lógica construimos un avatar nuevo que sustituirá a 
 //     PosTargetToPosDirAvtFtry
 
 //     Triangle3D t{triangle.a, triangle.b, triangle.c};
@@ -1485,7 +1078,7 @@ private:
 //   void setTriangleHitbox(std::shared_ptr<Triangle3D> triangle) {
 //     this->triangle = triangle;
 //   }
-
+  
 
 // private:
 //  std::shared_ptr<Triangle3D> triangle;
@@ -1525,7 +1118,7 @@ private:
 //   void create(std::string name, uint64_t cfgId) {
 //     using namespace std::string_literals;
 //     std::shared_ptr<MovingTriangle3DHitboxAvtShapeBldr> mt3hasb = std::make_shared<MovingTriangle3DHitboxAvtShapeBldr>();
-//     mainRsrc.insert(zbe::factories::functionName_ + name, mt3hasb);
+//     mainRsrc.insert("Function."s + name, mt3hasb);
 //     specificRsrc.insert("MovingTriangle3DHitboxAvtShapeBldr."s + name, msasb);
 //   }
 
@@ -1608,7 +1201,7 @@ private:
 //   void create(std::string name, uint64_t cfgId) {
 //     using namespace std::string_literals;
 //     std::shared_ptr<MovingTriangle3DHitboxAvtBldr> mt3hab = std::make_shared<MovingTriangle3DHitboxAvtBldr>();
-//     mainRsrc.insert(zbe::factories::functionName_ + name, mt3hab);
+//     mainRsrc.insert("Function."s + name, mt3hab);
 //     specificRsrc.insert("MovingTriangle3DHitboxAvtBldr."s + name, msab);
 //   }
 
@@ -2089,7 +1682,7 @@ public:
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     std::shared_ptr<TargetToDirAvtBldr> ttdab = std::make_shared<TargetToDirAvtBldr>();
-    mainRsrc.insert(zbe::factories::functionName_ + name, ttdab);
+    mainRsrc.insert("Function."s + name, ttdab);
     specificRsrc.insert("TargetToDirAvtBldr."s + name, ttdab);
   }
 
@@ -2150,7 +1743,7 @@ public:
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     std::shared_ptr<PosTargetToPosDirAvtBldr> pttpdvb = std::make_shared<PosTargetToPosDirAvtBldr>();
-    mainRsrc.insert(zbe::factories::functionName_ + name, pttpdvb);
+    mainRsrc.insert("Function."s + name, pttpdvb);
     specificRsrc.insert("PosTargetToPosDirAvtBldr."s + name, pttpdvb);
   }
 
@@ -2203,7 +1796,7 @@ public:
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     std::shared_ptr<DerivedCosVelAvtBldr> dcvab = std::make_shared<DerivedCosVelAvtBldr>();
-    mainRsrc.insert(zbe::factories::functionName_ + name, dcvab);
+    mainRsrc.insert("Function."s + name, dcvab);
     specificRsrc.insert("DerivedCosVelAvtBldr."s + name, dcvab);
   }
 
@@ -2272,7 +1865,7 @@ public:
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     std::shared_ptr<DerivedPosMovingSphereAvtShapeBldr> dpmsa = std::make_shared<DerivedPosMovingSphereAvtShapeBldr>();
-    mainRsrc.insert(zbe::factories::functionName_ + name, dpmsa);
+    mainRsrc.insert("Function."s + name, dpmsa);
     specificRsrc.insert("DerivedPosMovingSphereAvtShapeBldr."s + name, dpmsa);
   }
 
@@ -2337,7 +1930,7 @@ public:
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     std::shared_ptr<DerivedPosMovingSphereAvtBldr> dpmsa = std::make_shared<DerivedPosMovingSphereAvtBldr>();
-    mainRsrc.insert(zbe::factories::functionName_ + name, dpmsa);
+    mainRsrc.insert("Function."s + name, dpmsa);
     specificRsrc.insert("DerivedPosMovingSphereAvtBldr."s + name, dpmsa);
   }
 
@@ -2409,7 +2002,7 @@ public:
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     std::shared_ptr<LookAtToPitchAvtBldr> latpab = std::make_shared<LookAtToPitchAvtBldr>();
-    mainRsrc.insert(zbe::factories::functionName_ + name, latpab);
+    mainRsrc.insert("Function."s + name, latpab);
     specificRsrc.insert("LookAtToPitchAvtBldr."s + name, latpab);
   }
   void setup(std::string name, uint64_t cfgId) {
@@ -2461,7 +2054,7 @@ public:
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     std::shared_ptr<LookAtToYawAvtBldr> latyab = std::make_shared<LookAtToYawAvtBldr>();
-    mainRsrc.insert(zbe::factories::functionName_ + name, latyab);
+    mainRsrc.insert("Function."s + name, latyab);
     specificRsrc.insert("LookAtToYawAvtBldr."s + name, latyab);
   }
   void setup(std::string name, uint64_t cfgId) {

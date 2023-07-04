@@ -135,6 +135,20 @@ bool loadAllIndexed(RsrcStore<T>& store, RsrcDictionary<uint64_t>& uintDict, jso
     for (auto item : arrayCfg.items()) { //+ zbe::factories::separator
       auto key = item.key();
 
+      // std::string paramName = prefix + zbe::factories::separator + key;
+      // if(!store.contains(paramName)) {
+      //   SysError::setError(factoryName + " config for " + parameter + ": "s + paramName + " does not exist."s);
+      //   return std::nullopt;
+      // }
+      //
+      // auto element = store.get(paramName);
+
+      // auto element = readFromStore<T>(store, arrayCfg, prefix + zbe::factories::separator + key, factoryName);
+      // if(!element) {
+      //   SysError::setError(factoryName + " config for "s + parameter + " contains a non valid element name:"s + key);
+      //   return false;
+      // }
+
       auto element = loadParamStrStoreP<T>(store, prefix, key, factoryName);
       if(!element) {
         SysError::setError(factoryName + " config for "s + parameter + " contains a non valid element name:"s + key);
@@ -164,35 +178,6 @@ bool loadAllIndexed(RsrcStore<T>& store, RsrcDictionary<uint64_t>& uintDict, jso
   return true;
 }
 
-template<typename T>
-bool loadAll(RsrcStore<T>& store, json cfg, std::string prefix, std::string parameter, std::string factoryName, std::function<bool(std::shared_ptr<T>)> callback) {
-  using namespace std::string_literals;
-  if (cfg[parameter].is_array()) {
-    auto arrayCfg = cfg[parameter];
-    for (auto& item : arrayCfg.items()) {
-      auto& jvalue = item.value();
-      if (!jvalue.is_string()) {
-        SysError::setError(factoryName + " elementos on "s + parameter + " must be strings."s);
-        return false;
-      }
-      auto value = jvalue.get<std::string>();
-      auto element = loadParamStrStoreP<T>(store, prefix, value, factoryName);
-      if(!element) {
-        SysError::setError(factoryName + " config for "s + parameter + " contains a non valid element name:"s + value);
-        return false;
-      }
-
-      if(!callback(*element)) {
-        return false;
-      }
-    }
-  } else if(cfg.contains(parameter)) {
-    SysError::setError(factoryName + " config for " + parameter + " must be an array."s);
-    return false;
-  }
-  return true;
-}
-
 template<typename T, unsigned n>
 std::optional<std::array<T, n>> loadLiteralArray(RsrcDictionary<T>& dict, json cfg, std::string paramName, std::string factoryName) {
   using namespace std::string_literals;
@@ -213,31 +198,6 @@ std::optional<std::array<T, n>> loadLiteralArray(RsrcDictionary<T>& dict, json c
     i++;
   }
   return arr;
-}
-
-template<typename T>
-std::optional<std::forward_list<T>> loadLiteralList(RsrcDictionary<T>& dict, json cfg, std::string paramName, std::string factoryName, uint min = 0, uint max = 0) {
-  using namespace std::string_literals;
-  if (!cfg.is_array()) {
-    SysError::setError(factoryName + " config for " + paramName + " must be an array."s);
-    return std::nullopt;
-  }
-
-  if(cfg.size() < min) {
-    SysError::setError(factoryName + " config for " + paramName + " must have at least "s + std::to_string(min) + " elements");
-    return std::nullopt;
-  }
-
-  if(max>0 && cfg.size() > max) {
-    SysError::setError(factoryName + " config for " + paramName + " must have no more than "s + std::to_string(max) + " elements");
-    return std::nullopt;
-  }
-
-  std::forward_list<T> list;
-  for (auto& name : cfg.items()) {
-    list.push_front(dict.get(name.value().get<std::string>()));
-  }
-  return list;
 }
 
 }  // namespace JSONFactory

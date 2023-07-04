@@ -9,7 +9,6 @@
 
 #include "ZBE/resources/loaders/implementations/JSONAppLoader.h"
 #include <cstdio>
-#include <iostream>
 
 namespace zbe {
 
@@ -38,7 +37,6 @@ void JSONAppLoader::load(std::filesystem::path filePath) {
         ftryData.ftry->setup(ftryData.name, ftryData.cfgId);
       }
       appFactories.clear();
-      std::cout << SysError::getFirstErrorString() << "\n";
       json calls = phase["calls"];
       for(auto& call : calls) {
         checkAndCall(call, phase);

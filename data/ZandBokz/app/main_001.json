@@ -11,46 +11,29 @@
     "VZERO"  :{"type":"v3", "value":[0.0,0.0,0.0]},
     "ONE" : {"type":"uifd", "value":1},
     "NEGATIVEONE" : {"type":"ifd", "value":-1},
-    "tolerance" : {"type":"fd", "value":0.01},
     "width" : {"type":"uifd", "value":1280},
-    "height" : {"type":"uifd", "value":768},
+    "height" : {"type":"uifd", "value":960},
     "second" : {"type":"uifd", "value":65536},
     "gidIdx" : 1000,
     "stateIdx" : 1010,
     "radsIdx" : 1020,
     "positionIdx" : 1030,
-    "excentricIdx" : 1031,
     "sizeIdx" : 1040,
     "scaleIdx" : 1050,
     "orientationIdx" : 1060,
-    "cameraorientationIdx" : 1061,
     "drawticket" : 1070,
     "positionTicket" : 1080,
     "camPosVelTicket" : 1090,
     "ULM3DTicket" : 1100,
-    "ULM3DOn2DTicket" : 1101,
-    "gmTicket" : 1105,
-    "saltaListTicket" : 1106,
-    "twoVelaccumListTicket" : 1107,
-    "protaOrientationListTicket" : 1108,
     "velocityIdx" : 1110,
-    "velocityForwardIdx" : 1111,
-    "velocityLateralIdx" : 1112,
-    "velocityPre1Idx" : 1113,
-    "velocityPre2Idx" : 1114,
     "inerTicket" : 1200,
     "inatorTicket" : 1210,
-    "iner2DTicket" : 1205,
-    "inator2DTicket" : 1215,
     "BulletCreatorTicket" : 1220,
     "SoundCreatorTicket" : 1221,
     "positionAIdx" : 1230,
     "positionBIdx" : 1240,
     "positionCIdx" : 1250,
-    "pointAIdx" : 1310,
-    "pointBIdx" : 1320,
-    "pointCIdx" : 1330,
-    "lifespan" : 16553600,
+    "lifespan" : 655360,
     "fovIdx" : 3100,
     "targetIdx" : 3200,
     "upwardsIdx" : 3300,
@@ -58,7 +41,7 @@
     "targetTicket" : 3500,
     "camScaleIdx" : 3600,
     "upwardsTicket" : 3700,
-    "yawTicket" :3800,
+    "camYawTicket" :3800,
     "camPitchTicket" :3900,
     "bullet.speedIdx" : 4000,
     "timeHandlerTicket" : 4100,
@@ -66,73 +49,43 @@
     "sourcestateIdx" : 5010,
     "sourceIdx" : 5020,
     "soundstateIdx" : 5030,
-    "e1Idx" : 6010,
-    "e2Idx" : 6020,
-    "planePosIdx" : 6030,
-    "velocity2DIdx" : 6040,
-    "position2DIdx" : 6050,
-    "orientation2DIdx" : 6060,
-    "velocity2DRightSrcIdx" : 6110,
-    "velocity2DLeftSrcIdx" : 6120,
-    "velocity2DForwardSrcIdx" : 6130,
-    "velocity2DBackwardSrcIdx" : 6140,
-    "camposIdx" : 6200,
-    "attachonofticket" : 7000,
-    "relativeVelTicket" : 7100,
-    "copyVelOnOriTicket" : 7200,
+
     "state.static" : 0,
     "testwflags": 0,
     "testrflags": 0,
     "timeEventId" : 1,
     "inputEventId" : 84,
     "interactionEventId" : 42,
-    "interaction2DEventId" : 43,
     "mainInitialState" : 0,
     "mainExitState" : 1,
     "loadScreen.toMenu": 1,
     "loadScreen.loadTime" : 26214400,
     "cam.fov" :{"type":"f", "value":90.0},
     "cam.scale" :{"type":"f", "value":50.0},
-    "cam.aspect" :{"type":"f", "value":1.6666666},
+    "cam.aspect" :{"type":"f", "value":1.333333},
     "cam.znear" :{"type":"f", "value":1.0},
     "cam.zfar" :{"type":"f", "value":1500.0},
     "cam.fovMin" :{"type":"f", "value":99.5},
     "cam.fovMax" :{"type":"f", "value":100.0},
     "cam.fovPeriod" :{"type":"i", "value":65536},
-    "model.coordMin" :{"type":"f", "value":-10.0},
-    "model.coordMax" :{"type":"f", "value":10.0},
+    "model.coordMin" :{"type":"f", "value":-1.0},
+    "model.coordMax" :{"type":"f", "value":1.0},
     "model.coordPeriod" :{"type":"i", "value":457510},
     "model.fixedForwardVelocity" :{"type":"v3", "value":[0.0,0.0,50.0]},
     "model.fixedBackwardVelocity" :{"type":"v3", "value":[0.0,0.0,-50.0]},
     "model.fixedLeftVelocity" :{"type":"v3", "value":[-50.0,0.0,0.0]},
     "model.fixedRightVelocity" :{"type":"v3", "value":[50.0,0.0,0.0]},
-    "model.pitchsensibility" :{"type":"f", "value":0.01},
-    "model.yawsensibility" :{"type":"f", "value":-0.01},
-
-    "model.pitchRotVec" :{"type":"v3", "value":[1.0, 0.0, 10.0]},
-    "model.yawRotVec" :{"type":"v3", "value":[0.0, 1.0, 0.0]},
-
+    "model.pitch" :{"type":"f", "value":-0.01},
+    "model.yaw" :{"type":"f", "value":-0.01},
     "model.sineComponent" : 0,
-    "gravity" : {"type":"v3", "value":[0.0, -98.0, 0.0]},
     "bullet.speed" : {"type":"d", "value":200.0},
     "crosshairsPos" :{"type":"v2", "value":[0.0,0.0]},
     "crosshairsSize" :{"type":"v2", "value":[0.25,0.25]},
 
-    "caja.rightSpeed" : {"type":"v2", "value":[0.0,85.0]},
-    "caja.leftSpeed": {"type":"v2", "value":[0.0,-85.0]},
-    "caja.forwardSpeed" : {"type":"v2", "value":[85.0,0.0]},
-    "caja.backwardSpeed" : {"type":"v2", "value":[-85.0,0.0]},
-
-    "prota.rightSpeed" : {"type":"v2", "value":[0.0,85.0]},
-    "prota.leftSpeed": {"type":"v2", "value":[0.0,-85.0]},
-    "prota.forwardSpeed" : {"type":"v2", "value":[85.0,0.0]},
-    "prota.backwardSpeed" : {"type":"v2", "value":[-85.0,0.0]},
-
-    "velcajanorte" :{"type":"d", "value":50.0},
-    "velcajasur" :{"type":"d", "value":-50.0},
-    "velcajaeste" :{"type":"d", "value":50.0},
-    "velcajaoeste" :{"type":"d", "value":-50.0},
-    "velcajasalto" :{"type":"v3", "value":[0.0,100.0,0.0]},
+    "velcajanorte" :{"type":"v3", "value":[50.0,0.0,0.0]},
+    "velcajasur" :{"type":"v3", "value":[-50.0,0.0,0.0]},
+    "velcajaeste" :{"type":"v3", "value":[0.0,0.0,50.0]},
+    "velcajaoeste" :{"type":"v3", "value":[0.0,0.0,-50.0]},
 
     "TODOindices":""
   },
@@ -154,24 +107,12 @@
                 "znear" : ["cam.znear"],
                 "zfar" : ["cam.zfar"]
               },
-              "double" : {
-                "cajaVelLateral" : 0.0,
-                "cajaVelForward" : 0.0,
-                "protaVelLateral" : 0.0,
-                "protaVelForward" : 0.0
-              },
               "V3D" : {
-                "camEye" : [0.0, 150.0, 150.0],
+                "camEye" : [0.0, 3.0, 15.0],
                 "camTarget" : [0.0, 3.0, 0.0],
                 "camTargetOld" : [1.0, 0.0, 1.0],
                 "camUp" : [0.0, 1.0, 0.0],
-                "cajaVel" : [0.0, 0.0, 0.0],
-                "cajaPos" : [0.0, 10.0, 0.0],
-                "protaVel" : [0.0, 0.0, 0.0],
-                "protaPos" : [0.0, 15.0, 0.0],
-                "planePos" : [100.0, 100.0, 0.0],
-                "planeE1" : [0.0, 0.0, 0.0],
-                "planeE2" : [0.0, 0.0, 0.0]
+                "cajaVel" : [0.0, 0.0, 0.0]
               }
             }
           }
@@ -184,18 +125,6 @@
           "factory": "TFAECModelFtry",
           "description" : "do some serious sheet",
           "name": "loadScreen.drawList",
-          "config" : {}
-        },
-        {
-          "factory": "TFAECLookAtAvtFtry",
-          "description" : "do some serious sheet",
-          "name": "loadScreen.drawLookAtList",
-          "config" : {}
-        },
-        {
-          "factory": "TFAEC3DOn2DAvtFtry",
-          "description" : "do some serious sheet",
-          "name": "loadScreen.moveOnPlaneList",
           "config" : {}
         },
         {
@@ -235,51 +164,15 @@
           "config" : {}
         },
         {
-          "factory": "TFAECV3DAvtFtry",
-          "description" : "do some serious sheet",
-          "name": "loadScreen.saltaList",
-          "config" : {}
-        },
-        {
           "factory": "TFAECThreeV3DAvtFtry",
           "description" : "do some serious sheet",
           "name": "loadScreen.camMoveList",
           "config" : {}
         },
         {
-          "factory": "TFAECThreeV3DAvtFtry",
-          "description" : "do some serious sheet",
-          "name": "loadScreen.camFollowList",
-          "config" : {}
-        },
-        {
           "factory": "TFAECTwoV3DAvtFtry",
           "description" : "Uniform linear motion list",
           "name": "loadScreen.ULM3DList",
-          "config" : {}
-        },
-        {
-          "factory": "TFAECTwoV3DAvtFtry",
-          "description" : "Gravity motion list",
-          "name": "loadScreen.gmList",
-          "config" : {}
-        },
-        {
-          "factory": "TFAECThreeV3DAvtFtry",
-          "description" : "2 Vel accum list",
-          "name": "loadScreen.twovelaccumlist",
-          "config" : {}
-        },
-        {
-          "factory": "TFAECThreeV3DAvtFtry",
-          "description" : "2 Vel accum list",
-          "name": "loadScreen.calculaorilist",
-          "config" : {}
-        },
-        {
-          "factory": "TFAECTwoV3DAvtFtry",
-          "description" : "Vel to ori list",
-          "name": "loadScreen.vel2orilist",
           "config" : {}
         },
         {
@@ -295,12 +188,6 @@
           "config" : {}
         },
         {
-          "factory": "TFAEVoidFtry",
-          "description" : "do some serious sam",
-          "name": "loadScreen.attachcajaonofflist",
-          "config" : {}
-        },
-        {
           "factory": "InatorListFtry",
           "description" : "a platipus? perry the platipus!!!",
           "name": "loadScreen.inatorList",
@@ -313,29 +200,11 @@
           "config" : {}
         },
         {
-          "factory": "Inator2DListFtry",
-          "description" : "a platipus? perry the platipus!!!",
-          "name": "loadScreen.inator2DList",
-          "config" : {}
-        },
-        {
-          "factory": "Iner2DListFtry",
-          "description" : "a platipus? perry the platipus!!!",
-          "name": "loadScreen.iner2DList",
-          "config" : {}
-        },
-        {
-          "factory": "TFAECTwoDoubleThreeV3DFtry",
-          "description" : "a platipus? perry the platipus!!!",
-          "name": "loadScreen.velsetterlist",
-          "config" : {}
-        },
-        {
           "factory": "CameraFtry",
           "name": "loadScreen.cam",
           "config" : {
             "eye" : "zandbokz.camEye",
-            "target" : "zandbokz.protaPos",
+            "target" : "zandbokz.camTarget",
             "up" : "zandbokz.camUp",
             "fov" : "zandbokz.fov",
             "aspect" : "zandbokz.aspect",
@@ -429,13 +298,6 @@
           }
         },
         {
-          "factory": "JSONLookAtOGLModelSheetLoaderFtry",
-          "name":"zandbokz.lamsLoader",
-          "config" : {
-            "window" : "zandbokz.mainwindow"
-          }
-        },
-        {
           "factory": "JSONSpriteOGLModelSheetLoaderFtry",
           "name":"zandbokz.sLoader",
           "config" : {
@@ -460,14 +322,6 @@
           "config" : {
             "loader" : "zandbokz.msLoader",
             "url" : "data/ZandBokz/modelsheets"
-          }
-        },
-        {
-          "factory": "RsrcFtry",
-          "name":"zandbokz.lookAtModelSheetLoader",
-          "config" : {
-            "loader" : "zandbokz.lamsLoader",
-            "url" : "data/ZandBokz/lamodelsheets"
           }
         },
         {
@@ -518,39 +372,6 @@
       "factories" : [
         {
           "factory" : "EntityBldrFtry",
-          "name" : "zandbokz.thirdviewcambldr",
-          "config" : {
-            "contextTime":"DEFAULT",
-            "builders" : ["zandbokz.thirdviewcamvalues", "zandbokz.thirdviewcammove"]
-          }
-        },
-        {
-          "factory" :"EntitySetterFtry",
-          "name" : "zandbokz.thirdviewcamvalues",
-          "config" : {
-            "float": {
-              "fovIdx":"zandbokz.fov",
-              "camScaleIdx":"zandbokz.camScale"
-            },
-            "V3D": {
-              "positionIdx":"zandbokz.camEye",
-              "targetIdx":"zandbokz.cajaPos",
-              "upwardsIdx":"zandbokz.camUp",
-              "velocityIdx" :"zandbokz.cajaVel"
-            }
-          }
-        },
-        {
-          "factory" :"TwoV3DAvtBldrFtry",
-          "name" : "zandbokz.thirdviewcammove",
-          "config" : {
-            "attribIndexes" : ["velocityIdx", "positionIdx"],
-            "lists":{ "loadScreen.ULM3DList":"ULM3DTicket"},
-            "deativatedlists":{}
-          }
-        },
-        {
-          "factory" : "EntityBldrFtry",
           "name" : "zandbokz.pepinobuilder",
           "config" : {
             "contextTime":"DEFAULT",
@@ -594,38 +415,6 @@
           }
         },
         {
-          "factory" :"PlatformTraitBldrFtry",
-          "name" : "zandbokz.diositoesplataforma",
-          "config" : {
-            "attribIndexes" : ["positionIdx", "e2Idx", "e1Idx"]
-          }
-        },
-        {
-          "factory" :"ActorBldrFtry",
-          "name" : "zandbokz.actordiosito",
-          "config" : {
-            "solid" : "ENABLED",
-            "platform" : "zandbokz.diositoesplataforma"
-          }
-        },
-        {
-          "factory" :"Actor2DBldrFtry",
-          "name" : "zandbokz.actordiosito2D",
-          "config" : {
-            "solid" : "ENABLED"
-          }
-        },
-        {
-          "factory" :"ReactorBldrFtry",
-          "name" : "zandbokz.reactordiosito",
-          "config" : {}
-        },
-        {
-          "factory" :"Reactor2DBldrFtry",
-          "name" : "zandbokz.reactordiosito2D",
-          "config" : {}
-        },
-        {
           "factory" :"ActorBldrFtry",
           "name" : "zandbokz.actorpepinosolido",
           "config" : {
@@ -652,13 +441,6 @@
           }
         },
         {
-          "factory" :"ShapeTriangle2DBldrFtry",
-          "name" : "zandbokz.aspectodiostriangular2D",
-          "config" : {
-            "shapetype" : "zandbokz.diositorocoso2D"
-          }
-        },
-        {
           "factory" :"InerBldrFtry",
           "name" : "zandbokz.pepinosolidosocializa",
           "config" : {
@@ -674,79 +456,7 @@
           "description" : "Está ahí, mirando. Pero no hace na",
           "config" : {
             "contextTime":"DEFAULT",
-            "builders" : ["zandbokz.diositovalues", "zandbokz.diositocachetriangulo2D", "zandbokz.diositoapintar", "zandbokz.diositopalante","zandbokz.diositosolidosocializa", "zandbokz.diositosolidosocializa2D"]
-          }
-        },
-        {
-          "factory" : "EntityBldrFtry",
-          "name" : "zandbokz.diositobuilder1",
-          "description" : "Está ahí, mirando. Pero no hace na",
-          "config" : {
-            "contextTime":"DEFAULT",
-            "builders" : ["zandbokz.diositovalues1", "zandbokz.diositocachetriangulo2D", "zandbokz.diositoapintar", "zandbokz.diositosolidosocializa", "zandbokz.diositosolidosocializa2D"]
-          }
-        },
-        {
-          "factory" : "EntityBldrFtry",
-          "name" : "zandbokz.diositobuilder2",
-          "description" : "Está ahí, mirando. Pero no hace na",
-          "config" : {
-            "contextTime":"DEFAULT",
-            "builders" : ["zandbokz.diositovalues2", "zandbokz.diositocachetriangulo2D", "zandbokz.diositoapintar", "zandbokz.diositosolidosocializa", "zandbokz.diositosolidosocializa2D"]
-          }
-        },
-        {
-          "factory" : "EntityBldrFtry",
-          "name" : "zandbokz.diositobuilder3",
-          "description" : "Está ahí, mirando. Pero no hace na",
-          "config" : {
-            "contextTime":"DEFAULT",
-            "builders" : ["zandbokz.diositovalues3", "zandbokz.diositocachetriangulo2D", "zandbokz.diositoapintar", "zandbokz.diositosolidosocializa", "zandbokz.diositosolidosocializa2D"]
-          }
-        },
-        {
-          "factory" : "EntityBldrFtry",
-          "name" : "zandbokz.diositobuilder4",
-          "description" : "Está ahí, mirando. Pero no hace na",
-          "config" : {
-            "contextTime":"DEFAULT",
-            "builders" : ["zandbokz.diositovalues4", "zandbokz.diositocachetriangulo2D", "zandbokz.diositoapintar", "zandbokz.diositosolidosocializa", "zandbokz.diositosolidosocializa2D"]
-          }
-        },
-        {
-          "factory" : "EntityBldrFtry",
-          "name" : "zandbokz.diositobuilder5",
-          "description" : "Está ahí, mirando. Pero no hace na",
-          "config" : {
-            "contextTime":"DEFAULT",
-            "builders" : ["zandbokz.diositovalues5", "zandbokz.diositocachetriangulo2D", "zandbokz.diositoapintar", "zandbokz.diositosolidosocializa", "zandbokz.diositosolidosocializa2D"]
-          }
-        },
-        {
-          "factory" : "EntityBldrFtry",
-          "name" : "zandbokz.diositobuilder6",
-          "description" : "Está ahí, mirando. Pero no hace na",
-          "config" : {
-            "contextTime":"DEFAULT",
-            "builders" : ["zandbokz.diositovalues6", "zandbokz.diositocachetriangulo2D", "zandbokz.diositoapintar", "zandbokz.diositosolidosocializa", "zandbokz.diositosolidosocializa2D"]
-          }
-        },
-        {
-          "factory" : "EntityBldrFtry",
-          "name" : "zandbokz.diositobuilder7",
-          "description" : "Está ahí, mirando. Pero no hace na",
-          "config" : {
-            "contextTime":"DEFAULT",
-            "builders" : ["zandbokz.diositovalues7", "zandbokz.diositocachetriangulo2D", "zandbokz.diositoapintar", "zandbokz.diositosolidosocializa", "zandbokz.diositosolidosocializa2D"]
-          }
-        },
-        {
-          "factory" : "EntityBldrFtry",
-          "name" : "zandbokz.diositobuilder8",
-          "description" : "Está ahí, mirando. Pero no hace na",
-          "config" : {
-            "contextTime":"DEFAULT",
-            "builders" : ["zandbokz.diositovalues8", "zandbokz.diositocachetriangulo2D", "zandbokz.diositoapintar", "zandbokz.diositosolidosocializa", "zandbokz.diositosolidosocializa2D"]
+            "builders" : ["zandbokz.diositovalues", "zandbokz.diositoapintar", "zandbokz.diositosolidosocializa"]
           }
         },
         {
@@ -754,34 +464,11 @@
           "name" : "zandbokz.diositovalues",
           "config" : {
             "uint": {
-              "gidIdx":["cucucurva"]
+              "gidIdx":["Ojito"]
             },
             "double": {
               "radsIdx":[0.0],
-              "scaleIdx":[100.0]
-            },
-            "V3D": {
-              "positionIdx":"zandbokz.planePos",
-              "orientationIdx":[1.0, 0.0, 0.0],
-              "positionAIdx":[200.0, 0.0, 200.0],
-              "positionBIdx":[-200.0, 0.0, 200.0],
-              "positionCIdx":[200.0, 0.0, -200.0],
-              "velocityIdx":[0.0, 0.0, 0.0],
-              "e1Idx": "zandbokz.planeE1",
-              "e2Idx": "zandbokz.planeE2"
-            }
-          }
-        },
-        {
-          "factory" :"EntitySetterFtry",
-          "name" : "zandbokz.diositovalues1",
-          "config" : {
-            "uint": {
-              "gidIdx":["cucucurva"]
-            },
-            "double": {
-              "radsIdx":[0.0],
-              "scaleIdx":[100.0]
+              "scaleIdx":[10.0]
             },
             "V3D": {
               "positionIdx":[0.0, 50.0, 0.0],
@@ -789,170 +476,7 @@
               "positionAIdx":[200.0, 0.0, 200.0],
               "positionBIdx":[-200.0, 0.0, 200.0],
               "positionCIdx":[200.0, 0.0, -200.0],
-              "velocityIdx":[0.0, 0.0, 0.0],
-              "e1Idx":[0.0, 0.0, 0.0],
-              "e2Idx":[0.0, 0.0, 0.0]
-            }
-          }
-        },
-        {
-          "factory" :"EntitySetterFtry",
-          "name" : "zandbokz.diositovalues2",
-          "config" : {
-            "uint": {
-              "gidIdx":["cucucurva"]
-            },
-            "double": {
-              "radsIdx":[3.14159],
-              "scaleIdx":[100.0]
-            },
-            "V3D": {
-              "positionIdx":[50.0, 50.0, 50.0],
-              "orientationIdx":[0.0, 0.0, 1.0],
-              "positionAIdx":[200.0, 0.0, 200.0],
-              "positionBIdx":[-200.0, 0.0, 200.0],
-              "positionCIdx":[200.0, 0.0, -200.0],
-              "velocityIdx":[0.0, 0.0, 0.0],
-              "e1Idx":[0.0, 0.0, 0.0],
-              "e2Idx":[0.0, 0.0, 0.0]
-            }
-          }
-        },
-        {
-          "factory" :"EntitySetterFtry",
-          "name" : "zandbokz.diositovalues3",
-          "config" : {
-            "uint": {
-              "gidIdx":["cucucurva"]
-            },
-            "double": {
-              "radsIdx":[3.14159],
-              "scaleIdx":[100.0]
-            },
-            "V3D": {
-              "positionIdx":[150.0, 151.0, 151.1],
-              "orientationIdx":[1.0, 1.0, 1.0],
-              "positionAIdx":[200.0, 0.0, 200.0],
-              "positionBIdx":[-200.0, 0.0, 200.0],
-              "positionCIdx":[200.0, 0.0, -200.0],
-              "velocityIdx":[0.0, 0.0, 0.0],
-              "e1Idx":[0.0, 0.0, 0.0],
-              "e2Idx":[0.0, 0.0, 0.0]
-            }
-          }
-        },
-        {
-          "factory" :"EntitySetterFtry",
-          "name" : "zandbokz.diositovalues4",
-          "config" : {
-            "uint": {
-              "gidIdx":["cucucurva"]
-            },
-            "double": {
-              "radsIdx":[3.14159],
-              "scaleIdx":[100.0]
-            },
-            "V3D": {
-              "positionIdx":[50.0, 52.0, 52.2],
-              "orientationIdx":[0.0, 0.0, 1.0],
-              "positionAIdx":[200.0, 0.0, 200.0],
-              "positionBIdx":[-200.0, 0.0, 200.0],
-              "positionCIdx":[200.0, 0.0, -200.0],
-              "velocityIdx":[0.0, 0.0, 0.0],
-              "e1Idx":[0.0, 0.0, 0.0],
-              "e2Idx":[0.0, 0.0, 0.0]
-            }
-          }
-        },
-        {
-          "factory" :"EntitySetterFtry",
-          "name" : "zandbokz.diositovalues5",
-          "config" : {
-            "uint": {
-              "gidIdx":["cucucurva"]
-            },
-            "double": {
-              "radsIdx":[3.14159],
-              "scaleIdx":[100.0]
-            },
-            "V3D": {
-              "positionIdx":[50.0, 53.0, 53.3],
-              "orientationIdx":[0.0, 0.0, 1.0],
-              "positionAIdx":[200.0, 0.0, 200.0],
-              "positionBIdx":[-200.0, 0.0, 200.0],
-              "positionCIdx":[200.0, 0.0, -200.0],
-              "velocityIdx":[0.0, 0.0, 0.0],
-              "e1Idx":[0.0, 0.0, 0.0],
-              "e2Idx":[0.0, 0.0, 0.0]
-            }
-          }
-        },
-        {
-          "factory" :"EntitySetterFtry",
-          "name" : "zandbokz.diositovalues6",
-          "config" : {
-            "uint": {
-              "gidIdx":["cucucurva"]
-            },
-            "double": {
-              "radsIdx":[3.14159],
-              "scaleIdx":[100.0]
-            },
-            "V3D": {
-              "positionIdx":[50.0, 54.0, 54.4],
-              "orientationIdx":[0.0, 0.0, 1.0],
-              "positionAIdx":[200.0, 0.0, 200.0],
-              "positionBIdx":[-200.0, 0.0, 200.0],
-              "positionCIdx":[200.0, 0.0, -200.0],
-              "velocityIdx":[0.0, 0.0, 0.0],
-              "e1Idx":[0.0, 0.0, 0.0],
-              "e2Idx":[0.0, 0.0, 0.0]
-            }
-          }
-        },
-        {
-          "factory" :"EntitySetterFtry",
-          "name" : "zandbokz.diositovalues7",
-          "config" : {
-            "uint": {
-              "gidIdx":["cucucurva"]
-            },
-            "double": {
-              "radsIdx":[3.14159],
-              "scaleIdx":[100.0]
-            },
-            "V3D": {
-              "positionIdx":[50.0, 55.0, 55.5],
-              "orientationIdx":[0.0, 0.0, 1.0],
-              "positionAIdx":[200.0, 0.0, 200.0],
-              "positionBIdx":[-200.0, 0.0, 200.0],
-              "positionCIdx":[200.0, 0.0, -200.0],
-              "velocityIdx":[0.0, 0.0, 0.0],
-              "e1Idx":[0.0, 0.0, 0.0],
-              "e2Idx":[0.0, 0.0, 0.0]
-            }
-          }
-        },
-        {
-          "factory" :"EntitySetterFtry",
-          "name" : "zandbokz.diositovalues8",
-          "config" : {
-            "uint": {
-              "gidIdx":["cucucurva"]
-            },
-            "double": {
-              "radsIdx":[3.14159],
-              "scaleIdx":[100.0]
-            },
-            "V3D": {
-              "positionIdx":[50.0, 56.0, 56.6],
-              "orientationIdx":[0.0, 0.0, 1.0],
-              "positionAIdx":[200.0, 0.0, 200.0],
-              "positionBIdx":[-200.0, 0.0, 200.0],
-              "positionCIdx":[200.0, 0.0, -200.0],
-              "velocityIdx":[0.0, 0.0, 0.0],
-              "e1Idx":[0.0, 0.0, 0.0],
-              "e2Idx":[0.0, 0.0, 0.0]
+              "velocityIdx":[0.0, 0.0, 0.0]
             }
           }
         },
@@ -969,21 +493,10 @@
           "name" : "zandbokz.diositosolidosocializa",
           "description" : "Usamos actor y reactor del pepino porque dios se comporta como un pepino y tampoco hace nada. Al menos los pepinos son nutritivos.",
           "config" : {
-            "actorbuilder" : "zandbokz.actordiosito",
-            "reactorbuilder" : "zandbokz.reactordiosito",
+            "actorbuilder" : "zandbokz.actorpepinosolido",
+            "reactorbuilder" : "zandbokz.reactorpepinosolido",
             "shapebuilder" : "zandbokz.aspectodiostriangular",
             "lists" : {"loadScreen.inerList":"inerTicket"}
-          }
-        },
-        {
-          "factory" :"Iner2DBldrFtry",
-          "name" : "zandbokz.diositosolidosocializa2D",
-          "description" : "Diosito tampoco hace nada en 2D.",
-          "config" : {
-            "actorbuilder" : "zandbokz.actordiosito2D",
-            "reactorbuilder" : "zandbokz.reactordiosito2D",
-            "shapebuilder" : "zandbokz.aspectodiostriangular2D",
-            "lists" : {"loadScreen.iner2DList":"iner2DTicket"}
           }
         },
         {
@@ -999,38 +512,13 @@
           }
         },
         {
-          "factory" :"MovingTriangle3DRscAvtShapeBldrFtry",
+          "factory" :"MovingTriangle3DAvtShapeBldrFtry",
           "name" : "zandbokz.diositorocoso",
           "config" : {
-            "positionIdx" : "positionIdx",
-            "orientationIdx" : "orientationIdx",
-            "velocityIdx" : "velocityIdx",
-            "radsIdx" : "radsIdx",
-            "sizeIdx" : "scaleIdx",
-            "e1Idx" : "e1Idx",
-            "e2Idx" : "e2Idx",
-            "triangle" : "cucucurva"
-          }
-        },
-        {
-          "factory" : "Triangle3Dto2DCacheBldrFtry", 
-          "name" : "zandbokz.diositocachetriangulo2D",
-          "description" : "Le cachea el triangulo a la plataforma",
-          "config" : {
-            "aIdx" : "pointAIdx",
-            "bIdx" : "pointBIdx",
-            "cIdx" : "pointCIdx",
-            "sizeIdx" : "scaleIdx",
-            "triangle" : "cucucurva"
-          }
-        },
-        {
-          "factory" :"Triangle2DShapeAvtBldrFtry",
-          "name" : "zandbokz.diositorocoso2D",
-          "config" : {
-            "aIdx" : "pointAIdx",
-            "bIdx" : "pointBIdx",
-            "cIdx" : "pointCIdx"
+            "positionAIdx" : "positionAIdx",
+            "positionBIdx" : "positionBIdx",
+            "positionCIdx" : "positionCIdx",
+            "velocityIdx" : "velocityIdx"
           }
         },
         {
@@ -1107,14 +595,6 @@
           }
         },
         {
-          "factory" : "EntityBldrFtry",
-          "name" : "zandbokz.creaunicorniorosa",
-          "config" : {
-            "contextTime":"DEFAULT",
-            "builders" : ["zandbokz.unicorniorosavalues", "zandbokz.castañasolidosocializa"]
-          }
-        },
-        {
           "factory" : "EntityEraserTHBldrFtry",
           "name" : "zandbokz.borrator",
           "config" : {
@@ -1127,72 +607,18 @@
           }
         },
         {
+          "factory" : "ReverseDirectionReactionBldrFtry",
+          "name" : "zandbokz.rebotamal",
+          "config" : {
+            "vectorIdx" : "orientationIdx"
+          }
+        },
+        {
           "factory" : "BounceReactionBldrFtry",
           "name" : "zandbokz.rebotabien",
           "config" : {
             "vectorIdx" : "orientationIdx",
             "upwardsIdx" : "upwardsIdx"
-          }
-        },
-        {
-          "factory" : "TicketActivatorPlatformRctBldrFtry",
-          "name" : "zandbokz.reaccionattachactivations",
-          "config" : {
-            "tickets" : ["ULM3DOn2DTicket"]
-          }
-        },
-        {
-          "factory" : "TicketDeactivatorPlatformRctBldrFtry",
-          "name" : "zandbokz.reaccionattachdeactivations",
-          "config" : {
-            "tickets" : ["gmTicket", "ULM3DTicket"]
-          }
-        },
-        {
-          "factory" : "TicketActivatorSolidRctBldrFtry",
-          "name" : "zandbokz.reaccioncaeactivations",
-          "config" : {
-            "tickets" : ["gmTicket", "ULM3DTicket"]
-          }
-        },
-        {
-          "factory" : "TicketDeactivatorSolidRctBldrFtry",
-          "name" : "zandbokz.reaccioncaedeactivations",
-          "config" : {
-            "tickets" : ["ULM3DOn2DTicket"]
-          }
-        },
-        {
-          "factory" : "StoreValuesPlatformRctBldrFtry",
-          "name" : "zandbokz.reaccionattachpilladelplano",
-          "config" : {
-            "idxlist" : ["planePosIdx", "e2Idx", "e1Idx"]
-          }
-        },
-        {
-          "factory" : "AttachRepositionReactionBldrFtry",
-          "name" : "zandbokz.reaccionattachrecoloca",
-          "config" : {
-            "idxlist" : ["velocity2DIdx", "position2DIdx", "velocityIdx"]
-          }
-        },
-        {
-          "factory" : "PrintfSolid2DRctBldrFtry",
-          "name" : "zandbokz.reaccionpintainteraccionsolid",
-          "config" : {}
-        },
-        {
-          "factory" : "MultiSolid2DRctBldrFtry",
-          "name" : "zandbokz.reaccionmulticae",
-          "config" : {
-            "reactionBuilders" : ["zandbokz.reaccionpintainteraccionsolid","zandbokz.reaccioncaeactivations", "zandbokz.reaccioncaedeactivations"]
-          }
-        },
-        {
-          "factory" : "MultiPlatformRctBldrFtry",
-          "name" : "zandbokz.reaccionmultiagarra",
-          "config" : {
-            "reactionBuilders" : ["zandbokz.reaccionattachactivations", "zandbokz.reaccionattachdeactivations", "zandbokz.reaccionattachpilladelplano", "zandbokz.reaccionattachrecoloca"]
           }
         },
         {
@@ -1210,18 +636,15 @@
           "factory" :"EntitySetterFtry",
           "name" : "zandbokz.castañavalues",
           "config" : {
-            "uintBackUp": {
-              "gidIdx":["XYZ"]
-            },
             "uint": {
               "gidIdx":["Castaña"]
             },
             "double": {
-              "radsIdx":[0.0],
-              "scaleIdx":[20.0]
+              "radsIdx":[140.0],
+              "scaleIdx":[10.0]
             },
             "float": {
-              "sizeIdx":[20.0]
+              "sizeIdx":[10.0]
             },
             "V3D": {
               "orientationIdx":[10.5, 0.0, 0.5]
@@ -1229,29 +652,11 @@
           }
         },
         {
-          "factory" :"EntitySetterFtry",
-          "name" : "zandbokz.unicorniorosavalues",
-          "config" : {
-            "double": {
-              "radsIdx":[0.0],
-              "scaleIdx":[2.0]
-            },
-            "float": {
-              "sizeIdx":[2.0]
-            },
-            "V3D": {
-              "orientationIdx":[0.0, 0.0, 1.0],
-              "positionIdx":[0.0, -1000.0, 0.0],
-              "upwardsIdx":[1.0, 0.0, 0.0]
-            }
-          }
-        },
-        {
-          "factory" :"DrawableLookAtAvtBldrFtry",
+          "factory" :"Drawable3DAvtBldrFtry",
           "name" : "zandbokz.castañaapintar",
           "config" : {
-            "attribIndexes" : ["gidIdx", "scaleIdx", "upwardsIdx", "orientationIdx", "positionIdx"],
-            "lists":{"loadScreen.drawLookAtList":"drawticket"}
+            "attribIndexes" : ["gidIdx", "scaleIdx", "radsIdx", "orientationIdx", "positionIdx"],
+            "lists":{"loadScreen.drawList":"drawticket"}
           }
         },
         {
@@ -1263,18 +668,9 @@
           }
         },
         {
-          "factory" :"TwoV3DAvtBldrFtry",
-          "name" : "zandbokz.diositopalante",
-          "config" : {
-            "attribIndexes" : ["velocityIdx", "positionIdx"],
-            "lists":{"loadScreen.ULM3DList":"ULM3DTicket"}
-          }
-        },
-        {
           "factory" :"ActorBldrFtry",
           "name" : "zandbokz.actorcastañasolido",
-          "config" : {},
-          "configBackup" : {
+          "config" : {
             "solid" : "ENABLED"
           }
         },
@@ -1318,126 +714,10 @@
         },
         {
           "factory" : "EntityBldrFtry",
-          "name" : "zandbokz.protabuilder",
-          "config" : {
-            "contextTime":"DEFAULT",
-            "builders" : ["zandbokz.protavalues", "zandbokz.protaapintar", "zandbokz.protaamover", "zandbokz.protacalculavel", "zandbokz.protamirapaondebe", "zandbokz.protaorientationcalcbuild", "zandbokz.protadispara", "zandbokz.protadisparasuena"],
-            "buildersback" : [],
-            "TODO" : "al quitar protaorientationcalcbuild la orientacion se lleva valores absurdos ¿Quien los pone y porque?"
-          }
-        },
-        {
-          "factory" :"EntitySetterFtry",
-          "name" : "zandbokz.protavalues",
-          "config" : {
-            "uint": {
-              "gidIdx":["Roboto"]
-            },
-            "double": {
-              "radsIdx":[0.0],
-              "scaleIdx":[100.0],
-              "velocityForwardIdx":"zandbokz.protaVelLateral",
-              "velocityLateralIdx":"zandbokz.protaVelForward"
-            },
-            "float": {
-              "sizeIdx":[100.0]
-            },
-            "V3D": {
-              "camposIdx" : "zandbokz.camEye",
-              "velocityPre1Idx" : [0.0, 0.0, 0.0],
-              "velocityPre2Idx" : [0.0, 0.0, 0.0],
-              "positionIdx":"zandbokz.protaPos",
-              "orientationIdx":[1.0, 0.0, 0.0],
-              "cameraorientationIdx":[1.0, 0.0, 0.0],
-              "velocityIdx": "zandbokz.protaVel",
-              "planePosIdx": [0.0, 0.0, 0.0],
-              "upwardsIdx": [0.0, 1.0, 0.0],
-              "e1Idx": [0.0, 0.0, 0.0],
-              "e2Idx": [0.0, 0.0, 0.0]
-            },
-            "V2D": {
-              "position2DIdx":[0.0, 0.0],
-              "velocity2DIdx":[0.0, 0.0],
-              "orientation2DIdx":[1.0, 0.0],
-              "velocity2DRightSrcIdx" : ["prota.rightSpeed"],
-              "velocity2DLeftSrcIdx" : ["prota.leftSpeed"],
-              "velocity2DForwardSrcIdx" : ["prota.forwardSpeed"],
-              "velocity2DBackwardSrcIdx" : ["prota.backwardSpeed"]
-            }
-          }
-        },
-        {
-          "factory" :"DrawableLookAtAvtBldrFtry",
-          "name" : "zandbokz.protaapintar",
-          "config" : {
-            "attribIndexes" : ["gidIdx", "scaleIdx", "upwardsIdx", "orientationIdx", "positionIdx"],
-            "lists":{"loadScreen.drawLookAtList":"drawticket"}
-          }
-        },
-        {
-          "factory" :"TwoV3DAvtBldrFtry",
-          "name" : "zandbokz.protaamover",
-          "config" : {
-            "attribIndexes" : ["velocityIdx", "positionIdx"],
-            "lists":{
-              "loadScreen.ULM3DList":"ULM3DTicket"
-            }
-          }
-        },
-        {
-          "factory" :"TwoDoubleThreeV3DAvtBldrFtry",
-          "name" : "zandbokz.protacalculavel",
-          "config" : {
-            "attribIndexes" : ["velocityForwardIdx", "velocityLateralIdx", "velocityIdx", "upwardsIdx","cameraorientationIdx"],
-            "lists":{"loadScreen.velsetterlist" : "relativeVelTicket"},
-            "deativatedlists":{}
-          }
-        },
-        {
-          "factory" :"ThreeV3DAvtBldrFtry",
-          "name" : "zandbokz.protaorientationcalcbuild",
-          "config" : {
-            "attribIndexes" : ["camposIdx", "positionIdx", "cameraorientationIdx"],
-            "lists":{
-              "loadScreen.calculaorilist":"protaOrientationListTicket"
-            },
-            "deativatedlists":{
-            }
-          }
-        },
-        {
-          "factory" :"TwoV3DAvtBldrFtry",
-          "name" : "zandbokz.protamirapaondebe",
-          "config" : {
-            "attribIndexes" : ["orientationIdx", "velocityIdx"],
-            "lists":{ "loadScreen.vel2orilist":"copyVelOnOriTicket"}
-          }
-        },
-        {
-          "factory" :"ThreeV3DAvtBldrFtry",
-          "name" : "zandbokz.protadispara",
-          "config" : {
-            "attribIndexes" : ["upwardsIdx", "orientationIdx", "positionIdx"],
-            "lists":{"loadScreen.BulletCreatorList":"BulletCreatorTicket"},
-            "deativatedlists":{}
-          }
-        },
-        {
-          "factory" :"ThreeV3DAvtBldrFtry",
-          "name" : "zandbokz.protadisparasuena",
-          "config" : {
-            "attribIndexes" : ["upwardsIdx", "orientationIdx", "positionIdx"],
-            "lists":{"loadScreen.SoundCreatorList":"SoundCreatorTicket"},
-            "deativatedlists":{}
-          }
-        },
-        {
-          "factory" : "EntityBldrFtry",
           "name" : "zandbokz.cajabuilder",
           "config" : {
             "contextTime":"DEFAULT",
-            "builders" : ["zandbokz.cajavalues", "zandbokz.cajaapintar", "zandbokz.cajaamover", "zandbokz.cajaacaer", "zandbokz.cajafinalvel", "zandbokz.cajaagirar", "zandbokz.cajacalculavel", "zandbokz.cajaamoverenplano","zandbokz.cajasocializa", "zandbokz.cajasInator2D","zandbokz.attachcajaonoff", "zandbokz.cajaasaltar", "zandbokz.cajaPlanoDerecha", "zandbokz.cajaPlanoIzquierda", "zandbokz.cajaPlanoDelante", "zandbokz.cajaPlanoAtras"],
-            "buildersback" : []
+            "builders" : ["zandbokz.cajavalues", "zandbokz.cajaapintar", "zandbokz.cajaamover", "zandbokz.cajasolidosocializa"]
           }
         },
         {
@@ -1448,33 +728,16 @@
               "gidIdx":["ZCube"]
             },
             "double": {
-              "radsIdx":[0.0],
-              "scaleIdx":[5.0],
-              "velocityForwardIdx":[0.0],
-              "velocityLateralIdx":[0.0]
+              "radsIdx":[0.7853975],
+              "scaleIdx":[10.0]
             },
             "float": {
               "sizeIdx":[5.0]
             },
             "V3D": {
-              "velocityPre1Idx" : [0.0, 0.0, 0.0],
-              "velocityPre2Idx" : [0.0, 0.0, 0.0],
-              "positionIdx":"zandbokz.cajaPos",
-              "orientationIdx":[1.0, 0.0, 0.0],
-              "velocityIdx": "zandbokz.cajaVel",
-              "planePosIdx":"zandbokz.planePos",
-              "upwardsIdx": [0.0, 1.0, 0.0],
-              "e1Idx": "zandbokz.planeE1",
-              "e2Idx": "zandbokz.planeE2"
-            },
-            "V2D": {
-              "position2DIdx":[0.0, 0.0],
-              "velocity2DIdx":[0.0, 0.0],
-              "orientation2DIdx":[1.0, 0.0],
-              "velocity2DRightSrcIdx" : ["caja.rightSpeed"],
-              "velocity2DLeftSrcIdx" : ["caja.leftSpeed"],
-              "velocity2DForwardSrcIdx" : ["caja.forwardSpeed"],
-              "velocity2DBackwardSrcIdx" : ["caja.backwardSpeed"]
+              "positionIdx":[0.0, 10.0, 0.0],
+              "orientationIdx":[0.0, 1.0, 0.0],
+              "velocityIdx": "zandbokz.cajaVel"
             }
           }
         },
@@ -1487,84 +750,11 @@
           }
         },
         {
-          "factory" :"VoidAvtBldrFtry",
-          "name" : "zandbokz.attachcajaonoff",
-          "config" : {
-            "lists":{"loadScreen.attachcajaonofflist":"attachonofticket"}
-          }
-        },
-        {
-          "factory" :"TwoDoubleThreeV3DAvtBldrFtry",
-          "name" : "zandbokz.cajacalculavel",
-          "config" : {
-            "attribIndexes" : ["velocityLateralIdx", "velocityForwardIdx", "velocityPre1Idx", "upwardsIdx","orientationIdx"],
-            "lists":{"loadScreen.velsetterlist" : "relativeVelTicket"},
-            "deativatedlists":{}
-          }
-        },
-        {
           "factory" :"TwoV3DAvtBldrFtry",
           "name" : "zandbokz.cajaamover",
           "config" : {
             "attribIndexes" : ["velocityIdx", "positionIdx"],
-            "lists":{
-            },
-            "deativatedlists":{
-              "loadScreen.ULM3DList":"ULM3DTicket"
-            }
-          }
-        },
-        {
-          "factory" :"ThreeV3DAvtBldrFtry",
-          "name" : "zandbokz.cajafinalvel",
-          "config" : {
-            "attribIndexes" : ["velocityPre2Idx", "velocityPre1Idx", "velocityIdx"],
-            "lists":{
-              "loadScreen.twovelaccumlist":"twoVelaccumListTicket"
-            },
-            "deativatedlists":{
-            }
-          }
-        },
-        {
-          "factory" :"TwoV3DAvtBldrFtry",
-          "name" : "zandbokz.cajaacaer",
-          "config" : {
-            "attribIndexes" : ["velocityPre2Idx", "positionIdx"],
-            "lists":{
-            },
-            "deativatedlists":{
-              "loadScreen.gmList":"gmTicket"
-
-            }
-          }
-        },
-        {
-          "factory" :"TwoV3DAvtBldrFtry",
-          "name" : "zandbokz.cajaagirar",
-          "config" : {
-            "attribIndexes" : ["upwardsIdx", "velocityPre1Idx"],
-            "lists":{"loadScreen.yawList" : "yawTicket"}
-          }
-        },
-        {
-          "factory" :"V3DAvtBldrFtry",
-          "name" : "zandbokz.cajaasaltar",
-          "config" : {
-            "attribIndexes" : ["velocityIdx"],
-            "lists":{
-              "loadScreen.saltaList":"saltaListTicket"
-            }
-          }
-        },
-        {
-          "factory" :"3DOn2DAvtBldrFtry",
-          "name" : "zandbokz.cajaamoverenplano",
-          "config" : {
-            "attribIndexes" : ["velocity2DIdx", "position2DIdx", "velocityIdx", "positionIdx", "e2Idx", "e1Idx", "planePosIdx"],
-            "lists":{
-              "loadScreen.moveOnPlaneList":"ULM3DOn2DTicket"
-            }
+            "lists":{"loadScreen.ULM3DList":"ULM3DTicket"}
           }
         },
         {
@@ -1577,9 +767,7 @@
         {
           "factory" :"ReactorBldrFtry",
           "name" : "zandbokz.reactorcajasolido",
-          "config" : {
-            "platform" : "zandbokz.reaccionmultiagarra"
-          }
+          "config" : {}
         },
         {
           "factory" :"ShapeMSphereBldrFtry",
@@ -1589,48 +777,13 @@
           }
         },
         {
-          "factory" :"Actor2DBldrFtry",
-          "name" : "zandbokz.actorcajasolido2D",
-          "config" : {
-            "solid" : "ENABLED"
-          }
-        },
-        {
-          "factory" :"Reactor2DBldrFtry",
-          "name" : "zandbokz.reactorcajasolido2D",
-          "config" : {
-            "solid" : "zandbokz.reaccionmulticae"
-          }
-        },
-        {
-          "factory" :"ShapeMPoint2DBldrFtry",
-          "name" : "zandbokz.aspectocajapunto",
-          "config" : {
-            "shapetype" : "zandbokz.cajashapepunto2D"
-          }
-        },
-        {
-          "factory" :"InatorBldrFtry",
-          "name" : "zandbokz.cajasocializa",
+          "factory" :"InerBldrFtry",
+          "name" : "zandbokz.cajasolidosocializa",
           "config" : {
             "actorbuilder" : "zandbokz.actorcajasolido",
             "reactorbuilder" : "zandbokz.reactorcajasolido",
             "shapebuilder" : "zandbokz.aspectocajasolido",
-            "interactioners" : "loadScreen.inerList",
-            "inerlists" : {"loadScreen.inerList":"inerTicket"},
-            "inatorlists" :{"loadScreen.inatorList" : "inatorTicket"}
-          }
-        },
-        {
-          "factory" :"Inator2DBldrFtry",
-          "name" : "zandbokz.cajasInator2D",
-          "config" : {
-            "actorbuilder" : "zandbokz.actorcajasolido2D",
-            "reactorbuilder" : "zandbokz.reactorcajasolido2D",
-            "shapebuilder" : "zandbokz.aspectocajapunto",
-            "interactioners" : "loadScreen.iner2DList",
-            "inerlists" : {"loadScreen.iner2DList":"iner2DTicket"},
-            "inatorlists" :{"loadScreen.inator2DList" : "inator2DTicket"}
+            "lists" : {"loadScreen.inerList":"inerTicket"}
           }
         },
         {
@@ -1641,70 +794,9 @@
             "velocityIdx" : "velocityIdx",
             "radiusIdx" : "sizeIdx"
           }
-        },
-        {
-          "factory" :"MovingPoint2DShapeAvtBldrFtry",
-          "name" : "zandbokz.cajashapepunto2D",
-          "config" : {
-            "positionIdx" : "position2DIdx",
-            "velocityIdx" : "velocity2DIdx"
-          }
-        },
-        {"factory": "Add2DVelIHBldrFtry",
-          "name": "zandbokz.cajaPlanoDerecha",
-          "config" : {
-            "orientation2DIdx" : "orientation2DIdx",
-            "velocity2DIdx" : "velocity2DIdx",
-            "velocity2DsrcIds" : "velocity2DRightSrcIdx",
-            "inputEventGenerator" : "loadScreen.inputEventGenerator",
-            "multiplier" : "ONE",
-            "tolerance" : "tolerance",
-            "down" : true,
-            "key":"ZBEK_KP_6"
-          }
-        },
-        {"factory": "Add2DVelIHBldrFtry",
-          "name": "zandbokz.cajaPlanoIzquierda",
-          "config" : {
-            "orientation2DIdx" : "orientation2DIdx",
-            "velocity2DIdx" : "velocity2DIdx",
-            "velocity2DsrcIds" : "velocity2DLeftSrcIdx",
-            "inputEventGenerator" : "loadScreen.inputEventGenerator",
-            "multiplier" : "ONE",
-            "tolerance" : "tolerance",
-            "down" : true,
-            "key":"ZBEK_KP_4"
-          }
-        },
-        {"factory": "Add2DVelIHBldrFtry",
-          "name": "zandbokz.cajaPlanoDelante",
-          "config" : {
-            "orientation2DIdx" : "orientation2DIdx",
-            "velocity2DIdx" : "velocity2DIdx",
-            "velocity2DsrcIds" : "velocity2DForwardSrcIdx",
-            "inputEventGenerator" : "loadScreen.inputEventGenerator",
-            "multiplier" : "ONE",
-            "tolerance" : "tolerance",
-            "down" : true,
-            "key":"ZBEK_KP_8"
-          }
-        },
-        {"factory": "Add2DVelIHBldrFtry",
-          "name": "zandbokz.cajaPlanoAtras",
-          "config" : {
-            "orientation2DIdx" : "orientation2DIdx",
-            "velocity2DIdx" : "velocity2DIdx",
-            "velocity2DsrcIds" : "velocity2DBackwardSrcIdx",
-            "inputEventGenerator" : "loadScreen.inputEventGenerator",
-            "multiplier" : "ONE",
-            "tolerance" : "tolerance",
-            "down" : true,
-            "key":"ZBEK_KP_5"
-          }
         }
       ],
-      "calls" : ["zandbokz.thirdviewcambldr", "zandbokz.creaunicorniorosa", "zandbokz.pepinobuilder", "zandbokz.protabuilder"],
-      "backupcalls" : ["zandbokz.cajabuilder", "zandbokz.creaunicorniorosa", "zandbokz.diositobuilder", "zandbokz.diositobuilder1", "zandbokz.diositobuilder2", "zandbokz.diositobuilder3", "zandbokz.diositobuilder4", "zandbokz.diositobuilder5", "zandbokz.diositobuilder6", "zandbokz.diositobuilder7", "zandbokz.diositobuilder8"]
+      "calls" : ["zandbokz.pepinobuilder", "zandbokz.cajabuilder", "zandbokz.diositobuilder"]
     },
     {
       "description" : "Creating entity",
@@ -1722,13 +814,13 @@
               "scaleIdx":[200.0]
             },
             "V3D": {
-              "positionIdx":[0.0, -10.0, 0.0],
+              "positionIdx":[0.0, 0.0, 0.0],
               "orientationIdx":[0.0, 1.0, 0.0]
             }
           }
         },
         {"factory": "EntityFtry",
-          "name": "cameraControllerFree",
+          "name": "cameraController",
           "description" : "Entidad asociada a la camara",
           "TODO" : {
             "eye" : "zandbokz.camEye",
@@ -1748,9 +840,7 @@
             "V3D": {
               "positionIdx":"zandbokz.camEye",
               "targetIdx":"zandbokz.camTarget",
-              "upwardsIdx":"zandbokz.camUp",
-              "velocityIdx": "zandbokz.protaVel",
-              "excentricIdx": "zandbokz.protaPos"
+              "upwardsIdx":"zandbokz.camUp"
             },
             "TODO": "asociar todos los values de la camara"
           }
@@ -1788,8 +878,7 @@
             "daemons": [
               "loadScreen.timeEventGenerator",
               "loadScreen.inputEventGenerator",
-              "loadScreen.interactionEventGenerator",
-              "loadScreen.interactionEventGenerator2D"
+              "loadScreen.interactionEventGenerator"
             ]
           }
         },
@@ -1797,22 +886,15 @@
           "name": "BehaviorsMD",
           "config" : {
             "daemons": [
-              "loadScreen.relativevelDmn",
               "loadScreen.fovOscillatorDaemon",
               "loadScreen.coordOscillatorDaemon",
-              "loadScreen.calculaprotavelDMN",
-              "loadScreen.vel2oriDMN",
-              "loadScreen.2velAccumDMN",
-              "loadScreen.ULM3DDaemon",
-              "loadScreen.ULM3DOn2DDaemon",
-              "loadScreen.gravityDMN"
+              "loadScreen.ULM3DDaemon"
             ],
             "disabledDaemons": [
               "loadScreen.goForwardDaemon",
               "loadScreen.goBackwardDaemon",
               "loadScreen.goLeftDaemon",
-              "loadScreen.goRightDaemon",
-              "loadScreen.masterShot"
+              "loadScreen.goRightDaemon"
             ]
           }
         },
@@ -1853,20 +935,12 @@
             "window" : "zandbokz.mainwindow"
           }
         },
-        {"factory": "IEG3DFtry",
+        {"factory": "IEGFtry",
           "name": "loadScreen.interactionEventGenerator",
           "config" : {
             "eventId" : "interactionEventId",
             "contextTime" : "DEFAULT",
             "interactionators" : "loadScreen.inatorList"
-          }
-        },
-        {"factory": "IEG2DFtry",
-          "name": "loadScreen.interactionEventGenerator2D",
-          "config" : {
-            "eventId" : "interaction2DEventId",
-            "contextTime" : "DEFAULT",
-            "interactionators" : "loadScreen.inator2DList"
           }
         },
         {"factory": "MainLoopExitFtry",
@@ -1887,14 +961,6 @@
         },
         {"factory": "OGLModelSheetDrawerFtry",
           "name": "loadScreen.screenDrawer",
-          "description" : "comportamiento que pintara la pantalla. Faltan tipos",
-          "config" : {
-            "window" : "zandbokz.mainwindow",
-            "programId" : "base_program"
-          }
-        },
-        {"factory": "OGLLookAtModelSheetDrawerFtry",
-          "name": "loadScreen.screenLookAtDrawer",
           "description" : "comportamiento que pintara la pantalla. Faltan tipos",
           "config" : {
             "window" : "zandbokz.mainwindow",
@@ -1938,139 +1004,19 @@
             "component" : "model.sineComponent"
           }
         },
-        {"factory": "VoidBvrDmnFtry",
-          "name": "loadScreen.attachcajaactivationsDaemon",
-          "description" : "",
-          "config" : {
-            "list" : "loadScreen.attachcajaonofflist",
-            "behavior" : "loadScreen.attachcajaactivations"
-          }
-        },
-        {"factory": "VoidBvrDmnFtry",
-          "name": "loadScreen.attachcajadeactivationsDaemon",
-          "description" : "",
-          "config" : {
-            "list" : "loadScreen.attachcajaonofflist",
-            "behavior" : "loadScreen.attachcajadeactivations"
-          }
-        },
-        {"factory": "VoidBvrDmnFtry",
-          "name": "loadScreen.dettachcajaactivationsDaemon",
-          "description" : "",
-          "config" : {
-            "list" : "loadScreen.attachcajaonofflist",
-            "behavior" : "loadScreen.dettachcajaactivations"
-          }
-        },
-        {"factory": "VoidBvrDmnFtry",
-          "name": "loadScreen.dettachcajadeactivationsDaemon",
-          "description" : "",
-          "config" : {
-            "list" : "loadScreen.attachcajaonofflist",
-            "behavior" : "loadScreen.dettachcajadeactivations"
-          }
-        },
-        {"factory": "TicketActivatorBvrFtry",
-          "name": "loadScreen.attachcajaactivations",
-          "description" : "comportamiento engancha la caja a un plano",
-          "config" : {
-            "tickets" : ["ULM3DOn2DTicket"]
-          }
-        },
-        {"factory": "TicketDeactivatorBvrFtry",
-          "name": "loadScreen.attachcajadeactivations",
-          "description" : "comportamiento engancha la caja a un plano",
-          "config" : {
-            "tickets" : ["gmTicket"]
-          }
-        },
-        {"factory": "TicketActivatorBvrFtry",
-          "name": "loadScreen.dettachcajaactivations",
-          "description" : "comportamiento engancha la caja a un plano",
-          "config" : {
-            "tickets" : ["gmTicket"]
-          }
-        },
-        {"factory": "TicketDeactivatorBvrFtry",
-          "name": "loadScreen.dettachcajadeactivations",
-          "description" : "comportamiento engancha la caja a un plano",
-          "config" : {
-            "tickets" : ["ULM3DOn2DTicket"]
-          }
-        },
-        {"factory": "MasterDmnFtry",
-          "name": "loadScreen.attachcajamaster",
-          "description" : "demonio que engancha",
-          "config" : {
-            "daemons": [
-              "loadScreen.attachcajaactivationsDaemon",
-              "loadScreen.attachcajadeactivationsDaemon"
-            ]
-          }
-        },
-        {"factory": "MasterDmnFtry",
-          "name": "loadScreen.dettachcajamaster",
-          "description" : "demonio que desengancha",
-          "config" : {
-            "daemons": [
-              "loadScreen.dettachcajaactivationsDaemon",
-              "loadScreen.dettachcajadeactivationsDaemon",
-              "loadScreen.cajaponvelocidadsaltoDmn"
-            ]
-          }
-        },
-        {"factory": "Vector3DSetterFixedBvrFtry",
-          "name": "loadScreen.cajaponvelocidadsalto",
-          "description" : "comportamiento que pone velocidad para saltar",
-          "config" : {
-            "value": "velcajasalto"
-          }
-        },
-        {"factory": "V3DAvtDaemonFtry",
-          "name": "loadScreen.cajaponvelocidadsaltoDmn",
-          "description" : "demonio que menea el fov",
-          "config" : {
-            "list" : "loadScreen.saltaList",
-            "behavior" : "loadScreen.cajaponvelocidadsalto"
-          }
-        },
-        {"factory": "ExcentricalRotation3DFtry",
+        {"factory": "Rotation3DFtry",
           "name": "loadScreen.pitchBhv",
           "description" : "Comportamiento que menea el obojeto mirando parriba y pabajo",
           "config" : {
-             "sensibility" : "model.pitchsensibility",
-             "rotation" : "model.pitchRotVec"
+             "sensibility" : "model.pitch"
           }
         },
-        {"factory": "ExcentricalRotation3DFtry",
+        {"factory": "Rotation3DFtry",
           "name": "loadScreen.yawBhv",
           "description" : "Comportamiento que menea el bobobojeto mirando pa diestra y siniestra",
           "config" : {
-             "sensibility" : "model.yawsensibility",
-             "rotation" : "model.yawRotVec"
+             "sensibility" : "model.yaw"
           }
-        },
-        {"factory": "GravityMotion3DFtry",
-          "name": "loadScreen.gravityBHV",
-          "description" : "Comportamiento paquesecaiga",
-          "config" : {
-             "gravity" : "gravity"
-          }
-        },
-        {"factory": "Vec3DAccumBhvFtry",
-          "name": "loadScreen.2velAccumBHV",
-          "description" : "Comportamiento pa que sume velocidades",
-          "config" : {}
-        },
-        {"factory": "CalculeOrientationBhv",
-          "name": "loadScreen.calculaprotavel",
-          "description" : "Comportamiento pa que calcule la orientación del prota",
-          "config" : {}
-        },
-        {"factory": "CopyV3DIfNotZeroBhv",
-          "name": "loadScreen.vel2ori",
-          "description" : "Comportamiento pa que mire por donde va",
-          "config" : {}
         },
         {"factory": "RelativeUniformLinearMotion3DFtry",
           "name": "loadScreen.goForward",
@@ -2111,13 +1057,6 @@
             "contextTime" : "DEFAULT"
           }
         },
-        {"factory": "UniformLinearMotion2DOnPlane",
-          "name": "loadScreen.ULM3DOn2D",
-          "description" : "Comportamiento que menea cosas sobre planos",
-          "config" : {
-            "contextTime" : "DEFAULT"
-          }
-        },
         {"factory": "BulletCreatorFtry",
           "name": "loadScreen.BulletCreator",
           "description" : "Creador de balas",
@@ -2140,11 +1079,6 @@
             "contextTime" : "DEFAULT"
           }
         },
-        {"factory": "OrientationRelativeVelSetterFtry",
-          "name": "loadScreen.velsetter",
-          "description" : "Comportamiento que calcula la velocidad final de la caja según la orientación y ... otros valores",
-          "config" : {}
-        },
         {"factory": "BulletCreatorBhvFtry",
           "name": "loadScreen.BulletCreatorBhv",
           "description" : "Comportamiento que crea balas",
@@ -2162,14 +1096,6 @@
         },
         {"factory": "OnceDaemonFtry",
           "name": "loadScreen.onceYawDaemon",
-          "description" : "demonio girara la camara una vez y se va",
-          "config" : {
-            "Daemon" : "loadScreen.yawDaemon",
-            "DaemonMaster" : "BehaviorsMD"
-          }
-        },
-        {"factory": "OnceDaemonFtry",
-          "name": "loadScreen.onceYawPlayerDaemon",
           "description" : "demonio girara la camara una vez y se va",
           "config" : {
             "Daemon" : "loadScreen.yawDaemon",
@@ -2235,7 +1161,6 @@
               "loadScreen.drawDaemon2D",
               "loadScreen.shadersSetter2D",
               "loadScreen.drawDaemon3D",
-              "loadScreen.drawLookAtDaemon3D",
               "loadScreen.shadersSetter3D"
             ]
           }
@@ -2263,14 +1188,6 @@
           "config" : {
             "list" : "loadScreen.drawList",
             "behavior" : "loadScreen.screenDrawer"
-          }
-        },
-        {"factory": "LookAtAvtDaemonFtry",
-          "name": "loadScreen.drawLookAtDaemon3D",
-          "description" : "demonio que pintara la pantalla. Faltan tipos",
-          "config" : {
-            "list" : "loadScreen.drawLookAtList",
-            "behavior" : "loadScreen.screenLookAtDrawer"
           }
         },
         {"factory": "SimpleSpriteDrwrDaemonFtry",
@@ -2303,46 +1220,6 @@
           "config" : {
             "list" : "loadScreen.coordOscillatorList",
             "behavior" : "loadScreen.coordOscillator"
-          }
-        },
-        {"factory": "TwoV3DAvtDaemonFtry",
-          "name": "loadScreen.gravityDMN",
-          "description" : "demonio pa que se caiga",
-          "config" : {
-            "list" : "loadScreen.gmList",
-            "behavior" : "loadScreen.gravityBHV"
-          }
-        },
-        {"factory": "ThreeV3DAvtDaemonFtry",
-          "name": "loadScreen.2velAccumDMN",
-          "description" : "demonio pa que se sumen velocidades",
-          "config" : {
-            "list" : "loadScreen.twovelaccumlist",
-            "behavior" : "loadScreen.2velAccumBHV"
-          }
-        },
-        {"factory": "ThreeV3DAvtDaemonFtry",
-          "name": "loadScreen.calculaprotavelDMN",
-          "description" : "demonio pa que se sumen velocidades",
-          "config" : {
-            "list" : "loadScreen.calculaorilist",
-            "behavior" : "loadScreen.calculaprotavel"
-          }
-        },
-        {"factory": "TwoV3DAvtDaemonFtry",
-          "name": "loadScreen.vel2oriDMN",
-          "description" : "demonio pa que mire a donde va",
-          "config" : {
-            "list" : "loadScreen.vel2orilist",
-            "behavior" : "loadScreen.vel2ori"
-          }
-        },
-        {"factory": "TwoDoubleThreeV3DBhvDmnFtry",
-          "name": "loadScreen.relativevelDmn",
-          "description" : "demonio pa que se caiga",
-          "config" : {
-            "list" : "loadScreen.velsetterlist",
-            "behavior" : "loadScreen.velsetter"
           }
         },
         {"factory": "ThreeV3DAvtDaemonFtry",
@@ -2385,14 +1262,6 @@
             "behavior" : "loadScreen.ULM3DBhv"
           }
         },
-        {"factory": "3DOn2DAvtDaemonFtry",
-          "name": "loadScreen.ULM3DOn2DDaemon",
-          "description" : "demonio mueve la bala",
-          "config" : {
-            "list" : "loadScreen.moveOnPlaneList",
-            "behavior" : "loadScreen.ULM3DOn2D"
-          }
-        },
         {"factory": "Drawable3DAvtFtry",
           "name": "loadScreen.sueloEnt",
           "config" : {
@@ -2409,91 +1278,69 @@
             "lists":{"loadScreen.drawList2D":"drawticket"}
           }
         },
-        {"factory": "TwoV3DAvtFtry",
-          "name": "loadScreen.notSosimplecamMovePitch",
-          "config" : {
-            "entity" : "cameraControllerFree",
-            "attribIndexes" : ["excentricIdx", "positionIdx"],
-            "lists":{},
-            "deativatedlists" : {"loadScreen.pitchList":"camPitchTicket"}
-          }
-        },
-        {"factory": "TwoV3DAvtFtry",
-          "name": "loadScreen.notSosimplecamMoveYaw",
-          "config" : {
-            "entity" : "cameraControllerFree",
-            "attribIndexes" : ["excentricIdx", "positionIdx"],
-            "lists":{"loadScreen.yawList":"yawTicket"},
-            "deativatedlists" : {}
-          }
-        },
-        {"factory": "TwoV3DAvtFtry",
-          "name": "loadScreen.simplecamMove",
-          "config" : {
-            "entity" : "cameraControllerFree",
-            "attribIndexes" : ["velocityIdx", "positionIdx"],
-            "lists":{"loadScreen.ULM3DList":"ULM3DTicket"},
-            "deativatedlists" : {}
-          }
-        },
         {"factory": "FloatAvtFtry",
           "name": "loadScreen.camFov",
           "config" : {
-            "entity" : "cameraControllerFree",
+            "entity" : "cameraController",
             "attribIndexes" : ["fovIdx"],
-            "lists":{},
-            "deativatedlists" : {"loadScreen.fovOscillatorList":"fovticket"}
+            "lists":{"loadScreen.fovOscillatorList":"fovticket"}
           }
         },
         {"factory": "TargetToDirAvtFtry",
           "name": "loadScreen.camPosVel",
           "config" : {
-            "entity" : "cameraControllerFree",
+            "entity" : "cameraController",
             "positionIdx" : "positionIdx",
             "targetIdx" : "targetIdx",
             "upwardsIdx" : "upwardsIdx",
             "scaleIdx" : "camScaleIdx",
-            "lists":{},
-            "deativatedlists":{"loadScreen.fovOscillatorList":"fovticket", "loadScreen.camMoveList":"camPosVelTicket"}
+            "lists":{"loadScreen.camMoveList":"camPosVelTicket"}
+          }
+        },
+        { "factory" : "PosUpwardsTargetToPosUpwardsDirAvtFtry",
+          "name": "loadScreen.camPosUpDir",
+          "config" : {
+            "entity" : "cameraController",
+            "positionIdx" : "positionIdx",
+            "targetIdx" : "targetIdx",
+            "upwardsIdx" : "upwardsIdx",
+            "lists":{"loadScreen.BulletCreatorList":"BulletCreatorTicket"}
+          }
+        },
+        { "factory": "PosTargetToPosDirAvtFtry",
+          "name": "loadScreen.camPosDir",
+          "config" : {
+            "entity" : "cameraController",
+            "positionIdx" : "positionIdx",
+            "targetIdx" : "targetIdx",
+            "lists":{"loadScreen.SoundCreatorList":"SoundCreatorTicket"}
           }
         },
         {"factory": "LookAtToPitchAvtFtry",
           "name": "loadScreen.camPitch",
           "config" : {
-            "entity" : "cameraControllerFree",
+            "entity" : "cameraController",
             "positionIdx" : "positionIdx",
             "targetIdx" : "targetIdx",
             "upwardsIdx" : "upwardsIdx",
             "scaleIdx" : "camScaleIdx",
-            "lists":{},
-            "deativatedlists":{},
-            "backup" : {"loadScreen.pitchList":"camPitchTicket"}
+            "lists":{"loadScreen.pitchList":"camPitchTicket"}
           }
         },
         {"factory": "LookAtToYawAvtFtry",
           "name": "loadScreen.camYaw",
           "config" : {
-            "entity" : "cameraControllerFree",
+            "entity" : "cameraController",
             "positionIdx" : "positionIdx",
             "targetIdx" : "targetIdx",
             "upwardsIdx" : "upwardsIdx",
             "scaleIdx" : "camScaleIdx",
-            "lists":{},
-            "deativatedlists":{},
-            "backup":{"loadScreen.yawList":"yawTicket"}
+            "lists":{"loadScreen.yawList":"camYawTicket"}
           }
         }
       ]
     }, {"description" : "Setting controls",
       "factories" : [
-        {"factory": "KeyDownTicketEnablerIHFtry",
-          "name": "loadScreen.ratatatatataInputH",
-          "config" : {
-            "ticket" : "BehaviorsMD.loadScreen.masterShot.ticket",
-            "inputEventGenerator" : "loadScreen.inputEventGenerator",
-            "key":"ZBEK_MOUSE_RIGHT"
-          }
-        },
         {"factory": "KeyDownTicketEnablerIHFtry",
           "name": "loadScreen.goForwardInputH",
           "config" : {
@@ -2538,8 +1385,7 @@
         {"factory": "ParametricActivatorIHFtry",
           "name": "loadScreen.yawInputH",
           "config" : {
-            "ticket" : "BehaviorsMD.loadScreen.onceYawPlayerDaemon.ticket",
-            "ticketBack" : "BehaviorsMD.loadScreen.onceYawDaemon.ticket",
+            "ticket" : "BehaviorsMD.loadScreen.onceYawDaemon.ticket",
             "parametric" : "loadScreen.yawBhv",
             "inputEventGenerator" : "loadScreen.inputEventGenerator",
             "key":"ZBEK_MOUSE_OFFSET_X"
@@ -2553,44 +1399,44 @@
             "key":"ZBEK_MOUSE_LEFT"
           }
         },
-        {"factory": "DoubleKeyValueSetterIHFtry",
+        {"factory": "V3DKeyValueSetterIHFtry",
           "name": "loadScreen.cajanorte",
           "config" : {
             "inputEventGenerator" : "loadScreen.inputEventGenerator",
             "key":"ZBEK_UP",
             "valuePressed":"velcajanorte",
-            "valueReleased":"ZERO",
-            "value" : "zandbokz.protaVelForward"
+            "valueReleased":"VZERO",
+            "value" : "zandbokz.cajaVel"
           }
         },
-        {"factory": "DoubleKeyValueSetterIHFtry",
+        {"factory": "V3DKeyValueSetterIHFtry",
           "name": "loadScreen.cajasur",
           "config" : {
             "inputEventGenerator" : "loadScreen.inputEventGenerator",
             "key":"ZBEK_DOWN",
             "valuePressed":"velcajasur",
-            "valueReleased":"ZERO",
-            "value" : "zandbokz.protaVelForward"
+            "valueReleased":"VZERO",
+            "value" : "zandbokz.cajaVel"
           }
         },
-        {"factory": "DoubleKeyValueSetterIHFtry",
+        {"factory": "V3DKeyValueSetterIHFtry",
           "name": "loadScreen.cajaeste",
           "config" : {
             "inputEventGenerator" : "loadScreen.inputEventGenerator",
             "key":"ZBEK_RIGHT",
             "valuePressed":"velcajaeste",
-            "valueReleased":"ZERO",
-            "value" : "zandbokz.protaVelLateral"
+            "valueReleased":"VZERO",
+            "value" : "zandbokz.cajaVel"
           }
         },
-        {"factory": "DoubleKeyValueSetterIHFtry",
+        {"factory": "V3DKeyValueSetterIHFtry",
           "name": "loadScreen.cajaoeste",
           "config" : {
             "inputEventGenerator" : "loadScreen.inputEventGenerator",
             "key":"ZBEK_LEFT",
             "valuePressed":"velcajaoeste",
-            "valueReleased":"ZERO",
-            "value" : "zandbokz.protaVelLateral"
+            "valueReleased":"VZERO",
+            "value" : "zandbokz.cajaVel"
           }
         },
         {"factory": "DaemonIHFtry",
@@ -2599,14 +1445,6 @@
             "daemon" : "loadScreen.exitDaemon",
             "inputEventGenerator" : "loadScreen.inputEventGenerator",
             "key":"ZBEK_ESCAPE"
-          }
-        },
-        {"factory": "DaemonIHFtry",
-          "name": "loadScreen.saltahandler",
-          "config" : {
-            "daemon" : "loadScreen.dettachcajamaster",
-            "inputEventGenerator" : "loadScreen.inputEventGenerator",
-            "key":"ZBEK_SPACE"
           }
         }
       ]

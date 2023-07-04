@@ -10,7 +10,6 @@
 #ifndef ZBE_ENTITIES_BUILDERS_METABUILDER_H
 #define ZBE_ENTITIES_BUILDERS_METABUILDER_H
 
-#include <cstdio>
 #include <deque>
 #include <memory>
 #include <string>
@@ -424,7 +423,7 @@ private:
   std::forward_list<std::pair<uint64_t, std::shared_ptr<Value<std::vector<std::string>>>>> sharedVStringValues;
 };
 
-template<template<typename T, typename ...Ts> class AVT, typename T, typename ...Ts>
+template<typename T, typename ...Ts>
 class AvatarBldr : public Funct<void, std::shared_ptr<Entity>> {
 public:
   static const int expectedIndexes = sizeof...(Ts) + 1;
@@ -436,12 +435,6 @@ public:
       auto ticket = indexNList.second->push_front(avt);
       ent->addTicket(indexNList.first, ticket);
     }
-    for(auto indexNList : deactivatedIndexNLists) {
-      auto ticket = indexNList.second->push_front(avt);
-      ent->addTicket(indexNList.first, ticket);
-      // TODO crear metodo addTicket que permita pasar un bool indicando si es activo o no.
-      ent->setINACTIVE(indexNList.first);
-    }
   }
 
   void setIdxArr(std::array<uint64_t, expectedIndexes> idxArr) {
@@ -452,20 +445,15 @@ public:
     indexNLists.push_back({index, list});
   }
 
-  void addDeactivatedIndexNlist(uint64_t index, std::shared_ptr<TicketedForwardList<AvtBaseType>> list) {
-    deactivatedIndexNLists.push_back({index, list});
-  }
-
 private:
-  using AvtImplType = AVT<T, Ts...>;
+  using AvtImplType = MBaseAvatar<T, Ts...>;
   std::array<uint64_t, expectedIndexes> idxArr;
   std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> indexNLists;
-  std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> deactivatedIndexNLists;
 
 };
 
-template<template<typename T> class AVT, typename T>
-class AvatarBldr<AVT, T> : public Funct<void, std::shared_ptr<Entity>> {
+template<typename T>
+class AvatarBldr<T> : public Funct<void, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = SAvatar<T>;
   void operator()(std::shared_ptr<Entity> ent) {
@@ -475,12 +463,6 @@ public:
       auto ticket = indexNList.second->push_front(avt);
       ent->addTicket(indexNList.first, ticket);
     }
-    for(auto indexNList : deactivatedIndexNLists) {
-      auto ticket = indexNList.second->push_front(avt);
-      ent->addTicket(indexNList.first, ticket);
-      // TODO crear metodo addTicket que permita pasar un bool indicando si es activo o no.
-      ent->setINACTIVE(indexNList.first);
-    }
   }
 
   void setIdx(uint64_t idx) {
@@ -495,72 +477,20 @@ public:
     indexNLists.push_back({index, list});
   }
 
-  void addDeactivatedIndexNlist(uint64_t index, std::shared_ptr<TicketedForwardList<AvtBaseType>> list) {
-    deactivatedIndexNLists.push_back({index, list});
-  }
-
 private:
-  using AvtImplType = AVT<T>;
+  using AvtImplType = SBaseAvatar<T>;
   uint64_t idx;
   std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> indexNLists;
-  std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> deactivatedIndexNLists;
 
 };
 
-template<typename T>
-class AvtVoid {
-  T t;
-};
-
-template<>
-class AvatarBldr<AvtVoid, void> : public Funct<void, std::shared_ptr<Entity>> {
-public:
-  using AvtBaseType = Avatar;
-  void operator()(std::shared_ptr<Entity> ent) {
-    std::shared_ptr<AvtImplType> avt = std::make_shared<AvtImplType>(ent);
-    for(auto indexNList : indexNLists) {
-      auto ticket = indexNList.second->push_front(avt);
-      ent->addTicket(indexNList.first, ticket);
-    }
-    for(auto indexNList : deactivatedIndexNLists) {
-      auto ticket = indexNList.second->push_front(avt);
-      ent->addTicket(indexNList.first, ticket);
-      // TODO crear metodo addTicket que permita pasar un bool indicando si es activo o no.
-      ent->setINACTIVE(indexNList.first);
-    }
-  }
-
-  void setIdx(uint64_t idx) {
-    this->idx = idx;
-  }
-
-  void setIdxArr(std::array<uint64_t, 1> idxArr) {
-    this->idx = idxArr[0];
-  }
-
-  void addIndexNlist(uint64_t index, std::shared_ptr<TicketedForwardList<AvtBaseType>> list) {
-    indexNLists.push_back({index, list});
-  }
-
-  void addDeactivatedIndexNlist(uint64_t index, std::shared_ptr<TicketedForwardList<AvtBaseType>> list) {
-    deactivatedIndexNLists.push_back({index, list});
-  }
-
-private:
-  using AvtImplType = BaseAvatar;
-  uint64_t idx;
-  std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> indexNLists;
-  std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> deactivatedIndexNLists;
-
-};
-
-template<template<typename ...Ts> class AVT, typename... Ts>
-class _AvatarBldrFtry : public Factory {
+template<typename... Ts>
+class AvatarBldrFtry : public Factory {
 public:
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
-    std::shared_ptr<AvatarBldr<AVT, Ts...>> ab = std::make_shared<AvatarBldr<AVT, Ts...>>();
-    mainRsrc.insert(zbe::factories::functionName_ + name, ab);
+    std::shared_ptr<AvatarBldr<Ts...>> ab = std::make_shared<AvatarBldr<Ts...>>();
+    mainRsrc.insert("Function."s + name, ab);
     specificRsrc.insert("AvatarBldr."s + name, ab);
   }
 
@@ -582,16 +512,9 @@ public:
     }
     ab->setIdxArr(*arr);
 
-    JSONFactory::loadAllIndexed<TicketedForwardList<typename AvatarBldr<AVT, Ts...>::AvtBaseType>>(listRsrc, uintDict, j, zbe::factories::listName, "lists"s, "AvatarBldrFtry"s,
+    JSONFactory::loadAllIndexed<TicketedForwardList<typename AvatarBldr<Ts...>::AvtBaseType>>(listRsrc, uintDict, j, zbe::factories::listName, "lists"s, "AvatarBldrFtry"s,
         [&](uint64_t idx, std::shared_ptr<ListType> list) {
           ab->addIndexNlist(idx, list);
-          return true;
-        }
-    );
-
-    JSONFactory::loadAllIndexed<TicketedForwardList<typename AvatarBldr<AVT, Ts...>::AvtBaseType>>(listRsrc, uintDict, j, zbe::factories::listName, "deativatedlists"s, "AvatarBldrFtry"s,
-        [&](uint64_t idx, std::shared_ptr<ListType> list) {
-          ab->addDeactivatedIndexNlist(idx, list);
           return true;
         }
     );
@@ -600,69 +523,10 @@ public:
 private:
   static const int expectedIndexes = sizeof...(Ts);
   using FunctionType = Funct<void, std::shared_ptr<Entity>>;
-  using ListType = TicketedForwardList<typename AvatarBldr<AVT, Ts...>::AvtBaseType>;
+  using ListType = TicketedForwardList<typename AvatarBldr<Ts...>::AvtBaseType>;
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
-  RsrcStore<AvatarBldr<AVT, Ts...>>& specificRsrc = RsrcStore<AvatarBldr<AVT, Ts...>>::getInstance();
-  RsrcStore<ListType>& listRsrc = RsrcStore<ListType>::getInstance();
-  RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
-};
-
-template<typename ...Ts>
-using MAvatarBldrFtry = _AvatarBldrFtry<MBaseAvatar, Ts...>;
-
-template<typename T>
-using SAvatarBldrFtry = _AvatarBldrFtry<SBaseAvatar, T>;
-
-template<typename T, typename ...Ts>
-using MDynamicAvatarBldrFtry = _AvatarBldrFtry<MDynamicAvatar, T, Ts...>;
-
-template<typename T>
-using SDynamicAvatarBldrFtry = _AvatarBldrFtry<SDynamicAvatar, T>;
-
-
-class AvatarBldrFtry : public Factory {
-public:
-  void create(std::string name, uint64_t cfgId) {
-    using namespace std::string_literals;
-    std::shared_ptr<AvatarBldr<AvtVoid, void>> ab = std::make_shared<AvatarBldr<AvtVoid, void>>();
-    mainRsrc.insert(zbe::factories::functionName_ + name, ab);
-    specificRsrc.insert("AvatarBldr."s + name, ab);
-  }
-
-  void setup(std::string name, uint64_t cfgId) {
-    using namespace std::string_literals;
-    using namespace nlohmann;
-    std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);
-
-    if(!cfg) {
-      SysError::setError("AvatarBldrFtry config for "s + name + " not found."s);
-      return;
-    }
-    auto ab = specificRsrc.get("AvatarBldr."s + name);
-    auto j = *cfg;
-
-    JSONFactory::loadAllIndexed<TicketedForwardList<typename AvatarBldr<AvtVoid, void>::AvtBaseType>>(listRsrc, uintDict, j, zbe::factories::listName, "lists"s, "AvatarBldrFtry"s,
-        [&](uint64_t idx, std::shared_ptr<ListType> list) {
-          ab->addIndexNlist(idx, list);
-          return true;
-        }
-    );
-
-    JSONFactory::loadAllIndexed<TicketedForwardList<typename AvatarBldr<AvtVoid, void>::AvtBaseType>>(listRsrc, uintDict, j, zbe::factories::listName, "deativatedlists"s, "AvatarBldrFtry"s,
-        [&](uint64_t idx, std::shared_ptr<ListType> list) {
-          ab->addDeactivatedIndexNlist(idx, list);
-          return true;
-        }
-    );
-  }
-
-private:
-  using FunctionType = Funct<void, std::shared_ptr<Entity>>;
-  using ListType = TicketedForwardList<typename AvatarBldr<AvtVoid, void>::AvtBaseType>;
-  RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
-  RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
-  RsrcStore<AvatarBldr<AvtVoid, void>>& specificRsrc = RsrcStore<AvatarBldr<AvtVoid, void>>::getInstance();
+  RsrcStore<AvatarBldr<Ts...>>& specificRsrc = RsrcStore<AvatarBldr<Ts...>>::getInstance();
   RsrcStore<ListType>& listRsrc = RsrcStore<ListType>::getInstance();
   RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
 };
@@ -773,16 +637,43 @@ private:
   std::shared_ptr<InerList> internalInerList;
 };
 
+template<typename IData, typename Trait, typename ...Traits>
+class ActorBldr : public Funct<Actor<IData, Trait, Traits...>, std::shared_ptr<Entity>>, public ActorBldr<IData, Trait>, public ActorBldr<IData, Traits>... {
+public:
+  Actor<IData, Trait, Traits...> operator()(std::shared_ptr<Entity> ent) {
+    Actor<IData, Trait, Traits...> actor;
+    actor.setTrait(buildFunct<Trait>(ent));
+    std::initializer_list<int>{(actor.setTrait(buildFunct<Traits>(ent)) , 0)... };
+    return actor;
+  }
+
+  template<typename U>
+  std::shared_ptr<Funct<void, Reactor<IData, U>*, IData>> buildFunct(std::shared_ptr<Entity> ent) {
+    return this->ActorBldr<IData, U>::buildFunct(ent);
+  }
+
+  template<typename U>
+  void setTraitBuildr(std::shared_ptr<typename ActorBldr<IData, U>::SubBuild> sb) {
+    this->ActorBldr<IData, U>::setTraitBuildr(sb);
+  }
+};
+
 template<typename IData, typename Trait>
-class _ActorBldr {
+class ActorBldr<IData, Trait> : public Funct<Actor<IData, Trait>, std::shared_ptr<Entity>> {
 public:
   using TraitFunct = Funct<void, Reactor<IData, Trait>*, IData>;
   using SubBuild = Funct<std::shared_ptr<TraitFunct>, std::shared_ptr<Entity>>;
 
-  _ActorBldr() : sb(std::make_shared<WrapperFunct<std::shared_ptr<TraitFunct>,std::shared_ptr<Entity>>>([](std::shared_ptr<Entity>){
+  ActorBldr() : sb(std::make_shared<WrapperFunct<std::shared_ptr<TraitFunct>,std::shared_ptr<Entity>>>([](std::shared_ptr<Entity>){
                     return std::make_shared<WrapperFunct<void, Reactor<IData, Trait>*, IData>>(Actor<IData, Trait>::noAct);
                 })) {
 
+  }
+
+  Actor<IData, Trait> operator() (std::shared_ptr<Entity> ent) {
+    Actor<IData, Trait> actor;
+    actor.setTrait((*sb)(ent));
+    return actor;
   }
 
   std::shared_ptr<TraitFunct> buildFunct(std::shared_ptr<Entity> ent) {
@@ -796,67 +687,50 @@ private:
   std::shared_ptr<SubBuild> sb;
 };
 
-template<typename IData, typename Trait, typename ...Traits>
-class ActorBldr : public Funct<Actor<IData, Trait, Traits...>, std::shared_ptr<Entity>>, public _ActorBldr<IData, Trait>, public _ActorBldr<IData, Traits>... {
-public:
-  Actor<IData, Trait, Traits...> operator()(std::shared_ptr<Entity> ent) {
-    Actor<IData, Trait, Traits...> actor;
-    actor.setTrait(buildFunct<Trait>(ent));
-    std::initializer_list<int>{(actor.setTrait(buildFunct<Traits>(ent)) , 0)... };
-    return actor;
-  }
-
-  template<typename U>
-  std::shared_ptr<Funct<void, Reactor<IData, U>*, IData>> buildFunct(std::shared_ptr<Entity> ent) {
-    return this->_ActorBldr<IData, U>::buildFunct(ent);
-  }
-
-  template<typename U>
-  void setTraitBuildr(std::shared_ptr<typename _ActorBldr<IData, U>::SubBuild> sb) {
-    this->_ActorBldr<IData, U>::setTraitBuildr(sb);
-  }
-};
-
-template<typename IData, typename Trait>
-class ActorBldr<IData, Trait> : public Funct<Actor<IData, Trait>, std::shared_ptr<Entity>>, public _ActorBldr<IData, Trait> {
-public:
-  Actor<IData, Trait> operator() (std::shared_ptr<Entity> ent) {
-    Actor<IData, Trait> actor;
-    actor.setTrait(_ActorBldr<IData, Trait>::buildFunct(ent));
-    return actor;
-  }
-};
-
 template<typename IData, typename Trait>
 class EnabledEmptyTraitBldr : public Funct<std::shared_ptr<Funct<void, Reactor<IData, Trait>*, IData>>, std::shared_ptr<Entity>> {
 public:
-  EnabledEmptyTraitBldr() : emptyTrait(std::make_shared<EnabledEmptyTrait<IData, Trait>>()) {}
-
   std::shared_ptr<Funct<void, Reactor<IData, Trait>*, IData>> operator()(std::shared_ptr<Entity>) {
-    //return std::make_shared<EnabledEmptyTrait<IData, Trait>>();
-    return emptyTrait;
+    return std::make_shared<EnabledEmptyTrait<IData, Trait>>();
   }
-private:
-  std::shared_ptr<Funct<void, Reactor<IData, Trait>*, IData>> emptyTrait;
 };
 
 // Use SimpleGenericFtry for this EnabledEmptyTraitBldr
 
-// TODO: NO necesitamos heredar de ReactorBldr dado que no necesitamos usar su operator
-// Podemos hacer una clase de utilidad que haga las funciones actuales de ReactorBldr (EJ: ReactorBldr_)
-// Esas funciones son buildFunct y setReactionBuilder
-// De esta forma ReactorBldr de uno hereda de ese una vez y ReactorBldr de muchos herada de esa para cada tipo pero NO del funct de cada tipo.
+template<typename IData, typename Trait, typename ...Traits>
+class ReactorBldr : public Funct<Reactor<IData, Trait, Traits...>, std::shared_ptr<Entity>>, public ReactorBldr<IData, Trait>, public ReactorBldr<IData, Traits>... {
+public:
+  Reactor<IData, Trait, Traits...> operator()(std::shared_ptr<Entity> ent) {
+    Reactor<IData, Trait, Traits...> reactor;
+    reactor.setReaction(buildFunct(ent));
+    std::initializer_list<int>{(reactor.setReaction(buildFunct<Traits>(ent)) , 0)... };
+    return reactor;
+  }
+
+  template<typename U>
+  std::shared_ptr<Funct<void, IData, U>> buildFunct(std::shared_ptr<Entity> ent) {
+    return this->ReactorBldr<IData, U>::buildFunct(ent);
+  }
+
+  template<typename U>
+  void setReactionBuilder(std::shared_ptr<typename ReactorBldr<IData, U>::SubBuild> sb) {
+    this->ReactorBldr<IData, U>::setReactionBuilder(sb);
+  }
+};
 
 template<typename IData, typename Trait>
-class _ReactorBldr {
+class ReactorBldr<IData, Trait> : public Funct<Reactor<IData, Trait>, std::shared_ptr<Entity>> {
 public:
   using ReactFunct = Funct<void, IData, Trait>;
   using SubBuild = Funct<std::shared_ptr<ReactFunct>, std::shared_ptr<Entity>>;
 
-  //_ReactorBldr() : sb(std::make_shared<WrapperFunct<std::shared_ptr<ReactFunct>, std::shared_ptr<Entity>>>(noReactionSubBuild)) {}
-  _ReactorBldr() : sb() {}
+  ReactorBldr() : sb(std::make_shared<WrapperFunct<std::shared_ptr<ReactFunct>, std::shared_ptr<Entity>>>(noReactionSubBuild)) {}
 
-  virtual ~_ReactorBldr() = default;
+  Reactor<IData, Trait> operator() (std::shared_ptr<Entity> ent) {
+    Reactor<IData, Trait> reactor;
+    reactor.setReaction((*sb)(ent));
+    return reactor;
+  }
 
   std::shared_ptr<ReactFunct> buildFunct(std::shared_ptr<Entity> ent) {
     return (*sb)(ent);
@@ -865,60 +739,11 @@ public:
   void setReactionBuilder(std::shared_ptr<SubBuild> sb) {
     this->sb = sb;
   }
-
+private:
   static std::shared_ptr<ReactFunct> noReactionSubBuild(std::shared_ptr<Entity>) {
     return Reactor<IData, Trait>::noReaction;
   }
-protected:
   std::shared_ptr<SubBuild> sb;
-};
-
-template<typename IData, typename Trait, typename ...Traits>
-class ReactorBldr : public Funct<Reactor<IData, Trait, Traits...>, std::shared_ptr<Entity>>, public _ReactorBldr<IData, Trait>, public _ReactorBldr<IData, Traits>... {
-public:
-  Reactor<IData, Trait, Traits...> operator()(std::shared_ptr<Entity> ent) {
-    Reactor<IData, Trait, Traits...> reactor;
-    reactor.Reactor<IData, Trait>::setReaction(buildFunct<Trait>(ent));
-    std::initializer_list<int>{(reactor.Reactor<IData, Traits>::setReaction(buildFunct<Traits>(ent)) , 0)... };
-    return reactor;
-  }
-
-  template<typename U>
-  std::shared_ptr<Funct<void, IData, U>> buildFunct(std::shared_ptr<Entity> ent) {
-    return this->_ReactorBldr<IData, U>::buildFunct(ent);
-  }
-
-  template<typename U>
-  void setReactionBuilder(std::shared_ptr<typename _ReactorBldr<IData, U>::SubBuild> sb) {
-    this->_ReactorBldr<IData, U>::setReactionBuilder(sb);
-  }
-};
-
-template<typename IData, typename Trait>
-class ReactorBldr<IData, Trait> : public Funct<Reactor<IData, Trait>, std::shared_ptr<Entity>>, public _ReactorBldr<IData, Trait> {
-public:
-  using ReactFunct = Funct<void, IData, Trait>;
-  using SubBuild = Funct<std::shared_ptr<ReactFunct>, std::shared_ptr<Entity>>;
-
-  Reactor<IData, Trait> operator() (std::shared_ptr<Entity> ent) {
-    Reactor<IData, Trait> reactor;
-    //reactor.setReaction((*sb)(ent));
-    reactor.setReaction(_ReactorBldr<IData, Trait>::buildFunct(ent));
-    return reactor;
-  }
-
-//   std::shared_ptr<ReactFunct> buildFunct(std::shared_ptr<Entity> ent) {
-//     return (*sb)(ent);
-//   }
-
-//   void setReactionBuilder(std::shared_ptr<SubBuild> sb) {
-//     this->sb = sb;
-//   }
-// private:
-//   static std::shared_ptr<ReactFunct> noReactionSubBuild(std::shared_ptr<Entity>) {
-//     return Reactor<IData, Trait>::noReaction;
-//   }
-//   std::shared_ptr<SubBuild> sb;
 };
 
 template<typename S, typename ...Shapes>
@@ -950,7 +775,7 @@ public:
   template<typename U>
   void addTraitBuilder(std::string traitCfgName, nlohmann::json cfg, std::shared_ptr<ActorBldr<IData, Traits...>> actorBldr, bool& failed) {
     using namespace std::string_literals;
-    auto& builderStore = RsrcStore<typename _ActorBldr<IData, U>::SubBuild>::getInstance();
+    auto& builderStore = RsrcStore<typename ActorBldr<IData, Traits...>::SubBuild>::getInstance();
     if(failed) {return;}
     if(!cfg.contains(traitCfgName)) {
       return;
@@ -962,22 +787,22 @@ public:
     }
     std::string builderName = cfg[traitCfgName].get<std::string>();
     if(!builderName.compare("ENABLED"s)) {
-        actorBldr->_ActorBldr<IData, U>::setTraitBuildr(std::make_shared<EnabledEmptyTraitBldr<IData, U>>());
+        actorBldr->setTraitBuildr(std::make_shared<EnabledEmptyTraitBldr<IData, U>>());
     } else {
-      if(!builderStore.contains(zbe::factories::functionName_ + builderName)) {
+      if(builderStore.contains(builderName)) {
         SysError::setError("ActorBldrFtry config for "s + traitCfgName + " is not a builder name");
         failed = true;
         return;
       }
-      auto bldr = builderStore.get(zbe::factories::functionName_ + builderName);
-      actorBldr->_ActorBldr<IData, U>::setTraitBuildr(bldr);
+      auto bldr = builderStore.get(builderName);
+      actorBldr->setTraitBuildr(bldr);
     }
   }
 
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     std::shared_ptr<ActorBldr<IData, Traits...>> ab = std::make_shared<ActorBldr<IData, Traits...>>();
-    mainRsrc.insert(zbe::factories::functionName_ + name, ab);
+    mainRsrc.insert("Function."s + name, ab);
     specificRsrc.insert("ActorBldr."s + name, ab);
   }
 
@@ -1013,11 +838,8 @@ public:
   void addReactionBuilder(std::string traitCfgName, nlohmann::json cfg, std::shared_ptr<ReactorBldr<IData, Traits...>> reactorBldr, bool& failed) {
     using namespace std::string_literals;
     auto& builderStore = RsrcStore<typename ReactorBldr<IData, U>::SubBuild>::getInstance();
-    if(failed) {
-      return;
-    }
+    if(failed) {return;}
     if(!cfg.contains(traitCfgName)) {
-      reactorBldr->_ReactorBldr<IData, U>::setReactionBuilder(std::make_shared<WrapperFunct<std::shared_ptr<Funct<void, IData, U>>, std::shared_ptr<Entity>>>(_ReactorBldr<IData, U>::noReactionSubBuild));
       return;
     }
     if(!cfg[traitCfgName].is_string()) {
@@ -1033,15 +855,15 @@ public:
       return;
     }
     auto bldr = builderStore.get(storedName );
-    reactorBldr->_ReactorBldr<IData, U>::setReactionBuilder(bldr);
+    reactorBldr->setReactionBuilder(bldr);
   }
 
   ReactorBldrFtry(std::initializer_list<std::string> names) : traitCfgNames(names)  {}
 
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     std::shared_ptr<ReactorBldr<IData, Traits...>> ab = std::make_shared<ReactorBldr<IData, Traits...>>();
-    mainRsrc.insert(zbe::factories::functionName_ + name, ab);
+    mainRsrc.insert("Function."s + name, ab);
     specificRsrc.insert("ReactorBldr."s + name, ab);
   }
 
@@ -1076,7 +898,7 @@ public:
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     std::shared_ptr<ShapeBldr<S, Shapes...>> sb = std::make_shared<ShapeBldr<S, Shapes...>>();
-    mainRsrc.insert(zbe::factories::functionName_ + name, sb);
+    mainRsrc.insert("Function."s + name, sb);
     specificRsrc.insert("ShapeBldr."s + name, sb);
   }
 
@@ -1114,7 +936,7 @@ public:
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     std::shared_ptr<EntityBldr> eb = std::make_shared<EntityBldr>();
-    mainRsrc.insert(zbe::factories::functionName_ + name, eb);
+    mainRsrc.insert("Function."s + name, eb);
     specificRsrc.insert("EntityBldr."s + name, eb);
   }
 
@@ -1377,7 +1199,7 @@ public:
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     std::shared_ptr<BuildCopyVectModuleBldr<n, T, Ts...>> bcvmb = std::make_shared<BuildCopyVectModuleBldr<n, T, Ts...>>();
-    mainRsrc.insert(zbe::factories::functionName_ + name, bcvmb);
+    mainRsrc.insert("Function."s + name, bcvmb);
     specificRsrc.insert("BuildCopyVectModuleBldr."s + name, bcvmb);
   }
 
@@ -1415,7 +1237,7 @@ public:
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     std::shared_ptr<BehaviorEntityBldr<T, Ts...>> eb = std::make_shared<BehaviorEntityBldr<T, Ts...>>();
-    mainRsrc.insert(zbe::factories::functionName_ + name, eb);
+    mainRsrc.insert("Function."s + name, eb);
     specificRsrc.insert("BehaviorEntityBldr."s + name, eb);
   }
 
@@ -1525,7 +1347,7 @@ public:
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     std::shared_ptr<BehaviorEntityBldr<T>> eb = std::make_shared<BehaviorEntityBldr<T>>();
-    mainRsrc.insert(zbe::factories::functionName_ + name, eb);
+    mainRsrc.insert("Function."s + name, eb);
     specificRsrc.insert("BehaviorEntityBldr."s + name, eb);
   }
 
@@ -1626,7 +1448,7 @@ public:
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     std::shared_ptr<InatorBldr> inatorb = std::make_shared<InatorBldr>();
-    mainRsrc.insert(zbe::factories::functionName_ + name, inatorb);
+    mainRsrc.insert("Function."s + name, inatorb);
     specificRsrc.insert("InteractionatorBldr."s + name, inatorb);
   }
 
@@ -1651,7 +1473,6 @@ public:
       SysError::setError("InteractionatorBldrFtry config for reactorbuilder is invalid"s);
       return;
     }
-
     auto shapeBuilder = JSONFactory::loadParamCfgStoreP<typename InatorBldr::ShapeBldr>(shapeBldrRsrc, j, zbe::factories::functionName, "shapebuilder"s, "InteractionatorBldrFtry"s);
     if(!shapeBuilder) {
       SysError::setError("InteractionatorBldrFtry config for shapebuilder is invalid"s);
@@ -1704,7 +1525,7 @@ public:
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     std::shared_ptr<InerBldr> inerb = std::make_shared<InerBldr>();
-    mainRsrc.insert(zbe::factories::functionName_ + name, inerb);
+    mainRsrc.insert("Function."s + name, inerb);
     specificRsrc.insert("InteractionerBldr."s + name, inerb);
   }
 
@@ -1728,9 +1549,8 @@ public:
       SysError::setError("InteractionerBldrFtry config for reactorbuilder is invalid"s);
       return;
     }
-
     auto shapeBuilder = JSONFactory::loadParamCfgStoreP<typename InerBldr::ShapeBldr>(shapeBldrRsrc, j, zbe::factories::functionName, "shapebuilder"s, "InteractionerBldr"s);
-    if(!shapeBuilder) {
+    if(!actorBuilder) {
       SysError::setError("InteractionerBldrFtry config for shapebuilder is invalid"s);
       return;
     }
@@ -1786,7 +1606,7 @@ public:
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     std::shared_ptr<EntityTimerBldr> etb = std::make_shared<EntityTimerBldr>();
-    mainRsrc.insert(zbe::factories::functionName_ + name, etb);
+    mainRsrc.insert("Function."s + name, etb);
     specificRsrc.insert("EntityTimerBldr."s + name, etb);
   }
 

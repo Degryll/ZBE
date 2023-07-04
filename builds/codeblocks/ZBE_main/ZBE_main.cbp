@@ -201,6 +201,7 @@
 					<Add library="openal" />
 					<Add library="pthread" />
 					<Add library="dl" />
+					<Add library="glfw" />
 					<Add directory="../../../lib" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/linux64/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />
@@ -267,6 +268,7 @@
 					<Add library="openal" />
 					<Add library="pthread" />
 					<Add library="dl" />
+					<Add library="glfw" />
 					<Add directory="../../../lib" />
 					<Add directory="../../../extlibs/SDL2/2.0.8/linux64/lib" />
 					<Add directory="../../../extlibs/SDL2_image/2.0.0/x86_64-linux-gcc/lib" />
@@ -349,6 +351,8 @@
 		<Unit filename="../../../src/ZBE_main/src/tinygltf/window.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
+			<code_completion />
+			<debugger />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

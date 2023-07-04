@@ -12,128 +12,25 @@
 
 #include <cstdint>
 #include <memory>
-#include <cstdio>
+
 #include <string>
 
 #include <nlohmann/json.hpp>
 
 #include "ZBE/core/system/SysError.h"
-#include "ZBE/core/tools/math/math.h"
-#include "ZBE/core/tools/math/Vector.h"
+
 #include "ZBE/core/tools/tools.h"
 #include "ZBE/core/tools/containers/RsrcStore.h"
 #include "ZBE/core/tools/containers/RsrcDictionary.h"
 #include "ZBE/core/entities/Entity.h"
-#include "ZBE/core/system/system.h"
 
 #include "ZBE/factories/Factory.h"
+
+#include "ZBE/core/system/system.h"
 
 #include "ZBE/JSON/JSONFactory.h"
 
 namespace zandbokz {
-
-//template<typename IData, typename Trait>
-class AttachRepositionReaction : public zbe::Funct<void, zbe::CollisionData3D, Platform> {
-public:
-  AttachRepositionReaction(const AttachRepositionReaction&) = delete; //!< Avoid copy.
-  void operator=(const AttachRepositionReaction&) = delete; //!< Avoid copy.
-
-  static const int AVTSIZE = 3;
-
-  /** brief Parametrized constructor
-  * param avt Avatar to use
-  */
-  AttachRepositionReaction(std::shared_ptr<zbe::MAvatar<zbe::Vector2D, zbe::Vector2D, zbe::Vector3D>> avatar) : avatar(avatar) {}
-
-  /** brief Reposition entity on plane.
-  */
-  void operator()(zbe::CollisionData3D cData, Platform platform) {
-
-    //auto vpos2D = avatar->get<2, zbe::Vector2D>();
-    
-    auto planeE1 = platform[2]->get();
-    auto planeE2 = platform[1]->get();
-    auto planePos = platform[0]->get();
-
-    //auto pos2D = vpos2D->get();
-
-    auto diff = zbe::Vector3D{cData.point.x, cData.point.y, cData.point.z} - planePos;
-    zbe::Vector3D ax{1.0, 0.0, 0.0};
-    zbe::Vector3D ay{0.0, 1.0, 0.0};
-    zbe::Vector3D az{0.0, 0.0, 1.0};
-
-    zbe::Vector3D bx = planeE1;
-    zbe::Vector3D by = planeE2;
-    zbe::Vector3D bz = zbe::cross(planeE1, planeE2).normalize();
-
-    double x = diff * zbe::Vector3D{bx.x, bx.y, bx.z};
-    double y = diff * zbe::Vector3D{by.x, by.y, by.z};
-    double z = diff * zbe::Vector3D{bz.x, bz.y, bz.z};
-
-    zbe::Vector3D coordChange{x,y,z};
-
-    zbe::Vector2D newPos2D{coordChange.x, coordChange.y};
-    // printf("newPos2D %lf, %lf\n", newPos2D.x, newPos2D.y);fflush(stdout);
-    avatar->set<2, zbe::Vector2D>(newPos2D);
-      
-  }
-private:
-  std::shared_ptr<zbe::MAvatar<zbe::Vector2D, zbe::Vector2D, zbe::Vector3D>> avatar;
-};
-
-class AttachRepositionReactionBldr : public zbe::Funct<std::shared_ptr<zbe::Funct<void, zbe::CollisionData3D, Platform>>, std::shared_ptr<zbe::Entity>> {
-public:
-  std::shared_ptr<zbe::Funct<void, zbe::CollisionData3D, Platform>> operator()(std::shared_ptr<zbe::Entity> ent){
-    auto avt = std::make_shared<zbe::MBaseAvatar<zbe::Vector2D, zbe::Vector2D, zbe::Vector3D>>();
-    avt->setupEntity(ent, idxArr);
-    return std::make_shared<AttachRepositionReaction>(avt);
-  }
-
-  void setIdx(std::array<uint64_t, AttachRepositionReaction::AVTSIZE> idxArr) {
-    this->idxArr = idxArr;
-  }
-private:
-  std::array<uint64_t, AttachRepositionReaction::AVTSIZE> idxArr;
-};
-
-class AttachRepositionReactionBldrFtry : public zbe::Factory {
-public:
-  void create(std::string name, uint64_t cfgId) {
-    using namespace std::string_literals;
-    std::shared_ptr<AttachRepositionReactionBldr> arrb = std::make_shared<AttachRepositionReactionBldr>();
-    mainRsrc.insert("Function."s + name, arrb);
-    specificRsrc.insert("AttachRepositionReactionBldr."s + name, arrb);
-  }
-
-  void setup(std::string name, uint64_t cfgId) {
-    using namespace std::string_literals;
-    using namespace nlohmann;
-    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
-
-    if(cfg) {
-      auto j = *cfg;
-
-      auto arrb = specificRsrc.get("AttachRepositionReactionBldr."s + name);
-
-      std::optional<std::array<uint64_t, AttachRepositionReaction::AVTSIZE>> arr = zbe::JSONFactory::loadLiteralArray<uint64_t, AttachRepositionReaction::AVTSIZE>(uintDict, j["idxlist"], "idxlist", "StoreValuesRctBldrFtry");
-      if(!arr) {
-        return;
-      }
-
-      arrb->setIdx(*arr);
-    } else {
-      zbe::SysError::setError("AttachRepositionReactionBldrFtry config for "s + name + " not found."s);
-    }
-  }
-
-private:
-  using FunctionType = zbe::Funct<std::shared_ptr<zbe::Funct<void, zbe::CollisionData3D, Platform>>, std::shared_ptr<zbe::Entity>>;
-
-  zbe::RsrcDictionary<uint64_t>& uintDict                     = zbe::RsrcDictionary<uint64_t>::getInstance();
-  zbe::RsrcStore<nlohmann::json> &configRsrc                  = zbe::RsrcStore<nlohmann::json>::getInstance();
-  zbe::RsrcStore<AttachRepositionReactionBldr>& specificRsrc  = zbe::RsrcStore<AttachRepositionReactionBldr>::getInstance();
-  zbe::RsrcStore<FunctionType>& mainRsrc                      = zbe::RsrcStore<FunctionType>::getInstance();
-};
 
 template<typename IData, typename Trait>
 class ReverseDirectionReaction : public zbe::Funct<void, IData, Trait> {
@@ -252,7 +149,7 @@ public:
 private:
  std::shared_ptr<zbe::MAvatar<zbe::Vector3D, zbe::Vector3D>> avt;
 };
-
+// TODO arreglando bounce
 template<typename IData, typename Trait>
 class BounceReactionBldr : public zbe::Funct<std::shared_ptr<zbe::Funct<void, IData, Trait>>, std::shared_ptr<zbe::Entity>> {
 public:

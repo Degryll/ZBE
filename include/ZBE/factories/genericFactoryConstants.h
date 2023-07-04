@@ -17,15 +17,10 @@ namespace zbe {
   namespace factories {
     using namespace std::string_literals;
 
-    static const std::string separator = "."s;
-
     static const std::string listName = "List"s;
     static const std::string functionName = "Function"s;
+    static const std::string separator = "."s;
     static const std::string contextimeName = "ContextTime"s;
-
-    static const std::string listName_ = listName + separator;
-    static const std::string functionName_ = functionName + separator;
-    static const std::string contextimeName_ = contextimeName + separator;
   }
 }  // namespace zbe
 

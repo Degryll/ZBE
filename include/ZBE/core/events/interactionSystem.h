@@ -43,10 +43,10 @@ public:
     std::initializer_list<int>{(this->Reactor<IData, U>::setPayload(payload) , 0)... };
   }
 
-//  template <typename U>
-//  void setReaction(std::shared_ptr<Funct<void,IData, U>> reaction) {
-//    this->Reactor<IData, U>::setReaction(reaction);
-//  }
+  template <typename U>
+  void setReaction(std::shared_ptr<Funct<void,IData, U>> reaction) {
+    this->Reactor<IData, U>::setReaction(reaction);
+  }
 
   // template <typename U>
   // void setPayload(Reactor<IData, U> payload) {
@@ -73,6 +73,10 @@ public:
     void react(IData data, Trait trait) {
       (*reaction)(data, trait);
     }
+
+    // void setPayload(Reactor<IData, Trait> payload) {
+    //   this->reaction = payload.reaction;
+    // }
 
     void callActor(Actor<IData, Trait>*  actor, IData data) {
       actor->act(this, data);
@@ -253,8 +257,8 @@ public:
   Interactioner(std::shared_ptr<Shape<Shapes...>> shape, ActorType actor, ReactorType reactor) : shape(shape), actor(actor), reactor(reactor) {}
 
   std::shared_ptr<Shape<Shapes...>> getShape()   {return shape;}
-  ActorType                         getActor()   {return actor;}
-  ReactorType                       getReactor() {return reactor;}
+  ActorType        getActor()   {return actor;}
+  ReactorType      getReactor() {return reactor;}
 
   void setShape(std::shared_ptr<Shape<Shapes...>> shape) {
     this->shape = shape;
@@ -281,6 +285,7 @@ private:
 class RayRay {
 public:
   bool operator()(std::shared_ptr<Ray> , std::shared_ptr<Ray> , int64_t , CollisionData &data) {
+    fprintf(f,"RayRay\n");fflush(stdout);
     data.time = 5;
     data.point = zbe::Vector3D{4.0,2.0,0.0};
     return true;
@@ -408,7 +413,7 @@ public:
   using IEG = InteractionEventGenerator<Overloaded, IData, ActorType, ReactorType, Shapes...>;
   using ATOR = Interactionator<ActorType, ReactorType, Shapes...>;
 
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     std::shared_ptr<IEG> ieg = std::shared_ptr<IEG>(new IEG);  // std::make_shared<SineOscillator>();
     daemonStore.insert("Daemon."s + name, ieg);

@@ -818,8 +818,8 @@ bool intersectionMovingNSphereOutsideMovingNTriangle(NSphere<dim> sphere, Vector
             auto intersectTime = quantizeTime(tbar);
             if(intersectTime<=time) {
                 time = intersectTime;
-                point = sphere.c + (time * sVelocity)/SECOND;
-                return true && time;  // Only if time > 0
+                point = sphere.c + time * sVelocity;
+                return true && time;
             } else {
                 return false;
             }
@@ -851,8 +851,8 @@ bool intersectionMovingNSphereOutsideMovingNTriangle(NSphere<dim> sphere, Vector
             auto intersectTime = quantizeTime(tbar);
             if(intersectTime<=time) {
                 time = intersectTime;
-                point = sphere.c + (time * sVelocity)/SECOND;
-                return true && time;  // Only if time > 0
+                point = sphere.c + time * sVelocity;
+                return true && time;
             } else {
                 return false;
             }
@@ -907,8 +907,8 @@ bool intersectionMovingNSphereOutsideMovingNTriangle(NSphere<dim> sphere, Vector
                                 auto intersectTime = quantizeTime(tbar);
                                 if(intersectTime<=time) {
                                     time = intersectTime;
-                                    point = sphere.c + (time * sVelocity)/SECOND;
-                                    return true && time;  // Only if time > 0
+                                    point = sphere.c + time * sVelocity;
+                                    return true && time;
                                 } else {
                                     return false;
                                 }
@@ -943,8 +943,8 @@ bool intersectionMovingNSphereOutsideMovingNTriangle(NSphere<dim> sphere, Vector
                         auto intersectTime = quantizeTime(tbar);
                         if(intersectTime<=time) {
                             time = intersectTime;
-                            point = sphere.c + (time * sVelocity)/SECOND;
-                            return true && time;  // Only if time > 0
+                            point = sphere.c + time * sVelocity;
+                            return true && time;
                         } else {
                             return false;
                         }
@@ -955,8 +955,6 @@ bool intersectionMovingNSphereOutsideMovingNTriangle(NSphere<dim> sphere, Vector
     }
     return false;
 }
-
-bool intersectionMovingRay2DRay2D(Ray2D r1, Ray2D r2, int64_t& time, Point2D& point, Vector2D& normal);
 
 }  // namespace zbe
 

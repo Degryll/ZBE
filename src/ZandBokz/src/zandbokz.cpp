@@ -61,15 +61,27 @@ int main(int /*argc*/, char** /*argv*/) {
   OALContextDaemon oalContextDmn;
   oalContextDmn.run();
 
-  std::cout << SysError::getFirstErrorString() << "\n";
-  JSONAppLoader appLoader;
-  appLoader.load("data/ZandBokz/app/main_002.json");
-  std::cout << SysError::getFirstErrorString() << "\n";
-  // Run App.
-  auto d = RsrcStore<Daemon>::getInstance().get("Daemon.Main");
-  std::cout << SysError::getFirstErrorString() << "\n";
-  d->run();
-  return 0;
+   // Esto deberia ir a un ZandBokzFactories.h
+   // template <typename Selector, typename Overloaded, typename IData, typename ActorType, typename ReactorType, typename ...Shapes>
+   using ZandBokzOverloaded = zbe::overloaded<zbe::MovingSphereFunctor>;
+   using ZandBokzSelector = zbe::BaseSelector<zbe::InteractionSelector<zbe::CollisionData3D, ZandBokzOverloaded, zbe::MovingSphere>, ZandBokzOverloaded, zbe::MovingSphereFunctor>;
+   using Solid = zbe::EmptyTrait;
+
+   using ActorType = zbe::Actor<zbe::CollisionData3D, Solid>;
+   using ReactorType = zbe::Reactor<zbe::CollisionData3D, Solid>;
+
+   auto& factories = RsrcStore<Factory>::getInstance();
+   factories.insert("MovingSphereCollideEventGeneratorFtry", std::make_shared<InteractionEventGeneratorFtry<ZandBokzSelector, ZandBokzOverloaded, zbe::CollisionData3D, ActorType, ReactorType, zbe::MovingSphere> >());
+   // Load App.
+   std::cout << SysError::getFirstErrorString() << "\n";
+   JSONAppLoader appLoader;
+   appLoader.load("data/ZandBokz/app/main_001.json");
+   std::cout << SysError::getFirstErrorString() << "\n";
+   // Run App.
+   auto d = RsrcStore<Daemon>::getInstance().get("Daemon.Main");
+   std::cout << SysError::getFirstErrorString() << "\n";
+   d->run();
+   return 0;
 
 
     // Flujo del juego
