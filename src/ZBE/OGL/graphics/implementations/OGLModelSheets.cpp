@@ -82,15 +82,18 @@ OGLModel LookAtOGLModelSheet::generateModel(std::shared_ptr<MAvatar<uint64_t, do
   glm::vec3 glPos(pos.x, pos.y, pos.z);
   Vector3D dir = avatar->get<2, Vector3D>()->get();
   dir.normalize();
-  glm::vec3 glDir(dir.x, dir.y, dir.z);
   Vector3D upw = avatar->get<3, Vector3D>()->get();
   upw = upw.normalize();
   glm::vec3 glUpw(upw.x, upw.y, upw.z);
 
   Vector3D nor = cross(dir, upw);
   nor.normalize();
-  glm::vec3 glNor(nor.x, nor.y, nor.z);
 
+  // This is made to avoid deformation caused by non perpendicular dir and upw vectors.
+  dir = cross(upw, nor);
+
+  glm::vec3 glNor(nor.x, nor.y, nor.z);
+  glm::vec3 glDir(dir.x, dir.y, dir.z);
 
   float baseScale = (float) avatar->get<4, double>()->get();;
   glm::mat4 mat(1.0);
@@ -100,51 +103,16 @@ OGLModel LookAtOGLModelSheet::generateModel(std::shared_ptr<MAvatar<uint64_t, do
 //   // We will initially asume the same origin for all the models.
 //   // In the future we can pass it by parameter
 
-  // glm::vec3 x(1.0,0.0,0.0);
-  // glm::vec3 y(0.0,1.0,0.0);
-  // glm::vec3 z(0.0,0.0,1.0);
-
-  // glm::vec3 x(1.0,0.0,0.0);
-  // glm::vec3 y(0.0,0.0,1.0);
-  // glm::vec3 z(0.0,1.0,0.0);
-
-  // glm::vec3 x(0.0,1.0,0.0);
-  // glm::vec3 y(0.0,0.0,1.0);
-  // glm::vec3 z(1.0,0.0,0.0);
-
-  // glm::vec3 x(0.0,1.0,0.0);
-  // glm::vec3 y(1.0,0.0,0.0);
-  // glm::vec3 z(0.0,0.0,1.0);
-
-  // glm::vec3 x(0.0,0.0,1.0);
-  // glm::vec3 y(1.0,0.0,0.0);
-  // glm::vec3 z(0.0,1.0,0.0);
-
-  // glm::vec3 x(0.0,0.0,1.0);
-  // glm::vec3 y(0.0,1.0,0.0);
-  // glm::vec3 z(1.0,0.0,0.0);
-
   glm::vec3 x(1.0,0.0,0.0);
   glm::vec3 y(0.0,1.0,0.0);
   glm::vec3 z(0.0,0.0,1.0);
-
-  // glm::mat4 rotate({
-  //   glm::dot(glDir, x), glm::dot(glNor, x), glm::dot(glUpw, x),
-  //   glm::dot(glDir, y), glm::dot(glNor, y), glm::dot(glUpw, y),
-  //   glm::dot(glDir, z), glm::dot(glNor, z), glm::dot(glUpw, z)
-  // });
-
-  // glm::mat4 rotate({
-  //   glm::dot(glNor, x), glm::dot(glUpw, x), glm::dot(glDir, x),
-  //   glm::dot(glNor, y), glm::dot(glUpw, y), glm::dot(glDir, y),
-  //   glm::dot(glNor, z), glm::dot(glUpw, z), glm::dot(glDir, z)
-  // });
 
   glm::mat4 rotate({
     glm::dot(glNor, x), glm::dot(glNor, y), glm::dot(glNor, z),
     glm::dot(glUpw, x), glm::dot(glUpw, y), glm::dot(glUpw, z),
     glm::dot(glDir, x), glm::dot(glDir, y), glm::dot(glDir, z)
   });
+
 
   glm::mat4 rotate90  = glm::rotate(glm::mat4(1.0f), -(float)PI/2.0f, glm::vec3(1.0,0.0,0.0));
 

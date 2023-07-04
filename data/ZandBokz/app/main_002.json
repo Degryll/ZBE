@@ -24,6 +24,7 @@
     "scaleIdx" : 1050,
     "orientationIdx" : 1060,
     "cameraorientationIdx" : 1061,
+    "orientationPreIdx" : 1062,
     "drawticket" : 1070,
     "positionTicket" : 1080,
     "camPosVelTicket" : 1090,
@@ -79,6 +80,7 @@
     "camposIdx" : 6200,
     "attachonofticket" : 7000,
     "relativeVelTicket" : 7100,
+    "relativeOriTicket" : 7101,
     "copyVelOnOriTicket" : 7200,
     "state.static" : 0,
     "testwflags": 0,
@@ -114,24 +116,24 @@
 
     "model.sineComponent" : 0,
     "gravity" : {"type":"v3", "value":[0.0, -98.0, 0.0]},
-    "bullet.speed" : {"type":"d", "value":200.0},
+    "bullet.speed" : {"type":"d", "value":800.0},
     "crosshairsPos" :{"type":"v2", "value":[0.0,0.0]},
     "crosshairsSize" :{"type":"v2", "value":[0.25,0.25]},
 
-    "caja.rightSpeed" : {"type":"v2", "value":[0.0,85.0]},
-    "caja.leftSpeed": {"type":"v2", "value":[0.0,-85.0]},
-    "caja.forwardSpeed" : {"type":"v2", "value":[85.0,0.0]},
-    "caja.backwardSpeed" : {"type":"v2", "value":[-85.0,0.0]},
+    "caja.rightSpeed" : {"type":"v2", "value":[0.0, 85.0]},
+    "caja.leftSpeed": {"type":"v2", "value":[0.0, -85.0]},
+    "caja.forwardSpeed" : {"type":"v2", "value":[85.0, 0.0]},
+    "caja.backwardSpeed" : {"type":"v2", "value":[-85.0, 0.0]},
 
-    "prota.rightSpeed" : {"type":"v2", "value":[0.0,85.0]},
-    "prota.leftSpeed": {"type":"v2", "value":[0.0,-85.0]},
-    "prota.forwardSpeed" : {"type":"v2", "value":[85.0,0.0]},
-    "prota.backwardSpeed" : {"type":"v2", "value":[-85.0,0.0]},
+    "prota.rightSpeed" : {"type":"v2", "value":[0.0, 85.0]},
+    "prota.leftSpeed": {"type":"v2", "value":[0.0, -85.0]},
+    "prota.forwardSpeed" : {"type":"v2", "value":[120.0, 0.0]},
+    "prota.backwardSpeed" : {"type":"v2", "value":[-85.0, 0.0]},
 
-    "velcajanorte" :{"type":"d", "value":50.0},
-    "velcajasur" :{"type":"d", "value":-50.0},
-    "velcajaeste" :{"type":"d", "value":50.0},
-    "velcajaoeste" :{"type":"d", "value":-50.0},
+    "velcajanorte" :{"type":"d", "value":120.0},
+    "velcajasur" :{"type":"d", "value":-120.0},
+    "velcajaeste" :{"type":"d", "value":70.0},
+    "velcajaoeste" :{"type":"d", "value":-70.0},
     "velcajasalto" :{"type":"v3", "value":[0.0,100.0,0.0]},
 
     "TODOindices":""
@@ -168,7 +170,7 @@
                 "cajaVel" : [0.0, 0.0, 0.0],
                 "cajaPos" : [0.0, 10.0, 0.0],
                 "protaVel" : [0.0, 0.0, 0.0],
-                "protaPos" : [0.0, 15.0, 0.0],
+                "protaPos" : [0.0, 150.0, 0.0],
                 "planePos" : [100.0, 100.0, 0.0],
                 "planeE1" : [0.0, 0.0, 0.0],
                 "planeE2" : [0.0, 0.0, 0.0]
@@ -1316,14 +1318,15 @@
             "radiusIdx" : "sizeIdx"
           }
         },
+
+
         {
           "factory" : "EntityBldrFtry",
           "name" : "zandbokz.protabuilder",
           "config" : {
             "contextTime":"DEFAULT",
-            "builders" : ["zandbokz.protavalues", "zandbokz.protaapintar", "zandbokz.protaamover", "zandbokz.protacalculavel", "zandbokz.protamirapaondebe", "zandbokz.protaorientationcalcbuild", "zandbokz.protadispara", "zandbokz.protadisparasuena"],
-            "buildersback" : [],
-            "TODO" : "al quitar protaorientationcalcbuild la orientacion se lleva valores absurdos ¿Quien los pone y porque?"
+            "builders" : ["zandbokz.protavalues", "zandbokz.protaapintar", "zandbokz.protaamover", "zandbokz.protacalculavel", "zandbokz.protacalculaori", "zandbokz.protamirapaondebe", "zandbokz.protaorientationcalcbuild", "zandbokz.protadispara", "zandbokz.protadisparasuena", "zandbokz.protaacaer",  "zandbokz.protafinalvel", "zandbokz.protasaltar"],
+            "buildersback" : []
           }
         },
         {
@@ -1348,6 +1351,7 @@
               "velocityPre2Idx" : [0.0, 0.0, 0.0],
               "positionIdx":"zandbokz.protaPos",
               "orientationIdx":[1.0, 0.0, 0.0],
+              "orientationPreIdx":[1.0, 0.0, 0.0],
               "cameraorientationIdx":[1.0, 0.0, 0.0],
               "velocityIdx": "zandbokz.protaVel",
               "planePosIdx": [0.0, 0.0, 0.0],
@@ -1388,8 +1392,17 @@
           "factory" :"TwoDoubleThreeV3DAvtBldrFtry",
           "name" : "zandbokz.protacalculavel",
           "config" : {
-            "attribIndexes" : ["velocityForwardIdx", "velocityLateralIdx", "velocityIdx", "upwardsIdx","cameraorientationIdx"],
+            "attribIndexes" : ["velocityForwardIdx", "velocityLateralIdx", "velocityPre1Idx", "upwardsIdx","cameraorientationIdx"],
             "lists":{"loadScreen.velsetterlist" : "relativeVelTicket"},
+            "deativatedlists":{}
+          }
+        },
+        {
+          "factory" :"TwoDoubleThreeV3DAvtBldrFtry",
+          "name" : "zandbokz.protacalculaori",
+          "config" : {
+            "attribIndexes" : ["velocityForwardIdx", "velocityLateralIdx", "orientationPreIdx", "upwardsIdx","cameraorientationIdx"],
+            "lists":{"loadScreen.velsetterlist" : "relativeOriTicket"},
             "deativatedlists":{}
           }
         },
@@ -1409,7 +1422,7 @@
           "factory" :"TwoV3DAvtBldrFtry",
           "name" : "zandbokz.protamirapaondebe",
           "config" : {
-            "attribIndexes" : ["orientationIdx", "velocityIdx"],
+            "attribIndexes" : ["orientationIdx", "orientationPreIdx"],
             "lists":{ "loadScreen.vel2orilist":"copyVelOnOriTicket"}
           }
         },
@@ -1423,14 +1436,47 @@
           }
         },
         {
-          "factory" :"ThreeV3DAvtBldrFtry",
+          "factory" :"TwoV3DAvtBldrFtry",
           "name" : "zandbokz.protadisparasuena",
           "config" : {
-            "attribIndexes" : ["upwardsIdx", "orientationIdx", "positionIdx"],
+            "attribIndexes" : ["orientationIdx", "positionIdx"],
             "lists":{"loadScreen.SoundCreatorList":"SoundCreatorTicket"},
             "deativatedlists":{}
           }
         },
+        {
+          "factory" :"TwoV3DAvtBldrFtry",
+          "name" : "zandbokz.protaacaer",
+          "config" : {
+            "attribIndexes" : ["velocityPre2Idx", "positionIdx"],
+            "lists":{"loadScreen.gmList":"gmTicket"},
+            "deativatedlists":{}
+          }
+        },
+        {
+          "factory" :"ThreeV3DAvtBldrFtry",
+          "name" : "zandbokz.protafinalvel",
+          "config" : {
+            "attribIndexes" : ["velocityPre2Idx", "velocityPre1Idx", "velocityIdx"],
+            "lists":{
+              "loadScreen.twovelaccumlist":"twoVelaccumListTicket"
+            },
+            "deativatedlists":{
+            }
+          }
+        },
+        {
+          "factory" :"V3DAvtBldrFtry",
+          "name" : "zandbokz.protasaltar",
+          "config" : {
+            "attribIndexes" : ["velocityPre2Idx"],
+            "lists":{
+              "loadScreen.saltaList":"saltaListTicket"
+            }
+          }
+        },
+
+
         {
           "factory" : "EntityBldrFtry",
           "name" : "zandbokz.cajabuilder",
@@ -1719,7 +1765,7 @@
             },
             "double": {
               "radsIdx":[0.0],
-              "scaleIdx":[200.0]
+              "scaleIdx":[2000.0]
             },
             "V3D": {
               "positionIdx":[0.0, -10.0, 0.0],

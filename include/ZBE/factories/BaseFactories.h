@@ -108,6 +108,7 @@ public:
     factories.insert("UniformLinearMotion2DFtry", std::make_shared<GenericFtry<Behavior<Vector2D, Vector2D>, UniformLinearMotion2D>>("Behavior", "UniformLinearMotion2D"));
     factories.insert("UniformLinearMotion2DOnPlane", std::make_shared<GenericFtry<Behavior<Vector2D, Vector2D, Vector3D, Vector3D, Vector3D, Vector3D, Vector3D >, UniformLinearMotion2DOnPlane>>("Behavior", "UniformLinearMotion2DOnPlane"));
     factories.insert("Rotation3DFtry", std::make_shared<Rotation3DFtry>());
+    factories.insert("ExcentricalRotation3DFtry", std::make_shared<ExcentricalRotation3DFtry>());
     factories.insert("BulletCreatorBhvFtry", std::make_shared<BulletCreatorBhvFtry>());
     factories.insert("TicketDeactivatorBvrFtry", std::make_shared<TicketDeactivatorBvrFtry>());
     factories.insert("TicketActivatorBvrFtry", std::make_shared<TicketActivatorBvrFtry>());
@@ -129,6 +130,7 @@ public:
     factories.insert("ActivatorIHFtry", std::make_shared<ActivatorIHFtry>());
     factories.insert("KeyDownTicketEnablerIHFtry", std::make_shared<KeyDownTicketEnablerIHFtry>());
     factories.insert("V3DKeyValueSetterIHFtry", std::make_shared<KeyValueSetterIHFtry<Vector3D>>());
+    factories.insert("DoubleKeyValueSetterIHFtry", std::make_shared<KeyValueSetterIHFtry<double>>());
     factories.insert("Add2DVelIHBldrFtry", std::make_shared<AddVelIHBldrFtry<2>>());
 
 

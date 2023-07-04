@@ -388,6 +388,19 @@ class _VECTOR {
       return equal;
     }
 
+    /** \brief Tells if given _VECTOR is all zeroes
+     *
+     * \param v the Vector.
+     * \return True if _VECTOR is all zeroes
+     */
+    friend bool isZero(const _VECTOR& v){
+      bool iszero = true;
+      for(unsigned i = 0; i < dim; i++ ) {
+        iszero &= almost_equal(v.data[i], 0.0);
+      }
+      return iszero;
+    }
+
 ///////////////////////////////////////////////////////////////////////////////
 // END Friend Functions
 ///////////////////////////////////////////////////////////////////////////////

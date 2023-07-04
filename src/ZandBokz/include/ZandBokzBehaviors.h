@@ -34,6 +34,78 @@
 
 namespace zandbokz {
 
+
+class CopyV3DIfNotZeroBhv : virtual public zbe::Behavior<zbe::Vector3D, zbe::Vector3D> {
+  public:
+  virtual ~CopyV3DIfNotZeroBhv() = default;
+  void apply(std::shared_ptr<zbe::MAvatar<zbe::Vector3D, zbe::Vector3D> > avatar) {
+    auto va = avatar->get<1, zbe::Vector3D>();
+    auto vb = avatar->get<2, zbe::Vector3D>();
+    zbe::Vector3D a = va->get();
+    zbe::Vector3D b = vb->get();
+    if(!isZero(a)) {
+      vb->set(a);
+      b = vb->get();
+    } 
+  }
+};
+
+class Vec3DAccumBhv : virtual public zbe::Behavior<zbe::Vector3D, zbe::Vector3D, zbe::Vector3D > {
+  public:
+  virtual ~Vec3DAccumBhv() = default;
+  void apply(std::shared_ptr<zbe::MAvatar<zbe::Vector3D, zbe::Vector3D, zbe::Vector3D > > avatar) {
+    //printf("Accum\n");fflush(stdout);
+    auto vDest = avatar->get<1, zbe::Vector3D>();
+    auto vA    = avatar->get<2, zbe::Vector3D>();
+    auto vB    = avatar->get<3, zbe::Vector3D>();
+
+    zbe::Vector3D a = vA->get();
+    zbe::Vector3D b = vB->get();
+    zbe::Vector3D newvel = a + b;
+    vDest->set(newvel);
+  }
+};
+
+class CalculeOrientationBhv : virtual public zbe::Behavior<zbe::Vector3D, zbe::Vector3D, zbe::Vector3D > {
+  public:
+  virtual ~CalculeOrientationBhv() = default;
+
+  void apply(std::shared_ptr<zbe::MAvatar<zbe::Vector3D, zbe::Vector3D, zbe::Vector3D > > avatar) {
+    auto vDest = avatar->get<1, zbe::Vector3D>();
+    auto vA    = avatar->get<2, zbe::Vector3D>();
+    auto vB    = avatar->get<3, zbe::Vector3D>();
+
+    zbe::Vector3D a = vA->get();
+    zbe::Vector3D b = vB->get();
+    zbe::Vector3D ori = a - b;
+    ori.y = 0.0;
+    ori.normalize();
+    
+    vDest->set(ori);
+  }
+};
+
+class OrientationRelativeVelSetter : virtual public zbe::Behavior<double, double, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D > {
+  public:
+  virtual ~OrientationRelativeVelSetter() = default;
+  void apply(std::shared_ptr<zbe::MAvatar<double, double, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D > > avatar) {
+    auto vOrientation = avatar->get<1, zbe::Vector3D>();
+    auto vUpwards     = avatar->get<2, zbe::Vector3D>();
+    auto vVelocity    = avatar->get<3, zbe::Vector3D>();
+    auto vForward    = avatar->get<4, double>();
+    auto vLateral    = avatar->get<5, double>();
+
+    zbe::Vector3D ori = vOrientation->get().normalize();
+    zbe::Vector3D upw = vUpwards->get();
+    zbe::Vector3D norm = cross(ori, upw);
+    double forw = vForward->get();
+    double late = vLateral->get();
+    
+    zbe::Vector3D newvel = (ori * forw) + (norm *late);
+    vVelocity->set(newvel);
+  }
+};
+
 class GravityMotion3D : virtual public zbe::Behavior<zbe::Vector3D, zbe::Vector3D > {
   public:
     virtual ~GravityMotion3D() = default;

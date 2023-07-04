@@ -109,6 +109,10 @@ public:
     factories.insert("AttachRepositionReactionBldrFtry", std::make_shared<AttachRepositionReactionBldrFtry>());
 
     factories.insert("GravityMotion3DFtry", std::make_shared<GravityMotion3DFtry>());
+    factories.insert("OrientationRelativeVelSetterFtry", std::make_shared<zbe::GenericFtry<zbe::Behavior<double, double, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D >, OrientationRelativeVelSetter>>("Behavior", "OrientationRelativeVelSetterFtry"));
+    factories.insert("Vec3DAccumBhvFtry", std::make_shared<zbe::GenericFtry<zbe::Behavior<zbe::Vector3D, zbe::Vector3D, zbe::Vector3D >, Vec3DAccumBhv>>("Behavior", "Vec3DAccumBhvFtry"));
+    factories.insert("CopyV3DIfNotZeroBhv", std::make_shared<zbe::GenericFtry<zbe::Behavior<zbe::Vector3D, zbe::Vector3D >, CopyV3DIfNotZeroBhv>>("Behavior", "CopyV3DIfNotZeroBhv"));
+    factories.insert("CalculeOrientationBhv", std::make_shared<zbe::GenericFtry<zbe::Behavior<zbe::Vector3D, zbe::Vector3D, zbe::Vector3D >, CalculeOrientationBhv>>("Behavior", "CalculeOrientationBhv"));
 
     factories.insert("TicketActivatorPlatformRctBldrFtry", std::make_shared<zbe::TicketActivatorRctBldrFtry<zbe::CollisionData3D, Platform>>());
     factories.insert("TicketDeactivatorPlatformRctBldrFtry", std::make_shared<zbe::TicketDeactivatorRctBldrFtry<zbe::CollisionData3D, Platform>>());

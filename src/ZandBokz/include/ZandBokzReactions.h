@@ -24,10 +24,9 @@
 #include "ZBE/core/tools/containers/RsrcStore.h"
 #include "ZBE/core/tools/containers/RsrcDictionary.h"
 #include "ZBE/core/entities/Entity.h"
+#include "ZBE/core/system/system.h"
 
 #include "ZBE/factories/Factory.h"
-
-#include "ZBE/core/system/system.h"
 
 #include "ZBE/JSON/JSONFactory.h"
 
@@ -74,7 +73,7 @@ public:
     zbe::Vector3D coordChange{x,y,z};
 
     zbe::Vector2D newPos2D{coordChange.x, coordChange.y};
-    printf("newPos2D %lf, %lf\n", newPos2D.x, newPos2D.y);fflush(stdout);
+    // printf("newPos2D %lf, %lf\n", newPos2D.x, newPos2D.y);fflush(stdout);
     avatar->set<2, zbe::Vector2D>(newPos2D);
       
   }

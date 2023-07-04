@@ -63,7 +63,7 @@ int main(int /*argc*/, char** /*argv*/) {
 
   std::cout << SysError::getFirstErrorString() << "\n";
   JSONAppLoader appLoader;
-  appLoader.load("data/ZandBokz/app/main_001.json");
+  appLoader.load("data/ZandBokz/app/main_002.json");
   std::cout << SysError::getFirstErrorString() << "\n";
   // Run App.
   auto d = RsrcStore<Daemon>::getInstance().get("Daemon.Main");
