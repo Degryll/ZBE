@@ -1,0 +1,10 @@
+{
+  "name" : "TrianguloIsosceles",
+  "capability" : "001",
+  "graphicdefs" : [
+    {
+      "name" : "TrianguloIsosceles"
+    }
+  ]
+  }
+  

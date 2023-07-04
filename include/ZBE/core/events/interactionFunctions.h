@@ -69,7 +69,6 @@ public:
   }
 };
 
-
 template<unsigned s>
 class MovingTriangleMovingNSphereFunctor {
 public:
@@ -85,6 +84,61 @@ public:
     return notIntersect(arg1, arg2, time, data);
   }
 };
+
+class MovingPoint2DTriangle2DFunctor {
+public:
+  bool operator()(std::shared_ptr<MovingPoint2D> movingpoint, std::shared_ptr<Triangle2D> triangle, int64_t time, NewCollisionData<2> &data){
+    NewCollisionData<2> bestData;
+    bestData.time = time;
+
+    NewCollisionData<2> currentData;
+    currentData.time = time;
+    auto currentpoint = *movingpoint->getShape();
+
+    Ray2D r1((currentpoint), movingpoint->v); // The point
+    Ray2D r2(triangle->a, triangle->b - triangle->a); // a - b
+    Ray2D r3(triangle->b, triangle->c - triangle->b); // b - c
+    Ray2D r4(triangle->c, triangle->a - triangle->c); // c - dç
+
+    // printf("R1 P: %lf, %lf  D: %lf, %lf\n", r1.o.x, r1.o.y, r1.d.x, r1.d.y);fflush(stdout);
+    // printf("R2 P: %lf, %lf  D: %lf, %lf\n", r2.o.x, r2.o.y, r2.d.x, r2.d.y);fflush(stdout);
+    // printf("R3 P: %lf, %lf  D: %lf, %lf\n", r3.o.x, r3.o.y, r3.d.x, r3.d.y);fflush(stdout);
+    // printf("R4 P: %lf, %lf  D: %lf, %lf\n", r4.o.x, r4.o.y, r4.d.x, r4.d.y);fflush(stdout);
+
+    bool intersect1 = intersectionMovingRay2DRay2D(r1, r2, currentData.time, currentData.point, currentData.normal);
+    if (intersect1) {
+      bestData.time = currentData.time;
+      bestData.point = currentData.point;
+      bestData.normal = currentData.normal;
+    } else {
+      currentData.time = bestData.time;
+    }
+
+    bool intersect2 = intersectionMovingRay2DRay2D(r1, r3, currentData.time, currentData.point, currentData.normal);
+    if (intersect2) {
+      bestData.time = currentData.time;
+      bestData.point = currentData.point;
+      bestData.normal = currentData.normal;
+    } else {
+      currentData.time = bestData.time;
+    }
+
+    bool intersect3 = intersectionMovingRay2DRay2D(r1, r4, currentData.time, currentData.point, currentData.normal);
+    if (intersect3) {
+      bestData.time = currentData.time;
+      bestData.point = currentData.point;
+      bestData.normal = currentData.normal;
+    }
+
+    data.time = bestData.time;
+    data.point = bestData.point;
+    data.normal = bestData.normal;
+
+    return intersect1 || intersect2 || intersect3;
+  }
+};
+
+// posiblemente MovingPoint2DConvexPolygon2D
 
 using MovingSphereFunctor = MovingNSphereFunctor<3>;
 using MovingSphereMovingTriangle3DFunctor = MovingNSphereMovingTriangleFunctor<3>;
