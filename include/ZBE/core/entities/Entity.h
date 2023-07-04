@@ -186,7 +186,105 @@ class ZBEAPI Entity {
     template<typename T>
     typename std::enable_if<std::is_same<std::vector<std::string> , T>::value, void>::type
     set(uint64_t id, std::shared_ptr<Value<T> > val) {setStringVector(id, val);}
+    /** \brief Overrides aValue<double> at identifier id.
+     * This method should be called only once per id.
+     *  \param id identifier
+     *  \param val Value<double> to be set.
+     *  \sa getDobule, setFloat, setUint, setInt
+     */
+    void overrideDouble(uint64_t id, std::shared_ptr<Value<double> > val);
+    template<typename T>
+    typename std::enable_if<std::is_same<double, T>::value, void>::type
+    override(uint64_t id, std::shared_ptr<Value<T> > val) {overrideDouble(id, val);}
 
+    /** \brief Overrides aValue<float> at identifier id.
+     * This method should be called only once per id.
+     *  \param id identifier
+     *  \param val Value<float> to be set.
+     *  \sa getFloat, setDouble, setUint, setInt
+     */
+    void overrideFloat(uint64_t id, std::shared_ptr<Value<float> > val);
+    template<typename T>
+    typename std::enable_if<std::is_same<float, T>::value, void>::type
+    override(uint64_t id, std::shared_ptr<Value<T> > val) {overrideFloat(id, val);}
+
+    /** \brief Overrides aValue<uint64_t> at identifier id.
+     * This method should be called only once per id.
+     *  \param id identifier
+     *  \param val Value<uint64_t> to be set.
+     *  \sa getUint, setInt, setDouble, setFloat
+     */
+    void overrideUint(uint64_t id, std::shared_ptr<Value<uint64_t> > val);
+    template<typename T>
+    typename std::enable_if<std::is_same<uint64_t, T>::value, void>::type
+    override(uint64_t id, std::shared_ptr<Value<T> > val) {overrideUint(id, val);}
+
+    /** \brief Overrides aValue<int64_t> at identifier id.
+     * This method should be called only once per id.
+     *  \param id identifier
+     *  \param val Value<int64_t> to be set.
+     *  \sa getInt, setUint, setDouble, setFloat
+     */
+    void overrideInt(uint64_t id, std::shared_ptr<Value<int64_t> > val);
+    template<typename T>
+    typename std::enable_if<std::is_same<int64_t, T>::value, void>::type
+    override(uint64_t id, std::shared_ptr<Value<T> > val) {overrideInt(id, val);}
+
+    /** \brief Overrides aValue<int64_t> at identifier id.
+     * This method should be called only once per id.
+     *  \param id identifier
+     *  \param val Value<int64_t> to be set.
+     *  \sa getInt, setUint, setDouble, setFloat
+     */
+    void overrideBool(uint64_t id, std::shared_ptr<Value<bool> > val);
+    template<typename T>
+    typename std::enable_if<std::is_same<bool, T>::value, void>::type
+    override(uint64_t id, std::shared_ptr<Value<T> > val) {overrideBool(id, val);}
+
+    /** \brief Overrides aValue<Vector3D> at identifier id.
+     * This method should be called only once per id.
+     *  \param id identifier
+     *  \param val Value<Vector3D> to be set.
+     *  \sa getInt, setUint, setDouble, setFloat
+     */
+    void overrideVector3D(uint64_t id, std::shared_ptr<Value<Vector3D> > val);
+    template<typename T>
+    typename std::enable_if<std::is_same<Vector3D, T>::value, void>::type
+    override(uint64_t id, std::shared_ptr<Value<T> > val) {overrideVector3D(id, val);}
+
+    /** \brief Overrides aValue<Vector2D> at identifier id.
+     * This method should be called only once per id.
+     *  \param id identifier
+     *  \param val Value<Vector2D> to be set.
+     *  \sa getInt, setUint, setDouble, setFloat
+     */
+    void overrideVector2D(uint64_t id, std::shared_ptr<Value<Vector2D> > val);
+    template<typename T>
+    typename std::enable_if<std::is_same<Vector2D, T>::value, void>::type
+    override(uint64_t id, std::shared_ptr<Value<T> > val) {overrideVector2D(id, val);}
+
+    /** \brief Overrides aValue<Vector2D> at identifier id.
+     * This method should be called only once per id.
+     *  \param id identifier
+     *  \param val Value<Vector2D> to be set.
+     *  \sa getInt, setUint, setDouble, setFloat
+     */
+    void overrideString(uint64_t id, std::shared_ptr<Value<std::string> > val);
+    template<typename T>
+    typename std::enable_if<std::is_same<std::string, T>::value, void>::type
+    override(uint64_t id, std::shared_ptr<Value<T> > val) {overrideString(id, val);}
+
+    /** \brief Overrides aValue<std::vector<std::string> > at identifier id.
+     * This method should be called only once per id.
+     *  \param id identifier
+     *  \param val Value<std::vector<std::string> > to be set.
+     *  \sa getInt, setUint, setDouble, setFloat, setString
+     */
+    void overrideStringVector(uint64_t id, std::shared_ptr<Value<std::vector<std::string> > > val);
+    template<typename T>
+    typename std::enable_if<std::is_same<std::vector<std::string> , T>::value, void>::type
+    override(uint64_t id, std::shared_ptr<Value<T> > val) {overrideStringVector(id, val);}
+    
     /** \brief Returns the Value<double> associated the identifier id.
      *  \param id identifier
      *  \return Value<double>.

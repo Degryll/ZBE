@@ -91,8 +91,6 @@ class RelativeUniformLinearMotion3D : virtual public Behavior<Vector3D, Vector3D
       vel = velocity;
     }
 
-    /** \brief Makes the entity move in a straight line
-     */
     void apply(std::shared_ptr<MAvatar<Vector3D, Vector3D, Vector3D > > avatar) {
       auto vpos = avatar->get<1, Vector3D>();
       auto vdir = avatar->get<2, Vector3D>();
@@ -139,6 +137,48 @@ public:
 private:
   Vector3D vvel;
 };
+
+class UniformLinearMotion2DOnPlane : virtual public Behavior<Vector2D, Vector2D, Vector3D, Vector3D, Vector3D, Vector3D, Vector3D> {
+public:
+  virtual ~UniformLinearMotion2DOnPlane() = default;
+
+  void apply(std::shared_ptr<MAvatar<Vector2D, Vector2D, Vector3D, Vector3D, Vector3D, Vector3D, Vector3D> > avatar) {
+    auto contextTime = avatar->getContextTime();
+    auto vplanePos = avatar->get<1, Vector3D>();
+    // El avatar usado en el sistema de fisicas para generar el MovingTriangle3D debe actualizar en la entidad dos Values<Vector3D>
+    // Esto vectores representan estos E1 y E2 que vienen a continuación. Estos son los vectores 0,1 y 1,0 del sistema de coordenadas del plano.
+    // https://math.stackexchange.com/questions/3007739/transformation-matrix-between-a-2d-and-a-3d-coordinate-system
+    auto vplaneE1 = avatar->get<2, Vector3D>();
+    auto vplaneE2 = avatar->get<3, Vector3D>();
+
+    auto vpos3D = avatar->get<4, Vector3D>();
+    auto vvel3D = avatar->get<5, Vector3D>();
+
+    auto vpos2D = avatar->get<6, Vector2D>();
+    auto vvel2D = avatar->get<7, Vector2D>();
+
+    auto planePos = vplanePos->get();
+    auto planeE1 = vplaneE1->get();
+    auto planeE2 = vplaneE2->get();
+
+    auto pos3D = vpos3D->get();
+    auto vel3D = vvel3D->get();
+
+    auto pos2D = vpos2D->get();
+    auto vel2D = vvel2D->get();
+
+    Vector2D newPos2D = pos2D + (vel2D * (contextTime->getCurrentTime() * zbe::INVERSE_SECOND));
+    Vector3D newPos3D = planePos + (planeE1 * newPos2D.x + planeE2 * newPos2D.y);
+    //Vector3D newPos3D = planePos + (Matrix(vplaneE1,vplaneE2) * newPos2D);
+    // TODO esto es una teoria.
+    Vector3D newVel3D = (planeE1 * vel2D.x + planeE2 * vel2D.y);
+    
+    avatar->set<4, Vector3D>(newPos3D);
+    avatar->set<5, Vector3D>(newVel3D);
+    avatar->set<6, Vector2D>(newPos2D);
+  }
+};
+
 
 /** \brief Factory for FixedUniformLinearMotion3DFtry.
  */
@@ -196,14 +236,10 @@ private:
   RsrcStore<FixedUniformLinearMotion3D>& fulm3dRsrc = RsrcStore<FixedUniformLinearMotion3D>::getInstance();
 };
 
-/** \brief Factory for FixedUniformLinearMotion3DFtry.
- */
+
 class RelativeUniformLinearMotion3DFtry : virtual public Factory {
 public:
-  /** \brief Builds a FixedUniformLinearMotion3D.
-   *  \param name Name for the created FixedUniformLinearMotion3D.
-   *  \param cfgId FixedUniformLinearMotion3D's configuration id.
-   */
+
   void create(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     std::shared_ptr<RelativeUniformLinearMotion3D> rulm3d = std::shared_ptr<RelativeUniformLinearMotion3D>(new RelativeUniformLinearMotion3D);
@@ -211,10 +247,6 @@ public:
     rulm3dRsrc.insert("RelativeUniformLinearMotion3D."s + name, rulm3d);
   }
 
-  /** \brief Setup the desired tool. The tool will be complete after this step.
-   *  \param name Name of the tool.
-   *  \param cfgId Tool's configuration id.
-   */
   void setup(std::string name, uint64_t cfgId) {
     using namespace std::string_literals;
     using namespace nlohmann;

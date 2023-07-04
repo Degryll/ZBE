@@ -9,8 +9,7 @@
 
 #include <cstdio>
 #include "ZBE/JSON/graphics/JSONGraphicsLoaders.h"
-#include "ZBE/OGL/graphics/implementations/SpriteOGLModelSheet.h"
-#include "ZBE/OGL/graphics/implementations/SimpleOGLModelSheet.h"
+#include "ZBE/OGL/graphics/implementations/OGLModelSheets.h"
 
 namespace zbe {
 namespace JSONGraphicsLoaders {
@@ -125,7 +124,7 @@ void JSONMultiSpriteSheetFileLoad(std::istream& is, RsrcStore<zbe::SpriteSheet<u
   }
 }
 
-void JSONSimpleModelSheetFileLoad(std::istream& is, std::shared_ptr<SDLOGLWindow> window, RsrcStore<zbe::SpriteSheet<uint64_t, int64_t, double, Vector2D, Vector2D> >& rsrcAnimSprt, NameRsrcDictionary& nrd, RsrcStore<zbe::OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> >& rsrcModelSheet, RsrcStore<OGLGraphics> &graphicsStore) {
+void JSONSimpleModelSheetFileLoad(std::istream& is, std::shared_ptr<SDLOGLWindow> window, NameRsrcDictionary& nrd, RsrcStore<zbe::OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> >& rsrcModelSheet, RsrcStore<OGLGraphics> &graphicsStore) {
   using namespace std::string_literals;
   using namespace nlohmann;
   json j;
@@ -145,6 +144,29 @@ void JSONSimpleModelSheetFileLoad(std::istream& is, std::shared_ptr<SDLOGLWindow
     SysError::setError(std::string("JSONMultiSpriteSheetFileLoad - ERROR: Json failed to parse: ") + std::string(e.what()));
   } catch (nlohmann::detail::type_error &e) {
     SysError::setError(std::string("JSONMultiSpriteSheetFileLoad - ERROR: Json failed to load SimpleModelSheet because: ") + std::string(e.what()));
+  }
+}
+
+void JSONLookAtOGLModelSheetFileLoad(std::istream& is, std::shared_ptr<SDLOGLWindow> window, NameRsrcDictionary& nrd, RsrcStore<zbe::OGLModelSheet<uint64_t, double, Vector3D, Vector3D, Vector3D> >& rsrcModelSheet, RsrcStore<OGLGraphics> &graphicsStore) {
+  using namespace std::string_literals;
+  using namespace nlohmann;
+  json j;
+  try {
+    is >> j;
+    std::string name = j["name"];
+    json graphicdefs = j["graphicdefs"];
+    json graphicdef =  graphicdefs[0];
+    std::string graphicsName = graphicdef["name"];
+    std::shared_ptr<LookAtOGLModelSheet> modelSheet = std::make_shared<LookAtOGLModelSheet>(window, "graphics."s + graphicsName, graphicsStore);
+
+    // for (auto graphicdef : graphicdefs) {
+    // TODO necesitaremos añadir múltiples definiciones de model a un solo OGLModelSheet en el futuro.
+    // }
+    rsrcModelSheet.insert(name, modelSheet);
+  } catch (json::parse_error &e) {
+    SysError::setError(std::string("JSONLookAtOGLModelSheetLoad - ERROR: Json failed to parse: ") + std::string(e.what()));
+  } catch (nlohmann::detail::type_error &e) {
+    SysError::setError(std::string("JSONLookAtOGLModelSheetLoad - ERROR: Json failed to load SimpleModelSheet because: ") + std::string(e.what()));
   }
 }
 
