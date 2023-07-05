@@ -2540,38 +2540,6 @@
             "key":"ZBEK_MOUSE_RIGHT"
           }
         },
-        {"factory": "KeyDownTicketEnablerIHFtry",
-          "name": "loadScreen.goForwardInputH",
-          "config" : {
-            "ticket" : "BehaviorsMD.loadScreen.goForwardDaemon.ticket",
-            "inputEventGenerator" : "loadScreen.inputEventGenerator",
-            "key":"ZBEK_w"
-          }
-        },
-        {"factory": "KeyDownTicketEnablerIHFtry",
-          "name": "loadScreen.goBackwardInputH",
-          "config" : {
-            "ticket" : "BehaviorsMD.loadScreen.goBackwardDaemon.ticket",
-            "inputEventGenerator" : "loadScreen.inputEventGenerator",
-            "key":"ZBEK_s"
-          }
-        },
-        {"factory": "KeyDownTicketEnablerIHFtry",
-          "name": "loadScreen.goLeftInputH",
-          "config" : {
-            "ticket" : "BehaviorsMD.loadScreen.goLeftDaemon.ticket",
-            "inputEventGenerator" : "loadScreen.inputEventGenerator",
-            "key":"ZBEK_a"
-          }
-        },
-        {"factory": "KeyDownTicketEnablerIHFtry",
-          "name": "loadScreen.goRightInputH",
-          "config" : {
-            "ticket" : "BehaviorsMD.loadScreen.goRightDaemon.ticket",
-            "inputEventGenerator" : "loadScreen.inputEventGenerator",
-            "key":"ZBEK_d"
-          }
-        },
         {"factory": "ParametricActivatorIHFtry",
           "name": "loadScreen.pitchInputH",
           "config" : {
@@ -2603,7 +2571,7 @@
           "name": "loadScreen.cajanorte",
           "config" : {
             "inputEventGenerator" : "loadScreen.inputEventGenerator",
-            "key":"ZBEK_UP",
+            "key":"ZBEK_w",
             "valuePressed":"velcajanorte",
             "valueReleased":"ZERO",
             "value" : "zandbokz.protaVelForward"
@@ -2613,7 +2581,7 @@
           "name": "loadScreen.cajasur",
           "config" : {
             "inputEventGenerator" : "loadScreen.inputEventGenerator",
-            "key":"ZBEK_DOWN",
+            "key":"ZBEK_s",
             "valuePressed":"velcajasur",
             "valueReleased":"ZERO",
             "value" : "zandbokz.protaVelForward"
@@ -2623,7 +2591,7 @@
           "name": "loadScreen.cajaeste",
           "config" : {
             "inputEventGenerator" : "loadScreen.inputEventGenerator",
-            "key":"ZBEK_RIGHT",
+            "key":"ZBEK_d",
             "valuePressed":"velcajaeste",
             "valueReleased":"ZERO",
             "value" : "zandbokz.protaVelLateral"
@@ -2633,7 +2601,7 @@
           "name": "loadScreen.cajaoeste",
           "config" : {
             "inputEventGenerator" : "loadScreen.inputEventGenerator",
-            "key":"ZBEK_LEFT",
+            "key":"ZBEK_a",
             "valuePressed":"velcajaoeste",
             "valueReleased":"ZERO",
             "value" : "zandbokz.protaVelLateral"

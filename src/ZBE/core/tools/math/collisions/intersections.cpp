@@ -8,6 +8,7 @@
  */
 
 #include "ZBE/core/tools/math/collisions/intersections.h"
+#include "ZBE/core/system/system.h"
 
 namespace zbe {
 
@@ -52,7 +53,7 @@ bool IntersectionMovingSphereInsideAABB3D(Sphere sphere, Vector3D direction, AAB
  * \param point Stores the point of collision, if any.
  * \return True if there is a collision before the initial value of time, false otherwise.
  */
-bool IntersectionMovingCircleOutsideAABB2D(Circle circle, Vector2D direction, AABB2D box, int64_t& time, Point2D& point, Vector2D& normal) {
+bool ZBEAPI IntersectionMovingCircleOutsideAABB2D(Circle circle, Vector2D direction, AABB2D box, int64_t& time, Point2D& point, Vector2D& normal) {
   double r = circle.r;
   AABB2D e = box;
   e.minimum[0] -= r;
@@ -137,15 +138,15 @@ bool IntersectionMovingCircleOutsideAABB2D(Circle circle, Vector2D direction, AA
   }  // if extended box collision
 }
 
-bool intersectionMovingRay2DRay2D(Ray2D r1, Ray2D r2, int64_t& time, Point2D& point, Vector2D& normal) {
+bool ZBEAPI intersectionMovingRay2DRay2D(Ray2D r1, Ray2D r2, int64_t& time, Point2D& point, Vector2D& normal) {
     Vector2D d1 = r1.d;
     Vector2D d2 = r2.d;
     Vector2D n2 = Vector2D{d2.y, -d2.x};
     n2.normalize();
-    
+
     double h = dot((r1.o - r2.o), n2); // height of the first point of l1 on vector l2
     double hd = dot(d1, n2);  // height differential of the vector that defines l1
-    
+
     // const double threshold = 0.0f;  // A threshold where height differential is considered to correspond to parallel lines
     // if(std::abs(hd) <= threshold) {
     //     return false;

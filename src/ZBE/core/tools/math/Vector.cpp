@@ -8,18 +8,19 @@
  */
 
 #include "ZBE/core/tools/math/Vector.h"
+#include "ZBE/core/system/system.h"
 
 namespace zbe {
 
-Vector<2> reflect(Vector<2> ray, const Vector<2> &normal){
+Vector<2> ZBEAPI reflect(Vector<2> ray, const Vector<2> &normal){
     return ray.reflect(normal);
 }
 
-Vector<3> reflect(Vector<3> ray, const Vector<3> &normal){
+Vector<3> ZBEAPI reflect(Vector<3> ray, const Vector<3> &normal){
     return ray.reflect(normal);
 }
 
-Vector<3> cross(Vector<3> lhs, const Vector<3>& rhs) {
+Vector<3> ZBEAPI cross(Vector<3> lhs, const Vector<3>& rhs) {
   return (lhs.cross(rhs));
 }
 

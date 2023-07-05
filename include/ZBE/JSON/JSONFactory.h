@@ -216,7 +216,7 @@ std::optional<std::array<T, n>> loadLiteralArray(RsrcDictionary<T>& dict, json c
 }
 
 template<typename T>
-std::optional<std::forward_list<T>> loadLiteralList(RsrcDictionary<T>& dict, json cfg, std::string paramName, std::string factoryName, uint min = 0, uint max = 0) {
+std::optional<std::forward_list<T>> loadLiteralList(RsrcDictionary<T>& dict, json cfg, std::string paramName, std::string factoryName, uint64_t min = 0, uint64_t max = 0) {
   using namespace std::string_literals;
   if (!cfg.is_array()) {
     SysError::setError(factoryName + " config for " + paramName + " must be an array."s);
