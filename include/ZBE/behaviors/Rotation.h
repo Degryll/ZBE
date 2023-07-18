@@ -25,10 +25,136 @@
 
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/rotate_vector.hpp>
+#include <glm/gtx/vector_angle.hpp>
 
 namespace zbe {
 
-class ExcentricalRotation3D : virtual public Behavior<Vector3D, Vector3D>, public Parametric<float> {
+class LimitedExcentricalRotation3D : virtual public Behavior<float, float, Vector3D,Vector3D, Vector3D, Vector3D>, public Parametric<float> {
+   public:
+    /** \brief Default constructor.
+     */
+    LimitedExcentricalRotation3D() = default;
+
+    /** \brief Virtual destructor.
+     */
+    ~LimitedExcentricalRotation3D() = default;
+
+    void set(float offset) {
+      this->radians = offset * sensibility;
+    }
+
+    void setSensibility(float sensibility) {
+      this->sensibility = sensibility;
+    }
+
+    /** \brief Makes the entity move in a straight line
+     */
+    void apply(std::shared_ptr<MAvatar<float, float, Vector3D, Vector3D, Vector3D, Vector3D> > avatar) {
+      auto vvpos = avatar->get<1, Vector3D>();
+      auto vvexc = avatar->get<2, Vector3D>();
+      auto vvrot = avatar->get<3, Vector3D>();
+      auto vvzero = avatar->get<4, Vector3D>();
+
+      auto vfmin = avatar->get<5, float>();
+      auto vfmax = avatar->get<6, float>();
+      
+      auto vpos = vvpos->get();
+      auto vexc = vvexc->get();
+      auto vrot = vvrot->get();
+      auto vzero = vvzero->get();
+
+      float min = vfmin->get();
+      float max = vfmax->get();
+      
+      vpos = vpos - vexc;
+      vrot.normalize();
+      glm::vec3 rot{vrot.x, vrot.y, vrot.z};
+      glm::vec3 pos(vpos.x, vpos.y, vpos.z);
+
+      Vector3D vab = normalize(vpos);
+      Vector3D vac =  vzero.normalize();
+
+      glm::vec3 ab(vab.x, vab.y, vab.z);
+      glm::vec3 ac(vac.x, vac.y, vac.z);
+
+      float current = glm::orientedAngle(ab, ac, ab);
+
+      float finalRadians = radians;
+
+      if(current + radians > max) {
+        finalRadians = max - current;
+      } else if(current + radians < min) {
+        finalRadians = min - current;
+      }
+
+      pos = glm::rotate(pos, finalRadians, rot);
+
+      avatar->set<1, Vector3D>(Vector3D{pos.x + vexc.x, pos.y + vexc.y, pos.z + vexc.z});
+    }
+
+  private:
+    float radians;
+    float sensibility;
+};
+
+class LimitedExcentricalRotation3DFtry : virtual public Factory {
+public:
+  /** \brief Builds a Rotation2D.
+   *  \param name Name for the created Rotation2D.
+   *  \param cfgId Rotation2D's configuration id.
+   */
+  void create(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    std::shared_ptr<LimitedExcentricalRotation3D> er3d = std::shared_ptr<LimitedExcentricalRotation3D>(new LimitedExcentricalRotation3D);
+    behaviorStore.insert("Behavior."s + name, er3d);
+    rot3DStore.insert("LimitedExcentricalRotation3D."s + name, er3d);
+    pmtStore.insert("Parametric."s + name, er3d);
+  }
+
+  /** \brief Setup the desired tool. The tool will be complete after this step.
+   *  \param name Name of the tool.
+   *  \param cfgId Tool's configuration id.
+   */
+  void setup(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configStore.get(cfgId);
+
+    if(cfg) {
+      auto j = *cfg;
+      if (!j["sensibility"].is_string()) {
+        SysError::setError("LimitedExcentricalRotation3D config for sensibility: must be a literal sensibility name."s);
+        return;
+      }
+
+      std::string sensibilityName = j["sensibility"].get<std::string>();
+      if(!floatDict.contains(sensibilityName)) {
+        SysError::setError("LimitedExcentricalRotation3D config for sensibility: "s + sensibilityName + " is not a sensibility name."s);
+        return;
+      }
+      
+      auto rot3D = rot3DStore.get("LimitedExcentricalRotation3D."s + name);
+      float sensibility = floatDict.get(sensibilityName);
+      rot3D->setSensibility(sensibility);
+
+    } else {
+      SysError::setError("LimitedExcentricalRotation3D config for "s + name + " not found."s);
+    }
+
+  }
+
+private:
+
+  RsrcStore<nlohmann::json>& configStore = RsrcStore<nlohmann::json>::getInstance();
+  RsrcDictionary<float>& floatDict = RsrcDictionary<float>::getInstance();
+  RsrcDictionary<Vector3D>& vect3DDict = RsrcDictionary<Vector3D>::getInstance();
+  RsrcStore<Behavior<float, float, Vector3D, Vector3D, Vector3D, Vector3D> >& behaviorStore = RsrcStore<Behavior<float, float, Vector3D, Vector3D, Vector3D, Vector3D> >::getInstance();
+  RsrcStore<LimitedExcentricalRotation3D>& rot3DStore = RsrcStore<LimitedExcentricalRotation3D>::getInstance();
+  RsrcStore<Parametric<float> >& pmtStore = RsrcStore<Parametric<float> >::getInstance();
+};
+
+
+class ExcentricalRotation3D : virtual public Behavior<Vector3D,Vector3D, Vector3D>, public Parametric<float> {
    public:
     /** \brief Default constructor.
      */
@@ -46,22 +172,21 @@ class ExcentricalRotation3D : virtual public Behavior<Vector3D, Vector3D>, publi
       this->sensibility = sensibility;
     }
 
-    void setRotationVec(Vector3D rotvec) {
-      rot = glm::vec3(rotvec.x, rotvec.y, rotvec.z);
-    }
-
     /** \brief Makes the entity move in a straight line
      */
-    void apply(std::shared_ptr<MAvatar<Vector3D, Vector3D > > avatar) {
+    void apply(std::shared_ptr<MAvatar<Vector3D, Vector3D, Vector3D > > avatar) {
       auto vvpos = avatar->get<1, Vector3D>();
       auto vvexc = avatar->get<2, Vector3D>();
-
+      auto vvrot = avatar->get<3, Vector3D>();
+      
       auto vpos = vvpos->get();
       auto vexc = vvexc->get();
+      auto vrot = vvrot->get();
       vpos = vpos - vexc;
 
+      vrot.normalize();
+      glm::vec3 rot{vrot.x, vrot.y, vrot.z};   
       glm::vec3 pos(vpos.x, vpos.y, vpos.z);
-
       pos = glm::rotate(pos, radians, rot);
       avatar->set<1, Vector3D>(Vector3D{pos.x + vexc.x, pos.y + vexc.y, pos.z + vexc.z});
     }
@@ -69,7 +194,6 @@ class ExcentricalRotation3D : virtual public Behavior<Vector3D, Vector3D>, publi
   private:
     float radians;
     float sensibility;
-    glm::vec3 rot;   
 };
 
 class ExcentricalRotation3DFtry : virtual public Factory {
@@ -107,19 +231,10 @@ public:
         SysError::setError("ExcentricalRotation3D config for sensibility: "s + sensibilityName + " is not a sensibility name."s);
         return;
       }
-      float sensibility = floatDict.get(sensibilityName);
-
-
-      std::string rotName = j["rotation"].get<std::string>();
-      if(!vect3DDict.contains(rotName)) {
-        SysError::setError("ExcentricalRotation3D config for rot: "s + rotName + " is not a vector name."s);
-        return;
-      }
-      auto rot = vect3DDict.get(rotName);
-
+      
       auto rot3D = rot3DStore.get("ExcentricalRotation3D."s + name);
+      float sensibility = floatDict.get(sensibilityName);
       rot3D->setSensibility(sensibility);
-      rot3D->setRotationVec(rot);
 
     } else {
       SysError::setError("ExcentricalRotation3D config for "s + name + " not found."s);
@@ -132,7 +247,7 @@ private:
   RsrcStore<nlohmann::json>& configStore = RsrcStore<nlohmann::json>::getInstance();
   RsrcDictionary<float>& floatDict = RsrcDictionary<float>::getInstance();
   RsrcDictionary<Vector3D>& vect3DDict = RsrcDictionary<Vector3D>::getInstance();
-  RsrcStore<Behavior<Vector3D, Vector3D> >& behaviorStore = RsrcStore<Behavior<Vector3D, Vector3D> >::getInstance();
+  RsrcStore<Behavior<Vector3D, Vector3D, Vector3D> >& behaviorStore = RsrcStore<Behavior<Vector3D, Vector3D, Vector3D> >::getInstance();
   RsrcStore<ExcentricalRotation3D>& rot3DStore = RsrcStore<ExcentricalRotation3D>::getInstance();
   RsrcStore<Parametric<float> >& pmtStore = RsrcStore<Parametric<float> >::getInstance();
 };

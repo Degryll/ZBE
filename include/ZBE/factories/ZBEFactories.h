@@ -81,6 +81,10 @@ public:
     using M3DOn2DAvtList = TicketedForwardList<MAvatar<Vector2D, Vector2D, Vector3D, Vector3D, Vector3D, Vector3D, Vector3D> >;
     using M3DOn2DAvtBhvr = BehaviorDmnFtry<M3DOn2DAvtList, Vector2D, Vector2D, Vector3D, Vector3D, Vector3D, Vector3D, Vector3D>;
 
+
+    using FourV3DTwoFAvtList = TicketedForwardList<MAvatar<float, float, Vector3D, Vector3D, Vector3D, Vector3D> >;
+    using FourV3DTwoFAvtBhvr = BehaviorDmnFtry<FourV3DTwoFAvtList, float, float, Vector3D, Vector3D, Vector3D, Vector3D>;
+
     auto& factories = RsrcStore<Factory>::getInstance();
     for(int i = 0;i<100;i++) {
         factories.insert(std::to_string(i)+"Ftry"s , std::make_shared<SimpleGenericFtry<int> >(factories::listName));
@@ -95,6 +99,8 @@ public:
     factories.insert("ThreeV3DAvtBldrFtry", std::make_shared<MAvatarBldrFtry<Vector3D, Vector3D, Vector3D> >());
     factories.insert("FloatAvtBldrFtry", std::make_shared<SAvatarBldrFtry<float> >());
     factories.insert("VoidAvtBldrFtry", std::make_shared<AvatarBldrFtry>());
+
+    factories.insert("FourV3DTowFAvtBldrFtry", std::make_shared<MAvatarBldrFtry<float, float, Vector2D, Vector2D, Vector2D, Vector2D>>());
 
     factories.insert("TwoDoubleThreeV3DAvtBldrFtry", std::make_shared<MAvatarBldrFtry<double,  double, Vector3D, Vector3D, Vector3D> >());
 
@@ -170,6 +176,11 @@ public:
     factories.insert("TwoDoubleThreeV3DBhvDmnFtry", std::make_shared<BehaviorDmnFtry<TicketedForwardList<MAvatar<double,  double, Vector3D, Vector3D, Vector3D>>, double, double, Vector3D, Vector3D, Vector3D>>()); //<double,  double, Vector3D, Vector3D, Vector3D>
 
     factories.insert("TwoV3DAvtFtry", std::make_shared<BaseAvatarFtry<Vector3D, Vector3D> >());
+    factories.insert("ThreeV3DAvtFtry", std::make_shared<BaseAvatarFtry<Vector3D, Vector3D, Vector3D> >());
+
+    factories.insert("FourV3DTwoFDaemonFtry", std::make_shared<FourV3DTwoFAvtBhvr>());
+    factories.insert("TFAECFourV3DTwoFAvtFtry" , std::make_shared<SimpleGenericFtry<FourV3DTwoFAvtList> >(factories::listName));
+    factories.insert("FourV3DTwoFAvtFtry", std::make_shared<BaseAvatarFtry<float,  float, Vector3D, Vector3D, Vector3D, Vector3D> >());
 
   }
 };

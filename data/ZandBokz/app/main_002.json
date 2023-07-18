@@ -82,6 +82,11 @@
     "relativeVelTicket" : 7100,
     "relativeOriTicket" : 7101,
     "copyVelOnOriTicket" : 7200,
+    "yawvectorIdx" : 8010,
+    "pitchvectorIdx" : 8020,
+    "zeroIdx" : 8030,
+    "minPitchIdx" : 8040,
+    "maxPitchIdx" : 8050,
     "state.static" : 0,
     "testwflags": 0,
     "testrflags": 0,
@@ -108,10 +113,10 @@
     "model.fixedBackwardVelocity" :{"type":"v3", "value":[0.0,0.0,-50.0]},
     "model.fixedLeftVelocity" :{"type":"v3", "value":[-50.0,0.0,0.0]},
     "model.fixedRightVelocity" :{"type":"v3", "value":[50.0,0.0,0.0]},
-    "model.pitchsensibility" :{"type":"f", "value":0.01},
+    "model.pitchsensibility" :{"type":"f", "value":-0.01},
     "model.yawsensibility" :{"type":"f", "value":-0.01},
 
-    "model.pitchRotVec" :{"type":"v3", "value":[1.0, 0.0, 10.0]},
+    "model.pitchRotVec" :{"type":"v3", "value":[1.0, 0.0, 0.0]},
     "model.yawRotVec" :{"type":"v3", "value":[0.0, 1.0, 0.0]},
 
     "model.sineComponent" : 0,
@@ -134,9 +139,7 @@
     "velcajasur" :{"type":"d", "value":-120.0},
     "velcajaeste" :{"type":"d", "value":70.0},
     "velcajaoeste" :{"type":"d", "value":-70.0},
-    "velcajasalto" :{"type":"v3", "value":[0.0,100.0,0.0]},
-
-    "TODOindices":""
+    "velcajasalto" :{"type":"v3", "value":[0.0,100.0,0.0]}
   },
   "phases":[
       {
@@ -154,7 +157,9 @@
                 "camScale" : ["cam.scale"],
                 "aspect" : ["cam.aspect"],
                 "znear" : ["cam.znear"],
-                "zfar" : ["cam.zfar"]
+                "zfar" : ["cam.zfar"],
+                "pitchmin" : 0.15 ,
+                "pitchmax" : 3.0
               },
               "double" : {
                 "cajaVelLateral" : 0.0,
@@ -173,7 +178,9 @@
                 "protaPos" : [0.0, 150.0, 0.0],
                 "planePos" : [100.0, 100.0, 0.0],
                 "planeE1" : [0.0, 0.0, 0.0],
-                "planeE2" : [0.0, 0.0, 0.0]
+                "planeE2" : [0.0, 0.0, 0.0],
+                "protaPitchVect" : [1.0, 0.0, 0.0],
+                "protaYawVect" : [0.0, 1.0, 0.0]
               }
             }
           }
@@ -213,13 +220,13 @@
           "config" : {}
         },
         {
-          "factory": "TFAECTwoV3DAvtFtry",
+          "factory": "TFAECFourV3DTwoFAvtFtry",
           "description" : "do some serious sheet",
           "name": "loadScreen.pitchList",
           "config" : {}
         },
         {
-          "factory": "TFAECTwoV3DAvtFtry",
+          "factory": "TFAECThreeV3DAvtFtry",
           "description" : "do some serious sheet",
           "name": "loadScreen.yawList",
           "config" : {}
@@ -574,7 +581,7 @@
               "sizeIdx":[5.0]
             },
             "V3D": {
-              "positionIdx":[-200.0, 10.0, -200.0],
+              "positionIdx":[-200.0, 0.0, -200.0],
               "orientationIdx":[1.0, 0.0, 0.0]
             }
           }
@@ -1357,7 +1364,9 @@
               "planePosIdx": [0.0, 0.0, 0.0],
               "upwardsIdx": [0.0, 1.0, 0.0],
               "e1Idx": [0.0, 0.0, 0.0],
-              "e2Idx": [0.0, 0.0, 0.0]
+              "e2Idx": [0.0, 0.0, 0.0],
+              "pitchvectorIdx": "zandbokz.protaPitchVect",
+              "yawvectorIdx": "zandbokz.protaYawVect"
             },
             "V2D": {
               "position2DIdx":[0.0, 0.0],
@@ -1482,8 +1491,8 @@
           "name" : "zandbokz.cajabuilder",
           "config" : {
             "contextTime":"DEFAULT",
-            "builders" : ["zandbokz.cajavalues", "zandbokz.cajaapintar", "zandbokz.cajaamover", "zandbokz.cajaacaer", "zandbokz.cajafinalvel", "zandbokz.cajaagirar", "zandbokz.cajacalculavel", "zandbokz.cajaamoverenplano","zandbokz.cajasocializa", "zandbokz.cajasInator2D","zandbokz.attachcajaonoff", "zandbokz.cajaasaltar", "zandbokz.cajaPlanoDerecha", "zandbokz.cajaPlanoIzquierda", "zandbokz.cajaPlanoDelante", "zandbokz.cajaPlanoAtras"],
-            "buildersback" : []
+            "builders" : ["zandbokz.cajavalues", "zandbokz.cajaapintar", "zandbokz.cajaamover", "zandbokz.cajaacaer", "zandbokz.cajafinalvel", "zandbokz.cajacalculavel", "zandbokz.cajaamoverenplano","zandbokz.cajasocializa", "zandbokz.cajasInator2D","zandbokz.attachcajaonoff", "zandbokz.cajaasaltar", "zandbokz.cajaPlanoDerecha", "zandbokz.cajaPlanoIzquierda", "zandbokz.cajaPlanoDelante", "zandbokz.cajaPlanoAtras"],
+            "buildersback" : ["zandbokz.cajaagirar"]
           }
         },
         {
@@ -1511,7 +1520,9 @@
               "planePosIdx":"zandbokz.planePos",
               "upwardsIdx": [0.0, 1.0, 0.0],
               "e1Idx": "zandbokz.planeE1",
-              "e2Idx": "zandbokz.planeE2"
+              "e2Idx": "zandbokz.planeE2",
+              "pitchvectorIdx": [1.0, 0.0, 0.0],
+              "yawvectorIdx": [0.0, 1.0, 0.0]
             },
             "V2D": {
               "position2DIdx":[0.0, 0.0],
@@ -1586,10 +1597,11 @@
           }
         },
         {
-          "factory" :"TwoV3DAvtBldrFtry",
+          "factory" :"ThreeV3DAvtBldrFtry",
           "name" : "zandbokz.cajaagirar",
+          "TODO" : "eliminar",
           "config" : {
-            "attribIndexes" : ["upwardsIdx", "velocityPre1Idx"],
+            "attribIndexes" : ["yawvectorIdx", "upwardsIdx", "velocityPre1Idx"],
             "lists":{"loadScreen.yawList" : "yawTicket"}
           }
         },
@@ -1789,14 +1801,19 @@
             "contextTime":"DEFAULT",
             "float": {
               "fovIdx":"zandbokz.fov",
-              "camScaleIdx":"zandbokz.camScale"
+              "camScaleIdx":"zandbokz.camScale",
+              "maxPitchIdx":"zandbokz.pitchmax",
+              "minPitchIdx":"zandbokz.pitchmin"
             },
             "V3D": {
+              "zeroIdx":[0.0, 0.0, 0.0],
               "positionIdx":"zandbokz.camEye",
               "targetIdx":"zandbokz.camTarget",
               "upwardsIdx":"zandbokz.camUp",
               "velocityIdx": "zandbokz.protaVel",
-              "excentricIdx": "zandbokz.protaPos"
+              "excentricIdx": "zandbokz.protaPos",
+              "pitchvectorIdx": "zandbokz.protaPitchVect",
+              "yawvectorIdx": "zandbokz.protaYawVect"
             },
             "TODO": "asociar todos los values de la camara"
           }
@@ -2080,20 +2097,18 @@
             "behavior" : "loadScreen.cajaponvelocidadsalto"
           }
         },
-        {"factory": "ExcentricalRotation3DFtry",
+        {"factory": "LimitedExcentricalRotation3DFtry",
           "name": "loadScreen.pitchBhv",
           "description" : "Comportamiento que menea el obojeto mirando parriba y pabajo",
           "config" : {
-             "sensibility" : "model.pitchsensibility",
-             "rotation" : "model.pitchRotVec"
+             "sensibility" : "model.pitchsensibility"
           }
         },
         {"factory": "ExcentricalRotation3DFtry",
           "name": "loadScreen.yawBhv",
           "description" : "Comportamiento que menea el bobobojeto mirando pa diestra y siniestra",
           "config" : {
-             "sensibility" : "model.yawsensibility",
-             "rotation" : "model.yawRotVec"
+             "sensibility" : "model.yawsensibility"
           }
         },
         {"factory": "GravityMotion3DFtry",
@@ -2230,7 +2245,7 @@
             "DaemonMaster" : "BehaviorsMD"
           }
         },
-        {"factory": "TwoV3DAvtDaemonFtry",
+        {"factory": "FourV3DTwoFDaemonFtry",
           "name": "loadScreen.pitchDaemon",
           "description" : "demonio girara la camara",
           "config" : {
@@ -2238,7 +2253,7 @@
             "behavior" : "loadScreen.pitchBhv"
           }
         },
-        {"factory": "TwoV3DAvtDaemonFtry",
+        {"factory": "ThreeV3DAvtDaemonFtry",
           "name": "loadScreen.yawDaemon",
           "description" : "demonio girara la camara",
           "config" : {
@@ -2455,24 +2470,35 @@
             "lists":{"loadScreen.drawList2D":"drawticket"}
           }
         },
-        {"factory": "TwoV3DAvtFtry",
+        {"factory": "FourV3DTwoFAvtFtry",
           "name": "loadScreen.notSosimplecamMovePitch",
           "config" : {
             "entity" : "cameraControllerFree",
-            "attribIndexes" : ["excentricIdx", "positionIdx"],
-            "lists":{},
-            "deativatedlists" : {"loadScreen.pitchList":"camPitchTicket"}
+            "attribIndexes" : ["maxPitchIdx", "minPitchIdx", "yawvectorIdx", "pitchvectorIdx", "excentricIdx", "positionIdx"],
+            "lists":{"loadScreen.pitchList":"camPitchTicket"},
+            "deativatedlists" : {}
           }
         },
-        {"factory": "TwoV3DAvtFtry",
+        {"factory": "ThreeV3DAvtFtry",
           "name": "loadScreen.notSosimplecamMoveYaw",
           "config" : {
             "entity" : "cameraControllerFree",
-            "attribIndexes" : ["excentricIdx", "positionIdx"],
+            "attribIndexes" : ["yawvectorIdx", "excentricIdx", "positionIdx"],
             "lists":{"loadScreen.yawList":"yawTicket"},
             "deativatedlists" : {}
           }
         },
+
+        {"factory": "ThreeV3DAvtFtry",
+          "name": "loadScreen.notSosimplecamMovePitchCorrection",
+          "config" : {
+            "entity" : "cameraControllerFree",
+            "attribIndexes" : ["yawvectorIdx", "zeroIdx", "pitchvectorIdx"],
+            "lists":{"loadScreen.yawList":"yawTicket"},
+            "deativatedlists" : {}
+          }
+        },
+
         {"factory": "TwoV3DAvtFtry",
           "name": "loadScreen.simplecamMove",
           "config" : {
@@ -2482,6 +2508,7 @@
             "deativatedlists" : {}
           }
         },
+
         {"factory": "FloatAvtFtry",
           "name": "loadScreen.camFov",
           "config" : {
@@ -2501,19 +2528,6 @@
             "scaleIdx" : "camScaleIdx",
             "lists":{},
             "deativatedlists":{"loadScreen.fovOscillatorList":"fovticket", "loadScreen.camMoveList":"camPosVelTicket"}
-          }
-        },
-        {"factory": "LookAtToPitchAvtFtry",
-          "name": "loadScreen.camPitch",
-          "config" : {
-            "entity" : "cameraControllerFree",
-            "positionIdx" : "positionIdx",
-            "targetIdx" : "targetIdx",
-            "upwardsIdx" : "upwardsIdx",
-            "scaleIdx" : "camScaleIdx",
-            "lists":{},
-            "deativatedlists":{},
-            "backup" : {"loadScreen.pitchList":"camPitchTicket"}
           }
         },
         {"factory": "LookAtToYawAvtFtry",
