@@ -242,12 +242,28 @@ class _VECTOR {
       return (*this);
     }
 
+    /** \brief Modifies this vector setting module to given value
+     *
+     * \return Normalized vector.
+     */
+    _VECTOR<dim>&  setModule(double module) {
+      return this->normalize() *= module;
+    }
+
     /** \brief Modifies this vector setting module to 1.0.
      *
      * \return Normalized vector.
      */
     friend _VECTOR normalize(_VECTOR rhs)  {
       return rhs.normalize();
+    }
+
+    /** \brief Modifies this vector setting module to given value
+     *
+     * \return Normalized vector.
+     */
+    friend _VECTOR setModule(_VECTOR rhs, double module)  {
+      return rhs.setModule(module);
     }
 
 
@@ -600,9 +616,19 @@ class Vector<3> : public _VECTOR<3> {
      */
     friend Vector<3> cross(Vector<3> lhs, const Vector<3>& rhs);
 
+    /** \brief Implements vector between two angles.
+     *
+     * \param lhs First vector.
+     * \param rhs Second vector.
+     * \return The angle between given vectors
+     */
+    double angle(Vector<3> lhs, Vector<3> rhs);
+
 };
 
 Vector<3> cross(Vector<3> lhs, const Vector<3>& rhs);
+
+double angle(Vector<3> lhs, Vector<3> rhs);
 
 using Vector3D = Vector<3>; //!< An alias to Vector<3>.
 

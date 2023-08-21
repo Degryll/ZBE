@@ -175,8 +175,12 @@ public:
     factories.insert("TFAECTwoDoubleThreeV3DFtry", std::make_shared<SimpleGenericFtry<TicketedForwardList<MAvatar<double,  double, Vector3D, Vector3D, Vector3D>>>>(factories::listName)); //<double,  double, Vector3D, Vector3D, Vector3D>
     factories.insert("TwoDoubleThreeV3DBhvDmnFtry", std::make_shared<BehaviorDmnFtry<TicketedForwardList<MAvatar<double,  double, Vector3D, Vector3D, Vector3D>>, double, double, Vector3D, Vector3D, Vector3D>>()); //<double,  double, Vector3D, Vector3D, Vector3D>
 
+    factories.insert("TFAECDoubleTwoV3DFtry", std::make_shared<SimpleGenericFtry<TicketedForwardList<MAvatar<double, Vector3D, Vector3D>>>>(factories::listName)); //<double,  double, Vector3D, Vector3D, Vector3D>
+    factories.insert("DoubleTwoV3DBhvDmnFtry", std::make_shared<BehaviorDmnFtry<TicketedForwardList<MAvatar<double, Vector3D, Vector3D>>, double, Vector3D, Vector3D>>()); //<double,  double, Vector3D, Vector3D, Vector3D>
+
     factories.insert("TwoV3DAvtFtry", std::make_shared<BaseAvatarFtry<Vector3D, Vector3D> >());
     factories.insert("ThreeV3DAvtFtry", std::make_shared<BaseAvatarFtry<Vector3D, Vector3D, Vector3D> >());
+    factories.insert("DoubleTwoV3DDAvtFtry", std::make_shared<BaseAvatarFtry<double, Vector3D, Vector3D> >());
 
     factories.insert("FourV3DTwoFDaemonFtry", std::make_shared<FourV3DTwoFAvtBhvr>());
     factories.insert("TFAECFourV3DTwoFAvtFtry" , std::make_shared<SimpleGenericFtry<FourV3DTwoFAvtList> >(factories::listName));

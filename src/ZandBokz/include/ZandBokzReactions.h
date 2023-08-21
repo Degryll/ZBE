@@ -32,6 +32,134 @@
 
 namespace zandbokz {
 
+class AttachRedirectionReaction : public zbe::Funct<void, zbe::CollisionData3D, Platform> {
+public:
+  AttachRedirectionReaction(const AttachRedirectionReaction&) = delete; //!< Avoid copy.
+  void operator=(const AttachRedirectionReaction&) = delete; //!< Avoid copy.
+
+  static const int AVTSIZE = 3;
+
+  /** brief Parametrized constructor
+  * param avt Avatar to use
+  */
+  AttachRedirectionReaction(std::shared_ptr<zbe::MAvatar<zbe::Vector3D, zbe::Vector3D, zbe::Vector3D>> avatar /* pitchvec(a) upwards(b) orientation*/) : avatar(avatar) {}
+
+  /** brief Reposition entity on plane.
+  */
+  void operator()(zbe::CollisionData3D cData, Platform platform) {
+    
+    auto planeE1 = platform[2]->get();
+    auto planeE2 = platform[1]->get();
+    auto planePos = platform[0]->get();
+
+    auto voirentation = avatar->get<1, zbe::Vector3D>();
+    zbe::Vector3D oirentation = voirentation->get();
+
+    //zbe::Vector3D planeNormal = zbe::cross(planeE1, planeE2);/*.normalize()*/
+    
+    // proyectar orientation en el plano
+    //   Distancia punto plano. El punto es: punto de colision + orientacion
+    //   cosas 
+    // el nuevo upwards es el vector normal del plano (producto vectorial e1 y e2)
+    // el nuevo pitchvec es el producto vectorial del nuevo upwards y la proyección normalizada de la orientacion 
+    // ya. Casi na.
+    //
+    //proyección de w sobre n = (n*w/n*n)n
+    //w' = w - proyección
+    //n (3,1)
+    //W (1,5)
+    //((3*1 + 1*5)/3*3+1*1)(3,1) = (8/10)(3,1) = (24/10, 8/10)
+    //w' = w - (24/10,8/10) = (-14/10, 42/10)
+
+    //zbe::Vector3D orientAbsolute = cData.point + oirentation;
+    zbe::Vector3D normal = -cData.normal;
+    zbe::Vector3D proyection = (((oirentation /*+ cData.point*/) * normal) / (normal * normal)) * normal;
+    zbe::Vector3D orientPrima = oirentation - proyection /*- cData.point*/; // Quiza normal tenga siempre modulo 1 y esto no haga falta
+    
+    zbe::Vector3D newPitchVect = zbe::cross(orientPrima.normalize(), normal);
+
+    zbe::Vector3D oldor = avatar->get<1, zbe::Vector3D>()->get();
+    zbe::Vector3D oldyv = avatar->get<2, zbe::Vector3D>()->get();
+    zbe::Vector3D oldpv = avatar->get<3, zbe::Vector3D>()->get();
+
+    printf("-############################################################################-\n");fflush(stdout);
+    printf("------ old ----\n");fflush(stdout);
+    printf("oldor %lf, %lf, %lf\n", oldor.x, oldor.y, oldor.z);fflush(stdout);
+    printf("oldyv %lf, %lf, %lf\n", oldyv.x, oldyv.y, oldyv.z);fflush(stdout);
+    printf("oldpv %lf, %lf, %lf\n", oldpv.x, oldpv.y, oldpv.z);fflush(stdout);
+    printf("------ new ----\n");fflush(stdout);
+    printf("orientPrima %lf, %lf, %lf\n", orientPrima.x, orientPrima.y, orientPrima.z);fflush(stdout);
+    printf("cData.normal %lf, %lf, %lf\n", normal.x, normal.y, normal.z);fflush(stdout);
+    printf("newPitchVect %lf, %lf, %lf\n", newPitchVect.x, newPitchVect.y, newPitchVect.z);fflush(stdout);
+    printf("---------------\n");fflush(stdout);
+    printf("proyection %lf, %lf, %lf\n", proyection.x, proyection.y, proyection.z);fflush(stdout);
+    printf("Angle %lf\n", zbe::angle(normal, newPitchVect));fflush(stdout);
+    printf("---------------\n");fflush(stdout);
+
+    avatar->set<1, zbe::Vector3D>(orientPrima);
+    avatar->set<2, zbe::Vector3D>(normal);
+    avatar->set<3, zbe::Vector3D>(newPitchVect);
+
+  }
+
+private:
+  std::shared_ptr<zbe::MAvatar<zbe::Vector3D, zbe::Vector3D, zbe::Vector3D>> avatar;
+};
+
+class AttachRedirectionReactionBldr : public zbe::Funct<std::shared_ptr<zbe::Funct<void, zbe::CollisionData3D, Platform>>, std::shared_ptr<zbe::Entity>> {
+public:
+  std::shared_ptr<zbe::Funct<void, zbe::CollisionData3D, Platform>> operator()(std::shared_ptr<zbe::Entity> ent){
+    auto avt = std::make_shared<zbe::MBaseAvatar<zbe::Vector3D, zbe::Vector3D, zbe::Vector3D>>();
+    avt->setupEntity(ent, idxArr);
+    return std::make_shared<AttachRedirectionReaction>(avt);
+  }
+
+  void setIdx(std::array<uint64_t, AttachRedirectionReaction::AVTSIZE> idxArr) {
+    this->idxArr = idxArr;
+  }
+private:
+  std::array<uint64_t, AttachRedirectionReaction::AVTSIZE> idxArr;
+};
+
+class AttachRedirectionReactionBldrFtry : public zbe::Factory {
+public:
+  void create(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    std::shared_ptr<AttachRedirectionReactionBldr> arrb = std::make_shared<AttachRedirectionReactionBldr>();
+    mainRsrc.insert("Function."s + name, arrb);
+    specificRsrc.insert("AttachRedirectionReactionBldr."s + name, arrb);
+  }
+
+  void setup(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+    if(cfg) {
+      auto j = *cfg;
+
+      auto arrb = specificRsrc.get("AttachRedirectionReactionBldr."s + name);
+
+      std::optional<std::array<uint64_t, AttachRedirectionReaction::AVTSIZE>> arr = zbe::JSONFactory::loadLiteralArray<uint64_t, AttachRedirectionReaction::AVTSIZE>(uintDict, j["idxlist"], "idxlist", "AttachRedirectionReactionBldrFtry");
+      if(!arr) {
+        return;
+      }
+
+      arrb->setIdx(*arr);
+    } else {
+      zbe::SysError::setError("AttachRedirectionReactionBldr config for "s + name + " not found."s);
+    }
+  }
+
+private:
+  using FunctionType = zbe::Funct<std::shared_ptr<zbe::Funct<void, zbe::CollisionData3D, Platform>>, std::shared_ptr<zbe::Entity>>;
+
+  zbe::RsrcDictionary<uint64_t>& uintDict                     = zbe::RsrcDictionary<uint64_t>::getInstance();
+  zbe::RsrcStore<nlohmann::json> &configRsrc                  = zbe::RsrcStore<nlohmann::json>::getInstance();
+  zbe::RsrcStore<AttachRedirectionReactionBldr>& specificRsrc = zbe::RsrcStore<AttachRedirectionReactionBldr>::getInstance();
+  zbe::RsrcStore<FunctionType>& mainRsrc                      = zbe::RsrcStore<FunctionType>::getInstance();
+};
+
 //template<typename IData, typename Trait>
 class AttachRepositionReaction : public zbe::Funct<void, zbe::CollisionData3D, Platform> {
 public:
@@ -73,7 +201,6 @@ public:
     zbe::Vector3D coordChange{x,y,z};
 
     zbe::Vector2D newPos2D{coordChange.x, coordChange.y};
-    // printf("newPos2D %lf, %lf\n", newPos2D.x, newPos2D.y);fflush(stdout);
     avatar->set<2, zbe::Vector2D>(newPos2D);
       
   }
@@ -115,7 +242,7 @@ public:
 
       auto arrb = specificRsrc.get("AttachRepositionReactionBldr."s + name);
 
-      std::optional<std::array<uint64_t, AttachRepositionReaction::AVTSIZE>> arr = zbe::JSONFactory::loadLiteralArray<uint64_t, AttachRepositionReaction::AVTSIZE>(uintDict, j["idxlist"], "idxlist", "StoreValuesRctBldrFtry");
+      std::optional<std::array<uint64_t, AttachRepositionReaction::AVTSIZE>> arr = zbe::JSONFactory::loadLiteralArray<uint64_t, AttachRepositionReaction::AVTSIZE>(uintDict, j["idxlist"], "idxlist", "AttachRepositionReactionBldrFtry");
       if(!arr) {
         return;
       }

@@ -21,7 +21,7 @@ Entity::~Entity() {
 void Entity::addTicket(uint64_t id, std::shared_ptr<Ticket> ticket) {
   auto it = tl.find(id);
   if (it != tl.end()) {
-    SysError::setError("Ticket in Entity list is not found.");
+    SysError::setError("Ticket in Entity already exists.");
   }
   tl[id] = ticket;
 }
@@ -38,7 +38,7 @@ void Entity::replaceTicket(uint64_t id, std::shared_ptr<Ticket> ticket) {
 void Entity::setACTIVE(uint64_t id) {
   auto it = tl.find(id);
   if (it == tl.end()) {
-    SysError::setError("Ticket in Entity list is not found.");
+    SysError::setError("Ticket in Entity list is not found for activation.");
   } else {
     it->second->setACTIVE();
   }
@@ -53,7 +53,7 @@ void Entity::setACTIVE() {
 void Entity::setINACTIVE(uint64_t id) {
   auto it = tl.find(id);
   if (it == tl.end()) {
-    SysError::setError("Ticket in Entity list is not found.");
+    SysError::setError("Ticket in Entity list is not found for inactivation.");
   } else {
     it->second->setINACTIVE();
   }
@@ -68,7 +68,7 @@ void Entity::setINACTIVE() {
 void Entity::setERASED(uint64_t id) {
   auto it = tl.find(id);
   if (it == tl.end()) {
-    SysError::setError("Ticket in Entity list is not found.");
+    SysError::setError("Ticket in Entity list is not found to erase.");
   } else {
     it->second->setERASED();
     tl.erase(it);

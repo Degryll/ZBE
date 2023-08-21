@@ -24,4 +24,10 @@ Vector<3> ZBEAPI cross(Vector<3> lhs, const Vector<3>& rhs) {
   return (lhs.cross(rhs));
 }
 
+double angle(Vector<3> lhs, Vector<3> rhs) {
+  double dot = (lhs * rhs);
+  double cos = dot /(lhs.getModule() + rhs.getModule());
+  return acos(cos);
+}
+
 }  // namespace

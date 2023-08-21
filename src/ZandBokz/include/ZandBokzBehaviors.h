@@ -11,6 +11,7 @@
  #define ZANDBOKZ_ZANDBOKZBEHAVIORS_H_
 
 #include <cstdio>
+
 #include <cstdint>
 #include <memory>
 
@@ -35,6 +36,26 @@
 namespace zandbokz {
 
 
+class KeepDistanceBhv : virtual public zbe::Behavior<double, zbe::Vector3D, zbe::Vector3D> {
+  public:
+  virtual ~KeepDistanceBhv() = default;
+  void apply(std::shared_ptr<zbe::MAvatar<double, zbe::Vector3D, zbe::Vector3D> > avatar) {
+    auto vtarget = avatar->get<1, zbe::Vector3D>();
+    auto vposition = avatar->get<2, zbe::Vector3D>();
+    auto vdistance = avatar->get<3, double>();
+
+    zbe::Vector3D target = vtarget->get();
+    zbe::Vector3D position = vposition->get();
+    double distance = vdistance->get();
+
+    zbe::Vector3D diff =  position - target;
+    diff.setModule(distance);
+
+    vposition->set(target + diff);
+  }
+};
+
+
 class CopyV3DIfNotZeroBhv : virtual public zbe::Behavior<zbe::Vector3D, zbe::Vector3D> {
   public:
   virtual ~CopyV3DIfNotZeroBhv() = default;
@@ -46,7 +67,7 @@ class CopyV3DIfNotZeroBhv : virtual public zbe::Behavior<zbe::Vector3D, zbe::Vec
     if(!isZero(a)) {
       vb->set(a);
       b = vb->get();
-    } 
+    }
   }
 };
 
@@ -80,7 +101,7 @@ class CalculeOrientationBhv : virtual public zbe::Behavior<zbe::Vector3D, zbe::V
     zbe::Vector3D ori = a - b;
     ori.y = 0.0;
     ori.normalize();
-    
+
     vDest->set(ori);
   }
 };
@@ -100,7 +121,7 @@ class OrientationRelativeVelSetter : virtual public zbe::Behavior<double, double
     zbe::Vector3D norm = cross(ori, upw);
     double forw = vForward->get();
     double late = vLateral->get();
-    
+
     zbe::Vector3D newvel = (ori * forw) + (norm *late);
     vVelocity->set(newvel);
   }

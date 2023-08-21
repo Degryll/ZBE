@@ -62,6 +62,12 @@ class LimitedExcentricalRotation3D : virtual public Behavior<float, float, Vecto
       auto vexc = vvexc->get();
       auto vrot = vvrot->get();
       auto vzero = vvzero->get();
+      
+      printf("------ LimitedExcentricalRotation3D ----\n");fflush(stdout);
+      printf("vpos %lf, %lf, %lf\n", vpos.x, vpos.y, vpos.z);fflush(stdout);
+      printf("vexc %lf, %lf, %lf\n", vexc.x, vexc.y, vexc.z);fflush(stdout);
+      printf("vrot %lf, %lf, %lf\n", vrot.x, vrot.y, vrot.z);fflush(stdout);
+      printf("vrot mod %lf\n", vrot.getModule());fflush(stdout);
 
       float min = vfmin->get();
       float max = vfmax->get();
@@ -81,11 +87,11 @@ class LimitedExcentricalRotation3D : virtual public Behavior<float, float, Vecto
 
       float finalRadians = radians;
 
-      if(current + radians > max) {
-        finalRadians = max - current;
-      } else if(current + radians < min) {
-        finalRadians = min - current;
-      }
+      // if(current + radians > max) {
+      //   finalRadians = max - current;
+      // } else if(current + radians < min) {
+      //   finalRadians = min - current;
+      // }
 
       pos = glm::rotate(pos, finalRadians, rot);
 
@@ -182,6 +188,13 @@ class ExcentricalRotation3D : virtual public Behavior<Vector3D,Vector3D, Vector3
       auto vpos = vvpos->get();
       auto vexc = vvexc->get();
       auto vrot = vvrot->get();
+      
+      printf("------ ExcentricalRotation3D ----\n");fflush(stdout);
+      printf("vpos %lf, %lf, %lf\n", vpos.x, vpos.y, vpos.z);fflush(stdout);
+      printf("vexc %lf, %lf, %lf\n", vexc.x, vexc.y, vexc.z);fflush(stdout);
+      printf("vrot %lf, %lf, %lf\n", vrot.x, vrot.y, vrot.z);fflush(stdout);
+      printf("vrot mod %lf\n", vrot.getModule());fflush(stdout);
+
       vpos = vpos - vexc;
 
       vrot.normalize();
