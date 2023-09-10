@@ -55,6 +55,7 @@
     "fovIdx" : 3100,
     "targetIdx" : 3200,
     "upwardsIdx" : 3300,
+    "camUpwardsIdx" : 3301,
     "fovticket" : 3400,
     "targetTicket" : 3500,
     "camScaleIdx" : 3600,
@@ -85,7 +86,8 @@
     "relativeOriTicket" : 7101,
     "copyVelOnOriTicket" : 7200,
     "yawvectorIdx" : 8010,
-    "pitchvectorIdx" : 8020,
+    "pitchvectorIdx" : 8011,
+    "rollvectorIdx" : 8012,
     "zeroIdx" : 8030,
     "minPitchIdx" : 8040,
     "maxPitchIdx" : 8050,
@@ -176,7 +178,8 @@
                 "planeE1" : [0.0, 0.0, 0.0],
                 "planeE2" : [0.0, 0.0, 0.0],
                 "protaPitchVect" : [1.0, 0.0, 0.0],
-                "protaYawVect" : [0.0, 1.0, 0.0]
+                "protaYawVect" : [0.0, 1.0, 0.0],
+                "protaRollVect" : [0.0, 0.0, 1.0]
               }
             }
           }
@@ -791,11 +794,11 @@
               "gidIdx":["cucucurva"]
             },
             "double": {
-              "radsIdx":[0.0],
-              "scaleIdx":[100.0]
+              "radsIdx":[1.57075],
+              "scaleIdx":[1000.0]
             },
             "V3D": {
-              "positionIdx":[0.0, 50.0, 0.0],
+              "positionIdx":[-1000.0, 150.0, 0.0],
               "orientationIdx":[1.0, 0.0, 0.0],
               "positionAIdx":[200.0, 0.0, 200.0],
               "positionBIdx":[-200.0, 0.0, 200.0],
@@ -1191,7 +1194,7 @@
           "factory" : "AttachRedirectionReactionBldrFtry",
           "name" : "zandbokz.reaccionattachredirecciona",
           "config" : {
-            "idxlist" : ["pitchvectorIdx", "yawvectorIdx", "orientationIdx"]
+            "idxlist" : ["camposIdx", "positionIdx", "pitchvectorIdx", "yawvectorIdx", "camUpwardsIdx", "orientationIdx"]
           }
         },
         {
@@ -1210,7 +1213,8 @@
           "factory" : "MultiPlatformRctBldrFtry",
           "name" : "zandbokz.reaccionmultiagarra",
           "config" : {
-            "reactionBuilders" : ["zandbokz.reaccionattachactivations", "zandbokz.reaccionattachdeactivations", "zandbokz.reaccionattachpilladelplano", "zandbokz.reaccionattachrecoloca", "zandbokz.reaccionattachredirecciona"]
+            "reactionBuilders" : ["zandbokz.reaccionattachactivations", "zandbokz.reaccionattachdeactivations", "zandbokz.reaccionattachpilladelplano", "zandbokz.reaccionattachrecoloca", "zandbokz.reaccionattachredirecciona"],
+            "reactionBuildersBack" : []
           }
         },
         {
@@ -1381,7 +1385,8 @@
               "e1Idx": [0.0, 0.0, 0.0],
               "e2Idx": [0.0, 0.0, 0.0],
               "pitchvectorIdx": "zandbokz.protaPitchVect",
-              "yawvectorIdx": "zandbokz.protaYawVect"
+              "yawvectorIdx": "zandbokz.protaYawVect",
+              "camUpwardsIdx" : "zandbokz.camUp"
             },
             "V2D": {
               "position2DIdx":[0.0, 0.0],
@@ -1653,7 +1658,7 @@
         }
 
       ],
-      "calls" : ["zandbokz.thirdviewcambldr", "zandbokz.creaunicorniorosa", "zandbokz.pepinobuilder", "zandbokz.protabuilder", "zandbokz.diositobuilder"],
+      "calls" : ["zandbokz.thirdviewcambldr", "zandbokz.creaunicorniorosa", "zandbokz.pepinobuilder", "zandbokz.protabuilder", "zandbokz.diositobuilder", "zandbokz.diositobuilder1"],
       "backupcalls" : ["zandbokz.cajabuilder", "zandbokz.creaunicorniorosa", "zandbokz.diositobuilder1", "zandbokz.diositobuilder2", "zandbokz.diositobuilder3", "zandbokz.diositobuilder4", "zandbokz.diositobuilder5", "zandbokz.diositobuilder6", "zandbokz.diositobuilder7", "zandbokz.diositobuilder8"]
     },
     {
@@ -1699,7 +1704,8 @@
               "velocityIdx": "zandbokz.protaVel",
               "excentricIdx": "zandbokz.protaPos",
               "pitchvectorIdx": "zandbokz.protaPitchVect",
-              "yawvectorIdx": "zandbokz.protaYawVect"
+              "yawvectorIdx": "zandbokz.protaYawVect",
+              "rollVectorIdx": "zandbokz.protaRollVect"
             },
             "TODO": "asociar todos los values de la camara"
           }
@@ -2377,8 +2383,8 @@
           "config" : {
             "entity" : "cameraControllerFree",
             "attribIndexes" : ["maxPitchIdx", "minPitchIdx", "yawvectorIdx", "pitchvectorIdx", "excentricIdx", "positionIdx"],
-            "lists":{},
-            "deativatedlists" : {"loadScreen.pitchList":"camPitchTicket"}
+            "lists":{"loadScreen.pitchList":"camPitchTicket"},
+            "deativatedlists" : {}
           }
         },
         {"factory": "ThreeV3DAvtFtry",
@@ -2396,6 +2402,7 @@
           "config" : {
             "entity" : "cameraControllerFree",
             "attribIndexes" : ["yawvectorIdx", "zeroIdx", "pitchvectorIdx"],
+            "attribIndexesBack" : ["yawvectorIdx", "excentricIdx", "pitchvectorIdx"],
             "lists":{"loadScreen.yawList":"pitchCorrectionTicket"},
             "deativatedlists" : {}
           }

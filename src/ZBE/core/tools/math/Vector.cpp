@@ -26,7 +26,9 @@ Vector<3> ZBEAPI cross(Vector<3> lhs, const Vector<3>& rhs) {
 
 double angle(Vector<3> lhs, Vector<3> rhs) {
   double dot = (lhs * rhs);
-  double cos = dot /(lhs.getModule() + rhs.getModule());
+  double len1sqr = lhs * lhs;
+  double len2sqr = rhs * rhs;
+  double cos = dot /sqrt(len1sqr * len2sqr);
   return acos(cos);
 }
 

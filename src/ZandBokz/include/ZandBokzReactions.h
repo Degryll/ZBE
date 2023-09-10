@@ -30,6 +30,8 @@
 
 #include "ZBE/JSON/JSONFactory.h"
 
+#include <glm/gtx/rotate_vector.hpp>
+#include <glm/gtx/vector_angle.hpp>
 namespace zandbokz {
 
 class AttachRedirectionReaction : public zbe::Funct<void, zbe::CollisionData3D, Platform> {
@@ -37,17 +39,17 @@ public:
   AttachRedirectionReaction(const AttachRedirectionReaction&) = delete; //!< Avoid copy.
   void operator=(const AttachRedirectionReaction&) = delete; //!< Avoid copy.
 
-  static const int AVTSIZE = 3;
+  static const int AVTSIZE = 6;
 
   /** brief Parametrized constructor
   * param avt Avatar to use
   */
-  AttachRedirectionReaction(std::shared_ptr<zbe::MAvatar<zbe::Vector3D, zbe::Vector3D, zbe::Vector3D>> avatar /* pitchvec(a) upwards(b) orientation*/) : avatar(avatar) {}
+  AttachRedirectionReaction(std::shared_ptr<zbe::MAvatar<zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D>> avatar /* pitchvec(a) upwards(b) orientation*/) : avatar(avatar) {}
 
   /** brief Reposition entity on plane.
   */
   void operator()(zbe::CollisionData3D cData, Platform platform) {
-    
+
     auto planeE1 = platform[2]->get();
     auto planeE2 = platform[1]->get();
     auto planePos = platform[0]->get();
@@ -56,12 +58,12 @@ public:
     zbe::Vector3D oirentation = voirentation->get();
 
     //zbe::Vector3D planeNormal = zbe::cross(planeE1, planeE2);/*.normalize()*/
-    
+
     // proyectar orientation en el plano
     //   Distancia punto plano. El punto es: punto de colision + orientacion
-    //   cosas 
+    //   cosas
     // el nuevo upwards es el vector normal del plano (producto vectorial e1 y e2)
-    // el nuevo pitchvec es el producto vectorial del nuevo upwards y la proyección normalizada de la orientacion 
+    // el nuevo pitchvec es el producto vectorial del nuevo upwards y la proyección normalizada de la orientacion
     // ya. Casi na.
     //
     //proyección de w sobre n = (n*w/n*n)n
@@ -75,41 +77,81 @@ public:
     zbe::Vector3D normal = -cData.normal;
     zbe::Vector3D proyection = (((oirentation /*+ cData.point*/) * normal) / (normal * normal)) * normal;
     zbe::Vector3D orientPrima = oirentation - proyection /*- cData.point*/; // Quiza normal tenga siempre modulo 1 y esto no haga falta
-    
-    zbe::Vector3D newPitchVect = zbe::cross(orientPrima.normalize(), normal);
 
-    zbe::Vector3D oldor = avatar->get<1, zbe::Vector3D>()->get();
-    zbe::Vector3D oldyv = avatar->get<2, zbe::Vector3D>()->get();
-    zbe::Vector3D oldpv = avatar->get<3, zbe::Vector3D>()->get();
+    // Hasta aqui bien, incluido normal como yaw vector .
+    // Falta calcular el upwards de la cámara. Tamien el pitcvector que debería poder sacarse como producto vectorial de la normal y el vector camara/personaja
 
-    printf("-############################################################################-\n");fflush(stdout);
-    printf("------ old ----\n");fflush(stdout);
-    printf("oldor %lf, %lf, %lf\n", oldor.x, oldor.y, oldor.z);fflush(stdout);
+
+    //zbe::Vector3D oldor = avatar->get<1, zbe::Vector3D>()->get();
+    zbe::Vector3D oldcu = avatar->get<2, zbe::Vector3D>()->get();
+    zbe::Vector3D oldyv = avatar->get<3, zbe::Vector3D>()->get();
+    zbe::Vector3D oldpv = avatar->get<4, zbe::Vector3D>()->get();
+    zbe::Vector3D pos = avatar->get<5, zbe::Vector3D>()->get();
+    zbe::Vector3D camPos = avatar->get<6, zbe::Vector3D>()->get();
+
+    float normalDiffAngle = angle(oldyv, oldcu);
+    zbe::Vector3D rotv = cross(normal, orientPrima);
+    glm::vec3 rot{rotv.x, rotv.y, rotv.z};
+    auto newCamUpGlm = glm::rotate(glm::vec3{normal.x, normal.y, normal.z}, -normalDiffAngle,  rot);
+    zbe::Vector3D newCamUp{newCamUpGlm.x ,newCamUpGlm.y, newCamUpGlm.z};
+    zbe::Vector3D newPitchVect = zbe::cross(newCamUp, (pos- camPos)).normalize();
+
+    printf("-###################################### init ######################################-\n");fflush(stdout);
+    printf("normalDiffAngle  %lf\n", normalDiffAngle);fflush(stdout);
     printf("oldyv %lf, %lf, %lf\n", oldyv.x, oldyv.y, oldyv.z);fflush(stdout);
-    printf("oldpv %lf, %lf, %lf\n", oldpv.x, oldpv.y, oldpv.z);fflush(stdout);
-    printf("------ new ----\n");fflush(stdout);
+    printf("oldcu %lf, %lf, %lf\n", oldcu.x, oldcu.y, oldcu.z);fflush(stdout);
+    printf("newCamUpGlm %lf, %lf, %lf\n", newCamUpGlm.x, newCamUpGlm.y, newCamUpGlm.z);fflush(stdout);
+    printf("----------------\n");fflush(stdout);
     printf("orientPrima %lf, %lf, %lf\n", orientPrima.x, orientPrima.y, orientPrima.z);fflush(stdout);
-    printf("cData.normal %lf, %lf, %lf\n", normal.x, normal.y, normal.z);fflush(stdout);
+    printf("newCamUp %lf, %lf, %lf\n", newCamUp.x, newCamUp.y, newCamUp.z);fflush(stdout);
+    printf("normal %lf, %lf, %lf\n", normal.x, normal.y, normal.z);fflush(stdout);
     printf("newPitchVect %lf, %lf, %lf\n", newPitchVect.x, newPitchVect.y, newPitchVect.z);fflush(stdout);
-    printf("---------------\n");fflush(stdout);
-    printf("proyection %lf, %lf, %lf\n", proyection.x, proyection.y, proyection.z);fflush(stdout);
-    printf("Angle %lf\n", zbe::angle(normal, newPitchVect));fflush(stdout);
-    printf("---------------\n");fflush(stdout);
+    printf("-###################################### end  ######################################-\n");fflush(stdout);
+
+    // zbe::Vector3D rotVect = pos - camPos;
+    // glm::vec3 rot{rotVect.x, rotVect.y, rotVect.z}; 
+    // glm::vec3 oldcuGlm{oldcu.x, oldcu.y, oldcu.z};
+
+    // float normalDiff = angle(oldyv, normal);
+    // auto newCamUpGlm = glm::rotate(oldcuGlm, normalDiff,  rot);
+    // zbe::Vector3D newCamUp{newCamUpGlm.x ,newCamUpGlm.y, newCamUpGlm.z};
+
+
+
+    // printf("-############################################################################-\n");fflush(stdout);
+    // printf("------ old ----\n");fflush(stdout);
+    // printf("oldor %lf, %lf, %lf\n", oldor.x, oldor.y, oldor.z);fflush(stdout);
+    // printf("oldcu %lf, %lf, %lf\n", oldcu.x, oldcu.y, oldcu.z);fflush(stdout);
+    // printf("oldyv %lf, %lf, %lf\n", oldyv.x, oldyv.y, oldyv.z);fflush(stdout);
+    // printf("oldpv %lf, %lf, %lf\n", oldpv.x, oldpv.y, oldpv.z);fflush(stdout);
+    // printf("------ upwards ----\n");fflush(stdout);
+    // printf("Angle %f\n", normalDiff);fflush(stdout);
+    // printf("rotVect %lf, %lf, %lf\n", rotVect.x, rotVect.y, rotVect.z);fflush(stdout);
+    // printf("newCamUp %lf, %lf, %lf\n", newCamUpGlm.x ,newCamUpGlm.y, newCamUpGlm.z);fflush(stdout);
+    // printf("------ new ----\n");fflush(stdout);
+    // printf("orientPrima %lf, %lf, %lf\n", orientPrima.x, orientPrima.y, orientPrima.z);fflush(stdout);
+    // printf("cData.normal %lf, %lf, %lf\n", normal.x, normal.y, normal.z);fflush(stdout);
+    // printf("newPitchVect %lf, %lf, %lf\n", newPitchVect.x, newPitchVect.y, newPitchVect.z);fflush(stdout);
+    // printf("---------------\n");fflush(stdout);
+    // printf("proyection %lf, %lf, %lf\n", proyection.x, proyection.y, proyection.z);fflush(stdout);
+    // printf("Angle %lf\n", zbe::angle(normal, newPitchVect));fflush(stdout);
+    // printf("---------------\n");fflush(stdout);
 
     avatar->set<1, zbe::Vector3D>(orientPrima);
-    avatar->set<2, zbe::Vector3D>(normal);
-    avatar->set<3, zbe::Vector3D>(newPitchVect);
+    avatar->set<2, zbe::Vector3D>(newCamUp);
+    avatar->set<3, zbe::Vector3D>(normal);
+    avatar->set<4, zbe::Vector3D>(newPitchVect);
 
   }
 
 private:
-  std::shared_ptr<zbe::MAvatar<zbe::Vector3D, zbe::Vector3D, zbe::Vector3D>> avatar;
+  std::shared_ptr<zbe::MAvatar<zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D>> avatar;
 };
 
 class AttachRedirectionReactionBldr : public zbe::Funct<std::shared_ptr<zbe::Funct<void, zbe::CollisionData3D, Platform>>, std::shared_ptr<zbe::Entity>> {
 public:
   std::shared_ptr<zbe::Funct<void, zbe::CollisionData3D, Platform>> operator()(std::shared_ptr<zbe::Entity> ent){
-    auto avt = std::make_shared<zbe::MBaseAvatar<zbe::Vector3D, zbe::Vector3D, zbe::Vector3D>>();
+    auto avt = std::make_shared<zbe::MBaseAvatar< zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D>>();
     avt->setupEntity(ent, idxArr);
     return std::make_shared<AttachRedirectionReaction>(avt);
   }
@@ -178,7 +220,7 @@ public:
   void operator()(zbe::CollisionData3D cData, Platform platform) {
 
     //auto vpos2D = avatar->get<2, zbe::Vector2D>();
-    
+
     auto planeE1 = platform[2]->get();
     auto planeE2 = platform[1]->get();
     auto planePos = platform[0]->get();
@@ -202,7 +244,7 @@ public:
 
     zbe::Vector2D newPos2D{coordChange.x, coordChange.y};
     avatar->set<2, zbe::Vector2D>(newPos2D);
-      
+
   }
 private:
   std::shared_ptr<zbe::MAvatar<zbe::Vector2D, zbe::Vector2D, zbe::Vector3D>> avatar;
