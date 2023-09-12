@@ -114,6 +114,7 @@ public:
     factories.insert("TicketDeactivatorBvrFtry", std::make_shared<TicketDeactivatorBvrFtry>());
     factories.insert("TicketActivatorBvrFtry", std::make_shared<TicketActivatorBvrFtry>());
     factories.insert("Vector3DSetterFixedBvrFtry", std::make_shared<ValueSetterFixedBvrFtry<Vector3D>>());
+    factories.insert("CopyVectorResizedBvrFtry", std::make_shared<GenericFtry<Behavior<Vector3D, Vector3D, double>, CopyVectorResizedBvr>>("Behavior", "CopyVectorResizedBvr"));
 
     // --- Events
     // --- --- Event generators

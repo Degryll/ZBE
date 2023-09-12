@@ -25,6 +25,21 @@
 
 namespace zbe {
 
+class CopyVectorResizedBvr : virtual public Behavior<Vector3D, Vector3D, double> {
+public:
+  void apply(std::shared_ptr<MAvatar<Vector3D, Vector3D, double>> avatar) {
+    auto vsize = avatar->get<1, double>();
+    auto vsrc  = avatar->get<2, Vector3D>();
+    //auto vdest = avatar->get<2, Vector3D>();
+
+    auto src = vsrc->get();
+    auto size = vsize->get();
+    
+
+    avatar->set<3, Vector3D>(src.normalize() * size);
+  }
+};
+
 template<typename T>
 class ValueSetterFixedBvr : virtual public Behavior<T> {
 public:

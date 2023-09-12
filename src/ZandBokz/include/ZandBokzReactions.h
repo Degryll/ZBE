@@ -96,46 +96,17 @@ public:
     zbe::Vector3D newCamUp{newCamUpGlm.x ,newCamUpGlm.y, newCamUpGlm.z};
     zbe::Vector3D newPitchVect = zbe::cross(newCamUp, (pos- camPos)).normalize();
 
-    printf("-###################################### init ######################################-\n");fflush(stdout);
-    printf("normalDiffAngle  %lf\n", normalDiffAngle);fflush(stdout);
-    printf("oldyv %lf, %lf, %lf\n", oldyv.x, oldyv.y, oldyv.z);fflush(stdout);
-    printf("oldcu %lf, %lf, %lf\n", oldcu.x, oldcu.y, oldcu.z);fflush(stdout);
-    printf("newCamUpGlm %lf, %lf, %lf\n", newCamUpGlm.x, newCamUpGlm.y, newCamUpGlm.z);fflush(stdout);
-    printf("----------------\n");fflush(stdout);
-    printf("orientPrima %lf, %lf, %lf\n", orientPrima.x, orientPrima.y, orientPrima.z);fflush(stdout);
-    printf("newCamUp %lf, %lf, %lf\n", newCamUp.x, newCamUp.y, newCamUp.z);fflush(stdout);
-    printf("normal %lf, %lf, %lf\n", normal.x, normal.y, normal.z);fflush(stdout);
-    printf("newPitchVect %lf, %lf, %lf\n", newPitchVect.x, newPitchVect.y, newPitchVect.z);fflush(stdout);
-    printf("-###################################### end  ######################################-\n");fflush(stdout);
-
-    // zbe::Vector3D rotVect = pos - camPos;
-    // glm::vec3 rot{rotVect.x, rotVect.y, rotVect.z}; 
-    // glm::vec3 oldcuGlm{oldcu.x, oldcu.y, oldcu.z};
-
-    // float normalDiff = angle(oldyv, normal);
-    // auto newCamUpGlm = glm::rotate(oldcuGlm, normalDiff,  rot);
-    // zbe::Vector3D newCamUp{newCamUpGlm.x ,newCamUpGlm.y, newCamUpGlm.z};
-
-
-
-    // printf("-############################################################################-\n");fflush(stdout);
-    // printf("------ old ----\n");fflush(stdout);
-    // printf("oldor %lf, %lf, %lf\n", oldor.x, oldor.y, oldor.z);fflush(stdout);
-    // printf("oldcu %lf, %lf, %lf\n", oldcu.x, oldcu.y, oldcu.z);fflush(stdout);
+    // printf("-###################################### init ######################################-\n");fflush(stdout);
+    // printf("normalDiffAngle  %lf\n", normalDiffAngle);fflush(stdout);
     // printf("oldyv %lf, %lf, %lf\n", oldyv.x, oldyv.y, oldyv.z);fflush(stdout);
-    // printf("oldpv %lf, %lf, %lf\n", oldpv.x, oldpv.y, oldpv.z);fflush(stdout);
-    // printf("------ upwards ----\n");fflush(stdout);
-    // printf("Angle %f\n", normalDiff);fflush(stdout);
-    // printf("rotVect %lf, %lf, %lf\n", rotVect.x, rotVect.y, rotVect.z);fflush(stdout);
-    // printf("newCamUp %lf, %lf, %lf\n", newCamUpGlm.x ,newCamUpGlm.y, newCamUpGlm.z);fflush(stdout);
-    // printf("------ new ----\n");fflush(stdout);
+    // printf("oldcu %lf, %lf, %lf\n", oldcu.x, oldcu.y, oldcu.z);fflush(stdout);
+    // printf("newCamUpGlm %lf, %lf, %lf\n", newCamUpGlm.x, newCamUpGlm.y, newCamUpGlm.z);fflush(stdout);
+    // printf("----------------\n");fflush(stdout);
     // printf("orientPrima %lf, %lf, %lf\n", orientPrima.x, orientPrima.y, orientPrima.z);fflush(stdout);
-    // printf("cData.normal %lf, %lf, %lf\n", normal.x, normal.y, normal.z);fflush(stdout);
+    // printf("newCamUp %lf, %lf, %lf\n", newCamUp.x, newCamUp.y, newCamUp.z);fflush(stdout);
+    // printf("normal %lf, %lf, %lf\n", normal.x, normal.y, normal.z);fflush(stdout);
     // printf("newPitchVect %lf, %lf, %lf\n", newPitchVect.x, newPitchVect.y, newPitchVect.z);fflush(stdout);
-    // printf("---------------\n");fflush(stdout);
-    // printf("proyection %lf, %lf, %lf\n", proyection.x, proyection.y, proyection.z);fflush(stdout);
-    // printf("Angle %lf\n", zbe::angle(normal, newPitchVect));fflush(stdout);
-    // printf("---------------\n");fflush(stdout);
+    // printf("-###################################### end  ######################################-\n");fflush(stdout);
 
     avatar->set<1, zbe::Vector3D>(orientPrima);
     avatar->set<2, zbe::Vector3D>(newCamUp);

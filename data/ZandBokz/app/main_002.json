@@ -34,6 +34,7 @@
     "saltaListTicket" : 1106,
     "twoVelaccumListTicket" : 1107,
     "protaOrientationListTicket" : 1108,
+    "bajaListTicket" : 1106,
     "velocityIdx" : 1110,
     "velocityForwardIdx" : 1111,
     "velocityLateralIdx" : 1112,
@@ -91,6 +92,8 @@
     "zeroIdx" : 8030,
     "minPitchIdx" : 8040,
     "maxPitchIdx" : 8050,
+    "jumpSpeedIdx" : 9000,
+    "bajaSpeedIdx" : 9001,
     "keepdistanceTicket" : 8060,
     "state.static" : 0,
     "testwflags": 0,
@@ -243,9 +246,15 @@
           "config" : {}
         },
         {
-          "factory": "TFAECV3DAvtFtry",
+          "factory": "DoubleTFAECTwoV3DAvtFtry",
           "description" : "do some serious sheet",
           "name": "loadScreen.saltaList",
+          "config" : {}
+        },
+        {
+          "factory": "DoubleTFAECTwoV3DAvtFtry",
+          "description" : "do some serious sheet",
+          "name": "loadScreen.bajaList",
           "config" : {}
         },
         {
@@ -817,12 +826,12 @@
               "gidIdx":["cucucurva"]
             },
             "double": {
-              "radsIdx":[3.14159],
-              "scaleIdx":[100.0]
+              "radsIdx":[1.57075],
+              "scaleIdx":[1000.0]
             },
             "V3D": {
-              "positionIdx":[50.0, 50.0, 50.0],
-              "orientationIdx":[0.0, 0.0, 1.0],
+              "positionIdx":[0.0, 400.0, 0.0],
+              "orientationIdx":[1.0, 0.0, 0.0],
               "positionAIdx":[200.0, 0.0, 200.0],
               "positionBIdx":[-200.0, 0.0, 200.0],
               "positionCIdx":[200.0, 0.0, -200.0],
@@ -1198,15 +1207,10 @@
           }
         },
         {
-          "factory" : "PrintfSolid2DRctBldrFtry",
-          "name" : "zandbokz.reaccionpintainteraccionsolid",
-          "config" : {}
-        },
-        {
           "factory" : "MultiSolid2DRctBldrFtry",
           "name" : "zandbokz.reaccionmulticae",
           "config" : {
-            "reactionBuilders" : ["zandbokz.reaccionpintainteraccionsolid","zandbokz.reaccioncaeactivations", "zandbokz.reaccioncaedeactivations"]
+            "reactionBuilders" : ["zandbokz.reaccioncaeactivations", "zandbokz.reaccioncaedeactivations"]
           }
         },
         {
@@ -1350,7 +1354,7 @@
                           "zandbokz.protadispara", "zandbokz.protadisparasuena", "zandbokz.protaacaer",  "zandbokz.protafinalvel", 
                           "zandbokz.protasaltar", "zandbokz.protafisica3d", "zandbokz.protaamoverenplano", "zandbokz.protaattachonoff",
                           "zandbokz.protaPlanoAtras", "zandbokz.protaPlanoDelante", "zandbokz.protaPlanoIzquierda", "zandbokz.protaPlanoDerecha",
-                          "zandbokz.protaInator2D"],
+                          "zandbokz.protaInator2D", "zandbokz.protabaja"],
             "buildersback" : []
           }
         },
@@ -1365,7 +1369,9 @@
               "radsIdx":[0.0],
               "scaleIdx":[100.0],
               "velocityForwardIdx":"zandbokz.protaVelLateral",
-              "velocityLateralIdx":"zandbokz.protaVelForward"
+              "velocityLateralIdx":"zandbokz.protaVelForward",
+              "jumpSpeedIdx": [50.0],
+              "bajaSpeedIdx": [-50.0]
             },
             "float": {
               "sizeIdx":[30.0]
@@ -1381,7 +1387,6 @@
               "velocityIdx": "zandbokz.protaVel",
               "planePosIdx": [0.0, 0.0, 0.0],
               "upwardsIdx": "zandbokz.protaYawVect",
-              "upwardsIdxback": [0.0, 1.0, 0.0],
               "e1Idx": [0.0, 0.0, 0.0],
               "e2Idx": [0.0, 0.0, 0.0],
               "pitchvectorIdx": "zandbokz.protaPitchVect",
@@ -1478,8 +1483,9 @@
           "name" : "zandbokz.protaacaer",
           "config" : {
             "attribIndexes" : ["velocityPre2Idx", "positionIdx"],
-            "lists":{"loadScreen.gmList":"gmTicket"},
-            "deativatedlists":{}
+            "lists":{},
+            "deativatedlists":{},
+            "listsBack":{"loadScreen.gmList":"gmTicket"}
           }
         },
         {
@@ -1495,12 +1501,22 @@
           }
         },
         {
-          "factory" :"V3DAvtBldrFtry",
+          "factory" :"TwoV3DDoubleAvtBldrFtry",
           "name" : "zandbokz.protasaltar",
           "config" : {
-            "attribIndexes" : ["velocityPre2Idx"],
+            "attribIndexes" : ["velocityPre2Idx", "upwardsIdx", "jumpSpeedIdx"],
             "lists":{
               "loadScreen.saltaList":"saltaListTicket"
+            }
+          }
+        },
+        {
+          "factory" :"TwoV3DDoubleAvtBldrFtry",
+          "name" : "zandbokz.protabaja",
+          "config" : {
+            "attribIndexes" : ["velocityPre2Idx", "upwardsIdx", "bajaSpeedIdx"],
+            "lists":{
+              "loadScreen.bajaList":"bajaListTicket"
             }
           }
         },
@@ -1658,8 +1674,8 @@
         }
 
       ],
-      "calls" : ["zandbokz.thirdviewcambldr", "zandbokz.creaunicorniorosa", "zandbokz.pepinobuilder", "zandbokz.protabuilder", "zandbokz.diositobuilder", "zandbokz.diositobuilder1"],
-      "backupcalls" : ["zandbokz.cajabuilder", "zandbokz.creaunicorniorosa", "zandbokz.diositobuilder1", "zandbokz.diositobuilder2", "zandbokz.diositobuilder3", "zandbokz.diositobuilder4", "zandbokz.diositobuilder5", "zandbokz.diositobuilder6", "zandbokz.diositobuilder7", "zandbokz.diositobuilder8"]
+      "calls" : ["zandbokz.thirdviewcambldr", "zandbokz.creaunicorniorosa", "zandbokz.pepinobuilder", "zandbokz.protabuilder", "zandbokz.diositobuilder", "zandbokz.diositobuilder1", "zandbokz.diositobuilder2"],
+      "backupcalls" : ["zandbokz.cajabuilder", "zandbokz.creaunicorniorosa", "zandbokz.diositobuilder3", "zandbokz.diositobuilder4", "zandbokz.diositobuilder5", "zandbokz.diositobuilder6", "zandbokz.diositobuilder7", "zandbokz.diositobuilder8"]
     },
     {
       "description" : "Creating entity",
@@ -1705,7 +1721,7 @@
               "excentricIdx": "zandbokz.protaPos",
               "pitchvectorIdx": "zandbokz.protaPitchVect",
               "yawvectorIdx": "zandbokz.protaYawVect",
-              "rollVectorIdx": "zandbokz.protaRollVect"
+              "rollvectorIdx": "zandbokz.protaRollVect"
             },
             "TODO": "asociar todos los values de la camara"
           }
@@ -1975,18 +1991,33 @@
             ]
           }
         },
-        {"factory": "Vector3DSetterFixedBvrFtry",
-          "name": "loadScreen.cajaponvelocidadsalto",
-          "description" : "comportamiento que pone velocidad para saltar",
+        {"factory": "MasterDmnFtry",
+          "name": "loadScreen.bajacajamaster",
+          "description" : "demonio que desengancha",
           "config" : {
-            "value": "velprotasalto"
+            "daemons": [
+              "loadScreen.cajaponvelocidadbajaDmn"
+            ]
           }
         },
-        {"factory": "V3DAvtDaemonFtry",
+        {"factory": "CopyVectorResizedBvrFtry",
+          "name": "loadScreen.cajaponvelocidadsalto",
+          "description" : "comportamiento que pone velocidad para saltar",
+          "config" : {}
+        },
+        {"factory": "DoubleTwoV3DAvtDaemonFtry",
           "name": "loadScreen.cajaponvelocidadsaltoDmn",
           "description" : "demonio que menea el fov",
           "config" : {
             "list" : "loadScreen.saltaList",
+            "behavior" : "loadScreen.cajaponvelocidadsalto"
+          }
+        },
+        {"factory": "DoubleTwoV3DAvtDaemonFtry",
+          "name": "loadScreen.cajaponvelocidadbajaDmn",
+          "description" : "demonio que menea el fov",
+          "config" : {
+            "list" : "loadScreen.bajaList",
             "behavior" : "loadScreen.cajaponvelocidadsalto"
           }
         },
@@ -2553,6 +2584,14 @@
             "daemon" : "loadScreen.dettachcajamaster",
             "inputEventGenerator" : "loadScreen.inputEventGenerator",
             "key":"ZBEK_SPACE"
+          }
+        },
+        {"factory": "DaemonIHFtry",
+          "name": "loadScreen.bajahandler",
+          "config" : {
+            "daemon" : "loadScreen.bajacajamaster",
+            "inputEventGenerator" : "loadScreen.inputEventGenerator",
+            "key":"ZBEK_LCTRL"
           }
         }
       ]
