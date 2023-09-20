@@ -34,7 +34,7 @@
     "saltaListTicket" : 1106,
     "twoVelaccumListTicket" : 1107,
     "protaOrientationListTicket" : 1108,
-    "bajaListTicket" : 1106,
+    "bajaListTicket" : 1109,
     "velocityIdx" : 1110,
     "velocityForwardIdx" : 1111,
     "velocityLateralIdx" : 1112,
@@ -85,6 +85,7 @@
     "attachonofticket" : 7000,
     "relativeVelTicket" : 7100,
     "relativeOriTicket" : 7101,
+    "relative2DVelTicket" : 7102,
     "copyVelOnOriTicket" : 7200,
     "yawvectorIdx" : 8010,
     "pitchvectorIdx" : 8011,
@@ -142,7 +143,10 @@
     "velprotasur" :{"type":"d", "value":-100.0},
     "velprotaeste" :{"type":"d", "value":150.0},
     "velprotaoeste" :{"type":"d", "value":-150.0},
-    "velprotasalto" :{"type":"v3", "value":[0.0,40.0,0.0]}
+    "velprotasalto" :{"type":"v3", "value":[0.0,40.0,0.0]},
+
+    "VOLANDO" : 0,
+    "RODANDO" : 1
   },
   "phases":[
       {
@@ -345,6 +349,12 @@
           "factory": "TFAECTwoDoubleThreeV3DFtry",
           "description" : "a platipus? perry the platipus!!!",
           "name": "loadScreen.velsetterlist",
+          "config" : {}
+        },
+        {
+          "factory": "TFAECTwoDoubleTwoV2DFtry",
+          "description" : "a platipus? perry the platipus!!!",
+          "name": "loadScreen.vel2dsetterlist",
           "config" : {}
         },
         {
@@ -1354,7 +1364,7 @@
                           "zandbokz.protadispara", "zandbokz.protadisparasuena", "zandbokz.protaacaer",  "zandbokz.protafinalvel", 
                           "zandbokz.protasaltar", "zandbokz.protafisica3d", "zandbokz.protaamoverenplano", "zandbokz.protaattachonoff",
                           "zandbokz.protaPlanoAtras", "zandbokz.protaPlanoDelante", "zandbokz.protaPlanoIzquierda", "zandbokz.protaPlanoDerecha",
-                          "zandbokz.protaInator2D", "zandbokz.protabaja"],
+                          "zandbokz.protaInator2D", "zandbokz.protabaja", "zandbokz.protacalcula2dvel"],
             "buildersback" : []
           }
         },
@@ -1428,6 +1438,15 @@
           "config" : {
             "attribIndexes" : ["velocityForwardIdx", "velocityLateralIdx", "velocityPre1Idx", "upwardsIdx","cameraorientationIdx"],
             "lists":{"loadScreen.velsetterlist" : "relativeVelTicket"},
+            "deativatedlists":{}
+          }
+        },
+        {
+          "factory" :"TwoDoubleTwoV2DAvtBldrFtry",
+          "name" : "zandbokz.protacalcula2dvel",
+          "config" : {
+            "attribIndexes" : ["velocityForwardIdx", "velocityLateralIdx", "velocity2DIdx", "orientation2DIdx"],
+            "lists":{"loadScreen.vel2dsetterlist" : "relative2DVelTicket"},
             "deativatedlists":{}
           }
         },
@@ -1769,6 +1788,7 @@
           "config" : {
             "daemons": [
               "loadScreen.relativevelDmn",
+              "loadScreen.relative2dvelDmn",
               "loadScreen.fovOscillatorDaemon",
               "loadScreen.coordOscillatorDaemon",
               "loadScreen.calculaprotavelDMN",
@@ -1992,6 +2012,39 @@
           }
         },
         {"factory": "MasterDmnFtry",
+          "name": "loadScreen.movimientovolando",
+          "description" : "demonio que desengancha",
+          "config" : {
+            "daemons": [
+              "loadScreen.dettachcajaactivationsDaemon",
+              "loadScreen.dettachcajadeactivationsDaemon",
+              "loadScreen.cajaponvelocidadsaltoDmn"
+            ]
+          }
+        },
+        {"factory": "MasterDmnFtry",
+          "name": "loadScreen.movimientorodando",
+          "description" : "demonio que desengancha",
+          "config" : {
+            "daemons": [
+              "loadScreen.dettachcajaactivationsDaemon",
+              "loadScreen.dettachcajadeactivationsDaemon",
+              "loadScreen.cajaponvelocidadsaltoDmn"
+            ]
+          }
+        },
+        {"factory": "StateMachineDmnFtry",
+          "name": "loadScreen.statemachinemovimiento",
+          "description" : "",
+          "config" : {
+            "value": "prota.state",
+            "states": {
+              "VOLANDO":"loadScreen.movimientovolando",
+              "RODANDO": "loadScreen.movimientorodando"
+            }
+          }
+        },
+        {"factory": "MasterDmnFtry",
           "name": "loadScreen.bajacajamaster",
           "description" : "demonio que desengancha",
           "config" : {
@@ -2127,6 +2180,11 @@
         },
         {"factory": "OrientationRelativeVelSetterFtry",
           "name": "loadScreen.velsetter",
+          "description" : "Comportamiento que calcula la velocidad final de la caja según la orientación y ... otros valores",
+          "config" : {}
+        },
+        {"factory": "OrientationRelative2DVelSetterFtry",
+          "name": "loadScreen.vel2dsetter",
           "description" : "Comportamiento que calcula la velocidad final de la caja según la orientación y ... otros valores",
           "config" : {}
         },
@@ -2335,7 +2393,14 @@
             "behavior" : "loadScreen.velsetter"
           }
         },
-
+        {"factory": "TwoDoubleTwoV2DBhvDmnFtry",
+          "name": "loadScreen.relative2dvelDmn",
+          "description" : "demonio pa que se caiga",
+          "config" : {
+            "list" : "loadScreen.vel2dsetterlist",
+            "behavior" : "loadScreen.vel2dsetter"
+          }
+        },
         {"factory": "DoubleTwoV3DBhvDmnFtry",
           "name": "loadScreen.keepdistanceDmn",
           "description" : "demonio pa que las cosas se mantengan a distancia",

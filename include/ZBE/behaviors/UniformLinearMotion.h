@@ -152,7 +152,7 @@ public:
     auto vplaneE2 = avatar->get<3, Vector3D>();
 
     auto vpos3D = avatar->get<4, Vector3D>();
-    auto vvel3D = avatar->get<5, Vector3D>();
+    //auto vvel3D = avatar->get<5, Vector3D>();
 
     auto vpos2D = avatar->get<6, Vector2D>();
     auto vvel2D = avatar->get<7, Vector2D>();
@@ -162,7 +162,7 @@ public:
     auto planeE2 = vplaneE2->get();
 
     auto pos3D = vpos3D->get();
-    auto vel3D = vvel3D->get();
+    //auto vel3D = vvel3D->get();
 
     auto pos2D = vpos2D->get();
     auto vel2D = vvel2D->get();

@@ -22,7 +22,6 @@
 #include "ZBE/core/tools/containers/Ticket.h"
 
 #include "ZBE/core/daemons/Daemon.h"
-#include "ZBE/core/daemons/DaemonMaster.h"
 
 #include "ZBE/factories/Factory.h"
 

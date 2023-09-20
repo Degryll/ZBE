@@ -38,9 +38,6 @@ template<unsigned dim>
 class AddVelIH : public InputHandler {
 public:
 
-  /** brief Parametrized constructor
-    * param value where to store input.
-   */
   AddVelIH(std::shared_ptr<MAvatar<Vector<dim>, Vector<dim>, Vector<dim>>> avt) : avt(avt) {}
 
   void run(uint32_t, float status) {

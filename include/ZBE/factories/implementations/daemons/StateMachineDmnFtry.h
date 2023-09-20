@@ -21,7 +21,6 @@
 #include "ZBE/core/tools/containers/RsrcDictionary.h"
 
 #include "ZBE/core/daemons/Daemon.h"
-#include "ZBE/core/daemons/StateMachineDaemon.h"
 
 #include "ZBE/factories/Factory.h"
 
@@ -47,6 +46,7 @@ public:
   void setup(std::string name, uint64_t cfgId);
 
 private:
+  RsrcDictionary<uint64_t>& uDict = RsrcDictionary<uint64_t>::getInstance();
   NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<Daemon> &daemonRsrc = RsrcStore<Daemon>::getInstance();

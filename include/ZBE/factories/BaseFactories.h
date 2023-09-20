@@ -46,7 +46,6 @@
 #include "ZBE/core/tools/containers/RsrcStore.h"
 #include "ZBE/core/daemons/Daemon.h"
 #include "ZBE/daemons/OnceDaemon.h"
-#include "ZBE/core/daemons/VoidDaemon.h"
 #include "ZBE/core/system/system.h"
 
 #include "ZBE/entities/builders/builders.h"

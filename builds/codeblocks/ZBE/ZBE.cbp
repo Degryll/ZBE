@@ -408,13 +408,6 @@
 		<Unit filename="../../../include/ZBE/behaviors/UniformLinearMotion.h" />
 		<Unit filename="../../../include/ZBE/core/behaviors/Behavior.h" />
 		<Unit filename="../../../include/ZBE/core/daemons/Daemon.h" />
-		<Unit filename="../../../include/ZBE/core/daemons/DaemonMaster.h" />
-		<Unit filename="../../../include/ZBE/core/daemons/MainLoop.h" />
-		<Unit filename="../../../include/ZBE/core/daemons/MainLoopExit.h" />
-		<Unit filename="../../../include/ZBE/core/daemons/PunisherDaemon.h" />
-		<Unit filename="../../../include/ZBE/core/daemons/Punishers.h" />
-		<Unit filename="../../../include/ZBE/core/daemons/StateMachineDaemon.h" />
-		<Unit filename="../../../include/ZBE/core/daemons/VoidDaemon.h" />
 		<Unit filename="../../../include/ZBE/core/entities/Adaptor.h" />
 		<Unit filename="../../../include/ZBE/core/entities/AvatarEntity.h" />
 		<Unit filename="../../../include/ZBE/core/entities/Entity.h" />

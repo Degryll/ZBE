@@ -127,6 +127,25 @@ class OrientationRelativeVelSetter : virtual public zbe::Behavior<double, double
   }
 };
 
+class OrientationRelative2DVelSetter : virtual public zbe::Behavior<double, double, zbe::Vector2D, zbe::Vector2D > {
+  public:
+  virtual ~OrientationRelative2DVelSetter() = default;
+  void apply(std::shared_ptr<zbe::MAvatar<double, double, zbe::Vector2D, zbe::Vector2D > > avatar) {
+    auto vOrientation = avatar->get<1, zbe::Vector2D>();
+    auto vVelocity    = avatar->get<2, zbe::Vector2D>();
+    auto vForward     = avatar->get<3, double>();
+    auto vLateral     = avatar->get<4, double>();
+
+    zbe::Vector2D ori  = vOrientation->get().normalize();
+    zbe::Vector2D norm{ori.y, -ori.x};
+    double forw = vForward->get();
+    double late = vLateral->get();
+
+    zbe::Vector2D newvel = (ori * forw) + (norm *late);
+    vVelocity->set(newvel);
+  }
+};
+
 class GravityMotion3D : virtual public zbe::Behavior<zbe::Vector3D, zbe::Vector3D > {
   public:
     virtual ~GravityMotion3D() = default;
