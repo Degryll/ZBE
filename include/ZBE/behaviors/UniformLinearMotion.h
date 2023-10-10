@@ -74,6 +74,8 @@ class UniformLinearMotion3D : virtual public Behavior<Vector3D, Vector3D > {
       auto vpos = avatar->get<1, Vector3D>();
       auto vvel = avatar->get<2, Vector3D>();
       auto contextTime = avatar->getContextTime();
+      auto vel = vvel->get();
+      printf("vel 3D %lf  %lf %lf\n", vel.x, vel.y, vel.z); fflush(stdout);
       vpos->set(vpos->get() + (vvel->get() * contextTime->getCurrentTime()) * zbe::INVERSE_SECOND);
     }
 };
@@ -148,6 +150,10 @@ public:
     // El avatar usado en el sistema de fisicas para generar el MovingTriangle3D debe actualizar en la entidad dos Values<Vector3D>
     // Esto vectores representan estos E1 y E2 que vienen a continuación. Estos son los vectores 0,1 y 1,0 del sistema de coordenadas del plano.
     // https://math.stackexchange.com/questions/3007739/transformation-matrix-between-a-2d-and-a-3d-coordinate-system
+
+    // ["velocity2DIdx", "position2DIdx", "velocityIdx", "positionIdx", "e2Idx", "e1Idx", "planePosIdx"],
+    // Es posible que este comportamiento no este usando velocity2DIdx y velocityIdx como esperamos
+
     auto vplaneE1 = avatar->get<2, Vector3D>();
     auto vplaneE2 = avatar->get<3, Vector3D>();
 
@@ -166,6 +172,8 @@ public:
 
     auto pos2D = vpos2D->get();
     auto vel2D = vvel2D->get();
+
+    printf("vel2D %lf : %lf\n", vel2D.x, vel2D.y); fflush(stdout);
 
     Vector2D newPos2D = pos2D + (vel2D * (contextTime->getCurrentTime() * zbe::INVERSE_SECOND));
     Vector3D newPos3D = planePos + (planeE1 * newPos2D.x + planeE2 * newPos2D.y);

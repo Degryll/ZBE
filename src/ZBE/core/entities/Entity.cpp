@@ -21,7 +21,10 @@ Entity::~Entity() {
 void Entity::addTicket(uint64_t id, std::shared_ptr<Ticket> ticket) {
   auto it = tl.find(id);
   if (it != tl.end()) {
-    SysError::setError("Ticket in Entity already exists.");
+    char buff[256];
+    sprintf(buff, "Ticket %llu in Entity already exists.", id);
+    //SysError::setError("Ticket in Entity already exists.");
+    SysError::setError(buff);
   }
   tl[id] = ticket;
 }

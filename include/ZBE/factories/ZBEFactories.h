@@ -69,6 +69,9 @@ public:
     using ThreeV3DAvtList = TicketedForwardList<MAvatar<Vector3D, Vector3D, Vector3D> >;
     using ThreeV3DAvtBhvr = BehaviorDmnFtry<ThreeV3DAvtList, Vector3D, Vector3D, Vector3D>;
 
+    using FourV3DAvtList = TicketedForwardList<MAvatar<Vector3D, Vector3D, Vector3D, Vector3D> >;
+    using FourV3DAvtBhvr = BehaviorDmnFtry<FourV3DAvtList, Vector3D, Vector3D, Vector3D, Vector3D>;
+
     using PosVel3DAvtList = TicketedForwardList<MAvatar<Vector3D, Vector3D> >;
     using PosVel3DAvtBhvr = BehaviorDmnFtry<PosVel3DAvtList, Vector3D, Vector3D>;
 
@@ -84,6 +87,8 @@ public:
     using M3DOn2DAvtList = TicketedForwardList<MAvatar<Vector2D, Vector2D, Vector3D, Vector3D, Vector3D, Vector3D, Vector3D> >;
     using M3DOn2DAvtBhvr = BehaviorDmnFtry<M3DOn2DAvtList, Vector2D, Vector2D, Vector3D, Vector3D, Vector3D, Vector3D, Vector3D>;
 
+    using V2DThreeV3DAvtList = TicketedForwardList<MAvatar<Vector2D, Vector3D, Vector3D, Vector3D> >;
+    using V2DThreeV3DAvtBhvr = BehaviorDmnFtry<V2DThreeV3DAvtList, Vector2D, Vector3D, Vector3D, Vector3D>;
 
     using FourV3DTwoFAvtList = TicketedForwardList<MAvatar<float, float, Vector3D, Vector3D, Vector3D, Vector3D> >;
     using FourV3DTwoFAvtBhvr = BehaviorDmnFtry<FourV3DTwoFAvtList, float, float, Vector3D, Vector3D, Vector3D, Vector3D>;
@@ -100,6 +105,8 @@ public:
     factories.insert("V3DAvtBldrFtry", std::make_shared<SAvatarBldrFtry<Vector3D> >());
     factories.insert("TwoV3DAvtBldrFtry", std::make_shared<MAvatarBldrFtry<Vector3D, Vector3D> >());
     factories.insert("ThreeV3DAvtBldrFtry", std::make_shared<MAvatarBldrFtry<Vector3D, Vector3D, Vector3D> >());
+    factories.insert("FourV3DAvtBldrFtry", std::make_shared<MAvatarBldrFtry<Vector3D, Vector3D, Vector3D, Vector3D> >());
+    factories.insert("V2ThreeV3DAvtBldrFtry", std::make_shared<MAvatarBldrFtry<Vector2D, Vector3D, Vector3D, Vector3D> >());
     factories.insert("FloatAvtBldrFtry", std::make_shared<SAvatarBldrFtry<float> >());
     factories.insert("VoidAvtBldrFtry", std::make_shared<AvatarBldrFtry>());
     factories.insert("TwoV3DDoubleAvtBldrFtry", std::make_shared<MAvatarBldrFtry<Vector3D, Vector3D, double> >());
@@ -119,6 +126,8 @@ public:
     factories.insert("LookAtToPitchAvtBldrFtry", std::make_shared<LookAtToPitchAvtBldrFtry>());
     factories.insert("LookAtToYawAvtBldrFtry", std::make_shared<LookAtToYawAvtBldrFtry>());
     factories.insert("3DOn2DAvtBldrFtry", std::make_shared<MDynamicAvatarBldrFtry<Vector2D, Vector2D, Vector3D, Vector3D, Vector3D, Vector3D, Vector3D> >());
+    factories.insert("DynamicV2ThreeV3DAvtBldrFtry", std::make_shared<MDynamicAvatarBldrFtry<Vector2D, Vector3D, Vector3D, Vector3D> >());
+
     //factories.insert("MovingSphereAvtBldrFtry", std::make_shared<MovingSphereAvtBldrFtry>());
     factories.insert("MovingSphereAvtShapeBldrFtry", std::make_shared<MovingSphereAvtShapeBldrFtry>());
     factories.insert("MovingTriangle3DAvtShapeBldrFtry", std::make_shared<MovingTriangle3DAvtShapeBldrFtry>());
@@ -164,6 +173,12 @@ public:
 
     factories.insert("ThreeV3DAvtDaemonFtry", std::make_shared<ThreeV3DAvtBhvr>());
     factories.insert("TFAECThreeV3DAvtFtry" , std::make_shared<SimpleGenericFtry<ThreeV3DAvtList> >(factories::listName));
+
+    factories.insert("FourV3DAvtDaemonFtry", std::make_shared<FourV3DAvtBhvr>());
+    factories.insert("TFAECFourV3DAvtFtry" , std::make_shared<SimpleGenericFtry<FourV3DAvtList> >(factories::listName));
+
+    factories.insert("V2DThreeV3DAvtDaemonFtry", std::make_shared<V2DThreeV3DAvtBhvr>());
+    factories.insert("TFAECV2DThreeV3DAvtFtry" , std::make_shared<SimpleGenericFtry<V2DThreeV3DAvtList> >(factories::listName));
 
     factories.insert("DoubleTwoV3DAvtDaemonFtry", std::make_shared<DoubleTwoV3DAvtBhvr>());
     factories.insert("DoubleTFAECTwoV3DAvtFtry" , std::make_shared<SimpleGenericFtry<DoubleTwoV3DAvtList> >(factories::listName));

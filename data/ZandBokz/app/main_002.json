@@ -87,6 +87,7 @@
     "relativeOriTicket" : 7101,
     "relative2DVelTicket" : 7102,
     "copyVelOnOriTicket" : 7200,
+    "proyectOrientationTicket" : 7201,
     "yawvectorIdx" : 8010,
     "pitchvectorIdx" : 8011,
     "rollvectorIdx" : 8012,
@@ -134,16 +135,16 @@
     "crosshairsPos" :{"type":"v2", "value":[0.0,0.0]},
     "crosshairsSize" :{"type":"v2", "value":[0.25,0.25]},
 
-    "prota.forwardSpeed" : {"type":"v2", "value":[220.0, 0.0]},
-    "prota.backwardSpeed" : {"type":"v2", "value":[-100.0, 0.0]},
-    "prota.rightSpeed" : {"type":"v2", "value":[0.0, 150.0]},
-    "prota.leftSpeed": {"type":"v2", "value":[0.0, -150.0]},
+    "prota.forwardSpeed" : {"type":"v2", "value":[22.0, 0.0]},
+    "prota.backwardSpeed" : {"type":"v2", "value":[-10.0, 0.0]},
+    "prota.rightSpeed" : {"type":"v2", "value":[0.0, 15.0]},
+    "prota.leftSpeed": {"type":"v2", "value":[0.0, -15.0]},
 
-    "velprotanorte" :{"type":"d", "value":220.0},
-    "velprotasur" :{"type":"d", "value":-100.0},
-    "velprotaeste" :{"type":"d", "value":150.0},
-    "velprotaoeste" :{"type":"d", "value":-150.0},
-    "velprotasalto" :{"type":"v3", "value":[0.0,40.0,0.0]},
+    "velprotanorte" :{"type":"d", "value":110.0},
+    "velprotasur" :{"type":"d", "value":-50.0},
+    "velprotaeste" :{"type":"d", "value":78.0},
+    "velprotaoeste" :{"type":"d", "value":-78.0},
+    "velprotasalto" :{"type":"v3", "value":[0.0,50.0,0.0]},
 
     "VOLANDO" : 0,
     "RODANDO" : 1
@@ -292,7 +293,13 @@
           "config" : {}
         },
         {
-          "factory": "TFAECThreeV3DAvtFtry",
+          "factory": "TFAECV2DThreeV3DAvtFtry",
+          "description" : "2 Vel accum list",
+          "name": "loadScreen.pryectaOrientatonlist",
+          "config" : {}
+        },
+        {
+          "factory": "TFAECFourV3DAvtFtry",
           "description" : "2 Vel accum list",
           "name": "loadScreen.calculaorilist",
           "config" : {}
@@ -1363,8 +1370,7 @@
                           "zandbokz.protacalculaori", "zandbokz.protamirapaondebe", "zandbokz.protaorientationcalcbuild", 
                           "zandbokz.protadispara", "zandbokz.protadisparasuena", "zandbokz.protaacaer",  "zandbokz.protafinalvel", 
                           "zandbokz.protasaltar", "zandbokz.protafisica3d", "zandbokz.protaamoverenplano", "zandbokz.protaattachonoff",
-                          "zandbokz.protaPlanoAtras", "zandbokz.protaPlanoDelante", "zandbokz.protaPlanoIzquierda", "zandbokz.protaPlanoDerecha",
-                          "zandbokz.protaInator2D", "zandbokz.protabaja", "zandbokz.protacalcula2dvel"],
+                          "zandbokz.protaInator2D", "zandbokz.protabaja", "zandbokz.protacalcula2dori", "zandbokz.protacalcula2DVel"],
             "buildersback" : []
           }
         },
@@ -1443,7 +1449,7 @@
         },
         {
           "factory" :"TwoDoubleTwoV2DAvtBldrFtry",
-          "name" : "zandbokz.protacalcula2dvel",
+          "name" : "zandbokz.protacalcula2DVel",
           "config" : {
             "attribIndexes" : ["velocityForwardIdx", "velocityLateralIdx", "velocity2DIdx", "orientation2DIdx"],
             "lists":{"loadScreen.vel2dsetterlist" : "relative2DVelTicket"},
@@ -1460,10 +1466,10 @@
           }
         },
         {
-          "factory" :"ThreeV3DAvtBldrFtry",
+          "factory" :"FourV3DAvtBldrFtry",
           "name" : "zandbokz.protaorientationcalcbuild",
           "config" : {
-            "attribIndexes" : ["camposIdx", "positionIdx", "cameraorientationIdx"],
+            "attribIndexes" : ["upwardsIdx", "camposIdx", "positionIdx", "cameraorientationIdx"],
             "lists":{
               "loadScreen.calculaorilist":"protaOrientationListTicket"
             },
@@ -1479,6 +1485,16 @@
             "lists":{ "loadScreen.vel2orilist":"copyVelOnOriTicket"}
           }
         },
+
+        {
+          "factory" :"DynamicV2ThreeV3DAvtBldrFtry",
+          "name" : "zandbokz.protacalcula2dori",
+          "config" : {
+            "attribIndexes" : ["orientation2DIdx", "orientationIdx", "e2Idx", "e1Idx"],
+            "lists":{ "loadScreen.pryectaOrientatonlist":"proyectOrientationTicket"}
+          }
+        },
+
         {
           "factory" :"ThreeV3DAvtBldrFtry",
           "name" : "zandbokz.protadispara",
@@ -1596,58 +1612,6 @@
           "name" : "zandbokz.protaattachonoff",
           "config" : {
             "lists":{"loadScreen.attachcajaonofflist":"attachonofticket"}
-          }
-        },
-        {"factory": "Add2DVelIHBldrFtry",
-          "name": "zandbokz.protaPlanoDerecha",
-          "config" : {
-            "orientation2DIdx" : "orientation2DIdx",
-            "velocity2DIdx" : "velocity2DIdx",
-            "velocity2DsrcIds" : "velocity2DRightSrcIdx",
-            "inputEventGenerator" : "loadScreen.inputEventGenerator",
-            "multiplier" : "ONE",
-            "tolerance" : "tolerance",
-            "down" : true,
-            "key":"ZBEK_KP_6"
-          }
-        },
-        {"factory": "Add2DVelIHBldrFtry",
-          "name": "zandbokz.protaPlanoIzquierda",
-          "config" : {
-            "orientation2DIdx" : "orientation2DIdx",
-            "velocity2DIdx" : "velocity2DIdx",
-            "velocity2DsrcIds" : "velocity2DLeftSrcIdx",
-            "inputEventGenerator" : "loadScreen.inputEventGenerator",
-            "multiplier" : "ONE",
-            "tolerance" : "tolerance",
-            "down" : true,
-            "key":"ZBEK_KP_4"
-          }
-        },
-        {"factory": "Add2DVelIHBldrFtry",
-          "name": "zandbokz.protaPlanoDelante",
-          "config" : {
-            "orientation2DIdx" : "orientation2DIdx",
-            "velocity2DIdx" : "velocity2DIdx",
-            "velocity2DsrcIds" : "velocity2DForwardSrcIdx",
-            "inputEventGenerator" : "loadScreen.inputEventGenerator",
-            "multiplier" : "ONE",
-            "tolerance" : "tolerance",
-            "down" : true,
-            "key":"ZBEK_KP_8"
-          }
-        },
-        {"factory": "Add2DVelIHBldrFtry",
-          "name": "zandbokz.protaPlanoAtras",
-          "config" : {
-            "orientation2DIdx" : "orientation2DIdx",
-            "velocity2DIdx" : "velocity2DIdx",
-            "velocity2DsrcIds" : "velocity2DBackwardSrcIdx",
-            "inputEventGenerator" : "loadScreen.inputEventGenerator",
-            "multiplier" : "ONE",
-            "tolerance" : "tolerance",
-            "down" : true,
-            "key":"ZBEK_KP_5"
           }
         },
         {
@@ -1792,6 +1756,7 @@
               "loadScreen.fovOscillatorDaemon",
               "loadScreen.coordOscillatorDaemon",
               "loadScreen.calculaprotavelDMN",
+              "loadScreen.proyectaorientacionDMN",
               "loadScreen.vel2oriDMN",
               "loadScreen.2velAccumDMN",
               "loadScreen.ULM3DDaemon",
@@ -1805,6 +1770,8 @@
               "loadScreen.goLeftDaemon",
               "loadScreen.goRightDaemon",
               "loadScreen.masterShot"
+            ],
+            "backDaemons" : [
             ]
           }
         },
@@ -2105,7 +2072,12 @@
           "description" : "Comportamiento pa que calcule la orientación del prota",
           "config" : {}
         },
-        {"factory": "CopyV3DIfNotZeroBhv",
+        {"factory": "ProjectV3DOnPlaneBhvFtry",
+          "name": "loadScreen.proyectaorientacion",
+          "description" : "Comportamiento proyecte la orientacion",
+          "config" : {}
+        },
+        {"factory": "CopyV3DIfNotZeroBhvFtry",
           "name": "loadScreen.vel2ori",
           "description" : "Comportamiento pa que mire por donde va",
           "config" : {}
@@ -2369,12 +2341,20 @@
             "behavior" : "loadScreen.2velAccumBHV"
           }
         },
-        {"factory": "ThreeV3DAvtDaemonFtry",
+        {"factory": "FourV3DAvtDaemonFtry",
           "name": "loadScreen.calculaprotavelDMN",
           "description" : "demonio pa que se sumen velocidades",
           "config" : {
             "list" : "loadScreen.calculaorilist",
             "behavior" : "loadScreen.calculaprotavel"
+          }
+        },
+        {"factory": "V2DThreeV3DAvtDaemonFtry",
+          "name": "loadScreen.proyectaorientacionDMN",
+          "description" : "demonio que proyecta la orientacion a 2d",
+          "config" : {
+            "list" : "loadScreen.pryectaOrientatonlist",
+            "behavior" : "loadScreen.proyectaorientacion"
           }
         },
         {"factory": "TwoV3DAvtDaemonFtry",

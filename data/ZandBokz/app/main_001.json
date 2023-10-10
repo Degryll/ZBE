@@ -2067,7 +2067,7 @@
           "description" : "Comportamiento pa que calcule la orientación del prota",
           "config" : {}
         },
-        {"factory": "CopyV3DIfNotZeroBhv",
+        {"factory": "CopyV3DIfNotZeroBhvFtry",
           "name": "loadScreen.vel2ori",
           "description" : "Comportamiento pa que mire por donde va",
           "config" : {}

@@ -55,7 +55,6 @@ class KeepDistanceBhv : virtual public zbe::Behavior<double, zbe::Vector3D, zbe:
   }
 };
 
-
 class CopyV3DIfNotZeroBhv : virtual public zbe::Behavior<zbe::Vector3D, zbe::Vector3D> {
   public:
   virtual ~CopyV3DIfNotZeroBhv() = default;
@@ -71,11 +70,42 @@ class CopyV3DIfNotZeroBhv : virtual public zbe::Behavior<zbe::Vector3D, zbe::Vec
   }
 };
 
+class ProjectV3DOnPlaneBhv : virtual public zbe::Behavior<zbe::Vector2D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D> {
+  public:
+  virtual ~ProjectV3DOnPlaneBhv() = default;
+  void apply(std::shared_ptr<zbe::MAvatar<zbe::Vector2D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D> > avatar) {
+    auto vE1 = avatar->get<1, zbe::Vector3D>();
+    auto vE2    = avatar->get<2, zbe::Vector3D>();
+    auto vSrc    = avatar->get<3, zbe::Vector3D>();
+
+    zbe::Vector3D planeE1 = vE1->get();
+    zbe::Vector3D planeE2 = vE2->get();
+    zbe::Vector3D src = vSrc->get();
+
+    zbe::Vector3D ax{1.0, 0.0, 0.0};
+    zbe::Vector3D ay{0.0, 1.0, 0.0};
+    zbe::Vector3D az{0.0, 0.0, 1.0};
+
+    zbe::Vector3D bx = planeE1;
+    zbe::Vector3D by = planeE2;
+    zbe::Vector3D bz = zbe::cross(planeE1, planeE2).normalize();
+
+    double x = src * zbe::Vector3D{bx.x, bx.y, bx.z};
+    double y = src * zbe::Vector3D{by.x, by.y, by.z};
+    double z = src * zbe::Vector3D{bz.x, bz.y, bz.z};
+
+    zbe::Vector3D coordChange{x,y,z};
+
+    zbe::Vector2D newOri2D{coordChange.x, coordChange.y};
+    avatar->set<4, zbe::Vector2D>(newOri2D);
+  }
+};
+
 class Vec3DAccumBhv : virtual public zbe::Behavior<zbe::Vector3D, zbe::Vector3D, zbe::Vector3D > {
   public:
   virtual ~Vec3DAccumBhv() = default;
   void apply(std::shared_ptr<zbe::MAvatar<zbe::Vector3D, zbe::Vector3D, zbe::Vector3D > > avatar) {
-    //printf("Accum\n");fflush(stdout);
+    
     auto vDest = avatar->get<1, zbe::Vector3D>();
     auto vA    = avatar->get<2, zbe::Vector3D>();
     auto vB    = avatar->get<3, zbe::Vector3D>();
@@ -87,22 +117,30 @@ class Vec3DAccumBhv : virtual public zbe::Behavior<zbe::Vector3D, zbe::Vector3D,
   }
 };
 
-class CalculeOrientationBhv : virtual public zbe::Behavior<zbe::Vector3D, zbe::Vector3D, zbe::Vector3D > {
+class CalculeOrientationBhv : virtual public zbe::Behavior<zbe::Vector3D, zbe::Vector3D, zbe::Vector3D ,zbe::Vector3D> {
   public:
   virtual ~CalculeOrientationBhv() = default;
 
-  void apply(std::shared_ptr<zbe::MAvatar<zbe::Vector3D, zbe::Vector3D, zbe::Vector3D > > avatar) {
-    auto vDest = avatar->get<1, zbe::Vector3D>();
-    auto vA    = avatar->get<2, zbe::Vector3D>();
-    auto vB    = avatar->get<3, zbe::Vector3D>();
+  void apply(std::shared_ptr<zbe::MAvatar<zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D > > avatar) {
+    // TODO esto no orienta como debe
+    auto vDest  = avatar->get<1, zbe::Vector3D>();
+    auto vA     = avatar->get<2, zbe::Vector3D>();
+    auto vB     = avatar->get<3, zbe::Vector3D>();
+    auto vNormal = avatar->get<4, zbe::Vector3D>();
 
-    zbe::Vector3D a = vA->get();
-    zbe::Vector3D b = vB->get();
+    zbe::Vector3D a      = vA->get();
+    zbe::Vector3D b      = vB->get();
+    zbe::Vector3D normal = vNormal->get();
     zbe::Vector3D ori = a - b;
-    ori.y = 0.0;
-    ori.normalize();
+    
+    //zbe::Vector3D normal = up;
+    zbe::Vector3D proyection = ((ori * normal) / (normal * normal)) * normal;
+    zbe::Vector3D orientPrima = ori - proyection;
+    //ori.y = 0.0;
+    //ori.normalize();
 
-    vDest->set(ori);
+    orientPrima.normalize();
+    vDest->set(orientPrima);
   }
 };
 
@@ -136,13 +174,20 @@ class OrientationRelative2DVelSetter : virtual public zbe::Behavior<double, doub
     auto vForward     = avatar->get<3, double>();
     auto vLateral     = avatar->get<4, double>();
 
+    auto oldVel = vVelocity->get();
+
     zbe::Vector2D ori  = vOrientation->get().normalize();
     zbe::Vector2D norm{ori.y, -ori.x};
     double forw = vForward->get();
     double late = vLateral->get();
+    zbe::Vector2D newvelF = (ori * forw);
+    zbe::Vector2D newvelL = (norm *late);
+    zbe::Vector2D newvel = newvelF + newvelL;
+    
+    zbe::Vector2D newVel2 = ori;
+    newVel2.setModule(newvel.getModule());
+    vVelocity->set(newVel2);
 
-    zbe::Vector2D newvel = (ori * forw) + (norm *late);
-    vVelocity->set(newvel);
   }
 };
 

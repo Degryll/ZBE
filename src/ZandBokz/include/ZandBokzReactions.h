@@ -39,7 +39,7 @@ public:
   AttachRedirectionReaction(const AttachRedirectionReaction&) = delete; //!< Avoid copy.
   void operator=(const AttachRedirectionReaction&) = delete; //!< Avoid copy.
 
-  static const int AVTSIZE = 6;
+  static const int AVTSIZE = 6 ;
 
   /** brief Parametrized constructor
   * param avt Avatar to use
