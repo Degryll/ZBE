@@ -714,7 +714,8 @@
           "description" : "Está ahí, mirando. Pero no hace na",
           "config" : {
             "contextTime":"DEFAULT",
-            "builders" : ["zandbokz.diositovalues", "zandbokz.diositocachetriangulo2D", "zandbokz.diositoapintar", "zandbokz.diositopalante","zandbokz.diositosolidosocializa", "zandbokz.diositosolidosocializa2D"]
+            "builders" : ["zandbokz.diositovalues", "zandbokz.diositocachetriangulo2D", "zandbokz.diositoapintar","zandbokz.diositosolidosocializa", "zandbokz.diositosolidosocializa2D"],
+            "backbuilers" : ["zandbokz.diositopalante"]
           }
         },
         {
@@ -1384,8 +1385,8 @@
             "double": {
               "radsIdx":[0.0],
               "scaleIdx":[100.0],
-              "velocityForwardIdx":"zandbokz.protaVelLateral",
-              "velocityLateralIdx":"zandbokz.protaVelForward",
+              "velocityForwardIdx":"zandbokz.protaVelForward",
+              "velocityLateralIdx":"zandbokz.protaVelLateral",
               "jumpSpeedIdx": [50.0],
               "bajaSpeedIdx": [-50.0]
             },
@@ -1442,7 +1443,7 @@
           "factory" :"TwoDoubleThreeV3DAvtBldrFtry",
           "name" : "zandbokz.protacalculavel",
           "config" : {
-            "attribIndexes" : ["velocityForwardIdx", "velocityLateralIdx", "velocityPre1Idx", "upwardsIdx","cameraorientationIdx"],
+            "attribIndexes" : ["velocityLateralIdx", "velocityForwardIdx", "velocityPre1Idx", "upwardsIdx","cameraorientationIdx"],
             "lists":{"loadScreen.velsetterlist" : "relativeVelTicket"},
             "deativatedlists":{}
           }
@@ -1451,7 +1452,7 @@
           "factory" :"TwoDoubleTwoV2DAvtBldrFtry",
           "name" : "zandbokz.protacalcula2DVel",
           "config" : {
-            "attribIndexes" : ["velocityForwardIdx", "velocityLateralIdx", "velocity2DIdx", "orientation2DIdx"],
+            "attribIndexes" : ["velocityLateralIdx", "velocityForwardIdx", "velocity2DIdx", "orientation2DIdx"],
             "lists":{"loadScreen.vel2dsetterlist" : "relative2DVelTicket"},
             "deativatedlists":{}
           }
@@ -1460,7 +1461,7 @@
           "factory" :"TwoDoubleThreeV3DAvtBldrFtry",
           "name" : "zandbokz.protacalculaori",
           "config" : {
-            "attribIndexes" : ["velocityForwardIdx", "velocityLateralIdx", "orientationPreIdx", "upwardsIdx","cameraorientationIdx"],
+            "attribIndexes" : ["velocityLateralIdx", "velocityForwardIdx", "orientationPreIdx", "upwardsIdx","cameraorientationIdx"],
             "lists":{"loadScreen.velsetterlist" : "relativeOriTicket"},
             "deativatedlists":{}
           }
@@ -1602,7 +1603,7 @@
           "name" : "zandbokz.protaamoverenplano",
           "config" : {
             "attribIndexes" : ["velocity2DIdx", "position2DIdx", "velocityIdx", "positionIdx", "e2Idx", "e1Idx", "planePosIdx"],
-            "lists":{
+            "deativatedlists":{
               "loadScreen.moveOnPlaneList":"ULM3DOn2DTicket"
             }
           }
@@ -1663,24 +1664,6 @@
     {
       "description" : "Creating entity",
       "factories" : [
-        {"factory": "EntityFtry",
-          "name": "Suelo",
-          "description" : "El logo que se muestra en la pantalla de carga",
-          "config" : {
-            "contextTime":"DEFAULT",
-            "uint": {
-              "gidIdx":["Plane"]
-            },
-            "double": {
-              "radsIdx":[0.0],
-              "scaleIdx":[2000.0]
-            },
-            "V3D": {
-              "positionIdx":[0.0, 0.0, 0.0],
-              "orientationIdx":[0.0, 1.0, 0.0]
-            }
-          }
-        },
         {"factory": "EntityFtry",
           "name": "cameraControllerFree",
           "description" : "Entidad asociada a la camara",
@@ -1976,39 +1959,6 @@
               "loadScreen.dettachcajadeactivationsDaemon",
               "loadScreen.cajaponvelocidadsaltoDmn"
             ]
-          }
-        },
-        {"factory": "MasterDmnFtry",
-          "name": "loadScreen.movimientovolando",
-          "description" : "demonio que desengancha",
-          "config" : {
-            "daemons": [
-              "loadScreen.dettachcajaactivationsDaemon",
-              "loadScreen.dettachcajadeactivationsDaemon",
-              "loadScreen.cajaponvelocidadsaltoDmn"
-            ]
-          }
-        },
-        {"factory": "MasterDmnFtry",
-          "name": "loadScreen.movimientorodando",
-          "description" : "demonio que desengancha",
-          "config" : {
-            "daemons": [
-              "loadScreen.dettachcajaactivationsDaemon",
-              "loadScreen.dettachcajadeactivationsDaemon",
-              "loadScreen.cajaponvelocidadsaltoDmn"
-            ]
-          }
-        },
-        {"factory": "StateMachineDmnFtry",
-          "name": "loadScreen.statemachinemovimiento",
-          "description" : "",
-          "config" : {
-            "value": "prota.state",
-            "states": {
-              "VOLANDO":"loadScreen.movimientovolando",
-              "RODANDO": "loadScreen.movimientorodando"
-            }
           }
         },
         {"factory": "MasterDmnFtry",
@@ -2436,14 +2386,6 @@
           "config" : {
             "list" : "loadScreen.moveOnPlaneList",
             "behavior" : "loadScreen.ULM3DOn2D"
-          }
-        },
-        {"factory": "Drawable3DAvtFtry",
-          "name": "loadScreen.sueloEnt",
-          "config" : {
-            "entity" : "Suelo",
-            "attribIndexes" : ["gidIdx", "scaleIdx", "radsIdx", "orientationIdx", "positionIdx"],
-            "lists":{"loadScreen.drawList":"drawticket"}
           }
         },
         {"factory": "DrawableSimple2DAvtFtry",
