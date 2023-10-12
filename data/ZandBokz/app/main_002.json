@@ -95,7 +95,6 @@
     "minPitchIdx" : 8040,
     "maxPitchIdx" : 8050,
     "jumpSpeedIdx" : 9000,
-    "bajaSpeedIdx" : 9001,
     "keepdistanceTicket" : 8060,
     "state.static" : 0,
     "testwflags": 0,
@@ -144,7 +143,8 @@
     "velprotasur" :{"type":"d", "value":-50.0},
     "velprotaeste" :{"type":"d", "value":78.0},
     "velprotaoeste" :{"type":"d", "value":-78.0},
-    "velprotasalto" :{"type":"v3", "value":[0.0,50.0,0.0]},
+    "velprotaarriba" :{"type":"d", "value":50.0},
+    "velprotaabajo" :{"type":"d", "value":-50.0},
 
     "VOLANDO" : 0,
     "RODANDO" : 1
@@ -173,7 +173,8 @@
                 "cajaVelLateral" : 0.0,
                 "cajaVelForward" : 0.0,
                 "protaVelLateral" : 0.0,
-                "protaVelForward" : 0.0
+                "protaVelForward" : 0.0,
+                "protaVelVertical" : 0.0
               },
               "V3D" : {
                 "camEye" : [0.0, 150.0, 150.0],
@@ -1371,7 +1372,7 @@
                           "zandbokz.protacalculaori", "zandbokz.protamirapaondebe", "zandbokz.protaorientationcalcbuild", 
                           "zandbokz.protadispara", "zandbokz.protadisparasuena", "zandbokz.protaacaer",  "zandbokz.protafinalvel", 
                           "zandbokz.protasaltar", "zandbokz.protafisica3d", "zandbokz.protaamoverenplano", "zandbokz.protaattachonoff",
-                          "zandbokz.protaInator2D", "zandbokz.protabaja", "zandbokz.protacalcula2dori", "zandbokz.protacalcula2DVel"],
+                          "zandbokz.protaInator2D", "zandbokz.protacalcula2dori", "zandbokz.protacalcula2DVel"],
             "buildersback" : []
           }
         },
@@ -1387,8 +1388,7 @@
               "scaleIdx":[100.0],
               "velocityForwardIdx":"zandbokz.protaVelForward",
               "velocityLateralIdx":"zandbokz.protaVelLateral",
-              "jumpSpeedIdx": [50.0],
-              "bajaSpeedIdx": [-50.0]
+              "jumpSpeedIdx": "zandbokz.protaVelVertical"
             },
             "float": {
               "sizeIdx":[30.0]
@@ -1543,16 +1543,6 @@
             "attribIndexes" : ["velocityPre2Idx", "upwardsIdx", "jumpSpeedIdx"],
             "lists":{
               "loadScreen.saltaList":"saltaListTicket"
-            }
-          }
-        },
-        {
-          "factory" :"TwoV3DDoubleAvtBldrFtry",
-          "name" : "zandbokz.protabaja",
-          "config" : {
-            "attribIndexes" : ["velocityPre2Idx", "upwardsIdx", "bajaSpeedIdx"],
-            "lists":{
-              "loadScreen.bajaList":"bajaListTicket"
             }
           }
         },
@@ -1738,6 +1728,7 @@
               "loadScreen.relative2dvelDmn",
               "loadScreen.fovOscillatorDaemon",
               "loadScreen.coordOscillatorDaemon",
+              "loadScreen.cajaponvelocidadsaltoDmn",
               "loadScreen.calculaprotavelDMN",
               "loadScreen.proyectaorientacionDMN",
               "loadScreen.vel2oriDMN",
@@ -1956,17 +1947,7 @@
           "config" : {
             "daemons": [
               "loadScreen.dettachcajaactivationsDaemon",
-              "loadScreen.dettachcajadeactivationsDaemon",
-              "loadScreen.cajaponvelocidadsaltoDmn"
-            ]
-          }
-        },
-        {"factory": "MasterDmnFtry",
-          "name": "loadScreen.bajacajamaster",
-          "description" : "demonio que desengancha",
-          "config" : {
-            "daemons": [
-              "loadScreen.cajaponvelocidadbajaDmn"
+              "loadScreen.dettachcajadeactivationsDaemon"
             ]
           }
         },
@@ -1980,14 +1961,6 @@
           "description" : "demonio que menea el fov",
           "config" : {
             "list" : "loadScreen.saltaList",
-            "behavior" : "loadScreen.cajaponvelocidadsalto"
-          }
-        },
-        {"factory": "DoubleTwoV3DAvtDaemonFtry",
-          "name": "loadScreen.cajaponvelocidadbajaDmn",
-          "description" : "demonio que menea el fov",
-          "config" : {
-            "list" : "loadScreen.bajaList",
             "behavior" : "loadScreen.cajaponvelocidadsalto"
           }
         },
@@ -2565,18 +2538,46 @@
             "key":"ZBEK_ESCAPE"
           }
         },
+        {"factory": "DoubleKeyValueSetterIHFtry",
+          "name": "loadScreen.saltahandlerVal",
+          "config" : {
+            "valuePressed":"velprotaarriba",
+            "valueReleased":"ZERO",
+            "value" : "zandbokz.protaVelVertical"
+          }
+        },
         {"factory": "DaemonIHFtry",
+          "name": "loadScreen.saltahandlerDmn",
+          "config" : {
+            "daemon" : "loadScreen.dettachcajamaster"
+          }
+        },
+        {"factory": "BroadcastIHFtry",
           "name": "loadScreen.saltahandler",
           "config" : {
-            "daemon" : "loadScreen.dettachcajamaster",
+            "handlers" : ["loadScreen.saltahandlerDmn", "loadScreen.saltahandlerVal"],
             "inputEventGenerator" : "loadScreen.inputEventGenerator",
             "key":"ZBEK_SPACE"
           }
         },
+        {"factory": "DoubleKeyValueSetterIHFtry",
+          "name": "loadScreen.bajahandlerVal",
+          "config" : {
+            "valuePressed":"velprotaabajo",
+            "valueReleased":"ZERO",
+            "value" : "zandbokz.protaVelVertical"
+          }
+        },
         {"factory": "DaemonIHFtry",
+          "name": "loadScreen.bajahandlerDmn",
+          "config" : {
+            "daemon" : "loadScreen.dettachcajamaster"
+          }
+        },
+        {"factory": "BroadcastIHFtry",
           "name": "loadScreen.bajahandler",
           "config" : {
-            "daemon" : "loadScreen.bajacajamaster",
+            "handlers" : ["loadScreen.bajahandlerDmn", "loadScreen.bajahandlerVal"],
             "inputEventGenerator" : "loadScreen.inputEventGenerator",
             "key":"ZBEK_LCTRL"
           }

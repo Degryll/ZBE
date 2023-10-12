@@ -24,26 +24,43 @@ void BroadcastIHFtry::create(std::string name, uint64_t) {
 }
 
 void BroadcastIHFtry::setup(std::string name, uint64_t cfgId) {
-    using namespace std::string_literals;
-    using namespace nlohmann;
-    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+  using namespace std::string_literals;
+  using namespace nlohmann;
+  std::shared_ptr<json> cfg = configRsrc.get(cfgId);
 
-    if(cfg) {
-      auto j = *cfg;
-      json handlers = j["handlers"];
-      auto bih = bihRsrc.get("BroadcastIH."s + name);
-      for (auto hnd : handlers) {
-        if (hnd.is_string()){
-          std::string handlerName = hnd.get<std::string>();
-          bih->addHandler(inputRsrc.get("InputHandler."s + handlerName));
-        } else {
-          SysError::setError("BroadcastIHFtry handlers config contains an invalid element ."s);
-        }
-      }
+  if(!cfg) {
+    SysError::setError("BroadcastIHFtry config for "s + name + " not found."s);
+    return;
+  }
 
+  auto j = *cfg;
+
+
+  auto ieg = JSONFactory::loadParamCfgStoreP<InputEventGenerator>(iegStore, j, "InputEventGenerator"s, "inputEventGenerator"s, "BroadcastIHFtry"s);
+  if(!ieg) {
+    SysError::setError("BroadcastIHFtry config for inputEventGenerator is invalid"s);
+    return;
+  }
+
+  auto key = JSONFactory::loadParamCfgDict<ZBE_K>(keyDict, j, "key"s, "BroadcastIHFtry"s);
+  if(!key) {
+    SysError::setError("BroadcastIHFtry config for key is invalid"s);
+    return;
+  }
+
+
+  json handlers = j["handlers"];
+  auto bih = bihRsrc.get("BroadcastIH."s + name);
+  for (auto hnd : handlers) {
+    if (hnd.is_string()){
+      std::string handlerName = hnd.get<std::string>();
+      bih->addHandler(inputRsrc.get("InputHandler."s + handlerName));
     } else {
-      SysError::setError("BroadcastIHFtry config for "s + name + " not found."s);
+      SysError::setError("BroadcastIHFtry handlers config contains an invalid element ."s);
     }
+  }
+
+  (*ieg)->addHandler(*key, bih);
 }
 
 }  // namespace zbe

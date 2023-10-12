@@ -75,7 +75,6 @@ class UniformLinearMotion3D : virtual public Behavior<Vector3D, Vector3D > {
       auto vvel = avatar->get<2, Vector3D>();
       auto contextTime = avatar->getContextTime();
       auto vel = vvel->get();
-      printf("vel 3D %lf  %lf %lf\n", vel.x, vel.y, vel.z); fflush(stdout);
       vpos->set(vpos->get() + (vvel->get() * contextTime->getCurrentTime()) * zbe::INVERSE_SECOND);
     }
 };
@@ -172,8 +171,6 @@ public:
 
     auto pos2D = vpos2D->get();
     auto vel2D = vvel2D->get();
-
-    printf("vel2D %lf : %lf\n", vel2D.x, vel2D.y); fflush(stdout);
 
     Vector2D newPos2D = pos2D + (vel2D * (contextTime->getCurrentTime() * zbe::INVERSE_SECOND));
     Vector3D newPos3D = planePos + (planeE1 * newPos2D.x + planeE2 * newPos2D.y);
