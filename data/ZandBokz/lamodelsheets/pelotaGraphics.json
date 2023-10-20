@@ -1,9 +1,9 @@
 {
-"name" : "gota",
+"name" : "pelota",
 "capability" : "001",
 "graphicdefs" : [
   {
-    "name" : "gota"
+    "name" : "pelota"
   }
 ]
 }

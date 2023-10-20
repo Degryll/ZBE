@@ -139,11 +139,11 @@ private:
   Vector3D vvel;
 };
 
-class UniformLinearMotion2DOnPlane : virtual public Behavior<Vector2D, Vector2D, Vector3D, Vector3D, Vector3D, Vector3D, Vector3D> {
+class UniformLinearMotion2DOnPlane : virtual public Behavior<float, Vector2D, Vector2D, Vector3D, Vector3D, Vector3D, Vector3D, Vector3D> {
 public:
   virtual ~UniformLinearMotion2DOnPlane() = default;
 
-  void apply(std::shared_ptr<MAvatar<Vector2D, Vector2D, Vector3D, Vector3D, Vector3D, Vector3D, Vector3D> > avatar) {
+  void apply(std::shared_ptr<MAvatar<float, Vector2D, Vector2D, Vector3D, Vector3D, Vector3D, Vector3D, Vector3D> > avatar) {
     auto contextTime = avatar->getContextTime();
     auto vplanePos = avatar->get<1, Vector3D>();
     // El avatar usado en el sistema de fisicas para generar el MovingTriangle3D debe actualizar en la entidad dos Values<Vector3D>
@@ -161,6 +161,7 @@ public:
 
     auto vpos2D = avatar->get<6, Vector2D>();
     auto vvel2D = avatar->get<7, Vector2D>();
+    auto distance = avatar->get<8, float>();
 
     auto planePos = vplanePos->get();
     auto planeE1 = vplaneE1->get();
@@ -177,8 +178,9 @@ public:
     //Vector3D newPos3D = planePos + (Matrix(vplaneE1,vplaneE2) * newPos2D);
     // TODO esto es una teoria.
     Vector3D newVel3D = (planeE1 * vel2D.x + planeE2 * vel2D.y);
+    auto distanceVect = (cross(planeE1, planeE2)).setModule(distance->get());
     
-    avatar->set<4, Vector3D>(newPos3D);
+    avatar->set<4, Vector3D>(newPos3D + distanceVect);
     avatar->set<5, Vector3D>(newVel3D);
     avatar->set<6, Vector2D>(newPos2D);
   }

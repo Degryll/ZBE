@@ -84,8 +84,8 @@ public:
     using LookAtAvtList = TicketedForwardList<MAvatar<uint64_t, double, Vector3D, Vector3D, Vector3D> >;
     using LookAtAvtBhvr = BehaviorDmnFtry<LookAtAvtList, uint64_t, double, Vector3D, Vector3D, Vector3D>;
 
-    using M3DOn2DAvtList = TicketedForwardList<MAvatar<Vector2D, Vector2D, Vector3D, Vector3D, Vector3D, Vector3D, Vector3D> >;
-    using M3DOn2DAvtBhvr = BehaviorDmnFtry<M3DOn2DAvtList, Vector2D, Vector2D, Vector3D, Vector3D, Vector3D, Vector3D, Vector3D>;
+    using M3DOn2DAvtList = TicketedForwardList<MAvatar<float, Vector2D, Vector2D, Vector3D, Vector3D, Vector3D, Vector3D, Vector3D> >;
+    using M3DOn2DAvtBhvr = BehaviorDmnFtry<M3DOn2DAvtList, float, Vector2D, Vector2D, Vector3D, Vector3D, Vector3D, Vector3D, Vector3D>;
 
     using V2DThreeV3DAvtList = TicketedForwardList<MAvatar<Vector2D, Vector3D, Vector3D, Vector3D> >;
     using V2DThreeV3DAvtBhvr = BehaviorDmnFtry<V2DThreeV3DAvtList, Vector2D, Vector3D, Vector3D, Vector3D>;
@@ -125,7 +125,7 @@ public:
     factories.insert("DerivedPosMovingSphereAvtShapeBldrFtry", std::make_shared<DerivedPosMovingSphereAvtShapeBldrFtry>());
     factories.insert("LookAtToPitchAvtBldrFtry", std::make_shared<LookAtToPitchAvtBldrFtry>());
     factories.insert("LookAtToYawAvtBldrFtry", std::make_shared<LookAtToYawAvtBldrFtry>());
-    factories.insert("3DOn2DAvtBldrFtry", std::make_shared<MDynamicAvatarBldrFtry<Vector2D, Vector2D, Vector3D, Vector3D, Vector3D, Vector3D, Vector3D> >());
+    factories.insert("3DOn2DAvtBldrFtry", std::make_shared<MDynamicAvatarBldrFtry<float, Vector2D, Vector2D, Vector3D, Vector3D, Vector3D, Vector3D, Vector3D> >());
     factories.insert("DynamicV2ThreeV3DAvtBldrFtry", std::make_shared<MDynamicAvatarBldrFtry<Vector2D, Vector3D, Vector3D, Vector3D> >());
 
     //factories.insert("MovingSphereAvtBldrFtry", std::make_shared<MovingSphereAvtBldrFtry>());

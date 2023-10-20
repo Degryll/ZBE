@@ -52,7 +52,7 @@
     "pointAIdx" : 1310,
     "pointBIdx" : 1320,
     "pointCIdx" : 1330,
-    "lifespan" : 16553600,
+    "lifespan" : 662144,
     "fovIdx" : 3100,
     "targetIdx" : 3200,
     "upwardsIdx" : 3300,
@@ -139,12 +139,12 @@
     "prota.rightSpeed" : {"type":"v2", "value":[0.0, 15.0]},
     "prota.leftSpeed": {"type":"v2", "value":[0.0, -15.0]},
 
-    "velprotanorte" :{"type":"d", "value":110.0},
-    "velprotasur" :{"type":"d", "value":-50.0},
-    "velprotaeste" :{"type":"d", "value":78.0},
-    "velprotaoeste" :{"type":"d", "value":-78.0},
-    "velprotaarriba" :{"type":"d", "value":50.0},
-    "velprotaabajo" :{"type":"d", "value":-50.0},
+    "velprotanorte" :{"type":"d", "value":320.0},
+    "velprotasur" :{"type":"d", "value":-160.0},
+    "velprotaeste" :{"type":"d", "value":160.0},
+    "velprotaoeste" :{"type":"d", "value":-160.0},
+    "velprotaarriba" :{"type":"d", "value":160.0},
+    "velprotaabajo" :{"type":"d", "value":-160.0},
 
     "VOLANDO" : 0,
     "RODANDO" : 1
@@ -796,7 +796,7 @@
           "name" : "zandbokz.diositovalues",
           "config" : {
             "uint": {
-              "gidIdx":["cucucurva"]
+              "gidIdx":["TrianguloIsosceles"]
             },
             "double": {
               "radsIdx":[0.570796],
@@ -819,15 +819,15 @@
           "name" : "zandbokz.diositovalues1",
           "config" : {
             "uint": {
-              "gidIdx":["cucucurva"]
+              "gidIdx":["TrianguloIsosceles"]
             },
             "double": {
-              "radsIdx":[1.57075],
+              "radsIdx":[0.0],
               "scaleIdx":[1000.0]
             },
             "V3D": {
-              "positionIdx":[-1000.0, 150.0, 0.0],
-              "orientationIdx":[1.0, 0.0, 0.0],
+              "positionIdx":[-1000.0, 0.0, 0.0],
+              "orientationIdx":[0.0, 1.0, 0.0],
               "positionAIdx":[200.0, 0.0, 200.0],
               "positionBIdx":[-200.0, 0.0, 200.0],
               "positionCIdx":[200.0, 0.0, -200.0],
@@ -842,15 +842,15 @@
           "name" : "zandbokz.diositovalues2",
           "config" : {
             "uint": {
-              "gidIdx":["cucucurva"]
+              "gidIdx":["TrianguloIsosceles"]
             },
             "double": {
-              "radsIdx":[1.57075],
+              "radsIdx":[3.14159265358979323846],
               "scaleIdx":[1000.0]
             },
             "V3D": {
-              "positionIdx":[0.0, 400.0, 0.0],
-              "orientationIdx":[1.0, 0.0, 0.0],
+              "positionIdx":[-1000.0, 0.0, 0.0],
+              "orientationIdx":[0.0, 1.0, 0.0],
               "positionAIdx":[200.0, 0.0, 200.0],
               "positionBIdx":[-200.0, 0.0, 200.0],
               "positionCIdx":[200.0, 0.0, -200.0],
@@ -865,15 +865,15 @@
           "name" : "zandbokz.diositovalues3",
           "config" : {
             "uint": {
-              "gidIdx":["cucucurva"]
+              "gidIdx":["TrianguloIsosceles"]
             },
             "double": {
-              "radsIdx":[3.14159],
-              "scaleIdx":[100.0]
+              "radsIdx":[-0.7853981634],
+              "scaleIdx":[1000.0]
             },
             "V3D": {
-              "positionIdx":[150.0, 151.0, 151.1],
-              "orientationIdx":[1.0, 1.0, 1.0],
+              "positionIdx":[-2500.0, 500.0, 0.0],
+              "orientationIdx":[0.0, 0.0, 1.0],
               "positionAIdx":[200.0, 0.0, 200.0],
               "positionBIdx":[-200.0, 0.0, 200.0],
               "positionCIdx":[200.0, 0.0, -200.0],
@@ -888,15 +888,15 @@
           "name" : "zandbokz.diositovalues4",
           "config" : {
             "uint": {
-              "gidIdx":["cucucurva"]
+              "gidIdx":["TrianguloIsosceles"]
             },
             "double": {
-              "radsIdx":[3.14159],
-              "scaleIdx":[100.0]
+              "radsIdx":[2.35619449019],
+              "scaleIdx":[1000.0]
             },
             "V3D": {
-              "positionIdx":[50.0, 52.0, 52.2],
-              "orientationIdx":[0.0, 0.0, 1.0],
+              "positionIdx":[-2500.0, 500.0, 0.0],
+              "orientationIdx":[1.0, 0.0, 0.0],
               "positionAIdx":[200.0, 0.0, 200.0],
               "positionBIdx":[-200.0, 0.0, 200.0],
               "positionCIdx":[200.0, 0.0, -200.0],
@@ -911,15 +911,15 @@
           "name" : "zandbokz.diositovalues5",
           "config" : {
             "uint": {
-              "gidIdx":["cucucurva"]
+              "gidIdx":["TrianguloIsosceles"]
             },
             "double": {
-              "radsIdx":[3.14159],
-              "scaleIdx":[100.0]
+              "radsIdx":[0.0],
+              "scaleIdx":[1000.0]
             },
             "V3D": {
-              "positionIdx":[50.0, 53.0, 53.3],
-              "orientationIdx":[0.0, 0.0, 1.0],
+              "positionIdx":[-3000.0, 1000.0, 0.0],
+              "orientationIdx":[0.0, 1.0, 0.0],
               "positionAIdx":[200.0, 0.0, 200.0],
               "positionBIdx":[-200.0, 0.0, 200.0],
               "positionCIdx":[200.0, 0.0, -200.0],
@@ -934,15 +934,15 @@
           "name" : "zandbokz.diositovalues6",
           "config" : {
             "uint": {
-              "gidIdx":["cucucurva"]
+              "gidIdx":["TrianguloIsosceles"]
             },
             "double": {
-              "radsIdx":[3.14159],
-              "scaleIdx":[100.0]
+              "radsIdx":[3.14159265358979323846],
+              "scaleIdx":[1000.0]
             },
             "V3D": {
-              "positionIdx":[50.0, 54.0, 54.4],
-              "orientationIdx":[0.0, 0.0, 1.0],
+              "positionIdx":[-3000.0, 1000.0, 0.0],
+              "orientationIdx":[0.0, 1.0, 0.0],
               "positionAIdx":[200.0, 0.0, 200.0],
               "positionBIdx":[-200.0, 0.0, 200.0],
               "positionCIdx":[200.0, 0.0, -200.0],
@@ -957,15 +957,15 @@
           "name" : "zandbokz.diositovalues7",
           "config" : {
             "uint": {
-              "gidIdx":["cucucurva"]
+              "gidIdx":["TrianguloIsosceles"]
             },
             "double": {
-              "radsIdx":[3.14159],
-              "scaleIdx":[100.0]
+              "radsIdx":[0.0],
+              "scaleIdx":[1000.0]
             },
             "V3D": {
-              "positionIdx":[50.0, 55.0, 55.5],
-              "orientationIdx":[0.0, 0.0, 1.0],
+              "positionIdx":[-7000.0, 0.0, 0.0],
+              "orientationIdx":[1.0, 0.0, 0.0],
               "positionAIdx":[200.0, 0.0, 200.0],
               "positionBIdx":[-200.0, 0.0, 200.0],
               "positionCIdx":[200.0, 0.0, -200.0],
@@ -980,15 +980,15 @@
           "name" : "zandbokz.diositovalues8",
           "config" : {
             "uint": {
-              "gidIdx":["cucucurva"]
+              "gidIdx":["TrianguloIsosceles"]
             },
             "double": {
-              "radsIdx":[3.14159],
-              "scaleIdx":[100.0]
+              "radsIdx":[3.14159265358979323846],
+              "scaleIdx":[1000.0]
             },
             "V3D": {
-              "positionIdx":[50.0, 56.0, 56.6],
-              "orientationIdx":[0.0, 0.0, 1.0],
+              "positionIdx":[-7000.0, 0.0, 0.0],
+              "orientationIdx":[0.0, 1.0, 0.0],
               "positionAIdx":[200.0, 0.0, 200.0],
               "positionBIdx":[-200.0, 0.0, 200.0],
               "positionCIdx":[200.0, 0.0, -200.0],
@@ -1051,7 +1051,7 @@
             "sizeIdx" : "scaleIdx",
             "e1Idx" : "e1Idx",
             "e2Idx" : "e2Idx",
-            "triangle" : "cucucurva"
+            "triangle" : "TrianguloIsosceles"
           }
         },
         {
@@ -1063,7 +1063,7 @@
             "bIdx" : "pointBIdx",
             "cIdx" : "pointCIdx",
             "sizeIdx" : "scaleIdx",
-            "triangle" : "cucucurva"
+            "triangle" : "TrianguloIsosceles"
           }
         },
         {
@@ -1259,7 +1259,7 @@
               "gidIdx":["XYZ"]
             },
             "uint": {
-              "gidIdx":["Castaña"]
+              "gidIdx":["gota"]
             },
             "double": {
               "radsIdx":[0.0],
@@ -1381,7 +1381,7 @@
           "name" : "zandbokz.protavalues",
           "config" : {
             "uint": {
-              "gidIdx":["Roboto"]
+              "gidIdx":["pelota"]
             },
             "double": {
               "radsIdx":[0.0],
@@ -1391,7 +1391,7 @@
               "jumpSpeedIdx": "zandbokz.protaVelVertical"
             },
             "float": {
-              "sizeIdx":[30.0]
+              "sizeIdx":[50.0]
             },
             "V3D": {
               "camposIdx" : "zandbokz.camEye",
@@ -1592,7 +1592,7 @@
           "factory" :"3DOn2DAvtBldrFtry",
           "name" : "zandbokz.protaamoverenplano",
           "config" : {
-            "attribIndexes" : ["velocity2DIdx", "position2DIdx", "velocityIdx", "positionIdx", "e2Idx", "e1Idx", "planePosIdx"],
+            "attribIndexes" : ["sizeIdx", "velocity2DIdx", "position2DIdx", "velocityIdx", "positionIdx", "e2Idx", "e1Idx", "planePosIdx"],
             "deativatedlists":{
               "loadScreen.moveOnPlaneList":"ULM3DOn2DTicket"
             }
@@ -1648,8 +1648,8 @@
         }
 
       ],
-      "calls" : ["zandbokz.thirdviewcambldr", "zandbokz.creaunicorniorosa", "zandbokz.pepinobuilder", "zandbokz.protabuilder", "zandbokz.diositobuilder", "zandbokz.diositobuilder1", "zandbokz.diositobuilder2"],
-      "backupcalls" : ["zandbokz.cajabuilder", "zandbokz.creaunicorniorosa", "zandbokz.diositobuilder3", "zandbokz.diositobuilder4", "zandbokz.diositobuilder5", "zandbokz.diositobuilder6", "zandbokz.diositobuilder7", "zandbokz.diositobuilder8"]
+      "calls" : ["zandbokz.thirdviewcambldr", "zandbokz.creaunicorniorosa", "zandbokz.pepinobuilder", "zandbokz.protabuilder", "zandbokz.diositobuilder", "zandbokz.diositobuilder1", "zandbokz.diositobuilder2", "zandbokz.diositobuilder3", "zandbokz.diositobuilder4", "zandbokz.diositobuilder5", "zandbokz.diositobuilder6", "zandbokz.diositobuilder7", "zandbokz.diositobuilder8"],
+      "backupcalls" : ["zandbokz.cajabuilder", "zandbokz.creaunicorniorosa"]
     },
     {
       "description" : "Creating entity",
@@ -2577,7 +2577,8 @@
         {"factory": "BroadcastIHFtry",
           "name": "loadScreen.bajahandler",
           "config" : {
-            "handlers" : ["loadScreen.bajahandlerDmn", "loadScreen.bajahandlerVal"],
+            "handlers" : ["loadScreen.bajahandlerVal"],
+            "backhandlers" : ["loadScreen.bajahandlerDmn"],
             "inputEventGenerator" : "loadScreen.inputEventGenerator",
             "key":"ZBEK_LCTRL"
           }

@@ -14,6 +14,7 @@
 #include <memory>
 #include <cstdio>
 #include <string>
+#include <cmath>
 
 #include <nlohmann/json.hpp>
 
@@ -74,7 +75,7 @@ public:
     //w' = w - (24/10,8/10) = (-14/10, 42/10)
 
     //zbe::Vector3D orientAbsolute = cData.point + oirentation;
-    zbe::Vector3D normal = -cData.normal;
+    zbe::Vector3D normal = cross(planeE1, planeE2);//-cData.normal;
     zbe::Vector3D proyection = (((oirentation /*+ cData.point*/) * normal) / (normal * normal)) * normal;
     zbe::Vector3D orientPrima = oirentation - proyection /*- cData.point*/; // Quiza normal tenga siempre modulo 1 y esto no haga falta
 
@@ -90,6 +91,7 @@ public:
     zbe::Vector3D camPos = avatar->get<6, zbe::Vector3D>()->get();
 
     float normalDiffAngle = angle(oldyv, oldcu);
+    // normalDiffAngle = (isnan(normalDiffAngle)? 0 : normalDiffAngle);
     zbe::Vector3D rotv = cross(normal, orientPrima);
     glm::vec3 rot{rotv.x, rotv.y, rotv.z};
     auto newCamUpGlm = glm::rotate(glm::vec3{normal.x, normal.y, normal.z}, -normalDiffAngle,  rot);
@@ -97,6 +99,7 @@ public:
     zbe::Vector3D newPitchVect = zbe::cross(newCamUp, (pos- camPos)).normalize();
 
     // printf("-###################################### init ######################################-\n");fflush(stdout);
+    // printf("normal %lf, %lf, %lf\n", normal.x, normal.y, normal.z);fflush(stdout);
     // printf("normalDiffAngle  %lf\n", normalDiffAngle);fflush(stdout);
     // printf("oldyv %lf, %lf, %lf\n", oldyv.x, oldyv.y, oldyv.z);fflush(stdout);
     // printf("oldcu %lf, %lf, %lf\n", oldcu.x, oldcu.y, oldcu.z);fflush(stdout);
@@ -107,6 +110,7 @@ public:
     // printf("normal %lf, %lf, %lf\n", normal.x, normal.y, normal.z);fflush(stdout);
     // printf("newPitchVect %lf, %lf, %lf\n", newPitchVect.x, newPitchVect.y, newPitchVect.z);fflush(stdout);
     // printf("-###################################### end  ######################################-\n");fflush(stdout);
+    //}
 
     avatar->set<1, zbe::Vector3D>(orientPrima);
     avatar->set<2, zbe::Vector3D>(newCamUp);
