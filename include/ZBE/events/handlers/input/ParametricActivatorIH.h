@@ -67,14 +67,14 @@ public:
 
 private:
   ParametricActivatorIH() : ticket(nullptr), parametric(nullptr) {}
-  std::shared_ptr<Parametric<float> > parametric;
   std::shared_ptr<Ticket> ticket;
+  std::shared_ptr<Parametric<float> > parametric;
 };
 
 class ZBEAPI ParametricActivatorIHFtry : public Factory {
 
 
-  void create(std::string name, uint64_t cfgId);
+  void create(std::string name, uint64_t);
 
   /** \brief Setup the desired tool. The tool will be complete after this step.
    *  \param name Name of the tool.

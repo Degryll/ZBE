@@ -98,7 +98,10 @@ public:
     zbe::Vector3D newCamUp{newCamUpGlm.x ,newCamUpGlm.y, newCamUpGlm.z};
     zbe::Vector3D newPitchVect = zbe::cross(newCamUp, (pos- camPos)).normalize();
 
-    // printf("-###################################### init ######################################-\n");fflush(stdout);
+    // printf("-########################## init ##########################-\n");fflush(stdout);
+    // printf("planeE1 %lf, %lf, %lf\n", planeE1.x, planeE1.y, planeE1.z);fflush(stdout);
+    // printf("planeE2 %lf, %lf, %lf\n", planeE2.x, planeE2.y, planeE2.z);fflush(stdout);
+    // printf("----------------\n");fflush(stdout);
     // printf("normal %lf, %lf, %lf\n", normal.x, normal.y, normal.z);fflush(stdout);
     // printf("normalDiffAngle  %lf\n", normalDiffAngle);fflush(stdout);
     // printf("oldyv %lf, %lf, %lf\n", oldyv.x, oldyv.y, oldyv.z);fflush(stdout);
@@ -109,8 +112,7 @@ public:
     // printf("newCamUp %lf, %lf, %lf\n", newCamUp.x, newCamUp.y, newCamUp.z);fflush(stdout);
     // printf("normal %lf, %lf, %lf\n", normal.x, normal.y, normal.z);fflush(stdout);
     // printf("newPitchVect %lf, %lf, %lf\n", newPitchVect.x, newPitchVect.y, newPitchVect.z);fflush(stdout);
-    // printf("-###################################### end  ######################################-\n");fflush(stdout);
-    //}
+    // printf("-########################## end  ##########################-\n");fflush(stdout);
 
     avatar->set<1, zbe::Vector3D>(orientPrima);
     avatar->set<2, zbe::Vector3D>(newCamUp);
@@ -135,12 +137,12 @@ public:
     this->idxArr = idxArr;
   }
 private:
-  std::array<uint64_t, AttachRedirectionReaction::AVTSIZE> idxArr;
+  std::array<uint64_t, AttachRedirectionReaction::AVTSIZE> idxArr {};
 };
 
 class AttachRedirectionReactionBldrFtry : public zbe::Factory {
 public:
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
     std::shared_ptr<AttachRedirectionReactionBldr> arrb = std::make_shared<AttachRedirectionReactionBldr>();
     mainRsrc.insert("Function."s + name, arrb);
@@ -237,12 +239,12 @@ public:
     this->idxArr = idxArr;
   }
 private:
-  std::array<uint64_t, AttachRepositionReaction::AVTSIZE> idxArr;
+  std::array<uint64_t, AttachRepositionReaction::AVTSIZE> idxArr {};
 };
 
 class AttachRepositionReactionBldrFtry : public zbe::Factory {
 public:
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
     std::shared_ptr<AttachRepositionReactionBldr> arrb = std::make_shared<AttachRepositionReactionBldr>();
     mainRsrc.insert("Function."s + name, arrb);
@@ -320,14 +322,14 @@ public:
    this->idx = idx;
  }
 private:
- uint64_t idx;
+ uint64_t idx{};
 };
 
 template<typename IData, typename Trait>
 class ReverseDirectionReactionBldrFtry : public zbe::Factory {
 // This class where c&p from DerivedPosMovingSphereAvtBldrFtry removing list managment
 public:
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
     std::shared_ptr<ReverseDirectionReactionBldr<IData, Trait>> rdrb = std::make_shared<ReverseDirectionReactionBldr<IData, Trait>>();
     mainRsrc.insert("Function."s + name, rdrb);
@@ -411,15 +413,15 @@ public:
    this->uidx = uidx;
  }
 private:
- uint64_t uidx;
- uint64_t vidx;
+ uint64_t uidx{};
+ uint64_t vidx{};
 };
 
 template<typename IData, typename Trait>
 class BounceReactionBldrFtry : public zbe::Factory {
 // This class where c&p from DerivedPosMovingSphereAvtBldrFtry removing list managment
 public:
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
     std::shared_ptr<BounceReactionBldr<IData, Trait>> rdrb = std::make_shared<BounceReactionBldr<IData, Trait>>();
     mainRsrc.insert("Function."s + name, rdrb);

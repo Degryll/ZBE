@@ -19,36 +19,36 @@ namespace zbe {
 
 template<unsigned s>
 struct NewCollisionData {
-  int64_t time;
-  zbe::Point<s> point;
-  zbe::Vector<s> normal;
+  uint64_t time{};
+  zbe::Point<s> point{};
+  zbe::Vector<s> normal{};
 };
 
 using CollisionData3D = NewCollisionData<3>;
 using CollisionData2D = NewCollisionData<2>;
 
 template<unsigned s>
-bool MovingNSphereMovingNSphere(std::shared_ptr<MovingNSphere<s>> arg1, std::shared_ptr<MovingNSphere<s>> arg2, int64_t time, NewCollisionData<s> &data) {
+bool MovingNSphereMovingNSphere(std::shared_ptr<MovingNSphere<s>> arg1, std::shared_ptr<MovingNSphere<s>> arg2, uint64_t time, NewCollisionData<s> &data) {
   data.time = time;
   return intersectionMovingNSphereOutsideMovingNSphere(*(arg1->getShape()), arg1->v, *(arg2->getShape()), arg2->v, data.time, data.point, data.normal);
 }
 
 
 template<unsigned s>
-bool MovingNSphereMovingTriangle(std::shared_ptr<MovingNSphere<s>> arg1, std::shared_ptr<MovingTriangle<s>> arg2, int64_t time, NewCollisionData<s> &data) {
+bool MovingNSphereMovingTriangle(std::shared_ptr<MovingNSphere<s>> arg1, std::shared_ptr<MovingTriangle<s>> arg2, uint64_t time, NewCollisionData<s> &data) {
   data.time = time;
   return intersectionMovingNSphereOutsideMovingNTriangle<s>(*(arg1->getShape()), arg1->v, *(arg2->getShape()), arg2->v, data.time, data.point, data.normal);
 }
 
 
 template<unsigned s>
-bool MovingTriangleMovingNSphere(std::shared_ptr<MovingTriangle<s>> arg1, std::shared_ptr<MovingNSphere<s>> arg2, int64_t time, NewCollisionData<s> &data) {
+bool MovingTriangleMovingNSphere(std::shared_ptr<MovingTriangle<s>> arg1, std::shared_ptr<MovingNSphere<s>> arg2, uint64_t time, NewCollisionData<s> &data) {
   data.time = time;
   return intersectionMovingNSphereOutsideMovingNTriangle<s>(*(arg2->getShape()), arg2->v, *(arg1->getShape()), arg1->v, data.time, data.point, data.normal);
 }
 
 template<typename a, typename b, unsigned s>
-bool notIntersect(std::shared_ptr<a>, std::shared_ptr<b>, int64_t time, NewCollisionData<s> &data) {
+bool notIntersect(std::shared_ptr<a>, std::shared_ptr<b>, uint64_t time, NewCollisionData<s> &data) {
   data.time = time;
   return false;
 }
@@ -56,7 +56,7 @@ bool notIntersect(std::shared_ptr<a>, std::shared_ptr<b>, int64_t time, NewColli
 template<unsigned s>
 class MovingNSphereFunctor {
 public:
-  bool operator()(std::shared_ptr<MovingNSphere<s>> arg1, std::shared_ptr<MovingNSphere<s>> arg2, int64_t time, NewCollisionData<s> &data) {
+  bool operator()(std::shared_ptr<MovingNSphere<s>> arg1, std::shared_ptr<MovingNSphere<s>> arg2, uint64_t time, NewCollisionData<s> &data) {
     return MovingNSphereMovingNSphere(arg1, arg2, time, data);
   }
 };
@@ -64,7 +64,7 @@ public:
 template<unsigned s>
 class MovingNSphereMovingTriangleFunctor {
 public:
-  bool operator()(std::shared_ptr<MovingNSphere<s>> arg1, std::shared_ptr<MovingTriangle<s>> arg2, int64_t time, NewCollisionData<s> &data) {
+  bool operator()(std::shared_ptr<MovingNSphere<s>> arg1, std::shared_ptr<MovingTriangle<s>> arg2, uint64_t time, NewCollisionData<s> &data) {
     return MovingNSphereMovingTriangle(arg1, arg2, time, data);
   }
 };
@@ -72,7 +72,7 @@ public:
 template<unsigned s>
 class MovingTriangleMovingNSphereFunctor {
 public:
-  bool operator()(std::shared_ptr<MovingTriangle<s>> arg1, std::shared_ptr<MovingNSphere<s>> arg2, int64_t time, NewCollisionData<s> &data) {
+  bool operator()(std::shared_ptr<MovingTriangle<s>> arg1, std::shared_ptr<MovingNSphere<s>> arg2, uint64_t time, NewCollisionData<s> &data) {
     return MovingTriangleMovingNSphere(arg1, arg2, time, data);
   }
 };
@@ -80,14 +80,20 @@ public:
 template<typename a, typename b, unsigned s>
 class NotIntersectFunctor {
 public:
-  bool operator()(std::shared_ptr<a> arg1, std::shared_ptr<b> arg2, int64_t time, NewCollisionData<s> &data){
+  bool operator()(std::shared_ptr<a> arg1, std::shared_ptr<b> arg2, uint64_t time, NewCollisionData<s> &data){
     return notIntersect(arg1, arg2, time, data);
   }
 };
 
+
+bool sameHalfSpace(Point2D pl1, Point2D pl2, Point2D a, Point2D b) {
+    int result1 = halfspace(a, pl1, pl2);
+    int result2 = halfspace(b, pl1, pl2);
+    return (result1 == result2);
+}
 class MovingPoint2DTriangle2DFunctor {
 public:
-  bool operator()(std::shared_ptr<MovingPoint2D> movingpoint, std::shared_ptr<Triangle2D> triangle, int64_t time, NewCollisionData<2> &data){
+  bool operator()(std::shared_ptr<MovingPoint2D> movingpoint, std::shared_ptr<Triangle2D> triangle, uint64_t time, NewCollisionData<2> &data){
     NewCollisionData<2> bestData;
     bestData.time = time;
 
@@ -98,18 +104,18 @@ public:
     Ray2D r1((currentpoint), movingpoint->v); // The point
     Ray2D r2(triangle->a, triangle->b - triangle->a); // a - b
     Ray2D r3(triangle->b, triangle->c - triangle->b); // b - c
-    Ray2D r4(triangle->c, triangle->a - triangle->c); // c - dç
-
-    // printf("R1 P: %lf, %lf  D: %lf, %lf\n", r1.o.x, r1.o.y, r1.d.x, r1.d.y);fflush(stdout);
-    // printf("R2 P: %lf, %lf  D: %lf, %lf\n", r2.o.x, r2.o.y, r2.d.x, r2.d.y);fflush(stdout);
-    // printf("R3 P: %lf, %lf  D: %lf, %lf\n", r3.o.x, r3.o.y, r3.d.x, r3.d.y);fflush(stdout);
-    // printf("R4 P: %lf, %lf  D: %lf, %lf\n", r4.o.x, r4.o.y, r4.d.x, r4.d.y);fflush(stdout);
+    Ray2D r4(triangle->c, triangle->a - triangle->c); // c - d
+    
+    Point2D center = triangleCenter(triangle->a, triangle->b, triangle->c);
 
     bool intersect1 = intersectionMovingRay2DRay2D(r1, r2, currentData.time, currentData.point, currentData.normal);
     if (intersect1) {
       bestData.time = currentData.time;
       bestData.point = currentData.point;
       bestData.normal = currentData.normal;
+      printf("b - a %lf\n",angle(movingpoint->v , r2.d)); fflush(stdout);
+      printf("Vel: %lf %lf\n", movingpoint->v.x, movingpoint->v.y); fflush(stdout);
+      printf("Same halfspace %b\n", sameHalfSpace(triangle->b, triangle->a, center, bestData.point + movingpoint->v)); fflush(stdout);
     } else {
       currentData.time = bestData.time;
     }
@@ -119,6 +125,9 @@ public:
       bestData.time = currentData.time;
       bestData.point = currentData.point;
       bestData.normal = currentData.normal;
+      printf("c - b %lf\n",angle(movingpoint->v , r3.d)); fflush(stdout);
+      printf("Vel: %lf %lf\n", movingpoint->v.x, movingpoint->v.y); fflush(stdout);
+      printf("Same halfspace %b\n", sameHalfSpace(triangle->c, triangle->b, center, bestData.point + movingpoint->v)); fflush(stdout);
     } else {
       currentData.time = bestData.time;
     }
@@ -128,13 +137,16 @@ public:
       bestData.time = currentData.time;
       bestData.point = currentData.point;
       bestData.normal = currentData.normal;
+      printf("a - c %lf\n",angle(movingpoint->v , r4.d)); fflush(stdout);
+      printf("Vel: %lf %lf\n", movingpoint->v.x, movingpoint->v.y); fflush(stdout);
+      printf("Same halfspace %b\n", sameHalfSpace(triangle->a, triangle->c, center, bestData.point + movingpoint->v)); fflush(stdout);
     }
 
     data.time = bestData.time;
     data.point = bestData.point;
     data.normal = bestData.normal;
 
-    return intersect1 || intersect2 || intersect3;
+    return (intersect1 || intersect2 || intersect3);
   }
 };
 

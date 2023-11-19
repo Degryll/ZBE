@@ -69,7 +69,7 @@ private:
 template<typename T>
 class KeyValueSetterIHFtry : public Factory {
 
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
 
     auto kvsih = std::shared_ptr<KeyValueSetterIH<T>>(new KeyValueSetterIH<T>());

@@ -24,6 +24,7 @@
 #include "ZBE/factories/Factory.h"
 #include "ZBE/factories/genericFactoryConstants.h"
 
+
 namespace zbe {
 
 template<typename IData, typename ...Traits>
@@ -238,6 +239,7 @@ class AvtShape : public zbe::Shape<Shapes...> {
 public:
 
   AvtShape(std::shared_ptr<SAvatar<S>> avt) : avt(avt) {}
+  virtual ~AvtShape() = default;
 
   std::variant<std::shared_ptr<Shapes>...> getShape() {
     return std::make_shared<S>(avt->get()->get());
@@ -307,7 +309,7 @@ template<typename IData, typename Overloaded, typename ...Shapes>
 class InteractionSelector {
 public:
   virtual ~InteractionSelector() = default;
-  bool select(std::shared_ptr<Shape<Shapes...>> i1, std::shared_ptr<Shape<Shapes...>> i2, std::variant<int64_t> timeLimit, std::variant<IData>& data) {
+  bool select(std::shared_ptr<Shape<Shapes...>> i1, std::shared_ptr<Shape<Shapes...>> i2, std::variant<uint64_t> timeLimit, std::variant<IData>& data) {
     auto a = i1->getShape();
     auto b = i2->getShape();
     return std::visit(getOverloaded(), a, b, timeLimit, data);
@@ -359,7 +361,7 @@ public:
   }
 
   void run() {
-    int64_t timeLimit = contextTime->getRemainTime();
+    uint64_t timeLimit = contextTime->getRemainTime();
     for(auto iator : (*ators)) {
       getCollision(iator, timeLimit);
     }
@@ -374,9 +376,9 @@ public:
   }
 
 private:
-  void getCollision(std::shared_ptr<Interactionator<ActorType, ReactorType, Shapes...>> ator, int64_t timeLimit) {
+  void getCollision(std::shared_ptr<Interactionator<ActorType, ReactorType, Shapes...>> ator, uint64_t timeLimit) {
     std::vector<InteractionEvent<IData, ActorType, ReactorType>> out;
-    std::variant<int64_t> vbest = timeLimit;
+    std::variant<uint64_t> vbest = timeLimit;
     auto iners = ator->getIners();
     for(auto iner : *iners) {
       std::variant<IData> vdata;
@@ -384,10 +386,11 @@ private:
       auto b = iner->getShape();
       if (selector->select(a, b, vbest, vdata)) {
         IData data = std::get<IData>(vdata);
-        int64_t best = data.time;
+        uint64_t best = data.time;
         vbest = best;
-        auto iea = new InteractionEvent<IData, ActorType, ReactorType>(id, contextTime->getEventTime() + best, data, ator->getActor(), iner->getReactor());
-        auto ieb = new InteractionEvent<IData, ActorType, ReactorType>(id, contextTime->getEventTime() + best, data, iner->getActor(), ator->getReactor());
+        auto eventTime = contextTime->getEventTime() + best;
+        auto iea = new InteractionEvent<IData, ActorType, ReactorType>(id, eventTime, data, ator->getActor(), iner->getReactor());
+        auto ieb = new InteractionEvent<IData, ActorType, ReactorType>(id, eventTime, data, iner->getActor(), ator->getReactor());
         this->es.storeEvent(iea);
         this->es.storeEvent(ieb);
       }

@@ -35,7 +35,7 @@ public:
   static SDL_Starter& getInstance(Uint32 flags = 0, Uint32 other = 0) {
     static SDL_Starter instance;
     SDL_InitSubSystem(flags);
-    //SDL_CaptureMouse(SDL_TRUE);
+    SDL_CaptureMouse(SDL_FALSE);
     SDL_SetRelativeMouseMode(SDL_TRUE);
     if (other & SDLNET) {
       SDLNet_Init();

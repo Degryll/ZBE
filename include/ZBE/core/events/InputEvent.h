@@ -38,7 +38,7 @@ public:
    * \param handler The handler that manages the event.
    *
    */
-  InputEvent(uint64_t id, int64_t time, uint32_t key, float state, InputHandler* handler) : Event(id, time), key(key), state(state), handler(handler) {}
+  InputEvent(uint64_t id, uint64_t time, uint32_t key, float state, InputHandler* handler) : Event(id, time), key(key), state(state), handler(handler) {}
 
   /** \brief base destructor.
    */

@@ -84,7 +84,7 @@ void Sound3DOALPlayer::setCamera(std::shared_ptr<Camera> cam) {
   this->cam = cam;
 }
 
-void Sound3DOALPlayerFtry::create(std::string name, uint64_t cfgId){
+void Sound3DOALPlayerFtry::create(std::string name, uint64_t){
   using namespace std::string_literals;
 
   std::shared_ptr<Sound3DOALPlayer> s3daolp = std::shared_ptr<Sound3DOALPlayer>(new Sound3DOALPlayer);

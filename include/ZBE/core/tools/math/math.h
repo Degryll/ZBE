@@ -52,7 +52,7 @@ static const double INVERSE_SECOND = 1.0 / 65536;
 
 /** \brief This constant represent the minimal amount of bits that will be used as precision.
  */
-static const int64_t TIME_QUANTUM = 256;
+static const uint64_t TIME_QUANTUM = 256;
 
 /** \brief This constant represent the proportion of time quantum in a second.
  */
@@ -65,7 +65,7 @@ static const int64_t ROUND_MASK = -TIME_QUANTUM;
 /** \brief Transforms the received time from ZBE time units to miliseconds.
  * \param time Time to convert.
  */
-inline int64_t MILITOZBETU(int64_t time) {
+inline uint64_t MILITOZBETU(uint64_t time) {
   return ((time << 16) / 1000);
 }
 
@@ -73,7 +73,7 @@ inline int64_t MILITOZBETU(int64_t time) {
  * WARNING: does not work with negative times
  * \param n Time to quantize.
  */
-inline int64_t quantizeTime(int64_t n) {
+inline uint64_t quantizeTime(uint64_t n) {
   return (n & ROUND_MASK);
 }
 
@@ -81,8 +81,8 @@ inline int64_t quantizeTime(int64_t n) {
  * WARNING: does not work with negative times
  * \param n Time to quantize.
  */
-inline int64_t quantizeTime(double n) {
-  int64_t time = n * SECOND;
+inline uint64_t quantizeTime(double n) {
+  uint64_t time = n * SECOND;
   return quantizeTime(time);
 }
 

@@ -57,8 +57,6 @@ template<typename T, typename ...Ts>
 class BehaviorEntityBldr : public Funct<void, std::shared_ptr<MAvatar<T, Ts...>>> {
 public:
 
-  BehaviorEntityBldr() = default;
-
   void operator()(std::shared_ptr<MAvatar<T, Ts...>> avt) {
     std::shared_ptr<Entity> ent = std::make_shared<Entity>();
     ent->setContextTime(contextTime);
@@ -131,18 +129,18 @@ private:
     }
   }
 
-  std::forward_list<std::pair<uint64_t, std::shared_ptr<Funct<std::shared_ptr<Value<double>>, std::shared_ptr<MAvatar<T, Ts...>>>>>> dCfgList;
-  std::forward_list<std::pair<uint64_t, std::shared_ptr<Funct<std::shared_ptr<Value<float>>, std::shared_ptr<MAvatar<T, Ts...>>>>>> fCfgList;
-  std::forward_list<std::pair<uint64_t, std::shared_ptr<Funct<std::shared_ptr<Value<uint64_t>>, std::shared_ptr<MAvatar<T, Ts...>>>>>> uCfgList;
-  std::forward_list<std::pair<uint64_t, std::shared_ptr<Funct<std::shared_ptr<Value<int64_t>>, std::shared_ptr<MAvatar<T, Ts...>>>>>> iCfgList;
-  std::forward_list<std::pair<uint64_t, std::shared_ptr<Funct<std::shared_ptr<Value<bool>>, std::shared_ptr<MAvatar<T, Ts...>>>>>> bCfgList;
-  std::forward_list<std::pair<uint64_t, std::shared_ptr<Funct<std::shared_ptr<Value<Vector3D>>, std::shared_ptr<MAvatar<T, Ts...>>>>>> v3CfgList;
-  std::forward_list<std::pair<uint64_t, std::shared_ptr<Funct<std::shared_ptr<Value<Vector2D>>, std::shared_ptr<MAvatar<T, Ts...>>>>>> v2CfgList;
-  std::forward_list<std::pair<uint64_t, std::shared_ptr<Funct<std::shared_ptr<Value<std::string>>, std::shared_ptr<MAvatar<T, Ts...>>>>>> sCfgList;
-  std::forward_list<std::pair<uint64_t, std::shared_ptr<Funct<std::shared_ptr<Value<std::vector<std::string>>>, std::shared_ptr<MAvatar<T, Ts...>>>>>> slCfgList;
+  std::forward_list<std::pair<uint64_t, std::shared_ptr<Funct<std::shared_ptr<Value<double>>, std::shared_ptr<MAvatar<T, Ts...>>>>>> dCfgList{};
+  std::forward_list<std::pair<uint64_t, std::shared_ptr<Funct<std::shared_ptr<Value<float>>, std::shared_ptr<MAvatar<T, Ts...>>>>>> fCfgList{};
+  std::forward_list<std::pair<uint64_t, std::shared_ptr<Funct<std::shared_ptr<Value<uint64_t>>, std::shared_ptr<MAvatar<T, Ts...>>>>>> uCfgList{};
+  std::forward_list<std::pair<uint64_t, std::shared_ptr<Funct<std::shared_ptr<Value<int64_t>>, std::shared_ptr<MAvatar<T, Ts...>>>>>> iCfgList{};
+  std::forward_list<std::pair<uint64_t, std::shared_ptr<Funct<std::shared_ptr<Value<bool>>, std::shared_ptr<MAvatar<T, Ts...>>>>>> bCfgList{};
+  std::forward_list<std::pair<uint64_t, std::shared_ptr<Funct<std::shared_ptr<Value<Vector3D>>, std::shared_ptr<MAvatar<T, Ts...>>>>>> v3CfgList{};
+  std::forward_list<std::pair<uint64_t, std::shared_ptr<Funct<std::shared_ptr<Value<Vector2D>>, std::shared_ptr<MAvatar<T, Ts...>>>>>> v2CfgList{};
+  std::forward_list<std::pair<uint64_t, std::shared_ptr<Funct<std::shared_ptr<Value<std::string>>, std::shared_ptr<MAvatar<T, Ts...>>>>>> sCfgList{};
+  std::forward_list<std::pair<uint64_t, std::shared_ptr<Funct<std::shared_ptr<Value<std::vector<std::string>>>, std::shared_ptr<MAvatar<T, Ts...>>>>>> slCfgList{};
 
-  std::deque<std::shared_ptr<Funct<void, std::shared_ptr<Entity>>>> builders;
-  std::shared_ptr<ContextTime> contextTime;
+  std::deque<std::shared_ptr<Funct<void, std::shared_ptr<Entity>>>> builders{};
+  std::shared_ptr<ContextTime> contextTime{};
 
 };
 
@@ -458,9 +456,9 @@ public:
 
 private:
   using AvtImplType = AVT<T, Ts...>;
-  std::array<uint64_t, expectedIndexes> idxArr;
-  std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> indexNLists;
-  std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> deactivatedIndexNLists;
+  std::array<uint64_t, expectedIndexes> idxArr{};
+  std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> indexNLists{};
+  std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> deactivatedIndexNLists{};
 
 };
 
@@ -557,7 +555,7 @@ private:
 template<template<typename ...Ts> class AVT, typename... Ts>
 class _AvatarBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
     std::shared_ptr<AvatarBldr<AVT, Ts...>> ab = std::make_shared<AvatarBldr<AVT, Ts...>>();
     mainRsrc.insert(zbe::factories::functionName_ + name, ab);
@@ -589,7 +587,7 @@ public:
         }
     );
 
-    JSONFactory::loadAllIndexed<TicketedForwardList<typename AvatarBldr<AVT, Ts...>::AvtBaseType>>(listRsrc, uintDict, j, zbe::factories::listName, "deativatedlists"s, "AvatarBldrFtry"s,
+    JSONFactory::loadAllIndexed<TicketedForwardList<typename AvatarBldr<AVT, Ts...>::AvtBaseType>>(listRsrc, uintDict, j, zbe::factories::listName, "deactivatedlists"s, "AvatarBldrFtry"s,
         [&](uint64_t idx, std::shared_ptr<ListType> list) {
           ab->addDeactivatedIndexNlist(idx, list);
           return true;
@@ -623,7 +621,7 @@ using SDynamicAvatarBldrFtry = _AvatarBldrFtry<SDynamicAvatar, T>;
 
 class AvatarBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
     std::shared_ptr<AvatarBldr<AvtVoid, void>> ab = std::make_shared<AvatarBldr<AvtVoid, void>>();
     mainRsrc.insert(zbe::factories::functionName_ + name, ab);
@@ -649,7 +647,7 @@ public:
         }
     );
 
-    JSONFactory::loadAllIndexed<TicketedForwardList<typename AvatarBldr<AvtVoid, void>::AvtBaseType>>(listRsrc, uintDict, j, zbe::factories::listName, "deativatedlists"s, "AvatarBldrFtry"s,
+    JSONFactory::loadAllIndexed<TicketedForwardList<typename AvatarBldr<AvtVoid, void>::AvtBaseType>>(listRsrc, uintDict, j, zbe::factories::listName, "deactivatedlists"s, "AvatarBldrFtry"s,
         [&](uint64_t idx, std::shared_ptr<ListType> list) {
           ab->addDeactivatedIndexNlist(idx, list);
           return true;
@@ -685,6 +683,11 @@ public:
       auto ticket = pair.second->push_front(iner);
       ent->addTicket(pair.first, ticket);
     }
+    for(auto pair : deactivatedInerLists) {
+      auto ticket = pair.second->push_front(iner);
+      ent->addTicket(pair.first, ticket);
+      ent->setINACTIVE(pair.first);
+    }
   }
 
   void setActorBldr(std::shared_ptr<ActorTypeBldr> actorBuilder) {
@@ -703,11 +706,16 @@ public:
     inerLists.push_front(std::pair<uint64_t, std::shared_ptr<TicketedForwardList<Iner>>>(idx, list));
   }
 
+  void addDeactivatedInerList(uint64_t idx, std::shared_ptr<InerList> list) {
+    deactivatedInerLists.push_front(std::pair<uint64_t, std::shared_ptr<TicketedForwardList<Iner>>>(idx, list));
+  }
+
 private:
-  std::shared_ptr<ActorTypeBldr> actorBuilder;
-  std::shared_ptr<ReactorTypeBldr> reactorBuilder;
-  std::shared_ptr<ShapeBldr> shapeBuilder;
-  std::forward_list<std::pair<uint64_t, std::shared_ptr<InerList>>> inerLists;
+  std::shared_ptr<ActorTypeBldr> actorBuilder{};
+  std::shared_ptr<ReactorTypeBldr> reactorBuilder{};
+  std::shared_ptr<ShapeBldr> shapeBuilder{};
+  std::forward_list<std::pair<uint64_t, std::shared_ptr<InerList>>> inerLists{};
+  std::forward_list<std::pair<uint64_t, std::shared_ptr<InerList>>> deactivatedInerLists{};
 };
 
 template<typename IData, typename ActorType, typename ReactorType, typename ...Shapes>
@@ -738,6 +746,18 @@ public:
       auto ticket = pair.second->push_front(inator);
       ent->addTicket(pair.first, ticket);
     }
+
+    for(auto pair : deactivatedInerLists) {
+      auto ticket = pair.second->push_front(inator);
+      ent->addTicket(pair.first, ticket);
+      ent->setINACTIVE(pair.first);
+    }
+
+    for(auto pair : deactivatedInatorLists) {
+      auto ticket = pair.second->push_front(inator);
+      ent->addTicket(pair.first, ticket);
+      ent->setINACTIVE(pair.first);
+    }
   }
 
   void setActorBldr(std::shared_ptr<ActorTypeBldr> actorBuilder) {
@@ -760,17 +780,27 @@ public:
     inatorLists.push_front(std::pair<uint64_t, std::shared_ptr<TicketedForwardList<Inator>>>(idx, list));
   }
 
+  void addDeactivatedInerList(uint64_t idx, std::shared_ptr<InerList> list) {
+    deactivatedInerLists.push_front(std::pair<uint64_t, std::shared_ptr<TicketedForwardList<Iner>>>(idx, list));
+  }
+
+  void addDeactivatedInatorList(uint64_t idx, std::shared_ptr<InatorList> list) {
+    deactivatedInatorLists.push_front(std::pair<uint64_t, std::shared_ptr<TicketedForwardList<Inator>>>(idx, list));
+  }
+
   void setInternalInerList(std::shared_ptr<InerList> internalInerList) {
     this->internalInerList = internalInerList;
   }
 
 private:
-  std::shared_ptr<ActorTypeBldr> actorBuilder;
-  std::shared_ptr<ReactorTypeBldr> reactorBuilder;
-  std::shared_ptr<ShapeBldr> shapeBuilder;
-  std::forward_list<std::pair<uint64_t, std::shared_ptr<InerList>>> inerLists;
-  std::forward_list<std::pair<uint64_t, std::shared_ptr<InatorList>>> inatorLists;
-  std::shared_ptr<InerList> internalInerList;
+  std::shared_ptr<ActorTypeBldr> actorBuilder{};
+  std::shared_ptr<ReactorTypeBldr> reactorBuilder{};
+  std::shared_ptr<ShapeBldr> shapeBuilder{};
+  std::forward_list<std::pair<uint64_t, std::shared_ptr<InerList>>> inerLists{};
+  std::forward_list<std::pair<uint64_t, std::shared_ptr<InatorList>>> inatorLists{};
+  std::forward_list<std::pair<uint64_t, std::shared_ptr<InerList>>> deactivatedInerLists{};
+  std::forward_list<std::pair<uint64_t, std::shared_ptr<InatorList>>> deactivatedInatorLists{};
+  std::shared_ptr<InerList> internalInerList{};
 };
 
 template<typename IData, typename Trait>
@@ -784,6 +814,8 @@ public:
                 })) {
 
   }
+
+  virtual ~_ActorBldr() = default;
 
   std::shared_ptr<TraitFunct> buildFunct(std::shared_ptr<Entity> ent) {
     return (*sb)(ent);
@@ -799,6 +831,7 @@ private:
 template<typename IData, typename Trait, typename ...Traits>
 class ActorBldr : public Funct<Actor<IData, Trait, Traits...>, std::shared_ptr<Entity>>, public _ActorBldr<IData, Trait>, public _ActorBldr<IData, Traits>... {
 public:
+  virtual ~ActorBldr() = default;
   Actor<IData, Trait, Traits...> operator()(std::shared_ptr<Entity> ent) {
     Actor<IData, Trait, Traits...> actor;
     actor.setTrait(buildFunct<Trait>(ent));
@@ -974,7 +1007,7 @@ public:
     }
   }
 
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
     std::shared_ptr<ActorBldr<IData, Traits...>> ab = std::make_shared<ActorBldr<IData, Traits...>>();
     mainRsrc.insert(zbe::factories::functionName_ + name, ab);
@@ -1073,7 +1106,7 @@ private:
 template<typename S, typename ...Shapes>
 class ShapeBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
     std::shared_ptr<ShapeBldr<S, Shapes...>> sb = std::make_shared<ShapeBldr<S, Shapes...>>();
     mainRsrc.insert(zbe::factories::functionName_ + name, sb);
@@ -1111,7 +1144,7 @@ private:
 class EntityBldrFtry : public Factory {
 public:
 
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
     std::shared_ptr<EntityBldr> eb = std::make_shared<EntityBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, eb);
@@ -1368,13 +1401,13 @@ public:
     this->module = module;
   }
 private:
-  double module;
+  double module{};
 };
 
 template<unsigned n, typename T, typename ...Ts>
 class BuildCopyVectModuleBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
     std::shared_ptr<BuildCopyVectModuleBldr<n, T, Ts...>> bcvmb = std::make_shared<BuildCopyVectModuleBldr<n, T, Ts...>>();
     mainRsrc.insert(zbe::factories::functionName_ + name, bcvmb);
@@ -1393,7 +1426,7 @@ public:
     auto bcvmb = specificRsrc.get("BuildCopyVectModuleBldr."s + name);
     auto j = *cfg;
     auto module = JSONFactory::loadParamCfgDict<double>(doubleDict, j, "module"s, "EntityTimerBldrFtry"s);
-    if(!time) {
+    if(!module) {
       SysError::setError("BehaviorEntityBldr config for module is invalid"s);
       return;
     }
@@ -1412,7 +1445,7 @@ template<typename T, typename ...Ts>
 class BehaviorEntityBldrFtry : public Factory {
 public:
 
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
     std::shared_ptr<BehaviorEntityBldr<T, Ts...>> eb = std::make_shared<BehaviorEntityBldr<T, Ts...>>();
     mainRsrc.insert(zbe::factories::functionName_ + name, eb);
@@ -1517,12 +1550,11 @@ private:
 
 };
 
-
 template<typename T>
 class BehaviorEntityBldrFtry<T> : public Factory {
 public:
 
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
     std::shared_ptr<BehaviorEntityBldr<T>> eb = std::make_shared<BehaviorEntityBldr<T>>();
     mainRsrc.insert(zbe::factories::functionName_ + name, eb);
@@ -1623,7 +1655,7 @@ template<typename IData, typename ActorType, typename ReactorType, typename ...S
 class InteractionatorBldrFtry : public Factory {
 public:
   using InatorBldr = InteractionatorBldr<IData, ActorType, ReactorType, Shapes...>;
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
     std::shared_ptr<InatorBldr> inatorb = std::make_shared<InatorBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, inatorb);
@@ -1681,6 +1713,20 @@ public:
           return true;
         }
     );
+
+    JSONFactory::loadAllIndexed<typename InatorBldr::InerList>(listInerRsrc, uintDict, j, zbe::factories::listName, "deactivatedinerlists"s, "InteractionatorBldrFtry"s,
+        [&](uint64_t idx, std::shared_ptr<typename InatorBldr::InerList> list) {
+          inatorb->addDeactivatedInerList(idx, list);
+          return true;
+        }
+    );
+
+    JSONFactory::loadAllIndexed<typename InatorBldr::InatorList>(listAtorRsrc, uintDict, j, zbe::factories::listName, "deactivatedinatorlists"s, "InteractionatorBldrFtry"s,
+        [&](uint64_t idx, std::shared_ptr<typename InatorBldr::InatorList> list) {
+          inatorb->addDeactivatedInatorList(idx, list);
+          return true;
+        }
+    );
   }
 private:
   RsrcStore<nlohmann::json>& configRsrc = RsrcStore<nlohmann::json>::getInstance();
@@ -1701,7 +1747,7 @@ template<typename IData, typename ActorType, typename ReactorType, typename ...S
 class InteractionerBldrFtry : public Factory {
 public:
   using InerBldr = InteractionerBldr<IData, ActorType, ReactorType, Shapes...>;
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
     std::shared_ptr<InerBldr> inerb = std::make_shared<InerBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, inerb);
@@ -1723,12 +1769,12 @@ public:
       SysError::setError("InteractionerBldrFtry config for actorbuilder is invalid"s);
       return;
     }
+
     auto reactorBuilder = JSONFactory::loadParamCfgStoreP<typename InerBldr::ReactorTypeBldr>(reactorBldrRsrc, j, zbe::factories::functionName, "reactorbuilder"s, "InteractionerBldr"s);
     if(!reactorBuilder) {
       SysError::setError("InteractionerBldrFtry config for reactorbuilder is invalid"s);
       return;
     }
-
     auto shapeBuilder = JSONFactory::loadParamCfgStoreP<typename InerBldr::ShapeBldr>(shapeBldrRsrc, j, zbe::factories::functionName, "shapebuilder"s, "InteractionerBldr"s);
     if(!shapeBuilder) {
       SysError::setError("InteractionerBldrFtry config for shapebuilder is invalid"s);
@@ -1740,6 +1786,13 @@ public:
     JSONFactory::loadAllIndexed<typename InerBldr::InerList>(listRsrc, uintDict, j, zbe::factories::listName, "lists"s, "InteractionerBldrFtry"s,
         [&](uint64_t idx, std::shared_ptr<typename InerBldr::InerList> list) {
           inerb->addInerList(idx, list);
+          return true;
+        }
+    );
+
+    JSONFactory::loadAllIndexed<typename InerBldr::InerList>(listRsrc, uintDict, j, zbe::factories::listName, "deactivatedlists"s, "InteractionerBldrFtry"s,
+        [&](uint64_t idx, std::shared_ptr<typename InerBldr::InerList> list) {
+          inerb->addDeactivatedInerList(idx, list);
           return true;
         }
     );
@@ -1783,7 +1836,7 @@ private:
 
 class EntityTimerBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
     std::shared_ptr<EntityTimerBldr> etb = std::make_shared<EntityTimerBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, etb);

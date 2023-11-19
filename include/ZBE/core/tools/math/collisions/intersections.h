@@ -35,9 +35,9 @@ it occured, and the normal into parameters.
  *  \param normal Stores the collision point's normal.
  */
 template <unsigned dim>
-bool intersectionMovingNSphereOutsideAABB(NSphere<dim> nsphere, Vector<dim> direction, AABB<dim> box, int64_t& time, Point<dim>& point) {SysError::setError("intersectionMovingNSphereOutsideAABB: Not implemented yet."); return false;}
-//inline bool IntersectionMovingCircleOutsideAABB2D(Circle circle, Vector2D direction, AABB2D box, int64_t& time, Point2D& point) {return (intersectionMovingNSphereOutsideAABB<2>(circle,direction,box,time,point));}  //!< 2D allias of IntersectionMovingNSphereOutsideAABB.
-ZBEAPI bool IntersectionMovingSphereOutsideAABB3D(Sphere sphere, Vector3D direction, AABB3D box, int64_t& time, Point3D& point);  //!< 3D allias of IntersectionMovingNSphereOutsideAABB.
+bool intersectionMovingNSphereOutsideAABB(NSphere<dim> nsphere, Vector<dim> direction, AABB<dim> box, uint64_t& time, Point<dim>& point) {SysError::setError("intersectionMovingNSphereOutsideAABB: Not implemented yet."); return false;}
+//inline bool IntersectionMovingCircleOutsideAABB2D(Circle circle, Vector2D direction, AABB2D box, uint64_t& time, Point2D& point) {return (intersectionMovingNSphereOutsideAABB<2>(circle,direction,box,time,point));}  //!< 2D allias of IntersectionMovingNSphereOutsideAABB.
+ZBEAPI bool IntersectionMovingSphereOutsideAABB3D(Sphere sphere, Vector3D direction, AABB3D box, uint64_t& time, Point3D& point);  //!< 3D allias of IntersectionMovingNSphereOutsideAABB.
 
 /** \brief Tells if a moving circle and a 2d AABB intersects (circle moving outside
 AABB) and stores the time of the "collision", the coordinates where it occured,
@@ -49,7 +49,7 @@ and the normal into parameters.
  *  \param point Intersection location.
  *  \param normal Stores the collision point's normal.
  */
-ZBEAPI bool IntersectionMovingCircleOutsideAABB2D(Circle circle, Vector2D direction, AABB2D box, int64_t& time, Point2D& point, Vector2D& normal);
+ZBEAPI bool IntersectionMovingCircleOutsideAABB2D(Circle circle, Vector2D direction, AABB2D box, uint64_t& time, Point2D& point, Vector2D& normal);
 
 /** \brief A template function that tell if two AABB boxes intersects.
  *
@@ -193,7 +193,7 @@ ZBEAPI bool intersectionPoint3DSphere(Point3D point, Sphere sphere);
  * \sa intersectionNormalRayNSphere.
  */
 template <unsigned dim>
-bool intersectionRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, int64_t &time, Point<dim>& point) {
+bool intersectionRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, uint64_t &time, Point<dim>& point) {
   Vector<dim> f = ray.o - nsphere.c;
 
   double a = ray.d * ray.d;
@@ -207,7 +207,7 @@ bool intersectionRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, int64_t &time, P
 
   if (discr < 0) return (false);
 
-  int64_t t = (int64_t)(((-b - sqrt(discr)) / (2 * a)) * zbe::SECOND);
+  uint64_t t = (int64_t)(((-b - sqrt(discr)) / (2 * a)) * zbe::SECOND);
   t = quantizeTime(t);
 
   if (t <= 0) return (false);
@@ -226,7 +226,7 @@ bool intersectionRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, int64_t &time, P
  *  \param time Initialy it has a limit time, if the collision happens before that time, this value is updated to the collision time.
  *  \param point Intersection location.
  */
-ZBEAPI bool intersectionRayCircle(Ray2D ray, Circle circle, int64_t &time, Point2D& point);
+ZBEAPI bool intersectionRayCircle(Ray2D ray, Circle circle, uint64_t &time, Point2D& point);
 
 /** \brief Tells if a 3d ray and a 3d sphere intersects and stores the time of
  the "collision" and the coordinates where it occured into two parameters.
@@ -235,7 +235,7 @@ ZBEAPI bool intersectionRayCircle(Ray2D ray, Circle circle, int64_t &time, Point
  *  \param time Initialy it has a limit time, if the collision happens before that time, this value is updated to the collision time.
  *  \param point Intersection location.
  */
-ZBEAPI bool intersectionRaySphere(Ray3D ray, Sphere sphere, int64_t &time, Point3D& point);
+ZBEAPI bool intersectionRaySphere(Ray3D ray, Sphere sphere, uint64_t &time, Point3D& point);
 
 /** \brief A template function that compute the time and point of collision (if any) of an N-dimensional ray with its director vector normalized and a NSphere.
  *
@@ -247,7 +247,7 @@ ZBEAPI bool intersectionRaySphere(Ray3D ray, Sphere sphere, int64_t &time, Point
  * \sa intersectionRayNSphere.
  */
 template <unsigned dim>
-bool intersectionNormalRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, int64_t &time, Point<dim>& point) {
+bool intersectionNormalRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, uint64_t &time, Point<dim>& point) {
   Vector<dim> f = ray.o - nsphere.c;
 
   //  because r.d is a unit vector, r.d dot r.d  = 1
@@ -260,7 +260,7 @@ bool intersectionNormalRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, int64_t &t
 
   if (discr < 0) return (false);
 
-  int64_t t = (int64_t)(-b - sqrt(discr));
+  uint64_t t = (int64_t)(-b - sqrt(discr));
   t = quantizeTime(t);
   if (t <= 0) return (false);
   if (t > time) return (false);
@@ -278,7 +278,7 @@ time of the "collision" and the coordinates where it occured into two parameters
  *  \param time Initialy it has a limit time, if the collision happens before that time, this value is updated to the collision time.
  *  \param point Intersection location.
  */
-ZBEAPI bool intersectionNormalRayCircle(Ray2D ray, Circle circle, int64_t &time, Point2D& point);
+ZBEAPI bool intersectionNormalRayCircle(Ray2D ray, Circle circle, uint64_t &time, Point2D& point);
 
 /** \brief Tells if a normalized 3d ray and a 3d sphere intersects and stores the
 time of the "collision" and the coordinates where it occured into two parameters.
@@ -287,7 +287,7 @@ time of the "collision" and the coordinates where it occured into two parameters
  *  \param time Initialy it has a limit time, if the collision happens before that time, this value is updated to the collision time.
  *  \param point Intersection location.
  */
-ZBEAPI bool intersectionNormalRaySphere(Ray3D ray, Sphere sphere, int64_t &time, Point3D& point);
+ZBEAPI bool intersectionNormalRaySphere(Ray3D ray, Sphere sphere, uint64_t &time, Point3D& point);
 
 /** \brief Computes the collision of a N-dimensional Beam inside and AABB.
  *
@@ -301,15 +301,15 @@ ZBEAPI bool intersectionNormalRaySphere(Ray3D ray, Sphere sphere, int64_t &time,
  * \sa intersectionRayOutsideAABB and intersectionSegmentOutsideAABB.
  */
 template <unsigned dim>
-bool intersectionBeamInsideAABB(Ray<dim> ray, AABB<dim> box, int64_t &time, Point<dim>& point) {
-  int64_t taux = std::numeric_limits<int64_t>::max();
+bool intersectionBeamInsideAABB(Ray<dim> ray, AABB<dim> box, uint64_t &time, Point<dim>& point) {
+  uint64_t taux = std::numeric_limits<int64_t>::max();
   for(unsigned i = 0; i < dim; i++) {
     if (abs(ray.d[i]) < PRECISION) continue;
     double d = (SECOND / ray.d[i]);
-    int64_t t1 = (box.minimum[i] - ray.o[i]) * d;
-    int64_t t2 = (box.maximum[i] - ray.o[i]) * d;
+    uint64_t t1 = (box.minimum[i] - ray.o[i]) * d;
+    uint64_t t2 = (box.maximum[i] - ray.o[i]) * d;
 
-    int64_t t = quantizeTime(std::max(t1, t2));
+    uint64_t t = quantizeTime(std::max(t1, t2));
     taux = std::min(taux, t);
   }
 
@@ -328,7 +328,7 @@ into two parameters.
  *  \param time Initialy it has a limit time, if the collision happens before that time, this value is updated to the collision time.
  *  \param point Intersection location.
  */
-ZBEAPI bool intersectionBeamInsideAABB2D(Ray2D ray, AABB2D box, int64_t &time, Point2D& point);
+ZBEAPI bool intersectionBeamInsideAABB2D(Ray2D ray, AABB2D box, uint64_t &time, Point2D& point);
 
 /** \brief Tells if a 3d beam and a 3d AABB intersects (ray moving inside AABB)
 and stores the time of the "collision" and the coordinates where it occured into
@@ -338,7 +338,7 @@ two parameters.
  *  \param time Initialy it has a limit time, if the collision happens before that time, this value is updated to the collision time.
  *  \param point Intersection location.
  */
-ZBEAPI bool intersectionBeamInsideAABB3D(Ray3D ray, AABB3D box, int64_t &time, Point3D& point);
+ZBEAPI bool intersectionBeamInsideAABB3D(Ray3D ray, AABB3D box, uint64_t &time, Point3D& point);
 
 /** \brief Computes the collision of a N-dimensional Ray and AABB.
  *
@@ -368,9 +368,9 @@ ZBEAPI bool intersectionBeamInsideAABB3D(Ray3D ray, AABB3D box, int64_t &time, P
  * \sa intersectionRayOutsideAABB and intersectionBeamOutsideAABB.
  */
 template <unsigned dim>
-inline bool intersectionSegmentOutsideAABB(Ray<dim> ray, AABB<dim> box, int64_t &time, Point<dim> &point) {
-  int64_t tmin = 0;
-  int64_t tmax = SECOND;
+inline bool intersectionSegmentOutsideAABB(Ray<dim> ray, AABB<dim> box, uint64_t &time, Point<dim> &point) {
+  uint64_t tmin = 0;
+  uint64_t tmax = SECOND;
   return (rayOutsideAABB(ray, box, tmin, tmax, time, point));
 }
 
@@ -382,7 +382,7 @@ into two parameters.
  *  \param time Initialy it has a limit time, if the collision happens before that time, this value is updated to the collision time.
  *  \param point Intersection location.
  */
-ZBEAPI bool intersectionSegmentOutsideAABB2D(Ray2D ray, AABB2D box, int64_t &time, Point2D& point);  //!< 2D allias of intersectionSegmentOutsideAABB.
+ZBEAPI bool intersectionSegmentOutsideAABB2D(Ray2D ray, AABB2D box, uint64_t &time, Point2D& point);  //!< 2D allias of intersectionSegmentOutsideAABB.
 
 /** \brief Tells if a 3d segment and a 3d AABB intersects (ray moving outside
 AABB) and stores the time of the "collision" and the coordinates where it occured
@@ -392,7 +392,7 @@ into two parameters.
  *  \param time Initialy it has a limit time, if the collision happens before that time, this value is updated to the collision time.
  *  \param point Intersection location.
  */
-ZBEAPI bool intersectionSegmentOutsideAABB3D(Ray3D ray, AABB3D box, int64_t &time, Point3D& point);  //!< 3D allias of intersectionSegmentOutsideAABB.
+ZBEAPI bool intersectionSegmentOutsideAABB3D(Ray3D ray, AABB3D box, uint64_t &time, Point3D& point);  //!< 3D allias of intersectionSegmentOutsideAABB.
 
 /** \brief Computes the collision of a N-dimensional Ray and AABB.
  *
@@ -406,9 +406,9 @@ ZBEAPI bool intersectionSegmentOutsideAABB3D(Ray3D ray, AABB3D box, int64_t &tim
  * \sa intersectionRayOutsideAABB and intersectionSegmentOutsideAABB.
  */
 template <unsigned dim>
-inline bool intersectionBeamOutsideAABB(Ray<dim> ray, AABB<dim> box, int64_t &time, Point<dim> &point) {
-  int64_t tmin = 0;
-  int64_t tmax = std::numeric_limits<int64_t>::max();
+inline bool intersectionBeamOutsideAABB(Ray<dim> ray, AABB<dim> box, uint64_t &time, Point<dim> &point) {
+  uint64_t tmin = 0;
+  uint64_t tmax = std::numeric_limits<int64_t>::max();
   return (rayOutsideAABB(ray, box, tmin, tmax, time, point));
 }
 
@@ -420,7 +420,7 @@ two parameters.
  *  \param time Initialy it has a limit time, if the collision happens before that time, this value is updated to the collision time.
  *  \param point Intersection location.
  */
-ZBEAPI bool intersectionBeamOutsideAABB2D(Ray2D ray, AABB2D box, int64_t &time, Point2D& point);
+ZBEAPI bool intersectionBeamOutsideAABB2D(Ray2D ray, AABB2D box, uint64_t &time, Point2D& point);
 
 /** \brief Tells if a 3d beam and a 3d AABB intersects (ray moving outside AABB)
 and stores the time of the "collision" and the coordinates where it occured into
@@ -430,7 +430,7 @@ two parameters.
  *  \param time Initialy it has a limit time, if the collision happens before that time, this value is updated to the collision time.
  *  \param point Intersection location.
  */
-ZBEAPI bool intersectionBeamOutsideAABB3D(Ray3D ray, AABB3D box, int64_t &time, Point3D& point);
+ZBEAPI bool intersectionBeamOutsideAABB3D(Ray3D ray, AABB3D box, uint64_t &time, Point3D& point);
 
 /** \brief Computes the collision of a N-dimensional Ray and AABB.
  *
@@ -450,14 +450,14 @@ ZBEAPI bool intersectionBeamOutsideAABB3D(Ray3D ray, AABB3D box, int64_t &time, 
  */
 
 template <unsigned dim>
-bool rayOutsideAABB(Ray<dim> ray, AABB<dim> box, int64_t tmin, int64_t tmax, int64_t &time, Point<dim> &point) {
+bool rayOutsideAABB(Ray<dim> ray, AABB<dim> box, uint64_t tmin, uint64_t tmax, uint64_t &time, Point<dim> &point) {
   for (unsigned i = 0; i < dim; i++) {
     if (abs(ray.d[i]) < PRECISION) {
       if (ray.o[i] < box.minimum[i] || ray.o[i] > box.maximum[i]) return (false);
     } else {
       double d = (SECOND / ray.d[i]);
-      int64_t t1 = quantizeTime((int64_t)((box.minimum[i] - ray.o[i]) * d));
-      int64_t t2 = quantizeTime((int64_t)((box.maximum[i] - ray.o[i]) * d));
+      uint64_t t1 = quantizeTime((uint64_t)((box.minimum[i] - ray.o[i]) * d));
+      uint64_t t2 = quantizeTime((uint64_t)((box.maximum[i] - ray.o[i]) * d));
       if (t1 > t2) std::swap(t1, t2);
       if (t1 > tmin) tmin = t1;
       if (t2 < tmax) tmax = t2;
@@ -483,7 +483,7 @@ bool rayOutsideAABB(Ray<dim> ray, AABB<dim> box, int64_t tmin, int64_t tmax, int
  * \return True if there is a collision before the initial value of time, false otherwise.
  */
 template <unsigned dim>
-bool intersectionMovingNSphereInsideAABB(NSphere<dim> nsphere, Vector<dim> direction, AABB<dim> box, int64_t& time, Point<dim>& point, Vector<dim>& normal) {
+bool intersectionMovingNSphereInsideAABB(NSphere<dim> nsphere, Vector<dim> direction, AABB<dim> box, uint64_t& time, Point<dim>& point, Vector<dim>& normal) {
   double r = nsphere.r;
   AABB<dim> e = box;
   for(unsigned i = 0; i < dim; i++) {
@@ -491,7 +491,7 @@ bool intersectionMovingNSphereInsideAABB(NSphere<dim> nsphere, Vector<dim> direc
     e.maximum[i] -= r;
   }
 
-  int64_t t = time;
+  uint64_t t = time;
   normal = {.0,.0};
   Ray<dim> ray(nsphere.c, direction);
   if(intersectionBeamInsideAABB<dim>(ray, e, t, point) && (t <= time)) {
@@ -522,7 +522,7 @@ and the normal into parameters.
  *  \param point Intersection location.
  *  \param normal Stores the collision point's normal.
  */
-ZBEAPI bool IntersectionMovingCircleInsideAABB2D(Circle circle, Vector2D direction, AABB2D box, int64_t& time, Point2D& point, Vector<2>& normal);
+ZBEAPI bool IntersectionMovingCircleInsideAABB2D(Circle circle, Vector2D direction, AABB2D box, uint64_t& time, Point2D& point, Vector<2>& normal);
 
 /** \brief Tells if a moving 3d sphere and a 3d AABB intersects (sphere moving
 outside AABB) and stores the time of the "collision", the coordinates where it
@@ -534,7 +534,7 @@ occured, and the normal into parameters.
  *  \param point Intersection location.
  *  \param normal Stores the collision point's normal.
  */
-ZBEAPI bool IntersectionMovingSphereInsideAABB3D(Sphere sphere, Vector3D direction, AABB3D box, int64_t& time, Point3D& point, Vector<3>& normal);  //!< 3D allias of IntersectionMovingNSphereInsideAABB.
+ZBEAPI bool IntersectionMovingSphereInsideAABB3D(Sphere sphere, Vector3D direction, AABB3D box, uint64_t& time, Point3D& point, Vector<3>& normal);  //!< 3D allias of IntersectionMovingNSphereInsideAABB.
 
 /** \brief Tells if a moving 3d sphere and a another moving 3d sphere intersects (sphere moving
 outside sphere) and stores the time of the "collision", the coordinates where it
@@ -548,7 +548,7 @@ occured, and the normal into parameters.
  *  \param normal Stores the collision point's normal.
  */
 template<unsigned dim>
-bool intersectionMovingNSphereOutsideMovingNSphere(NSphere<dim> sphere1, Vector<dim> velocity1, NSphere<dim> sphere2, Vector<dim> velocity2, int64_t& time, Point<dim>& point, Vector<dim>& normal) {
+bool intersectionMovingNSphereOutsideMovingNSphere(NSphere<dim> sphere1, Vector<dim> velocity1, NSphere<dim> sphere2, Vector<dim> velocity2, uint64_t& time, Point<dim>& point, Vector<dim>& normal) {
   Vector<dim> velocity =  velocity1 - velocity2;
   bool result = intersectionMovingNSphereOutsideNSphere(sphere1, velocity, sphere2, time, point, normal);
   if(result) {
@@ -568,7 +568,7 @@ occured, and the normal into parameters.
  *  \param normal Stores the collision point's normal.
  */
 template<unsigned dim>
-bool intersectionMovingNSphereOutsideNSphere(NSphere<dim> sphere1, Vector<dim> velocity1, NSphere<dim> sphere2, int64_t& time, Point<dim>& point, Vector<dim>& normal) {
+bool intersectionMovingNSphereOutsideNSphere(NSphere<dim> sphere1, Vector<dim> velocity1, NSphere<dim> sphere2, uint64_t& time, Point<dim>& point, Vector<dim>& normal) {
   Ray<dim> ray{sphere1.c, velocity1};
   sphere2.r += sphere1.r;
   bool result = intersectionRayNSphere(ray, sphere2, time, point);
@@ -723,16 +723,16 @@ double distancePointTriangle(Point<dim>& point, Triangle<dim> triangle, Point<di
 // ----------------------------- Triangles
 
 template<unsigned dim>
-bool intersectionMovingNSphereOutsideMovingNTriangle(NSphere<dim> sphere, Vector<dim> sVelocity, Triangle<dim> triangle, Vector<dim> tVelocity, int64_t& time, Point<dim>& point, Vector<dim>& normal) {
+bool intersectionMovingNSphereOutsideMovingNTriangle(NSphere<dim> sphere, Vector<dim> sVelocity, Triangle<dim> triangle, Vector<dim> tVelocity, uint64_t& time, Point<dim>& point, Vector<dim>& normal) {
     // Test for initial overlap or contact.
     double sqrDistance;
     distancePointTriangle<dim>(sphere.c, triangle, point, normal, sqrDistance);
 
     double rsqr = sphere.r * sphere.r;
-    if (sqrDistance <= rsqr) {
-        //time = 0;
-        return false;
-    }
+    // if (sqrDistance <= rsqr) {
+    //     //time = 0;
+    //     return false;
+    // }
 
     //-------
     // To reach here, the sphere and triangle are initially separated.
@@ -956,7 +956,7 @@ bool intersectionMovingNSphereOutsideMovingNTriangle(NSphere<dim> sphere, Vector
     return false;
 }
 
-bool intersectionMovingRay2DRay2D(Ray2D r1, Ray2D r2, int64_t& time, Point2D& point, Vector2D& normal);
+bool intersectionMovingRay2DRay2D(Ray2D r1, Ray2D r2, uint64_t& time, Point2D& point, Vector2D& normal);
 
 }  // namespace zbe
 

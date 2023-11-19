@@ -195,7 +195,7 @@ public:
    *  \param name Name for the created FixedUniformLinearMotion3D.
    *  \param cfgId FixedUniformLinearMotion3D's configuration id.
    */
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
     std::shared_ptr<FixedUniformLinearMotion3D> fulm3d = std::shared_ptr<FixedUniformLinearMotion3D>(new FixedUniformLinearMotion3D);
     behaviorRsrc.insert("Behavior."s + name, fulm3d);
@@ -247,7 +247,7 @@ private:
 class RelativeUniformLinearMotion3DFtry : virtual public Factory {
 public:
 
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
     std::shared_ptr<RelativeUniformLinearMotion3D> rulm3d = std::shared_ptr<RelativeUniformLinearMotion3D>(new RelativeUniformLinearMotion3D);
     behaviorRsrc.insert("Behavior."s + name, rulm3d);

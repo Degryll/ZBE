@@ -66,8 +66,8 @@ protected:
   }
 
   struct Handlers {
-    HandlerList active;
-    HandlerList inactive;
+    HandlerList active{};
+    HandlerList inactive{};
   };
 
 };
@@ -196,7 +196,7 @@ class ZBEAPI InputEventGenerator : virtual public Daemon {
 
     /** \brief Empty destructor.
      */
-    ~InputEventGenerator() = default;
+    virtual ~InputEventGenerator() = default;
 
     //void addManager(std::shared_ptr<InputStatusManager> manager) {;}
 
@@ -288,7 +288,7 @@ public:
    *  \param name Name for the created InputEventGenerator.
    *  \param cfgId InputEventGenerator's configuration id.
    */
-  void create(std::string name, uint64_t cfgId);
+  void create(std::string name, uint64_t);
 
   /** \brief Setup the desired tool. The tool will be complete after this step.
    *  \param name Name of the tool.

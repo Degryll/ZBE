@@ -34,7 +34,7 @@ public:
 
     auto src = vsrc->get();
     auto size = vsize->get();
-    
+
 
     avatar->set<3, Vector3D>(src.normalize() * size);
   }
@@ -53,13 +53,13 @@ public:
   }
 
 private:
-  T val;
+  T val {};
 };
 
 template<typename T>
 class ValueSetterFixedBvrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
     std::shared_ptr<ValueSetterFixedBvr<T>> vsfb = std::shared_ptr<ValueSetterFixedBvr<T>>(new ValueSetterFixedBvr<T>);
     behaviorRsrc.insert("Behavior."s + name, vsfb);
@@ -137,7 +137,7 @@ private:
 
 class TicketActivatorBvrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
     std::shared_ptr<TicketActivatorBvr> teb = std::shared_ptr<TicketActivatorBvr>(new TicketActivatorBvr);
     behaviorRsrc.insert("Behavior."s + name, teb);
@@ -175,7 +175,7 @@ private:
 
 class TicketDeactivatorBvrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
     std::shared_ptr<TicketDeactivatorBvr> tdb = std::shared_ptr<TicketDeactivatorBvr>(new TicketDeactivatorBvr);
     behaviorRsrc.insert("Behavior."s + name, tdb);

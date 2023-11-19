@@ -44,7 +44,7 @@ class InteractionEvent : public Event {
     * \param interactionData Parametric data about the interaction.
     * \param reactObject The second entity involved in the interaction.
     */
-    InteractionEvent(uint64_t id, int64_t time, Interactioner<R>* interactioner, typename R::InteractionData interactionData, std::shared_ptr<ReactObject<R> >  reactObject) : Event(id, time), c(interactioner), data(interactionData), ro(reactObject) {}
+    InteractionEvent(uint64_t id, uint64_t time, Interactioner<R>* interactioner, typename R::InteractionData interactionData, std::shared_ptr<ReactObject<R> >  reactObject) : Event(id, time), c(interactioner), data(interactionData), ro(reactObject) {}
 
     /** \brief base destructor.
     */

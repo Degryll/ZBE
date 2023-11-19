@@ -226,7 +226,7 @@ class GravityMotion3D : virtual public zbe::Behavior<zbe::Vector3D, zbe::Vector3
 class GravityMotion3DFtry : virtual public zbe::Factory {
 public:
 
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
     std::shared_ptr<GravityMotion3D> gm3d = std::shared_ptr<GravityMotion3D>(new GravityMotion3D);
     behaviorRsrc.insert("Behavior."s + name, gm3d);
@@ -296,7 +296,7 @@ class FollowTargetBvr : virtual public zbe::Behavior<zbe::Vector3D, zbe::Vector3
 class FollowTargetBvrFtry : virtual public zbe::Factory {
 public:
 
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
     std::shared_ptr<GravityMotion3D> gm3d = std::shared_ptr<GravityMotion3D>(new GravityMotion3D);
     behaviorRsrc.insert("Behavior."s + name, gm3d);

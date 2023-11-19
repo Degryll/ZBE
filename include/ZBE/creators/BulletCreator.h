@@ -176,7 +176,7 @@ private:
 
 class BulletCreatorFtry : virtual public Factory {
 public:
-  void create(std::string name, uint64_t cfgId){
+  void create(std::string name, uint64_t){
     using namespace std::string_literals;
     std::shared_ptr<BulletCreator> bc = std::shared_ptr<BulletCreator>(new BulletCreator);  // std::make_shared<SineOscillator>();
     bulletCreatorStore.insert("BulletCreator."s + name, bc);

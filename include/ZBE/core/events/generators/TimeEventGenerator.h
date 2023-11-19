@@ -32,12 +32,12 @@ namespace zbe {
  */
 struct ZBEAPI TimerData {
   std::shared_ptr<TimeHandler> handler;    //!< A handler that will be executed when the event is triggered.
-  int64_t time;  //!< When time reaches 0, the time event is triggered.
+  uint64_t time;  //!< When time reaches 0, the time event is triggered.
 
   /** \brief Builds a TimerData with the TimeHandler and the time.
    *
    */
-  TimerData(std::shared_ptr<TimeHandler> handler, int64_t time) : handler(handler), time(time) {}
+  TimerData(std::shared_ptr<TimeHandler> handler, uint64_t time) : handler(handler), time(time) {}
   inline bool operator<(const TimerData& rhs) const {return (this->time < rhs.time);}
 };
 
@@ -74,7 +74,7 @@ public:
   /** \brief Increases the time in a given amount (that can be negative). If the incremented time is zero or less, the event is triggered.
    * return true if the increment makes the timer go to zero or less.
    */
-  bool increaseTime(int64_t increment);
+  bool increaseTime(uint64_t increment);
 
   /** \brief Returns the event time.
    * \return The event time.
@@ -113,7 +113,7 @@ class ZBEAPI TimeEventGenerator : virtual public Daemon {
      * \return return A ticket used to modify or erase the timer.
      * \sa eraseTimer
      */
-    inline std::shared_ptr<TimerTicket> addAbsoluteTimer(std::shared_ptr<TimeHandler> handler, int64_t time) {
+    inline std::shared_ptr<TimerTicket> addAbsoluteTimer(std::shared_ptr<TimeHandler> handler, uint64_t time) {
       return (std::make_shared<TimerTicket>(timers.insert(TimerData(handler,quantizeTime(time))), timers, eventId, contextTime));
     }
 
@@ -123,7 +123,7 @@ class ZBEAPI TimeEventGenerator : virtual public Daemon {
      * \return return A ticket used to modify or erase the timer.
      * \sa eraseTimer
      */
-    inline std::shared_ptr<TimerTicket> addRelativeTimer(std::shared_ptr<TimeHandler> handler, int64_t time) {
+    inline std::shared_ptr<TimerTicket> addRelativeTimer(std::shared_ptr<TimeHandler> handler, uint64_t time) {
       return addAbsoluteTimer(handler, contextTime->getEventTime() + time);
     }
 

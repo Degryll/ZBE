@@ -546,7 +546,7 @@
           "config" : {
             "attribIndexes" : ["velocityIdx", "positionIdx"],
             "lists":{ "loadScreen.ULM3DList":"ULM3DTicket"},
-            "deativatedlists":{}
+            "deactivatedlists":{}
           }
         },
         {
@@ -1390,7 +1390,7 @@
           "config" : {
             "attribIndexes" : ["velocityForwardIdx", "velocityLateralIdx", "velocityIdx", "upwardsIdx","cameraorientationIdx"],
             "lists":{"loadScreen.velsetterlist" : "relativeVelTicket"},
-            "deativatedlists":{}
+            "deactivatedlists":{}
           }
         },
         {
@@ -1401,7 +1401,7 @@
             "lists":{
               "loadScreen.calculaorilist":"protaOrientationListTicket"
             },
-            "deativatedlists":{
+            "deactivatedlists":{
             }
           }
         },
@@ -1419,7 +1419,7 @@
           "config" : {
             "attribIndexes" : ["upwardsIdx", "orientationIdx", "positionIdx"],
             "lists":{"loadScreen.BulletCreatorList":"BulletCreatorTicket"},
-            "deativatedlists":{}
+            "deactivatedlists":{}
           }
         },
         {
@@ -1428,7 +1428,7 @@
           "config" : {
             "attribIndexes" : ["upwardsIdx", "orientationIdx", "positionIdx"],
             "lists":{"loadScreen.SoundCreatorList":"SoundCreatorTicket"},
-            "deativatedlists":{}
+            "deactivatedlists":{}
           }
         },
         {
@@ -1499,7 +1499,7 @@
           "config" : {
             "attribIndexes" : ["velocityLateralIdx", "velocityForwardIdx", "velocityPre1Idx", "upwardsIdx","orientationIdx"],
             "lists":{"loadScreen.velsetterlist" : "relativeVelTicket"},
-            "deativatedlists":{}
+            "deactivatedlists":{}
           }
         },
         {
@@ -1509,7 +1509,7 @@
             "attribIndexes" : ["velocityIdx", "positionIdx"],
             "lists":{
             },
-            "deativatedlists":{
+            "deactivatedlists":{
               "loadScreen.ULM3DList":"ULM3DTicket"
             }
           }
@@ -1522,7 +1522,7 @@
             "lists":{
               "loadScreen.twovelaccumlist":"twoVelaccumListTicket"
             },
-            "deativatedlists":{
+            "deactivatedlists":{
             }
           }
         },
@@ -1533,7 +1533,7 @@
             "attribIndexes" : ["velocityPre2Idx", "positionIdx"],
             "lists":{
             },
-            "deativatedlists":{
+            "deactivatedlists":{
               "loadScreen.gmList":"gmTicket"
 
             }
@@ -2415,7 +2415,7 @@
             "entity" : "cameraControllerFree",
             "attribIndexes" : ["excentricIdx", "positionIdx"],
             "lists":{},
-            "deativatedlists" : {"loadScreen.pitchList":"camPitchTicket"}
+            "deactivatedlists" : {"loadScreen.pitchList":"camPitchTicket"}
           }
         },
         {"factory": "TwoV3DAvtFtry",
@@ -2424,7 +2424,7 @@
             "entity" : "cameraControllerFree",
             "attribIndexes" : ["excentricIdx", "positionIdx"],
             "lists":{"loadScreen.yawList":"yawTicket"},
-            "deativatedlists" : {}
+            "deactivatedlists" : {}
           }
         },
         {"factory": "TwoV3DAvtFtry",
@@ -2433,7 +2433,7 @@
             "entity" : "cameraControllerFree",
             "attribIndexes" : ["velocityIdx", "positionIdx"],
             "lists":{"loadScreen.ULM3DList":"ULM3DTicket"},
-            "deativatedlists" : {}
+            "deactivatedlists" : {}
           }
         },
         {"factory": "FloatAvtFtry",
@@ -2442,7 +2442,7 @@
             "entity" : "cameraControllerFree",
             "attribIndexes" : ["fovIdx"],
             "lists":{},
-            "deativatedlists" : {"loadScreen.fovOscillatorList":"fovticket"}
+            "deactivatedlists" : {"loadScreen.fovOscillatorList":"fovticket"}
           }
         },
         {"factory": "TargetToDirAvtFtry",
@@ -2454,7 +2454,7 @@
             "upwardsIdx" : "upwardsIdx",
             "scaleIdx" : "camScaleIdx",
             "lists":{},
-            "deativatedlists":{"loadScreen.fovOscillatorList":"fovticket", "loadScreen.camMoveList":"camPosVelTicket"}
+            "deactivatedlists":{"loadScreen.fovOscillatorList":"fovticket", "loadScreen.camMoveList":"camPosVelTicket"}
           }
         },
         {"factory": "LookAtToPitchAvtFtry",
@@ -2466,7 +2466,7 @@
             "upwardsIdx" : "upwardsIdx",
             "scaleIdx" : "camScaleIdx",
             "lists":{},
-            "deativatedlists":{},
+            "deactivatedlists":{},
             "backup" : {"loadScreen.pitchList":"camPitchTicket"}
           }
         },
@@ -2479,7 +2479,7 @@
             "upwardsIdx" : "upwardsIdx",
             "scaleIdx" : "camScaleIdx",
             "lists":{},
-            "deativatedlists":{},
+            "deactivatedlists":{},
             "backup":{"loadScreen.yawList":"yawTicket"}
           }
         }

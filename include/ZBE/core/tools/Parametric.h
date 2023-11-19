@@ -15,6 +15,7 @@ namespace zbe {
 template <typename T>
 class Parametric {
 public:
+  virtual ~Parametric() = default;
   virtual void set(T value) = 0;
 };
 

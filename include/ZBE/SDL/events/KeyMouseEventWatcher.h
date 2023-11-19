@@ -40,7 +40,7 @@ public:
 
   /** \brief Empty Destructor
    */
-  ~KeyMouseEventWatcher() = default;
+  virtual ~KeyMouseEventWatcher() = default;
 
   void watch(SDL_Event event) {
     if (!tryKeyboardEvent(event)) {
@@ -90,19 +90,19 @@ private:
     return false;
   }
 
-  void setState(uint32_t key, float value, int64_t time) {
-    int64_t zbeTime = MILITOZBETU(time);
-    int64_t gameTime = zbeTime - contextTime->getLostTime();
-    int64_t storeTime = quantizeTime(gameTime) + zbe::TIME_QUANTUM;
+  void setState(uint32_t key, float value, uint64_t time) {
+    uint64_t zbeTime = MILITOZBETU(time);
+    uint64_t gameTime = zbeTime - contextTime->getLostTime();
+    uint64_t storeTime = quantizeTime(gameTime) + zbe::TIME_QUANTUM;
     //TODO: Ampliar la depuración a partir de aqui. El evento lo estamos registrando.
     InputStatus is(key, value, storeTime);
     inputBuffer->insert(is);
   }
 
-  void setTextInput(std::string text, int64_t time) {
-    int64_t zbeTime = MILITOZBETU(time);
-    int64_t gameTime = zbeTime - contextTime->getLostTime();
-    int64_t storeTime = quantizeTime(gameTime) + zbe::TIME_QUANTUM;
+  void setTextInput(std::string text, uint64_t time) {
+    uint64_t zbeTime = MILITOZBETU(time);
+    uint64_t gameTime = zbeTime - contextTime->getLostTime();
+    uint64_t storeTime = quantizeTime(gameTime) + zbe::TIME_QUANTUM;
     InputText it(text, storeTime);
     inputTextBuffer->insert(it);
   }

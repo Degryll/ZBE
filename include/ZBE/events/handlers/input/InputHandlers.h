@@ -44,7 +44,7 @@ public:
     double intiMult = -1.0;
     if ((status < 0.5 && !down) || (status >= 0.5 && down)) {
       intiMult = 1.0;
-    } 
+    }
     auto vOri = AvtUtil::get<3, Vector<dim> >(avt);
     auto vVel = AvtUtil::get<2, Vector<dim> >(avt);
     auto vVelSrc = AvtUtil::get<1, Vector<dim> >(avt);
@@ -75,10 +75,10 @@ public:
   }
 
 private:
-  std::shared_ptr<MAvatar<Vector<dim>, Vector<dim>, Vector<dim>>> avt;
-  bool down;
-  double multiplier;
-  double tolerance;
+  std::shared_ptr<MAvatar<Vector<dim>, Vector<dim>, Vector<dim>>> avt{};
+  bool down{};
+  double multiplier{};
+  double tolerance{};
 };
 
 template<unsigned dim>
@@ -109,11 +109,11 @@ public:
   }
 
 private:
-  std::array<uint64_t, 3> idxs;
-  bool down;
-  double multiplier;
-  double tolerance;
-  std::shared_ptr<InputEventGenerator> ieg;
+  std::array<uint64_t, 3> idxs{};
+  bool down{};
+  double multiplier{};
+  double tolerance{};
+  std::shared_ptr<InputEventGenerator> ieg{};
   ZBE_K key;
 };
 

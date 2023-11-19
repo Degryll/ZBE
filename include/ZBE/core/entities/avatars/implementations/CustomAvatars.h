@@ -286,7 +286,7 @@ private:
 
 class Triangle2DShapeAvtBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
     std::shared_ptr<Triangle2DShapeAvtBldr> t2dab = std::make_shared<Triangle2DShapeAvtBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, t2dab);
@@ -335,7 +335,7 @@ private:
 
 class MovingPoint2DShapeAvtBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
     std::shared_ptr<MovingPoint2DShapeAvtBldr> mp2dab = std::make_shared<MovingPoint2DShapeAvtBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, mp2dab);
@@ -509,7 +509,7 @@ private:
 class MovingSphereAvtShapeBldrFtry : public Factory {
 // This class where c&p from DerivedPosMovingSphereAvtBldrFtry removing list managment
 public:
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
     std::shared_ptr<MovingSphereAvtShapeBldr> msasb = std::make_shared<MovingSphereAvtShapeBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, msasb);
@@ -585,7 +585,7 @@ private:
 
 class MovingSphereAvtBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
     std::shared_ptr<MovingSphereAvtBldr> msab = std::make_shared<MovingSphereAvtBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, msab);
@@ -747,7 +747,7 @@ private:
 
 class MovingTriangle3DRscAvtShapeBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
     std::shared_ptr<MovingTriangle3DRscAvtShapeBldr> mt3rasb = std::make_shared<MovingTriangle3DRscAvtShapeBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, mt3rasb);
@@ -890,7 +890,7 @@ private:
 
 class MovingTriangle3DAvtShapeBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
     std::shared_ptr<MovingTriangle3DAvtShapeBldr> msasb = std::make_shared<MovingTriangle3DAvtShapeBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, msasb);
@@ -973,7 +973,7 @@ private:
 
 class MovingTriangle3DAvtBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
     std::shared_ptr<MovingTriangle3DAvtBldr> msab = std::make_shared<MovingTriangle3DAvtBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, msab);
@@ -1218,7 +1218,7 @@ private:
 
 class PosUpwardsTargetToPosUpwardsDirAvtBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
     std::shared_ptr<PosUpwardsTargetToPosUpwardsDirAvtBldr> put2pudab = std::make_shared<PosUpwardsTargetToPosUpwardsDirAvtBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, put2pudab);
@@ -1378,7 +1378,7 @@ private:
 
 // class PosTargetUpwardsToPosDirAngleAvtBldrFtry : public Factory {
 // public:
-//   void create(std::string name, uint64_t cfgId) {
+//   void create(std::string name, uint64_t) {
 //     using namespace std::string_literals;
 //     std::shared_ptr<PosTargetUpwardsToPosDirAngleAvtBldr> ptutpdaab = std::make_shared<PosTargetUpwardsToPosDirAngleAvtBldr>();
 //     mainRsrc.insert(zbe::factories::functionName_ + name, ptutpdaab);
@@ -1522,7 +1522,7 @@ private:
 
 // class MovingTriangle3DHitboxAvtShapeBldrFtry : public Factory {
 // public:
-//   void create(std::string name, uint64_t cfgId) {
+//   void create(std::string name, uint64_t) {
 //     using namespace std::string_literals;
 //     std::shared_ptr<MovingTriangle3DHitboxAvtShapeBldr> mt3hasb = std::make_shared<MovingTriangle3DHitboxAvtShapeBldr>();
 //     mainRsrc.insert(zbe::factories::functionName_ + name, mt3hasb);
@@ -1605,7 +1605,7 @@ private:
 
 // class MovingTriangle3DHitboxAvtBldrFtry : public Factory {
 // public:
-//   void create(std::string name, uint64_t cfgId) {
+//   void create(std::string name, uint64_t) {
 //     using namespace std::string_literals;
 //     std::shared_ptr<MovingTriangle3DHitboxAvtBldr> mt3hab = std::make_shared<MovingTriangle3DHitboxAvtBldr>();
 //     mainRsrc.insert(zbe::factories::functionName_ + name, mt3hab);
@@ -2086,7 +2086,7 @@ private:
 
 class TargetToDirAvtBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
     std::shared_ptr<TargetToDirAvtBldr> ttdab = std::make_shared<TargetToDirAvtBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, ttdab);
@@ -2147,7 +2147,7 @@ private:
 
 class PosTargetToPosDirAvtBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
     std::shared_ptr<PosTargetToPosDirAvtBldr> pttpdvb = std::make_shared<PosTargetToPosDirAvtBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, pttpdvb);
@@ -2200,7 +2200,7 @@ private:
 
 class DerivedCosVelAvtBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
     std::shared_ptr<DerivedCosVelAvtBldr> dcvab = std::make_shared<DerivedCosVelAvtBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, dcvab);
@@ -2269,7 +2269,7 @@ private:
 class DerivedPosMovingSphereAvtShapeBldrFtry : public Factory {
 // This class where c&p from DerivedPosMovingSphereAvtBldrFtry removing list managment
 public:
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
     std::shared_ptr<DerivedPosMovingSphereAvtShapeBldr> dpmsa = std::make_shared<DerivedPosMovingSphereAvtShapeBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, dpmsa);
@@ -2334,7 +2334,7 @@ private:
 class DerivedPosMovingSphereAvtBldrFtry : public Factory {
 // This class where c&p to DerivedPosMovingSphereAvtShapeBldrFtry
 public:
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
     std::shared_ptr<DerivedPosMovingSphereAvtBldr> dpmsa = std::make_shared<DerivedPosMovingSphereAvtBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, dpmsa);
@@ -2406,7 +2406,7 @@ private:
 
 class LookAtToPitchAvtBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
     std::shared_ptr<LookAtToPitchAvtBldr> latpab = std::make_shared<LookAtToPitchAvtBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, latpab);
@@ -2458,7 +2458,7 @@ private:
 
 class LookAtToYawAvtBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
     std::shared_ptr<LookAtToYawAvtBldr> latyab = std::make_shared<LookAtToYawAvtBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, latyab);

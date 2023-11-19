@@ -25,6 +25,8 @@ namespace zbe {
 struct ZBEAPI OGLModel {
 
   // OGLModel() = default;
+  OGLModel(const OGLModel&) = delete;
+  OGLModel operator=(const OGLModel&) = delete;
 
   OGLModel(GLuint vao, std::vector<GLuint> textures, GLenum  mode, GLsizei nvertex, GLenum  type, const GLvoid* offset, glm::mat4 modelMat, glm::mat4 texCoordMat) : vao(vao), textures(textures), nvertex(nvertex), modelMat(modelMat), texCoordMat(texCoordMat), mode(mode), type(type), offset(offset) {}
 

@@ -33,6 +33,9 @@ namespace zbe {
 class ZBEAPI SimpleOGLModelSheet : public OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> {
 public:
 
+  SimpleOGLModelSheet(const SimpleOGLModelSheet&) = delete;
+  SimpleOGLModelSheet operator=(const SimpleOGLModelSheet&) = delete;
+
   SimpleOGLModelSheet(std::shared_ptr<SDLOGLWindow> window, uint64_t modelId, uint64_t texId);
   SimpleOGLModelSheet(std::shared_ptr<SDLOGLWindow> window, uint64_t graphicsId, RsrcStore<OGLGraphics> &graphicsStore);
   SimpleOGLModelSheet(std::shared_ptr<SDLOGLWindow> window, std::string graphicsName, RsrcStore<OGLGraphics> &graphicsStore);
@@ -58,6 +61,8 @@ private:
 
 class ZBEAPI LookAtOGLModelSheet : public OGLModelSheet<uint64_t, double, Vector3D, Vector3D, Vector3D> {
 public:
+  LookAtOGLModelSheet(const LookAtOGLModelSheet&) = delete;
+  LookAtOGLModelSheet operator=(const LookAtOGLModelSheet&) = delete;
 
   LookAtOGLModelSheet(std::shared_ptr<SDLOGLWindow> window, uint64_t modelId, uint64_t texId);
   LookAtOGLModelSheet(std::shared_ptr<SDLOGLWindow> window, uint64_t graphicsId, RsrcStore<OGLGraphics> &graphicsStore);
@@ -86,6 +91,9 @@ private:
  */
 class SpriteOGLModelSheet : public OGLModelSheet<uint64_t, Vector2D, Vector2D> { // TODO llevar esto tipos al JSONGraphicsLoaders (linea 74)
 public:
+  SpriteOGLModelSheet(const SpriteOGLModelSheet&) = delete;
+  SpriteOGLModelSheet operator=(const SpriteOGLModelSheet&) = delete;
+
   SpriteOGLModelSheet(std::shared_ptr<SDLOGLWindow> window)
     : spriteDefintion(), vao(), textures(), mode(), nvertex(),  type(), offset(nullptr), window(window) {
     using namespace std::string_literals;

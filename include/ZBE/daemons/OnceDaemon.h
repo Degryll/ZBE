@@ -28,7 +28,7 @@ public:
 
   /** \brief Destroys the OnceDaemon.
    */
-  ~OnceDaemon() = default;
+  virtual ~OnceDaemon() = default;
 
   void setDaemon(std::shared_ptr<Daemon> daemon) {
     this->d = daemon;

@@ -41,7 +41,7 @@ class EntityEraserTH : public TimeHandler {
 
     /** brief Empty constructor
      */
-  	EntityEraserTH() = default;
+  	EntityEraserTH() : e() {}
 
     /** brief Parametrized constructor
      * param entity Entity to be erased
@@ -110,7 +110,7 @@ public:
  *  \param name Name for the created tool.
  *  \param cfgId Tool's configuration id.
  */
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
 
     std::shared_ptr<EntityEraserTH> te = std::make_shared<EntityEraserTH>();

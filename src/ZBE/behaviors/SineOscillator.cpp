@@ -21,7 +21,7 @@ void SineOscillatorF::apply(std::shared_ptr<SAvatar<float> > avatar) {
   value->set(newVal);
 }
 
-void SineOscillatorFFtry::create(std::string name, uint64_t cfgId) {
+void SineOscillatorFFtry::create(std::string name, uint64_t) {
   using namespace std::string_literals;
   std::shared_ptr<SineOscillatorF> so = std::shared_ptr<SineOscillatorF>(new SineOscillatorF);  // std::make_shared<SineOscillator>();
   behaviorRsrc.insert("Behavior."s + name, so);
@@ -89,7 +89,7 @@ void SineOscillatorV3D::apply(std::shared_ptr<SAvatar<Vector3D> > avatar) {
   value->get()[component] = newVal;
 }
 
-void SineOscillatorV3DFtry::create(std::string name, uint64_t cfgId) {
+void SineOscillatorV3DFtry::create(std::string name, uint64_t) {
   using namespace std::string_literals;
   std::shared_ptr<SineOscillatorV3D> so = std::shared_ptr<SineOscillatorV3D>(new SineOscillatorV3D);  // std::make_shared<SineOscillator>();
   behaviorRsrc.insert("Behavior."s + name, so);

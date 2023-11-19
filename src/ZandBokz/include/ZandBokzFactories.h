@@ -121,14 +121,20 @@ public:
     factories.insert("TicketActivatorPlatformRctBldrFtry", std::make_shared<zbe::TicketActivatorRctBldrFtry<zbe::CollisionData3D, Platform>>());
     factories.insert("TicketDeactivatorPlatformRctBldrFtry", std::make_shared<zbe::TicketDeactivatorRctBldrFtry<zbe::CollisionData3D, Platform>>());
 
-    factories.insert("TicketActivatorSolidRctBldrFtry", std::make_shared<zbe::TicketActivatorRctBldrFtry<zbe::CollisionData2D, Solid>>());
+    factories.insert("TicketActivator2DSolidRctBldrFtry", std::make_shared<zbe::TicketActivatorRctBldrFtry<zbe::CollisionData2D, Solid>>());
+    factories.insert("TicketActivatorSolidRctBldrFtry", std::make_shared<zbe::TicketActivatorRctBldrFtry<zbe::CollisionData3D, Solid>>());
     factories.insert("TicketDeactivatorSolidRctBldrFtry", std::make_shared<zbe::TicketDeactivatorRctBldrFtry<zbe::CollisionData2D, Solid>>());
+    factories.insert("TicketDeactivator2DSolidRctBldrFtry", std::make_shared<zbe::TicketDeactivatorRctBldrFtry<zbe::CollisionData2D, Solid>>());
+
+    factories.insert("Solid2DDaemonRctBldrFtry", std::make_shared<zbe::DaemonRctBldrFtry<zbe::CollisionData2D, Solid>>());
 
     factories.insert("StoreValuesPlatformRctBldrFtry", std::make_shared<zbe::StoreValuesRctBldrFtry<zbe::CollisionData3D, zbe::Vector3D, 3>>());
 
     factories.insert("MultiPlatformRctBldrFtry", std::make_shared<zbe::MultiRctBldrFtry<zbe::CollisionData3D, Platform>>());
+    factories.insert("MultiSolidRctBldrFtry", std::make_shared<zbe::MultiRctBldrFtry<zbe::CollisionData3D, Solid>>());
     factories.insert("MultiSolid2DRctBldrFtry", std::make_shared<zbe::MultiRctBldrFtry<zbe::CollisionData2D, Solid>>());
     factories.insert("PrintfSolid2DRctBldrFtry", std::make_shared<zbe::PrintfRctBldrFtry<zbe::CollisionData2D, Solid>>());
+    factories.insert("PrintfPlatformRctBldrFtry", std::make_shared<zbe::PrintfRctBldrFtry<zbe::CollisionData3D, Platform>>());
     factories.insert("Triangle3Dto2DCacheBldrFtry", std::make_shared<Triangle3Dto2DCacheBldrFtry>());
 
     factories.insert("PlatformTraitBldrFtry", std::make_shared<PlatformTraitBldrFtry>());

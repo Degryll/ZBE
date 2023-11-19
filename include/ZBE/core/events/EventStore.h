@@ -64,7 +64,7 @@ public:
 
   /** \brief Returns the time of the contained events.
   */
-  int64_t getTime();
+  uint64_t getTime();
 
 private:
   void clearStore(std::forward_list<Event*>&);
@@ -74,7 +74,7 @@ private:
   EventStore() :timedStore(), instantStore(), bettertime(std::numeric_limits<int64_t>::max()) {}
   std::forward_list<Event*> timedStore;
   std::forward_list<Event*> instantStore;
-  int64_t bettertime;
+  uint64_t bettertime;
 };
 
 }  // namespace zbe

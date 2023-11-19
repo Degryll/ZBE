@@ -76,7 +76,7 @@ public:
     zbe::Vector2D newPos2D{x, y};
     return std::make_shared<zbe::SimpleValue<zbe::Vector2D>>(newPos2D);
   }
-  
+
   void setIdxs(uint64_t aIdx, uint64_t bIdx, uint64_t cIdx, uint64_t sizeIdx) {
     this->aIdx = aIdx;
     this->bIdx = bIdx;
@@ -89,15 +89,15 @@ public:
   }
 
 private:
-  uint64_t aIdx;
-  uint64_t bIdx;
-  uint64_t cIdx;
-  uint64_t sizeIdx;
-  zbe::Triangle3D baseT;
+  uint64_t aIdx {};
+  uint64_t bIdx {};
+  uint64_t cIdx {};
+  uint64_t sizeIdx {};
+  zbe::Triangle3D baseT{};
 };
 
 class Triangle3Dto2DCacheBldrFtry : public zbe::Factory {
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
     std::shared_ptr<Triangle3Dto2DCacheBldr> t3dt2dcb = std::make_shared<Triangle3Dto2DCacheBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, t3dt2dcb);

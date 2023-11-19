@@ -31,13 +31,10 @@ namespace zbe {
 
 class LimitedExcentricalRotation3D : virtual public Behavior<float, float, Vector3D,Vector3D, Vector3D, Vector3D>, public Parametric<float> {
    public:
-    /** \brief Default constructor.
-     */
-    LimitedExcentricalRotation3D() = default;
 
     /** \brief Virtual destructor.
      */
-    ~LimitedExcentricalRotation3D() = default;
+    virtual ~LimitedExcentricalRotation3D() = default;
 
     void set(float offset) {
       this->radians = offset * sensibility;
@@ -109,7 +106,7 @@ public:
    *  \param name Name for the created Rotation2D.
    *  \param cfgId Rotation2D's configuration id.
    */
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
     std::shared_ptr<LimitedExcentricalRotation3D> er3d = std::shared_ptr<LimitedExcentricalRotation3D>(new LimitedExcentricalRotation3D);
     behaviorStore.insert("Behavior."s + name, er3d);
@@ -162,13 +159,10 @@ private:
 
 class ExcentricalRotation3D : virtual public Behavior<Vector3D,Vector3D, Vector3D>, public Parametric<float> {
    public:
-    /** \brief Default constructor.
-     */
-    ExcentricalRotation3D() = default;
 
     /** \brief Virtual destructor.
      */
-    ~ExcentricalRotation3D() = default;
+    virtual ~ExcentricalRotation3D() = default;
 
     void set(float offset) {
       this->radians = offset * sensibility;
@@ -215,7 +209,7 @@ public:
    *  \param name Name for the created Rotation2D.
    *  \param cfgId Rotation2D's configuration id.
    */
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
     std::shared_ptr<ExcentricalRotation3D> er3d = std::shared_ptr<ExcentricalRotation3D>(new ExcentricalRotation3D);
     behaviorStore.insert("Behavior."s + name, er3d);
@@ -269,13 +263,10 @@ private:
  */
 class Rotation3D : virtual public Behavior<Vector3D, Vector3D>, public Parametric<float> {
   public:
-    /** \brief Default constructor.
-     */
-    Rotation3D() = default;
 
     /** \brief Virtual destructor.
      */
-    ~Rotation3D() = default;
+    virtual ~Rotation3D() = default;
 
     void set(float offset) {
       this->radians = offset * sensibility;
@@ -311,7 +302,7 @@ public:
    *  \param name Name for the created Rotation2D.
    *  \param cfgId Rotation2D's configuration id.
    */
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
     std::shared_ptr<Rotation3D> rot3D = std::shared_ptr<Rotation3D>(new Rotation3D);
     behaviorStore.insert("Behavior."s + name, rot3D);

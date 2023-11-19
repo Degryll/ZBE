@@ -15,7 +15,7 @@ namespace zbe {
  *  \param name Name for the created ShadersSetter3D.
  *  \param cfgId ShadersSetter3D's configuration id.
  */
-void ShadersSetter3DFtry::create(std::string name, uint64_t cfgId) {
+void ShadersSetter3DFtry::create(std::string name, uint64_t) {
   using namespace std::string_literals;
   std::shared_ptr<ShadersSetter3D> ss3d = std::shared_ptr<ShadersSetter3D>(new ShadersSetter3D);
   daemonStore.insert("Daemon."s + name, ss3d);

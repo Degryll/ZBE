@@ -17,7 +17,7 @@ namespace zbe {
       creator->operator()(pos, dir);
     }
 
-    void BulletCreatorBhvFtry::create(std::string name, uint64_t cfgId){
+    void BulletCreatorBhvFtry::create(std::string name, uint64_t){
       using namespace std::string_literals;
       std::shared_ptr<BulletCreatorBhv> bcb = std::shared_ptr<BulletCreatorBhv>(new BulletCreatorBhv);  // std::make_shared<SineOscillator>();
       behaviorStore.insert("Behavior."s + name, bcb);

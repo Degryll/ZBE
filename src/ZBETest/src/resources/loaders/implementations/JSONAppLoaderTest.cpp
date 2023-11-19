@@ -24,7 +24,7 @@ public:
 
   DummyFtry() : createSet(), setupSet(), createCfgId() {}
 
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     EXPECT_EQ(setupSet.find(name), setupSet.end()) << "Must call create first and only once per cfg";
     createCfgId[name] = cfgId;
     createSet.insert(name);

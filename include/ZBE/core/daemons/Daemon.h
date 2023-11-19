@@ -71,14 +71,14 @@ public:
   }
 
 private:
-  std::shared_ptr<F> f;
-  std::shared_ptr<L> l;
+  std::shared_ptr<F> f{};
+  std::shared_ptr<L> l{};
 };
 
 template<typename F, typename L>
 class FunctOverAvtListDmnFtry : public Factory {
 public:
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
     std::shared_ptr<FunctOverAvtListDmn<F,L>> foald = std::make_shared<FunctOverAvtListDmn<F,L>>();
     mainRsrc.insert("Daemon."s + name, foald);
@@ -127,7 +127,7 @@ public:
 
   /** \brief Destructor and the contained Daemons.
    */
-  ~DaemonMaster() = default;
+  virtual ~DaemonMaster() = default;
 
   /** \brief It will run all Daemons added to this DaemonMaster.
    */
@@ -144,7 +144,7 @@ public:
   }
 
 private:
-  TicketedForwardList<Daemon> daemonList;
+  TicketedForwardList<Daemon> daemonList{};
 };
 
 
@@ -212,7 +212,7 @@ public:
 
   /** \brief Destructor.
    */
-  ~MainLoop() = default;
+  virtual ~MainLoop() = default;
 
   /** \brief It will run until stop() is called.
    *  For each frame it will:

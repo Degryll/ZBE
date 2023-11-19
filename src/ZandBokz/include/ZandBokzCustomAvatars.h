@@ -54,9 +54,9 @@ public:
   }
 
 private:
-  std::shared_ptr<zbe::Value<zbe::Vector3D> > velocity;
-  std::shared_ptr<zbe::Value<zbe::Vector3D> > center;
-  std::shared_ptr<zbe::Value<double> > radius;
+  std::shared_ptr<zbe::Value<zbe::Vector3D> > velocity{};
+  std::shared_ptr<zbe::Value<zbe::Vector3D> > center{};
+  std::shared_ptr<zbe::Value<double> > radius{};
 };
 
 // class MovingSphereDerivedVelAvt : public zbe::SAvatar<zbe::MovingSphere>, zbe::AvatarImp  {
@@ -128,17 +128,17 @@ public:
   }
 
 private:
-  uint64_t centeridx;
-  uint64_t radiusidx;
-  uint64_t velocityidx;
+  uint64_t centeridx {};
+  uint64_t radiusidx {};
+  uint64_t velocityidx {};
 };
-// TODO esto se está declarando en DOS sitios. Aquí y en custom avatars. 
+// TODO esto se está declarando en DOS sitios. Aquí y en custom avatars.
 // Se está usando esta copia y no la de customs avatars. Resulta que funciona...
 // así que habrá que ver diferencias con la de custom avatars, porque MovingTriangle3DAvt
 // Está basada en aquella y, no en esta, y no funciona.
 class MovingSphereAvtBldrFtry : public zbe::Factory {
 public:
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
     std::shared_ptr<MovingSphereAvtBldr> msvb = std::make_shared<MovingSphereAvtBldr>();
     mainRsrc.insert("Function."s + name, msvb);

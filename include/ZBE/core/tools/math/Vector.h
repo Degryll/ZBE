@@ -629,6 +629,10 @@ class Vector<3> : public _VECTOR<3> {
 Vector<3> cross(Vector<3> lhs, const Vector<3>& rhs);
 
 double angle(Vector<3> lhs, Vector<3> rhs);
+double angle(Vector<2> lhs, Vector<2> rhs);
+
+int halfspace(Point2D p, Point2D linePoint1, Point2D linePoint2);
+Point2D triangleCenter(Point2D vertex1, Point2D vertex2, Point2D vertex3);
 
 using Vector3D = Vector<3>; //!< An alias to Vector<3>.
 

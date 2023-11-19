@@ -39,7 +39,7 @@ public:
    * \param msg Message received.
    *
    */
-  NetEvent(uint64_t id, int64_t time, uint32_t sequence, SDLSocket socket, std::vector<char> msg, NetHandler* handler) : Event(id, time), sequence(sequence), socket(socket), msg(msg), handler(handler) {}
+  NetEvent(uint64_t id, uint64_t time, uint32_t sequence, SDLSocket socket, std::vector<char> msg, NetHandler* handler) : Event(id, time), sequence(sequence), socket(socket), msg(msg), handler(handler) {}
 
   /** \brief base destructor.
    */

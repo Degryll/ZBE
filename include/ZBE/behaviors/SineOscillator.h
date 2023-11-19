@@ -79,7 +79,7 @@ public:
    *  \param name Name for the created SineOscillator.
    *  \param cfgId SineOscillator's configuration id.
    */
-  void create(std::string name, uint64_t cfgId);
+  void create(std::string name, uint64_t);
 
   /** \brief Setup the desired tool. The tool will be complete after this step.
    *  \param name Name of the tool.
@@ -110,7 +110,7 @@ public:
   *   \param cTime Local time
   *   \param period Oscillation period
   */
-  SineOscillatorV3D(float min, float max, float period, int64_t component) : min(min), max(max), period(period) {}
+  SineOscillatorV3D(float min, float max, float period, int64_t component) : min(min), max(max), period(period), component(component) {}
 
   /** \brief Virtual destructor.
    */
@@ -143,7 +143,7 @@ public:
   }
 
 private:
-  SineOscillatorV3D() : min(-1.0f), max(1.0f), period(0) {}
+  SineOscillatorV3D() : min(-1.0f), max(1.0f), period(0), component(0) {}
 
   float min;
   float max;
@@ -159,7 +159,7 @@ public:
    *  \param name Name for the created SineOscillator.
    *  \param cfgId SineOscillator's configuration id.
    */
-  void create(std::string name, uint64_t cfgId);
+  void create(std::string name, uint64_t);
 
   /** \brief Setup the desired tool. The tool will be complete after this step.
    *  \param name Name of the tool.

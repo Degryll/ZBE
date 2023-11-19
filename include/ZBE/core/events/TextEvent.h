@@ -39,7 +39,7 @@ public:
    * \param handler The handler that manages the event.
    *
    */
-  TextEvent(uint64_t id, int64_t time, std::string text, std::shared_ptr<TextHandler> handler) : Event(id, time), text(text), handler(handler) {}
+  TextEvent(uint64_t id, uint64_t time, std::string text, std::shared_ptr<TextHandler> handler) : Event(id, time), text(text), handler(handler) {}
 
   /** \brief base destructor.
    */
