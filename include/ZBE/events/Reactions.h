@@ -50,7 +50,6 @@ public:
    *  param time not used
    */
   void operator()(IData, Trait) {
-    printf("Boom\n");fflush(stdout);
     dmn->run();
   }
 
@@ -463,7 +462,7 @@ public:
   //PrintfRct() : msg("Interaction") {};
   PrintfRct(std::string msg) : msg(msg) {};
 
-  void operator()(IData, Trait) {
+  void operator()(IData d, Trait t) {
     printf("%s \n", msg.c_str());fflush(stdout);
   }
 

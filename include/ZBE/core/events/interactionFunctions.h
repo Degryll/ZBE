@@ -113,9 +113,8 @@ public:
       bestData.time = currentData.time;
       bestData.point = currentData.point;
       bestData.normal = currentData.normal;
-      printf("b - a %lf\n",angle(movingpoint->v , r2.d)); fflush(stdout);
-      printf("Vel: %lf %lf\n", movingpoint->v.x, movingpoint->v.y); fflush(stdout);
-      printf("Same halfspace %b\n", sameHalfSpace(triangle->b, triangle->a, center, bestData.point + movingpoint->v)); fflush(stdout);
+      auto same = sameHalfSpace(triangle->a, triangle->b, center, bestData.point + movingpoint->v);
+      intersect1 = !same;
     } else {
       currentData.time = bestData.time;
     }
@@ -125,9 +124,8 @@ public:
       bestData.time = currentData.time;
       bestData.point = currentData.point;
       bestData.normal = currentData.normal;
-      printf("c - b %lf\n",angle(movingpoint->v , r3.d)); fflush(stdout);
-      printf("Vel: %lf %lf\n", movingpoint->v.x, movingpoint->v.y); fflush(stdout);
-      printf("Same halfspace %b\n", sameHalfSpace(triangle->c, triangle->b, center, bestData.point + movingpoint->v)); fflush(stdout);
+      auto same = sameHalfSpace(triangle->b, triangle->c, center, bestData.point + movingpoint->v);
+      intersect2 = !same;
     } else {
       currentData.time = bestData.time;
     }
@@ -137,9 +135,8 @@ public:
       bestData.time = currentData.time;
       bestData.point = currentData.point;
       bestData.normal = currentData.normal;
-      printf("a - c %lf\n",angle(movingpoint->v , r4.d)); fflush(stdout);
-      printf("Vel: %lf %lf\n", movingpoint->v.x, movingpoint->v.y); fflush(stdout);
-      printf("Same halfspace %b\n", sameHalfSpace(triangle->a, triangle->c, center, bestData.point + movingpoint->v)); fflush(stdout);
+      auto same = sameHalfSpace(triangle->c, triangle->a, center, bestData.point + movingpoint->v);
+      intersect3 = !same;
     }
 
     data.time = bestData.time;

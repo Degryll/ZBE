@@ -53,20 +53,12 @@ double angle(Vector<2> lhs, Vector<2> rhs) {
 }
 
 int halfspace(Point2D p, Point2D linePoint1, Point2D linePoint2) {
-
-    // Calcular el vector director de la recta
     Point2D lineVector = {linePoint2.x - linePoint1.x, linePoint2.y - linePoint1.y};
-
-    // Calcular el vector desde el punto de origen de la recta hasta el punto dado
     Point2D vectorToPoint = {p.x - linePoint1.x, p.y - linePoint1.y};
-
-    // Calcular el producto cruz entre los vectores
     double crossProduct = (lineVector.x * vectorToPoint.y) - (vectorToPoint.x * lineVector.y);
-
-    // Determinar en qué semiespacio está el punto
-    if (crossProduct > 0) {
+    if (crossProduct > 0.0) {
         return 1; // Punto a la izquierda de la recta (sentido antihorario)
-    } else if (crossProduct < 0) {
+    } else if (crossProduct < 0.0) {
         return -1; // Punto a la derecha de la recta (sentido horario)
     } else {
         return 0; // Punto sobre la recta

@@ -729,10 +729,10 @@ bool intersectionMovingNSphereOutsideMovingNTriangle(NSphere<dim> sphere, Vector
     distancePointTriangle<dim>(sphere.c, triangle, point, normal, sqrDistance);
 
     double rsqr = sphere.r * sphere.r;
-    // if (sqrDistance <= rsqr) {
-    //     //time = 0;
-    //     return false;
-    // }
+    if (sqrDistance <= rsqr) {
+        //time = 0;
+        return false;
+    }
 
     //-------
     // To reach here, the sphere and triangle are initially separated.

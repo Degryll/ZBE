@@ -221,7 +221,6 @@ public:
 
     zbe::Vector2D newPos2D{coordChange.x, coordChange.y};
     avatar->set<2, zbe::Vector2D>(newPos2D);
-
   }
 private:
   std::shared_ptr<zbe::MAvatar<zbe::Vector2D, zbe::Vector2D, zbe::Vector3D>> avatar;

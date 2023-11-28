@@ -697,7 +697,8 @@
         {
           "factory" :"Reactor2DBldrFtry",
           "name" : "zandbokz.reactordiosito2D",
-          "config" : {
+          "config" : {},
+          "configBackuo" : {
             "solid" : "zandbokz.reaccionmultisaledeplano"
           }
         },
@@ -1280,6 +1281,13 @@
         },
         {
           "factory" : "Solid2DDaemonRctBldrFtry",
+          "name" : "zandbokz.reaccionprotaechaplanosdelistas2D",
+          "config" : {
+            "daemon":"loadScreen.dettachcajadisableplatformsDaemon"
+          }
+        },
+        {
+          "factory" : "PlatforDaemonRctBldrFtry",
           "name" : "zandbokz.reaccionprotaechaplanosdelistas",
           "config" : {
             "daemon":"loadScreen.dettachcajadisableplatformsDaemon"
@@ -1289,7 +1297,7 @@
           "factory" : "MultiSolid2DRctBldrFtry",
           "name" : "zandbokz.reaccionmulticae",
           "config" : {
-            "reactionBuilders" : ["zandbokz.reaccioncaeactivations", "zandbokz.reaccioncaedeactivations", "zandbokz.reaccionprotaechaplanosdelistas"]
+            "reactionBuilders" : ["zandbokz.reaccioncaeactivations", "zandbokz.reaccioncaedeactivations", "zandbokz.reaccionprotaechaplanosdelistas2D"]
           }
         },
         {
@@ -1317,7 +1325,7 @@
           "factory" : "MultiPlatformRctBldrFtry",
           "name" : "zandbokz.reaccionmultiagarra",
           "config" : {
-            "reactionBuilders" : ["zandbokz.reaccionplanoentraprint", "zandbokz.reaccionattachactivations", "zandbokz.reaccionattachdeactivations", "zandbokz.reaccionattachpilladelplano", "zandbokz.reaccionattachrecoloca", "zandbokz.reaccionattachredirecciona"],
+            "reactionBuilders" : ["zandbokz.reaccionprotaechaplanosdelistas", "zandbokz.reaccionplanoentraprint", "zandbokz.reaccionattachactivations", "zandbokz.reaccionattachdeactivations", "zandbokz.reaccionattachpilladelplano", "zandbokz.reaccionattachrecoloca", "zandbokz.reaccionattachredirecciona"],
             "reactionBuildersBack" : []
           }
         },
@@ -1472,7 +1480,7 @@
               "jumpSpeedIdx": "zandbokz.protaVelVertical"
             },
             "float": {
-              "sizeIdx":[50.0],
+              "sizeIdx":[65.0],
               "ballRadIdx":[50.0]
             },
             "V3D": {
@@ -1729,8 +1737,8 @@
           }
         }
       ],
-      "calls" : ["zandbokz.thirdviewcambldr", "zandbokz.protabuilder", "zandbokz.diositobuilder", "zandbokz.diositobuilder1", "zandbokz.diositobuilder2"],
-      "backupcalls" : ["zandbokz.cajabuilder", "zandbokz.creaunicorniorosa", "zandbokz.pepinobuilder", "zandbokz.diositobuilder3", "zandbokz.diositobuilder4", "zandbokz.diositobuilder5", "zandbokz.diositobuilder6", "zandbokz.diositobuilder7", "zandbokz.diositobuilder8"]
+      "calls" : ["zandbokz.thirdviewcambldr", "zandbokz.protabuilder", "zandbokz.diositobuilder", "zandbokz.diositobuilder1", "zandbokz.diositobuilder2", "zandbokz.diositobuilder3", "zandbokz.diositobuilder4", "zandbokz.diositobuilder5", "zandbokz.diositobuilder6", "zandbokz.diositobuilder7", "zandbokz.diositobuilder8"],
+      "backupcalls" : ["zandbokz.cajabuilder", "zandbokz.creaunicorniorosa", "zandbokz.pepinobuilder"]
     },
     {
       "description" : "Creating entity",
@@ -1813,9 +1821,9 @@
               "loadScreen.calculaprotavelDMN",
               "loadScreen.proyectaorientacionDMN",
               "loadScreen.vel2oriDMN",
+              "loadScreen.ULM3DOn2DDaemon",
               "loadScreen.2velAccumDMN",
               "loadScreen.ULM3DDaemon",
-              "loadScreen.ULM3DOn2DDaemon",
               "loadScreen.gravityDMN",
               "loadScreen.keepdistanceDmn"
             ],
