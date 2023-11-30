@@ -47,6 +47,7 @@
     "inator2DTicket" : 1215,
     "BulletCreatorTicket" : 1220,
     "SoundCreatorTicket" : 1221,
+    "ChofCreatorTicket" : 1222,
     "positionAIdx" : 1230,
     "positionBIdx" : 1240,
     "positionCIdx" : 1250,
@@ -311,6 +312,12 @@
           "factory": "TFAECTwoV3DAvtFtry",
           "description" : "Vel to ori list",
           "name": "loadScreen.vel2orilist",
+          "config" : {}
+        },
+        {
+          "factory": "TFAECThreeV3DAvtFtry",
+          "description" : "do some serious sam",
+          "name": "loadScreen.cuajaronCreatorList",
           "config" : {}
         },
         {
@@ -1168,12 +1175,85 @@
             "lists":{"loadScreen.audiolist":"audioTicket"}
           }
         },
+
+
+        {
+          "factory" : "BehaviorEntityBldrFtry3V",
+          "name" : "zandbokz.dropcuajaron",
+          "config" : {
+            "contextTime":"DEFAULT",
+            "builders" : ["zandbokz.cuajaronvalues", "zandbokz.diositocachetriangulo2D", "zandbokz.cuajaronsolidosocializa", "zandbokz.cuajaronsolidosocializa2D", "zandbokz.cuajaronapintar"],
+            "Vector3D" : {
+              "positionIdx" : "zandbokz.copypos3v",
+              "orientationIdx" : "zandbokz.copyupwards3v",
+              "upwardsIdx" : "zandbokz.copyvel3v" 
+            }
+          }
+        },
+        {
+          "factory" :"EntitySetterFtry",
+          "name" : "zandbokz.cuajaronvalues",
+          "config" : {
+            "uint": {
+              "gidIdx":["TrianguloIsosceles"]
+            },
+            "double": {
+              "radsIdx":[0.0],
+              "scaleIdx":[500.0]
+            },
+            "float": {
+              "sizeIdx":[500.0]
+            },
+            "V3D": {
+              "positionIdx":[0.0, 0.0, 0.0],
+              "orientationIdx":[0.0, 1.0, 0.0],
+              "positionAIdx":[0.0, 0.0, 0.0],
+              "positionBIdx":[0.0, 0.0, 0.0],
+              "positionCIdx":[0.0, 0.0, 0.0],
+              "velocityIdx":[0.0, 0.0, 0.0],
+              "e1Idx":[0.0, 0.0, 0.0],
+              "e2Idx":[0.0, 0.0, 0.0]
+            }
+          }
+        },
+        {
+          "factory" :"Drawable3DAvtBldrFtry",
+          "name" : "zandbokz.cuajaronapintar",
+          "config" : {
+            "attribIndexes" : ["gidIdx", "scaleIdx", "radsIdx", "orientationIdx", "positionIdx"],
+            "lists":{"loadScreen.drawList":"drawticket"}
+          }
+        },
+        {
+          "factory" :"InerBldrFtry",
+          "name" : "zandbokz.cuajaronsolidosocializa",
+          "description" : "Chof tambien es un pepino",
+          "config" : {
+            "actorbuilder" : "zandbokz.actordiosito",
+            "reactorbuilder" : "zandbokz.reactordiosito",
+            "shapebuilder" : "zandbokz.aspectodiostriangular",
+            "lists" : {"loadScreen.inerList":"inerTicket"}
+          }
+        },
+        {
+          "factory" :"Iner2DBldrFtry",
+          "name" : "zandbokz.cuajaronsolidosocializa2D",
+          "description" : "Diosito tampoco hace nada en 2D.",
+          "config" : {
+            "actorbuilder" : "zandbokz.actordiosito2D",
+            "reactorbuilder" : "zandbokz.reactordiosito2D",
+            "shapebuilder" : "zandbokz.aspectodiostriangular2D",
+            "deactivatedlists" : {"loadScreen.iner2DList":"iner2DTicket"}
+          }
+        },
+
+
         {
           "factory" : "BehaviorEntityBldrFtry3V",
           "name" : "zandbokz.dropcastaña",
           "config" : {
             "contextTime":"DEFAULT",
-            "builders" : ["zandbokz.castañavalues", "zandbokz.castañaapintar", "zandbokz.castañaefimera", "zandbokz.castañapalante", "zandbokz.castañasolidosocializa"],
+            "builders" : ["zandbokz.castañavalues", "zandbokz.castañaapintar", "zandbokz.castañaefimera", "zandbokz.castañapalante", "zandbokz.castañasolidosocializa", "zandbokz.castañachof"],
             "Vector3D" : {
               "positionIdx" : "zandbokz.copypos3v",
               "orientationIdx" : "zandbokz.copyvel3v",
@@ -1325,8 +1405,8 @@
           "factory" : "MultiPlatformRctBldrFtry",
           "name" : "zandbokz.reaccionmultiagarra",
           "config" : {
-            "reactionBuilders" : ["zandbokz.reaccionprotaechaplanosdelistas", "zandbokz.reaccionplanoentraprint", "zandbokz.reaccionattachactivations", "zandbokz.reaccionattachdeactivations", "zandbokz.reaccionattachpilladelplano", "zandbokz.reaccionattachrecoloca", "zandbokz.reaccionattachredirecciona"],
-            "reactionBuildersBack" : []
+            "reactionBuilders" : ["zandbokz.reaccionprotaechaplanosdelistas", "zandbokz.reaccionattachactivations", "zandbokz.reaccionattachdeactivations", "zandbokz.reaccionattachpilladelplano", "zandbokz.reaccionattachrecoloca", "zandbokz.reaccionattachredirecciona"],
+            "reactionBuildersBack" : ["zandbokz.reaccionplanoentraprint"]
           }
         },
         {
@@ -1585,13 +1665,21 @@
             "lists":{ "loadScreen.pryectaOrientatonlist":"proyectOrientationTicket"}
           }
         },
-
         {
           "factory" :"ThreeV3DAvtBldrFtry",
           "name" : "zandbokz.protadispara",
           "config" : {
             "attribIndexes" : ["upwardsIdx", "orientationIdx", "positionIdx"],
             "lists":{"loadScreen.BulletCreatorList":"BulletCreatorTicket"},
+            "deactivatedlists":{}
+          }
+        },
+        {
+          "factory" :"ThreeV3DAvtBldrFtry",
+          "name" : "zandbokz.castañachof",
+          "config" : {
+            "attribIndexes" : ["upwardsIdx", "orientationIdx", "positionIdx"],
+            "lists":{"loadScreen.cuajaronCreatorList":"ChofCreatorTicket"},
             "deactivatedlists":{}
           }
         },
@@ -2212,6 +2300,14 @@
             "function" : "zandbokz.dropcastaña"
           }
         },
+        {"factory": "FunctOverAvtList3VDmnFtry",
+          "name": "loadScreen.chofdaemon",
+          "description" : "demonio crea cuajarones",
+          "config" : {
+            "list" : "loadScreen.cuajaronCreatorList",
+            "function" : "zandbokz.dropcuajaron"
+          }
+        },
         {"factory": "FunctOverAvtList2VDmnFtry",
           "name": "loadScreen.shotSuena",
           "description" : "demonio caga castañas",
@@ -2611,6 +2707,14 @@
           "name": "loadScreen.saltahandlerDmn",
           "config" : {
             "daemon" : "loadScreen.dettachcajamaster"
+          }
+        },
+        {"factory": "DaemonIHFtry",
+          "name": "loadScreen.chofhandlerDmn",
+          "config" : {
+            "daemon" : "loadScreen.chofdaemon",
+            "inputEventGenerator" : "loadScreen.inputEventGenerator",
+            "key":"ZBEK_e"
           }
         },
         {"factory": "BroadcastIHFtry",
