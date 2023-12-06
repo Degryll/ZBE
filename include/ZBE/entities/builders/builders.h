@@ -16,14 +16,22 @@
 #include <string>
 #include <initializer_list>
 #include <nlohmann/json.hpp>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 #include "ZBE/core/entities/Entity.h"
 #include "ZBE/core/entities/avatars/Avatar.h"
 #include "ZBE/core/entities/avatars/implementations/BaseAvatar.h"
 #include "ZBE/core/events/interactionSystem.h"
+#include "ZBE/core/events/handlers/TimeHandler.h"
+#include "ZBE/core/events/generators/TimeEventGenerator.h"
 #include "ZBE/core/system/system.h"
 #include "ZBE/core/tools/tools.h"
+#include "ZBE/core/tools/math/Vector.h"
 #include "ZBE/JSON/JSONFactory.h"
+
+#include "ZBE/core/tools/shared/implementations/SimpleValue.h"
 
 namespace zbe {
 
@@ -1404,6 +1412,135 @@ private:
   double module{};
 };
 
+
+// static void calculateRotAndRads(Vector3& vecA, Vector3D vecB) {
+//     // Normalizar los vectores
+//     vecA.normalize();
+//     vecB.normalize();
+
+//     // Calcular el ángulo entre los dos vectores
+//     double cosAngulo = vecA * vecB;
+//     double anguloRad = std::acos(cosAngulo);
+
+//     // Calcular el vector de rotación usando el producto cruzado
+//     Vector3D vectorRotacion = cross(vecA, vecB);
+
+//     std::cout << "Ángulo de rotación: " << anguloDeg << " grados" << std::endl;
+//     std::cout << "Vector de rotación: (" << vectorRotacion.x << ", "
+//               << vectorRotacion.y << ", " << vectorRotacion.z << ")" << std::endl;
+// }
+//-----------
+
+
+// void combineRotations(glm::vec3 axisA, float angleA, glm::vec3 axisB, float angleB, glm::vec3& axisResult, float& angleResult) {
+//     // Crear las matrices de rotación
+//     glm::mat4 rotationA = glm::rotate(glm::mat4(1.0f), angleA, axisA);
+//     glm::mat4 rotationB = glm::rotate(glm::mat4(1.0f), angleB, axisB);
+
+//     // Combinar las rotaciones
+//     glm::mat4 combinedRotation = rotationB * rotationA;
+
+//     // Convertir la matriz de rotación combinada a un cuaternión
+//     glm::quat quaternion = glm::quat_cast(combinedRotation);
+
+//     // Obtener el ángulo y el vector de rotación del cuaternión
+//     angleResult = 2 * acos(quaternion.w);
+//     axisResult = glm::normalize(glm::vec3(quaternion.x, quaternion.y, quaternion.z));
+// }
+
+// Función para calcular la rotación entre dos orientaciones
+void calculateRotation(glm::vec3 originDirection, glm::vec3 originUp, glm::vec3 destinationDirection, glm::vec3 destinationUp, glm::vec3& rotationAxis, double& rotationAngle);
+
+template<unsigned n, typename T, typename ...Ts>
+struct BuildUpDirToOriBldr : public Funct<std::shared_ptr<Value<Vector3D>>, std::shared_ptr<MAvatar<T, Ts...>>> {
+  std::shared_ptr<Value<Vector3D>> operator()(std::shared_ptr<MAvatar<T, Ts...>> avt) {
+    // ["upwardsIdx", "orientationIdx", "positionIdx"],
+    Vector3D ori = AvtUtil::get<2, Vector3D>(avt)->get();
+    Vector3D upwards = AvtUtil::get<3, Vector3D>(avt)->get();
+
+    glm::vec3 baseOri{0.0, 1.0, 0.0};
+    glm::vec3 baseUpw{1.0, 0.0, 0.0};
+
+    glm::vec3 gori{ori.x, ori.y, ori.z};
+    glm::vec3 gupwards{upwards.x, upwards.y, upwards.z};
+
+
+    // double oriAngle = angle(ori, baseOri);
+    // double upwAngle = angle(upwards, baseUpw);
+
+    // Vector3D oriRot = ori * baseOri;
+    // Vector3D oriRot = upwards * baseUpw;
+    glm::vec3 rotationAxis;
+    double rotationAngle;
+    calculateRotation(baseOri, baseUpw, gori, gupwards, rotationAxis, rotationAngle);
+    Vector3D out{rotationAxis.x, rotationAxis.y, rotationAxis.z};
+    return std::make_shared<SimpleValue<Vector3D>>(out);
+  }
+};
+
+template<unsigned n, typename T, typename ...Ts>
+struct BuildUpDirToRadsBldr : public Funct<std::shared_ptr<Value<double>>, std::shared_ptr<MAvatar<T, Ts...>>> {
+  std::shared_ptr<Value<double>> operator()(std::shared_ptr<MAvatar<T, Ts...>> avt) {
+    // ["upwardsIdx", "orientationIdx", "positionIdx"],
+    Vector3D ori = AvtUtil::get<2, Vector3D>(avt)->get();
+    Vector3D upwards = AvtUtil::get<3, Vector3D>(avt)->get();
+
+    glm::vec3 baseOri{0.0, 1.0, 0.0};
+    glm::vec3 baseUpw{1.0, 0.0, 0.0};
+
+    glm::vec3 gori{ori.x, ori.y, ori.z};
+    glm::vec3 gupwards{upwards.x, upwards.y, upwards.z};
+
+
+    // double oriAngle = angle(ori, baseOri);
+    // double upwAngle = angle(upwards, baseUpw);
+
+    // Vector3D oriRot = ori * baseOri;
+    // Vector3D oriRot = upwards * baseUpw;
+    glm::vec3 rotationAxis;
+    double rotationAngle;
+    calculateRotation(baseOri, baseUpw, gori, gupwards, rotationAxis, rotationAngle);
+    return std::make_shared<SimpleValue<double>>(rotationAngle);
+  }
+};
+//-----------
+
+// template<unsigned n, typename T, typename ...Ts>
+// class BuildUpDirToOriBldrFtry : public Factory {
+// public:
+//   void create(std::string name, uint64_t) {
+//     using namespace std::string_literals;
+//     std::shared_ptr<BuildUpDirToOriBldr<n, T, Ts...>> bcvmb = std::make_shared<BuildUpDirToOriBldr<n, T, Ts...>>();
+//     mainRsrc.insert(zbe::factories::functionName_ + name, bcvmb);
+//     specificRsrc.insert("BuildUpDirToOriBldr."s + name, bcvmb);
+//   }
+
+//   void setup(std::string name, uint64_t cfgId) {
+//     using namespace std::string_literals;
+//     using namespace nlohmann;
+//     std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);
+
+//     if(!cfg) {
+//       SysError::setError("BehaviorEntityBldrFtry config for "s + name + " not found."s);
+//       return;
+//     }
+//     auto bcvmb = specificRsrc.get("BuildUpDirToOriBldr."s + name);
+//     auto j = *cfg;
+//     auto module = JSONFactory::loadParamCfgDict<double>(doubleDict, j, "module"s, "BuildUpDirToOriBldrFtry"s);
+//     if(!module) {
+//       SysError::setError("BuildUpDirToOriBldrFtry config for module is invalid"s);
+//       return;
+//     }
+//     bcvmb->setVectorModule(*module);
+//   }
+
+// private:
+//   RsrcStore<nlohmann::json>& configRsrc = RsrcStore<nlohmann::json>::getInstance();
+//   RsrcStore<Funct<std::shared_ptr<Value<Vector3D>>, std::shared_ptr<MAvatar<T, Ts...>>>>& mainRsrc = RsrcStore<Funct<std::shared_ptr<Value<Vector3D>>, std::shared_ptr<MAvatar<T, Ts...>>>>::getInstance();
+//   RsrcStore<BuildUpDirToOriBldr<n, T, Ts...>>& specificRsrc = RsrcStore<BuildUpDirToOriBldr<n, T, Ts...>>::getInstance();
+//   RsrcDictionary<double>& doubleDict = RsrcDictionary<double>::getInstance();
+// };
+
 template<unsigned n, typename T, typename ...Ts>
 class BuildCopyVectModuleBldrFtry : public Factory {
 public:
@@ -1425,9 +1562,9 @@ public:
     }
     auto bcvmb = specificRsrc.get("BuildCopyVectModuleBldr."s + name);
     auto j = *cfg;
-    auto module = JSONFactory::loadParamCfgDict<double>(doubleDict, j, "module"s, "EntityTimerBldrFtry"s);
+    auto module = JSONFactory::loadParamCfgDict<double>(doubleDict, j, "module"s, "BuildCopyVectModuleBldrFtry"s);
     if(!module) {
-      SysError::setError("BehaviorEntityBldr config for module is invalid"s);
+      SysError::setError("BuildCopyVectModuleBldrFtry config for module is invalid"s);
       return;
     }
     bcvmb->setVectorModule(*module);

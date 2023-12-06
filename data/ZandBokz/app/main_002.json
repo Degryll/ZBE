@@ -1145,6 +1145,16 @@
           "config" : {}
         },
         {
+          "factory" : "UpDirToOriBldr1Ftry",
+          "name" : "zandbokz.UpDirToOri",
+          "config" : {}
+        },
+        {
+          "factory" : "UpDirToRadsBldr1Ftry",
+          "name" : "zandbokz.UpDirToRads",
+          "config" : {}
+        },
+        {
           "factory" : "BehaviorEntityBldrFtry2V",
           "name" : "zandbokz.suenacatapun",
           "config" : {
@@ -1185,8 +1195,15 @@
             "builders" : ["zandbokz.cuajaronvalues", "zandbokz.diositocachetriangulo2D", "zandbokz.cuajaronsolidosocializa", "zandbokz.cuajaronsolidosocializa2D", "zandbokz.cuajaronapintar"],
             "Vector3D" : {
               "positionIdx" : "zandbokz.copypos3v",
+              "orientationIdx" : "zandbokz.UpDirToOri",
+              "upwardsIdx" : "zandbokz.copyvel3v"
+            },
+            "double" : {
+              "radsIdx":"zandbokz.UpDirToRads"
+            },
+            "Vector3DBack" : {
               "orientationIdx" : "zandbokz.copyupwards3v",
-              "upwardsIdx" : "zandbokz.copyvel3v" 
+              "upwardsIdx" : "zandbokz.copyvel3v"
             }
           }
         },
@@ -1195,7 +1212,7 @@
           "name" : "zandbokz.cuajaronvalues",
           "config" : {
             "uint": {
-              "gidIdx":["TrianguloIsosceles"]
+              "gidIdx":["FleshTriangulo"]
             },
             "double": {
               "radsIdx":[0.0],
@@ -1206,7 +1223,7 @@
             },
             "V3D": {
               "positionIdx":[0.0, 0.0, 0.0],
-              "orientationIdx":[0.0, 1.0, 0.0],
+              "orientationIdx":[1.0, 0.0, 0.0],
               "positionAIdx":[0.0, 0.0, 0.0],
               "positionBIdx":[0.0, 0.0, 0.0],
               "positionCIdx":[0.0, 0.0, 0.0],

@@ -79,10 +79,6 @@ public:
     zbe::Vector3D proyection = (((oirentation /*+ cData.point*/) * normal) / (normal * normal)) * normal;
     zbe::Vector3D orientPrima = oirentation - proyection /*- cData.point*/; // Quiza normal tenga siempre modulo 1 y esto no haga falta
 
-    // Hasta aqui bien, incluido normal como yaw vector .
-    // Falta calcular el upwards de la cámara. Tamien el pitcvector que debería poder sacarse como producto vectorial de la normal y el vector camara/personaja
-
-
     //zbe::Vector3D oldor = avatar->get<1, zbe::Vector3D>()->get();
     zbe::Vector3D oldcu = avatar->get<2, zbe::Vector3D>()->get();
     zbe::Vector3D oldyv = avatar->get<3, zbe::Vector3D>()->get();

@@ -655,6 +655,7 @@
 		<Unit filename="../../../src/ZBE/core/zbe.cpp" />
 		<Unit filename="../../../src/ZBE/daemons/RsrcFolderLoaderDmn.cpp" />
 		<Unit filename="../../../src/ZBE/daemons/RsrcLoaderDmn.cpp" />
+		<Unit filename="../../../src/ZBE/entities/builders/builders.cpp" />
 		<Unit filename="../../../src/ZBE/events/handlers/input/ActivatorIH.cpp" />
 		<Unit filename="../../../src/ZBE/events/handlers/input/KeyDownTicketEnablerIH.cpp" />
 		<Unit filename="../../../src/ZBE/events/handlers/input/ParametricActivatorIH.cpp" />
