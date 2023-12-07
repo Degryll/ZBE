@@ -11,13 +11,15 @@
 
 namespace zbe {
 
-void calculateRotation(glm::vec3 originDirection, glm::vec3 originUp, glm::vec3 destinationDirection, glm::vec3 destinationUp, glm::vec3& rotationAxis, double& rotationAngle) {
+void combineRotations(glm::vec3 originDirection, glm::vec3 originUp, glm::vec3 destinationDirection, glm::vec3 destinationUp, glm::vec3& rotationAxis, double& rotationAngle) {
     // Crear las matrices de orientación
     glm::mat4 originOrientation = glm::lookAt(glm::vec3(0.0f), originDirection, originUp);
     glm::mat4 destinationOrientation = glm::lookAt(glm::vec3(0.0f), destinationDirection, destinationUp);
 
     // Calcular la matriz de rotación
     glm::mat4 rotationMatrix = glm::inverse(originOrientation) * destinationOrientation;
+
+    rotationMatrix = glm::transpose(rotationMatrix);
 
     // Convertir la matriz de rotación a un cuaternión
     glm::quat quaternion = glm::quat_cast(rotationMatrix);

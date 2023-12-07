@@ -99,8 +99,11 @@ public:
     factories.insert("CopyVec13VFtry", std::make_shared<zbe::GenericFtry<zbe::Funct<std::shared_ptr<zbe::Value<zbe::Vector3D>>, std::shared_ptr<zbe::MAvatar<zbe::Vector3D, zbe::Vector3D, zbe::Vector3D>>>,zbe::BuildCopyValueBldr<zbe::Vector3D, 1, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D> > >(zbe::factories::functionName, "BuildCopyValueBldr"));
     factories.insert("CopyVec33VFtry", std::make_shared<zbe::GenericFtry<zbe::Funct<std::shared_ptr<zbe::Value<zbe::Vector3D>>, std::shared_ptr<zbe::MAvatar<zbe::Vector3D, zbe::Vector3D, zbe::Vector3D>>>,zbe::BuildCopyValueBldr<zbe::Vector3D, 3, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D> > >(zbe::factories::functionName, "BuildCopyValueBldr"));
 
-    factories.insert("UpDirToOriBldr1Ftry", std::make_shared<zbe::GenericFtry<zbe::Funct<std::shared_ptr<zbe::Value<zbe::Vector3D>>, std::shared_ptr<zbe::MAvatar<zbe::Vector3D, zbe::Vector3D, zbe::Vector3D>>>,zbe::BuildUpDirToOriBldr<1, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D> > >(zbe::factories::functionName, "BuildUpDirToOriBldr"));
-    factories.insert("UpDirToRadsBldr1Ftry", std::make_shared<zbe::GenericFtry<zbe::Funct<std::shared_ptr<zbe::Value<double>>, std::shared_ptr<zbe::MAvatar<zbe::Vector3D, zbe::Vector3D, zbe::Vector3D>>>,zbe::BuildUpDirToRadsBldr<1, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D> > >(zbe::factories::functionName, "BuildUpDirToRadsBldr"));
+//BuildUpDirToRadsBldrFtry
+//BuildUpDirToOriBldrFtry
+
+    factories.insert("UpDirToOriBldr1Ftry",  std::make_shared<zbe::BuildUpDirToOriBldrFtry<zbe::Vector3D, zbe::Vector3D, zbe::Vector3D>>());
+    factories.insert("UpDirToRadsBldr1Ftry", std::make_shared<zbe::BuildUpDirToRadsBldrFtry<zbe::Vector3D, zbe::Vector3D, zbe::Vector3D>>());
 
     using ZBKEntityEraserReactionBldr = zbe::EntityEraserReactionBldr<zbe::CollisionData3D, Solid>;
     using ZBKEntityEraserReactionBldrFunct = zbe::Funct<std::shared_ptr<zbe::Funct<void, zbe::CollisionData3D, Solid>>,std::shared_ptr<zbe::Entity>>;

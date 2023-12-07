@@ -16,6 +16,8 @@
 #include "ZBE/factories/genericFactoryConstants.h"
 #include "ZBE/factories/Factory.h"
 #include "ZBE/core/system/system.h"
+#include "ZBE/core/tools/math/Vector.h"
+#include "ZBE/core/tools/containers/RsrcStore.h"
 
 #include <nlohmann/json.hpp>
 
@@ -239,6 +241,8 @@ std::optional<std::forward_list<T>> loadLiteralList(RsrcDictionary<T>& dict, jso
   }
   return list;
 }
+
+Vector3D parseV3DFromCfg(nlohmann::json cfgValue, std::string paramName, std::string factoryName);
 
 }  // namespace JSONFactory
 

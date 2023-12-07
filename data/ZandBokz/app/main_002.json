@@ -1147,12 +1147,34 @@
         {
           "factory" : "UpDirToOriBldr1Ftry",
           "name" : "zandbokz.UpDirToOri",
-          "config" : {}
+          "config" : {
+            "baseorientation" : [0.0, 0.0, 1.0],
+            "baseupwards" : [0.0, 1.0, 0.0]
+          }
         },
         {
           "factory" : "UpDirToRadsBldr1Ftry",
           "name" : "zandbokz.UpDirToRads",
-          "config" : {}
+          "config" : {
+            "baseorientation" : [0.0, 0.0, 1.0],
+            "baseupwards" : [0.0, 1.0, 0.0]
+          }
+        },
+        {
+          "factory" : "UpDirToOriBldr1Ftry",
+          "name" : "zandbokz.UpDirToOriRot",
+          "config" : {
+            "baseorientation" : [0.0, 0.0, -1.0],
+            "baseupwards" : [0.0, 1.0, 0.0]
+          }
+        },
+        {
+          "factory" : "UpDirToRadsBldr1Ftry",
+          "name" : "zandbokz.UpDirToRadsRot",
+          "config" : {
+            "baseorientation" : [0.0, 0.0, -1.0],
+            "baseupwards" : [0.0, 1.0, 0.0]
+          }
         },
         {
           "factory" : "BehaviorEntityBldrFtry2V",
@@ -1185,11 +1207,9 @@
             "lists":{"loadScreen.audiolist":"audioTicket"}
           }
         },
-
-
         {
           "factory" : "BehaviorEntityBldrFtry3V",
-          "name" : "zandbokz.dropcuajaron",
+          "name" : "zandbokz.dropcuajarona",
           "config" : {
             "contextTime":"DEFAULT",
             "builders" : ["zandbokz.cuajaronvalues", "zandbokz.diositocachetriangulo2D", "zandbokz.cuajaronsolidosocializa", "zandbokz.cuajaronsolidosocializa2D", "zandbokz.cuajaronapintar"],
@@ -1200,6 +1220,26 @@
             },
             "double" : {
               "radsIdx":"zandbokz.UpDirToRads"
+            },
+            "Vector3DBack" : {
+              "orientationIdx" : "zandbokz.copyupwards3v",
+              "upwardsIdx" : "zandbokz.copyvel3v"
+            }
+          }
+        },
+        {
+          "factory" : "BehaviorEntityBldrFtry3V",
+          "name" : "zandbokz.dropcuajaronb",
+          "config" : {
+            "contextTime":"DEFAULT",
+            "builders" : ["zandbokz.cuajaronvalues", "zandbokz.diositocachetriangulo2D", "zandbokz.cuajaronsolidosocializa", "zandbokz.cuajaronsolidosocializa2D", "zandbokz.cuajaronapintar"],
+            "Vector3D" : {
+              "positionIdx" : "zandbokz.copypos3v",
+              "orientationIdx" : "zandbokz.UpDirToOriRot",
+              "upwardsIdx" : "zandbokz.copyvel3v"
+            },
+            "double" : {
+              "radsIdx":"zandbokz.UpDirToRadsRot"
             },
             "Vector3DBack" : {
               "orientationIdx" : "zandbokz.copyupwards3v",
@@ -2317,12 +2357,30 @@
             "function" : "zandbokz.dropcastaña"
           }
         },
-        {"factory": "FunctOverAvtList3VDmnFtry",
+        {"factory": "MasterDmnFtry",
           "name": "loadScreen.chofdaemon",
+          "description" : "",
+          "config" : {
+            "daemons": [
+              "loadScreen.chofdaemona",
+              "loadScreen.chofdaemonb"
+            ]
+          }
+        },
+        {"factory": "FunctOverAvtList3VDmnFtry",
+          "name": "loadScreen.chofdaemona",
           "description" : "demonio crea cuajarones",
           "config" : {
             "list" : "loadScreen.cuajaronCreatorList",
-            "function" : "zandbokz.dropcuajaron"
+            "function" : "zandbokz.dropcuajarona"
+          }
+        },
+        {"factory": "FunctOverAvtList3VDmnFtry",
+          "name": "loadScreen.chofdaemonb",
+          "description" : "demonio crea cuajarones",
+          "config" : {
+            "list" : "loadScreen.cuajaronCreatorList",
+            "function" : "zandbokz.dropcuajaronb"
           }
         },
         {"factory": "FunctOverAvtList2VDmnFtry",

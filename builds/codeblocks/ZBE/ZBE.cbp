@@ -591,6 +591,7 @@
 		<Unit filename="../../../include/ZBE/system/SystemResources.h" />
 		<Unit filename="../../../include/ZBE/tools/graphics/Camera.h" />
 		<Unit filename="../../../include/ZBE/tools/graphics/CameraFtry.h" />
+		<Unit filename="../../../src/ZBE/JSON/JSONFactory.cpp" />
 		<Unit filename="../../../src/ZBE/JSON/graphics/JSONGraphicsLoaders.cpp" />
 		<Unit filename="../../../src/ZBE/JSON/resources/JSONAudioDefLoader.cpp" />
 		<Unit filename="../../../src/ZBE/JSON/resources/JSONGLSLProgramLoader.cpp" />
