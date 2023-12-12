@@ -1419,7 +1419,7 @@ template<typename T, typename ...Ts>
 struct BuildUpDirToOriBldr : public Funct<std::shared_ptr<Value<Vector3D>>, std::shared_ptr<MAvatar<T, Ts...>>> {
   std::shared_ptr<Value<Vector3D>> operator()(std::shared_ptr<MAvatar<T, Ts...>> avt) {
     // ["upwardsIdx", "orientationIdx", "positionIdx"],
-    Vector3D ori = AvtUtil::get<2, Vector3D>(avt)->get();
+    Vector3D ori = AvtUtil::get<2, Vector3D>(avt)->get() * -1.0;
     Vector3D upwards = AvtUtil::get<3, Vector3D>(avt)->get();
 
     glm::vec3 gori{ori.x, ori.y, ori.z};
@@ -1449,7 +1449,7 @@ template<typename T, typename ...Ts>
 struct BuildUpDirToRadsBldr : public Funct<std::shared_ptr<Value<double>>, std::shared_ptr<MAvatar<T, Ts...>>> {
   std::shared_ptr<Value<double>> operator()(std::shared_ptr<MAvatar<T, Ts...>> avt) {
     // ["upwardsIdx", "orientationIdx", "positionIdx"],
-    Vector3D ori = AvtUtil::get<2, Vector3D>(avt)->get();
+    Vector3D ori = AvtUtil::get<2, Vector3D>(avt)->get() * -1.0;
     Vector3D upwards = AvtUtil::get<3, Vector3D>(avt)->get();
     printf("oirentacion %lf, %lf, %lf\n", ori.x, ori.y, ori.z);fflush(stdout);
     printf("upwards %lf, %lf, %lf\n", upwards.x, upwards.y, upwards.z);fflush(stdout);
