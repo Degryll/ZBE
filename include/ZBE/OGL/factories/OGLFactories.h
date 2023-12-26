@@ -49,6 +49,7 @@ public:
     factories.insert("OGLModelSheetDrawerFtry" , std::make_shared<OGLModelSheetDrawerFtry<5, uint64_t, double,  double, Vector3D, Vector3D> >());
     factories.insert("OGLLookAtModelSheetDrawerFtry" , std::make_shared<OGLModelSheetDrawerFtry<5, uint64_t, double,  Vector3D, Vector3D, Vector3D> >());
     factories.insert("OGLSpriteSheetDrawerFtry" , std::make_shared<OGLModelSheetDrawerFtry<3, uint64_t, Vector2D, Vector2D> >());
+    factories.insert("OGLParametricSpriteSheetDrawerFtry" , std::make_shared<OGLModelSheetDrawerFtry<5, uint64_t, int64_t, int64_t, Vector2D, Vector2D> >());
     factories.insert("ShadersSetter2DFtry", std::make_shared<ShadersSetter2DFtry>());
     factories.insert("ShadersSetter3DFtry", std::make_shared<ShadersSetter3DFtry>());
   }

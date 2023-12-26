@@ -1,0 +1,11 @@
+{
+  "name": "img.loadScreen.simplelifebar",
+  "sprtdefs" : [
+    {
+      "name" : "static",
+      "img" : "loadScreen.simplelifebar",
+      "scale" : [1.0, 1.0],
+      "drawOffset" : [0.0, 0.0]
+    }
+  ]
+}

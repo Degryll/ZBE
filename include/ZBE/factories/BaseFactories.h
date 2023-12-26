@@ -54,6 +54,7 @@
 #include "ZBE/behaviors/UniformLinearMotion.h"
 #include "ZBE/behaviors/Rotation.h"
 #include "ZBE/behaviors/Behaviors.h"
+#include "ZBE/behaviors/Erase.h"
 #include "ZBE/behaviors/BulletCreatorBhv.h"
 
 #include "ZBE/creators/BulletCreator.h"
@@ -99,6 +100,8 @@ public:
     factories.insert("RsrcFolderLoaderDmnFtry", std::make_shared<RsrcFolderLoaderDmnFtry>());
 
     // --- Behaviors
+    factories.insert("BoundedAddIntBvr", std::make_shared<GenericFtry<Behavior<int64_t, int64_t, int64_t, int64_t>, BoundedAddBvr<int64_t>>>("Behavior", "BoundedAddBvr"));
+    factories.insert("EraseEnityBhvFtry", std::make_shared<GenericFtry<Behavior<void>, Erase>>("Behavior", "EraseEnityBvr"));
     factories.insert("SineOscillatorFFtry", std::make_shared<SineOscillatorFFtry>());
     factories.insert("SineOscillatorV3DFtry", std::make_shared<SineOscillatorV3DFtry>());
     factories.insert("FixedUniformLinearMotion3DFtry", std::make_shared<FixedUniformLinearMotion3DFtry>());

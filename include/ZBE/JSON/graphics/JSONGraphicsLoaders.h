@@ -57,6 +57,8 @@ namespace JSONGraphicsLoaders{
   ZBEAPI void JSONSimpleModelSheetFileLoad(std::istream& is, std::shared_ptr<SDLOGLWindow> window, NameRsrcDictionary& nrd, RsrcStore<zbe::OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> >& rsrcModelSheet, RsrcStore<OGLGraphics> &graphicsStore);
 
   ZBEAPI void JSONSpriteOGLModelSheetFileLoad(std::istream& is, std::shared_ptr<SDLOGLWindow> window, RsrcStore<OGLModelSheet<uint64_t, Vector2D, Vector2D>>& rsrcModelSheet, NameRsrcDictionary& nrd, RsrcStore<ImgDef>& rsrcImgDef);
+  
+  ZBEAPI void JSONParametricSpriteOGLModelSheetFileLoad(std::istream& is, std::shared_ptr<SDLOGLWindow> window, RsrcStore<OGLModelSheet<uint64_t, int64_t, int64_t, Vector2D, Vector2D>>& rsrcModelSheet, NameRsrcDictionary& nrd, RsrcStore<ImgDef>& rsrcImgDef);
 
   ZBEAPI void JSONLookAtOGLModelSheetFileLoad(std::istream& is, std::shared_ptr<SDLOGLWindow> window, NameRsrcDictionary& nrd, RsrcStore<zbe::OGLModelSheet<uint64_t, double, Vector3D, Vector3D, Vector3D> >& rsrcModelSheet, RsrcStore<OGLGraphics> &graphicsStore);
 

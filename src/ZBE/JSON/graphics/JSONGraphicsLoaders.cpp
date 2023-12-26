@@ -100,6 +100,38 @@ void JSONSpriteOGLModelSheetFileLoad(std::istream& is, std::shared_ptr<SDLOGLWin
   }
 }
 
+void JSONParametricSpriteOGLModelSheetFileLoad(std::istream& is, std::shared_ptr<SDLOGLWindow> window, RsrcStore<OGLModelSheet<uint64_t, int64_t, int64_t, Vector2D, Vector2D>>& rsrcModelSheet, NameRsrcDictionary& nrd, RsrcStore<ImgDef>& rsrcImgDef) {
+  using namespace nlohmann;
+  using namespace std::string_literals;
+  json j;
+  try {
+    is >> j;
+    std::string name = j["name"] ;
+    name = name + ".param"s;
+    json sprtDefs = j["sprtdefs"];
+    std::shared_ptr<ParametricSpriteOGLModelSheet> sprtSheet = std::make_shared<ParametricSpriteOGLModelSheet>(window);
+    // TODO : De momento solo vamos a soportar un sprite.
+    //for (auto sprtNode : sprtDefs) {
+    if (sprtDefs.is_array() && sprtDefs.size() >= 1) {
+      auto sprtNode = sprtDefs[0];
+      std::string stateName = sprtNode["name"];
+      SprtDef sprtDef = JSONSprtDefLoad(sprtNode, rsrcImgDef, nrd);
+      sprtSheet->setSprite(sprtDef);
+      if (sprtDefs.size() > 1) {
+        SysError::setError(std::string("ERROR: Invalid number of elements in sprtDefs"));
+      }
+    } else {
+      SysError::setError(std::string("ERROR: sprtDefs is empty"));
+    }
+    rsrcModelSheet.insert(name, sprtSheet);
+    auto gId = nrd.get(name);
+  } catch (json::parse_error &e) {
+    SysError::setError(std::string("JSONParametricSpriteOGLModelSheetFileLoad - ERROR: Json failed to parse: ") + std::string(e.what()));
+  } catch (nlohmann::detail::type_error &e) {
+    SysError::setError(std::string("JSONParametricSpriteOGLModelSheetFileLoad - ERROR: Json failed to load MultiSpriteSheet because: ") + std::string(e.what()));
+  }
+}
+
 void JSONMultiSpriteSheetFileLoad(std::istream& is, RsrcStore<zbe::SpriteSheet<uint64_t, int64_t, double, Vector2D, Vector2D> >& rsrcAnimSprt, NameRsrcDictionary& nrd, RsrcStore<zbe::OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> >& rsrcModelSheet, RsrcStore<ImgDef>& rsrcImgDef) {
   using namespace nlohmann;
   json j;

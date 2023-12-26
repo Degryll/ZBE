@@ -90,6 +90,7 @@
     "relative2DVelTicket" : 7102,
     "copyVelOnOriTicket" : 7200,
     "proyectOrientationTicket" : 7201,
+    "bloodincrementTicket" : 7202,
     "yawvectorIdx" : 8010,
     "pitchvectorIdx" : 8011,
     "rollvectorIdx" : 8012,
@@ -97,8 +98,13 @@
     "minPitchIdx" : 8040,
     "maxPitchIdx" : 8050,
     "jumpSpeedIdx" : 9000,
+    "currentbloodIdx" : 20001,
+    "maxbloodIdx" : 20002,
+    "minbloodIdx" : 20003,
+    "blooddecrementIdx" : 20004,
     "keepdistanceTicket" : 8060,
     "platformDisableListTicket" : 10001,
+    "deleteTicket" : 666666,
     "state.static" : 0,
     "testwflags": 0,
     "testrflags": 0,
@@ -134,8 +140,20 @@
     "model.sineComponent" : 0,
     "gravity" : {"type":"v3", "value":[0.0, -100.0, 0.0]},
     "bullet.speed" : {"type":"d", "value":800.0},
+
+
+    "hudcrossPosIdx" : 30001,
+    "hudcrossSizeIdx" : 30002,
+    "hudcrossGidIdx" : 30003,
+    "hudbloodbarPosIdx" : 30011,
+    "hudbloodbarSizeIdx" : 30012,
+    "hudbloodbarGidIdx" : 30013,
+    "hudcrossDrawticket" : 30101,
+    "hudbloodbarDrawticket" : 30102,
     "crosshairsPos" :{"type":"v2", "value":[0.0,0.0]},
     "crosshairsSize" :{"type":"v2", "value":[0.25,0.25]},
+    "bloodbarPos" :{"type":"v2", "value":[0.80, -0.90]},
+    "bloodbarSize" :{"type":"v2", "value":[0.35, 0.35]},
 
     "prota.forwardSpeed" : {"type":"v2", "value":[22.0, 0.0]},
     "prota.backwardSpeed" : {"type":"v2", "value":[-10.0, 0.0]},
@@ -146,8 +164,8 @@
     "velprotasur" :{"type":"d", "value":-160.0},
     "velprotaeste" :{"type":"d", "value":160.0},
     "velprotaoeste" :{"type":"d", "value":-160.0},
-    "velprotaarriba" :{"type":"d", "value":160.0},
-    "velprotaabajo" :{"type":"d", "value":-160.0},
+    "velprotaarriba" :{"type":"d", "value":240.0},
+    "velprotaabajo" :{"type":"d", "value":-240.0},
 
     "VOLANDO" : 0,
     "RODANDO" : 1
@@ -161,7 +179,11 @@
             "name" : "zandbokz",
             "config" : {
               "int" : {
-                "loadState" : ["mainInitialState"]
+                "loadState" : ["mainInitialState"],
+                "protaCurrentBlood" : 100,
+                "protaMaxBlood" : 100,
+                "protaMinBlood" : 0,
+                "shootbloodDecrement" : -1
               },
               "float" : {
                 "fov" : ["cam.fov"],
@@ -222,6 +244,12 @@
           "factory": "TFAECSimpleSpriteFtry",
           "description" : "do some serious sheet pero en dos de",
           "name": "loadScreen.drawList2D",
+          "config" : {}
+        },
+        {
+          "factory": "TFAECParamSpriteFtry",
+          "description" : "do some serious sheet pero en dos de",
+          "name": "loadScreen.drawList2Dparam",
           "config" : {}
         },
         {
@@ -321,6 +349,12 @@
           "config" : {}
         },
         {
+          "factory": "TFAEVoidFtry",
+          "description" : "delete castañas",
+          "name": "loadScreen.borracastañaslist",
+          "config" : {}
+        },
+        {
           "factory": "TFAECThreeV3DAvtFtry",
           "description" : "do some serious sam",
           "name": "loadScreen.BulletCreatorList",
@@ -384,6 +418,12 @@
           "factory": "TFAECDoubleTwoV3DFtry",
           "description" : "a platipus? perry the platipus!!!",
           "name": "loadScreen.keepdistancelist",
+          "config" : {}
+        },
+        {
+          "factory": "TFAEFourIntFtry",
+          "description" : "a platipus? perry the platipus!!!",
+          "name": "loadScreen.intincrementlist",
           "config" : {}
         },
         {
@@ -1310,7 +1350,7 @@
           "name" : "zandbokz.dropcastaña",
           "config" : {
             "contextTime":"DEFAULT",
-            "builders" : ["zandbokz.castañavalues", "zandbokz.castañaapintar", "zandbokz.castañaefimera", "zandbokz.castañapalante", "zandbokz.castañasolidosocializa", "zandbokz.castañachof"],
+            "builders" : ["zandbokz.castañavalues", "zandbokz.castañaapintar", "zandbokz.castañaefimera", "zandbokz.castañapalante", "zandbokz.castañasolidosocializa", "zandbokz.castañachof", "zandbokz.castañaseborra"],
             "Vector3D" : {
               "positionIdx" : "zandbokz.copypos3v",
               "orientationIdx" : "zandbokz.copyvel3v",
@@ -1489,10 +1529,10 @@
             },
             "double": {
               "radsIdx":[0.0],
-              "scaleIdx":[20.0]
+              "scaleIdx":[40.0]
             },
             "float": {
-              "sizeIdx":[20.0]
+              "sizeIdx":[40.0]
             },
             "V3D": {
               "orientationIdx":[10.5, 0.0, 0.5]
@@ -1515,6 +1555,13 @@
               "positionIdx":[0.0, -1000.0, 0.0],
               "upwardsIdx":[1.0, 0.0, 0.0]
             }
+          }
+        },
+        {
+          "factory" :"VoidAvtBldrFtry",
+          "name" : "zandbokz.castañaseborra",
+          "config" : {
+            "lists":{"loadScreen.borracastañaslist":"deleteTicket"}
           }
         },
         {
@@ -1598,7 +1645,7 @@
                           "zandbokz.protacalculaori", "zandbokz.protamirapaondebe", "zandbokz.protaorientationcalcbuild", 
                           "zandbokz.protadispara", "zandbokz.protadisparasuena", "zandbokz.protaacaer",  "zandbokz.protafinalvel", 
                           "zandbokz.protasaltar", "zandbokz.protafisica3d", "zandbokz.protaamoverenplano", "zandbokz.protaattachonoff",
-                          "zandbokz.protaInator2D", "zandbokz.protacalcula2dori", "zandbokz.protacalcula2DVel"],
+                          "zandbokz.protaInator2D", "zandbokz.protacalcula2dori", "zandbokz.protacalcula2DVel", "loadScreen.protapierdevida"],
             "buildersback" : []
           }
         },
@@ -1608,6 +1655,12 @@
           "config" : {
             "uint": {
               "gidIdx":["pelota"]
+            },
+            "int": {
+              "currentbloodIdx" : "zandbokz.protaCurrentBlood",
+              "maxbloodIdx" : "zandbokz.protaMaxBlood",
+              "minbloodIdx" : "zandbokz.protaMinBlood",
+              "blooddecrementIdx" : "zandbokz.shootbloodDecrement"
             },
             "double": {
               "radsIdx":[0.0],
@@ -1728,6 +1781,15 @@
           "config" : {
             "attribIndexes" : ["upwardsIdx", "orientationIdx", "positionIdx"],
             "lists":{"loadScreen.BulletCreatorList":"BulletCreatorTicket"},
+            "deactivatedlists":{}
+          }
+        },
+        {"factory": "FourIntAvtBldrFtry",
+          "name": "loadScreen.protapierdevida",
+          "description" : "",
+          "config" : {
+            "attribIndexes" : ["maxbloodIdx", "minbloodIdx", "blooddecrementIdx", "currentbloodIdx"],
+            "lists":{"loadScreen.intincrementlist":"bloodincrementTicket"},
             "deactivatedlists":{}
           }
         },
@@ -1917,16 +1979,23 @@
           }
         },
         {"factory": "EntityFtry",
-          "name": "crosshairs",
+          "name": "HUD",
           "description" : "Entidad asociada a la mirilla",
           "config" : {
             "contextTime":"DEFAULT",
             "V2D": {
-              "positionIdx":["crosshairsPos"],
-              "sizeIdx":["crosshairsSize"]
+              "hudcrossPosIdx":["crosshairsPos"],
+              "hudcrossSizeIdx":["crosshairsSize"],
+              "hudbloodbarPosIdx":["bloodbarPos"],
+              "hudbloodbarSizeIdx":["bloodbarSize"]
             },
             "uint": {
-              "gidIdx":["img.loadScreen.crosshairs"]
+              "hudcrossGidIdx":["img.loadScreen.crosshairs"],
+              "hudbloodbarGidIdx":["img.loadScreen.vida.param"]
+            },
+            "int": {
+              "currentbloodIdx" : "zandbokz.protaCurrentBlood",
+              "maxbloodIdx" : "zandbokz.protaMaxBlood"
             }
           }
         }
@@ -2076,6 +2145,14 @@
             "programId" : "base_program2D"
           }
         },
+        {"factory": "OGLParametricSpriteSheetDrawerFtry",
+          "name": "loadScreen.screenDrawer2DParametric",
+          "description" : "comportamiento que pintara la pantalla. Faltan tipos",
+          "config" : {
+            "window" : "zandbokz.mainwindow",
+            "programId" : "base_program2D"
+          }
+        },
         {"factory": "Sound3DOALPlayerFtry",
           "name": "loadScreen.audioplayer",
           "description" : "comportamiento que reproduce sonidos",
@@ -2136,6 +2213,24 @@
             "list" : "loadScreen.attachcajaonofflist",
             "behavior" : "loadScreen.dettachcajadeactivations"
           }
+        },
+        {"factory": "BoundedAddIntBvr",
+          "name": "zandbokz.intincrementBvr",
+          "description" : "comportamiento suma uibt",
+          "config" : {}
+        },
+        {"factory": "FourIntBhvrDmnFtry",
+          "name": "loadScreen.intincrementDaemon",
+          "description" : "",
+          "config" : {
+            "list" : "loadScreen.intincrementlist",
+            "behavior" : "zandbokz.intincrementBvr"
+          }
+        },
+        {"factory": "EraseEnityBhvFtry",
+          "name": "zandbokz.borracastañasbvr",
+          "description" : "comportamiento borra castañas",
+          "config" : {}
         },
         {"factory": "TicketActivatorBvrFtry",
           "name": "loadScreen.attachcajaactivations",
@@ -2325,14 +2420,6 @@
             "DaemonMaster" : "BehaviorsMD"
           }
         },
-        {"factory": "OnceDaemonFtry",
-          "name": "loadScreen.OnceBulletCreatorDmn",
-          "description" : "demonio girara la camara una vez y se va",
-          "config" : {
-            "Daemon" : "loadScreen.masterShot",
-            "DaemonMaster" : "BehaviorsMD"
-          }
-        },
         {"factory": "FourV3DTwoFDaemonFtry",
           "name": "loadScreen.pitchDaemon",
           "description" : "demonio girara la camara",
@@ -2362,6 +2449,8 @@
           "description" : "",
           "config" : {
             "daemons": [
+              "loadScreen.intincrementDaemon",
+              "loadScreen.chofdaemonborra",
               "loadScreen.chofdaemona",
               "loadScreen.chofdaemonb"
             ]
@@ -2383,6 +2472,14 @@
             "function" : "zandbokz.dropcuajaronb"
           }
         },
+        {"factory": "VoidBvrDmnFtry",
+          "name": "loadScreen.chofdaemonborra",
+          "description" : "demonio limpia la sangre",
+          "config" : {
+            "list" : "loadScreen.borracastañaslist",
+            "behavior" : "zandbokz.borracastañasbvr"
+          }
+        },
         {"factory": "FunctOverAvtList2VDmnFtry",
           "name": "loadScreen.shotSuena",
           "description" : "demonio caga castañas",
@@ -2396,6 +2493,7 @@
           "description" : "demonio que lanza castañas y suena",
           "config" : {
             "daemons": [
+              "loadScreen.intincrementDaemon",
               "loadScreen.shotDaemon",
               "loadScreen.shotSuena"
             ]
@@ -2408,6 +2506,7 @@
             "daemons": [
               "loadScreen.audioplayerDaemon",
               "loadScreen.drawDaemon2D",
+              "loadScreen.drawDaemon2Dparam",
               "loadScreen.shadersSetter2D",
               "loadScreen.drawDaemon3D",
               "loadScreen.drawLookAtDaemon3D",
@@ -2454,6 +2553,14 @@
           "config" : {
             "list" : "loadScreen.drawList2D",
             "behavior" : "loadScreen.screenDrawer2D"
+          }
+        },
+        {"factory": "ParamSpriteDrwrDaemonFtry",
+          "name": "loadScreen.drawDaemon2Dparam",
+          "description" : "demonio que pintara la pantalla en 2D. Faltan tipos",
+          "config" : {
+            "list" : "loadScreen.drawList2Dparam",
+            "behavior" : "loadScreen.screenDrawer2DParametric"
           }
         },
         {"factory": "OALPlayerDaemon",
@@ -2596,9 +2703,17 @@
         {"factory": "DrawableSimple2DAvtFtry",
           "name": "loadScreen.crosshairsavt",
           "config" : {
-            "entity" : "crosshairs",
-            "attribIndexes" : ["gidIdx", "sizeIdx", "positionIdx"],
-            "lists":{"loadScreen.drawList2D":"drawticket"}
+            "entity" : "HUD",
+            "attribIndexes" : ["hudcrossGidIdx", "hudcrossSizeIdx", "hudcrossPosIdx"],
+            "lists":{"loadScreen.drawList2D":"hudcrossDrawticket"}
+          }
+        },
+        {"factory": "DrawableParam2DAvtFtry",
+          "name": "loadScreen.bloodbaravt",
+          "config" : {
+            "entity" : "HUD",
+            "attribIndexes" : ["hudbloodbarGidIdx", "currentbloodIdx", "maxbloodIdx", "hudbloodbarSizeIdx", "hudbloodbarPosIdx"],
+            "lists":{"loadScreen.drawList2Dparam":"hudbloodbarDrawticket"}
           }
         },
         {"factory": "FourV3DTwoFAvtFtry",
@@ -2714,10 +2829,10 @@
             "key":"ZBEK_MOUSE_OFFSET_X"
           }
         },
-        {"factory": "ActivatorIHFtry",
+        {"factory": "DaemonIHFtry",
           "name": "loadScreen.BulletCreatorIH",
           "config" : {
-            "ticket" : "BehaviorsMD.loadScreen.OnceBulletCreatorDmn.ticket",
+            "daemon" : "loadScreen.masterShot",
             "inputEventGenerator" : "loadScreen.inputEventGenerator",
             "key":"ZBEK_MOUSE_LEFT"
           }

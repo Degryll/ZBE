@@ -240,6 +240,7 @@ public:
 private:
   std::shared_ptr<SDLOGLWindow> window = nullptr;
   RsrcStore<OGLModelSheet<uint64_t, Vector2D, Vector2D>> &rsrcModelSheet = RsrcStore<OGLModelSheet<uint64_t, Vector2D, Vector2D>>::getInstance();
+  RsrcStore<OGLModelSheet<uint64_t, int64_t, int64_t, Vector2D, Vector2D>> &rsrcParamModelSheet = RsrcStore<OGLModelSheet<uint64_t, int64_t, int64_t, Vector2D, Vector2D>>::getInstance();
   RsrcStore<ImgDef> &rsrcImgDef = RsrcStore<ImgDef>::getInstance();
   NameRsrcDictionary& nrd = NameRsrcDictionary::getInstance();
 };

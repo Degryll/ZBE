@@ -48,6 +48,7 @@ void DaemonIHFtry::setup(std::string name, uint64_t cfgId) {
 
       bool haskey = j["key"].is_string();
       bool hasIeg = j["inputEventGenerator"].is_string();
+      bool hasValue = j["value"].is_number_float();
 
       if(haskey != hasIeg) {
         if (!hasIeg) {
@@ -57,6 +58,11 @@ void DaemonIHFtry::setup(std::string name, uint64_t cfgId) {
           SysError::setError("DaemonIHFtry config for key: "s + j["key"].get<std::string>() + ": must be a key name."s);
           return;
         }
+      }
+
+      if(hasValue) {
+        float val = j["value"].get<float>();
+        ih->setValue(val);
       }
 
       if(haskey) {

@@ -1451,8 +1451,6 @@ struct BuildUpDirToRadsBldr : public Funct<std::shared_ptr<Value<double>>, std::
     // ["upwardsIdx", "orientationIdx", "positionIdx"],
     Vector3D ori = AvtUtil::get<2, Vector3D>(avt)->get() * -1.0;
     Vector3D upwards = AvtUtil::get<3, Vector3D>(avt)->get();
-    printf("oirentacion %lf, %lf, %lf\n", ori.x, ori.y, ori.z);fflush(stdout);
-    printf("upwards %lf, %lf, %lf\n", upwards.x, upwards.y, upwards.z);fflush(stdout);
 
     glm::vec3 gori{ori.x, ori.y, ori.z};
     glm::vec3 gupwards{upwards.x, upwards.y, upwards.z};
@@ -1460,8 +1458,6 @@ struct BuildUpDirToRadsBldr : public Funct<std::shared_ptr<Value<double>>, std::
     glm::vec3 rotationAxis;
     double rotationAngle;
     combineRotations(baseOri, baseUpw, gupwards, gori, rotationAxis, rotationAngle);
-    printf("rotationAxis %lf, %lf, %lf\n", rotationAxis.x, rotationAxis.y, rotationAxis.z);fflush(stdout);
-    printf("rotationAngle %lf\n", rotationAngle);fflush(stdout);
     return std::make_shared<SimpleValue<double>>(rotationAngle);
   }
 

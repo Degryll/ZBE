@@ -30,7 +30,6 @@ public:
   void apply(std::shared_ptr<MAvatar<Vector3D, Vector3D, double>> avatar) {
     auto vsize = avatar->get<1, double>();
     auto vsrc  = avatar->get<2, Vector3D>();
-    //auto vdest = avatar->get<2, Vector3D>();
 
     auto src = vsrc->get();
     auto size = vsize->get();
@@ -40,6 +39,33 @@ public:
   }
 };
 
+template<typename T>
+class BoundedAddBvr : virtual public Behavior<T, T, T, T> {
+public:
+  void apply(std::shared_ptr<MAvatar<T, T, T, T>> avatar) {
+    auto vcurrent = AvtUtil::get<1, T>(avatar);
+    auto vincrement = AvtUtil::get<2, T>(avatar);
+    auto vmin = AvtUtil::get<3, T>(avatar);
+    auto vmax = AvtUtil::get<4, T>(avatar);
+
+    auto current = vcurrent->get();
+    auto increment = vincrement->get();
+    auto min = vmin->get();
+    auto max = vmax->get();
+
+    //printf("current %ld increment %ld min %ld max %ld \n", current, increment, min, max);fflush(stdout);
+    current = current + increment;
+    //printf("current %ld\n", current);fflush(stdout);
+    if(current>max) {
+      current = max;
+    }
+
+    if(current<min) {
+      current = min;
+    }
+    vcurrent->set(current);
+  }
+};
 template<typename T>
 class ValueSetterFixedBvr : virtual public Behavior<T> {
 public:

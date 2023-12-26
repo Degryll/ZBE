@@ -1,0 +1,11 @@
+{
+  "name": "img.loadScreen.vida",
+  "sprtdefs" : [
+    {
+      "name" : "static",
+      "img" : "loadScreen.vida",
+      "scale" : [1.0, 1.0],
+      "drawOffset" : [0.0, 0.0]
+    }
+  ]
+}

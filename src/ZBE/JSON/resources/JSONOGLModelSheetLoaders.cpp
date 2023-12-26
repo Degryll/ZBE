@@ -28,6 +28,8 @@ namespace zbe {
   void JSONSpriteOGLModelSheetLoader::load(std::filesystem::path filePath) {
     std::ifstream ifs(filePath);
     JSONGraphicsLoaders::JSONSpriteOGLModelSheetFileLoad(ifs, window, rsrcModelSheet, nrd, rsrcImgDef);
+    std::ifstream ifs2(filePath);
+    JSONGraphicsLoaders::JSONParametricSpriteOGLModelSheetFileLoad(ifs2, window, rsrcParamModelSheet, nrd, rsrcImgDef);
   }
 
   /** \brief Load an image

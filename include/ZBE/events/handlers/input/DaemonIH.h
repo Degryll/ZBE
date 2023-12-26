@@ -28,7 +28,7 @@ public:
   /** \brief Constructs a DaemonIH from a daemon.
  	 *  \param daemon daemon to be executed.
 	 */
-	DaemonIH() : d(nullptr) {}
+	DaemonIH() : d(nullptr), value(1.0f) {}
 
   /** \brief Constructs a DaemonIH from a daemon.
 	 *  \param daemon daemon to be executed.
@@ -42,15 +42,25 @@ public:
 		this->d = daemon;
 	}
 
+	/** \brief set the Daemon to be called.
+	 *  \param daemon The Daemon.
+	 */
+  void setValue(float value){
+		this->value = value;
+	}
+
 	/** \brief run daemon.
 	 *  \param state not used
 	 */
-	void run(uint32_t, float) {
-    d->run();
+	void run(uint32_t, float inval) {
+		if (almost_equal(inval, value)) {
+    	d->run();
+		}
 	}
 
 private:
 	std::shared_ptr<Daemon> d;
+	float value;
 };
 
 }  // namespace zbe
