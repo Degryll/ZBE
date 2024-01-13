@@ -22,8 +22,8 @@
     "timeEventId" : 1,
     "mainInitialState" : 0,
     "mainExitState" : 1,
-    "loadScreen.toMenu": 1,
-    "loadScreen.loadTime" : 262144,
+    "zandbokz.toMenu": 1,
+    "zandbokz.loadTime" : 262144,
     "TODOindices":""
   },
   "phases":[
@@ -47,7 +47,7 @@
         {
           "factory": "TFAECAnimSprtFtry",
           "description" : "do some serious sheet",
-          "name": "loadScreen.drawList",
+          "name": "zandbokz.drawList",
           "config" : {}
         },
         {
@@ -123,7 +123,7 @@
           },
           "config" : {
             "uint": {
-              "gidIdx":["img.loadScreen.background"]
+              "gidIdx":["img.zandbokz.background"]
             },
             "int": {
               "stateIdx":["state.static"]
@@ -153,47 +153,47 @@
         {"factory": "MainLoopFtry",
           "name": "zandbokz.MainLoop",
           "config" : {
-            "preDaemon":"loadScreen.PreDaemon",
+            "preDaemon":"zandbokz.PreDaemon",
             "preDaemonDesc":"done",
-            "eventDaemon":"loadScreen.eventGenerator",
+            "eventDaemon":"zandbokz.eventGenerator",
             "eventDaemonDesc":"done",
             "commonDaemon":"DEFAULT",
             "commonDaemonDesc":"nada?vacio?",
             "reactDaemon":"DEFAULT",
             "reactDaemonDesc":"si hay evento de tiempo: se llama al exit... pero esto lo hace el eventStore.manage(): que esto se queda vacio",
-            "drawDaemon":"loadScreen.drawDaemon",
+            "drawDaemon":"zandbokz.drawDaemon",
             "drawDaemonDesc":"Pues a pintar la pantalla de carga",
-            "postDaemon":"loadScreen.PostDaemon",
+            "postDaemon":"zandbokz.PostDaemon",
             "postDaemonDesc":"Hacer cosas de sdl",
             "contextTime":"DEFAULT",
             "contextTimeDesc":"el systime"
           }
         },
         {"factory": "SDLSysTimeFtry",
-          "name": "loadScreen.SDLSysTime",
+          "name": "zandbokz.SDLSysTime",
           "config" : {}
         },
         {"factory": "BasicPreLoopSDLDaemonFtry",
-          "name": "loadScreen.PreDaemon",
+          "name": "zandbokz.PreDaemon",
           "config" : {
             "window" : "zandbokz.mainwindow"
           }
         },
         {"factory": "BasicPostLoopSDLDaemonFtry",
-          "name": "loadScreen.PostDaemon",
+          "name": "zandbokz.PostDaemon",
           "config" : {
             "window" : "zandbokz.mainwindow"
           }
         },
         {"factory": "TimeEventGnFtry",
-          "name": "loadScreen.eventGenerator",
+          "name": "zandbokz.eventGenerator",
           "config" : {
             "eventId" : "timeEventId",
             "contextTime" : "DEFAULT"
           }
         },
         {"factory": "MainLoopExitFtry",
-          "name": "loadScreen.exitDaemon",
+          "name": "zandbokz.exitDaemon",
           "config" : {
             "mainloop" : "zandbokz.MainLoop",
             "valueHolder" : "zandbokz.loadState",
@@ -201,35 +201,35 @@
           }
         },
         {"factory": "DaemonTimeHandlerFtry",
-          "name": "loadScreen.exitHandler",
+          "name": "zandbokz.exitHandler",
           "config" : {
-            "generator" : "loadScreen.eventGenerator",
-            "time" : "loadScreen.loadTime",
-            "dmn" : "loadScreen.exitDaemon"
+            "generator" : "zandbokz.eventGenerator",
+            "time" : "zandbokz.loadTime",
+            "dmn" : "zandbokz.exitDaemon"
           }
         },
         {"factory": "SpriteSheetSDLDrawerFtry",
-          "name": "loadScreen.screenDrawer",
+          "name": "zandbokz.screenDrawer",
           "description" : "comportamiento que pintara la pantalla. Faltan tipos",
           "config" : {
             "window" : "zandbokz.mainwindow"
           }
         },
         {"factory": "DrawerAnimSprtFtry",
-          "name": "loadScreen.drawDaemon",
+          "name": "zandbokz.drawDaemon",
           "description" : "demonio que pintara la pantalla. Faltan tipos",
           "config" : {
-            "list" : "loadScreen.drawList",
-            "behavior" : "loadScreen.screenDrawer"
+            "list" : "zandbokz.drawList",
+            "behavior" : "zandbokz.screenDrawer"
           }
         },
         {"factory": "Drawable2DAvtFtry",
-          "name": "loadScreen.bgEnt",
+          "name": "zandbokz.bgEnt",
           "cosas" : "uint64_t, int64_t, double, Vector2D, Vector2D",
           "config" : {
             "entity" : "loadingLogo",
             "attribIndexes" : ["gidIdx", "stateIdx", "degreesIdx", "sizeIdx", "positionIdx"],
-            "lists":{"loadScreen.drawList":"drawticket"}
+            "lists":{"zandbokz.drawList":"drawticket"}
           }
         }
       ]

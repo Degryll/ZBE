@@ -53,9 +53,9 @@ public:
     auto min = vmin->get();
     auto max = vmax->get();
 
-    //printf("current %ld increment %ld min %ld max %ld \n", current, increment, min, max);fflush(stdout);
+    printf("current %ld increment %ld min %ld max %ld \n", current, increment, min, max);fflush(stdout);
     current = current + increment;
-    //printf("current %ld\n", current);fflush(stdout);
+    printf("current %ld\n", current);fflush(stdout);
     if(current>max) {
       current = max;
     }

@@ -74,7 +74,7 @@ int main(int /*argc*/, char** /*argv*/) {
 
     // Flujo del juego
       // Llamar a la primera carga de factorias basicas. (CommonFactories)
-      // Cargar primera aplicacion: LoadScreen.
+      // Cargar primera aplicacion: zandbokz.
         // Devolvera un demonio que cargara lo minimo para:
           // Pintar un pantalla de carga
             // Instanciar pintadores

@@ -30,8 +30,8 @@
     "timeEventId" : 1,
     "mainInitialState" : 0,
     "mainExitState" : 1,
-    "loadScreen.toMenu": 1,
-    "loadScreen.loadTime" : 2621440,
+    "zandbokz.toMenu": 1,
+    "zandbokz.loadTime" : 2621440,
     "cam.fov" :{"type":"f", "value":90.0},
     "cam.aspect" :{"type":"f", "value":1.333333},
     "cam.znear" :{"type":"f", "value":1.0},
@@ -77,24 +77,24 @@
         {
           "factory": "TFAECModelFtry",
           "description" : "do some serious sheet",
-          "name": "loadScreen.drawList",
+          "name": "zandbokz.drawList",
           "config" : {}
         },
         {
           "factory": "TFAECFloatAvtFtry",
           "description" : "do some serious sheet",
-          "name": "loadScreen.fovOscillatorList",
+          "name": "zandbokz.fovOscillatorList",
           "config" : {}
         },
         {
           "factory": "TFAECFloatAvtFtry",
           "description" : "do some serious sheet",
-          "name": "loadScreen.coordOscillatorList",
+          "name": "zandbokz.coordOscillatorList",
           "config" : {}
         },
         {
           "factory": "CameraFtry",
-          "name": "loadScreen.cam",
+          "name": "zandbokz.cam",
           "config" : {
             "eye" : "zandbokz.camEye",
             "target" : "zandbokz.camTarget",
@@ -236,57 +236,57 @@
           "name": "Behaviors",
           "config" : {
             "daemons": [
-              "loadScreen.fovOscillatorDaemon",
-              "loadScreen.coordOscillatorDaemon"
+              "zandbokz.fovOscillatorDaemon",
+              "zandbokz.coordOscillatorDaemon"
             ]
           }
         },
         {"factory": "MainLoopFtry",
           "name": "zandbokz.MainLoop",
           "config" : {
-            "preDaemon":"loadScreen.PreDaemon",
+            "preDaemon":"zandbokz.PreDaemon",
             "preDaemonDesc":"done",
-            "eventDaemon":"loadScreen.eventGenerator",
+            "eventDaemon":"zandbokz.eventGenerator",
             "eventDaemonDesc":"done",
             "commonDaemon":"Behaviors",
             "commonDaemonDesc":"nada?vacio?",
             "reactDaemon":"DEFAULT",
             "reactDaemonDesc":"si hay evento de tiempo: se llama al exit... pero esto lo hace el eventStore.manage(): que esto se queda vacio",
-            "drawDaemon":"loadScreen.drawDaemon",
+            "drawDaemon":"zandbokz.drawDaemon",
             "drawDaemonDesc":"Pues a pintar la pantalla de carga",
-            "postDaemon":"loadScreen.PostDaemon",
+            "postDaemon":"zandbokz.PostDaemon",
             "postDaemonDesc":"Hacer cosas de sdl",
             "contextTime":"DEFAULT",
             "contextTimeDesc":"el systime"
           }
         },
         {"factory": "SDLSysTimeFtry",
-          "name": "loadScreen.SDLSysTime",
+          "name": "zandbokz.SDLSysTime",
           "config" : {}
         },
         {"factory": "OGLPreDrawFtry",
-          "name": "loadScreen.PreDaemon",
+          "name": "zandbokz.PreDaemon",
           "config" : {
             "window" : "zandbokz.mainwindow",
-            "camera" : "loadScreen.cam",
+            "camera" : "zandbokz.cam",
             "programId": "base_program"
           }
         },
         {"factory": "OGLPostDrawFtry",
-          "name": "loadScreen.PostDaemon",
+          "name": "zandbokz.PostDaemon",
           "config" : {
             "window" : "zandbokz.mainwindow"
           }
         },
         {"factory": "TimeEventGnFtry",
-          "name": "loadScreen.eventGenerator",
+          "name": "zandbokz.eventGenerator",
           "config" : {
             "eventId" : "timeEventId",
             "contextTime" : "DEFAULT"
           }
         },
         {"factory": "MainLoopExitFtry",
-          "name": "loadScreen.exitDaemon",
+          "name": "zandbokz.exitDaemon",
           "config" : {
             "mainloop" : "zandbokz.MainLoop",
             "valueHolder" : "zandbokz.loadState",
@@ -294,15 +294,15 @@
           }
         },
         {"factory": "DaemonTimeHandlerFtry",
-          "name": "loadScreen.exitHandler",
+          "name": "zandbokz.exitHandler",
           "config" : {
-            "generator" : "loadScreen.eventGenerator",
-            "time" : "loadScreen.loadTime",
-            "dmn" : "loadScreen.exitDaemon"
+            "generator" : "zandbokz.eventGenerator",
+            "time" : "zandbokz.loadTime",
+            "dmn" : "zandbokz.exitDaemon"
           }
         },
         {"factory": "OGLModelSheetDrawerFtry",
-          "name": "loadScreen.screenDrawer",
+          "name": "zandbokz.screenDrawer",
           "description" : "comportamiento que pintara la pantalla. Faltan tipos",
           "config" : {
             "window" : "zandbokz.mainwindow",
@@ -310,7 +310,7 @@
           }
         },
         {"factory": "SineOscillatorFtry",
-          "name": "loadScreen.fovOscillator",
+          "name": "zandbokz.fovOscillator",
           "description" : "Comportamiento que menea el fov",
           "config" : {
             "min" : "cam.fovMin",
@@ -320,7 +320,7 @@
           }
         },
         {"factory": "SineOscillatorFtry",
-          "name": "loadScreen.coordOscillator",
+          "name": "zandbokz.coordOscillator",
           "description" : "Comportamiento que menea el obojeto",
           "config" : {
             "min" : "model.coordMin",
@@ -330,43 +330,43 @@
           }
         },
         {"factory": "DrawerModelDaemonFtry",
-          "name": "loadScreen.drawDaemon",
+          "name": "zandbokz.drawDaemon",
           "description" : "demonio que pintara la pantalla. Faltan tipos",
           "config" : {
-            "list" : "loadScreen.drawList",
-            "behavior" : "loadScreen.screenDrawer"
+            "list" : "zandbokz.drawList",
+            "behavior" : "zandbokz.screenDrawer"
           }
         },
         {"factory": "FloatAvtDaemonFtry",
-          "name": "loadScreen.fovOscillatorDaemon",
+          "name": "zandbokz.fovOscillatorDaemon",
           "description" : "demonio que menea el fov",
           "config" : {
-            "list" : "loadScreen.fovOscillatorList",
-            "behavior" : "loadScreen.fovOscillator"
+            "list" : "zandbokz.fovOscillatorList",
+            "behavior" : "zandbokz.fovOscillator"
           }
         },
         {"factory": "FloatAvtDaemonFtry",
-          "name": "loadScreen.coordOscillatorDaemon",
+          "name": "zandbokz.coordOscillatorDaemon",
           "description" : "demonio que menea el fov",
           "config" : {
-            "list" : "loadScreen.coordOscillatorList",
-            "behavior" : "loadScreen.coordOscillator"
+            "list" : "zandbokz.coordOscillatorList",
+            "behavior" : "zandbokz.coordOscillator"
           }
         },
         {"factory": "Drawable3DAvtFtry",
-          "name": "loadScreen.bgEnt",
+          "name": "zandbokz.bgEnt",
           "config" : {
             "entity" : "loadingLogo",
             "attribIndexes" : ["gidIdx", "scaleIdx", "degreesIdx", "orientationIdx", "positionIdx"],
-            "lists":{"loadScreen.drawList":"drawticket"}
+            "lists":{"zandbokz.drawList":"drawticket"}
           }
         },
         {"factory": "FloatAvtFtry",
-          "name": "loadScreen.camFov",
+          "name": "zandbokz.camFov",
           "config" : {
             "entity" : "cameraController",
             "attribIndexes" : ["fovIdx"],
-            "lists":{"loadScreen.fovOscillatorList":"fovticket"}
+            "lists":{"zandbokz.fovOscillatorList":"fovticket"}
           }
         }
       ]

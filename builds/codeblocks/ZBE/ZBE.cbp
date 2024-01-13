@@ -677,7 +677,6 @@
 		<Unit filename="../../../src/ZBE/factories/implementations/events/handlers/input/DaemonClickIHFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/events/handlers/input/DaemonIHFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/events/handlers/input/InputToValueFtry.cpp" />
-		<Unit filename="../../../src/ZBE/factories/implementations/events/handlers/time/DaemonRecurrentTimeHandlerFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/events/handlers/time/DaemonTimeHandlerFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/events/handlers/time/TicketEraserFtry.cpp" />
 		<Unit filename="../../../src/ZBE/glTF/resources/GlTFResourceLoader.cpp" />

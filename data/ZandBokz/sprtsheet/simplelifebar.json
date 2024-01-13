@@ -1,9 +1,9 @@
 {
-  "name": "img.loadScreen.simplelifebar",
+  "name": "img.zandbokz.simplelifebar",
   "sprtdefs" : [
     {
       "name" : "static",
-      "img" : "loadScreen.simplelifebar",
+      "img" : "zandbokz.simplelifebar",
       "scale" : [1.0, 1.0],
       "drawOffset" : [0.0, 0.0]
     }

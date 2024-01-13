@@ -1,9 +1,9 @@
 {
-  "name": "img.loadScreen.vida",
+  "name": "img.zandbokz.vida",
   "sprtdefs" : [
     {
       "name" : "static",
-      "img" : "loadScreen.vida",
+      "img" : "zandbokz.vida",
       "scale" : [1.0, 1.0],
       "drawOffset" : [0.0, 0.0]
     }

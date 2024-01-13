@@ -12,6 +12,7 @@
 
 #include <cstdint>
 #include <memory>
+#include <cmath>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -193,7 +194,10 @@ public:
     int64_t max = avatar->get<3, int64_t>()->get();
     int64_t current = avatar->get<4, int64_t>()->get();
 
-    int64_t frame = ((spriteDefintion.img.frameAmount*current) / max) - 1;
+
+    double maxFrame = (double)(spriteDefintion.img.frameAmount - 1);  // Max index frame. IE: 24 frames = 0..23
+    double valueRatio = max/maxFrame;
+    int64_t frame = ceil(current / valueRatio);
     //printf("Current %ld max %ld frame %ld\n", current, max, frame);fflush(stdout);
     Point2D p = spriteDefintion.img.texCoord.p + (spriteDefintion.img.texCoordOffset *  frame);
     //printf("P ( %lf,  %lf) = (%lf, %lf) + ((%lf, %lf) * %ld)\n", p.x, p.y, spriteDefintion.img.texCoord.p.x, spriteDefintion.img.texCoord.p.y, spriteDefintion.img.texCoordOffset.x, spriteDefintion.img.texCoordOffset.y , frame);fflush(stdout);

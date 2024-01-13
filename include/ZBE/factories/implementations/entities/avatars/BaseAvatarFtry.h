@@ -96,16 +96,6 @@ void BaseAvatarFtry<T>::create(std::string name, uint64_t) {
   baseAvatarStore.insert("BaseAvatar."s + name, avt);
 }
 
-/*
-{"factory": "BaseAvatarFtryV3D_V3D_UINT",
-  "name": "loadScreen.bgEnt",
-  "config" : {
-    "entity": "myEntity",
-    "attribIndexes": ["Attribs.pos","Attribs.vel","Attribs.graphics"],
-    "lists" : {"loadScreen.drawList":"tickets.drawList","loadScreen.drawListB":"tickets.drawListB"},
-  }
-}
-*/
 
 template<typename T, typename... Ts>
 void BaseAvatarFtry<T, Ts...>::setup(std::string name, uint64_t cfgId) {

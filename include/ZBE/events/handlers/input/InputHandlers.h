@@ -119,17 +119,6 @@ private:
 
 
 
-/*
-            "orientation2DIdx" : "orientation2DIdx",
-            "velocity2DIdx" : "velocity2DIdx",
-            "velocity2DsrcIds" : "velocity2DRightSrcIdx",
-            "inputEventGenerator" : "loadScreen.inputEventGenerator",
-            "key":"ZBEK_d",
-            "multiplier" : "-1",
-            "tolerance" : "0.01",
-            "down" : true
-*/
-
 template<unsigned dim>
 class AddVelIHBldrFtry : public Factory {
 

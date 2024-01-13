@@ -26,7 +26,6 @@
 #include "ZBE/factories/implementations/events/handlers/input/DaemonClickIHFtry.h"
 #include "ZBE/factories/implementations/events/handlers/input/DaemonIHFtry.h"
 #include "ZBE/factories/implementations/events/handlers/input/InputToValueFtry.h"
-#include "ZBE/factories/implementations/events/handlers/time/DaemonRecurrentTimeHandlerFtry.h"
 #include "ZBE/factories/implementations/events/handlers/time/DaemonTimeHandlerFtry.h"
 #include "ZBE/factories/implementations/events/handlers/time/TicketEraserFtry.h"
 #include "ZBE/factories/implementations/events/handlers/actuators/DmnSelectorAtorFtry.h"
@@ -40,6 +39,7 @@
 #include "ZBE/events/handlers/input/CommonInputHandlers.h"
 #include "ZBE/events/handlers/input/InputHandlers.h"
 #include "ZBE/events/handlers/time/EntityEraser.h"
+#include "ZBE/events/handlers/time/DaemonRecurrentTimeHandler.h"
 
 #include "ZBE/core/events/generators/InputEventGenerator.h"
 #include "ZBE/core/tools/shared/implementations/SimpleValue.h"
@@ -128,6 +128,7 @@ public:
     factories.insert("BroadcastIHFtry", std::make_shared<BroadcastIHFtry>());
     factories.insert("DaemonClickIHFtry", std::make_shared<DaemonClickIHFtry>());
     factories.insert("DaemonIHFtry", std::make_shared<DaemonIHFtry>());
+    factories.insert("ConditionalIntDaemonIHFtry", std::make_shared<ConditionalDaemonIHFtry<int64_t>>());
     factories.insert("InputToValueFtry", std::make_shared<InputToValueFtry>());
     factories.insert("TicketTogglerIHFtry", std::make_shared<TicketTogglerIHFtry>());
     factories.insert("ParametricActivatorIHFtry", std::make_shared<ParametricActivatorIHFtry>());
@@ -139,13 +140,12 @@ public:
 
 
     // --- --- Event time handlers
-    factories.insert("DaemonRecurrentTimeHandlerFtry", std::make_shared<DaemonRecurrentTimeHandlerFtry>());
     factories.insert("DaemonTimeHandlerFtry", std::make_shared<DaemonTimeHandlerFtry>());
     factories.insert("TicketEraserFtry", std::make_shared<TicketEraserFtry>());
     factories.insert("EntityEraserTHFtry", std::make_shared<EntityEraserTHFtry>());
     factories.insert("EntityEraserTHBldrFtry", std::make_shared<GenericFtry<Funct<std::shared_ptr<TimeHandler>, std::shared_ptr<Entity>>, EntityEraserTHBldr> >(factories::functionName, "EntityEraserTHBldr"));
     factories.insert("EntityTimerBldrFtry", std::make_shared<EntityTimerBldrFtry>());
-
+    factories.insert("DaemonRecurrentTHBldrFtry", std::make_shared<DaemonRecurrentTHBldrFtry>());
 
     // --- --- creators
     factories.insert("BulletCreatorFtry", std::make_shared<BulletCreatorFtry>());

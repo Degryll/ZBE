@@ -55,6 +55,7 @@
     "pointBIdx" : 1320,
     "pointCIdx" : 1330,
     "lifespan" : 662144,
+    "bloodrestTime" : 512,
     "fovIdx" : 3100,
     "targetIdx" : 3200,
     "upwardsIdx" : 3300,
@@ -68,7 +69,8 @@
     "pitchCorrectionTicket" :3801,
     "camPitchTicket" :3900,
     "bullet.speedIdx" : 4000,
-    "timeHandlerTicket" : 4100,
+    "lifeSpanTHTicket" : 4100,
+    "bloodfillerTHTicket" : 4101,
     "audioTicket" : 5000,
     "sourcestateIdx" : 5010,
     "sourceIdx" : 5020,
@@ -91,6 +93,7 @@
     "copyVelOnOriTicket" : 7200,
     "proyectOrientationTicket" : 7201,
     "bloodincrementTicket" : 7202,
+    "blooddecrementTicket" : 7203,
     "yawvectorIdx" : 8010,
     "pitchvectorIdx" : 8011,
     "rollvectorIdx" : 8012,
@@ -102,6 +105,7 @@
     "maxbloodIdx" : 20002,
     "minbloodIdx" : 20003,
     "blooddecrementIdx" : 20004,
+    "bloodincrementIdx" : 20005,
     "keepdistanceTicket" : 8060,
     "platformDisableListTicket" : 10001,
     "deleteTicket" : 666666,
@@ -114,8 +118,8 @@
     "interaction2DEventId" : 43,
     "mainInitialState" : 0,
     "mainExitState" : 1,
-    "loadScreen.toMenu": 1,
-    "loadScreen.loadTime" : 26214400,
+    "zandbokz.toMenu": 1,
+    "zandbokz.loadTime" : 26214400,
     "cam.fov" :{"type":"f", "value":90.0},
     "cam.scale" :{"type":"f", "value":50.0},
     "cam.aspect" :{"type":"f", "value":1.6666666},
@@ -183,7 +187,8 @@
                 "protaCurrentBlood" : 100,
                 "protaMaxBlood" : 100,
                 "protaMinBlood" : 0,
-                "shootbloodDecrement" : -1
+                "shootbloodDecrement" : -1,
+                "restbloodIncrement" : 1
               },
               "float" : {
                 "fov" : ["cam.fov"],
@@ -225,210 +230,216 @@
         {
           "factory": "TFAECModelFtry",
           "description" : "do some serious sheet",
-          "name": "loadScreen.drawList",
+          "name": "zandbokz.drawList",
           "config" : {}
         },
         {
           "factory": "TFAECLookAtAvtFtry",
           "description" : "do some serious sheet",
-          "name": "loadScreen.drawLookAtList",
+          "name": "zandbokz.drawLookAtList",
           "config" : {}
         },
         {
           "factory": "TFAEC3DOn2DAvtFtry",
           "description" : "do some serious sheet",
-          "name": "loadScreen.moveOnPlaneList",
+          "name": "zandbokz.moveOnPlaneList",
           "config" : {}
         },
         {
           "factory": "TFAECSimpleSpriteFtry",
           "description" : "do some serious sheet pero en dos de",
-          "name": "loadScreen.drawList2D",
+          "name": "zandbokz.drawList2D",
           "config" : {}
         },
         {
           "factory": "TFAECParamSpriteFtry",
           "description" : "do some serious sheet pero en dos de",
-          "name": "loadScreen.drawList2Dparam",
+          "name": "zandbokz.drawList2Dparam",
           "config" : {}
         },
         {
           "factory": "TFOALAvtFtry",
           "description" : "lista para audio",
-          "name": "loadScreen.audiolist",
+          "name": "zandbokz.audiolist",
           "config" : {}
         },
         {
           "factory": "TFAECFourV3DTwoFAvtFtry",
           "description" : "do some serious sheet",
-          "name": "loadScreen.pitchList",
+          "name": "zandbokz.pitchList",
           "config" : {}
         },
         {
           "factory": "TFAECThreeV3DAvtFtry",
           "description" : "do some serious sheet",
-          "name": "loadScreen.yawList",
+          "name": "zandbokz.yawList",
           "config" : {}
         },
         {
           "factory": "TFAECFloatAvtFtry",
           "description" : "do some serious sheet",
-          "name": "loadScreen.fovOscillatorList",
+          "name": "zandbokz.fovOscillatorList",
           "config" : {}
         },
         {
           "factory": "TFAECV3DAvtFtry",
           "description" : "do some serious sheet",
-          "name": "loadScreen.coordOscillatorList",
+          "name": "zandbokz.coordOscillatorList",
           "config" : {}
         },
         {
           "factory": "DoubleTFAECTwoV3DAvtFtry",
           "description" : "do some serious sheet",
-          "name": "loadScreen.saltaList",
+          "name": "zandbokz.saltaList",
           "config" : {}
         },
         {
           "factory": "DoubleTFAECTwoV3DAvtFtry",
           "description" : "do some serious sheet",
-          "name": "loadScreen.bajaList",
+          "name": "zandbokz.bajaList",
           "config" : {}
         },
         {
           "factory": "TFAECThreeV3DAvtFtry",
           "description" : "do some serious sheet",
-          "name": "loadScreen.camMoveList",
+          "name": "zandbokz.camMoveList",
           "config" : {}
         },
         {
           "factory": "TFAECThreeV3DAvtFtry",
           "description" : "do some serious sheet",
-          "name": "loadScreen.camFollowList",
+          "name": "zandbokz.camFollowList",
           "config" : {}
         },
         {
           "factory": "TFAECTwoV3DAvtFtry",
           "description" : "Uniform linear motion list",
-          "name": "loadScreen.ULM3DList",
+          "name": "zandbokz.ULM3DList",
           "config" : {}
         },
         {
           "factory": "TFAECTwoV3DAvtFtry",
           "description" : "Gravity motion list",
-          "name": "loadScreen.gmList",
+          "name": "zandbokz.gmList",
           "config" : {}
         },
         {
           "factory": "TFAECThreeV3DAvtFtry",
           "description" : "2 Vel accum list",
-          "name": "loadScreen.twovelaccumlist",
+          "name": "zandbokz.twovelaccumlist",
           "config" : {}
         },
         {
           "factory": "TFAECV2DThreeV3DAvtFtry",
           "description" : "2 Vel accum list",
-          "name": "loadScreen.pryectaOrientatonlist",
+          "name": "zandbokz.pryectaOrientatonlist",
           "config" : {}
         },
         {
           "factory": "TFAECFourV3DAvtFtry",
           "description" : "2 Vel accum list",
-          "name": "loadScreen.calculaorilist",
+          "name": "zandbokz.calculaorilist",
           "config" : {}
         },
         {
           "factory": "TFAECTwoV3DAvtFtry",
           "description" : "Vel to ori list",
-          "name": "loadScreen.vel2orilist",
+          "name": "zandbokz.vel2orilist",
           "config" : {}
         },
         {
           "factory": "TFAECThreeV3DAvtFtry",
           "description" : "do some serious sam",
-          "name": "loadScreen.cuajaronCreatorList",
+          "name": "zandbokz.cuajaronCreatorList",
           "config" : {}
         },
         {
           "factory": "TFAEVoidFtry",
           "description" : "delete castañas",
-          "name": "loadScreen.borracastañaslist",
+          "name": "zandbokz.borracastañaslist",
           "config" : {}
         },
         {
           "factory": "TFAECThreeV3DAvtFtry",
           "description" : "do some serious sam",
-          "name": "loadScreen.BulletCreatorList",
+          "name": "zandbokz.BulletCreatorList",
           "config" : {}
         },
         {
           "factory": "TFAECTwoV3DAvtFtry",
           "description" : "do some serious sam",
-          "name": "loadScreen.SoundCreatorList",
+          "name": "zandbokz.SoundCreatorList",
           "config" : {}
         },
         {
           "factory": "TFAEVoidFtry",
           "description" : "do some serious sam",
-          "name": "loadScreen.attachcajaonofflist",
+          "name": "zandbokz.attachcajaonofflist",
           "config" : {}
         },
         {
           "factory": "TFAEVoidFtry",
           "description" : "do some serious sam",
-          "name": "loadScreen.dettachcajadisableplatformslist",
+          "name": "zandbokz.dettachcajadisableplatformslist",
           "config" : {}
         },
         {
           "factory": "InatorListFtry",
           "description" : "a platipus? perry the platipus!!!",
-          "name": "loadScreen.inatorList",
+          "name": "zandbokz.inatorList",
           "config" : {}
         },
         {
           "factory": "InerListFtry",
           "description" : "a platipus? perry the platipus!!!",
-          "name": "loadScreen.inerList",
+          "name": "zandbokz.inerList",
           "config" : {}
         },
         {
           "factory": "Inator2DListFtry",
           "description" : "a platipus? perry the platipus!!!",
-          "name": "loadScreen.inator2DList",
+          "name": "zandbokz.inator2DList",
           "config" : {}
         },
         {
           "factory": "Iner2DListFtry",
           "description" : "a platipus? perry the platipus!!!",
-          "name": "loadScreen.iner2DList",
+          "name": "zandbokz.iner2DList",
           "config" : {}
         },
         {
           "factory": "TFAECTwoDoubleThreeV3DFtry",
           "description" : "a platipus? perry the platipus!!!",
-          "name": "loadScreen.velsetterlist",
+          "name": "zandbokz.velsetterlist",
           "config" : {}
         },
         {
           "factory": "TFAECTwoDoubleTwoV2DFtry",
           "description" : "a platipus? perry the platipus!!!",
-          "name": "loadScreen.vel2dsetterlist",
+          "name": "zandbokz.vel2dsetterlist",
           "config" : {}
         },
         {
           "factory": "TFAECDoubleTwoV3DFtry",
           "description" : "a platipus? perry the platipus!!!",
-          "name": "loadScreen.keepdistancelist",
+          "name": "zandbokz.keepdistancelist",
           "config" : {}
         },
         {
           "factory": "TFAEFourIntFtry",
           "description" : "a platipus? perry the platipus!!!",
-          "name": "loadScreen.intincrementlist",
+          "name": "zandbokz.blooddecrementlist",
+          "config" : {}
+        },
+        {
+          "factory": "TFAEFourIntFtry",
+          "description" : "a platipus? perry the platipus!!!",
+          "name": "zandbokz.bloodincrementlist",
           "config" : {}
         },
         {
           "factory": "CameraFtry",
-          "name": "loadScreen.cam",
+          "name": "zandbokz.cam",
           "config" : {
             "eye" : "zandbokz.camEye",
             "target" : "zandbokz.protaPos",
@@ -453,7 +464,7 @@
           }
         },
         {"factory": "TimeEventGnFtry",
-          "name": "loadScreen.timeEventGenerator",
+          "name": "zandbokz.timeEventGenerator",
           "config" : {
             "eventId" : "timeEventId",
             "contextTime" : "DEFAULT"
@@ -464,14 +475,14 @@
       "description" : "Creating resource loaders.",
       "factories" : [
         { "factory": "KeyMouseEventWatcherFtry",
-          "name":"loadScreen.KBMWatcher",
+          "name":"zandbokz.KBMWatcher",
           "config" : {
             "window" : "zandbokz.mainwindow",
             "contextTime" : "DEFAULT"
           }
         },
         { "factory": "InputEventGeneratorFtry",
-          "name":"loadScreen.inputEventGenerator",
+          "name":"zandbokz.inputEventGenerator",
           "config" : {
             "eventId":"inputEventId",
             "contextTime":"DEFAULT",
@@ -613,18 +624,18 @@
       "description" : "Daemons needed for entity creation",
       "factories" : [
         {"factory": "TicketDeactivatorBvrFtry",
-          "name": "loadScreen.dettachcajadisableplatforms",
+          "name": "zandbokz.dettachcajadisableplatforms",
           "description" : "comportamiento desactiva todos los planos",
           "config" : {
             "tickets" : ["iner2DTicket"]
           }
         },
         {"factory": "VoidBvrDmnFtry",
-          "name": "loadScreen.dettachcajadisableplatformsDaemon",
+          "name": "zandbokz.dettachcajadisableplatformsDaemon",
           "description" : "",
           "config" : {
-            "list" : "loadScreen.dettachcajadisableplatformslist",
-            "behavior" : "loadScreen.dettachcajadisableplatforms"
+            "list" : "zandbokz.dettachcajadisableplatformslist",
+            "behavior" : "zandbokz.dettachcajadisableplatforms"
           }
         }
       ]
@@ -661,7 +672,7 @@
           "name" : "zandbokz.thirdviewcammove",
           "config" : {
             "attribIndexes" : ["velocityIdx", "positionIdx"],
-            "lists":{ "loadScreen.ULM3DList":"ULM3DTicket"},
+            "lists":{ "zandbokz.ULM3DList":"ULM3DTicket"},
             "deactivatedlists":{}
           }
         },
@@ -698,7 +709,7 @@
           "name" : "zandbokz.pepinoapintar",
           "config" : {
             "attribIndexes" : ["gidIdx", "scaleIdx", "radsIdx", "orientationIdx", "positionIdx"],
-            "lists":{"loadScreen.drawList":"drawticket"}
+            "lists":{"zandbokz.drawList":"drawticket"}
           }
         },
         {
@@ -706,7 +717,7 @@
           "name" : "zandbokz.pepinoabailar",
           "config" : {
             "attribIndexes" : ["positionIdx"],
-            "lists":{"loadScreen.coordOscillatorList":"positionTicket"}
+            "lists":{"zandbokz.coordOscillatorList":"positionTicket"}
           }
         },
         {
@@ -1076,14 +1087,14 @@
           "name" : "zandbokz.diositoapintar",
           "config" : {
             "attribIndexes" : ["gidIdx", "scaleIdx", "radsIdx", "orientationIdx", "positionIdx"],
-            "lists":{"loadScreen.drawList":"drawticket"}
+            "lists":{"zandbokz.drawList":"drawticket"}
           }
         },
         {
           "factory" :"VoidAvtBldrFtry",
           "name" : "zandbokz.diositodesactiva",
           "config" : {
-            "lists":{"loadScreen.dettachcajadisableplatformslist":"platformDisableListTicket"}
+            "lists":{"zandbokz.dettachcajadisableplatformslist":"platformDisableListTicket"}
           }
         },
         {
@@ -1094,7 +1105,7 @@
             "actorbuilder" : "zandbokz.actordiosito",
             "reactorbuilder" : "zandbokz.reactordiosito",
             "shapebuilder" : "zandbokz.aspectodiostriangular",
-            "lists" : {"loadScreen.inerList":"inerTicket"}
+            "lists" : {"zandbokz.inerList":"inerTicket"}
           }
         },
         {
@@ -1105,7 +1116,7 @@
             "actorbuilder" : "zandbokz.actordiosito2D",
             "reactorbuilder" : "zandbokz.reactordiosito2D",
             "shapebuilder" : "zandbokz.aspectodiostriangular2D",
-            "deactivatedlists" : {"loadScreen.iner2DList":"iner2DTicket"}
+            "deactivatedlists" : {"zandbokz.iner2DList":"iner2DTicket"}
           }
         },
         {
@@ -1244,7 +1255,7 @@
           "name" : "zandbokz.suena",
           "config" : {
             "attribIndexes" : ["sourceIdx", "sourcestateIdx", "soundstateIdx", "orientationIdx", "positionIdx"],
-            "lists":{"loadScreen.audiolist":"audioTicket"}
+            "lists":{"zandbokz.audiolist":"audioTicket"}
           }
         },
         {
@@ -1318,7 +1329,7 @@
           "name" : "zandbokz.cuajaronapintar",
           "config" : {
             "attribIndexes" : ["gidIdx", "scaleIdx", "radsIdx", "orientationIdx", "positionIdx"],
-            "lists":{"loadScreen.drawList":"drawticket"}
+            "lists":{"zandbokz.drawList":"drawticket"}
           }
         },
         {
@@ -1329,7 +1340,7 @@
             "actorbuilder" : "zandbokz.actordiosito",
             "reactorbuilder" : "zandbokz.reactordiosito",
             "shapebuilder" : "zandbokz.aspectodiostriangular",
-            "lists" : {"loadScreen.inerList":"inerTicket"}
+            "lists" : {"zandbokz.inerList":"inerTicket"}
           }
         },
         {
@@ -1340,7 +1351,7 @@
             "actorbuilder" : "zandbokz.actordiosito2D",
             "reactorbuilder" : "zandbokz.reactordiosito2D",
             "shapebuilder" : "zandbokz.aspectodiostriangular2D",
-            "deactivatedlists" : {"loadScreen.iner2DList":"iner2DTicket"}
+            "deactivatedlists" : {"zandbokz.iner2DList":"iner2DTicket"}
           }
         },
 
@@ -1460,14 +1471,14 @@
           "factory" : "Solid2DDaemonRctBldrFtry",
           "name" : "zandbokz.reaccionprotaechaplanosdelistas2D",
           "config" : {
-            "daemon":"loadScreen.dettachcajadisableplatformsDaemon"
+            "daemon":"zandbokz.dettachcajadisableplatformsDaemon"
           }
         },
         {
           "factory" : "PlatforDaemonRctBldrFtry",
           "name" : "zandbokz.reaccionprotaechaplanosdelistas",
           "config" : {
-            "daemon":"loadScreen.dettachcajadisableplatformsDaemon"
+            "daemon":"zandbokz.dettachcajadisableplatformsDaemon"
           }
         },
         {
@@ -1491,6 +1502,58 @@
             "reactionBuilders" : ["zandbokz.reaccionplanoentraenlistas"]
           }
         },
+        {"factory": "BoundedAddIntBvr",
+          "name": "zandbokz.intincrementBvr",
+          "description" : "comportamiento suma uibt",
+          "config" : {}
+        },
+        {"factory": "FourIntBhvrDmnFtry",
+          "name": "zandbokz.intincrementDaemon",
+          "description" : "",
+          "config" : {
+            "list" : "zandbokz.blooddecrementlist",
+            "behavior" : "zandbokz.intincrementBvr"
+          }
+        },
+        
+        {"factory": "FourIntAvtBldrFtry",
+          "name": "zandbokz.protaganasangre",
+          "description" : "",
+          "config" : {
+            "attribIndexes" : ["maxbloodIdx", "minbloodIdx", "bloodincrementIdx", "currentbloodIdx"],
+            "lists":{"zandbokz.bloodincrementlist":"bloodincrementTicket"},
+            "deactivatedlists":{}
+          }
+        },
+        {"factory": "FourIntBhvrDmnFtry",
+          "name": "zandbokz.bloodfillerDmn",
+          "description" : "",
+          "config" : {
+            "list" : "zandbokz.bloodincrementlist",
+            "behavior" : "zandbokz.intincrementBvr"
+          }
+        },
+        {
+          "factory" : "DaemonRecurrentTHBldrFtry",
+          "name" : "zandbokz.bloodfillerth",
+          "config" : {
+            "daemon" : "zandbokz.bloodfillerDmn",
+            "teg" : "zandbokz.timeEventGenerator",
+            "ticketId" : "bloodfillerTHTicket",
+            "period" : "bloodrestTime"
+          }
+        },
+        {
+          "factory" : "EntityTimerBldrFtry",
+          "name" : "zandbokz.protarecuperasangre",
+          "config" : {
+            "handlerbuilder":"zandbokz.bloodfillerth",
+            "teg" : "zandbokz.timeEventGenerator",
+            "time" : "bloodrestTime",
+            "ticketId" : "bloodfillerTHTicket",
+            "contextTime" : "DEFAULT"
+          }
+        },
         {
           "factory" : "PrintfPlatformRctBldrFtry",
           "name" : "zandbokz.reaccionplanoentraprint",
@@ -1511,9 +1574,9 @@
           "name" : "zandbokz.castañaefimera",
           "config" : {
             "handlerbuilder":"zandbokz.borrator",
-            "teg" : "loadScreen.timeEventGenerator",
+            "teg" : "zandbokz.timeEventGenerator",
             "time" : "lifespan",
-            "ticketId" : "timeHandlerTicket",
+            "ticketId" : "lifeSpanTHTicket",
             "contextTime" : "DEFAULT"
           }
         },
@@ -1561,7 +1624,7 @@
           "factory" :"VoidAvtBldrFtry",
           "name" : "zandbokz.castañaseborra",
           "config" : {
-            "lists":{"loadScreen.borracastañaslist":"deleteTicket"}
+            "lists":{"zandbokz.borracastañaslist":"deleteTicket"}
           }
         },
         {
@@ -1569,7 +1632,7 @@
           "name" : "zandbokz.castañaapintar",
           "config" : {
             "attribIndexes" : ["gidIdx", "scaleIdx", "upwardsIdx", "orientationIdx", "positionIdx"],
-            "lists":{"loadScreen.drawLookAtList":"drawticket"}
+            "lists":{"zandbokz.drawLookAtList":"drawticket"}
           }
         },
         {
@@ -1577,7 +1640,7 @@
           "name" : "zandbokz.castañapalante",
           "config" : {
             "attribIndexes" : ["orientationIdx", "positionIdx"],
-            "lists":{"loadScreen.ULM3DList":"ULM3DTicket"}
+            "lists":{"zandbokz.ULM3DList":"ULM3DTicket"}
           }
         },
         {
@@ -1585,7 +1648,7 @@
           "name" : "zandbokz.diositopalante",
           "config" : {
             "attribIndexes" : ["velocityIdx", "positionIdx"],
-            "lists":{"loadScreen.ULM3DList":"ULM3DTicket"}
+            "lists":{"zandbokz.ULM3DList":"ULM3DTicket"}
           }
         },
         {
@@ -1620,9 +1683,9 @@
             "actorbuilder" : "zandbokz.actorcastañasolido",
             "reactorbuilder" : "zandbokz.reactorcastañasolido",
             "shapebuilder" : "zandbokz.aspectocastañasolido",
-            "interactioners" : "loadScreen.inerList",
+            "interactioners" : "zandbokz.inerList",
             "inerlists" : {},
-            "inatorlists" :{"loadScreen.inatorList" : "inatorTicket"}
+            "inatorlists" :{"zandbokz.inatorList" : "inatorTicket"}
           }
         },
         {
@@ -1645,7 +1708,8 @@
                           "zandbokz.protacalculaori", "zandbokz.protamirapaondebe", "zandbokz.protaorientationcalcbuild", 
                           "zandbokz.protadispara", "zandbokz.protadisparasuena", "zandbokz.protaacaer",  "zandbokz.protafinalvel", 
                           "zandbokz.protasaltar", "zandbokz.protafisica3d", "zandbokz.protaamoverenplano", "zandbokz.protaattachonoff",
-                          "zandbokz.protaInator2D", "zandbokz.protacalcula2dori", "zandbokz.protacalcula2DVel", "loadScreen.protapierdevida"],
+                          "zandbokz.protaInator2D", "zandbokz.protacalcula2dori", "zandbokz.protacalcula2DVel", "zandbokz.protapierdesangre",
+                          "zandbokz.protaganasangre","zandbokz.protarecuperasangre"],
             "buildersback" : []
           }
         },
@@ -1660,7 +1724,9 @@
               "currentbloodIdx" : "zandbokz.protaCurrentBlood",
               "maxbloodIdx" : "zandbokz.protaMaxBlood",
               "minbloodIdx" : "zandbokz.protaMinBlood",
-              "blooddecrementIdx" : "zandbokz.shootbloodDecrement"
+              "blooddecrementIdx" : "zandbokz.shootbloodDecrement",
+              "bloodincrementIdx" : "zandbokz.restbloodIncrement"
+
             },
             "double": {
               "radsIdx":[0.0],
@@ -1706,7 +1772,7 @@
           "name" : "zandbokz.protaapintar",
           "config" : {
             "attribIndexes" : ["gidIdx", "scaleIdx", "upwardsIdx", "orientationIdx", "positionIdx"],
-            "lists":{"loadScreen.drawLookAtList":"drawticket"}
+            "lists":{"zandbokz.drawLookAtList":"drawticket"}
           }
         },
         {
@@ -1715,7 +1781,7 @@
           "config" : {
             "attribIndexes" : ["velocityIdx", "positionIdx"],
             "lists":{
-              "loadScreen.ULM3DList":"ULM3DTicket"
+              "zandbokz.ULM3DList":"ULM3DTicket"
             }
           }
         },
@@ -1724,7 +1790,7 @@
           "name" : "zandbokz.protacalculavel",
           "config" : {
             "attribIndexes" : ["velocityLateralIdx", "velocityForwardIdx", "velocityPre1Idx", "upwardsIdx","cameraorientationIdx"],
-            "lists":{"loadScreen.velsetterlist" : "relativeVelTicket"},
+            "lists":{"zandbokz.velsetterlist" : "relativeVelTicket"},
             "deactivatedlists":{}
           }
         },
@@ -1733,7 +1799,7 @@
           "name" : "zandbokz.protacalcula2DVel",
           "config" : {
             "attribIndexes" : ["velocityLateralIdx", "velocityForwardIdx", "velocity2DIdx", "orientation2DIdx"],
-            "lists":{"loadScreen.vel2dsetterlist" : "relative2DVelTicket"},
+            "lists":{"zandbokz.vel2dsetterlist" : "relative2DVelTicket"},
             "deactivatedlists":{}
           }
         },
@@ -1742,7 +1808,7 @@
           "name" : "zandbokz.protacalculaori",
           "config" : {
             "attribIndexes" : ["velocityLateralIdx", "velocityForwardIdx", "orientationPreIdx", "upwardsIdx","cameraorientationIdx"],
-            "lists":{"loadScreen.velsetterlist" : "relativeOriTicket"},
+            "lists":{"zandbokz.velsetterlist" : "relativeOriTicket"},
             "deactivatedlists":{}
           }
         },
@@ -1752,7 +1818,7 @@
           "config" : {
             "attribIndexes" : ["upwardsIdx", "camposIdx", "positionIdx", "cameraorientationIdx"],
             "lists":{
-              "loadScreen.calculaorilist":"protaOrientationListTicket"
+              "zandbokz.calculaorilist":"protaOrientationListTicket"
             },
             "deactivatedlists":{
             }
@@ -1763,7 +1829,7 @@
           "name" : "zandbokz.protamirapaondebe",
           "config" : {
             "attribIndexes" : ["orientationIdx", "orientationPreIdx"],
-            "lists":{ "loadScreen.vel2orilist":"copyVelOnOriTicket"}
+            "lists":{ "zandbokz.vel2orilist":"copyVelOnOriTicket"}
           }
         },
 
@@ -1772,7 +1838,7 @@
           "name" : "zandbokz.protacalcula2dori",
           "config" : {
             "attribIndexes" : ["orientation2DIdx", "orientationIdx", "e2Idx", "e1Idx"],
-            "lists":{ "loadScreen.pryectaOrientatonlist":"proyectOrientationTicket"}
+            "lists":{ "zandbokz.pryectaOrientatonlist":"proyectOrientationTicket"}
           }
         },
         {
@@ -1780,16 +1846,16 @@
           "name" : "zandbokz.protadispara",
           "config" : {
             "attribIndexes" : ["upwardsIdx", "orientationIdx", "positionIdx"],
-            "lists":{"loadScreen.BulletCreatorList":"BulletCreatorTicket"},
+            "lists":{"zandbokz.BulletCreatorList":"BulletCreatorTicket"},
             "deactivatedlists":{}
           }
         },
         {"factory": "FourIntAvtBldrFtry",
-          "name": "loadScreen.protapierdevida",
+          "name": "zandbokz.protapierdesangre",
           "description" : "",
           "config" : {
             "attribIndexes" : ["maxbloodIdx", "minbloodIdx", "blooddecrementIdx", "currentbloodIdx"],
-            "lists":{"loadScreen.intincrementlist":"bloodincrementTicket"},
+            "lists":{"zandbokz.blooddecrementlist":"blooddecrementTicket"},
             "deactivatedlists":{}
           }
         },
@@ -1798,7 +1864,7 @@
           "name" : "zandbokz.castañachof",
           "config" : {
             "attribIndexes" : ["upwardsIdx", "orientationIdx", "positionIdx"],
-            "lists":{"loadScreen.cuajaronCreatorList":"ChofCreatorTicket"},
+            "lists":{"zandbokz.cuajaronCreatorList":"ChofCreatorTicket"},
             "deactivatedlists":{}
           }
         },
@@ -1807,7 +1873,7 @@
           "name" : "zandbokz.protadisparasuena",
           "config" : {
             "attribIndexes" : ["orientationIdx", "positionIdx"],
-            "lists":{"loadScreen.SoundCreatorList":"SoundCreatorTicket"},
+            "lists":{"zandbokz.SoundCreatorList":"SoundCreatorTicket"},
             "deactivatedlists":{}
           }
         },
@@ -1818,7 +1884,7 @@
             "attribIndexes" : ["velocityPre2Idx", "positionIdx"],
             "lists":{},
             "deactivatedlists":{},
-            "listsBack":{"loadScreen.gmList":"gmTicket"}
+            "listsBack":{"zandbokz.gmList":"gmTicket"}
           }
         },
         {
@@ -1827,7 +1893,7 @@
           "config" : {
             "attribIndexes" : ["velocityPre2Idx", "velocityPre1Idx", "velocityIdx"],
             "lists":{
-              "loadScreen.twovelaccumlist":"twoVelaccumListTicket"
+              "zandbokz.twovelaccumlist":"twoVelaccumListTicket"
             },
             "deactivatedlists":{
             }
@@ -1839,7 +1905,7 @@
           "config" : {
             "attribIndexes" : ["velocityPre2Idx", "upwardsIdx", "jumpSpeedIdx"],
             "lists":{
-              "loadScreen.saltaList":"saltaListTicket"
+              "zandbokz.saltaList":"saltaListTicket"
             }
           }
         },
@@ -1850,9 +1916,9 @@
             "actorbuilder" : "zandbokz.actorprotasolido",
             "reactorbuilder" : "zandbokz.reactorprotasolido",
             "shapebuilder" : "zandbokz.aspectoprotasolido",
-            "interactioners" : "loadScreen.inerList",
-            "inerlists" : {"loadScreen.inerList":"inerTicket"},
-            "inatorlists" :{"loadScreen.inatorList" : "inatorTicket"}
+            "interactioners" : "zandbokz.inerList",
+            "inerlists" : {"zandbokz.inerList":"inerTicket"},
+            "inatorlists" :{"zandbokz.inatorList" : "inatorTicket"}
           }
         },
         {
@@ -1891,7 +1957,7 @@
           "config" : {
             "attribIndexes" : ["ballRadIdx", "velocity2DIdx", "position2DIdx", "velocityIdx", "positionIdx", "e2Idx", "e1Idx", "planePosIdx"],
             "deactivatedlists":{
-              "loadScreen.moveOnPlaneList":"ULM3DOn2DTicket"
+              "zandbokz.moveOnPlaneList":"ULM3DOn2DTicket"
             }
           }
         },
@@ -1899,7 +1965,7 @@
           "factory" :"VoidAvtBldrFtry",
           "name" : "zandbokz.protaattachonoff",
           "config" : {
-            "lists":{"loadScreen.attachcajaonofflist":"attachonofticket"}
+            "lists":{"zandbokz.attachcajaonofflist":"attachonofticket"}
           }
         },
         {
@@ -1909,9 +1975,9 @@
             "actorbuilder" : "zandbokz.actorprotaolido2D",
             "reactorbuilder" : "zandbokz.reactorprotasolido2D",
             "shapebuilder" : "zandbokz.aspectoprotapunto",
-            "interactioners" : "loadScreen.iner2DList",
-            "inerlists" : {"loadScreen.iner2DList":"iner2DTicket"},
-            "inatorlists" :{"loadScreen.inator2DList" : "inator2DTicket"}
+            "interactioners" : "zandbokz.iner2DList",
+            "inerlists" : {"zandbokz.iner2DList":"iner2DTicket"},
+            "inatorlists" :{"zandbokz.inator2DList" : "inator2DTicket"}
           }
         },
         {
@@ -1990,8 +2056,8 @@
               "hudbloodbarSizeIdx":["bloodbarSize"]
             },
             "uint": {
-              "hudcrossGidIdx":["img.loadScreen.crosshairs"],
-              "hudbloodbarGidIdx":["img.loadScreen.vida.param"]
+              "hudcrossGidIdx":["img.zandbokz.crosshairs"],
+              "hudbloodbarGidIdx":["img.zandbokz.vida.param"]
             },
             "int": {
               "currentbloodIdx" : "zandbokz.protaCurrentBlood",
@@ -2013,13 +2079,13 @@
           }
         },
         {"factory": "MasterDmnFtry",
-          "name": "loadScreen.eventGenerator",
+          "name": "zandbokz.eventGenerator",
           "config" : {
             "daemons": [
-              "loadScreen.timeEventGenerator",
-              "loadScreen.inputEventGenerator",
-              "loadScreen.interactionEventGenerator",
-              "loadScreen.interactionEventGenerator2D"
+              "zandbokz.timeEventGenerator",
+              "zandbokz.inputEventGenerator",
+              "zandbokz.interactionEventGenerator",
+              "zandbokz.interactionEventGenerator2D"
             ]
           }
         },
@@ -2027,26 +2093,26 @@
           "name": "BehaviorsMD",
           "config" : {
             "daemons": [
-              "loadScreen.relativevelDmn",
-              "loadScreen.relative2dvelDmn",
-              "loadScreen.fovOscillatorDaemon",
-              "loadScreen.coordOscillatorDaemon",
-              "loadScreen.cajaponvelocidadsaltoDmn",
-              "loadScreen.calculaprotavelDMN",
-              "loadScreen.proyectaorientacionDMN",
-              "loadScreen.vel2oriDMN",
-              "loadScreen.ULM3DOn2DDaemon",
-              "loadScreen.2velAccumDMN",
-              "loadScreen.ULM3DDaemon",
-              "loadScreen.gravityDMN",
-              "loadScreen.keepdistanceDmn"
+              "zandbokz.relativevelDmn",
+              "zandbokz.relative2dvelDmn",
+              "zandbokz.fovOscillatorDaemon",
+              "zandbokz.coordOscillatorDaemon",
+              "zandbokz.cajaponvelocidadsaltoDmn",
+              "zandbokz.calculaprotavelDMN",
+              "zandbokz.proyectaorientacionDMN",
+              "zandbokz.vel2oriDMN",
+              "zandbokz.ULM3DOn2DDaemon",
+              "zandbokz.2velAccumDMN",
+              "zandbokz.ULM3DDaemon",
+              "zandbokz.gravityDMN",
+              "zandbokz.keepdistanceDmn"
             ],
             "disabledDaemons": [
-              "loadScreen.goForwardDaemon",
-              "loadScreen.goBackwardDaemon",
-              "loadScreen.goLeftDaemon",
-              "loadScreen.goRightDaemon",
-              "loadScreen.masterShot"
+              "zandbokz.goForwardDaemon",
+              "zandbokz.goBackwardDaemon",
+              "zandbokz.goLeftDaemon",
+              "zandbokz.goRightDaemon",
+              "zandbokz.masterShot"
             ],
             "backDaemons" : [
             ]
@@ -2055,58 +2121,58 @@
         {"factory": "MainLoopFtry",
           "name": "zandbokz.MainLoop",
           "config" : {
-            "preDaemon":"loadScreen.PreDaemon",
+            "preDaemon":"zandbokz.PreDaemon",
             "preDaemonDesc":"done",
-            "eventDaemon":"loadScreen.eventGenerator",
+            "eventDaemon":"zandbokz.eventGenerator",
             "eventDaemonDesc":"done",
             "commonDaemon":"BehaviorsMD",
             "commonDaemonDesc":"nada?vacio?",
             "reactDaemon":"DEFAULT",
             "reactDaemonDesc":"si hay evento de tiempo: se llama al exit... pero esto lo hace el eventStore.manage(): que esto se queda vacio",
-            "drawDaemon":"loadScreen.masterDrawDaemon",
+            "drawDaemon":"zandbokz.masterDrawDaemon",
             "drawDaemonDesc":"Pues a pintar la pantalla de carga",
-            "postDaemon":"loadScreen.PostDaemon",
+            "postDaemon":"zandbokz.PostDaemon",
             "postDaemonDesc":"Hacer cosas de sdl",
             "contextTime":"DEFAULT",
             "contextTimeDesc":"el systime"
           }
         },
         {"factory": "SDLSysTimeFtry",
-          "name": "loadScreen.SDLSysTime",
+          "name": "zandbokz.SDLSysTime",
           "config" : {}
         },
         {"factory": "OGLPreDrawFtry",
-          "name": "loadScreen.PreDaemon",
+          "name": "zandbokz.PreDaemon",
           "config" : {
             "window" : "zandbokz.mainwindow",
-            "camera" : "loadScreen.cam",
+            "camera" : "zandbokz.cam",
             "programId": "base_program"
           }
         },
         {"factory": "OGLPostDrawFtry",
-          "name": "loadScreen.PostDaemon",
+          "name": "zandbokz.PostDaemon",
           "config" : {
             "window" : "zandbokz.mainwindow"
           }
         },
         {"factory": "IEG3DFtry",
-          "name": "loadScreen.interactionEventGenerator",
+          "name": "zandbokz.interactionEventGenerator",
           "config" : {
             "eventId" : "interactionEventId",
             "contextTime" : "DEFAULT",
-            "interactionators" : "loadScreen.inatorList"
+            "interactionators" : "zandbokz.inatorList"
           }
         },
         {"factory": "IEG2DFtry",
-          "name": "loadScreen.interactionEventGenerator2D",
+          "name": "zandbokz.interactionEventGenerator2D",
           "config" : {
             "eventId" : "interaction2DEventId",
             "contextTime" : "DEFAULT",
-            "interactionators" : "loadScreen.inator2DList"
+            "interactionators" : "zandbokz.inator2DList"
           }
         },
         {"factory": "MainLoopExitFtry",
-          "name": "loadScreen.exitDaemon",
+          "name": "zandbokz.exitDaemon",
           "config" : {
             "mainloop" : "zandbokz.MainLoop",
             "valueHolder" : "zandbokz.loadState",
@@ -2114,15 +2180,15 @@
           }
         },
         {"factory": "DaemonTimeHandlerFtry",
-          "name": "loadScreen.exitTimeHandler",
+          "name": "zandbokz.exitTimeHandler",
           "config" : {
-            "generator" : "loadScreen.timeEventGenerator",
-            "time" : "loadScreen.loadTime",
-            "dmn" : "loadScreen.exitDaemon"
+            "generator" : "zandbokz.timeEventGenerator",
+            "time" : "zandbokz.loadTime",
+            "dmn" : "zandbokz.exitDaemon"
           }
         },
         {"factory": "OGLModelSheetDrawerFtry",
-          "name": "loadScreen.screenDrawer",
+          "name": "zandbokz.screenDrawer",
           "description" : "comportamiento que pintara la pantalla. Faltan tipos",
           "config" : {
             "window" : "zandbokz.mainwindow",
@@ -2130,7 +2196,7 @@
           }
         },
         {"factory": "OGLLookAtModelSheetDrawerFtry",
-          "name": "loadScreen.screenLookAtDrawer",
+          "name": "zandbokz.screenLookAtDrawer",
           "description" : "comportamiento que pintara la pantalla. Faltan tipos",
           "config" : {
             "window" : "zandbokz.mainwindow",
@@ -2138,7 +2204,7 @@
           }
         },
         {"factory": "OGLSpriteSheetDrawerFtry",
-          "name": "loadScreen.screenDrawer2D",
+          "name": "zandbokz.screenDrawer2D",
           "description" : "comportamiento que pintara la pantalla. Faltan tipos",
           "config" : {
             "window" : "zandbokz.mainwindow",
@@ -2146,7 +2212,7 @@
           }
         },
         {"factory": "OGLParametricSpriteSheetDrawerFtry",
-          "name": "loadScreen.screenDrawer2DParametric",
+          "name": "zandbokz.screenDrawer2DParametric",
           "description" : "comportamiento que pintara la pantalla. Faltan tipos",
           "config" : {
             "window" : "zandbokz.mainwindow",
@@ -2154,15 +2220,15 @@
           }
         },
         {"factory": "Sound3DOALPlayerFtry",
-          "name": "loadScreen.audioplayer",
+          "name": "zandbokz.audioplayer",
           "description" : "comportamiento que reproduce sonidos",
           "config" : {
-            "camera" : "loadScreen.cam",
+            "camera" : "zandbokz.cam",
             "audiostore" : "zandbokz.audiostore"
           }
         },
         {"factory": "SineOscillatorFFtry",
-          "name": "loadScreen.fovOscillator",
+          "name": "zandbokz.fovOscillator",
           "description" : "Comportamiento que menea el fov",
           "config" : {
             "min" : "cam.fovMin",
@@ -2172,7 +2238,7 @@
           }
         },
         {"factory": "SineOscillatorV3DFtry",
-          "name": "loadScreen.coordOscillator",
+          "name": "zandbokz.coordOscillator",
           "description" : "Comportamiento que menea el obojeto",
           "config" : {
             "min" : "model.coordMin",
@@ -2183,48 +2249,35 @@
           }
         },
         {"factory": "VoidBvrDmnFtry",
-          "name": "loadScreen.attachcajaactivationsDaemon",
+          "name": "zandbokz.attachcajaactivationsDaemon",
           "description" : "",
           "config" : {
-            "list" : "loadScreen.attachcajaonofflist",
-            "behavior" : "loadScreen.attachcajaactivations"
+            "list" : "zandbokz.attachcajaonofflist",
+            "behavior" : "zandbokz.attachcajaactivations"
           }
         },
         {"factory": "VoidBvrDmnFtry",
-          "name": "loadScreen.attachcajadeactivationsDaemon",
+          "name": "zandbokz.attachcajadeactivationsDaemon",
           "description" : "",
           "config" : {
-            "list" : "loadScreen.attachcajaonofflist",
-            "behavior" : "loadScreen.attachcajadeactivations"
+            "list" : "zandbokz.attachcajaonofflist",
+            "behavior" : "zandbokz.attachcajadeactivations"
           }
         },
         {"factory": "VoidBvrDmnFtry",
-          "name": "loadScreen.dettachcajaactivationsDaemon",
+          "name": "zandbokz.dettachcajaactivationsDaemon",
           "description" : "",
           "config" : {
-            "list" : "loadScreen.attachcajaonofflist",
-            "behavior" : "loadScreen.dettachcajaactivations"
+            "list" : "zandbokz.attachcajaonofflist",
+            "behavior" : "zandbokz.dettachcajaactivations"
           }
         },
         {"factory": "VoidBvrDmnFtry",
-          "name": "loadScreen.dettachcajadeactivationsDaemon",
+          "name": "zandbokz.dettachcajadeactivationsDaemon",
           "description" : "",
           "config" : {
-            "list" : "loadScreen.attachcajaonofflist",
-            "behavior" : "loadScreen.dettachcajadeactivations"
-          }
-        },
-        {"factory": "BoundedAddIntBvr",
-          "name": "zandbokz.intincrementBvr",
-          "description" : "comportamiento suma uibt",
-          "config" : {}
-        },
-        {"factory": "FourIntBhvrDmnFtry",
-          "name": "loadScreen.intincrementDaemon",
-          "description" : "",
-          "config" : {
-            "list" : "loadScreen.intincrementlist",
-            "behavior" : "zandbokz.intincrementBvr"
+            "list" : "zandbokz.attachcajaonofflist",
+            "behavior" : "zandbokz.dettachcajadeactivations"
           }
         },
         {"factory": "EraseEnityBhvFtry",
@@ -2233,110 +2286,110 @@
           "config" : {}
         },
         {"factory": "TicketActivatorBvrFtry",
-          "name": "loadScreen.attachcajaactivations",
+          "name": "zandbokz.attachcajaactivations",
           "description" : "comportamiento engancha la caja a un plano",
           "config" : {
             "tickets" : ["ULM3DOn2DTicket"]
           }
         },
         {"factory": "TicketDeactivatorBvrFtry",
-          "name": "loadScreen.attachcajadeactivations",
+          "name": "zandbokz.attachcajadeactivations",
           "description" : "comportamiento engancha la caja a un plano",
           "config" : {
             "tickets" : ["gmTicket"]
           }
         },
         {"factory": "TicketActivatorBvrFtry",
-          "name": "loadScreen.dettachcajaactivations",
+          "name": "zandbokz.dettachcajaactivations",
           "description" : "comportamiento engancha la caja a un plano",
           "config" : {
             "tickets" : ["gmTicket", "ULM3DTicket"]
           }
         },
         {"factory": "TicketDeactivatorBvrFtry",
-          "name": "loadScreen.dettachcajadeactivations",
+          "name": "zandbokz.dettachcajadeactivations",
           "description" : "comportamiento engancha la caja a un plano",
           "config" : {
             "tickets" : ["ULM3DOn2DTicket"]
           }
         },
         {"factory": "MasterDmnFtry",
-          "name": "loadScreen.attachcajamaster",
+          "name": "zandbokz.attachcajamaster",
           "description" : "demonio que engancha",
           "config" : {
             "daemons": [
-              "loadScreen.attachcajaactivationsDaemon",
-              "loadScreen.attachcajadeactivationsDaemon"
+              "zandbokz.attachcajaactivationsDaemon",
+              "zandbokz.attachcajadeactivationsDaemon"
             ]
           }
         },
         {"factory": "MasterDmnFtry",
-          "name": "loadScreen.dettachcajamaster",
+          "name": "zandbokz.dettachcajamaster",
           "description" : "demonio que desengancha",
           "config" : {
             "daemons": [
-              "loadScreen.dettachcajaactivationsDaemon",
-              "loadScreen.dettachcajadeactivationsDaemon",
-              "loadScreen.dettachcajadisableplatformsDaemon"
+              "zandbokz.dettachcajaactivationsDaemon",
+              "zandbokz.dettachcajadeactivationsDaemon",
+              "zandbokz.dettachcajadisableplatformsDaemon"
             ]
           }
         },
         {"factory": "CopyVectorResizedBvrFtry",
-          "name": "loadScreen.cajaponvelocidadsalto",
+          "name": "zandbokz.cajaponvelocidadsalto",
           "description" : "comportamiento que pone velocidad para saltar",
           "config" : {}
         },
         {"factory": "DoubleTwoV3DAvtDaemonFtry",
-          "name": "loadScreen.cajaponvelocidadsaltoDmn",
+          "name": "zandbokz.cajaponvelocidadsaltoDmn",
           "description" : "demonio que menea el fov",
           "config" : {
-            "list" : "loadScreen.saltaList",
-            "behavior" : "loadScreen.cajaponvelocidadsalto"
+            "list" : "zandbokz.saltaList",
+            "behavior" : "zandbokz.cajaponvelocidadsalto"
           }
         },
         {"factory": "LimitedExcentricalRotation3DFtry",
-          "name": "loadScreen.pitchBhv",
+          "name": "zandbokz.pitchBhv",
           "description" : "Comportamiento que menea el obojeto mirando parriba y pabajo",
           "config" : {
              "sensibility" : "model.pitchsensibility"
           }
         },
         {"factory": "ExcentricalRotation3DFtry",
-          "name": "loadScreen.yawBhv",
+          "name": "zandbokz.yawBhv",
           "description" : "Comportamiento que menea el bobobojeto mirando pa diestra y siniestra",
           "config" : {
              "sensibility" : "model.yawsensibility"
           }
         },
         {"factory": "GravityMotion3DFtry",
-          "name": "loadScreen.gravityBHV",
+          "name": "zandbokz.gravityBHV",
           "description" : "Comportamiento paquesecaiga",
           "config" : {
              "gravity" : "gravity"
           }
         },
         {"factory": "Vec3DAccumBhvFtry",
-          "name": "loadScreen.2velAccumBHV",
+          "name": "zandbokz.2velAccumBHV",
           "description" : "Comportamiento pa que sume velocidades",
           "config" : {}
         },
         {"factory": "CalculeOrientationBhv",
-          "name": "loadScreen.calculaprotavel",
+          "name": "zandbokz.calculaprotavel",
           "description" : "Comportamiento pa que calcule la orientación del prota",
           "config" : {}
         },
         {"factory": "ProjectV3DOnPlaneBhvFtry",
-          "name": "loadScreen.proyectaorientacion",
+          "name": "zandbokz.proyectaorientacion",
           "description" : "Comportamiento proyecte la orientacion",
           "config" : {}
         },
         {"factory": "CopyV3DIfNotZeroBhvFtry",
-          "name": "loadScreen.vel2ori",
+          "name": "zandbokz.vel2ori",
           "description" : "Comportamiento pa que mire por donde va",
           "config" : {}
         },
         {"factory": "RelativeUniformLinearMotion3DFtry",
-          "name": "loadScreen.goForward",
+          "name": "zandbokz.goForward",
           "description" : "Comportamiento que menea el obojeto to palante",
           "config" : {
             "velocity" : "model.fixedForwardVelocity",
@@ -2344,7 +2397,7 @@
           }
         },
         {"factory": "RelativeUniformLinearMotion3DFtry",
-          "name": "loadScreen.goBackward",
+          "name": "zandbokz.goBackward",
           "description" : "Comportamiento que menea el obojeto to patras",
           "config" : {
             "velocity" : "model.fixedBackwardVelocity",
@@ -2352,7 +2405,7 @@
           }
         },
         {"factory": "RelativeUniformLinearMotion3DFtry",
-          "name": "loadScreen.goLeft",
+          "name": "zandbokz.goLeft",
           "description" : "Comportamiento que menea el obojeto pa la siniestra",
           "config" : {
             "velocity" : "model.fixedLeftVelocity",
@@ -2360,7 +2413,7 @@
           }
         },
         {"factory": "RelativeUniformLinearMotion3DFtry",
-          "name": "loadScreen.goRight",
+          "name": "zandbokz.goRight",
           "description" : "Comportamiento que menea el obojeto pa la diestra",
           "config" : {
             "velocity" : "model.fixedRightVelocity",
@@ -2368,154 +2421,154 @@
           }
         },
         {"factory": "UniformLinearMotion3DFtry",
-          "name": "loadScreen.ULM3DBhv",
+          "name": "zandbokz.ULM3DBhv",
           "description" : "Comportamiento que menea la bala palante",
           "config" : {
             "contextTime" : "DEFAULT"
           }
         },
         {"factory": "UniformLinearMotion2DOnPlane",
-          "name": "loadScreen.ULM3DOn2D",
+          "name": "zandbokz.ULM3DOn2D",
           "description" : "Comportamiento que menea cosas sobre planos",
           "config" : {
             "contextTime" : "DEFAULT"
           }
         },
         {"factory": "OrientationRelativeVelSetterFtry",
-          "name": "loadScreen.velsetter",
+          "name": "zandbokz.velsetter",
           "description" : "Comportamiento que calcula la velocidad final de la caja según la orientación y ... otros valores",
           "config" : {}
         },
         {"factory": "OrientationRelative2DVelSetterFtry",
-          "name": "loadScreen.vel2dsetter",
+          "name": "zandbokz.vel2dsetter",
           "description" : "Comportamiento que calcula la velocidad final de la caja según la orientación y ... otros valores",
           "config" : {}
         },
         {"factory": "KeepDistanceBhvFtry",
-          "name": "loadScreen.keepdistanceBhv",
+          "name": "zandbokz.keepdistanceBhv",
           "description" : "Comportamiento que mantiene la distancia entre dos puntos igual a un valor dado",
           "config" : {}
         },
         {"factory": "OnceDaemonFtry",
-          "name": "loadScreen.oncePitchDaemon",
+          "name": "zandbokz.oncePitchDaemon",
           "description" : "demonio girara la camara una vez y se va",
           "config" : {
-            "Daemon" : "loadScreen.pitchDaemon",
+            "Daemon" : "zandbokz.pitchDaemon",
             "DaemonMaster" : "BehaviorsMD"
           }
         },
         {"factory": "OnceDaemonFtry",
-          "name": "loadScreen.onceYawDaemon",
+          "name": "zandbokz.onceYawDaemon",
           "description" : "demonio girara la camara una vez y se va",
           "config" : {
-            "Daemon" : "loadScreen.yawDaemon",
+            "Daemon" : "zandbokz.yawDaemon",
             "DaemonMaster" : "BehaviorsMD"
           }
         },
         {"factory": "OnceDaemonFtry",
-          "name": "loadScreen.onceYawPlayerDaemon",
+          "name": "zandbokz.onceYawPlayerDaemon",
           "description" : "demonio girara la camara una vez y se va",
           "config" : {
-            "Daemon" : "loadScreen.yawDaemon",
+            "Daemon" : "zandbokz.yawDaemon",
             "DaemonMaster" : "BehaviorsMD"
           }
         },
         {"factory": "FourV3DTwoFDaemonFtry",
-          "name": "loadScreen.pitchDaemon",
+          "name": "zandbokz.pitchDaemon",
           "description" : "demonio girara la camara",
           "config" : {
-            "list" : "loadScreen.pitchList",
-            "behavior" : "loadScreen.pitchBhv"
+            "list" : "zandbokz.pitchList",
+            "behavior" : "zandbokz.pitchBhv"
           }
         },
         {"factory": "ThreeV3DAvtDaemonFtry",
-          "name": "loadScreen.yawDaemon",
+          "name": "zandbokz.yawDaemon",
           "description" : "demonio girara la camara",
           "config" : {
-            "list" : "loadScreen.yawList",
-            "behavior" : "loadScreen.yawBhv"
+            "list" : "zandbokz.yawList",
+            "behavior" : "zandbokz.yawBhv"
           }
         },
         {"factory": "FunctOverAvtList3VDmnFtry",
-          "name": "loadScreen.shotDaemon",
+          "name": "zandbokz.shotDaemon",
           "description" : "demonio caga castañas",
           "config" : {
-            "list" : "loadScreen.BulletCreatorList",
+            "list" : "zandbokz.BulletCreatorList",
             "function" : "zandbokz.dropcastaña"
           }
         },
         {"factory": "MasterDmnFtry",
-          "name": "loadScreen.chofdaemon",
+          "name": "zandbokz.chofdaemon",
           "description" : "",
           "config" : {
             "daemons": [
-              "loadScreen.intincrementDaemon",
-              "loadScreen.chofdaemonborra",
-              "loadScreen.chofdaemona",
-              "loadScreen.chofdaemonb"
+              "zandbokz.intincrementDaemon",
+              "zandbokz.chofdaemonborra",
+              "zandbokz.chofdaemona",
+              "zandbokz.chofdaemonb"
             ]
           }
         },
         {"factory": "FunctOverAvtList3VDmnFtry",
-          "name": "loadScreen.chofdaemona",
+          "name": "zandbokz.chofdaemona",
           "description" : "demonio crea cuajarones",
           "config" : {
-            "list" : "loadScreen.cuajaronCreatorList",
+            "list" : "zandbokz.cuajaronCreatorList",
             "function" : "zandbokz.dropcuajarona"
           }
         },
         {"factory": "FunctOverAvtList3VDmnFtry",
-          "name": "loadScreen.chofdaemonb",
+          "name": "zandbokz.chofdaemonb",
           "description" : "demonio crea cuajarones",
           "config" : {
-            "list" : "loadScreen.cuajaronCreatorList",
+            "list" : "zandbokz.cuajaronCreatorList",
             "function" : "zandbokz.dropcuajaronb"
           }
         },
         {"factory": "VoidBvrDmnFtry",
-          "name": "loadScreen.chofdaemonborra",
+          "name": "zandbokz.chofdaemonborra",
           "description" : "demonio limpia la sangre",
           "config" : {
-            "list" : "loadScreen.borracastañaslist",
+            "list" : "zandbokz.borracastañaslist",
             "behavior" : "zandbokz.borracastañasbvr"
           }
         },
         {"factory": "FunctOverAvtList2VDmnFtry",
-          "name": "loadScreen.shotSuena",
+          "name": "zandbokz.shotSuena",
           "description" : "demonio caga castañas",
           "config" : {
-            "list" : "loadScreen.SoundCreatorList",
+            "list" : "zandbokz.SoundCreatorList",
             "function" : "zandbokz.suenacatapun"
           }
         },
         {"factory": "MasterDmnFtry",
-          "name": "loadScreen.masterShot",
+          "name": "zandbokz.masterShot",
           "description" : "demonio que lanza castañas y suena",
           "config" : {
             "daemons": [
-              "loadScreen.intincrementDaemon",
-              "loadScreen.shotDaemon",
-              "loadScreen.shotSuena"
+              "zandbokz.intincrementDaemon",
+              "zandbokz.shotDaemon",
+              "zandbokz.shotSuena"
             ]
           }
         },
         {"factory": "MasterDmnFtry",
-          "name": "loadScreen.masterDrawDaemon",
+          "name": "zandbokz.masterDrawDaemon",
           "description" : "demonio que pintara la pantalla. Faltan tipos",
           "config" : {
             "daemons": [
-              "loadScreen.audioplayerDaemon",
-              "loadScreen.drawDaemon2D",
-              "loadScreen.drawDaemon2Dparam",
-              "loadScreen.shadersSetter2D",
-              "loadScreen.drawDaemon3D",
-              "loadScreen.drawLookAtDaemon3D",
-              "loadScreen.shadersSetter3D"
+              "zandbokz.audioplayerDaemon",
+              "zandbokz.drawDaemon2D",
+              "zandbokz.drawDaemon2Dparam",
+              "zandbokz.shadersSetter2D",
+              "zandbokz.drawDaemon3D",
+              "zandbokz.drawLookAtDaemon3D",
+              "zandbokz.shadersSetter3D"
             ]
           }
         },
         {"factory": "ShadersSetter2DFtry",
-          "name": "loadScreen.shadersSetter2D",
+          "name": "zandbokz.shadersSetter2D",
           "description" : "shadersSetter2D",
           "config" : {
             "window" : "zandbokz.mainwindow",
@@ -2523,250 +2576,250 @@
           }
         },
         {"factory": "ShadersSetter3DFtry",
-          "name": "loadScreen.shadersSetter3D",
+          "name": "zandbokz.shadersSetter3D",
           "description" : "shadersSetter3D",
           "config" : {
             "window" : "zandbokz.mainwindow",
             "gProgramID" : "base_program",
-            "camera" : "loadScreen.cam"
+            "camera" : "zandbokz.cam"
           }
         },
         {"factory": "DrawerModelDaemonFtry",
-          "name": "loadScreen.drawDaemon3D",
+          "name": "zandbokz.drawDaemon3D",
           "description" : "demonio que pintara la pantalla. Faltan tipos",
           "config" : {
-            "list" : "loadScreen.drawList",
-            "behavior" : "loadScreen.screenDrawer"
+            "list" : "zandbokz.drawList",
+            "behavior" : "zandbokz.screenDrawer"
           }
         },
         {"factory": "LookAtAvtDaemonFtry",
-          "name": "loadScreen.drawLookAtDaemon3D",
+          "name": "zandbokz.drawLookAtDaemon3D",
           "description" : "demonio que pintara la pantalla. Faltan tipos",
           "config" : {
-            "list" : "loadScreen.drawLookAtList",
-            "behavior" : "loadScreen.screenLookAtDrawer"
+            "list" : "zandbokz.drawLookAtList",
+            "behavior" : "zandbokz.screenLookAtDrawer"
           }
         },
         {"factory": "SimpleSpriteDrwrDaemonFtry",
-          "name": "loadScreen.drawDaemon2D",
+          "name": "zandbokz.drawDaemon2D",
           "description" : "demonio que pintara la pantalla en 2D. Faltan tipos",
           "config" : {
-            "list" : "loadScreen.drawList2D",
-            "behavior" : "loadScreen.screenDrawer2D"
+            "list" : "zandbokz.drawList2D",
+            "behavior" : "zandbokz.screenDrawer2D"
           }
         },
         {"factory": "ParamSpriteDrwrDaemonFtry",
-          "name": "loadScreen.drawDaemon2Dparam",
+          "name": "zandbokz.drawDaemon2Dparam",
           "description" : "demonio que pintara la pantalla en 2D. Faltan tipos",
           "config" : {
-            "list" : "loadScreen.drawList2Dparam",
-            "behavior" : "loadScreen.screenDrawer2DParametric"
+            "list" : "zandbokz.drawList2Dparam",
+            "behavior" : "zandbokz.screenDrawer2DParametric"
           }
         },
         {"factory": "OALPlayerDaemon",
-          "name": "loadScreen.audioplayerDaemon",
+          "name": "zandbokz.audioplayerDaemon",
           "description" : "demonio que reproducira audio",
           "config" : {
-            "list" : "loadScreen.audiolist",
-            "behavior" : "loadScreen.audioplayer"
+            "list" : "zandbokz.audiolist",
+            "behavior" : "zandbokz.audioplayer"
           }
         },
         {"factory": "FloatAvtDaemonFtry",
-          "name": "loadScreen.fovOscillatorDaemon",
+          "name": "zandbokz.fovOscillatorDaemon",
           "description" : "demonio que menea el fov",
           "config" : {
-            "list" : "loadScreen.fovOscillatorList",
-            "behavior" : "loadScreen.fovOscillator"
+            "list" : "zandbokz.fovOscillatorList",
+            "behavior" : "zandbokz.fovOscillator"
           }
         },
         {"factory": "V3DAvtDaemonFtry",
-          "name": "loadScreen.coordOscillatorDaemon",
+          "name": "zandbokz.coordOscillatorDaemon",
           "description" : "demonio que menea el fov",
           "config" : {
-            "list" : "loadScreen.coordOscillatorList",
-            "behavior" : "loadScreen.coordOscillator"
+            "list" : "zandbokz.coordOscillatorList",
+            "behavior" : "zandbokz.coordOscillator"
           }
         },
         {"factory": "TwoV3DAvtDaemonFtry",
-          "name": "loadScreen.gravityDMN",
+          "name": "zandbokz.gravityDMN",
           "description" : "demonio pa que se caiga",
           "config" : {
-            "list" : "loadScreen.gmList",
-            "behavior" : "loadScreen.gravityBHV"
+            "list" : "zandbokz.gmList",
+            "behavior" : "zandbokz.gravityBHV"
           }
         },
         {"factory": "ThreeV3DAvtDaemonFtry",
-          "name": "loadScreen.2velAccumDMN",
+          "name": "zandbokz.2velAccumDMN",
           "description" : "demonio pa que se sumen velocidades",
           "config" : {
-            "list" : "loadScreen.twovelaccumlist",
-            "behavior" : "loadScreen.2velAccumBHV"
+            "list" : "zandbokz.twovelaccumlist",
+            "behavior" : "zandbokz.2velAccumBHV"
           }
         },
         {"factory": "FourV3DAvtDaemonFtry",
-          "name": "loadScreen.calculaprotavelDMN",
+          "name": "zandbokz.calculaprotavelDMN",
           "description" : "demonio pa que se sumen velocidades",
           "config" : {
-            "list" : "loadScreen.calculaorilist",
-            "behavior" : "loadScreen.calculaprotavel"
+            "list" : "zandbokz.calculaorilist",
+            "behavior" : "zandbokz.calculaprotavel"
           }
         },
         {"factory": "V2DThreeV3DAvtDaemonFtry",
-          "name": "loadScreen.proyectaorientacionDMN",
+          "name": "zandbokz.proyectaorientacionDMN",
           "description" : "demonio que proyecta la orientacion a 2d",
           "config" : {
-            "list" : "loadScreen.pryectaOrientatonlist",
-            "behavior" : "loadScreen.proyectaorientacion"
+            "list" : "zandbokz.pryectaOrientatonlist",
+            "behavior" : "zandbokz.proyectaorientacion"
           }
         },
         {"factory": "TwoV3DAvtDaemonFtry",
-          "name": "loadScreen.vel2oriDMN",
+          "name": "zandbokz.vel2oriDMN",
           "description" : "demonio pa que mire a donde va",
           "config" : {
-            "list" : "loadScreen.vel2orilist",
-            "behavior" : "loadScreen.vel2ori"
+            "list" : "zandbokz.vel2orilist",
+            "behavior" : "zandbokz.vel2ori"
           }
         },
         {"factory": "TwoDoubleThreeV3DBhvDmnFtry",
-          "name": "loadScreen.relativevelDmn",
+          "name": "zandbokz.relativevelDmn",
           "description" : "demonio pa que se caiga",
           "config" : {
-            "list" : "loadScreen.velsetterlist",
-            "behavior" : "loadScreen.velsetter"
+            "list" : "zandbokz.velsetterlist",
+            "behavior" : "zandbokz.velsetter"
           }
         },
         {"factory": "TwoDoubleTwoV2DBhvDmnFtry",
-          "name": "loadScreen.relative2dvelDmn",
+          "name": "zandbokz.relative2dvelDmn",
           "description" : "demonio pa que se caiga",
           "config" : {
-            "list" : "loadScreen.vel2dsetterlist",
-            "behavior" : "loadScreen.vel2dsetter"
+            "list" : "zandbokz.vel2dsetterlist",
+            "behavior" : "zandbokz.vel2dsetter"
           }
         },
         {"factory": "DoubleTwoV3DBhvDmnFtry",
-          "name": "loadScreen.keepdistanceDmn",
+          "name": "zandbokz.keepdistanceDmn",
           "description" : "demonio pa que las cosas se mantengan a distancia",
           "config" : {
-            "list" : "loadScreen.keepdistancelist",
-            "behavior" : "loadScreen.keepdistanceBhv"
+            "list" : "zandbokz.keepdistancelist",
+            "behavior" : "zandbokz.keepdistanceBhv"
           }
         },
 
         {"factory": "ThreeV3DAvtDaemonFtry",
-          "name": "loadScreen.goForwardDaemon",
+          "name": "zandbokz.goForwardDaemon",
           "description" : "demonio que menea la camara",
           "config" : {
-            "list" : "loadScreen.camMoveList",
-            "behavior" : "loadScreen.goForward"
+            "list" : "zandbokz.camMoveList",
+            "behavior" : "zandbokz.goForward"
           }
         },
         {"factory": "ThreeV3DAvtDaemonFtry",
-          "name": "loadScreen.goBackwardDaemon",
+          "name": "zandbokz.goBackwardDaemon",
           "description" : "demonio que menea la camara",
           "config" : {
-            "list" : "loadScreen.camMoveList",
-            "behavior" : "loadScreen.goBackward"
+            "list" : "zandbokz.camMoveList",
+            "behavior" : "zandbokz.goBackward"
           }
         },
         {"factory": "ThreeV3DAvtDaemonFtry",
-          "name": "loadScreen.goLeftDaemon",
+          "name": "zandbokz.goLeftDaemon",
           "description" : "demonio que menea la camara",
           "config" : {
-            "list" : "loadScreen.camMoveList",
-            "behavior" : "loadScreen.goLeft"
+            "list" : "zandbokz.camMoveList",
+            "behavior" : "zandbokz.goLeft"
           }
         },
         {"factory": "ThreeV3DAvtDaemonFtry",
-          "name": "loadScreen.goRightDaemon",
+          "name": "zandbokz.goRightDaemon",
           "description" : "demonio que menea la camara",
           "config" : {
-            "list" : "loadScreen.camMoveList",
-            "behavior" : "loadScreen.goRight"
+            "list" : "zandbokz.camMoveList",
+            "behavior" : "zandbokz.goRight"
           }
         },
         {"factory": "TwoV3DAvtDaemonFtry",
-          "name": "loadScreen.ULM3DDaemon",
+          "name": "zandbokz.ULM3DDaemon",
           "description" : "demonio mueve la bala",
           "config" : {
-            "list" : "loadScreen.ULM3DList",
-            "behavior" : "loadScreen.ULM3DBhv"
+            "list" : "zandbokz.ULM3DList",
+            "behavior" : "zandbokz.ULM3DBhv"
           }
         },
         {"factory": "3DOn2DAvtDaemonFtry",
-          "name": "loadScreen.ULM3DOn2DDaemon",
+          "name": "zandbokz.ULM3DOn2DDaemon",
           "description" : "demonio mueve la bala",
           "config" : {
-            "list" : "loadScreen.moveOnPlaneList",
-            "behavior" : "loadScreen.ULM3DOn2D"
+            "list" : "zandbokz.moveOnPlaneList",
+            "behavior" : "zandbokz.ULM3DOn2D"
           }
         },
         {"factory": "DrawableSimple2DAvtFtry",
-          "name": "loadScreen.crosshairsavt",
+          "name": "zandbokz.crosshairsavt",
           "config" : {
             "entity" : "HUD",
             "attribIndexes" : ["hudcrossGidIdx", "hudcrossSizeIdx", "hudcrossPosIdx"],
-            "lists":{"loadScreen.drawList2D":"hudcrossDrawticket"}
+            "lists":{"zandbokz.drawList2D":"hudcrossDrawticket"}
           }
         },
         {"factory": "DrawableParam2DAvtFtry",
-          "name": "loadScreen.bloodbaravt",
+          "name": "zandbokz.bloodbaravt",
           "config" : {
             "entity" : "HUD",
             "attribIndexes" : ["hudbloodbarGidIdx", "currentbloodIdx", "maxbloodIdx", "hudbloodbarSizeIdx", "hudbloodbarPosIdx"],
-            "lists":{"loadScreen.drawList2Dparam":"hudbloodbarDrawticket"}
+            "lists":{"zandbokz.drawList2Dparam":"hudbloodbarDrawticket"}
           }
         },
         {"factory": "FourV3DTwoFAvtFtry",
-          "name": "loadScreen.notSosimplecamMovePitch",
+          "name": "zandbokz.notSosimplecamMovePitch",
           "config" : {
             "entity" : "cameraControllerFree",
             "attribIndexes" : ["maxPitchIdx", "minPitchIdx", "yawvectorIdx", "pitchvectorIdx", "excentricIdx", "positionIdx"],
-            "lists":{"loadScreen.pitchList":"camPitchTicket"},
+            "lists":{"zandbokz.pitchList":"camPitchTicket"},
             "deactivatedlists" : {}
           }
         },
         {"factory": "ThreeV3DAvtFtry",
-          "name": "loadScreen.notSosimplecamMoveYaw",
+          "name": "zandbokz.notSosimplecamMoveYaw",
           "config" : {
             "entity" : "cameraControllerFree",
             "attribIndexes" : ["yawvectorIdx", "excentricIdx", "positionIdx"],
-            "lists":{"loadScreen.yawList":"yawTicket"},
+            "lists":{"zandbokz.yawList":"yawTicket"},
             "deactivatedlists" : {}
           }
         },
 
         {"factory": "ThreeV3DAvtFtry",
-          "name": "loadScreen.notSosimplecamMovePitchCorrection",
+          "name": "zandbokz.notSosimplecamMovePitchCorrection",
           "config" : {
             "entity" : "cameraControllerFree",
             "attribIndexes" : ["yawvectorIdx", "zeroIdx", "pitchvectorIdx"],
             "attribIndexesBack" : ["yawvectorIdx", "excentricIdx", "pitchvectorIdx"],
-            "lists":{"loadScreen.yawList":"pitchCorrectionTicket"},
+            "lists":{"zandbokz.yawList":"pitchCorrectionTicket"},
             "deactivatedlists" : {}
           }
         },
 
         {"factory": "TwoV3DAvtFtry",
-          "name": "loadScreen.simplecamMove",
+          "name": "zandbokz.simplecamMove",
           "config" : {
             "entity" : "cameraControllerFree",
             "attribIndexes" : ["velocityIdx", "positionIdx"],
-            "lists":{"loadScreen.ULM3DList":"ULM3DTicket"},
+            "lists":{"zandbokz.ULM3DList":"ULM3DTicket"},
             "deactivatedlists" : {}
           }
         },
 
         {"factory": "FloatAvtFtry",
-          "name": "loadScreen.camFov",
+          "name": "zandbokz.camFov",
           "config" : {
             "entity" : "cameraControllerFree",
             "attribIndexes" : ["fovIdx"],
             "lists":{},
-            "deactivatedlists" : {"loadScreen.fovOscillatorList":"fovticket"}
+            "deactivatedlists" : {"zandbokz.fovOscillatorList":"fovticket"}
           }
         },
         {"factory": "TargetToDirAvtFtry",
-          "name": "loadScreen.camPosVel",
+          "name": "zandbokz.camPosVel",
           "config" : {
             "entity" : "cameraControllerFree",
             "positionIdx" : "positionIdx",
@@ -2774,11 +2827,11 @@
             "upwardsIdx" : "upwardsIdx",
             "scaleIdx" : "camScaleIdx",
             "lists":{},
-            "deactivatedlists":{"loadScreen.fovOscillatorList":"fovticket", "loadScreen.camMoveList":"camPosVelTicket"}
+            "deactivatedlists":{"zandbokz.fovOscillatorList":"fovticket", "zandbokz.camMoveList":"camPosVelTicket"}
           }
         },
         {"factory": "LookAtToYawAvtFtry",
-          "name": "loadScreen.camYaw",
+          "name": "zandbokz.camYaw",
           "config" : {
             "entity" : "cameraControllerFree",
             "positionIdx" : "positionIdx",
@@ -2787,60 +2840,55 @@
             "scaleIdx" : "camScaleIdx",
             "lists":{},
             "deactivatedlists":{},
-            "backup":{"loadScreen.yawList":"yawTicket"}
+            "backup":{"zandbokz.yawList":"yawTicket"}
           }
         },
         {"factory": "DoubleTwoV3DDAvtFtry",
-          "name": "loadScreen.camkeepdistance",
+          "name": "zandbokz.camkeepdistance",
           "config" : {
             "entity" : "cameraControllerFree",
             "attribIndexes" : ["cameraDistanceIdx", "positionIdx", "targetIdx"],
-            "lists":{"loadScreen.keepdistancelist" : "keepdistanceTicket"},
+            "lists":{"zandbokz.keepdistancelist" : "keepdistanceTicket"},
             "deactivatedlists":{}
           }
         }
       ]
     }, {"description" : "Setting controls",
       "factories" : [
-        {"factory": "KeyDownTicketEnablerIHFtry",
-          "name": "loadScreen.ratatatatataInputH",
-          "config" : {
-            "ticket" : "BehaviorsMD.loadScreen.masterShot.ticket",
-            "inputEventGenerator" : "loadScreen.inputEventGenerator",
-            "key":"ZBEK_MOUSE_RIGHT"
-          }
-        },
         {"factory": "ParametricActivatorIHFtry",
-          "name": "loadScreen.pitchInputH",
+          "name": "zandbokz.pitchInputH",
           "config" : {
-            "ticket" : "BehaviorsMD.loadScreen.oncePitchDaemon.ticket",
-            "parametric" : "loadScreen.pitchBhv",
-            "inputEventGenerator" : "loadScreen.inputEventGenerator",
+            "ticket" : "BehaviorsMD.zandbokz.oncePitchDaemon.ticket",
+            "parametric" : "zandbokz.pitchBhv",
+            "inputEventGenerator" : "zandbokz.inputEventGenerator",
             "key":"ZBEK_MOUSE_OFFSET_Y"
           }
         },
         {"factory": "ParametricActivatorIHFtry",
-          "name": "loadScreen.yawInputH",
+          "name": "zandbokz.yawInputH",
           "config" : {
-            "ticket" : "BehaviorsMD.loadScreen.onceYawPlayerDaemon.ticket",
-            "ticketBack" : "BehaviorsMD.loadScreen.onceYawDaemon.ticket",
-            "parametric" : "loadScreen.yawBhv",
-            "inputEventGenerator" : "loadScreen.inputEventGenerator",
+            "ticket" : "BehaviorsMD.zandbokz.onceYawPlayerDaemon.ticket",
+            "ticketBack" : "BehaviorsMD.zandbokz.onceYawDaemon.ticket",
+            "parametric" : "zandbokz.yawBhv",
+            "inputEventGenerator" : "zandbokz.inputEventGenerator",
             "key":"ZBEK_MOUSE_OFFSET_X"
           }
         },
-        {"factory": "DaemonIHFtry",
-          "name": "loadScreen.BulletCreatorIH",
+        {"factory": "ConditionalIntDaemonIHFtry",
+          "name": "zandbokz.BulletCreatorIH",
           "config" : {
-            "daemon" : "loadScreen.masterShot",
-            "inputEventGenerator" : "loadScreen.inputEventGenerator",
+            "daemon" : "zandbokz.masterShot",
+            "inputEventGenerator" : "zandbokz.inputEventGenerator",
+            "condition":"zandbokz.protaCurrentBlood",
+            "expected":"ZERO",
+            "equal":false,
             "key":"ZBEK_MOUSE_LEFT"
           }
         },
         {"factory": "DoubleKeyValueSetterIHFtry",
-          "name": "loadScreen.cajanorte",
+          "name": "zandbokz.cajanorte",
           "config" : {
-            "inputEventGenerator" : "loadScreen.inputEventGenerator",
+            "inputEventGenerator" : "zandbokz.inputEventGenerator",
             "key":"ZBEK_w",
             "valuePressed":"velprotanorte",
             "valueReleased":"ZERO",
@@ -2848,9 +2896,9 @@
           }
         },
         {"factory": "DoubleKeyValueSetterIHFtry",
-          "name": "loadScreen.cajasur",
+          "name": "zandbokz.cajasur",
           "config" : {
-            "inputEventGenerator" : "loadScreen.inputEventGenerator",
+            "inputEventGenerator" : "zandbokz.inputEventGenerator",
             "key":"ZBEK_s",
             "valuePressed":"velprotasur",
             "valueReleased":"ZERO",
@@ -2858,9 +2906,9 @@
           }
         },
         {"factory": "DoubleKeyValueSetterIHFtry",
-          "name": "loadScreen.cajaeste",
+          "name": "zandbokz.cajaeste",
           "config" : {
-            "inputEventGenerator" : "loadScreen.inputEventGenerator",
+            "inputEventGenerator" : "zandbokz.inputEventGenerator",
             "key":"ZBEK_d",
             "valuePressed":"velprotaeste",
             "valueReleased":"ZERO",
@@ -2868,9 +2916,9 @@
           }
         },
         {"factory": "DoubleKeyValueSetterIHFtry",
-          "name": "loadScreen.cajaoeste",
+          "name": "zandbokz.cajaoeste",
           "config" : {
-            "inputEventGenerator" : "loadScreen.inputEventGenerator",
+            "inputEventGenerator" : "zandbokz.inputEventGenerator",
             "key":"ZBEK_a",
             "valuePressed":"velprotaoeste",
             "valueReleased":"ZERO",
@@ -2878,15 +2926,15 @@
           }
         },
         {"factory": "DaemonIHFtry",
-          "name": "loadScreen.exitKeyHandler",
+          "name": "zandbokz.exitKeyHandler",
           "config" : {
-            "daemon" : "loadScreen.exitDaemon",
-            "inputEventGenerator" : "loadScreen.inputEventGenerator",
+            "daemon" : "zandbokz.exitDaemon",
+            "inputEventGenerator" : "zandbokz.inputEventGenerator",
             "key":"ZBEK_ESCAPE"
           }
         },
         {"factory": "DoubleKeyValueSetterIHFtry",
-          "name": "loadScreen.saltahandlerVal",
+          "name": "zandbokz.saltahandlerVal",
           "config" : {
             "valuePressed":"velprotaarriba",
             "valueReleased":"ZERO",
@@ -2894,29 +2942,29 @@
           }
         },
         {"factory": "DaemonIHFtry",
-          "name": "loadScreen.saltahandlerDmn",
+          "name": "zandbokz.saltahandlerDmn",
           "config" : {
-            "daemon" : "loadScreen.dettachcajamaster"
+            "daemon" : "zandbokz.dettachcajamaster"
           }
         },
         {"factory": "DaemonIHFtry",
-          "name": "loadScreen.chofhandlerDmn",
+          "name": "zandbokz.chofhandlerDmn",
           "config" : {
-            "daemon" : "loadScreen.chofdaemon",
-            "inputEventGenerator" : "loadScreen.inputEventGenerator",
+            "daemon" : "zandbokz.chofdaemon",
+            "inputEventGenerator" : "zandbokz.inputEventGenerator",
             "key":"ZBEK_e"
           }
         },
         {"factory": "BroadcastIHFtry",
-          "name": "loadScreen.saltahandler",
+          "name": "zandbokz.saltahandler",
           "config" : {
-            "handlers" : ["loadScreen.saltahandlerDmn", "loadScreen.saltahandlerVal"],
-            "inputEventGenerator" : "loadScreen.inputEventGenerator",
+            "handlers" : ["zandbokz.saltahandlerDmn", "zandbokz.saltahandlerVal"],
+            "inputEventGenerator" : "zandbokz.inputEventGenerator",
             "key":"ZBEK_SPACE"
           }
         },
         {"factory": "DoubleKeyValueSetterIHFtry",
-          "name": "loadScreen.bajahandlerVal",
+          "name": "zandbokz.bajahandlerVal",
           "config" : {
             "valuePressed":"velprotaabajo",
             "valueReleased":"ZERO",
@@ -2924,17 +2972,17 @@
           }
         },
         {"factory": "DaemonIHFtry",
-          "name": "loadScreen.bajahandlerDmn",
+          "name": "zandbokz.bajahandlerDmn",
           "config" : {
-            "daemon" : "loadScreen.dettachcajamaster"
+            "daemon" : "zandbokz.dettachcajamaster"
           }
         },
         {"factory": "BroadcastIHFtry",
-          "name": "loadScreen.bajahandler",
+          "name": "zandbokz.bajahandler",
           "config" : {
-            "handlers" : ["loadScreen.bajahandlerVal"],
-            "backhandlers" : ["loadScreen.bajahandlerDmn"],
-            "inputEventGenerator" : "loadScreen.inputEventGenerator",
+            "handlers" : ["zandbokz.bajahandlerVal"],
+            "backhandlers" : ["zandbokz.bajahandlerDmn"],
+            "inputEventGenerator" : "zandbokz.inputEventGenerator",
             "key":"ZBEK_LCTRL"
           }
         }
