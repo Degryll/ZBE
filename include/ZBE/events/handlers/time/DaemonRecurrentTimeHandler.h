@@ -81,7 +81,7 @@ void operator=(const DaemonRecurrentTimeHandler&) = delete; //!< Deleted copy co
     d->run();
 
     std::shared_ptr<TimeHandler> th = std::make_shared<DaemonRecurrentTimeHandler>(d, teg, avatar, ticketid, period);
-    std::shared_ptr<TimerTicket> tt = teg->addRelativeTimer(th, time + period);
+    std::shared_ptr<TimerTicket> tt = teg->addRelativeTimer(th, period);
     avatar->replaceTicket(ticketid, tt);
 	}
 

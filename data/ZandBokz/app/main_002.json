@@ -55,7 +55,7 @@
     "pointBIdx" : 1320,
     "pointCIdx" : 1330,
     "lifespan" : 662144,
-    "bloodrestTime" : 512,
+    "bloodrestTime" : 65536,
     "fovIdx" : 3100,
     "targetIdx" : 3200,
     "upwardsIdx" : 3300,
