@@ -1401,7 +1401,7 @@
           "factory" : "TicketActivatorPlatformRctBldrFtry",
           "name" : "zandbokz.reaccionattachactivations",
           "config" : {
-            "tickets" : ["ULM3DOn2DTicket"]
+            "tickets" : ["ULM3DOn2DTicket", "bloodfillerTHTicket"]
           }
         },
         {
@@ -1551,7 +1551,8 @@
             "teg" : "zandbokz.timeEventGenerator",
             "time" : "bloodrestTime",
             "ticketId" : "bloodfillerTHTicket",
-            "contextTime" : "DEFAULT"
+            "contextTime" : "DEFAULT",
+            "enabled" : false
           }
         },
         {
@@ -2310,7 +2311,7 @@
           "name": "zandbokz.dettachcajadeactivations",
           "description" : "comportamiento engancha la caja a un plano",
           "config" : {
-            "tickets" : ["ULM3DOn2DTicket"]
+            "tickets" : ["ULM3DOn2DTicket", "bloodfillerTHTicket"]
           }
         },
         {"factory": "MasterDmnFtry",

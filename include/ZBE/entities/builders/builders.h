@@ -1960,6 +1960,9 @@ class EntityTimerBldr : public Funct<void, std::shared_ptr<Entity>> {
 public:
   void operator()(std::shared_ptr<Entity> ent) {
     auto ticket = teg->addRelativeTimer((*handlerBuilder)(ent), time);
+    if(!enabled) {
+      ticket->setINACTIVE();
+    }
     ent->addTicket(ticketId, ticket);
   }
 
@@ -1967,10 +1970,11 @@ public:
     this->handlerBuilder = handlerBuilder;
   }
 
-  void setTeg(std::shared_ptr<TimeEventGenerator> teg, uint64_t time, uint64_t ticketId) {
+  void setTeg(std::shared_ptr<TimeEventGenerator> teg, uint64_t time, uint64_t ticketId, bool enabled = true) {
     this->teg = teg;
     this->time = time;
     this->ticketId = ticketId;
+    this->enabled = enabled;
   }
 
 private:
@@ -1978,6 +1982,7 @@ private:
   std::shared_ptr<TimeEventGenerator> teg;
   uint64_t time;
   uint64_t ticketId;
+  bool enabled;
 };
 
 class EntityTimerBldrFtry : public Factory {
@@ -2031,7 +2036,13 @@ public:
       SysError::setError("EntityTimerBldrFtry config for time is invalid"s);
       return;
     }
-    etb->setTeg(*teg, *time, *ticketId);
+
+    bool enabled = true;
+    if (j.contains("enabled") && j["enabled"].is_boolean()) {
+      enabled = j["enabled"].get<bool>();
+    }
+
+    etb->setTeg(*teg, *time, *ticketId, enabled);
   }
 
 private:
