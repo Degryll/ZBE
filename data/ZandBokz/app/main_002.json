@@ -56,6 +56,7 @@
     "pointCIdx" : 1330,
     "lifespan" : 662144,
     "bloodrestTime" : 65536,
+    "bloodburnTime" : 16384,
     "fovIdx" : 3100,
     "targetIdx" : 3200,
     "upwardsIdx" : 3300,
@@ -71,6 +72,7 @@
     "bullet.speedIdx" : 4000,
     "lifeSpanTHTicket" : 4100,
     "bloodfillerTHTicket" : 4101,
+    "bloodburnerTHTicket" : 4102,
     "audioTicket" : 5000,
     "sourcestateIdx" : 5010,
     "sourceIdx" : 5020,
@@ -1408,7 +1410,7 @@
           "factory" : "TicketDeactivatorPlatformRctBldrFtry",
           "name" : "zandbokz.reaccionattachdeactivations",
           "config" : {
-            "tickets" : ["gmTicket", "ULM3DTicket"]
+            "tickets" : ["gmTicket", "ULM3DTicket", "bloodburnerTHTicket"]
           }
         },
         {
@@ -1422,7 +1424,7 @@
           "factory" : "TicketDeactivator2DSolidRctBldrFtry",
           "name" : "zandbokz.reaccionplanosaledelistas",
           "config" : {
-            "tickets" : ["iner2DTicket"]
+            "tickets" : ["iner2DTicket", "bloodfillerTHTicket"]
           }
         },
         {
@@ -1508,7 +1510,7 @@
           "config" : {}
         },
         {"factory": "FourIntBhvrDmnFtry",
-          "name": "zandbokz.intincrementDaemon",
+          "name": "zandbokz.bloodburnDaemon",
           "description" : "",
           "config" : {
             "list" : "zandbokz.blooddecrementlist",
@@ -1553,6 +1555,27 @@
             "ticketId" : "bloodfillerTHTicket",
             "contextTime" : "DEFAULT",
             "enabled" : false
+          }
+        },
+        {
+          "factory" : "DaemonRecurrentTHBldrFtry",
+          "name" : "zandbokz.bloodburnerth",
+          "config" : {
+            "daemon" : "zandbokz.bloodburnDaemon",
+            "teg" : "zandbokz.timeEventGenerator",
+            "ticketId" : "bloodburnerTHTicket",
+            "period" : "bloodburnTime"
+          }
+        },
+        {
+          "factory" : "EntityTimerBldrFtry",
+          "name" : "zandbokz.protaquemasangre",
+          "config" : {
+            "handlerbuilder":"zandbokz.bloodburnerth",
+            "teg" : "zandbokz.timeEventGenerator",
+            "time" : "bloodburnTime",
+            "ticketId" : "bloodburnerTHTicket",
+            "contextTime" : "DEFAULT"
           }
         },
         {
@@ -1710,7 +1733,7 @@
                           "zandbokz.protadispara", "zandbokz.protadisparasuena", "zandbokz.protaacaer",  "zandbokz.protafinalvel", 
                           "zandbokz.protasaltar", "zandbokz.protafisica3d", "zandbokz.protaamoverenplano", "zandbokz.protaattachonoff",
                           "zandbokz.protaInator2D", "zandbokz.protacalcula2dori", "zandbokz.protacalcula2DVel", "zandbokz.protapierdesangre",
-                          "zandbokz.protaganasangre","zandbokz.protarecuperasangre"],
+                          "zandbokz.protaganasangre","zandbokz.protarecuperasangre", "zandbokz.protaquemasangre"],
             "buildersback" : []
           }
         },
@@ -2290,21 +2313,21 @@
           "name": "zandbokz.attachcajaactivations",
           "description" : "comportamiento engancha la caja a un plano",
           "config" : {
-            "tickets" : ["ULM3DOn2DTicket"]
+            "tickets" : ["ULM3DOn2DTicket", "bloodfillerTHTicket"]
           }
         },
         {"factory": "TicketDeactivatorBvrFtry",
           "name": "zandbokz.attachcajadeactivations",
           "description" : "comportamiento engancha la caja a un plano",
           "config" : {
-            "tickets" : ["gmTicket"]
+            "tickets" : ["gmTicket", "bloodburnerTHTicket"]
           }
         },
         {"factory": "TicketActivatorBvrFtry",
           "name": "zandbokz.dettachcajaactivations",
           "description" : "comportamiento engancha la caja a un plano",
           "config" : {
-            "tickets" : ["gmTicket", "ULM3DTicket"]
+            "tickets" : ["gmTicket", "ULM3DTicket", "bloodburnerTHTicket"]
           }
         },
         {"factory": "TicketDeactivatorBvrFtry",
@@ -2503,7 +2526,7 @@
           "description" : "",
           "config" : {
             "daemons": [
-              "zandbokz.intincrementDaemon",
+              "zandbokz.bloodburnDaemon",
               "zandbokz.chofdaemonborra",
               "zandbokz.chofdaemona",
               "zandbokz.chofdaemonb"
@@ -2547,7 +2570,7 @@
           "description" : "demonio que lanza castañas y suena",
           "config" : {
             "daemons": [
-              "zandbokz.intincrementDaemon",
+              "zandbokz.bloodburnDaemon",
               "zandbokz.shotDaemon",
               "zandbokz.shotSuena"
             ]
