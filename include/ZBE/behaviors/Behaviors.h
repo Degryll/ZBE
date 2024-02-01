@@ -66,6 +66,7 @@ public:
     vcurrent->set(current);
   }
 };
+
 template<typename T>
 class ValueSetterFixedBvr : virtual public Behavior<T> {
 public:
@@ -80,6 +81,90 @@ public:
 
 private:
   T val {};
+};
+
+template<typename T>
+class BoundedAddTriggerBvr : virtual public Behavior<T, T, T, T, T> {
+public:
+  void apply(std::shared_ptr<MAvatar<T, T, T, T, T>> avatar) {
+    auto vcurrent = AvtUtil::get<1, T>(avatar);
+    auto vincrement = AvtUtil::get<2, T>(avatar);
+    auto vmin = AvtUtil::get<3, T>(avatar);
+    auto vmax = AvtUtil::get<4, T>(avatar);
+    auto vtrigger = AvtUtil::get<5, T>(avatar);
+
+    auto current = vcurrent->get();
+    auto increment = vincrement->get();
+    auto min = vmin->get();
+    auto max = vmax->get();
+    auto trigger = vtrigger->get();
+
+    //printf("current %ld increment %ld min %ld max %ld \n", current, increment, min, max);fflush(stdout);
+    current = current + increment;
+    //printf("current %ld\n", current);fflush(stdout);
+    if(current>max) {
+      current = max;
+    }
+
+    if(current<min) {
+      current = min;
+    }
+
+    vcurrent->set(current);
+
+    if(current == trigger) {
+      dmn->run();
+    }
+  }
+
+  void setDaemon(std::shared_ptr<Daemon> dmn) {
+    this->dmn = dmn;
+  }
+
+private:
+  std::shared_ptr<Daemon> dmn;
+};
+
+
+
+template<typename T>
+class BoundedAddTriggerBvrFtry : public Factory {
+public:
+  void create(std::string name, uint64_t) {
+    using namespace std::string_literals;
+    std::shared_ptr<BoundedAddTriggerBvr<T>> batb = std::shared_ptr<BoundedAddTriggerBvr<T>>(new BoundedAddTriggerBvr<T>);
+    behaviorRsrc.insert("Behavior."s + name, batb);
+    specificRsrc.insert("BoundedAddTriggerBvr."s + name, batb);
+  }
+
+  void setup(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+    if(cfg) {
+      auto j = *cfg;
+
+      auto batb = specificRsrc.get("BoundedAddTriggerBvr."s + name);
+
+      auto daemon = JSONFactory::loadParamCfgStoreP<Daemon>(daemonRsrc, j, "Daemon"s, "daemon"s, "BoundedAddTriggerBvrFtry"s);
+      if(!daemon) {
+        SysError::setError("BoundedAddTriggerBvrFtry config for daemon must be a valid Daemon name."s);
+        return;
+      }
+
+      batb->setDaemon(*daemon);
+    } else {
+        SysError::setError("BoundedAddTriggerBvrFtry config for "s + name + " not found."s);
+    }
+  }
+
+private:
+
+  RsrcStore<nlohmann::json>& configRsrc = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<Daemon>& daemonRsrc = RsrcStore<Daemon>::getInstance();
+  RsrcStore<Behavior<T,T,T,T,T>>& behaviorRsrc = RsrcStore<Behavior<T,T,T,T,T>>::getInstance();
+  RsrcStore<BoundedAddTriggerBvr<T>>& specificRsrc = RsrcStore<BoundedAddTriggerBvr<T>>::getInstance();
 };
 
 template<typename T>

@@ -435,7 +435,7 @@ public:
 
       auto tarb = specificRsrc.get("MultiRctBldr."s + name);
 
-      JSONFactory::loadAll<FunctionType>(mainRsrc, j, zbe::factories::functionName, "reactionBuilders"s, "MultiRctBldrFtry"s,
+      JSONFactory::loadAllP<FunctionType>(mainRsrc, j, zbe::factories::functionName, "reactionBuilders"s, "MultiRctBldrFtry"s,
         [&](std::shared_ptr<FunctionType> rctbldr) {
           tarb->addBuilder(rctbldr);
           return true;

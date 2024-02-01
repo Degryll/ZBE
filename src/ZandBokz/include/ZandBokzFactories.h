@@ -26,6 +26,7 @@
 #include "ZandBokzReactions.h"
 #include "ZandBokzBehaviors.h"
 #include "ZandBokzBuilders.h"
+#include "ZandBokzDaemons.h"
 
 namespace zandbokz {
 
@@ -147,6 +148,8 @@ public:
     factories.insert("PlatformTraitBldrFtry", std::make_shared<PlatformTraitBldrFtry>());
 
     factories.insert("DoubleTwoV3DAvtBldrFtry", std::make_shared<zbe::MAvatarBldrFtry<double, zbe::Vector3D, zbe::Vector3D>>());
+
+    factories.insert("FixedDoubleValueSetterDmnFtry", std::make_shared<FixedValueSetterDmnFtry<double>>());
   }
 
 };

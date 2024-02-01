@@ -443,6 +443,98 @@ public:
   void run() {}
 };
 
+/** \brief Daemon that does nothing.
+ */
+class ConditionalIntDaemon : public Daemon {
+public:
+
+  /** \brief Do nothing.
+   */
+  void run() {
+    if(val->get() == condition) {
+      daemon->run();
+    }
+  }
+
+  /** \brief Sets the expected condition to run the underlying daemon.
+   * |param condition The expected condition value.
+   */
+  void setCondition(int64_t condition) {
+    this->condition = condition;
+  }
+
+  /** \brief Sets the Value<int64_t> where the state will be found.
+   * |param val Condition container.
+   */
+  void setConditionValue(std::shared_ptr<Value<int64_t> > val) {
+    this->val = val;
+  }
+
+  /** \brief Sets the Daemon to be executed if the condtion is fullfiled.
+   * |param daemon The daemon.
+   */
+  void setDaemon(std::shared_ptr<Daemon> daemon) {
+    this->daemon = daemon;
+  }
+
+private:
+
+  int64_t condition;
+  std::shared_ptr<Value<int64_t> > val;
+  std::shared_ptr<Daemon> daemon;
+
+};
+
+class ConditionalIntDaemonFtry : public Factory {
+public:
+  void create(std::string name, uint64_t) {
+    using namespace std::string_literals;
+    std::shared_ptr<ConditionalIntDaemon> cid = std::make_shared<ConditionalIntDaemon>();
+    mainRsrc.insert("Daemon."s + name, cid);
+    specificRsrc.insert("ConditionalIntDaemon."s + name, cid);
+  }
+  void setup(std::string name, uint64_t cfgId){
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);
+
+    if(!cfg) {
+      SysError::setError("ConditionalIntDaemonFtry config for "s + name + " not found."s);
+      return;
+    }
+    auto cid = specificRsrc.get("ConditionalIntDaemon."s + name);
+    auto j = *cfg;
+
+    if(auto daemon = JSONFactory::loadParamCfgStoreP<Daemon>(mainRsrc, j, zbe::factories::daemonName, "daemon", "ConditionalIntDaemonFtry"s)) {
+      cid->setDaemon(*daemon);
+    } else {
+      SysError::setError("ConditionalIntDaemonFtry config for daemon is not an adecuate daemon name."s);
+      return;
+    }
+
+    if(auto value = JSONFactory::loadParamCfgStore<Value<int64_t>>(valueIRsrc, j, "value"s, "ConditionalIntDaemonFtry"s)) {
+      cid->setConditionValue(*value);
+    } else {
+      SysError::setError("ConditionalIntDaemonFtry config for value is not an adecuate value name."s);
+      return;
+    }
+
+    if(auto condition = JSONFactory::loadParamCfgDict<int64_t>(intStore, j, "condition"s, "ConditionalIntDaemonFtry"s)) {
+      cid->setCondition(*condition);
+    } else {
+      SysError::setError("ConditionalIntDaemonFtry config for condition is not an adecuate int name."s);
+      return;
+    }
+
+  }
+private:
+  RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<Daemon>& mainRsrc = RsrcStore<Daemon>::getInstance();
+  RsrcStore<ConditionalIntDaemon>& specificRsrc = RsrcStore<ConditionalIntDaemon>::getInstance();
+  RsrcStore<Value<int64_t> > &valueIRsrc = RsrcStore<Value<int64_t> >::getInstance();
+  RsrcDictionary<int64_t>& intStore = RsrcDictionary<int64_t>::getInstance();
+};
+
 }  // namespace zbe
 
 #endif  // ZBE_CORE_DAEMONS_DAEMON_H

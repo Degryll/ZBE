@@ -108,6 +108,7 @@
     "minbloodIdx" : 20003,
     "blooddecrementIdx" : 20004,
     "bloodincrementIdx" : 20005,
+    "bloodTriggerIdx" : 20006,
     "keepdistanceTicket" : 8060,
     "platformDisableListTicket" : 10001,
     "deleteTicket" : 666666,
@@ -428,13 +429,13 @@
           "config" : {}
         },
         {
-          "factory": "TFAEFourIntFtry",
+          "factory": "TFAEFiveIntFtry",
           "description" : "a platipus? perry the platipus!!!",
           "name": "zandbokz.blooddecrementlist",
           "config" : {}
         },
         {
-          "factory": "TFAEFourIntFtry",
+          "factory": "TFAEFiveIntFtry",
           "description" : "a platipus? perry the platipus!!!",
           "name": "zandbokz.bloodincrementlist",
           "config" : {}
@@ -1445,7 +1446,7 @@
           "factory" : "TicketDeactivatorSolidRctBldrFtry",
           "name" : "zandbokz.reaccioncaedeactivations",
           "config" : {
-            "tickets" : ["ULM3DOn2DTicket"]
+            "tickets" : ["ULM3DOn2DTicket", "bloodfillerTHTicket"]
           }
         },
         {
@@ -1504,35 +1505,44 @@
             "reactionBuilders" : ["zandbokz.reaccionplanoentraenlistas"]
           }
         },
-        {"factory": "BoundedAddIntBvr",
-          "name": "zandbokz.intincrementBvr",
-          "description" : "comportamiento suma uibt",
-          "config" : {}
+        {"factory":"FixedDoubleValueSetterDmnFtry",
+          "name": "zandbokz.resetmovimiento",
+          "config" : {
+            "values" : ["zandbokz.protaVelLateral", "zandbokz.protaVelVertical", "zandbokz.protaVelForward"],
+            "fixedvalue" : "ZERO"
+          }
         },
-        {"factory": "FourIntBhvrDmnFtry",
+        {"factory": "BoundedAddIntTriggerBvr",
+          "name": "zandbokz.intincrementTriggerBvr",
+          "description" : "comportamiento suma uibt",
+          "config" : {
+            "daemon" : "zandbokz.resetmovimiento"
+          }
+        },
+        {"factory": "FiveIntBhvrDmnFtry",
           "name": "zandbokz.bloodburnDaemon",
           "description" : "",
           "config" : {
             "list" : "zandbokz.blooddecrementlist",
-            "behavior" : "zandbokz.intincrementBvr"
+            "behavior" : "zandbokz.intincrementTriggerBvr"
           }
         },
         
-        {"factory": "FourIntAvtBldrFtry",
+        {"factory": "FiveIntAvtBldrFtry",
           "name": "zandbokz.protaganasangre",
           "description" : "",
           "config" : {
-            "attribIndexes" : ["maxbloodIdx", "minbloodIdx", "bloodincrementIdx", "currentbloodIdx"],
+            "attribIndexes" : ["bloodTriggerIdx", "maxbloodIdx", "minbloodIdx", "bloodincrementIdx", "currentbloodIdx"],
             "lists":{"zandbokz.bloodincrementlist":"bloodincrementTicket"},
             "deactivatedlists":{}
           }
         },
-        {"factory": "FourIntBhvrDmnFtry",
+        {"factory": "FiveIntBhvrDmnFtry",
           "name": "zandbokz.bloodfillerDmn",
           "description" : "",
           "config" : {
             "list" : "zandbokz.bloodincrementlist",
-            "behavior" : "zandbokz.intincrementBvr"
+            "behavior" : "zandbokz.intincrementTriggerBvr"
           }
         },
         {
@@ -1749,7 +1759,8 @@
               "maxbloodIdx" : "zandbokz.protaMaxBlood",
               "minbloodIdx" : "zandbokz.protaMinBlood",
               "blooddecrementIdx" : "zandbokz.shootbloodDecrement",
-              "bloodincrementIdx" : "zandbokz.restbloodIncrement"
+              "bloodincrementIdx" : "zandbokz.restbloodIncrement",
+              "bloodTriggerIdx" : [0]
 
             },
             "double": {
@@ -1874,11 +1885,11 @@
             "deactivatedlists":{}
           }
         },
-        {"factory": "FourIntAvtBldrFtry",
+        {"factory": "FiveIntAvtBldrFtry",
           "name": "zandbokz.protapierdesangre",
           "description" : "",
           "config" : {
-            "attribIndexes" : ["maxbloodIdx", "minbloodIdx", "blooddecrementIdx", "currentbloodIdx"],
+            "attribIndexes" : ["bloodTriggerIdx", "maxbloodIdx", "minbloodIdx", "blooddecrementIdx", "currentbloodIdx"],
             "lists":{"zandbokz.blooddecrementlist":"blooddecrementTicket"},
             "deactivatedlists":{}
           }
@@ -2909,41 +2920,77 @@
             "key":"ZBEK_MOUSE_LEFT"
           }
         },
+        {"factory": "ConditionalIntCompositeIHFtry",
+          "name": "zandbokz.cajanorteSihaysangre",
+          "config" : {
+            "handler" : "zandbokz.cajanorte",
+            "inputEventGenerator" : "zandbokz.inputEventGenerator",
+            "key":"ZBEK_w",
+            "condition" : "zandbokz.protaCurrentBlood",
+            "expected" : "ZERO",
+            "equal" : false
+          }
+        },
         {"factory": "DoubleKeyValueSetterIHFtry",
           "name": "zandbokz.cajanorte",
           "config" : {
-            "inputEventGenerator" : "zandbokz.inputEventGenerator",
-            "key":"ZBEK_w",
             "valuePressed":"velprotanorte",
             "valueReleased":"ZERO",
             "value" : "zandbokz.protaVelForward"
           }
         },
+        {"factory": "ConditionalIntCompositeIHFtry",
+          "name": "zandbokz.cajasurSihaysangre",
+          "config" : {
+            "handler" : "zandbokz.cajasur",
+            "inputEventGenerator" : "zandbokz.inputEventGenerator",
+            "key":"ZBEK_s",
+            "condition" : "zandbokz.protaCurrentBlood",
+            "expected" : "ZERO",
+            "equal" : false
+          }
+        },
         {"factory": "DoubleKeyValueSetterIHFtry",
           "name": "zandbokz.cajasur",
           "config" : {
-            "inputEventGenerator" : "zandbokz.inputEventGenerator",
-            "key":"ZBEK_s",
             "valuePressed":"velprotasur",
             "valueReleased":"ZERO",
             "value" : "zandbokz.protaVelForward"
           }
         },
+        {"factory": "ConditionalIntCompositeIHFtry",
+          "name": "zandbokz.cajaesteSihaysangre",
+          "config" : {
+            "handler" : "zandbokz.cajaeste",
+            "inputEventGenerator" : "zandbokz.inputEventGenerator",
+            "key":"ZBEK_d",
+            "condition" : "zandbokz.protaCurrentBlood",
+            "expected" : "ZERO",
+            "equal" : false
+          }
+        },
         {"factory": "DoubleKeyValueSetterIHFtry",
           "name": "zandbokz.cajaeste",
           "config" : {
-            "inputEventGenerator" : "zandbokz.inputEventGenerator",
-            "key":"ZBEK_d",
             "valuePressed":"velprotaeste",
             "valueReleased":"ZERO",
             "value" : "zandbokz.protaVelLateral"
           }
         },
+        {"factory": "ConditionalIntCompositeIHFtry",
+          "name": "zandbokz.cajaoesteSihaysangre",
+          "config" : {
+            "handler" : "zandbokz.cajaoeste",
+            "inputEventGenerator" : "zandbokz.inputEventGenerator",
+            "key":"ZBEK_a",
+            "condition" : "zandbokz.protaCurrentBlood",
+            "expected" : "ZERO",
+            "equal" : false
+          }
+        },
         {"factory": "DoubleKeyValueSetterIHFtry",
           "name": "zandbokz.cajaoeste",
           "config" : {
-            "inputEventGenerator" : "zandbokz.inputEventGenerator",
-            "key":"ZBEK_a",
             "valuePressed":"velprotaoeste",
             "valueReleased":"ZERO",
             "value" : "zandbokz.protaVelLateral"
@@ -2979,12 +3026,21 @@
             "key":"ZBEK_e"
           }
         },
+        {"factory": "ConditionalIntCompositeIHFtry",
+          "name": "zandbokz.saltahandlerSihaysangre",
+          "config" : {
+            "handler" : "zandbokz.saltahandler",
+            "inputEventGenerator" : "zandbokz.inputEventGenerator",
+            "key":"ZBEK_SPACE",
+            "condition" : "zandbokz.protaCurrentBlood",
+            "expected" : "ZERO",
+            "equal" : false
+          }
+        },
         {"factory": "BroadcastIHFtry",
           "name": "zandbokz.saltahandler",
           "config" : {
-            "handlers" : ["zandbokz.saltahandlerDmn", "zandbokz.saltahandlerVal"],
-            "inputEventGenerator" : "zandbokz.inputEventGenerator",
-            "key":"ZBEK_SPACE"
+            "handlers" : ["zandbokz.saltahandlerDmn", "zandbokz.saltahandlerVal"]
           }
         },
         {"factory": "DoubleKeyValueSetterIHFtry",
@@ -3001,13 +3057,22 @@
             "daemon" : "zandbokz.dettachcajamaster"
           }
         },
+        {"factory": "ConditionalIntCompositeIHFtry",
+          "name": "zandbokz.bajahandlerSihaysangre",
+          "config" : {
+            "handler" : "zandbokz.bajahandler",
+            "inputEventGenerator" : "zandbokz.inputEventGenerator",
+            "key":"ZBEK_LCTRL",
+            "condition" : "zandbokz.protaCurrentBlood",
+            "expected" : "ZERO",
+            "equal" : false
+          }
+        },
         {"factory": "BroadcastIHFtry",
           "name": "zandbokz.bajahandler",
           "config" : {
             "handlers" : ["zandbokz.bajahandlerVal"],
-            "backhandlers" : ["zandbokz.bajahandlerDmn"],
-            "inputEventGenerator" : "zandbokz.inputEventGenerator",
-            "key":"ZBEK_LCTRL"
+            "backhandlers" : ["zandbokz.bajahandlerDmn"]
           }
         }
       ]

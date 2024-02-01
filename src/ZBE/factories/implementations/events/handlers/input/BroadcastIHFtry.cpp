@@ -36,18 +36,8 @@ void BroadcastIHFtry::setup(std::string name, uint64_t cfgId) {
   auto j = *cfg;
 
 
-  auto ieg = JSONFactory::loadParamCfgStoreP<InputEventGenerator>(iegStore, j, "InputEventGenerator"s, "inputEventGenerator"s, "BroadcastIHFtry"s);
-  if(!ieg) {
-    SysError::setError("BroadcastIHFtry config for inputEventGenerator is invalid"s);
-    return;
-  }
-
-  auto key = JSONFactory::loadParamCfgDict<ZBE_K>(keyDict, j, "key"s, "BroadcastIHFtry"s);
-  if(!key) {
-    SysError::setError("BroadcastIHFtry config for key is invalid"s);
-    return;
-  }
-
+  bool haskey = j["key"].is_string();
+  bool hasIeg = j["inputEventGenerator"].is_string();
 
   json handlers = j["handlers"];
   auto bih = bihRsrc.get("BroadcastIH."s + name);
@@ -60,7 +50,32 @@ void BroadcastIHFtry::setup(std::string name, uint64_t cfgId) {
     }
   }
 
-  (*ieg)->addHandler(*key, bih);
+  if(haskey != hasIeg) {
+    if (!hasIeg) {
+      SysError::setError("BroadcastIHFtry config for inputEventGenerator: "s + j["inputEventGenerator"].get<std::string>() + ": must be an inputEventGenerator name."s);
+      return;
+    } else {
+      SysError::setError("BroadcastIHFtry config for key: "s + j["key"].get<std::string>() + ": must be a key name."s);
+      return;
+    }
+  }
+
+  if(haskey) {
+    auto ieg = JSONFactory::loadParamCfgStoreP<InputEventGenerator>(iegStore, j, "InputEventGenerator"s, "inputEventGenerator"s, "BroadcastIHFtry"s);
+    if(!ieg) {
+      SysError::setError("BroadcastIHFtry config for inputEventGenerator is invalid"s);
+      return;
+    }
+
+    auto key = JSONFactory::loadParamCfgDict<ZBE_K>(keyDict, j, "key"s, "BroadcastIHFtry"s);
+    if(!key) {
+      SysError::setError("BroadcastIHFtry config for key is invalid"s);
+      return;
+    }
+
+    (*ieg)->addHandler(*key, bih);
+  }
+
 }
 
 }  // namespace zbe

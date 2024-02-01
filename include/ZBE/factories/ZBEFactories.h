@@ -57,6 +57,9 @@ public:
     using FourIntList = TicketedForwardList<MAvatar<int64_t, int64_t, int64_t, int64_t> >;
     using FourIntBhvrDmn = BehaviorDmnFtry<FourIntList, int64_t, int64_t, int64_t, int64_t>;
 
+    using FiveIntList = TicketedForwardList<MAvatar<int64_t, int64_t, int64_t, int64_t, int64_t> >;
+    using FiveIntBhvrDmn = BehaviorDmnFtry<FiveIntList, int64_t, int64_t, int64_t, int64_t, int64_t>;
+
     using ModelList = TicketedForwardList<MAvatar<uint64_t, double, double, Vector3D, Vector3D> >;
     using ModelDrwr = BehaviorDmnFtry<ModelList, uint64_t, double, double, Vector3D, Vector3D>;
 
@@ -116,6 +119,7 @@ public:
     factories.insert("FloatAvtBldrFtry", std::make_shared<SAvatarBldrFtry<float> >());
     factories.insert("VoidAvtBldrFtry", std::make_shared<AvatarBldrFtry>());
     factories.insert("FourIntAvtBldrFtry", std::make_shared<MAvatarBldrFtry<int64_t, int64_t, int64_t, int64_t> >());
+    factories.insert("FiveIntAvtBldrFtry", std::make_shared<MAvatarBldrFtry<int64_t, int64_t, int64_t, int64_t, int64_t> >());
     factories.insert("TwoV3DDoubleAvtBldrFtry", std::make_shared<MAvatarBldrFtry<Vector3D, Vector3D, double> >());
 
     factories.insert("FourV3DTowFAvtBldrFtry", std::make_shared<MAvatarBldrFtry<float, float, Vector2D, Vector2D, Vector2D, Vector2D>>());
@@ -167,6 +171,9 @@ public:
 
     factories.insert("FourIntBhvrDmnFtry", std::make_shared<FourIntBhvrDmn>());
     factories.insert("TFAEFourIntFtry" , std::make_shared<SimpleGenericFtry<FourIntList> >(factories::listName));
+
+    factories.insert("FiveIntBhvrDmnFtry", std::make_shared<FiveIntBhvrDmn>());
+    factories.insert("TFAEFiveIntFtry" , std::make_shared<SimpleGenericFtry<FiveIntList> >(factories::listName));
 
     factories.insert("DrawerAnimSprtFtry", std::make_shared<AnimDrwr>());
     factories.insert("TFAECAnimSprtFtry" , std::make_shared<SimpleGenericFtry<AnimList> >(factories::listName));

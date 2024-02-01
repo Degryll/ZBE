@@ -98,9 +98,11 @@ public:
     factories.insert("OnceDaemonFtry", std::make_shared<OnceDaemonFtry>());
     factories.insert("StateMachineDmnFtry", std::make_shared<StateMachineDmnFtry>());
     factories.insert("RsrcFolderLoaderDmnFtry", std::make_shared<RsrcFolderLoaderDmnFtry>());
+    factories.insert("ConditionalIntDaemonFtry", std::make_shared<ConditionalIntDaemonFtry>());
 
     // --- Behaviors
     factories.insert("BoundedAddIntBvr", std::make_shared<GenericFtry<Behavior<int64_t, int64_t, int64_t, int64_t>, BoundedAddBvr<int64_t>>>("Behavior", "BoundedAddBvr"));
+    factories.insert("BoundedAddIntTriggerBvr", std::make_shared<BoundedAddTriggerBvrFtry<int64_t>>());
     factories.insert("EraseEnityBhvFtry", std::make_shared<GenericFtry<Behavior<void>, Erase>>("Behavior", "EraseEnityBvr"));
     factories.insert("SineOscillatorFFtry", std::make_shared<SineOscillatorFFtry>());
     factories.insert("SineOscillatorV3DFtry", std::make_shared<SineOscillatorV3DFtry>());
@@ -129,6 +131,7 @@ public:
     factories.insert("DaemonClickIHFtry", std::make_shared<DaemonClickIHFtry>());
     factories.insert("DaemonIHFtry", std::make_shared<DaemonIHFtry>());
     factories.insert("ConditionalIntDaemonIHFtry", std::make_shared<ConditionalDaemonIHFtry<int64_t>>());
+    factories.insert("ConditionalIntCompositeIHFtry", std::make_shared<ConditionalCompositeIHFtry<int64_t>>());
     factories.insert("InputToValueFtry", std::make_shared<InputToValueFtry>());
     factories.insert("TicketTogglerIHFtry", std::make_shared<TicketTogglerIHFtry>());
     factories.insert("ParametricActivatorIHFtry", std::make_shared<ParametricActivatorIHFtry>());

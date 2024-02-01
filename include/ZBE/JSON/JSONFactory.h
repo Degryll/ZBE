@@ -167,7 +167,7 @@ bool loadAllIndexed(RsrcStore<T>& store, RsrcDictionary<uint64_t>& uintDict, jso
 }
 
 template<typename T>
-bool loadAll(RsrcStore<T>& store, json cfg, std::string prefix, std::string parameter, std::string factoryName, std::function<bool(std::shared_ptr<T>)> callback) {
+bool loadAllP(RsrcStore<T>& store, json cfg, std::string prefix, std::string parameter, std::string factoryName, std::function<bool(std::shared_ptr<T>)> callback) {
   using namespace std::string_literals;
   if (cfg[parameter].is_array()) {
     auto arrayCfg = cfg[parameter];
@@ -179,6 +179,35 @@ bool loadAll(RsrcStore<T>& store, json cfg, std::string prefix, std::string para
       }
       auto value = jvalue.get<std::string>();
       auto element = loadParamStrStoreP<T>(store, prefix, value, factoryName);
+      if(!element) {
+        SysError::setError(factoryName + " config for "s + parameter + " contains a non valid element name:"s + value);
+        return false;
+      }
+
+      if(!callback(*element)) {
+        return false;
+      }
+    }
+  } else if(cfg.contains(parameter)) {
+    SysError::setError(factoryName + " config for " + parameter + " must be an array."s);
+    return false;
+  }
+  return true;
+}
+
+template<typename T>
+bool loadAll(RsrcStore<T>& store, json cfg, std::string parameter, std::string factoryName, std::function<bool(std::shared_ptr<T>)> callback) {
+  using namespace std::string_literals;
+  if (cfg[parameter].is_array()) {
+    auto arrayCfg = cfg[parameter];
+    for (auto& item : arrayCfg.items()) {
+      auto& jvalue = item.value();
+      if (!jvalue.is_string()) {
+        SysError::setError(factoryName + " elementos on "s + parameter + " must be strings."s);
+        return false;
+      }
+      auto value = jvalue.get<std::string>();
+      auto element = loadParamStrStore<T>(store, value, factoryName);
       if(!element) {
         SysError::setError(factoryName + " config for "s + parameter + " contains a non valid element name:"s + value);
         return false;
