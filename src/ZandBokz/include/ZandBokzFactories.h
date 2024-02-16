@@ -63,8 +63,12 @@ public:
     factories.insert("Inator2DListFtry", std::make_shared<zbe::SimpleGenericFtry<Inator2DList> >(zbe::factories::listName));
     factories.insert("Iner2DListFtry", std::make_shared<zbe::SimpleGenericFtry<Iner2DList> >(zbe::factories::listName));
 
+    factories.insert("FGInatorListFtry", std::make_shared<zbe::SimpleGenericFtry<FGInatorList> >(zbe::factories::listName));
+    factories.insert("FGInerListFtry", std::make_shared<zbe::SimpleGenericFtry<FGInerList> >(zbe::factories::listName));
+
     factories.insert("IEG3DFtry", std::make_shared<IEG3DFtry>());
     factories.insert("IEG2DFtry", std::make_shared<IEG2DFtry>());
+    factories.insert("IEGFGFtry", std::make_shared<IEGFGFtry>());
 
     factories.insert("InerBldrFtry", std::make_shared<InerBldrFtry>());
     factories.insert("InatorBldrFtry", std::make_shared<InatorBldrFtry>());
@@ -72,17 +76,26 @@ public:
     factories.insert("Iner2DBldrFtry", std::make_shared<Iner2DBldrFtry>());
     factories.insert("Inator2DBldrFtry", std::make_shared<Inator2DBldrFtry>());
 
+    factories.insert("FGInerBldrFtry", std::make_shared<FGInerBldrFtry>());
+    factories.insert("FGInatorBldrFtry", std::make_shared<FGInatorBldrFtry>());
+
     factories.insert("ActorBldrFtry", std::make_shared<ActorBldrFtry>(std::initializer_list<std::string>{"solid"s, "platform"s}));
     factories.insert("ReactorBldrFtry", std::make_shared<ReactorBldrFtry>(std::initializer_list<std::string>{"solid"s, "platform"s}));
 
     factories.insert("Actor2DBldrFtry", std::make_shared<Actor2DBldrFtry>(std::initializer_list<std::string>{"solid"s}));
     factories.insert("Reactor2DBldrFtry", std::make_shared<Reactor2DBldrFtry>(std::initializer_list<std::string>{"solid"s}));
 
+    factories.insert("FGActorBldrFtry", std::make_shared<FGActorBldrFtry>(std::initializer_list<std::string>{"attractor"s}));
+    factories.insert("FGRectorBldrFtry", std::make_shared<FGReactorBldrFtry>(std::initializer_list<std::string>{"attractor"s}));
+
     factories.insert("ShapeMSphereBldrFtry", std::make_shared<ShapeMSphereBldrFtry>());
     factories.insert("ShapeMTriangleBldrFtry", std::make_shared<ShapeMTriangleBldrFtry>());
 
     factories.insert("ShapeTriangle2DBldrFtry", std::make_shared<ShapeTriangle2DBldrFtry>());
     factories.insert("ShapeMPoint2DBldrFtry", std::make_shared<ShapeMPoint2DBldrFtry>());
+
+    factories.insert("FGShapeMTriangleBldrFtry", std::make_shared<FGShapeMTriangleBldrFtry>());
+    factories.insert("FGShapeMPointBldrFtry", std::make_shared<FGShapeMPointBldrFtry>());
 
     factories.insert("MovingSphereAvtBldrFtry", std::make_shared<MovingSphereAvtBldrFtry>());
     factories.insert("MovingTriangle3DAvtBldrFtry", std::make_shared<zbe::MovingTriangle3DAvtBldrFtry>());
@@ -119,7 +132,7 @@ public:
     factories.insert("GravityMotion3DFtry", std::make_shared<GravityMotion3DFtry>());
     factories.insert("OrientationRelativeVelSetterFtry", std::make_shared<zbe::GenericFtry<zbe::Behavior<double, double, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D >, OrientationRelativeVelSetter>>("Behavior", "OrientationRelativeVelSetter"));
     factories.insert("OrientationRelative2DVelSetterFtry", std::make_shared<zbe::GenericFtry<zbe::Behavior<double, double, zbe::Vector2D, zbe::Vector2D >, OrientationRelative2DVelSetter>>("Behavior", "OrientationRelative2DVelSetter"));
-    factories.insert("Vec3DAccumBhvFtry", std::make_shared<zbe::GenericFtry<zbe::Behavior<zbe::Vector3D, zbe::Vector3D, zbe::Vector3D >, Vec3DAccumBhv>>("Behavior", "Vec3DAccumBhv"));
+    factories.insert("Vec3DAccumBhvFtry", std::make_shared<zbe::GenericFtry<zbe::Behavior<zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D >, Vec3DAccumBhv>>("Behavior", "Vec3DAccumBhv"));
     factories.insert("CopyV3DIfNotZeroBhvFtry", std::make_shared<zbe::GenericFtry<zbe::Behavior<zbe::Vector3D, zbe::Vector3D >, CopyV3DIfNotZeroBhv>>("Behavior", "CopyV3DIfNotZeroBhv"));
     factories.insert("ProjectV3DOnPlaneBhvFtry", std::make_shared<zbe::GenericFtry<zbe::Behavior<zbe::Vector2D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D >, ProjectV3DOnPlaneBhv>>("Behavior", "ProjectV3DOnPlaneBhv"));
     factories.insert("CalculeOrientationBhv", std::make_shared<zbe::GenericFtry<zbe::Behavior<zbe::Vector3D, zbe::Vector3D, zbe::Vector3D , zbe::Vector3D >, CalculeOrientationBhv>>("Behavior", "CalculeOrientationBhv"));
@@ -144,12 +157,14 @@ public:
     factories.insert("PrintfSolid2DRctBldrFtry", std::make_shared<zbe::PrintfRctBldrFtry<zbe::CollisionData2D, Solid>>());
     factories.insert("PrintfPlatformRctBldrFtry", std::make_shared<zbe::PrintfRctBldrFtry<zbe::CollisionData3D, Platform>>());
     factories.insert("Triangle3Dto2DCacheBldrFtry", std::make_shared<Triangle3Dto2DCacheBldrFtry>());
+    factories.insert("NonRealGravityVelSetterBhvFtry", std::make_shared<NonRealGravityVelSetterBhvFtry>());
 
     factories.insert("PlatformTraitBldrFtry", std::make_shared<PlatformTraitBldrFtry>());
 
     factories.insert("DoubleTwoV3DAvtBldrFtry", std::make_shared<zbe::MAvatarBldrFtry<double, zbe::Vector3D, zbe::Vector3D>>());
 
     factories.insert("FixedDoubleValueSetterDmnFtry", std::make_shared<FixedValueSetterDmnFtry<double>>());
+    factories.insert("FixedVector3DValueSetterDmnFtry", std::make_shared<FixedValueSetterDmnFtry<zbe::Vector3D>>());
   }
 
 };

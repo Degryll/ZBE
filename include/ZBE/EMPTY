@@ -1,2 +1,6 @@
 Demonio condicional que, cuando la sangre llegue a cero, ejecute las activaciones/desactivaciones necesarias para entrar en caida
 .... y luego la caida, que eso ya tiene más miga :D
+
+
+Quitar zbe:: atributos CollisionData
+Renombrar getCollision en IEG

@@ -33,7 +33,7 @@
     "ULM3DOn2DTicket" : 1101,
     "gmTicket" : 1105,
     "saltaListTicket" : 1106,
-    "twoVelaccumListTicket" : 1107,
+    "velaccumListTicket" : 1107,
     "protaOrientationListTicket" : 1108,
     "bajaListTicket" : 1109,
     "velocityIdx" : 1110,
@@ -41,6 +41,7 @@
     "velocityLateralIdx" : 1112,
     "velocityPre1Idx" : 1113,
     "velocityPre2Idx" : 1114,
+    "velocityPre3Idx" : 1115,
     "inerTicket" : 1200,
     "inatorTicket" : 1210,
     "iner2DTicket" : 1205,
@@ -48,6 +49,8 @@
     "BulletCreatorTicket" : 1220,
     "SoundCreatorTicket" : 1221,
     "ChofCreatorTicket" : 1222,
+    "attractorTicket" : 1223,
+    "attractedTicket" : 1224,
     "positionAIdx" : 1230,
     "positionBIdx" : 1240,
     "positionCIdx" : 1250,
@@ -122,7 +125,7 @@
     "mainInitialState" : 0,
     "mainExitState" : 1,
     "zandbokz.toMenu": 1,
-    "zandbokz.loadTime" : 26214400,
+    "zandbokz.loadTime" : 262144000,
     "cam.fov" :{"type":"f", "value":90.0},
     "cam.scale" :{"type":"f", "value":50.0},
     "cam.aspect" :{"type":"f", "value":1.6666666},
@@ -146,6 +149,8 @@
 
     "model.sineComponent" : 0,
     "gravity" : {"type":"v3", "value":[0.0, -100.0, 0.0]},
+    "attractorsRadius" : {"type":"uifd", "value":2000},
+    "attractionRatio" : {"type":"uifd", "value":500},
     "bullet.speed" : {"type":"d", "value":800.0},
 
 
@@ -159,8 +164,8 @@
     "hudbloodbarDrawticket" : 30102,
     "crosshairsPos" :{"type":"v2", "value":[0.0,0.0]},
     "crosshairsSize" :{"type":"v2", "value":[0.25,0.25]},
-    "bloodbarPos" :{"type":"v2", "value":[0.80, -0.90]},
-    "bloodbarSize" :{"type":"v2", "value":[0.35, 0.35]},
+    "bloodbarPos" :{"type":"v2", "value":[0.90, -0.80]},
+    "bloodbarSize" :{"type":"v2", "value":[1.0, 1.0]},
 
     "prota.forwardSpeed" : {"type":"v2", "value":[22.0, 0.0]},
     "prota.backwardSpeed" : {"type":"v2", "value":[-10.0, 0.0]},
@@ -221,7 +226,8 @@
                 "planeE2" : [0.0, 0.0, 0.0],
                 "protaPitchVect" : [1.0, 0.0, 0.0],
                 "protaYawVect" : [0.0, 1.0, 0.0],
-                "protaRollVect" : [0.0, 0.0, 1.0]
+                "protaRollVect" : [0.0, 0.0, 1.0],
+                "protagrav" : [0.0, 0.0, 0.0]
               }
             }
           }
@@ -291,6 +297,12 @@
           "config" : {}
         },
         {
+          "factory": "TFAECV3DAvtFtry",
+          "description" : "do some serious sheet",
+          "name": "zandbokz.attractorsList",
+          "config" : {}
+        },
+        {
           "factory": "DoubleTFAECTwoV3DAvtFtry",
           "description" : "do some serious sheet",
           "name": "zandbokz.saltaList",
@@ -322,25 +334,31 @@
         },
         {
           "factory": "TFAECTwoV3DAvtFtry",
+          "description" : "Lista de atraidos por atractores",
+          "name": "zandbokz.attractedlist",
+          "config" : {}
+        },
+        {
+          "factory": "TFAECTwoV3DAvtFtry",
           "description" : "Gravity motion list",
           "name": "zandbokz.gmList",
           "config" : {}
         },
         {
-          "factory": "TFAECThreeV3DAvtFtry",
-          "description" : "2 Vel accum list",
-          "name": "zandbokz.twovelaccumlist",
+          "factory": "TFAECFourV3DAvtFtry",
+          "description" : "Vel accum list",
+          "name": "zandbokz.velaccumlist",
           "config" : {}
         },
         {
           "factory": "TFAECV2DThreeV3DAvtFtry",
-          "description" : "2 Vel accum list",
+          "description" : "Vel accum list",
           "name": "zandbokz.pryectaOrientatonlist",
           "config" : {}
         },
         {
           "factory": "TFAECFourV3DAvtFtry",
-          "description" : "2 Vel accum list",
+          "description" : "Vel accum list",
           "name": "zandbokz.calculaorilist",
           "config" : {}
         },
@@ -802,7 +820,7 @@
           "description" : "Está ahí, mirando. Pero no hace na",
           "config" : {
             "contextTime":"DEFAULT",
-            "builders" : ["zandbokz.diositovalues", "zandbokz.diositocachetriangulo2D", "zandbokz.diositoapintar","zandbokz.diositosolidosocializa", "zandbokz.diositosolidosocializa2D", "zandbokz.diositodesactiva"],
+            "builders" : ["zandbokz.diositovalues", "zandbokz.diositocachetriangulo2D", "zandbokz.diositoapintar","zandbokz.diositosolidosocializa", "zandbokz.diositosolidosocializa2D", "zandbokz.diositodesactiva", "zandbokz.plataformaatrae"],
             "backbuilers" : ["zandbokz.diositopalante"]
           }
         },
@@ -812,7 +830,7 @@
           "description" : "Está ahí, mirando. Pero no hace na",
           "config" : {
             "contextTime":"DEFAULT",
-            "builders" : ["zandbokz.diositovalues1", "zandbokz.diositocachetriangulo2D", "zandbokz.diositoapintar", "zandbokz.diositosolidosocializa", "zandbokz.diositosolidosocializa2D", "zandbokz.diositodesactiva"]
+            "builders" : ["zandbokz.diositovalues1", "zandbokz.diositocachetriangulo2D", "zandbokz.diositoapintar", "zandbokz.diositosolidosocializa", "zandbokz.diositosolidosocializa2D", "zandbokz.diositodesactiva", "zandbokz.plataformaatrae"]
           }
         },
         {
@@ -821,7 +839,7 @@
           "description" : "Está ahí, mirando. Pero no hace na",
           "config" : {
             "contextTime":"DEFAULT",
-            "builders" : ["zandbokz.diositovalues2", "zandbokz.diositocachetriangulo2D", "zandbokz.diositoapintar", "zandbokz.diositosolidosocializa", "zandbokz.diositosolidosocializa2D", "zandbokz.diositodesactiva"]
+            "builders" : ["zandbokz.diositovalues2", "zandbokz.diositocachetriangulo2D", "zandbokz.diositoapintar", "zandbokz.diositosolidosocializa", "zandbokz.diositosolidosocializa2D", "zandbokz.diositodesactiva", "zandbokz.plataformaatrae"]
           }
         },
         {
@@ -830,7 +848,7 @@
           "description" : "Está ahí, mirando. Pero no hace na",
           "config" : {
             "contextTime":"DEFAULT",
-            "builders" : ["zandbokz.diositovalues3", "zandbokz.diositocachetriangulo2D", "zandbokz.diositoapintar", "zandbokz.diositosolidosocializa", "zandbokz.diositosolidosocializa2D", "zandbokz.diositodesactiva"]
+            "builders" : ["zandbokz.diositovalues3", "zandbokz.diositocachetriangulo2D", "zandbokz.diositoapintar", "zandbokz.diositosolidosocializa", "zandbokz.diositosolidosocializa2D", "zandbokz.diositodesactiva", "zandbokz.plataformaatrae"]
           }
         },
         {
@@ -839,7 +857,7 @@
           "description" : "Está ahí, mirando. Pero no hace na",
           "config" : {
             "contextTime":"DEFAULT",
-            "builders" : ["zandbokz.diositovalues4", "zandbokz.diositocachetriangulo2D", "zandbokz.diositoapintar", "zandbokz.diositosolidosocializa", "zandbokz.diositosolidosocializa2D", "zandbokz.diositodesactiva"]
+            "builders" : ["zandbokz.diositovalues4", "zandbokz.diositocachetriangulo2D", "zandbokz.diositoapintar", "zandbokz.diositosolidosocializa", "zandbokz.diositosolidosocializa2D", "zandbokz.diositodesactiva", "zandbokz.plataformaatrae"]
           }
         },
         {
@@ -848,7 +866,7 @@
           "description" : "Está ahí, mirando. Pero no hace na",
           "config" : {
             "contextTime":"DEFAULT",
-            "builders" : ["zandbokz.diositovalues5", "zandbokz.diositocachetriangulo2D", "zandbokz.diositoapintar", "zandbokz.diositosolidosocializa", "zandbokz.diositosolidosocializa2D", "zandbokz.diositodesactiva"]
+            "builders" : ["zandbokz.diositovalues5", "zandbokz.diositocachetriangulo2D", "zandbokz.diositoapintar", "zandbokz.diositosolidosocializa", "zandbokz.diositosolidosocializa2D", "zandbokz.diositodesactiva", "zandbokz.plataformaatrae"]
           }
         },
         {
@@ -857,7 +875,7 @@
           "description" : "Está ahí, mirando. Pero no hace na",
           "config" : {
             "contextTime":"DEFAULT",
-            "builders" : ["zandbokz.diositovalues6", "zandbokz.diositocachetriangulo2D", "zandbokz.diositoapintar", "zandbokz.diositosolidosocializa", "zandbokz.diositosolidosocializa2D", "zandbokz.diositodesactiva"]
+            "builders" : ["zandbokz.diositovalues6", "zandbokz.diositocachetriangulo2D", "zandbokz.diositoapintar", "zandbokz.diositosolidosocializa", "zandbokz.diositosolidosocializa2D", "zandbokz.diositodesactiva", "zandbokz.plataformaatrae"]
           }
         },
         {
@@ -866,7 +884,7 @@
           "description" : "Está ahí, mirando. Pero no hace na",
           "config" : {
             "contextTime":"DEFAULT",
-            "builders" : ["zandbokz.diositovalues7", "zandbokz.diositocachetriangulo2D", "zandbokz.diositoapintar", "zandbokz.diositosolidosocializa", "zandbokz.diositosolidosocializa2D", "zandbokz.diositodesactiva"]
+            "builders" : ["zandbokz.diositovalues7", "zandbokz.diositocachetriangulo2D", "zandbokz.diositoapintar", "zandbokz.diositosolidosocializa", "zandbokz.diositosolidosocializa2D", "zandbokz.diositodesactiva", "zandbokz.plataformaatrae"]
           }
         },
         {
@@ -875,7 +893,7 @@
           "description" : "Está ahí, mirando. Pero no hace na",
           "config" : {
             "contextTime":"DEFAULT",
-            "builders" : ["zandbokz.diositovalues8", "zandbokz.diositocachetriangulo2D", "zandbokz.diositoapintar", "zandbokz.diositosolidosocializa", "zandbokz.diositosolidosocializa2D", "zandbokz.diositodesactiva"]
+            "builders" : ["zandbokz.diositovalues8", "zandbokz.diositocachetriangulo2D", "zandbokz.diositoapintar", "zandbokz.diositosolidosocializa", "zandbokz.diositosolidosocializa2D", "zandbokz.diositodesactiva", "zandbokz.plataformaatrae"]
           }
         },
         {
@@ -1266,7 +1284,7 @@
           "name" : "zandbokz.dropcuajarona",
           "config" : {
             "contextTime":"DEFAULT",
-            "builders" : ["zandbokz.cuajaronvalues", "zandbokz.diositocachetriangulo2D", "zandbokz.cuajaronsolidosocializa", "zandbokz.cuajaronsolidosocializa2D", "zandbokz.cuajaronapintar"],
+            "builders" : ["zandbokz.cuajaronvalues", "zandbokz.diositocachetriangulo2D", "zandbokz.cuajaronsolidosocializa", "zandbokz.cuajaronsolidosocializa2D", "zandbokz.cuajaronapintar", "zandbokz.plataformaatrae"],
             "Vector3D" : {
               "positionIdx" : "zandbokz.copypos3v",
               "orientationIdx" : "zandbokz.UpDirToOri",
@@ -1286,7 +1304,7 @@
           "name" : "zandbokz.dropcuajaronb",
           "config" : {
             "contextTime":"DEFAULT",
-            "builders" : ["zandbokz.cuajaronvalues", "zandbokz.diositocachetriangulo2D", "zandbokz.cuajaronsolidosocializa", "zandbokz.cuajaronsolidosocializa2D", "zandbokz.cuajaronapintar"],
+            "builders" : ["zandbokz.cuajaronvalues", "zandbokz.diositocachetriangulo2D", "zandbokz.cuajaronsolidosocializa", "zandbokz.cuajaronsolidosocializa2D", "zandbokz.cuajaronapintar", "zandbokz.plataformaatrae"],
             "Vector3D" : {
               "positionIdx" : "zandbokz.copypos3v",
               "orientationIdx" : "zandbokz.UpDirToOriRot",
@@ -1325,6 +1343,14 @@
               "e1Idx":[0.0, 0.0, 0.0],
               "e2Idx":[0.0, 0.0, 0.0]
             }
+          }
+        },
+        {
+          "factory" :"V3DAvtBldrFtry",
+          "name" : "zandbokz.plataformaatrae",
+          "config" : {
+            "attribIndexes" : ["positionIdx"],
+            "lists":{"zandbokz.attractorsList":"attractorTicket"}
           }
         },
         {
@@ -1505,6 +1531,31 @@
             "reactionBuilders" : ["zandbokz.reaccionplanoentraenlistas"]
           }
         },
+        {"factory":"TwoV3DAvtDaemonFtry",
+          "name": "zandbokz.elprotasecae",
+          "config" : {
+            "list" : "zandbokz.attractedlist",
+            "behavior" : "zandbokz.elprotasecaeBhv"
+          }
+        },
+        {"factory": "MasterDmnFtry",
+          "name": "zandbokz.sangresefo",
+          "config" : {
+            "daemons": [
+              "zandbokz.elprotasecae",
+              "zandbokz.resetmovimiento"
+            ],
+            "backdaemons" : ["zandbokz.resetmovimientov3"]
+          }
+        },
+        {"factory":"NonRealGravityVelSetterBhvFtry",
+          "name": "zandbokz.elprotasecaeBhv",
+          "config" : {
+            "ratio" : "attractionRatio",
+            "radius" : "attractorsRadius",
+            "list" : "zandbokz.attractorsList"
+          }
+        },
         {"factory":"FixedDoubleValueSetterDmnFtry",
           "name": "zandbokz.resetmovimiento",
           "config" : {
@@ -1512,11 +1563,18 @@
             "fixedvalue" : "ZERO"
           }
         },
+        {"factory":"FixedVector3DValueSetterDmnFtry",
+          "name": "zandbokz.resetmovimientov3",
+          "config" : {
+            "values" : ["zandbokz.protagrav"],
+            "fixedvalue" : "VZERO"
+          }
+        },
         {"factory": "BoundedAddIntTriggerBvr",
           "name": "zandbokz.intincrementTriggerBvr",
           "description" : "comportamiento suma uibt",
           "config" : {
-            "daemon" : "zandbokz.resetmovimiento"
+            "daemon" : "zandbokz.sangresefo"
           }
         },
         {"factory": "FiveIntBhvrDmnFtry",
@@ -1743,7 +1801,7 @@
                           "zandbokz.protadispara", "zandbokz.protadisparasuena", "zandbokz.protaacaer",  "zandbokz.protafinalvel", 
                           "zandbokz.protasaltar", "zandbokz.protafisica3d", "zandbokz.protaamoverenplano", "zandbokz.protaattachonoff",
                           "zandbokz.protaInator2D", "zandbokz.protacalcula2dori", "zandbokz.protacalcula2DVel", "zandbokz.protapierdesangre",
-                          "zandbokz.protaganasangre","zandbokz.protarecuperasangre", "zandbokz.protaquemasangre"],
+                          "zandbokz.protaganasangre","zandbokz.protarecuperasangre", "zandbokz.protaquemasangre", "zandbokz.protaacaerenplataformas"],
             "buildersback" : []
           }
         },
@@ -1778,6 +1836,7 @@
               "camposIdx" : "zandbokz.camEye",
               "velocityPre1Idx" : [0.0, 0.0, 0.0],
               "velocityPre2Idx" : [0.0, 0.0, 0.0],
+              "velocityPre3Idx" : "zandbokz.protagrav",
               "positionIdx":"zandbokz.protaPos",
               "orientationIdx":[1.0, 0.0, 0.0],
               "orientationPreIdx":[1.0, 0.0, 0.0],
@@ -1817,6 +1876,17 @@
             "attribIndexes" : ["velocityIdx", "positionIdx"],
             "lists":{
               "zandbokz.ULM3DList":"ULM3DTicket"
+            }
+          }
+        },
+        {
+          "factory" :"TwoV3DAvtBldrFtry",
+          "name" : "zandbokz.protaacaerenplataformas",
+          "config" : {
+            "attribIndexes" : ["velocityPre3Idx", "positionIdx"],
+            "TODO" : "sumar esto al resto de velocidades",
+            "lists":{
+              "zandbokz.attractedlist":"attractedTicket"
             }
           }
         },
@@ -1923,12 +1993,12 @@
           }
         },
         {
-          "factory" :"ThreeV3DAvtBldrFtry",
+          "factory" :"FourV3DAvtBldrFtry",
           "name" : "zandbokz.protafinalvel",
           "config" : {
-            "attribIndexes" : ["velocityPre2Idx", "velocityPre1Idx", "velocityIdx"],
+            "attribIndexes" : ["velocityPre3Idx", "velocityPre2Idx", "velocityPre1Idx", "velocityIdx"],
             "lists":{
-              "zandbokz.twovelaccumlist":"twoVelaccumListTicket"
+              "zandbokz.velaccumlist":"velaccumListTicket"
             },
             "deactivatedlists":{
             }
@@ -2092,7 +2162,7 @@
             },
             "uint": {
               "hudcrossGidIdx":["img.zandbokz.crosshairs"],
-              "hudbloodbarGidIdx":["img.zandbokz.vida.param"]
+              "hudbloodbarGidIdx":["img.zandbokz.bloodbarrel.param"]
             },
             "int": {
               "currentbloodIdx" : "zandbokz.protaCurrentBlood",
@@ -2137,7 +2207,7 @@
               "zandbokz.proyectaorientacionDMN",
               "zandbokz.vel2oriDMN",
               "zandbokz.ULM3DOn2DDaemon",
-              "zandbokz.2velAccumDMN",
+              "zandbokz.velAccumDMN",
               "zandbokz.ULM3DDaemon",
               "zandbokz.gravityDMN",
               "zandbokz.keepdistanceDmn"
@@ -2353,6 +2423,8 @@
           "description" : "demonio que engancha",
           "config" : {
             "daemons": [
+              "zandbokz.resetmovimientov3",
+              "zandbokz.bloodfillerDmn",
               "zandbokz.attachcajaactivationsDaemon",
               "zandbokz.attachcajadeactivationsDaemon"
             ]
@@ -2363,6 +2435,8 @@
           "description" : "demonio que desengancha",
           "config" : {
             "daemons": [
+              "zandbokz.resetmovimientov3",
+              "zandbokz.bloodfillerDmn",
               "zandbokz.dettachcajaactivationsDaemon",
               "zandbokz.dettachcajadeactivationsDaemon",
               "zandbokz.dettachcajadisableplatformsDaemon"
@@ -2404,7 +2478,7 @@
           }
         },
         {"factory": "Vec3DAccumBhvFtry",
-          "name": "zandbokz.2velAccumBHV",
+          "name": "zandbokz.velAccumBHV",
           "description" : "Comportamiento pa que sume velocidades",
           "config" : {}
         },
@@ -2683,12 +2757,12 @@
             "behavior" : "zandbokz.gravityBHV"
           }
         },
-        {"factory": "ThreeV3DAvtDaemonFtry",
-          "name": "zandbokz.2velAccumDMN",
+        {"factory": "FourV3DAvtDaemonFtry",
+          "name": "zandbokz.velAccumDMN",
           "description" : "demonio pa que se sumen velocidades",
           "config" : {
-            "list" : "zandbokz.twovelaccumlist",
-            "behavior" : "zandbokz.2velAccumBHV"
+            "list" : "zandbokz.velaccumlist",
+            "behavior" : "zandbokz.velAccumBHV"
           }
         },
         {"factory": "FourV3DAvtDaemonFtry",

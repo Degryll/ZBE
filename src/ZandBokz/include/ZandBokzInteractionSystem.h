@@ -97,6 +97,114 @@ using Iner2DBldrFtry   = zbe::InteractionerBldrFtry<  zbe::CollisionData2D, ZB2D
 
 using IEG2DFtry = zbe::InteractionEventGeneratorFtry<Physics2DSelector, Physics2DOverloaded, zbe::CollisionData2D, ZB2DActor, ZB2DReactor, zbe::MovingPoint2D, zbe::Triangle2D>;
 
+// zandbokz 3d fake gravity interaction system ------------------------------------
+struct FGravityData {
+  uint64_t time{};
+  zbe::Point3D point{};
+};
+
+struct Attractor {};
+
+zbe::Point3D calculateNormal(const zbe::Point3D& p1, const zbe::Point3D& p2, const zbe::Point3D& p3) {
+    // Calcula el vector normal al plano
+    zbe::Point3D v1 = {p2.x - p1.x, p2.y - p1.y, p2.z - p1.z};
+    zbe::Point3D v2 = {p3.x - p1.x, p3.y - p1.y, p3.z - p1.z};
+
+    zbe::Point3D normal;
+    normal.x = v1.y * v2.z - v1.z * v2.y;
+    normal.y = v1.z * v2.x - v1.x * v2.z;
+    normal.z = v1.x * v2.y - v1.y * v2.x;
+
+    return normal;
+}
+
+zbe::Point3D projectPointOnPlane(const zbe::Point3D* point, const zbe::Triangle3D* triangle) {
+    // Calcula el vector normal al plano
+    auto normal = calculateNormal(triangle->a, triangle->b, triangle->c);
+
+    // Calcula el numerador de la fórmula
+    double numerator = normal.x * (point->x - triangle->a.x) + normal.y * (point->y - triangle->a.y) + normal.z * (point->z - triangle->a.z);
+
+    // Calcula el denominador de la fórmula
+    double denominator = normal.x * normal.x + normal.y * normal.y + normal.z * normal.z;
+
+    // Calcula la proyección del punto sobre el plano
+    zbe::Point3D projection;
+    projection.x = point->x - (numerator / denominator) * normal.x;
+    projection.y = point->y - (numerator / denominator) * normal.y;
+    projection.z = point->z - (numerator / denominator) * normal.z;
+
+    return projection;
+}
+
+bool gravityCenterMovingPointMovingTriangle(std::shared_ptr<zbe::MovingPoint3D> mpoint, std::shared_ptr<zbe::MovingTriangle3D> mtriangle, uint64_t time, FGravityData& gdata) {
+  zbe::Point3D proyection = projectPointOnPlane(mpoint->getShape(), mtriangle->getShape());
+  gdata.point = proyection;
+  gdata.time = time;
+  return true;
+}
+
+class GravityCenterMovingPointMovingTriangleFunctor {
+public:
+  bool operator()(std::shared_ptr<zbe::MovingPoint3D> arg1, std::shared_ptr<zbe::MovingTriangle3D> arg2, uint64_t time, FGravityData &data){
+    return gravityCenterMovingPointMovingTriangle(arg1, arg2, time, data);
+  }
+};
+
+template<typename a, typename b>
+bool notGravity(std::shared_ptr<a>, std::shared_ptr<b>, uint64_t time, FGravityData &data) {
+  data.time = time;
+  return false;
+}
+
+template<typename a, typename b>
+class NotFGravityFunctor {
+public:
+  bool operator()(std::shared_ptr<a> arg1, std::shared_ptr<b> arg2, uint64_t time, FGravityData &data){
+    return notGravity<a, b>(arg1, arg2, time, data);
+  }
+};
+
+using FGravity3DOverloaded = zbe::overloaded<NotFGravityFunctor<zbe::MovingPoint3D,zbe::MovingPoint3D>, GravityCenterMovingPointMovingTriangleFunctor, NotFGravityFunctor<zbe::MovingTriangle3D,zbe::MovingPoint3D>, NotFGravityFunctor<zbe::MovingTriangle3D, zbe::MovingTriangle3D>>;
+
+class FGravity3DSelector : public zbe::InteractionSelector<FGravityData, FGravity3DOverloaded, zbe::MovingPoint3D, zbe::MovingTriangle3D> {
+public:
+  virtual ~FGravity3DSelector() = default;
+protected:
+  virtual FGravity3DOverloaded getOverloaded() {
+    return FGravity3DOverloaded {NotFGravityFunctor<zbe::MovingPoint3D,zbe::MovingPoint3D>{}, GravityCenterMovingPointMovingTriangleFunctor{}, NotFGravityFunctor<zbe::MovingTriangle3D,zbe::MovingPoint3D>{}, NotFGravityFunctor<zbe::MovingTriangle3D, zbe::MovingTriangle3D>{}};
+  }
+};
+
+
+using FGActor = zbe::Actor<FGravityData, Attractor>;
+using FGReactor = zbe::Reactor<FGravityData, Attractor>;
+using FGShapes = zbe::Shape<zbe::MovingPoint3D, zbe::MovingTriangle3D>;
+
+using FGIner = zbe::Interactioner<FGActor, FGReactor, zbe::MovingPoint3D, zbe::MovingTriangle3D>;
+using FGInator = zbe::Interactionator<FGActor, FGReactor, zbe::MovingPoint3D, zbe::MovingTriangle3D>;
+
+using FGInatorList = zbe::TicketedForwardList<FGInator>;
+using FGInerList = zbe::TicketedForwardList<FGIner>;
+
+using IEGFG = zbe::InteractionEventGenerator<FGravity3DSelector, FGravity3DOverloaded, FGravityData, ZBActor, ZBReactor, zbe::MovingPoint3D, zbe::MovingTriangle3D>;
+
+using FGInerBldr = zbe::InteractionerBldr<FGravityData, FGActor, FGReactor, zbe::MovingPoint3D, zbe::MovingTriangle3D>;
+using FGInatorBldr = zbe::InteractionatorBldr<FGravityData, FGActor, FGReactor, zbe::MovingPoint3D, zbe::MovingTriangle3D>;
+
+// zandbokz interaction types builders factories
+using FGActorBldrFtry = zbe::ActorBldrFtry<FGravityData, Attractor>;
+using FGReactorBldrFtry = zbe::ReactorBldrFtry<FGravityData, Attractor>;
+using FGShapeMPointBldrFtry   = zbe::ShapeBldrFtry<zbe::MovingPoint3D,     zbe::MovingPoint3D, zbe::MovingTriangle3D>;
+using FGShapeMTriangleBldrFtry = zbe::ShapeBldrFtry<zbe::MovingTriangle3D, zbe::MovingPoint3D, zbe::MovingTriangle3D>;
+
+using FGInatorBldrFtry = zbe::InteractionatorBldrFtry<FGravityData, FGActor, FGReactor, zbe::MovingPoint3D, zbe::MovingTriangle3D>;
+using FGInerBldrFtry = zbe::InteractionerBldrFtry<FGravityData, FGActor, FGReactor, zbe::MovingPoint3D, zbe::MovingTriangle3D>;
+
+using IEGFGFtry = zbe::InteractionEventGeneratorFtry<FGravity3DSelector, FGravity3DOverloaded, FGravityData, FGActor, FGReactor, zbe::MovingPoint3D, zbe::MovingTriangle3D>;
+
+
+
 
 // -----------
 

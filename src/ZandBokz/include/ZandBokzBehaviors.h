@@ -24,8 +24,10 @@
 #include "ZBE/core/tools/tools.h"
 #include "ZBE/core/tools/containers/RsrcStore.h"
 #include "ZBE/core/tools/containers/RsrcDictionary.h"
+#include "ZBE/core/tools/containers/TicketedForwardList.h"
 #include "ZBE/core/behaviors/Behavior.h"
 #include "ZBE/core/entities/Entity.h"
+#include "ZBE/core/entities/avatars/Avatar.h"
 
 #include "ZBE/factories/Factory.h"
 
@@ -101,18 +103,20 @@ class ProjectV3DOnPlaneBhv : virtual public zbe::Behavior<zbe::Vector2D, zbe::Ve
   }
 };
 
-class Vec3DAccumBhv : virtual public zbe::Behavior<zbe::Vector3D, zbe::Vector3D, zbe::Vector3D > {
+class Vec3DAccumBhv : virtual public zbe::Behavior<zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D > {
   public:
   virtual ~Vec3DAccumBhv() = default;
-  void apply(std::shared_ptr<zbe::MAvatar<zbe::Vector3D, zbe::Vector3D, zbe::Vector3D > > avatar) {
+  void apply(std::shared_ptr<zbe::MAvatar<zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D > > avatar) {
     
     auto vDest = avatar->get<1, zbe::Vector3D>();
     auto vA    = avatar->get<2, zbe::Vector3D>();
     auto vB    = avatar->get<3, zbe::Vector3D>();
+    auto vC    = avatar->get<4, zbe::Vector3D>();
 
     zbe::Vector3D a = vA->get();
     zbe::Vector3D b = vB->get();
-    zbe::Vector3D newvel = a + b;
+    zbe::Vector3D c = vC->get();
+    zbe::Vector3D newvel = a + b + c;
     vDest->set(newvel);
   }
 };
@@ -329,6 +333,137 @@ private:
   zbe::RsrcStore<zbe::Value<zbe::Vector3D> > &vv3Rsrc = zbe::RsrcStore<zbe::Value<zbe::Vector3D> >::getInstance();
   zbe::RsrcStore<zbe::Behavior<zbe::Vector3D, zbe::Vector3D> >& behaviorRsrc = zbe::RsrcStore<zbe::Behavior<zbe::Vector3D, zbe::Vector3D> >::getInstance();
   zbe::RsrcStore<GravityMotion3D>& gm3dRsrc = zbe::RsrcStore<GravityMotion3D>::getInstance();
+};
+
+
+class NonRealGravityVelSetterBhv : virtual public zbe::Behavior<zbe::Vector3D, zbe::Vector3D> {
+  public:
+    using ListType = zbe::TicketedForwardList<zbe::SAvatar<zbe::Vector3D>>;
+    virtual ~NonRealGravityVelSetterBhv() = default;
+
+    void setRadius(double radius) {
+      this->radius = radius;
+    }
+
+    void setRatio(double ratio) {
+      this->ratio = ratio;
+    }
+
+    void setAttractorList(std::shared_ptr<ListType> attractors) {
+      this->attractors = attractors;
+    }
+
+    void apply(std::shared_ptr<zbe::MAvatar<zbe::Vector3D, zbe::Vector3D > > avatar) {
+
+      auto vpos = avatar->get<1, zbe::Vector3D>();
+      auto vvel = avatar->get<2, zbe::Vector3D>();
+      zbe::Vector3D pos = vpos->get(); 
+      zbe::Vector3D fakeGrav{0.0,0.0,0.0};
+
+      closest(pos, fakeGrav);
+      //insideRadiusMean(pos, fakeGrav);
+      vvel->set(fakeGrav);
+    }
+
+    void closest(zbe::Vector3D &pos, zbe::Vector3D &fakeGrav) {
+      double bestDistance = INFINITY;
+      for (auto attractor : *attractors) {
+        auto v = attractor->get();
+        zbe::Vector3D v3 = v->get();
+        zbe::Vector3D direction = v3 - pos;
+        double distance = direction.getModule();
+        if (direction.getModule() < bestDistance) {
+          fakeGrav = direction.setModule(ratio);
+          bestDistance = distance;
+        }
+      }
+    }
+
+    void insideRadiusMean(zbe::Vector3D &pos, zbe::Vector3D &fakeGrav) {
+      double x = 0.0;
+      double y = 0.0;
+      double z = 0.0;
+      int amount = 0;
+
+      for (auto attractor : *attractors) {
+        auto v = attractor->get();
+        zbe::Vector3D v3 = v->get();
+        zbe::Vector3D dist = v3 - pos;
+        if (dist.getModule() < radius) {
+          x += v3.x;
+          y += v3.y;
+          z += v3.z;
+          amount++;
+        }
+      }
+      if (amount > 0) {
+        printf("Attractors: %d\n", amount);
+        fflush(stdout);
+        x = x / amount;
+        y = y / amount;
+        z = z / amount;
+      } else {
+        printf("No attractors\n");
+        fflush(stdout);
+      }
+      fakeGrav = zbe::Vector3D{x, y, z} - pos;
+      fakeGrav = fakeGrav.setModule(ratio);
+    }
+
+  private:
+    double radius;
+    double ratio;
+    std::shared_ptr<zbe::TicketedForwardList<zbe::SAvatar<zbe::Vector3D>>> attractors;
+};
+
+class NonRealGravityVelSetterBhvFtry : virtual public zbe::Factory {
+public:
+
+  void create(std::string name, uint64_t) {
+    using namespace std::string_literals;
+    std::shared_ptr<NonRealGravityVelSetterBhv> nrgvs = std::shared_ptr<NonRealGravityVelSetterBhv>(new NonRealGravityVelSetterBhv);
+    behaviorRsrc.insert("Behavior."s + name, nrgvs);
+    specifcRsrc.insert("NonRealGravityVelSetterBhv."s + name, nrgvs);
+  }
+
+  void setup(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+    if(cfg) {
+        auto j = *cfg;
+        auto nrgvs = specifcRsrc.get("NonRealGravityVelSetterBhv."s + name);
+
+        auto ratio = zbe::JSONFactory::loadParamCfgDict<double>(dStore, j, "ratio"s, "NonRealGravityVelSetterBhvFtry"s);
+        if(!ratio) {
+            return;
+        }
+        nrgvs->setRatio(*ratio);
+
+        auto radius = zbe::JSONFactory::loadParamCfgDict<double>(dStore, j, "radius"s, "NonRealGravityVelSetterBhvFtry"s);
+        if(!radius) {
+            return;
+        }
+        nrgvs->setRadius(*radius);
+        auto attractors = zbe::JSONFactory::loadParamCfgStoreP<NonRealGravityVelSetterBhv::ListType>(rsrclists, j, zbe::factories::listName, "list"s, "NonRealGravityVelSetterBhvFtry"s);
+        if(!radius) {
+            return;
+        }
+
+        nrgvs->setAttractorList(*attractors);
+    } else {
+        zbe::SysError::setError("NonRealGravityVelSetterBhvFtry config for "s + name + " not found."s);
+    }
+  }
+
+private:
+
+  zbe::RsrcStore<nlohmann::json>& configRsrc = zbe::RsrcStore<nlohmann::json>::getInstance();
+  zbe::RsrcDictionary<double>& dStore = zbe::RsrcDictionary<double>::getInstance();
+  zbe::RsrcStore<zbe::Behavior<zbe::Vector3D, zbe::Vector3D> >& behaviorRsrc = zbe::RsrcStore<zbe::Behavior<zbe::Vector3D, zbe::Vector3D> >::getInstance();
+  zbe::RsrcStore<NonRealGravityVelSetterBhv>& specifcRsrc = zbe::RsrcStore<NonRealGravityVelSetterBhv>::getInstance();
+  zbe::RsrcStore<NonRealGravityVelSetterBhv::ListType>& rsrclists = zbe::RsrcStore<NonRealGravityVelSetterBhv::ListType>::getInstance();
 };
 
 } // namespace zandbokz

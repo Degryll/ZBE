@@ -98,21 +98,22 @@ public:
     auto min = vmin->get();
     auto max = vmax->get();
     auto trigger = vtrigger->get();
+    auto newval = current;
 
     //printf("current %ld increment %ld min %ld max %ld \n", current, increment, min, max);fflush(stdout);
-    current = current + increment;
+    newval = newval + increment;
     //printf("current %ld\n", current);fflush(stdout);
-    if(current>max) {
-      current = max;
+    if(newval>max) {
+      newval = max;
     }
 
-    if(current<min) {
-      current = min;
+    if(newval<min) {
+      newval = min;
     }
 
-    vcurrent->set(current);
+    vcurrent->set(newval);
 
-    if(current == trigger) {
+    if(newval != current && newval == trigger) {
       dmn->run();
     }
   }
