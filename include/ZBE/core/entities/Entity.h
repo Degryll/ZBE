@@ -341,10 +341,6 @@ class ZBEAPI Entity {
      *  \sa setFloat, getDouble, getUint, getInt
      */
     std::shared_ptr<Value<Vector3D> > getVector3D(uint64_t id);
-    // template<typename T, typename U>
-    // typename std::enable_if<std::is_same<T, Vector3D>::value && std::is_same<U, std::shared_ptr<Value<T> > >::value, U>::type
-    // get(uint64_t id) {return getVector3D(id);}
-
     template<typename T, typename U>
     typename std::enable_if<std::is_same<T, Vector<3>>::value && std::is_same<U, std::shared_ptr<Value<T> > >::value, U>::type
     get(uint64_t id) {return getVector3D(id);}
@@ -355,10 +351,6 @@ class ZBEAPI Entity {
      *  \sa setFloat, getDouble, getUint, getInt
      */
     std::shared_ptr<Value<Vector2D> > getVector2D(uint64_t id);
-    // template<typename T, typename U>
-    // typename std::enable_if<std::is_same<T, Vector2D>::value && std::is_same<U, std::shared_ptr<Value<T> > >::value, U>::type
-    // get(uint64_t id) {return getVector2D(id);}
-
     template<typename T, typename U>
     typename std::enable_if<std::is_same<T, Vector<2>>::value && std::is_same<U, std::shared_ptr<Value<T> > >::value, U>::type
     get(uint64_t id) {return getVector2D(id);}

@@ -337,7 +337,7 @@ private:
 
 class NonRealGravityVelSetterResetBhv : virtual public zbe::Behavior<double, double, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D> {
   void apply(std::shared_ptr<zbe::MAvatar<double, double, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D> > avatar) {
-
+    //["bestCenterDistIdx","attractionRatioIdx","velocityPre3Idx", "bestCenterIdx","positionIdx"],
     auto vpos = avatar->get<1, zbe::Vector3D>();
     auto vcenter = avatar->get<2, zbe::Vector3D>();
     auto vratio = avatar->get<4, double>();
