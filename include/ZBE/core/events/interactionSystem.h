@@ -13,6 +13,8 @@
 #include <cstdint>
 #include <iostream>
 #include <variant>
+#include <cxxabi.h>
+#include <typeinfo>
 
 #include "ZBE/core/daemons/Daemon.h"
 #include "ZBE/core/entities/avatars/Avatar.h"
@@ -188,31 +190,46 @@ public:
 
 // Esta implementacion se mantiene como documentacion.
 // Revisar
-template<typename IData, typename Trait, typename Base, typename ...Bases>
-struct ReactionPrint {
-  ReactionPrint(std::shared_ptr<zbe::MAvatar<Base, Bases...>> avt) : avt(avt) {}
+// template<typename IData, typename Trait, typename Base, typename ...Bases>
+// struct ReactionPrint {
+//   ReactionPrint(std::shared_ptr<zbe::MAvatar<Base, Bases...>> avt) : avt(avt) {}
+//   void operator() (IData data, Trait trait){
+//       std::cout << "Typeid name: " << typeid(trait).name() << " With value " << trait << std::endl;
+//       std::cout << "Interaction data: " << data << std::endl;
+//       auto val = zbe::AvtUtil::get<2, Base >(avt);
+//       //auto val = avt->get<1, uint64_t>()->get();
+//       std::cout << "First avt data: " << val << std::endl;
+//   }
+// private:
+//   std::shared_ptr<zbe::MAvatar<Base, Bases...>> avt;
+// };
+
+template <typename T>
+void imprimirNombreTipo() {
+    int status;
+    char* realname = abi::__cxa_demangle(typeid(T).name(), 0, 0, &status);
+    if (status == 0) {
+        printf("Reaction: %s\n", realname);fflush(stdout);
+        free(realname);
+    } else {
+        printf("Error al obtener el nombre del tipo\n");
+    }
+}
+
+template<typename IData, typename Trait>
+struct ReactionPrint : zbe::Funct<void, IData, Trait> {
   void operator() (IData data, Trait trait){
-      std::cout << "Typeid name: " << typeid(trait).name() << " With value " << trait << std::endl;
-      std::cout << "Interaction data: " << data << std::endl;
-      auto val = zbe::AvtUtil::get<2, Base >(avt);
-      //auto val = avt->get<1, uint64_t>()->get();
-      std::cout << "First avt data: " << val << std::endl;
+      imprimirNombreTipo<Trait>();
+      //std::cout << "Interaction data: " << data << std::endl;
   }
-private:
-  std::shared_ptr<zbe::MAvatar<Base, Bases...>> avt;
 };
 
-template<typename IData, typename Trait, typename Base>
-struct ReactionPrint<IData, Trait, Base> {
-  ReactionPrint(std::shared_ptr<zbe::SAvatar<Base>> avt) : avt(avt) {}
-  void operator() (IData data, Trait trait){
-      std::cout << "Typeid name: " << typeid(trait).name() << " With value " << trait << std::endl;
-      std::cout << "Interaction data: " << data << std::endl;
-      auto val = zbe::AvtUtil::get<1, Base >(avt);
-      std::cout << "First avt data: " << val << std::endl;
+template<typename IData, typename Trait, typename ReactionType>
+class ReactionBldr : public zbe::Funct<std::shared_ptr<zbe::Funct<void, IData, Trait>>, std::shared_ptr<zbe::Entity>> {
+public:
+  std::shared_ptr<zbe::Funct<void, IData, Trait>> operator()(std::shared_ptr<zbe::Entity> ent){
+    return std::make_shared<ReactionType>();
   }
-private:
-  std::shared_ptr<zbe::SAvatar<Base>> avt;
 };
 
 
@@ -345,6 +362,7 @@ public:
 private:
   std::shared_ptr<zbe::TicketedForwardList<Interactioner<ActorType, ReactorType, Shapes...>>> iners{};
 };
+
 
 template <typename Overloaded, typename IData, typename ActorType, typename ReactorType, typename ...Shapes>
 class InteractionEventGenerator : virtual public Daemon {

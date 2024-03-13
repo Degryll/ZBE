@@ -4,3 +4,13 @@ Demonio condicional que, cuando la sangre llegue a cero, ejecute las activacione
 
 Quitar zbe:: atributos CollisionData
 Renombrar getCollision en IEG
+
+
+El sistema de carga del JSON tiene que tener ya creada a priori una serie valores constantes como:
+ZERO
+MAX
+MIN
+ONE
+NEGONE
+
+Estos valores tiene que estar disponibles para todos los tipos para los que tenga sentido.

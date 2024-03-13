@@ -144,7 +144,8 @@ public:
     factories.insert("MovingTriangle3DAvtShapeBldrFtry", std::make_shared<MovingTriangle3DAvtShapeBldrFtry>());
     factories.insert("MovingTriangle3DRscAvtShapeBldrFtry", std::make_shared<MovingTriangle3DRscAvtShapeBldrFtry>());
 
-    factories.insert("MovingPoint2DShapeAvtBldrFtry", std::make_shared<MovingPoint2DShapeAvtBldrFtry>());
+    factories.insert("MovingPoint2DShapeAvtBldrFtry", std::make_shared<MovingPointShapeAvtBldrFtry<2>>());
+    factories.insert("MovingPoint3DShapeAvtBldrFtry", std::make_shared<MovingPointShapeAvtBldrFtry<3>>());
     factories.insert("Triangle2DShapeAvtBldrFtry", std::make_shared<Triangle2DShapeAvtBldrFtry>());
 
     // Avatars

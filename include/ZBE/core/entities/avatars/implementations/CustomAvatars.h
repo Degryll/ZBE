@@ -171,29 +171,31 @@ private:
   std::shared_ptr<Value<Vector3D> > target;
 };
 
-class MovingPoint2DAvt : public SAvatar<MovingPoint2D>, AvatarImp {
+template<unsigned s>
+class MovingPointAvt : public SAvatar<MovingPoint<s>>, AvatarImp {
 public:
   void setupEntity(std::shared_ptr<Entity> entity, uint64_t positionidx, uint64_t velocityidx) {
     AvatarImp::setupEntity(entity);
-    _Avatar<1, MovingPoint2D>::setup(&getMPoint, &setMPoint, (void*)this);
-    position = entity->getVector2D(positionidx);
-    velocity = entity->getVector2D(velocityidx);
+    _Avatar<1, MovingPoint<s>>::setup(&getMPoint, &setMPoint, (void*)this);
+    //, std::shared_ptr<zbe::Value<T> >
+    position = entity->get<Vector<s>, std::shared_ptr<zbe::Value<Vector<s>>>>(positionidx);
+    velocity = entity->get<Vector<s>, std::shared_ptr<zbe::Value<Vector<s>>>>(velocityidx);
   }
 
-  static std::shared_ptr<Value<MovingPoint2D> > getMPoint(void *instance) {
-    auto  mpa = (MovingPoint2DAvt*)instance;
+  static std::shared_ptr<Value<MovingPoint<s>>> getMPoint(void *instance) {
+    auto  mpa = (MovingPointAvt<s>*)instance;
     auto& position = mpa->position;
     auto& velocity = mpa->velocity;
     auto p = position->get();
     auto v = velocity->get();
-    Point2D p2(p.toPoint());
-    MovingPoint2D mp{p2, v};
-    auto out = std::make_shared<SimpleValue<MovingPoint2D> >();
+    Point<s> p2(p.toPoint());
+    MovingPoint<s> mp{p2, v};
+    auto out = std::make_shared<SimpleValue<MovingPoint<s>> >();
     out->set(mp);
     return out;
   }
 
-  static void setMPoint(void *instance, MovingPoint2D position) {
+  static void setMPoint(void *instance, MovingPoint<s> position) {
     assert(false);
   }
 
@@ -202,8 +204,8 @@ public:
   }
 
 private:
- std::shared_ptr<Value<Vector2D> > position;
- std::shared_ptr<Value<Vector2D> > velocity;
+ std::shared_ptr<Value<Vector<s>> > position;
+ std::shared_ptr<Value<Vector<s>> > velocity;
 };
 
 class Triangle2DAvt : public SAvatar<Triangle2D>, AvatarImp {
@@ -265,11 +267,12 @@ private:
  uint64_t cidx;
 };
 
-class MovingPoint2DShapeAvtBldr : public Funct<std::shared_ptr<SAvatar<MovingPoint2D>>, std::shared_ptr<Entity>> {
+template<unsigned s>
+class MovingPointShapeAvtBldr : public Funct<std::shared_ptr<SAvatar<MovingPoint<s>>>, std::shared_ptr<Entity>> {
 public:
-  using AvtBaseType = SAvatar<MovingPoint2D>;
-  std::shared_ptr<SAvatar<MovingPoint2D>> operator()(std::shared_ptr<Entity> ent) {
-    std::shared_ptr<MovingPoint2DAvt> avt = std::make_shared<MovingPoint2DAvt>();
+  using AvtBaseType = SAvatar<MovingPoint<s>>;
+  std::shared_ptr<SAvatar<MovingPoint<s>>> operator()(std::shared_ptr<Entity> ent) {
+    std::shared_ptr<MovingPointAvt<s>> avt = std::make_shared<MovingPointAvt<s>>();
     avt->setupEntity(ent, positionidx, velocityIdx);
     return avt;
   }
@@ -333,13 +336,14 @@ private:
   RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
 };
 
-class MovingPoint2DShapeAvtBldrFtry : public Factory {
+template<unsigned s>
+class MovingPointShapeAvtBldrFtry : public Factory {
 public:
   void create(std::string name, uint64_t) {
     using namespace std::string_literals;
-    std::shared_ptr<MovingPoint2DShapeAvtBldr> mp2dab = std::make_shared<MovingPoint2DShapeAvtBldr>();
+    std::shared_ptr<MovingPointShapeAvtBldr<s>> mp2dab = std::make_shared<MovingPointShapeAvtBldr<s>>();
     mainRsrc.insert(zbe::factories::functionName_ + name, mp2dab);
-    specificRsrc.insert("MovingPoint2DShapeAvtBldr."s + name, mp2dab);
+    specificRsrc.insert("MovingPointShapeAvtBldr."s + name, mp2dab);
   }
 
   void setup(std::string name, uint64_t cfgId) {
@@ -350,14 +354,14 @@ public:
     if(cfg) {
       auto j = *cfg;
 
-      auto mp2dab = specificRsrc.get("MovingPoint2DShapeAvtBldr."s + name);
+      auto mp2dab = specificRsrc.get("MovingPointShapeAvtBldr."s + name);
 
-      auto positionIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionIdx"s, "MovingPoint2DShapeAvtBldrFtry"s);
+      auto positionIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionIdx"s, "MovingPointShapeAvtBldrFtry"s);
       if(!positionIdx) {
         return;
       }
 
-      auto velocityIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "velocityIdx"s, "MovingPoint2DShapeAvtBldrFtry"s);
+      auto velocityIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "velocityIdx"s, "MovingPointShapeAvtBldrFtry"s);
       if(!velocityIdx) {
         return;
       }
@@ -365,15 +369,15 @@ public:
       mp2dab->setIdxs(*positionIdx, *velocityIdx);
 
     } else {
-      SysError::setError("MovingPoint2DShapeAvtBldrFtry config for "s + name + " not found."s);
+      SysError::setError("MovingPointShapeAvtBldrFtry config for "s + name + " not found."s);
     }
   }
 
 private:
-  using FunctionType = Funct<std::shared_ptr<SAvatar<MovingPoint2D>>, std::shared_ptr<Entity>>;
+  using FunctionType = Funct<std::shared_ptr<SAvatar<MovingPoint<s>>>, std::shared_ptr<Entity>>;
   RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
   RsrcStore<nlohmann::json> &configRsrc                          = RsrcStore<nlohmann::json>::getInstance();
-  RsrcStore<MovingPoint2DShapeAvtBldr>& specificRsrc    = RsrcStore<MovingPoint2DShapeAvtBldr>::getInstance();
+  RsrcStore<MovingPointShapeAvtBldr<s>>& specificRsrc    = RsrcStore<MovingPointShapeAvtBldr<s>>::getInstance();
   RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
 };
 

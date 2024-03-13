@@ -10,6 +10,8 @@
 #ifndef ZANDBOKZ_ZANDBOKZINTERACTIONSYSTEM_H_
 #define ZANDBOKZ_ZANDBOKZINTERACTIONSYSTEM_H_
 
+#include <stdlib.h>
+
 #include "ZBE/core/events/interactionSystem.h"
 #include "ZBE/core/events/interactionFunctions.h"
 
@@ -118,29 +120,138 @@ zbe::Point3D calculateNormal(const zbe::Point3D& p1, const zbe::Point3D& p2, con
     return normal;
 }
 
-zbe::Point3D projectPointOnPlane(const zbe::Point3D* point, const zbe::Triangle3D* triangle) {
-    // Calcula el vector normal al plano
-    auto normal = calculateNormal(triangle->a, triangle->b, triangle->c);
+struct PointNDistance {
+    zbe::Point3D closestPoint;
+    double distance;
+};
 
-    // Calcula el numerador de la fórmula
-    double numerator = normal.x * (point->x - triangle->a.x) + normal.y * (point->y - triangle->a.y) + normal.z * (point->z - triangle->a.z);
-
-    // Calcula el denominador de la fórmula
-    double denominator = normal.x * normal.x + normal.y * normal.y + normal.z * normal.z;
-
-    // Calcula la proyección del punto sobre el plano
-    zbe::Point3D projection;
-    projection.x = point->x - (numerator / denominator) * normal.x;
-    projection.y = point->y - (numerator / denominator) * normal.y;
-    projection.z = point->z - (numerator / denominator) * normal.z;
-
-    return projection;
+bool PointInOrOn(const zbe::Point3D&  P1,const zbe::Point3D&  P2,const zbe::Point3D&  A,const zbe::Point3D&  B ) {
+    zbe::Vector3D CP1 = cross( B - A, P1 - A );
+    zbe::Vector3D CP2 = cross( B - A, P2 - A );
+    return dot( CP1, CP2 ) >= 0;
 }
 
+bool isProjectedPointInsideTriangle(const zbe::Point3D& p, const zbe::Triangle3D& triangle) {
+    return PointInOrOn( p, triangle.a, triangle.b, triangle.c ) &&
+           PointInOrOn( p, triangle.b, triangle.c, triangle.a ) &&
+           PointInOrOn( p, triangle.c, triangle.a, triangle.b );
+} 
+
+// Función para calcular el punto más cercano en un segmento a un punto dado
+PointNDistance closestPointOnSegment(const zbe::Point3D& point, const zbe::Point3D& A, const zbe::Point3D& B) {
+    // Vector del punto al inicio del segmento
+    zbe::Point3D AP = {point.x - A.x, point.y - A.y, point.z - A.z};
+
+    // Vector del inicio al final del segmento
+    zbe::Point3D AB = {B.x - A.x, B.y - A.y, B.z - A.z};
+
+    // Calcula el parámetro t para la proyección del punto en el segmento
+    double t = (AP.x * AB.x + AP.y * AB.y + AP.z * AB.z) / (AB.x * AB.x + AB.y * AB.y + AB.z * AB.z);
+
+    // Verifica si el punto proyectado está dentro del segmento
+    if (t < 0.0) {
+        // El punto más cercano es el extremo A del segmento
+        PointNDistance result = {A, std::sqrt(AP.x * AP.x + AP.y * AP.y + AP.z * AP.z)};
+        return result;
+    } else if (t > 1.0) {
+        // El punto más cercano es el extremo B del segmento
+        PointNDistance result = {B, std::sqrt((point.x - B.x) * (point.x - B.x) + (point.y - B.y) * (point.y - B.y) + (point.z - B.z) * (point.z - B.z))};
+        return result;
+    } else {
+        // El punto más cercano es la proyección en el segmento
+        zbe::Point3D closestPoint = {
+            A.x + t * AB.x,
+            A.y + t * AB.y,
+            A.z + t * AB.z
+        };
+
+        PointNDistance result = {closestPoint, abs(std::sqrt((point.x - closestPoint.x) * (point.x - closestPoint.x) + (point.y - closestPoint.y) * (point.y - closestPoint.y) + (point.z - closestPoint.z) * (point.z - closestPoint.z)))};
+        return result;
+    }
+}
+
+PointNDistance projectPointOntoPlane(const zbe::Point3D& point, const zbe::Vector3D& pNormal, const zbe::Point3D& pPoint) {
+    zbe::Vector3D V = {point.x - pPoint.x, point.y - pPoint.y, point.z - pPoint.z}; //del punto del plano a la posicion
+    //double d = V.x * pNormal.x + V.y * pNormal.y + V.z * pNormal.z;
+    double d = dot(V, pNormal); // escalar con la normal. debería dar la altura de la posición en el plano.
+    // zbe::Point3D projection = {point.x - d * pNormal.x, point.y - d * pNormal.y, point.z - d * pNormal.z};
+    zbe::Vector3D aux = pNormal;
+    aux.setModule(d);
+    zbe::Point3D projection{point.x -aux.x, point.y -aux.y,point.z -aux.z};
+    PointNDistance result = {projection, abs(d)};
+    return result;
+}
+
+// Función para calcular la proyección de un punto en el plano de un triángulo
+PointNDistance projectPointOntoTrianglePlane(const zbe::Point3D& point, const zbe::Triangle3D& triangle) {
+    // Vértices del triángulo
+    const zbe::Point3D& A = triangle.a;
+    const zbe::Point3D& B = triangle.b;
+    const zbe::Point3D& C = triangle.c;
+
+    // Vectores de los lados del triángulo
+    zbe::Point3D AB = {B.x - A.x, B.y - A.y, B.z - A.z};
+    zbe::Point3D AC = {C.x - A.x, C.y - A.y, C.z - A.z};
+
+    // Vector normal al plano del triángulo
+    zbe::Point3D normal = {
+        AB.y * AC.z - AB.z * AC.y,
+        AB.z * AC.x - AB.x * AC.z,
+        AB.x * AC.y - AB.y * AC.x
+    };
+
+    // Proyección del vector punto-triángulo sobre el plano
+    double t = (normal.x * (A.x - point.x) + normal.y * (A.y - point.y) + normal.z * (A.z - point.z)) /
+               (normal.x * normal.x + normal.y * normal.y + normal.z * normal.z);
+
+    // Coordenadas del punto proyectado
+    zbe::Point3D projectedPoint = {
+        point.x + t * normal.x,
+        point.y + t * normal.y,
+        point.z + t * normal.z
+    };
+
+    PointNDistance result = {projectedPoint, std::sqrt((point.x - projectedPoint.x) * (point.x - projectedPoint.x) + (point.y - projectedPoint.y) * (point.y - projectedPoint.y) + (point.z - projectedPoint.z) * (point.z - projectedPoint.z))};
+    return result;
+}
+
+zbe::Point3D projectPointOnTriangle(const zbe::Point3D* point, const zbe::Triangle3D* triangle) {
+    const zbe::Vector3D& A{triangle->a.x,triangle->a.y,triangle->a.z} ;
+    const zbe::Vector3D& B{triangle->b.x,triangle->b.y,triangle->b.z} ;
+    const zbe::Vector3D& C{triangle->c.x,triangle->c.y,triangle->c.z} ;
+
+  zbe::Vector3D normal  = cross((B-A),(C-A));
+  normal.normalize();
+  auto proyection = projectPointOntoPlane(*point, normal, triangle->a);
+  if(isProjectedPointInsideTriangle(proyection.closestPoint, *triangle)) {
+    return proyection.closestPoint;
+  }
+
+  auto abDist = closestPointOnSegment(*point, triangle->a, triangle->b);
+  auto bcDist = closestPointOnSegment(*point, triangle->b, triangle->c);
+  auto caDist = closestPointOnSegment(*point, triangle->c, triangle->a);
+
+  if(abDist.distance<bcDist.distance) {
+    if(abDist.distance<caDist.distance) {
+      return abDist.closestPoint;
+    } else {
+      return caDist.closestPoint;
+    }
+  } else {
+    if(bcDist.distance<caDist.distance) {
+      return bcDist.closestPoint;
+    } else {
+      return caDist.closestPoint;
+    }
+  }
+}
+
+
 bool gravityCenterMovingPointMovingTriangle(std::shared_ptr<zbe::MovingPoint3D> mpoint, std::shared_ptr<zbe::MovingTriangle3D> mtriangle, uint64_t time, FGravityData& gdata) {
-  zbe::Point3D proyection = projectPointOnPlane(mpoint->getShape(), mtriangle->getShape());
+  zbe::Point3D proyection = projectPointOnTriangle(mpoint->getShape(), mtriangle->getShape());
   gdata.point = proyection;
   gdata.time = time;
+  //printf("C %lf,%lf,%lf ", gdata.point.x, gdata.point.y, gdata.point.z);fflush(stdout);
   return true;
 }
 
@@ -184,8 +295,8 @@ using FGShapes = zbe::Shape<zbe::MovingPoint3D, zbe::MovingTriangle3D>;
 using FGIner = zbe::Interactioner<FGActor, FGReactor, zbe::MovingPoint3D, zbe::MovingTriangle3D>;
 using FGInator = zbe::Interactionator<FGActor, FGReactor, zbe::MovingPoint3D, zbe::MovingTriangle3D>;
 
-using FGInatorList = zbe::TicketedForwardList<FGInator>;
-using FGInerList = zbe::TicketedForwardList<FGIner>;
+using InatorFGList = zbe::TicketedForwardList<FGInator>;
+using InerFGList = zbe::TicketedForwardList<FGIner>;
 
 using IEGFG = zbe::InteractionEventGenerator<FGravity3DSelector, FGravity3DOverloaded, FGravityData, ZBActor, ZBReactor, zbe::MovingPoint3D, zbe::MovingTriangle3D>;
 
@@ -193,18 +304,15 @@ using FGInerBldr = zbe::InteractionerBldr<FGravityData, FGActor, FGReactor, zbe:
 using FGInatorBldr = zbe::InteractionatorBldr<FGravityData, FGActor, FGReactor, zbe::MovingPoint3D, zbe::MovingTriangle3D>;
 
 // zandbokz interaction types builders factories
-using FGActorBldrFtry = zbe::ActorBldrFtry<FGravityData, Attractor>;
-using FGReactorBldrFtry = zbe::ReactorBldrFtry<FGravityData, Attractor>;
-using FGShapeMPointBldrFtry   = zbe::ShapeBldrFtry<zbe::MovingPoint3D,     zbe::MovingPoint3D, zbe::MovingTriangle3D>;
-using FGShapeMTriangleBldrFtry = zbe::ShapeBldrFtry<zbe::MovingTriangle3D, zbe::MovingPoint3D, zbe::MovingTriangle3D>;
+using ActorFGBldrFtry = zbe::ActorBldrFtry<FGravityData, Attractor>;
+using ReactorFGBldrFtry = zbe::ReactorBldrFtry<FGravityData, Attractor>;
+using ShapeFGMPointBldrFtry   = zbe::ShapeBldrFtry<zbe::MovingPoint3D,     zbe::MovingPoint3D, zbe::MovingTriangle3D>;
+using ShapeFGMTriangleBldrFtry = zbe::ShapeBldrFtry<zbe::MovingTriangle3D, zbe::MovingPoint3D, zbe::MovingTriangle3D>;
 
-using FGInatorBldrFtry = zbe::InteractionatorBldrFtry<FGravityData, FGActor, FGReactor, zbe::MovingPoint3D, zbe::MovingTriangle3D>;
-using FGInerBldrFtry = zbe::InteractionerBldrFtry<FGravityData, FGActor, FGReactor, zbe::MovingPoint3D, zbe::MovingTriangle3D>;
+using InatorFGBldrFtry = zbe::InteractionatorBldrFtry<FGravityData, FGActor, FGReactor, zbe::MovingPoint3D, zbe::MovingTriangle3D>;
+using InerFGBldrFtry = zbe::InteractionerBldrFtry<FGravityData, FGActor, FGReactor, zbe::MovingPoint3D, zbe::MovingTriangle3D>;
 
 using IEGFGFtry = zbe::InteractionEventGeneratorFtry<FGravity3DSelector, FGravity3DOverloaded, FGravityData, FGActor, FGReactor, zbe::MovingPoint3D, zbe::MovingTriangle3D>;
-
-
-
 
 // -----------
 
@@ -230,7 +338,7 @@ public:
     for(int i = 0; i<PLATFORMPARAMS; i++) {
       (*p)[i] = ent->getVector3D(idx[i]);
     }
-    
+
     auto out = std::make_shared<PlatformTrait>(*p);
     delete p;
     return out;

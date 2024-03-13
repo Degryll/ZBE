@@ -18,6 +18,9 @@
 
 #include <nlohmann/json.hpp>
 
+#include <glm/gtx/rotate_vector.hpp>
+#include <glm/gtx/vector_angle.hpp>
+
 #include "ZBE/core/system/SysError.h"
 #include "ZBE/core/tools/math/math.h"
 #include "ZBE/core/tools/math/Vector.h"
@@ -31,8 +34,8 @@
 
 #include "ZBE/JSON/JSONFactory.h"
 
-#include <glm/gtx/rotate_vector.hpp>
-#include <glm/gtx/vector_angle.hpp>
+#include "ZandBokzInteractionSystem.h"
+
 namespace zandbokz {
 
 class AttachRedirectionReaction : public zbe::Funct<void, zbe::CollisionData3D, Platform> {
@@ -173,6 +176,101 @@ private:
   zbe::RsrcStore<nlohmann::json> &configRsrc                  = zbe::RsrcStore<nlohmann::json>::getInstance();
   zbe::RsrcStore<AttachRedirectionReactionBldr>& specificRsrc = zbe::RsrcStore<AttachRedirectionReactionBldr>::getInstance();
   zbe::RsrcStore<FunctionType>& mainRsrc                      = zbe::RsrcStore<FunctionType>::getInstance();
+};
+
+//template<typename IData, typename Trait>
+class ClosestCenterStoreReaction : public zbe::Funct<void, FGravityData, Attractor> {
+public:
+  ClosestCenterStoreReaction(const ClosestCenterStoreReaction&) = delete; //!< Avoid copy.
+  void operator=(const ClosestCenterStoreReaction&) = delete; //!< Avoid copy.
+
+  static const int AVTSIZE = 3;
+
+  /** brief Parametrized constructor
+  * param avt Avatar to use
+  */
+  ClosestCenterStoreReaction(std::shared_ptr<zbe::MAvatar<double, zbe::Vector3D, zbe::Vector3D>> avatar) : avatar(avatar) {}
+
+  /** brief Reposition entity on plane.
+  */
+  void operator()(FGravityData gData, Attractor) {
+
+    auto vposition = avatar->get<1, zbe::Vector3D>();
+    auto vcenter = avatar->get<2, zbe::Vector3D>();
+    auto vdistance = avatar->get<3, double>();
+
+    auto position = vposition->get();
+    auto center = vcenter->get();
+    auto distance = vdistance->get();
+    zbe::Vector3D c{gData.point.x, gData.point.y, gData.point.z};
+    double newDistance = (c - position).getModule();
+    // printf("C %lf,%lf,%lf\n", gData.point.x, gData.point.y, gData.point.z);fflush(stdout);
+    // printf("P %lf,%lf,%lf\n", position.x, position.y, position.z);fflush(stdout);
+    // printf("Distance %lf new Distance %lf\n");fflush(stdout);
+    if(newDistance<distance) {
+      //printf("Updating D %lf C %lf,%lf,%lf\n",newDistance, c.x, c.y, c.z);fflush(stdout);
+      avatar->set<2, zbe::Vector3D>(c);
+      avatar->set<3, double>(newDistance);
+    } //else {
+      //printf("Current D %lf C %lf,%lf,%lf\n",distance, center.x, center.y, center.z);fflush(stdout);
+    //}
+  }
+private:
+  std::shared_ptr<zbe::MAvatar<double, zbe::Vector3D, zbe::Vector3D>> avatar;
+};
+
+class ClosestCenterStoreReactionBldr : public zbe::Funct<std::shared_ptr<zbe::Funct<void, FGravityData, Attractor>>, std::shared_ptr<zbe::Entity>> {
+public:
+  std::shared_ptr<zbe::Funct<void, FGravityData, Attractor>> operator()(std::shared_ptr<zbe::Entity> ent){
+    auto avt = std::make_shared<zbe::MBaseAvatar<double, zbe::Vector3D, zbe::Vector3D>>();
+    avt->setupEntity(ent, idxArr);
+    return std::make_shared<ClosestCenterStoreReaction>(avt);
+  }
+
+  void setIdx(std::array<uint64_t, ClosestCenterStoreReaction::AVTSIZE> idxArr) {
+    this->idxArr = idxArr;
+  }
+private:
+  std::array<uint64_t, ClosestCenterStoreReaction::AVTSIZE> idxArr {};
+};
+
+class ClosestCenterStoreReactionBldrFtry : public zbe::Factory {
+public:
+  void create(std::string name, uint64_t) {
+    using namespace std::string_literals;
+    std::shared_ptr<ClosestCenterStoreReactionBldr> arrb = std::make_shared<ClosestCenterStoreReactionBldr>();
+    mainRsrc.insert("Function."s + name, arrb);
+    specificRsrc.insert("ClosestCenterStoreReactionBldr."s + name, arrb);
+  }
+
+  void setup(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+    if(cfg) {
+      auto j = *cfg;
+
+      auto arrb = specificRsrc.get("ClosestCenterStoreReactionBldr."s + name);
+
+      std::optional<std::array<uint64_t, ClosestCenterStoreReaction::AVTSIZE>> arr = zbe::JSONFactory::loadLiteralArray<uint64_t, ClosestCenterStoreReaction::AVTSIZE>(uintDict, j["idxlist"], "idxlist", "AttachRepositionReactionBldrFtry");
+      if(!arr) {
+        return;
+      }
+
+      arrb->setIdx(*arr);
+    } else {
+      zbe::SysError::setError("ClosestCenterStoreReactionBldrFtry config for "s + name + " not found."s);
+    }
+  }
+
+private:
+  using FunctionType = zbe::Funct<std::shared_ptr<zbe::Funct<void, FGravityData, Attractor>>, std::shared_ptr<zbe::Entity>>;
+
+  zbe::RsrcDictionary<uint64_t>& uintDict                      = zbe::RsrcDictionary<uint64_t>::getInstance();
+  zbe::RsrcStore<nlohmann::json> &configRsrc                   = zbe::RsrcStore<nlohmann::json>::getInstance();
+  zbe::RsrcStore<ClosestCenterStoreReactionBldr>& specificRsrc = zbe::RsrcStore<ClosestCenterStoreReactionBldr>::getInstance();
+  zbe::RsrcStore<FunctionType>& mainRsrc                       = zbe::RsrcStore<FunctionType>::getInstance();
 };
 
 //template<typename IData, typename Trait>

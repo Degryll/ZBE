@@ -14,7 +14,7 @@
 
 #include <cstdint>
 #include <memory>
-
+#include <limits>
 #include <string>
 
 #include <nlohmann/json.hpp>
@@ -335,6 +335,25 @@ private:
   zbe::RsrcStore<GravityMotion3D>& gm3dRsrc = zbe::RsrcStore<GravityMotion3D>::getInstance();
 };
 
+class NonRealGravityVelSetterResetBhv : virtual public zbe::Behavior<double, double, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D> {
+  void apply(std::shared_ptr<zbe::MAvatar<double, double, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D> > avatar) {
+
+    auto vpos = avatar->get<1, zbe::Vector3D>();
+    auto vcenter = avatar->get<2, zbe::Vector3D>();
+    auto vratio = avatar->get<4, double>();
+    
+
+    zbe::Vector3D pos = vpos->get();
+    zbe::Vector3D center = vcenter->get();
+    zbe::Vector3D newvel = center - pos;
+    newvel.setModule(vratio->get());
+    
+    avatar->set<3, zbe::Vector3D>(newvel);
+    printf("\nDistance %lf center %lf,%lf,%lf  \n", avatar->get<5, double>()->get(), center.x,center.y,center.z);fflush(stdout);
+    avatar->set<5, double>(std::numeric_limits<double>::max());
+    
+  }
+};
 
 class NonRealGravityVelSetterBhv : virtual public zbe::Behavior<zbe::Vector3D, zbe::Vector3D> {
   public:
