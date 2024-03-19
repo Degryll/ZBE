@@ -349,7 +349,7 @@ class NonRealGravityVelSetterResetBhv : virtual public zbe::Behavior<double, dou
     newvel.setModule(vratio->get());
     
     avatar->set<3, zbe::Vector3D>(newvel);
-    printf("\nDistance %lf center %lf,%lf,%lf  \n", avatar->get<5, double>()->get(), center.x,center.y,center.z);fflush(stdout);
+    // printf("\nDistance %lf center %lf,%lf,%lf  \n", avatar->get<5, double>()->get(), center.x,center.y,center.z);fflush(stdout);
     avatar->set<5, double>(std::numeric_limits<double>::max());
     
   }

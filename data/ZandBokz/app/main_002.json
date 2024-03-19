@@ -119,6 +119,7 @@
     "bloodTriggerIdx" : 20006,
     "keepdistanceTicket" : 8060,
     "platformDisableListTicket" : 10001,
+    "distResetTicket" : 10002,
     "deleteTicket" : 666666,
     "state.static" : 0,
     "testwflags": 0,
@@ -158,6 +159,7 @@
     "attractorsRadius" : {"type":"uifd", "value":2000},
     "attractionRatio" : {"type":"uifd", "value":500},
     "bullet.speed" : {"type":"d", "value":800.0},
+    "MAXDOUBLE" : {"type":"d", "value":179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368.0},
 
 
     "hudcrossPosIdx" : 30001,
@@ -343,6 +345,12 @@
           "factory": "TFAECFakeGravityFtry",
           "description" : "Lista de atraidos por atractores",
           "name": "zandbokz.attractedlist",
+          "config" : {}
+        },
+        {
+          "factory": "TFAECDoubleAvtFtry",
+          "description" : "Lista para resetear la distancia al centro de gravedad",
+          "name": "zandbokz.distResetList",
           "config" : {}
         },
         {
@@ -1353,7 +1361,7 @@
           "name" : "zandbokz.dropcuajaronb",
           "config" : {
             "contextTime":"DEFAULT",
-            "builders" : ["zandbokz.cuajaronvalues", "zandbokz.diositocachetriangulo2D", "zandbokz.cuajaronsolidosocializa", "zandbokz.cuajaronsolidosocializa2D", "zandbokz.cuajaronapintar", "zandbokz.plataformaatrae"],
+            "builders" : ["zandbokz.cuajaronvalues", "zandbokz.diositocachetriangulo2D", "zandbokz.cuajaronsolidosocializa", "zandbokz.cuajaronsolidosocializa2D", "zandbokz.cuajaronapintar", "zandbokz.plataformaatrae", "zandbokz.diositoattractorsocializa"],
             "Vector3D" : {
               "positionIdx" : "zandbokz.copypos3v",
               "orientationIdx" : "zandbokz.UpDirToOriRot",
@@ -1585,6 +1593,19 @@
           "config" : {
             "list" : "zandbokz.attractedlist",
             "behavior" : "zandbokz.elprotasecaeBhv"
+          }
+        },
+        {"factory":"DoubleSetterFixedBvrFtry",
+          "name": "zandbokz.resetdistanciaBhv",
+          "config" : {
+            "value" : "MAXDOUBLE"
+          }
+        },
+        {"factory":"DoubleBhvDmnFtry",
+          "name": "zandbokz.resetdistancia",
+          "config" : {
+            "list" : "zandbokz.distResetList",
+            "behavior" : "zandbokz.resetdistanciaBhv"
           }
         },
         {"factory": "MasterDmnFtry",
@@ -1847,7 +1868,7 @@
                           "zandbokz.protasaltar", "zandbokz.protafisica3d", "zandbokz.protaamoverenplano", "zandbokz.protaattachonoff",
                           "zandbokz.protaInator2D", "zandbokz.protacalcula2dori", "zandbokz.protacalcula2DVel", "zandbokz.protapierdesangre",
                           "zandbokz.protaganasangre","zandbokz.protarecuperasangre", "zandbokz.protaquemasangre", "zandbokz.protaacaerenplataformas",
-                          "zandbokz.protafisicaFG"],
+                          "zandbokz.protafisicaFG", "zandbokz.protaresetdist"],
             "buildersback" : []
           }
         },
@@ -1869,7 +1890,7 @@
             },
             "double": {
               "radsIdx":[0.0],
-              "bestCenterDistIdx" : [179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368.0],
+              "bestCenterDistIdx" : 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368.0,
               "attractionRatioIdx" : "zandbokz.attractionRatio",
               "scaleIdx":[100.0],
               "velocityForwardIdx":"zandbokz.protaVelForward",
@@ -1954,6 +1975,15 @@
           "config" : {
             "attribIndexes" : ["velocityLateralIdx", "velocityForwardIdx", "velocity2DIdx", "orientation2DIdx"],
             "lists":{"zandbokz.vel2dsetterlist" : "relative2DVelTicket"},
+            "deactivatedlists":{}
+          }
+        },
+        {
+          "factory" :"DoubleAvtBldrFtry",
+          "name" : "zandbokz.protaresetdist",
+          "config" : {
+            "attribIndexes" : ["bestCenterDistIdx"],
+            "lists":{"zandbokz.distResetList" : "distResetTicket"},
             "deactivatedlists":{}
           }
         },
@@ -2212,7 +2242,7 @@
           }
         }
       ],
-      "calls" : ["zandbokz.thirdviewcambldr", "zandbokz.protabuilder", "zandbokz.diositobuilder1"],
+      "calls" : ["zandbokz.thirdviewcambldr", "zandbokz.protabuilder", "zandbokz.diositobuilder", "zandbokz.diositobuilder1", "zandbokz.diositobuilder2", "zandbokz.diositobuilder3", "zandbokz.diositobuilder4", "zandbokz.diositobuilder5", "zandbokz.diositobuilder6", "zandbokz.diositobuilder7", "zandbokz.diositobuilder8"],
       "backupcalls" : ["zandbokz.cajabuilder", "zandbokz.creaunicorniorosa", "zandbokz.pepinobuilder", "zandbokz.diositobuilder", "zandbokz.diositobuilder2", "zandbokz.diositobuilder3", "zandbokz.diositobuilder4", "zandbokz.diositobuilder5", "zandbokz.diositobuilder6", "zandbokz.diositobuilder7", "zandbokz.diositobuilder8"]
     },
     {
@@ -2308,7 +2338,8 @@
               "zandbokz.velAccumDMN",
               "zandbokz.ULM3DDaemon",
               "zandbokz.gravityDMN",
-              "zandbokz.keepdistanceDmn"
+              "zandbokz.keepdistanceDmn",
+              "zandbokz.resetdistancia"
             ],
             "disabledDaemons": [
               "zandbokz.goForwardDaemon",
@@ -2839,7 +2870,7 @@
             "behavior" : "zandbokz.audioplayer"
           }
         },
-        {"factory": "FloatAvtDaemonFtry",
+        {"factory": "FloatBhvDmnFtry",
           "name": "zandbokz.fovOscillatorDaemon",
           "description" : "demonio que menea el fov",
           "config" : {

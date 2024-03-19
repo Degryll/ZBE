@@ -70,7 +70,10 @@ public:
     using ParamSpriteDrwr = BehaviorDmnFtry<ParamSpriteList, uint64_t, int64_t, int64_t, Vector2D, Vector2D>;
 
     using FloatAvtList = TicketedForwardList<SAvatar<float> >;
-    using FloatAvtBhvr = BehaviorDmnFtry<FloatAvtList, float>;
+    using FloatAvtBhvDmnFtry = BehaviorDmnFtry<FloatAvtList, float>;
+
+    using DoubleAvtList = TicketedForwardList<SAvatar<double> >;
+    using DoubleBhvrDmnFtry = BehaviorDmnFtry<DoubleAvtList, double>;
 
     using V3DAvtList = TicketedForwardList<SAvatar<Vector3D> >;
     using V3DAvtBhvr = BehaviorDmnFtry<V3DAvtList, Vector3D>;
@@ -117,6 +120,7 @@ public:
     factories.insert("FourV3DAvtBldrFtry", std::make_shared<MAvatarBldrFtry<Vector3D, Vector3D, Vector3D, Vector3D> >());
     factories.insert("V2ThreeV3DAvtBldrFtry", std::make_shared<MAvatarBldrFtry<Vector2D, Vector3D, Vector3D, Vector3D> >());
     factories.insert("FloatAvtBldrFtry", std::make_shared<SAvatarBldrFtry<float> >());
+    factories.insert("DoubleAvtBldrFtry", std::make_shared<SAvatarBldrFtry<double> >());
     factories.insert("VoidAvtBldrFtry", std::make_shared<AvatarBldrFtry>());
     factories.insert("FourIntAvtBldrFtry", std::make_shared<MAvatarBldrFtry<int64_t, int64_t, int64_t, int64_t> >());
     factories.insert("FiveIntAvtBldrFtry", std::make_shared<MAvatarBldrFtry<int64_t, int64_t, int64_t, int64_t, int64_t> >());
@@ -188,9 +192,11 @@ public:
     factories.insert("ParamSpriteDrwrDaemonFtry", std::make_shared<ParamSpriteDrwr>());
     factories.insert("TFAECParamSpriteFtry" , std::make_shared<SimpleGenericFtry<ParamSpriteList> >(factories::listName));
 
-
-    factories.insert("FloatAvtDaemonFtry", std::make_shared<FloatAvtBhvr>());
+    factories.insert("FloatBhvDmnFtry", std::make_shared<FloatAvtBhvDmnFtry>());
     factories.insert("TFAECFloatAvtFtry" , std::make_shared<SimpleGenericFtry<FloatAvtList> >(factories::listName));
+
+    factories.insert("DoubleBhvDmnFtry", std::make_shared<DoubleBhvrDmnFtry>());
+    factories.insert("TFAECDoubleAvtFtry" , std::make_shared<SimpleGenericFtry<DoubleAvtList> >(factories::listName));
 
     factories.insert("V3DAvtDaemonFtry", std::make_shared<V3DAvtBhvr>());
     factories.insert("TFAECV3DAvtFtry" , std::make_shared<SimpleGenericFtry<V3DAvtList> >(factories::listName));
