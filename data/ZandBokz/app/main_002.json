@@ -1855,8 +1855,6 @@
             "radiusIdx" : "sizeIdx"
           }
         },
-
-
         {
           "factory" : "EntityBldrFtry",
           "name" : "zandbokz.protabuilder",
@@ -2113,10 +2111,18 @@
           }
         },
         {
+          "factory" : "PrintfGoalRctBldrFtry",
+          "name" : "zandbokz.reaccionhasganao",
+          "config" : {
+            "msg":"Pos eso, que has ganao"
+          }
+        },
+        {
           "factory" :"ReactorBldrFtry",
           "name" : "zandbokz.reactorprotasolido",
           "config" : {
-            "platform" : "zandbokz.reaccionmultiagarra"
+            "platform" : "zandbokz.reaccionmultiagarra",
+            "goal" : "zandbokz.reaccionhasganao"
           }
         },
         {
@@ -2240,10 +2246,95 @@
             "positionIdx" : "positionIdx",
             "velocityIdx" : "velocityIdx"
           }
+        },
+
+        {
+          "factory" : "EntityBldrFtry",
+          "name" : "zandbokz.goalbuilder",
+          "config" : {
+            "contextTime":"DEFAULT",
+            "builders" : ["zandbokz.goalvalues", "zandbokz.goalapintar", "zandbokz.goalfisica3d"],
+            "buildersback" : []
+          }
+        },
+        {
+          "factory" :"EntitySetterFtry",
+          "name" : "zandbokz.goalvalues",
+          "config" : {
+            "uint": {
+              "gidIdx":["Cube"]
+            },
+            "int": {},
+            "double": {
+              "radsIdx":[0.0],
+              "scaleIdx":[100.0]
+            },
+            "float": {
+              "sizeIdx":[100.0]
+            },
+            "V3D": {
+              "positionIdx": [100.0, 100.0, 100.0],
+              "orientationIdx":[1.0, 0.0, 0.0],
+              "upwardsIdx": [100.0, 100.0, 100.0],
+              "velocityIdx" : [0.0, 0.0, 0.0]
+            },
+            "V2D": {
+            }
+          }
+        },
+        {
+          "factory" :"Drawable3DAvtBldrFtry",
+          "name" : "zandbokz.goalapintar",
+          "config" : {
+            "attribIndexes" : ["gidIdx", "scaleIdx", "radsIdx", "orientationIdx", "positionIdx"],
+            "lists":{"zandbokz.drawList":"drawticket"}
+          }
+        },
+        {
+          "factory" :"ActorBldrFtry",
+          "name" : "zandbokz.actorgoalsolido",
+          "config" : {
+            "solid" : "ENABLED"
+          }
+        },
+        {
+          "factory" :"ReactorBldrFtry",
+          "name" : "zandbokz.reactorgoalsolido",
+          "config" : {
+            
+          }
+        },
+        {
+          "factory" :"ShapeMSphereBldrFtry",
+          "name" : "zandbokz.aspectogoalsolido",
+          "config" : {
+            "shapetype" : "zandbokz.goalrocoso"
+          }
+        },
+        {
+          "factory" :"MovingSphereAvtShapeBldrFtry",
+          "name" : "zandbokz.goalrocoso",
+          "config" : {
+            "positionIdx" : "positionIdx",
+            "velocityIdx" : "velocityIdx",
+            "radiusIdx" : "sizeIdx"
+          }
+        },
+        {
+          "factory" :"InatorBldrFtry",
+          "name" : "zandbokz.goalfisica3d",
+          "config" : {
+            "actorbuilder" : "zandbokz.actorgoalsolido",
+            "reactorbuilder" : "zandbokz.reactorgoalsolido",
+            "shapebuilder" : "zandbokz.aspectogoalsolido",
+            "interactioners" : "zandbokz.inerList",
+            "inerlists" : {"zandbokz.inerList":"inerTicket"},
+            "inatorlists" :{"zandbokz.inatorList" : "inatorTicket"}
+          }
         }
       ],
-      "calls" : ["zandbokz.thirdviewcambldr", "zandbokz.protabuilder", "zandbokz.diositobuilder", "zandbokz.diositobuilder1", "zandbokz.diositobuilder2", "zandbokz.diositobuilder3", "zandbokz.diositobuilder4", "zandbokz.diositobuilder5", "zandbokz.diositobuilder6", "zandbokz.diositobuilder7", "zandbokz.diositobuilder8"],
-      "backupcalls" : ["zandbokz.cajabuilder", "zandbokz.creaunicorniorosa", "zandbokz.pepinobuilder", "zandbokz.diositobuilder", "zandbokz.diositobuilder2", "zandbokz.diositobuilder3", "zandbokz.diositobuilder4", "zandbokz.diositobuilder5", "zandbokz.diositobuilder6", "zandbokz.diositobuilder7", "zandbokz.diositobuilder8"]
+      "calls" : ["zandbokz.thirdviewcambldr", "zandbokz.protabuilder", "zandbokz.goalbuilder", "zandbokz.diositobuilder", "zandbokz.diositobuilder1", "zandbokz.diositobuilder2", "zandbokz.diositobuilder3", "zandbokz.diositobuilder4", "zandbokz.diositobuilder5", "zandbokz.diositobuilder6", "zandbokz.diositobuilder7", "zandbokz.diositobuilder8"],
+      "backupcalls" : ["zandbokz.cajabuilder", "zandbokz.creaunicorniorosa", "zandbokz.pepinobuilder"]
     },
     {
       "description" : "Creating entity",

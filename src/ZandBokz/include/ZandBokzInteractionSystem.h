@@ -30,12 +30,13 @@ protected:
 };
 
 struct Solid {};
+struct Goal {};
 
 const int PLATFORMPARAMS = 3;
 using Platform = std::array<std::shared_ptr<zbe::Value<zbe::Vector3D>>, PLATFORMPARAMS>;
 
-using ZBActor = zbe::Actor<zbe::CollisionData3D, Solid, Platform>;
-using ZBReactor = zbe::Reactor<zbe::CollisionData3D, Solid, Platform>;
+using ZBActor = zbe::Actor<zbe::CollisionData3D, Solid, Platform, Goal>;
+using ZBReactor = zbe::Reactor<zbe::CollisionData3D, Solid, Platform, Goal>;
 using Shapes = zbe::Shape<zbe::MovingSphere, zbe::MovingTriangle3D>;
 
 using Iner = zbe::Interactioner<ZBActor, ZBReactor, zbe::MovingSphere, zbe::MovingTriangle3D>;
@@ -50,8 +51,8 @@ using InerBldr = zbe::InteractionerBldr<zbe::CollisionData3D, ZBActor, ZBReactor
 using InatorBldr = zbe::InteractionatorBldr<zbe::CollisionData3D, ZBActor, ZBReactor, zbe::MovingSphere, zbe::MovingTriangle3D>;
 
 // zandbokz interaction types builders factories
-using ActorBldrFtry = zbe::ActorBldrFtry<zbe::CollisionData3D, Solid, Platform>;
-using ReactorBldrFtry = zbe::ReactorBldrFtry<zbe::CollisionData3D, Solid, Platform>;
+using ActorBldrFtry = zbe::ActorBldrFtry<zbe::CollisionData3D, Solid, Platform, Goal>;
+using ReactorBldrFtry = zbe::ReactorBldrFtry<zbe::CollisionData3D, Solid, Platform, Goal>;
 using ShapeMSphereBldrFtry   = zbe::ShapeBldrFtry<zbe::MovingSphere,     zbe::MovingSphere, zbe::MovingTriangle3D>;
 using ShapeMTriangleBldrFtry = zbe::ShapeBldrFtry<zbe::MovingTriangle3D, zbe::MovingSphere, zbe::MovingTriangle3D>;
 

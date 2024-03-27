@@ -88,8 +88,8 @@ public:
     factories.insert("InerFGBldrFtry", std::make_shared<InerFGBldrFtry>());
     factories.insert("InatorFGBldrFtry", std::make_shared<InatorFGBldrFtry>());
 
-    factories.insert("ActorBldrFtry", std::make_shared<ActorBldrFtry>(std::initializer_list<std::string>{"solid"s, "platform"s}));
-    factories.insert("ReactorBldrFtry", std::make_shared<ReactorBldrFtry>(std::initializer_list<std::string>{"solid"s, "platform"s}));
+    factories.insert("ActorBldrFtry", std::make_shared<ActorBldrFtry>(std::initializer_list<std::string>{"solid"s, "platform"s, "goal"s}));
+    factories.insert("ReactorBldrFtry", std::make_shared<ReactorBldrFtry>(std::initializer_list<std::string>{"solid"s, "platform"s, "goal"s}));
 
     factories.insert("Actor2DBldrFtry", std::make_shared<Actor2DBldrFtry>(std::initializer_list<std::string>{"solid"s}));
     factories.insert("Reactor2DBldrFtry", std::make_shared<Reactor2DBldrFtry>(std::initializer_list<std::string>{"solid"s}));
@@ -171,6 +171,7 @@ public:
     factories.insert("MultiSolid2DRctBldrFtry", std::make_shared<zbe::MultiRctBldrFtry<zbe::CollisionData2D, Solid>>());
     factories.insert("PrintfSolid2DRctBldrFtry", std::make_shared<zbe::PrintfRctBldrFtry<zbe::CollisionData2D, Solid>>());
     factories.insert("PrintfPlatformRctBldrFtry", std::make_shared<zbe::PrintfRctBldrFtry<zbe::CollisionData3D, Platform>>());
+    factories.insert("PrintfGoalRctBldrFtry", std::make_shared<zbe::PrintfRctBldrFtry<zbe::CollisionData3D, Goal>>());
     factories.insert("Triangle3Dto2DCacheBldrFtry", std::make_shared<Triangle3Dto2DCacheBldrFtry>());
     factories.insert("NonRealGravityVelSetterBhvFtry", std::make_shared<NonRealGravityVelSetterBhvFtry>());
     factories.insert("NonRealGravityVelSetterResetBhvFtry", std::make_shared<zbe::GenericFtry<zbe::Behavior<double, double, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D>, NonRealGravityVelSetterResetBhv>>("Behavior", "NonRealGravityVelSetterResetBhv"));
