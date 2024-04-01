@@ -84,6 +84,7 @@ public:
     // --- Builders
     factories.insert("EntityBldrFtry", std::make_shared<EntityBldrFtry>());
     factories.insert("EntitySetterFtry", std::make_shared<EntitySetterFtry>());
+    factories.insert("EntityFileBldrFtry", std::make_shared<EntityFileBldrFtry>());
 
     // --- Entities
     factories.insert("EntityFtry", std::make_shared<EntityFtry>());

@@ -12,6 +12,8 @@
 
 #include <cstdio>
 #include <deque>
+#include <iostream>
+#include <fstream>
 #include <memory>
 #include <string>
 #include <initializer_list>
@@ -59,6 +61,263 @@ private:
   std::shared_ptr<ContextTime> contextTime;
 };
 
+template <typename T>
+T parseArrayElement(nlohmann::json value, RsrcDictionary<T> &literalStore) {
+  using namespace std::string_literals;
+  if (value.is_string()) {
+      //auto s = value.get<std::string>();
+      //auto sp = valueRsrc.get(s);
+      //auto sr = sp->get();
+      //return sr;
+    return literalStore.get(value.get<std::string>());
+  } else if(value.is_array() && (value.size() == 1)
+          && ((std::is_floating_point<T>::value && value.at(0).is_number_float())
+            ||(std::is_integral<T>::value && value.at(0).is_number_integer())
+            ||(std::is_same<T, bool>::value && value.at(0).is_boolean())
+            ||(std::is_same<T, std::string>::value && value.at(0).is_string()))) {
+    return value.at(0).get<T>();
+  } else if((std::is_floating_point<T>::value && value.is_number_float())
+          ||(std::is_integral<T>::value && value.is_number_integer())
+          ||(std::is_same<T, bool>::value && value.is_boolean())) {
+    return value.get<T>();
+  } else {
+      SysError::setError("EntitySetter parseArrayElement error: "s + value.get<std::string>() + " has invalid type."s);
+      return T();
+  }
+}
+
+class EntityFileBldr : public Funct<void> {
+public:
+  void operator()() {
+    for(auto cfg : cfgs) {
+      std::shared_ptr<Entity> ent = std::make_shared<Entity>();
+      ent->setContextTime(contextTime);
+      loadValues(ent, cfg);
+      for(auto& builder : builders) {
+        (*builder)(ent);
+      }
+    }
+
+  }
+
+  void addBldr(std::shared_ptr<Funct<void, std::shared_ptr<Entity>>> builder) {
+    builders.push_back(builder);
+  }
+
+  void setContextTime(std::shared_ptr<ContextTime> contextTime) {
+    this->contextTime = contextTime;
+  }
+
+  void setCfgs(nlohmann::json cfgs) {
+   this->cfgs = cfgs;
+  }
+
+private:
+  void loadValues(std::shared_ptr<Entity> ent, nlohmann::json j) {
+      if (j.find("double") != j.end())  { parse(j["double"],  valueDRsrc, doubleStore, ent); }
+      if (j.find("float") != j.end())   { parse(j["float"],   valueFRsrc, floatStore, ent); }
+      if (j.find("uint") != j.end())    { parse(j["uint"],    valueURsrc, uintStore, ent); }
+      if (j.find("int") != j.end())     { parse(j["int"],     valueIRsrc, intStore, ent); }
+      if (j.find("bool") != j.end())    { parse(j["bool"],    valueBRsrc, boolStore, ent); }
+      if (j.find("V2D") != j.end())     { parseV2D(j["V2D"],              ent); }
+      if (j.find("V3D") != j.end())     { parseV3D(j["V3D"],              ent); }
+      if (j.find("String") != j.end())  { parse(j["String"],  valueSRsrc, stringStore, ent); }
+      if (j.find("VString") != j.end()) { parseVString(j["VString"],      ent); }
+  }
+
+  // template<typename U>
+  // void addValues(std::shared_ptr<Entity> ent, ) {
+  //   for(auto& cfg : cfgl) {
+  //     std::shared_ptr<Funct<std::shared_ptr<Value<U>>, std::shared_ptr<MAvatar<T, Ts...>>>> second = cfg.second;
+  //     ent->set<U>(cfg.first, (*second)(avt)); //*(cfg.second)
+  //   }
+  // }
+
+  template <typename T>
+  inline void parse(nlohmann::json cfg, RsrcStore<Value<T> > &valueRsrc, RsrcDictionary<T> &literalStore, std::shared_ptr<Entity> ent) {
+    using namespace std::string_literals;
+    for (auto item : cfg.items()) {
+      auto id = uintStore.get(item.key());
+      auto cfgValue = item.value();
+      if (cfgValue.is_string()) {
+        ent->set<T>(id, valueRsrc.get(cfgValue.get<std::string>()));
+      } else if(cfgValue.is_array() && (cfgValue.size() == 1)
+           &&(std::is_same_v<T, std::string> == false) && (cfgValue.at(0).is_string())) {
+        ent->set<T>(id, std::make_shared<zbe::SimpleValue<T> >(literalStore.get(cfgValue.at(0).get<std::string>())));
+      } else if(cfgValue.is_array() && (cfgValue.size() == 1)
+        && ((std::is_floating_point<T>::value && cfgValue.at(0).is_number_float())
+           ||(std::is_integral<T>::value && cfgValue.at(0).is_number_integer())
+           ||(std::is_same<T, bool>::value && cfgValue.at(0).is_boolean())
+           ||(std::is_same<T, std::string>::value && cfgValue.at(0).is_string()))){
+        ent->set<T>(id, std::make_shared<zbe::SimpleValue<T> >(cfgValue.at(0).get<T>()));
+      } else if((std::is_floating_point<T>::value && cfgValue.is_number_float())
+           ||(std::is_integral<T>::value && cfgValue.is_number_integer())
+           ||(std::is_same<T, bool>::value && cfgValue.is_boolean())) {
+        ent->set<T>(id, std::make_shared<zbe::SimpleValue<T> >(cfgValue.get<T>()));
+      } else {
+        SysError::setError("EntitySetter parseValue error: "s + item.key() + " is invalid."s);
+      }
+    }
+  }
+
+  inline void parseV3D(nlohmann::json cfg, std::shared_ptr<Entity> ent) {
+    for (auto item : cfg.items()) {
+      auto cfgValue = item.value();
+      auto id = uintStore.get(item.key());
+      std::shared_ptr<zbe::Value<Vector3D> > val = std::make_shared<zbe::SimpleValue<Vector3D> >();
+      if (cfgValue.is_string()) {
+        ent->set<Vector3D>(id, valueV3Rsrc.get(cfgValue.get<std::string>()));
+      } else if(cfgValue.is_array() && (cfgValue.size() == 1)
+             && (cfgValue.at(0).is_string())) {
+        ent->set<Vector3D>(id, std::make_shared<zbe::SimpleValue<Vector3D> >(literalStoreV3D.get(cfgValue.at(0).get<std::string>())));
+      } else if (cfgValue.is_array() && (cfgValue.size() == 3)) {
+        auto c = 0;
+        Vector3D val;
+        for (auto item : cfgValue.items()) {
+          val[c++] = parseArrayElement(item.value(), doubleStore);
+        }
+        ent->set<Vector3D>(id, std::make_shared<zbe::SimpleValue<Vector3D> >(val));
+      }
+    }
+  }
+
+  inline void parseV2D(nlohmann::json cfg, std::shared_ptr<Entity> ent) {
+    for (auto item : cfg.items()) {
+      auto cfgValue = item.value();
+      auto id = uintStore.get(item.key());
+      std::shared_ptr<zbe::Value<Vector2D> > val = std::make_shared<zbe::SimpleValue<Vector2D> >();
+      if (cfgValue.is_string()) {
+        ent->set<Vector2D>(id, valueV2Rsrc.get(cfgValue.get<std::string>()));
+      } else if(cfgValue.is_array() && (cfgValue.size() == 1)
+             && (cfgValue.at(0).is_string())) {
+        ent->set<Vector2D>(id, std::make_shared<zbe::SimpleValue<Vector2D> >(literalStoreV2D.get(cfgValue.at(0).get<std::string>())));
+      } else if (cfgValue.is_array() && (cfgValue.size() == 2)) {
+        auto c = 0;
+        Vector2D val;
+        for (auto item : cfgValue.items()) {
+          val[c++] = parseArrayElement(item.value(), doubleStore);
+        }
+        ent->set<Vector2D>(id, std::make_shared<zbe::SimpleValue<Vector2D> >(val));
+      }
+    }
+  }
+
+  inline void parseVString(nlohmann::json cfg, std::shared_ptr<Entity> ent) {
+    for (auto item : cfg.items()) {
+      auto cfgValue = item.value();
+      auto id = uintStore.get(item.key());
+      if (cfgValue.is_string()) {
+        ent->set<std::vector<std::string>>(id, valueVSRsrc.get(cfgValue.get<std::string>()));
+      } else if (cfgValue.is_array()) {
+        std::vector<std::string> val;
+        for (auto item : cfgValue.items()) {
+          val.emplace_back(parseArrayElement<std::string>(item.value(), stringStore));
+        }
+        ent->set<std::vector<std::string>>(id, std::make_shared<zbe::SimpleValue<std::vector<std::string>> >(val));
+      }
+    }
+  }
+
+  std::deque<std::shared_ptr<Funct<void, std::shared_ptr<Entity>>>> builders;
+  std::shared_ptr<ContextTime> contextTime;
+  nlohmann::json cfgs;
+
+  RsrcDictionary<int64_t>& intStore = RsrcDictionary<int64_t>::getInstance();
+  RsrcDictionary<uint64_t>& uintStore = RsrcDictionary<uint64_t>::getInstance();
+  RsrcDictionary<double>& doubleStore = RsrcDictionary<double>::getInstance();
+  RsrcDictionary<float>& floatStore = RsrcDictionary<float>::getInstance();
+  RsrcDictionary<bool>& boolStore = RsrcDictionary<bool>::getInstance();
+  RsrcDictionary<std::string>& stringStore = RsrcDictionary<std::string>::getInstance();
+  RsrcStore<ContextTime>& cTimeRsrc = RsrcStore<ContextTime>::getInstance();  RsrcStore<Value<double> > &valueDRsrc = RsrcStore<Value<double> >::getInstance();
+  RsrcStore<Value<float> > &valueFRsrc = RsrcStore<Value<float> >::getInstance();
+  RsrcStore<Value<uint64_t> > &valueURsrc = RsrcStore<Value<uint64_t> >::getInstance();
+  RsrcStore<Value<int64_t> > &valueIRsrc = RsrcStore<Value<int64_t> >::getInstance();
+  RsrcStore<Value<bool> > &valueBRsrc = RsrcStore<Value<bool> >::getInstance();
+  RsrcStore<Value<Vector2D> > &valueV2Rsrc = RsrcStore<Value<Vector2D> >::getInstance();
+  RsrcStore<Value<Vector3D> > &valueV3Rsrc = RsrcStore<Value<Vector3D> >::getInstance();
+  RsrcStore<Value<std::string> > &valueSRsrc = RsrcStore<Value<std::string> >::getInstance();
+  RsrcStore<Value<std::vector<std::string> > > &valueVSRsrc = RsrcStore<Value<std::vector<std::string> > >::getInstance();
+  RsrcDictionary<Vector2D> &literalStoreV2D = RsrcDictionary<Vector2D>::getInstance();
+  RsrcDictionary<Vector3D> &literalStoreV3D = RsrcDictionary<Vector3D>::getInstance();
+
+};
+
+
+
+class EntityFileBldrFtry : public Factory {
+public:
+
+  void create(std::string name, uint64_t) {
+    using namespace std::string_literals;
+    std::shared_ptr<EntityFileBldr> efb = std::make_shared<EntityFileBldr>();
+    mainRsrc.insert(zbe::factories::functionName_ + name, efb);
+    specificRsrc.insert("EntityFileBldr."s + name, efb);
+  }
+
+  void setup(std::string name, uint64_t cfgId) {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);
+
+    if(!cfg) {
+      SysError::setError("EntityFileBldrFtry config for "s + name + " not found."s);
+      return;
+    }
+    auto efb = specificRsrc.get("EntityFileBldr."s + name);
+    auto j = *cfg;
+
+    if (j["builders"].is_array()) {
+      auto builders = j["builders"];
+      for(auto it : builders) {
+        auto name = it.get<std::string>();
+        auto storedName = zbe::factories::functionName + zbe::factories::separator + name;
+        if(!extraBldrStore.contains(storedName)) {
+          SysError::setError("EntityFileBldrFtry builders config " + name + " (" + storedName + "). is not an adecuate builder name."s);
+          return;
+        }
+        efb->addBldr(extraBldrStore.get(storedName));
+      }
+    } else if(j.contains("builders")) {
+      SysError::setError("EntityFileBldrFtry config for builders, if present, must be a array."s);
+    }
+
+    auto contextTime = JSONFactory::loadParamCfgStoreP<ContextTime>(cTimeRsrc, j, zbe::factories::contextimeName, "contextTime"s, "EntityFileBldrFtry"s);
+    if(!contextTime) {
+      SysError::setError("EntityFileBldrFtry config for contextTime is invalid"s);
+      return;
+    }
+    efb->setContextTime(*contextTime);
+
+    if (!j["path"].is_string()) {
+      SysError::setError("EntityFileBldrFtry config for path must be a string."s);
+      return;
+    }
+    std::filesystem::path filePath = j["path"].get<std::string>();
+    std::ifstream ifs(filePath);
+    json appCfg;
+    try {
+      ifs >> appCfg;
+
+      if(appCfg["config"].is_array()) {
+        efb->setCfgs(appCfg["config"]);
+      } else {
+        SysError::setError("Provided file must contain an array of entity value configurations."s);
+        return;
+      }
+    } catch (json::parse_error &e) {
+      SysError::setError("ERROR: Json on "s + filePath.u8string() + " failed to parse: "s + std::string(e.what()));
+    }
+  }
+
+private:
+
+  RsrcStore<nlohmann::json>& configRsrc = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<Funct<void>>& mainRsrc = RsrcStore<Funct<void>>::getInstance();
+  RsrcStore<EntityFileBldr>& specificRsrc = RsrcStore<EntityFileBldr>::getInstance();
+  RsrcStore<Funct<void, std::shared_ptr<Entity>>>& extraBldrStore = RsrcStore<Funct<void, std::shared_ptr<Entity>>>::getInstance();
+  RsrcStore<ContextTime>& cTimeRsrc = RsrcStore<ContextTime>::getInstance();
+
+};
 
 
 template<typename T, typename ...Ts>
@@ -1264,31 +1523,6 @@ private:
   RsrcDictionary<Vector3D> &literalStoreV3D = RsrcDictionary<Vector3D>::getInstance();
 
   template <typename T>
-  T parseArrayElement(nlohmann::json value, RsrcDictionary<T> &literalStore) {
-    using namespace std::string_literals;
-    if (value.is_string()) {
-        //auto s = value.get<std::string>();
-        //auto sp = valueRsrc.get(s);
-        //auto sr = sp->get();
-        //return sr;
-      return literalStore.get(value.get<std::string>());
-    } else if(value.is_array() && (value.size() == 1)
-           && ((std::is_floating_point<T>::value && value.at(0).is_number_float())
-              ||(std::is_integral<T>::value && value.at(0).is_number_integer())
-              ||(std::is_same<T, bool>::value && value.at(0).is_boolean())
-              ||(std::is_same<T, std::string>::value && value.at(0).is_string()))) {
-      return value.at(0).get<T>();
-    } else if((std::is_floating_point<T>::value && value.is_number_float())
-           ||(std::is_integral<T>::value && value.is_number_integer())
-           ||(std::is_same<T, bool>::value && value.is_boolean())) {
-      return value.get<T>();
-    } else {
-        SysError::setError("EntitySetter parseArrayElement error: "s + value.get<std::string>() + " has invalid type."s);
-        return T();
-    }
-  }
-
-  template <typename T>
   inline void parse(nlohmann::json cfg, RsrcStore<Value<T> > &valueRsrc, RsrcDictionary<T> &literalStore, std::shared_ptr<EntitySetter> es) {
     using namespace std::string_literals;
     for (auto item : cfg.items()) {
@@ -1496,7 +1730,7 @@ public:
     auto budtob = specificRsrc.get("BuildUpDirToOriBldr."s + name);
     auto j = *cfg;
 
-    if(j.contains("baseupwards")) { 
+    if(j.contains("baseupwards")) {
       budtob->setBaseUpwards(JSONFactory::parseV3DFromCfg(j["baseupwards"], "baseupwards"s, "BuildUpDirToOriBldrFtry"s));
     }
 

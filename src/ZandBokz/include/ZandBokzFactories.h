@@ -163,6 +163,7 @@ public:
 
     factories.insert("Solid2DDaemonRctBldrFtry", std::make_shared<zbe::DaemonRctBldrFtry<zbe::CollisionData2D, Solid>>());
     factories.insert("PlatforDaemonRctBldrFtry", std::make_shared<zbe::DaemonRctBldrFtry<zbe::CollisionData3D, Platform>>());
+    factories.insert("GoalDaemonRctBldrFtry",    std::make_shared<zbe::DaemonRctBldrFtry<zbe::CollisionData3D, Goal>>());
 
     factories.insert("StoreValuesPlatformRctBldrFtry", std::make_shared<zbe::StoreValuesRctBldrFtry<zbe::CollisionData3D, zbe::Vector3D, 3>>());
 
