@@ -31,6 +31,7 @@
 #include "ZBE/core/tools/containers/TicketedForwardList.h"
 #include "ZBE/core/tools/containers/Ticket.h"
 #include "ZBE/core/tools/shared/Value.h"
+#include "ZBE/core/tools/tools.h"
 #include "ZBE/core/entities/avatars/Avatar.h"
 
 #include "ZBE/factories/Factory.h"
@@ -51,6 +52,54 @@ public:
   /** \brief Destructor.
    */
   virtual ~Daemon(){};
+};
+
+class CallDmn : public Daemon {
+public:
+  void run() {
+      (*f)();
+  }
+
+  void setFunct(std::shared_ptr<Funct<void>> f) {
+    this->f = f;
+  }
+
+private:
+  std::shared_ptr<Funct<void>> f{};
+};
+
+class CallDmnFtry : public Factory {
+public:
+  void create(std::string name, uint64_t) {
+    using namespace std::string_literals;
+    std::shared_ptr<CallDmn> cdmn = std::make_shared<CallDmn>();
+    mainRsrc.insert("Daemon."s + name, cdmn);
+    specificRsrc.insert("CallDmn."s + name, cdmn);
+  }
+  void setup(std::string name, uint64_t cfgId){
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);
+
+    if(!cfg) {
+      SysError::setError("CallDmnFtry config for "s + name + " not found."s);
+      return;
+    }
+    auto cdmn = specificRsrc.get("CallDmn."s + name);
+    auto j = *cfg;
+
+    if(auto funct = JSONFactory::loadParamCfgStoreP<Funct<void>>(functRsrc, j, zbe::factories::functionName, "call", "CallDmnFtry"s)) {
+      cdmn->setFunct(*funct);
+    } else {
+      SysError::setError("CallDmnFtry config for function is not an adecuate function name. Either it doesn't exist or type doesn't match"s);
+      return;
+    }
+  }
+private:
+  RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<Daemon>& mainRsrc = RsrcStore<Daemon>::getInstance();
+  RsrcStore<CallDmn>& specificRsrc = RsrcStore<CallDmn>::getInstance();
+  RsrcStore<Funct<void>>& functRsrc = RsrcStore<Funct<void>>::getInstance();
 };
 
 template<typename F, typename L>

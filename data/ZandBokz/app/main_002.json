@@ -121,6 +121,8 @@
     "platformDisableListTicket" : 10001,
     "distResetTicket" : 10002,
     "deleteTicket" : 666666,
+    "deleteAtResetTicket" : 666667,
+    "protaResetTicket" : 666668,
     "state.static" : 0,
     "testwflags": 0,
     "testrflags": 0,
@@ -396,6 +398,18 @@
           "config" : {}
         },
         {
+          "factory": "TFAEVoidFtry",
+          "description" : "delete castañas",
+          "name": "zandbokz.deleteAtResetList",
+          "config" : {}
+        },
+        {
+          "factory": "TFAECProtaResetFtry",
+          "description" : "list reset de prota",
+          "name": "zandbokz.protaResetList",
+          "config" : {}
+        },
+        {
           "factory": "TFAECThreeV3DAvtFtry",
           "description" : "do some serious sam",
           "name": "zandbokz.BulletCreatorList",
@@ -516,6 +530,32 @@
           "config" : {
             "eventId" : "timeEventId",
             "contextTime" : "DEFAULT"
+          }
+        },
+        {"factory": "EraseEnityBhvFtry",
+          "name": "zandbokz.demonioborrador",
+          "description" : "comportamiento borra castañas",
+          "config" : {}
+        },
+        {"factory": "VoidBvrDmnFtry",
+          "name": "zandbokz.deleteAtResetDmn",
+          "description" : "demonio limpia la sangre",
+          "config" : {
+            "list" : "zandbokz.deleteAtResetList",
+            "behavior" : "zandbokz.demonioborrador"
+          }
+        },
+        {"factory": "ZandBockPlayerResetBhvFtry",
+          "name": "zandbokz.protaResetBhv",
+          "description" : "comportamiento que reseteal al prota",
+          "config" : {}
+        },
+        {"factory": "ProtaResetBhvrDmnFtry",
+          "name": "zandbokz.protaResetDmn",
+          "description" : "demonio que reseteal al prota",
+          "config" : {
+            "list" : "zandbokz.protaResetList",
+            "behavior" : "zandbokz.protaResetBhv"
           }
         }]
       },
@@ -692,6 +732,13 @@
       "description" : "Entity builders",
       "factories" : [
         {
+          "factory" :"VoidAvtBldrFtry",
+          "name" : "zandbokz.aborrarentreniveles",
+          "config" : {
+            "lists":{"zandbokz.deleteAtResetList":"deleteAtResetTicket"}
+          }
+        },
+        {
           "factory" : "EntityBldrFtry",
           "name" : "zandbokz.thirdviewcambldr",
           "config" : {
@@ -866,8 +913,8 @@
           "description" : "Está ahí, mirando. Pero no hace na",
           "config" : {
             "contextTime":"DEFAULT",
-            "builders" : ["zandbokz.diositocachetriangulo2D", "zandbokz.diositoapintar","zandbokz.diositosolidosocializa", "zandbokz.diositosolidosocializa2D", "zandbokz.diositodesactiva", "zandbokz.plataformaatrae", "zandbokz.diositoattractorsocializa"],
-            "path" : "data/ZandBokz/app/plataformas_001.json"
+            "builders" : ["zandbokz.aborrarentreniveles","zandbokz.diositocachetriangulo2D", "zandbokz.diositoapintar","zandbokz.diositosolidosocializa", "zandbokz.diositosolidosocializa2D", "zandbokz.diositodesactiva", "zandbokz.plataformaatrae", "zandbokz.diositoattractorsocializa"],
+            "path" : "data/ZandBokz/app/levels/1/plataformas.json"
           }
         },
         {
@@ -1062,7 +1109,7 @@
           "name" : "zandbokz.dropcuajarona",
           "config" : {
             "contextTime":"DEFAULT",
-            "builders" : ["zandbokz.cuajaronvalues", "zandbokz.diositocachetriangulo2D", "zandbokz.cuajaronsolidosocializa", "zandbokz.cuajaronsolidosocializa2D", "zandbokz.cuajaronapintar", "zandbokz.plataformaatrae"],
+            "builders" : ["zandbokz.aborrarentreniveles","zandbokz.cuajaronvalues", "zandbokz.diositocachetriangulo2D", "zandbokz.cuajaronsolidosocializa", "zandbokz.cuajaronsolidosocializa2D", "zandbokz.cuajaronapintar", "zandbokz.plataformaatrae"],
             "Vector3D" : {
               "positionIdx" : "zandbokz.copypos3v",
               "orientationIdx" : "zandbokz.UpDirToOri",
@@ -1082,7 +1129,7 @@
           "name" : "zandbokz.dropcuajaronb",
           "config" : {
             "contextTime":"DEFAULT",
-            "builders" : ["zandbokz.cuajaronvalues", "zandbokz.diositocachetriangulo2D", "zandbokz.cuajaronsolidosocializa", "zandbokz.cuajaronsolidosocializa2D", "zandbokz.cuajaronapintar", "zandbokz.plataformaatrae", "zandbokz.diositoattractorsocializa"],
+            "builders" : ["zandbokz.aborrarentreniveles","zandbokz.cuajaronvalues", "zandbokz.diositocachetriangulo2D", "zandbokz.cuajaronsolidosocializa", "zandbokz.cuajaronsolidosocializa2D", "zandbokz.cuajaronapintar", "zandbokz.plataformaatrae", "zandbokz.diositoattractorsocializa"],
             "Vector3D" : {
               "positionIdx" : "zandbokz.copypos3v",
               "orientationIdx" : "zandbokz.UpDirToOriRot",
@@ -1168,7 +1215,7 @@
           "name" : "zandbokz.dropcastaña",
           "config" : {
             "contextTime":"DEFAULT",
-            "builders" : ["zandbokz.castañavalues", "zandbokz.castañaapintar", "zandbokz.castañaefimera", "zandbokz.castañapalante", "zandbokz.castañasolidosocializa", "zandbokz.castañachof", "zandbokz.castañaseborra"],
+            "builders" : ["zandbokz.aborrarentreniveles","zandbokz.castañavalues", "zandbokz.castañaapintar", "zandbokz.castañaefimera", "zandbokz.castañapalante", "zandbokz.castañasolidosocializa", "zandbokz.castañachof", "zandbokz.castañaseborra"],
             "Vector3D" : {
               "positionIdx" : "zandbokz.copypos3v",
               "orientationIdx" : "zandbokz.copyvel3v",
@@ -1587,8 +1634,16 @@
                           "zandbokz.protasaltar", "zandbokz.protafisica3d", "zandbokz.protaamoverenplano", "zandbokz.protaattachonoff",
                           "zandbokz.protaInator2D", "zandbokz.protacalcula2dori", "zandbokz.protacalcula2DVel", "zandbokz.protapierdesangre",
                           "zandbokz.protaganasangre","zandbokz.protarecuperasangre", "zandbokz.protaquemasangre", "zandbokz.protaacaerenplataformas",
-                          "zandbokz.protafisicaFG", "zandbokz.protaresetdist"],
+                          "zandbokz.protafisicaFG", "zandbokz.protaresetdist", "zandbokz.protareset"],
             "buildersback" : []
+          }
+        },
+        {
+          "factory" :"ProtaResetAvtBldrFtry",
+          "name" : "zandbokz.protareset",
+          "config" : {
+            "attribIndexes" : ["currentbloodIdx", "bestCenterDistIdx", "bestCenterIdx", "positionIdx", "velocityIdx", "upwardsIdx", "pitchvectorIdx", "yawvectorIdx", "camUpwardsIdx"],
+            "lists":{"zandbokz.protaResetList":"protaResetTicket"}
           }
         },
         {
@@ -1625,7 +1680,7 @@
               "camposIdx" : "zandbokz.camEye",
               "velocityPre1Idx" : [0.0, 0.0, 0.0],
               "velocityPre2Idx" : [0.0, 0.0, 0.0],
-              "velocityPre3Idx" : "zandbokz.protagrav",
+              "velocityPre3Idx" : "zandbokz.protagrav", 
               "positionIdx":"zandbokz.protaPos",
               "orientationIdx":[1.0, 0.0, 0.0],
               "orientationPreIdx":[1.0, 0.0, 0.0],
@@ -1832,10 +1887,25 @@
           }
         },
         {
+          "factory" : "CallDmnFtry",
+          "name" : "zandbokz.demoniocarganivel",
+          "config" : {
+            "call":"zandbokz.diositobuilderfichero"
+          }
+        },
+        {"factory": "MasterDmnFtry",
+          "name": "zandbokz.demoniofinnivel",
+          "config" : {
+            "daemons": [
+              "zandbokz.demoniocarganivel","zandbokz.protaResetDmn", "zandbokz.deleteAtResetDmn"
+            ]
+          }
+        },
+        {
           "factory" : "GoalDaemonRctBldrFtry",
           "name" : "zandbokz.reaccionhasganao",
           "config" : {
-            "daemon":"zandbokz.exitDaemon"
+            "daemon": "zandbokz.demoniofinnivel"
           }
         },
         {
@@ -1968,39 +2038,14 @@
             "velocityIdx" : "velocityIdx"
           }
         },
-
         {
-          "factory" : "EntityBldrFtry",
+          "factory" : "EntityFileBldrFtry",
           "name" : "zandbokz.goalbuilder",
+          "description" : "Está ahí, mirando. Pero no hace na",
           "config" : {
             "contextTime":"DEFAULT",
-            "builders" : ["zandbokz.goalvalues", "zandbokz.goalapintar", "zandbokz.goalfisica3d"],
-            "buildersback" : []
-          }
-        },
-        {
-          "factory" :"EntitySetterFtry",
-          "name" : "zandbokz.goalvalues",
-          "config" : {
-            "uint": {
-              "gidIdx":["Cerebro"]
-            },
-            "int": {},
-            "double": {
-              "radsIdx":[-1.57],
-              "scaleIdx":[200.0]
-            },
-            "float": {
-              "sizeIdx":[100.0]
-            },
-            "V3D": {
-              "positionIdx": [100.0, 100.0, 100.0],
-              "orientationIdx":[1.0, 0.0, 0.0],
-              "upwardsIdx": [0.0, 1.0, 0.0],
-              "velocityIdx" : [0.0, 0.0, 0.0]
-            },
-            "V2D": {
-            }
+            "builders" : ["zandbokz.goalapintar", "zandbokz.goalfisica3d"],
+            "path" : "data/ZandBokz/app/levels/1/goal.json"
           }
         },
         {
@@ -2015,7 +2060,8 @@
           "factory" :"ActorBldrFtry",
           "name" : "zandbokz.actorgoalsolido",
           "config" : {
-            "solid" : "ENABLED"
+            "solid" : "ENABLED",
+            "goal" : "ENABLED"
           }
         },
         {
@@ -2334,11 +2380,6 @@
             "behavior" : "zandbokz.dettachcajadeactivations"
           }
         },
-        {"factory": "EraseEnityBhvFtry",
-          "name": "zandbokz.borracastañasbvr",
-          "description" : "comportamiento borra castañas",
-          "config" : {}
-        },
         {"factory": "TicketActivatorBvrFtry",
           "name": "zandbokz.attachcajaactivations",
           "description" : "comportamiento engancha la caja a un plano",
@@ -2588,7 +2629,7 @@
           "description" : "demonio limpia la sangre",
           "config" : {
             "list" : "zandbokz.borracastañaslist",
-            "behavior" : "zandbokz.borracastañasbvr"
+            "behavior" : "zandbokz.demonioborrador"
           }
         },
         {"factory": "FunctOverAvtList2VDmnFtry",

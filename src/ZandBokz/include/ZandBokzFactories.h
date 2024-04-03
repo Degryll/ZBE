@@ -58,13 +58,21 @@ public:
 
     using FakeGravityAvt = zbe::MAvatar<double, double, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D>;
     using FakeGravityList = zbe::TicketedForwardList<FakeGravityAvt>;
-    using FakeGravityBhvDmn = zbe::BehaviorDmnFtry<FakeGravityList, double, double, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D>;
+
+    using ProtaResetAvt = zbe::MAvatar<int64_t, double, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D>;
+    using ProtaResetList = zbe::TicketedForwardList<ProtaResetAvt>;
 
     auto& factories = zbe::RsrcStore<zbe::Factory>::getInstance();
+
+    factories.insert("ZandBockPlayerResetBhvFtry", std::make_shared<zbe::GenericFtry<zbe::Behavior<int64_t, double, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D>, ZandBockPlayerResetBhv>>("Behavior", "ZandBockPlayerResetBhv"));
 
     factories.insert("FakeGravityAvtBldrFtry", std::make_shared<zbe::MAvatarBldrFtry<double, double, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D>>());
     factories.insert("TFAECFakeGravityFtry" , std::make_shared<zbe::SimpleGenericFtry<FakeGravityList> >(zbe::factories::listName));
     factories.insert("FakeGravityBhvrDmnFtry", std::make_shared<zbe::BehaviorDmnFtry<FakeGravityList, double, double, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D>>());
+    
+    factories.insert("ProtaResetAvtBldrFtry", std::make_shared<zbe::MAvatarBldrFtry<int64_t, double, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D>>());
+    factories.insert("TFAECProtaResetFtry" , std::make_shared<zbe::SimpleGenericFtry<ProtaResetList> >(zbe::factories::listName));
+    factories.insert("ProtaResetBhvrDmnFtry", std::make_shared<zbe::BehaviorDmnFtry<ProtaResetList, int64_t, double, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D>>());
 
     factories.insert("InatorListFtry", std::make_shared<zbe::SimpleGenericFtry<InatorList> >(zbe::factories::listName));
     factories.insert("InerListFtry", std::make_shared<zbe::SimpleGenericFtry<InerList> >(zbe::factories::listName));

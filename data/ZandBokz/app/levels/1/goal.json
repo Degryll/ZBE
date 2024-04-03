@@ -1,0 +1,25 @@
+{
+  "factory" :"EntitySetterFtry",
+  "name" : "zandbokz.goalvalues",
+  "config" : [{
+    "uint": {
+      "gidIdx":["Cerebro"]
+    },
+    "int": {},
+    "double": {
+      "radsIdx":[-1.57],
+      "scaleIdx":[200.0]
+    },
+    "float": {
+      "sizeIdx":[100.0]
+    },
+    "V3D": {
+      "positionIdx": [100.0, 100.0, 100.0],
+      "orientationIdx":[1.0, 0.0, 0.0],
+      "upwardsIdx": [0.0, 1.0, 0.0],
+      "velocityIdx" : [0.0, 0.0, 0.0]
+    },
+    "V2D": {
+    }
+  }]
+}

@@ -38,6 +38,34 @@
 namespace zandbokz {
 
 
+class ZandBockPlayerResetBhv : virtual public zbe::Behavior<int64_t, double, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D> {
+  public:
+  virtual ~ZandBockPlayerResetBhv() = default;
+  void apply(std::shared_ptr<zbe::MAvatar<int64_t, double, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D> > avatar) {
+    //"attribIndexes" : ["currentbloodIdx", "bestCenterDistIdx", "bestCenterIdx", "positionIdx", "velocityIdx", "upwardsIdx", "pitchvectorIdx", "yawvectorIdx", "camUpwardsIdx"],
+    auto vblood       = avatar->get<9, int64_t>();
+    auto vcdistance   = avatar->get<8, double>();
+    auto vbestCenter  = avatar->get<7, zbe::Vector3D>();
+    auto vposition    = avatar->get<6, zbe::Vector3D>();
+    auto vvelocity    = avatar->get<5, zbe::Vector3D>();
+    auto vupwards     = avatar->get<4, zbe::Vector3D>();
+    auto vpitchvector = avatar->get<3, zbe::Vector3D>();
+    auto vyawvector   = avatar->get<2, zbe::Vector3D>();
+    auto vcamUpwards  = avatar->get<1, zbe::Vector3D>();
+
+    vblood->set(100);
+    vcdistance->set(std::numeric_limits<double>::max());
+    vbestCenter->set({0.0,0.0,0.0});
+    vposition->set({0.0,0.0,0.0});
+    vvelocity->set({0.0,0.0,0.0});
+    vupwards->set({0.0,1.0,0.0});
+    vpitchvector->set({1.0,0.0,0.0});
+    vyawvector->set({0.0,1.0,0.0});
+    vcamUpwards->set({0.0,1.0,0.0});
+  }
+};
+
+
 class KeepDistanceBhv : virtual public zbe::Behavior<double, zbe::Vector3D, zbe::Vector3D> {
   public:
   virtual ~KeepDistanceBhv() = default;

@@ -38,15 +38,6 @@ int main(int /*argc*/, char** /*argv*/) {
    using namespace zandbokz;
    using namespace std::string_literals;
 
-   Point3D position{0.0, 150.0, 0.0};
-   Point3D a{-1000.0, 0.0, -1000.0};
-   Point3D b{0.0, 0.0, 1000.0};
-   Point3D c{1000.0, 0.0, -1000.0};
-   Triangle3D triangle{a,b,c};
-
-   zbe::Point3D result = projectPointOnTriangle(&position, &triangle);
-   printf("Result: %lf, %lf, %lf\n", result.x, result.y, result.z);fflush(stdout);
-
    init();
    printf("Hello ZandBokz\n");
    BaseFactories::load();

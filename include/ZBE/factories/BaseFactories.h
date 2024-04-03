@@ -96,6 +96,7 @@ public:
     factories.insert("MainLoopExitFtry", std::make_shared<MainLoopExitFtry>());
     factories.insert("MainLoopFtry", std::make_shared<MainLoopFtry>());
     factories.insert("MasterDmnFtry", std::make_shared<MasterDmnFtry>());
+    factories.insert("CallDmnFtry", std::make_shared<CallDmnFtry>());
     factories.insert("OnceDaemonFtry", std::make_shared<OnceDaemonFtry>());
     factories.insert("StateMachineDmnFtry", std::make_shared<StateMachineDmnFtry>());
     factories.insert("RsrcFolderLoaderDmnFtry", std::make_shared<RsrcFolderLoaderDmnFtry>());
