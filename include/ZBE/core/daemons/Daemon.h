@@ -56,16 +56,19 @@ public:
 
 class CallDmn : public Daemon {
 public:
+  CallDmn() : fs() {}
   void run() {
+    for(auto f : fs) {
       (*f)();
+    }
   }
 
-  void setFunct(std::shared_ptr<Funct<void>> f) {
-    this->f = f;
+  void addFunct(std::shared_ptr<Funct<void>> f) {
+    this->fs.push_front(f);
   }
 
 private:
-  std::shared_ptr<Funct<void>> f{};
+  std::forward_list<std::shared_ptr<Funct<void>>> fs;
 };
 
 class CallDmnFtry : public Factory {
@@ -88,12 +91,12 @@ public:
     auto cdmn = specificRsrc.get("CallDmn."s + name);
     auto j = *cfg;
 
-    if(auto funct = JSONFactory::loadParamCfgStoreP<Funct<void>>(functRsrc, j, zbe::factories::functionName, "call", "CallDmnFtry"s)) {
-      cdmn->setFunct(*funct);
-    } else {
-      SysError::setError("CallDmnFtry config for function is not an adecuate function name. Either it doesn't exist or type doesn't match"s);
-      return;
-    }
+    JSONFactory::loadAllP<Funct<void>>(functRsrc, j, zbe::factories::functionName, "calls"s, "CallDmnFtry"s,        
+      [&](std::shared_ptr<Funct<void>> rctbldr) {
+        cdmn->addFunct(rctbldr);
+        return true;
+      }
+    );
   }
 private:
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
@@ -480,6 +483,102 @@ public:
 private:
   std::unordered_map<int64_t, std::shared_ptr<Daemon> > daemons;
   std::shared_ptr<Value<int64_t> > state;
+};
+
+
+/** \brief A Daemon capable of execute an specific sub Daemon depending on
+* an state.
+*/
+class ZBEAPI StatedDaemon : public Daemon {
+public:
+
+  StatedDaemon(const StateMachineDaemon&) = delete;
+  void operator=(const StateMachineDaemon&) = delete;
+
+  /** \brief Builds an empty StatedDaemon.
+   */
+  StatedDaemon() : daemons(), state(nullptr) {}
+
+  /** \brief Build the Daemon with the value used to select the state
+   * and an initial state amount.
+   *
+   */
+  StatedDaemon(std::shared_ptr<Value<int64_t> > state) : daemons(), state(state) {}
+
+  /** \brief Destroys the StateMachineDaemon.
+   */
+  virtual ~StatedDaemon() {}
+
+  /** \brief Sets the Daemon to use for a given state.
+   * |param state desired state
+   * |param daemon Daemon daemon to run
+   */
+  void setDaemon(int64_t state, std::shared_ptr<Daemon> daemon) {
+    daemons[state]= daemon;
+  }
+
+  /** \brief Sets the Value<int64_t> where the state will be found.
+   * |param state state container.
+   */
+  void setStateValue(std::shared_ptr<Value<int64_t> > state) {
+    this->state = state;
+  }
+
+  /** \brief It will run the contained daemons while "state" is positive.
+   */
+  void run() {
+    int64_t s = state->get();
+    auto it = daemons.find(s);
+    if(it != daemons.end()) {
+      it->second->run();
+    }
+  }
+
+private:
+  std::unordered_map<int64_t, std::shared_ptr<Daemon> > daemons;
+  std::shared_ptr<Value<int64_t> > state;
+};
+
+class StatedDaemonFtry : public Factory {
+public:
+  void create(std::string name, uint64_t) {
+    using namespace std::string_literals;
+    std::shared_ptr<StatedDaemon> smd = std::make_shared<StatedDaemon>();
+    mainRsrc.insert("Daemon."s + name, smd);
+    specificRsrc.insert("StatedDaemon."s + name, smd);
+  }
+  void setup(std::string name, uint64_t cfgId){
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);
+
+    if(!cfg) {
+      SysError::setError("StatedDaemonFtry config for "s + name + " not found."s);
+      return;
+    }
+    auto j = *cfg;
+    auto smd = specificRsrc.get("StatedDaemon."s + name);
+
+    if(auto value = JSONFactory::loadParamCfgStore<Value<int64_t>>(valueIRsrc, j, "value"s, "StatedDaemonFtry"s)) {
+      smd->setStateValue(*value);
+    } else {
+      SysError::setError("StatedDaemonFtry config for value is not an adecuate value name."s);
+      return;
+    }
+
+    JSONFactory::loadAllIndexedRev<Daemon>(mainRsrc, uintDict, j, zbe::factories::daemonName, "daemons"s, "StatedDaemonFtry"s,
+    [&](uint64_t idx, std::shared_ptr<Daemon> dmn) {
+      smd->setDaemon(idx, dmn);
+      return true;
+    });
+
+  }
+private:
+  RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<Daemon>& mainRsrc = RsrcStore<Daemon>::getInstance();
+  RsrcStore<StatedDaemon>& specificRsrc = RsrcStore<StatedDaemon>::getInstance();
+  RsrcStore<Value<int64_t> > &valueIRsrc = RsrcStore<Value<int64_t> >::getInstance();
+  RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
 };
 
 /** \brief Daemon that does nothing.

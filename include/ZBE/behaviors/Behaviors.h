@@ -68,6 +68,17 @@ public:
 };
 
 template<typename T>
+class SimpleIncrementBvr : virtual public Behavior<T> {
+public:
+  void apply(std::shared_ptr<SAvatar<T>> avatar) {
+    auto vv = avatar->get();
+    auto v = vv->get(); 
+    v++;
+    vv->set(v);
+  }
+};
+
+template<typename T>
 class ValueSetterFixedBvr : virtual public Behavior<T> {
 public:
   void apply(std::shared_ptr<SAvatar<T>> avatar) {

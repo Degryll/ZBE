@@ -11,7 +11,7 @@
         "scaleIdx":[500.0]
       },
       "V3D": {
-        "positionIdx":[-1000.0, 100.0, 200.0],
+        "positionIdx":[1000.0, 100.0, -200.0],
         "orientationIdx":[1.0, 0.0, 0.0],
         "positionAIdx":[200.0, 0.0, 200.0],
         "positionBIdx":[-200.0, 0.0, 200.0],

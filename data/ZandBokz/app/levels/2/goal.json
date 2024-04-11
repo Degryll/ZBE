@@ -14,7 +14,7 @@
       "sizeIdx":[100.0]
     },
     "V3D": {
-      "positionIdx": [1000.0, 100.0, 1000.0],
+      "positionIdx": [-1000.0, 1000.0, 100.0],
       "orientationIdx":[1.0, 0.0, 0.0],
       "upwardsIdx": [0.0, 1.0, 0.0],
       "velocityIdx" : [0.0, 0.0, 0.0]

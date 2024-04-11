@@ -101,6 +101,7 @@ public:
     factories.insert("StateMachineDmnFtry", std::make_shared<StateMachineDmnFtry>());
     factories.insert("RsrcFolderLoaderDmnFtry", std::make_shared<RsrcFolderLoaderDmnFtry>());
     factories.insert("ConditionalIntDaemonFtry", std::make_shared<ConditionalIntDaemonFtry>());
+    factories.insert("StatedDaemonFtry", std::make_shared<StatedDaemonFtry>());
 
     // --- Behaviors
     factories.insert("BoundedAddIntBvr", std::make_shared<GenericFtry<Behavior<int64_t, int64_t, int64_t, int64_t>, BoundedAddBvr<int64_t>>>("Behavior", "BoundedAddBvr"));
@@ -121,6 +122,9 @@ public:
     factories.insert("TicketActivatorBvrFtry", std::make_shared<TicketActivatorBvrFtry>());
     factories.insert("Vector3DSetterFixedBvrFtry", std::make_shared<ValueSetterFixedBvrFtry<Vector3D>>());
     factories.insert("DoubleSetterFixedBvrFtry", std::make_shared<ValueSetterFixedBvrFtry<double>>());
+
+    factories.insert("IntSimpleIncrementBvrFtry", std::make_shared<GenericFtry<Behavior<int64_t>, SimpleIncrementBvr<int64_t>>>("Behavior", "SimpleIncrementBvr"));
+
     factories.insert("CopyVectorResizedBvrFtry", std::make_shared<GenericFtry<Behavior<Vector3D, Vector3D, double>, CopyVectorResizedBvr>>("Behavior", "CopyVectorResizedBvr"));
 
     // --- Events

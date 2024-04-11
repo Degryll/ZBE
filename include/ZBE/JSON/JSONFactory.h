@@ -167,6 +167,41 @@ bool loadAllIndexed(RsrcStore<T>& store, RsrcDictionary<uint64_t>& uintDict, jso
 }
 
 template<typename T>
+bool loadAllIndexedRev(RsrcStore<T>& store, RsrcDictionary<uint64_t>& uintDict, json cfg, std::string prefix, std::string parameter, std::string factoryName, std::function<bool(uint64_t, std::shared_ptr<T>)> callback) {
+  using namespace std::string_literals;
+  if (cfg[parameter].is_object()) {
+    auto arrayCfg = cfg[parameter];
+    for (auto item : arrayCfg.items()) { //+ zbe::factories::separator
+      auto key = item.key();
+      if(!uintDict.contains(key)) {
+        SysError::setError(factoryName + " config for "s + parameter + " contains a non valid element name:"s + key);
+        return false;
+      }
+      uint64_t idx = uintDict.get(key);
+
+      if (!item.value().is_string()) {
+        SysError::setError(factoryName + " config for "s + key + " must be a string."s);
+        return false;
+      }
+      
+      auto elementName = item.value().get<std::string>();
+      auto element = loadParamStrStoreP<T>(store, prefix, elementName, factoryName);
+      if(!element) {
+        SysError::setError(factoryName + " config for "s + parameter + " contains a non valid element name:"s + elementName);
+        return false;
+      }
+
+      if(!callback(idx, *element)) {
+        return false;
+      }
+    }
+  } else if(cfg.contains(parameter)) {
+    return false;
+  }
+  return true;
+}
+
+template<typename T>
 bool loadAllP(RsrcStore<T>& store, json cfg, std::string prefix, std::string parameter, std::string factoryName, std::function<bool(std::shared_ptr<T>)> callback) {
   using namespace std::string_literals;
   if (cfg[parameter].is_array()) {

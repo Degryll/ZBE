@@ -117,12 +117,14 @@
     "blooddecrementIdx" : 20004,
     "bloodincrementIdx" : 20005,
     "bloodTriggerIdx" : 20006,
+    "gameLevelIdx" : 30000,
     "keepdistanceTicket" : 8060,
     "platformDisableListTicket" : 10001,
     "distResetTicket" : 10002,
     "deleteTicket" : 666666,
     "deleteAtResetTicket" : 666667,
     "protaResetTicket" : 666668,
+    "levelIncrementTicket" : 666669,
     "state.static" : 0,
     "testwflags": 0,
     "testrflags": 0,
@@ -189,6 +191,11 @@
     "velprotaarriba" :{"type":"d", "value":240.0},
     "velprotaabajo" :{"type":"d", "value":-240.0},
 
+    "Level1" :{"type":"ui", "value": 1},
+    "Level2" :{"type":"ui", "value": 2},
+    "Level3" :{"type":"ui", "value": 3},
+    "Level4" :{"type":"ui", "value": 4},
+
     "VOLANDO" : 0,
     "RODANDO" : 1
   },
@@ -201,6 +208,7 @@
             "name" : "zandbokz",
             "config" : {
               "int" : {
+                "gameLevel" : 1,
                 "loadState" : ["mainInitialState"],
                 "protaCurrentBlood" : 100,
                 "protaMaxBlood" : 100,
@@ -232,9 +240,6 @@
                 "cajaPos" : [0.0, 10.0, 0.0],
                 "protaVel" : [0.0, 0.0, 0.0],
                 "protaPos" : [0.0, 150.0, 0.0],
-                "planePos" : [1000.0, 100.0, -200.0],
-                "planeE1" : [0.0, 0.0, 0.0],
-                "planeE2" : [0.0, 0.0, 0.0],
                 "protaPitchVect" : [1.0, 0.0, 0.0],
                 "protaYawVect" : [0.0, 1.0, 0.0],
                 "protaRollVect" : [0.0, 0.0, 1.0],
@@ -299,6 +304,12 @@
           "factory": "TFAECFloatAvtFtry",
           "description" : "do some serious sheet",
           "name": "zandbokz.fovOscillatorList",
+          "config" : {}
+        },
+        {
+          "factory": "TFAECIntAvtFtry",
+          "description" : "level increment list",
+          "name": "zandbokz.levelIncrementList",
           "config" : {}
         },
         {
@@ -530,6 +541,19 @@
           "config" : {
             "eventId" : "timeEventId",
             "contextTime" : "DEFAULT"
+          }
+        },
+        {"factory": "IntSimpleIncrementBvrFtry",
+          "name": "zandbokz.increment",
+          "description" : "comportamiento borra castañas",
+          "config" : {}
+        },
+        {"factory": "IntBhvDmnFtry",
+          "name": "zandbokz.levelIncrementDmn",
+          "description" : "demonio limpia la sangre",
+          "config" : {
+            "list" : "zandbokz.levelIncrementList",
+            "behavior" : "zandbokz.increment"
           }
         },
         {"factory": "EraseEnityBhvFtry",
@@ -905,16 +929,6 @@
           "name" : "zandbokz.aspectodiostriangularFG",
           "config" : {
             "shapetype" : "zandbokz.diositorocoso"
-          }
-        },
-        {
-          "factory" : "EntityFileBldrFtry",
-          "name" : "zandbokz.diositobuilderfichero",
-          "description" : "Está ahí, mirando. Pero no hace na",
-          "config" : {
-            "contextTime":"DEFAULT",
-            "builders" : ["zandbokz.aborrarentreniveles","zandbokz.diositocachetriangulo2D", "zandbokz.diositoapintar","zandbokz.diositosolidosocializa", "zandbokz.diositosolidosocializa2D", "zandbokz.diositodesactiva", "zandbokz.plataformaatrae", "zandbokz.diositoattractorsocializa"],
-            "path" : "data/ZandBokz/app/levels/1/plataformas.json"
           }
         },
         {
@@ -1634,7 +1648,7 @@
                           "zandbokz.protasaltar", "zandbokz.protafisica3d", "zandbokz.protaamoverenplano", "zandbokz.protaattachonoff",
                           "zandbokz.protaInator2D", "zandbokz.protacalcula2dori", "zandbokz.protacalcula2DVel", "zandbokz.protapierdesangre",
                           "zandbokz.protaganasangre","zandbokz.protarecuperasangre", "zandbokz.protaquemasangre", "zandbokz.protaacaerenplataformas",
-                          "zandbokz.protafisicaFG", "zandbokz.protaresetdist", "zandbokz.protareset"],
+                          "zandbokz.protafisicaFG", "zandbokz.protaresetdist", "zandbokz.protareset", "zandbokz.protapasanivel"],
             "buildersback" : []
           }
         },
@@ -1644,6 +1658,14 @@
           "config" : {
             "attribIndexes" : ["currentbloodIdx", "bestCenterDistIdx", "bestCenterIdx", "positionIdx", "velocityIdx", "upwardsIdx", "pitchvectorIdx", "yawvectorIdx", "camUpwardsIdx"],
             "lists":{"zandbokz.protaResetList":"protaResetTicket"}
+          }
+        },
+        {
+          "factory" :"IntAvtBldrFtry",
+          "name" : "zandbokz.protapasanivel",
+          "config" : {
+            "attribIndexes" : ["gameLevelIdx"],
+            "lists":{"zandbokz.levelIncrementList":"levelIncrementTicket"}
           }
         },
         {
@@ -1659,7 +1681,8 @@
               "minbloodIdx" : "zandbokz.protaMinBlood",
               "blooddecrementIdx" : "zandbokz.shootbloodDecrement",
               "bloodincrementIdx" : "zandbokz.restbloodIncrement",
-              "bloodTriggerIdx" : [0]
+              "bloodTriggerIdx" : [0],
+              "gameLevelIdx" : "zandbokz.gameLevel"
 
             },
             "double": {
@@ -1886,18 +1909,11 @@
             "solid" : "ENABLED"
           }
         },
-        {
-          "factory" : "CallDmnFtry",
-          "name" : "zandbokz.demoniocarganivel",
-          "config" : {
-            "call":"zandbokz.diositobuilderfichero"
-          }
-        },
         {"factory": "MasterDmnFtry",
           "name": "zandbokz.demoniofinnivel",
           "config" : {
             "daemons": [
-              "zandbokz.demoniocarganivel","zandbokz.protaResetDmn", "zandbokz.deleteAtResetDmn"
+              "zandbokz.protaResetDmn", "zandbokz.levelselectDaemon", "zandbokz.levelIncrementDmn", "zandbokz.deleteAtResetDmn"
             ]
           }
         },
@@ -2039,16 +2055,6 @@
           }
         },
         {
-          "factory" : "EntityFileBldrFtry",
-          "name" : "zandbokz.goalbuilder",
-          "description" : "Está ahí, mirando. Pero no hace na",
-          "config" : {
-            "contextTime":"DEFAULT",
-            "builders" : ["zandbokz.goalapintar", "zandbokz.goalfisica3d"],
-            "path" : "data/ZandBokz/app/levels/1/goal.json"
-          }
-        },
-        {
           "factory" :"Drawable3DAvtBldrFtry",
           "name" : "zandbokz.goalapintar",
           "config" : {
@@ -2095,12 +2101,100 @@
             "reactorbuilder" : "zandbokz.reactorgoalsolido",
             "shapebuilder" : "zandbokz.aspectogoalsolido",
             "interactioners" : "zandbokz.inerList",
-            "inerlists" : {"zandbokz.inerList":"inerTicket"},
+            "inerlists" : {},
             "inatorlists" :{"zandbokz.inatorList" : "inatorTicket"}
           }
+        },
+        {
+          "factory" :"StatedDaemonFtry",
+          "name" : "zandbokz.levelselectDaemon",
+          "config" : {
+            "value" : "zandbokz.gameLevel",
+            "daemons" :{
+              "Level1" : "zandbokz.demoniocarganivel1",
+              "Level2" : "zandbokz.demoniocarganivel2",
+              "Level3" : "zandbokz.demoniocarganivel1",
+              "Level4" : "zandbokz.demoniocarganivel2"
+            }
+          }
+        },
+        {
+          "factory" : "CallDmnFtry",
+          "name" : "zandbokz.demoniocarganivel1",
+          "config" : {
+            "calls":["zandbokz.diositobuilderfichero1", "zandbokz.goalbuilderfichero1"]
+          }
+        },
+        {
+          "factory" : "CallDmnFtry",
+          "name" : "zandbokz.demoniocarganivel2",
+          "config" : {
+            "calls":["zandbokz.diositobuilderfichero2", "zandbokz.goalbuilderfichero2"]
+          }
+        },
+        {
+          "factory" : "EntityFileBldrFtry",
+          "name" : "zandbokz.diositobuilderfichero",
+          "description" : "Está ahí, mirando. Pero no hace na",
+          "config" : {
+            "contextTime":"DEFAULT",
+            "builders" : ["zandbokz.aborrarentreniveles","zandbokz.diositocachetriangulo2D", "zandbokz.diositoapintar","zandbokz.diositosolidosocializa", "zandbokz.diositosolidosocializa2D", "zandbokz.diositodesactiva", "zandbokz.plataformaatrae", "zandbokz.diositoattractorsocializa"],
+            "path" : "data/ZandBokz/app/levels/1/plataformas.json"
+          }
+        },
+        {
+          "factory" : "EntityFileBldrFtry",
+          "name" : "zandbokz.goalbuilderfichero",
+          "description" : "Está ahí, mirando. Pero no hace na",
+          "config" : {
+            "contextTime":"DEFAULT",
+            "builders" : ["zandbokz.aborrarentreniveles", "zandbokz.goalapintar", "zandbokz.goalfisica3d"],
+            "path" : "data/ZandBokz/app/levels/1/goal.json"
+          }
+        },
+        {
+          "factory" : "EntityFileBldrFtry",
+          "name" : "zandbokz.diositobuilderfichero1",
+          "description" : "Está ahí, mirando. Pero no hace na",
+          "config" : {
+            "contextTime":"DEFAULT",
+            "builders" : ["zandbokz.aborrarentreniveles","zandbokz.diositocachetriangulo2D", "zandbokz.diositoapintar","zandbokz.diositosolidosocializa", "zandbokz.diositosolidosocializa2D", "zandbokz.diositodesactiva", "zandbokz.plataformaatrae", "zandbokz.diositoattractorsocializa"],
+            "path" : "data/ZandBokz/app/levels/1/plataformas.json"
+          }
+        },
+        {
+          "factory" : "EntityFileBldrFtry",
+          "name" : "zandbokz.goalbuilderfichero1",
+          "description" : "Está ahí, mirando. Pero no hace na",
+          "config" : {
+            "contextTime":"DEFAULT",
+            "builders" : ["zandbokz.aborrarentreniveles", "zandbokz.goalapintar", "zandbokz.goalfisica3d"],
+            "path" : "data/ZandBokz/app/levels/1/goal.json"
+          }
+        },
+        {
+          "factory" : "EntityFileBldrFtry",
+          "name" : "zandbokz.diositobuilderfichero2",
+          "description" : "Está ahí, mirando. Pero no hace na",
+          "config" : {
+            "contextTime":"DEFAULT",
+            "builders" : ["zandbokz.aborrarentreniveles","zandbokz.diositocachetriangulo2D", "zandbokz.diositoapintar","zandbokz.diositosolidosocializa", "zandbokz.diositosolidosocializa2D", "zandbokz.diositodesactiva", "zandbokz.plataformaatrae", "zandbokz.diositoattractorsocializa"],
+            "path" : "data/ZandBokz/app/levels/2/plataformas.json"
+          }
+        },
+        {
+          "factory" : "EntityFileBldrFtry",
+          "name" : "zandbokz.goalbuilderfichero2",
+          "description" : "Está ahí, mirando. Pero no hace na",
+          "config" : {
+            "contextTime":"DEFAULT",
+            "builders" : ["zandbokz.aborrarentreniveles", "zandbokz.goalapintar", "zandbokz.goalfisica3d"],
+            "path" : "data/ZandBokz/app/levels/2/goal.json"
+          }
         }
+
       ],
-      "calls" : ["zandbokz.thirdviewcambldr", "zandbokz.protabuilder", "zandbokz.goalbuilder", "zandbokz.diositobuilderfichero"],
+      "calls" : ["zandbokz.thirdviewcambldr", "zandbokz.protabuilder", "zandbokz.goalbuilderfichero", "zandbokz.diositobuilderfichero"],
       "backupcalls" : ["zandbokz.cajabuilder", "zandbokz.creaunicorniorosa", "zandbokz.pepinobuilder"]
     },
     {
