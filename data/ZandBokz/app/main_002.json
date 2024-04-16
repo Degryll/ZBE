@@ -64,7 +64,7 @@
     "pointCIdx" : 1330,
     "lifespan" : 662144,
     "bloodrestTime" : 6553,
-    "bloodburnTime" : 16384,
+    "bloodburnTime" : 8192,
     "fovIdx" : 3100,
     "targetIdx" : 3200,
     "upwardsIdx" : 3300,
@@ -1283,7 +1283,7 @@
           "factory" : "TicketActivator2DSolidRctBldrFtry",
           "name" : "zandbokz.reaccioncaeactivations",
           "config" : {
-            "tickets" : ["gmTicket", "ULM3DTicket"]
+            "tickets" : ["gmTicket", "ULM3DTicket", "bloodburnerTHTicket"]
           }
         },
         {
