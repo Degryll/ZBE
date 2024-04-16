@@ -25,6 +25,7 @@ namespace zbe {
 template<typename T>
 class ZBEAPI RsrcDictionary {
   public:
+    using StoredType = T;
     RsrcDictionary(RsrcDictionary const&)    = delete;  //!< Needed for singleton.
     void operator=(RsrcDictionary const&) = delete;  //!< Needed for singleton.
 

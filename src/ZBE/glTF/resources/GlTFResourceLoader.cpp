@@ -5,6 +5,8 @@
 * @date 2021-05-17
 * @author Batis Degryll Ludo
 */
+
+#include <forward_list>
 #include "ZBE/glTF/resources/GlTFResourceLoader.h"
 
 namespace zbe {
@@ -80,6 +82,7 @@ namespace zbe {
   }
 
   void GlTFResourceLoader::bindMesh(std::vector<GLuint> vbos, tinygltf::Model &model, /*tinygltf::Mesh &mesh*/ int meshIdx) {
+    using namespace std::string_literals;
     tinygltf::Mesh &mesh = model.meshes[meshIdx];
     for (size_t i = 0; i < model.bufferViews.size(); ++i) {
       const tinygltf::BufferView &bufferView = model.bufferViews[i];
@@ -106,6 +109,24 @@ namespace zbe {
       glBindBuffer(bufferView.target, vbo);
 
       glBufferData(bufferView.target, bufferView.byteLength, &buffer.data.at(0) + bufferView.byteOffset, GL_STATIC_DRAW);
+      if(i==0) { // TODO sacar este codigo de aqui usando ek indices que se lee mas abajo para "POSITION" en lugar de asumir que es el cero.
+        // o, simplemente, leer antes ese indice y usarlo en este if...
+        std::shared_ptr<std::forward_list<Triangle3D>> listT3D = std::make_shared<std::forward_list<Triangle3D>>();
+
+        float* p = (float*)&buffer.data.at(0) + bufferView.byteOffset;
+        int ne = bufferView.byteLength / (sizeof(float) * 3 * 3);
+        uint64_t index;
+        auto modelName = model.meshes[0].name;
+        for(int i = 0; i < ne; ++i) {
+          index = i*9;
+          Point3D a{p[index+0],p[index+1],p[index+2]};
+          Point3D b{p[index+3],p[index+4],p[index+5]};
+          Point3D c{p[index+6],p[index+7],p[index+8]};
+          Triangle3D t{a,b,c};
+          listT3D->push_front(t);
+        }
+        triangle3DListRsrc.insert("TriangleList."s + modelName, listT3D);
+      }
     }  // for model.bufferViews
 
     for (size_t i = 0; i < mesh.primitives.size(); ++i) {

@@ -37,28 +37,28 @@ public:
    *  than this value the excess will be ignored.
    *  \param  time Desired max frame time
    */
-  static void setMaxFrameTime(int64_t time) {
+  static void setMaxFrameTime(uint64_t time) {
     maxFrameTime = time;
   }
 
   /** \brief Get the total time passed until the end of last frame.
    * \return Total time passed until last frame.
    */
-  inline int64_t getTotalTime() {
+  inline uint64_t getTotalTime() {
     return endT;
   }
 
   /** \brief Get the last frame duration.
    * \return Last frame duration.
    */
-  inline int64_t getFrameTime() {
+  inline uint64_t getFrameTime() {
     return frame;
   }
 
   /** \brief Get the time lost by performance issues.
    * \return lost time.
    */
-  inline int64_t getLostTime() {
+  inline uint64_t getLostTime() {
     return lostTime;
   }
 
@@ -79,7 +79,7 @@ public:
   /** \brief Set the time of the first interrupt, probably an event.
    *  \param eventTime time in which current events occured
    */
-  inline void setEventTime(int64_t eventTime) {
+  inline void setEventTime(uint64_t eventTime) {
     if (eventTime <= endT) {
       eventT = eventTime;
       is_partFrame = true;
@@ -101,35 +101,35 @@ public:
   /** \brief Get the initial frame time.
    * \return Sub frame time.
    */
-  inline int64_t getInitFrameTime() {
+  inline uint64_t getInitFrameTime() {
     return initT;
   }
 
   /** \brief Get the end frame time.
    * \return Sub frame time.
    */
-  inline int64_t getEndFrameTime() {
+  inline uint64_t getEndFrameTime() {
     return endT;
   }
 
   /** \brief Get current frame time.
    * \return Current frame time.
    */
-  inline int64_t getCurrentTime() {
+  inline uint64_t getCurrentTime() {
     return currentT;
   }
 
   /** \brief Get remaining frame time.
    * \return Remaining frame time.
    */
-  inline int64_t getRemainTime() {
+  inline uint64_t getRemainTime() {
     return remainT;
   }
 
   /** \brief Get the partial frame time.
    * \return Partial frame time.
    */
-  inline int64_t getEventTime() {
+  inline uint64_t getEventTime() {
     return eventT;
   }
 
@@ -143,7 +143,7 @@ public:
 
   /** \brief Resume the ContextTime.
    */
-  void resume(int64_t resumeTime) {
+  void resume(uint64_t resumeTime) {
     if (paused) {
       endT = resumeTime;
       paused = false;
@@ -155,9 +155,9 @@ public:
   inline void update() {
     if (paused) {return;}
     initT = _getInitTime();
-    int64_t finalTime = _getTotalTime();
-    int64_t realFrameTime = finalTime - initT;
-    int64_t total;
+    uint64_t finalTime = _getTotalTime();
+    uint64_t realFrameTime = finalTime - initT;
+    uint64_t total;
     if (realFrameTime < maxFrameTime) {
       total = finalTime;
       frame = realFrameTime;
@@ -173,17 +173,17 @@ public:
   }
 
 protected:
-  int64_t frame;     //!< Last frame duration
-  int64_t lostTime;  //!< Accumulated Total Time - Max frame time
-  int64_t initT;     //!< Initial frame time.
-  int64_t endT;      //!< End frame time.
-  int64_t eventT;    //!< Partial frame time.
+  uint64_t frame;     //!< Last frame duration
+  uint64_t lostTime;  //!< Accumulated Total Time - Max frame time
+  uint64_t initT;     //!< Initial frame time.
+  uint64_t endT;      //!< End frame time.
+  uint64_t eventT;    //!< Partial frame time.
   bool is_partFrame; //!< Is partial frame?
-  int64_t currentT;  //!< Time available to behave.
-  int64_t remainT;   //!< Time available to new events.
+  uint64_t currentT;  //!< Time available to behave.
+  uint64_t remainT;   //!< Time available to new events.
   bool paused;       //!< Time is paused
   bool resumed;      //!< Time is resumed
-  static int64_t maxFrameTime;  //!< No frame will be longer than this.
+  static uint64_t maxFrameTime;  //!< No frame will be longer than this.
 
 private:
   virtual uint64_t _getTotalTime() = 0;

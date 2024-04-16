@@ -29,7 +29,7 @@ class ZBEAPI Event {
      * \param time Exact moment in which it occurred
      *
      */
-    Event(uint64_t id, int64_t time) : id(id), time(time) {}
+    Event(uint64_t id, uint64_t time) : id(id), time(time) {}
 
     virtual ~Event() {};  //!< Empty destructor
 
@@ -68,7 +68,7 @@ class ZBEAPI Event {
   private:
 
     uint64_t id;    //!< Event id
-    int64_t time;  //!< Time when the event occurs
+    uint64_t time;  //!< Time when the event occurs
 };
 
 }  // namespace zbe

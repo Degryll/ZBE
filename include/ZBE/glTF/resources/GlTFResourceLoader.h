@@ -42,6 +42,7 @@
 #include "ZBE/core/tools/containers/RsrcDictionary.h"
 #include "ZBE/core/system/system.h"
 #include "ZBE/core/tools/containers/RsrcStore.h"
+#include "ZBE/core/tools/math/objects.h"
 
 #include "ZBE/resources/loaders/RsrcLoader.h"
 
@@ -85,6 +86,7 @@ private:
   OGLModelStore* modelStore = nullptr;
 
   RsrcStore<OGLGraphics>& graphicsStore = RsrcStore<OGLGraphics>::getInstance();
+  RsrcStore<std::forward_list<Triangle3D>> &triangle3DListRsrc = RsrcStore<std::forward_list<Triangle3D>>::getInstance();
   NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();
 
   GLuint bindModel(tinygltf::Model &model);

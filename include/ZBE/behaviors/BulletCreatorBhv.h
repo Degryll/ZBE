@@ -71,7 +71,7 @@ public:
 
 private:
 
-  BulletCreatorBhv() = default;
+  BulletCreatorBhv() : creator() {};
 
   void setCreator(std::shared_ptr<BulletCreator> creator) {
     this->creator = creator;
@@ -82,7 +82,7 @@ private:
 
 class ZBEAPI BulletCreatorBhvFtry : virtual public Factory  {
 public:
-  void create(std::string name, uint64_t cfgId);
+  void create(std::string name, uint64_t);
 
   void setup(std::string name, uint64_t cfgId);
 private:

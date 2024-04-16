@@ -1,0 +1,14 @@
+{
+"name" : "zandbokz",
+"imgdefs" : [
+  {
+    "name" : "simplelifebar",
+    "frameTime" : 10000,
+    "frameAmount" : 56,
+    "region" : [0.0,0.0,64.0, 256.0],
+    "regionOffset" : [32.0, 0.0],
+    "texCoord" : [0.0,0.0,0.128,1.0],
+    "texCoordOffset" : [0.015625, 0.0]
+  }
+]
+}

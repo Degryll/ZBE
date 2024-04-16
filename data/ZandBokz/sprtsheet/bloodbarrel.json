@@ -1,0 +1,11 @@
+{
+  "name": "img.zandbokz.bloodbarrel",
+  "sprtdefs" : [
+    {
+      "name" : "static",
+      "img" : "zandbokz.bloodbarrel",
+      "scale" : [1.0, 1.0],
+      "drawOffset" : [0.0, 0.0]
+    }
+  ]
+}

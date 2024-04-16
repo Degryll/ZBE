@@ -1,0 +1,9 @@
+{
+"name" : "pelota",
+"capability" : "001",
+"graphicdefs" : [
+  {
+    "name" : "pelota"
+  }
+]
+}

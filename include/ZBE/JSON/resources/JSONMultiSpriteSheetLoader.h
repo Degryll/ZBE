@@ -28,12 +28,6 @@ namespace zbe {
 class ZBEAPI JSONMultiSpriteSheetLoader : public RsrcLoader {
 public:
 
- /** \brief Builds an SDLImgLoader from a SDLImageStore and the file extension supported (PNG by default)
-  *  \imgStore SDLImgLoader to use.
-  *  \extension Extension supported. PNG by default.
-  */
- JSONMultiSpriteSheetLoader() = default;
-
  /** \brief Load an image
   *  \param filePath Path to image file.
   *  \return An id to the image loaded.

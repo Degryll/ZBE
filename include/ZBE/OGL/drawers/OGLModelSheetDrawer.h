@@ -52,7 +52,7 @@ class OGLModelSheetDrawer : public Behavior<T, Ts...> {
 
     /** \brief Destructor.
      */
-    ~OGLModelSheetDrawer() = default;
+    virtual ~OGLModelSheetDrawer() = default;
 
     /** \brief Draws the given entity.
      *  \param The entity to be drawn.
@@ -82,7 +82,7 @@ class OGLModelSheetDrawer : public Behavior<T, Ts...> {
   private:
     GLuint gProgramID;
     std::shared_ptr<SDLOGLWindow> window = nullptr;  //!< A SDL window with its context.
-    std::shared_ptr<SDLImageStore> imgStore; //!< Where the images are stored.
+    std::shared_ptr<SDLImageStore> imgStore{}; //!< Where the images are stored.
     RsrcStore<OGLModelSheet<T, Ts...> >& rsOglMs;
 };
 

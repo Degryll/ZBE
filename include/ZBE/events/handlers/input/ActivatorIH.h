@@ -66,7 +66,7 @@ private:
 class ZBEAPI ActivatorIHFtry : public Factory {
 
 
-  void create(std::string name, uint64_t cfgId);
+  void create(std::string name, uint64_t);
 
   /** \brief Setup the desired tool. The tool will be complete after this step.
    *  \param name Name of the tool.

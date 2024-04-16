@@ -41,7 +41,7 @@ public:
    *  \param name Name for the created MainLoopFtry.
    *  \param cfgId InteractionEvGnFtry's configuration id.
    */
-  void create(std::string name, uint64_t cfgId);
+  void create(std::string name, uint64_t);
 
   /** \brief Setup the desired tool. The tool will be complete after this step.
    *  \param name Name of the tool.
@@ -58,7 +58,7 @@ private:
 };
 
 template <typename R, typename IS, typename LN, typename LT>
-void InteractionEvGnFtry<R, IS, LN, LT>::create(std::string name, uint64_t cfgId) {
+void InteractionEvGnFtry<R, IS, LN, LT>::create(std::string name, uint64_t) {
   using namespace std::string_literals;
 
   auto ieg = std::make_shared<InteractionEventGenerator<R, IS, LN, LT> >();

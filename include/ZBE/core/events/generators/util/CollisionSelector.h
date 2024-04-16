@@ -40,7 +40,7 @@ class ZBEAPI CollisionSelector {
      *  \param point Point of collision if any.
      *  \return True if there is a collision in the timeslot set by time, false otherwise.
      */
-    bool select(std::shared_ptr<CollisionObject> param1, std::shared_ptr<CollisionObject> param2, int64_t& time, CollisionData *data);
+    bool select(std::shared_ptr<CollisionObject> param1, std::shared_ptr<CollisionObject> param2, uint64_t& time, OldCollisionData *data);
 
     /** \brief Dont move, wont collide.
      *  \param param1 First AABB.
@@ -49,7 +49,7 @@ class ZBEAPI CollisionSelector {
      *  \param point Unaltered.
      *  \return False.
      */
-    virtual bool visit(StaticSolidAABB2D& param1, StaticSolidAABB2D& param2, int64_t& time, CollisionData *data) = 0;
+    virtual bool visit(StaticSolidAABB2D& param1, StaticSolidAABB2D& param2, uint64_t& time, OldCollisionData *data) = 0;
 
     /** \brief Dont move, wont collide.
      *  \param param1 First AABB.
@@ -58,7 +58,7 @@ class ZBEAPI CollisionSelector {
      *  \param point Point of collision if any.
      *  \return False.
      */
-    virtual bool visit(StaticLimiterAABB2D& param1, StaticLimiterAABB2D& param2, int64_t& time, CollisionData *data) = 0;
+    virtual bool visit(StaticLimiterAABB2D& param1, StaticLimiterAABB2D& param2, uint64_t& time, OldCollisionData *data) = 0;
 
     /** \brief Dont move, wont collide.
      *  \param param1 First AABB.
@@ -67,7 +67,7 @@ class ZBEAPI CollisionSelector {
      *  \param point Point of collision if any.
      *  \return False.
      */
-    virtual bool visit(StaticSolidAABB2D& param1, StaticLimiterAABB2D& param2, int64_t& time, CollisionData *data) = 0;
+    virtual bool visit(StaticSolidAABB2D& param1, StaticLimiterAABB2D& param2, uint64_t& time, OldCollisionData *data) = 0;
 
     /** \brief Dont move, wont collide.
      *  \param param1 First AABB.
@@ -76,7 +76,7 @@ class ZBEAPI CollisionSelector {
      *  \param point Point of collision if any.
      *  \return False.
      */
-    virtual bool visit(StaticLimiterAABB2D& param1, StaticSolidAABB2D& param2, int64_t& time, CollisionData *data) = 0;
+    virtual bool visit(StaticLimiterAABB2D& param1, StaticSolidAABB2D& param2, uint64_t& time, OldCollisionData *data) = 0;
 
     /** \brief Collision detection for an AABB and a circle.
      *  \param param1 The AABB.
@@ -85,7 +85,7 @@ class ZBEAPI CollisionSelector {
      *  \param point Point of collision if any.
      *  \return True if there is a collision in the timeslot set by time, false otherwise.
      */
-    virtual bool visit(StaticSolidAABB2D& param1, ConstantMovingCircle& param2, int64_t& time, CollisionData *data) = 0;
+    virtual bool visit(StaticSolidAABB2D& param1, ConstantMovingCircle& param2, uint64_t& time, OldCollisionData *data) = 0;
 
     /** \brief Collision detection for an AABB and a circle.
      *  \param param1 The AABB.
@@ -94,7 +94,7 @@ class ZBEAPI CollisionSelector {
      *  \param point Point of collision if any.
      *  \return True if there is a collision in the timeslot set by time, false otherwise.
      */
-    virtual bool visit(StaticLimiterAABB2D& param1, ConstantMovingCircle& param2, int64_t& time, CollisionData *data) = 0;
+    virtual bool visit(StaticLimiterAABB2D& param1, ConstantMovingCircle& param2, uint64_t& time, OldCollisionData *data) = 0;
 
     /** \brief Collision detection for a circle and an AABB.
      *  \param param1 The circle.
@@ -103,7 +103,7 @@ class ZBEAPI CollisionSelector {
      *  \param point Point of collision if any.
      *  \return True if there is a collision in the timeslot set by time, false otherwise.
      */
-    virtual bool visit(ConstantMovingCircle& param1, StaticSolidAABB2D& param2, int64_t& time, CollisionData *data) = 0;
+    virtual bool visit(ConstantMovingCircle& param1, StaticSolidAABB2D& param2, uint64_t& time, OldCollisionData *data) = 0;
 
     /** \brief Collision detection for a circle and an AABB.
      *  \param param1 The circle.
@@ -112,7 +112,7 @@ class ZBEAPI CollisionSelector {
      *  \param point Point of collision if any.
      *  \return True if there is a collision in the timeslot set by time, false otherwise.
      */
-    virtual bool visit(ConstantMovingCircle& param1, StaticLimiterAABB2D& param2, int64_t& time, CollisionData *data) = 0;
+    virtual bool visit(ConstantMovingCircle& param1, StaticLimiterAABB2D& param2, uint64_t& time, OldCollisionData *data) = 0;
 
     /** \brief Collision detection for two circles.
      *  \param param1 First circle.
@@ -121,7 +121,7 @@ class ZBEAPI CollisionSelector {
      *  \param point Point of collision if any.
      *  \return True if there is a collision in the timeslot set by time, false otherwise.
      */
-    virtual bool visit(ConstantMovingCircle& param1, ConstantMovingCircle& param2, int64_t& time, CollisionData *data) = 0;
+    virtual bool visit(ConstantMovingCircle& param1, ConstantMovingCircle& param2, uint64_t& time, OldCollisionData *data) = 0;
 };
 
 }  // namespace zbe

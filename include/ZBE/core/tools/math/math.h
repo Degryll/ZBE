@@ -52,7 +52,7 @@ static const double INVERSE_SECOND = 1.0 / 65536;
 
 /** \brief This constant represent the minimal amount of bits that will be used as precision.
  */
-static const int64_t TIME_QUANTUM = 256;
+static const uint64_t TIME_QUANTUM = 256;
 
 /** \brief This constant represent the proportion of time quantum in a second.
  */
@@ -73,8 +73,17 @@ inline uint64_t MILITOZBETU(uint64_t time) {
  * WARNING: does not work with negative times
  * \param n Time to quantize.
  */
-inline int64_t quantizeTime(int64_t n) {
+inline uint64_t quantizeTime(uint64_t n) {
   return (n & ROUND_MASK);
+}
+
+/** \brief Used to round time values to its closer quantum.
+ * WARNING: does not work with negative times
+ * \param n Time to quantize.
+ */
+inline uint64_t quantizeTime(double n) {
+  uint64_t time = n * SECOND;
+  return quantizeTime(time);
 }
 
 /** \brief Used to compare two double values.

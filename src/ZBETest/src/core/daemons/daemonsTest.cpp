@@ -3,7 +3,6 @@
 #include <memory>
 
 #include "ZBE/core/daemons/Daemon.h"
-#include "ZBE/core/daemons/DaemonMaster.h"
 
 namespace DaemonTest {
 //Dummy Daemon implementation. Just for test purposes.

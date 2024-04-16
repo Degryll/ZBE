@@ -67,9 +67,9 @@ private:
 };
 
 template<typename T>
-class ZBEAPI KeyValueSetterIHFtry : public Factory {
+class KeyValueSetterIHFtry : public Factory {
 
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
 
     auto kvsih = std::shared_ptr<KeyValueSetterIH<T>>(new KeyValueSetterIH<T>());
@@ -90,18 +90,6 @@ class ZBEAPI KeyValueSetterIHFtry : public Factory {
     auto kvsih = specificRsrcStore.get("KeyValueSetterIH."s + name);
     auto j = *cfg;
 
-    auto ieg = JSONFactory::loadParamCfgStoreP<InputEventGenerator>(iegStore, j, "InputEventGenerator"s, "inputEventGenerator"s, "KeyValueSetterIHFtry"s);
-    if(!ieg) {
-      SysError::setError("KeyValueSetterIHFtry config for inputEventGenerator is invalid"s);
-      return;
-    }
-
-    auto key = JSONFactory::loadParamCfgDict<ZBE_K>(keyDict, j, "key"s, "KeyValueSetterIHFtry"s);
-    if(!key) {
-      SysError::setError("KeyValueSetterIHFtry config for key is invalid"s);
-      return;
-    }
-
     auto valuePressed = JSONFactory::loadParamCfgDict<T>(tDict, j, "valuePressed"s, "KeyValueSetterIHFtry"s);
     if(!valuePressed) {
       SysError::setError("KeyValueSetterIHFtry config for valuePressed is invalid"s);
@@ -114,78 +102,44 @@ class ZBEAPI KeyValueSetterIHFtry : public Factory {
       return;
     }
 
-    auto value = JSONFactory::loadParamCfgStore<Value<Vector3D>>(valueStore, j, "value"s, "KeyValueSetterIHFtry"s);
+    auto value = JSONFactory::loadParamCfgStore<Value<T>>(valueStore, j, "value"s, "KeyValueSetterIHFtry"s);
     if(!value) {
       SysError::setError("KeyValueSetterIHFtry config for value is invalid"s);
       return;
+    }
+
+
+    bool haskey = j["key"].is_string();
+    bool hasIeg = j["inputEventGenerator"].is_string();
+
+    if(haskey != hasIeg) {
+      if (!hasIeg) {
+        SysError::setError("DaemonIHFtry config for inputEventGenerator: "s + j["inputEventGenerator"].get<std::string>() + ": must be an inputEventGenerator name."s);
+        return;
+      } else {
+        SysError::setError("DaemonIHFtry config for key: "s + j["key"].get<std::string>() + ": must be a key name."s);
+        return;
+      }
     }
 
     kvsih->setPressedVal(*valuePressed);
     kvsih->setReleaseVal(*valueReleased);
     kvsih->setValue(*value);
 
-    (*ieg)->addHandler(*key, kvsih);
+    if(haskey) {
+      auto ieg = JSONFactory::loadParamCfgStoreP<InputEventGenerator>(iegStore, j, "InputEventGenerator"s, "inputEventGenerator"s, "KeyValueSetterIHFtry"s);
+      auto key = JSONFactory::loadParamCfgDict<ZBE_K>(keyDict, j, "key"s, "KeyValueSetterIHFtry"s);
+      if(!ieg) {
+        SysError::setError("KeyValueSetterIHFtry config for inputEventGenerator is invalid"s);
+        return;
+      }
+      if(!key) {
+      SysError::setError("KeyValueSetterIHFtry config for key is invalid"s);
+      return;
+      }
 
-/*
-const ZBE_K ZBEK_RIGHT = 1073741903;
-const ZBE_K ZBEK_LEFT = 1073741904;
-const ZBE_K ZBEK_DOWN = 1073741905;
-const ZBE_K ZBEK_UP = 1073741906;
-*/
-/*
-"inputEventGenerator" : "loadScreen.inputEventGenerator",
-"key":"ZBEK_UP",
-"valuePressed":"boxUpSpeed",
-"valueReleased":"ZERO",
-"value" : "zandbokz.boxVector"
-*/
-
-    // if(cfg) {
-    //   auto j = *cfg;
-    //   if (!j["ticket"].is_string()) {
-    //     SysError::setError("ActivatorIHFtry config for ticket: "s + j["ticket"].get<std::string>() + ": must be a ticket name."s);
-    //     return;
-    //   }
-    //   std::string ticketName = j["ticket"].get<std::string>();
-    //   if(!ticketStore.contains(ticketName)) {
-    //     SysError::setError("ActivatorIHFtry config for ticket: "s + ticketName + " is not a ticket name."s);
-    //     return;
-    //   }
-
-    //   if (!j["inputEventGenerator"].is_string()) {
-    //     SysError::setError("ActivatorIHFtry config for inputEventGenerator: "s + j["inputEventGenerator"].get<std::string>() + ": must be an inputEventGenerator name."s);
-    //     return;
-    //   }
-
-    //   std::string inputEventGeneratorName = j["inputEventGenerator"].get<std::string>();
-    //   if(!iegStore.contains("InputEventGenerator."s + inputEventGeneratorName)) {
-    //     SysError::setError("ActivatorIHFtry config for inputEventGenerator: "s + inputEventGeneratorName + " is not an inputEventGenerator name."s);
-    //     return;
-    //   }
-
-    //   if (!j["key"].is_string()) {
-    //     SysError::setError("ActivatorIHFtry config for key: "s + j["key"].get<std::string>() + ": must be a key name."s);
-    //     return;
-    //   }
-
-    //   std::string keyName = j["key"].get<std::string>();
-    //   if(!keyDict.contains(keyName)) {
-    //     SysError::setError("ActivatorIHFtry config for key: "s + keyName + " is not a key name."s);
-    //     return;
-    //   }
-
-    //   auto ticket = ticketStore.get(ticketName);
-    //   auto ieg    = iegStore.get("InputEventGenerator."s + inputEventGeneratorName);
-    //   auto key    = keyDict.get(keyName);
-    //   auto ih     = paihStore.get("ActivatorIH."s + name);
-
-    //   ih->setTicket(ticket);
-
-
-
-    // } else {
-    //   SysError::setError("ActivatorIHFtry config for "s + name + " not found."s);
-    // }
+      (*ieg)->addHandler(*key, kvsih);
+    }
   }
 
 private:

@@ -21,12 +21,16 @@
 #include "ZBE/core/tools/containers/RsrcDictionary.h"
 
 #include "ZBE/core/events/handlers/InputHandler.h"
+#include "ZBE/core/events/generators/InputEventGenerator.h"
 
 #include "ZBE/events/handlers/input/BroadcastIH.h"
 
 #include "ZBE/factories/Factory.h"
 
 #include "ZBE/core/system/system.h"
+#include "ZBE/core/io/Input.h"
+
+#include "ZBE/JSON/JSONFactory.h"
 
 namespace zbe {
 
@@ -39,7 +43,7 @@ public:
  *  \param name Name for the created tool.
  *  \param cfgId Tool's configuration id.
  */
-  void create(std::string name, uint64_t cfgId);
+  void create(std::string name, uint64_t);
 
   /** \brief Setup the desired tool. The tool will be complete after this step.
    *  \param name Name of the tool.
@@ -52,6 +56,8 @@ private:
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<InputHandler> &inputRsrc = RsrcStore<InputHandler>::getInstance();
   RsrcStore<BroadcastIH> &bihRsrc = RsrcStore<BroadcastIH>::getInstance();
+  RsrcDictionary<ZBE_K> &keyDict           = RsrcDictionary<ZBE_K>::getInstance();
+  RsrcStore<InputEventGenerator>& iegStore = RsrcStore<InputEventGenerator>::getInstance();
 };
 
 }  // namespace zbe

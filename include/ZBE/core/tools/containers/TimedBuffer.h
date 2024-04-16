@@ -56,7 +56,6 @@ void TimedBuffer<T>::getRange(uint64_t initT, uint64_t endT, std::vector<T>& sto
   TimedElement<T> upper(initT);
   buffer.erase(buffer.begin(),buffer.upper_bound(upper));
   if(!buffer.empty()){
-    auto it = buffer.begin();
     for(auto& te : buffer) {
       if(te.getTime() > endT) {
         break;

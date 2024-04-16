@@ -1,0 +1,9 @@
+{
+"name" : "Cerebro",
+"capability" : "001",
+"graphicdefs" : [
+  {
+    "name" : "cerebro"
+  }
+]
+}

@@ -1,0 +1,83 @@
+{
+  "factory" :"EntitySetterFtry",
+  "name" : "zandbokz.diositovalues",
+  "config" : [
+    {
+      "uint": {
+        "gidIdx":["TrianguloIsosceles"]
+      },
+      "double": {
+        "radsIdx":[0.0],
+        "scaleIdx":[500.0]
+      },
+      "V3D": {
+        "positionIdx":[0.0, 0.0, 0.0],
+        "orientationIdx":[1.0, 0.0, 0.0],
+        "positionAIdx":[200.0, 0.0, 200.0],
+        "positionBIdx":[-200.0, 0.0, 200.0],
+        "positionCIdx":[200.0, 0.0, -200.0],
+        "velocityIdx":[0.0, 0.0, 0.0],
+        "e1Idx" : [0.0, 0.0, 0.0],
+        "e2Idx" : [0.0, 0.0, 0.0]
+      }
+    },
+    {
+      "uint": {
+        "gidIdx":["TrianguloIsosceles"]
+      },
+      "double": {
+        "radsIdx":[3.14159265358979323846],
+        "scaleIdx":[500.0]
+      },
+      "V3D": {
+        "positionIdx":[0.0, 0.0, 0.0],
+        "orientationIdx":[0.0, 1.0, 0.0],
+        "positionAIdx":[200.0, 0.0, 200.0],
+        "positionBIdx":[-200.0, 0.0, 200.0],
+        "positionCIdx":[200.0, 0.0, -200.0],
+        "velocityIdx":[0.0, 0.0, 0.0],
+        "e1Idx" : [0.0, 0.0, 0.0],
+        "e2Idx" : [0.0, 0.0, 0.0]
+      }
+    },
+    
+    {
+      "uint": {
+        "gidIdx":["TrianguloIsosceles"]
+      },
+      "double": {
+        "radsIdx":[1.570796327],
+        "scaleIdx":[500.0]
+      },
+      "V3D": {
+        "positionIdx":[500.0, 0.0, 0.0],
+        "orientationIdx":[1.0, 0.0, 1.0],
+        "positionAIdx":[200.0, 0.0, 200.0],
+        "positionBIdx":[-200.0, 0.0, 200.0],
+        "positionCIdx":[200.0, 0.0, -200.0],
+        "velocityIdx":[0.0, 0.0, 0.0],
+        "e1Idx" : [0.0, 0.0, 0.0],
+        "e2Idx" : [0.0, 0.0, 0.0]
+      }
+    },
+    {
+      "uint": {
+        "gidIdx":["TrianguloIsosceles"]
+      },
+      "double": {
+        "radsIdx":[3.14159265358979323846],
+        "scaleIdx":[500.0]
+      },
+      "V3D": {
+        "positionIdx":[-500.0, 0.0, 0.0],
+        "orientationIdx":[1.0, 1.0, 1.0],
+        "positionAIdx":[200.0, 0.0, 200.0],
+        "positionBIdx":[-200.0, 0.0, 200.0],
+        "positionCIdx":[200.0, 0.0, -200.0],
+        "velocityIdx":[0.0, 0.0, 0.0],
+        "e1Idx" : [0.0, 0.0, 0.0],
+        "e2Idx" : [0.0, 0.0, 0.0]
+      }
+    }
+  ]
+}

@@ -26,9 +26,9 @@ int openaltest(int , char **) {
 
   //uint64_t bufferId = store->loadAudio("data/test/audio/die_m.ogg");
 
-  uint64_t bufferId = NameRsrcDictionary::getInstance().get(cn::AUDIO + cn::SEPARATOR + "diem");
-
-  Sound3DOALPlayer player(store);
+  uint64_t bufferId = NameRsrcDictionary::getInstance().get(cn::AUDIO + cn::SEPARATOR + "die");
+  std::shared_ptr<Camera> cam = std::make_shared<Camera>();
+  Sound3DOALPlayer player(store, cam);
 
   std::shared_ptr<Entity> ent = std::make_shared<Entity>();
 

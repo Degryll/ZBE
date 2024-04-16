@@ -359,6 +359,25 @@ struct AABB<3> {
 
 using AABB3D = AABB<3>;  //!< An alias to AABB<3>.
 
+template<unsigned dim>
+struct Triangle {
+  Point<dim> a, b, c;
+};
+
+template<>
+struct Triangle<2> {
+  Point2D a, b, c;
+};
+
+using Triangle2D = Triangle<2>;
+
+template<>
+struct Triangle<3> {
+  Point3D a, b, c;
+};
+
+using Triangle3D = Triangle<3>;
+
 }  // namespace zbe
 
 #endif  // ZBE_CORE_TOOLS_MATH_OBJECTS_H_

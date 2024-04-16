@@ -8,6 +8,7 @@
 */
 
 #include <cstdio>
+#include <iostream>
 
 #include "ZBE/OAL/resources/OALAudioLoader.h"
 

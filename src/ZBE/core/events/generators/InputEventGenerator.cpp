@@ -40,7 +40,7 @@ void InputEventGenerator::run() {
   }
 }
 
-void InputEventGeneratorFtry::create(std::string name, uint64_t cfgId) {
+void InputEventGeneratorFtry::create(std::string name, uint64_t) {
   using namespace std::string_literals;
   std::shared_ptr<InputEventGenerator> so = std::shared_ptr<InputEventGenerator>(new InputEventGenerator);
   daemonRsrc.insert("Daemon."s + name, so);

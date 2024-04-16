@@ -7,7 +7,7 @@
  * @brief A Daemon capable of run other Daemons.
  */
 
-#include "ZBE/core/daemons/DaemonMaster.h"
+#include "ZBE/core/daemons/Daemon.h"
 
 namespace zbe {
 

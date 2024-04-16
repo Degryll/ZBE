@@ -22,7 +22,6 @@
 #include "ZBE/core/tools/containers/Ticket.h"
 
 #include "ZBE/core/daemons/Daemon.h"
-#include "ZBE/core/daemons/DaemonMaster.h"
 
 #include "ZBE/factories/Factory.h"
 
@@ -39,7 +38,7 @@ public:
    *  \param name Name for the created MasterDmnFtry.
    *  \param cfgId MasterDmnFtry's configuration id.
    */
-  void create(std::string name, uint64_t cfgId);
+  void create(std::string name, uint64_t);
 
   /** \brief Setup the desired tool. The tool will be complete after this step.
    *  \param name Name of the tool.

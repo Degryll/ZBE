@@ -100,9 +100,9 @@ public:
     OGLModelStore(const OGLModelStore&) = delete; //!< Delete copy constructor
     void operator=(const OGLModelStore&) = delete; //!< Delete assing aperator
 
-    OGLModelStore() = default;
+    OGLModelStore() : modelCollection(), m() {}
 
-    ~OGLModelStore() = default;
+    virtual ~OGLModelStore() = default;
 
     void loadDefault() {
             using namespace std::string_literals;
@@ -176,7 +176,7 @@ public:
    *  \param window_flags Flags for the SDLOGLWindow creation. Default no flags.
    *  \param rederer_flags Flags for the Renderer creation. Default no flags.
    */
-  SDLOGLWindow() : SDLWindow(), texStore(), modelStore(), shaderStore() {}
+  SDLOGLWindow() : SDLWindow(), glContext(), texStore(), modelStore(), shaderStore() {}
 
   /** \brief Creates a new SDLOGLWindow and a Renderer.
    *
@@ -208,7 +208,7 @@ public:
 
   /** \brief Free resources and destroy the Renderer and the SDLOGLWindow.
    */
-  ~SDLOGLWindow() {};
+  virtual ~SDLOGLWindow() {};
 
   /** \brief Sets the window flags
    *  \param window_flags The widnow flags, like borderless, resizable, etc.

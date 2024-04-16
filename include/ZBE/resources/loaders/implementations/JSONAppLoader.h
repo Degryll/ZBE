@@ -18,10 +18,12 @@
 #include <nlohmann/json.hpp>
 
 #include "ZBE/factories/Factory.h"
+#include "ZBE/factories/genericFactoryConstants.h"
 #include "ZBE/resources/loaders/RsrcLoader.h"
 #include "ZBE/core/tools/containers/RsrcDictionary.h"
 #include "ZBE/core/tools/containers/RsrcStore.h"
 #include "ZBE/core/tools/math/Vector.h"
+#include "ZBE/core/tools/tools.h"
 
 namespace zbe {
 
@@ -60,6 +62,7 @@ private:
 
   void loadLiteralConfig(std::string name, json& value);
   FtryData readFactoryConfig(json ftryCfg);
+  void checkAndCall(json& call, json& phase);
 
   RsrcStore<json>& cfgStore = RsrcStore<json>::getInstance();
   RsrcStore<Factory>& ftryStore = RsrcStore<Factory>::getInstance();
@@ -72,6 +75,8 @@ private:
   RsrcDictionary<double>& doubleStore = RsrcDictionary<double>::getInstance();
   RsrcDictionary<float>& floatStore = RsrcDictionary<float>::getInstance();
   RsrcDictionary<std::string>& stringStore = RsrcDictionary<std::string>::getInstance();
+
+  RsrcStore<Funct<void>>& callableRsrc = RsrcStore<Funct<void>>::getInstance();
 
   std::forward_list<FtryData> appLists;
   std::forward_list<FtryData> appFactories;

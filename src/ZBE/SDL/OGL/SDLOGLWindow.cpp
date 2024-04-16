@@ -60,7 +60,7 @@ void SDLOGLWindow::createGLContext() {
   if( glewError != GLEW_OK ) {
     SysError::setError(std::string("ERROR: Error initializing GLEW: ") + std::string((char*)glewGetErrorString( glewError )));
   }
-  glClearColor(0.5,0.5,0.5,0.0);
+  glClearColor(0.1,0.1,0.1,0.0);
   // During init, enable debug output
   glEnable              ( GL_DEBUG_OUTPUT );
   glDebugMessageCallback( MessageCallback, 0 );
@@ -68,9 +68,9 @@ void SDLOGLWindow::createGLContext() {
   //glEnable(GL_TEXTURE_2D);printf("Pista a 0x%x\n", glGetError()); fflush(stdout);
   glEnable(GL_DEPTH_TEST);
   // TODO habilitar cull face. Que no queremos repetirnos.
-  glEnable(GL_CULL_FACE);
+  //glEnable(GL_CULL_FACE);
   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-  glCullFace(GL_BACK);
+  glCullFace(GL_FRONT_AND_BACK);
   glEnable (GL_BLEND); glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 //  IMGUI_CHECKVERSION();
 //  ImGui::CreateContext();

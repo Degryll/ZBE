@@ -99,7 +99,7 @@ public:
         auto ticket = list->push_front(bhvAvt);
         e->addTicket(listref.second, ticket);
       }
-      std::shared_ptr<EntityEraser> ee = std::make_shared<EntityEraser>(e);
+      std::shared_ptr<EntityEraserTH> ee = std::make_shared<EntityEraserTH>(e);
       auto ticket = teg->addRelativeTimer(ee, time);
       e->addTicket(ticketId, ticket);
       e->setContextTime(cTime);
@@ -176,7 +176,7 @@ private:
 
 class BulletCreatorFtry : virtual public Factory {
 public:
-  void create(std::string name, uint64_t cfgId){
+  void create(std::string name, uint64_t){
     using namespace std::string_literals;
     std::shared_ptr<BulletCreator> bc = std::shared_ptr<BulletCreator>(new BulletCreator);  // std::make_shared<SineOscillator>();
     bulletCreatorStore.insert("BulletCreator."s + name, bc);

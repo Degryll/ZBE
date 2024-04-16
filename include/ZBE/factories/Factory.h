@@ -28,7 +28,7 @@ public:
    *  \param name Name for the created tool.
    *  \param cfgId Tool's configuration id.
    */
-  virtual void create(std::string name, uint64_t cfgId) = 0;
+  virtual void create(std::string name, uint64_t) = 0;
 
   /** \brief Setup the desired tool. The tool will be complete after this step.
    *  \param name Name of the tool.

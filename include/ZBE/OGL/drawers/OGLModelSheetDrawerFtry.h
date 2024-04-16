@@ -21,7 +21,7 @@
 
 #include "ZBE/core/behaviors/Behavior.h"
 
-#include "ZBE/OGL/graphics/implementations/SimpleOGLModelSheet.h"
+#include "ZBE/OGL/graphics/implementations/OGLModelSheets.h"
 #include "ZBE/OGL/drawers/OGLModelSheetDrawer.h"
 #include "ZBE/SDL/OGL/SDLOGLWindow.h"
 
@@ -40,7 +40,7 @@ public:
    *  \param name Name for the created SingleText SDL Drawer.
    *  \param cfgId Configuration id for the SingleText SDL Drawer.
    */
-   void create(std::string name, uint64_t cfgId);
+   void create(std::string name, uint64_t);
 
   /** \brief Setup the desired tool. The tool will be complete after this step.
    *  \param name Name of the tool.

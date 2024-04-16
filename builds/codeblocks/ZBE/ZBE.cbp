@@ -302,9 +302,7 @@
 		<Unit filename="../../../include/ZBE/JSON/resources/JSONGLSLProgramLoaderFtry.h" />
 		<Unit filename="../../../include/ZBE/JSON/resources/JSONImgDefLoader.h" />
 		<Unit filename="../../../include/ZBE/JSON/resources/JSONMultiSpriteSheetLoader.h" />
-		<Unit filename="../../../include/ZBE/JSON/resources/JSONSimpleOGLModelSheetLoader.h" />
-		<Unit filename="../../../include/ZBE/JSON/resources/JSONSimpleOGLModelSheetLoaderFtry.h" />
-		<Unit filename="../../../include/ZBE/JSON/resources/JSONSpriteOGLModelSheetLoader.h" />
+		<Unit filename="../../../include/ZBE/JSON/resources/JSONOGLModelSheetLoaders.h" />
 		<Unit filename="../../../include/ZBE/OAL/daemons/OALContextDaemon.h" />
 		<Unit filename="../../../include/ZBE/OAL/entities/avatars/Sound3D.h" />
 		<Unit filename="../../../include/ZBE/OAL/entities/avatars/implementations/BaseSound3D.h" />
@@ -324,7 +322,7 @@
 		<Unit filename="../../../include/ZBE/OGL/graphics/OGLGraphics.h" />
 		<Unit filename="../../../include/ZBE/OGL/graphics/OGLModel.h" />
 		<Unit filename="../../../include/ZBE/OGL/graphics/OGLModelSheet.h" />
-		<Unit filename="../../../include/ZBE/OGL/graphics/implementations/SimpleOGLModelSheet.h" />
+		<Unit filename="../../../include/ZBE/OGL/graphics/implementations/OGLModelSheets.h" />
 		<Unit filename="../../../include/ZBE/SDL/OGL/ImGui/SDLOGLImGuiWindow.h" />
 		<Unit filename="../../../include/ZBE/SDL/OGL/SDLOGLWindow.h" />
 		<Unit filename="../../../include/ZBE/SDL/daemons/BasicPostLoopSDLDaemon.h" />
@@ -410,13 +408,6 @@
 		<Unit filename="../../../include/ZBE/behaviors/UniformLinearMotion.h" />
 		<Unit filename="../../../include/ZBE/core/behaviors/Behavior.h" />
 		<Unit filename="../../../include/ZBE/core/daemons/Daemon.h" />
-		<Unit filename="../../../include/ZBE/core/daemons/DaemonMaster.h" />
-		<Unit filename="../../../include/ZBE/core/daemons/MainLoop.h" />
-		<Unit filename="../../../include/ZBE/core/daemons/MainLoopExit.h" />
-		<Unit filename="../../../include/ZBE/core/daemons/PunisherDaemon.h" />
-		<Unit filename="../../../include/ZBE/core/daemons/Punishers.h" />
-		<Unit filename="../../../include/ZBE/core/daemons/StateMachineDaemon.h" />
-		<Unit filename="../../../include/ZBE/core/daemons/VoidDaemon.h" />
 		<Unit filename="../../../include/ZBE/core/entities/Adaptor.h" />
 		<Unit filename="../../../include/ZBE/core/entities/AvatarEntity.h" />
 		<Unit filename="../../../include/ZBE/core/entities/Entity.h" />
@@ -534,6 +525,7 @@
 		<Unit filename="../../../include/ZBE/entities/avatars/implementations/ValuedSingleModel.h" />
 		<Unit filename="../../../include/ZBE/entities/builders/builders.h" />
 		<Unit filename="../../../include/ZBE/entities/implementations/Console.h" />
+		<Unit filename="../../../include/ZBE/events/Reactions.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/actuators/BouncerAtor.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/actuators/ConditionalEraserAtor.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/actuators/DaemonSelectorAtor.h" />
@@ -546,6 +538,7 @@
 		<Unit filename="../../../include/ZBE/events/handlers/input/DaemonClickIH.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/input/DaemonIH.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/input/ExecuteCommandIH.h" />
+		<Unit filename="../../../include/ZBE/events/handlers/input/InputHandlers.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/input/InputToValue.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/input/KeyDownTicketEnablerIH.h" />
 		<Unit filename="../../../include/ZBE/events/handlers/input/ParametricActivatorIH.h" />
@@ -598,19 +591,20 @@
 		<Unit filename="../../../include/ZBE/system/SystemResources.h" />
 		<Unit filename="../../../include/ZBE/tools/graphics/Camera.h" />
 		<Unit filename="../../../include/ZBE/tools/graphics/CameraFtry.h" />
+		<Unit filename="../../../src/ZBE/JSON/JSONFactory.cpp" />
 		<Unit filename="../../../src/ZBE/JSON/graphics/JSONGraphicsLoaders.cpp" />
 		<Unit filename="../../../src/ZBE/JSON/resources/JSONAudioDefLoader.cpp" />
 		<Unit filename="../../../src/ZBE/JSON/resources/JSONGLSLProgramLoader.cpp" />
+		<Unit filename="../../../src/ZBE/JSON/resources/JSONGLSLProgramLoaderFtry.cpp" />
 		<Unit filename="../../../src/ZBE/JSON/resources/JSONMultiSpriteSheetLoader.cpp" />
-		<Unit filename="../../../src/ZBE/JSON/resources/JSONSimpleOGLModelSheetLoader.cpp" />
-		<Unit filename="../../../src/ZBE/JSON/resources/JSONSpriteOGLModelSheetLoader.cpp" />
+		<Unit filename="../../../src/ZBE/JSON/resources/JSONOGLModelSheetLoaders.cpp" />
 		<Unit filename="../../../src/ZBE/OAL/daemons/OALContextDaemon.cpp" />
 		<Unit filename="../../../src/ZBE/OAL/players/Sound3DOALPlayer.cpp" />
 		<Unit filename="../../../src/ZBE/OAL/resources/OALAudioLoader.cpp" />
 		<Unit filename="../../../src/ZBE/OAL/system/OALAudioStore.cpp" />
 		<Unit filename="../../../src/ZBE/OAL/tools/OALUtils.cpp" />
 		<Unit filename="../../../src/ZBE/OGL/daemons/ShadersSetter.cpp" />
-		<Unit filename="../../../src/ZBE/OGL/graphics/implementations/SimpleOGLModelSheet.cpp" />
+		<Unit filename="../../../src/ZBE/OGL/graphics/implementations/OGLModelSheets.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/OGL/SDLOGLWindow.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/OGL/daemons/OGLPreDrawer.cpp" />
 		<Unit filename="../../../src/ZBE/SDL/OGL/factories/daemons/OGLPostDrawFtry.cpp" />
@@ -662,6 +656,7 @@
 		<Unit filename="../../../src/ZBE/core/zbe.cpp" />
 		<Unit filename="../../../src/ZBE/daemons/RsrcFolderLoaderDmn.cpp" />
 		<Unit filename="../../../src/ZBE/daemons/RsrcLoaderDmn.cpp" />
+		<Unit filename="../../../src/ZBE/entities/builders/builders.cpp" />
 		<Unit filename="../../../src/ZBE/events/handlers/input/ActivatorIH.cpp" />
 		<Unit filename="../../../src/ZBE/events/handlers/input/KeyDownTicketEnablerIH.cpp" />
 		<Unit filename="../../../src/ZBE/events/handlers/input/ParametricActivatorIH.cpp" />
@@ -682,7 +677,6 @@
 		<Unit filename="../../../src/ZBE/factories/implementations/events/handlers/input/DaemonClickIHFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/events/handlers/input/DaemonIHFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/events/handlers/input/InputToValueFtry.cpp" />
-		<Unit filename="../../../src/ZBE/factories/implementations/events/handlers/time/DaemonRecurrentTimeHandlerFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/events/handlers/time/DaemonTimeHandlerFtry.cpp" />
 		<Unit filename="../../../src/ZBE/factories/implementations/events/handlers/time/TicketEraserFtry.cpp" />
 		<Unit filename="../../../src/ZBE/glTF/resources/GlTFResourceLoader.cpp" />
@@ -702,8 +696,6 @@
 				<general />
 			</DoxyBlocks>
 			<lib_finder disable_auto="1" />
-			<code_completion />
-			<debugger />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

@@ -10,6 +10,7 @@
 #ifndef ZBE_CORE_TOOLS_TOOLS_H_
 #define ZBE_CORE_TOOLS_TOOLS_H_
 
+#include <functional>
 #include "ZBE/core/system/system.h"
 
 namespace zbe {
@@ -81,6 +82,24 @@ struct TypeContainer<T> {
   T* get() {return t;}
 
   T* t;
+};
+
+template<typename RetVal, typename ...Ts>
+class Funct {
+public:
+  virtual ~Funct() {};
+  virtual RetVal operator()(Ts...) = 0;
+};
+
+template<typename RetVal, typename ...Ts>
+class WrapperFunct : public Funct<RetVal, Ts...> {
+public:
+  WrapperFunct(std::function<RetVal(Ts...)> callable) : callable(callable) {}
+  RetVal operator()(Ts... something) {
+    return callable(something...);
+  };
+private:
+  std::function<RetVal(Ts...)> callable;
 };
 
 }  // namespace zbe

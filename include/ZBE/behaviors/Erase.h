@@ -35,6 +35,20 @@ class Erase : virtual public Behavior<void> {
     }
 };
 
+class EraseEntity : virtual public Behavior<void> {
+  public:
+
+    /** \brief Virtual destructor.
+     */
+    virtual ~EraseEntity() {}
+
+    /** \brief Erase given avatar.
+     */
+    void apply(std::shared_ptr<Avatar> avatar) {
+      avatar->getEntity()->setERASED();
+    }
+};
+
 }  // namespace zbe
 
 #endif  // ZBE_BEHAVIORS_ERASE_H_

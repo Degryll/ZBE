@@ -21,7 +21,6 @@
 #include "ZBE/core/tools/containers/RsrcDictionary.h"
 
 #include "ZBE/core/daemons/Daemon.h"
-#include "ZBE/core/daemons/Punishers.h"
 
 #include "ZBE/factories/Factory.h"
 
@@ -39,7 +38,7 @@ public:
  *  \param name Name for the created tool.
  *  \param cfgId Tool's configuration id.
  */
-  void create(std::string name, uint64_t cfgId);
+  void create(std::string name, uint64_t);
 
   /** \brief Setup the desired tool. The tool will be complete after this step.
    *  \param name Name of the tool.

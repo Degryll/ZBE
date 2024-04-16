@@ -42,36 +42,46 @@ void DaemonIHFtry::setup(std::string name, uint64_t cfgId) {
         return;
       }
 
-      if (!j["inputEventGenerator"].is_string()) {
-        SysError::setError("DaemonIHFtry config for inputEventGenerator: "s + j["inputEventGenerator"].get<std::string>() + ": must be an inputEventGenerator name."s);
-        return;
-      }
-
-      std::string inputEventGeneratorName = j["inputEventGenerator"].get<std::string>();
-      if(!iegStore.contains("InputEventGenerator."s + inputEventGeneratorName)) {
-        SysError::setError("DaemonIHFtry config for inputEventGenerator: "s + inputEventGeneratorName + " is not an inputEventGenerator name."s);
-        return;
-      }
-
-      if (!j["key"].is_string()) {
-        SysError::setError("DaemonIHFtry config for key: "s + j["key"].get<std::string>() + ": must be a key name."s);
-        return;
-      }
-
-      std::string keyName = j["key"].get<std::string>();
-      if(!keyDict.contains(keyName)) {
-        SysError::setError("DaemonIHFtry config for key: "s + keyName + " is not a key name."s);
-        return;
-      }
-
       auto daemon = daemonStore.get("Daemon."s + daemonName);
-      auto ieg    = iegStore.get("InputEventGenerator."s + inputEventGeneratorName);
-      auto key    = keyDict.get(keyName);
       auto ih   = dcihRsrc.get("DaemonIH."s + name);
-
       ih->setDaemon(daemon);
-      ieg->addHandler(key, ih);
 
+      bool haskey = j["key"].is_string();
+      bool hasIeg = j["inputEventGenerator"].is_string();
+      bool hasValue = j["value"].is_number_float();
+
+      if(haskey != hasIeg) {
+        if (!hasIeg) {
+          SysError::setError("DaemonIHFtry config for inputEventGenerator: "s + j["inputEventGenerator"].get<std::string>() + ": must be an inputEventGenerator name."s);
+          return;
+        } else {
+          SysError::setError("DaemonIHFtry config for key: "s + j["key"].get<std::string>() + ": must be a key name."s);
+          return;
+        }
+      }
+
+      if(hasValue) {
+        float val = j["value"].get<float>();
+        ih->setValue(val);
+      }
+
+      if(haskey) {
+        std::string inputEventGeneratorName = j["inputEventGenerator"].get<std::string>();
+        if(!iegStore.contains("InputEventGenerator."s + inputEventGeneratorName)) {
+          SysError::setError("DaemonIHFtry config for inputEventGenerator: "s + inputEventGeneratorName + " is not an inputEventGenerator name."s);
+          return;
+        }
+
+        std::string keyName = j["key"].get<std::string>();
+        if(!keyDict.contains(keyName)) {
+          SysError::setError("DaemonIHFtry config for key: "s + keyName + " is not a key name."s);
+          return;
+        }
+
+        auto ieg    = iegStore.get("InputEventGenerator."s + inputEventGeneratorName);
+        auto key    = keyDict.get(keyName);
+        ieg->addHandler(key, ih);
+      }
 
     } else {
       SysError::setError("DaemonIH config for "s + name + " not found."s);

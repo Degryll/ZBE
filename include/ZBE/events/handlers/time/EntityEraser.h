@@ -20,6 +20,7 @@
 #include "ZBE/core/system/SysError.h"
 #include "ZBE/core/system/SysIdGenerator.h"
 
+#include "ZBE/core/tools/tools.h"
 #include "ZBE/core/tools/containers/RsrcStore.h"
 #include "ZBE/core/tools/containers/RsrcDictionary.h"
 #include "ZBE/core/entities/Entity.h"
@@ -33,19 +34,19 @@
 
 namespace zbe {
 
-class EntityEraser : public TimeHandler {
+class EntityEraserTH : public TimeHandler {
   public:
-	EntityEraser(const EntityEraser&) = delete; //!< Avoid copy.
-	void operator=(const EntityEraser&) = delete; //!< Avoid copy.
+	EntityEraserTH(const EntityEraserTH&) = delete; //!< Avoid copy.
+	void operator=(const EntityEraserTH&) = delete; //!< Avoid copy.
 
     /** brief Empty constructor
      */
-  	EntityEraser() = default;
+  	EntityEraserTH() : e() {}
 
     /** brief Parametrized constructor
      * param entity Entity to be erased
      */
-  	EntityEraser(std::shared_ptr<Entity> entity): e(entity){}
+  	EntityEraserTH(std::shared_ptr<Entity> entity): e(entity){}
 
   	void setEntity(std::shared_ptr<Entity> entity) {e = entity;}
 
@@ -60,21 +61,61 @@ class EntityEraser : public TimeHandler {
     std::shared_ptr<zbe::Entity> e;
 };
 
-/** \brief Factory for EntityEraser.
+template<typename IData, typename Trait>
+class EntityEraserReaction : public Funct<void, IData, Trait> {
+public:
+//	EntityEraserReaction(const EntityEraserReaction&) = delete; //!< Avoid copy.
+//	void operator=(const EntityEraserReaction&) = delete; //!< Avoid copy.
+
+    /** brief Empty constructor
+     */
+  	EntityEraserReaction() = default;
+
+    /** brief Parametrized constructor
+     * param entity Entity to be erased
+     */
+  	EntityEraserReaction(std::shared_ptr<Entity> entity): e(entity){}
+
+  	void setEntity(std::shared_ptr<Entity> entity) {e = entity;}
+
+    /** brief Erases entity
+     *  param time not used
+     */
+  	void operator()(IData, Trait) {
+        e->setERASED();
+  	}
+
+  private:
+    std::shared_ptr<zbe::Entity> e;
+};
+
+template<typename IData, typename Trait>
+class EntityEraserReactionBldr : public Funct<std::shared_ptr<Funct<void, IData, Trait>>, std::shared_ptr<Entity>> {
+  std::shared_ptr<Funct<void, IData, Trait>> operator()(std::shared_ptr<Entity> ent){
+    return std::make_shared<EntityEraserReaction<IData, Trait>>(ent);
+  }
+};
+
+//template<typename IData, typename Trait>
+//class EntityEraserReactionBldr : public Funct<void, IData, Trait> {
+//
+//};
+
+/** \brief Factory for EntityEraserTH.
  */
-class EntityEraserFtry : virtual public Factory {
+class EntityEraserTHFtry : virtual public Factory {
 public:
 
 /** \brief Create the desired tool, probably incomplete.
  *  \param name Name for the created tool.
  *  \param cfgId Tool's configuration id.
  */
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
 
-    std::shared_ptr<EntityEraser> te = std::make_shared<EntityEraser>();
+    std::shared_ptr<EntityEraserTH> te = std::make_shared<EntityEraserTH>();
     timeStore.insert("TimeHandler."s + name, te);
-    timeEraserStore.insert("EntityEraser."s + name, te);
+    timeEraserStore.insert("EntityEraserTH."s + name, te);
   }
 
   /** \brief Setup the desired tool. The tool will be complete after this step.
@@ -91,14 +132,14 @@ public:
       if (j["entity"].is_string()) {
         std::string ename = j["entity"].get<std::string>();
         std::shared_ptr<Entity> entity = entityStore.get("Entity."s + ename);
-        auto te = timeEraserStore.get("EntityEraser."s + name);
+        auto te = timeEraserStore.get("EntityEraserTH."s + name);
         te->setEntity(entity);
 
       } else {
-        SysError::setError("EntityEraserFtry config for "s + j["entity"].get<std::string>() + ": must be a string."s);
+        SysError::setError("EntityEraserTHFtry config for "s + j["entity"].get<std::string>() + ": must be a string."s);
       }
     } else {
-      SysError::setError("EntityEraserFtry config for "s + name + " not found."s);
+      SysError::setError("EntityEraserTHFtry config for "s + name + " not found."s);
     }
   }
 
@@ -108,7 +149,13 @@ private:
   RsrcStore<nlohmann::json> &configStore = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<Entity> &entityStore = RsrcStore<Entity>::getInstance();
   RsrcStore<TimeHandler> &timeStore = RsrcStore<TimeHandler>::getInstance();
-  RsrcStore<EntityEraser> &timeEraserStore = RsrcStore<EntityEraser>::getInstance();
+  RsrcStore<EntityEraserTH> &timeEraserStore = RsrcStore<EntityEraserTH>::getInstance();
+};
+
+class EntityEraserTHBldr : public Funct<std::shared_ptr<TimeHandler>, std::shared_ptr<Entity>> {
+  std::shared_ptr<TimeHandler> operator()(std::shared_ptr<Entity> ent) {
+      return std::make_shared<EntityEraserTH>(ent);
+  }
 };
 
 }  // namespace zbe

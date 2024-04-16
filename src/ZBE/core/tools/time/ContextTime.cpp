@@ -11,6 +11,6 @@
 
 namespace zbe {
 
-int64_t ContextTime::maxFrameTime = 2048;
+uint64_t ContextTime::maxFrameTime = 2048;
 
 }  // namespace zbe

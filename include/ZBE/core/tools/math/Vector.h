@@ -177,7 +177,7 @@ class _VECTOR {
      */
     _VECTOR<dim>& setZeros() {
       for(unsigned i = 0; i < dim; i++) {
-        data[i] = 0;
+        data[i] = 0.0;
       }
 
       return (*this);
@@ -191,6 +191,14 @@ class _VECTOR {
       out.setZeros();
 
       return (out);
+    }
+
+    /** \brief Returns this vector as a Point.
+     * \return this vector as a Point.
+     */
+    _POINT<dim> toPoint() {
+      _POINT<dim> p;
+      return p + (*this);
     }
 
 
@@ -234,12 +242,28 @@ class _VECTOR {
       return (*this);
     }
 
+    /** \brief Modifies this vector setting module to given value
+     *
+     * \return Normalized vector.
+     */
+    _VECTOR<dim>&  setModule(double module) {
+      return this->normalize() *= module;
+    }
+
     /** \brief Modifies this vector setting module to 1.0.
      *
      * \return Normalized vector.
      */
     friend _VECTOR normalize(_VECTOR rhs)  {
       return rhs.normalize();
+    }
+
+    /** \brief Modifies this vector setting module to given value
+     *
+     * \return Normalized vector.
+     */
+    friend _VECTOR setModule(_VECTOR rhs, double module)  {
+      return rhs.setModule(module);
     }
 
 
@@ -336,6 +360,28 @@ class _VECTOR {
       return (v);
     }
 
+    /** \brief Implements Vector divsion by a scalar.
+     *
+     * \param lhs The original Vector.
+     * \param rhs The scalar.
+     * \return A reference to the resulting Vector.
+     * \sa operator+=(), operator-=() and operator-().
+     */
+    friend _VECTOR operator/(_VECTOR lhs, double rhs) {
+      return (lhs/=rhs);
+    }
+
+    /** \brief Implements dot product.
+     *
+     * \param lhs First vector.
+     * \param rhs Second vector.
+     * \return Doct product.
+     * \sa operator+=(), operator-=() and operator-().
+     */
+    friend inline double dot(const _VECTOR& lhs, const _VECTOR& rhs) {
+      return (lhs * rhs);
+    }
+
     /** \brief calculates the resulting path of reflection of a ray or impact of an object with a plane.
      * \param normal Vector normal to the collision plane.
      * \return Vector with the ray or object path reflected.
@@ -356,6 +402,19 @@ class _VECTOR {
         equal &= almost_equal(lhs.data[i], rhs.data[i]);
       }
       return equal;
+    }
+
+    /** \brief Tells if given _VECTOR is all zeroes
+     *
+     * \param v the Vector.
+     * \return True if _VECTOR is all zeroes
+     */
+    friend bool isZero(const _VECTOR& v){
+      bool iszero = true;
+      for(unsigned i = 0; i < dim; i++ ) {
+        iszero &= almost_equal(v.data[i], 0.0);
+      }
+      return iszero;
     }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -555,11 +614,25 @@ class Vector<3> : public _VECTOR<3> {
      * \return A vector with the cross product.
      * \sa cross().
      */
-    friend Vector<3> cross(Vector<3> lhs, const Vector<3>& rhs) {
-      return (lhs.cross(rhs));
-    }
+    friend Vector<3> cross(Vector<3> lhs, const Vector<3>& rhs);
+
+    /** \brief Implements vector between two angles.
+     *
+     * \param lhs First vector.
+     * \param rhs Second vector.
+     * \return The angle between given vectors
+     */
+    double angle(Vector<3> lhs, Vector<3> rhs);
 
 };
+
+Vector<3> cross(Vector<3> lhs, const Vector<3>& rhs);
+
+double angle(Vector<3> lhs, Vector<3> rhs);
+double angle(Vector<2> lhs, Vector<2> rhs);
+
+int halfspace(Point2D p, Point2D linePoint1, Point2D linePoint2);
+Point2D triangleCenter(Point2D vertex1, Point2D vertex2, Point2D vertex3);
 
 using Vector3D = Vector<3>; //!< An alias to Vector<3>.
 

@@ -8,7 +8,7 @@
  * an state.
  */
 
-#include "ZBE/core/daemons/StateMachineDaemon.h"
+#include "ZBE/core/daemons/Daemon.h"
 
 namespace zbe {
 

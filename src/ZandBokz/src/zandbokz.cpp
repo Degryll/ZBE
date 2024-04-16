@@ -16,33 +16,65 @@
 #include "ZBE/JSON/factories/JSONFactories.h"
 #include "ZBE/SDL/factories/SDLFactories.h"
 #include "ZBE/OGL/factories/OGLFactories.h"
+#include "ZBE/OAL/factories/OALFactories.h"
 #include "ZBE/resources/loaders/implementations/JSONAppLoader.h"
 
+#include "ZBE/core/events/interactionSystem.h"
+#include "ZBE/core/events/interactionFunctions.h"
+#include "ZBE/core/events/shapes.h"
+#include "ZBE/core/events/traits.h"
+
+#include "ZBE/JSON/JSONFactory.h"
+
+#include "zandbokz.h"
+#include "ZandBokzFactories.h"
+#include "ZandBokzInteractionSystem.h"
+
+#include "ZBE/OAL/daemons/OALContextDaemon.h"
+
 int main(int /*argc*/, char** /*argv*/) {
+
    using namespace zbe;
+   using namespace zandbokz;
+   using namespace std::string_literals;
+
    init();
    printf("Hello ZandBokz\n");
    BaseFactories::load();
+   printf("Base loaded\n");
    SDLFactories::load();
+   printf("SDL\n");
    OGLFactories::load();
+   printf("OGL\n");
    GLTFFactories::load();
+   printf("GLTF\n");
+   OALFactories::load();
+   printf("OAL\n");
    ZBEFactories::load();
+   printf("ZBE\n");
    JSONFactories::load();
-   // Load App.
-   std::cout << SysError::getFirstErrorString() << "\n";
-   JSONAppLoader appLoader;
-   appLoader.load("data/ZandBokz/app/main_001.json");
-   std::cout << SysError::getFirstErrorString() << "\n";
-   // Run App.
-   auto d = RsrcStore<Daemon>::getInstance().get("Daemon.Main");
-   std::cout << SysError::getFirstErrorString() << "\n";
-   d->run();
-   return 0;
+   printf("JSON\n");
+   ZandBokzFactories::load();
+   printf("ZandBokz\n");
+
+  // TODO llevar a factoria
+  OALContextDaemon oalContextDmn;
+  oalContextDmn.run();
+
+  std::cout << SysError::getFirstErrorString() << "\n";
+  JSONAppLoader appLoader;
+  appLoader.load("data/ZandBokz/app/main_002.json");
+  std::cout << SysError::getFirstErrorString() << "\n";
+  // Run App.
+  auto d = RsrcStore<Daemon>::getInstance().get("Daemon.Main");
+  std::cout << SysError::getFirstErrorString() << "\n";
+  d->run();
+  return 0;
 
 
     // Flujo del juego
       // Llamar a la primera carga de factorias basicas. (CommonFactories)
-      // Cargar primera aplicacion: LoadScreen.
+      // Cargar primera aplicacion: zandbokz.
         // Devolvera un demonio que cargara lo minimo para:
           // Pintar un pantalla de carga
             // Instanciar pintadores

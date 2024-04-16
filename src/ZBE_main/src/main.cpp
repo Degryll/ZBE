@@ -3,9 +3,12 @@
 #include "batismain.h"
 #include "degryllmain.h"
 #include "ludomain.h"
-#include "gamemain.h"
+//#include "gamemain.h"
 #include "testing.h"
-#include "tinygltf/gltfmain.h"
+#include "tempmain.h"
+#include "tempcleanmain.h"
+//#include "tinygltf/gltfmain.h"
+int gltfmain(int argc, char **argv){}
 
 int main(int argc, char* argv[]) {
   int option;
@@ -13,13 +16,15 @@ int main(int argc, char* argv[]) {
   printf("1 - batismain\n");
   printf("2 - degryllmain\n");
   printf("3 - ludomain\n");
-  printf("4 - gamemain\n");
+  printf("#4 - gamemain\n");
   printf("5 - testing\n");
   printf("6 - gltf test\n");
+  printf("7 - temporal prueba interacciones\n");
+  printf("8 - temporal prueba interacciones limpito\n");
   printf("0 - salir\n");
   printf("--:");
   int readAmount = scanf ("%d",&option);
-  while (readAmount!=1 || option<0 || option>6) {
+  while (readAmount!=1 || option<0 || option>8) {
     printf("Introduzca una opcion... que valga: ");
     readAmount = scanf ("%d",&option);
   }
@@ -36,13 +41,19 @@ int main(int argc, char* argv[]) {
       out = ludo::ludomain(argc,argv);
     break;
     case 4:
-      out = gamemain(argc,argv);
+      //out = gamemain(argc,argv);
     break;
     case 5:
       out = testing::testingmain(argc,argv);
     break;
     case 6:
       out = gltfmain(argc,argv);
+    break;
+    case 7:
+      out = temp::tempmain(argc,argv);
+    break;
+    case 8:
+      out = tempclean::tempcleanmain(argc,argv);
     break;
     case 0:
       printf("�Y para que has venido?\n");

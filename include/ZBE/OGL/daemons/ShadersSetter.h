@@ -41,7 +41,7 @@ public:
   friend class ShadersSetter3DFtry;
   /** \brief Destructor.
    */
-  ~ShadersSetter3D() = default;
+  virtual ~ShadersSetter3D() = default;
 
   /** \brief Do the actual Daemon job.
    */
@@ -81,7 +81,7 @@ class ShadersSetter2D : public Daemon {
 public:
   /** \brief Destructor.
    */
-  ~ShadersSetter2D() = default;
+  virtual ~ShadersSetter2D() = default;
 
   /** \brief Do the actual Daemon job.
    */
@@ -106,7 +106,7 @@ public:
    *  \param name Name for the created ShadersSetter3D.
    *  \param cfgId ShadersSetter3D's configuration id.
    */
-  void create(std::string name, uint64_t cfgId);
+  void create(std::string name, uint64_t);
 
   /** \brief Setup the desired tool. The tool will be complete after this step.
    *  \param name Name of the tool.
@@ -131,7 +131,7 @@ public:
    *  \param name Name for the created ShadersSetter2D.
    *  \param cfgId ShadersSetter2D's configuration id.
    */
-  void create(std::string name, uint64_t cfgId) {
+  void create(std::string name, uint64_t) {
     using namespace std::string_literals;
     std::shared_ptr<ShadersSetter2D> ss2D = std::shared_ptr<ShadersSetter2D>(new ShadersSetter2D);
     daemonStore.insert("Daemon."s + name, ss2D);

@@ -1,130 +1,130 @@
 #include "degryllmain.h"
 
-#include <cstdio>
-#include <cstdint>
-#include <memory>
-#include <string>
-#include <vector>
-
-#include <imgui.h>
-#include <imgui_impl_sdl.h>
-#include <imgui_impl_opengl3.h>
-
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_ttf.h>
-
-#include <GL/glew.h>
-
-#include <chaiscript/chaiscript.hpp>
-
-//#include "ZBE/core/zbe.h"
-#include "ZBE/core/entities/Entity.h"
-#include "ZBE/core/entities/avatars/Avatar.h"
-#include "ZBE/core/entities/avatars/implementations/BaseAvatar.h"
-#include "ZBE/SDL/OGL/SDLOGLWindow.h"
-#include "ZBE/SDL/OGL/ImGui/SDLOGLImGuiWindow.h"
-
-#include "ZBE/core/tools/shared/Value.h"
-#include "ZBE/core/tools/shared/implementations/SimpleValue.h"
-//#include "ZBE/core/events/handlers/InputHandler.h"
+//#include <cstdio>
+//#include <cstdint>
+//#include <memory>
+//#include <string>
+//#include <vector>
+//
+//#include <imgui.h>
+//#include <imgui_impl_sdl.h>
+//#include <imgui_impl_opengl3.h>
+//
+//#include <SDL2/SDL.h>
+//#include <SDL2/SDL_ttf.h>
+//
+//#include <GL/glew.h>
+//
+//#include <chaiscript/chaiscript.hpp>
+//
+////#include "ZBE/core/zbe.h"
+//#include "ZBE/core/entities/Entity.h"
 //#include "ZBE/core/entities/avatars/Avatar.h"
+//#include "ZBE/core/entities/avatars/implementations/BaseAvatar.h"
+//#include "ZBE/SDL/OGL/SDLOGLWindow.h"
+//#include "ZBE/SDL/OGL/ImGui/SDLOGLImGuiWindow.h"
+//
+//#include "ZBE/core/tools/shared/Value.h"
+//#include "ZBE/core/tools/shared/implementations/SimpleValue.h"
+////#include "ZBE/core/events/handlers/InputHandler.h"
+////#include "ZBE/core/entities/avatars/Avatar.h"
+//
+//#include "ZBE/core/tools/containers/TicketedForwardList.h"
+//
+//#include "ZBE/core/daemons/MainLoop.h"
+//#include "ZBE/core/daemons/Daemon.h"
+//#include "ZBE/core/daemons/DaemonMaster.h"
+//#include "ZBE/core/daemons/Punishers.h"
+//
+//#include "ZBE/core/io/Input.h"
+//
+////#include "ZBE/core/events/generators/util/InputStatusManager.h"
+//#include "ZBE/core/events/generators/InputEventGenerator.h"
+////#include "ZBE/core/events/generators/TimeEventGenerator.h"
+//
+//#include "ZBE/SDL/tools/SDLTimer.h"
+//#include "ZBE/OGL/daemons/SimpleImGuiTest.h"
+//#include "ZBE/SDL/daemons/BasicPreLoopSDLDaemon.h"
+//#include "ZBE/SDL/daemons/BasicPostLoopSDLDaemon.h"
+//#include "ZBE/SDL/drawers/ConsoleTextSDLDrawer.h"
+//#include "ZBE/SDL/drawers/SingleSpriteSDLDrawer.h"
+//#include "ZBE/core/daemons/MainLoopExit.h"
+//#include "ZBE/events/handlers/input/DaemonIH.h"
+//#include "ZBE/events/handlers/input/AddText.h"
+//#include "ZBE/events/handlers/input/ExecuteCommandIH.h"
+//#include "ZBE/events/handlers/input/RemoveGlyphIH.h"
+//#include "ZBE/events/handlers/input/ScrollIH.h"
+//
+//#include "ZBE/core/tools/math/math.h"
+//#include "ZBE/core/system/SysTime.h"
+//#include "ZBE/behaviors/CustomMotion.h"
+//
+//#include "ZBE/SDL/starters/SDL_Starter.h"
+//
+//#include "ZBE/ImGui/daemons/ImGuiPreLoopDaemon.h"
+//#include "ZBE/ImGui/daemons/ImGuiPostLoopDaemon.h"
+//#include "ZBE/SDL/events/SDLEventWatcher.h"
+//#include "ZBE/SDL/events/KeyMouseEventWatcher.h"
+//#include "ZBE/ImGui/events/ImGuiEventWatcher.h"
+//
+//#include "ZBE/entities/implementations/Console.h"
 
-#include "ZBE/core/tools/containers/TicketedForwardList.h"
-
-#include "ZBE/core/daemons/MainLoop.h"
-#include "ZBE/core/daemons/Daemon.h"
-#include "ZBE/core/daemons/DaemonMaster.h"
-#include "ZBE/core/daemons/Punishers.h"
-
-#include "ZBE/core/io/Input.h"
-
-//#include "ZBE/core/events/generators/util/InputStatusManager.h"
-#include "ZBE/core/events/generators/InputEventGenerator.h"
-//#include "ZBE/core/events/generators/TimeEventGenerator.h"
-
-#include "ZBE/SDL/tools/SDLTimer.h"
-#include "ZBE/OGL/daemons/SimpleImGuiTest.h"
-#include "ZBE/SDL/daemons/BasicPreLoopSDLDaemon.h"
-#include "ZBE/SDL/daemons/BasicPostLoopSDLDaemon.h"
-#include "ZBE/SDL/drawers/ConsoleTextSDLDrawer.h"
-#include "ZBE/SDL/drawers/SingleSpriteSDLDrawer.h"
-#include "ZBE/core/daemons/MainLoopExit.h"
-#include "ZBE/events/handlers/input/DaemonIH.h"
-#include "ZBE/events/handlers/input/AddText.h"
-#include "ZBE/events/handlers/input/ExecuteCommandIH.h"
-#include "ZBE/events/handlers/input/RemoveGlyphIH.h"
-#include "ZBE/events/handlers/input/ScrollIH.h"
-
-#include "ZBE/core/tools/math/math.h"
-#include "ZBE/core/system/SysTime.h"
-#include "ZBE/behaviors/CustomMotion.h"
-
-#include "ZBE/SDL/starters/SDL_Starter.h"
-
-#include "ZBE/ImGui/daemons/ImGuiPreLoopDaemon.h"
-#include "ZBE/ImGui/daemons/ImGuiPostLoopDaemon.h"
-#include "ZBE/SDL/events/SDLEventWatcher.h"
-#include "ZBE/SDL/events/KeyMouseEventWatcher.h"
-#include "ZBE/ImGui/events/ImGuiEventWatcher.h"
-
-#include "ZBE/entities/implementations/Console.h"
-
-class ChaiWarp {
-public:
-  ChaiWarp(std::shared_ptr<zbe::Value<zbe::Vector2D > > vv) : vv(vv) {}
-
-  void setX(double x) {
-    zbe::Vector2D aux(vv->get());
-    aux.x = x;
-    vv->set(aux);
-  }
-
-  void setY(double y) {
-    zbe::Vector2D aux(vv->get());
-    aux.y = y;
-    vv->set(aux);
-  }
-
-  void incrementX(double x) {
-    zbe::Vector2D aux(vv->get());
-    aux.x = aux.x + x;
-    vv->set(aux);
-  }
-
-  void incrementY(double y) {
-    zbe::Vector2D aux(vv->get());
-    aux.y = aux.y + y;
-    vv->set(aux);
-  }
-
-private:
-  std::shared_ptr<zbe::Value<zbe::Vector2D > > vv;
-};
-
-class ChaiWarpBhv {
-public:
-  ChaiWarpBhv(std::shared_ptr<zbe::CustomMotion<2> > cm) : cm(cm) {}
-
-  void setFunction(std::function<void(double &posx, double &posy, double &velx, double &vely, double &acelx, double &acely, double time)> f) {
-    cm->setFunction(f);
-  }
-
-private:
-  std::shared_ptr<zbe::CustomMotion<2> > cm;
-};
-
-void test2(double &posx, double &, double &velx, double &, double &acelx, double &, double time) {
-  acelx = 100.0 * (500.0 - 2.0 * posx + 140.0) / (500.0 - 140.0);
-  velx = velx + (acelx * time);
-  posx = posx + (velx * time);
-}
-
-void test(double &posx, double &, double &velx, double &, double &, double &, double time) {
-  posx = posx + (velx * time);
-  if (posx > 500) {
-    posx = 140 + posx - 500;
-  }
-}
+//class ChaiWarp {
+//public:
+//  ChaiWarp(std::shared_ptr<zbe::Value<zbe::Vector2D > > vv) : vv(vv) {}
+//
+//  void setX(double x) {
+//    zbe::Vector2D aux(vv->get());
+//    aux.x = x;
+//    vv->set(aux);
+//  }
+//
+//  void setY(double y) {
+//    zbe::Vector2D aux(vv->get());
+//    aux.y = y;
+//    vv->set(aux);
+//  }
+//
+//  void incrementX(double x) {
+//    zbe::Vector2D aux(vv->get());
+//    aux.x = aux.x + x;
+//    vv->set(aux);
+//  }
+//
+//  void incrementY(double y) {
+//    zbe::Vector2D aux(vv->get());
+//    aux.y = aux.y + y;
+//    vv->set(aux);
+//  }
+//
+//private:
+//  std::shared_ptr<zbe::Value<zbe::Vector2D > > vv;
+//};
+//
+//class ChaiWarpBhv {
+//public:
+//  ChaiWarpBhv(std::shared_ptr<zbe::CustomMotion<2> > cm) : cm(cm) {}
+//
+//  void setFunction(std::function<void(double &posx, double &posy, double &velx, double &vely, double &acelx, double &acely, double time)> f) {
+//    cm->setFunction(f);
+//  }
+//
+//private:
+//  std::shared_ptr<zbe::CustomMotion<2> > cm;
+//};
+//
+//void test2(double &posx, double &, double &velx, double &, double &acelx, double &, double time) {
+//  acelx = 100.0 * (500.0 - 2.0 * posx + 140.0) / (500.0 - 140.0);
+//  velx = velx + (acelx * time);
+//  posx = posx + (velx * time);
+//}
+//
+//void test(double &posx, double &, double &velx, double &, double &, double &, double time) {
+//  posx = posx + (velx * time);
+//  if (posx > 500) {
+//    posx = 140 + posx - 500;
+//  }
+//}
 
 //class SDLWindow2 {
 //public:

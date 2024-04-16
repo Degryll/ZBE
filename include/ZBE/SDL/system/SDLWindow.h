@@ -75,7 +75,7 @@ public:
 
   /** \brief Free resources and destroy the Renderer and the SDLWindow.
    */
-  ~SDLWindow();
+  virtual ~SDLWindow();
 
   /** \brief Sets the window title
    *  \param title The title

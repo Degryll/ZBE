@@ -16,17 +16,18 @@
         {
             "mesh" : 0,
             "name" : "Chestnut",
-            "translation" : [
-                -6.454966068267822,
+            "rotation" : [
+                -0.7071065902709961,
                 0,
-                0
+                0,
+                0.7071069478988647
             ]
         }
     ],
     "materials" : [
         {
             "doubleSided" : true,
-            "name" : "Material.001",
+            "name" : "Material.002",
             "pbrMetallicRoughness" : {
                 "baseColorTexture" : {
                     "index" : 0,
@@ -69,29 +70,29 @@
         {
             "bufferView" : 0,
             "componentType" : 5126,
-            "count" : 939,
+            "count" : 924,
             "max" : [
-                3.710239887237549,
-                9.229485511779785,
-                1.3386601209640503
+                0.500582218170166,
+                0.25568926334381104,
+                0.4999997019767761
             ],
             "min" : [
-                -6.570603370666504,
-                -1.0393829345703125,
-                -3.912623405456543
+                -0.500583827495575,
+                -0.25568971037864685,
+                -0.5000001788139343
             ],
             "type" : "VEC3"
         },
         {
             "bufferView" : 1,
             "componentType" : 5126,
-            "count" : 939,
+            "count" : 924,
             "type" : "VEC3"
         },
         {
             "bufferView" : 2,
             "componentType" : 5126,
-            "count" : 939,
+            "count" : 924,
             "type" : "VEC2"
         },
         {
@@ -104,28 +105,28 @@
     "bufferViews" : [
         {
             "buffer" : 0,
-            "byteLength" : 11268,
+            "byteLength" : 11088,
             "byteOffset" : 0
         },
         {
             "buffer" : 0,
-            "byteLength" : 11268,
-            "byteOffset" : 11268
+            "byteLength" : 11088,
+            "byteOffset" : 11088
         },
         {
             "buffer" : 0,
-            "byteLength" : 7512,
-            "byteOffset" : 22536
+            "byteLength" : 7392,
+            "byteOffset" : 22176
         },
         {
             "buffer" : 0,
             "byteLength" : 5304,
-            "byteOffset" : 30048
+            "byteOffset" : 29568
         }
     ],
     "buffers" : [
         {
-            "byteLength" : 35352,
+            "byteLength" : 34872,
             "uri" : "casta\u00f1a.bin"
         }
     ]

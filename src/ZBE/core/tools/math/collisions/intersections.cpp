@@ -8,6 +8,7 @@
  */
 
 #include "ZBE/core/tools/math/collisions/intersections.h"
+#include "ZBE/core/system/system.h"
 
 namespace zbe {
 
@@ -25,23 +26,23 @@ bool intersectionPoint3DAABB3D(Point3D point, AABB<3> box) {return intersectionP
 bool intersectionPoint2DCircle(Point2D point, Circle circle) {return intersectionPointNSphere<2>(point, circle);}
 bool intersectionPoint3DSphere(Point3D point, Sphere sphere) {return intersectionPointNSphere<3>(point, sphere);}
 
-bool intersectionRayCircle(Ray2D ray, Circle circle, int64_t &time, Point2D& point) {return (intersectionRayNSphere<2>(ray,circle,time,point));}
-bool intersectionRaySphere(Ray3D ray, Sphere sphere, int64_t &time, Point3D& point) {return (intersectionRayNSphere<3>(ray,sphere,time,point));}
+bool intersectionRayCircle(Ray2D ray, Circle circle, uint64_t &time, Point2D& point) {return (intersectionRayNSphere<2>(ray,circle,time,point));}
+bool intersectionRaySphere(Ray3D ray, Sphere sphere, uint64_t &time, Point3D& point) {return (intersectionRayNSphere<3>(ray,sphere,time,point));}
 
-bool intersectionNormalRayCircle(Ray2D ray, Circle circle, int64_t &time, Point2D& point) {return (intersectionNormalRayNSphere<2>(ray,circle,time,point));}
-bool intersectionNormalRaySphere(Ray3D ray, Sphere sphere, int64_t &time, Point3D& point) {return (intersectionNormalRayNSphere<3>(ray,sphere,time,point));}
+bool intersectionNormalRayCircle(Ray2D ray, Circle circle, uint64_t &time, Point2D& point) {return (intersectionNormalRayNSphere<2>(ray,circle,time,point));}
+bool intersectionNormalRaySphere(Ray3D ray, Sphere sphere, uint64_t &time, Point3D& point) {return (intersectionNormalRayNSphere<3>(ray,sphere,time,point));}
 
-bool intersectionBeamInsideAABB2D(Ray2D ray, AABB2D box, int64_t &time, Point2D& point) {return (intersectionBeamInsideAABB<2>(ray, box, time, point));}
-bool intersectionBeamInsideAABB3D(Ray3D ray, AABB3D box, int64_t &time, Point3D& point) {return (intersectionBeamInsideAABB<3>(ray, box, time, point));}
+bool intersectionBeamInsideAABB2D(Ray2D ray, AABB2D box, uint64_t &time, Point2D& point) {return (intersectionBeamInsideAABB<2>(ray, box, time, point));}
+bool intersectionBeamInsideAABB3D(Ray3D ray, AABB3D box, uint64_t &time, Point3D& point) {return (intersectionBeamInsideAABB<3>(ray, box, time, point));}
 
-bool intersectionSegmentOutsideAABB2D(Ray2D ray, AABB2D box, int64_t &time, Point2D& point) {return (intersectionSegmentOutsideAABB<2>(ray,box,time,point));}
-bool intersectionSegmentOutsideAABB3D(Ray3D ray, AABB3D box, int64_t &time, Point3D& point) {return (intersectionSegmentOutsideAABB<3>(ray,box,time,point));}
+bool intersectionSegmentOutsideAABB2D(Ray2D ray, AABB2D box, uint64_t &time, Point2D& point) {return (intersectionSegmentOutsideAABB<2>(ray,box,time,point));}
+bool intersectionSegmentOutsideAABB3D(Ray3D ray, AABB3D box, uint64_t &time, Point3D& point) {return (intersectionSegmentOutsideAABB<3>(ray,box,time,point));}
 
-bool intersectionBeamOutsideAABB2D(Ray2D ray, AABB2D box, int64_t &time, Point2D& point) {return (intersectionBeamOutsideAABB<2>(ray,box,time,point));}
-bool intersectionBeamOutsideAABB3D(Ray3D ray, AABB3D box, int64_t &time, Point3D& point) {return (intersectionBeamOutsideAABB<3>(ray,box,time,point));}
+bool intersectionBeamOutsideAABB2D(Ray2D ray, AABB2D box, uint64_t &time, Point2D& point) {return (intersectionBeamOutsideAABB<2>(ray,box,time,point));}
+bool intersectionBeamOutsideAABB3D(Ray3D ray, AABB3D box, uint64_t &time, Point3D& point) {return (intersectionBeamOutsideAABB<3>(ray,box,time,point));}
 
-bool IntersectionMovingCircleInsideAABB2D(Circle circle, Vector2D direction, AABB2D box, int64_t& time, Point2D& point, Vector<2>& normal) {return (intersectionMovingNSphereInsideAABB<2>(circle,direction,box, time,point, normal));}
-bool IntersectionMovingSphereInsideAABB3D(Sphere sphere, Vector3D direction, AABB3D box, int64_t& time, Point3D& point, Vector<3>& normal) {return (intersectionMovingNSphereInsideAABB<3>(sphere,direction,box, time,point, normal));}
+bool IntersectionMovingCircleInsideAABB2D(Circle circle, Vector2D direction, AABB2D box, uint64_t& time, Point2D& point, Vector<2>& normal) {return (intersectionMovingNSphereInsideAABB<2>(circle,direction,box, time,point, normal));}
+bool IntersectionMovingSphereInsideAABB3D(Sphere sphere, Vector3D direction, AABB3D box, uint64_t& time, Point3D& point, Vector<3>& normal) {return (intersectionMovingNSphereInsideAABB<3>(sphere,direction,box, time,point, normal));}
 
 /** \brief Computes the collision of a moving circle with an AABB. Outside approach.
  *
@@ -52,7 +53,7 @@ bool IntersectionMovingSphereInsideAABB3D(Sphere sphere, Vector3D direction, AAB
  * \param point Stores the point of collision, if any.
  * \return True if there is a collision before the initial value of time, false otherwise.
  */
-bool IntersectionMovingCircleOutsideAABB2D(Circle circle, Vector2D direction, AABB2D box, int64_t& time, Point2D& point, Vector2D& normal) {
+bool ZBEAPI IntersectionMovingCircleOutsideAABB2D(Circle circle, Vector2D direction, AABB2D box, uint64_t& time, Point2D& point, Vector2D& normal) {
   double r = circle.r;
   AABB2D e = box;
   e.minimum[0] -= r;
@@ -60,7 +61,7 @@ bool IntersectionMovingCircleOutsideAABB2D(Circle circle, Vector2D direction, AA
   e.maximum[0] += r;
   e.maximum[1] += r;
 
-  int64_t t = time;
+  uint64_t t = time;
   Point2D c;
   Ray2D ray(circle.c, direction);
 
@@ -135,6 +136,35 @@ bool IntersectionMovingCircleOutsideAABB2D(Circle circle, Vector2D direction, AA
     }  // if m == 2
         return (false);
   }  // if extended box collision
+}
+
+bool ZBEAPI intersectionMovingRay2DRay2D(Ray2D r1, Ray2D r2, uint64_t& time, Point2D& point, Vector2D& normal) {
+    Vector2D d1 = r1.d;
+    Vector2D d2 = r2.d;
+    Vector2D n2 = Vector2D{d2.y, -d2.x};
+    n2.normalize();
+
+    double h = dot((r1.o - r2.o), n2); // height of the first point of l1 on vector l2
+    double hd = dot(d1, n2);  // height differential of the vector that defines l1
+
+    // const double threshold = 0.0f;  // A threshold where height differential is considered to correspond to parallel lines
+    // if(std::abs(hd) <= threshold) {
+    //     return false;
+    // }
+    if(almost_equal(hd, 0.0)) {
+        return false;
+    }
+    double t = (h/ -hd);
+    point = r1.o + (d1 * t);
+    auto intersectTime = quantizeTime(t);
+
+    if(intersectTime <= time) {
+      time = intersectTime;
+      normal = n2;
+      return time > 0;  // Only if time > 0
+  } else {
+      return false;
+  }
 }
 
 }  // namespace zbe

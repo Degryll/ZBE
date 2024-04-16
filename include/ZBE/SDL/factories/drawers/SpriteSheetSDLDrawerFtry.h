@@ -38,7 +38,7 @@ public:
    *  \param name Name for the created SpriteSheet SDL Drawer.
    *  \param cfgId Configuration id for the SpriteSheet SDL Drawer.
    */
-  void create(std::string name, uint64_t cfgId);
+  void create(std::string name, uint64_t);
 
   /** \brief Setup the desired tool. The tool will be complete after this step.
    *  \param name Name of the tool.

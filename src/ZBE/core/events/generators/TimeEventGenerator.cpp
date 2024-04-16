@@ -57,7 +57,7 @@ inline void TimerTicket::setState(State state) {
   if(state == ERASED) this->setERASED();
 }
 
-bool TimerTicket::increaseTime(int64_t increment) {
+bool TimerTicket::increaseTime(uint64_t increment) {
   TimerData data = (*iter);
   timers.erase(iter);
   data.time += zbe::quantizeTime(increment);

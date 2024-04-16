@@ -52,7 +52,7 @@ public:
   /** brief stores input value to the value.
     * param status value from input.
    */
-  void run(uint32_t, float status) {
+  void run(uint32_t, float) {
     ticket->toggle();
   }
 
@@ -68,7 +68,7 @@ class ZBEAPI TicketTogglerIHFtry : public Factory {
    *  \param name Name for the created SDLWindow.
    *  \param cfgId SDLWindow's configuration id.
    */
-  void create(std::string name, uint64_t cfgId);
+  void create(std::string name, uint64_t);
 
   /** \brief Setup the desired tool. The tool will be complete after this step.
    *  \param name Name of the tool.
