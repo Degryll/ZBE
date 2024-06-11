@@ -74,8 +74,8 @@ function(myproject_setup_dependencies)
   
   cpmaddpackage(
     NAME SDL3_net
-    GITHUB_REPOSITORY libsdl-org/SDL_mixer
-    GIT_TAG 3f45cc34ee327ee5d23d828c049d5a66316b6c73)
+    GITHUB_REPOSITORY libsdl-org/SDL_net
+    GIT_TAG 635c365de6c331730901bf88ee1b66f716fd1dfc)
 
   cpmaddpackage(
     NAME SDL3_ttf
