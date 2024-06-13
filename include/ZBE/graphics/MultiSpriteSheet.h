@@ -65,7 +65,7 @@ public:
     Region2D src(usedSD.img.region.p + (usedSD.img.regionOffset *  frame), usedSD.img.region.v);
     auto size = avatar->get<2, Vector2D>()->get();
     auto pos = avatar->get<1, Vector2D>()->get();
-    Region2D dst({(double)pos.x + usedSD.drawOffset.x, (double)pos.y + usedSD.drawOffset.y}, {(double)size.x * usedSD.scale.x, (double)size.y * usedSD.scale.y});
+    Region2D dst({static_cast<double>(pos.x) + usedSD.drawOffset.x, static_cast<double>(pos.y) + usedSD.drawOffset.y}, {static_cast<double>(size.x) * usedSD.scale.x, static_cast<double>(size.y) * usedSD.scale.y});
     Sprite s(src, dst, avatar->get<3, double>()->get(), usedSD.img.imgSrcId);
     return s;
     //return Sprite(Region2D(), Region2D(), 0.0, 0);

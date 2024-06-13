@@ -71,6 +71,8 @@
         "typeinfo": "cpp",
         "valarray": "cpp",
         "variant": "cpp",
-        "stb_vorbis.c": "cpp"
+        "stb_vorbis.c": "cpp",
+        "format": "cpp",
+        "locale": "cpp"
     }
 }

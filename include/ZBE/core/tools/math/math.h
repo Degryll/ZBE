@@ -56,7 +56,7 @@ static const uint64_t TIME_QUANTUM = 256;
 
 /** \brief This constant represent the proportion of time quantum in a second.
  */
-static const double TIME_QUANTUM_VALUE = (double)TIME_QUANTUM / SECOND;
+static const double TIME_QUANTUM_VALUE = static_cast<double>(TIME_QUANTUM / SECOND);
 
 /** \brief This constant represent the minimal amount of bits that will be used as precision.
  */

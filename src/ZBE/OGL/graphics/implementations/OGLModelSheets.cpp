@@ -40,8 +40,8 @@ OGLModel SimpleOGLModelSheet::generateModel(std::shared_ptr<MAvatar<uint64_t, do
   glm::vec3 glPos(pos.x, pos.y, pos.z);
   Vector3D dir = avatar->get<2, Vector3D>()->get();
   glm::vec3 glDir(dir.x, dir.y, dir.z);
-  float angle = (float) avatar->get<3, double>()->get();
-  float baseScale = (float) avatar->get<4, double>()->get();;
+  float angle = static_cast<float>(avatar->get<3, double>()->get());
+  float baseScale = static_cast<float>(avatar->get<4, double>()->get());
   glm::mat4 mat(1.0);
 
   glm::mat4 translate = glm::translate(mat, glPos);
@@ -95,7 +95,7 @@ OGLModel LookAtOGLModelSheet::generateModel(std::shared_ptr<MAvatar<uint64_t, do
   glm::vec3 glNor(nor.x, nor.y, nor.z);
   glm::vec3 glDir(dir.x, dir.y, dir.z);
 
-  float baseScale = (float) avatar->get<4, double>()->get();;
+  float baseScale = static_cast<float>(avatar->get<4, double>()->get());
   glm::mat4 mat(1.0);
 
   glm::mat4 translate = glm::translate(glm::mat4(1.0f), glPos);
@@ -114,7 +114,7 @@ OGLModel LookAtOGLModelSheet::generateModel(std::shared_ptr<MAvatar<uint64_t, do
   });
 
 
-  glm::mat4 rotate90  = glm::rotate(glm::mat4(1.0f), -(float)PI/2.0f, glm::vec3(1.0,0.0,0.0));
+  glm::mat4 rotate90  = glm::rotate(glm::mat4(1.0f), -static_cast<float>(PI/2.0f), glm::vec3(1.0,0.0,0.0));
 
   //glm::mat4 rotate(1.0f);
 
