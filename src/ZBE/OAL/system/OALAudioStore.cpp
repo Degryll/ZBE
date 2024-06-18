@@ -9,7 +9,7 @@
  */
 
 #include "ZBE/OAL/system/OALAudioStore.h"
-#include <stb_vorbis.c>
+#include <stb_vorbis.h>
 
 namespace zbe {
 
@@ -47,7 +47,7 @@ uint64_t OALAudioStore::reloadAudio(const char *url, uint64_t id) {
   return id;
 }
 
-ALuint OALAudioStore::getAudio(uint64_t id) {
+ALuint OALAudioStore::getAudio(uint64_t id) const {
   return audioCollection[id];
 }
 
@@ -82,7 +82,7 @@ ALuint OALAudioStore::_loadAudio(const char *url) {
 	}
 
   ALuint buffer = 0;
-  alGenBuffers((ALuint)1, &buffer);
+  alGenBuffers(static_cast<ALuint>(1), &buffer);
 
   if(checkErrors("generating buffer")) {
     free(data);

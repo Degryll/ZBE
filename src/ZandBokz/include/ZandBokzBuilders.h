@@ -33,7 +33,7 @@ namespace zandbokz {
 class Triangle3Dto2DCacheBldr : public zbe::Funct<void, std::shared_ptr<zbe::Entity>> {
 public:
  void operator()(std::shared_ptr<zbe::Entity> entity) {
-    float baseScale = (float)entity->getDouble(sizeIdx)->get();
+    float baseScale = static_cast<float>(entity->getDouble(sizeIdx)->get());
     // Calculate plane
     glm::mat4 mat(1.0);
     glm::vec3 glPos(0.0, 0.0, 0.0);

@@ -109,6 +109,7 @@ target_link_libraries(ZBE_LIB PRIVATE myproject_options myproject_warnings SDL3:
 
 target_include_directories(ZBE_LIB ${WARNING_GUARD} PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
                                                                   $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>)
+target_include_directories(ZBE_LIB PRIVATE ${PROJECT_SOURCE_DIR}/extlibs/stb)
 
 target_compile_features(ZBE_LIB PUBLIC cxx_std_20)
 

@@ -14,7 +14,6 @@
 
 #include <cstdio>
 
-#include <GL/glew.h>
 #include <nlohmann/json.hpp>
 
 #include "ZBE/core/tools/math/math.h"

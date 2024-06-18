@@ -12,7 +12,6 @@
 
 #include <string>
 
-#include <GL/glew.h>
 
 #include <nlohmann/json.hpp>
 

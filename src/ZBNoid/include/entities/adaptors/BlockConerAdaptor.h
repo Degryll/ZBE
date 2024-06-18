@@ -40,7 +40,7 @@ class BlockConerAdaptor : public zbe::Adaptor<zbe::Interactioner<R> > {
       roSB(nullptr), roSBB(nullptr) {
     std::shared_ptr<zbe::Element2D<R> > ent = e.lock();
     std::shared_ptr<zbe::WeakAvatarEntityContainer<zbe::Avatar, zbe::Positionable<2>, zbe::Stated> > aeContainer = std::make_shared<zbe::WeakAvatarEntityContainer<zbe::Avatar, zbe::Positionable<2>, zbe::Stated> >(ent);
-    zbe::AABB2D aabb({(double)ent->getX(), (double)ent->getY()}, {(double)ent->getX()+ent->getW(), (double)ent->getY()+ent->getH()});
+    zbe::AABB2D aabb({static_cast<double>(ent->getX()), static_cast<double>(ent->getY())}, {static_cast<double>(ent->getX()+ent->getW()), (double)ent->getY()+ent->getH()});
     std::shared_ptr<zbe::StaticSolidAABB2D > cObject(new zbe::StaticSolidAABB2D(aabb));
 
     std::shared_ptr<zbe::WeakAvatarEntityContainer<Solid, Breakable> > weakAECSB = std::make_shared<zbe::WeakAvatarEntityContainer<Solid, Breakable> >(aeSolid, aeBreak);

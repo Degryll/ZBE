@@ -63,12 +63,12 @@ public:
      *  \return an OAL buffer id.
      *  \sa loadImg(), storeTexture()
      */
-    ALuint getAudio(uint64_t id);
+    ALuint getAudio(uint64_t id) const;
 
 private:
 
-    bool checkErrors(const char *job);
-    void logOALError(const char *job, std::string error);
+    static bool checkErrors(const char *job);
+    static void logOALError(const char *job, std::string error);
 
     ALuint _loadAudio(const char *url);
 

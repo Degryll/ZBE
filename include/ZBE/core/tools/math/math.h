@@ -60,7 +60,7 @@ static const double TIME_QUANTUM_VALUE = static_cast<double>(TIME_QUANTUM / SECO
 
 /** \brief This constant represent the minimal amount of bits that will be used as precision.
  */
-static const int64_t ROUND_MASK = -TIME_QUANTUM;
+static const uint64_t ROUND_MASK = std::numeric_limits<uint64_t>::max() - (TIME_QUANTUM - 1); //-static_cast<int64_t>(TIME_QUANTUM);
 
 /** \brief Transforms the received time from ZBE time units to miliseconds.
  * \param time Time to convert.

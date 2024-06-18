@@ -20,7 +20,6 @@
 #include <string>
 #include <cstdint>
 
-#include <GL/glew.h>
 #include <nlohmann/json.hpp>
 //#include <GLFW/glfw3.h>
 //#include <glm/gtc/matrix_transform.hpp>
