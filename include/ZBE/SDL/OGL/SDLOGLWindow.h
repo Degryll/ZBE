@@ -201,7 +201,7 @@ public:
    *  \param window_flags Flags for the SDLOGLWindow creation. Default no flags.
    *  \param rederer_flags Flags for the Renderer creation. Default no flags.
    */
-  SDLOGLWindow(const char* title, int x, int y, int width, int height, Uint32 window_flags = 0, Uint32 renderer_flags = 0) : SDLWindow(title, x, y, width, height, window_flags | SDL_WINDOW_OPENGL, renderer_flags), glContext(SDL_GL_CreateContext(getSDL_Window())), texStore(), modelStore(), shaderStore(){
+  SDLOGLWindow(const char* title, int x, int y, int width, int height, Uint32 window_flags = 0, Uint32 renderer_flags = 0) : SDLWindow(title, x, y, width, height, window_flags | SDL_WINDOW_OPENGL, renderer_flags), glContext(SDL_GL_CreateContext(getSDL_Window())), texStore(), modelStore(), shaderStore() {
     createGLContext();
   }
 
@@ -218,7 +218,7 @@ public:
   /** \brief Creates the widnows (use only width empty constructor and setters)
    *  \sa setTitle, setX, setY, setWidth, setHeight, setWindow_flags
    */
-  void run() {
+  void run() override {
     SDLWindow::run();
     glContext = SDL_GL_CreateContext(getSDL_Window());
     createGLContext();

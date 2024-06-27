@@ -32,7 +32,7 @@ class ZBEAPI SimpleBounceable : public Bounceable{
     /** \brief Return the bounce factor.
      * \return The bounce factor.
      */
-    double getFactor(){return factor;}
+    double getFactor() {return factor;}
 
   private:
     double factor;

@@ -122,7 +122,7 @@ public:
   /** \brief Creates the widnows (use only width empty constructor and setters)
    *  \sa setTitle, setX, setY, setWidth, setHeight, setWindow_flags
    */
-  void run();
+  void run() override;
 
   /** \brief internal SDLImageStore getter
    */
@@ -238,10 +238,10 @@ protected:
   /** \brief Checks if the window is correctly created
    */
   void checkWidowCreation() {
-    if (window == nullptr){
+    if (window == nullptr) {
       zbe::SysError::setError(std::string("ERROR: SDL could not create a SDLWindow! SDL ERROR: ") + SDL_GetError());
     }
-    if (renderer == nullptr){
+    if (renderer == nullptr) {
       SDL_DestroyWindow(window);
       zbe::SysError::setError(std::string("ERROR: SDL could not create a renderer! SDL ERROR: ") + SDL_GetError());
     }

@@ -39,7 +39,7 @@ namespace zbe {
 
       /** \brief Runs the daemon.
        */
-      void run();
+      void run() override;
 
     private:
       zbe::SDLEventDispatcher& sdlEventDist;

@@ -35,7 +35,7 @@ public:
   /** \brief Parametrized constructor.
       \param limit Limit below which the entity will be killed.
    */
-  StateLTEraser(int64_t limit) : limit(limit){}
+  StateLTEraser(int64_t limit) : limit(limit) {}
 
   /** \brief Sets the limit, any avatar with state bellow this limit will be erased.
    */
@@ -45,7 +45,7 @@ public:
    */
   void apply(std::shared_ptr<SAvatar<int64_t> > avatar) override {
     auto state = avatar->get<1, int64_t>();
-    if((*state).get() < limit){
+    if((*state).get() < limit) {
       avatar->setERASED();
     }
   }

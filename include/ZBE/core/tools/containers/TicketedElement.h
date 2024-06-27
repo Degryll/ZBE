@@ -35,13 +35,13 @@ public:
    */
   inline std::shared_ptr<T> getElement() {return (e);}
 
-  inline void setACTIVE()   {s = ACTIVE;}    //!< Set the state as ACTIVE.
-  inline void setINACTIVE() {s = INACTIVE;}  //!< Set the state as INACTIVE.
-  inline void setERASED()   {s = ERASED;}  //!< Set the state as ERASED.
+  inline void setACTIVE() override   {s = ACTIVE;}    //!< Set the state as ACTIVE.
+  inline void setINACTIVE() override {s = INACTIVE;}  //!< Set the state as INACTIVE.
+  inline void setERASED() override   {s = ERASED;}  //!< Set the state as ERASED.
 
-  inline void setState(State state) {s = state;}  //!< Set the state as state.
+  inline void setState(State state) override {s = state;}  //!< Set the state as state.
 
-  inline void toggle() {
+  inline void toggle() override {
     if(s == ACTIVE) {
       s = INACTIVE;
     } else if(s == INACTIVE) {
@@ -49,12 +49,12 @@ public:
     }
   }  //!< Set the state as state.
 
-  inline bool isACTIVE()    {return (s == ACTIVE);}    //!< True if state is ACTIVE.
-  inline bool isNotACTIVE() {return (s != ACTIVE);}    //!< True if state is not ACTIVE, either INACTIVE or ERASED.
-  inline bool isINACTIVE()  {return (s == INACTIVE);}  //!< True if state is INACTIVE.
-  inline bool isERASED()    {return (s == ERASED);}    //!< True if state is ERASED.
+  inline bool isACTIVE() override    {return (s == ACTIVE);}    //!< True if state is ACTIVE.
+  inline bool isNotACTIVE() override {return (s != ACTIVE);}    //!< True if state is not ACTIVE, either INACTIVE or ERASED.
+  inline bool isINACTIVE() override  {return (s == INACTIVE);}  //!< True if state is INACTIVE.
+  inline bool isERASED() override    {return (s == ERASED);}    //!< True if state is ERASED.
 
-  inline State getState() {return (s);}  //!< Return the state of the ticket.
+  inline State getState() override {return (s);}  //!< Return the state of the ticket.
 
 private:
 

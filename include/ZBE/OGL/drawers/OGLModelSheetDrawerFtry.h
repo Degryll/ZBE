@@ -72,10 +72,10 @@ void OGLModelSheetDrawerFtry<idx, T, Ts...>::setup(std::string name, uint64_t cf
 
   if(cfg) {
     auto j = *cfg;
-    if (j["window"].is_string()){
+    if (j["window"].is_string()) {
      std::string windowName = j["window"].get<std::string>();
      auto w = windowRsrc.get("SDLOGLWindow."s + windowName);
-       if (j["programId"].is_string()){
+       if (j["programId"].is_string()) {
          std::string pidName = j["programId"].get<std::string>();
          auto p = uintStore.get(pidName);
          auto ssd = oGLMSDrawerRsrc.get("OGLMSDrawer."s + name);

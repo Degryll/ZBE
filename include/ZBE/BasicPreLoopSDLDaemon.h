@@ -51,7 +51,7 @@ namespace zbe {
 
       /** \brief Runs the daemon.
        */
-      void run();
+      void run() override;
 
     private:
       std::shared_ptr<zbe::SDLWindow> window;

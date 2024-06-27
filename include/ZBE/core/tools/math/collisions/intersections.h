@@ -139,7 +139,7 @@ ZBEAPI bool intersectionSphereAABB3D(Sphere sphere, AABB<3> box);
 template <unsigned dim>
 bool intersectionPointAABB(Point<dim> point, AABB<dim> box) {
   for(unsigned i = 0; i < dim; i++) {
-    if (point[i]<box.minimum[i] || point[i]>box.maximum[i]){
+    if (point[i]<box.minimum[i] || point[i]>box.maximum[i]) {
       return false;
     }
   }
@@ -604,7 +604,7 @@ double distancePointTriangle(Point<dim>& point, Triangle<dim> triangle, Point<di
         if (t < ZERO) { // region 4
             if (b0 < ZERO) {
                 t = ZERO;
-                if (-b0 >= a00){
+                if (-b0 >= a00) {
                     s = ONE;
                 } else {
                     s = -b0 / a00;

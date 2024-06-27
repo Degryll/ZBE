@@ -40,7 +40,7 @@ public:
 
   /** \brief It will Load the factories calling the load method.
   */
-  void run() {
+  void run() override {
     load();
   };
 

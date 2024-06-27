@@ -40,7 +40,7 @@ public:
 
   /** \brief It will run the Daemons and deactivate it.
    */
-  void run() {
+  void run() override {
     d->run();
     t->setINACTIVE();
   }

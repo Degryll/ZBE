@@ -55,32 +55,32 @@ struct AvatarImp : virtual public Avatar {
   /** \brief Change the state of this avatar in the list identified by id to INACTIVE.
    *  \param id Id to identify the list.
    */
-  void setINACTIVE(uint64_t id){
+  void setINACTIVE(uint64_t id) {
       e->setINACTIVE(id);
   }
 
   /** \brief Change the state of this avatar in the list identified by id to ACTIVE.
    *  \param id Id to identify the list.
    */
-  void setERASED(uint64_t id){
+  void setERASED(uint64_t id) {
       e->setERASED(id);
   }
 
   /** \brief Change the state of this avatar for all list to ACTIVE.
    */
-  void setACTIVE(){
+  void setACTIVE() {
       e->setACTIVE();
   }
 
   /** \brief Change the state of this avatar for all list to INACTIVE.
    */
-  void setINACTIVE(){
+  void setINACTIVE() {
       e->setINACTIVE();
   }
 
   /** \brief Change the state of this avatar for all list to ERASED.
    */
-  void setERASED(){
+  void setERASED() {
       e->setERASED();
   }
 

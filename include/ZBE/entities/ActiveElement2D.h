@@ -109,7 +109,7 @@ template<typename R>
 class CActiveElement2D : public Countable<int64_t>, public ActiveElement2D<R> {
 public:
   CActiveElement2D(std::shared_ptr<Value<int64_t> > ninstances, Point2D position, Vector2D velocity, uint64_t actuatorsList, uint64_t collisionersList, int64_t width, int64_t height, uint64_t graphics)
-    : Countable<int64_t>(ninstances), ActiveElement2D<R>(position, velocity, actuatorsList, collisionersList, width, height,  graphics){}
+    : Countable<int64_t>(ninstances), ActiveElement2D<R>(position, velocity, actuatorsList, collisionersList, width, height,  graphics) {}
 };
 
 } // namespace zbe

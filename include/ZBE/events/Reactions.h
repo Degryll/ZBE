@@ -149,7 +149,7 @@ private:
 template<typename IData, typename Trait>
 class DaemonRctBldr : public Funct<std::shared_ptr<Funct<void, IData, Trait>>, std::shared_ptr<Entity>> {
 public:
-std::shared_ptr<Funct<void, IData, Trait>> operator()(std::shared_ptr<Entity>){
+std::shared_ptr<Funct<void, IData, Trait>> operator()(std::shared_ptr<Entity>) {
   return std::make_shared<DaemonRct<IData, Trait>>(dmn);
 }
 
@@ -163,7 +163,7 @@ std::shared_ptr<Daemon> dmn {};
 template<typename IData, typename Trait>
 class TicketActivatorRctBldr : public Funct<std::shared_ptr<Funct<void, IData, Trait>>, std::shared_ptr<Entity>> {
 public:
-std::shared_ptr<Funct<void, IData, Trait>> operator()(std::shared_ptr<Entity> ent){
+std::shared_ptr<Funct<void, IData, Trait>> operator()(std::shared_ptr<Entity> ent) {
   auto avt = std::make_shared<BaseAvatar>(ent);
   auto tar = std::make_shared<TicketActivatorRct<IData, Trait>>(avt);
   tar->setTicketList(list);
@@ -180,7 +180,7 @@ std::forward_list<uint64_t> list {};
 template<typename IData, typename Trait>
 class TicketDeactivatorRctBldr : public Funct<std::shared_ptr<Funct<void, IData, Trait>>, std::shared_ptr<Entity>> {
 public:
-std::shared_ptr<Funct<void, IData, Trait>> operator()(std::shared_ptr<Entity> ent){
+std::shared_ptr<Funct<void, IData, Trait>> operator()(std::shared_ptr<Entity> ent) {
   auto avt = std::make_shared<BaseAvatar>(ent);
   auto tar = std::make_shared<TicketDeactivatorRct<IData, Trait>>(avt);
   tar->setTicketList(list);
@@ -199,7 +199,7 @@ template<typename IData, typename ValueType, unsigned n>
 
 class StoreValuesRctBldr : public Funct<std::shared_ptr<Funct<void, IData, std::array<std::shared_ptr<Value<ValueType>>, n>>>, std::shared_ptr<Entity>> {
 public:
-std::shared_ptr<Funct<void, IData, std::array<std::shared_ptr<Value<ValueType>>, n>>> operator()(std::shared_ptr<Entity> ent){
+std::shared_ptr<Funct<void, IData, std::array<std::shared_ptr<Value<ValueType>>, n>>> operator()(std::shared_ptr<Entity> ent) {
   auto avt = std::make_shared<AwareAvatar>(ent);
   auto tar = std::make_shared<StoreValuesRct<IData, ValueType, n>>(avt);
   tar->setDestinyList(dest);
@@ -397,7 +397,7 @@ private:
 template<typename IData, typename Trait>
 class MultiRctBldr : public Funct<std::shared_ptr<Funct<void, IData, Trait>>, std::shared_ptr<Entity>> {
 public:
-  std::shared_ptr<Funct<void, IData, Trait>> operator()(std::shared_ptr<Entity> ent){
+  std::shared_ptr<Funct<void, IData, Trait>> operator()(std::shared_ptr<Entity> ent) {
   auto mr = std::make_shared<MultiRct<IData, Trait>>();
     for(auto builder : bldrs) {
       auto rct = (*builder)(ent);
@@ -478,7 +478,7 @@ template<typename IData, typename Trait>
 class PrintfRctBldr : public Funct<std::shared_ptr<Funct<void, IData, Trait>>, std::shared_ptr<Entity>> {
 public:
   PrintfRctBldr() : msg("Interaction") {};
-  std::shared_ptr<Funct<void, IData, Trait>> operator()(std::shared_ptr<Entity>){
+  std::shared_ptr<Funct<void, IData, Trait>> operator()(std::shared_ptr<Entity>) {
     return std::make_shared<PrintfRct<IData, Trait>>(msg);
   }
 

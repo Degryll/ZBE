@@ -82,14 +82,14 @@
 //   /** \brief It will look for interaction events occurred within the available
 //    *  time and it will send them to the EventStore.
 //    */
-//   void run();
+//   void run() override;
 
 // protected:
 //   /** \brief Stores both events in the EventStore
 //    * \param a Interaction event from entity a
 //    * \param a Interaction event from entity b
 //    */
-//   virtual void storeEvents(InteractionEvent<R>* a, InteractionEvent<R>* b){
+//   virtual void storeEvents(InteractionEvent<R>* a, InteractionEvent<R>* b) {
 //     es.storeEvent(a);
 //     es.storeEvent(b);
 //   }
@@ -151,7 +151,7 @@
 
 //   /** \brief Empty constructor.
 //    */
-//   InstantInteractionEventGenerator(): InteractionEventGenerator<R, IS, LN, LT>(){}
+//   InstantInteractionEventGenerator(): InteractionEventGenerator<R, IS, LN, LT>() {}
 
 //   /** \brief Parametrized Constructor.
 //    * \param list The list id of interactionators.
@@ -160,14 +160,14 @@
 //    *  selector chooses how to check the interacion according to the types of the
 //    *  participants in the interaction.
 //    */
-//   InstantInteractionEventGenerator(uint64_t list, int eventId, std::shared_ptr<IS> is): InteractionEventGenerator<R, IS, LN, LT>(list, eventId, is){}
+//   InstantInteractionEventGenerator(uint64_t list, int eventId, std::shared_ptr<IS> is): InteractionEventGenerator<R, IS, LN, LT>(list, eventId, is) {}
 
 // protected:
 //   /** \brief Stores both events in the EventStore
 //    * \param a Interaction event from entity a view
 //    * \param a Interaction event from entity b view
 //    */
-//   void storeEvents(InteractionEvent<R>* a, InteractionEvent<R>* b){
+//   void storeEvents(InteractionEvent<R>* a, InteractionEvent<R>* b) {
 //     this->es.storeInstantEvent(a);
 //     this->es.storeInstantEvent(b);
 //   }

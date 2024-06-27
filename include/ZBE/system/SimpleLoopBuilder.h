@@ -21,7 +21,7 @@ namespace zbe {
 
 class ZBEAPI SimpleEventDistpacher : public Daemon {
 
-void run() {
+void run() override {
   SDLEventDispatcher::getInstance().run();
 }
 

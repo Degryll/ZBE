@@ -108,7 +108,7 @@ private:
       && ((std::is_floating_point<T>::value && value.at(0).is_number_float())
          ||(std::is_integral<T>::value && value.at(0).is_number_integer())
          ||(std::is_same<T, bool>::value && value.at(0).is_boolean())
-         ||(std::is_same<T, std::string>::value && value.at(0).is_string()))){
+         ||(std::is_same<T, std::string>::value && value.at(0).is_string()))) {
       return std::make_shared<SimpleValue<T> >(value.at(0).get<T>());
     } else if((std::is_floating_point<T>::value && value.is_number_float())
          ||(std::is_integral<T>::value && value.is_number_integer())
@@ -126,7 +126,7 @@ private:
         auto id = uintStore.get(item.key());
         e->set<T>(id, parseSingleValue(item.value(), valueRsrc, literalStore));
         // por si generalizamos
-        // if (item.value().is_array() && item.value().size() > 1){
+        // if (item.value().is_array() && item.value().size() > 1) {
         //   e.set<T>(id, parseMultiValue<T, item.value().size()>(item.value(), valueRsrc));
         // } else {
         //   e.set<T>(id, parseSingleValue(item.value(), valueRsrc));

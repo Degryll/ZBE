@@ -50,7 +50,7 @@ class FixedValueSetterDmn : virtual public zbe::Daemon {
       this->fixed = fixed;
     }
 
-    void run() {
+    void run() override {
       // for(auto it = list.begin(); it != list.end(); ++it) {
       //   (*it)->run();
       // }

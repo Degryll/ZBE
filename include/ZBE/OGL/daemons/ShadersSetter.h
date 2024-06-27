@@ -44,7 +44,7 @@ public:
 
   /** \brief Do the actual Daemon job.
    */
-  void run() {
+  void run() override {
     glUseProgram(gProgramID);
 
 // glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
@@ -84,7 +84,7 @@ public:
 
   /** \brief Do the actual Daemon job.
    */
-  void run() {
+  void run() override {
     glClear(GL_DEPTH_BUFFER_BIT);
     glUseProgram(gProgramID);
   }

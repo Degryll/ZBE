@@ -38,7 +38,7 @@ public:
 
   ~BallAcceleratorItem(){}
 
-  void run(){
+  void run() override {
     for(auto ball : (*ballList)) {
       zbe::Movable<2>* movable;
       assignAvatar((std::shared_ptr<zbe::AvatarEntityContainer<zbe::Movable<2> > >)ball,&movable);

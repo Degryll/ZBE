@@ -56,7 +56,7 @@ public:
 
   /** \brief Runs the daemon.
    */
-  void run() {
+  void run() override {
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     SDL_GL_SwapWindow(window->getSDL_Window());

@@ -148,7 +148,7 @@ private:
         && ((std::is_floating_point<T>::value && cfgValue.at(0).is_number_float())
            ||(std::is_integral<T>::value && cfgValue.at(0).is_number_integer())
            ||(std::is_same<T, bool>::value && cfgValue.at(0).is_boolean())
-           ||(std::is_same<T, std::string>::value && cfgValue.at(0).is_string()))){
+           ||(std::is_same<T, std::string>::value && cfgValue.at(0).is_string()))) {
         ent->set<T>(id, std::make_shared<zbe::SimpleValue<T> >(cfgValue.at(0).get<T>()));
       } else if((std::is_floating_point<T>::value && cfgValue.is_number_float())
            ||(std::is_integral<T>::value && cfgValue.is_number_integer())
@@ -1076,7 +1076,7 @@ public:
   using TraitFunct = Funct<void, Reactor<IData, Trait>*, IData>;
   using SubBuild = Funct<std::shared_ptr<TraitFunct>, std::shared_ptr<Entity>>;
 
-  _ActorBldr() : sb(std::make_shared<WrapperFunct<std::shared_ptr<TraitFunct>,std::shared_ptr<Entity>>>([](std::shared_ptr<Entity>){
+  _ActorBldr() : sb(std::make_shared<WrapperFunct<std::shared_ptr<TraitFunct>,std::shared_ptr<Entity>>>([](std::shared_ptr<Entity>) {
                     return std::make_shared<WrapperFunct<void, Reactor<IData, Trait>*, IData>>(Actor<IData, Trait>::noAct);
                 })) {
 
@@ -1226,7 +1226,7 @@ class ShapeBldr : public Funct<std::shared_ptr<Shape<Shapes...>>, std::shared_pt
 public:
   using SubBuild = Funct<std::shared_ptr<SAvatar<S>>, std::shared_ptr<Entity>>;
 
-  ShapeBldr() : sb(std::make_shared<WrapperFunct<std::shared_ptr<SAvatar<S>>, std::shared_ptr<Entity>>>([](std::shared_ptr<Entity>){assert(false); return nullptr;})) {}
+  ShapeBldr() : sb(std::make_shared<WrapperFunct<std::shared_ptr<SAvatar<S>>, std::shared_ptr<Entity>>>([](std::shared_ptr<Entity>) {assert(false); return nullptr;})) {}
   ~ShapeBldr() = default;
 
   std::shared_ptr<Shape<Shapes...>> operator()(std::shared_ptr<Entity> ent) {
@@ -1538,7 +1538,7 @@ private:
         && ((std::is_floating_point<T>::value && cfgValue.at(0).is_number_float())
            ||(std::is_integral<T>::value && cfgValue.at(0).is_number_integer())
            ||(std::is_same<T, bool>::value && cfgValue.at(0).is_boolean())
-           ||(std::is_same<T, std::string>::value && cfgValue.at(0).is_string()))){
+           ||(std::is_same<T, std::string>::value && cfgValue.at(0).is_string()))) {
         es->setNewValue<T>(id, cfgValue.at(0).get<T>());
       } else if((std::is_floating_point<T>::value && cfgValue.is_number_float())
            ||(std::is_integral<T>::value && cfgValue.is_number_integer())

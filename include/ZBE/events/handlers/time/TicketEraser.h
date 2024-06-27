@@ -27,12 +27,12 @@ class ZBEAPI TicketEraser : public TimeHandler {
 
     /** brief Empty constructor
      */
-  	TicketEraser(): t(nullptr){}
+  	TicketEraser(): t(nullptr) {}
 
     /** brief Parametrized constructor
      * param ticket Ticket to be erased
      */
-  	TicketEraser(std::shared_ptr<Ticket> ticket): t(ticket){}
+  	TicketEraser(std::shared_ptr<Ticket> ticket): t(ticket) {}
 
   	void setTicket(std::shared_ptr<Ticket> ticket) {t = ticket;}
 

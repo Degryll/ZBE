@@ -57,7 +57,7 @@ public:
 
   /** \brief Runs the daemon.
    */
-  void run();
+  void run() override;
 
 private:
   zbe::RsrcStore<SDLWindow>& rs = zbe::RsrcStore<SDLWindow>::getInstance();

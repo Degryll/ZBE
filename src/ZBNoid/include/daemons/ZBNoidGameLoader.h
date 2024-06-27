@@ -29,7 +29,7 @@ namespace zombienoid {
 
       ~ZBNoidGameLoader() {}
 
-      void run();
+      void run() override;
 
     private:
       std::shared_ptr<RsrcIDDictionary> rsrcIDDic;

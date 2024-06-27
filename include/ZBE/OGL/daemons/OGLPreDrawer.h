@@ -44,7 +44,7 @@ public:
 
   /** \brief Do the actual Daemon job.
    */
-  void run();
+  void run() override;
 
   void setProgram(std::shared_ptr<SDLOGLWindow> window, uint64_t programId) {
     gProgramID = window->getShaderStore()->getShader(programId);

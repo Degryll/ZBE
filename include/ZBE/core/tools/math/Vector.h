@@ -386,7 +386,7 @@ class _VECTOR {
      * \param normal Vector normal to the collision plane.
      * \return Vector with the ray or object path reflected.
      */
-    friend _VECTOR reflect(_VECTOR ray, const _VECTOR &normal){
+    friend _VECTOR reflect(_VECTOR ray, const _VECTOR &normal) {
         return ray.reflect(normal);
     };
 
@@ -396,7 +396,7 @@ class _VECTOR {
      * \param rhs second Vector.
      * \return True if both _VECTOR are equal. False otherwise.
      */
-    friend bool operator==(const _VECTOR& lhs, const _VECTOR& rhs){
+    friend bool operator==(const _VECTOR& lhs, const _VECTOR& rhs) {
       bool equal = true;
       for(unsigned i = 0; i < dim; i++ ) {
         equal &= almost_equal(lhs.data[i], rhs.data[i]);
@@ -409,7 +409,7 @@ class _VECTOR {
      * \param v the Vector.
      * \return True if _VECTOR is all zeroes
      */
-    friend bool isZero(const _VECTOR& v){
+    friend bool isZero(const _VECTOR& v) {
       bool iszero = true;
       for(unsigned i = 0; i < dim; i++ ) {
         iszero &= almost_equal(v.data[i], 0.0);

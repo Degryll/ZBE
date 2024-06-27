@@ -51,13 +51,13 @@ public:
 
   /** \brief Destructor.
    */
-  virtual ~Daemon(){};
+  virtual ~Daemon() {};
 };
 
 class CallDmn : public Daemon {
 public:
   CallDmn() : fs() {}
-  void run() {
+  void run() override {
     for(auto f : fs) {
       (*f)();
     }
@@ -79,7 +79,7 @@ public:
     mainRsrc.insert("Daemon."s + name, cdmn);
     specificRsrc.insert("CallDmn."s + name, cdmn);
   }
-  void setup(std::string name, uint64_t cfgId){
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);
@@ -108,7 +108,7 @@ private:
 template<typename F, typename L>
 class FunctOverAvtListDmn : public Daemon {
 public:
-  void run() {
+  void run() override {
     for(auto avt : *l) {
       (*f)(avt);
     }
@@ -136,7 +136,7 @@ public:
     mainRsrc.insert("Daemon."s + name, foald);
     specificRsrc.insert("FunctOverAvtListDmn."s + name, foald);
   }
-  void setup(std::string name, uint64_t cfgId){
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);
@@ -183,7 +183,7 @@ public:
 
   /** \brief It will run all Daemons added to this DaemonMaster.
    */
-  void run();
+  void run() override;
 
   /** \brief Add a Daemon to be run by this Daemon.
    *  The given Daemon will be stored by this Daemon and destroyed with it.
@@ -212,13 +212,13 @@ private:
 
 //   /** \brief It will run all Daemons added to this StatedDaemonMaster.
 //    */
-//   void run();
+//   void run() override;
 
 //   /** \brief Add a Daemon to be run by this Daemon.
 //    * \param value The value that contains the state that decides what daemon to run
 //    * \return void
 //    */
-//   void setValue(std::shared_ptr< Value<int64_t> > value){
+//   void setValue(std::shared_ptr< Value<int64_t> > value) {
 //     this->state = value;
 //   }
 
@@ -282,7 +282,7 @@ public:
    *    execute "post" daemon (usually do nothing): mean to clean up the frame.
    *  \sa stop(), EventStore::manage()
    */
-  void run();
+  void run() override;
 
   /** \brief Setter for the Pre-loop daemon.
    * \param daemon Pointer to the Daemon desired to be used.
@@ -359,21 +359,21 @@ public:
    */
   ~MainLoopExit() {}
 
-  void setMainLoop(std::shared_ptr<MainLoop> mainLoop){
+  void setMainLoop(std::shared_ptr<MainLoop> mainLoop) {
     this->mainLoop = mainLoop;
   }
 
-  void setValue(std::shared_ptr< Value<int64_t> > value){
+  void setValue(std::shared_ptr< Value<int64_t> > value) {
     this->value = value;
   }
 
-  void setExitValue(int64_t exitValue){
+  void setExitValue(int64_t exitValue) {
     this->exitValue = exitValue;
   }
 
   /** \brief End MainLoop and save given value.
    */
-  void run() {
+  void run() override {
     value->set(exitValue);
     mainLoop->stop();
   }
@@ -419,7 +419,7 @@ public:
 
   /** \brief It will run the Behavior over the entity list.
    */
-  void run();
+  void run() override;
 
 private:
   std::shared_ptr<P> punish;
@@ -427,7 +427,7 @@ private:
 };
 
 template<typename P, typename L>
-void PunisherDaemon<P, L>::run(){
+void PunisherDaemon<P, L>::run() {
   for(auto e : (*list)) {
     punish->apply(e);
   }
@@ -478,7 +478,7 @@ public:
 
   /** \brief It will run the contained daemons while "state" is positive.
    */
-  void run();
+  void run() override;
 
 private:
   std::unordered_map<int64_t, std::shared_ptr<Daemon> > daemons;
@@ -526,7 +526,7 @@ public:
 
   /** \brief It will run the contained daemons while "state" is positive.
    */
-  void run() {
+  void run() override {
     int64_t s = state->get();
     auto it = daemons.find(s);
     if(it != daemons.end()) {
@@ -547,7 +547,7 @@ public:
     mainRsrc.insert("Daemon."s + name, smd);
     specificRsrc.insert("StatedDaemon."s + name, smd);
   }
-  void setup(std::string name, uint64_t cfgId){
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);
@@ -588,7 +588,7 @@ public:
 
   /** \brief Do nothing.
    */
-  void run() {}
+  void run() override {}
 };
 
 /** \brief Daemon that does nothing.
@@ -598,7 +598,7 @@ public:
 
   /** \brief Do nothing.
    */
-  void run() {
+  void run() override {
     if(val->get() == condition) {
       daemon->run();
     }
@@ -641,7 +641,7 @@ public:
     mainRsrc.insert("Daemon."s + name, cid);
     specificRsrc.insert("ConditionalIntDaemon."s + name, cid);
   }
-  void setup(std::string name, uint64_t cfgId){
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);

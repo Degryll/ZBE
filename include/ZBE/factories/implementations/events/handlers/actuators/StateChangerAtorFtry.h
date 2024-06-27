@@ -81,7 +81,7 @@ void StateChangerSelfAtorFtry<T, R>::setup(std::string name, uint64_t cfgId) {
   auto j = *cfg;
     json state = j["state"];
     std::string stateName;
-    if(state.is_string()){
+    if(state.is_string()) {
       stateName = state.get<std::string>();
     } else {
       SysError::setError("StateChangerSelfAtorFtry state config "s + name + " is invalid or not present."s);

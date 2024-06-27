@@ -53,7 +53,7 @@ public:
       delete archetype;
   }
 
-  void run(){
+  void run() override {
     for(auto ball : (*ballList)) {
       zbe::Movable<2>* sample;
       assignAvatar((std::shared_ptr<zbe::AvatarEntityContainer<zbe::Movable<2> > >)ball,&sample);

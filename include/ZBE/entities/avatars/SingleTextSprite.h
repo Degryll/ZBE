@@ -26,7 +26,7 @@ public:
 
     /** \brief Virtual destructor.
      */
-    virtual ~SingleTextSprite(){}
+    virtual ~SingleTextSprite() {}
 
     /** \brief Text value for this sprite.
      *  \return the text value

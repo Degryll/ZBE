@@ -46,7 +46,7 @@ class EntityEraserTH : public TimeHandler {
     /** brief Parametrized constructor
      * param entity Entity to be erased
      */
-  	EntityEraserTH(std::shared_ptr<Entity> entity): e(entity){}
+  	EntityEraserTH(std::shared_ptr<Entity> entity): e(entity) {}
 
   	void setEntity(std::shared_ptr<Entity> entity) {e = entity;}
 
@@ -74,7 +74,7 @@ public:
     /** brief Parametrized constructor
      * param entity Entity to be erased
      */
-  	EntityEraserReaction(std::shared_ptr<Entity> entity): e(entity){}
+  	EntityEraserReaction(std::shared_ptr<Entity> entity): e(entity) {}
 
   	void setEntity(std::shared_ptr<Entity> entity) {e = entity;}
 
@@ -91,7 +91,7 @@ public:
 
 template<typename IData, typename Trait>
 class EntityEraserReactionBldr : public Funct<std::shared_ptr<Funct<void, IData, Trait>>, std::shared_ptr<Entity>> {
-  std::shared_ptr<Funct<void, IData, Trait>> operator()(std::shared_ptr<Entity> ent){
+  std::shared_ptr<Funct<void, IData, Trait>> operator()(std::shared_ptr<Entity> ent) {
     return std::make_shared<EntityEraserReaction<IData, Trait>>(ent);
   }
 };
@@ -122,7 +122,7 @@ public:
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId){
+  void setup(std::string name, uint64_t cfgId)  override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configStore.get(cfgId);

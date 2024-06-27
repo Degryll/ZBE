@@ -143,7 +143,7 @@ class ZBEAPI TimeEventGenerator : virtual public Daemon {
 
     /** \brief It will look for time events occurred within the available.
      */
-    void run();
+    void run() override;
 
   private:
     uint64_t eventId;

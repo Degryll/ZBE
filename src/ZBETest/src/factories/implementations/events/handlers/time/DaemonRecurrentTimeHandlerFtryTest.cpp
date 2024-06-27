@@ -33,7 +33,7 @@ class DummyDaemon : public zbe::Daemon {
 public:
   DummyDaemon(): runtimes(0){}
 
-  void run(){
+  void run() override {
     runtimes++;
   }
   uint64_t runtimes;

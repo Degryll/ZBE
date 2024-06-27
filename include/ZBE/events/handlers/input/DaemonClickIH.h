@@ -79,7 +79,7 @@ void setDaemon(std::shared_ptr<Daemon> daemon) {
  *  \param state input state.
  */
 void run(uint32_t, float state) {
-  if(!almost_equal(state, ZBE_KEYUP)){
+  if(!almost_equal(state, ZBE_KEYUP)) {
     return;
   }
   double x = xval->get();

@@ -30,7 +30,7 @@ public:
 
   /** \brief It will Load the system resources.
   */
-  void run() {
+  void run() override {
     load();
   };
 

@@ -51,7 +51,7 @@ public:
 
   /** \brief Runs the daemon.
    */
-  inline void run() {
+  inline void run() override {
     window->clear();
     sdlEventDist.run();
   }

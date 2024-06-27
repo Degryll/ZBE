@@ -31,7 +31,7 @@ class BasePositionable : virtual public Positionable<s> {
 
     /** \brief Virtual destructor.
      */
-    virtual ~BasePositionable(){}
+    virtual ~BasePositionable() {}
 
     /** \brief Builds this BasePositionable with a Position.
      */

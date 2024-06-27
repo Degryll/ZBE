@@ -38,7 +38,7 @@ public:
 	/** \brief set the Daemon to be called.
 	 *  \param daemon The Daemon.
 	 */
-  void setDaemon(std::shared_ptr<zbe::Value<std::string> > vc){
+  void setDaemon(std::shared_ptr<zbe::Value<std::string> > vc) {
 		this->vc = vc;
 	}
 

@@ -75,27 +75,27 @@ public:
   //     return Sprite(Region2D(), Region2D(), 0.0, 0);
   // }
 
-  void setSprite(int64_t index, SprtDef sd){
-    if(index >= 0 && index < size){
+  void setSprite(int64_t index, SprtDef sd) {
+    if(index >= 0 && index < size) {
       spriteDefintions[index]= sd;
     }
   }
 
-  void setSprite(int64_t index, ImgDef id){
-    if(index >= 0 && index < size){
+  void setSprite(int64_t index, ImgDef id) {
+    if(index >= 0 && index < size) {
       spriteDefintions[index]= SprtDef(id);
     }
   }
 
-  uint64_t getSize(){
+  uint64_t getSize() {
     return size;
   }
 
-  void setDefaultSprite(SprtDef sd){
+  void setDefaultSprite(SprtDef sd) {
     defaultSD = sd;
   }
 
-  void setDefaultSprite(ImgDef id){
+  void setDefaultSprite(ImgDef id) {
     defaultSD = SprtDef(id);
   }
 

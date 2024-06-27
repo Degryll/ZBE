@@ -37,7 +37,7 @@ public:
 
   /** \brief Virtual destructor
    */
-  virtual ~AvatarEntity(){}
+  virtual ~AvatarEntity() {}
 
   /** \brief Return the Entity's Avatar
    *  \param avatarPtr Direction of the pointer where the avatar will be stored.
@@ -77,7 +77,7 @@ public:
   /** \brief Set the adaptor that will be used to retrieve the Entity's Avatar.
    *  \param adaptor The adaptor.
    */
-  virtual void setAdaptor(std::shared_ptr< Adaptor<T> > adaptor){
+  virtual void setAdaptor(std::shared_ptr< Adaptor<T> > adaptor) {
     this->a = adaptor;
     this->template _setAdaptor<typename T::Base>();
   }
@@ -117,7 +117,7 @@ public:
 
   /** \brief On destruction, deletes the avatar
    */
-  virtual ~AvatarEntityFixed(){
+  virtual ~AvatarEntityFixed() {
     this->template _deleteAvatar<typename T::Base>();
   }
 
@@ -191,7 +191,7 @@ public:
 
   /** \brief Builds an AvatarEntityContainer from a shared_ptr to an AvatarEntityContainer of the specific type. This type can belong to an avatar hierarchy.
    */
-  AvatarEntityContainer(std::shared_ptr<AvatarEntityContainer<T> > aec) : AvatarEntityContainer<typename T::Base>(aec), aet(aec->get()){}
+  AvatarEntityContainer(std::shared_ptr<AvatarEntityContainer<T> > aec) : AvatarEntityContainer<typename T::Base>(aec), aet(aec->get()) {}
 
   /** \brief Builds an AvatarEntityContainer from a shared_ptr to an AvatarEntity of the specific type. This type can belong to an avatar hierarchy.
    */
@@ -238,7 +238,7 @@ public:
 
   /** \brief Empty Destructor
    */
-  ~AvatarEntityContainer(){}
+  ~AvatarEntityContainer() {}
 
 protected:
     template<typename T>
@@ -282,14 +282,14 @@ public:
   /** \brief Builds a WeakAvatarEntityContainer from a shared_ptr to an AvatarEntity of the specific type. This type can belong to an avatar hierarchy.
    */
   template <typename U = T>
-  WeakAvatarEntityContainer(std::weak_ptr<AvatarEntity<T> > aet, typename std::enable_if<!std::is_void<typename U::Base>::value>::type * = nullptr ) : aet(aet){
+  WeakAvatarEntityContainer(std::weak_ptr<AvatarEntity<T> > aet, typename std::enable_if<!std::is_void<typename U::Base>::value>::type * = nullptr ) : aet(aet) {
     _setAE(aet);
   }
 
   /** \brief Builds a WeakAvatarEntityContainer from a shared_ptr to an AvatarEntity of the specific type. This type will be the base type of its hierarchy.
    */
   template <typename U = T>
-  WeakAvatarEntityContainer(std::weak_ptr<AvatarEntity<T> > aet, typename std::enable_if<std::is_void<typename U::Base>::value, int>::type * = nullptr) : aet(aet){}
+  WeakAvatarEntityContainer(std::weak_ptr<AvatarEntity<T> > aet, typename std::enable_if<std::is_void<typename U::Base>::value, int>::type * = nullptr) : aet(aet) {}
 
   /** \brief Empty Destructor
    */
@@ -326,7 +326,7 @@ public:
 
   /** \brief Empty Destructor
    */
-  ~WeakAvatarEntityContainer(){}
+  ~WeakAvatarEntityContainer() {}
 
 };
 

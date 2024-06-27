@@ -30,7 +30,7 @@ public:
 
   /** \brief Virtual destructor.
    */
-  virtual ~Interactionator(){};
+  virtual ~Interactionator() {};
 
   /**  \brief Returns the global id of the list of Interactionables identify by an id.
     *  \param id Id to identify the list.

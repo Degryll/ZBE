@@ -204,7 +204,7 @@ class ZBEAPI InputEventGenerator : virtual public Daemon {
      * \param initTime Time from which events are generated
      * \param endTime Time until the events are generated
      */
-    void run();
+    void run() override;
     inline HandlerTicket addHandler(uint32_t inputId, std::shared_ptr<InputHandler> handler) {
       return mism.addHandler(inputId, handler);
     }

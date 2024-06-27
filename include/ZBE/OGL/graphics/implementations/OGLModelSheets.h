@@ -143,7 +143,7 @@ public:
     return OGLModel(vao, textures, mode, nvertex, type, offset, m, tx);
   }
 
-  void setSprite(SprtDef sd){
+  void setSprite(SprtDef sd) {
       spriteDefintion = sd;
       textures.push_back(window->getTextureStore()->getTexture(spriteDefintion.img.imgSrcId));
   }
@@ -220,7 +220,7 @@ public:
     return OGLModel(vao, textures, mode, nvertex, type, offset, m, tx);
   }
 
-  void setSprite(SprtDef sd){
+  void setSprite(SprtDef sd) {
       spriteDefintion = sd;
       textures.push_back(window->getTextureStore()->getTexture(spriteDefintion.img.imgSrcId));
   }

@@ -59,7 +59,7 @@ private:
 
   uint32_t getEquivalentToSDL(SDL_Keycode k) {return (k);}
 
-  bool tryKeyboardEvent(SDL_Event &event){
+  bool tryKeyboardEvent(SDL_Event &event) {
     if (event.type == SDL_KEYDOWN && event.key.repeat == 0) {
       setState(getEquivalentToSDL(event.key.keysym.sym), 1.0f, event.key.timestamp);
       return true;
@@ -73,17 +73,17 @@ private:
     return false;
   }
 
-  bool tryMouseEvent(SDL_Event &event){
+  bool tryMouseEvent(SDL_Event &event) {
     if (event.type == SDL_MOUSEBUTTONDOWN) {
       setMouseButtonState(event, 1.0f);
       return true;
     } else if (event.type == SDL_MOUSEBUTTONUP) {
       setMouseButtonState(event, 0.0f);
       return true;
-    } else if (event.type == SDL_MOUSEWHEEL){
+    } else if (event.type == SDL_MOUSEWHEEL) {
       setMouseWheelState(event);
       return true;
-    } else if (event.type == SDL_MOUSEMOTION){
+    } else if (event.type == SDL_MOUSEMOTION) {
       setMouseCoordsState(event);
       return true;
     }

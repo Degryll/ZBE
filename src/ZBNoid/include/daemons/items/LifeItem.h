@@ -24,7 +24,7 @@ namespace zombienoid {
 class LifeItem : public zbe::Daemon {
 public:
   LifeItem(std::shared_ptr<zbe::Value<int64_t> > lifes, int64_t amount): l(lifes), amount(amount) {}
-  void run(){
+  void run() override {
       l->add(amount);
   }
 

@@ -80,7 +80,7 @@ public:
 template<typename a, typename b, unsigned s>
 class NotIntersectFunctor {
 public:
-  bool operator()(std::shared_ptr<a> arg1, std::shared_ptr<b> arg2, uint64_t time, NewCollisionData<s> &data){
+  bool operator()(std::shared_ptr<a> arg1, std::shared_ptr<b> arg2, uint64_t time, NewCollisionData<s> &data) {
     return notIntersect(arg1, arg2, time, data);
   }
 };
@@ -93,7 +93,7 @@ bool sameHalfSpace(Point2D pl1, Point2D pl2, Point2D a, Point2D b) {
 }
 class MovingPoint2DTriangle2DFunctor {
 public:
-  bool operator()(std::shared_ptr<MovingPoint2D> movingpoint, std::shared_ptr<Triangle2D> triangle, uint64_t time, NewCollisionData<2> &data){
+  bool operator()(std::shared_ptr<MovingPoint2D> movingpoint, std::shared_ptr<Triangle2D> triangle, uint64_t time, NewCollisionData<2> &data) {
     NewCollisionData<2> bestData;
     bestData.time = time;
 

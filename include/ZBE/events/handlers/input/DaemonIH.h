@@ -38,14 +38,14 @@ public:
 	/** \brief set the Daemon to be called.
 	 *  \param daemon The Daemon.
 	 */
-  void setDaemon(std::shared_ptr<Daemon> daemon){
+  void setDaemon(std::shared_ptr<Daemon> daemon) {
 		this->d = daemon;
 	}
 
 	/** \brief set the Daemon to be called.
 	 *  \param daemon The Daemon.
 	 */
-  void setValue(float value){
+  void setValue(float value) {
 		this->value = value;
 	}
 
@@ -77,19 +77,19 @@ public:
   /** \brief Constructs a DaemonIH from a daemon.
 	 *  \param daemon daemon to be executed.
 	 */
-	ConditionalDaemonIH(std::shared_ptr<Daemon> daemon):d(daemon), value(1.0f), cValue(nullptr), cExpected(){}
+	ConditionalDaemonIH(std::shared_ptr<Daemon> daemon):d(daemon), value(1.0f), cValue(nullptr), cExpected() {}
 
 	/** \brief set the Daemon to be called.
 	 *  \param daemon The Daemon.
 	 */
-  void setDaemon(std::shared_ptr<Daemon> daemon){
+  void setDaemon(std::shared_ptr<Daemon> daemon) {
 		this->d = daemon;
 	}
 
 	/** \brief set the Daemon to be called.
 	 *  \param daemon The Daemon.
 	 */
-  void setValue(float value){
+  void setValue(float value) {
 		this->value = value;
 	}
 
@@ -137,12 +137,12 @@ public:
   /** \brief Constructs a DaemonIH from a daemon.
 	 *  \param daemon daemon to be executed.
 	 */
-	ConditionalCompositeIH(std::shared_ptr<InputHandler> ih): ih(ih), cValue(nullptr), cExpected(){}
+	ConditionalCompositeIH(std::shared_ptr<InputHandler> ih): ih(ih), cValue(nullptr), cExpected() {}
 
 	/** \brief set the InputHandler to be called.
 	 *  \param ih The InputHandler.
 	 */
-  void setInputHandler(std::shared_ptr<InputHandler> ih){
+  void setInputHandler(std::shared_ptr<InputHandler> ih) {
 		this->ih = ih;
 	}
 

@@ -144,7 +144,7 @@ public:
   // }
 
 protected:
-  //Actor(subAct sa) : sa(sa){  }
+  //Actor(subAct sa) : sa(sa) {  }
 
   void setAct(subAct sa) {
     this->sa = sa;
@@ -193,7 +193,7 @@ public:
 // template<typename IData, typename Trait, typename Base, typename ...Bases>
 // struct ReactionPrint {
 //   ReactionPrint(std::shared_ptr<zbe::MAvatar<Base, Bases...>> avt) : avt(avt) {}
-//   void operator() (IData data, Trait trait){
+//   void operator() (IData data, Trait trait) {
 //       std::cout << "Typeid name: " << typeid(trait).name() << " With value " << trait << std::endl;
 //       std::cout << "Interaction data: " << data << std::endl;
 //       auto val = zbe::AvtUtil::get<2, Base >(avt);
@@ -218,7 +218,7 @@ void imprimirNombreTipo() {
 
 template<typename IData, typename Trait>
 struct ReactionPrint : zbe::Funct<void, IData, Trait> {
-  void operator() (IData data, Trait trait){
+  void operator() (IData data, Trait trait) {
       imprimirNombreTipo<Trait>();
       //std::cout << "Interaction data: " << data << std::endl;
   }
@@ -227,7 +227,7 @@ struct ReactionPrint : zbe::Funct<void, IData, Trait> {
 template<typename IData, typename Trait, typename ReactionType>
 class ReactionBldr : public zbe::Funct<std::shared_ptr<zbe::Funct<void, IData, Trait>>, std::shared_ptr<zbe::Entity>> {
 public:
-  std::shared_ptr<zbe::Funct<void, IData, Trait>> operator()(std::shared_ptr<zbe::Entity> ent){
+  std::shared_ptr<zbe::Funct<void, IData, Trait>> operator()(std::shared_ptr<zbe::Entity> ent) {
     return std::make_shared<ReactionType>();
   }
 };
@@ -378,7 +378,7 @@ public:
     this->contextTime = contextTime;
   }
 
-  void run() {
+  void run() override {
     uint64_t timeLimit = contextTime->getRemainTime();
     for(auto iator : (*ators)) {
       getCollision(iator, timeLimit);

@@ -31,7 +31,7 @@ class UnStickyBar : public zbe::Daemon {
 public:
   UnStickyBar(std::shared_ptr<zbe::Daemon> endDaemon, std::shared_ptr<zbe::Value<int64_t> > itemState, int64_t endState)
     : endDaemon(endDaemon), itemState(itemState), endState(endState) {}
-  void run(){
+  void run() override {
     endDaemon->run();
     itemState->set(endState);
   }
@@ -50,7 +50,7 @@ public:
   StickyBarItem(std::shared_ptr<zbe::Daemon> initDaemon, std::shared_ptr<zbe::Daemon> endDaemon, std::shared_ptr<zbe::TimeEventGenerator> teg,
                 int64_t time, int64_t initState, int64_t endState, std::shared_ptr<zbe::Value<int64_t> > itemState)
     : initDaemon(initDaemon), endDaemon(endDaemon), teg(teg), time(time), initState(initState), endState(endState), itemState(itemState), timer(nullptr) {}
-  void run(){
+  void run() override {
     if(itemState->get() != initState) {
       itemState->set(initState);
       initDaemon->run();

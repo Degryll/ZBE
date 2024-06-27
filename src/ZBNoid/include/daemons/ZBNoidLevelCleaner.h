@@ -28,7 +28,7 @@ public:
   ZBNoidLevelCleaner() : demagnetizeDaemon(std::make_shared<zbe::BehaviorDaemon<zbe::TicketedFAEC<zbe::Positionable<2>, zbe::Avatar>, zbe::Avatar> >(std::make_shared<Demagnetizer>(ZBNCfg::BEHAVE_TICKET, ZBNCfg::MAGNET_TICKET), zbe::RsrcStore<zbe::TicketedFAEC<zbe::Positionable<2>, zbe::Avatar> >::getInstance().get(ZBNCfg::DEMAGNETIZE_LIST))) {}
   ~ZBNoidLevelCleaner() {}
 
-  void run();
+  void run() override;
 
 private:
   std::shared_ptr<zbe::Daemon> demagnetizeDaemon;

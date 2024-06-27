@@ -33,7 +33,7 @@ class ConsoleTextDrawer : public Behavior<uint64_t, std::string, int64_t, std::v
     /** \brief Empty constructor.
      */
     ConsoleTextDrawer()
-      : window(nullptr), textFontStore(nullptr){}
+      : window(nullptr), textFontStore(nullptr) {}
 
     /** \brief Create a new drawer in the given context.
      *  \param window A SDLwindow with its context.

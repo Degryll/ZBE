@@ -49,7 +49,7 @@ public:
 
   /** \brief Runs the daemon.
    */
-  void run() {
+  void run() override {
     window->present();
   }
 private:

@@ -70,7 +70,7 @@ void SpriteSheetSDLDrawerFtry<gidIdx, T, Ts...>::setup(std::string name, uint64_
 
   if(cfg) {
     auto j = *cfg;
-    if (j["window"].is_string()){
+    if (j["window"].is_string()) {
       std::string windowName = j["window"].get<std::string>();
       auto w = windowRsrc.get("SDLWindow."s + windowName);
 

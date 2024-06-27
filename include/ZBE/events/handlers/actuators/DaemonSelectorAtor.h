@@ -60,14 +60,14 @@ public:
    *  \param state State for which daemon will be executed.
    *  \param daemon The Daemon.
    */
-  void setDaemon(int64_t state, std::shared_ptr<Daemon> daemon){
+  void setDaemon(int64_t state, std::shared_ptr<Daemon> daemon) {
     daemons[state] = daemon;
   }
 
   /** \brief Set the daemon to use for as default.
    *  \param daemon The Daemon.
    */
-  void setDefault(std::shared_ptr<Daemon> daemon){
+  void setDefault(std::shared_ptr<Daemon> daemon) {
     defDaemon = daemon;
   }
 
@@ -112,14 +112,14 @@ public:
    *  \param state State for which daemon will be executed.
    *  \param daemon The Daemon.
    */
-  void setDaemon(int64_t state, std::shared_ptr<Daemon> daemon){
+  void setDaemon(int64_t state, std::shared_ptr<Daemon> daemon) {
     daemons[state] = daemon;
   }
 
   /** \brief Set the daemon to use for as default.
    *  \param daemon The Daemon.
    */
-  void setDefault(std::shared_ptr<Daemon> daemon){
+  void setDefault(std::shared_ptr<Daemon> daemon) {
     defDaemon = daemon;
   }
 
@@ -157,14 +157,14 @@ public:
    *  \param state State for which daemon will be executed.
    *  \param daemon The Daemon.
    */
-  void setDaemon(int64_t state, std::shared_ptr<Daemon> daemon){
+  void setDaemon(int64_t state, std::shared_ptr<Daemon> daemon) {
     daemons[state] = daemon;
   }
 
   /** \brief Set the daemon to use for as default.
    *  \param daemon The Daemon.
    */
-  void setDefault(std::shared_ptr<Daemon> daemon){
+  void setDefault(std::shared_ptr<Daemon> daemon) {
     defDaemon = daemon;
   }
 

@@ -37,7 +37,7 @@ class ConditionalEraserAtor: public zbe::Actuator<zbe::WeakAvatarEntityContainer
       InteractionTester* it;
       ro->get()->assignAvatar(&it);
       zbe::CollisionData * cd = zbe::Actuator<zbe::WeakAvatarEntityContainer<zbe::Avatar>, R>::getCollisionData();
-      if (it->test(cd)){
+      if (it->test(cd)) {
         zbe::Avatar * a;
         zbe::Actuator<zbe::WeakAvatarEntityContainer<zbe::Avatar>, R>::getCollisioner()->get()->assignAvatar(&a);
         a->setERASED();

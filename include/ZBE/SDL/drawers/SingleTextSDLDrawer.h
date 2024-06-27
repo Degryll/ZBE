@@ -33,7 +33,7 @@ class ZBEAPI SingleTextSDLDrawer : public Behavior<std::string, uint64_t, Vector
     /** \brief Empty constructor.
      */
     SingleTextSDLDrawer()
-      : window(nullptr), textFontStore(nullptr){}
+      : window(nullptr), textFontStore(nullptr) {}
 
     /** \brief Create a new drawer in the given context.
      *  \param window A SDLwindow with its context.

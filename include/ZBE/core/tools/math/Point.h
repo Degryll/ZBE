@@ -190,7 +190,7 @@ class _POINT {
      * \param rhs second Point.
      * \return True if both _POINT are equal. False otherwise.
      */
-    friend bool operator==(const _POINT& lhs, const _POINT& rhs){
+    friend bool operator==(const _POINT& lhs, const _POINT& rhs) {
       bool equal = true;
       for(unsigned i = 0; i < s; i++ ) {
         equal &= almost_equal(lhs.data[i], rhs.data[i]);

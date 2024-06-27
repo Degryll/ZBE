@@ -28,7 +28,7 @@ namespace zombienoid {
       ZBNoidLevelReset() {}
       ~ZBNoidLevelReset() {}
 
-      void run();
+      void run() override;
   };
 
 

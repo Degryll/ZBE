@@ -40,7 +40,7 @@ public:
 
   ~BallRadiusItem(){}
 
-  void run(){
+  void run() override {
     for(auto ball : (*ballList)) {
       zbe::Resizable* resizable;
       assignAvatar((std::shared_ptr<zbe::AvatarEntityContainer<zbe::Resizable> >)ball,&resizable);

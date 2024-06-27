@@ -82,7 +82,7 @@ public:
    *  \param name Name for the created JSONSimpleOGLModelSheetLoader.
    *  \param cfgId JSONSimpleOGLModelSheetLoader's configuration id.
    */
-  void create(std::string name, uint64_t){
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     auto jsoglmsl = std::make_shared<JSONSimpleOGLModelSheetLoader>();
     rsrclRsrc.insert("RsrcLoader."s + name, jsoglmsl);
@@ -93,7 +93,7 @@ public:
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId){
+  void setup(std::string name, uint64_t cfgId)  override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -165,7 +165,7 @@ public:
    *  \param name Name for the created JSONLookAtOGLModelSheetLoader.
    *  \param cfgId JSONLookAtOGLModelSheetLoader's configuration id.
    */
-  void create(std::string name, uint64_t){
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     auto jsoglmsl = std::make_shared<JSONLookAtOGLModelSheetLoader>();
     rsrclRsrc.insert("RsrcLoader."s + name, jsoglmsl);
@@ -176,7 +176,7 @@ public:
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId){
+  void setup(std::string name, uint64_t cfgId)  override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -252,7 +252,7 @@ public:
    *  \param name Name for the created JSONSpriteOGLModelSheetLoader.
    *  \param cfgId JSONSpriteOGLModelSheetLoader's configuration id.
    */
-  void create(std::string name, uint64_t){
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     auto jsoglmsl = std::make_shared<JSONSpriteOGLModelSheetLoader>();
     rsrclRsrc.insert("RsrcLoader."s + name, jsoglmsl);
@@ -263,7 +263,7 @@ public:
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId){
+  void setup(std::string name, uint64_t cfgId)  override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);

@@ -176,13 +176,13 @@ private:
 
 class BulletCreatorFtry : virtual public Factory {
 public:
-  void create(std::string name, uint64_t){
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<BulletCreator> bc = std::shared_ptr<BulletCreator>(new BulletCreator);  // std::make_shared<SineOscillator>();
     bulletCreatorStore.insert("BulletCreator."s + name, bc);
   }
 
-  void setup(std::string name, uint64_t cfgId){
+  void setup(std::string name, uint64_t cfgId)  override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configStore.get(cfgId);
@@ -353,12 +353,12 @@ public:
         return;
       }
 
-      if (j["graphicList"].empty()){
+      if (j["graphicList"].empty()) {
         SysError::setError("BulletCreatorFtry " + name + "  config for graphicList is empty"s);
         return;
       }
 
-      if (j["behaviorList"].empty()){
+      if (j["behaviorList"].empty()) {
         SysError::setError("BulletCreatorFtry  " + name + " config for behaviorList is empty"s);
         return;
       }

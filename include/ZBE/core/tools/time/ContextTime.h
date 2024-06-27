@@ -25,7 +25,7 @@ class ZBEAPI ContextTime {
 public:
   ContextTime() : frame(0), lostTime(0), initT(0), endT(0), eventT(0), is_partFrame(false), currentT(0), remainT(0), paused(false), resumed(false) {}  //!< Basic constructor to be used internally.
 
-  virtual ~ContextTime(){}
+  virtual ~ContextTime() {}
 
 
   /** \brief Get the total time passed until the end of last frame.

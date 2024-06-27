@@ -1094,7 +1094,7 @@ private:
 
 
 class PosUpwardsTargetToPosUpwardsDirAvtFtry : public Factory {
-  void create(std::string name, uint64_t){
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
 
     auto puttpuda = std::make_shared<PosUpwardsTargetToPosUpwardsDirAvt>();
@@ -1105,7 +1105,7 @@ class PosUpwardsTargetToPosUpwardsDirAvtFtry : public Factory {
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId){
+  void setup(std::string name, uint64_t cfgId)  override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -2097,7 +2097,7 @@ public:
     specificRsrc.insert("TargetToDirAvtBldr."s + name, ttdab);
   }
 
-  void setup(std::string name, uint64_t cfgId){
+  void setup(std::string name, uint64_t cfgId)  override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -2520,7 +2520,7 @@ class TargetToDirAvtFtry : public Factory {
    *  \param name Name for the created TargetToDirAvt.
    *  \param cfgId TargetToDirAvt's configuration id.
    */
-  void create(std::string name, uint64_t){
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
 
     auto ttdavt = std::make_shared<TargetToDirAvt>();
@@ -2531,7 +2531,7 @@ class TargetToDirAvtFtry : public Factory {
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId){
+  void setup(std::string name, uint64_t cfgId)  override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -2630,7 +2630,7 @@ class PosTargetToPosDirAvtFtry : public Factory {
    *  \param name Name for the created TargetToDirAvt.
    *  \param cfgId TargetToDirAvt's configuration id.
    */
-  void create(std::string name, uint64_t){
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
 
     auto ttdavt = std::make_shared<PosTargetToPosDirAvt>();
@@ -2641,7 +2641,7 @@ class PosTargetToPosDirAvtFtry : public Factory {
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId){
+  void setup(std::string name, uint64_t cfgId)  override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -2721,7 +2721,7 @@ class DerivedCosVelAvtFtry : public Factory {
    *  \param name Name for the created TargetToDirAvt.
    *  \param cfgId TargetToDirAvt's configuration id.
    */
-  void create(std::string name, uint64_t){
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
 
     auto dcv = std::make_shared<DerivedCosVelAvt>();
@@ -2732,7 +2732,7 @@ class DerivedCosVelAvtFtry : public Factory {
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId){
+  void setup(std::string name, uint64_t cfgId)  override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -2849,7 +2849,7 @@ class DerivedPosMovingSphereAvtFtry : public Factory {
    *  \param name Name for the created TargetToDirAvt.
    *  \param cfgId TargetToDirAvt's configuration id.
    */
-  void create(std::string name, uint64_t){
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
 
     auto dpmsa = std::make_shared<DerivedPosMovingSphereAvt>();
@@ -2860,7 +2860,7 @@ class DerivedPosMovingSphereAvtFtry : public Factory {
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId){
+  void setup(std::string name, uint64_t cfgId)  override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -2987,7 +2987,7 @@ class LookAtToPitchAvtFtry : public Factory {
    *  \param name Name for the created LookAtToPitchAvt.
    *  \param cfgId LookAtToPitchAvt's configuration id.
    */
-  void create(std::string name, uint64_t){
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
 
     auto latpavt = std::make_shared<LookAtToPitchAvt>();
@@ -2998,7 +2998,7 @@ class LookAtToPitchAvtFtry : public Factory {
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId){
+  void setup(std::string name, uint64_t cfgId)  override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configStore.get(cfgId);
@@ -3086,7 +3086,7 @@ class LookAtToYawAvtFtry : public Factory {
    *  \param name Name for the created LookAtToYawAvt.
    *  \param cfgId LookAtToYawAvt's configuration id.
    */
-  void create(std::string name, uint64_t){
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
 
     auto latpavt = std::make_shared<LookAtToYawAvt>();
@@ -3097,7 +3097,7 @@ class LookAtToYawAvtFtry : public Factory {
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId){
+  void setup(std::string name, uint64_t cfgId)  override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configStore.get(cfgId);

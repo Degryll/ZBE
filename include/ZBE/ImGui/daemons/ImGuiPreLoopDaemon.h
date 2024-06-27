@@ -54,7 +54,7 @@ public:
 
   /** \brief Runs the daemon.
    */
-  void run() {
+  void run() override {
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplSDL2_NewFrame(window->getSDL_Window());
     ImGui::NewFrame();

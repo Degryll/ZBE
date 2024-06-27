@@ -27,7 +27,7 @@ class DummyDaemon : public zbe::Daemon {
 public:
   DummyDaemon() : executed(false){}
 
-  void run(){
+  void run() override {
     executed = true;
   }
   bool executed;
@@ -42,7 +42,7 @@ public:
     ml = mainLoop;
   }
 
-  void run() {
+  void run() override {
     ml->stop();
     executed = true;
   }
@@ -62,7 +62,7 @@ class DummyEventDaemon : public zbe::Daemon {
 public:
   DummyEventDaemon(): executed(false) {}
 
-  void run() {
+  void run() override {
     if(executed) return;
     auto e = new DummyEvent();
     es.storeEvent(e);

@@ -93,7 +93,7 @@ void DaemonSelectorAlienAtorFtry<T, R>::setup(std::string name, uint64_t cfgId) 
     }
 
     json defDaemon = j["defdmn"];
-    if(defDaemon.is_string()){
+    if(defDaemon.is_string()) {
       std::string dname = defDaemon.get<std::string>();
       uint64_t dId = dict.get("Daemon."s + dname);
       dsaa->setDefault(daemonRsrc.get(dId));
@@ -168,7 +168,7 @@ void DaemonSelectorSelfAtorFtry<T, R>::setup(std::string name, uint64_t cfgId) {
     }
 
     json defDaemon = j["defdmn"];
-    if(defDaemon.is_string()){
+    if(defDaemon.is_string()) {
       std::string dname = defDaemon.get<std::string>();
       uint64_t dId = dict.get("Daemon."s + dname);
       dsaa->setDefault(daemonRsrc.get(dId));
@@ -243,7 +243,7 @@ void DaemonSelectorSelfAnyAtorFtry<R>::setup(std::string name, uint64_t cfgId) {
     }
 
     json defDaemon = j["defdmn"];
-    if(defDaemon.is_string()){
+    if(defDaemon.is_string()) {
       std::string dname = defDaemon.get<std::string>();
       uint64_t dId = dict.get("Daemon."s + dname);
       dsaa->setDefault(daemonRsrc.get(dId));

@@ -26,12 +26,12 @@ class ZBEAPI BroadcastIH : public InputHandler {
     ~BroadcastIH() {}
 
   	void run(uint32_t key, float state) {
-      for (auto ih : ihs){
+      for (auto ih : ihs) {
         ih->run(key, state);
       }
   	}
 
-    void addHandler(std::shared_ptr<InputHandler> ih){
+    void addHandler(std::shared_ptr<InputHandler> ih) {
       ihs.push_back(ih);
     }
 

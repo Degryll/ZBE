@@ -25,7 +25,7 @@ class DummyDaemon : public zbe::Daemon {
 public:
   DummyDaemon(std::shared_ptr<zbe::Value<int64_t> > state, int64_t newstate): executed(false), state(state), newstate(newstate) {}
 
-  void run(){
+  void run() override {
     executed = true;
     state->set(newstate);
   }

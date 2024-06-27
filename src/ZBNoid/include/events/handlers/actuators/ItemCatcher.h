@@ -51,7 +51,7 @@ private:
 };
 
 class DummyItem : virtual public zbe::Daemon {
-  void run() {};
+  void run() override {};
 };
 
 }  // namespace zombienoid
