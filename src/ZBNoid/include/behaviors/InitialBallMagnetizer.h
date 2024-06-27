@@ -37,7 +37,7 @@ public:
 
   /**\brief If entity state down limit is reached, entity is erased and an attempt to create an item is made.
   */
-  void apply(std::shared_ptr<zbe::AvatarEntityContainer<Avatars...> > entity) {
+  void apply(std::shared_ptr<zbe::AvatarEntityContainer<Avatars...> > entity) override {
     zbe::Avatar* avatar;
     zbe::Positionable<2>* positionable;
     std::shared_ptr<zbe::AvatarEntityContainer<zbe::Avatar> > aeca = entity;

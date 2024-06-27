@@ -97,14 +97,14 @@ private:
 };
 
 class Triangle3Dto2DCacheBldrFtry : public zbe::Factory {
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<Triangle3Dto2DCacheBldr> t3dt2dcb = std::make_shared<Triangle3Dto2DCacheBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, t3dt2dcb);
     specificRsrc.insert("Triangle3Dto2DCacheBldr."s + name, t3dt2dcb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);

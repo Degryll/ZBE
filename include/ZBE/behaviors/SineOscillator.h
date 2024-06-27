@@ -49,7 +49,7 @@ public:
   /** \brief Oscillates given avatar.
   *   \param avatar avatar to oscillate
    */
-  void apply(std::shared_ptr<SAvatar<float> > avatar) final;
+  void apply(std::shared_ptr<SAvatar<float> > avatar) override;
 
   /** \brief sets min & max range values
   *   \param min Min range value
@@ -79,7 +79,7 @@ public:
    *  \param name Name for the created SineOscillator.
    *  \param cfgId SineOscillator's configuration id.
    */
-  void create(std::string name, uint64_t);
+  void create(std::string name, uint64_t) override;
 
   /** \brief Setup the desired tool. The tool will be complete after this step.
    *  \param name Name of the tool.
@@ -119,7 +119,7 @@ public:
   /** \brief Oscillates given avatar.
   *   \param avatar avatar to oscillate
    */
-  void apply(std::shared_ptr<SAvatar<Vector3D> > avatar) final;
+  void apply(std::shared_ptr<SAvatar<Vector3D> > avatar) override;
 
   /** \brief sets min & max range values
   *   \param min Min range value
@@ -159,7 +159,7 @@ public:
    *  \param name Name for the created SineOscillator.
    *  \param cfgId SineOscillator's configuration id.
    */
-  void create(std::string name, uint64_t);
+  void create(std::string name, uint64_t) override;
 
   /** \brief Setup the desired tool. The tool will be complete after this step.
    *  \param name Name of the tool.

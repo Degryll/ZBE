@@ -48,7 +48,7 @@ public:
 
   /** \brief Plays the Sound3D.
    */
-  void apply(std::shared_ptr<MAvatar<uint64_t, uint64_t, uint64_t, Vector3D, Vector3D> > avatar);
+  void apply(std::shared_ptr<MAvatar<uint64_t, uint64_t, uint64_t, Vector3D, Vector3D> > avatar) override;
 
   void setCamera(std::shared_ptr<Camera> cam);
 
@@ -66,9 +66,9 @@ private:
 
 class ZBEAPI Sound3DOALPlayerFtry : public Factory {
 public:
-  void create(std::string name, uint64_t);
+  void create(std::string name, uint64_t) override;
 
-  void setup(std::string name, uint64_t cfgId);
+  void setup(std::string name, uint64_t cfgId) override;
 
 private:
   RsrcStore<nlohmann::json>& configRsrc = RsrcStore<nlohmann::json>::getInstance();

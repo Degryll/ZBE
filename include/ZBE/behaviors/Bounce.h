@@ -32,7 +32,7 @@ public:
 
   /** \brief Changes the entity velocity with the accumulated normals.
    */
-  void apply(std::shared_ptr<MAvatar<bool, Vector<s>, Vector<s> > > avatar) {
+  void apply(std::shared_ptr<MAvatar<bool, Vector<s>, Vector<s> > > avatar) override {
     auto vhasNormals = AvtUtil::get<3, bool>(avatar);
     if(vhasNormals->get()){
       auto vNormals = AvtUtil::get<2, Vector<s> >(avatar);

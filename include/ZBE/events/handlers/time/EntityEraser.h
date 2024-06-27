@@ -110,7 +110,7 @@ public:
  *  \param name Name for the created tool.
  *  \param cfgId Tool's configuration id.
  */
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
 
     std::shared_ptr<EntityEraserTH> te = std::make_shared<EntityEraserTH>();

@@ -36,12 +36,12 @@ public:
   *  \param imgId Associated audio id
   *  \return An id to the audio definition.
   */
- void loadRsrcDef(const std::filesystem::path& url, uint64_t imgId);
+ void loadRsrcDef(const std::filesystem::path& url, uint64_t imgId) override;
 
  /** \brief Returns the file extension.
   *  \return The file extension.
   */
- const std::filesystem::path getExtension() {
+ const std::filesystem::path getExtension() override {
    static const std::filesystem::path p(".json");
    return p;
  }

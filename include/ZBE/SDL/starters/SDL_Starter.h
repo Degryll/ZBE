@@ -11,8 +11,8 @@
 #ifndef ZBE_SDL_STARTERS_STARTER_H_
 #define ZBE_SDL_STARTERS_STARTER_H_
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_net.h>
+#include <SDL3/SDL.h>
+#include <SDL3_net/SDL_net.h>
 
 #include "ZBE/core/system/system.h"
 
@@ -46,17 +46,17 @@ public:
 
   /** \brief Shutdowns all SDL subsystems.
    */
-  void quit() {SDL_Quit(); SDLNet_Quit();}  //!< Call SDL_Quit.
+  static void quit() {SDL_Quit(); SDLNet_Quit();}  //!< Call SDL_Quit.
 
   /** \brief Shutdowns given SDL subsystem.
    */
-  void quitSubSystem(Uint32 flags) {
+  static void quitSubSystem(Uint32 flags) {
     SDL_QuitSubSystem(flags);
   }
 
   /** \brief Shutdowns given SDL subsystem.
    */
-  void quitOtherSystem(Uint32 flags) {
+  static void quitOtherSystem(Uint32 flags) {
     if (flags & SDLNET) {
       sdlnetrefs--;
       if (!sdlnetrefs) SDLNet_Quit();

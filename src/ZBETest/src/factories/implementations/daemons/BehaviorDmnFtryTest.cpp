@@ -32,7 +32,7 @@ namespace BehaviorDmnFtryTest {
 
 class DummyBehavior : public zbe::Behavior<uint64_t> {
 public:
-  void apply(std::shared_ptr<zbe::SAvatar<uint64_t> > avatar) {
+  void apply(std::shared_ptr<zbe::SAvatar<uint64_t> > avatar) override {
     //void zbe::Behavior<T>::apply(std::shared_ptr<zbe::_Avatar<1, T> >) [with T = zbe::_Avatar<1, long unsigned int>]’|
     avatar->get<1, uint64_t>()->set(1);
   }

@@ -38,7 +38,7 @@ public:
    *  \param name Name for the created item.
    *  \param cfgId item's configuration id.
    */
-  void create(std::string name, uint64_t);
+  void create(std::string name, uint64_t) override;
 
   /** \brief Configures SysTime to use and SDLTimer.
    *  \param name Name for the created item.

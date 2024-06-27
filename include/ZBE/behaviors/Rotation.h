@@ -46,7 +46,7 @@ class LimitedExcentricalRotation3D : virtual public Behavior<float, float, Vecto
 
     /** \brief Makes the entity move in a straight line
      */
-    void apply(std::shared_ptr<MAvatar<float, float, Vector3D, Vector3D, Vector3D, Vector3D> > avatar) {
+    void apply(std::shared_ptr<MAvatar<float, float, Vector3D, Vector3D, Vector3D, Vector3D> > avatar) override {
       auto vvpos = avatar->get<1, Vector3D>();
       auto vvexc = avatar->get<2, Vector3D>();
       auto vvrot = avatar->get<3, Vector3D>();
@@ -106,7 +106,7 @@ public:
    *  \param name Name for the created Rotation2D.
    *  \param cfgId Rotation2D's configuration id.
    */
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<LimitedExcentricalRotation3D> er3d = std::shared_ptr<LimitedExcentricalRotation3D>(new LimitedExcentricalRotation3D);
     behaviorStore.insert("Behavior."s + name, er3d);
@@ -118,7 +118,7 @@ public:
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configStore.get(cfgId);
@@ -174,7 +174,7 @@ class ExcentricalRotation3D : virtual public Behavior<Vector3D,Vector3D, Vector3
 
     /** \brief Makes the entity move in a straight line
      */
-    void apply(std::shared_ptr<MAvatar<Vector3D, Vector3D, Vector3D > > avatar) {
+    void apply(std::shared_ptr<MAvatar<Vector3D, Vector3D, Vector3D > > avatar) override {
       auto vvpos = avatar->get<1, Vector3D>();
       auto vvexc = avatar->get<2, Vector3D>();
       auto vvrot = avatar->get<3, Vector3D>();
@@ -209,7 +209,7 @@ public:
    *  \param name Name for the created Rotation2D.
    *  \param cfgId Rotation2D's configuration id.
    */
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<ExcentricalRotation3D> er3d = std::shared_ptr<ExcentricalRotation3D>(new ExcentricalRotation3D);
     behaviorStore.insert("Behavior."s + name, er3d);
@@ -221,7 +221,7 @@ public:
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configStore.get(cfgId);
@@ -278,7 +278,7 @@ class Rotation3D : virtual public Behavior<Vector3D, Vector3D>, public Parametri
 
     /** \brief Makes the entity move in a straight line
      */
-    void apply(std::shared_ptr<MAvatar<Vector3D, Vector3D > > avatar) {
+    void apply(std::shared_ptr<MAvatar<Vector3D, Vector3D > > avatar) override {
       auto vpos = avatar->get<1, Vector3D>();
       auto vrot = avatar->get<2, Vector3D>();
 
@@ -302,7 +302,7 @@ public:
    *  \param name Name for the created Rotation2D.
    *  \param cfgId Rotation2D's configuration id.
    */
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<Rotation3D> rot3D = std::shared_ptr<Rotation3D>(new Rotation3D);
     behaviorStore.insert("Behavior."s + name, rot3D);
@@ -314,7 +314,7 @@ public:
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configStore.get(cfgId);

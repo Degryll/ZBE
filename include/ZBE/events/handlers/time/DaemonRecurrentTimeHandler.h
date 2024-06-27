@@ -130,7 +130,7 @@ private:
 
 class DaemonRecurrentTHBldrFtry : public Factory {
 
-void create(std::string name, uint64_t) {
+void create(std::string name, uint64_t) override {
   using namespace std::string_literals;
 
   std::shared_ptr<DaemonRecurrentTHBldr> drth = std::make_shared<DaemonRecurrentTHBldr>();
@@ -138,7 +138,7 @@ void create(std::string name, uint64_t) {
   specificRsrc.insert("DaemonRecurrentTHBldrFtry."s + name, drth);
 }
 
-void setup(std::string name, uint64_t cfgId) {
+void setup(std::string name, uint64_t cfgId) override {
   using namespace std::string_literals;
   using namespace nlohmann;
   std::shared_ptr<json> cfg = configRsrc.get(cfgId);

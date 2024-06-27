@@ -289,14 +289,14 @@ private:
 
 class Triangle2DShapeAvtBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<Triangle2DShapeAvtBldr> t2dab = std::make_shared<Triangle2DShapeAvtBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, t2dab);
     specificRsrc.insert("Triangle2DShapeAvtBldr."s + name, t2dab);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -339,14 +339,14 @@ private:
 template<unsigned s>
 class MovingPointShapeAvtBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<MovingPointShapeAvtBldr<s>> mp2dab = std::make_shared<MovingPointShapeAvtBldr<s>>();
     mainRsrc.insert(zbe::factories::functionName_ + name, mp2dab);
     specificRsrc.insert("MovingPointShapeAvtBldr."s + name, mp2dab);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -513,14 +513,14 @@ private:
 class MovingSphereAvtShapeBldrFtry : public Factory {
 // This class where c&p from DerivedPosMovingSphereAvtBldrFtry removing list managment
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<MovingSphereAvtShapeBldr> msasb = std::make_shared<MovingSphereAvtShapeBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, msasb);
     specificRsrc.insert("MovingSphereAvtShapeBldr."s + name, msasb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -589,14 +589,14 @@ private:
 
 class MovingSphereAvtBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<MovingSphereAvtBldr> msab = std::make_shared<MovingSphereAvtBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, msab);
     specificRsrc.insert("MovingSphereAvtBldr."s + name, msab);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -751,14 +751,14 @@ private:
 
 class MovingTriangle3DRscAvtShapeBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<MovingTriangle3DRscAvtShapeBldr> mt3rasb = std::make_shared<MovingTriangle3DRscAvtShapeBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, mt3rasb);
     specificRsrc.insert("MovingTriangle3DRscAvtShapeBldr."s + name, mt3rasb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -894,14 +894,14 @@ private:
 
 class MovingTriangle3DAvtShapeBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<MovingTriangle3DAvtShapeBldr> msasb = std::make_shared<MovingTriangle3DAvtShapeBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, msasb);
     specificRsrc.insert("MovingTriangle3DAvtShapeBldr."s + name, msasb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -977,14 +977,14 @@ private:
 
 class MovingTriangle3DAvtBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<MovingTriangle3DAvtBldr> msab = std::make_shared<MovingTriangle3DAvtBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, msab);
     specificRsrc.insert("MovingTriangle3DAvtBldr."s + name, msab);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -1222,14 +1222,14 @@ private:
 
 class PosUpwardsTargetToPosUpwardsDirAvtBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<PosUpwardsTargetToPosUpwardsDirAvtBldr> put2pudab = std::make_shared<PosUpwardsTargetToPosUpwardsDirAvtBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, put2pudab);
     specificRsrc.insert("PosUpwardsTargetToPosUpwardsDirAvtBldr."s + name, put2pudab);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -1382,14 +1382,14 @@ private:
 
 // class PosTargetUpwardsToPosDirAngleAvtBldrFtry : public Factory {
 // public:
-//   void create(std::string name, uint64_t) {
+//   void create(std::string name, uint64_t) override {
 //     using namespace std::string_literals;
 //     std::shared_ptr<PosTargetUpwardsToPosDirAngleAvtBldr> ptutpdaab = std::make_shared<PosTargetUpwardsToPosDirAngleAvtBldr>();
 //     mainRsrc.insert(zbe::factories::functionName_ + name, ptutpdaab);
 //     specificRsrc.insert("PosTargetUpwardsToPosDirAngleAvtBldr."s + name, ptutpdaab);
 //   }
 
-//   void setup(std::string name, uint64_t cfgId) {
+//   void setup(std::string name, uint64_t cfgId) override {
 //     using namespace std::string_literals;
 //     using namespace nlohmann;
 //     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -1526,14 +1526,14 @@ private:
 
 // class MovingTriangle3DHitboxAvtShapeBldrFtry : public Factory {
 // public:
-//   void create(std::string name, uint64_t) {
+//   void create(std::string name, uint64_t) override {
 //     using namespace std::string_literals;
 //     std::shared_ptr<MovingTriangle3DHitboxAvtShapeBldr> mt3hasb = std::make_shared<MovingTriangle3DHitboxAvtShapeBldr>();
 //     mainRsrc.insert(zbe::factories::functionName_ + name, mt3hasb);
 //     specificRsrc.insert("MovingTriangle3DHitboxAvtShapeBldr."s + name, msasb);
 //   }
 
-//   void setup(std::string name, uint64_t cfgId) {
+//   void setup(std::string name, uint64_t cfgId) override {
 //     using namespace std::string_literals;
 //     using namespace nlohmann;
 //     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -1609,14 +1609,14 @@ private:
 
 // class MovingTriangle3DHitboxAvtBldrFtry : public Factory {
 // public:
-//   void create(std::string name, uint64_t) {
+//   void create(std::string name, uint64_t) override {
 //     using namespace std::string_literals;
 //     std::shared_ptr<MovingTriangle3DHitboxAvtBldr> mt3hab = std::make_shared<MovingTriangle3DHitboxAvtBldr>();
 //     mainRsrc.insert(zbe::factories::functionName_ + name, mt3hab);
 //     specificRsrc.insert("MovingTriangle3DHitboxAvtBldr."s + name, msab);
 //   }
 
-//   void setup(std::string name, uint64_t cfgId) {
+//   void setup(std::string name, uint64_t cfgId) override {
 //     using namespace std::string_literals;
 //     using namespace nlohmann;
 //     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -2090,7 +2090,7 @@ private:
 
 class TargetToDirAvtBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<TargetToDirAvtBldr> ttdab = std::make_shared<TargetToDirAvtBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, ttdab);
@@ -2151,14 +2151,14 @@ private:
 
 class PosTargetToPosDirAvtBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<PosTargetToPosDirAvtBldr> pttpdvb = std::make_shared<PosTargetToPosDirAvtBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, pttpdvb);
     specificRsrc.insert("PosTargetToPosDirAvtBldr."s + name, pttpdvb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -2204,14 +2204,14 @@ private:
 
 class DerivedCosVelAvtBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<DerivedCosVelAvtBldr> dcvab = std::make_shared<DerivedCosVelAvtBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, dcvab);
     specificRsrc.insert("DerivedCosVelAvtBldr."s + name, dcvab);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -2273,14 +2273,14 @@ private:
 class DerivedPosMovingSphereAvtShapeBldrFtry : public Factory {
 // This class where c&p from DerivedPosMovingSphereAvtBldrFtry removing list managment
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<DerivedPosMovingSphereAvtShapeBldr> dpmsa = std::make_shared<DerivedPosMovingSphereAvtShapeBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, dpmsa);
     specificRsrc.insert("DerivedPosMovingSphereAvtShapeBldr."s + name, dpmsa);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -2338,14 +2338,14 @@ private:
 class DerivedPosMovingSphereAvtBldrFtry : public Factory {
 // This class where c&p to DerivedPosMovingSphereAvtShapeBldrFtry
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<DerivedPosMovingSphereAvtBldr> dpmsa = std::make_shared<DerivedPosMovingSphereAvtBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, dpmsa);
     specificRsrc.insert("DerivedPosMovingSphereAvtBldr."s + name, dpmsa);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -2410,13 +2410,13 @@ private:
 
 class LookAtToPitchAvtBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<LookAtToPitchAvtBldr> latpab = std::make_shared<LookAtToPitchAvtBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, latpab);
     specificRsrc.insert("LookAtToPitchAvtBldr."s + name, latpab);
   }
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -2462,13 +2462,13 @@ private:
 
 class LookAtToYawAvtBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<LookAtToYawAvtBldr> latyab = std::make_shared<LookAtToYawAvtBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, latyab);
     specificRsrc.insert("LookAtToYawAvtBldr."s + name, latyab);
   }
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);

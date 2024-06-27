@@ -10,7 +10,7 @@
 #ifndef ZBE_IMGUI_EVENTS_IMGUIEVENTWATCHER_H
 #define ZBE_IMGUI_EVENTS_IMGUIEVENTWATCHER_H
 
-#include <SDL2/SDL.h>
+#include <SDL3/SDL.h>
 
 #include "ZBE/SDL/events/SDLEventWatcher.h"
 #include "ZBE/core/io/InputBuffer.h"

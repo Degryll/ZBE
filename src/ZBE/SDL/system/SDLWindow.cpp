@@ -11,7 +11,7 @@
 
 #include <string>
 
-#include <SDL2/SDL_image.h>
+#include <SDL3/SDL_image.h>
 
 namespace zbe {
 

@@ -82,7 +82,7 @@ inline uint64_t quantizeTime(uint64_t n) {
  * \param n Time to quantize.
  */
 inline uint64_t quantizeTime(double n) {
-  uint64_t time = n * SECOND;
+  uint64_t time = static_cast<uint64_t>(n * SECOND);
   return quantizeTime(time);
 }
 
@@ -106,7 +106,7 @@ inline double round(double d) {
  * \param n Number to be rounded.
  */
 inline int64_t roundUp (double n) {
-    return ((n > 0) ? ceil(n) : floor(n));
+    return ((n > 0.0) ?  static_cast<int64_t>(ceil(n)) :  static_cast<int64_t>(floor(n)));
 }
 
 /** \brief Tells if the given double values are close enough to be cosidered equal.

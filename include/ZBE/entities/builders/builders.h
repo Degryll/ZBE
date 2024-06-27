@@ -247,14 +247,14 @@ private:
 class EntityFileBldrFtry : public Factory {
 public:
 
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<EntityFileBldr> efb = std::make_shared<EntityFileBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, efb);
     specificRsrc.insert("EntityFileBldr."s + name, efb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);
@@ -822,14 +822,14 @@ private:
 template<template<typename ...Ts> class AVT, typename... Ts>
 class _AvatarBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<AvatarBldr<AVT, Ts...>> ab = std::make_shared<AvatarBldr<AVT, Ts...>>();
     mainRsrc.insert(zbe::factories::functionName_ + name, ab);
     specificRsrc.insert("AvatarBldr."s + name, ab);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);
@@ -888,14 +888,14 @@ using SDynamicAvatarBldrFtry = _AvatarBldrFtry<SDynamicAvatar, T>;
 
 class AvatarBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<AvatarBldr<AvtVoid, void>> ab = std::make_shared<AvatarBldr<AvtVoid, void>>();
     mainRsrc.insert(zbe::factories::functionName_ + name, ab);
     specificRsrc.insert("AvatarBldr."s + name, ab);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);
@@ -1274,14 +1274,14 @@ public:
     }
   }
 
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<ActorBldr<IData, Traits...>> ab = std::make_shared<ActorBldr<IData, Traits...>>();
     mainRsrc.insert(zbe::factories::functionName_ + name, ab);
     specificRsrc.insert("ActorBldr."s + name, ab);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);
@@ -1338,14 +1338,14 @@ public:
 
   ReactorBldrFtry(std::initializer_list<std::string> names) : traitCfgNames(names)  {}
 
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<ReactorBldr<IData, Traits...>> ab = std::make_shared<ReactorBldr<IData, Traits...>>();
     mainRsrc.insert(zbe::factories::functionName_ + name, ab);
     specificRsrc.insert("ReactorBldr."s + name, ab);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);
@@ -1373,14 +1373,14 @@ private:
 template<typename S, typename ...Shapes>
 class ShapeBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<ShapeBldr<S, Shapes...>> sb = std::make_shared<ShapeBldr<S, Shapes...>>();
     mainRsrc.insert(zbe::factories::functionName_ + name, sb);
     specificRsrc.insert("ShapeBldr."s + name, sb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);
@@ -1411,14 +1411,14 @@ private:
 class EntityBldrFtry : public Factory {
 public:
 
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<EntityBldr> eb = std::make_shared<EntityBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, eb);
     specificRsrc.insert("EntityBldr."s + name, eb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);
@@ -1466,14 +1466,14 @@ private:
 class EntitySetterFtry : virtual public Factory {
 public:
 
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<EntitySetter> e = std::make_shared<EntitySetter>();
     mainRsrc.insert(factories::functionName + factories::separator  + name, e);
     specificRsrc.insert("EntitySetter."s + name, e);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -1711,14 +1711,14 @@ private:
 template<typename T, typename ...Ts>
 class BuildUpDirToOriBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<BuildUpDirToOriBldr<T, Ts...>> budtob = std::make_shared<BuildUpDirToOriBldr<T, Ts...>>();
     mainRsrc.insert(zbe::factories::functionName_ + name, budtob);
     specificRsrc.insert("BuildUpDirToOriBldr."s + name, budtob);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);
@@ -1749,14 +1749,14 @@ private:
 template<typename T, typename ...Ts>
 class BuildUpDirToRadsBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<BuildUpDirToRadsBldr<T, Ts...>> budtrb = std::make_shared<BuildUpDirToRadsBldr<T, Ts...>>();
     mainRsrc.insert(zbe::factories::functionName_ + name, budtrb);
     specificRsrc.insert("BuildUpDirToRadsBldr."s + name, budtrb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);
@@ -1787,14 +1787,14 @@ private:
 template<unsigned n, typename T, typename ...Ts>
 class BuildCopyVectModuleBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<BuildCopyVectModuleBldr<n, T, Ts...>> bcvmb = std::make_shared<BuildCopyVectModuleBldr<n, T, Ts...>>();
     mainRsrc.insert(zbe::factories::functionName_ + name, bcvmb);
     specificRsrc.insert("BuildCopyVectModuleBldr."s + name, bcvmb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);
@@ -1825,14 +1825,14 @@ template<typename T, typename ...Ts>
 class BehaviorEntityBldrFtry : public Factory {
 public:
 
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<BehaviorEntityBldr<T, Ts...>> eb = std::make_shared<BehaviorEntityBldr<T, Ts...>>();
     mainRsrc.insert(zbe::factories::functionName_ + name, eb);
     specificRsrc.insert("BehaviorEntityBldr."s + name, eb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);
@@ -1934,14 +1934,14 @@ template<typename T>
 class BehaviorEntityBldrFtry<T> : public Factory {
 public:
 
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<BehaviorEntityBldr<T>> eb = std::make_shared<BehaviorEntityBldr<T>>();
     mainRsrc.insert(zbe::factories::functionName_ + name, eb);
     specificRsrc.insert("BehaviorEntityBldr."s + name, eb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);
@@ -2035,14 +2035,14 @@ template<typename IData, typename ActorType, typename ReactorType, typename ...S
 class InteractionatorBldrFtry : public Factory {
 public:
   using InatorBldr = InteractionatorBldr<IData, ActorType, ReactorType, Shapes...>;
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<InatorBldr> inatorb = std::make_shared<InatorBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, inatorb);
     specificRsrc.insert("InteractionatorBldr."s + name, inatorb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);
@@ -2127,14 +2127,14 @@ template<typename IData, typename ActorType, typename ReactorType, typename ...S
 class InteractionerBldrFtry : public Factory {
 public:
   using InerBldr = InteractionerBldr<IData, ActorType, ReactorType, Shapes...>;
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<InerBldr> inerb = std::make_shared<InerBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, inerb);
     specificRsrc.insert("InteractionerBldr."s + name, inerb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);
@@ -2221,14 +2221,14 @@ private:
 
 class EntityTimerBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<EntityTimerBldr> etb = std::make_shared<EntityTimerBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, etb);
     specificRsrc.insert("EntityTimerBldr."s + name, etb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);

@@ -46,7 +46,7 @@ public:
 
   /** \brief Sets the entity state to given one.
    */
-  void apply(std::shared_ptr<SAvatar<int64_t> > avatar) {
+  void apply(std::shared_ptr<SAvatar<int64_t> > avatar) override {
     auto s = AvtUtil::get<1, int64_t>(avatar);
     s->set(state);
   }

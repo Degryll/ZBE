@@ -10,7 +10,7 @@
 #ifndef BATIS_ENTITIES_SIGN
 #define BATIS_ENTITIES_SIGN
 
-#include <SDL2/SDL_ttf.h>
+#include <SDL3_ttf/SDL_ttf.h>
 
 #include "ZBE/archetypes/TextDrawable.h"
 #include "ZBE/entities/avatars/SingleTextSprite.h"
@@ -25,7 +25,7 @@ public:
   void operator=(const Sign&) = delete;
 
   Sign(int64_t x, int64_t y, int64_t w, int64_t h, uint64_t font, const char *text) : x(x), y(y), w(w), h(h), f(font), text(text) {
-     //call TTF_SizeText(TTF_Font *font, const char *text, int *w, int *h) to averiguar el tamaño;
+     //call TTF_SizeText(TTF_Font *font, const char *text, int *w, int *h) to averiguar el tamaï¿½o;
   }
 
   int64_t getX() {return (x);}

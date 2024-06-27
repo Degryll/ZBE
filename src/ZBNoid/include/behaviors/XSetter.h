@@ -32,7 +32,7 @@ public:
 
   /**\brief Sets x position of the entity to given Value<double>.
   */
-  void apply(std::shared_ptr<zbe::AvatarEntityContainer<zbe::Positionable<2> > > entity) {
+  void apply(std::shared_ptr<zbe::AvatarEntityContainer<zbe::Positionable<2> > > entity) override {
     zbe::Positionable<2>* positionable;
     std::shared_ptr<zbe::AvatarEntityContainer<zbe::Positionable<2> > > aecp2 = entity;
     assignAvatar(aecp2 , &positionable);

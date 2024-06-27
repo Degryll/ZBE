@@ -11,8 +11,8 @@
 #define ZBE_SDL_DRAWERS_SIMPLETEXTSDLDRAWER_H_
 
 #include <memory>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_ttf.h>
+#include <SDL3/SDL.h>
+#include <SDL3_ttf/SDL_ttf.h>
 
 #include "ZBE/core/behaviors/Behavior.h"
 #include "ZBE/entities/avatars/SingleTextSprite.h"
@@ -56,7 +56,7 @@ class ZBEAPI SingleTextSDLDrawer : public Behavior<std::string, uint64_t, Vector
     /** \brief Draws the given entity.
      *  \param The entity to be drawn.
      */
-    void apply(std::shared_ptr<MAvatar<std::string, uint64_t, Vector2D, Vector2D> > avatar) {
+    void apply(std::shared_ptr<MAvatar<std::string, uint64_t, Vector2D, Vector2D> > avatar) override{
       SDL_Texture* t = textFontStore->renderText(avatar->get<3, uint64_t>()->get(), avatar->get<4, std::string>()->get().c_str());
 
       int tw, th, aw, ah;

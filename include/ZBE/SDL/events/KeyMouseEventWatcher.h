@@ -14,7 +14,7 @@
 #include <cstdint>
 #include <nlohmann/json.hpp>
 
-#include <SDL2/SDL.h>
+#include <SDL3/SDL.h>
 
 #include "ZBE/SDL/events/SDLEventDispatcher.h"
 #include "ZBE/SDL/events/SDLEventWatcher.h"
@@ -155,7 +155,7 @@ public:
    *  \param name Name for the created SDLWindow.
    *  \param cfgId SDLWindow's configuration id.
    */
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
 
     auto kmew = std::shared_ptr<KeyMouseEventWatcher>(new KeyMouseEventWatcher);
@@ -166,7 +166,7 @@ public:
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     auto cfg = configRsrc.get(cfgId);

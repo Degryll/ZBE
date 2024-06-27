@@ -27,7 +27,7 @@ namespace zbe {
 
 class CopyVectorResizedBvr : virtual public Behavior<Vector3D, Vector3D, double> {
 public:
-  void apply(std::shared_ptr<MAvatar<Vector3D, Vector3D, double>> avatar) {
+  void apply(std::shared_ptr<MAvatar<Vector3D, Vector3D, double>> avatar) override {
     auto vsize = avatar->get<1, double>();
     auto vsrc  = avatar->get<2, Vector3D>();
 
@@ -42,7 +42,7 @@ public:
 template<typename T>
 class BoundedAddBvr : virtual public Behavior<T, T, T, T> {
 public:
-  void apply(std::shared_ptr<MAvatar<T, T, T, T>> avatar) {
+  void apply(std::shared_ptr<MAvatar<T, T, T, T>> avatar) override {
     auto vcurrent = AvtUtil::get<1, T>(avatar);
     auto vincrement = AvtUtil::get<2, T>(avatar);
     auto vmin = AvtUtil::get<3, T>(avatar);
@@ -70,7 +70,7 @@ public:
 template<typename T>
 class SimpleIncrementBvr : virtual public Behavior<T> {
 public:
-  void apply(std::shared_ptr<SAvatar<T>> avatar) {
+  void apply(std::shared_ptr<SAvatar<T>> avatar) override {
     auto vv = avatar->get();
     auto v = vv->get(); 
     v++;
@@ -81,7 +81,7 @@ public:
 template<typename T>
 class ValueSetterFixedBvr : virtual public Behavior<T> {
 public:
-  void apply(std::shared_ptr<SAvatar<T>> avatar) {
+  void apply(std::shared_ptr<SAvatar<T>> avatar) override {
     auto vv = avatar->get();
     vv->set(val);
   }
@@ -97,7 +97,7 @@ private:
 template<typename T>
 class BoundedAddTriggerBvr : virtual public Behavior<T, T, T, T, T> {
 public:
-  void apply(std::shared_ptr<MAvatar<T, T, T, T, T>> avatar) {
+  void apply(std::shared_ptr<MAvatar<T, T, T, T, T>> avatar) override {
     auto vcurrent = AvtUtil::get<1, T>(avatar);
     auto vincrement = AvtUtil::get<2, T>(avatar);
     auto vmin = AvtUtil::get<3, T>(avatar);
@@ -142,14 +142,14 @@ private:
 template<typename T>
 class BoundedAddTriggerBvrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<BoundedAddTriggerBvr<T>> batb = std::shared_ptr<BoundedAddTriggerBvr<T>>(new BoundedAddTriggerBvr<T>);
     behaviorRsrc.insert("Behavior."s + name, batb);
     specificRsrc.insert("BoundedAddTriggerBvr."s + name, batb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -182,14 +182,14 @@ private:
 template<typename T>
 class ValueSetterFixedBvrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<ValueSetterFixedBvr<T>> vsfb = std::shared_ptr<ValueSetterFixedBvr<T>>(new ValueSetterFixedBvr<T>);
     behaviorRsrc.insert("Behavior."s + name, vsfb);
     vsfbRsrc.insert("ValueSetterFixedBvr."s + name, vsfb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -223,7 +223,7 @@ public:
 
     virtual ~TicketActivatorBvr() {}
 
-    void apply(std::shared_ptr<Avatar> avatar) {
+    void apply(std::shared_ptr<Avatar> avatar) override {
         for(auto& t : list ) {
             avatar->setACTIVE(t);
         }
@@ -242,7 +242,7 @@ public:
 
     virtual ~TicketDeactivatorBvr() {}
 
-    void apply(std::shared_ptr<Avatar> avatar) {
+    void apply(std::shared_ptr<Avatar> avatar) override {
         for(auto& t : list ) {
             avatar->setINACTIVE(t);
         }
@@ -260,14 +260,14 @@ private:
 
 class TicketActivatorBvrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<TicketActivatorBvr> teb = std::shared_ptr<TicketActivatorBvr>(new TicketActivatorBvr);
     behaviorRsrc.insert("Behavior."s + name, teb);
     tebRsrc.insert("TicketActivatorBvr."s + name, teb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -298,14 +298,14 @@ private:
 
 class TicketDeactivatorBvrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<TicketDeactivatorBvr> tdb = std::shared_ptr<TicketDeactivatorBvr>(new TicketDeactivatorBvr);
     behaviorRsrc.insert("Behavior."s + name, tdb);
     tdbRsrc.insert("TicketDeactivatorBvr."s + name, tdb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);

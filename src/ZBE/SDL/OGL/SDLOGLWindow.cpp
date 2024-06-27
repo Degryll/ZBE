@@ -40,8 +40,8 @@ MessageCallback( GLenum ,//source,
 }
 
 void SDLOGLWindow::createGLContext() {
-  //Use OpenGL 3.1 core
-  const char* glsl_version = "#version 130";
+  //Use OpenGL 3.0 core
+  // const char* glsl_version = "#version 130";
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, 0);
   SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, ZBE_GL_MAJOR_VERSION );
   SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, ZBE_GL_MINOR_VERSION );

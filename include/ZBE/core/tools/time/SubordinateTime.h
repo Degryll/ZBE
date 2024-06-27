@@ -30,7 +30,7 @@ public:
   /** \brief Get the total time passed until the end of last frame.
   * \return Total time passed until last frame.
   */
-  std::shared_ptr<ContextTime> clone() {
+  std::shared_ptr<ContextTime> clone() override {
     return std::make_shared<SubordinateTime>(this->parent);
   }
 
@@ -40,11 +40,11 @@ public:
 
 private:
   std::shared_ptr<ContextTime> parent;
-  uint64_t _getTotalTime() {
+  uint64_t _getTotalTime() override {
     return parent->getTotalTime() - lostTime;
   }
 
-  uint64_t _getInitTime() {
+  uint64_t _getInitTime() override {
     return parent->getInitFrameTime() - lostTime;
   }
 

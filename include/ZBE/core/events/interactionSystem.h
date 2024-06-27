@@ -429,14 +429,14 @@ public:
   using IEG = InteractionEventGenerator<Overloaded, IData, ActorType, ReactorType, Shapes...>;
   using ATOR = Interactionator<ActorType, ReactorType, Shapes...>;
 
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<IEG> ieg = std::shared_ptr<IEG>(new IEG);  // std::make_shared<SineOscillator>();
     daemonStore.insert("Daemon."s + name, ieg);
     iegStore.insert("InteractionEventGenerator."s + name, ieg);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configStore.get(cfgId);

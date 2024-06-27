@@ -141,14 +141,14 @@ private:
 
 class AttachRedirectionReactionBldrFtry : public zbe::Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<AttachRedirectionReactionBldr> arrb = std::make_shared<AttachRedirectionReactionBldr>();
     mainRsrc.insert("Function."s + name, arrb);
     specificRsrc.insert("AttachRedirectionReactionBldr."s + name, arrb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -236,14 +236,14 @@ private:
 
 class ClosestCenterStoreReactionBldrFtry : public zbe::Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<ClosestCenterStoreReactionBldr> arrb = std::make_shared<ClosestCenterStoreReactionBldr>();
     mainRsrc.insert("Function."s + name, arrb);
     specificRsrc.insert("ClosestCenterStoreReactionBldr."s + name, arrb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -337,14 +337,14 @@ private:
 
 class AttachRepositionReactionBldrFtry : public zbe::Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<AttachRepositionReactionBldr> arrb = std::make_shared<AttachRepositionReactionBldr>();
     mainRsrc.insert("Function."s + name, arrb);
     specificRsrc.insert("AttachRepositionReactionBldr."s + name, arrb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -422,14 +422,14 @@ template<typename IData, typename Trait>
 class ReverseDirectionReactionBldrFtry : public zbe::Factory {
 // This class where c&p from DerivedPosMovingSphereAvtBldrFtry removing list managment
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<ReverseDirectionReactionBldr<IData, Trait>> rdrb = std::make_shared<ReverseDirectionReactionBldr<IData, Trait>>();
     mainRsrc.insert("Function."s + name, rdrb);
     specificRsrc.insert("ReverseDirectionReactionBldr."s + name, rdrb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -514,14 +514,14 @@ template<typename IData, typename Trait>
 class BounceReactionBldrFtry : public zbe::Factory {
 // This class where c&p from DerivedPosMovingSphereAvtBldrFtry removing list managment
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<BounceReactionBldr<IData, Trait>> rdrb = std::make_shared<BounceReactionBldr<IData, Trait>>();
     mainRsrc.insert("Function."s + name, rdrb);
     specificRsrc.insert("BounceReactionBldr."s + name, rdrb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);

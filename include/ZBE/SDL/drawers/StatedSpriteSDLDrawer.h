@@ -11,7 +11,7 @@
 #define ZBE_SDL_DRAWERS_SIMPLESPRITESDLDRAWER_H_
 
 #include <memory>
-#include <SDL2/SDL.h>
+#include <SDL3/SDL.h>
 
 #include "ZBE/core/behaviors/Behavior.h"
 #include "ZBE/core/entities/avatars/StatedSprite.h"
@@ -41,7 +41,7 @@ class ZBEAPI StatedSpriteSDLDrawer : public Behavior<StatedSprite> {
     /** \brief Draws the given entity.
      *  \param The entity to be drawn.
      */
-    void apply(std::shared_ptr<AvatarEntityContainer<StatedSprite> > entity);
+    void apply(std::shared_ptr<AvatarEntityContainer<StatedSprite> > entity) override;
 
   private:
     SDLWindow* window;  //!< A SDL window with its context.

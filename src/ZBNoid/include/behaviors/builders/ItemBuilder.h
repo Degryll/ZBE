@@ -60,7 +60,7 @@ public:
 
   /** \brief It will build an item with the same position as the given positionable.
    */
-  void apply(std::shared_ptr<zbe::AvatarEntityContainer< zbe::Positionable<2> > > aecm) {
+  void apply(std::shared_ptr<zbe::AvatarEntityContainer< zbe::Positionable<2> > > aecm) override {
     zbe::Positionable<2>* pable;
     assignAvatar(aecm->get(), &pable);
 

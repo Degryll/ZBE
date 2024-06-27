@@ -353,14 +353,14 @@ private:
 
 class PlatformTraitBldrFtry : public zbe::Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<PlatformTraitBldr> ptb = std::make_shared<PlatformTraitBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, ptb);
     specificRsrc.insert("PlatformTraitBldr."s + name, ptb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);

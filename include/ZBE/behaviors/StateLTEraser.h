@@ -43,7 +43,7 @@ public:
 
   /** \brief Erases given entity if its stata is less that expected one.
    */
-  void apply(std::shared_ptr<SAvatar<int64_t> > avatar) {
+  void apply(std::shared_ptr<SAvatar<int64_t> > avatar) override {
     auto state = avatar->get<1, int64_t>();
     if((*state).get() < limit){
       avatar->setERASED();

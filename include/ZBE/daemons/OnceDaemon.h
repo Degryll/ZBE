@@ -57,7 +57,7 @@ public:
    *  \param name Name for the created OnceDaemon.
    *  \param cfgId item's configuration id.
    */
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<OnceDaemon> od = std::make_shared<OnceDaemon>();
@@ -68,7 +68,7 @@ public:
    *  \param name Name for the created item.
    *  \param cfgId item's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);

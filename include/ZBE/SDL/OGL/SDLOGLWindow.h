@@ -17,8 +17,8 @@
 #include <vector>
 #include <tuple>
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_opengl.h>
+#include <SDL3/SDL.h>
+#include <SDL3/SDL_opengl.h>
 
 #include "ZBE/core/system/SysError.h"
 #include "ZBE/core/tools/containers/RsrcDictionary.h"
@@ -74,7 +74,7 @@ public:
      *  \return a GL texture id.
      *  \sa loadImg(), storeTexture()
      */
-    GLuint getTexture(uint64_t id);
+    const GLuint getTexture(uint64_t id);
 
     /** \brief Store a texture id;
      *  \param The texture id to store.
@@ -87,7 +87,7 @@ private:
 
   void overwriteTexture(uint64_t index, const GLuint tex);
   GLuint _createTexture(const GLvoid *data, unsigned w, unsigned h);
-  std::vector<unsigned char> loadPNG(const char* filename, unsigned &width, unsigned &height);
+  static std::vector<unsigned char> loadPNG(const char* filename, unsigned &width, unsigned &height);
 
   std::vector<GLuint> texCollection;  //!< Collection of textures.
   std::mutex m;                       //!< Mutex to avoid race conditions.
@@ -105,12 +105,12 @@ public:
 
     void loadDefault() {
             using namespace std::string_literals;
-            GLfloat m[] = {-1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
+            GLfloat mat[] = {-1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
                            1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
                            -1.0f, 1.0f, 0.0f, 0.0f, 1.0f,
                            1.0f, 1.0f, 0.0f, 1.0f, 1.0f};
             GLuint i[] = {0, 1, 2, 1, 3, 2};
-            uint64_t id = loadModel(m, i, 4, 6);
+            uint64_t id = loadModel(mat, i, 4, 6);
             dict.insert("model.DEFAULT2D"s, id);
     }
 
@@ -142,12 +142,12 @@ public:
 
   uint64_t loadShader(std::vector<ShaderDef> shaderDefs);
 
-  GLuint getShader(uint64_t id);
+  const GLuint getShader(uint64_t id);
 
 private:
   const std::string readFile(const char* filename);
-  void printShaderLog(GLuint shader);
-  void printProgramLog(GLuint program);
+  static void printShaderLog(GLuint shader);
+  static void printProgramLog(GLuint program);
   void compileShader(GLuint gProgramID, const char* shaderSrc[], GLenum shaderType);
   void linkProgram(GLuint gProgramID);
   uint64_t storeProgram(const GLuint program);

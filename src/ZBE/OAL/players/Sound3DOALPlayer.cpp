@@ -21,9 +21,9 @@ namespace zbe {
 
 Vector3D transformAudioPos(Vector3D p, std::vector<float>& tm) {
   Vector3D out;
-  out.x = p.x * tm[0] + p.y * tm[1] + p.z * tm[2] + tm[3];
-  out.y = p.x * tm[4] + p.y * tm[5] + p.z * tm[6] + tm[7];
-  out.z = p.x * tm[8] + p.y * tm[9] + p.z * tm[10] + tm[11];
+  out.x = p.x * static_cast<double>(tm[0]) + p.y * static_cast<double>(tm[1]) + p.z * static_cast<double>(tm[2]) + static_cast<double>(tm[3]);
+  out.y = p.x * static_cast<double>(tm[4]) + p.y * static_cast<double>(tm[5]) + p.z * static_cast<double>(tm[6]) + static_cast<double>(tm[7]);
+  out.z = p.x * static_cast<double>(tm[8]) + p.y * static_cast<double>(tm[9]) + p.z * static_cast<double>(tm[10]) + static_cast<double>(tm[11]);
   return out;
 }
 
@@ -38,23 +38,23 @@ void Sound3DOALPlayer::apply(std::shared_ptr<MAvatar<uint64_t, uint64_t, uint64_
   Vector3D p = pV->get();
   Vector3D v = vV->get();
   uint64_t state = stateV->get();
-  ALuint source = (ALuint)sourceV->get();
+  ALuint source = static_cast<ALuint>(sourceV->get());
   uint64_t id = idV->get();
 
   if(state == NEW){
     p = transformAudioPos(p, cam->getTransformMat());
     v = transformAudioPos(v, cam->getTransformMat());
-    alGenSources((ALuint)1, &source);
+    alGenSources(static_cast<ALuint>(1), &source);
     alSourcei(source, AL_LOOPING, AL_FALSE);
     alSourcef(source, AL_PITCH, 1);
     alSourcef(source, AL_GAIN, 1);
-    alSource3f(source, AL_POSITION, p.x, p.y, p.z);
-    alSource3f(source, AL_VELOCITY, v.x, v.y, p.z);
+    alSource3f(source, AL_POSITION, static_cast<ALfloat>(p.x), static_cast<ALfloat>(p.y), static_cast<ALfloat>(p.z));
+    alSource3f(source, AL_VELOCITY, static_cast<ALfloat>(v.x), static_cast<ALfloat>(v.y), static_cast<ALfloat>(p.z));
     ALuint buffer = store->getAudio(id);
-    alSourcei(source, AL_BUFFER, buffer);
+    alSourcei(source, AL_BUFFER, static_cast<ALint>(buffer));
     alSourcePlay(source);
     alGetSourcei(source, AL_SOURCE_STATE, &source_state);
-    sourceV->set((uint64_t)source);
+    sourceV->set(static_cast<uint64_t>(source));
     if(source_state != AL_PLAYING) {
       ALCenum error = alGetError();
       SysError::setError(std::string("ERROR: Unable to play sound with id ") + std::to_string(id) + std::string(". OpenAL error nun:") + std::to_string(error));
@@ -67,13 +67,13 @@ void Sound3DOALPlayer::apply(std::shared_ptr<MAvatar<uint64_t, uint64_t, uint64_
     if(source_state == AL_STOPPED) {
       stateV->set(STOPPED);
       avatar->setERASED();
-      alDeleteSources((ALuint)1, &source);
+      alDeleteSources(static_cast<ALuint>(1), &source);
     } else {
       p = transformAudioPos(p, cam->getTransformMat());
       v = transformAudioPos(v, cam->getTransformMat());
-      source = (ALuint)sourceV->get();
-      alSource3f(source, AL_POSITION, p.x, p.y, p.z);
-      alSource3f(source, AL_VELOCITY, v.x, v.y, p.z);
+      source = static_cast<ALuint>(sourceV->get());
+      alSource3f(source, AL_POSITION, static_cast<ALfloat>(p.x), static_cast<ALfloat>(p.y), static_cast<ALfloat>(p.z));
+      alSource3f(source, AL_VELOCITY, static_cast<ALfloat>(v.x), static_cast<ALfloat>(v.y), static_cast<ALfloat>(p.z));
     }
   } else {
     SysError::setError(std::string("ERROR: Sound avatar with audio id ") + std::to_string(id) + std::string(" has an unexpected state"));

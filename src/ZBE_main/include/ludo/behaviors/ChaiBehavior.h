@@ -34,7 +34,7 @@ template <typename T, typename... Ts>
 class ChaiBehavior : virtual public Behavior<T, T...> {
 public:
   friend class ChaiBehaviorFtry<T, T...>;
-  void apply(std::shared_ptr<MAvatar<T, T...> > avatar) {
+  void apply(std::shared_ptr<MAvatar<T, T...> > avatar) override {
     
   };
 }

@@ -138,7 +138,7 @@ private:
 // Está basada en aquella y, no en esta, y no funciona.
 class MovingSphereAvtBldrFtry : public zbe::Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<MovingSphereAvtBldr> msvb = std::make_shared<MovingSphereAvtBldr>();
     mainRsrc.insert("Function."s + name, msvb);

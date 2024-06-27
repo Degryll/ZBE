@@ -37,7 +37,7 @@ public:
    *  \param name Name for the created BasicPostLoopSDLDaemon.
    *  \param cfgId BasicPostLoopSDLDaemon's configuration id.
    */
-  void create(std::string name, uint64_t);
+  void create(std::string name, uint64_t) override;
 
   /** \brief Setup the desired tool. The tool will be complete after this step.
    *  \param name Name of the tool.

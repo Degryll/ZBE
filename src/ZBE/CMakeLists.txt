@@ -105,7 +105,18 @@ tools/graphics/Camera.cpp
 
 add_library(myproject::ZBE_LIB ALIAS ZBE_LIB)
 
-target_link_libraries(ZBE_LIB PRIVATE myproject_options myproject_warnings SDL3::SDL3 nlohmann_json::nlohmann_json glm tinygltf imgui)
+target_link_libraries(ZBE_LIB PRIVATE 
+  myproject_options myproject_warnings
+  SDL3::SDL3
+  SDL3_net::SDL3_net
+  SDL3_ttf::SDL3_ttf
+  SDL3_mixer::SDL3_mixer
+  SDL3_image::SDL3_image
+  nlohmann_json::nlohmann_json
+  glm
+  tinygltf
+  imgui
+)
 
 target_include_directories(ZBE_LIB ${WARNING_GUARD} PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
                                                                   $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>)

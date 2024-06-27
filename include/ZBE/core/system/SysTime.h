@@ -43,7 +43,7 @@ public:
   /** \brief Get the total time passed until the end of last frame.
   * \return Total time passed until last frame.
   */
-  std::shared_ptr<ContextTime> clone() {
+  std::shared_ptr<ContextTime> clone() override {
    return getInstance();
   }
 
@@ -60,11 +60,11 @@ private:
 
   std::shared_ptr<Timer> timer;      //!< Actual implementation of Timer to be used.
 
-  uint64_t _getTotalTime() {
-    return timer->totalTime() - lostTime;
+  uint64_t _getTotalTime() override {
+    return static_cast<uint64_t>(timer->totalTime()) - lostTime;
   }
 
-  uint64_t _getInitTime() {
+  uint64_t _getInitTime() override {
     return endT;
   }
 

@@ -11,7 +11,7 @@
 #define SDL_DRAWERS_SIMPLESPRITESDLDRAWER_H_
 
 #include <memory>
-#include <SDL2/SDL.h>
+#include <SDL3/SDL.h>
 
 #include "ZBE/core/behaviors/Behavior.h"
 #include "ZBE/core/entities/avatars/SingleSprite.h"
@@ -41,7 +41,7 @@ class ZBEAPI SingleSpriteSDLDrawer : public Behavior<uint64_t, Vector2D, Vector2
     /** \brief Draws the given entity.
      *  \param The entity to be drawn.
      */
-    void apply(std::shared_ptr<MAvatar<uint64_t, Vector2D, Vector2D> > avatar);
+    void apply(std::shared_ptr<MAvatar<uint64_t, Vector2D, Vector2D> > avatar) override;
 
   private:
     std::shared_ptr<SDLWindow> window;  //!< A SDL window with its context.

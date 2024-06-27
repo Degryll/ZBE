@@ -69,7 +69,7 @@ private:
 template<typename T>
 class KeyValueSetterIHFtry : public Factory {
 
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
 
     auto kvsih = std::shared_ptr<KeyValueSetterIH<T>>(new KeyValueSetterIH<T>());
@@ -77,7 +77,7 @@ class KeyValueSetterIHFtry : public Factory {
     specificRsrcStore.insert("KeyValueSetterIH."s + name, kvsih);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configStore.get(cfgId);

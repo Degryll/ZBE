@@ -67,7 +67,7 @@ public:
 
   /** \brief BulletCreatorBhv given avatar.
    */
-  void apply(std::shared_ptr<MAvatar<Vector3D, Vector3D> > avatar);
+  void apply(std::shared_ptr<MAvatar<Vector3D, Vector3D> > avatar) override;
 
 private:
 
@@ -82,7 +82,7 @@ private:
 
 class ZBEAPI BulletCreatorBhvFtry : virtual public Factory  {
 public:
-  void create(std::string name, uint64_t);
+  void create(std::string name, uint64_t) override;
 
   void setup(std::string name, uint64_t cfgId);
 private:

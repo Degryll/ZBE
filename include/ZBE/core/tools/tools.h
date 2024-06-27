@@ -70,7 +70,7 @@ struct TypeContainer : public TypeContainer<T>, public TypeContainer<Bases...> {
  */
 template <typename T>
 struct TypeContainer<T> {
-  TypeContainer<T>(const TypeContainer<T>&) = delete;
+  TypeContainer(const TypeContainer<T>&) = delete;
   void operator=(const TypeContainer<T>&) = delete;
 
   TypeContainer(T* t): t(t){}

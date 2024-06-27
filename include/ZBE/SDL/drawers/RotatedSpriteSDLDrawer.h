@@ -10,7 +10,7 @@
 #ifndef ZBE_SDL_DRAWERS_ROTATEDPRITESDLDRAWER_H_
 #define ZBE_SDL_DRAWERS_ROTATEDPRITESDLDRAWER_H_
 
-#include <SDL2/SDL.h>
+#include <SDL3/SDL.h>
 
 #include "ZBE/core/behaviors/Behavior.h"
 #include "ZBE/core/entities/avatars/RotatedSprite.h"
@@ -40,7 +40,7 @@ class ZBEAPI RotatedSpriteSDLDrawer : public Behavior<RotatedSprite> {
     /** \brief Draws the given entity.
      *  \param The entity to be drawn.
      */
-    void apply(AvatarEntityContainer<RotatedSprite> *entity);
+    void apply(AvatarEntityContainer<RotatedSprite> *entity) override;
 
   private:
     SDLWindow* window;  //!< A SDL window with its context.

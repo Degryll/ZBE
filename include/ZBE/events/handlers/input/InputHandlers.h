@@ -122,14 +122,14 @@ private:
 template<unsigned dim>
 class AddVelIHBldrFtry : public Factory {
 
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<AddVelIHBldr<dim>> avihb = std::make_shared<AddVelIHBldr<dim>>();
     mainRsrc.insert(zbe::factories::functionName_ + name, avihb);
     specificRsrc.insert("AddVelIHBldr."s + name, avihb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);

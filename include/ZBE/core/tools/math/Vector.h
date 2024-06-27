@@ -507,10 +507,10 @@ class Vector<2> : public _VECTOR<2> {
     Vector& operator=(std::initializer_list<double> l) {_VECTOR<2>::operator=(l); return (*this);}
 
     /** \brief Set values of the vector as Cartesian coordinates (default).
-     *  \param x X coordinate
-     *  \param y Y coordinate
+     *  \param xcord X coordinate
+     *  \param ycord Y coordinate
      */
-    void setCartesian(double x, double y) {data[0] = x; data[1] = y;}
+    void setCartesian(double xcord, double ycord) {data[0] = xcord; data[1] = ycord;}
 
     /** \brief Set values of the vector as Polar coordinates in radians (transformed to Cartesian).
      *  \param r Radial coordinate

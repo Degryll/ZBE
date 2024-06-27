@@ -105,7 +105,7 @@ public:
    *  \param name Name for the created ShadersSetter3D.
    *  \param cfgId ShadersSetter3D's configuration id.
    */
-  void create(std::string name, uint64_t);
+  void create(std::string name, uint64_t) override;
 
   /** \brief Setup the desired tool. The tool will be complete after this step.
    *  \param name Name of the tool.
@@ -130,7 +130,7 @@ public:
    *  \param name Name for the created ShadersSetter2D.
    *  \param cfgId ShadersSetter2D's configuration id.
    */
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<ShadersSetter2D> ss2D = std::shared_ptr<ShadersSetter2D>(new ShadersSetter2D);
     daemonStore.insert("Daemon."s + name, ss2D);
@@ -141,7 +141,7 @@ public:
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configStore.get(cfgId);

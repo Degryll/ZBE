@@ -37,7 +37,7 @@ class AvatarCreator : virtual public Behavior<T, Ts...> {
 
     /** \brief Erase given avatar.
      */
-    void apply(std::shared_ptr<Avatar> avatar) {
+    void apply(std::shared_ptr<Avatar> avatar) override {
       MAvatar a<T, Ts...>(attribs);
       for (auto lid : lists) {
         auto l = rsrclists.get(lid);

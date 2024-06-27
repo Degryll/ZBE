@@ -15,7 +15,7 @@
 namespace zbe {
 
 void OALAudioLoader::load(std::filesystem::path filePath) {
-  uint64_t audioId = audioStore->loadAudio(filePath.u8string().c_str());
+  uint64_t audioId = audioStore->loadAudio(filePath.string().c_str());
   if(audioId > 0) {
     std::filesystem::path defFilePath = generateDefPath(filePath);
     audioDefLoader->loadRsrcDef(defFilePath, audioId);

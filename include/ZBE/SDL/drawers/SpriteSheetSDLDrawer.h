@@ -13,7 +13,7 @@
 #include <memory>
 #include <cstdint>
 
-#include <SDL2/SDL.h>
+#include <SDL3/SDL.h>
 
 #include "ZBE/core/behaviors/Behavior.h"
 
@@ -64,7 +64,7 @@ class SpriteSheetSDLDrawer : public Behavior<T, Ts...> {
     /** \brief Draws the given entity.
      *  \param The entity to be drawn.
      */
-    void apply(std::shared_ptr<MAvatar<T, Ts...> > avatar) {
+    void apply(std::shared_ptr<MAvatar<T, Ts...> > avatar) override{
       std::shared_ptr<_Avatar<idx, uint64_t> > av = avatar;
       auto val = av->get();
       uint64_t gId = val->get();

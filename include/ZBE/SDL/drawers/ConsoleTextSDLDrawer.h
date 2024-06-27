@@ -11,8 +11,8 @@
 #define ZBE_SDL_DRAWERS_CONSOLETEXTSDLDRAWER_H_
 
 #include <memory>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_ttf.h>
+#include <SDL3/SDL.h>
+#include <SDL3_ttf/SDL_ttf.h>
 
 #include "ZBE/core/behaviors/Behavior.h"
 #include "ZBE/entities/avatars/SingleTextSprite.h"
@@ -56,7 +56,7 @@ class ConsoleTextDrawer : public Behavior<uint64_t, std::string, int64_t, std::v
     /** \brief Draws the given entity.
      *  \param The entity to be drawn.
      */
-    void apply(std::shared_ptr<MAvatar<uint64_t, std::string, int64_t, std::vector<std::string> > > avatar) {
+    void apply(std::shared_ptr<MAvatar<uint64_t, std::string, int64_t, std::vector<std::string> > > avatar) override {
       using namespace std::string_literals;
 
       auto fid = avatar->get<4, uint64_t>()->get();

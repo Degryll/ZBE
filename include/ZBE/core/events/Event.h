@@ -39,7 +39,7 @@ class ZBEAPI Event {
      *
      */
     inline int64_t getTime() const{
-      return time;
+      return static_cast<int64_t>(time);
     }
 
     /** \brief Get the id from this even.

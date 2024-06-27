@@ -59,7 +59,7 @@ class CustomMotion : virtual public Behavior<Vector<s>, Vector<s>, Vector<s> > {
 
     /** \brief Makes the entity move in a straight line
      */
-    void apply(std::shared_ptr<MAvatar<Vector<s>, Vector<s>, Vector<s> > > avatar) {
+    void apply(std::shared_ptr<MAvatar<Vector<s>, Vector<s>, Vector<s> > > avatar) override {
       auto vacl = AvtUtil::get<3, Vector<s> >(avatar);
       auto vvel = AvtUtil::get<2, Vector<s> >(avatar);
       auto vpos = AvtUtil::get<1, Vector<s> >(avatar);

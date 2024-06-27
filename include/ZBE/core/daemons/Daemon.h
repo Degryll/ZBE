@@ -73,7 +73,7 @@ private:
 
 class CallDmnFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<CallDmn> cdmn = std::make_shared<CallDmn>();
     mainRsrc.insert("Daemon."s + name, cdmn);
@@ -130,7 +130,7 @@ private:
 template<typename F, typename L>
 class FunctOverAvtListDmnFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<FunctOverAvtListDmn<F,L>> foald = std::make_shared<FunctOverAvtListDmn<F,L>>();
     mainRsrc.insert("Daemon."s + name, foald);
@@ -541,7 +541,7 @@ private:
 
 class StatedDaemonFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<StatedDaemon> smd = std::make_shared<StatedDaemon>();
     mainRsrc.insert("Daemon."s + name, smd);
@@ -635,7 +635,7 @@ private:
 
 class ConditionalIntDaemonFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<ConditionalIntDaemon> cid = std::make_shared<ConditionalIntDaemon>();
     mainRsrc.insert("Daemon."s + name, cid);

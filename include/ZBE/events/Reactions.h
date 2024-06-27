@@ -216,14 +216,14 @@ private:
 template<typename IData, typename Trait>
 class DaemonRctBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<DaemonRctBldr<IData, Trait>> drb = std::make_shared<DaemonRctBldr<IData, Trait>>();
     mainRsrc.insert(zbe::factories::functionName_ + name, drb);
     specificRsrc.insert("DaemonRctBldr."s + name, drb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -256,14 +256,14 @@ private:
 template<typename IData, typename Trait>
 class TicketActivatorRctBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<TicketActivatorRctBldr<IData, Trait>> tarb = std::make_shared<TicketActivatorRctBldr<IData, Trait>>();
     mainRsrc.insert(zbe::factories::functionName_ + name, tarb);
     specificRsrc.insert("TicketActivatorRctBldr."s + name, tarb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -296,14 +296,14 @@ private:
 template<typename IData, typename Trait>
 class TicketDeactivatorRctBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<TicketDeactivatorRctBldr<IData, Trait>> tarb = std::make_shared<TicketDeactivatorRctBldr<IData, Trait>>();
     mainRsrc.insert(zbe::factories::functionName_ + name, tarb);
     specificRsrc.insert("TicketDeactivatorRctBldr."s + name, tarb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -336,14 +336,14 @@ private:
 template<typename IData, typename ValueType, unsigned n>
 class StoreValuesRctBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<StoreValuesRctBldr<IData, ValueType, n>> tarb = std::make_shared<StoreValuesRctBldr<IData, ValueType, n>>();
     mainRsrc.insert(zbe::factories::functionName_ + name, tarb);
     specificRsrc.insert("StoreValuesRctBldr."s + name, tarb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -418,14 +418,14 @@ private:
 template<typename IData, typename Trait>
 class MultiRctBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<MultiRctBldr<IData, Trait>> tarb = std::make_shared<MultiRctBldr<IData, Trait>>();
     mainRsrc.insert(zbe::factories::functionName_ + name, tarb);
     specificRsrc.insert("MultiRctBldr."s + name, tarb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -494,14 +494,14 @@ private:
 template<typename IData, typename Trait>
 class PrintfRctBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<PrintfRctBldr<IData, Trait>> prb = std::make_shared<PrintfRctBldr<IData, Trait>>();
     mainRsrc.insert(zbe::factories::functionName_ + name, prb);
     specificRsrc.insert("PrintfRctBldr."s + name, prb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);

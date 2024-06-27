@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 
-#include <SDL2/SDL.h>
+#include <SDL3/SDL.h>
 #include <climits>
 #include "ZBE/core/io/InputBuffer.h"
 #include "ZBE/core/io/InputStatus.h"

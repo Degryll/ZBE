@@ -36,7 +36,7 @@ public:
    *  \param name Name for the created BaseAvatar.
    *  \param cfgId item's configuration id.
    */
-  void create(std::string name, uint64_t);
+  void create(std::string name, uint64_t) override;
 
   /** \brief Set-up a BaseAvatar.
    *  \param name Name for the created item.
@@ -63,7 +63,7 @@ public:
    *  \param name Name for the created BaseAvatar.
    *  \param cfgId item's configuration id.
    */
-  void create(std::string name, uint64_t);
+  void create(std::string name, uint64_t) override;
 
   /** \brief Set-up a BaseAvatar.
    *  \param name Name for the created item.

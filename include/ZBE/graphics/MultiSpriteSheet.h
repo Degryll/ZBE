@@ -36,13 +36,13 @@ public:
   /** \brief Parametriced constructor
    *  \param id Id for the SpriteSheet;
    **/
-  MultiSpriteSheet(int64_t size, const SprtDef& defaultSD = SprtDef()) : spriteDefintions(size), size(size), defaultSD(defaultSD) {
+  MultiSpriteSheet(int64_t size, const SprtDef& defaultSD = SprtDef()) : spriteDefintions(static_cast<size_t>(size)), size(size), defaultSD(defaultSD) {
     for(unsigned i = 0; i < size; i++) {
       spriteDefintions[i] = defaultSD;
     }
   }
 
-  MultiSpriteSheet(int64_t size, const ImgDef& defaultID) : spriteDefintions(size), size(size), defaultSD(defaultID) {
+  MultiSpriteSheet(int64_t size, const ImgDef& defaultID) : spriteDefintions(static_cast<size_t>(size)), size(size), defaultSD(defaultID) {
     for(unsigned i = 0; i < size; i++) {
       spriteDefintions[i] = defaultSD;
     }
@@ -51,7 +51,7 @@ public:
   /** \brief Generate a sprite from a given entity.
    *  \return generated sprite
    **/
-  Sprite generateSprite(std::shared_ptr<MAvatar<uint64_t, int64_t, double, Vector2D, Vector2D> > avatar) {
+  Sprite generateSprite(std::shared_ptr<MAvatar<uint64_t, int64_t, double, Vector2D, Vector2D> > avatar) override {
     SprtDef& usedSD = defaultSD;
     int64_t state = avatar->get<4, int64_t>()->get();
     if(state>=0 && state<size) {
