@@ -566,8 +566,8 @@ public:
       return;
     }
 
-    JSONFactory::loadAllIndexedRev<Daemon>(mainRsrc, uintDict, j, zbe::factories::daemonName, "daemons"s, "StatedDaemonFtry"s,
-    [&](uint64_t idx, std::shared_ptr<Daemon> dmn) {
+    JSONFactory::loadAllIndexedRev<Daemon, int64_t>(mainRsrc, intDict, j, zbe::factories::daemonName, "daemons"s, "StatedDaemonFtry"s,
+    [&](int64_t idx, std::shared_ptr<Daemon> dmn) {
       smd->setDaemon(idx, dmn);
       return true;
     });
@@ -578,7 +578,7 @@ private:
   RsrcStore<Daemon>& mainRsrc = RsrcStore<Daemon>::getInstance();
   RsrcStore<StatedDaemon>& specificRsrc = RsrcStore<StatedDaemon>::getInstance();
   RsrcStore<Value<int64_t> > &valueIRsrc = RsrcStore<Value<int64_t> >::getInstance();
-  RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
+  RsrcDictionary<int64_t>& intDict = RsrcDictionary<int64_t>::getInstance();
 };
 
 /** \brief Daemon that does nothing.

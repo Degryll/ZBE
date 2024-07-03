@@ -60,27 +60,27 @@ function(myproject_setup_dependencies)
   cpmaddpackage(
     NAME SDL3
     GITHUB_REPOSITORY libsdl-org/SDL
-    GIT_TAG 27728db41d12b1fdf91c296905a24d087424fc47)
+    GIT_TAG 982feb7a65aef15e4cff157120808f439a9abdc4)
   
   cpmaddpackage(
     NAME SDL3_image
     GITHUB_REPOSITORY libsdl-org/SDL_image
-    GIT_TAG 8eff782fa33d795c9ea1ac42dbe7e17cc9874c78)
+    GIT_TAG 60013b1f94676e38d15c57de3e5cd36483c78187)
   
   cpmaddpackage(
     NAME SDL3_mixer
     GITHUB_REPOSITORY libsdl-org/SDL_mixer
-    GIT_TAG 9c5ccc06a8701eb593628e4772fa8c32909e301f)
+    GIT_TAG 9fdb00fa64df5f084a78fae56a9f13b40d4ef85c)
   
   cpmaddpackage(
     NAME SDL3_net
     GITHUB_REPOSITORY libsdl-org/SDL_net
-    GIT_TAG 635c365de6c331730901bf88ee1b66f716fd1dfc)
+    GIT_TAG 8dffdd6ca620c6a991fa4dbec5495f6e0a955b2a)
 
   cpmaddpackage(
     NAME SDL3_ttf
     GITHUB_REPOSITORY libsdl-org/SDL_ttf
-    GIT_TAG df316fa22ea8ac84c53c8e78030b46ac81925df3)
+    GIT_TAG ad1ecab775ac285ba7546b6ee90252549a25452c)
     
 
 # ChaiScript-6.1.0 

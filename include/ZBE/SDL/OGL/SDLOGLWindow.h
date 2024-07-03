@@ -74,7 +74,7 @@ public:
      *  \return a GL texture id.
      *  \sa loadImg(), storeTexture()
      */
-    const GLuint getTexture(uint64_t id);
+    GLuint getTexture(uint64_t id) const;
 
     /** \brief Store a texture id;
      *  \param The texture id to store.
@@ -142,10 +142,10 @@ public:
 
   uint64_t loadShader(std::vector<ShaderDef> shaderDefs);
 
-  const GLuint getShader(uint64_t id);
+  GLuint getShader(uint64_t id) const;
 
 private:
-  const std::string readFile(const char* filename);
+  static const std::string readFile(const char* filename);
   static void printShaderLog(GLuint shader);
   static void printProgramLog(GLuint program);
   void compileShader(GLuint gProgramID, const char* shaderSrc[], GLenum shaderType);

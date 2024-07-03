@@ -12,9 +12,9 @@
 #include <fstream>
 #include <cstdio>
 
-#include <imgui.h>
-#include <imgui_impl_sdl.h>
-#include <imgui_impl_opengl3.h>
+// #include <imgui.h>
+// #include <imgui_impl_sdl.h>
+// #include <imgui_impl_opengl3.h>
 
 #include "lodepng.h"
 
@@ -116,7 +116,7 @@ void OGLTextureStore::reloadImg(uint64_t id, const char *url) {
   return overwriteTexture(id, _createTexture(&data[0], w, h));
 }
 
-GLuint OGLTextureStore::getTexture(uint64_t id) {
+GLuint OGLTextureStore::getTexture(uint64_t id) const {
   if(texCollection.size() <= id) {
     zbe::SysError::setError(std::string("ERROR: trying to get a non existing texture."));
     return (0);
@@ -293,7 +293,7 @@ void OGLShaderStore::printShaderLog(GLuint shader) {
       if( infoLogLength > 0 ){ printf( "%s\n", infoLog );}
       delete[] infoLog;
   } else {
-      printf( "Name %d is not a shader\n", shader );
+      printf( "Name %u is not a shader\n", shader );
   }
 }
 
