@@ -1,4 +1,5 @@
 include(cmake/CPM.cmake)
+include(ExternalProject)
 
 # Done as a function so that updates to variables like
 # CMAKE_CXX_FLAGS don't propagate out to other
@@ -52,10 +53,40 @@ function(myproject_setup_dependencies)
 
   cpmaddpackage("gh:nemtrif/utfcpp@4.0.5")
   
-  cpmaddpackage(
-    NAME lodePNG
-    GITHUB_REPOSITORY lvandeve/lodepng
-    GIT_TAG ed3c5f14b136c936d615ee3b38aaa7e7e642f12c)
+  # ------- LODEPNG START -------
+  # cpmaddpackage(
+  #   NAME lodePNG
+  #   GITHUB_REPOSITORY lvandeve/lodepng
+  #   GIT_TAG ed3c5f14b136c936d615ee3b38aaa7e7e642f12c)
+
+# Descargar y configurar lodepng
+ExternalProject_Add(
+  lodepng
+  GIT_REPOSITORY https://github.com/lvandeve/lodepng.git
+  GIT_TAG master
+  PREFIX ${CMAKE_BINARY_DIR}/_deps/lodepng-src
+  CONFIGURE_COMMAND ""
+  BUILD_COMMAND ""
+  INSTALL_COMMAND ""
+  # CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/lodepng-install
+  # BUILD_BYPRODUCTS ${CMAKE_BINARY_DIR}/lodepng-install/lib/liblodepng.a
+)
+
+# message("CMAKE_BINARY_DIR: " ${CMAKE_BINARY_DIR})
+
+# # Añadir lodepng como una biblioteca IMPORTED
+# # add_library(lodepng STATIC IMPORTED)
+# # add_dependencies(lodepng lodepng_project)
+
+# set_target_properties(lodepng PROPERTIES
+#   IMPORTED_LOCATION ${CMAKE_BINARY_DIR}/lodepng-install/lib/liblodepng.a
+#   INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_BINARY_DIR}/lodepng-install/include
+# )
+#   # include(GNUInstallDirs)
+  
+#   # install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+
+  # -----------------------------
   
   cpmaddpackage(
     NAME SDL3

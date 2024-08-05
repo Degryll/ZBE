@@ -100,10 +100,8 @@ tools/graphics/CameraFtry.cpp
 tools/graphics/Camera.cpp
 )
 
-
-
-
 add_library(myproject::ZBE_LIB ALIAS ZBE_LIB)
+add_dependencies(ZBE_LIB lodepng)
 
 target_link_libraries(ZBE_LIB PRIVATE 
   myproject_options myproject_warnings
@@ -121,6 +119,8 @@ target_link_libraries(ZBE_LIB PRIVATE
 target_include_directories(ZBE_LIB ${WARNING_GUARD} PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
                                                                   $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>)
 target_include_directories(ZBE_LIB PRIVATE ${PROJECT_SOURCE_DIR}/extlibs/stb)
+
+target_include_directories(ZBE_LIB PRIVATE ${CMAKE_BINARY_DIR}/lodepng)
 
 target_compile_features(ZBE_LIB PUBLIC cxx_std_20)
 
