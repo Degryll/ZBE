@@ -10,7 +10,7 @@
 #ifndef ZBE_SDL_DRAWERS_ROTATEDPRITESDLDRAWER_H_
 #define ZBE_SDL_DRAWERS_ROTATEDPRITESDLDRAWER_H_
 
-#include <SDL3/SDL.h>
+#include <SDL2/SDL.h>
 
 #include "ZBE/core/behaviors/Behavior.h"
 #include "ZBE/core/entities/avatars/RotatedSprite.h"

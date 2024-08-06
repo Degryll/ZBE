@@ -105,11 +105,10 @@ add_dependencies(ZBE_LIB lodepng)
 
 target_link_libraries(ZBE_LIB PRIVATE 
   myproject_options myproject_warnings
-  SDL3::SDL3
-  SDL3_net::SDL3_net
-  SDL3_ttf::SDL3_ttf
-  SDL3_mixer::SDL3_mixer
-  SDL3_image::SDL3_image
+  SDL2
+  SDL2_image 
+  SDL2_net
+  SDL2_ttf
   nlohmann_json::nlohmann_json
   glm
   tinygltf

@@ -2,8 +2,8 @@
 #define LUDO_SDLAUDIOTEST_H_
 
 #include <cstdio>
-#include <SDL3/SDL.h>
-#include <SDL3/SDL_mixer.h>
+#include <SDL2/SDL.h>
+//#include <SDL2/SDL_mixer.h>
 
 namespace ludo {
     int sdlaudiotest(int argc, char* argv[]);

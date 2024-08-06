@@ -11,7 +11,7 @@
 #define SDL_DRAWERS_SIMPLESPRITESDLDRAWER_H_
 
 #include <memory>
-#include <SDL3/SDL.h>
+#include <SDL2/SDL.h>
 
 #include "ZBE/core/behaviors/Behavior.h"
 #include "ZBE/core/entities/avatars/SingleSprite.h"

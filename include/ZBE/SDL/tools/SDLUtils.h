@@ -10,7 +10,7 @@
 #ifndef ZBE_SDL_TOOLS_SDLUTILS_H_
 #define ZBE_SDL_TOOLS_SDLUTILS_H_
 
-#include <SDL3/SDL.h>
+#include <SDL2/SDL.h>
 
 namespace zbe {
 

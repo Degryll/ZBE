@@ -12,7 +12,7 @@
 
 #include <string>
 
-#include <SDL3_ttf/SDL_ttf.h>
+#include <SDL_ttf.h>
 
 #include "ZBE/archetypes/Drawable.h"
 

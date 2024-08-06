@@ -12,7 +12,7 @@
 
 #include <cstdint>
 
-#include <SDL3_net/SDL_net.h>
+#include <SDL2/SDL_net.h>
 
 #include "ZBE/SDL/system/SDLSocket.h"
 

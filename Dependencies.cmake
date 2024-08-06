@@ -87,32 +87,17 @@ ExternalProject_Add(
 #   # install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
   # -----------------------------
+  cpmaddpackage("gh:libsdl-org/SDL#release-2.30.6")
   
-  cpmaddpackage(
-    NAME SDL3
-    GITHUB_REPOSITORY libsdl-org/SDL
-    GIT_TAG 982feb7a65aef15e4cff157120808f439a9abdc4)
+  cpmaddpackage("gh:libsdl-org/SDL_image#release-2.8.2")
   
-  cpmaddpackage(
-    NAME SDL3_image
-    GITHUB_REPOSITORY libsdl-org/SDL_image
-    GIT_TAG 60013b1f94676e38d15c57de3e5cd36483c78187)
-  
-  cpmaddpackage(
-    NAME SDL3_mixer
-    GITHUB_REPOSITORY libsdl-org/SDL_mixer
-    GIT_TAG 9fdb00fa64df5f084a78fae56a9f13b40d4ef85c)
-  
-  cpmaddpackage(
-    NAME SDL3_net
-    GITHUB_REPOSITORY libsdl-org/SDL_net
-    GIT_TAG 8dffdd6ca620c6a991fa4dbec5495f6e0a955b2a)
+  # cpmaddpackage("gh:xiph/opusfile@0.12")
 
-  cpmaddpackage(
-    NAME SDL3_ttf
-    GITHUB_REPOSITORY libsdl-org/SDL_ttf
-    GIT_TAG ad1ecab775ac285ba7546b6ee90252549a25452c)
-    
+  # cpmaddpackage("gh:libsdl-org/SDL_mixer#release-2.8.0")
+
+  cpmaddpackage("gh:libsdl-org/SDL_net#release-2.2.0")
+
+  cpmaddpackage("gh:libsdl-org/SDL_ttf#release-2.22.0")    
 
 # ChaiScript-6.1.0 
 # X - > GLEW 

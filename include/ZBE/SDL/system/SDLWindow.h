@@ -19,8 +19,8 @@
 #include <mutex>
 #include <vector>
 
-#include <SDL3/SDL.h>
-#include <SDL3_ttf/SDL_ttf.h>
+#include <SDL2/SDL.h>
+#include <SDL_ttf.h>
 
 #include "ZBE/core/system/SysError.h"
 
@@ -122,7 +122,7 @@ public:
   /** \brief Creates the widnows (use only width empty constructor and setters)
    *  \sa setTitle, setX, setY, setWidth, setHeight, setWindow_flags
    */
-  void run() override;
+  void run();
 
   /** \brief internal SDLImageStore getter
    */

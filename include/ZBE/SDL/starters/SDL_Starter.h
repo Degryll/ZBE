@@ -11,8 +11,8 @@
 #ifndef ZBE_SDL_STARTERS_STARTER_H_
 #define ZBE_SDL_STARTERS_STARTER_H_
 
-#include <SDL3/SDL.h>
-#include <SDL3_net/SDL_net.h>
+#include <SDL2/SDL.h>
+#include <SDL_net.h>
 
 #include "ZBE/core/system/system.h"
 

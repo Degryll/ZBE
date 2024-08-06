@@ -10,8 +10,8 @@
 //#include <imgui_impl_sdl.h>
 //#include <imgui_impl_opengl3.h>
 //
-//#include <SDL3/SDL.h>
-//#include <SDL3_ttf/SDL_ttf.h>
+//#include <SDL2/SDL.h>
+//#include <SDL_ttf.h>
 //
 //#include <GL/glew.h>
 //

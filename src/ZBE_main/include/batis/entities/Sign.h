@@ -10,7 +10,7 @@
 #ifndef BATIS_ENTITIES_SIGN
 #define BATIS_ENTITIES_SIGN
 
-#include <SDL3_ttf/SDL_ttf.h>
+#include <SDL_ttf.h>
 
 #include "ZBE/archetypes/TextDrawable.h"
 #include "ZBE/entities/avatars/SingleTextSprite.h"

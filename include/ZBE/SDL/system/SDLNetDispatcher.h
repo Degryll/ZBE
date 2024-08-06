@@ -13,7 +13,7 @@
 #include <memory>
 #include <forward_list>
 
-#include <SDL3/SDL.h>
+#include <SDL2/SDL.h>
 
 #include "ZBE/SDL/starters/SDL_Starter.h"
 #include "ZBE/core/io/NetBuffer.h"
