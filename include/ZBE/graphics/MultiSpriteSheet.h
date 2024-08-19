@@ -55,17 +55,17 @@ public:
     SprtDef& usedSD = defaultSD;
     int64_t state = avatar->get<4, int64_t>()->get();
     if(state>=0 && state<size) {
-        usedSD = spriteDefintions[state];
+        usedSD = spriteDefintions[static_cast<uint64_t>(state)];
     }
     auto cTime = avatar->getContextTime();
     // uint64_t time = a->getTime() % (usedSD.img.frameAmount * usedSD.img.frameTime);
     // TODO ensure that we are using the right time: getTotalTime?
     uint64_t time = cTime->getTotalTime() % (usedSD.img.frameAmount * usedSD.img.frameTime);
     uint64_t frame = time/usedSD.img.frameTime;
-    Region2D src(usedSD.img.region.p + (usedSD.img.regionOffset *  frame), usedSD.img.region.v);
+    Region2D src(usedSD.img.region.p + (usedSD.img.regionOffset *  static_cast<double>(frame)), usedSD.img.region.v);
     auto size = avatar->get<2, Vector2D>()->get();
     auto pos = avatar->get<1, Vector2D>()->get();
-    Region2D dst({static_cast<double>(pos.x) + usedSD.drawOffset.x, static_cast<double>(pos.y) + usedSD.drawOffset.y}, {static_cast<double>(size.x) * usedSD.scale.x, static_cast<double>(size.y) * usedSD.scale.y});
+    Region2D dst({pos.x + usedSD.drawOffset.x, pos.y + usedSD.drawOffset.y}, {size.x * usedSD.scale.x, size.y * usedSD.scale.y});
     Sprite s(src, dst, avatar->get<3, double>()->get(), usedSD.img.imgSrcId);
     return s;
     //return Sprite(Region2D(), Region2D(), 0.0, 0);
@@ -77,18 +77,18 @@ public:
 
   void setSprite(int64_t index, SprtDef sd) {
     if(index >= 0 && index < size) {
-      spriteDefintions[index]= sd;
+      spriteDefintions[static_cast<uint64_t>(index)]= sd;
     }
   }
 
   void setSprite(int64_t index, ImgDef id) {
     if(index >= 0 && index < size) {
-      spriteDefintions[index]= SprtDef(id);
+      spriteDefintions[static_cast<uint64_t>(index)]= SprtDef(id);
     }
   }
 
   uint64_t getSize() {
-    return size;
+    return static_cast<uint64_t>(size);
   }
 
   void setDefaultSprite(SprtDef sd) {

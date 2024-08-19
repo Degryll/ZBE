@@ -11,9 +11,8 @@
 #define ZBE_OGL_DAEMONS_SHADERSSETTER_H
 
 #include <memory>
-
 #include <cstdio>
-
+#include <GL/glew.h>
 #include <nlohmann/json.hpp>
 
 #include "ZBE/core/tools/math/math.h"
@@ -55,8 +54,8 @@ public:
 //
 // glBindVertexArray(0);
 
-    GLuint projectLoc = glGetUniformLocation(gProgramID, "projection" );
-    GLuint viewLoc = glGetUniformLocation(gProgramID, "view" );
+    GLint projectLoc = glGetUniformLocation(gProgramID, "projection" );
+    GLint viewLoc = glGetUniformLocation(gProgramID, "view" );
     glUniformMatrix4fv(projectLoc, 1, true, cam->getProjectionMat().data());
     glUniformMatrix4fv(viewLoc, 1, false, cam->getTransformMat().data());
   }
@@ -111,7 +110,7 @@ public:
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId);
+  void setup(std::string name, uint64_t cfgId) override;
 
 private:
   RsrcStore<nlohmann::json>& configStore = RsrcStore<nlohmann::json>::getInstance();

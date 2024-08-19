@@ -272,7 +272,7 @@ public:
     /** \brief Creates a new SDLImageStore associated to a renderer.
      *  \param renderer SDL_Renderer to use.
      */
-    SDLImageStore(SDL_Renderer* renderer) explicit;
+    explicit SDLImageStore(SDL_Renderer* renderer);
 
     /** \brief Default destructor. Will free all loaded textures.
      */

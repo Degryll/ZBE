@@ -84,7 +84,7 @@ class ZBEAPI BulletCreatorBhvFtry : virtual public Factory  {
 public:
   void create(std::string name, uint64_t) override;
 
-  void setup(std::string name, uint64_t cfgId);
+  void setup(std::string name, uint64_t cfgId) override;
 private:
   RsrcStore<nlohmann::json>& configStore = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<Behavior<Vector3D, Vector3D>>& behaviorStore = RsrcStore<Behavior<Vector3D, Vector3D>>::getInstance();

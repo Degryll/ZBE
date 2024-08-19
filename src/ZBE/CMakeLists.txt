@@ -101,7 +101,19 @@ tools/graphics/Camera.cpp
 )
 
 add_library(myproject::ZBE_LIB ALIAS ZBE_LIB)
-add_dependencies(ZBE_LIB lodepng)
+
+add_library(glew STATIC IMPORTED) # or STATIC instead of SHARED
+IF (WIN32)
+  set_target_properties(glew PROPERTIES
+    IMPORTED_LOCATION "${PROJECT_SOURCE_DIR}/extlibs/glew/2.2.0/windows/x64/glew32s.lib"
+    INTERFACE_INCLUDE_DIRECTORIES "${PROJECT_SOURCE_DIR}/extlibs/glew/2.2.0/include"
+  )
+ELSE()
+  set_target_properties(glew PROPERTIES
+    IMPORTED_LOCATION "${PROJECT_SOURCE_DIR}/extlibs/glew/2.2.0/linux/libGLEW.a"
+    INTERFACE_INCLUDE_DIRECTORIES "${PROJECT_SOURCE_DIR}/extlibs/glew/2.2.0/include"
+  )
+ENDIF()
 
 target_link_libraries(ZBE_LIB PRIVATE 
   myproject_options myproject_warnings
@@ -113,6 +125,8 @@ target_link_libraries(ZBE_LIB PRIVATE
   glm
   tinygltf
   imgui
+  libpng
+  glew
 )
 
 target_include_directories(ZBE_LIB ${WARNING_GUARD} PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>

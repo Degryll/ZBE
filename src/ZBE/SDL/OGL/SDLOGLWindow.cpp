@@ -10,13 +10,14 @@
 #include "ZBE/SDL/OGL/SDLOGLWindow.h"
 
 #include <fstream>
+#include <iostream>
 #include <cstdio>
 
 // #include <imgui.h>
 // #include <imgui_impl_sdl.h>
 // #include <imgui_impl_opengl3.h>
 
-#include "lodepng.h"
+#include <png.h>
 
 namespace zbe {
 
@@ -25,19 +26,19 @@ const GLuint VT_POS = 1;
 
 //----- SDLOGLWindow -----//
 
-  void GLAPIENTRY
-MessageCallback( GLenum ,//source,
-                 GLenum type,
-                 GLuint ,//id,
-                 GLenum severity,
-                 GLsizei ,//length,
-                 const GLchar* message,
-                 const void* )//userParam )
-{
-  fprintf( stderr, "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
-           ( type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : "" ),
-            type, severity, message );
-}
+//   void GLAPIENTRY
+// MessageCallback( GLenum ,//source,
+//                  GLenum type,
+//                  GLuint ,//id,
+//                  GLenum severity,
+//                  GLsizei ,//length,
+//                  const GLchar* message,
+//                  const void* )//userParam )
+// {
+//   fprintf( stderr, "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
+//            ( type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : "" ),
+//             type, severity, message );
+// }
 
 void SDLOGLWindow::createGLContext() {
   //Use OpenGL 3.0 core
@@ -58,12 +59,12 @@ void SDLOGLWindow::createGLContext() {
   glewExperimental = GL_TRUE;
   GLenum glewError = glewInit();
   if( glewError != GLEW_OK ) {
-    SysError::setError(std::string("ERROR: Error initializing GLEW: ") + std::string((char*)glewGetErrorString( glewError )));
+    SysError::setError(std::string("ERROR: Error initializing GLEW: ") + std::string(reinterpret_cast<const char*>(glewGetErrorString( glewError ))));
   }
-  glClearColor(0.1,0.1,0.1,0.0);
+  glClearColor(0.1f,0.1f,0.1f,0.0f);
   // During init, enable debug output
   glEnable              ( GL_DEBUG_OUTPUT );
-  glDebugMessageCallback( MessageCallback, 0 );
+  // glDebugMessageCallback( MessageCallback, 0 );
 
   //glEnable(GL_TEXTURE_2D);printf("Pista a 0x%x\n", glGetError()); fflush(stdout);
   glEnable(GL_DEPTH_TEST);
@@ -153,19 +154,103 @@ GLuint OGLTextureStore::_createTexture(const GLvoid *data, unsigned w, unsigned 
     glBindTexture(GL_TEXTURE_2D, texture);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, static_cast<GLsizei>(w), static_cast<GLsizei>(h), 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
   m.unlock();
   return texture;
 }
 
 std::vector<unsigned char> OGLTextureStore::loadPNG(const char* filename, unsigned &width, unsigned &height) {
-  std::vector<unsigned char> image;
-  unsigned error = lodepng::decode(image, width, height, filename);
-  if(error != 0)  {
-    zbe::SysError::setError(std::string("ERROR: lodepng could not load the texture: ") + lodepng_error_text(error));
-  }
-  return image;
+    // Abrir archivo con ifstream en modo binario
+    std::ifstream file(std::string(filename), std::ios::binary);
+    if (!file.is_open()) {
+        zbe::SysError::setError(std::string("Error opening PNG file."));
+    }
+
+    // Leer las primeras 8 bytes y verificar si es un archivo PNG
+    png_byte header[8];
+    file.read(reinterpret_cast<char*>(header), sizeof(header));
+    if (png_sig_cmp(header, 0, 8)) {
+        zbe::SysError::setError(std::string("File is not recognized as a PNG file."));
+    }
+
+    png_structp png = png_create_read_struct(PNG_LIBPNG_VER_STRING, nullptr, nullptr, nullptr);
+    if (!png) {
+        zbe::SysError::setError(std::string("Failed to create PNG read structure."));
+    }
+
+    png_infop info = png_create_info_struct(png);
+    if (!info) {
+        png_destroy_read_struct(&png, nullptr, nullptr);
+        zbe::SysError::setError(std::string("Failed to create PNG info structure."));
+    }
+
+    if (setjmp(png_jmpbuf(png))) {
+        png_destroy_read_struct(&png, &info, nullptr);
+        zbe::SysError::setError(std::string("Error during PNG creation."));
+    }
+
+    // Usar función personalizada para manejar el ifstream con libpng
+    png_set_read_fn(png, static_cast<png_voidp>(&file), [](png_structp png_ptr, png_bytep outBytes, png_size_t byteCountToRead) {
+        std::ifstream* fp = static_cast<std::ifstream*>(png_get_io_ptr(png_ptr));
+        fp->read(reinterpret_cast<char*>(outBytes), static_cast<long>(byteCountToRead));
+    });
+
+    png_set_sig_bytes(png, 8); // Informar que ya hemos leído las primeras 8 bytes
+    png_read_info(png, info);
+
+    width = png_get_image_width(png, info);
+    height = png_get_image_height(png, info);
+    png_byte color_type = png_get_color_type(png, info);
+    png_byte bit_depth = png_get_bit_depth(png, info);
+
+    // Handle grayscale images
+    if (bit_depth == 16)
+        png_set_strip_16(png);
+
+    if (color_type == PNG_COLOR_TYPE_PALETTE)
+        png_set_palette_to_rgb(png);
+
+    if (color_type == PNG_COLOR_TYPE_GRAY && bit_depth < 8)
+        png_set_expand_gray_1_2_4_to_8(png);
+
+    if (png_get_valid(png, info, PNG_INFO_tRNS))
+        png_set_tRNS_to_alpha(png);
+
+    // Ensure 8-bit RGBA
+    if (color_type == PNG_COLOR_TYPE_RGB ||
+        color_type == PNG_COLOR_TYPE_GRAY ||
+        color_type == PNG_COLOR_TYPE_PALETTE)
+        png_set_filler(png, 0xFF, PNG_FILLER_AFTER);
+
+    if (color_type == PNG_COLOR_TYPE_GRAY ||
+        color_type == PNG_COLOR_TYPE_GRAY_ALPHA)
+        png_set_gray_to_rgb(png);
+
+    png_read_update_info(png, info);
+
+    // Allocate memory for storing the PNG image data
+    std::vector<unsigned char> image_data(width * height * 4);
+    std::vector<png_bytep> row_pointers(height);
+
+    for (unsigned y = 0; y < height; y++) {
+        row_pointers[y] = image_data.data() + y * width * 4;
+    }
+
+    png_read_image(png, row_pointers.data());
+
+    png_destroy_read_struct(&png, &info, nullptr);
+
+    return image_data;
 }
+
+// std::vector<unsigned char> OGLTextureStore::loadPNG(const char* filename, unsigned &width, unsigned &height) {
+// std::vector<unsigned char> image;
+// unsigned error = lodepng::decode(image, width, height, filename);
+// if(error != 0)  {
+//   zbe::SysError::setError(std::string("ERROR: lodepng could not load the texture: ") + lodepng_error_text(error));
+// }
+// return image;
+// }
 
 //----- OGLModelStore -----//
 
@@ -182,17 +267,17 @@ uint64_t OGLModelStore::loadModel(const GLfloat *vertexData, const GLuint *index
   glGenBuffers( 1, &vbo);
   glBindBuffer( GL_ARRAY_BUFFER, vbo);
   // (3 + 2) * vSize : (pos + tex) * nvertex
-  glBufferData( GL_ARRAY_BUFFER, (3 + 2) * vSize * sizeof(GLfloat), vertexData, GL_STATIC_DRAW );
+  glBufferData( GL_ARRAY_BUFFER, (3u + 2u) * static_cast<unsigned>(vSize) * sizeof(GLfloat), vertexData, GL_STATIC_DRAW );
 
   glEnableVertexAttribArray(V_POS);
   glEnableVertexAttribArray(VT_POS);
   glVertexAttribPointer(V_POS, 3, GL_FLOAT, GL_FALSE, (3 + 2) * sizeof(GLfloat), NULL );
-  glVertexAttribPointer(VT_POS, 2, GL_FLOAT, GL_FALSE, (3 + 2) * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+  glVertexAttribPointer(VT_POS, 2, GL_FLOAT, GL_FALSE, (3 + 2) * sizeof(GLfloat), reinterpret_cast<void*>(3 * sizeof(float)));
 
   //Create IBO
   glGenBuffers( 1, &ibo);
   glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, ibo);
-  glBufferData( GL_ELEMENT_ARRAY_BUFFER, iSize * sizeof(GLuint), indexData, GL_STATIC_DRAW );
+  glBufferData( GL_ELEMENT_ARRAY_BUFFER, static_cast<unsigned>(iSize) * sizeof(GLuint), indexData, GL_STATIC_DRAW );
 
   glBindVertexArray(0);
 
@@ -237,7 +322,7 @@ uint64_t OGLShaderStore::loadShader(std::vector<ShaderDef> shaderDefs) {
   return storeProgram(gProgramID);
 }
 
-GLuint OGLShaderStore::getShader(uint64_t id) {
+GLuint OGLShaderStore::getShader(uint64_t id) const {
   if(programCollection.size() <= id) {
     zbe::SysError::setError(std::string("ERROR: trying to get a non existing shader."));
     return (0);

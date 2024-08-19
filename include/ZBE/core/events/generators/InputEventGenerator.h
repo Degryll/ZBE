@@ -294,7 +294,7 @@ public:
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId);
+  void setup(std::string name, uint64_t cfgId) override;
 
 private:
   RsrcDictionary<uint64_t>& uintStore = RsrcDictionary<uint64_t>::getInstance();

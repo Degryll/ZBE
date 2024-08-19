@@ -58,7 +58,7 @@ public:
 
   /** \brief Distribute SDL events in the appropriate structures of the system.
    */
-  inline void run() override {
+  inline void run() {
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
       for(auto& w : watchers) {

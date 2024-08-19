@@ -17,6 +17,7 @@
 #include <vector>
 #include <tuple>
 
+#include <GL/glew.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>
 
@@ -142,7 +143,7 @@ public:
 
   uint64_t loadShader(std::vector<ShaderDef> shaderDefs);
 
-  GLuint getShader(uint64_t id) const;
+  GLuint getShader(uint64_t id) const ;
 
 private:
   static const std::string readFile(const char* filename);
@@ -218,7 +219,7 @@ public:
   /** \brief Creates the widnows (use only width empty constructor and setters)
    *  \sa setTitle, setX, setY, setWidth, setHeight, setWindow_flags
    */
-  void run() override {
+  void run() {
     SDLWindow::run();
     glContext = SDL_GL_CreateContext(getSDL_Window());
     createGLContext();
