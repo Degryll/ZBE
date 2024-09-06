@@ -44,11 +44,11 @@ void EventStore::clearStore() {
 }
 
 void EventStore::storeEvent(Event* e) {
-  if(e->getTime() == bettertime) {
+  if(e->getTime() == static_cast<int64_t>(bettertime)) {
     timedStore.push_front(e);
-  } else if (e->getTime() < bettertime) {
+  } else if (e->getTime() < static_cast<int64_t>(bettertime)) {
     clearTimedStore();
-    bettertime = e->getTime();
+    bettertime = static_cast<uint64_t>(e->getTime());
     timedStore.push_front(e);
   } else {
     delete e;

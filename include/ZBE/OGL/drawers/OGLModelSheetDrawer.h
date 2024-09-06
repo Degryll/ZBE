@@ -20,7 +20,7 @@
 
 #include "ZBE/core/behaviors/Behavior.h"
 
-#include "ZBE/core/entities/AvatarEntity.h"
+
 
 #include "ZBE/core/tools/containers/RsrcStore.h"
 #include "ZBE/OGL/graphics/OGLModelSheet.h"

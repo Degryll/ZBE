@@ -13,7 +13,7 @@
 namespace zbe {
 
 static void SystemResources::load() {
-  uint64_t id = RsrcStore<ContexTime>::getInstance().insert("ContexTime.SYSTEM"s, SysTime::getInstance());
+  uint64_t id = RsrcStore<ContextTime>::getInstance().insert("ContextTime.SYSTEM"s, SysTime::getInstance());
   RsrcStore<SysTime>::getInstance().insert(id, SysTime::getInstance());
   dict.insert("SysTime.SYSTEM"s, id);
 }

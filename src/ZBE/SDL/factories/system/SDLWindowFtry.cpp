@@ -64,17 +64,17 @@ void SDLWindowFtry::setup(std::string name, uint64_t cfgId) {
     auto aux = j["title"].get<std::string>();
     std::string ctitle = strStore.get(aux);
     aux = j["x"].get<std::string>();
-    uint64_t cx = (uint64_t)intStore.get(aux);
+    int cx = static_cast<int>(intStore.get(aux));
     aux = j["y"].get<std::string>();
-    uint64_t cy = (uint64_t)intStore.get(aux);
+    int cy = static_cast<int>(intStore.get(aux));
     aux = j["w"].get<std::string>();
-    uint64_t cw = (uint64_t)intStore.get(aux);
+    int cw = static_cast<int>(intStore.get(aux));
     aux = j["h"].get<std::string>();
-    uint64_t ch = (uint64_t)intStore.get(aux);
+    int ch = static_cast<int>(intStore.get(aux));
     aux = j["wflags"].get<std::string>();
-    uint64_t cwflags = (uint64_t)intStore.get(aux);
+    Uint32 cwflags = static_cast<Uint32>(intStore.get(aux));
     aux = j["rflags"].get<std::string>();
-    uint64_t crflags = (uint64_t)intStore.get(aux);
+    Uint32 crflags = static_cast<Uint32>(intStore.get(aux));
 
     auto sdlwin = sdlWindowRsrc.get("SDLWindow."s + name);
     sdlwin->setTitle(ctitle.c_str());

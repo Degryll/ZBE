@@ -53,9 +53,9 @@ public:
 private:
   std::shared_ptr<OGLGraphics> graphic;
   GLuint vao;
+  GLsizei nvertex;
   std::vector<GLuint> textures;
   GLenum  mode;
-  GLsizei nvertex;
   GLenum  type;
   const GLvoid* offset;
 };
@@ -81,9 +81,9 @@ public:
 private:
   std::shared_ptr<OGLGraphics> graphic;
   GLuint vao;
+  GLsizei nvertex;
   std::vector<GLuint> textures;
   GLenum  mode;
-  GLsizei nvertex;
   GLenum  type;
   const GLvoid* offset;
 };

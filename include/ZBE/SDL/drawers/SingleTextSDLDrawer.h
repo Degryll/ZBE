@@ -16,7 +16,7 @@
 
 #include "ZBE/core/behaviors/Behavior.h"
 #include "ZBE/entities/avatars/SingleTextSprite.h"
-#include "ZBE/core/entities/AvatarEntity.h"
+
 #include "ZBE/SDL/system/SDLWindow.h"
 
 #include "ZBE/core/system/system.h"

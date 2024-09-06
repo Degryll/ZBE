@@ -1,6 +1,6 @@
 /**
  * Copyright 2012 Batis Degryll Ludo
- * @file CommonFactories.h
+ * @file SDLFactories.h
  * @since 2019-02-20
  * @date 2019-02-20
  * @author Ludo Degryll Batis

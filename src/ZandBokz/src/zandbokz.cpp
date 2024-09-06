@@ -73,7 +73,7 @@ int main(int /*argc*/, char** /*argv*/) {
 
 
     // Flujo del juego
-      // Llamar a la primera carga de factorias basicas. (CommonFactories)
+      // Llamar a la primera carga de factorias basicas.
       // Cargar primera aplicacion: zandbokz.
         // Devolvera un demonio que cargara lo minimo para:
           // Pintar un pantalla de carga
@@ -92,7 +92,7 @@ int main(int /*argc*/, char** /*argv*/) {
       // Cambiar factories por general? Necesitamos cargar assets en esa fase.
       // Factorias de ContextTime:SubordinateTime
       // Avatares nuevos: Todos construidos a partir de un Entity.
-      // Declarar en CommonFactories factorias para:
+      // Declarar factorias para:
         // values X
         // listas V
       // cambiar el campo "lists" del main.json por "containers" e incluir en el factorias de values.

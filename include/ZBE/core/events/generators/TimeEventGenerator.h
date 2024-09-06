@@ -55,7 +55,7 @@ public:
    *  \param timers The multiset where the timer is stored.
    *  \param eventId Event Id.
    */
-  TimerTicket(std::multiset<TimerData>::iterator iter, std::multiset<TimerData>& timers, int eventId, std::shared_ptr<ContextTime> contextTime) : s(ACTIVE), iter(iter), timers(timers), eventId(eventId), es(EventStore::getInstance()), contextTime(contextTime), td((*iter)) {}
+  TimerTicket(std::multiset<TimerData>::iterator iter, std::multiset<TimerData>& timers, uint64_t eventId, std::shared_ptr<ContextTime> contextTime) : s(ACTIVE), iter(iter), timers(timers), eventId(eventId), es(EventStore::getInstance()), contextTime(contextTime), td((*iter)) {}
 
   void setACTIVE();    //!< Set the state as ACTIVE.
   void setINACTIVE();  //!< Set the state as INACTIVE.
@@ -87,7 +87,7 @@ private:
   State s;  //!< State of the object
   std::multiset<TimerData>::iterator iter;
   std::multiset<TimerData>& timers;
-  int eventId;
+  uint64_t eventId;
   EventStore& es;
   std::shared_ptr<ContextTime> contextTime;
   TimerData td;

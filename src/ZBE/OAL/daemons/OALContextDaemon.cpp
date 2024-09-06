@@ -41,13 +41,12 @@ void OALContextDaemon::run() {
 
 ALCchar* OALContextDaemon::getLastAudioDevice(const ALCchar *devices) {
   const ALCchar *device = devices, *next = devices + 1;
-  size_t len = 0;
   ALCchar *out = static_cast<ALCchar*>(malloc(sizeof(ALCchar)*1024));
 
   while (device && *device != '\0' && next && *next != '\0') {
     strcpy(out,  device);
     //fprintf(stdout, "%s\n", device);
-    len = strlen(device);
+    size_t len = strlen(device);
     device += (len + 1);
     next += (len + 2);
   }

@@ -24,7 +24,7 @@
  */
 #define ZBE_LOG_INFO(MSG) \
 do{ zbe::LoggerMsg lm; \
-    zbe::Logger::getInstance().log(zbe::Logger::NINFO, zbe::Logger::TINFO, lm << "> " << MSG); } while(0)
+    zbe::Logger::getInstance().log(zbe::Logger::IDINFO, zbe::Logger::TINFO, lm << "> " << MSG); } while(0)
 
 /** \brief Add a [DEBUG] annotation to the logs.
  *
@@ -33,7 +33,7 @@ do{ zbe::LoggerMsg lm; \
  */
 #define ZBE_LOG_DEBUG(MSG) \
 do{ zbe::LoggerMsg lm; \
-    zbe::Logger::getInstance().log(zbe::Logger::NDEBUG, zbe::Logger::TDEBUG, lm << __FILE__ << ":" << __LINE__ << "> " << MSG); } while(0)
+    zbe::Logger::getInstance().log(zbe::Logger::IDDEBUG, zbe::Logger::TDEBUG, lm << __FILE__ << ":" << __LINE__ << "> " << MSG); } while(0)
 
 /** \brief Add a [WARNING] annotation to the logs.
  *
@@ -41,7 +41,7 @@ do{ zbe::LoggerMsg lm; \
  */
 #define ZBE_LOG_WARNING(MSG) \
 do{ zbe::LoggerMsg lm; \
-    zbe::Logger::getInstance().log(zbe::Logger::NWARNING, zbe::Logger::TWARNING, lm << "> " << MSG); } while(0)
+    zbe::Logger::getInstance().log(zbe::Logger::IDWARNING, zbe::Logger::TWARNING, lm << "> " << MSG); } while(0)
 
 /** \brief Add a [ERROR] annotation to the logs.
  *
@@ -49,7 +49,7 @@ do{ zbe::LoggerMsg lm; \
  */
 #define ZBE_LOG_ERROR(MSG) \
 do{ zbe::LoggerMsg lm; \
-    zbe::Logger::getInstance().log(zbe::Logger::NERROR, zbe::Logger::TERROR, lm << "> " << MSG); } while(0)
+    zbe::Logger::getInstance().log(zbe::Logger::IDERROR, zbe::Logger::TERROR, lm << "> " << MSG); } while(0)
 
 /** \brief Add an user defined annotation to the logs.
  *
@@ -150,10 +150,10 @@ LoggerMsg& LoggerMsg::operator<<(T t) {
  */
 class ZBEAPI Logger {
 public:
-  static const int NINFO;       //!< Id of INFO annotations
-  static const int NDEBUG;      //!< Id of DEBUG annotations
-  static const int NWARNING;    //!< Id of WARNING annotations
-  static const int NERROR;      //!< Id of ERROR annotations
+  static const int IDINFO;       //!< Id of INFO annotations
+  static const int IDDEBUG;      //!< Id of DEBUG annotations
+  static const int IDWARNING;    //!< Id of WARNING annotations
+  static const int IDERROR;      //!< Id of ERROR annotations
   static const char TINFO[];    //!< Text of INFO annotations
   static const char TDEBUG[];   //!< Text of DEBUG annotations
   static const char TWARNING[]; //!< Text of WARNING annotations

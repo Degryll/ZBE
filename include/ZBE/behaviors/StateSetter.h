@@ -14,7 +14,7 @@
 #include <cstdint>
 
 #include "ZBE/core/behaviors/Behavior.h"
-#include "ZBE/core/entities/AvatarEntity.h"
+
 
 #include "ZBE/entities/avatars/Stated.h"
 

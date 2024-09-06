@@ -145,8 +145,8 @@ public:
 private:
   SineOscillatorV3D() : min(-1.0f), max(1.0f), period(0), component(0) {}
 
-  float min;
-  float max;
+  double min;
+  double max;
   int64_t period;
   int64_t component;
 };

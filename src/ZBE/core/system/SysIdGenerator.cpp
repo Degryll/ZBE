@@ -7,6 +7,8 @@
  * @brief A system class ZBEAPI to get unique Ids.
  */
 
+#include <cstdint>
+
 #include "ZBE/core/system/SysIdGenerator.h"
 
 namespace zbe {

@@ -12,15 +12,18 @@
 
 namespace zbe {
   SimpleOGLModelSheet::SimpleOGLModelSheet(std::shared_ptr<SDLOGLWindow> window, uint64_t modelId, uint64_t texId)
-    : vao(std::get<0>(window->getModelStore()->getModel(modelId))), nvertex(std::get<1>(window->getModelStore()->getModel(modelId))), textures() {
+    : vao(std::get<0>(window->getModelStore()->getModel(modelId))), 
+      nvertex(std::get<1>(window->getModelStore()->getModel(modelId))),
+      textures() {
       textures.push_back(window->getTextureStore()->getTexture(texId));
   }
 
-  SimpleOGLModelSheet::SimpleOGLModelSheet(std::shared_ptr<SDLOGLWindow> window, uint64_t graphicsId, RsrcStore<OGLGraphics> &graphicsStore)
-    : graphic(graphicsStore.get(graphicsId)), vao(graphic->vao), textures{graphic->texid}, mode(graphic->mode), nvertex(graphic->nvertex), type(graphic->type), offset(graphic->offset) {}
+  SimpleOGLModelSheet::SimpleOGLModelSheet(std::shared_ptr<SDLOGLWindow> , uint64_t graphicsId, RsrcStore<OGLGraphics> &graphicsStore)
+    : graphic(graphicsStore.get(graphicsId)), vao(graphic->vao),  nvertex(graphic->nvertex),  textures{graphic->texid}, 
+      mode(graphic->mode), type(graphic->type), offset(graphic->offset) {}
 
-  SimpleOGLModelSheet::SimpleOGLModelSheet(std::shared_ptr<SDLOGLWindow> window, std::string graphicsName, RsrcStore<OGLGraphics> &graphicsStore)
-  : graphic(nullptr), vao(0), textures(), mode(0), nvertex(0), type(0), offset(nullptr) { // TODO Find a way to write this using an initilaizer list
+  SimpleOGLModelSheet::SimpleOGLModelSheet(std::shared_ptr<SDLOGLWindow> , std::string graphicsName, RsrcStore<OGLGraphics> &graphicsStore)
+  : graphic(nullptr), vao(0), nvertex(0), textures(), mode(0),  type(0), offset(nullptr) { // TODO Find a way to write this using an initilaizer list
       using namespace std::string_literals;
       if (!graphicsStore.contains(graphicsName)) {
         SysError::setError("SimpleOGLModelSheet for graphic: "s + graphicsName + " is not a SimpleOGLModelSheet literal."s);
@@ -54,15 +57,17 @@ OGLModel SimpleOGLModelSheet::generateModel(std::shared_ptr<MAvatar<uint64_t, do
 
 
 LookAtOGLModelSheet::LookAtOGLModelSheet(std::shared_ptr<SDLOGLWindow> window, uint64_t modelId, uint64_t texId)
-  : vao(std::get<0>(window->getModelStore()->getModel(modelId))), nvertex(std::get<1>(window->getModelStore()->getModel(modelId))), textures() {
+  : vao(std::get<0>(window->getModelStore()->getModel(modelId))), nvertex(std::get<1>(window->getModelStore()->getModel(modelId))),
+    textures() {
     textures.push_back(window->getTextureStore()->getTexture(texId));
 }
 
-LookAtOGLModelSheet::LookAtOGLModelSheet(std::shared_ptr<SDLOGLWindow> window, uint64_t graphicsId, RsrcStore<OGLGraphics> &graphicsStore)
-  : graphic(graphicsStore.get(graphicsId)), vao(graphic->vao), textures{graphic->texid}, mode(graphic->mode), nvertex(graphic->nvertex), type(graphic->type), offset(graphic->offset) {}
+LookAtOGLModelSheet::LookAtOGLModelSheet(std::shared_ptr<SDLOGLWindow>, uint64_t graphicsId, RsrcStore<OGLGraphics> &graphicsStore)
+  : graphic(graphicsStore.get(graphicsId)), vao(graphic->vao), nvertex(graphic->nvertex), textures{graphic->texid}, mode(graphic->mode),
+    type(graphic->type), offset(graphic->offset) {}
 
-LookAtOGLModelSheet::LookAtOGLModelSheet(std::shared_ptr<SDLOGLWindow> window, std::string graphicsName, RsrcStore<OGLGraphics> &graphicsStore)
-: graphic(nullptr), vao(0), textures(), mode(0), nvertex(0), type(0), offset(nullptr) { // TODO Find a way to write this using an initilaizer list
+LookAtOGLModelSheet::LookAtOGLModelSheet(std::shared_ptr<SDLOGLWindow>, std::string graphicsName, RsrcStore<OGLGraphics> &graphicsStore)
+: graphic(nullptr), vao(0), nvertex(0), textures(), mode(0), type(0), offset(nullptr) { // TODO Find a way to write this using an initilaizer list
   using namespace std::string_literals;
   if (!graphicsStore.contains(graphicsName)) {
     SysError::setError("LookAtOGLModelSheet for graphic: "s + graphicsName + " is not a LookAtOGLModelSheet literal."s);
@@ -114,7 +119,7 @@ OGLModel LookAtOGLModelSheet::generateModel(std::shared_ptr<MAvatar<uint64_t, do
   });
 
 
-  glm::mat4 rotate90  = glm::rotate(glm::mat4(1.0f), -static_cast<float>(PI/2.0f), glm::vec3(1.0,0.0,0.0));
+  glm::mat4 rotate90  = glm::rotate(glm::mat4(1.0f), -static_cast<float>(PI/2.0), glm::vec3(1.0,0.0,0.0));
 
   //glm::mat4 rotate(1.0f);
 

@@ -15,9 +15,9 @@ namespace zbe {
 void SineOscillatorF::apply(std::shared_ptr<SAvatar<float> > avatar) {
   auto value = avatar->get<1, float>();
   auto cTime = avatar->getContextTime();
-  float div = (cTime->getTotalTime()/static_cast<float>(period))*TAU;
-  float cosine = cos(div);
-  float newVal = ((cosine+1.0)/2.0)*(max-min)+min;
+  float div = (static_cast<float>(cTime->getTotalTime())/static_cast<float>(period))*static_cast<float>(TAU);
+  float cosine = static_cast<float>(cos(div));
+  float newVal = ((cosine+1.0f)/2.0f)*(max-min)+min;
   value->set(newVal);
 }
 
@@ -83,10 +83,10 @@ void SineOscillatorFFtry::setup(std::string name, uint64_t cfgId) {
 void SineOscillatorV3D::apply(std::shared_ptr<SAvatar<Vector3D> > avatar) {
   auto value = avatar->get<1, Vector3D>();
   auto cTime = avatar->getContextTime();
-  float div = (cTime->getTotalTime()/static_cast<float>(period))*TAU;
-  float cosine = cos(div);
-  float newVal = ((cosine+1.0)/2.0)*(max-min)+min;
-  value->get()[component] = newVal;
+  double div = ( static_cast<double>(cTime->getTotalTime())/static_cast<double>(period))*TAU;
+  double cosine = cos(div);
+  double newVal = ((cosine+1.0)/2.0)*(max-min)+min;
+  value->get()[static_cast<std::size_t>(component)] = newVal;
 }
 
 void SineOscillatorV3DFtry::create(std::string name, uint64_t) {

@@ -98,6 +98,7 @@
         "__tuple": "cpp",
         "__verbose_abort": "cpp",
         "ios": "cpp",
-        "shared_mutex": "cpp"
+        "shared_mutex": "cpp",
+        "__memory": "cpp"
     }
 }

@@ -32,13 +32,13 @@ namespace zbe {
     }
 
     GLuint vao = bindModel(model);
-    auto modelName = model.meshes[0].name;
-    GLsizei nvertex = model.accessors[model.meshes[0].primitives[0].indices].count;
+    auto modelName = model.meshes[0u].name;
+    GLsizei nvertex = model.accessors[static_cast<unsigned>(model.meshes[0u].primitives[0u].indices)].count;
     uint64_t modelId = modelStore->storeModel(vao, nvertex);
 
-    GLenum  mode = model.meshes[0].primitives[0].mode;
-    GLenum  type = model.accessors[model.meshes[0].primitives[0].indices].componentType;
-    const GLvoid* offset = (GLvoid*)(model.accessors[model.meshes[0].primitives[0].indices].byteOffset);
+    GLenum  mode = model.meshes[0u].primitives[0u].mode;
+    GLenum  type = model.accessors[model.meshes[0u].primitives[0u].indices].componentType;
+    const GLvoid* offset = (GLvoid*)(model.accessors[model.meshes[0u].primitives[0u].indices].byteOffset);
     NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();
     dict.insert("model."s + modelName, modelId);
     GLuint texId = bindTextures(model);
@@ -53,7 +53,7 @@ namespace zbe {
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
 
-    const tinygltf::Scene &scene = model.scenes[model.defaultScene];
+    const tinygltf::Scene &scene = model.scenes[static_cast<unsigned>(model.defaultScene)];
     for (size_t i = 0; i < scene.nodes.size(); ++i) {
       assert((scene.nodes[i] >= 0) && (scene.nodes[i] < model.nodes.size()));
       //bindModelNodes(vbos, model, model.nodes[scene.nodes[i]]);
@@ -68,8 +68,8 @@ namespace zbe {
   }
 
   void GlTFResourceLoader::bindModelNodes(std::vector<GLuint> vbos, tinygltf::Model &model, /*tinygltf::Node &node*/ int nodeIdx) {
-    tinygltf::Node &node = model.nodes[nodeIdx];
-    if ((node.mesh >= 0) && (node.mesh < model.meshes.size())) {
+    tinygltf::Node &node = model.nodes[static_cast<unsigned>(nodeIdx)];
+    if ((node.mesh >= 0u) && (node.mesh < model.meshes.size())) {
       //bindMesh(vbos, model, model.meshes[node.mesh]);
       bindMesh(vbos, model, node.mesh);
     }
@@ -115,10 +115,9 @@ namespace zbe {
 
         float* p = (float*)&buffer.data.at(0) + bufferView.byteOffset;
         int ne = bufferView.byteLength / (sizeof(float) * 3 * 3);
-        uint64_t index;
         auto modelName = model.meshes[0].name;
-        for(int i = 0; i < ne; ++i) {
-          index = i*9;
+        for(int j = 0; j < ne; ++j) {
+          uint64_t index = j*9;
           Point3D a{p[index+0],p[index+1],p[index+2]};
           Point3D b{p[index+3],p[index+4],p[index+5]};
           Point3D c{p[index+6],p[index+7],p[index+8]};

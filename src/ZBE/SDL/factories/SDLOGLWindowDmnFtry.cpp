@@ -72,17 +72,17 @@ void SDLOGLWindowDmnFtry::setup(std::string name, uint64_t cfgId) {
     aux = j["title"].get<std::string>();
     std::string ctitle = strStore.get(aux);
     aux = j["x"].get<std::string>();
-    uint64_t cx = intStore.get(aux);
+    int cx = static_cast<int>(intStore.get(aux));
     aux = j["y"].get<std::string>();
-    uint64_t cy = intStore.get(aux);
+    int cy = static_cast<int>(intStore.get(aux));
     aux = j["w"].get<std::string>();
-    uint64_t cw = intStore.get(aux);
+    int cw = static_cast<int>(intStore.get(aux));
     aux = j["h"].get<std::string>();
-    uint64_t ch = intStore.get(aux);
+    int ch = static_cast<int>(intStore.get(aux));
     aux = j["wflags"].get<std::string>();
-    uint64_t cwflags = intStore.get(aux);
+    Uint32 cwflags = static_cast<Uint32>(intStore.get(aux));
     aux = j["rflags"].get<std::string>();
-    uint64_t crflags = intStore.get(aux);
+    Uint32 crflags = static_cast<Uint32>(intStore.get(aux));
 
     auto sdlwdmn = SDLOGLWindowDmnRsrc.get("SDLOGLWindowDaemon."s + name);
     sdlwdmn->setName(cname);

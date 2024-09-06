@@ -152,7 +152,7 @@ public:
     return is_generated;
   }
 
-  inline void setEventID(int eventId) {
+  inline void setEventID(int64_t eventId) {
     this->eventId = eventId;
   }
 
@@ -255,7 +255,7 @@ class ZBEAPI InputEventGenerator : virtual public Daemon {
 
     InputEventGenerator() : inputBuffer(nullptr), inputTextBuffer(nullptr), mism(), eventId(), store(EventStore::getInstance()), handler(nullptr), contextTime(nullptr) {}
 
-    inline void setEventID(int eventId) {
+    inline void setEventID(uint64_t eventId) {
       this->eventId = eventId;
       mism.setEventID(eventId);
     }

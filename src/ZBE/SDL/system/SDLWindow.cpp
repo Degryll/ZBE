@@ -11,7 +11,7 @@
 
 #include <string>
 
-#include <SDL2/SDL_image.h>
+#include <SDL_image.h>
 
 namespace zbe {
 
@@ -115,7 +115,7 @@ uint64_t SDLImageStore::loadImg(const char *data, int width, int height, int dep
     bmask = 0x00ff0000;
   #endif
 
-  SDL_Surface* s = SDL_CreateRGBSurfaceFrom((void*)data, width, height, depth, pitch, rmask, gmask, bmask, 0xff);
+  SDL_Surface* s = SDL_CreateRGBSurfaceFrom(const_cast<void*>(static_cast<const void*>(data)), width, height, depth, pitch, rmask, gmask, bmask, 0xff);
 
   SDL_Texture *t = SDL_CreateTextureFromSurface(renderer, s);
 
@@ -180,7 +180,7 @@ SDL_Texture* SDLTextFontStore::renderText(uint64_t fontID, const char *text) {
     return nullptr;
   }
   SDL_Texture * t = SDL_CreateTextureFromSurface(renderer, s);
-  if(s) SDL_FreeSurface(s);
+  SDL_FreeSurface(s);
   return t;
 }
 

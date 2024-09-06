@@ -173,6 +173,7 @@ public:
     factories.insert("DerivedPosMovingSphereAvtFtry", std::make_shared<DerivedPosMovingSphereAvtFtry>());
 
     // Daemons & List
+    // TODO Todas las listas deben ser renombradas para que no lleven AEC en el nombre. Ya no lo usan.
 
     factories.insert("VoidBvrDmnFtry", std::make_shared<VoidAvtBhvr>());
     factories.insert("TFAEVoidFtry" , std::make_shared<SimpleGenericFtry<VoidAvtList> >(factories::listName));

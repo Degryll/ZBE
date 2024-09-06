@@ -28,7 +28,7 @@ void StateSetterBhvFtry::setup(std::string name, uint64_t cfgId) {
     auto j = *cfg;
     if (j["state"].is_string()) {
       std::string cname = j["state"].get<std::string>();
-      uint64_t state = (uint64_t)intStore.get(cname);
+      int64_t state = intStore.get(cname);
 
       auto ss = StateSetterRsrc.get("StateSetter."s + name);
       ss->setState(state);

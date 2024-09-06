@@ -12,7 +12,7 @@
 namespace zbe {
 
 void RsrcFolderLoaderDmn::run() {
-  rsrcFolderLoader->load(folderPath.u8string());
+  rsrcFolderLoader->load(folderPath.string());
 }
 
 void RsrcFolderLoaderDmn::setRsrcFolderLoader(std::shared_ptr<RsrcFolderLoader> loader) {

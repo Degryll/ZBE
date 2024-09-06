@@ -5,7 +5,7 @@
 
 #include "ZBE/core/events/handlers/TimeHandler.h"
 #include "ZBE/core/tools/math/Point.h"
-#include "ZBE/core/entities/AvatarEntity.h"
+
 #include "ZBE/entities/avatars/Positionable.h"
 #include "ZBE/core/events/generators/TimeEventGenerator.h"
 

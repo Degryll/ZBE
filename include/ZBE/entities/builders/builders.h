@@ -305,7 +305,7 @@ public:
         return;
       }
     } catch (json::parse_error &e) {
-      SysError::setError("ERROR: Json on "s + filePath.u8string() + " failed to parse: "s + std::string(e.what()));
+      SysError::setError("ERROR: Json on "s + filePath.string() + " failed to parse: "s + std::string(e.what()));
     }
   }
 

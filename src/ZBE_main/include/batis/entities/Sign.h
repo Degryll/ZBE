@@ -14,7 +14,7 @@
 
 #include "ZBE/archetypes/TextDrawable.h"
 #include "ZBE/entities/avatars/SingleTextSprite.h"
-#include "ZBE/core/entities/AvatarEntity.h"
+
 
 namespace batis{
 

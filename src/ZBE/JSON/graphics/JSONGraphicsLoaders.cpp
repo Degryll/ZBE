@@ -92,7 +92,6 @@ void JSONSpriteOGLModelSheetFileLoad(std::istream& is, std::shared_ptr<SDLOGLWin
       SysError::setError(std::string("ERROR: sprtDefs is empty"));
     }
     rsrcModelSheet.insert(name, sprtSheet);
-    auto gId = nrd.get(name);
   } catch (json::parse_error &e) {
     SysError::setError(std::string("JSONSpriteOGLModelSheetFileLoad - ERROR: Json failed to parse: ") + std::string(e.what()));
   } catch (nlohmann::detail::type_error &e) {
@@ -124,7 +123,6 @@ void JSONParametricSpriteOGLModelSheetFileLoad(std::istream& is, std::shared_ptr
       SysError::setError(std::string("ERROR: sprtDefs is empty"));
     }
     rsrcModelSheet.insert(name, sprtSheet);
-    auto gId = nrd.get(name);
   } catch (json::parse_error &e) {
     SysError::setError(std::string("JSONParametricSpriteOGLModelSheetFileLoad - ERROR: Json failed to parse: ") + std::string(e.what()));
   } catch (nlohmann::detail::type_error &e) {
@@ -132,7 +130,7 @@ void JSONParametricSpriteOGLModelSheetFileLoad(std::istream& is, std::shared_ptr
   }
 }
 
-void JSONMultiSpriteSheetFileLoad(std::istream& is, RsrcStore<zbe::SpriteSheet<uint64_t, int64_t, double, Vector2D, Vector2D> >& rsrcAnimSprt, NameRsrcDictionary& nrd, RsrcStore<zbe::OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> >& rsrcModelSheet, RsrcStore<ImgDef>& rsrcImgDef) {
+void JSONMultiSpriteSheetFileLoad(std::istream& is, RsrcStore<zbe::SpriteSheet<uint64_t, int64_t, double, Vector2D, Vector2D> >& rsrcAnimSprt, NameRsrcDictionary& nrd, RsrcStore<zbe::OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> >& , RsrcStore<ImgDef>& rsrcImgDef) {
   using namespace nlohmann;
   json j;
   try {
@@ -143,7 +141,7 @@ void JSONMultiSpriteSheetFileLoad(std::istream& is, RsrcStore<zbe::SpriteSheet<u
     for (auto sprtNode : sprtDefs) {
       std::string stateName = sprtNode["name"];
       SprtDef sprtDef = JSONSprtDefLoad(sprtNode, rsrcImgDef, nrd);
-      sprtSheet->setSprite(nrd.get(cn::STATE + cn::SEPARATOR + stateName), sprtDef);
+      sprtSheet->setSprite(static_cast<int64_t>(nrd.get(cn::STATE + cn::SEPARATOR + stateName)), sprtDef);
       if (!sprtNode["default"].is_null() && sprtNode["default"]) {
         sprtSheet->setDefaultSprite(sprtDef);
       }
@@ -156,7 +154,7 @@ void JSONMultiSpriteSheetFileLoad(std::istream& is, RsrcStore<zbe::SpriteSheet<u
   }
 }
 
-void JSONSimpleModelSheetFileLoad(std::istream& is, std::shared_ptr<SDLOGLWindow> window, NameRsrcDictionary& nrd, RsrcStore<zbe::OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> >& rsrcModelSheet, RsrcStore<OGLGraphics> &graphicsStore) {
+void JSONSimpleModelSheetFileLoad(std::istream& is, std::shared_ptr<SDLOGLWindow> window, NameRsrcDictionary& , RsrcStore<zbe::OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> >& rsrcModelSheet, RsrcStore<OGLGraphics> &graphicsStore) {
   using namespace std::string_literals;
   using namespace nlohmann;
   json j;
@@ -179,7 +177,7 @@ void JSONSimpleModelSheetFileLoad(std::istream& is, std::shared_ptr<SDLOGLWindow
   }
 }
 
-void JSONLookAtOGLModelSheetFileLoad(std::istream& is, std::shared_ptr<SDLOGLWindow> window, NameRsrcDictionary& nrd, RsrcStore<zbe::OGLModelSheet<uint64_t, double, Vector3D, Vector3D, Vector3D> >& rsrcModelSheet, RsrcStore<OGLGraphics> &graphicsStore) {
+void JSONLookAtOGLModelSheetFileLoad(std::istream& is, std::shared_ptr<SDLOGLWindow> window, NameRsrcDictionary& , RsrcStore<zbe::OGLModelSheet<uint64_t, double, Vector3D, Vector3D, Vector3D> >& rsrcModelSheet, RsrcStore<OGLGraphics> &graphicsStore) {
   using namespace std::string_literals;
   using namespace nlohmann;
   json j;

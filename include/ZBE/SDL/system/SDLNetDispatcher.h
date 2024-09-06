@@ -83,7 +83,7 @@ public:
 
   /** \brief Distribute SDL events in the appropriate structures of the system.
    */
-  void run() override;
+  void run();
 
 private:
   SDLNetDispatcher()

@@ -126,7 +126,7 @@ size_t FileHandler::read(void* buffer, size_t size, size_t count) {
 }
 
 char* FileHandler::readln(char* buffer, size_t buffersize) {
-  return fgets(buffer,buffersize,f);
+  return fgets(buffer, static_cast<int>(buffersize), f);
 }
 
 size_t FileHandler::write(const char* text) {
