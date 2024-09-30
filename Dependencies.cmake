@@ -47,6 +47,19 @@ function(myproject_setup_dependencies)
 
   cpmaddpackage("gh:ocornut/imgui@1.90.7")
 
+  if (imgui_ADDED)
+    # imgui has no CMake support, so we create our own target
+
+    file(GLOB imgui_sources "${imgui_SOURCE_DIR}/*.cpp")
+    file(GLOB imgui_sources_cpp "${imgui_SOURCE_DIR}/misc/cpp/*.cpp")
+
+    list(REMOVE_ITEM imgui_sources "${imgui_SOURCE_DIR}/imgui_demo.cpp")
+
+    set(IMGUI_DIR ${imgui_SOURCE_DIR})
+    set(IMGUI_INCLUDE_DIR ${imgui_SOURCE_DIR})
+    set(IMGUI_SOURCES ${imgui_sources} ${imgui_sources_cpp})
+  endif()
+
   cpmaddpackage("gh:kcat/openal-soft#1.23.1")
 
   cpmaddpackage("gh:syoyo/tinygltf@2.8.22")

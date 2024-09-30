@@ -117,8 +117,6 @@ target_link_libraries(ZBE_LIB PRIVATE
   nlohmann_json::nlohmann_json
   glm
   tinygltf
-  imgui
-  libpng
   glew
 )
 
@@ -128,7 +126,7 @@ target_include_directories(ZBE_LIB ${WARNING_GUARD} PUBLIC $<BUILD_INTERFACE:${P
                                                            $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>)
 target_include_directories(ZBE_LIB PRIVATE ${PROJECT_SOURCE_DIR}/extlibs/stb)
 
-target_include_directories(ZBE_LIB PRIVATE ${CMAKE_BINARY_DIR}/lodepng)
+target_include_directories(ZBE_LIB SYSTEM PUBLIC ${imgui_SOURCE_DIR})
 
 target_compile_features(ZBE_LIB PUBLIC cxx_std_20)
 
