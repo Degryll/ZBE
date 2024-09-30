@@ -67,7 +67,7 @@ public:
   *  \return An id to the image loaded.
   */
  void load(std::filesystem::path filePath) {
-    uint64_t imgId = texStore->loadImg(filePath.u8string().c_str());  // TODO test with ut8
+    uint64_t imgId = texStore->loadImg(filePath.string().c_str());  // TODO test with ut8
     if(imgId > 0) {
       std::filesystem::path defFilePath = generateDefPath(filePath);
       imgDefLoader->loadRsrcDef(defFilePath, imgId);

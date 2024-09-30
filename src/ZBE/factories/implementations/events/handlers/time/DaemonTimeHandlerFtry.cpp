@@ -43,7 +43,7 @@ void DaemonTimeHandlerFtry::setup(std::string name, uint64_t cfgId) {
 
     std::shared_ptr<Daemon> daemon = dmnRsrc.get("Daemon."s + dname);
     std::shared_ptr<TimeEventGenerator> teg = tegRsrc.get("TimeEventGenerator."s + gname);
-    uint64_t time = intStore.get(tname);
+    uint64_t time = static_cast<uint64_t>(intStore.get(tname));
 
     auto dth = dmnTimeHandlerRsrc.remove("DaemonTimeHandler."s + name);
     dth->setDaemon(daemon);

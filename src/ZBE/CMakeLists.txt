@@ -89,7 +89,6 @@ add_library(ZBE_LIB
   resources/loaders/RsrcFolderLoader.cpp
   resources/loaders/implementations/JSONAppLoader.cpp
   sytem/SystemResources.cpp
-  sytem/SimpleLoopBuilder.cpp
   tools/graphics/CameraFtry.cpp
   tools/graphics/Camera.cpp
 )

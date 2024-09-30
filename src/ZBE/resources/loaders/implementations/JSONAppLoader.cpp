@@ -45,7 +45,7 @@ void JSONAppLoader::load(std::filesystem::path filePath) {
       }
     }
   } catch (json::parse_error &e) {
-    SysError::setError("ERROR: Json on "s + filePath.u8string() + " failed to parse: "s + std::string(e.what()));
+    SysError::setError("ERROR: Json on "s + filePath.string() + " failed to parse: "s + std::string(e.what()));
   } catch (nlohmann::detail::type_error &e) {
     SysError::setError("ERROR: Unexpected type error on json app load: "s + std::string(e.what()));
   }
@@ -142,7 +142,7 @@ void JSONAppLoader::checkAndCall(json& call, json& phase) {
     auto  callable = callableRsrc.get(factories::functionName + factories::separator + call.get<std::string>());
     (*callable)();
   } else {
-    SysError::setError(std::string("ERROR: Non valid call at phase " + phase["description"].get<std::string>()));
+    SysError::setError(std::string("ERROR: Non valid call at phase ") + phase["description"].get<std::string>());
   }
 }
 

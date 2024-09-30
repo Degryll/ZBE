@@ -39,7 +39,7 @@ public:
   static void load();
 
 private:
-  NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();
+  static NameRsrcDictionary &dict;
 
 };
 

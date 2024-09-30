@@ -17,7 +17,7 @@ namespace zbe {
     std::string err;
     std::string warn;
 
-    bool res = loader.LoadASCIIFromFile(&model, &err, &warn, filePath.u8string());
+    bool res = loader.LoadASCIIFromFile(&model, &err, &warn, filePath.string());
 
     if (!warn.empty()) {
       SysError::setError(std::string("WARNING: GlTFResourceLoader:") + warn);
@@ -28,17 +28,19 @@ namespace zbe {
     }
 
     if (!res) {
-      SysError::setError("ERROR: Failed to load glTF "s + filePath.u8string());
+      SysError::setError("ERROR: Failed to load glTF "s + filePath.string());
     }
 
     GLuint vao = bindModel(model);
     auto modelName = model.meshes[0u].name;
-    GLsizei nvertex = model.accessors[static_cast<unsigned>(model.meshes[0u].primitives[0u].indices)].count;
+    GLsizei nvertex = static_cast<GLsizei>(model.accessors[static_cast<unsigned>(model.meshes[0u].primitives[0u].indices)].count);
     uint64_t modelId = modelStore->storeModel(vao, nvertex);
 
-    GLenum  mode = model.meshes[0u].primitives[0u].mode;
-    GLenum  type = model.accessors[model.meshes[0u].primitives[0u].indices].componentType;
-    const GLvoid* offset = (GLvoid*)(model.accessors[model.meshes[0u].primitives[0u].indices].byteOffset);
+    GLenum  mode = static_cast<GLenum>(model.meshes[0u].primitives[0u].mode);
+    GLenum  type = static_cast<GLenum>(model.accessors[static_cast<unsigned>(model.meshes[0u].primitives[0u].indices)].componentType);
+    char* off = 0;
+    off += model.accessors[static_cast<unsigned>(model.meshes[0u].primitives[0u].indices)].byteOffset;
+    const GLvoid* offset = off;
     NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();
     dict.insert("model."s + modelName, modelId);
     GLuint texId = bindTextures(model);
@@ -69,7 +71,7 @@ namespace zbe {
 
   void GlTFResourceLoader::bindModelNodes(std::vector<GLuint> vbos, tinygltf::Model &model, /*tinygltf::Node &node*/ int nodeIdx) {
     tinygltf::Node &node = model.nodes[static_cast<unsigned>(nodeIdx)];
-    if ((node.mesh >= 0u) && (node.mesh < model.meshes.size())) {
+    if ((node.mesh >= 0) && (node.mesh < static_cast<int>(model.meshes.size()))) {
       //bindMesh(vbos, model, model.meshes[node.mesh]);
       bindMesh(vbos, model, node.mesh);
     }
@@ -83,7 +85,7 @@ namespace zbe {
 
   void GlTFResourceLoader::bindMesh(std::vector<GLuint> vbos, tinygltf::Model &model, /*tinygltf::Mesh &mesh*/ int meshIdx) {
     using namespace std::string_literals;
-    tinygltf::Mesh &mesh = model.meshes[meshIdx];
+    tinygltf::Mesh &mesh = model.meshes[static_cast<unsigned>(meshIdx)];
     for (size_t i = 0; i < model.bufferViews.size(); ++i) {
       const tinygltf::BufferView &bufferView = model.bufferViews[i];
       if (bufferView.target == 0) {  // TODO impl drawarrays
@@ -100,24 +102,28 @@ namespace zbe {
                    */
       }  // if bufferView.target == 0
 
-      const tinygltf::Buffer &buffer = model.buffers[bufferView.buffer];
+      const tinygltf::Buffer &buffer = model.buffers[static_cast<unsigned>(bufferView.buffer)];
       // std::cout << "bufferview.target " << bufferView.target << std::endl;
 
       GLuint vbo;
       glGenBuffers(1, &vbo);
       vbos.push_back(vbo);
-      glBindBuffer(bufferView.target, vbo);
+      glBindBuffer(static_cast<GLenum>(bufferView.target), vbo);
 
-      glBufferData(bufferView.target, bufferView.byteLength, &buffer.data.at(0) + bufferView.byteOffset, GL_STATIC_DRAW);
+      glBufferData(static_cast<GLenum>(bufferView.target), static_cast<GLsizeiptr>(bufferView.byteLength), &buffer.data.at(0) + bufferView.byteOffset, GL_STATIC_DRAW);
       if(i==0) { // TODO sacar este codigo de aqui usando ek indices que se lee mas abajo para "POSITION" en lugar de asumir que es el cero.
         // o, simplemente, leer antes ese indice y usarlo en este if...
         std::shared_ptr<std::forward_list<Triangle3D>> listT3D = std::make_shared<std::forward_list<Triangle3D>>();
+        
+        // TODO revisar los tipos que realmente debemos usar aqui
+        const void* pcc = &buffer.data.at(0) + bufferView.byteOffset;
+        void* pc =  const_cast<void*>(pcc);
+        float* p = static_cast<float*>(pc);
 
-        float* p = (float*)&buffer.data.at(0) + bufferView.byteOffset;
-        int ne = bufferView.byteLength / (sizeof(float) * 3 * 3);
+        uint64_t ne = bufferView.byteLength / (sizeof(float) * 3u * 3u);
         auto modelName = model.meshes[0].name;
-        for(int j = 0; j < ne; ++j) {
-          uint64_t index = j*9;
+        for(uint64_t j = 0; j < ne; ++j) {
+          uint64_t index = j * 9u;
           Point3D a{p[index+0],p[index+1],p[index+2]};
           Point3D b{p[index+3],p[index+4],p[index+5]};
           Point3D c{p[index+6],p[index+7],p[index+8]};
@@ -130,28 +136,31 @@ namespace zbe {
 
     for (size_t i = 0; i < mesh.primitives.size(); ++i) {
       tinygltf::Primitive primitive = mesh.primitives[i];
-      tinygltf::Accessor indexAccessor = model.accessors[primitive.indices];
+      tinygltf::Accessor indexAccessor = model.accessors[static_cast<unsigned>(primitive.indices)];
 
 
       for (auto &attrib : primitive.attributes) {
-        tinygltf::Accessor accessor = model.accessors[attrib.second];
-        int byteStride = accessor.ByteStride(model.bufferViews[accessor.bufferView]);
-        glBindBuffer(GL_ARRAY_BUFFER, vbos[accessor.bufferView]);
+        tinygltf::Accessor accessor = model.accessors[static_cast<unsigned>(attrib.second)];
+        int byteStride = accessor.ByteStride(model.bufferViews[static_cast<unsigned>(accessor.bufferView)]);
+        glBindBuffer(GL_ARRAY_BUFFER, vbos[static_cast<unsigned>(accessor.bufferView)]);
 
         int size = 1;
         if (accessor.type != TINYGLTF_TYPE_SCALAR) {
           size = accessor.type;
         }
 
-        int vaa = -1;
-        if (attrib.first.compare("POSITION") == 0) { vaa = 0; }
-        if (attrib.first.compare("NORMAL") == 0) { vaa = 2; }
-        if (attrib.first.compare("TEXCOORD_0") == 0) { vaa = 1; }
-        if (vaa > -1) {
+        GLuint vaa;
+        bool valid = false;
+        if (attrib.first.compare("POSITION") == 0) { vaa = 0; valid = true;}
+        if (attrib.first.compare("NORMAL") == 0) { vaa = 2; valid = true;}
+        if (attrib.first.compare("TEXCOORD_0") == 0) { vaa = 1; valid = true;}
+        if (valid) {
+          char* pv = 0;
+          pv += accessor.byteOffset;
           glEnableVertexAttribArray(vaa);
-          glVertexAttribPointer(vaa, size, accessor.componentType,
+          glVertexAttribPointer(vaa, size, static_cast<unsigned>(accessor.componentType),
                                 accessor.normalized ? GL_TRUE : GL_FALSE,
-                                byteStride, (const GLvoid *)(accessor.byteOffset));
+                                byteStride, static_cast<const GLvoid *>(pv));
         } else {
           std::cout << "vaa missing: " << attrib.first << std::endl;
         }
@@ -172,7 +181,7 @@ namespace zbe {
         GLuint texid;
         glGenTextures(1, &texid);
 
-        tinygltf::Image &image = model.images[tex.source];
+        tinygltf::Image &image = model.images[static_cast<unsigned>(tex.source)];
 
         glBindTexture(GL_TEXTURE_2D, texid);
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
