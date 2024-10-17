@@ -63,7 +63,7 @@ public:
 	/** \brief run daemon.
 	 *  \param state not used
 	 */
-	void run(uint32_t, float state) {
+	void run(uint32_t, float state) override {
 	  if (state) {
       std::string text = vc->get();
       std::string prefix("chai ");

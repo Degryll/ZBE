@@ -40,7 +40,7 @@ public:
 
   AddVelIH(std::shared_ptr<MAvatar<Vector<dim>, Vector<dim>, Vector<dim>>> avt) : avt(avt) {}
 
-  void run(uint32_t, float status) {
+  void run(uint32_t, float status) override {
     double intiMult = -1.0;
     if ((status < 0.5 && !down) || (status >= 0.5 && down)) {
       intiMult = 1.0;
@@ -84,7 +84,7 @@ private:
 template<unsigned dim>
 class AddVelIHBldr : public Funct<void, std::shared_ptr<Entity>> {
 public:
-  void operator()(std::shared_ptr<Entity> ent) {
+  void operator()(std::shared_ptr<Entity> ent) override {
     auto avt = std::make_shared<MBaseAvatar<Vector<dim>, Vector<dim>, Vector<dim>>>();
     avt->setupEntity(ent, idxs);
     std::shared_ptr<AddVelIH<dim>> ih = std::make_shared<AddVelIH<dim>>(avt);

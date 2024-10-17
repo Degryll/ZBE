@@ -52,7 +52,7 @@ public:
   /** brief stores input value to the value.
     * param status value from input.
    */
-  void run(uint32_t, float) {
+  void run(uint32_t, float) override {
     ticket->toggle();
   }
 

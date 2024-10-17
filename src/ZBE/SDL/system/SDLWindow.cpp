@@ -15,8 +15,8 @@
 
 namespace zbe {
 
-SDLWindow::SDLWindow(const char* title, int width, int height, Uint32 SDLWindow_flags, Uint32 renderer_flags)
-  : SDLWindow(title, 0, 0, width, height, SDLWindow_flags, renderer_flags) {}
+SDLWindow::SDLWindow(const char* title, int width, int height, Uint32 window_flags, Uint32 renderer_flags)
+  : SDLWindow(title, 0, 0, width, height, window_flags, renderer_flags) {}
 
 SDLWindow::SDLWindow(const char* title, int x, int y, int width, int height, Uint32 window_flags, Uint32 renderer_flags)
        : title(title), x(x), y(y), width(width), height(height), window_flags(window_flags), renderer_flags(renderer_flags),

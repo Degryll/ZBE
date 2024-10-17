@@ -52,7 +52,7 @@ public:
   /** brief stores input value to the value.
     * param status value from input.
    */
-  void run(uint32_t, float status) {
+  void run(uint32_t, float status) override {
     if (!status) {
       ticket->setACTIVE();
     }

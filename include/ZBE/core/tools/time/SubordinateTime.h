@@ -24,6 +24,7 @@ namespace zbe {
 class ZBEAPI SubordinateTime : public ContextTime {
 public:
 
+  // cppcheck-suppress noExplicitConstructor
   SubordinateTime(std::shared_ptr<ContextTime> parent) : parent(parent) {}
   SubordinateTime(const SubordinateTime& sibling) : parent(sibling.parent) {}
 

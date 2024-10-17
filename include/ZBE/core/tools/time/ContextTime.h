@@ -44,28 +44,28 @@ public:
   /** \brief Get the total time passed until the end of last frame.
    * \return Total time passed until last frame.
    */
-  inline uint64_t getTotalTime() {
+  inline uint64_t getTotalTime() const {
     return endT;
   }
 
   /** \brief Get the last frame duration.
    * \return Last frame duration.
    */
-  inline uint64_t getFrameTime() {
+  inline uint64_t getFrameTime() const {
     return frame;
   }
 
   /** \brief Get the time lost by performance issues.
    * \return lost time.
    */
-  inline uint64_t getLostTime() {
+  inline uint64_t getLostTime() const {
     return lostTime;
   }
 
   /** \brief Return true if remains time to finish the actual frame.
    * \return True if the actual frame is not finished yet.
    */
-  inline bool isFrameRemaining() {
+  inline bool isFrameRemaining() const {
     return (initT < endT);
   }
 
@@ -94,42 +94,42 @@ public:
   /** \brief Return true if we're resolving a partial frame.
    * \return True if the actual frame is partial.
    */
-  inline bool isPartialFrame() {
+  inline bool isPartialFrame() const {
     return (is_partFrame);
   }
 
   /** \brief Get the initial frame time.
    * \return Sub frame time.
    */
-  inline uint64_t getInitFrameTime() {
+  inline uint64_t getInitFrameTime() const {
     return initT;
   }
 
   /** \brief Get the end frame time.
    * \return Sub frame time.
    */
-  inline uint64_t getEndFrameTime() {
+  inline uint64_t getEndFrameTime() const {
     return endT;
   }
 
   /** \brief Get current frame time.
    * \return Current frame time.
    */
-  inline uint64_t getCurrentTime() {
+  inline uint64_t getCurrentTime() const {
     return currentT;
   }
 
   /** \brief Get remaining frame time.
    * \return Remaining frame time.
    */
-  inline uint64_t getRemainTime() {
+  inline uint64_t getRemainTime() const {
     return remainT;
   }
 
   /** \brief Get the partial frame time.
    * \return Partial frame time.
    */
-  inline uint64_t getEventTime() {
+  inline uint64_t getEventTime() const {
     return eventT;
   }
 

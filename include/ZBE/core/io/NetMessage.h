@@ -11,7 +11,7 @@
 #define ZBE_CORE_IO_NETMESSAGE_H
 
 #include <cstdint>
-
+#include <limits>
 #include <SDL_net.h>
 
 #include "ZBE/SDL/system/SDLSocket.h"
@@ -26,7 +26,7 @@ class ZBEAPI NetMessage {
 public:
   /** \brief Empty constructor for dummy messages.
    */
-  NetMessage() : sequence(-1), socket(), msg(), time(-1) {}
+  NetMessage() : sequence(std::numeric_limits<uint64_t>::max()), socket(), msg(), time(std::numeric_limits<uint64_t>::max()) {}
 
   /** \brief Construct an input status.
    *  \param id Id of the input (key, button, mouse move, etc.).

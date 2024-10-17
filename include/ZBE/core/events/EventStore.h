@@ -64,7 +64,7 @@ public:
 
   /** \brief Returns the time of the contained events.
   */
-  uint64_t getTime();
+  uint64_t getTime() const;
 
 private:
   void clearStore(std::forward_list<Event*>&);

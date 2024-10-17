@@ -99,6 +99,7 @@
         "__verbose_abort": "cpp",
         "ios": "cpp",
         "shared_mutex": "cpp",
-        "__memory": "cpp"
+        "__memory": "cpp",
+        "charconv": "cpp"
     }
 }

@@ -40,7 +40,7 @@ public:
   *   \param cTime Local time
   *   \param period Oscillation period
   */
-  SineOscillatorF(float min, float max, float period) : min(min), max(max), period(period) {}
+  SineOscillatorF(float min, float max, int64_t period) : min(min), max(max), period(period) {}
 
   /** \brief Virtual destructor.
    */
@@ -110,7 +110,7 @@ public:
   *   \param cTime Local time
   *   \param period Oscillation period
   */
-  SineOscillatorV3D(float min, float max, float period, int64_t component) : min(min), max(max), period(period), component(component) {}
+  SineOscillatorV3D(float min, float max, int64_t period, int64_t component) : min(min), max(max), period(period), component(component) {}
 
   /** \brief Virtual destructor.
    */

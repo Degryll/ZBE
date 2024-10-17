@@ -109,7 +109,7 @@ template <unsigned n, typename T>
 class _Avatar<n, T> : virtual public Avatar {
 public:
   using Base = Avatar;
-  _Avatar(const _Avatar& rhs) : subGetter(rhs.subGetter), subSetter(rhs.subSetter), instance(rhs.instance) {}
+  explicit _Avatar(const _Avatar& rhs) : subGetter(rhs.subGetter), subSetter(rhs.subSetter), instance(rhs.instance) {}
   void operator=(const _Avatar&) = delete;
 
   virtual ~_Avatar() {}

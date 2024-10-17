@@ -57,8 +57,8 @@ private:
   int getTCPMsg(uint64_t &sequence, std::vector<char> &msg);
   int putTCPMsg(uint64_t sequence, std::vector<char> msg);
 
-  int getUDPMsg(uint64_t &, std::vector<char> &) {zbe::SysError::setError("TODO, empty getUDPMsg function."); return (17);}
-  int putUDPMsg(uint64_t , std::vector<char> ) {zbe::SysError::setError("TODO, empty putUDPMsg function."); return (17);}
+  static int getUDPMsg(uint64_t &, std::vector<char> &) {zbe::SysError::setError("TODO, empty getUDPMsg function."); return (17);}
+  static int putUDPMsg(uint64_t , std::vector<char> ) {zbe::SysError::setError("TODO, empty putUDPMsg function."); return (17);}
 
   Type type;
   TCPsocket tcp;

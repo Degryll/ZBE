@@ -14,7 +14,7 @@ namespace zbe {
   SimpleOGLModelSheet::SimpleOGLModelSheet(std::shared_ptr<SDLOGLWindow> window, uint64_t modelId, uint64_t texId)
     : vao(std::get<0>(window->getModelStore()->getModel(modelId))), 
       nvertex(std::get<1>(window->getModelStore()->getModel(modelId))),
-      textures() {
+      textures(), mode(), type(), offset() {
       textures.push_back(window->getTextureStore()->getTexture(texId));
   }
 
@@ -43,12 +43,12 @@ OGLModel SimpleOGLModelSheet::generateModel(std::shared_ptr<MAvatar<uint64_t, do
   glm::vec3 glPos(pos.x, pos.y, pos.z);
   Vector3D dir = avatar->get<2, Vector3D>()->get();
   glm::vec3 glDir(dir.x, dir.y, dir.z);
-  float angle = static_cast<float>(avatar->get<3, double>()->get());
+  float ang = static_cast<float>(avatar->get<3, double>()->get());
   float baseScale = static_cast<float>(avatar->get<4, double>()->get());
   glm::mat4 mat(1.0);
 
   glm::mat4 translate = glm::translate(mat, glPos);
-  glm::mat4 rotate    = glm::rotate(   mat, angle, glDir);
+  glm::mat4 rotate    = glm::rotate(   mat, ang, glDir);
   glm::mat4 scale     = glm::scale(    mat, glm::vec3(baseScale));
   glm::mat4 m = translate * scale * rotate;
 
@@ -58,7 +58,7 @@ OGLModel SimpleOGLModelSheet::generateModel(std::shared_ptr<MAvatar<uint64_t, do
 
 LookAtOGLModelSheet::LookAtOGLModelSheet(std::shared_ptr<SDLOGLWindow> window, uint64_t modelId, uint64_t texId)
   : vao(std::get<0>(window->getModelStore()->getModel(modelId))), nvertex(std::get<1>(window->getModelStore()->getModel(modelId))),
-    textures() {
+    textures(), mode(), type(), offset() {
     textures.push_back(window->getTextureStore()->getTexture(texId));
 }
 

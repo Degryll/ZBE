@@ -48,7 +48,7 @@ public:
   /** \brief Get the id of the key related with this event.
    * \return An integer that identifies the key.
    */
-  inline uint32_t getSequence() {
+  inline uint64_t getSequence() {
       return sequence;
   }
 
@@ -69,7 +69,7 @@ public:
   /** \brief Manage the current event and, presumably,
    * do the actions associated with it.
    */
-  void manage() {
+  void manage() override {
     handler->run(sequence, socket, msg);
   }
 

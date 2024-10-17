@@ -40,7 +40,7 @@ namespace zbe {
 
 class EntityBldr : public Funct<void> {
 public:
-  void operator()() {
+  void operator()() override {
     std::shared_ptr<Entity> ent = std::make_shared<Entity>();
     ent->setContextTime(contextTime);
     for(auto& builder : builders) {
@@ -88,7 +88,7 @@ T parseArrayElement(nlohmann::json value, RsrcDictionary<T> &literalStore) {
 
 class EntityFileBldr : public Funct<void> {
 public:
-  void operator()() {
+  void operator()() override {
     for(auto cfg : cfgs) {
       std::shared_ptr<Entity> ent = std::make_shared<Entity>();
       ent->setContextTime(contextTime);
@@ -171,7 +171,7 @@ private:
              && (cfgValue.at(0).is_string())) {
         ent->set<Vector3D>(id, std::make_shared<zbe::SimpleValue<Vector3D> >(literalStoreV3D.get(cfgValue.at(0).get<std::string>())));
       } else if (cfgValue.is_array() && (cfgValue.size() == 3)) {
-        auto c = 0;
+        auto c = 0u;
         Vector3D val;
         for (auto item : cfgValue.items()) {
           val[c++] = parseArrayElement(item.value(), doubleStore);
@@ -192,7 +192,7 @@ private:
              && (cfgValue.at(0).is_string())) {
         ent->set<Vector2D>(id, std::make_shared<zbe::SimpleValue<Vector2D> >(literalStoreV2D.get(cfgValue.at(0).get<std::string>())));
       } else if (cfgValue.is_array() && (cfgValue.size() == 2)) {
-        auto c = 0;
+        auto c = 0u;
         Vector2D val;
         for (auto item : cfgValue.items()) {
           val[c++] = parseArrayElement(item.value(), doubleStore);
@@ -324,7 +324,7 @@ template<typename T, typename ...Ts>
 class BehaviorEntityBldr : public Funct<void, std::shared_ptr<MAvatar<T, Ts...>>> {
 public:
 
-  void operator()(std::shared_ptr<MAvatar<T, Ts...>> avt) {
+  void operator()(std::shared_ptr<MAvatar<T, Ts...>> avt) override {
     std::shared_ptr<Entity> ent = std::make_shared<Entity>();
     ent->setContextTime(contextTime);
 
@@ -417,7 +417,7 @@ public:
 
   BehaviorEntityBldr() = default;
 
-  void operator()(std::shared_ptr<SAvatar<T>> avt) {
+  void operator()(std::shared_ptr<SAvatar<T>> avt) override {
     std::shared_ptr<Entity> ent = std::make_shared<Entity>();
 
     addValues<double>(ent, dCfgList, avt);
@@ -500,7 +500,7 @@ private:
 
 class EntitySetter : public Funct<void, std::shared_ptr<Entity>> {
 public:
-  void operator()(std::shared_ptr<Entity> ent) {
+  void operator()(std::shared_ptr<Entity> ent) override {
     addValues<double>(ent, newDoubleValues, sharedDoubleValues);
     addValues<float>(ent, newFloatValues, sharedFloatValues);
     addValues<uint64_t>(ent, newUintValues, sharedUintValues);
@@ -694,7 +694,7 @@ class AvatarBldr : public Funct<void, std::shared_ptr<Entity>> {
 public:
   static const int expectedIndexes = sizeof...(Ts) + 1;
   using AvtBaseType = MAvatar<T, Ts...>;
-  void operator()(std::shared_ptr<Entity> ent) {
+  void operator()(std::shared_ptr<Entity> ent) override {
     std::shared_ptr<AvtImplType> avt = std::make_shared<AvtImplType>();
     avt->setupEntity(ent, idxArr);
     for(auto indexNList : indexNLists) {
@@ -733,7 +733,7 @@ template<template<typename T> class AVT, typename T>
 class AvatarBldr<AVT, T> : public Funct<void, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = SAvatar<T>;
-  void operator()(std::shared_ptr<Entity> ent) {
+  void operator()(std::shared_ptr<Entity> ent) override {
     std::shared_ptr<AvtImplType> avt = std::make_shared<AvtImplType>();
     avt->setupEntity(ent, idx);
     for(auto indexNList : indexNLists) {
@@ -781,7 +781,7 @@ template<>
 class AvatarBldr<AvtVoid, void> : public Funct<void, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = Avatar;
-  void operator()(std::shared_ptr<Entity> ent) {
+  void operator()(std::shared_ptr<Entity> ent) override {
     std::shared_ptr<AvtImplType> avt = std::make_shared<AvtImplType>(ent);
     for(auto indexNList : indexNLists) {
       auto ticket = indexNList.second->push_front(avt);
@@ -941,7 +941,7 @@ public:
   using ActorTypeBldr = Funct<ActorType, std::shared_ptr<Entity>>;
   using ReactorTypeBldr = Funct<ReactorType, std::shared_ptr<Entity>>;
   using ShapeBldr = Funct<std::shared_ptr<Shape<Shapes...>>, std::shared_ptr<Entity>>;
-  void operator()(std::shared_ptr<Entity> ent) {
+  void operator()(std::shared_ptr<Entity> ent) override {
     ActorType actor = (*actorBuilder)(ent);
     ReactorType reactor = (*reactorBuilder)(ent);
     std::shared_ptr<Shape<Shapes...>> shape = (*shapeBuilder)(ent);
@@ -996,7 +996,7 @@ public:
   using ReactorTypeBldr = Funct<ReactorType, std::shared_ptr<Entity>>;
   using ShapeBldr = Funct<std::shared_ptr<Shape<Shapes...>>, std::shared_ptr<Entity>>;
 
-  void operator()(std::shared_ptr<Entity> ent) {
+  void operator()(std::shared_ptr<Entity> ent) override {
     ActorType actor = (*actorBuilder)(ent);
     ReactorType reactor = (*reactorBuilder)(ent);
     std::shared_ptr<Shape<Shapes...>> shape = (*shapeBuilder)(ent);
@@ -1099,7 +1099,7 @@ template<typename IData, typename Trait, typename ...Traits>
 class ActorBldr : public Funct<Actor<IData, Trait, Traits...>, std::shared_ptr<Entity>>, public _ActorBldr<IData, Trait>, public _ActorBldr<IData, Traits>... {
 public:
   virtual ~ActorBldr() = default;
-  Actor<IData, Trait, Traits...> operator()(std::shared_ptr<Entity> ent) {
+  Actor<IData, Trait, Traits...> operator()(std::shared_ptr<Entity> ent) override {
     Actor<IData, Trait, Traits...> actor;
     actor.setTrait(buildFunct<Trait>(ent));
     std::initializer_list<int>{(actor.setTrait(buildFunct<Traits>(ent)) , 0)... };
@@ -1120,7 +1120,7 @@ public:
 template<typename IData, typename Trait>
 class ActorBldr<IData, Trait> : public Funct<Actor<IData, Trait>, std::shared_ptr<Entity>>, public _ActorBldr<IData, Trait> {
 public:
-  Actor<IData, Trait> operator() (std::shared_ptr<Entity> ent) {
+  Actor<IData, Trait> operator() (std::shared_ptr<Entity> ent) override {
     Actor<IData, Trait> actor;
     actor.setTrait(_ActorBldr<IData, Trait>::buildFunct(ent));
     return actor;
@@ -1132,7 +1132,7 @@ class EnabledEmptyTraitBldr : public Funct<std::shared_ptr<Funct<void, Reactor<I
 public:
   EnabledEmptyTraitBldr() : emptyTrait(std::make_shared<EnabledEmptyTrait<IData, Trait>>()) {}
 
-  std::shared_ptr<Funct<void, Reactor<IData, Trait>*, IData>> operator()(std::shared_ptr<Entity>) {
+  std::shared_ptr<Funct<void, Reactor<IData, Trait>*, IData>> operator()(std::shared_ptr<Entity>) override {
     //return std::make_shared<EnabledEmptyTrait<IData, Trait>>();
     return emptyTrait;
   }
@@ -1176,7 +1176,7 @@ protected:
 template<typename IData, typename Trait, typename ...Traits>
 class ReactorBldr : public Funct<Reactor<IData, Trait, Traits...>, std::shared_ptr<Entity>>, public _ReactorBldr<IData, Trait>, public _ReactorBldr<IData, Traits>... {
 public:
-  Reactor<IData, Trait, Traits...> operator()(std::shared_ptr<Entity> ent) {
+  Reactor<IData, Trait, Traits...> operator()(std::shared_ptr<Entity> ent) override {
     Reactor<IData, Trait, Traits...> reactor;
     reactor.Reactor<IData, Trait>::setReaction(buildFunct<Trait>(ent));
     std::initializer_list<int>{(reactor.Reactor<IData, Traits>::setReaction(buildFunct<Traits>(ent)) , 0)... };
@@ -1200,7 +1200,7 @@ public:
   using ReactFunct = Funct<void, IData, Trait>;
   using SubBuild = Funct<std::shared_ptr<ReactFunct>, std::shared_ptr<Entity>>;
 
-  Reactor<IData, Trait> operator() (std::shared_ptr<Entity> ent) {
+  Reactor<IData, Trait> operator() (std::shared_ptr<Entity> ent) override {
     Reactor<IData, Trait> reactor;
     //reactor.setReaction((*sb)(ent));
     reactor.setReaction(_ReactorBldr<IData, Trait>::buildFunct(ent));
@@ -1229,7 +1229,7 @@ public:
   ShapeBldr() : sb(std::make_shared<WrapperFunct<std::shared_ptr<SAvatar<S>>, std::shared_ptr<Entity>>>([](std::shared_ptr<Entity>) {assert(false); return nullptr;})) {}
   ~ShapeBldr() = default;
 
-  std::shared_ptr<Shape<Shapes...>> operator()(std::shared_ptr<Entity> ent) {
+  std::shared_ptr<Shape<Shapes...>> operator()(std::shared_ptr<Entity> ent) override {
     std::shared_ptr<SAvatar<S>> avt = (*sb)(ent);
     return std::make_shared<AvtShape<S, Shapes...>>(avt);
   }
@@ -1561,7 +1561,7 @@ private:
              && (cfgValue.at(0).is_string())) {
         es->setNewValue<Vector3D>(id, literalStoreV3D.get(cfgValue.at(0).get<std::string>()));
       } else if (cfgValue.is_array() && (cfgValue.size() == 3)) {
-        auto c = 0;
+        auto c = 0u;
         Vector3D val;
         for (auto item : cfgValue.items()) {
           val[c++] = parseArrayElement(item.value(), doubleStore);
@@ -1582,7 +1582,7 @@ private:
              && (cfgValue.at(0).is_string())) {
         es->setNewValue<Vector2D>(id, literalStoreV2D.get(cfgValue.at(0).get<std::string>()));
       } else if (cfgValue.is_array() && (cfgValue.size() == 2)) {
-        auto c = 0;
+        auto c = 0u;
         Vector2D val;
         for (auto item : cfgValue.items()) {
           val[c++] = parseArrayElement(item.value(), doubleStore);
@@ -1626,7 +1626,7 @@ private:
 
 template<typename VT, unsigned n, typename T, typename ...Ts>
 struct BuildCopyValueBldr : public Funct<std::shared_ptr<Value<VT>>, std::shared_ptr<MAvatar<T, Ts...>>> {
-  std::shared_ptr<Value<VT>> operator()(std::shared_ptr<MAvatar<T, Ts...>> avt) {
+  std::shared_ptr<Value<VT>> operator()(std::shared_ptr<MAvatar<T, Ts...>> avt) override {
     auto val = AvtUtil::get<n, VT>(avt)->get();
     return std::make_shared<SimpleValue<VT>>(val);
   }
@@ -1635,7 +1635,7 @@ struct BuildCopyValueBldr : public Funct<std::shared_ptr<Value<VT>>, std::shared
 template<unsigned n, typename T, typename ...Ts>
 class BuildCopyVectModuleBldr : public Funct<std::shared_ptr<Value<Vector3D>>, std::shared_ptr<MAvatar<T, Ts...>>> {
 public:
-  std::shared_ptr<Value<Vector3D>> operator()(std::shared_ptr<MAvatar<T, Ts...>> avt) {
+  std::shared_ptr<Value<Vector3D>> operator()(std::shared_ptr<MAvatar<T, Ts...>> avt) override {
     auto val = AvtUtil::get<n, Vector3D>(avt)->get();
     return std::make_shared<SimpleValue<Vector3D>>(val.normalize()*module);
   }
@@ -1651,7 +1651,7 @@ void combineRotations(glm::vec3 originDirection, glm::vec3 originUp, glm::vec3 d
 
 template<typename T, typename ...Ts>
 struct BuildUpDirToOriBldr : public Funct<std::shared_ptr<Value<Vector3D>>, std::shared_ptr<MAvatar<T, Ts...>>> {
-  std::shared_ptr<Value<Vector3D>> operator()(std::shared_ptr<MAvatar<T, Ts...>> avt) {
+  std::shared_ptr<Value<Vector3D>> operator()(std::shared_ptr<MAvatar<T, Ts...>> avt) override {
     // ["upwardsIdx", "orientationIdx", "positionIdx"],
     Vector3D ori = AvtUtil::get<2, Vector3D>(avt)->get() * -1.0;
     Vector3D upwards = AvtUtil::get<3, Vector3D>(avt)->get();
@@ -1681,7 +1681,7 @@ private:
 
 template<typename T, typename ...Ts>
 struct BuildUpDirToRadsBldr : public Funct<std::shared_ptr<Value<double>>, std::shared_ptr<MAvatar<T, Ts...>>> {
-  std::shared_ptr<Value<double>> operator()(std::shared_ptr<MAvatar<T, Ts...>> avt) {
+  std::shared_ptr<Value<double>> operator()(std::shared_ptr<MAvatar<T, Ts...>> avt) override {
     // ["upwardsIdx", "orientationIdx", "positionIdx"],
     Vector3D ori = AvtUtil::get<2, Vector3D>(avt)->get() * -1.0;
     Vector3D upwards = AvtUtil::get<3, Vector3D>(avt)->get();
@@ -2192,7 +2192,7 @@ private:
 
 class EntityTimerBldr : public Funct<void, std::shared_ptr<Entity>> {
 public:
-  void operator()(std::shared_ptr<Entity> ent) {
+  void operator()(std::shared_ptr<Entity> ent) override {
     auto ticket = teg->addRelativeTimer((*handlerBuilder)(ent), time);
     if(!enabled) {
       ticket->setINACTIVE();

@@ -52,6 +52,7 @@ class _POINT {
      *
      *  \param l List of values.
      */
+    // cppcheck-suppress noExplicitConstructor
     _POINT(const std::initializer_list<double> l) {
       if (l.size() != s) {
         SysError::setError("Point ERROR: Initializer list size is incorrect.");
@@ -224,6 +225,7 @@ class Point : public _POINT<s> {
      *        Point<N> p = {v1, v2, ... , vN}
      *  \param l List of values.
      */
+    // cppcheck-suppress noExplicitConstructor
     Point(std::initializer_list<double> l) : _POINT<s>(l) {}
 };
 
@@ -253,6 +255,7 @@ class Point<2> : public _POINT<2> {
      *
      *  \param p Point to copy
      */
+    // cppcheck-suppress noExplicitConstructor
     Point(const _POINT<2>& p) : _POINT<2>(p), x(data[0]), y(data[1]) {}
 
     /** \brief A list initializer constructor.
@@ -267,6 +270,7 @@ class Point<2> : public _POINT<2> {
      *
      *  \param l List of values.
      */
+    // cppcheck-suppress noExplicitConstructor
     Point(std::initializer_list<double> l) : _POINT(l), x(data[0]), y(data[1]) {}
 
     /** \brief Assign operator.
@@ -314,6 +318,7 @@ class Point<3> : public _POINT<3> {
      *
      *  \param p Point to copy
      */
+    // cppcheck-suppress noExplicitConstructor
     Point(const _POINT<3>& p) : _POINT<3>(p), x(data[0]), y(data[1]), z(data[2]) {}
 
     /** \brief A list initializer constructor.
@@ -328,6 +333,7 @@ class Point<3> : public _POINT<3> {
      *
      *  \param l List of values that defines the point.
      */
+    // cppcheck-suppress noExplicitConstructor
     Point(std::initializer_list<double> l) : _POINT(l), x(data[0]), y(data[1]), z(data[2]) {}
 
     /** \brief Assign operator.
@@ -356,9 +362,8 @@ using Point3D = Point<3>;  //!< An alias to Point<3>.
 template <unsigned dim>
 double sqrPointDist(Point<dim> a, Point<dim> b) {
     double accum = 0;
-    double localDist;
     for(unsigned i = 0; i < dim; i++) {
-        localDist = b[i] - a[i];
+        double localDist = b[i] - a[i];
         accum += localDist * localDist;
     }
     return accum;

@@ -52,7 +52,7 @@ public:
 	/** \brief run daemon.
 	 *  \param state not used
 	 */
-	void run(uint32_t, float inval) {
+	void run(uint32_t, float inval) override {
 		if (almost_equal(inval, value)) {
     	d->run();
 		}
@@ -107,7 +107,7 @@ public:
 	 *  \param state not used
 	 */
 	void run(uint32_t, float inval) {
-		if (!(cValue->get() == cExpected) == equal) {
+		if (!(cValue->get() == cExpected) == equal) override {
     	return;
 		}
 		if (almost_equal(inval, value)) {
@@ -159,7 +159,7 @@ public:
 	/** \brief run daemon.
 	 *  \param state not used
 	 */
-	void run(uint32_t key, float inval) {
+	void run(uint32_t key, float inval) override {
 		if (!(cValue->get() == cExpected) == equal) {
     		return;
 		}

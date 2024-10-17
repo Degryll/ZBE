@@ -31,7 +31,7 @@ class ZBEAPI SingleSpriteSDLDrawer : public Behavior<uint64_t, Vector2D, Vector2
     /** \brief Create a new drawer in the given context.
      *  \param window A SDLwindow with its context.
      */
-    SingleSpriteSDLDrawer(std::shared_ptr<SDLWindow> window) : window(window), imgStore(window->getImgStore()) {}
+    explicit SingleSpriteSDLDrawer(std::shared_ptr<SDLWindow> window) : window(window), imgStore(window->getImgStore()) {}
 
     /** \brief Destructor.
      */

@@ -96,7 +96,7 @@ private:
 
 class DaemonRecurrentTHBldr : public Funct<std::shared_ptr<TimeHandler>, std::shared_ptr<Entity>> {
 public:
-  std::shared_ptr<TimeHandler> operator()(std::shared_ptr<Entity> ent) {
+  std::shared_ptr<TimeHandler> operator()(std::shared_ptr<Entity> ent) override {
       //std::shared_ptr<Avatar> avatar = 
       std::shared_ptr<Avatar> avatar = std::make_shared<AwareAvatar>(ent);
       auto drth = std::make_shared<DaemonRecurrentTimeHandler>();

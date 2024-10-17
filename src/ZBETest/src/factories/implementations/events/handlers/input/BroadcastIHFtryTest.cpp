@@ -19,7 +19,7 @@ class DummyHandler : virtual public zbe::InputHandler {
 public:
     DummyHandler() {}
 
-    virtual void run(uint32_t key, float state) {
+    virtual void run(uint32_t key, float state) override {
       called = true;
       this->state = state;
       this->key = key;

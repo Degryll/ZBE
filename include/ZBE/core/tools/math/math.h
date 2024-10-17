@@ -48,7 +48,7 @@ static const int64_t SECOND = 65536;
 
 /** \brief This constant represent 1 / second.
  */
-static const double INVERSE_SECOND = 1.0 / 65536;
+static const double INVERSE_SECOND = 1.0 / 65536.0;
 
 /** \brief This constant represent the minimal amount of bits that will be used as precision.
  */

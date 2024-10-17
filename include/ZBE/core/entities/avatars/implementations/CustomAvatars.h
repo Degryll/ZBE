@@ -249,7 +249,7 @@ private:
 class Triangle2DShapeAvtBldr : public Funct<std::shared_ptr<SAvatar<Triangle2D>>, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = SAvatar<Triangle2D>;
-  std::shared_ptr<SAvatar<Triangle2D>> operator()(std::shared_ptr<Entity> ent) {
+  std::shared_ptr<SAvatar<Triangle2D>> operator()(std::shared_ptr<Entity> ent) override {
     std::shared_ptr<Triangle2DAvt> avt = std::make_shared<Triangle2DAvt>();
     avt->setupEntity(ent, aidx, bidx, cidx);
     return avt;
@@ -271,7 +271,7 @@ template<unsigned s>
 class MovingPointShapeAvtBldr : public Funct<std::shared_ptr<SAvatar<MovingPoint<s>>>, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = SAvatar<MovingPoint<s>>;
-  std::shared_ptr<SAvatar<MovingPoint<s>>> operator()(std::shared_ptr<Entity> ent) {
+  std::shared_ptr<SAvatar<MovingPoint<s>>> operator()(std::shared_ptr<Entity> ent) override {
     std::shared_ptr<MovingPointAvt<s>> avt = std::make_shared<MovingPointAvt<s>>();
     avt->setupEntity(ent, positionidx, velocityIdx);
     return avt;
@@ -492,7 +492,7 @@ private:
 class MovingSphereAvtShapeBldr  : public Funct<std::shared_ptr<SAvatar<MovingSphere>>, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = SAvatar<MovingSphere>;
-  std::shared_ptr<SAvatar<MovingSphere>> operator()(std::shared_ptr<Entity> ent) {
+  std::shared_ptr<SAvatar<MovingSphere>> operator()(std::shared_ptr<Entity> ent) override {
     std::shared_ptr<MovingSphereAvt> avt = std::make_shared<MovingSphereAvt>();
     avt->setupEntity(ent, positionidx, velocityidx, radiusidx);
     return avt;
@@ -561,7 +561,7 @@ private:
 class MovingSphereAvtBldr : public Funct<std::shared_ptr<SAvatar<MovingSphere>>, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = SAvatar<MovingSphere>;
-  std::shared_ptr<SAvatar<MovingSphere>> operator()(std::shared_ptr<Entity> ent) {
+  std::shared_ptr<SAvatar<MovingSphere>> operator()(std::shared_ptr<Entity> ent) override {
     std::shared_ptr<MovingSphereAvt> avt = std::make_shared<MovingSphereAvt>();
     avt->setupEntity(ent, positionidx, velocityidx, radiusidx);
     for(auto indexNList : indexNLists) {
@@ -717,7 +717,7 @@ private:
 class MovingTriangle3DRscAvtShapeBldr  : public Funct<std::shared_ptr<SAvatar<MovingTriangle3D>>, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = SAvatar<MovingSphere>;
-  std::shared_ptr<SAvatar<MovingTriangle3D>> operator()(std::shared_ptr<Entity> ent) {
+  std::shared_ptr<SAvatar<MovingTriangle3D>> operator()(std::shared_ptr<Entity> ent) override {
     std::shared_ptr<MovingTriangle3DRscAvt> avt = std::make_shared<MovingTriangle3DRscAvt>();
     avt->setupEntity(ent, velocityIdx, orientationIdx, positionIdx, radsIdx, sizeIdx, e1Idx, e2Idx);
     avt->setBaseTriangle(baseT);
@@ -872,7 +872,7 @@ private:
 class MovingTriangle3DAvtShapeBldr  : public Funct<std::shared_ptr<SAvatar<MovingTriangle3D>>, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = SAvatar<MovingSphere>;
-  std::shared_ptr<SAvatar<MovingTriangle3D>> operator()(std::shared_ptr<Entity> ent) {
+  std::shared_ptr<SAvatar<MovingTriangle3D>> operator()(std::shared_ptr<Entity> ent) override {
     std::shared_ptr<MovingTriangle3DAvt> avt = std::make_shared<MovingTriangle3DAvt>();
     avt->setupEntity(ent, positionAidx, positionBidx, positionCidx, velocityidx);
     return avt;
@@ -947,7 +947,7 @@ private:
 class MovingTriangle3DAvtBldr : public Funct<std::shared_ptr<SAvatar<MovingTriangle3D>>, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = SAvatar<MovingTriangle3D>;
-  std::shared_ptr<SAvatar<MovingTriangle3D>> operator()(std::shared_ptr<Entity> ent) {
+  std::shared_ptr<SAvatar<MovingTriangle3D>> operator()(std::shared_ptr<Entity> ent) override {
     std::shared_ptr<MovingTriangle3DAvt> avt = std::make_shared<MovingTriangle3DAvt>();
     avt->setupEntity(ent, positionAidx, positionBidx, positionCidx, velocityidx);
     for(auto indexNList : indexNLists) {
@@ -1193,7 +1193,7 @@ private:
 class PosUpwardsTargetToPosUpwardsDirAvtBldr : public Funct<void, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = MAvatar<Vector3D, Vector3D, Vector3D>;
-  void operator()(std::shared_ptr<Entity> ent) {
+  void operator()(std::shared_ptr<Entity> ent) override {
     std::shared_ptr<PosUpwardsTargetToPosUpwardsDirAvt> avt = std::make_shared<PosUpwardsTargetToPosUpwardsDirAvt>();
 
     avt->setupEntity(ent, positionidx, targetidx, upwardsidx);
@@ -1352,7 +1352,7 @@ private:
 // class PosTargetUpwardsToPosDirAngleAvtBldr : public Funct<void, std::shared_ptr<Entity>> {
 // public:
 //   using AvtBaseType = MAvatar<double, Vector3D, Vector3D>;
-//   void operator()(std::shared_ptr<Entity> ent) {
+//   void operator()(std::shared_ptr<Entity> ent) override {
 //     std::shared_ptr<PosTargetUpwardsToPosDirAngleAvt> avt = std::make_shared<PosTargetUpwardsToPosDirAngleAvt>();
 
 //     avt->setupEntity(ent, positionidx, targetidx, upwardsidx);
@@ -1503,7 +1503,7 @@ private:
 // class MovingTriangle3DHitboxAvtShapeBldr  : public Funct<std::shared_ptr<SAvatar<MovingTriangle3D>>, std::shared_ptr<Entity>> {
 // public:
 //   using AvtBaseType = SAvatar<MovingSphere>;
-//   std::shared_ptr<SAvatar<MovingTriangle3D>> operator()(std::shared_ptr<Entity> ent) {
+//   std::shared_ptr<SAvatar<MovingTriangle3D>> operator()(std::shared_ptr<Entity> ent) override {
 //     std::shared_ptr<MovingTriangle3DHitboxAvt> avt = std::make_shared<MovingTriangle3DHitboxAvt>();
 //     avt->setupEntity(ent, positionidx, velocityidx, orientationidx, sizeidx);
 //     return avt;
@@ -1579,7 +1579,7 @@ private:
 // class MovingTriangle3DHitboxAvtBldr : public Funct<std::shared_ptr<SAvatar<MovingTriangle3D>>, std::shared_ptr<Entity>> {
 // public:
 //   using AvtBaseType = SAvatar<MovingTriangle3D>;
-//   std::shared_ptr<SAvatar<MovingTriangle3D>> operator()(std::shared_ptr<Entity> ent) {
+//   std::shared_ptr<SAvatar<MovingTriangle3D>> operator()(std::shared_ptr<Entity> ent) override {
 //     std::shared_ptr<MovingTriangle3DHitboxAvt> avt = std::make_shared<MovingTriangle3DHitboxAvt>();
 //     avt->setupEntity(ent, positionidx, velocityidx, orientationidx, sizeidx);
 //     for(auto indexNList : indexNLists) {
@@ -1846,7 +1846,7 @@ private:
 class TargetToDirAvtBldr : public Funct<void, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = MAvatar<Vector3D, Vector3D, Vector3D>;
-  void operator()(std::shared_ptr<Entity> ent) {
+  void operator()(std::shared_ptr<Entity> ent) override {
     std::shared_ptr<TargetToDirAvt> avt = std::make_shared<TargetToDirAvt>();
     avt->setupEntity(ent, positionidx, targetidx,upwardsidx, scaleidx);
     for(auto indexNList : indexNLists) {
@@ -1878,7 +1878,7 @@ private:
 class PosTargetToPosDirAvtBldr : public Funct<void, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = MAvatar<Vector3D, Vector3D>;
-  void operator()(std::shared_ptr<Entity> ent) {
+  void operator()(std::shared_ptr<Entity> ent) override {
     std::shared_ptr<PosTargetToPosDirAvt> avt = std::make_shared<PosTargetToPosDirAvt>();
 
     avt->setupEntity(ent, positionidx, targetidx);
@@ -1907,7 +1907,7 @@ private:
 class DerivedCosVelAvtBldr : public Funct<void, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = MAvatar<Vector3D, Vector3D>;
-  void operator()(std::shared_ptr<Entity> ent) {
+  void operator()(std::shared_ptr<Entity> ent) override {
     std::shared_ptr<DerivedCosVelAvt> avt = std::make_shared<DerivedCosVelAvt>();
     avt->setRange(min, max);
     avt->setPeriod(period);
@@ -1950,7 +1950,7 @@ class DerivedPosMovingSphereAvtShapeBldr : public Funct<std::shared_ptr<SAvatar<
 // This class where c&p from DerivedPosMovingSphereAvtBldr removing list managment
 public:
   using AvtBaseType = SAvatar<MovingSphere>;
-  std::shared_ptr<SAvatar<MovingSphere>> operator()(std::shared_ptr<Entity> ent) {
+  std::shared_ptr<SAvatar<MovingSphere>> operator()(std::shared_ptr<Entity> ent) override {
     std::shared_ptr<DerivedPosMovingSphereAvt> avt = std::make_shared<DerivedPosMovingSphereAvt>();
     avt->setRange(min, max);
     avt->setPeriod(period);
@@ -1986,7 +1986,7 @@ class DerivedPosMovingSphereAvtBldr : public Funct<void, std::shared_ptr<Entity>
 // This class where c&p to DerivedPosMovingSphereAvtShapeBldr
 public:
   using AvtBaseType = SAvatar<MovingSphere>;
-  void operator()(std::shared_ptr<Entity> ent) {
+  void operator()(std::shared_ptr<Entity> ent) override {
     std::shared_ptr<DerivedPosMovingSphereAvt> avt = std::make_shared<DerivedPosMovingSphereAvt>();
     avt->setRange(min, max);
     avt->setPeriod(period);
@@ -2031,7 +2031,7 @@ private:
 class LookAtToPitchAvtBldr : public Funct<void, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = MAvatar<Vector3D, Vector3D>;
-  void operator()(std::shared_ptr<Entity> ent) {
+  void operator()(std::shared_ptr<Entity> ent) override {
     std::shared_ptr<LookAtToPitchAvt> avt = std::make_shared<LookAtToPitchAvt>();
     avt->setupEntity(ent, positionidx, targetidx,upwardsidx);
     for(auto indexNList : indexNLists) {
@@ -2060,7 +2060,7 @@ private:
 class LookAtToYawAvtBldr : public Funct<void, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = MAvatar<Vector3D, Vector3D>;
-  void operator()(std::shared_ptr<Entity> ent) {
+  void operator()(std::shared_ptr<Entity> ent) override {
     std::shared_ptr<LookAtToPitchAvt> avt = std::make_shared<LookAtToPitchAvt>();
     avt->setupEntity(ent, positionidx, targetidx,upwardsidx);
     for(auto indexNList : indexNLists) {

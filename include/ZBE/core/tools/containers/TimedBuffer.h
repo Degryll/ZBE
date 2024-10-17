@@ -36,7 +36,7 @@ public:
    */
   inline void insert(T const& element) {buffer.insert(TimedElement<T>(element, element.getTime()));}
 
-  uint64_t size() {return buffer.size();}
+  uint64_t size() const {return buffer.size();}
 
   /** \brief Will insert in the given store all TimedElements created
    *    in the given time range. All elements with time less than or equal to initT will be discarded.

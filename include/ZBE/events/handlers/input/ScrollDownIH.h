@@ -53,7 +53,7 @@ public:
 	/** \brief run daemon.
 	 *  \param state not used
 	 */
-	void run(uint32_t, float) {
+	void run(uint32_t, float) override {
     vl->set(std::min(int64_t(vh->get().size()), vl->get()+1));
 	}
 

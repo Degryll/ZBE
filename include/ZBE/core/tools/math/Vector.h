@@ -50,6 +50,7 @@ class _VECTOR {
      *
      *  \param l Initializer list with the vector coordinates
      */
+    // cppcheck-suppress noExplicitConstructor
     _VECTOR(std::initializer_list<double> l) {
       if (l.size() != dim) {
         SysError::setError("Vector ERROR: Initializer list size is incorrect.");
@@ -207,7 +208,7 @@ class _VECTOR {
      * \return The Vector module.
      * \sa getSqrModule().
      */
-    double getModule() {
+    double getModule() const {
       double r = 0;
       for(unsigned i = 0; i < dim; i++) {
         r += data[i] * data[i];
@@ -221,7 +222,7 @@ class _VECTOR {
      * \return The squared Vector module.
      * \sa getModule().
      */
-    double getSqrModule() {  // to avoid square root
+    double getSqrModule() const {  // to avoid square root
       double r2 = 0;
       for(unsigned i = 0; i < dim; i++) {
         r2 += data[i] * data[i];
@@ -308,7 +309,7 @@ class _VECTOR {
      * \sa operator-=(), operator-() and operator*=().
      */
     friend _VECTOR operator+(_VECTOR& lhs, _VECTOR&& rhs) {
-      return (rhs+=lhs);
+      return (lhs+=rhs);
     }
 
     /** \brief Implements Vector subtraction.
@@ -434,6 +435,7 @@ class Vector : public _VECTOR<dim> {
   public:
     /** \brief Void constructor, the Vector's values are unknown.
      */
+    // cppcheck-suppress uninitMemberVar
     Vector() : _VECTOR<dim>() {}
 
     /** \brief A list initializer constructor.
@@ -448,6 +450,7 @@ class Vector : public _VECTOR<dim> {
      *
      *  \param l Initializer list with the vector coordinates
      */
+    // cppcheck-suppress[uninitMemberVar,noExplicitConstructor]
     Vector(std::initializer_list<double> l) : _VECTOR<dim>(l) {}
 };
 
@@ -475,6 +478,7 @@ class Vector<2> : public _VECTOR<2> {
     /** \brief A copy constructor with _VECTOR<2>.
      *  \param v _VECTOR to copy
      */
+    // cppcheck-suppress noExplicitConstructor
     Vector(const _VECTOR<2>& v) : _VECTOR<2>(v), x(data[0]), y(data[1]) {}
 
     /** \brief A list initializer constructor.
@@ -489,6 +493,7 @@ class Vector<2> : public _VECTOR<2> {
      *
      *  \param l Initializer list with the vector coordinates
      */
+    // cppcheck-suppress noExplicitConstructor
     Vector(std::initializer_list<double> l) : _VECTOR<2>(l), x(data[0]), y(data[1]) {}
 
     /** \brief Assign operator.
@@ -561,6 +566,7 @@ class Vector<3> : public _VECTOR<3> {
     /** \brief A copy constructor with _VECTOR<3>.
      *  \param _VECTOR to copy
      */
+    // cppcheck-suppress noExplicitConstructor
     Vector(const _VECTOR<3>& v) : _VECTOR<3>(v), x(data[0]), y(data[1]), z(data[2]) {}
 
     /** \brief A list initializer constructor.
@@ -575,6 +581,7 @@ class Vector<3> : public _VECTOR<3> {
      *
      *  \param l Initializer list with the vector coordinates
      */
+    // cppcheck-suppress noExplicitConstructor
     Vector(std::initializer_list<double> l) : _VECTOR<3>(l), x(data[0]), y(data[1]), z(data[2]) {}
 
     /** \brief Assign operator.

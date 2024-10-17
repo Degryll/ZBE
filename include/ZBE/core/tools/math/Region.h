@@ -79,6 +79,7 @@ public:
   /** \brief Copy constructor
    *  \param rhs _REGION to copy
    */
+  // cppcheck-suppress noExplicitConstructor
   Region(const _REGION<dim>& rhs) : _REGION<dim>(rhs), p(_REGION<dim>::_p), v(_REGION<dim>::_v) {}
 
   /** \brief Parametrized constructor
@@ -135,6 +136,7 @@ public:
   /** \brief Copy constructor
    *  \param rhs _REGION to copy
    */
+  // cppcheck-suppress noExplicitConstructor
   Region(const _REGION<2>& rhs) : _REGION<2>(rhs), p(_REGION<2>::_p), v(_REGION<2>::_v) {}
 
   /** \brief Parametrized constructor
@@ -154,6 +156,8 @@ public:
    */
   Region& operator=(const Region<2>& rhs) {
     _REGION<2>::operator=(rhs);
+    p = rhs.p;
+    v = rhs.v;
     return (*this);
   }
 
@@ -189,6 +193,7 @@ public:
   /** \brief Copy constructor
    *  \param rhs _REGION to copy
    */
+  // cppcheck-suppress noExplicitConstructor
   Region(const _REGION<3>& rhs) : _REGION<3>(rhs), p(_REGION<3>::_p), v(_REGION<3>::_v) {}
 
   /** \brief Parametrized constructor
@@ -208,6 +213,8 @@ public:
    */
   Region& operator=(const Region<3>& rhs) {
     _REGION<3>::operator=(rhs);
+    p = rhs.p;
+    v = rhs.v;
     return (*this);
   }
 

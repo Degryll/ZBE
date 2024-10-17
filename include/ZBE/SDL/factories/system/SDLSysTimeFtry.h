@@ -44,7 +44,7 @@ public:
    *  \param name Name for the created item.
    *  \param cfgId item's configuration id.
    */
-  void setup(std::string, uint64_t);
+  void setup(std::string, uint64_t) override;
 
 private:
   RsrcStore<Timer> &timerRsrc = RsrcStore<Timer>::getInstance();

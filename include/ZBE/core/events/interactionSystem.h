@@ -57,7 +57,7 @@ public:
   // }
 
   void callActor(Actor<IData, Traits...>*  actor, IData data) {
-    std::initializer_list<int>{(actor->act((Reactor<IData, Traits>*)this, data), 0)... };
+    std::initializer_list<int>{(actor->act(static_cast<Reactor<IData, Traits>*>(this), data), 0)... };
   }
 };
 
@@ -171,7 +171,7 @@ template<typename IData, typename Trait>
 class AvtEnabledTrait : public Funct<void, Reactor<IData, Trait>*, IData>  {
 public:
   AvtEnabledTrait(std::shared_ptr<SAvatar<Trait>> avt) : avt(avt) {}
-  void operator()(Reactor<IData, Trait>* reactor, IData data) {
+  void operator()(Reactor<IData, Trait>* reactor, IData data) override {
     auto trait = avt->get();
     reactor->react(data, trait);
   }
@@ -182,7 +182,7 @@ private:
 template<typename IData, typename Trait>
 class EnabledEmptyTrait : public Funct<void, Reactor<IData, Trait>*, IData> {
 public:
-  void operator()(Reactor<IData, Trait>* reactor, IData data) {
+  void operator()(Reactor<IData, Trait>* reactor, IData data) override {
     Trait t;
     reactor->react(data, t);
   }
@@ -193,7 +193,7 @@ public:
 // template<typename IData, typename Trait, typename Base, typename ...Bases>
 // struct ReactionPrint {
 //   ReactionPrint(std::shared_ptr<zbe::MAvatar<Base, Bases...>> avt) : avt(avt) {}
-//   void operator() (IData data, Trait trait) {
+//   void operator() (IData data, Trait trait) override {
 //       std::cout << "Typeid name: " << typeid(trait).name() << " With value " << trait << std::endl;
 //       std::cout << "Interaction data: " << data << std::endl;
 //       auto val = zbe::AvtUtil::get<2, Base >(avt);
@@ -218,7 +218,7 @@ void imprimirNombreTipo() {
 
 template<typename IData, typename Trait>
 struct ReactionPrint : zbe::Funct<void, IData, Trait> {
-  void operator() (IData data, Trait trait) {
+  void operator() (IData data, Trait trait) override {
       imprimirNombreTipo<Trait>();
       //std::cout << "Interaction data: " << data << std::endl;
   }
@@ -227,7 +227,7 @@ struct ReactionPrint : zbe::Funct<void, IData, Trait> {
 template<typename IData, typename Trait, typename ReactionType>
 class ReactionBldr : public zbe::Funct<std::shared_ptr<zbe::Funct<void, IData, Trait>>, std::shared_ptr<zbe::Entity>> {
 public:
-  std::shared_ptr<zbe::Funct<void, IData, Trait>> operator()(std::shared_ptr<zbe::Entity> ent) {
+  std::shared_ptr<zbe::Funct<void, IData, Trait>> operator()(std::shared_ptr<zbe::Entity> ent) override {
     return std::make_shared<ReactionType>();
   }
 };

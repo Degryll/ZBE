@@ -56,7 +56,7 @@ class ZBEAPI Event {
      *
      * \return Return true if this occurs earlier than e.
      */
-    bool operator<(const Event & e) {
+    bool operator<(const Event & e) const {
       return getTime() < e.getTime();
     }
 

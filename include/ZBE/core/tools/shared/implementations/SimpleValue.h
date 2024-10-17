@@ -40,14 +40,14 @@ public:
   /** brief Sets the value.
    *  param value Value to store.
    */
-  void set(T value) {
+  void set(T value) override {
     v = value ;
   }
 
   /** brief Returns the value.
    *  return value;
    */
-  T& get() {
+  T& get() override {
     return v;
   }
 
@@ -172,7 +172,7 @@ private:
     using namespace std::string_literals;
     Vector3D v3;
     if (cfg.is_array() && (cfg.size() == 3)) {
-      auto c = 0;
+      auto c = 0u;
       for (auto item : cfg.items()) {
         v3[c++] = parseArrayElement(item.value(), doubleStore);
       }
@@ -186,7 +186,7 @@ private:
     using namespace std::string_literals;
     Vector2D v2;
     if (cfg.is_array() && (cfg.size() == 2)) {
-      auto c = 0;
+      auto c = 0u;
       for (auto item : cfg.items()) {
         v2[c++] = parseArrayElement(item.value(), doubleStore);
       }

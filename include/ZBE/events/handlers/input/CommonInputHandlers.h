@@ -50,7 +50,7 @@ public:
     this->releaseVal = val;
   }
 
-  void run(uint32_t, float status) {
+  void run(uint32_t, float status) override {
     if (status < 0.5) {
       value->set(releaseVal);
     } else {

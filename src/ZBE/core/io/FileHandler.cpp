@@ -36,7 +36,8 @@ bool FileHandler::exist(const char* filename) {
 
   struct _stat buffer;
   return (_wstat(fn.c_str(), &buffer) == 0 && (buffer.st_mode & _S_IFREG));
-
+#else
+  return false;
 #endif // OS
 }
 
@@ -52,6 +53,8 @@ bool FileHandler::existDir(const char* dirname) {
   struct _stat buffer;
   return (_wstat(fn.c_str(), &buffer) == 0 && (buffer.st_mode & _S_IFDIR));
 
+#else
+  return false;
 #endif // OS
 }
 
@@ -65,6 +68,8 @@ bool FileHandler::rm(const char* filename) {
 
   return (_wremove(fn.c_str()));
 
+#else
+  return false;
 #endif // OS
 }
 
@@ -78,6 +83,8 @@ bool FileHandler::rmdir(const char* dirname) {
 
   return (!RemoveDirectoryW(fn.c_str()));
 
+#else
+  return false;
 #endif // OS
 }
 

@@ -76,7 +76,7 @@ class ZBEAPI MappedInputStatusManager : public InputStatusManager {
 public:
 
   MappedInputStatusManager() : eventId(), store(EventStore::getInstance()), handlers() {}
-  MappedInputStatusManager(int eventId) : eventId(eventId), store(EventStore::getInstance()), handlers() {}
+  MappedInputStatusManager(uint64_t eventId) : eventId(eventId), store(EventStore::getInstance()), handlers() {}
   virtual ~MappedInputStatusManager() = default;
 
   /** Add a handler to an input event.
@@ -139,7 +139,7 @@ public:
     }
   }
 
-  bool generate(const InputStatus& is) {
+  bool generate(const InputStatus& is) override {
     bool is_generated = false;
     auto hit = handlers.find(is.getId());
     if (hit != handlers.end() && !hit->second.active.empty()) {
@@ -152,7 +152,7 @@ public:
     return is_generated;
   }
 
-  inline void setEventID(int64_t eventId) {
+  inline void setEventID(uint64_t eventId) {
     this->eventId = eventId;
   }
 
@@ -175,7 +175,7 @@ class ZBEAPI AnyInputStatusManager : public InputStatusManager {
 public:
   virtual ~AnyInputStatusManager() {}
 
-  virtual bool generate(const InputStatus& is) = 0;
+  virtual bool generate(const InputStatus& is) override = 0;
 
 };
 
@@ -192,7 +192,7 @@ class ZBEAPI InputEventGenerator : virtual public Daemon {
 
     /** \brief Default constructor.
      */
-    InputEventGenerator(std::shared_ptr<InputBuffer> inputBuffer, std::shared_ptr<InputTextBuffer> inputTextBuffer = nullptr, int eventId = 0, std::shared_ptr<TextHandler> handler = nullptr, std::shared_ptr<ContextTime> contextTime = nullptr) : inputBuffer(inputBuffer), inputTextBuffer(inputTextBuffer), mism(eventId), eventId(eventId), store(EventStore::getInstance()), handler(handler), contextTime(contextTime) {}
+    InputEventGenerator(std::shared_ptr<InputBuffer> inputBuffer, std::shared_ptr<InputTextBuffer> inputTextBuffer = nullptr, uint64_t eventId = 0, std::shared_ptr<TextHandler> handler = nullptr, std::shared_ptr<ContextTime> contextTime = nullptr) : inputBuffer(inputBuffer), inputTextBuffer(inputTextBuffer), mism(eventId), eventId(eventId), store(EventStore::getInstance()), handler(handler), contextTime(contextTime) {}
 
     /** \brief Empty destructor.
      */

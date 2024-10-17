@@ -95,7 +95,7 @@ template<typename RetVal, typename ...Ts>
 class WrapperFunct : public Funct<RetVal, Ts...> {
 public:
   WrapperFunct(std::function<RetVal(Ts...)> callable) : callable(callable) {}
-  RetVal operator()(Ts... something) {
+  RetVal operator()(Ts... something) override {
     return callable(something...);
   };
 private:

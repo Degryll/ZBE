@@ -71,7 +71,7 @@ void EventStore::manageStore(std::forward_list<Event*>& store) {
   clearStore(store);
 }
 
-uint64_t EventStore::getTime() {
+uint64_t EventStore::getTime() const {
   return (bettertime);
 }
 

@@ -45,7 +45,7 @@ public:
 	/** \brief run daemon.
 	 *  \param state not used
 	 */
-	void run(uint32_t, float state) {
+	void run(uint32_t, float state) override {
 	  if (state) {
       while(1) {
         if (vc->get().size()==0) {

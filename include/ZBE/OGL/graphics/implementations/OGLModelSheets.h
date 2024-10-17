@@ -48,7 +48,7 @@ public:
   /** \brief Generate a sprite from a given entity.
    *  \return generated sprite
    **/
-  OGLModel generateModel(std::shared_ptr<MAvatar<uint64_t, double, double, Vector3D, Vector3D> > avatar);
+  OGLModel generateModel(std::shared_ptr<MAvatar<uint64_t, double, double, Vector3D, Vector3D> > avatar) override;
 
 private:
   std::shared_ptr<OGLGraphics> graphic;
@@ -76,7 +76,7 @@ public:
   /** \brief Generate a sprite from a given entity.
    *  \return generated sprite
    **/
-  OGLModel generateModel(std::shared_ptr<MAvatar<uint64_t, double, Vector3D, Vector3D, Vector3D> > avatar);
+  OGLModel generateModel(std::shared_ptr<MAvatar<uint64_t, double, Vector3D, Vector3D, Vector3D> > avatar) override;
 
 private:
   std::shared_ptr<OGLGraphics> graphic;
@@ -95,6 +95,7 @@ public:
   SpriteOGLModelSheet(const SpriteOGLModelSheet&) = delete;
   SpriteOGLModelSheet operator=(const SpriteOGLModelSheet&) = delete;
 
+  // cppcheck-suppress noExplicitConstructor
   SpriteOGLModelSheet(std::shared_ptr<SDLOGLWindow> window)
     : spriteDefintion(), vao(), textures(), mode(), nvertex(),  type(), offset(nullptr), window(window) {
     using namespace std::string_literals;
@@ -113,7 +114,7 @@ public:
   /** \brief Generate a sprite from a given entity.
    *  \return generated sprite
    **/
-  OGLModel generateModel(std::shared_ptr<MAvatar<uint64_t, Vector2D, Vector2D> > avatar) {
+  OGLModel generateModel(std::shared_ptr<MAvatar<uint64_t, Vector2D, Vector2D> > avatar) override {
     auto prepos = avatar->get<1, Vector2D>();
     Vector2D pos = prepos->get();
     Vector2D size = avatar->get<2, Vector2D>()->get();
@@ -123,7 +124,7 @@ public:
     uint64_t time = cTime->getTotalTime() % (spriteDefintion.img.frameAmount * spriteDefintion.img.frameTime);
     uint64_t frame = time/spriteDefintion.img.frameTime;
 
-    Point2D p = spriteDefintion.img.texCoord.p + (spriteDefintion.img.texCoordOffset *  frame);
+    Point2D p = spriteDefintion.img.texCoord.p + (spriteDefintion.img.texCoordOffset *  static_cast<double>(frame));
     auto t = glm::vec3(p[0], p[1], 0.0);
     auto s = glm::vec3(spriteDefintion.img.texCoord.v.x, spriteDefintion.img.texCoord.v.y, 1.0);
 
@@ -169,6 +170,7 @@ public:
   ParametricSpriteOGLModelSheet(const ParametricSpriteOGLModelSheet&) = delete;
   ParametricSpriteOGLModelSheet operator=(const ParametricSpriteOGLModelSheet&) = delete;
 
+  // cppcheck-suppress noExplicitConstructor
   ParametricSpriteOGLModelSheet(std::shared_ptr<SDLOGLWindow> window)
     : spriteDefintion(), vao(), textures(), mode(), nvertex(),  type(), offset(nullptr), window(window) {
     using namespace std::string_literals;
@@ -187,7 +189,7 @@ public:
   /** \brief Generate a sprite from a given entity.
    *  \return generated sprite
    **/
-  OGLModel generateModel(std::shared_ptr<MAvatar<uint64_t, int64_t, int64_t, Vector2D, Vector2D> > avatar) {
+  OGLModel generateModel(std::shared_ptr<MAvatar<uint64_t, int64_t, int64_t, Vector2D, Vector2D> > avatar) override {
     auto prepos = avatar->get<1, Vector2D>();
     Vector2D pos = prepos->get();
     Vector2D size = avatar->get<2, Vector2D>()->get();
@@ -196,10 +198,10 @@ public:
 
 
     double maxFrame = static_cast<double>(spriteDefintion.img.frameAmount - 1);  // Max index frame. IE: 24 frames = 0..23
-    double valueRatio = max/maxFrame;
-    int64_t frame = ceil(current / valueRatio);
+    double valueRatio = static_cast<double>(max)/maxFrame;
+    int64_t frame = static_cast<int64_t>(ceil(static_cast<double>(current) / valueRatio));
     //printf("Current %ld max %ld frame %ld\n", current, max, frame);fflush(stdout);
-    Point2D p = spriteDefintion.img.texCoord.p + (spriteDefintion.img.texCoordOffset *  frame);
+    Point2D p = spriteDefintion.img.texCoord.p + (spriteDefintion.img.texCoordOffset *  static_cast<double>(frame));
     //printf("P ( %lf,  %lf) = (%lf, %lf) + ((%lf, %lf) * %ld)\n", p.x, p.y, spriteDefintion.img.texCoord.p.x, spriteDefintion.img.texCoord.p.y, spriteDefintion.img.texCoordOffset.x, spriteDefintion.img.texCoordOffset.y , frame);fflush(stdout);
     auto t = glm::vec3(p[0], p[1], 0.0);
     auto s = glm::vec3(spriteDefintion.img.texCoord.v.x, spriteDefintion.img.texCoord.v.y, 1.0);

@@ -47,21 +47,21 @@ public:
   /** \brief Get the id of the key related with this event.
    * \return An integer that identifies the key.
    */
-  inline uint32_t getKey() {
+  inline uint32_t getKey() const {
       return key;
   }
 
   /** \brief Get the state of the related key as a value in the range (-1.0 .. +1.0).
    * \return An float representing the state.
    */
-  inline float getState() {
+  inline float getState() const {
       return state;
   }
 
   /** \brief Manage the current event and, presumably,
    * do the actions associated with it.
    */
-  void manage();
+  void manage() override;
 
 private:
   uint32_t key;

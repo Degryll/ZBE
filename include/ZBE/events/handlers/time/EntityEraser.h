@@ -53,7 +53,7 @@ class EntityEraserTH : public TimeHandler {
     /** brief Erases entity
      *  param time not used
      */
-  	void run(uint64_t) {
+  	void run(uint64_t) override {
         e->setERASED();
   	}
 
@@ -81,7 +81,7 @@ public:
     /** brief Erases entity
      *  param time not used
      */
-  	void operator()(IData, Trait) {
+  	void operator()(IData, Trait) override {
         e->setERASED();
   	}
 
@@ -91,15 +91,10 @@ public:
 
 template<typename IData, typename Trait>
 class EntityEraserReactionBldr : public Funct<std::shared_ptr<Funct<void, IData, Trait>>, std::shared_ptr<Entity>> {
-  std::shared_ptr<Funct<void, IData, Trait>> operator()(std::shared_ptr<Entity> ent) {
+  std::shared_ptr<Funct<void, IData, Trait>> operator()(std::shared_ptr<Entity> ent) override {
     return std::make_shared<EntityEraserReaction<IData, Trait>>(ent);
   }
 };
-
-//template<typename IData, typename Trait>
-//class EntityEraserReactionBldr : public Funct<void, IData, Trait> {
-//
-//};
 
 /** \brief Factory for EntityEraserTH.
  */
@@ -153,7 +148,7 @@ private:
 };
 
 class EntityEraserTHBldr : public Funct<std::shared_ptr<TimeHandler>, std::shared_ptr<Entity>> {
-  std::shared_ptr<TimeHandler> operator()(std::shared_ptr<Entity> ent) {
+  std::shared_ptr<TimeHandler> operator()(std::shared_ptr<Entity> ent) override {
       return std::make_shared<EntityEraserTH>(ent);
   }
 };

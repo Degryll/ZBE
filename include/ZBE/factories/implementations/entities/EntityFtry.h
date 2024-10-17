@@ -142,7 +142,7 @@ private:
            && (cfg.at(0).is_string())) {
       return std::make_shared<SimpleValue<Vector3D> >(literalStoreV3D.get(cfg.at(0).get<std::string>()));
     } else if (cfg.is_array() && (cfg.size() == 3)) {
-      auto c = 0;
+      auto c = 0u;
       for (auto item : cfg.items()) {
         val->get()[c++] = parseArrayElement(item.value(), doubleStore);
       }
@@ -158,7 +158,7 @@ private:
            && (cfg.at(0).is_string())) {
       return std::make_shared<SimpleValue<Vector2D> >(literalStoreV2D.get(cfg.at(0).get<std::string>()));
     } else if (cfg.is_array() && (cfg.size() == 2)) {
-      auto c = 0;
+      auto c = 0u;
       for (auto item : cfg.items()) {
         val->get()[c++] = parseArrayElement(item.value(), doubleStore);
       }

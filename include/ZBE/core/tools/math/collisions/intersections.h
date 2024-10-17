@@ -61,7 +61,7 @@ ZBEAPI bool IntersectionMovingCircleOutsideAABB2D(Circle circle, Vector2D direct
 template <unsigned dim>
 bool intersectionAABBAABB(AABB<dim> boxa, AABB<dim> boxb) {
   for(unsigned i = 0; i < dim; i++) {
-    if(abs(boxa.minimum[i] - boxb.minimum[i]) * 2 >= ((boxa.maximum[i] - boxa.minimum[i]) + (boxb.maximum[i] - boxb.minimum[i]))) {
+    if(fabs(boxa.minimum[i] - boxb.minimum[i]) * 2.0 >= ((boxa.maximum[i] - boxa.minimum[i]) + (boxb.maximum[i] - boxb.minimum[i]))) {
         return false;
     }
   }
@@ -207,14 +207,14 @@ bool intersectionRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, uint64_t &time, 
 
   if (discr < 0) return (false);
 
-  uint64_t t = (int64_t)(((-b - sqrt(discr)) / (2 * a)) * zbe::SECOND);
+  uint64_t t = static_cast<uint64_t>(((-b - sqrt(discr)) / (2 * a)) * zbe::SECOND);
   t = quantizeTime(t);
 
-  if (t <= 0) return (false);
+  if (t == 0) return (false);
   if (t > time) return (false);
 
   time = t;
-  point = ray.o + (ray.d * time) * zbe::INVERSE_SECOND;
+  point = ray.o + (ray.d * static_cast<double>(time)) * zbe::INVERSE_SECOND;
 
   return (true);
 }
@@ -260,13 +260,13 @@ bool intersectionNormalRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, uint64_t &
 
   if (discr < 0) return (false);
 
-  uint64_t t = (int64_t)(-b - sqrt(discr));
+  uint64_t t = static_cast<uint64_t>(-b - sqrt(discr));
   t = quantizeTime(t);
-  if (t <= 0) return (false);
+  if (t == 0) return (false);
   if (t > time) return (false);
 
   time = t;
-  point = ray.o + ray.d * time;
+  point = ray.o + ray.d * static_cast<double>(time);
 
   return (true);
 }
@@ -304,19 +304,19 @@ template <unsigned dim>
 bool intersectionBeamInsideAABB(Ray<dim> ray, AABB<dim> box, uint64_t &time, Point<dim>& point) {
   uint64_t taux = std::numeric_limits<int64_t>::max();
   for(unsigned i = 0; i < dim; i++) {
-    if (abs(ray.d[i]) < PRECISION) continue;
+    if (fabs(ray.d[i]) < PRECISION) continue;
     double d = (SECOND / ray.d[i]);
-    uint64_t t1 = (box.minimum[i] - ray.o[i]) * d;
-    uint64_t t2 = (box.maximum[i] - ray.o[i]) * d;
+    uint64_t t1 = uint64_t((box.minimum[i] - ray.o[i]) * d);
+    uint64_t t2 = uint64_t((box.maximum[i] - ray.o[i]) * d);
 
     uint64_t t = quantizeTime(std::max(t1, t2));
     taux = std::min(taux, t);
   }
 
-  if((taux > time) || (taux <= 0)) return (false);
+  if((taux > time) || (taux == 0)) return (false);
 
   time = taux;
-  point = ray.o + ((ray.d * time) * INVERSE_SECOND);
+  point = ray.o + ((ray.d * static_cast<double>(time)) * INVERSE_SECOND);
   return true;
 }
 
@@ -452,12 +452,12 @@ ZBEAPI bool intersectionBeamOutsideAABB3D(Ray3D ray, AABB3D box, uint64_t &time,
 template <unsigned dim>
 bool rayOutsideAABB(Ray<dim> ray, AABB<dim> box, uint64_t tmin, uint64_t tmax, uint64_t &time, Point<dim> &point) {
   for (unsigned i = 0; i < dim; i++) {
-    if (abs(ray.d[i]) < PRECISION) {
+    if (fabs(ray.d[i]) < PRECISION) {
       if (ray.o[i] < box.minimum[i] || ray.o[i] > box.maximum[i]) return (false);
     } else {
       double d = (SECOND / ray.d[i]);
-      uint64_t t1 = quantizeTime((uint64_t)((box.minimum[i] - ray.o[i]) * d));
-      uint64_t t2 = quantizeTime((uint64_t)((box.maximum[i] - ray.o[i]) * d));
+      uint64_t t1 = quantizeTime(static_cast<uint64_t>((box.minimum[i] - ray.o[i]) * d));
+      uint64_t t2 = quantizeTime(static_cast<uint64_t>((box.maximum[i] - ray.o[i]) * d));
       if (t1 > t2) std::swap(t1, t2);
       if (t1 > tmin) tmin = t1;
       if (t2 < tmax) tmax = t2;
@@ -468,7 +468,7 @@ bool rayOutsideAABB(Ray<dim> ray, AABB<dim> box, uint64_t tmin, uint64_t tmax, u
   if ((tmin > time) || (tmin == 0)) return (false);
 
   time = tmin;
-  point = ray.o + ((ray.d * time) * INVERSE_SECOND);
+  point = ray.o + ((ray.d * static_cast<double>(time)) * INVERSE_SECOND);
   return (true);
 }
 

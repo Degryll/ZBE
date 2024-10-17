@@ -57,19 +57,19 @@ public:
    */
   TimerTicket(std::multiset<TimerData>::iterator iter, std::multiset<TimerData>& timers, uint64_t eventId, std::shared_ptr<ContextTime> contextTime) : s(ACTIVE), iter(iter), timers(timers), eventId(eventId), es(EventStore::getInstance()), contextTime(contextTime), td((*iter)) {}
 
-  void setACTIVE();    //!< Set the state as ACTIVE.
-  void setINACTIVE();  //!< Set the state as INACTIVE.
-  void setERASED();    //!< Set the state as ERASED
-  void toggle();  //!< Set the state as state.
+  void setACTIVE() override;    //!< Set the state as ACTIVE.
+  void setINACTIVE() override;  //!< Set the state as INACTIVE.
+  void setERASED() override;    //!< Set the state as ERASED
+  void toggle() override;  //!< Set the state as state.
 
-  void setState(State state);  //!< Set the state as state.
+  void setState(State state) override;  //!< Set the state as state.
 
-  inline bool isACTIVE()    {return (s == ACTIVE);}    //!< True if state is ACTIVE.
-  inline bool isNotACTIVE() {return (s != ACTIVE);}    //!< True if state is not ACTIVE, either INACTIVE or ERASED.
-  inline bool isINACTIVE()  {return (s == INACTIVE);}  //!< True if state is INACTIVE.
-  inline bool isERASED()    {return (s == ERASED);}    //!< True if state is ERASED.
+  inline bool isACTIVE()    override {return (s == ACTIVE);}    //!< True if state is ACTIVE.
+  inline bool isNotACTIVE() override {return (s != ACTIVE);}    //!< True if state is not ACTIVE, either INACTIVE or ERASED.
+  inline bool isINACTIVE()  override {return (s == INACTIVE);}  //!< True if state is INACTIVE.
+  inline bool isERASED()    override {return (s == ERASED);}    //!< True if state is ERASED.
 
-  State getState() {return (s);}  //!< Return the state of the ticket.
+  State getState() override {return (s);}  //!< Return the state of the ticket.
 
   /** \brief Increases the time in a given amount (that can be negative). If the incremented time is zero or less, the event is triggered.
    * return true if the increment makes the timer go to zero or less.
@@ -80,7 +80,7 @@ public:
    * \return The event time.
   */
   int64_t getTime() {
-    return (iter->time);
+    return static_cast<int64_t>(iter->time);
   }
 
 private:

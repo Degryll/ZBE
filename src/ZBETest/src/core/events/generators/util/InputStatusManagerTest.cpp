@@ -18,7 +18,7 @@ class MockInputHandler : public zbe::InputHandler {
 
   	MockInputHandler() : b(false) {}
 
-  	void run(uint32_t, float) {
+  	void run(uint32_t, float) override {
       b = true;
   	}
 

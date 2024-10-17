@@ -63,8 +63,8 @@ class ZBEAPI SingleTextSDLDrawer : public Behavior<std::string, uint64_t, Vector
       SDL_QueryTexture(t, NULL,NULL, &tw, &th);
       SDL_Rect src,dst;
       auto dim = avatar->get<2, Vector2D>()->get();
-      aw = (int)dim.x;
-      ah = (int)dim.y;
+      aw = static_cast<int>(dim.x);
+      ah = static_cast<int>(dim.y);
       src.w = std::min(tw,aw);
       src.h = std::min(th,ah);
       dst.w = src.w;
@@ -72,8 +72,8 @@ class ZBEAPI SingleTextSDLDrawer : public Behavior<std::string, uint64_t, Vector
       src.x = 0;
       src.y = 0;
       auto pos = avatar->get<1, Vector2D>()->get();
-      dst.x = (int)pos.x + (aw - dst.w);
-      dst.y = (int)pos.y + (ah - dst.h);
+      dst.x = static_cast<int>(pos.x + (aw - dst.w));
+      dst.y = static_cast<int>(pos.y + (ah - dst.h));
 
       window->render(t, &src, &dst);
       SDL_DestroyTexture(t);

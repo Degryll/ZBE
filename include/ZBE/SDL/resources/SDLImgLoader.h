@@ -66,7 +66,7 @@ public:
   *  \param filePath Path to image file.
   *  \return An id to the image loaded.
   */
- void load(std::filesystem::path filePath) {
+ void load(std::filesystem::path filePath) override {
     uint64_t imgId = imgStore->loadImg(filePath.c_str());  // TODO test with ut8
     if(imgId > 0) {
       std::filesystem::path defFilePath = generateDefPath(filePath);
@@ -78,7 +78,7 @@ public:
   *  \param extension Image file extension.
   *  \return True if the extensions is loadable.
   */
- bool isLoadable(std::filesystem::path extension) {
+ bool isLoadable(std::filesystem::path extension) override {
    return (ext.compare(extension) == 0);
  }
 
