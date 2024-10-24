@@ -78,8 +78,8 @@ void setDaemon(std::shared_ptr<Daemon> daemon) {
 /** \brief exec daemon if click is inside given area.
  *  \param state input state.
  */
-void run(uint32_t, float state) {
-  if(!almost_equal(state, ZBE_KEYUP)) override {
+void run(uint32_t, float state) override {
+  if(!almost_equal(state, ZBE_KEYUP)) {
     return;
   }
   double x = xval->get();

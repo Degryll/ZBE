@@ -24,7 +24,7 @@ public:
 
   RsrcFolderLoader() : rsrcLoader(nullptr) {}
 
-  RsrcFolderLoader(std::shared_ptr<RsrcLoader> rsrcLoader) : rsrcLoader(rsrcLoader) {}
+  explicit RsrcFolderLoader(std::shared_ptr<RsrcLoader> rsrcLoader) : rsrcLoader(rsrcLoader) {}
 
   void setRsrcLoader(std::shared_ptr<RsrcLoader> rsrcLoader) {
     this->rsrcLoader = rsrcLoader;

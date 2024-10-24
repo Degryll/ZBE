@@ -571,7 +571,7 @@ public:
 
   template<typename T>
   typename std::enable_if<std::is_same<int64_t, T>::value, void>::type
-  setNewValue(uint64_t index, double val) {setNewIntValue(index, val);}
+  setNewValue(uint64_t index, int64_t val) {setNewIntValue(index, val);}
 
   template<typename T>
   typename std::enable_if<std::is_same<int64_t, T>::value, void>::type
@@ -692,7 +692,7 @@ private:
 template<template<typename T, typename ...Ts> class AVT, typename T, typename ...Ts>
 class AvatarBldr : public Funct<void, std::shared_ptr<Entity>> {
 public:
-  static const int expectedIndexes = sizeof...(Ts) + 1;
+  static const unsigned expectedIndexes = sizeof...(Ts) + 1;
   using AvtBaseType = MAvatar<T, Ts...>;
   void operator()(std::shared_ptr<Entity> ent) override {
     std::shared_ptr<AvtImplType> avt = std::make_shared<AvtImplType>();
@@ -863,7 +863,7 @@ public:
   }
 
 private:
-  static const int expectedIndexes = sizeof...(Ts);
+  static const unsigned expectedIndexes = sizeof...(Ts);
   using FunctionType = Funct<void, std::shared_ptr<Entity>>;
   using ListType = TicketedForwardList<typename AvatarBldr<AVT, Ts...>::AvtBaseType>;
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();

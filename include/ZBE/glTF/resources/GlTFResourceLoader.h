@@ -73,12 +73,12 @@ void setup(OGLTextureStore* texStore,  OGLModelStore* modelStore) {
   this->modelStore = modelStore;
 }
 
-bool isLoadable(std::filesystem::path extension) {
+bool isLoadable(std::filesystem::path extension) override {
   static const std::filesystem::path ext(".gltf");
   return (ext.compare(extension) == 0);
 }
 
-void load(std::filesystem::path filePath);
+void load(std::filesystem::path filePath) override;
 
 private:
   OGLTextureStore* texStore = nullptr;

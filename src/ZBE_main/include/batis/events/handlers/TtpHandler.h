@@ -20,7 +20,7 @@ class TtpHandler : public zbe::TimeHandler {
 
   	TtpHandler(std::shared_ptr<zbe::AvatarEntity<zbe::Positionable<2> > > entity, std::shared_ptr<zbe::TimeEventGenerator> teg, std::shared_ptr<batis::GameBoard> board) : e(entity), teg(teg), board(board) {}
 
-  	void run(uint64_t time) {
+  	void run(uint64_t time) override {
       zbe::Positionable<2>* avatar;
       e->assignAvatar(&avatar);
 

@@ -25,7 +25,7 @@ class MouseXKeepInputHandler : public zbe::InputHandler {
 
   	MouseXKeepInputHandler() : keeper(batis::MouseKeeper::getInstance()) {}
 
-  	void run(float status) {
+  	void run(float status) override {
       keeper.setX(status);
   	}
 

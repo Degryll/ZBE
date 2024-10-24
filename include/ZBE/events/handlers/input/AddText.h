@@ -63,7 +63,7 @@ public:
   /** brief stores input value to the value.
     * param status value from input.
    */
-  void run(std::string text) {
+  void run(std::string text) override {
     if (SDL_strlen(text.c_str()) == 0 || text.c_str()[0] == '\n') return;
     vc->set(vc->get() + text);
     vl->set(vh->get().size());

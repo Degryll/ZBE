@@ -13,11 +13,11 @@ namespace RsrcFolderLoaderTest {
 class DummyRsrcLoader : public zbe::RsrcLoader {
 public:
 DummyRsrcLoader() : calls(0) {}
-void load(std::filesystem::path) {
+void load(std::filesystem::path) override {
   calls++;
 }
 
-bool isLoadable(std::filesystem::path extension) {
+bool isLoadable(std::filesystem::path extension) override {
   static std::filesystem::path ext = ".png";
   return (ext.compare(extension) == 0);
 }

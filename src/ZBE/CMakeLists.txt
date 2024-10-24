@@ -128,6 +128,7 @@ target_include_directories(ZBE_LIB PRIVATE ${PROJECT_SOURCE_DIR}/extlibs/stb)
 target_include_directories(ZBE_LIB SYSTEM PRIVATE ${imgui_SOURCE_DIR})
 target_include_directories(ZBE_LIB SYSTEM PRIVATE ${glm_SOURCE_DIR})
 target_include_directories(ZBE_LIB SYSTEM PRIVATE ${SDL2_net_SOURCE_DIR})
+target_include_directories(ZBE_LIB SYSTEM PRIVATE ${tinygltf_SOURCE_DIR})
 
 # TODO eliminar todo esto cuando se termine la compilacion
 # Este bloque funciona

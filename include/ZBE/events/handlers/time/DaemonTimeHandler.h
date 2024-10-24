@@ -39,7 +39,7 @@ void operator=(const DaemonTimeHandler&) = delete; //!< Avoid copy.
   /** brief Run daemon
    *  param time not used
    */
-	void run(uint64_t) {
+	void run(uint64_t) override {
     d->run();
 	}
 

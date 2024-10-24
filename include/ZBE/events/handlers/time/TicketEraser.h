@@ -39,7 +39,7 @@ class ZBEAPI TicketEraser : public TimeHandler {
     /** brief Erases ticket
      *  param time not used
      */
-  	void run(uint64_t) {
+  	void run(uint64_t) override {
         t->setERASED();
   	}
 

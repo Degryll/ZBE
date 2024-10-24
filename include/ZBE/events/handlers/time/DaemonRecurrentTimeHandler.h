@@ -77,7 +77,7 @@ void operator=(const DaemonRecurrentTimeHandler&) = delete; //!< Deleted copy co
   /** brief Run daemon and re-add the timer.
    *  param time used to calculate next iteration.
    */
-	void run(uint64_t /*time*/) {
+	void run(uint64_t /*time*/) override {
     d->run();
 
     std::shared_ptr<TimeHandler> th = std::make_shared<DaemonRecurrentTimeHandler>(d, teg, avatar, ticketid, period);

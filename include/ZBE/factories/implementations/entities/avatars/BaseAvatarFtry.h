@@ -45,7 +45,7 @@ public:
   void setup(std::string, uint64_t);
 
 private:
-  static const int expectedIndexes = sizeof...(Ts) + 1;
+  static const unsigned expectedIndexes = sizeof...(Ts) + 1;
   NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();
   RsrcStore<Entity>& entStore = RsrcStore<Entity>::getInstance();
   RsrcStore<MBaseAvatar<T, Ts...> >& baseAvatarStore = RsrcStore<MBaseAvatar<T, Ts...> >::getInstance();

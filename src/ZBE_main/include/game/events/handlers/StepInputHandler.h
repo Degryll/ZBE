@@ -13,7 +13,7 @@ class StepInputHandler : public zbe::InputHandler {
 
   	StepInputHandler(zbe::Mobile<2>* entity, int movement, int dimension) : e(entity), m(movement), d(dimension) {}
 
-  	void run(float status) {
+  	void run(float status) override {
       zbe::Vector<2>& aux = e->getVelocity();
       if( status) {
         aux[d] = m;

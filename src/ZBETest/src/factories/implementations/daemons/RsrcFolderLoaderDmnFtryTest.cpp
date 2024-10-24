@@ -25,7 +25,7 @@ namespace RsrcFolderLoaderDmnTest {
 class DummyRsrcLoader : public zbe::RsrcLoader {
 public:
 DummyRsrcLoader() : calls(0) {}
-void load(std::filesystem::path) {
+void load(std::filesystem::path) override {
   calls++;
 }
 

@@ -106,8 +106,8 @@ public:
 	/** \brief run daemon.
 	 *  \param state not used
 	 */
-	void run(uint32_t, float inval) {
-		if (!(cValue->get() == cExpected) == equal) override {
+	void run(uint32_t, float inval) override {
+		if (!(cValue->get() == cExpected) == equal) {
     	return;
 		}
 		if (almost_equal(inval, value)) {
