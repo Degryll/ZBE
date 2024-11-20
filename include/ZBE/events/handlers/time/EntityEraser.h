@@ -35,7 +35,7 @@
 namespace zbe {
 
 class EntityEraserTH : public TimeHandler {
-  public:
+public:
 	EntityEraserTH(const EntityEraserTH&) = delete; //!< Avoid copy.
 	void operator=(const EntityEraserTH&) = delete; //!< Avoid copy.
 
@@ -46,7 +46,7 @@ class EntityEraserTH : public TimeHandler {
     /** brief Parametrized constructor
      * param entity Entity to be erased
      */
-  	EntityEraserTH(std::shared_ptr<Entity> entity): e(entity) {}
+  	explicit EntityEraserTH(std::shared_ptr<Entity> entity): e(entity) {}
 
   	void setEntity(std::shared_ptr<Entity> entity) {e = entity;}
 
@@ -74,7 +74,7 @@ public:
     /** brief Parametrized constructor
      * param entity Entity to be erased
      */
-  	EntityEraserReaction(std::shared_ptr<Entity> entity): e(entity) {}
+  	explicit EntityEraserReaction(std::shared_ptr<Entity> entity): e(entity) {}
 
   	void setEntity(std::shared_ptr<Entity> entity) {e = entity;}
 

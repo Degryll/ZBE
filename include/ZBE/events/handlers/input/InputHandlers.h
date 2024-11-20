@@ -38,11 +38,11 @@ template<unsigned dim>
 class AddVelIH : public InputHandler {
 public:
 
-  AddVelIH(std::shared_ptr<MAvatar<Vector<dim>, Vector<dim>, Vector<dim>>> avt) : avt(avt) {}
+  explicit AddVelIH(std::shared_ptr<MAvatar<Vector<dim>, Vector<dim>, Vector<dim>>> avt) : avt(avt) {}
 
   void run(uint32_t, float status) override {
     double intiMult = -1.0;
-    if ((status < 0.5 && !down) || (status >= 0.5 && down)) {
+    if ((status < 0.5f && !down) || (status >= 0.5f && down)) {
       intiMult = 1.0;
     }
     auto vOri = AvtUtil::get<3, Vector<dim> >(avt);
@@ -84,6 +84,9 @@ private:
 template<unsigned dim>
 class AddVelIHBldr : public Funct<void, std::shared_ptr<Entity>> {
 public:
+
+  AddVelIHBldr() = default;
+
   void operator()(std::shared_ptr<Entity> ent) override {
     auto avt = std::make_shared<MBaseAvatar<Vector<dim>, Vector<dim>, Vector<dim>>>();
     avt->setupEntity(ent, idxs);

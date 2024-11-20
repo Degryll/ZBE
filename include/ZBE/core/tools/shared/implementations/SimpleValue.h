@@ -35,7 +35,7 @@ public:
   /** brief Parametrized contructor.
    *  param value Value to store.
    */
-  SimpleValue(T value) : v(value) {}
+  explicit SimpleValue(T value) : v(value) {}
 
   /** brief Sets the value.
    *  param value Value to store.
@@ -200,6 +200,8 @@ private:
     std::vector<std::string> vs;
     if (cfg.is_array()) {
       for (auto item : cfg.items()) {
+        // TODO quitar este suppress y usar std::transform 
+        // cppcheck-suppress useStlAlgorithm
         vs.emplace_back(parseArrayElement<std::string>(item.value(), stringStore));
       }
     }

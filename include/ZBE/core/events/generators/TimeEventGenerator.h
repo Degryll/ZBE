@@ -79,7 +79,7 @@ public:
   /** \brief Returns the event time.
    * \return The event time.
   */
-  int64_t getTime() {
+  int64_t getTime() const {
     return static_cast<int64_t>(iter->time);
   }
 
@@ -105,7 +105,7 @@ class ZBEAPI TimeEventGenerator : virtual public Daemon {
      *  \param eventId event id.
      *  \param contextTime ContextTime to use.
      */
-    TimeEventGenerator(uint64_t eventId, std::shared_ptr<ContextTime> contextTime = SysTime::getInstance()) : eventId(eventId), es(EventStore::getInstance()), timers(), contextTime(contextTime) {}
+    explicit TimeEventGenerator(uint64_t eventId, std::shared_ptr<ContextTime> contextTime = SysTime::getInstance()) : eventId(eventId), es(EventStore::getInstance()), timers(), contextTime(contextTime) {}
 
     /** Add a new Timer that only triggers onces.
      * \param id Id of the Timer, to identify the action to accomplish when the event is triggered

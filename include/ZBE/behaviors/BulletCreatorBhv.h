@@ -27,7 +27,7 @@ class BulletCreatorBhv : virtual public Behavior<Vector3D, Vector3D> {
 public:
   friend class BulletCreatorBhvFtry;
 
-  BulletCreatorBhv(std::shared_ptr<BulletCreator> creator) : creator(creator) {}
+  explicit BulletCreatorBhv(std::shared_ptr<BulletCreator> creator) : creator(creator) {}
 
   /** \brief Virtual destructor.
    */

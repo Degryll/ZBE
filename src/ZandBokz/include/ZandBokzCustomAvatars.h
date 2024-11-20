@@ -27,30 +27,31 @@ class MovingSphereAvt : public zbe::SAvatar<zbe::MovingSphere>, zbe::AvatarImp  
 public:
   void setupEntity(std::shared_ptr<zbe::Entity> entity, uint64_t centeridx, uint64_t radiusidx, uint64_t velocityidx) {
     zbe::AvatarImp::setupEntity(entity);
-    _Avatar<1, zbe::MovingSphere>::setup(&getMovingSphere, &setMovingSphere, (void*)this);
+    _Avatar<1, zbe::MovingSphere>::setup(&getMovingSphere, &setMovingSphere, static_cast<void*>(this));
     center = entity->getVector3D(centeridx);
     radius = entity->getDouble(radiusidx);
     velocity = entity->getVector3D(velocityidx);
   }
 
   static void setMovingSphere(void *instance, zbe::MovingSphere msphere) {
-    ((MovingSphereAvt*)instance)->velocity->set(msphere.v);
-    ((MovingSphereAvt*)instance)->center->set(zbe::Vector3D{msphere.c.x, msphere.c.y, msphere.c.z});
-    ((MovingSphereAvt*)instance)->radius->set(msphere.r);
+    static_cast<MovingSphereAvt*>(instance)->velocity->set(msphere.v);
+    static_cast<MovingSphereAvt*>(instance)->center->set(zbe::Vector3D{msphere.c.x, msphere.c.y, msphere.c.z});
+    static_cast<MovingSphereAvt*>(instance)->radius->set(msphere.r);
   }
 
   static std::shared_ptr<zbe::Value<zbe::MovingSphere>> getMovingSphere(void *instance) {
     return std::make_shared<zbe::SimpleValue<zbe::MovingSphere>>(zbe::MovingSphere{
       zbe::Sphere{
-          ((MovingSphereAvt*)instance)->center->get().toPoint(),
-          ((MovingSphereAvt*)instance)->radius->get()
-        }, ((MovingSphereAvt*)instance)->velocity->get()
+          static_cast<MovingSphereAvt*>(instance)->center->get().toPoint(),
+          static_cast<MovingSphereAvt*>(instance)->radius->get()
+        }, static_cast<MovingSphereAvt*>(instance)->velocity->get()
     }
     );
   }
 
-  std::shared_ptr<zbe::Entity> getEntity() {
+  std::shared_ptr<zbe::Entity> getEntity() override {
     assert(false);
+    return 0;
   }
 
 private:
@@ -63,7 +64,7 @@ private:
 // public:
 //   void setupEntity(std::shared_ptr<zbe::Entity> entity, uint64_t centeridx, uint64_t radiusidx, ... TODO indices para calculo de velocidad ...) {
 //     zbe::AvatarImp::setupEntity(entity);
-//     _Avatar<1, zbe::MovingSphere>::setup(&getMovingSphere, &setMovingSphere, (void*)this);
+//     _Avatar<1, zbe::MovingSphere>::setup(&getMovingSphere, &setMovingSphere, static_cast<void*>(this));
 //     center = entity->getVector3D(centeridx);
 //     radius = entity->getDouble(radiusidx);
 //     cTime = entity->getContextTime();
@@ -105,6 +106,7 @@ private:
 //
 //   std::shared_ptr<zbe::Entity> getEntity() {
 //     assert(false);
+//     return 0;
 //   }
 //
 // private:
@@ -115,7 +117,7 @@ private:
 
 class MovingSphereAvtBldr : public zbe::Funct<std::shared_ptr<zbe::SAvatar<zbe::MovingSphere>>, std::shared_ptr<zbe::Entity>> {
 public:
-  std::shared_ptr<zbe::SAvatar<zbe::MovingSphere>> operator()(std::shared_ptr<zbe::Entity> ent) {
+  std::shared_ptr<zbe::SAvatar<zbe::MovingSphere>> operator()(std::shared_ptr<zbe::Entity> ent) override {
     std::shared_ptr<MovingSphereAvt> avt = std::make_shared<MovingSphereAvt>();
     avt->setupEntity(ent, centeridx, radiusidx, velocityidx);
     return avt;
@@ -145,7 +147,7 @@ public:
     specificRsrc.insert("MovingSphereAvtBldr."s + name, msvb);
   }
 
-  void setup(std::string name, uint64_t cfgId){
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);

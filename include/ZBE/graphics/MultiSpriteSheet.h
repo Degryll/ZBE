@@ -36,7 +36,7 @@ public:
   /** \brief Parametriced constructor
    *  \param id Id for the SpriteSheet;
    **/
-  MultiSpriteSheet(int64_t size, const SprtDef& defaultSD = SprtDef()) : spriteDefintions(static_cast<size_t>(size)), size(size), defaultSD(defaultSD) {
+  explicit MultiSpriteSheet(int64_t size, const SprtDef& defaultSD = SprtDef()) : spriteDefintions(static_cast<size_t>(size)), size(size), defaultSD(defaultSD) {
     for(unsigned i = 0; i < size; i++) {
       spriteDefintions[i] = defaultSD;
     }
@@ -63,9 +63,9 @@ public:
     uint64_t time = cTime->getTotalTime() % (usedSD.img.frameAmount * usedSD.img.frameTime);
     uint64_t frame = time/usedSD.img.frameTime;
     Region2D src(usedSD.img.region.p + (usedSD.img.regionOffset *  static_cast<double>(frame)), usedSD.img.region.v);
-    auto size = avatar->get<2, Vector2D>()->get();
+    auto avtsize = avatar->get<2, Vector2D>()->get();
     auto pos = avatar->get<1, Vector2D>()->get();
-    Region2D dst({pos.x + usedSD.drawOffset.x, pos.y + usedSD.drawOffset.y}, {size.x * usedSD.scale.x, size.y * usedSD.scale.y});
+    Region2D dst({pos.x + usedSD.drawOffset.x, pos.y + usedSD.drawOffset.y}, {avtsize.x * usedSD.scale.x, avtsize.y * usedSD.scale.y});
     Sprite s(src, dst, avatar->get<3, double>()->get(), usedSD.img.imgSrcId);
     return s;
     //return Sprite(Region2D(), Region2D(), 0.0, 0);
@@ -87,7 +87,7 @@ public:
     }
   }
 
-  uint64_t getSize() {
+  uint64_t getSize() const {
     return static_cast<uint64_t>(size);
   }
 

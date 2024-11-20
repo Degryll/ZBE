@@ -32,7 +32,7 @@ class ZBEAPI TicketEraser : public TimeHandler {
     /** brief Parametrized constructor
      * param ticket Ticket to be erased
      */
-  	TicketEraser(std::shared_ptr<Ticket> ticket): t(ticket) {}
+  	explicit TicketEraser(std::shared_ptr<Ticket> ticket): t(ticket) {}
 
   	void setTicket(std::shared_ptr<Ticket> ticket) {t = ticket;}
 

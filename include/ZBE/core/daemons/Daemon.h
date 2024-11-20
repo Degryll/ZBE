@@ -455,7 +455,7 @@ public:
    * and an initial state amount.
    *
    */
-  StateMachineDaemon(std::shared_ptr<Value<int64_t> > state) : daemons(), state(state) {}
+  explicit StateMachineDaemon(std::shared_ptr<Value<int64_t> > state) : daemons(), state(state) {}
 
   /** \brief Destroys the StateMachineDaemon.
    */
@@ -503,7 +503,7 @@ public:
    * and an initial state amount.
    *
    */
-  StatedDaemon(std::shared_ptr<Value<int64_t> > state) : daemons(), state(state) {}
+  explicit StatedDaemon(std::shared_ptr<Value<int64_t> > state) : daemons(), state(state) {}
 
   /** \brief Destroys the StateMachineDaemon.
    */
@@ -595,6 +595,8 @@ public:
  */
 class ConditionalIntDaemon : public Daemon {
 public:
+
+  ConditionalIntDaemon() = default;
 
   /** \brief Do nothing.
    */

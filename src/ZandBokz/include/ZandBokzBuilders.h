@@ -32,7 +32,7 @@ namespace zandbokz {
 
 class Triangle3Dto2DCacheBldr : public zbe::Funct<void, std::shared_ptr<zbe::Entity>> {
 public:
- void operator()(std::shared_ptr<zbe::Entity> entity) {
+ void operator()(std::shared_ptr<zbe::Entity> entity) override {
     float baseScale = static_cast<float>(entity->getDouble(sizeIdx)->get());
     // Calculate plane
     glm::mat4 mat(1.0);
@@ -66,7 +66,7 @@ public:
     auto vcaux = caux->get();
   }
 
-  std::shared_ptr<zbe::Value<zbe::Vector2D>> transformPointCoords(glm::vec3 p, zbe::Vector3D bx, zbe::Vector3D by, zbe::Vector3D bz) {
+  std::shared_ptr<zbe::Value<zbe::Vector2D>> transformPointCoords(glm::vec3 p, zbe::Vector3D bx, zbe::Vector3D by, zbe::Vector3D) {
 
     auto diff = zbe::Vector3D{p.x, p.y, p.z};
 

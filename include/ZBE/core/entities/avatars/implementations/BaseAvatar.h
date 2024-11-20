@@ -27,7 +27,7 @@ namespace zbe {
  */
 struct AvatarImp : virtual public Avatar {
 
-  AvatarImp(std::shared_ptr<Entity> entity) : e(entity) {}
+  explicit AvatarImp(std::shared_ptr<Entity> entity) : e(entity) {}
 
   /** \brief Register a new Ticket from a list.
    *  \param id Id to identify the list.
@@ -114,7 +114,7 @@ protected:
  */
 struct AwareAvatar : public AvatarImp {
 public:
-  AwareAvatar(std::shared_ptr<Entity> entity) : AvatarImp(entity) {}
+  explicit AwareAvatar(std::shared_ptr<Entity> entity) : AvatarImp(entity) {}
 
   /** \brief Access the underliying entity (if allowed)
    */
@@ -131,7 +131,7 @@ protected:
  */
 struct BaseAvatar : public AvatarImp {
 public:
-  BaseAvatar(std::shared_ptr<Entity> entity) : AvatarImp(entity) {}
+  explicit BaseAvatar(std::shared_ptr<Entity> entity) : AvatarImp(entity) {}
 
   /** \brief Access the underliying entity (if allowed)
    */
@@ -304,7 +304,7 @@ public:
  _DynamicAvatar(std::shared_ptr<Entity> entity, typename std::array<uint64_t, 1>::iterator idsi)
   : A(entity),
     _Avatar<n, T>(&_DynamicAvatar::getImpl, &_DynamicAvatar::setImpl, static_cast<void*>(this)),
-    entity(entity), id(id) {
+    entity(entity), id(idsi[0]) {
       setCallback();
     }
 
@@ -321,7 +321,7 @@ public:
     A::setupEntity(entity);
     _Avatar<n, T>::setup(&_DynamicAvatar::getImpl, &_DynamicAvatar::setImpl, static_cast<void*>(this));
     this->entity = entity;
-    this->id = id;
+    this->id = idsi[0];
   }
 
   static std::shared_ptr<Value<T> > getImpl(void *instance) {

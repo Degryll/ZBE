@@ -42,7 +42,7 @@ public:
    */
   virtual ~KeyMouseEventWatcher() = default;
 
-  void watch(SDL_Event event) {
+  void watch(SDL_Event event) override {
     if (!tryKeyboardEvent(event)) {
       tryMouseEvent(event);
     }
@@ -57,9 +57,9 @@ private:
     this->contextTime = contextTime;
   }
 
-  uint32_t getEquivalentToSDL(SDL_Keycode k) {return (k);}
+  uint32_t static getEquivalentToSDL(SDL_Keycode k) {return static_cast<uint32_t>(k);}
 
-  bool tryKeyboardEvent(SDL_Event &event) {
+  bool tryKeyboardEvent(const SDL_Event &event) {
     if (event.type == SDL_KEYDOWN && event.key.repeat == 0) {
       setState(getEquivalentToSDL(event.key.keysym.sym), 1.0f, event.key.timestamp);
       return true;
@@ -73,7 +73,7 @@ private:
     return false;
   }
 
-  bool tryMouseEvent(SDL_Event &event) {
+  bool tryMouseEvent(const SDL_Event &event) {
     if (event.type == SDL_MOUSEBUTTONDOWN) {
       setMouseButtonState(event, 1.0f);
       return true;
@@ -107,7 +107,7 @@ private:
     inputTextBuffer->insert(it);
   }
 
-  void setMouseButtonState(SDL_Event &event, float value) {
+  void setMouseButtonState(const SDL_Event &event, float value) {
     uint64_t key = 0;
     switch (event.button.button) {
       case SDL_BUTTON_LEFT:
@@ -128,19 +128,19 @@ private:
       default:
         break;
     }
-    setState(key,value,event.key.timestamp);
+    setState(static_cast<uint32_t>(key),value,event.key.timestamp);
   }
 
-  void setMouseWheelState(SDL_Event &event) {
-    setState(ZBEK_MOUSE_WHEEL_X,event.wheel.x,event.key.timestamp);
-    setState(ZBEK_MOUSE_WHEEL_Y,event.wheel.y,event.key.timestamp);
+  void setMouseWheelState(const SDL_Event &event) {
+    setState(ZBEK_MOUSE_WHEEL_X, static_cast<float>(event.wheel.x), event.key.timestamp);
+    setState(ZBEK_MOUSE_WHEEL_Y, static_cast<float>(event.wheel.y), event.key.timestamp);
   }
 
-  void setMouseCoordsState(SDL_Event &event) {
-    setState(ZBEK_MOUSE_COORD_X,event.motion.x,event.key.timestamp);
-    setState(ZBEK_MOUSE_COORD_Y,event.motion.y,event.key.timestamp);
-    setState(ZBEK_MOUSE_OFFSET_X,event.motion.xrel,event.key.timestamp);
-    setState(ZBEK_MOUSE_OFFSET_Y,event.motion.yrel,event.key.timestamp);
+  void setMouseCoordsState(const SDL_Event &event) {
+    setState(ZBEK_MOUSE_COORD_X, static_cast<float>(event.motion.x), event.key.timestamp);
+    setState(ZBEK_MOUSE_COORD_Y, static_cast<float>(event.motion.y), event.key.timestamp);
+    setState(ZBEK_MOUSE_OFFSET_X, static_cast<float>(event.motion.xrel), event.key.timestamp);
+    setState(ZBEK_MOUSE_OFFSET_Y, static_cast<float>(event.motion.yrel), event.key.timestamp);
   }
 
   std::shared_ptr<InputBuffer> inputBuffer;

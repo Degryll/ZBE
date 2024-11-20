@@ -16,7 +16,6 @@
 #include "ZBE/factories/genericFactoryConstants.h"
 #include "ZBE/factories/implementations/GenericFtry.h"
 #include "ZBE/factories/implementations/daemons/BehaviorDmnFtry.h"
-#include "ZBE/factories/implementations/entities/avatars/SimpleAnimSprtFtry.h"
 #include "ZBE/factories/implementations/entities/avatars/BaseAvatarFtry.h"
 
 #include "ZBE/core/entities/avatars/Avatar.h"

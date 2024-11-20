@@ -47,7 +47,7 @@ struct Covariance_Traits<T, void> {
   struct Type {
     Type() {}
     template<typename ...Ts>
-    Type(Ts...) {}
+    explicit Type(Ts...) {}
     virtual ~Type() {}
   };
 };
@@ -73,7 +73,7 @@ struct TypeContainer<T> {
   TypeContainer(const TypeContainer<T>&) = delete;
   void operator=(const TypeContainer<T>&) = delete;
 
-  TypeContainer(T* t): t(t) {}
+  explicit TypeContainer(T* t): t(t) {}
   ~TypeContainer() {}
 
   /** \brief Return the stored instance.
@@ -94,7 +94,7 @@ public:
 template<typename RetVal, typename ...Ts>
 class WrapperFunct : public Funct<RetVal, Ts...> {
 public:
-  WrapperFunct(std::function<RetVal(Ts...)> callable) : callable(callable) {}
+  explicit WrapperFunct(std::function<RetVal(Ts...)> callable) : callable(callable) {}
   RetVal operator()(Ts... something) override {
     return callable(something...);
   };

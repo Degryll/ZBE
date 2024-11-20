@@ -108,7 +108,7 @@ ELSE()
   )
 ENDIF()
 
-target_link_libraries(ZBE_LIB PRIVATE 
+target_link_libraries(ZBE_LIB PUBLIC 
   myproject_options myproject_warnings
   SDL2
   SDL2_image 
@@ -129,29 +129,6 @@ target_include_directories(ZBE_LIB SYSTEM PRIVATE ${imgui_SOURCE_DIR})
 target_include_directories(ZBE_LIB SYSTEM PRIVATE ${glm_SOURCE_DIR})
 target_include_directories(ZBE_LIB SYSTEM PRIVATE ${SDL2_net_SOURCE_DIR})
 target_include_directories(ZBE_LIB SYSTEM PRIVATE ${tinygltf_SOURCE_DIR})
-
-# TODO eliminar todo esto cuando se termine la compilacion
-# Este bloque funciona
-# target_include_directories(ZBE_LIB ${WARNING_GUARD} PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
-#                                                            $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>)
-# target_include_directories(ZBE_LIB PRIVATE ${PROJECT_SOURCE_DIR}/extlibs/stb)
-
-# target_include_directories(ZBE_LIB SYSTEM PUBLIC ${imgui_SOURCE_DIR})
-# Hasta aquí
-
-# target_include_directories(ZBE_LIB PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>)
-# target_include_directories(ZBE_LIB PUBLIC $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>)
-# target_include_directories(ZBE_LIB PRIVATE ${PROJECT_SOURCE_DIR}/extlibs/stb)
-
-# target_include_directories(ZBE_LIB SYSTEM PUBLIC ${imgui_SOURCE_DIR})
-# target_include_directories(ZBE_LIB SYSTEM PUBLIC ${glew_SOURCE_DIR})
-# target_include_directories(ZBE_LIB SYSTEM PUBLIC ${SDL2_SOURCE_DIR})
-# target_include_directories(ZBE_LIB SYSTEM PUBLIC ${SDL2_net_SOURCE_DIR})
-# target_include_directories(ZBE_LIB SYSTEM PUBLIC ${SDL2_ttf_SOURCE_DIR})
-# # target_include_directories(ZBE_LIB SYSTEM PUBLIC ${nlohmann_json::nlohmann_json_SOURCE_DIR})
-# target_include_directories(ZBE_LIB SYSTEM PUBLIC ${glm_SOURCE_DIR}) # Esta funciona
-# target_include_directories(ZBE_LIB SYSTEM PUBLIC ${tinygltf_SOURCE_DIR})
-# target_include_directories(ZBE_LIB SYSTEM PUBLIC ${SDL2_image_SOURCE_DIR})
 
 message(" ################## SOURCE DIRs ##################")
 message(${PROJECT_SOURCE_DIR})

@@ -77,7 +77,7 @@ class InteractionEvent : public Event {
     /** \brief Manage the current event and, presumably,
      * do the actions associated with it.
      */
-    void manage() {
+    void manage() override {
       c->react(&data,ro);
     };
 

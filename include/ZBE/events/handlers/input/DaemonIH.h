@@ -33,7 +33,7 @@ public:
   /** \brief Constructs a DaemonIH from a daemon.
 	 *  \param daemon daemon to be executed.
 	 */
-	DaemonIH(std::shared_ptr<Daemon> daemon):d(daemon), value(1.0f)  {}
+	explicit DaemonIH(std::shared_ptr<Daemon> daemon):d(daemon), value(1.0f)  {}
 
 	/** \brief set the Daemon to be called.
 	 *  \param daemon The Daemon.
@@ -69,27 +69,27 @@ template<typename T>
 class ZBEAPI ConditionalDaemonIH : public InputHandler {
 public:
 
-  /** \brief Constructs a DaemonIH from a daemon.
- 	 *  \param daemon daemon to be executed.
-	 */
-	ConditionalDaemonIH() : d(nullptr), value(1.0f), cValue(nullptr), cExpected() {}
-
-  /** \brief Constructs a DaemonIH from a daemon.
+	/** \brief Constructs a DaemonIH from a daemon.
 	 *  \param daemon daemon to be executed.
 	 */
-	ConditionalDaemonIH(std::shared_ptr<Daemon> daemon):d(daemon), value(1.0f), cValue(nullptr), cExpected() {}
+	ConditionalDaemonIH() : d(nullptr), value(1.0f), cValue(nullptr), cExpected(), equal() {}
+
+	/** \brief Constructs a DaemonIH from a daemon.
+	 *  \param daemon daemon to be executed.
+	 */
+	explicit ConditionalDaemonIH(std::shared_ptr<Daemon> daemon):d(daemon), value(1.0f), cValue(nullptr), cExpected(), equal() {}
 
 	/** \brief set the Daemon to be called.
 	 *  \param daemon The Daemon.
 	 */
-  void setDaemon(std::shared_ptr<Daemon> daemon) {
+	void setDaemon(std::shared_ptr<Daemon> daemon) {
 		this->d = daemon;
 	}
 
 	/** \brief set the Daemon to be called.
 	 *  \param daemon The Daemon.
 	 */
-  void setValue(float value) {
+	void setValue(float value) {
 		this->value = value;
 	}
 
@@ -97,7 +97,7 @@ public:
 	 *  \param cValue The Value<T> that will be checked.
 	 *  \param cValue The expected value that will run the damon.
 	 */
-  void setCondition(std::shared_ptr<Value<T>> cValue, T cExpected, bool equal) {
+	void setCondition(std::shared_ptr<Value<T>> cValue, T cExpected, bool equal) {
 		this->cValue = cValue;
 		this->cExpected = cExpected;
 		this->equal = equal;
@@ -108,10 +108,10 @@ public:
 	 */
 	void run(uint32_t, float inval) override {
 		if (!(cValue->get() == cExpected) == equal) {
-    	return;
+		return;
 		}
 		if (almost_equal(inval, value)) {
-    	d->run();
+		d->run();
 		}
 	}
 
@@ -129,20 +129,20 @@ template<typename T>
 class ZBEAPI ConditionalCompositeIH : public InputHandler {
 public:
 
-  /** \brief Constructs a DaemonIH from a daemon.
+  	/** \brief Constructs a DaemonIH from a daemon.
  	 *  \param daemon daemon to be executed.
 	 */
-	ConditionalCompositeIH() : ih(nullptr), cValue(nullptr), cExpected() {}
+	ConditionalCompositeIH() = default;
 
-  /** \brief Constructs a DaemonIH from a daemon.
+ 	/** \brief Constructs a DaemonIH from a daemon.
 	 *  \param daemon daemon to be executed.
 	 */
-	ConditionalCompositeIH(std::shared_ptr<InputHandler> ih): ih(ih), cValue(nullptr), cExpected() {}
+	explicit ConditionalCompositeIH(std::shared_ptr<InputHandler> ih): ih(ih), cValue(nullptr), cExpected(), equal() {}
 
 	/** \brief set the InputHandler to be called.
 	 *  \param ih The InputHandler.
 	 */
-  void setInputHandler(std::shared_ptr<InputHandler> ih) {
+  	void setInputHandler(std::shared_ptr<InputHandler> ih) {
 		this->ih = ih;
 	}
 
@@ -150,7 +150,7 @@ public:
 	 *  \param cValue The Value<T> that will be checked.
 	 *  \param cValue The expected value that will run the damon.
 	 */
-  void setCondition(std::shared_ptr<Value<T>> cValue, T cExpected, bool equal) {
+  	void setCondition(std::shared_ptr<Value<T>> cValue, T cExpected, bool equal) {
 		this->cValue = cValue;
 		this->cExpected = cExpected;
 		this->equal = equal;

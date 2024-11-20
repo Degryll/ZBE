@@ -239,7 +239,7 @@ class GravityMotion3D : virtual public zbe::Behavior<zbe::Vector3D, zbe::Vector3
         zbe::Vector3D vel = vvel->get();
         auto contextTime = avatar->getContextTime();
 
-        double t = contextTime->getCurrentTime() * zbe::INVERSE_SECOND;
+        double t = static_cast<double>(contextTime->getCurrentTime()) * zbe::INVERSE_SECOND;
         zbe::Vector3D newvel = vel + (g * t);
         zbe::Vector3D newpos = pos + vel*t + (g/2)*(t * t);
 
@@ -309,7 +309,7 @@ class FollowTargetBvr : virtual public zbe::Behavior<zbe::Vector3D, zbe::Vector3
         zbe::Vector3D vel = vvel->get();
         auto contextTime = avatar->getContextTime();
 
-        double t = contextTime->getCurrentTime() * zbe::INVERSE_SECOND;
+        double t = static_cast<double>(contextTime->getCurrentTime()) * zbe::INVERSE_SECOND;
         zbe::Vector3D newvel = vel + (g * t);
         zbe::Vector3D newpos = pos + vel*t + (g/2)*(t * t);
 

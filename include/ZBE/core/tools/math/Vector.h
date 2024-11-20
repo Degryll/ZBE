@@ -57,7 +57,7 @@ class _VECTOR {
         return;
       }
 
-      int i = 0;
+      uint i = 0;
       for(auto it : l) {
         data[i++] = it;
       }
@@ -76,7 +76,7 @@ class _VECTOR {
         return (*this);
       }
 
-      int i = 0;
+      uint i = 0;
       for(auto it : l) {
         data[i++] = it;
       }

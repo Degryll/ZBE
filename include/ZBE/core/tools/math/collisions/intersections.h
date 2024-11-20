@@ -552,7 +552,7 @@ bool intersectionMovingNSphereOutsideMovingNSphere(NSphere<dim> sphere1, Vector<
   Vector<dim> velocity =  velocity1 - velocity2;
   bool result = intersectionMovingNSphereOutsideNSphere(sphere1, velocity, sphere2, time, point, normal);
   if(result) {
-    point = point + (velocity2 * time);
+    point = point + (velocity2 * static_cast<double>(time));
   }
   return result;
 }
@@ -806,7 +806,7 @@ bool intersectionMovingNSphereOutsideMovingNTriangle(NSphere<dim> sphere, Vector
 
         double tbar = (sphere.r - dotUDelta0) / dotUV;
         bool foundContact = true;
-        for (int32_t i = 0; i < 3; ++i) {
+        for (uint i = 0; i < 3; ++i) {
             double phi = dot(ExU[i], Delta[i]);
             double psi = dot(ExU[i], V);
             if (phi + psi * tbar > 0.0) {
@@ -818,7 +818,7 @@ bool intersectionMovingNSphereOutsideMovingNTriangle(NSphere<dim> sphere, Vector
             auto intersectTime = quantizeTime(tbar);
             if(intersectTime<=time) {
                 time = intersectTime;
-                point = sphere.c + (time * sVelocity)/SECOND;
+                point = sphere.c + (static_cast<double>(time) * sVelocity)/SECOND;
                 return true && time;  // Only if time > 0
             } else {
                 return false;
@@ -839,7 +839,7 @@ bool intersectionMovingNSphereOutsideMovingNTriangle(NSphere<dim> sphere, Vector
 
         double tbar = (-sphere.r - dotUDelta0) / dotUV;
         bool foundContact = true;
-        for (int32_t i = 0; i < 3; ++i) {
+        for (uint i = 0; i < 3; ++i) {
             double phi = dot(ExU[i], Delta[i]);
             double psi = dot(ExU[i], V);
             if (phi + psi * tbar > 0.0) {
@@ -851,7 +851,7 @@ bool intersectionMovingNSphereOutsideMovingNTriangle(NSphere<dim> sphere, Vector
             auto intersectTime = quantizeTime(tbar);
             if(intersectTime<=time) {
                 time = intersectTime;
-                point = sphere.c + (time * sVelocity)/SECOND;
+                point = sphere.c + (static_cast<double>(time) * sVelocity)/SECOND;
                 return true && time;  // Only if time > 0
             } else {
                 return false;
@@ -876,13 +876,13 @@ bool intersectionMovingNSphereOutsideMovingNTriangle(NSphere<dim> sphere, Vector
     //TODO: cambiar estos tipos por vectores.
 
     std::array<double, 3> del{}, delp{}, nu{};
-    for (int32_t im1 = 2, i = 0; i < 3; im1 = i++) {
+    for (uint im1 = 2, i = 0; i < 3; im1 = i++) {
         del[i] = dot(E[i], Delta[i]);
         delp[im1] = dot(E[im1], Delta[i]);
         nu[i] = dot(E[i], V);
     }
 
-    for (int32_t i = 2, ip1 = 0; ip1 < 3; i = ip1++) {//Vector3<T> hatV = V - E[i] * nu[i] / sqrLenE[i];
+    for (uint i = 2, ip1 = 0; ip1 < 3; i = ip1++) {//Vector3<T> hatV = V - E[i] * nu[i] / sqrLenE[i];
         Vector<dim> hatV = V - E[i] * nu[i]/ sqrLenE[i];
         double sqrLenHatV = dot(hatV, hatV);
         if (sqrLenHatV > 0.0) {
@@ -907,7 +907,7 @@ bool intersectionMovingNSphereOutsideMovingNTriangle(NSphere<dim> sphere, Vector
                                 auto intersectTime = quantizeTime(tbar);
                                 if(intersectTime<=time) {
                                     time = intersectTime;
-                                    point = sphere.c + (time * sVelocity)/SECOND;
+                                    point = sphere.c + (static_cast<double>(time) * sVelocity)/static_cast<double>(SECOND);
                                     return true && time;  // Only if time > 0
                                 } else {
                                     return false;
@@ -924,7 +924,7 @@ bool intersectionMovingNSphereOutsideMovingNTriangle(NSphere<dim> sphere, Vector
   // volume.  We know that |V|^2 > 0 because of a previous
   // early-exit test.
 
-    for (int32_t im1 = 2, i = 0; i < 3; im1 = i++) {
+    for (uint im1 = 2, i = 0; i < 3; im1 = i++) {
         double alpha = - dot(V, Delta[i]);
         if (alpha >= 0.0)
         {
@@ -943,7 +943,7 @@ bool intersectionMovingNSphereOutsideMovingNTriangle(NSphere<dim> sphere, Vector
                         auto intersectTime = quantizeTime(tbar);
                         if(intersectTime<=time) {
                             time = intersectTime;
-                            point = sphere.c + (time * sVelocity)/SECOND;
+                            point = sphere.c + (static_cast<double>(time) * sVelocity)/static_cast<double>(SECOND);
                             return true && time;  // Only if time > 0
                         } else {
                             return false;

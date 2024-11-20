@@ -46,7 +46,7 @@ class SpriteSheetSDLDrawer : public Behavior<T, Ts...> {
     /** \brief Create a new drawer in the given context.
      *  \param window A SDLwindow with its context.
      */
-    SpriteSheetSDLDrawer(std::shared_ptr<SDLWindow> window)
+    explicit SpriteSheetSDLDrawer(std::shared_ptr<SDLWindow> window)
       : window(window), imgStore(window->getImgStore()), rmss(RsrcStore<SpriteSheet<T, Ts...> >::getInstance()) {}
 
     /** \brief Destructor.
@@ -77,8 +77,8 @@ class SpriteSheetSDLDrawer : public Behavior<T, Ts...> {
       SDL_Rect dst = convert2SDLRect(s.dst);
 
       SDL_Point p;
-      p.x = s.dst.p.x + (s.dst.v.x / 2);
-      p.y = s.dst.p.y + (s.dst.v.y / 2);
+      p.x = static_cast<int>(s.dst.p.x + (s.dst.v.x / 2.0));
+      p.y = static_cast<int>(s.dst.p.y + (s.dst.v.y / 2.0));
       window->render(imgStore->getTexture(s.g), &src, &dst, s.a, &p);
     }
 

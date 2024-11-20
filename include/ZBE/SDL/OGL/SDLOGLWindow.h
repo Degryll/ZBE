@@ -242,7 +242,7 @@ public:
   void present() {SDL_GL_SwapWindow(getSDL_Window());}
   void glSwap() {SDL_GL_SwapWindow(getSDL_Window());}
 
-  SDL_GLContext getGLContext() {
+  SDL_GLContext getGLContext() const {
     return glContext;
   }
 

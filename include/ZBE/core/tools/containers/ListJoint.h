@@ -28,7 +28,7 @@ public:
   /** \brief parametrized constructor
    *  \param l The joint.
    */
-  JointIterator(J *l) : l(l), jit(firstNonEmptyL()), lit(firstElement()) {}
+  explicit JointIterator(J *l) : l(l), jit(firstNonEmptyL()), lit(firstElement()) {}
 
   /** \brief parametrized constructor
    *  \param l The joint.
@@ -52,7 +52,7 @@ public:
   /** \brief operator ++
    */
   JointIterator& operator++() {
-    lit++;
+    ++lit;
     if(lit == (*jit)->end()) {
       jit = nextNonEmptyL(++jit);
       if(jit != l->end()) {

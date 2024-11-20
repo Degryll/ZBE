@@ -51,7 +51,7 @@ public:
   }
 
   void run(uint32_t, float status) override {
-    if (status < 0.5) {
+    if (status < 0.5f) {
       value->set(releaseVal);
     } else {
       value->set(pressedVal);

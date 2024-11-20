@@ -56,7 +56,7 @@ bool notIntersect(std::shared_ptr<a>, std::shared_ptr<b>, uint64_t time, NewColl
 template<unsigned s>
 class MovingNSphereFunctor {
 public:
-  bool operator()(std::shared_ptr<MovingNSphere<s>> arg1, std::shared_ptr<MovingNSphere<s>> arg2, uint64_t time, NewCollisionData<s> &data) {
+  bool operator()(std::shared_ptr<MovingNSphere<s>> arg1, std::shared_ptr<MovingNSphere<s>> arg2, uint64_t time, NewCollisionData<s> &data) const {
     return MovingNSphereMovingNSphere(arg1, arg2, time, data);
   }
 };
@@ -64,7 +64,7 @@ public:
 template<unsigned s>
 class MovingNSphereMovingTriangleFunctor {
 public:
-  bool operator()(std::shared_ptr<MovingNSphere<s>> arg1, std::shared_ptr<MovingTriangle<s>> arg2, uint64_t time, NewCollisionData<s> &data) {
+  bool operator()(std::shared_ptr<MovingNSphere<s>> arg1, std::shared_ptr<MovingTriangle<s>> arg2, uint64_t time, NewCollisionData<s> &data) const {
     return MovingNSphereMovingTriangle(arg1, arg2, time, data);
   }
 };
@@ -72,7 +72,7 @@ public:
 template<unsigned s>
 class MovingTriangleMovingNSphereFunctor {
 public:
-  bool operator()(std::shared_ptr<MovingTriangle<s>> arg1, std::shared_ptr<MovingNSphere<s>> arg2, uint64_t time, NewCollisionData<s> &data) {
+  bool operator()(std::shared_ptr<MovingTriangle<s>> arg1, std::shared_ptr<MovingNSphere<s>> arg2, uint64_t time, NewCollisionData<s> &data) const {
     return MovingTriangleMovingNSphere(arg1, arg2, time, data);
   }
 };
@@ -80,7 +80,7 @@ public:
 template<typename a, typename b, unsigned s>
 class NotIntersectFunctor {
 public:
-  bool operator()(std::shared_ptr<a> arg1, std::shared_ptr<b> arg2, uint64_t time, NewCollisionData<s> &data) {
+  bool operator()(std::shared_ptr<a> arg1, std::shared_ptr<b> arg2, uint64_t time, NewCollisionData<s> &data) const {
     return notIntersect(arg1, arg2, time, data);
   }
 };
@@ -93,7 +93,7 @@ bool sameHalfSpace(Point2D pl1, Point2D pl2, Point2D a, Point2D b) {
 }
 class MovingPoint2DTriangle2DFunctor {
 public:
-  bool operator()(std::shared_ptr<MovingPoint2D> movingpoint, std::shared_ptr<Triangle2D> triangle, uint64_t time, NewCollisionData<2> &data) {
+  bool operator()(std::shared_ptr<MovingPoint2D> movingpoint, std::shared_ptr<Triangle2D> triangle, uint64_t time, NewCollisionData<2> &data) const {
     NewCollisionData<2> bestData;
     bestData.time = time;
 

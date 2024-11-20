@@ -462,7 +462,7 @@ public:
   //PrintfRct() : msg("Interaction") {};
   PrintfRct(std::string msg) : msg(msg) {};
 
-  void operator()(IData d, Trait t) override {
+  void operator()(IData, Trait) override {
     printf("%s \n", msg.c_str());fflush(stdout);
   }
 

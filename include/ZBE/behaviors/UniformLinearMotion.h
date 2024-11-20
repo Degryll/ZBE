@@ -54,7 +54,7 @@ class UniformLinearMotion2D : virtual public Behavior<Vector<2>, Vector<2> > {
       auto vvel = AvtUtil::get<1, Vector<2> >(avatar);
       auto vpos = AvtUtil::get<2, Vector<2> >(avatar);
       auto contextTime = avatar->getContextTime();
-      vpos->set(vpos->get() + (vvel->get() * contextTime->getCurrentTime()) * zbe::INVERSE_SECOND);
+      vpos->set(vpos->get() + (vvel->get() * static_cast<double>(contextTime->getCurrentTime())) * zbe::INVERSE_SECOND);
     }
 
 };
@@ -75,7 +75,7 @@ class UniformLinearMotion3D : virtual public Behavior<Vector3D, Vector3D > {
       auto vvel = avatar->get<2, Vector3D>();
       auto contextTime = avatar->getContextTime();
       auto vel = vvel->get();
-      vpos->set(vpos->get() + (vvel->get() * contextTime->getCurrentTime()) * zbe::INVERSE_SECOND);
+      vpos->set(vpos->get() + (vel * static_cast<double>(contextTime->getCurrentTime())) * zbe::INVERSE_SECOND);
     }
 };
 
@@ -106,7 +106,7 @@ class RelativeUniformLinearMotion3D : virtual public Behavior<Vector3D, Vector3D
 
       auto contextTime = avatar->getContextTime();
 
-      avatar->set<1, Vector3D>(vpos->get() + (v * contextTime->getCurrentTime()) * zbe::INVERSE_SECOND);
+      avatar->set<1, Vector3D>(vpos->get() + (v * static_cast<double>(contextTime->getCurrentTime())) * zbe::INVERSE_SECOND);
     }
 
   private:
@@ -132,7 +132,7 @@ public:
     auto vpos = avatar->get<1, Vector3D>();
     //vpos->set(vpos->get() + (vvel * contextTime->getCurrentTime()) * zbe::INVERSE_SECOND);
     auto contextTime = avatar->getContextTime();
-    avatar->set<1, Vector3D>(vpos->get() + (vvel * contextTime->getCurrentTime()) * zbe::INVERSE_SECOND);
+    avatar->set<1, Vector3D>(vpos->get() + (vvel * static_cast<double>(contextTime->getCurrentTime())) * zbe::INVERSE_SECOND);
   }
 
 private:
@@ -156,9 +156,6 @@ public:
     auto vplaneE1 = avatar->get<2, Vector3D>();
     auto vplaneE2 = avatar->get<3, Vector3D>();
 
-    auto vpos3D = avatar->get<4, Vector3D>();
-    //auto vvel3D = avatar->get<5, Vector3D>();
-
     auto vpos2D = avatar->get<6, Vector2D>();
     auto vvel2D = avatar->get<7, Vector2D>();
     auto distance = avatar->get<8, float>();
@@ -167,13 +164,10 @@ public:
     auto planeE1 = vplaneE1->get();
     auto planeE2 = vplaneE2->get();
 
-    auto pos3D = vpos3D->get();
-    //auto vel3D = vvel3D->get();
-
     auto pos2D = vpos2D->get();
     auto vel2D = vvel2D->get();
 
-    Vector2D newPos2D = pos2D + (vel2D * (contextTime->getCurrentTime() * zbe::INVERSE_SECOND));
+    Vector2D newPos2D = pos2D + (vel2D * (static_cast<double>(contextTime->getCurrentTime()) * zbe::INVERSE_SECOND));
     Vector3D newPos3D = planePos + (planeE1 * newPos2D.x + planeE2 * newPos2D.y);
     //Vector3D newPos3D = planePos + (Matrix(vplaneE1,vplaneE2) * newPos2D);
     // TODO esto es una teoria.

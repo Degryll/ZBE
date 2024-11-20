@@ -25,7 +25,7 @@ public:
 
   OGLPostDraw() : window(nullptr) {}
 
-  OGLPostDraw(std::shared_ptr<zbe::SDLOGLWindow> window) : window(window) {}
+  explicit OGLPostDraw(std::shared_ptr<zbe::SDLOGLWindow> window) : window(window) {}
 
   /** \brief Destructor.
    */

@@ -52,7 +52,7 @@ public:
 
   /** brief Reposition entity on plane.
   */
-  void operator()(zbe::CollisionData3D cData, Platform platform) {
+  void operator()(zbe::CollisionData3D, Platform platform) override {
 
     auto planeE1 = platform[2]->get();
     auto planeE2 = platform[1]->get();
@@ -89,7 +89,7 @@ public:
     zbe::Vector3D pos = avatar->get<5, zbe::Vector3D>()->get();
     zbe::Vector3D camPos = avatar->get<6, zbe::Vector3D>()->get();
 
-    float normalDiffAngle = angle(oldyv, oldcu);
+    float normalDiffAngle = static_cast<float>(angle(oldyv, oldcu));
     // normalDiffAngle = (isnan(normalDiffAngle)? 0 : normalDiffAngle);
     zbe::Vector3D rotv = cross(normal, orientPrima);
     glm::vec3 rot{rotv.x, rotv.y, rotv.z};
@@ -126,7 +126,7 @@ private:
 
 class AttachRedirectionReactionBldr : public zbe::Funct<std::shared_ptr<zbe::Funct<void, zbe::CollisionData3D, Platform>>, std::shared_ptr<zbe::Entity>> {
 public:
-  std::shared_ptr<zbe::Funct<void, zbe::CollisionData3D, Platform>> operator()(std::shared_ptr<zbe::Entity> ent){
+  std::shared_ptr<zbe::Funct<void, zbe::CollisionData3D, Platform>> operator()(std::shared_ptr<zbe::Entity> ent) override {
     auto avt = std::make_shared<zbe::MBaseAvatar< zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D>>();
     avt->setupEntity(ent, idxArr);
     return std::make_shared<AttachRedirectionReaction>(avt);
@@ -193,7 +193,7 @@ public:
 
   /** brief Reposition entity on plane.
   */
-  void operator()(FGravityData gData, Attractor) {
+  void operator()(FGravityData gData, Attractor) override {
 
     auto vposition = avatar->get<1, zbe::Vector3D>();
     auto vcenter = avatar->get<2, zbe::Vector3D>();
@@ -221,7 +221,7 @@ private:
 
 class ClosestCenterStoreReactionBldr : public zbe::Funct<std::shared_ptr<zbe::Funct<void, FGravityData, Attractor>>, std::shared_ptr<zbe::Entity>> {
 public:
-  std::shared_ptr<zbe::Funct<void, FGravityData, Attractor>> operator()(std::shared_ptr<zbe::Entity> ent){
+  std::shared_ptr<zbe::Funct<void, FGravityData, Attractor>> operator()(std::shared_ptr<zbe::Entity> ent) override {
     auto avt = std::make_shared<zbe::MBaseAvatar<double, zbe::Vector3D, zbe::Vector3D>>();
     avt->setupEntity(ent, idxArr);
     return std::make_shared<ClosestCenterStoreReaction>(avt);
@@ -288,7 +288,7 @@ public:
 
   /** brief Reposition entity on plane.
   */
-  void operator()(zbe::CollisionData3D cData, Platform platform) {
+  void operator()(zbe::CollisionData3D cData, Platform platform) override {
 
     //auto vpos2D = avatar->get<2, zbe::Vector2D>();
 
@@ -322,7 +322,7 @@ private:
 
 class AttachRepositionReactionBldr : public zbe::Funct<std::shared_ptr<zbe::Funct<void, zbe::CollisionData3D, Platform>>, std::shared_ptr<zbe::Entity>> {
 public:
-  std::shared_ptr<zbe::Funct<void, zbe::CollisionData3D, Platform>> operator()(std::shared_ptr<zbe::Entity> ent){
+  std::shared_ptr<zbe::Funct<void, zbe::CollisionData3D, Platform>> operator()(std::shared_ptr<zbe::Entity> ent) override {
     auto avt = std::make_shared<zbe::MBaseAvatar<zbe::Vector2D, zbe::Vector2D, zbe::Vector3D>>();
     avt->setupEntity(ent, idxArr);
     return std::make_shared<AttachRepositionReaction>(avt);
@@ -392,7 +392,7 @@ public:
  /** brief Erases entity
   *  param time not used
   */
- void operator()(IData, Trait) {
+ void operator()(IData, Trait) override {
      auto val = avt->get()->get();
      zbe::Vector3D newVal = -val;
      //avt->set(std::make_shared<zbe::SimpleValue<zbe::Vector3D>>(newVal));
@@ -405,7 +405,7 @@ private:
 template<typename IData, typename Trait>
 class ReverseDirectionReactionBldr : public zbe::Funct<std::shared_ptr<zbe::Funct<void, IData, Trait>>, std::shared_ptr<zbe::Entity>> {
 public:
- std::shared_ptr<zbe::Funct<void, IData, Trait>> operator()(std::shared_ptr<zbe::Entity> ent){
+ std::shared_ptr<zbe::Funct<void, IData, Trait>> operator()(std::shared_ptr<zbe::Entity> ent) override {
    auto avt = std::make_shared<zbe::SBaseAvatar<zbe::Vector3D>>();
    avt->setupEntity(ent, idx);
    return std::make_shared<ReverseDirectionReaction<IData, Trait>>(avt);
@@ -480,7 +480,7 @@ public:
  /** brief Erases entity
   *  param time not used
   */
-  void operator()(IData idata, Trait) {
+  void operator()(IData idata, Trait) override {
     auto vval = avt->get<1, zbe::Vector3D>();
     auto uval = avt->get<2, zbe::Vector3D>();
     zbe::Vector3D newvVal = vval->get().reflect(idata.normal);
@@ -495,7 +495,7 @@ private:
 template<typename IData, typename Trait>
 class BounceReactionBldr : public zbe::Funct<std::shared_ptr<zbe::Funct<void, IData, Trait>>, std::shared_ptr<zbe::Entity>> {
 public:
- std::shared_ptr<zbe::Funct<void, IData, Trait>> operator()(std::shared_ptr<zbe::Entity> ent){
+ std::shared_ptr<zbe::Funct<void, IData, Trait>> operator()(std::shared_ptr<zbe::Entity> ent) override {
    auto avt = std::make_shared<zbe::MBaseAvatar<zbe::Vector3D, zbe::Vector3D>>();
    avt->setupEntity(ent, {uidx, vidx});
    return std::make_shared<BounceReaction<IData, Trait>>(avt);

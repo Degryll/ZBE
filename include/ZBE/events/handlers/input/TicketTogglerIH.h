@@ -40,7 +40,7 @@ public:
   /** brief Parametrized constructor
     * param value where to store input.
    */
-  TicketTogglerIH(std::shared_ptr<Ticket> ticket) : ticket(ticket) {}
+  explicit TicketTogglerIH(std::shared_ptr<Ticket> ticket) : ticket(ticket) {}
 
   /** \brief Set Value<double> where input will be stored.
    *  \param value where input will be stored.

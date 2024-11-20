@@ -34,7 +34,7 @@ public:
   /** \brief Builds a BasicPostLoopSDLDaemon from a window.
    *  \param window windo to use.
    */
-  BasicPostLoopSDLDaemon(std::shared_ptr<zbe::SDLWindow> window): window(window) {}
+  explicit BasicPostLoopSDLDaemon(std::shared_ptr<zbe::SDLWindow> window): window(window) {}
 
   /** \brief Destroys the BasicPostLoopSDLDaemon
    */

@@ -42,7 +42,7 @@ public:
    *  \param name Name for the created item.
    *  \param cfgId item's configuration id.
    */
-  void setup(std::string, uint64_t);
+  void setup(std::string, uint64_t) override;
 
 private:
   static const unsigned expectedIndexes = sizeof...(Ts) + 1;
@@ -69,7 +69,7 @@ public:
    *  \param name Name for the created item.
    *  \param cfgId item's configuration id.
    */
-  void setup(std::string, uint64_t);
+  void setup(std::string, uint64_t) override;
 
 private:
   NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();
@@ -129,7 +129,7 @@ void BaseAvatarFtry<T, Ts...>::setup(std::string name, uint64_t cfgId) {
     }
 
     std::array<uint64_t, expectedIndexes> idxArr;
-    int i = 0;
+    uint i = 0;
     for (auto& idxName : idxCfg.items()) {
       idxArr[i] = dict.get(idxName.value().get<std::string>());
       i++;

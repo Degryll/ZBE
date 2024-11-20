@@ -53,7 +53,7 @@ public:
   virtual bool generate(const InputStatus& is) = 0;
 protected:
   template <typename IteratorA, typename IteratorB, typename IteratorC>
-  inline bool range_contains(IteratorA from, const IteratorB& end, const IteratorC& candidate) {
+  inline static bool range_contains(IteratorA from, const IteratorB& end, const IteratorC& candidate) {
       while (from != end)
           if (&*from++ == &*candidate)
               return true;
@@ -61,7 +61,7 @@ protected:
   }
 
   template <typename List, typename Iterator>
-  inline bool list_contains(List& l, const Iterator& candidate) {
+  inline static bool list_contains(List& l, const Iterator& candidate) {
     return range_contains(l.begin(), l.end(), candidate);
   }
 
@@ -76,7 +76,7 @@ class ZBEAPI MappedInputStatusManager : public InputStatusManager {
 public:
 
   MappedInputStatusManager() : eventId(), store(EventStore::getInstance()), handlers() {}
-  MappedInputStatusManager(uint64_t eventId) : eventId(eventId), store(EventStore::getInstance()), handlers() {}
+  explicit MappedInputStatusManager(uint64_t eventId) : eventId(eventId), store(EventStore::getInstance()), handlers() {}
   virtual ~MappedInputStatusManager() = default;
 
   /** Add a handler to an input event.
@@ -192,7 +192,7 @@ class ZBEAPI InputEventGenerator : virtual public Daemon {
 
     /** \brief Default constructor.
      */
-    InputEventGenerator(std::shared_ptr<InputBuffer> inputBuffer, std::shared_ptr<InputTextBuffer> inputTextBuffer = nullptr, uint64_t eventId = 0, std::shared_ptr<TextHandler> handler = nullptr, std::shared_ptr<ContextTime> contextTime = nullptr) : inputBuffer(inputBuffer), inputTextBuffer(inputTextBuffer), mism(eventId), eventId(eventId), store(EventStore::getInstance()), handler(handler), contextTime(contextTime) {}
+    explicit InputEventGenerator(std::shared_ptr<InputBuffer> inputBuffer, std::shared_ptr<InputTextBuffer> inputTextBuffer = nullptr, uint64_t eventId = 0, std::shared_ptr<TextHandler> handler = nullptr, std::shared_ptr<ContextTime> contextTime = nullptr) : inputBuffer(inputBuffer), inputTextBuffer(inputTextBuffer), mism(eventId), eventId(eventId), store(EventStore::getInstance()), handler(handler), contextTime(contextTime) {}
 
     /** \brief Empty destructor.
      */

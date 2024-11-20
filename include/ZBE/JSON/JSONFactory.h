@@ -273,7 +273,7 @@ std::optional<std::array<T, n>> loadLiteralArray(RsrcDictionary<T>& dict, json c
   }
 
   std::array<T, n> arr;
-  int i = 0;
+  uint i = 0;
   for (auto& name : cfg.items()) {
     arr[i] = dict.get(name.value().get<std::string>());
     i++;
@@ -301,6 +301,8 @@ std::optional<std::forward_list<T>> loadLiteralList(RsrcDictionary<T>& dict, jso
 
   std::forward_list<T> list;
   for (auto& name : cfg.items()) {
+    // TODO quitar este suppress y usar std::transform 
+    // cppcheck-suppress useStlAlgorithm
     list.push_front(dict.get(name.value().get<std::string>()));
   }
   return list;

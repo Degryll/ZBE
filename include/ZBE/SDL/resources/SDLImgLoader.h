@@ -85,9 +85,9 @@ public:
 private:
 
   std::filesystem::path generateDefPath(const std::filesystem::path& p) {
-    std::filesystem::path ext = imgDefLoader->getExtension();
+    std::filesystem::path dlExt = imgDefLoader->getExtension();
     std::filesystem::path out = p;
-    return (out.replace_extension(ext));
+    return (out.replace_extension(dlExt));
   }
 
   std::shared_ptr<zbe::SDLImageStore> imgStore;

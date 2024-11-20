@@ -172,11 +172,11 @@ private:
         ent->set<Vector3D>(id, std::make_shared<zbe::SimpleValue<Vector3D> >(literalStoreV3D.get(cfgValue.at(0).get<std::string>())));
       } else if (cfgValue.is_array() && (cfgValue.size() == 3)) {
         auto c = 0u;
-        Vector3D val;
-        for (auto item : cfgValue.items()) {
-          val[c++] = parseArrayElement(item.value(), doubleStore);
+        Vector3D newval;
+        for (auto i : cfgValue.items()) {
+          newval[c++] = parseArrayElement(i.value(), doubleStore);
         }
-        ent->set<Vector3D>(id, std::make_shared<zbe::SimpleValue<Vector3D> >(val));
+        ent->set<Vector3D>(id, std::make_shared<zbe::SimpleValue<Vector3D> >(newval));
       }
     }
   }
@@ -193,11 +193,11 @@ private:
         ent->set<Vector2D>(id, std::make_shared<zbe::SimpleValue<Vector2D> >(literalStoreV2D.get(cfgValue.at(0).get<std::string>())));
       } else if (cfgValue.is_array() && (cfgValue.size() == 2)) {
         auto c = 0u;
-        Vector2D val;
-        for (auto item : cfgValue.items()) {
-          val[c++] = parseArrayElement(item.value(), doubleStore);
+        Vector2D newval;
+        for (auto i : cfgValue.items()) {
+          newval[c++] = parseArrayElement(i.value(), doubleStore);
         }
-        ent->set<Vector2D>(id, std::make_shared<zbe::SimpleValue<Vector2D> >(val));
+        ent->set<Vector2D>(id, std::make_shared<zbe::SimpleValue<Vector2D> >(newval));
       }
     }
   }
@@ -209,11 +209,13 @@ private:
       if (cfgValue.is_string()) {
         ent->set<std::vector<std::string>>(id, valueVSRsrc.get(cfgValue.get<std::string>()));
       } else if (cfgValue.is_array()) {
-        std::vector<std::string> val;
-        for (auto item : cfgValue.items()) {
-          val.emplace_back(parseArrayElement<std::string>(item.value(), stringStore));
+        std::vector<std::string> newval;
+        for (auto i : cfgValue.items()) {
+          // TODO quitar este suppress y usar std::transform 
+          // cppcheck-suppress useStlAlgorithm
+          newval.emplace_back(parseArrayElement<std::string>(i.value(), stringStore));
         }
-        ent->set<std::vector<std::string>>(id, std::make_shared<zbe::SimpleValue<std::vector<std::string>> >(val));
+        ent->set<std::vector<std::string>>(id, std::make_shared<zbe::SimpleValue<std::vector<std::string>> >(newval));
       }
     }
   }
@@ -269,10 +271,10 @@ public:
     if (j["builders"].is_array()) {
       auto builders = j["builders"];
       for(auto it : builders) {
-        auto name = it.get<std::string>();
-        auto storedName = zbe::factories::functionName + zbe::factories::separator + name;
+        auto bname = it.get<std::string>();
+        auto storedName = zbe::factories::functionName + zbe::factories::separator + bname;
         if(!extraBldrStore.contains(storedName)) {
-          SysError::setError("EntityFileBldrFtry builders config " + name + " (" + storedName + "). is not an adecuate builder name."s);
+          SysError::setError("EntityFileBldrFtry builders config " + bname + " (" + storedName + "). is not an adecuate builder name."s);
           return;
         }
         efb->addBldr(extraBldrStore.get(storedName));
@@ -694,6 +696,9 @@ class AvatarBldr : public Funct<void, std::shared_ptr<Entity>> {
 public:
   static const unsigned expectedIndexes = sizeof...(Ts) + 1;
   using AvtBaseType = MAvatar<T, Ts...>;
+
+  AvatarBldr() = default;
+
   void operator()(std::shared_ptr<Entity> ent) override {
     std::shared_ptr<AvtImplType> avt = std::make_shared<AvtImplType>();
     avt->setupEntity(ent, idxArr);
@@ -733,6 +738,9 @@ template<template<typename T> class AVT, typename T>
 class AvatarBldr<AVT, T> : public Funct<void, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = SAvatar<T>;
+  
+  AvatarBldr() = default;
+  
   void operator()(std::shared_ptr<Entity> ent) override {
     std::shared_ptr<AvtImplType> avt = std::make_shared<AvtImplType>();
     avt->setupEntity(ent, idx);
@@ -778,9 +786,13 @@ class AvtVoid {
 };
 
 template<>
+// cppcheck-suppress noConstructor
 class AvatarBldr<AvtVoid, void> : public Funct<void, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = Avatar;
+
+  AvatarBldr() = default;
+
   void operator()(std::shared_ptr<Entity> ent) override {
     std::shared_ptr<AvtImplType> avt = std::make_shared<AvtImplType>(ent);
     for(auto indexNList : indexNLists) {
@@ -799,7 +811,7 @@ public:
     this->idx = idx;
   }
 
-  void setIdxArr(std::array<uint64_t, 1> idxArr) {
+  void setIdxArr(const std::array<uint64_t, 1> idxArr) {
     this->idx = idxArr[0];
   }
 
@@ -1204,7 +1216,7 @@ public:
     Reactor<IData, Trait> reactor;
     //reactor.setReaction((*sb)(ent));
     reactor.setReaction(_ReactorBldr<IData, Trait>::buildFunct(ent));
-    return reactor;
+    return Reactor<IData, Trait>(reactor);
   }
 
 //   std::shared_ptr<ReactFunct> buildFunct(std::shared_ptr<Entity> ent) {
@@ -1245,7 +1257,7 @@ private:
 template<typename IData, typename ...Traits>
 class ActorBldrFtry : public Factory {
 public:
-  ActorBldrFtry(std::initializer_list<std::string> names) :traitCfgNames(names)  {}
+  explicit ActorBldrFtry(std::initializer_list<std::string> names) :traitCfgNames(names)  {}
 
   template<typename U>
   void addTraitBuilder(std::string traitCfgName, nlohmann::json cfg, std::shared_ptr<ActorBldr<IData, Traits...>> actorBldr, bool& failed) {
@@ -1292,7 +1304,7 @@ public:
     }
     auto ab = specificRsrc.get("ActorBldr."s + name);
     auto j = *cfg;
-    int i = 0;
+    uint i = 0;
     bool failed = false;
     std::initializer_list<int>({(addTraitBuilder<Traits>(traitCfgNames[i++], j, ab, failed), 0)...});
   }
@@ -1336,7 +1348,7 @@ public:
     reactorBldr->_ReactorBldr<IData, U>::setReactionBuilder(bldr);
   }
 
-  ReactorBldrFtry(std::initializer_list<std::string> names) : traitCfgNames(names)  {}
+  explicit ReactorBldrFtry(std::initializer_list<std::string> names) : traitCfgNames(names)  {}
 
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
@@ -1356,7 +1368,7 @@ public:
     }
     auto ab = specificRsrc.get("ReactorBldr."s + name);
     auto j = *cfg;
-    int i = 0;
+    uint i = 0;
     bool failed = false;
     std::initializer_list<int>({(addReactionBuilder<Traits>(traitCfgNames[i++], j, ab, failed), 0)...});
   }
@@ -1433,10 +1445,10 @@ public:
     if (j["builders"].is_array()) {
       auto builders = j["builders"];
       for(auto it : builders) {
-        auto name = it.get<std::string>();
-        auto storedName = zbe::factories::functionName + zbe::factories::separator + name;
+        auto bname = it.get<std::string>();
+        auto storedName = zbe::factories::functionName + zbe::factories::separator + bname;
         if(!extraBldrStore.contains(storedName)) {
-          SysError::setError("EntityBldrFtry builders config " + name + " (" + storedName + "). is not an adecuate builder name."s);
+          SysError::setError("EntityBldrFtry builders config " + bname + " (" + storedName + "). is not an adecuate builder name."s);
           return;
         }
         eb->addBldr(extraBldrStore.get(storedName));
@@ -1562,11 +1574,11 @@ private:
         es->setNewValue<Vector3D>(id, literalStoreV3D.get(cfgValue.at(0).get<std::string>()));
       } else if (cfgValue.is_array() && (cfgValue.size() == 3)) {
         auto c = 0u;
-        Vector3D val;
-        for (auto item : cfgValue.items()) {
-          val[c++] = parseArrayElement(item.value(), doubleStore);
+        Vector3D newval;
+        for (auto i : cfgValue.items()) {
+          newval[c++] = parseArrayElement(i.value(), doubleStore);
         }
-        es->setNewValue<Vector3D>(id, val);
+        es->setNewValue<Vector3D>(id, newval);
       }
     }
   }
@@ -1583,11 +1595,11 @@ private:
         es->setNewValue<Vector2D>(id, literalStoreV2D.get(cfgValue.at(0).get<std::string>()));
       } else if (cfgValue.is_array() && (cfgValue.size() == 2)) {
         auto c = 0u;
-        Vector2D val;
-        for (auto item : cfgValue.items()) {
-          val[c++] = parseArrayElement(item.value(), doubleStore);
+        Vector2D newval;
+        for (auto i : cfgValue.items()) {
+          newval[c++] = parseArrayElement(i.value(), doubleStore);
         }
-        es->setNewValue<Vector2D>(id, val);
+        es->setNewValue<Vector2D>(id, newval);
       }
     }
   }
@@ -1600,8 +1612,10 @@ private:
         es->setSharedValue<std::vector<std::string>>(id, valueVSRsrc.get(cfgValue.get<std::string>()));
       } else if (cfgValue.is_array()) {
         std::vector<std::string> val;
-        for (auto item : cfgValue.items()) {
-          val.emplace_back(parseArrayElement<std::string>(item.value(), stringStore));
+        for (auto i : cfgValue.items()) {
+        // TODO quitar este suppress y usar std::transform 
+        // cppcheck-suppress useStlAlgorithm
+          val.emplace_back(parseArrayElement<std::string>(i.value(), stringStore));
         }
         es->setNewValue<std::vector<std::string>>(id, val);
       }
@@ -1865,10 +1879,10 @@ public:
     if (j["builders"].is_array()) {
       auto builders = j["builders"];
       for(auto it : builders) {
-        auto name = it.get<std::string>();
-        auto storedName = zbe::factories::functionName + zbe::factories::separator + name;
+        auto bname = it.get<std::string>();
+        auto storedName = zbe::factories::functionName + zbe::factories::separator + bname;
         if(!extraBldrStore.contains(storedName)) {
-          SysError::setError("BehaviorEntityBldrFtry builders config " + name + " (" + storedName + "). is not an adecuate builder name."s);
+          SysError::setError("BehaviorEntityBldrFtry builders config " + bname + " (" + storedName + "). is not an adecuate builder name."s);
           return;
         }
         eb->addBldr(extraBldrStore.get(storedName));
@@ -1968,10 +1982,10 @@ public:
     if (j["builders"].is_array()) {
       auto builders = j["builders"];
       for(auto it : builders) {
-        auto name = it.get<std::string>();
-        auto storedName = zbe::factories::functionName + zbe::factories::separator + name;
+        auto bname = it.get<std::string>();
+        auto storedName = zbe::factories::functionName + zbe::factories::separator + bname;
         if(!extraBldrStore.contains(storedName)) {
-          SysError::setError("BehaviorEntityBldrFtry builders config " + name + " (" + storedName + "). is not an adecuate builder name."s);
+          SysError::setError("BehaviorEntityBldrFtry builders config " + bname + " (" + storedName + "). is not an adecuate builder name."s);
           return;
         }
         eb->addBldr(extraBldrStore.get(storedName));
@@ -2192,6 +2206,7 @@ private:
 
 class EntityTimerBldr : public Funct<void, std::shared_ptr<Entity>> {
 public:
+  EntityTimerBldr() = default;
   void operator()(std::shared_ptr<Entity> ent) override {
     auto ticket = teg->addRelativeTimer((*handlerBuilder)(ent), time);
     if(!enabled) {

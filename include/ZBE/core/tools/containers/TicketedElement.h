@@ -28,7 +28,7 @@ public:
    *  \param element The element
    *  \param state The initial state of the element
    */
-  TicketedElement(std::shared_ptr<T> element) : s(ACTIVE), e(element) {}
+  explicit TicketedElement(std::shared_ptr<T> element) : s(ACTIVE), e(element) {}
 
   /** \brief Getter to the element.
    *  \return The element
