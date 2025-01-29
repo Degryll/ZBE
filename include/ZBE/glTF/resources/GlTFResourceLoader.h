@@ -28,9 +28,9 @@
 //#include "window.h"
 
 // TODO maybe we should replace stb_image with other technologies like... SDL?
-#define TINYGLTF_IMPLEMENTATION
-#define STB_IMAGE_IMPLEMENTATION
-#define STB_IMAGE_WRITE_IMPLEMENTATION
+// #define TINYGLTF_IMPLEMENTATION
+// #define STB_IMAGE_IMPLEMENTATION
+// #define STB_IMAGE_WRITE_IMPLEMENTATION
 //#define TINYGLTF_NOEXCEPTION
 //#define JSON_NOEXCEPTION
 

@@ -1,4 +1,4 @@
-include_directories(test2)
+include_directories(ZBE)
 add_subdirectory(ZBE)
 link_directories(ZBE)
 add_subdirectory(ZandBokz)

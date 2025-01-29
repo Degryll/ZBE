@@ -9,7 +9,7 @@
  */
 
 #include "ZBE/OAL/system/OALAudioStore.h"
-#include <stb_vorbis.h>
+#include "../extlibs/stb/stb_vorbis.h" //<stb_vorbis.h>
 
 namespace zbe {
 

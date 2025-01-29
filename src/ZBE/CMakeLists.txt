@@ -1,4 +1,4 @@
-include(GenerateExportHeader)
+# include(GenerateExportHeader)
 
 
 add_library(ZBE_LIB 
@@ -91,11 +91,16 @@ add_library(ZBE_LIB
   sytem/SystemResources.cpp
   tools/graphics/CameraFtry.cpp
   tools/graphics/Camera.cpp
+  # Extlibs
+  ../../extlibs/stb/stb_vorbis.c
 )
+
+list(APPEND CMAKE_CXX_CPPCHECK --exclude=../../extlibs/stb/)
 
 add_library(myproject::ZBE_LIB ALIAS ZBE_LIB)
 
 add_library(glew STATIC IMPORTED) # or STATIC instead of SHARED
+
 IF (WIN32)
   set_target_properties(glew PROPERTIES
     IMPORTED_LOCATION "${PROJECT_SOURCE_DIR}/extlibs/glew/2.2.0/windows/x64/glew32s.lib"
@@ -110,41 +115,46 @@ ENDIF()
 
 target_link_libraries(ZBE_LIB PUBLIC 
   myproject_options myproject_warnings
-  SDL2
-  SDL2_image 
-  SDL2_net
-  SDL2_ttf
-  nlohmann_json::nlohmann_json
-  glm
-  tinygltf
-  glew
+  PUBLIC SDL2
+  PUBLIC SDL2_image 
+  PUBLIC SDL2_net
+  PUBLIC SDL2_ttf
+  PUBLIC nlohmann_json::nlohmann_json
+  PUBLIC tinygltf
+  PUBLIC png
+  PUBLIC glew
+  PUBLIC GL
+  PUBLIC glm
+  PUBLIC OpenAL
+  # Vorbis & openal
 )
 
 # TODO revisar cual es la carpeta correcta en la que deshabilitar los warnings
 target_include_directories(ZBE_LIB PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>)
 target_include_directories(ZBE_LIB PUBLIC $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>)
-target_include_directories(ZBE_LIB PRIVATE ${PROJECT_SOURCE_DIR}/extlibs/stb)
-
+                                                
 target_include_directories(ZBE_LIB SYSTEM PRIVATE ${imgui_SOURCE_DIR})
 target_include_directories(ZBE_LIB SYSTEM PRIVATE ${glm_SOURCE_DIR})
 target_include_directories(ZBE_LIB SYSTEM PRIVATE ${SDL2_net_SOURCE_DIR})
 target_include_directories(ZBE_LIB SYSTEM PRIVATE ${tinygltf_SOURCE_DIR})
+
+# target_include_directories(ZBE_LIB SYSTEM PRIVATE ../../extlibs/stb)
 
 message(" ################## SOURCE DIRs ##################")
 message(${PROJECT_SOURCE_DIR})
 message(${PROJECT_BINARY_DIR})
 
 
-target_compile_features(ZBE_LIB PUBLIC cxx_std_20)
+# target_compile_features(ZBE_LIB PUBLIC cxx_std_20)
 
-set_target_properties(
-  ZBE_LIB
-  PROPERTIES VERSION ${PROJECT_VERSION}
-             CXX_VISIBILITY_PRESET hidden
-             VISIBILITY_INLINES_HIDDEN YES)
+# set_target_properties(
+#   ZBE_LIB
+#   PROPERTIES VERSION ${PROJECT_VERSION}
+#              CXX_VISIBILITY_PRESET hidden
+#              VISIBILITY_INLINES_HIDDEN YES)
 
-generate_export_header(ZBE_LIB EXPORT_FILE_NAME ${PROJECT_BINARY_DIR}/include/ZBE/zbe.h)
+# generate_export_header(ZBE_LIB EXPORT_FILE_NAME ${PROJECT_BINARY_DIR}/include/ZBE/zbe.h)
 
-if(NOT BUILD_SHARED_LIBS)
-  target_compile_definitions(ZBE_LIB PUBLIC SAMPLE_LIBRARY_STATIC_DEFINE)
-endif()
+# if(NOT BUILD_SHARED_LIBS)
+#   target_compile_definitions(ZBE_LIB PUBLIC SAMPLE_LIBRARY_STATIC_DEFINE)
+# endif()
