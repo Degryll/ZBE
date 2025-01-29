@@ -59,26 +59,59 @@ function(myproject_setup_dependencies)
     set(IMGUI_INCLUDE_DIR ${imgui_SOURCE_DIR})
     set(IMGUI_SOURCES ${imgui_sources} ${imgui_sources_cpp})
   endif()
+#--------------
+cpmaddpackage("gh:kcat/openal-soft#1.23.1")
 
-  cpmaddpackage("gh:kcat/openal-soft#1.23.1")
+cpmaddpackage("gh:syoyo/tinygltf@2.8.22")
 
-  cpmaddpackage("gh:syoyo/tinygltf@2.8.22")
+cpmaddpackage("gh:nemtrif/utfcpp@4.0.5")
 
-  cpmaddpackage("gh:nemtrif/utfcpp@4.0.5")
+cpmaddpackage("gh:pnggroup/libpng@1.6.43")
 
-  cpmaddpackage("gh:pnggroup/libpng@1.6.43")
 
-  cpmaddpackage("gh:libsdl-org/SDL#release-2.30.6")
-  
-  cpmaddpackage("gh:libsdl-org/SDL_image#release-2.8.2")
-  
-  # cpmaddpackage("gh:xiph/opusfile@0.12")
 
-  # cpmaddpackage("gh:libsdl-org/SDL_mixer#release-2.8.0")
+CPMAddPackage(
+  NAME SDL2
+  GITHUB_REPOSITORY libsdl-org/SDL
+  GIT_TAG release-2.30.10
+  OPTIONS
+  "SDL_STATIC OFF"
+  "SDL_SHARED ON"
+  "SDL_TEST OFF"
+  "SDL2_DISABLE_SDL2MAIN ON"
+  "SDL2_DISABLE_INSTALL ON"
+  "SDL2_DISABLE_UNINSTALL ON"
+)
 
-  cpmaddpackage("gh:libsdl-org/SDL_net#release-2.2.0")
+CPMAddPackage(
+  NAME SDL2_image
+  GITHUB_REPOSITORY libsdl-org/SDL_image
+  GIT_TAG release-2.8.2
+  OPTIONS
+  "SDL2IMAGE_INSTALL OFF"
+  "SDL2IMAGE_SAMPLES OFF"
+  "BUILD_SHARED_LIBS ON"
+)
 
-  cpmaddpackage("gh:libsdl-org/SDL_ttf#release-2.22.0")    
+CPMAddPackage(
+  NAME SDL2_net
+  GITHUB_REPOSITORY libsdl-org/SDL_net
+  GIT_TAG release-2.2.0
+  OPTIONS
+  "SDL2TTF_INSTALL OFF"
+  "SDL2TTF_SAMPLES OFF"
+  "BUILD_SHARED_LIBS ON"
+)
+
+CPMAddPackage(
+  NAME SDL2_ttf
+  GITHUB_REPOSITORY libsdl-org/SDL_ttf
+  GIT_TAG release-2.22.0
+  OPTIONS
+  "SDL2NET_INSTALL OFF"
+  "SDL2NET_SAMPLES OFF"
+  "BUILD_SHARED_LIBS ON"
+)
 
 # ChaiScript-6.1.0 
 # X - > GLEW 
