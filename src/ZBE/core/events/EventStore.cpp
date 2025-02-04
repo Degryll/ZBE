@@ -35,7 +35,8 @@ void EventStore::clearTimedStore() {
 
 void EventStore::clearStore(std::forward_list<Event*>& store) {
   store.remove_if(deleteAll);
-  bettertime = std::numeric_limits<uint64_t>::max();
+  // To make it compatible with int64_t and avoid a casting here.
+  bettertime = (std::numeric_limits<uint64_t>::max()/2) -1;
 }
 
 void EventStore::clearStore() {
