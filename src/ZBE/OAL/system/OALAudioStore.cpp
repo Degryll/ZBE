@@ -9,7 +9,9 @@
  */
 
 #include "ZBE/OAL/system/OALAudioStore.h"
-#include "../extlibs/stb/stb_vorbis.h" //<stb_vorbis.h>
+#include <vorbis/vorbisfile.h>
+
+//#include "../extlibs/stb/stb_vorbis.h" //<stb_vorbis.h>
 
 namespace zbe {
 
@@ -68,32 +70,50 @@ void OALAudioStore::logOALError(const char *job, std::string error) {
 }
 
 ALuint OALAudioStore::_loadAudio(const char *url) {
-  ALenum format;
-  int channels, freq;
-  short* data;
-  int len = stb_vorbis_decode_filename(url, &channels, &freq, &data);
+      std::vector<char> bufferData;
+    ALenum format;
+    ALsizei freq;
 
-  if(!len) {zbe::SysError::setError(std::string("ERROR: Can't load audio file: ") + std::string(url) + std::string(". For an unknown reason."));}
+    // Abrir el archivo
+    FILE* file = fopen(url, "rb");
+    if (!file) {
+        std::cerr << "Error abriendo el archivo: " << url << std::endl;
+        return 0;
+    }
 
-	if(channels == 2) {
-    format = AL_FORMAT_STEREO16;
-	} else {
-    format = AL_FORMAT_MONO16;
-	}
+    // Cargar el archivo OGG
+    OggVorbis_File oggFile;
+    if (ov_open(file, &oggFile, nullptr, 0) < 0) {
+        std::cerr << "Error al abrir el archivo OGG" << std::endl;
+        fclose(file);
+        return 0;
+    }
 
-  ALuint buffer = 0;
-  alGenBuffers(static_cast<ALuint>(1), &buffer);
+    // Obtener información del audio
+    vorbis_info* info = ov_info(&oggFile, -1);
+    freq = static_cast<ALsizei>(info->rate);
+    format = (info->channels == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
 
-  if(checkErrors("generating buffer")) {
-    free(data);
-    return buffer;
-  }
+    // Leer datos y almacenarlos en un buffer
+    char tempBuffer[4096];
+    int bitStream;
+    long bytes;
+    do {
+        bytes = ov_read(&oggFile, tempBuffer, sizeof(tempBuffer), 0, 2, 1, &bitStream);
+        if (bytes > 0) {
+            bufferData.insert(bufferData.end(), tempBuffer, tempBuffer + bytes);
+        }
+    } while (bytes > 0);
 
-  alBufferData(buffer, format, data, len, freq);
-  free(data);
+    // Cerrar el archivo OGG
+    ov_clear(&oggFile);
 
-  checkErrors("copying buffer");
-  return buffer;
+    // Crear y cargar buffer en OpenAL
+    ALuint buffer;
+    alGenBuffers(1, &buffer);
+    alBufferData(buffer, format, bufferData.data(), static_cast<ALsizei>(bufferData.size()), freq);
+
+    return buffer; // Devuelve el identificador del buffer
 }
 
 }  // namespace zbe

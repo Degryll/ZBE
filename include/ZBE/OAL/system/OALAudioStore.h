@@ -18,6 +18,9 @@
 
 #include <AL/al.h>
 #include <AL/alc.h>
+#include <iostream>
+#include <vector>
+#include <vorbis/vorbisfile.h>
 
 #include "ZBE/core/system/SysError.h"
 

@@ -126,6 +126,9 @@ target_link_libraries(ZBE_LIB PUBLIC
   PUBLIC GL
   PUBLIC glm
   PUBLIC OpenAL
+  PUBLIC ogg
+  PUBLIC vorbis
+  PUBLIC vorbisfile
   # Vorbis & openal
 )
 
@@ -137,6 +140,9 @@ target_include_directories(ZBE_LIB SYSTEM PRIVATE ${imgui_SOURCE_DIR})
 target_include_directories(ZBE_LIB SYSTEM PRIVATE ${glm_SOURCE_DIR})
 target_include_directories(ZBE_LIB SYSTEM PRIVATE ${SDL2_net_SOURCE_DIR})
 target_include_directories(ZBE_LIB SYSTEM PRIVATE ${tinygltf_SOURCE_DIR})
+target_include_directories(ZBE_LIB SYSTEM PRIVATE ${vorbis_SOURCE_DIR}/include)
+target_include_directories(ZBE_LIB SYSTEM PRIVATE ${ogg_SOURCE_DIR})
+
 
 # target_include_directories(ZBE_LIB SYSTEM PRIVATE ../../extlibs/stb)
 

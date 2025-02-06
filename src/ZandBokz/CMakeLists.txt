@@ -29,6 +29,8 @@ target_include_directories(ZANDBOKZ PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DI
 target_include_directories(ZANDBOKZ SYSTEM PRIVATE ${glm_SOURCE_DIR})
 target_include_directories(ZANDBOKZ SYSTEM PRIVATE ${SDL2_SOURCE_DIR})
 target_include_directories(ZANDBOKZ SYSTEM PRIVATE ${tinygltf_SOURCE_DIR})
+target_include_directories(ZANDBOKZ SYSTEM PRIVATE ${vorbis_SOURCE_DIR}/include)
+target_include_directories(ZANDBOKZ SYSTEM PRIVATE ${ogg_SOURCE_DIR})
 
 
 # target_compile_features(ZANDBOKZ PUBLIC cxx_std_20)
