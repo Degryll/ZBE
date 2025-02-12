@@ -113,6 +113,25 @@ CPMAddPackage(
   "BUILD_SHARED_LIBS ON"
 )
 
+# OGG
+
+# Descargar Ogg primero
+CPMAddPackage(
+    NAME ogg
+    GITHUB_REPOSITORY xiph/ogg
+    GIT_TAG v1.3.5
+)
+set(OGG_INCLUDE_DIR ${libogg_SOURCE_DIR}/include)
+set(OGG_INCLUDE_DIRS ${OGG_INCLUDE_DIR} ${libogg_BINARY_DIR}/include)
+set(OGG_LIBRARY $<TARGET_FILE:ogg>)
+
+# Descargar Vorbis después (que depende de Ogg)
+CPMAddPackage(
+    NAME vorbis
+    GITHUB_REPOSITORY xiph/vorbis
+    GIT_TAG v1.3.7
+)
+
 # ChaiScript-6.1.0 
 # X - > GLEW 
 # V - > glm 
