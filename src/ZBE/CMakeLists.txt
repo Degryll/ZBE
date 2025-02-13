@@ -95,7 +95,7 @@ add_library(ZBE_LIB
 
 list(APPEND CMAKE_CXX_CPPCHECK --exclude=../../extlibs/stb/)
 
-add_library(myproject::ZBE_LIB ALIAS ZBE_LIB)
+add_library(ZBE::ZBE_LIB ALIAS ZBE_LIB)
 
 add_library(glew STATIC IMPORTED) # or STATIC instead of SHARED
 
@@ -112,7 +112,7 @@ ELSE()
 ENDIF()
 
 target_link_libraries(ZBE_LIB PUBLIC 
-  myproject_options myproject_warnings
+  ZBE_options ZBE_warnings
   PUBLIC SDL2
   PUBLIC SDL2_image 
   PUBLIC SDL2_net
