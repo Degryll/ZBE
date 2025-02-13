@@ -91,8 +91,6 @@ add_library(ZBE_LIB
   sytem/SystemResources.cpp
   tools/graphics/CameraFtry.cpp
   tools/graphics/Camera.cpp
-  # Extlibs
-  ../../extlibs/stb/stb_vorbis.c
 )
 
 list(APPEND CMAKE_CXX_CPPCHECK --exclude=../../extlibs/stb/)

@@ -57,7 +57,7 @@ namespace zbe {
 
     const tinygltf::Scene &scene = model.scenes[static_cast<unsigned>(model.defaultScene)];
     for (size_t i = 0; i < scene.nodes.size(); ++i) {
-      assert((scene.nodes[i] >= 0) && (scene.nodes[i] < model.nodes.size()));
+      assert((scene.nodes[i] >= 0) && (scene.nodes[i] < static_cast<int>(model.nodes.size())));
       //bindModelNodes(vbos, model, model.nodes[scene.nodes[i]]);
       bindModelNodes(vbos, model, scene.nodes[i]);
     }
@@ -77,7 +77,7 @@ namespace zbe {
     }
 
     for (size_t i = 0; i < node.children.size(); i++) {
-      assert((node.children[i] >= 0) && (node.children[i] < model.nodes.size()));
+      assert((node.children[i] >= 0) && (node.children[i] < static_cast<int>(model.nodes.size())));
       //bindModelNodes(vbos, model, model.nodes[node.children[i]]);
       bindModelNodes(vbos, model, node.children[i]);
     }
