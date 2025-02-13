@@ -77,7 +77,7 @@ void operator=(const DaemonRecurrentTimeHandler&) = delete; //!< Deleted copy co
   /** brief Run daemon and re-add the timer.
    *  param time used to calculate next iteration.
    */
-	void run(uint64_t /*time*/) {
+	void run(uint64_t /*time*/) override {
     d->run();
 
     std::shared_ptr<TimeHandler> th = std::make_shared<DaemonRecurrentTimeHandler>(d, teg, avatar, ticketid, period);
@@ -96,7 +96,9 @@ private:
 
 class DaemonRecurrentTHBldr : public Funct<std::shared_ptr<TimeHandler>, std::shared_ptr<Entity>> {
 public:
-  std::shared_ptr<TimeHandler> operator()(std::shared_ptr<Entity> ent) {
+  DaemonRecurrentTHBldr() = default;
+  
+  std::shared_ptr<TimeHandler> operator()(std::shared_ptr<Entity> ent) override {
       //std::shared_ptr<Avatar> avatar = 
       std::shared_ptr<Avatar> avatar = std::make_shared<AwareAvatar>(ent);
       auto drth = std::make_shared<DaemonRecurrentTimeHandler>();
@@ -130,7 +132,7 @@ private:
 
 class DaemonRecurrentTHBldrFtry : public Factory {
 
-void create(std::string name, uint64_t) {
+void create(std::string name, uint64_t) override {
   using namespace std::string_literals;
 
   std::shared_ptr<DaemonRecurrentTHBldr> drth = std::make_shared<DaemonRecurrentTHBldr>();
@@ -138,7 +140,7 @@ void create(std::string name, uint64_t) {
   specificRsrc.insert("DaemonRecurrentTHBldrFtry."s + name, drth);
 }
 
-void setup(std::string name, uint64_t cfgId) {
+void setup(std::string name, uint64_t cfgId) override {
   using namespace std::string_literals;
   using namespace nlohmann;
   std::shared_ptr<json> cfg = configRsrc.get(cfgId);

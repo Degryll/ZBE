@@ -32,7 +32,7 @@ public:
 
   /** \brief Virtual Destructor.
    */
-  ~BaseSingleTextSprite(){};
+  ~BaseSingleTextSprite() {};
 
   /** \brief Returns x.
    *  \return x.

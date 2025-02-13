@@ -29,13 +29,13 @@ public:
 
   /** \brief It will Load the factories calling the load method.
   */
-  void run() {
+  void run() override {
     load();
   };
 
   /** \brief It loads all factories.
   */
-  static void load(){
+  static void load() {
     auto& factories = RsrcStore<Factory>::getInstance();
     factories.insert("GlTFResourceLoaderFtry", std::make_shared<GlTFResourceLoaderFtry>());
   }

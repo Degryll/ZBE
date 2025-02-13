@@ -36,7 +36,7 @@ public:
   /** \brief Builds a BasicPostLoopSDLDaemon from a window.
    *  \param window windo to use.
    */
-  BasicPreLoopSDLDaemon(std::shared_ptr<zbe::SDLWindow> window): window(window), sdlEventDist(zbe::SDLEventDispatcher::getInstance()) {}
+  explicit BasicPreLoopSDLDaemon(std::shared_ptr<zbe::SDLWindow> window): window(window), sdlEventDist(zbe::SDLEventDispatcher::getInstance()) {}
 
   /** \brief Destroys the BasicPreLoopSDLDaemon
    */
@@ -51,7 +51,7 @@ public:
 
   /** \brief Runs the daemon.
    */
-  inline void run() {
+  inline void run() override {
     window->clear();
     sdlEventDist.run();
   }

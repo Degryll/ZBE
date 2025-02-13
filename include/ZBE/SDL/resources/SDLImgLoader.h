@@ -66,8 +66,8 @@ public:
   *  \param filePath Path to image file.
   *  \return An id to the image loaded.
   */
- void load(std::filesystem::path filePath) {
-    uint64_t imgId = imgStore->loadImg(filePath.u8string().c_str());  // TODO test with ut8
+ void load(std::filesystem::path filePath) override {
+    uint64_t imgId = imgStore->loadImg(filePath.c_str());  // TODO test with ut8
     if(imgId > 0) {
       std::filesystem::path defFilePath = generateDefPath(filePath);
       imgDefLoader->loadRsrcDef(defFilePath, imgId);
@@ -78,16 +78,16 @@ public:
   *  \param extension Image file extension.
   *  \return True if the extensions is loadable.
   */
- bool isLoadable(std::filesystem::path extension) {
+ bool isLoadable(std::filesystem::path extension) override {
    return (ext.compare(extension) == 0);
  }
 
 private:
 
   std::filesystem::path generateDefPath(const std::filesystem::path& p) {
-    std::filesystem::path ext = imgDefLoader->getExtension();
+    std::filesystem::path dlExt = imgDefLoader->getExtension();
     std::filesystem::path out = p;
-    return (out.replace_extension(ext));
+    return (out.replace_extension(dlExt));
   }
 
   std::shared_ptr<zbe::SDLImageStore> imgStore;

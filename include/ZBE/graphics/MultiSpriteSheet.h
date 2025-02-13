@@ -36,13 +36,13 @@ public:
   /** \brief Parametriced constructor
    *  \param id Id for the SpriteSheet;
    **/
-  MultiSpriteSheet(int64_t size, const SprtDef& defaultSD = SprtDef()) : spriteDefintions(size), size(size), defaultSD(defaultSD) {
+  explicit MultiSpriteSheet(int64_t size, const SprtDef& defaultSD = SprtDef()) : spriteDefintions(static_cast<size_t>(size)), size(size), defaultSD(defaultSD) {
     for(unsigned i = 0; i < size; i++) {
       spriteDefintions[i] = defaultSD;
     }
   }
 
-  MultiSpriteSheet(int64_t size, const ImgDef& defaultID) : spriteDefintions(size), size(size), defaultSD(defaultID) {
+  MultiSpriteSheet(int64_t size, const ImgDef& defaultID) : spriteDefintions(static_cast<size_t>(size)), size(size), defaultSD(defaultID) {
     for(unsigned i = 0; i < size; i++) {
       spriteDefintions[i] = defaultSD;
     }
@@ -51,21 +51,21 @@ public:
   /** \brief Generate a sprite from a given entity.
    *  \return generated sprite
    **/
-  Sprite generateSprite(std::shared_ptr<MAvatar<uint64_t, int64_t, double, Vector2D, Vector2D> > avatar) {
+  Sprite generateSprite(std::shared_ptr<MAvatar<uint64_t, int64_t, double, Vector2D, Vector2D> > avatar) override {
     SprtDef& usedSD = defaultSD;
     int64_t state = avatar->get<4, int64_t>()->get();
     if(state>=0 && state<size) {
-        usedSD = spriteDefintions[state];
+        usedSD = spriteDefintions[static_cast<uint64_t>(state)];
     }
     auto cTime = avatar->getContextTime();
     // uint64_t time = a->getTime() % (usedSD.img.frameAmount * usedSD.img.frameTime);
     // TODO ensure that we are using the right time: getTotalTime?
     uint64_t time = cTime->getTotalTime() % (usedSD.img.frameAmount * usedSD.img.frameTime);
     uint64_t frame = time/usedSD.img.frameTime;
-    Region2D src(usedSD.img.region.p + (usedSD.img.regionOffset *  frame), usedSD.img.region.v);
-    auto size = avatar->get<2, Vector2D>()->get();
+    Region2D src(usedSD.img.region.p + (usedSD.img.regionOffset *  static_cast<double>(frame)), usedSD.img.region.v);
+    auto avtsize = avatar->get<2, Vector2D>()->get();
     auto pos = avatar->get<1, Vector2D>()->get();
-    Region2D dst({(double)pos.x + usedSD.drawOffset.x, (double)pos.y + usedSD.drawOffset.y}, {(double)size.x * usedSD.scale.x, (double)size.y * usedSD.scale.y});
+    Region2D dst({pos.x + usedSD.drawOffset.x, pos.y + usedSD.drawOffset.y}, {avtsize.x * usedSD.scale.x, avtsize.y * usedSD.scale.y});
     Sprite s(src, dst, avatar->get<3, double>()->get(), usedSD.img.imgSrcId);
     return s;
     //return Sprite(Region2D(), Region2D(), 0.0, 0);
@@ -75,27 +75,27 @@ public:
   //     return Sprite(Region2D(), Region2D(), 0.0, 0);
   // }
 
-  void setSprite(int64_t index, SprtDef sd){
-    if(index >= 0 && index < size){
-      spriteDefintions[index]= sd;
+  void setSprite(int64_t index, SprtDef sd) {
+    if(index >= 0 && index < size) {
+      spriteDefintions[static_cast<uint64_t>(index)]= sd;
     }
   }
 
-  void setSprite(int64_t index, ImgDef id){
-    if(index >= 0 && index < size){
-      spriteDefintions[index]= SprtDef(id);
+  void setSprite(int64_t index, ImgDef id) {
+    if(index >= 0 && index < size) {
+      spriteDefintions[static_cast<uint64_t>(index)]= SprtDef(id);
     }
   }
 
-  uint64_t getSize(){
-    return size;
+  uint64_t getSize() const {
+    return static_cast<uint64_t>(size);
   }
 
-  void setDefaultSprite(SprtDef sd){
+  void setDefaultSprite(SprtDef sd) {
     defaultSD = sd;
   }
 
-  void setDefaultSprite(ImgDef id){
+  void setDefaultSprite(ImgDef id) {
     defaultSD = SprtDef(id);
   }
 

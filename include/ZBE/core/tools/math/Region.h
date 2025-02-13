@@ -49,7 +49,7 @@ public:
    * \param rhs second Region.
    * \return True if both _REGION are equal. False otherwise.
    */
-  friend bool operator==(const _REGION& lhs, const _REGION& rhs){
+  friend bool operator==(const _REGION& lhs, const _REGION& rhs) {
     return ((lhs._p == rhs._p) && (lhs._v == rhs._v));
   }
 
@@ -79,6 +79,7 @@ public:
   /** \brief Copy constructor
    *  \param rhs _REGION to copy
    */
+  // cppcheck-suppress noExplicitConstructor
   Region(const _REGION<dim>& rhs) : _REGION<dim>(rhs), p(_REGION<dim>::_p), v(_REGION<dim>::_v) {}
 
   /** \brief Parametrized constructor
@@ -96,7 +97,7 @@ public:
   /** \brief Copy operator
    *  \param rhs Region to copy
    */
-  Region& operator=(const Region<dim>& rhs){
+  Region& operator=(const Region<dim>& rhs) {
     _REGION<dim>::operator=(rhs);
     p = rhs.p;
     v = rhs.v;
@@ -106,7 +107,7 @@ public:
   /** \brief Copy operator that lets to copy a _REGION to REGION
    *  \param rhs _REGION to copy
    */
-  Region& operator=(const _REGION<dim>& rhs){
+  Region& operator=(const _REGION<dim>& rhs) {
     _REGION<dim>::operator=(rhs);
     p = rhs._p;
     v = rhs._v;
@@ -135,6 +136,7 @@ public:
   /** \brief Copy constructor
    *  \param rhs _REGION to copy
    */
+  // cppcheck-suppress noExplicitConstructor
   Region(const _REGION<2>& rhs) : _REGION<2>(rhs), p(_REGION<2>::_p), v(_REGION<2>::_v) {}
 
   /** \brief Parametrized constructor
@@ -152,15 +154,17 @@ public:
   /** \brief Copy operator
    *  \param rhs Region to copy
    */
-  Region& operator=(const Region<2>& rhs){
+  Region& operator=(const Region<2>& rhs) {
     _REGION<2>::operator=(rhs);
+    p = rhs.p;
+    v = rhs.v;
     return (*this);
   }
 
   /** \brief Copy operator that lets to copy a _REGION to REGION
    *  \param rhs _REGION to copy
    */
-  Region& operator=(const _REGION<2>& rhs){
+  Region& operator=(const _REGION<2>& rhs) {
     _REGION<2>::operator=(rhs);
     return (*this);
   }
@@ -189,6 +193,7 @@ public:
   /** \brief Copy constructor
    *  \param rhs _REGION to copy
    */
+  // cppcheck-suppress noExplicitConstructor
   Region(const _REGION<3>& rhs) : _REGION<3>(rhs), p(_REGION<3>::_p), v(_REGION<3>::_v) {}
 
   /** \brief Parametrized constructor
@@ -206,15 +211,17 @@ public:
   /** \brief Copy operator
    *  \param rhs Region to copy
    */
-  Region& operator=(const Region<3>& rhs){
+  Region& operator=(const Region<3>& rhs) {
     _REGION<3>::operator=(rhs);
+    p = rhs.p;
+    v = rhs.v;
     return (*this);
   }
 
   /** \brief Copy operator that lets to copy a _REGION to REGION
    *  \param rhs _REGION to copy
    */
-  Region& operator=(const _REGION<3>& rhs){
+  Region& operator=(const _REGION<3>& rhs) {
     _REGION<3>::operator=(rhs);
     return (*this);
   }

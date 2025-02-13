@@ -24,7 +24,7 @@ class Physics3DSelector : public zbe::InteractionSelector<zbe::CollisionData3D, 
 public:
   virtual ~Physics3DSelector() = default;
 protected:
-  virtual Physics3DOverloaded getOverloaded() {
+  virtual Physics3DOverloaded getOverloaded() override {
     return Physics3DOverloaded {zbe::MovingSphereFunctor{}, zbe::MovingSphereMovingTriangle3DFunctor{}, zbe::MovingTriangle3DMovingSphereFunctor{}, zbe::NotIntersectFunctor<zbe::Triangle<3>, zbe::Triangle<3>, 3>{}};
   }
 };
@@ -32,7 +32,7 @@ protected:
 struct Solid {};
 struct Goal {};
 
-const int PLATFORMPARAMS = 3;
+const uint PLATFORMPARAMS = 3;
 using Platform = std::array<std::shared_ptr<zbe::Value<zbe::Vector3D>>, PLATFORMPARAMS>;
 
 using ZBActor = zbe::Actor<zbe::CollisionData3D, Solid, Platform, Goal>;
@@ -68,7 +68,7 @@ class Physics2DSelector : public zbe::InteractionSelector<zbe::CollisionData2D, 
 public:
   virtual ~Physics2DSelector() = default;
 protected:
-  virtual Physics2DOverloaded getOverloaded() {
+  virtual Physics2DOverloaded getOverloaded() override {
     return Physics2DOverloaded {zbe::NotIntersectFunctor<zbe::MovingPoint2D, zbe::MovingPoint2D, 2>{}, zbe::MovingPoint2DTriangle2DFunctor{}, zbe::NotIntersectFunctor<zbe::Triangle2D, zbe::MovingPoint2D, 2>{}, zbe::NotIntersectFunctor<zbe::Triangle2D, zbe::Triangle2D, 2>{}};
   }
 };
@@ -283,7 +283,7 @@ class FGravity3DSelector : public zbe::InteractionSelector<FGravityData, FGravit
 public:
   virtual ~FGravity3DSelector() = default;
 protected:
-  virtual FGravity3DOverloaded getOverloaded() {
+  virtual FGravity3DOverloaded getOverloaded() override {
     return FGravity3DOverloaded {NotFGravityFunctor<zbe::MovingPoint3D,zbe::MovingPoint3D>{}, GravityCenterMovingPointMovingTriangleFunctor{}, NotFGravityFunctor<zbe::MovingTriangle3D,zbe::MovingPoint3D>{}, NotFGravityFunctor<zbe::MovingTriangle3D, zbe::MovingTriangle3D>{}};
   }
 };
@@ -321,7 +321,7 @@ class PlatformTrait : public zbe::Funct<void, zbe::Reactor<zbe::CollisionData3D,
 public:
   PlatformTrait(Platform p) : p(p) {}
 
-  void operator()(zbe::Reactor<zbe::CollisionData3D, Platform>* reactor, zbe::CollisionData3D data) {
+  void operator()(zbe::Reactor<zbe::CollisionData3D, Platform>* reactor, zbe::CollisionData3D data) override {
     auto a = (*p[0]).get();
     auto b = (*p[1]).get();
     auto c = (*p[2]).get();
@@ -333,10 +333,10 @@ private:
 
 class PlatformTraitBldr : public zbe::Funct<std::shared_ptr<zbe::Funct<void, zbe::Reactor<zbe::CollisionData3D, Platform>*, zbe::CollisionData3D>>, std::shared_ptr<zbe::Entity>> {
 public:
-  std::shared_ptr<zbe::Funct<void, zbe::Reactor<zbe::CollisionData3D, Platform>*, zbe::CollisionData3D>> operator()(std::shared_ptr<zbe::Entity> ent) {
+  std::shared_ptr<zbe::Funct<void, zbe::Reactor<zbe::CollisionData3D, Platform>*, zbe::CollisionData3D>> operator()(std::shared_ptr<zbe::Entity> ent) override {
     // TODO deshaz esta barbarie
     Platform* p = new Platform{};
-    for(int i = 0; i<PLATFORMPARAMS; i++) {
+    for(uint i = 0; i<PLATFORMPARAMS; i++) {
       (*p)[i] = ent->getVector3D(idx[i]);
     }
 
@@ -353,14 +353,14 @@ private:
 
 class PlatformTraitBldrFtry : public zbe::Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<PlatformTraitBldr> ptb = std::make_shared<PlatformTraitBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, ptb);
     specificRsrc.insert("PlatformTraitBldr."s + name, ptb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);

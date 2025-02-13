@@ -57,7 +57,7 @@ public:
 
   /** \brief Runs the daemon.
    */
-  void run();
+  void run() override;
 
 private:
   zbe::RsrcStore<SDLOGLWindow>& rs = zbe::RsrcStore<SDLOGLWindow>::getInstance();

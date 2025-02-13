@@ -9,13 +9,13 @@ typedef uint32_t ZBE_K;
 typedef float ZBE_KStatus;
 
 // Input status
-const ZBE_KStatus ZBE_KEYDOWN = 1.0; //!< Key is pressed.
-const ZBE_KStatus ZBE_KEYUP = 0.0;   //!< Key is released.
+const ZBE_KStatus ZBE_KEYDOWN = 1.0f; //!< Key is pressed.
+const ZBE_KStatus ZBE_KEYUP = 0.0f;   //!< Key is released.
 
-const ZBE_KStatus ZBE_TRIGGERED = 0.1; //!< Minimal value an analog input is considered triggered.
-const ZBE_KStatus ZBE_FULL = 1.0;      //!< The analog input is fully pressed.
-const ZBE_KStatus ZBE_HARD = 0.75;     //!< The analog input is almost fully pressed.
-const ZBE_KStatus ZBE_SOFT = 0.25;     //!< The analog input is barely pressed.
+const ZBE_KStatus ZBE_TRIGGERED = 0.1f; //!< Minimal value an analog input is considered triggered.
+const ZBE_KStatus ZBE_FULL = 1.0f;      //!< The analog input is fully pressed.
+const ZBE_KStatus ZBE_HARD = 0.75f;     //!< The analog input is almost fully pressed.
+const ZBE_KStatus ZBE_SOFT = 0.25f;     //!< The analog input is barely pressed.
 
 // Printable characters keys
 const ZBE_K ZBEK_UNKNOWN = 0;

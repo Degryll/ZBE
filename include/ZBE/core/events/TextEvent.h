@@ -48,14 +48,14 @@ public:
   /** \brief Get the text of this event.
    * \return A string.
    */
-  inline std::string getText() {
+  inline std::string getText() const {
       return text;
   }
 
   /** \brief Manage the current event and, presumably,
    * do the actions associated with it.
    */
-  void manage();
+  void manage() override;
 
 private:
   std::string text;

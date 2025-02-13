@@ -20,7 +20,7 @@
 #include <vector>
 
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_ttf.h>
+#include <SDL_ttf.h>
 
 #include "ZBE/core/system/SysError.h"
 
@@ -238,10 +238,10 @@ protected:
   /** \brief Checks if the window is correctly created
    */
   void checkWidowCreation() {
-    if (window == nullptr){
+    if (window == nullptr) {
       zbe::SysError::setError(std::string("ERROR: SDL could not create a SDLWindow! SDL ERROR: ") + SDL_GetError());
     }
-    if (renderer == nullptr){
+    if (renderer == nullptr) {
       SDL_DestroyWindow(window);
       zbe::SysError::setError(std::string("ERROR: SDL could not create a renderer! SDL ERROR: ") + SDL_GetError());
     }
@@ -272,7 +272,7 @@ public:
     /** \brief Creates a new SDLImageStore associated to a renderer.
      *  \param renderer SDL_Renderer to use.
      */
-    SDLImageStore(SDL_Renderer* renderer);
+    explicit SDLImageStore(SDL_Renderer* renderer);
 
     /** \brief Default destructor. Will free all loaded textures.
      */

@@ -49,7 +49,7 @@ public:
   /** brief Activate configured tickets
    *  param time not used
    */
-  void operator()(IData, Trait) {
+  void operator()(IData, Trait) override {
     dmn->run();
   }
 
@@ -75,7 +75,7 @@ public:
   /** brief Activate configured tickets
    *  param time not used
    */
-  void operator()(IData, Trait) {
+  void operator()(IData, Trait) override {
     for(auto& t : list ) {
       avt->setACTIVE(t);
     }
@@ -104,7 +104,7 @@ public:
   /** brief Deactivate configured tickets
    *  param time not used
    */
-  void operator()(IData, Trait) {
+  void operator()(IData, Trait) override {
     for(auto& t : list ) {
       avt->setINACTIVE(t);
     }
@@ -130,7 +130,7 @@ public:
   */
  StoreValuesRct(std::shared_ptr<AwareAvatar> avt) : avt(avt), dest() {}
 
- void operator()(IData, std::array<std::shared_ptr<Value<ValueType>>, n> trait) {
+ void operator()(IData, std::array<std::shared_ptr<Value<ValueType>>, n> trait) override {
    auto ent = avt->getEntity();
    for(uint i =0; i< n; i++) {
      ent->override<ValueType>(dest[i], trait[i]);
@@ -149,7 +149,7 @@ private:
 template<typename IData, typename Trait>
 class DaemonRctBldr : public Funct<std::shared_ptr<Funct<void, IData, Trait>>, std::shared_ptr<Entity>> {
 public:
-std::shared_ptr<Funct<void, IData, Trait>> operator()(std::shared_ptr<Entity>){
+std::shared_ptr<Funct<void, IData, Trait>> operator()(std::shared_ptr<Entity>) override {
   return std::make_shared<DaemonRct<IData, Trait>>(dmn);
 }
 
@@ -163,7 +163,7 @@ std::shared_ptr<Daemon> dmn {};
 template<typename IData, typename Trait>
 class TicketActivatorRctBldr : public Funct<std::shared_ptr<Funct<void, IData, Trait>>, std::shared_ptr<Entity>> {
 public:
-std::shared_ptr<Funct<void, IData, Trait>> operator()(std::shared_ptr<Entity> ent){
+std::shared_ptr<Funct<void, IData, Trait>> operator()(std::shared_ptr<Entity> ent) override {
   auto avt = std::make_shared<BaseAvatar>(ent);
   auto tar = std::make_shared<TicketActivatorRct<IData, Trait>>(avt);
   tar->setTicketList(list);
@@ -180,7 +180,7 @@ std::forward_list<uint64_t> list {};
 template<typename IData, typename Trait>
 class TicketDeactivatorRctBldr : public Funct<std::shared_ptr<Funct<void, IData, Trait>>, std::shared_ptr<Entity>> {
 public:
-std::shared_ptr<Funct<void, IData, Trait>> operator()(std::shared_ptr<Entity> ent){
+std::shared_ptr<Funct<void, IData, Trait>> operator()(std::shared_ptr<Entity> ent) override {
   auto avt = std::make_shared<BaseAvatar>(ent);
   auto tar = std::make_shared<TicketDeactivatorRct<IData, Trait>>(avt);
   tar->setTicketList(list);
@@ -199,7 +199,7 @@ template<typename IData, typename ValueType, unsigned n>
 
 class StoreValuesRctBldr : public Funct<std::shared_ptr<Funct<void, IData, std::array<std::shared_ptr<Value<ValueType>>, n>>>, std::shared_ptr<Entity>> {
 public:
-std::shared_ptr<Funct<void, IData, std::array<std::shared_ptr<Value<ValueType>>, n>>> operator()(std::shared_ptr<Entity> ent){
+std::shared_ptr<Funct<void, IData, std::array<std::shared_ptr<Value<ValueType>>, n>>> operator()(std::shared_ptr<Entity> ent) override {
   auto avt = std::make_shared<AwareAvatar>(ent);
   auto tar = std::make_shared<StoreValuesRct<IData, ValueType, n>>(avt);
   tar->setDestinyList(dest);
@@ -216,14 +216,14 @@ private:
 template<typename IData, typename Trait>
 class DaemonRctBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<DaemonRctBldr<IData, Trait>> drb = std::make_shared<DaemonRctBldr<IData, Trait>>();
     mainRsrc.insert(zbe::factories::functionName_ + name, drb);
     specificRsrc.insert("DaemonRctBldr."s + name, drb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -256,14 +256,14 @@ private:
 template<typename IData, typename Trait>
 class TicketActivatorRctBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<TicketActivatorRctBldr<IData, Trait>> tarb = std::make_shared<TicketActivatorRctBldr<IData, Trait>>();
     mainRsrc.insert(zbe::factories::functionName_ + name, tarb);
     specificRsrc.insert("TicketActivatorRctBldr."s + name, tarb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -296,14 +296,14 @@ private:
 template<typename IData, typename Trait>
 class TicketDeactivatorRctBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<TicketDeactivatorRctBldr<IData, Trait>> tarb = std::make_shared<TicketDeactivatorRctBldr<IData, Trait>>();
     mainRsrc.insert(zbe::factories::functionName_ + name, tarb);
     specificRsrc.insert("TicketDeactivatorRctBldr."s + name, tarb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -336,14 +336,14 @@ private:
 template<typename IData, typename ValueType, unsigned n>
 class StoreValuesRctBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<StoreValuesRctBldr<IData, ValueType, n>> tarb = std::make_shared<StoreValuesRctBldr<IData, ValueType, n>>();
     mainRsrc.insert(zbe::factories::functionName_ + name, tarb);
     specificRsrc.insert("StoreValuesRctBldr."s + name, tarb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -380,7 +380,7 @@ public:
   /** brief Activate configured tickets
    *  param time not used
    */
-  void operator()(IData data, Trait trait) {
+  void operator()(IData data, Trait trait) override {
     for(auto& r : reactions ) {
       (*r)(data, trait);
     }
@@ -397,7 +397,7 @@ private:
 template<typename IData, typename Trait>
 class MultiRctBldr : public Funct<std::shared_ptr<Funct<void, IData, Trait>>, std::shared_ptr<Entity>> {
 public:
-  std::shared_ptr<Funct<void, IData, Trait>> operator()(std::shared_ptr<Entity> ent){
+  std::shared_ptr<Funct<void, IData, Trait>> operator()(std::shared_ptr<Entity> ent) override {
   auto mr = std::make_shared<MultiRct<IData, Trait>>();
     for(auto builder : bldrs) {
       auto rct = (*builder)(ent);
@@ -418,14 +418,14 @@ private:
 template<typename IData, typename Trait>
 class MultiRctBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<MultiRctBldr<IData, Trait>> tarb = std::make_shared<MultiRctBldr<IData, Trait>>();
     mainRsrc.insert(zbe::factories::functionName_ + name, tarb);
     specificRsrc.insert("MultiRctBldr."s + name, tarb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -462,7 +462,7 @@ public:
   //PrintfRct() : msg("Interaction") {};
   PrintfRct(std::string msg) : msg(msg) {};
 
-  void operator()(IData d, Trait t) {
+  void operator()(IData, Trait) override {
     printf("%s \n", msg.c_str());fflush(stdout);
   }
 
@@ -478,7 +478,7 @@ template<typename IData, typename Trait>
 class PrintfRctBldr : public Funct<std::shared_ptr<Funct<void, IData, Trait>>, std::shared_ptr<Entity>> {
 public:
   PrintfRctBldr() : msg("Interaction") {};
-  std::shared_ptr<Funct<void, IData, Trait>> operator()(std::shared_ptr<Entity>){
+  std::shared_ptr<Funct<void, IData, Trait>> operator()(std::shared_ptr<Entity>) override {
     return std::make_shared<PrintfRct<IData, Trait>>(msg);
   }
 
@@ -494,14 +494,14 @@ private:
 template<typename IData, typename Trait>
 class PrintfRctBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<PrintfRctBldr<IData, Trait>> prb = std::make_shared<PrintfRctBldr<IData, Trait>>();
     mainRsrc.insert(zbe::factories::functionName_ + name, prb);
     specificRsrc.insert("PrintfRctBldr."s + name, prb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);

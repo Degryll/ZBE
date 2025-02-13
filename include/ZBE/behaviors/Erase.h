@@ -30,7 +30,7 @@ class Erase : virtual public Behavior<void> {
 
     /** \brief Erase given avatar.
      */
-    void apply(std::shared_ptr<Avatar> avatar) {
+    void apply(std::shared_ptr<Avatar> avatar) override {
       avatar->setERASED();
     }
 };
@@ -44,7 +44,7 @@ class EraseEntity : virtual public Behavior<void> {
 
     /** \brief Erase given avatar.
      */
-    void apply(std::shared_ptr<Avatar> avatar) {
+    void apply(std::shared_ptr<Avatar> avatar) override {
       avatar->getEntity()->setERASED();
     }
 };

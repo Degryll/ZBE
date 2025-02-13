@@ -12,7 +12,6 @@
 
 #include <string>
 
-#include <GL/glew.h>
 
 #include <nlohmann/json.hpp>
 
@@ -40,13 +39,13 @@ public:
    *  \param name Name for the created SingleText SDL Drawer.
    *  \param cfgId Configuration id for the SingleText SDL Drawer.
    */
-   void create(std::string name, uint64_t);
+   void create(std::string name, uint64_t) override;
 
   /** \brief Setup the desired tool. The tool will be complete after this step.
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId);
+  void setup(std::string name, uint64_t cfgId) override;
 
 private:
   RsrcStore<nlohmann::json>& configRsrc = RsrcStore<nlohmann::json>:: getInstance();
@@ -73,10 +72,10 @@ void OGLModelSheetDrawerFtry<idx, T, Ts...>::setup(std::string name, uint64_t cf
 
   if(cfg) {
     auto j = *cfg;
-    if (j["window"].is_string()){
+    if (j["window"].is_string()) {
      std::string windowName = j["window"].get<std::string>();
      auto w = windowRsrc.get("SDLOGLWindow."s + windowName);
-       if (j["programId"].is_string()){
+       if (j["programId"].is_string()) {
          std::string pidName = j["programId"].get<std::string>();
          auto p = uintStore.get(pidName);
          auto ssd = oGLMSDrawerRsrc.get("OGLMSDrawer."s + name);

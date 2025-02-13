@@ -29,7 +29,7 @@ public:
 
   /** \brief Virtual destructor
   */
-  virtual ~SpriteSheet(){} //!< Virtual destrutor.
+  virtual ~SpriteSheet() {} //!< Virtual destrutor.
 
   /** \brief Generate a sprite from a given entity.
    *  \return generated sprite

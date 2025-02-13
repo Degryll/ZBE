@@ -15,7 +15,6 @@
 
 #include "ZBE/core/behaviors/Behavior.h"
 #include "ZBE/core/entities/avatars/SingleSprite.h"
-#include "ZBE/core/entities/AvatarEntity.h"
 #include "ZBE/SDL/system/SDLWindow.h"
 
 #include "ZBE/core/system/system.h"
@@ -32,7 +31,7 @@ class ZBEAPI SingleSpriteSDLDrawer : public Behavior<uint64_t, Vector2D, Vector2
     /** \brief Create a new drawer in the given context.
      *  \param window A SDLwindow with its context.
      */
-    SingleSpriteSDLDrawer(std::shared_ptr<SDLWindow> window) : window(window), imgStore(window->getImgStore()) {}
+    explicit SingleSpriteSDLDrawer(std::shared_ptr<SDLWindow> window) : window(window), imgStore(window->getImgStore()) {}
 
     /** \brief Destructor.
      */
@@ -41,7 +40,7 @@ class ZBEAPI SingleSpriteSDLDrawer : public Behavior<uint64_t, Vector2D, Vector2
     /** \brief Draws the given entity.
      *  \param The entity to be drawn.
      */
-    void apply(std::shared_ptr<MAvatar<uint64_t, Vector2D, Vector2D> > avatar);
+    void apply(std::shared_ptr<MAvatar<uint64_t, Vector2D, Vector2D> > avatar) override;
 
   private:
     std::shared_ptr<SDLWindow> window;  //!< A SDL window with its context.

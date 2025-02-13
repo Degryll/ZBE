@@ -50,13 +50,14 @@ class _VECTOR {
      *
      *  \param l Initializer list with the vector coordinates
      */
+    // cppcheck-suppress noExplicitConstructor
     _VECTOR(std::initializer_list<double> l) {
       if (l.size() != dim) {
         SysError::setError("Vector ERROR: Initializer list size is incorrect.");
         return;
       }
 
-      int i = 0;
+      uint i = 0;
       for(auto it : l) {
         data[i++] = it;
       }
@@ -75,7 +76,7 @@ class _VECTOR {
         return (*this);
       }
 
-      int i = 0;
+      uint i = 0;
       for(auto it : l) {
         data[i++] = it;
       }
@@ -207,7 +208,7 @@ class _VECTOR {
      * \return The Vector module.
      * \sa getSqrModule().
      */
-    double getModule() {
+    double getModule() const {
       double r = 0;
       for(unsigned i = 0; i < dim; i++) {
         r += data[i] * data[i];
@@ -221,7 +222,7 @@ class _VECTOR {
      * \return The squared Vector module.
      * \sa getModule().
      */
-    double getSqrModule() {  // to avoid square root
+    double getSqrModule() const {  // to avoid square root
       double r2 = 0;
       for(unsigned i = 0; i < dim; i++) {
         r2 += data[i] * data[i];
@@ -308,7 +309,7 @@ class _VECTOR {
      * \sa operator-=(), operator-() and operator*=().
      */
     friend _VECTOR operator+(_VECTOR& lhs, _VECTOR&& rhs) {
-      return (rhs+=lhs);
+      return (lhs+=rhs);
     }
 
     /** \brief Implements Vector subtraction.
@@ -386,7 +387,7 @@ class _VECTOR {
      * \param normal Vector normal to the collision plane.
      * \return Vector with the ray or object path reflected.
      */
-    friend _VECTOR reflect(_VECTOR ray, const _VECTOR &normal){
+    friend _VECTOR reflect(_VECTOR ray, const _VECTOR &normal) {
         return ray.reflect(normal);
     };
 
@@ -396,7 +397,7 @@ class _VECTOR {
      * \param rhs second Vector.
      * \return True if both _VECTOR are equal. False otherwise.
      */
-    friend bool operator==(const _VECTOR& lhs, const _VECTOR& rhs){
+    friend bool operator==(const _VECTOR& lhs, const _VECTOR& rhs) {
       bool equal = true;
       for(unsigned i = 0; i < dim; i++ ) {
         equal &= almost_equal(lhs.data[i], rhs.data[i]);
@@ -409,7 +410,7 @@ class _VECTOR {
      * \param v the Vector.
      * \return True if _VECTOR is all zeroes
      */
-    friend bool isZero(const _VECTOR& v){
+    friend bool isZero(const _VECTOR& v) {
       bool iszero = true;
       for(unsigned i = 0; i < dim; i++ ) {
         iszero &= almost_equal(v.data[i], 0.0);
@@ -434,6 +435,7 @@ class Vector : public _VECTOR<dim> {
   public:
     /** \brief Void constructor, the Vector's values are unknown.
      */
+    // cppcheck-suppress uninitMemberVar
     Vector() : _VECTOR<dim>() {}
 
     /** \brief A list initializer constructor.
@@ -448,6 +450,7 @@ class Vector : public _VECTOR<dim> {
      *
      *  \param l Initializer list with the vector coordinates
      */
+    // cppcheck-suppress[uninitMemberVar,noExplicitConstructor]
     Vector(std::initializer_list<double> l) : _VECTOR<dim>(l) {}
 };
 
@@ -475,6 +478,7 @@ class Vector<2> : public _VECTOR<2> {
     /** \brief A copy constructor with _VECTOR<2>.
      *  \param v _VECTOR to copy
      */
+    // cppcheck-suppress noExplicitConstructor
     Vector(const _VECTOR<2>& v) : _VECTOR<2>(v), x(data[0]), y(data[1]) {}
 
     /** \brief A list initializer constructor.
@@ -489,6 +493,7 @@ class Vector<2> : public _VECTOR<2> {
      *
      *  \param l Initializer list with the vector coordinates
      */
+    // cppcheck-suppress noExplicitConstructor
     Vector(std::initializer_list<double> l) : _VECTOR<2>(l), x(data[0]), y(data[1]) {}
 
     /** \brief Assign operator.
@@ -507,10 +512,10 @@ class Vector<2> : public _VECTOR<2> {
     Vector& operator=(std::initializer_list<double> l) {_VECTOR<2>::operator=(l); return (*this);}
 
     /** \brief Set values of the vector as Cartesian coordinates (default).
-     *  \param x X coordinate
-     *  \param y Y coordinate
+     *  \param xcord X coordinate
+     *  \param ycord Y coordinate
      */
-    void setCartesian(double x, double y) {data[0] = x; data[1] = y;}
+    void setCartesian(double xcord, double ycord) {data[0] = xcord; data[1] = ycord;}
 
     /** \brief Set values of the vector as Polar coordinates in radians (transformed to Cartesian).
      *  \param r Radial coordinate
@@ -561,6 +566,7 @@ class Vector<3> : public _VECTOR<3> {
     /** \brief A copy constructor with _VECTOR<3>.
      *  \param _VECTOR to copy
      */
+    // cppcheck-suppress noExplicitConstructor
     Vector(const _VECTOR<3>& v) : _VECTOR<3>(v), x(data[0]), y(data[1]), z(data[2]) {}
 
     /** \brief A list initializer constructor.
@@ -575,6 +581,7 @@ class Vector<3> : public _VECTOR<3> {
      *
      *  \param l Initializer list with the vector coordinates
      */
+    // cppcheck-suppress noExplicitConstructor
     Vector(std::initializer_list<double> l) : _VECTOR<3>(l), x(data[0]), y(data[1]), z(data[2]) {}
 
     /** \brief Assign operator.

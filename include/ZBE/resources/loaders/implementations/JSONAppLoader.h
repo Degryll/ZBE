@@ -43,14 +43,14 @@ public:
   /** \brief Loads the app config
    *  \param filePath Path to resource file.
    */
-  void load(std::filesystem::path filePath);
+  void load(std::filesystem::path filePath) override;
 
 
   /** \brief Tells if a file extension is loadable.
    *  \param extension resource file extension.
    *  \return True if the extensions is loadable by the given implementation.
    */
-  bool isLoadable(std::filesystem::path extension);
+  bool isLoadable(std::filesystem::path extension) override;
 
 private:
   struct FtryData {

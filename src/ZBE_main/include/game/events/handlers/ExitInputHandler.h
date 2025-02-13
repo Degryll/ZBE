@@ -13,7 +13,7 @@ class ExitInputHandler : public zbe::InputHandler {
 
   	ExitInputHandler() {}
 
-  	void run(float status) {
+  	void run(float status) override {
       if( status) {
           zbe::SDL_Starter::getInstance().quit();
           exit(0);

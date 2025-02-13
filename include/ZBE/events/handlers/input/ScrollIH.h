@@ -54,7 +54,7 @@ public:
 	/** \brief run daemon.
 	 *  \param state not used
 	 */
-	void run(uint32_t, float state) {
+	void run(uint32_t, float state) override {
 	  if (state > 0 && vl->get() > 10ll) {
       vl->set(std::max(10ll, vl->get()-1ll));
     } else  if (state < 0) {

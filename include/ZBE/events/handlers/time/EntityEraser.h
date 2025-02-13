@@ -35,7 +35,7 @@
 namespace zbe {
 
 class EntityEraserTH : public TimeHandler {
-  public:
+public:
 	EntityEraserTH(const EntityEraserTH&) = delete; //!< Avoid copy.
 	void operator=(const EntityEraserTH&) = delete; //!< Avoid copy.
 
@@ -46,14 +46,14 @@ class EntityEraserTH : public TimeHandler {
     /** brief Parametrized constructor
      * param entity Entity to be erased
      */
-  	EntityEraserTH(std::shared_ptr<Entity> entity): e(entity){}
+  	explicit EntityEraserTH(std::shared_ptr<Entity> entity): e(entity) {}
 
   	void setEntity(std::shared_ptr<Entity> entity) {e = entity;}
 
     /** brief Erases entity
      *  param time not used
      */
-  	void run(uint64_t) {
+  	void run(uint64_t) override {
         e->setERASED();
   	}
 
@@ -74,14 +74,14 @@ public:
     /** brief Parametrized constructor
      * param entity Entity to be erased
      */
-  	EntityEraserReaction(std::shared_ptr<Entity> entity): e(entity){}
+  	explicit EntityEraserReaction(std::shared_ptr<Entity> entity): e(entity) {}
 
   	void setEntity(std::shared_ptr<Entity> entity) {e = entity;}
 
     /** brief Erases entity
      *  param time not used
      */
-  	void operator()(IData, Trait) {
+  	void operator()(IData, Trait) override {
         e->setERASED();
   	}
 
@@ -91,15 +91,10 @@ public:
 
 template<typename IData, typename Trait>
 class EntityEraserReactionBldr : public Funct<std::shared_ptr<Funct<void, IData, Trait>>, std::shared_ptr<Entity>> {
-  std::shared_ptr<Funct<void, IData, Trait>> operator()(std::shared_ptr<Entity> ent){
+  std::shared_ptr<Funct<void, IData, Trait>> operator()(std::shared_ptr<Entity> ent) override {
     return std::make_shared<EntityEraserReaction<IData, Trait>>(ent);
   }
 };
-
-//template<typename IData, typename Trait>
-//class EntityEraserReactionBldr : public Funct<void, IData, Trait> {
-//
-//};
 
 /** \brief Factory for EntityEraserTH.
  */
@@ -110,7 +105,7 @@ public:
  *  \param name Name for the created tool.
  *  \param cfgId Tool's configuration id.
  */
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
 
     std::shared_ptr<EntityEraserTH> te = std::make_shared<EntityEraserTH>();
@@ -122,7 +117,7 @@ public:
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId){
+  void setup(std::string name, uint64_t cfgId)  override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configStore.get(cfgId);
@@ -153,7 +148,7 @@ private:
 };
 
 class EntityEraserTHBldr : public Funct<std::shared_ptr<TimeHandler>, std::shared_ptr<Entity>> {
-  std::shared_ptr<TimeHandler> operator()(std::shared_ptr<Entity> ent) {
+  std::shared_ptr<TimeHandler> operator()(std::shared_ptr<Entity> ent) override {
       return std::make_shared<EntityEraserTH>(ent);
   }
 };

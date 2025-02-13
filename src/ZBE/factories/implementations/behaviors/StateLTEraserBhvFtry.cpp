@@ -28,7 +28,7 @@ void StateLTEraserBhvFtry::setup(std::string name, uint64_t cfgId) {
     auto j = *cfg;
     if (j["limit"].is_string()) {
       std::string cname = j["limit"].get<std::string>();
-      uint64_t limit = (uint64_t)intStore.get(cname);
+      int64_t limit = intStore.get(cname);
 
       auto ss = StateLTEraserRsrc.get("StateLTEraser."s + name);
       ss->setLimit(limit);

@@ -39,7 +39,7 @@ public:
    * \param msg Message received.
    *
    */
-  NetEvent(uint64_t id, uint64_t time, uint32_t sequence, SDLSocket socket, std::vector<char> msg, NetHandler* handler) : Event(id, time), sequence(sequence), socket(socket), msg(msg), handler(handler) {}
+  NetEvent(uint64_t id, uint64_t time, uint64_t sequence, SDLSocket socket, std::vector<char> msg, NetHandler* handler) : Event(id, time), sequence(sequence), socket(socket), msg(msg), handler(handler) {}
 
   /** \brief base destructor.
    */
@@ -48,7 +48,7 @@ public:
   /** \brief Get the id of the key related with this event.
    * \return An integer that identifies the key.
    */
-  inline uint32_t getSequence() {
+  inline uint64_t getSequence() {
       return sequence;
   }
 
@@ -69,12 +69,12 @@ public:
   /** \brief Manage the current event and, presumably,
    * do the actions associated with it.
    */
-  void manage() {
+  void manage() override {
     handler->run(sequence, socket, msg);
   }
 
 private:
-  uint32_t sequence;
+  uint64_t sequence;
   SDLSocket socket;
   std::vector<char> msg;
   NetHandler* handler;

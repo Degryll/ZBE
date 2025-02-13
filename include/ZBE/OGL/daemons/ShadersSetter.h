@@ -11,9 +11,7 @@
 #define ZBE_OGL_DAEMONS_SHADERSSETTER_H
 
 #include <memory>
-
 #include <cstdio>
-
 #include <GL/glew.h>
 #include <nlohmann/json.hpp>
 
@@ -45,7 +43,7 @@ public:
 
   /** \brief Do the actual Daemon job.
    */
-  void run() {
+  void run() override {
     glUseProgram(gProgramID);
 
 // glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
@@ -56,8 +54,8 @@ public:
 //
 // glBindVertexArray(0);
 
-    GLuint projectLoc = glGetUniformLocation(gProgramID, "projection" );
-    GLuint viewLoc = glGetUniformLocation(gProgramID, "view" );
+    GLint projectLoc = glGetUniformLocation(gProgramID, "projection" );
+    GLint viewLoc = glGetUniformLocation(gProgramID, "view" );
     glUniformMatrix4fv(projectLoc, 1, true, cam->getProjectionMat().data());
     glUniformMatrix4fv(viewLoc, 1, false, cam->getTransformMat().data());
   }
@@ -85,7 +83,7 @@ public:
 
   /** \brief Do the actual Daemon job.
    */
-  void run() {
+  void run() override {
     glClear(GL_DEPTH_BUFFER_BIT);
     glUseProgram(gProgramID);
   }
@@ -106,13 +104,13 @@ public:
    *  \param name Name for the created ShadersSetter3D.
    *  \param cfgId ShadersSetter3D's configuration id.
    */
-  void create(std::string name, uint64_t);
+  void create(std::string name, uint64_t) override;
 
   /** \brief Setup the desired tool. The tool will be complete after this step.
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId);
+  void setup(std::string name, uint64_t cfgId) override;
 
 private:
   RsrcStore<nlohmann::json>& configStore = RsrcStore<nlohmann::json>::getInstance();
@@ -131,7 +129,7 @@ public:
    *  \param name Name for the created ShadersSetter2D.
    *  \param cfgId ShadersSetter2D's configuration id.
    */
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<ShadersSetter2D> ss2D = std::shared_ptr<ShadersSetter2D>(new ShadersSetter2D);
     daemonStore.insert("Daemon."s + name, ss2D);
@@ -142,7 +140,7 @@ public:
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configStore.get(cfgId);

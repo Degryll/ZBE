@@ -61,7 +61,7 @@ ZBEAPI bool IntersectionMovingCircleOutsideAABB2D(Circle circle, Vector2D direct
 template <unsigned dim>
 bool intersectionAABBAABB(AABB<dim> boxa, AABB<dim> boxb) {
   for(unsigned i = 0; i < dim; i++) {
-    if(abs(boxa.minimum[i] - boxb.minimum[i]) * 2 >= ((boxa.maximum[i] - boxa.minimum[i]) + (boxb.maximum[i] - boxb.minimum[i]))) {
+    if(fabs(boxa.minimum[i] - boxb.minimum[i]) * 2.0 >= ((boxa.maximum[i] - boxa.minimum[i]) + (boxb.maximum[i] - boxb.minimum[i]))) {
         return false;
     }
   }
@@ -139,7 +139,7 @@ ZBEAPI bool intersectionSphereAABB3D(Sphere sphere, AABB<3> box);
 template <unsigned dim>
 bool intersectionPointAABB(Point<dim> point, AABB<dim> box) {
   for(unsigned i = 0; i < dim; i++) {
-    if (point[i]<box.minimum[i] || point[i]>box.maximum[i]){
+    if (point[i]<box.minimum[i] || point[i]>box.maximum[i]) {
       return false;
     }
   }
@@ -207,14 +207,14 @@ bool intersectionRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, uint64_t &time, 
 
   if (discr < 0) return (false);
 
-  uint64_t t = (int64_t)(((-b - sqrt(discr)) / (2 * a)) * zbe::SECOND);
+  uint64_t t = static_cast<uint64_t>(((-b - sqrt(discr)) / (2 * a)) * zbe::SECOND);
   t = quantizeTime(t);
 
-  if (t <= 0) return (false);
+  if (t == 0) return (false);
   if (t > time) return (false);
 
   time = t;
-  point = ray.o + (ray.d * time) * zbe::INVERSE_SECOND;
+  point = ray.o + (ray.d * static_cast<double>(time)) * zbe::INVERSE_SECOND;
 
   return (true);
 }
@@ -260,13 +260,13 @@ bool intersectionNormalRayNSphere(Ray<dim> ray, NSphere<dim> nsphere, uint64_t &
 
   if (discr < 0) return (false);
 
-  uint64_t t = (int64_t)(-b - sqrt(discr));
+  uint64_t t = static_cast<uint64_t>(-b - sqrt(discr));
   t = quantizeTime(t);
-  if (t <= 0) return (false);
+  if (t == 0) return (false);
   if (t > time) return (false);
 
   time = t;
-  point = ray.o + ray.d * time;
+  point = ray.o + ray.d * static_cast<double>(time);
 
   return (true);
 }
@@ -304,19 +304,19 @@ template <unsigned dim>
 bool intersectionBeamInsideAABB(Ray<dim> ray, AABB<dim> box, uint64_t &time, Point<dim>& point) {
   uint64_t taux = std::numeric_limits<int64_t>::max();
   for(unsigned i = 0; i < dim; i++) {
-    if (abs(ray.d[i]) < PRECISION) continue;
+    if (fabs(ray.d[i]) < PRECISION) continue;
     double d = (SECOND / ray.d[i]);
-    uint64_t t1 = (box.minimum[i] - ray.o[i]) * d;
-    uint64_t t2 = (box.maximum[i] - ray.o[i]) * d;
+    uint64_t t1 = uint64_t((box.minimum[i] - ray.o[i]) * d);
+    uint64_t t2 = uint64_t((box.maximum[i] - ray.o[i]) * d);
 
     uint64_t t = quantizeTime(std::max(t1, t2));
     taux = std::min(taux, t);
   }
 
-  if((taux > time) || (taux <= 0)) return (false);
+  if((taux > time) || (taux == 0)) return (false);
 
   time = taux;
-  point = ray.o + ((ray.d * time) * INVERSE_SECOND);
+  point = ray.o + ((ray.d * static_cast<double>(time)) * INVERSE_SECOND);
   return true;
 }
 
@@ -452,12 +452,12 @@ ZBEAPI bool intersectionBeamOutsideAABB3D(Ray3D ray, AABB3D box, uint64_t &time,
 template <unsigned dim>
 bool rayOutsideAABB(Ray<dim> ray, AABB<dim> box, uint64_t tmin, uint64_t tmax, uint64_t &time, Point<dim> &point) {
   for (unsigned i = 0; i < dim; i++) {
-    if (abs(ray.d[i]) < PRECISION) {
+    if (fabs(ray.d[i]) < PRECISION) {
       if (ray.o[i] < box.minimum[i] || ray.o[i] > box.maximum[i]) return (false);
     } else {
       double d = (SECOND / ray.d[i]);
-      uint64_t t1 = quantizeTime((uint64_t)((box.minimum[i] - ray.o[i]) * d));
-      uint64_t t2 = quantizeTime((uint64_t)((box.maximum[i] - ray.o[i]) * d));
+      uint64_t t1 = quantizeTime(static_cast<uint64_t>((box.minimum[i] - ray.o[i]) * d));
+      uint64_t t2 = quantizeTime(static_cast<uint64_t>((box.maximum[i] - ray.o[i]) * d));
       if (t1 > t2) std::swap(t1, t2);
       if (t1 > tmin) tmin = t1;
       if (t2 < tmax) tmax = t2;
@@ -468,7 +468,7 @@ bool rayOutsideAABB(Ray<dim> ray, AABB<dim> box, uint64_t tmin, uint64_t tmax, u
   if ((tmin > time) || (tmin == 0)) return (false);
 
   time = tmin;
-  point = ray.o + ((ray.d * time) * INVERSE_SECOND);
+  point = ray.o + ((ray.d * static_cast<double>(time)) * INVERSE_SECOND);
   return (true);
 }
 
@@ -552,7 +552,7 @@ bool intersectionMovingNSphereOutsideMovingNSphere(NSphere<dim> sphere1, Vector<
   Vector<dim> velocity =  velocity1 - velocity2;
   bool result = intersectionMovingNSphereOutsideNSphere(sphere1, velocity, sphere2, time, point, normal);
   if(result) {
-    point = point + (velocity2 * time);
+    point = point + (velocity2 * static_cast<double>(time));
   }
   return result;
 }
@@ -604,7 +604,7 @@ double distancePointTriangle(Point<dim>& point, Triangle<dim> triangle, Point<di
         if (t < ZERO) { // region 4
             if (b0 < ZERO) {
                 t = ZERO;
-                if (-b0 >= a00){
+                if (-b0 >= a00) {
                     s = ONE;
                 } else {
                     s = -b0 / a00;
@@ -806,7 +806,7 @@ bool intersectionMovingNSphereOutsideMovingNTriangle(NSphere<dim> sphere, Vector
 
         double tbar = (sphere.r - dotUDelta0) / dotUV;
         bool foundContact = true;
-        for (int32_t i = 0; i < 3; ++i) {
+        for (uint i = 0; i < 3; ++i) {
             double phi = dot(ExU[i], Delta[i]);
             double psi = dot(ExU[i], V);
             if (phi + psi * tbar > 0.0) {
@@ -818,7 +818,7 @@ bool intersectionMovingNSphereOutsideMovingNTriangle(NSphere<dim> sphere, Vector
             auto intersectTime = quantizeTime(tbar);
             if(intersectTime<=time) {
                 time = intersectTime;
-                point = sphere.c + (time * sVelocity)/SECOND;
+                point = sphere.c + (static_cast<double>(time) * sVelocity)/SECOND;
                 return true && time;  // Only if time > 0
             } else {
                 return false;
@@ -839,7 +839,7 @@ bool intersectionMovingNSphereOutsideMovingNTriangle(NSphere<dim> sphere, Vector
 
         double tbar = (-sphere.r - dotUDelta0) / dotUV;
         bool foundContact = true;
-        for (int32_t i = 0; i < 3; ++i) {
+        for (uint i = 0; i < 3; ++i) {
             double phi = dot(ExU[i], Delta[i]);
             double psi = dot(ExU[i], V);
             if (phi + psi * tbar > 0.0) {
@@ -851,7 +851,7 @@ bool intersectionMovingNSphereOutsideMovingNTriangle(NSphere<dim> sphere, Vector
             auto intersectTime = quantizeTime(tbar);
             if(intersectTime<=time) {
                 time = intersectTime;
-                point = sphere.c + (time * sVelocity)/SECOND;
+                point = sphere.c + (static_cast<double>(time) * sVelocity)/SECOND;
                 return true && time;  // Only if time > 0
             } else {
                 return false;
@@ -876,13 +876,13 @@ bool intersectionMovingNSphereOutsideMovingNTriangle(NSphere<dim> sphere, Vector
     //TODO: cambiar estos tipos por vectores.
 
     std::array<double, 3> del{}, delp{}, nu{};
-    for (int32_t im1 = 2, i = 0; i < 3; im1 = i++) {
+    for (uint im1 = 2, i = 0; i < 3; im1 = i++) {
         del[i] = dot(E[i], Delta[i]);
         delp[im1] = dot(E[im1], Delta[i]);
         nu[i] = dot(E[i], V);
     }
 
-    for (int32_t i = 2, ip1 = 0; ip1 < 3; i = ip1++) {//Vector3<T> hatV = V - E[i] * nu[i] / sqrLenE[i];
+    for (uint i = 2, ip1 = 0; ip1 < 3; i = ip1++) {//Vector3<T> hatV = V - E[i] * nu[i] / sqrLenE[i];
         Vector<dim> hatV = V - E[i] * nu[i]/ sqrLenE[i];
         double sqrLenHatV = dot(hatV, hatV);
         if (sqrLenHatV > 0.0) {
@@ -907,7 +907,7 @@ bool intersectionMovingNSphereOutsideMovingNTriangle(NSphere<dim> sphere, Vector
                                 auto intersectTime = quantizeTime(tbar);
                                 if(intersectTime<=time) {
                                     time = intersectTime;
-                                    point = sphere.c + (time * sVelocity)/SECOND;
+                                    point = sphere.c + (static_cast<double>(time) * sVelocity)/static_cast<double>(SECOND);
                                     return true && time;  // Only if time > 0
                                 } else {
                                     return false;
@@ -924,7 +924,7 @@ bool intersectionMovingNSphereOutsideMovingNTriangle(NSphere<dim> sphere, Vector
   // volume.  We know that |V|^2 > 0 because of a previous
   // early-exit test.
 
-    for (int32_t im1 = 2, i = 0; i < 3; im1 = i++) {
+    for (uint im1 = 2, i = 0; i < 3; im1 = i++) {
         double alpha = - dot(V, Delta[i]);
         if (alpha >= 0.0)
         {
@@ -943,7 +943,7 @@ bool intersectionMovingNSphereOutsideMovingNTriangle(NSphere<dim> sphere, Vector
                         auto intersectTime = quantizeTime(tbar);
                         if(intersectTime<=time) {
                             time = intersectTime;
-                            point = sphere.c + (time * sVelocity)/SECOND;
+                            point = sphere.c + (static_cast<double>(time) * sVelocity)/static_cast<double>(SECOND);
                             return true && time;  // Only if time > 0
                         } else {
                             return false;

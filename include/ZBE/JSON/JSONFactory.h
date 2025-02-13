@@ -166,18 +166,18 @@ bool loadAllIndexed(RsrcStore<T>& store, RsrcDictionary<uint64_t>& uintDict, jso
   return true;
 }
 
-template<typename T>
-bool loadAllIndexedRev(RsrcStore<T>& store, RsrcDictionary<uint64_t>& uintDict, json cfg, std::string prefix, std::string parameter, std::string factoryName, std::function<bool(uint64_t, std::shared_ptr<T>)> callback) {
+template<typename T, typename D>
+bool loadAllIndexedRev(RsrcStore<T>& store, RsrcDictionary<D>& dict, json cfg, std::string prefix, std::string parameter, std::string factoryName, std::function<bool(D, std::shared_ptr<T>)> callback) {
   using namespace std::string_literals;
   if (cfg[parameter].is_object()) {
     auto arrayCfg = cfg[parameter];
     for (auto item : arrayCfg.items()) { //+ zbe::factories::separator
       auto key = item.key();
-      if(!uintDict.contains(key)) {
+      if(!dict.contains(key)) {
         SysError::setError(factoryName + " config for "s + parameter + " contains a non valid element name:"s + key);
         return false;
       }
-      uint64_t idx = uintDict.get(key);
+      D idx = dict.get(key);
 
       if (!item.value().is_string()) {
         SysError::setError(factoryName + " config for "s + key + " must be a string."s);
@@ -273,7 +273,7 @@ std::optional<std::array<T, n>> loadLiteralArray(RsrcDictionary<T>& dict, json c
   }
 
   std::array<T, n> arr;
-  int i = 0;
+  uint i = 0;
   for (auto& name : cfg.items()) {
     arr[i] = dict.get(name.value().get<std::string>());
     i++;
@@ -301,6 +301,8 @@ std::optional<std::forward_list<T>> loadLiteralList(RsrcDictionary<T>& dict, jso
 
   std::forward_list<T> list;
   for (auto& name : cfg.items()) {
+    // TODO quitar este suppress y usar std::transform 
+    // cppcheck-suppress useStlAlgorithm
     list.push_front(dict.get(name.value().get<std::string>()));
   }
   return list;

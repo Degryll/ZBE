@@ -50,11 +50,11 @@ class UniformLinearMotion2D : virtual public Behavior<Vector<2>, Vector<2> > {
 
     /** \brief Makes the entity move in a straight line
      */
-    void apply(std::shared_ptr<MAvatar<Vector<2>, Vector<2> > > avatar) {
+    void apply(std::shared_ptr<MAvatar<Vector<2>, Vector<2> > > avatar) override {
       auto vvel = AvtUtil::get<1, Vector<2> >(avatar);
       auto vpos = AvtUtil::get<2, Vector<2> >(avatar);
       auto contextTime = avatar->getContextTime();
-      vpos->set(vpos->get() + (vvel->get() * contextTime->getCurrentTime()) * zbe::INVERSE_SECOND);
+      vpos->set(vpos->get() + (vvel->get() * static_cast<double>(contextTime->getCurrentTime())) * zbe::INVERSE_SECOND);
     }
 
 };
@@ -70,12 +70,12 @@ class UniformLinearMotion3D : virtual public Behavior<Vector3D, Vector3D > {
 
     /** \brief Makes the entity move in a straight line
      */
-    void apply(std::shared_ptr<MAvatar<Vector3D, Vector3D > > avatar) {
+    void apply(std::shared_ptr<MAvatar<Vector3D, Vector3D > > avatar) override {
       auto vpos = avatar->get<1, Vector3D>();
       auto vvel = avatar->get<2, Vector3D>();
       auto contextTime = avatar->getContextTime();
       auto vel = vvel->get();
-      vpos->set(vpos->get() + (vvel->get() * contextTime->getCurrentTime()) * zbe::INVERSE_SECOND);
+      vpos->set(vpos->get() + (vel * static_cast<double>(contextTime->getCurrentTime())) * zbe::INVERSE_SECOND);
     }
 };
 
@@ -92,7 +92,7 @@ class RelativeUniformLinearMotion3D : virtual public Behavior<Vector3D, Vector3D
       vel = velocity;
     }
 
-    void apply(std::shared_ptr<MAvatar<Vector3D, Vector3D, Vector3D > > avatar) {
+    void apply(std::shared_ptr<MAvatar<Vector3D, Vector3D, Vector3D > > avatar) override {
       auto vpos = avatar->get<1, Vector3D>();
       auto vdir = avatar->get<2, Vector3D>();
       auto vup = avatar->get<3, Vector3D>();
@@ -106,7 +106,7 @@ class RelativeUniformLinearMotion3D : virtual public Behavior<Vector3D, Vector3D
 
       auto contextTime = avatar->getContextTime();
 
-      avatar->set<1, Vector3D>(vpos->get() + (v * contextTime->getCurrentTime()) * zbe::INVERSE_SECOND);
+      avatar->set<1, Vector3D>(vpos->get() + (v * static_cast<double>(contextTime->getCurrentTime())) * zbe::INVERSE_SECOND);
     }
 
   private:
@@ -128,11 +128,11 @@ public:
 
   /** \brief Makes the entity move in a straight line
    */
-  void apply(std::shared_ptr<MAvatar<Vector3D> > avatar) {
+  void apply(std::shared_ptr<MAvatar<Vector3D> > avatar) override {
     auto vpos = avatar->get<1, Vector3D>();
     //vpos->set(vpos->get() + (vvel * contextTime->getCurrentTime()) * zbe::INVERSE_SECOND);
     auto contextTime = avatar->getContextTime();
-    avatar->set<1, Vector3D>(vpos->get() + (vvel * contextTime->getCurrentTime()) * zbe::INVERSE_SECOND);
+    avatar->set<1, Vector3D>(vpos->get() + (vvel * static_cast<double>(contextTime->getCurrentTime())) * zbe::INVERSE_SECOND);
   }
 
 private:
@@ -143,7 +143,7 @@ class UniformLinearMotion2DOnPlane : virtual public Behavior<float, Vector2D, Ve
 public:
   virtual ~UniformLinearMotion2DOnPlane() = default;
 
-  void apply(std::shared_ptr<MAvatar<float, Vector2D, Vector2D, Vector3D, Vector3D, Vector3D, Vector3D, Vector3D> > avatar) {
+  void apply(std::shared_ptr<MAvatar<float, Vector2D, Vector2D, Vector3D, Vector3D, Vector3D, Vector3D, Vector3D> > avatar) override {
     auto contextTime = avatar->getContextTime();
     auto vplanePos = avatar->get<1, Vector3D>();
     // El avatar usado en el sistema de fisicas para generar el MovingTriangle3D debe actualizar en la entidad dos Values<Vector3D>
@@ -156,9 +156,6 @@ public:
     auto vplaneE1 = avatar->get<2, Vector3D>();
     auto vplaneE2 = avatar->get<3, Vector3D>();
 
-    auto vpos3D = avatar->get<4, Vector3D>();
-    //auto vvel3D = avatar->get<5, Vector3D>();
-
     auto vpos2D = avatar->get<6, Vector2D>();
     auto vvel2D = avatar->get<7, Vector2D>();
     auto distance = avatar->get<8, float>();
@@ -167,13 +164,10 @@ public:
     auto planeE1 = vplaneE1->get();
     auto planeE2 = vplaneE2->get();
 
-    auto pos3D = vpos3D->get();
-    //auto vel3D = vvel3D->get();
-
     auto pos2D = vpos2D->get();
     auto vel2D = vvel2D->get();
 
-    Vector2D newPos2D = pos2D + (vel2D * (contextTime->getCurrentTime() * zbe::INVERSE_SECOND));
+    Vector2D newPos2D = pos2D + (vel2D * (static_cast<double>(contextTime->getCurrentTime()) * zbe::INVERSE_SECOND));
     Vector3D newPos3D = planePos + (planeE1 * newPos2D.x + planeE2 * newPos2D.y);
     //Vector3D newPos3D = planePos + (Matrix(vplaneE1,vplaneE2) * newPos2D);
     // TODO esto es una teoria.
@@ -195,7 +189,7 @@ public:
    *  \param name Name for the created FixedUniformLinearMotion3D.
    *  \param cfgId FixedUniformLinearMotion3D's configuration id.
    */
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<FixedUniformLinearMotion3D> fulm3d = std::shared_ptr<FixedUniformLinearMotion3D>(new FixedUniformLinearMotion3D);
     behaviorRsrc.insert("Behavior."s + name, fulm3d);
@@ -206,7 +200,7 @@ public:
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -247,14 +241,14 @@ private:
 class RelativeUniformLinearMotion3DFtry : virtual public Factory {
 public:
 
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<RelativeUniformLinearMotion3D> rulm3d = std::shared_ptr<RelativeUniformLinearMotion3D>(new RelativeUniformLinearMotion3D);
     behaviorRsrc.insert("Behavior."s + name, rulm3d);
     rulm3dRsrc.insert("RelativeUniformLinearMotion3D."s + name, rulm3d);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);

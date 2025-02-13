@@ -39,13 +39,13 @@ public:
    *  \param name Name for the Entity.
    *  \param cfgId Entity's configuration id.
    */
-  void create(std::string name, uint64_t);
+  void create(std::string name, uint64_t) override;
 
   /** \brief Setup the desired tool. The tool will be complete after this step.
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId);
+  void setup(std::string name, uint64_t cfgId) override;
 
 private:
   RsrcDictionary<int64_t>& intStore = RsrcDictionary<int64_t>::getInstance();
@@ -108,7 +108,7 @@ private:
       && ((std::is_floating_point<T>::value && value.at(0).is_number_float())
          ||(std::is_integral<T>::value && value.at(0).is_number_integer())
          ||(std::is_same<T, bool>::value && value.at(0).is_boolean())
-         ||(std::is_same<T, std::string>::value && value.at(0).is_string()))){
+         ||(std::is_same<T, std::string>::value && value.at(0).is_string()))) {
       return std::make_shared<SimpleValue<T> >(value.at(0).get<T>());
     } else if((std::is_floating_point<T>::value && value.is_number_float())
          ||(std::is_integral<T>::value && value.is_number_integer())
@@ -126,7 +126,7 @@ private:
         auto id = uintStore.get(item.key());
         e->set<T>(id, parseSingleValue(item.value(), valueRsrc, literalStore));
         // por si generalizamos
-        // if (item.value().is_array() && item.value().size() > 1){
+        // if (item.value().is_array() && item.value().size() > 1) {
         //   e.set<T>(id, parseMultiValue<T, item.value().size()>(item.value(), valueRsrc));
         // } else {
         //   e.set<T>(id, parseSingleValue(item.value(), valueRsrc));
@@ -142,7 +142,7 @@ private:
            && (cfg.at(0).is_string())) {
       return std::make_shared<SimpleValue<Vector3D> >(literalStoreV3D.get(cfg.at(0).get<std::string>()));
     } else if (cfg.is_array() && (cfg.size() == 3)) {
-      auto c = 0;
+      auto c = 0u;
       for (auto item : cfg.items()) {
         val->get()[c++] = parseArrayElement(item.value(), doubleStore);
       }
@@ -158,7 +158,7 @@ private:
            && (cfg.at(0).is_string())) {
       return std::make_shared<SimpleValue<Vector2D> >(literalStoreV2D.get(cfg.at(0).get<std::string>()));
     } else if (cfg.is_array() && (cfg.size() == 2)) {
-      auto c = 0;
+      auto c = 0u;
       for (auto item : cfg.items()) {
         val->get()[c++] = parseArrayElement(item.value(), doubleStore);
       }

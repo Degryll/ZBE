@@ -35,19 +35,19 @@ public:
   /** brief Parametrized contructor.
    *  param value Value to store.
    */
-  SimpleValue(T value) : v(value) {}
+  explicit SimpleValue(T value) : v(value) {}
 
   /** brief Sets the value.
    *  param value Value to store.
    */
-  void set(T value) {
+  void set(T value) override {
     v = value ;
   }
 
   /** brief Returns the value.
    *  return value;
    */
-  T& get() {
+  T& get() override {
     return v;
   }
 
@@ -69,13 +69,13 @@ public:
    *  \param name Name for the created SimpleValue.
    *  \param cfgId SimpleValue's configuration id.
    */
-  void create(std::string name, uint64_t);
+  void create(std::string name, uint64_t) override;
 
   /** \brief Setup the desired tool. The tool will be complete after this step.
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId);
+  void setup(std::string name, uint64_t cfgId) override;
 
 private:
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
@@ -139,7 +139,7 @@ private:
       && ((std::is_floating_point<T>::value && value.at(0).is_number_float())
          ||(std::is_integral<T>::value && value.at(0).is_number_integer())
          ||(std::is_same<T, bool>::value && value.at(0).is_boolean())
-         ||(std::is_same<T, std::string>::value && value.at(0).is_string()))){
+         ||(std::is_same<T, std::string>::value && value.at(0).is_string()))) {
       return value.at(0).get<T>();
     } else if((std::is_floating_point<T>::value && value.is_number_float())
          ||(std::is_integral<T>::value && value.is_number_integer())
@@ -160,7 +160,7 @@ private:
       val->set(parseSingleValue(item.value(), literalStore));
       //---
       // por si generalizamos
-      // if (item.value().is_array() && item.value().size() > 1){
+      // if (item.value().is_array() && item.value().size() > 1) {
       //   e.set<T>(id, parseMultiValue<T, item.value().size()>(item.value(), valueRsrc));
       // } else {
       //   e.set<T>(id, parseSingleValue(item.value(), valueRsrc));
@@ -172,7 +172,7 @@ private:
     using namespace std::string_literals;
     Vector3D v3;
     if (cfg.is_array() && (cfg.size() == 3)) {
-      auto c = 0;
+      auto c = 0u;
       for (auto item : cfg.items()) {
         v3[c++] = parseArrayElement(item.value(), doubleStore);
       }
@@ -186,7 +186,7 @@ private:
     using namespace std::string_literals;
     Vector2D v2;
     if (cfg.is_array() && (cfg.size() == 2)) {
-      auto c = 0;
+      auto c = 0u;
       for (auto item : cfg.items()) {
         v2[c++] = parseArrayElement(item.value(), doubleStore);
       }
@@ -200,6 +200,8 @@ private:
     std::vector<std::string> vs;
     if (cfg.is_array()) {
       for (auto item : cfg.items()) {
+        // TODO quitar este suppress y usar std::transform 
+        // cppcheck-suppress useStlAlgorithm
         vs.emplace_back(parseArrayElement<std::string>(item.value(), stringStore));
       }
     }

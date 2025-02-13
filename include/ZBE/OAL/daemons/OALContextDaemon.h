@@ -38,7 +38,7 @@ public:
    */
   OALContextDaemon() {}
 
-  void run();
+  void run() override;
 private:
   static ALCchar* getLastAudioDevice(const ALCchar *devices);
 

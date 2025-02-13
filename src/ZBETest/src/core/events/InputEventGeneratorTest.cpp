@@ -32,7 +32,7 @@ class DummyTimer : public zbe::Timer {
 //
 //   	MockInputHandler() : b(false) {}
 //
-//   	void run(uint32_t, float) {
+//   	void run(uint32_t, float) override {
 //       b = true;
 //   	}
 //

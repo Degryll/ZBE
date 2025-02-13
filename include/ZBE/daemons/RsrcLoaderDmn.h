@@ -36,7 +36,7 @@ public:
 
   /** \brief It will run all Daemons added to this DaemonMaster.
    */
-  void run();
+  void run() override;
 
   /** \brief Set the RsrcLoader to be run by this Daemon.
    * \param loader Shared point to the RsrcLoader to be stored and executed.

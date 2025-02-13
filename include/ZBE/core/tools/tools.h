@@ -45,10 +45,10 @@ struct Covariance_Traits {
 template<typename T>
 struct Covariance_Traits<T, void> {
   struct Type {
-    Type(){}
+    Type() {}
     template<typename ...Ts>
-    Type(Ts...){}
-    virtual ~Type(){}
+    explicit Type(Ts...) {}
+    virtual ~Type() {}
   };
 };
 
@@ -62,7 +62,7 @@ struct TypeGimmick { typedef T type; };
 template <typename T, typename... Bases>
 struct TypeContainer : public TypeContainer<T>, public TypeContainer<Bases...> {
   TypeContainer(T* t, Bases*...bases): TypeContainer<T>(t), TypeContainer<Bases...>(bases...) {}
-  ~TypeContainer(){}
+  ~TypeContainer() {}
 };
 
 /** \brief Base case of.
@@ -70,11 +70,11 @@ struct TypeContainer : public TypeContainer<T>, public TypeContainer<Bases...> {
  */
 template <typename T>
 struct TypeContainer<T> {
-  TypeContainer<T>(const TypeContainer<T>&) = delete;
+  TypeContainer(const TypeContainer<T>&) = delete;
   void operator=(const TypeContainer<T>&) = delete;
 
-  TypeContainer(T* t): t(t){}
-  ~TypeContainer(){}
+  explicit TypeContainer(T* t): t(t) {}
+  ~TypeContainer() {}
 
   /** \brief Return the stored instance.
    *
@@ -94,8 +94,8 @@ public:
 template<typename RetVal, typename ...Ts>
 class WrapperFunct : public Funct<RetVal, Ts...> {
 public:
-  WrapperFunct(std::function<RetVal(Ts...)> callable) : callable(callable) {}
-  RetVal operator()(Ts... something) {
+  explicit WrapperFunct(std::function<RetVal(Ts...)> callable) : callable(callable) {}
+  RetVal operator()(Ts... something) override {
     return callable(something...);
   };
 private:

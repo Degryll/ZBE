@@ -32,13 +32,13 @@ public:
   *  \param filePath Path to image file.
   *  \return An id to the image loaded.
   */
- void load(std::filesystem::path filePath);
+ void load(std::filesystem::path filePath) override;
 
  /** \brief Tells if a file extension is loadable.
   *  \param extension Image file extension.
   *  \return True if the extensions is loadable.
   */
- bool isLoadable(std::filesystem::path extension) {
+ bool isLoadable(std::filesystem::path extension) override {
    static const std::filesystem::path ext(".json");
    return (ext.compare(extension) == 0);
  }

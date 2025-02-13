@@ -61,7 +61,7 @@ void StateMachineDmnFtry::setup(std::string name, uint64_t cfgId) {
       uint64_t state = uDict.get(stateCfg.key());
 
       if(auto dmn = JSONFactory::loadParamStrStore<Daemon>(daemonRsrc, zbe::factories::daemonName_ + stateCfg.value().get<std::string>() , "StateMachineDaemonFtry"s)) {
-        smd->setDaemon(state, *dmn);
+        smd->setDaemon(static_cast<int64_t>(state), *dmn);
       } else {
         SysError::setError("StateMachineDaemonFtry value for "s +  stateCfg.key() + " is not a daemon name");
         return;

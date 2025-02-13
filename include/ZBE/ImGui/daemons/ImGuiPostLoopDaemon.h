@@ -18,7 +18,6 @@
 #include <imgui_impl_sdl.h>
 #include <imgui_impl_opengl3.h>
 
-#include <GL/glew.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>
 
@@ -57,7 +56,7 @@ public:
 
   /** \brief Runs the daemon.
    */
-  void run() {
+  void run() override {
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     SDL_GL_SwapWindow(window->getSDL_Window());

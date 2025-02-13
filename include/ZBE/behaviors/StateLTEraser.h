@@ -14,7 +14,7 @@
 #include <memory>
 
 #include "ZBE/core/behaviors/Behavior.h"
-#include "ZBE/core/entities/AvatarEntity.h"
+
 
 #include "ZBE/entities/avatars/Stated.h"
 #include "ZBE/core/entities/avatars/Avatar.h"
@@ -35,7 +35,7 @@ public:
   /** \brief Parametrized constructor.
       \param limit Limit below which the entity will be killed.
    */
-  StateLTEraser(int64_t limit) : limit(limit){}
+  StateLTEraser(int64_t limit) : limit(limit) {}
 
   /** \brief Sets the limit, any avatar with state bellow this limit will be erased.
    */
@@ -43,9 +43,9 @@ public:
 
   /** \brief Erases given entity if its stata is less that expected one.
    */
-  void apply(std::shared_ptr<SAvatar<int64_t> > avatar) {
+  void apply(std::shared_ptr<SAvatar<int64_t> > avatar) override {
     auto state = avatar->get<1, int64_t>();
-    if((*state).get() < limit){
+    if((*state).get() < limit) {
       avatar->setERASED();
     }
   }

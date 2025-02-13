@@ -38,11 +38,11 @@ template<unsigned dim>
 class AddVelIH : public InputHandler {
 public:
 
-  AddVelIH(std::shared_ptr<MAvatar<Vector<dim>, Vector<dim>, Vector<dim>>> avt) : avt(avt) {}
+  explicit AddVelIH(std::shared_ptr<MAvatar<Vector<dim>, Vector<dim>, Vector<dim>>> avt) : avt(avt) {}
 
-  void run(uint32_t, float status) {
+  void run(uint32_t, float status) override {
     double intiMult = -1.0;
-    if ((status < 0.5 && !down) || (status >= 0.5 && down)) {
+    if ((status < 0.5f && !down) || (status >= 0.5f && down)) {
       intiMult = 1.0;
     }
     auto vOri = AvtUtil::get<3, Vector<dim> >(avt);
@@ -84,7 +84,10 @@ private:
 template<unsigned dim>
 class AddVelIHBldr : public Funct<void, std::shared_ptr<Entity>> {
 public:
-  void operator()(std::shared_ptr<Entity> ent) {
+
+  AddVelIHBldr() = default;
+
+  void operator()(std::shared_ptr<Entity> ent) override {
     auto avt = std::make_shared<MBaseAvatar<Vector<dim>, Vector<dim>, Vector<dim>>>();
     avt->setupEntity(ent, idxs);
     std::shared_ptr<AddVelIH<dim>> ih = std::make_shared<AddVelIH<dim>>(avt);
@@ -122,14 +125,14 @@ private:
 template<unsigned dim>
 class AddVelIHBldrFtry : public Factory {
 
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<AddVelIHBldr<dim>> avihb = std::make_shared<AddVelIHBldr<dim>>();
     mainRsrc.insert(zbe::factories::functionName_ + name, avihb);
     specificRsrc.insert("AddVelIHBldr."s + name, avihb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);

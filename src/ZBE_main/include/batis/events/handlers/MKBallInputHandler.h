@@ -25,7 +25,7 @@ class MKBallInputHandler : public zbe::InputHandler {
 
   	MKBallInputHandler(): keeper(batis::MouseKeeper::getInstance()), mouseEven(true) {}
 
-  	void run(float status) {
+  	void run(float status) override {
       if( status) {
         mouseEven = !mouseEven;
         if (mouseEven) {

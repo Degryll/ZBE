@@ -47,7 +47,7 @@ public:
    * \param initTime Time from which events are generated
    * \param endTime Time until the events are generated
    */
-  void run();
+  void run() override;
 
 private:
   uint64_t eventId;

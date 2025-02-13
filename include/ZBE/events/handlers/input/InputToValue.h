@@ -35,7 +35,7 @@ public:
   /** brief Parametrized constructor
     * param value where to store input.
    */
-  InputToValue(std::shared_ptr<zbe::Value<double> > val) : val(val) {}
+  explicit InputToValue(std::shared_ptr<zbe::Value<double> > val) : val(val) {}
 
   /** \brief Set Value<double> where input will be stored.
    *  \param value where input will be stored.
@@ -47,7 +47,7 @@ public:
   /** brief stores input value to the value.
     * param status value from input.
    */
-  void run(uint32_t, float status) {
+  void run(uint32_t, float status) override {
     val->set(status);
   }
 

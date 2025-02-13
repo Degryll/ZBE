@@ -48,7 +48,7 @@ static const int64_t SECOND = 65536;
 
 /** \brief This constant represent 1 / second.
  */
-static const double INVERSE_SECOND = 1.0 / 65536;
+static const double INVERSE_SECOND = 1.0 / 65536.0;
 
 /** \brief This constant represent the minimal amount of bits that will be used as precision.
  */
@@ -56,11 +56,11 @@ static const uint64_t TIME_QUANTUM = 256;
 
 /** \brief This constant represent the proportion of time quantum in a second.
  */
-static const double TIME_QUANTUM_VALUE = (double)TIME_QUANTUM / SECOND;
+static const double TIME_QUANTUM_VALUE = static_cast<double>(TIME_QUANTUM / SECOND);
 
 /** \brief This constant represent the minimal amount of bits that will be used as precision.
  */
-static const int64_t ROUND_MASK = -TIME_QUANTUM;
+static const uint64_t ROUND_MASK = std::numeric_limits<uint64_t>::max() - (TIME_QUANTUM - 1); //-static_cast<int64_t>(TIME_QUANTUM);
 
 /** \brief Transforms the received time from ZBE time units to miliseconds.
  * \param time Time to convert.
@@ -82,7 +82,7 @@ inline uint64_t quantizeTime(uint64_t n) {
  * \param n Time to quantize.
  */
 inline uint64_t quantizeTime(double n) {
-  uint64_t time = n * SECOND;
+  uint64_t time = static_cast<uint64_t>(n * SECOND);
   return quantizeTime(time);
 }
 
@@ -106,7 +106,7 @@ inline double round(double d) {
  * \param n Number to be rounded.
  */
 inline int64_t roundUp (double n) {
-    return ((n > 0) ? ceil(n) : floor(n));
+    return ((n > 0.0) ?  static_cast<int64_t>(ceil(n)) :  static_cast<int64_t>(floor(n)));
 }
 
 /** \brief Tells if the given double values are close enough to be cosidered equal.

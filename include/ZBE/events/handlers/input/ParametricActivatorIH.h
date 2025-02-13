@@ -60,7 +60,7 @@ public:
   /** brief stores input value to the value.
     * param status value from input.
    */
-  void run(uint32_t, float status) {
+  void run(uint32_t, float status) override {
     ticket->setACTIVE();
     parametric->set(status);
   }
@@ -74,13 +74,13 @@ private:
 class ZBEAPI ParametricActivatorIHFtry : public Factory {
 
 
-  void create(std::string name, uint64_t);
+  void create(std::string name, uint64_t) override;
 
   /** \brief Setup the desired tool. The tool will be complete after this step.
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId);
+  void setup(std::string name, uint64_t cfgId) override;
 
 private:
   RsrcStore<nlohmann::json> &configStore         = RsrcStore<nlohmann::json>::getInstance();

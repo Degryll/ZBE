@@ -141,7 +141,7 @@ template <unsigned s>
 struct NSphere {
   /** \brief Void constructor, the NSphere's values are unknown.
    */
-  NSphere() {}
+  NSphere() : c(), r() {}
 
   /** \brief Parametrized constructor.
    *

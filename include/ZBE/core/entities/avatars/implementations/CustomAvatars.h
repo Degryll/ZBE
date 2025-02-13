@@ -48,66 +48,67 @@ class TargetToDirAvt : public MAvatar<Vector3D, Vector3D, Vector3D>, AvatarImp {
 public:
   /** \brief
    */
-   void setupEntity(std::shared_ptr<Entity> entity, uint64_t positionidx, uint64_t targetidx, uint64_t upwardsidx, uint64_t scaleidx) {
-     AvatarImp::setupEntity(entity);
-     _Avatar<1, Vector3D>::setup(&getPosition, &setPosition, (void*)this);
-     _Avatar<2, Vector3D>::setup(&getVelocity, &setVelocity, (void*)this);
-     _Avatar<3, Vector3D>::setup(&getUpwards, &setUpwards, (void*)this);
-     position = entity->getVector3D(positionidx);
-     target = entity->getVector3D(targetidx);
-     upwards = entity->getVector3D(upwardsidx);
-     scale = entity->getFloat(scaleidx); //TODO sobra scale? borrar en toda la clase?
-   }
+  void setupEntity(std::shared_ptr<Entity> entity, uint64_t positionidx, uint64_t targetidx, uint64_t upwardsidx, uint64_t scaleidx) {
+    AvatarImp::setupEntity(entity);
+    _Avatar<1, Vector3D>::setup(&getPosition, &setPosition, static_cast<void*>(this));
+    _Avatar<2, Vector3D>::setup(&getVelocity, &setVelocity, static_cast<void*>(this));
+    _Avatar<3, Vector3D>::setup(&getUpwards, &setUpwards, static_cast<void*>(this));
+    position = entity->getVector3D(positionidx);
+    target = entity->getVector3D(targetidx);
+    upwards = entity->getVector3D(upwardsidx);
+    scale = entity->getFloat(scaleidx); //TODO sobra scale? borrar en toda la clase?
+  }
 
-   static std::shared_ptr<Value<Vector3D> > getPosition(void *instance) {
-     return ((TargetToDirAvt*)instance)->position;
-   }
+  static std::shared_ptr<Value<Vector3D> > getPosition(void *instance) {
+    return  static_cast<TargetToDirAvt*>(instance)->position;
+  }
 
-   static std::shared_ptr<Value<Vector3D> > getVelocity(void *instance) {
-     auto& position = ((TargetToDirAvt*)instance)->position;
-     auto& target =   ((TargetToDirAvt*)instance)->target;
-     auto& scale =    ((TargetToDirAvt*)instance)->scale;
-     auto p = position->get();
-     auto t = target->get();
-     auto s = scale->get();
-     auto v = (t - p).normalize();// * s;
-     auto r = std::make_shared<SimpleValue<Vector3D> >();
-     r->set(v);
-     return r;
-   }
+  static std::shared_ptr<Value<Vector3D> > getVelocity(void *instance) {
+    auto& position = static_cast<TargetToDirAvt*>(instance)->position;
+    auto& target =   static_cast<TargetToDirAvt*>(instance)->target;
+    // auto& scale =    static_cast<TargetToDirAvt*>(instance)->scale;
+    auto p = position->get();
+    auto t = target->get();
+    // auto s = scale->get();
+    auto v = (t - p).normalize();// * s;
+    auto r = std::make_shared<SimpleValue<Vector3D> >();
+    r->set(v);
+    return r;
+  }
 
-   static std::shared_ptr<Value<Vector3D> > getUpwards(void *instance) {
-     auto u = normalize(((TargetToDirAvt*)instance)->upwards->get());
-     auto r = std::make_shared<SimpleValue<Vector3D> >();
-     r->set(u);
-     return r;
-   }
+  static std::shared_ptr<Value<Vector3D> > getUpwards(void *instance) {
+    auto u = normalize(static_cast<TargetToDirAvt*>(instance)->upwards->get());
+    auto r = std::make_shared<SimpleValue<Vector3D> >();
+    r->set(u);
+    return r;
+  }
 
-   static void setPosition(void *instance, Vector3D position) {
-     auto& _position = ((TargetToDirAvt*)instance)->position;
-     auto& _target =  ((TargetToDirAvt*)instance)->target;
+  static void setPosition(void *instance, Vector3D position) {
+    auto& _position = static_cast<TargetToDirAvt*>(instance)->position;
+    auto& _target =  static_cast<TargetToDirAvt*>(instance)->target;
 
-     auto p = _position->get();
-     auto t = _target->get();
-     auto offset = t - p;
+    auto p = _position->get();
+    auto t = _target->get();
+    auto offset = t - p;
 
-     _position->set(position);
-     _target->set(position + offset);
-   }
+    _position->set(position);
+    _target->set(position + offset);
+  }
 
-   static void setVelocity(void*, Vector3D) {
-     // TODO completar haciendo que al modificar la velocidad modifique la orientación de Target
-     // para que apunte donde dice la velocidad
-     // y hacemos que scale valga el modulo de la velocidad.
-   }
+  static void setVelocity(void*, Vector3D) {
+    // TODO completar haciendo que al modificar la velocidad modifique la orientación de Target
+    // para que apunte donde dice la velocidad
+    // y hacemos que scale valga el modulo de la velocidad.
+  }
 
-   static void setUpwards(void* instance, Vector3D upwards) {
-     ((TargetToDirAvt*)instance)->upwards->set(upwards);
-   }
+  static void setUpwards(void* instance, Vector3D upwards) {
+    static_cast<TargetToDirAvt*>(instance)->upwards->set(upwards);
+  }
 
-   std::shared_ptr<Entity> getEntity() {
-     assert(false);
-   }
+  std::shared_ptr<Entity> getEntity() override {
+    assert(false);
+    return 0;
+  }
 //TODO hacer factoría y probar (un cachopo)
 //TODO Usar el UniformLinearMotion (no fixed) para mover la cámara
 //TODO girar cámara con ratón
@@ -124,48 +125,47 @@ public:
 
   /** \brief
    */
-   void setupEntity(std::shared_ptr<Entity> entity, uint64_t positionidx, uint64_t targetidx) {
-     AvatarImp::setupEntity(entity);
-     _Avatar<1, Vector3D>::setup(&getPosition, &setPosition, (void*)this);
-     _Avatar<2, Vector3D>::setup(&getDirection, &setDirection, (void*)this);
-     position = entity->getVector3D(positionidx);
-     target = entity->getVector3D(targetidx);
-   }
+  void setupEntity(std::shared_ptr<Entity> entity, uint64_t positionidx, uint64_t targetidx) {
+    AvatarImp::setupEntity(entity);
+    _Avatar<1, Vector3D>::setup(&getPosition, &setPosition, static_cast<void*>(this));
+    _Avatar<2, Vector3D>::setup(&getDirection, &setDirection, static_cast<void*>(this));
+    position = entity->getVector3D(positionidx);
+    target = entity->getVector3D(targetidx);
+  }
 
-   static std::shared_ptr<Value<Vector3D> > getPosition(void *instance) {
-     return ((PosTargetToPosDirAvt*)instance)->position;
-   }
+  static std::shared_ptr<Value<Vector3D> > getPosition(void *instance) {
+    return static_cast<PosTargetToPosDirAvt*>(instance)->position;
+  }
 
-   static std::shared_ptr<Value<Vector3D> > getDirection(void *instance) {
-     auto& position = ((PosTargetToPosDirAvt*)instance)->position;
-     auto& target =   ((PosTargetToPosDirAvt*)instance)->target;
-     auto p = position->get();
-     auto t = target->get();
-     auto v = (t - p).normalize();// * s;
-     auto r = std::make_shared<SimpleValue<Vector3D> >();
-     r->set(v);
-     return r;
-   }
+  static std::shared_ptr<Value<Vector3D> > getDirection(void *instance) {
+    auto& position = static_cast<PosTargetToPosDirAvt*>(instance)->position;
+    auto& target =   static_cast<PosTargetToPosDirAvt*>(instance)->target;
+    auto p = position->get();
+    auto t = target->get();
+    auto v = (t - p).normalize();// * s;
+    auto r = std::make_shared<SimpleValue<Vector3D> >();
+    r->set(v);
+    return r;
+  }
 
-   static void setPosition(void *instance, Vector3D position) {
-     auto& _position = ((PosTargetToPosDirAvt*)instance)->position;
-     auto& _target =  ((PosTargetToPosDirAvt*)instance)->target;
-     auto p = _position->get();
-     auto t = _target->get();
-     auto offset = t - p;
-     _position->set(position);
-     _target->set(position + offset);
-   }
+  static void setPosition(void *instance, Vector3D position) {
+    auto& _position = static_cast<PosTargetToPosDirAvt*>(instance)->position;
+    auto& _target =  static_cast<PosTargetToPosDirAvt*>(instance)->target;
+    auto p = _position->get();
+    auto t = _target->get();
+    auto offset = t - p;
+    _position->set(position);
+    _target->set(position + offset);
+  }
 
-   static void setDirection(void*, Vector3D) {
-     assert(false);
-   }
+  static void setDirection(void*, Vector3D ) {
+    assert(false);
+  }
 
-   std::shared_ptr<Entity> getEntity() {
-     assert(false);
-   }
-
-
+  std::shared_ptr<Entity> getEntity() override {
+    assert(false);
+    return 0;
+  }
 private:
   std::shared_ptr<Value<Vector3D> > position;
   std::shared_ptr<Value<Vector3D> > target;
@@ -176,14 +176,14 @@ class MovingPointAvt : public SAvatar<MovingPoint<s>>, AvatarImp {
 public:
   void setupEntity(std::shared_ptr<Entity> entity, uint64_t positionidx, uint64_t velocityidx) {
     AvatarImp::setupEntity(entity);
-    _Avatar<1, MovingPoint<s>>::setup(&getMPoint, &setMPoint, (void*)this);
+    _Avatar<1, MovingPoint<s>>::setup(&getMPoint, &setMPoint,  static_cast<void*>(this));
     //, std::shared_ptr<zbe::Value<T> >
     position = entity->get<Vector<s>, std::shared_ptr<zbe::Value<Vector<s>>>>(positionidx);
     velocity = entity->get<Vector<s>, std::shared_ptr<zbe::Value<Vector<s>>>>(velocityidx);
   }
 
   static std::shared_ptr<Value<MovingPoint<s>>> getMPoint(void *instance) {
-    auto  mpa = (MovingPointAvt<s>*)instance;
+    auto  mpa = static_cast<MovingPointAvt<s>*>(instance);
     auto& position = mpa->position;
     auto& velocity = mpa->velocity;
     auto p = position->get();
@@ -195,12 +195,13 @@ public:
     return out;
   }
 
-  static void setMPoint(void *instance, MovingPoint<s> position) {
+  static void setMPoint(void *, MovingPoint<s> ) {
     assert(false);
   }
 
-  std::shared_ptr<Entity> getEntity() {
+  std::shared_ptr<Entity> getEntity() override {
     assert(false);
+    return 0;
   }
 
 private:
@@ -212,7 +213,7 @@ class Triangle2DAvt : public SAvatar<Triangle2D>, AvatarImp {
 public:
   void setupEntity(std::shared_ptr<Entity> entity, uint64_t aidx, uint64_t bidx, uint64_t cidx) {
     AvatarImp::setupEntity(entity);
-    _Avatar<1, Triangle2D>::setup(&getTriangle, &setTriangle, (void*)this);
+    _Avatar<1, Triangle2D>::setup(&getTriangle, &setTriangle, static_cast<void*>(this));
     auto a = entity->getVector2D(aidx);
     auto b = entity->getVector2D(bidx);
     auto c = entity->getVector2D(cidx);
@@ -225,16 +226,17 @@ public:
   }
 
   static std::shared_ptr<Value<Triangle2D> > getTriangle(void *instance) {
-    auto  t2a = (Triangle2DAvt*)instance;
+    auto  t2a = static_cast<Triangle2DAvt*>(instance);
     return t2a->triangle;
   }
 
-  static void setTriangle(void *instance, Triangle2D triangle) {
+  static void setTriangle(void *, Triangle2D ) {
     assert(false);
   }
 
-  std::shared_ptr<Entity> getEntity() {
+  std::shared_ptr<Entity> getEntity() override {
     assert(false);
+    return 0;
   }
 
 private:
@@ -242,14 +244,12 @@ private:
 };
 
 // TODO: ¿Quien escribe a b y c en 2d en el triangulo?
-
-
 // -------------------------------------------- --------------------------------------------
 
 class Triangle2DShapeAvtBldr : public Funct<std::shared_ptr<SAvatar<Triangle2D>>, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = SAvatar<Triangle2D>;
-  std::shared_ptr<SAvatar<Triangle2D>> operator()(std::shared_ptr<Entity> ent) {
+  std::shared_ptr<SAvatar<Triangle2D>> operator()(std::shared_ptr<Entity> ent) override {
     std::shared_ptr<Triangle2DAvt> avt = std::make_shared<Triangle2DAvt>();
     avt->setupEntity(ent, aidx, bidx, cidx);
     return avt;
@@ -271,7 +271,7 @@ template<unsigned s>
 class MovingPointShapeAvtBldr : public Funct<std::shared_ptr<SAvatar<MovingPoint<s>>>, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = SAvatar<MovingPoint<s>>;
-  std::shared_ptr<SAvatar<MovingPoint<s>>> operator()(std::shared_ptr<Entity> ent) {
+  std::shared_ptr<SAvatar<MovingPoint<s>>> operator()(std::shared_ptr<Entity> ent) override {
     std::shared_ptr<MovingPointAvt<s>> avt = std::make_shared<MovingPointAvt<s>>();
     avt->setupEntity(ent, positionidx, velocityIdx);
     return avt;
@@ -289,14 +289,14 @@ private:
 
 class Triangle2DShapeAvtBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<Triangle2DShapeAvtBldr> t2dab = std::make_shared<Triangle2DShapeAvtBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, t2dab);
     specificRsrc.insert("Triangle2DShapeAvtBldr."s + name, t2dab);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -339,14 +339,14 @@ private:
 template<unsigned s>
 class MovingPointShapeAvtBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<MovingPointShapeAvtBldr<s>> mp2dab = std::make_shared<MovingPointShapeAvtBldr<s>>();
     mainRsrc.insert(zbe::factories::functionName_ + name, mp2dab);
     specificRsrc.insert("MovingPointShapeAvtBldr."s + name, mp2dab);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -390,43 +390,44 @@ public:
    */
    void setupEntity(std::shared_ptr<Entity> entity, uint64_t positionidx) {
      AvatarImp::setupEntity(entity);
-     _Avatar<1, Vector3D>::setup(&getPosition, &setPosition, (void*)this);
-     _Avatar<2, Vector3D>::setup(&getVelocity, &setVelocity, (void*)this);
+     _Avatar<1, Vector3D>::setup(&getPosition, &setPosition, static_cast<void*>(this));
+     _Avatar<2, Vector3D>::setup(&getVelocity, &setVelocity, static_cast<void*>(this));
      position = entity->getVector3D(positionidx);
      cTime = entity->getContextTime();
    }
 
    static std::shared_ptr<Value<Vector3D> > getPosition(void *instance) {
-     return ((DerivedCosVelAvt*)instance)->position;
+     return static_cast<DerivedCosVelAvt*>(instance)->position;
    }
 
    static std::shared_ptr<Value<Vector3D> > getVelocity(void *instance) {
-     auto dcv = (DerivedCosVelAvt*)instance;
+     auto dcv = static_cast<DerivedCosVelAvt*>(instance);
      auto& position = dcv->position;
      auto p = position->get();
      auto time = dcv->cTime->getTotalTime();
-     float div = (time / (float)dcv->period) * TAU;
-     float cosine = cos(div);
-     float newVal = ((cosine + 1.0) / 2.0) * (dcv->max - dcv->min) + dcv->min;
+     double div = (static_cast<double>(time) * TAU) / static_cast<double>(dcv->period);
+     double cosine = cos(div);
+     double newVal = ((cosine + 1.0) / 2.0) * (dcv->max - dcv->min) + dcv->min;
      Vector3D v{0.0, 0.0, 0.0};
-     v[dcv->component] = newVal / time;
+     v[static_cast<unsigned>(dcv->component)] = newVal / static_cast<double>(time);
      auto r = std::make_shared<SimpleValue<Vector3D> >();
      r->set(v);
      return r;
    }
 
    static void setPosition(void *instance, Vector3D position) {
-     auto& _position = ((DerivedCosVelAvt*)instance)->position;
+     auto& _position = static_cast<DerivedCosVelAvt*>(instance)->position;
      auto p = _position->get();
      _position->set(position);
    }
 
-   static void setVelocity(void*, Vector3D) {
+   static void setVelocity(void*, Vector3D ) {
      assert(false);
    }
 
-   std::shared_ptr<Entity> getEntity() {
+   std::shared_ptr<Entity> getEntity() override {
      assert(false);
+     return 0;
    }
 
    void setRange(float min, float max) {this->min = min; this->max = max;}
@@ -442,8 +443,8 @@ private:
   std::shared_ptr<Value<Vector3D> > position;
   std::shared_ptr<ContextTime> cTime;
 
-  float min;
-  float max;
+  double min;
+  double max;
   int64_t period;
   int64_t component;
 };
@@ -452,7 +453,7 @@ class MovingSphereAvt : public SAvatar<MovingSphere>, public AvatarImp {
 public:
   void setupEntity(std::shared_ptr<Entity> entity, uint64_t positionidx, uint64_t velocityidx, uint64_t radiusidx) {
     AvatarImp::setupEntity(entity);
-    _Avatar<1, MovingSphere>::setup(&getSphere, &setSphere, (void*)this);
+    _Avatar<1, MovingSphere>::setup(&getSphere, &setSphere, static_cast<void*>(this));
     position = entity->getVector3D(positionidx);
     velocity = entity->getVector3D(velocityidx);
     radius = entity->getFloat(radiusidx);
@@ -460,7 +461,7 @@ public:
   }
 
   static std::shared_ptr<Value<MovingSphere> > getSphere(void *instance) {
-    auto  msa = (MovingSphereAvt*)instance;
+    auto  msa = static_cast<MovingSphereAvt*>(instance);
     auto& position = msa->position;
     auto& velocity = msa->velocity;
     auto p = position->get();
@@ -474,12 +475,13 @@ public:
     return out;
   }
 
-  static void setSphere(void *instance, MovingSphere position) {
+  static void setSphere(void *, MovingSphere ) {
     assert(false);
   }
 
-  std::shared_ptr<Entity> getEntity() {
+  std::shared_ptr<Entity> getEntity() override {
     assert(false);
+    return 0;
   }
 
 private:
@@ -492,7 +494,7 @@ private:
 class MovingSphereAvtShapeBldr  : public Funct<std::shared_ptr<SAvatar<MovingSphere>>, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = SAvatar<MovingSphere>;
-  std::shared_ptr<SAvatar<MovingSphere>> operator()(std::shared_ptr<Entity> ent) {
+  std::shared_ptr<SAvatar<MovingSphere>> operator()(std::shared_ptr<Entity> ent) override {
     std::shared_ptr<MovingSphereAvt> avt = std::make_shared<MovingSphereAvt>();
     avt->setupEntity(ent, positionidx, velocityidx, radiusidx);
     return avt;
@@ -513,14 +515,14 @@ private:
 class MovingSphereAvtShapeBldrFtry : public Factory {
 // This class where c&p from DerivedPosMovingSphereAvtBldrFtry removing list managment
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<MovingSphereAvtShapeBldr> msasb = std::make_shared<MovingSphereAvtShapeBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, msasb);
     specificRsrc.insert("MovingSphereAvtShapeBldr."s + name, msasb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -561,13 +563,14 @@ private:
 class MovingSphereAvtBldr : public Funct<std::shared_ptr<SAvatar<MovingSphere>>, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = SAvatar<MovingSphere>;
-  std::shared_ptr<SAvatar<MovingSphere>> operator()(std::shared_ptr<Entity> ent) {
+  std::shared_ptr<SAvatar<MovingSphere>> operator()(std::shared_ptr<Entity> ent) override {
     std::shared_ptr<MovingSphereAvt> avt = std::make_shared<MovingSphereAvt>();
     avt->setupEntity(ent, positionidx, velocityidx, radiusidx);
     for(auto indexNList : indexNLists) {
       auto ticket = indexNList.second->push_front(avt);
       ent->addTicket(indexNList.first, ticket);
     }
+    return avt;
   }
 
   void setIdxs(uint64_t positionidx, uint64_t velocityidx, uint64_t radiusidx) {
@@ -589,14 +592,14 @@ private:
 
 class MovingSphereAvtBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<MovingSphereAvtBldr> msab = std::make_shared<MovingSphereAvtBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, msab);
     specificRsrc.insert("MovingSphereAvtBldr."s + name, msab);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -639,7 +642,7 @@ public:
 
   void setupEntity(std::shared_ptr<Entity> entity, uint64_t velocityIdx, uint64_t orientationIdx, uint64_t positionIdx, uint64_t radsIdx, uint64_t sizeIdx, uint64_t e1Idx, uint64_t e2Idx) {
     AvatarImp::setupEntity(entity);
-    _Avatar<1, MovingTriangle3D>::setup(&getTriangle, &setTriangle, (void*)this);
+    _Avatar<1, MovingTriangle3D>::setup(&getTriangle, &setTriangle, static_cast<void*>(this));
     orientation = entity->getVector3D(orientationIdx);
     velocity = entity->getVector3D(velocityIdx);
     position = entity->getVector3D(positionIdx);
@@ -651,12 +654,12 @@ public:
   }
 
   static std::shared_ptr<Value<MovingTriangle3D> > getTriangle(void *instance) {
-    auto  mtra = (MovingTriangle3DRscAvt*)instance;
+    auto  mtra = static_cast<MovingTriangle3DRscAvt*>(instance);
     auto& vel = mtra->velocity->get();
     auto& ori = mtra->orientation->get();
     auto& pos = mtra->position->get();
-    float angle = (float)mtra->rads->get();
-    float baseScale = (float)mtra->size->get();
+    float angle = static_cast<float>(mtra->rads->get());
+    float baseScale = static_cast<float>(mtra->size->get());
 
     glm::vec3 glPos(pos.x, pos.y, pos.z);
     glm::vec3 glDir(ori.x, ori.y, ori.z);
@@ -693,8 +696,9 @@ public:
     assert(false);
   }
 
-  std::shared_ptr<Entity> getEntity() {
+  std::shared_ptr<Entity> getEntity() override {
     assert(false);
+    return 0;
   }
 
   void setBaseTriangle(Triangle3D baseT) {
@@ -717,7 +721,7 @@ private:
 class MovingTriangle3DRscAvtShapeBldr  : public Funct<std::shared_ptr<SAvatar<MovingTriangle3D>>, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = SAvatar<MovingSphere>;
-  std::shared_ptr<SAvatar<MovingTriangle3D>> operator()(std::shared_ptr<Entity> ent) {
+  std::shared_ptr<SAvatar<MovingTriangle3D>> operator()(std::shared_ptr<Entity> ent) override {
     std::shared_ptr<MovingTriangle3DRscAvt> avt = std::make_shared<MovingTriangle3DRscAvt>();
     avt->setupEntity(ent, velocityIdx, orientationIdx, positionIdx, radsIdx, sizeIdx, e1Idx, e2Idx);
     avt->setBaseTriangle(baseT);
@@ -751,14 +755,14 @@ private:
 
 class MovingTriangle3DRscAvtShapeBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<MovingTriangle3DRscAvtShapeBldr> mt3rasb = std::make_shared<MovingTriangle3DRscAvtShapeBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, mt3rasb);
     specificRsrc.insert("MovingTriangle3DRscAvtShapeBldr."s + name, mt3rasb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -827,7 +831,7 @@ class MovingTriangle3DAvt : public SAvatar<MovingTriangle3D>, public AvatarImp {
 public:
   void setupEntity(std::shared_ptr<Entity> entity, uint64_t positionAidx, uint64_t positionBidx, uint64_t positionCidx, uint64_t velocityidx) {
     AvatarImp::setupEntity(entity);
-    _Avatar<1, MovingTriangle3D>::setup(&getTriangle, &setTriangle, (void*)this);
+    _Avatar<1, MovingTriangle3D>::setup(&getTriangle, &setTriangle, static_cast<void*>(this));
     positionA = entity->getVector3D(positionAidx);
     positionB = entity->getVector3D(positionBidx);
     positionC = entity->getVector3D(positionCidx);
@@ -836,7 +840,7 @@ public:
   }
 
   static std::shared_ptr<Value<MovingTriangle3D> > getTriangle(void *instance) {
-    auto  mta = (MovingTriangle3DAvt*)instance;
+    auto  mta = static_cast<MovingTriangle3DAvt*>(instance);
     auto& positionA = mta->positionA;
     auto& positionB = mta->positionB;
     auto& positionC = mta->positionC;
@@ -857,8 +861,9 @@ public:
     assert(false);
   }
 
-  std::shared_ptr<Entity> getEntity() {
+  std::shared_ptr<Entity> getEntity() override {
     assert(false);
+    return 0;
   }
 
 private:
@@ -872,7 +877,7 @@ private:
 class MovingTriangle3DAvtShapeBldr  : public Funct<std::shared_ptr<SAvatar<MovingTriangle3D>>, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = SAvatar<MovingSphere>;
-  std::shared_ptr<SAvatar<MovingTriangle3D>> operator()(std::shared_ptr<Entity> ent) {
+  std::shared_ptr<SAvatar<MovingTriangle3D>> operator()(std::shared_ptr<Entity> ent) override {
     std::shared_ptr<MovingTriangle3DAvt> avt = std::make_shared<MovingTriangle3DAvt>();
     avt->setupEntity(ent, positionAidx, positionBidx, positionCidx, velocityidx);
     return avt;
@@ -894,14 +899,14 @@ private:
 
 class MovingTriangle3DAvtShapeBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<MovingTriangle3DAvtShapeBldr> msasb = std::make_shared<MovingTriangle3DAvtShapeBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, msasb);
     specificRsrc.insert("MovingTriangle3DAvtShapeBldr."s + name, msasb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -947,13 +952,14 @@ private:
 class MovingTriangle3DAvtBldr : public Funct<std::shared_ptr<SAvatar<MovingTriangle3D>>, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = SAvatar<MovingTriangle3D>;
-  std::shared_ptr<SAvatar<MovingTriangle3D>> operator()(std::shared_ptr<Entity> ent) {
+  std::shared_ptr<SAvatar<MovingTriangle3D>> operator()(std::shared_ptr<Entity> ent) override {
     std::shared_ptr<MovingTriangle3DAvt> avt = std::make_shared<MovingTriangle3DAvt>();
     avt->setupEntity(ent, positionAidx, positionBidx, positionCidx, velocityidx);
     for(auto indexNList : indexNLists) {
       auto ticket = indexNList.second->push_front(avt);
       ent->addTicket(indexNList.first, ticket);
     }
+    return avt;
   }
 
   void setIdxs(uint64_t positionAidx, uint64_t positionBidx, uint64_t positionCidx, uint64_t velocityidx) {
@@ -977,14 +983,14 @@ private:
 
 class MovingTriangle3DAvtBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<MovingTriangle3DAvtBldr> msab = std::make_shared<MovingTriangle3DAvtBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, msab);
     specificRsrc.insert("MovingTriangle3DAvtBldr."s + name, msab);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -1039,62 +1045,59 @@ public:
 
   /** \brief
    */
-   void setupEntity(std::shared_ptr<Entity> entity, uint64_t positionidx, uint64_t targetidx, uint64_t upwardsidx) {
-     AvatarImp::setupEntity(entity);
-     _Avatar<1, Vector3D>::setup(&getPosition, &setPosition, (void*)this);
-     _Avatar<2, Vector3D>::setup(&getDirection, &setDirection, (void*)this);
-     _Avatar<3, Vector3D>::setup(&getUpwards, &setUpwards, (void*)this);
-     position = entity->getVector3D(positionidx);
-     target = entity->getVector3D(targetidx);
-     upwards = entity->getVector3D(upwardsidx);
-   }
+  void setupEntity(std::shared_ptr<Entity> entity, uint64_t positionidx, uint64_t targetidx, uint64_t upwardsidx) {
+    AvatarImp::setupEntity(entity);
+    _Avatar<1, Vector3D>::setup(&getPosition, &setPosition, static_cast<void*>(this));
+    _Avatar<2, Vector3D>::setup(&getDirection, &setDirection, static_cast<void*>(this));
+    _Avatar<3, Vector3D>::setup(&getUpwards, &setUpwards, static_cast<void*>(this));
+    position = entity->getVector3D(positionidx);
+    target = entity->getVector3D(targetidx);
+    upwards = entity->getVector3D(upwardsidx);
+  }
 
-   static std::shared_ptr<Value<Vector3D> > getPosition(void *instance) {
-     return ((PosUpwardsTargetToPosUpwardsDirAvt*)instance)->position;
-   }
+  static std::shared_ptr<Value<Vector3D> > getPosition(void *instance) {
+    return static_cast<PosUpwardsTargetToPosUpwardsDirAvt*>(instance)->position;
+  }
 
-   static std::shared_ptr<Value<Vector3D> > getDirection(void *instance) {
-     auto& position = ((PosUpwardsTargetToPosUpwardsDirAvt*)instance)->position;
-     auto& target =   ((PosUpwardsTargetToPosUpwardsDirAvt*)instance)->target;
-     auto p = position->get();
-     auto t = target->get();
-     auto v = (t - p).normalize();// * s;
-     auto r = std::make_shared<SimpleValue<Vector3D> >();
-     r->set(v);
-     return r;
-   }
+  static std::shared_ptr<Value<Vector3D> > getDirection(void *instance) {
+    auto& position = static_cast<PosUpwardsTargetToPosUpwardsDirAvt*>(instance)->position;
+    auto& target =   static_cast<PosUpwardsTargetToPosUpwardsDirAvt*>(instance)->target;
+    auto p = position->get();
+    auto t = target->get();
+    auto v = (t - p).normalize();// * s;
+    auto r = std::make_shared<SimpleValue<Vector3D> >();
+    r->set(v);
+    return r;
+  }
 
-   static std::shared_ptr<Value<Vector3D> > getUpwards(void *instance) {
-     return ((PosUpwardsTargetToPosUpwardsDirAvt*)instance)->upwards;
-   }
+  static std::shared_ptr<Value<Vector3D> > getUpwards(void *instance) {
+    return static_cast<PosUpwardsTargetToPosUpwardsDirAvt*>(instance)->upwards;
+  }
 
-   static void setPosition(void *instance, Vector3D position) {
-     assert(false);
-   }
+  static void setPosition(void *, Vector3D) {
+    assert(false);
+  }
 
-   static void setDirection(void*, Vector3D) {
-     assert(false);
-   }
+  static void setDirection(void*, Vector3D) {
+    assert(false);
+  }
 
-   static void setUpwards(void*, Vector3D) {
-     assert(false);
-   }
+  static void setUpwards(void*, Vector3D) {
+    assert(false);
+  }
 
-   std::shared_ptr<Entity> getEntity() {
-     assert(false);
-   }
-
-
+  std::shared_ptr<Entity> getEntity() override {
+    assert(false);
+  return 0;
+  }
 private:
   std::shared_ptr<Value<Vector3D> > position;
   std::shared_ptr<Value<Vector3D> > target;
   std::shared_ptr<Value<Vector3D> > upwards;
 };
 
-
-
 class PosUpwardsTargetToPosUpwardsDirAvtFtry : public Factory {
-  void create(std::string name, uint64_t){
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
 
     auto puttpuda = std::make_shared<PosUpwardsTargetToPosUpwardsDirAvt>();
@@ -1105,7 +1108,7 @@ class PosUpwardsTargetToPosUpwardsDirAvtFtry : public Factory {
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId){
+  void setup(std::string name, uint64_t cfgId)  override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -1188,12 +1191,10 @@ private:
   RsrcStore<Entity>& entityRsrc                                            = RsrcStore<Entity>::getInstance();
   RsrcStore<TicketedForwardList<MAvatar<Vector3D, Vector3D, Vector3D> > >& listStore = RsrcStore<TicketedForwardList<MAvatar<Vector3D, Vector3D, Vector3D> > >::getInstance();
 };
-
-
 class PosUpwardsTargetToPosUpwardsDirAvtBldr : public Funct<void, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = MAvatar<Vector3D, Vector3D, Vector3D>;
-  void operator()(std::shared_ptr<Entity> ent) {
+  void operator()(std::shared_ptr<Entity> ent) override {
     std::shared_ptr<PosUpwardsTargetToPosUpwardsDirAvt> avt = std::make_shared<PosUpwardsTargetToPosUpwardsDirAvt>();
 
     avt->setupEntity(ent, positionidx, targetidx, upwardsidx);
@@ -1222,14 +1223,14 @@ private:
 
 class PosUpwardsTargetToPosUpwardsDirAvtBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<PosUpwardsTargetToPosUpwardsDirAvtBldr> put2pudab = std::make_shared<PosUpwardsTargetToPosUpwardsDirAvtBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, put2pudab);
     specificRsrc.insert("PosUpwardsTargetToPosUpwardsDirAvtBldr."s + name, put2pudab);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -1277,8 +1278,6 @@ private:
 };
 
 // // ---------------------- TODO PosTargetUpwardsToPosDirAngleAvt
-
-
 // class PosTargetUpwardsToPosDirAngleAvt : public MAvatar<double, Vector3D, Vector3D>, AvatarImp {
 // public:
 
@@ -1286,21 +1285,21 @@ private:
 //    */
 //    void setupEntity(std::shared_ptr<Entity> entity, uint64_t positionidx, uint64_t targetidx, uint64_t upwardsidx) {
 //      AvatarImp::setupEntity(entity);
-//      _Avatar<1, Vector3D>::setup(&getPosition, &setPosition, (void*)this);
-//      _Avatar<2, Vector3D>::setup(&getDirection, &setDirection, (void*)this);
-//      _Avatar<3, double>::setup(&getAngle, &setAngle, (void*)this);
+//      _Avatar<1, Vector3D>::setup(&getPosition, &setPosition, static_cast<void*>(this));
+//      _Avatar<2, Vector3D>::setup(&getDirection, &setDirection, static_cast<void*>(this));
+//      _Avatar<3, double>::setup(&getAngle, &setAngle, static_cast<void*>(this));
 //      position = entity->getVector3D(positionidx);
 //      target = entity->getVector3D(targetidx);
 //      upwards = entity->getVector3D(upwardsidx);
 //    }
 
 //    static std::shared_ptr<Value<Vector3D> > getPosition(void *instance) {
-//      return ((PosTargetUpwardsToPosDirAngleAvt*)instance)->position;
+//      return  static_cast<PosTargetUpwardsToPosDirAngleAvt*>(instance)->position;
 //    }
 
 //    static std::shared_ptr<Value<Vector3D> > getDirection(void *instance) {
-//      auto& position = ((PosTargetUpwardsToPosDirAngleAvt*)instance)->position;
-//      auto& target =   ((PosTargetUpwardsToPosDirAngleAvt*)instance)->target;
+//      auto& position = static_cast<PosTargetUpwardsToPosDirAngleAvt*>(instance)->position;
+//      auto& target =   static_cast<PosTargetUpwardsToPosDirAngleAvt*>(instance)->target;
 //      auto p = position->get();
 //      auto t = target->get();
 //      auto v = (t - p).normalize();
@@ -1310,9 +1309,9 @@ private:
 //    }
 
 //    static std::shared_ptr<Value<double> > getAngle(void *instance, double angle) {
-//     //  auto& position = ((PosTargetUpwardsToPosDirAngleAvt*)instance)->position;
-//     //  auto& target =  ((PosTargetUpwardsToPosDirAngleAvt*)instance)->target;
-//     //  auto& upwards =  ((PosTargetUpwardsToPosDirAngleAvt*)instance)->upwards;
+//     //  auto& position = static_cast<PosTargetUpwardsToPosDirAngleAvt*>(instance)->position;
+//     //  auto& target =  static_cast<PosTargetUpwardsToPosDirAngleAvt*>(instance)->target;
+//     //  auto& upwards =  static_cast<PosTargetUpwardsToPosDirAngleAvt*>(instance)->upwards;
 //     //  auto p = position->get();
 //     //  auto t = target->get();
 //     //  auto u = upwards->get();
@@ -1321,8 +1320,6 @@ private:
 //     //  //glm::mat4 rotmat = orientation (detail::tvec3< T > const &d, detail::tvec3< T > const &u);
 //     //  glm::quat q = glm::quat_cast(rotmat);
 //     //  double angle = glm::angle(q);
-
-
 //      return std::make_shared<SimpleValue<double> >();
 //    }
 
@@ -1338,11 +1335,10 @@ private:
 //      assert(false);
 //    }
 
-//    std::shared_ptr<Entity> getEntity() {
+//    std::shared_ptr<Entity> getEntity() override {
 //      assert(false);
+//      return 0;
 //    }
-
-
 // private:
 //   std::shared_ptr<Value<Vector3D> > position;
 //   std::shared_ptr<Value<Vector3D> > target;
@@ -1352,7 +1348,7 @@ private:
 // class PosTargetUpwardsToPosDirAngleAvtBldr : public Funct<void, std::shared_ptr<Entity>> {
 // public:
 //   using AvtBaseType = MAvatar<double, Vector3D, Vector3D>;
-//   void operator()(std::shared_ptr<Entity> ent) {
+//   void operator()(std::shared_ptr<Entity> ent) override {
 //     std::shared_ptr<PosTargetUpwardsToPosDirAngleAvt> avt = std::make_shared<PosTargetUpwardsToPosDirAngleAvt>();
 
 //     avt->setupEntity(ent, positionidx, targetidx, upwardsidx);
@@ -1360,6 +1356,7 @@ private:
 //       auto ticket = indexNList.second->push_front(avt);
 //       ent->addTicket(indexNList.first, ticket);
 //     }
+//     return avt;
 //   }
 
 //   void setIdxs(uint64_t positionidx, uint64_t targetidx, uint64_t upwardsidx) {
@@ -1378,18 +1375,16 @@ private:
 //   uint64_t upwardsidx;
 //   std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> indexNLists;
 // };
-
-
 // class PosTargetUpwardsToPosDirAngleAvtBldrFtry : public Factory {
 // public:
-//   void create(std::string name, uint64_t) {
+//   void create(std::string name, uint64_t) override {
 //     using namespace std::string_literals;
 //     std::shared_ptr<PosTargetUpwardsToPosDirAngleAvtBldr> ptutpdaab = std::make_shared<PosTargetUpwardsToPosDirAngleAvtBldr>();
 //     mainRsrc.insert(zbe::factories::functionName_ + name, ptutpdaab);
 //     specificRsrc.insert("PosTargetUpwardsToPosDirAngleAvtBldr."s + name, ptutpdaab);
 //   }
 
-//   void setup(std::string name, uint64_t cfgId) {
+//   void setup(std::string name, uint64_t cfgId) override {
 //     using namespace std::string_literals;
 //     using namespace nlohmann;
 //     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -1442,7 +1437,7 @@ private:
 // public:
 //   void setupEntity(std::shared_ptr<Entity> entity, uint64_t positionidx, uint64_t velocityidx, uint64_t orientationidx, uint64_t sizeidx) {
 //     AvatarImp::setupEntity(entity);
-//     _Avatar<1, MovingTriangle3D>::setup(&getTriangle, &setTriangle, (void*)this);
+//     _Avatar<1, MovingTriangle3D>::setup(&getTriangle, &setTriangle, static_cast<void*>(this));
 //     position = entity->getVector3D(positionidx);
 //     velocity = entity->getVector3D(velocityidx);
 //     orientation = entity->getVector3D(orientationidx);
@@ -1451,7 +1446,7 @@ private:
 //   }
 
 //   static std::shared_ptr<Value<MovingTriangle3D> > getTriangle(void *instance) {
-//     auto  mtha = (MovingTriangle3DHitboxAvt*)instance;
+//     auto  mtha = static_cast<MovingTriangle3DHitboxAvt*>(instance);
 //     auto& position = mtha->position;
 //     auto& orientation = mtha->orientation;
 //     auto& velocity = mtha->velocity;
@@ -1482,15 +1477,14 @@ private:
 //     assert(false);
 //   }
 
-//   std::shared_ptr<Entity> getEntity() {
+//   std::shared_ptr<Entity> getEntity() override {
 //     assert(false);
+//     return 0;
 //   }
 
 //   void setTriangleHitbox(std::shared_ptr<Triangle3D> triangle) {
 //     this->triangle = triangle;
 //   }
-
-
 // private:
 //  std::shared_ptr<Triangle3D> triangle;
 //  std::shared_ptr<Value<Vector3D> > position;
@@ -1503,7 +1497,7 @@ private:
 // class MovingTriangle3DHitboxAvtShapeBldr  : public Funct<std::shared_ptr<SAvatar<MovingTriangle3D>>, std::shared_ptr<Entity>> {
 // public:
 //   using AvtBaseType = SAvatar<MovingSphere>;
-//   std::shared_ptr<SAvatar<MovingTriangle3D>> operator()(std::shared_ptr<Entity> ent) {
+//   std::shared_ptr<SAvatar<MovingTriangle3D>> operator()(std::shared_ptr<Entity> ent) override {
 //     std::shared_ptr<MovingTriangle3DHitboxAvt> avt = std::make_shared<MovingTriangle3DHitboxAvt>();
 //     avt->setupEntity(ent, positionidx, velocityidx, orientationidx, sizeidx);
 //     return avt;
@@ -1526,14 +1520,14 @@ private:
 
 // class MovingTriangle3DHitboxAvtShapeBldrFtry : public Factory {
 // public:
-//   void create(std::string name, uint64_t) {
+//   void create(std::string name, uint64_t) override {
 //     using namespace std::string_literals;
 //     std::shared_ptr<MovingTriangle3DHitboxAvtShapeBldr> mt3hasb = std::make_shared<MovingTriangle3DHitboxAvtShapeBldr>();
 //     mainRsrc.insert(zbe::factories::functionName_ + name, mt3hasb);
 //     specificRsrc.insert("MovingTriangle3DHitboxAvtShapeBldr."s + name, msasb);
 //   }
 
-//   void setup(std::string name, uint64_t cfgId) {
+//   void setup(std::string name, uint64_t cfgId) override {
 //     using namespace std::string_literals;
 //     using namespace nlohmann;
 //     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -1579,13 +1573,14 @@ private:
 // class MovingTriangle3DHitboxAvtBldr : public Funct<std::shared_ptr<SAvatar<MovingTriangle3D>>, std::shared_ptr<Entity>> {
 // public:
 //   using AvtBaseType = SAvatar<MovingTriangle3D>;
-//   std::shared_ptr<SAvatar<MovingTriangle3D>> operator()(std::shared_ptr<Entity> ent) {
+//   std::shared_ptr<SAvatar<MovingTriangle3D>> operator()(std::shared_ptr<Entity> ent) override {
 //     std::shared_ptr<MovingTriangle3DHitboxAvt> avt = std::make_shared<MovingTriangle3DHitboxAvt>();
 //     avt->setupEntity(ent, positionidx, velocityidx, orientationidx, sizeidx);
 //     for(auto indexNList : indexNLists) {
 //       auto ticket = indexNList.second->push_front(avt);
 //       ent->addTicket(indexNList.first, ticket);
 //     }
+//     return avt;
 //   }
 
 //   void setIdxs(uint64_t positionidx, uint64_t velocityidx, uint64_t orientationidx, uint64_t sizeidx) {
@@ -1609,14 +1604,14 @@ private:
 
 // class MovingTriangle3DHitboxAvtBldrFtry : public Factory {
 // public:
-//   void create(std::string name, uint64_t) {
+//   void create(std::string name, uint64_t) override {
 //     using namespace std::string_literals;
 //     std::shared_ptr<MovingTriangle3DHitboxAvtBldr> mt3hab = std::make_shared<MovingTriangle3DHitboxAvtBldr>();
 //     mainRsrc.insert(zbe::factories::functionName_ + name, mt3hab);
 //     specificRsrc.insert("MovingTriangle3DHitboxAvtBldr."s + name, msab);
 //   }
 
-//   void setup(std::string name, uint64_t cfgId) {
+//   void setup(std::string name, uint64_t cfgId) override {
 //     using namespace std::string_literals;
 //     using namespace nlohmann;
 //     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -1669,123 +1664,121 @@ private:
 // MovingTriangle3DAvtBldrFtry
 
 // -----
-
-
 class DerivedPosMovingSphereAvt : public SAvatar<MovingSphere>, public AvatarImp {
 public:
 
   /** \brief
    */
-   void setupEntity(std::shared_ptr<Entity> entity, uint64_t positionidx, uint64_t radiusidx) {
-     AvatarImp::setupEntity(entity);
-     _Avatar<1, MovingSphere>::setup(&getSphere, &setSphere, (void*)this);
-     position = entity->getVector3D(positionidx);
-     radius = entity->getFloat(radiusidx);
-     cTime = entity->getContextTime();
-   }
+    void setupEntity(std::shared_ptr<Entity> entity, uint64_t positionidx, uint64_t radiusidx) {
+      AvatarImp::setupEntity(entity);
+      _Avatar<1, MovingSphere>::setup(&getSphere, &setSphere, static_cast<void*>(this));
+      position = entity->getVector3D(positionidx);
+      radius = entity->getFloat(radiusidx);
+      cTime = entity->getContextTime();
+    }
 
-   static std::shared_ptr<Value<MovingSphere> > getSphere(void *instance) {
-     auto  dpmsa = (DerivedPosMovingSphereAvt*)instance;
-     auto& position = dpmsa->position;
-     auto p = position->get();
-     auto r = dpmsa->radius->get();
-     auto time = dpmsa->cTime->getTotalTime();
-     float div = (time / (float)dpmsa->period) * TAU;
-     float cosine = cos(div);
-     float newVal = ((cosine + 1.0) / 2.0) * (dpmsa->max - dpmsa->min) + dpmsa->min;
-     Vector3D v{0.0, 0.0, 0.0};
-     v[dpmsa->component] = newVal / time;
-     Sphere s(p.toPoint(), r);
-     MovingSphere ms{s, v};
-     auto out = std::make_shared<SimpleValue<MovingSphere> >();
-     out->set(ms);
-     return out;
-   }
+    static std::shared_ptr<Value<MovingSphere> > getSphere(void *instance) {
+      auto  dpmsa =  static_cast<DerivedPosMovingSphereAvt*>(instance);
+      auto& position = dpmsa->position;
+      auto p = position->get();
+      auto r = dpmsa->radius->get();
+      auto time = dpmsa->cTime->getTotalTime();
+      double div = (static_cast<double>(time) / static_cast<double>(dpmsa->period)) * TAU;
+      double cosine = cos(div);
+      double newVal = ((cosine + 1.0) / 2.0) * (dpmsa->max - dpmsa->min) + dpmsa->min;
+      Vector3D v{0.0, 0.0, 0.0};
+      v[static_cast<unsigned>(dpmsa->component)] = newVal / static_cast<double>(time);
+      Sphere s(p.toPoint(), r);
+      MovingSphere ms{s, v};
+      auto out = std::make_shared<SimpleValue<MovingSphere> >();
+      out->set(ms);
+      return out;
+    }
 
-   static void setSphere(void *instance, MovingSphere position) {
-     assert(false);
-   }
+    static void setSphere(void *, MovingSphere) {
+      assert(false);
+    }
 
-   std::shared_ptr<Entity> getEntity() {
-     assert(false);
-   }
+    std::shared_ptr<Entity> getEntity() override {
+      assert(false);
+    return 0;
+    }
 
-   void setRange(float min, float max) {this->min = min; this->max = max;}
+    void setRange(float min, float max) {this->min = min; this->max = max;}
 
-   void setPeriod(int64_t period) {this->period = period;}
+    void setPeriod(int64_t period) {this->period = period;}
 
-   void setComponent(int64_t component) {
-     assert(component>=0 && component<=2);
-     this->component = component;
-   }
+    void setComponent(int64_t component) {
+      assert(component>=0 && component<=2);
+      this->component = component;
+    }
 
 private:
   std::shared_ptr<Value<Vector3D> > position;
   std::shared_ptr<Value<float> > radius;
   std::shared_ptr<ContextTime> cTime;
 
-  float min;
-  float max;
+  double min;
+  double max;
   int64_t period;
   int64_t component;
 };
-
-
 class LookAtToPitchAvt : public MAvatar<Vector3D, Vector3D>, AvatarImp {
 public:
 
-  /** \brief
-   */
-   void setupEntity(std::shared_ptr<Entity> entity, uint64_t positionidx, uint64_t targetidx, uint64_t upwardsidx) {
-     AvatarImp::setupEntity(entity);
-     _Avatar<1, Vector3D>::setup(&getTarget, &setTarget, (void*)this);
-     _Avatar<2, Vector3D>::setup(&getRotation, &setRotation, (void*)this);
-     position = entity->getVector3D(positionidx);
-     target = entity->getVector3D(targetidx);
-     upwards = entity->getVector3D(upwardsidx);
-   }
+/** \brief
+ */
+  void setupEntity(std::shared_ptr<Entity> entity, uint64_t positionidx, uint64_t targetidx, uint64_t upwardsidx) {
+    AvatarImp::setupEntity(entity);
+    _Avatar<1, Vector3D>::setup(&getTarget, &setTarget, static_cast<void*>(this));
+    _Avatar<2, Vector3D>::setup(&getRotation, &setRotation, static_cast<void*>(this));
+    position = entity->getVector3D(positionidx);
+    target = entity->getVector3D(targetidx);
+    upwards = entity->getVector3D(upwardsidx);
+  }
 
-   static std::shared_ptr<Value<Vector3D> > getTarget(void *instance) {
-     auto& position = ((LookAtToPitchAvt*)instance)->position;
-     auto& target =   ((LookAtToPitchAvt*)instance)->target;
-     auto p = position->get();
-     auto t = target->get();
-     auto r = std::make_shared<SimpleValue<Vector3D> >();
-     r->set(t - p);
-     return r;
-   }
+  static std::shared_ptr<Value<Vector3D> > getTarget(void *instance) {
+    auto& position = static_cast<LookAtToPitchAvt*>(instance)->position;
+    auto& target =   static_cast<LookAtToPitchAvt*>(instance)->target;
+    auto p = position->get();
+    auto t = target->get();
+    auto r = std::make_shared<SimpleValue<Vector3D> >();
+    r->set(t - p);
+    return r;
+  }
 
-   static std::shared_ptr<Value<Vector3D> > getRotation(void *instance) {
-     auto& position = ((LookAtToPitchAvt*)instance)->position;
-     auto& target =   ((LookAtToPitchAvt*)instance)->target;
-     auto& upwards =    ((LookAtToPitchAvt*)instance)->upwards;
-     auto& _dxu =    ((LookAtToPitchAvt*)instance)->dxu;
-     auto d = target->get() - position->get();
-     auto u = upwards->get();
-     _dxu = cross(d, u);
-     auto r = std::make_shared<SimpleValue<Vector3D> >();
-     r->set(_dxu);
-     return r;
-   }
+  static std::shared_ptr<Value<Vector3D> > getRotation(void *instance) {
+    auto& position = static_cast<LookAtToPitchAvt*>(instance)->position;
+    auto& target   = static_cast<LookAtToPitchAvt*>(instance)->target;
+    auto& upwards  = static_cast<LookAtToPitchAvt*>(instance)->upwards;
+    auto& _dxu     = static_cast<LookAtToPitchAvt*>(instance)->dxu;
+    auto d = target->get() - position->get();
+    auto u = upwards->get();
+    _dxu = cross(d, u);
+    auto r = std::make_shared<SimpleValue<Vector3D> >();
+    r->set(_dxu);
+    return r;
+  }
 
-   static void setTarget(void *instance, Vector3D target) {
-     auto& _position = ((LookAtToPitchAvt*)instance)->position;
-     auto& _target =  ((LookAtToPitchAvt*)instance)->target;
-     auto& _upwards =    ((LookAtToPitchAvt*)instance)->upwards;
-     auto& _dxu =    ((LookAtToPitchAvt*)instance)->dxu;
-     auto newd = target;
-     auto u = cross(_dxu, newd).normalize();
-     _target->set(target + _position->get());
-     _upwards->set(u);
-   }
+  static void setTarget(void *instance, Vector3D target) {
+    auto& _position = static_cast<LookAtToPitchAvt*>(instance)->position;
+    auto& _target   = static_cast<LookAtToPitchAvt*>(instance)->target;
+    auto& _upwards  = static_cast<LookAtToPitchAvt*>(instance)->upwards;
+    auto& _dxu      = static_cast<LookAtToPitchAvt*>(instance)->dxu;
+    auto newd = target;
+    auto u = cross(_dxu, newd).normalize();
+    _target->set(target + _position->get());
+    _upwards->set(u);
+  }
 
-   static void setRotation(void*, Vector3D) {
-     // TODO Repensar si tiene sentido realizar alguna conversión en este punto o incluir asserts para evitar que sea llamado.
-   }
+  static void setRotation(void*, Vector3D) {
+    // TODO Repensar si tiene sentido realizar alguna conversión en este punto o incluir asserts para evitar que sea llamado.
+  }
 
-   std::shared_ptr<Entity> getEntity() {
-     assert(false);
-   }
+  std::shared_ptr<Entity> getEntity() override {
+    assert(false);
+    return 0;
+  }
 
 private:
 
@@ -1800,41 +1793,42 @@ public:
 
   /** \brief
    */
-   void setupEntity(std::shared_ptr<Entity> entity, uint64_t positionidx, uint64_t targetidx, uint64_t upwardsidx) {
-     AvatarImp::setupEntity(entity);
-     _Avatar<1, Vector3D>::setup(&getTarget, &setTarget, (void*)this);
-     _Avatar<2, Vector3D>::setup(&getRotation, &setRotation, (void*)this);
-     position = entity->getVector3D(positionidx);
-     target = entity->getVector3D(targetidx);
-     upwards = entity->getVector3D(upwardsidx);
-   }
+    void setupEntity(std::shared_ptr<Entity> entity, uint64_t positionidx, uint64_t targetidx, uint64_t upwardsidx) {
+      AvatarImp::setupEntity(entity);
+      _Avatar<1, Vector3D>::setup(&getTarget, &setTarget, static_cast<void*>(this));
+      _Avatar<2, Vector3D>::setup(&getRotation, &setRotation, static_cast<void*>(this));
+      position = entity->getVector3D(positionidx);
+      target = entity->getVector3D(targetidx);
+      upwards = entity->getVector3D(upwardsidx);
+    }
 
-   static std::shared_ptr<Value<Vector3D> > getTarget(void *instance) {
-     auto& position = ((LookAtToYawAvt*)instance)->position;
-     auto& target =   ((LookAtToYawAvt*)instance)->target;
-     auto p = position->get();
-     auto t = target->get();
-     auto r = std::make_shared<SimpleValue<Vector3D> >();
-     r->set(t - p);
-     return r;
-   }
+    static std::shared_ptr<Value<Vector3D> > getTarget(void *instance) {
+      auto& position = static_cast<LookAtToYawAvt*>(instance)->position;
+      auto& target   = static_cast<LookAtToYawAvt*>(instance)->target;
+      auto p = position->get();
+      auto t = target->get();
+      auto r = std::make_shared<SimpleValue<Vector3D> >();
+      r->set(t - p);
+      return r;
+    }
 
-   static std::shared_ptr<Value<Vector3D> > getRotation(void *instance) {
-     return ((LookAtToYawAvt*)instance)->upwards;
-   }
+    static std::shared_ptr<Value<Vector3D> > getRotation(void *instance) {
+      return static_cast<LookAtToYawAvt*>(instance)->upwards;
+    }
 
-   static void setTarget(void *instance, Vector3D target) {
-     auto& _target =  ((LookAtToYawAvt*)instance)->target;
-     _target->set(target);
-   }
+    static void setTarget(void *instance, Vector3D target) {
+      auto& _target = static_cast<LookAtToYawAvt*>(instance)->target;
+      _target->set(target);
+    }
 
-   static void setRotation(void*, Vector3D) {
-     // TODO Repensar si tiene sentido realizar alguna conversión en este punto o incluir asserts para evitar que sea llamado.
-   }
+    static void setRotation(void*, Vector3D) {
+      // TODO Repensar si tiene sentido realizar alguna conversión en este punto o incluir asserts para evitar que sea llamado.
+    }
 
-   std::shared_ptr<Entity> getEntity() {
-     assert(false);
-   }
+    std::shared_ptr<Entity> getEntity() override {
+      assert(false);
+      return 0;
+    }
 
 private:
 
@@ -1846,7 +1840,7 @@ private:
 class TargetToDirAvtBldr : public Funct<void, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = MAvatar<Vector3D, Vector3D, Vector3D>;
-  void operator()(std::shared_ptr<Entity> ent) {
+  void operator()(std::shared_ptr<Entity> ent) override {
     std::shared_ptr<TargetToDirAvt> avt = std::make_shared<TargetToDirAvt>();
     avt->setupEntity(ent, positionidx, targetidx,upwardsidx, scaleidx);
     for(auto indexNList : indexNLists) {
@@ -1873,12 +1867,10 @@ private:
   uint64_t scaleidx;
   std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> indexNLists;
 };
-
-
 class PosTargetToPosDirAvtBldr : public Funct<void, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = MAvatar<Vector3D, Vector3D>;
-  void operator()(std::shared_ptr<Entity> ent) {
+  void operator()(std::shared_ptr<Entity> ent) override {
     std::shared_ptr<PosTargetToPosDirAvt> avt = std::make_shared<PosTargetToPosDirAvt>();
 
     avt->setupEntity(ent, positionidx, targetidx);
@@ -1902,12 +1894,10 @@ private:
   uint64_t targetidx;
   std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> indexNLists;
 };
-
-
 class DerivedCosVelAvtBldr : public Funct<void, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = MAvatar<Vector3D, Vector3D>;
-  void operator()(std::shared_ptr<Entity> ent) {
+  void operator()(std::shared_ptr<Entity> ent) override {
     std::shared_ptr<DerivedCosVelAvt> avt = std::make_shared<DerivedCosVelAvt>();
     avt->setRange(min, max);
     avt->setPeriod(period);
@@ -1950,7 +1940,7 @@ class DerivedPosMovingSphereAvtShapeBldr : public Funct<std::shared_ptr<SAvatar<
 // This class where c&p from DerivedPosMovingSphereAvtBldr removing list managment
 public:
   using AvtBaseType = SAvatar<MovingSphere>;
-  std::shared_ptr<SAvatar<MovingSphere>> operator()(std::shared_ptr<Entity> ent) {
+  std::shared_ptr<SAvatar<MovingSphere>> operator()(std::shared_ptr<Entity> ent) override {
     std::shared_ptr<DerivedPosMovingSphereAvt> avt = std::make_shared<DerivedPosMovingSphereAvt>();
     avt->setRange(min, max);
     avt->setPeriod(period);
@@ -1986,7 +1976,7 @@ class DerivedPosMovingSphereAvtBldr : public Funct<void, std::shared_ptr<Entity>
 // This class where c&p to DerivedPosMovingSphereAvtShapeBldr
 public:
   using AvtBaseType = SAvatar<MovingSphere>;
-  void operator()(std::shared_ptr<Entity> ent) {
+  void operator()(std::shared_ptr<Entity> ent) override {
     std::shared_ptr<DerivedPosMovingSphereAvt> avt = std::make_shared<DerivedPosMovingSphereAvt>();
     avt->setRange(min, max);
     avt->setPeriod(period);
@@ -2007,8 +1997,6 @@ public:
   void addIndexNlist(uint64_t index, std::shared_ptr<TicketedForwardList<AvtBaseType>> list) {
     indexNLists.push_back({index, list});
   }
-
-
   void setRange(float min, float max) {this->min = min; this->max = max;}
 
   void setPeriod(int64_t period) {this->period = period;}
@@ -2031,7 +2019,7 @@ private:
 class LookAtToPitchAvtBldr : public Funct<void, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = MAvatar<Vector3D, Vector3D>;
-  void operator()(std::shared_ptr<Entity> ent) {
+  void operator()(std::shared_ptr<Entity> ent) override {
     std::shared_ptr<LookAtToPitchAvt> avt = std::make_shared<LookAtToPitchAvt>();
     avt->setupEntity(ent, positionidx, targetidx,upwardsidx);
     for(auto indexNList : indexNLists) {
@@ -2060,7 +2048,7 @@ private:
 class LookAtToYawAvtBldr : public Funct<void, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = MAvatar<Vector3D, Vector3D>;
-  void operator()(std::shared_ptr<Entity> ent) {
+  void operator()(std::shared_ptr<Entity> ent) override {
     std::shared_ptr<LookAtToPitchAvt> avt = std::make_shared<LookAtToPitchAvt>();
     avt->setupEntity(ent, positionidx, targetidx,upwardsidx);
     for(auto indexNList : indexNLists) {
@@ -2090,14 +2078,14 @@ private:
 
 class TargetToDirAvtBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<TargetToDirAvtBldr> ttdab = std::make_shared<TargetToDirAvtBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, ttdab);
     specificRsrc.insert("TargetToDirAvtBldr."s + name, ttdab);
   }
 
-  void setup(std::string name, uint64_t cfgId){
+  void setup(std::string name, uint64_t cfgId)  override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -2147,18 +2135,16 @@ private:
   RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
   RsrcStore<ListType>& listRsrc = RsrcStore<ListType>::getInstance();
 };
-
-
 class PosTargetToPosDirAvtBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<PosTargetToPosDirAvtBldr> pttpdvb = std::make_shared<PosTargetToPosDirAvtBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, pttpdvb);
     specificRsrc.insert("PosTargetToPosDirAvtBldr."s + name, pttpdvb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -2200,18 +2186,16 @@ private:
   RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
   RsrcStore<ListType>& listRsrc = RsrcStore<ListType>::getInstance();
 };
-
-
 class DerivedCosVelAvtBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<DerivedCosVelAvtBldr> dcvab = std::make_shared<DerivedCosVelAvtBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, dcvab);
     specificRsrc.insert("DerivedCosVelAvtBldr."s + name, dcvab);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -2273,14 +2257,14 @@ private:
 class DerivedPosMovingSphereAvtShapeBldrFtry : public Factory {
 // This class where c&p from DerivedPosMovingSphereAvtBldrFtry removing list managment
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<DerivedPosMovingSphereAvtShapeBldr> dpmsa = std::make_shared<DerivedPosMovingSphereAvtShapeBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, dpmsa);
     specificRsrc.insert("DerivedPosMovingSphereAvtShapeBldr."s + name, dpmsa);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -2338,14 +2322,14 @@ private:
 class DerivedPosMovingSphereAvtBldrFtry : public Factory {
 // This class where c&p to DerivedPosMovingSphereAvtShapeBldrFtry
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<DerivedPosMovingSphereAvtBldr> dpmsa = std::make_shared<DerivedPosMovingSphereAvtBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, dpmsa);
     specificRsrc.insert("DerivedPosMovingSphereAvtBldr."s + name, dpmsa);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -2410,13 +2394,13 @@ private:
 
 class LookAtToPitchAvtBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<LookAtToPitchAvtBldr> latpab = std::make_shared<LookAtToPitchAvtBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, latpab);
     specificRsrc.insert("LookAtToPitchAvtBldr."s + name, latpab);
   }
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -2462,13 +2446,13 @@ private:
 
 class LookAtToYawAvtBldrFtry : public Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<LookAtToYawAvtBldr> latyab = std::make_shared<LookAtToYawAvtBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, latyab);
     specificRsrc.insert("LookAtToYawAvtBldr."s + name, latyab);
   }
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -2512,15 +2496,13 @@ private:
   RsrcStore<LookAtToYawAvtBldr>& specificRsrc    = RsrcStore<LookAtToYawAvtBldr>::getInstance();
   RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
 };
-
-
 //---------------------------- NUEVAS
 class TargetToDirAvtFtry : public Factory {
   /** \brief Builds a TargetToDirAvt.
    *  \param name Name for the created TargetToDirAvt.
    *  \param cfgId TargetToDirAvt's configuration id.
    */
-  void create(std::string name, uint64_t){
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
 
     auto ttdavt = std::make_shared<TargetToDirAvt>();
@@ -2531,7 +2513,7 @@ class TargetToDirAvtFtry : public Factory {
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId){
+  void setup(std::string name, uint64_t cfgId)  override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -2630,7 +2612,7 @@ class PosTargetToPosDirAvtFtry : public Factory {
    *  \param name Name for the created TargetToDirAvt.
    *  \param cfgId TargetToDirAvt's configuration id.
    */
-  void create(std::string name, uint64_t){
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
 
     auto ttdavt = std::make_shared<PosTargetToPosDirAvt>();
@@ -2641,7 +2623,7 @@ class PosTargetToPosDirAvtFtry : public Factory {
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId){
+  void setup(std::string name, uint64_t cfgId)  override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -2721,7 +2703,7 @@ class DerivedCosVelAvtFtry : public Factory {
    *  \param name Name for the created TargetToDirAvt.
    *  \param cfgId TargetToDirAvt's configuration id.
    */
-  void create(std::string name, uint64_t){
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
 
     auto dcv = std::make_shared<DerivedCosVelAvt>();
@@ -2732,7 +2714,7 @@ class DerivedCosVelAvtFtry : public Factory {
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId){
+  void setup(std::string name, uint64_t cfgId)  override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -2842,14 +2824,12 @@ private:
   RsrcStore<Entity>& entityRsrc                                  = RsrcStore<Entity>::getInstance();
   RsrcStore<TicketedForwardList<MAvatar<Vector3D> > >& listStore = RsrcStore<TicketedForwardList<MAvatar<Vector3D> > >::getInstance();
 };
-
-
 class DerivedPosMovingSphereAvtFtry : public Factory {
   /** \brief Builds a TargetToDirAvt.
    *  \param name Name for the created TargetToDirAvt.
    *  \param cfgId TargetToDirAvt's configuration id.
    */
-  void create(std::string name, uint64_t){
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
 
     auto dpmsa = std::make_shared<DerivedPosMovingSphereAvt>();
@@ -2860,7 +2840,7 @@ class DerivedPosMovingSphereAvtFtry : public Factory {
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId){
+  void setup(std::string name, uint64_t cfgId)  override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -2987,7 +2967,7 @@ class LookAtToPitchAvtFtry : public Factory {
    *  \param name Name for the created LookAtToPitchAvt.
    *  \param cfgId LookAtToPitchAvt's configuration id.
    */
-  void create(std::string name, uint64_t){
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
 
     auto latpavt = std::make_shared<LookAtToPitchAvt>();
@@ -2998,7 +2978,7 @@ class LookAtToPitchAvtFtry : public Factory {
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId){
+  void setup(std::string name, uint64_t cfgId)  override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configStore.get(cfgId);
@@ -3086,7 +3066,7 @@ class LookAtToYawAvtFtry : public Factory {
    *  \param name Name for the created LookAtToYawAvt.
    *  \param cfgId LookAtToYawAvt's configuration id.
    */
-  void create(std::string name, uint64_t){
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
 
     auto latpavt = std::make_shared<LookAtToYawAvt>();
@@ -3097,7 +3077,7 @@ class LookAtToYawAvtFtry : public Factory {
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId){
+  void setup(std::string name, uint64_t cfgId)  override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configStore.get(cfgId);
@@ -3180,8 +3160,6 @@ private:
   RsrcStore<Entity>& entityStore            = RsrcStore<Entity>::getInstance();
   RsrcStore<TicketedForwardList<MAvatar<Vector3D, Vector3D> > >& listStore = RsrcStore<TicketedForwardList<MAvatar<Vector3D, Vector3D> > >::getInstance();
 };
-
-
 }  // namespace zbe
 
 #endif  // ZBE_CORE_ENTITIES_AVATARS_IMPLEMENTATIONS_CUSTOMAVATARS_H_

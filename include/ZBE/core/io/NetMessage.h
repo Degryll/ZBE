@@ -11,8 +11,8 @@
 #define ZBE_CORE_IO_NETMESSAGE_H
 
 #include <cstdint>
-
-#include <SDL2/SDL_net.h>
+#include <limits>
+#include <SDL_net.h>
 
 #include "ZBE/SDL/system/SDLSocket.h"
 
@@ -26,19 +26,19 @@ class ZBEAPI NetMessage {
 public:
   /** \brief Empty constructor for dummy messages.
    */
-  NetMessage() : sequence(-1), socket(), msg(), time(-1) {}
+  NetMessage() : sequence(std::numeric_limits<uint64_t>::max()), socket(), msg(), time(std::numeric_limits<uint64_t>::max()) {}
 
   /** \brief Construct an input status.
    *  \param id Id of the input (key, button, mouse move, etc.).
    *  \param status Status of the input (pressed, moved, etc.).
    *  \param time When the input was changed.
    */
-  NetMessage(Uint32 sequence, SDLSocket socket, std::vector<char> msg, uint64_t time) : sequence(sequence), socket(socket), msg(msg), time(time) {}
+  NetMessage(uint64_t sequence, SDLSocket socket, std::vector<char> msg, uint64_t time) : sequence(sequence), socket(socket), msg(msg), time(time) {}
 
   /** \brief Returns the sequence number the network message.
    *  \return The sequence number.
    */
-  Uint32 getSequence() const { return sequence;}
+  uint64_t getSequence() const { return sequence;}
 
   /** \brief Returns the socket that received the message.
    *  \return Socket that received the message.
@@ -61,7 +61,7 @@ public:
   bool operator<(const NetMessage& rhs) const {return time < rhs.getTime();}
 
 private:
-  Uint32 sequence;
+  uint64_t sequence;
   SDLSocket socket;
   std::vector<char> msg;
   uint64_t time;

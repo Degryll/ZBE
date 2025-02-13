@@ -36,7 +36,7 @@ public:
    */
   inline void insert(T const& element) {buffer.insert(TimedElement<T>(element, element.getTime()));}
 
-  uint64_t size() {return buffer.size();}
+  uint64_t size() const {return buffer.size();}
 
   /** \brief Will insert in the given store all TimedElements created
    *    in the given time range. All elements with time less than or equal to initT will be discarded.
@@ -55,7 +55,7 @@ template <typename T>
 void TimedBuffer<T>::getRange(uint64_t initT, uint64_t endT, std::vector<T>& store) {
   TimedElement<T> upper(initT);
   buffer.erase(buffer.begin(),buffer.upper_bound(upper));
-  if(!buffer.empty()){
+  if(!buffer.empty()) {
     for(auto& te : buffer) {
       if(te.getTime() > endT) {
         break;
@@ -70,7 +70,7 @@ template <typename T>
 void TimedBuffer<T>::getFirstInRange(uint64_t initT, uint64_t endT, std::vector<T>& store) {
   TimedElement<T> upper(initT);
   buffer.erase(buffer.begin(),buffer.upper_bound(upper));
-  if(!buffer.empty()){
+  if(!buffer.empty()) {
     auto it = buffer.begin();
     uint64_t first = it->getTime();
     for(; it != buffer.end(); ++it) {

@@ -9,11 +9,15 @@
 
 
 #include "ZBE/system/SystemResources.h"
+#include <string>
 
 namespace zbe {
 
-static void SystemResources::load() {
-  uint64_t id = RsrcStore<ContexTime>::getInstance().insert("ContexTime.SYSTEM"s, SysTime::getInstance());
+NameRsrcDictionary& SystemResources::dict = NameRsrcDictionary::getInstance();
+
+void SystemResources::load() {
+  using namespace std::string_literals;
+  uint64_t id = RsrcStore<ContextTime>::getInstance().insert("ContextTime.SYSTEM"s, SysTime::getInstance());
   RsrcStore<SysTime>::getInstance().insert(id, SysTime::getInstance());
   dict.insert("SysTime.SYSTEM"s, id);
 }

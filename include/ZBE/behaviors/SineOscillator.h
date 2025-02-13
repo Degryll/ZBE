@@ -40,7 +40,7 @@ public:
   *   \param cTime Local time
   *   \param period Oscillation period
   */
-  SineOscillatorF(float min, float max, float period) : min(min), max(max), period(period) {}
+  SineOscillatorF(float min, float max, int64_t period) : min(min), max(max), period(period) {}
 
   /** \brief Virtual destructor.
    */
@@ -49,7 +49,7 @@ public:
   /** \brief Oscillates given avatar.
   *   \param avatar avatar to oscillate
    */
-  void apply(std::shared_ptr<SAvatar<float> > avatar) final;
+  void apply(std::shared_ptr<SAvatar<float> > avatar) override;
 
   /** \brief sets min & max range values
   *   \param min Min range value
@@ -79,13 +79,13 @@ public:
    *  \param name Name for the created SineOscillator.
    *  \param cfgId SineOscillator's configuration id.
    */
-  void create(std::string name, uint64_t);
+  void create(std::string name, uint64_t) override;
 
   /** \brief Setup the desired tool. The tool will be complete after this step.
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId);
+  void setup(std::string name, uint64_t cfgId) override;
 
 private:
 
@@ -110,7 +110,7 @@ public:
   *   \param cTime Local time
   *   \param period Oscillation period
   */
-  SineOscillatorV3D(float min, float max, float period, int64_t component) : min(min), max(max), period(period), component(component) {}
+  SineOscillatorV3D(float min, float max, int64_t period, int64_t component) : min(min), max(max), period(period), component(component) {}
 
   /** \brief Virtual destructor.
    */
@@ -119,7 +119,7 @@ public:
   /** \brief Oscillates given avatar.
   *   \param avatar avatar to oscillate
    */
-  void apply(std::shared_ptr<SAvatar<Vector3D> > avatar) final;
+  void apply(std::shared_ptr<SAvatar<Vector3D> > avatar) override;
 
   /** \brief sets min & max range values
   *   \param min Min range value
@@ -145,8 +145,8 @@ public:
 private:
   SineOscillatorV3D() : min(-1.0f), max(1.0f), period(0), component(0) {}
 
-  float min;
-  float max;
+  double min;
+  double max;
   int64_t period;
   int64_t component;
 };
@@ -159,13 +159,13 @@ public:
    *  \param name Name for the created SineOscillator.
    *  \param cfgId SineOscillator's configuration id.
    */
-  void create(std::string name, uint64_t);
+  void create(std::string name, uint64_t) override;
 
   /** \brief Setup the desired tool. The tool will be complete after this step.
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId);
+  void setup(std::string name, uint64_t cfgId) override;
 
 private:
 

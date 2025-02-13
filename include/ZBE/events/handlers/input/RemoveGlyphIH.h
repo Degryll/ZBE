@@ -38,14 +38,14 @@ public:
 	/** \brief set the Daemon to be called.
 	 *  \param daemon The Daemon.
 	 */
-  void setDaemon(std::shared_ptr<zbe::Value<std::string> > vc){
+  void setDaemon(std::shared_ptr<zbe::Value<std::string> > vc) {
 		this->vc = vc;
 	}
 
 	/** \brief run daemon.
 	 *  \param state not used
 	 */
-	void run(uint32_t, float state) {
+	void run(uint32_t, float state) override {
 	  if (state) {
       while(1) {
         if (vc->get().size()==0) {

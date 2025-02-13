@@ -31,12 +31,14 @@ namespace zbe {
 
 class LimitedExcentricalRotation3D : virtual public Behavior<float, float, Vector3D,Vector3D, Vector3D, Vector3D>, public Parametric<float> {
    public:
+    
+    LimitedExcentricalRotation3D() = default;
 
     /** \brief Virtual destructor.
      */
     virtual ~LimitedExcentricalRotation3D() = default;
 
-    void set(float offset) {
+    void set(float offset) override {
       this->radians = offset * sensibility;
     }
 
@@ -46,14 +48,14 @@ class LimitedExcentricalRotation3D : virtual public Behavior<float, float, Vecto
 
     /** \brief Makes the entity move in a straight line
      */
-    void apply(std::shared_ptr<MAvatar<float, float, Vector3D, Vector3D, Vector3D, Vector3D> > avatar) {
+    void apply(std::shared_ptr<MAvatar<float, float, Vector3D, Vector3D, Vector3D, Vector3D> > avatar) override {
       auto vvpos = avatar->get<1, Vector3D>();
       auto vvexc = avatar->get<2, Vector3D>();
       auto vvrot = avatar->get<3, Vector3D>();
       auto vvzero = avatar->get<4, Vector3D>();
 
-      auto vfmin = avatar->get<5, float>();
-      auto vfmax = avatar->get<6, float>();
+      // auto vfmin = avatar->get<5, float>();
+      // auto vfmax = avatar->get<6, float>();
       
       auto vpos = vvpos->get();
       auto vexc = vvexc->get();
@@ -66,8 +68,8 @@ class LimitedExcentricalRotation3D : virtual public Behavior<float, float, Vecto
       // printf("vrot %lf, %lf, %lf\n", vrot.x, vrot.y, vrot.z);fflush(stdout);
       // printf("vrot mod %lf\n", vrot.getModule());fflush(stdout);
 
-      float min = vfmin->get();
-      float max = vfmax->get();
+      // float min = vfmin->get();
+      // float max = vfmax->get();
       
       vpos = vpos - vexc;
       vrot.normalize();
@@ -80,7 +82,7 @@ class LimitedExcentricalRotation3D : virtual public Behavior<float, float, Vecto
       glm::vec3 ab(vab.x, vab.y, vab.z);
       glm::vec3 ac(vac.x, vac.y, vac.z);
 
-      float current = glm::orientedAngle(ab, ac, ab);
+      // float current = glm::orientedAngle(ab, ac, ab);
 
       float finalRadians = radians;
 
@@ -92,7 +94,7 @@ class LimitedExcentricalRotation3D : virtual public Behavior<float, float, Vecto
 
       pos = glm::rotate(pos, finalRadians, rot);
 
-      avatar->set<1, Vector3D>(Vector3D{pos.x + vexc.x, pos.y + vexc.y, pos.z + vexc.z});
+      avatar->set<1, Vector3D>(Vector3D{static_cast<double>(pos.x) + vexc.x, static_cast<double>(pos.y) + vexc.y, static_cast<double>(pos.z) + vexc.z});
     }
 
   private:
@@ -106,7 +108,7 @@ public:
    *  \param name Name for the created Rotation2D.
    *  \param cfgId Rotation2D's configuration id.
    */
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<LimitedExcentricalRotation3D> er3d = std::shared_ptr<LimitedExcentricalRotation3D>(new LimitedExcentricalRotation3D);
     behaviorStore.insert("Behavior."s + name, er3d);
@@ -118,7 +120,7 @@ public:
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configStore.get(cfgId);
@@ -160,11 +162,13 @@ private:
 class ExcentricalRotation3D : virtual public Behavior<Vector3D,Vector3D, Vector3D>, public Parametric<float> {
    public:
 
+    ExcentricalRotation3D() = default;
+
     /** \brief Virtual destructor.
      */
     virtual ~ExcentricalRotation3D() = default;
 
-    void set(float offset) {
+    void set(float offset) override {
       this->radians = offset * sensibility;
     }
 
@@ -174,7 +178,7 @@ class ExcentricalRotation3D : virtual public Behavior<Vector3D,Vector3D, Vector3
 
     /** \brief Makes the entity move in a straight line
      */
-    void apply(std::shared_ptr<MAvatar<Vector3D, Vector3D, Vector3D > > avatar) {
+    void apply(std::shared_ptr<MAvatar<Vector3D, Vector3D, Vector3D > > avatar) override {
       auto vvpos = avatar->get<1, Vector3D>();
       auto vvexc = avatar->get<2, Vector3D>();
       auto vvrot = avatar->get<3, Vector3D>();
@@ -195,7 +199,7 @@ class ExcentricalRotation3D : virtual public Behavior<Vector3D,Vector3D, Vector3
       glm::vec3 rot{vrot.x, vrot.y, vrot.z};   
       glm::vec3 pos(vpos.x, vpos.y, vpos.z);
       pos = glm::rotate(pos, radians, rot);
-      avatar->set<1, Vector3D>(Vector3D{pos.x + vexc.x, pos.y + vexc.y, pos.z + vexc.z});
+      avatar->set<1, Vector3D>(Vector3D{static_cast<double>(pos.x) + vexc.x, static_cast<double>(pos.y) + vexc.y, static_cast<double>(pos.z) + vexc.z});
     }
 
   private:
@@ -209,7 +213,7 @@ public:
    *  \param name Name for the created Rotation2D.
    *  \param cfgId Rotation2D's configuration id.
    */
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<ExcentricalRotation3D> er3d = std::shared_ptr<ExcentricalRotation3D>(new ExcentricalRotation3D);
     behaviorStore.insert("Behavior."s + name, er3d);
@@ -221,7 +225,7 @@ public:
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configStore.get(cfgId);
@@ -264,11 +268,13 @@ private:
 class Rotation3D : virtual public Behavior<Vector3D, Vector3D>, public Parametric<float> {
   public:
 
+    Rotation3D() = default;
+
     /** \brief Virtual destructor.
      */
     virtual ~Rotation3D() = default;
 
-    void set(float offset) {
+    void set(float offset) override {
       this->radians = offset * sensibility;
     }
 
@@ -278,7 +284,7 @@ class Rotation3D : virtual public Behavior<Vector3D, Vector3D>, public Parametri
 
     /** \brief Makes the entity move in a straight line
      */
-    void apply(std::shared_ptr<MAvatar<Vector3D, Vector3D > > avatar) {
+    void apply(std::shared_ptr<MAvatar<Vector3D, Vector3D > > avatar) override {
       auto vpos = avatar->get<1, Vector3D>();
       auto vrot = avatar->get<2, Vector3D>();
 
@@ -302,7 +308,7 @@ public:
    *  \param name Name for the created Rotation2D.
    *  \param cfgId Rotation2D's configuration id.
    */
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<Rotation3D> rot3D = std::shared_ptr<Rotation3D>(new Rotation3D);
     behaviorStore.insert("Behavior."s + name, rot3D);
@@ -314,7 +320,7 @@ public:
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configStore.get(cfgId);

@@ -15,7 +15,7 @@ using namespace nlohmann;
 
 Vector3D parseV3DFromCfg(nlohmann::json cfgValue, std::string paramName, std::string factoryName) {
     using namespace std::string_literals;
-    auto c = 0;
+    std::size_t c = 0;
     Vector3D val;
     for (auto item : cfgValue.items()) {
       if(item.value().is_number_float()) {

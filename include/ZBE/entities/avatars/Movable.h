@@ -28,7 +28,7 @@ class Movable : virtual public Positionable<s> {
 
     /** \brief Virtual destructor.
      */
-    virtual ~Movable(){}
+    virtual ~Movable() {}
 
     /** \brief Sets the velocity for this movable.
      * \param List of values for the velocity.

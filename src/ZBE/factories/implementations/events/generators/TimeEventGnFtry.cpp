@@ -30,11 +30,11 @@ namespace zbe{
       std::string ename = j["eventId"].get<std::string>();
       std::string ctname = j["contextTime"].get<std::string>();
 
-      int eId = intStore.get(ename);
+      int64_t eId = intStore.get(ename);
       auto cTime = cxTimeStore.get("ContextTime."s + ctname);
 
       auto teg = tegRsrc.get("TimeEventGenerator."s + name);
-      teg->setEventId(eId);
+      teg->setEventId(static_cast<uint64_t>(eId));
       teg->setContextTime(cTime);
 
     } else {

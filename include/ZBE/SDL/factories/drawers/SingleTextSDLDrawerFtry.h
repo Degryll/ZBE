@@ -36,13 +36,13 @@ public:
    *  \param name Name for the created SingleText SDL Drawer.
    *  \param cfgId Configuration id for the SingleText SDL Drawer.
    */
-   void create(std::string name, uint64_t);
+   void create(std::string name, uint64_t) override;
 
   /** \brief Setup the desired tool. The tool will be complete after this step.
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId);
+  void setup(std::string name, uint64_t cfgId) override;
 
 private:
   RsrcStore<nlohmann::json>& configRsrc = RsrcStore<nlohmann::json>::getInstance();

@@ -53,8 +53,8 @@ public:
   /** \brief Manage the current event and, presumably,
    * do the actions associated with it.
    */
-  void manage() {
-      handler->run(getTime());
+  void manage() override {
+      handler->run(static_cast<uint64_t>(getTime()));
   };
 
 private:

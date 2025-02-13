@@ -12,11 +12,11 @@
 
 #include <memory>
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_ttf.h>
+#include <SDL_ttf.h>
 
 #include "ZBE/core/behaviors/Behavior.h"
 #include "ZBE/entities/avatars/SingleTextSprite.h"
-#include "ZBE/core/entities/AvatarEntity.h"
+
 #include "ZBE/SDL/system/SDLWindow.h"
 
 #include "ZBE/core/system/system.h"
@@ -33,7 +33,7 @@ class ZBEAPI SingleTextSDLDrawer : public Behavior<std::string, uint64_t, Vector
     /** \brief Empty constructor.
      */
     SingleTextSDLDrawer()
-      : window(nullptr), textFontStore(nullptr){}
+      : window(nullptr), textFontStore(nullptr) {}
 
     /** \brief Create a new drawer in the given context.
      *  \param window A SDLwindow with its context.
@@ -56,15 +56,15 @@ class ZBEAPI SingleTextSDLDrawer : public Behavior<std::string, uint64_t, Vector
     /** \brief Draws the given entity.
      *  \param The entity to be drawn.
      */
-    void apply(std::shared_ptr<MAvatar<std::string, uint64_t, Vector2D, Vector2D> > avatar) {
+    void apply(std::shared_ptr<MAvatar<std::string, uint64_t, Vector2D, Vector2D> > avatar) override{
       SDL_Texture* t = textFontStore->renderText(avatar->get<3, uint64_t>()->get(), avatar->get<4, std::string>()->get().c_str());
 
       int tw, th, aw, ah;
       SDL_QueryTexture(t, NULL,NULL, &tw, &th);
       SDL_Rect src,dst;
       auto dim = avatar->get<2, Vector2D>()->get();
-      aw = (int)dim.x;
-      ah = (int)dim.y;
+      aw = static_cast<int>(dim.x);
+      ah = static_cast<int>(dim.y);
       src.w = std::min(tw,aw);
       src.h = std::min(th,ah);
       dst.w = src.w;
@@ -72,8 +72,8 @@ class ZBEAPI SingleTextSDLDrawer : public Behavior<std::string, uint64_t, Vector
       src.x = 0;
       src.y = 0;
       auto pos = avatar->get<1, Vector2D>()->get();
-      dst.x = (int)pos.x + (aw - dst.w);
-      dst.y = (int)pos.y + (ah - dst.h);
+      dst.x = static_cast<int>(pos.x + (aw - dst.w));
+      dst.y = static_cast<int>(pos.y + (ah - dst.h));
 
       window->render(t, &src, &dst);
       SDL_DestroyTexture(t);

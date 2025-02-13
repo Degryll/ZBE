@@ -14,7 +14,7 @@ class DaemonTestImp : public zbe::Daemon{
       called = false;
     }
 
-    void run() {
+    void run() override {
       called = true;
     }
 

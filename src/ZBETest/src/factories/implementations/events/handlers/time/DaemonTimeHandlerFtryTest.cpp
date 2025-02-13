@@ -27,7 +27,7 @@ class DummyDaemon : public zbe::Daemon {
 public:
   DummyDaemon(): executed(false){}
 
-  void run(){
+  void run() override {
     executed = true;
   }
   bool executed;

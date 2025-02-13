@@ -24,7 +24,7 @@ public:
   /** \brief Construct a dummy Timed Element for comparison purpose.
    *  \param time When this element was created.
    */
-  TimedElement(uint64_t time) : e(), time(time) {}
+  explicit TimedElement(uint64_t time) : e(), time(time) {}
 
   /** \brief Construct an Timed Element.
    *  \param element The element.

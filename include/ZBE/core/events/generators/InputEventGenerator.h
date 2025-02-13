@@ -53,7 +53,7 @@ public:
   virtual bool generate(const InputStatus& is) = 0;
 protected:
   template <typename IteratorA, typename IteratorB, typename IteratorC>
-  inline bool range_contains(IteratorA from, const IteratorB& end, const IteratorC& candidate) {
+  inline static bool range_contains(IteratorA from, const IteratorB& end, const IteratorC& candidate) {
       while (from != end)
           if (&*from++ == &*candidate)
               return true;
@@ -61,7 +61,7 @@ protected:
   }
 
   template <typename List, typename Iterator>
-  inline bool list_contains(List& l, const Iterator& candidate) {
+  inline static bool list_contains(List& l, const Iterator& candidate) {
     return range_contains(l.begin(), l.end(), candidate);
   }
 
@@ -76,7 +76,7 @@ class ZBEAPI MappedInputStatusManager : public InputStatusManager {
 public:
 
   MappedInputStatusManager() : eventId(), store(EventStore::getInstance()), handlers() {}
-  MappedInputStatusManager(int eventId) : eventId(eventId), store(EventStore::getInstance()), handlers() {}
+  explicit MappedInputStatusManager(uint64_t eventId) : eventId(eventId), store(EventStore::getInstance()), handlers() {}
   virtual ~MappedInputStatusManager() = default;
 
   /** Add a handler to an input event.
@@ -139,7 +139,7 @@ public:
     }
   }
 
-  bool generate(const InputStatus& is) {
+  bool generate(const InputStatus& is) override {
     bool is_generated = false;
     auto hit = handlers.find(is.getId());
     if (hit != handlers.end() && !hit->second.active.empty()) {
@@ -152,7 +152,7 @@ public:
     return is_generated;
   }
 
-  inline void setEventID(int eventId) {
+  inline void setEventID(uint64_t eventId) {
     this->eventId = eventId;
   }
 
@@ -175,7 +175,7 @@ class ZBEAPI AnyInputStatusManager : public InputStatusManager {
 public:
   virtual ~AnyInputStatusManager() {}
 
-  virtual bool generate(const InputStatus& is) = 0;
+  virtual bool generate(const InputStatus& is) override = 0;
 
 };
 
@@ -192,7 +192,7 @@ class ZBEAPI InputEventGenerator : virtual public Daemon {
 
     /** \brief Default constructor.
      */
-    InputEventGenerator(std::shared_ptr<InputBuffer> inputBuffer, std::shared_ptr<InputTextBuffer> inputTextBuffer = nullptr, int eventId = 0, std::shared_ptr<TextHandler> handler = nullptr, std::shared_ptr<ContextTime> contextTime = nullptr) : inputBuffer(inputBuffer), inputTextBuffer(inputTextBuffer), mism(eventId), eventId(eventId), store(EventStore::getInstance()), handler(handler), contextTime(contextTime) {}
+    explicit InputEventGenerator(std::shared_ptr<InputBuffer> inputBuffer, std::shared_ptr<InputTextBuffer> inputTextBuffer = nullptr, uint64_t eventId = 0, std::shared_ptr<TextHandler> handler = nullptr, std::shared_ptr<ContextTime> contextTime = nullptr) : inputBuffer(inputBuffer), inputTextBuffer(inputTextBuffer), mism(eventId), eventId(eventId), store(EventStore::getInstance()), handler(handler), contextTime(contextTime) {}
 
     /** \brief Empty destructor.
      */
@@ -204,7 +204,7 @@ class ZBEAPI InputEventGenerator : virtual public Daemon {
      * \param initTime Time from which events are generated
      * \param endTime Time until the events are generated
      */
-    void run();
+    void run() override;
     inline HandlerTicket addHandler(uint32_t inputId, std::shared_ptr<InputHandler> handler) {
       return mism.addHandler(inputId, handler);
     }
@@ -255,7 +255,7 @@ class ZBEAPI InputEventGenerator : virtual public Daemon {
 
     InputEventGenerator() : inputBuffer(nullptr), inputTextBuffer(nullptr), mism(), eventId(), store(EventStore::getInstance()), handler(nullptr), contextTime(nullptr) {}
 
-    inline void setEventID(int eventId) {
+    inline void setEventID(uint64_t eventId) {
       this->eventId = eventId;
       mism.setEventID(eventId);
     }
@@ -288,13 +288,13 @@ public:
    *  \param name Name for the created InputEventGenerator.
    *  \param cfgId InputEventGenerator's configuration id.
    */
-  void create(std::string name, uint64_t);
+  void create(std::string name, uint64_t) override;
 
   /** \brief Setup the desired tool. The tool will be complete after this step.
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId);
+  void setup(std::string name, uint64_t cfgId) override;
 
 private:
   RsrcDictionary<uint64_t>& uintStore = RsrcDictionary<uint64_t>::getInstance();

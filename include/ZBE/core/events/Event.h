@@ -39,7 +39,7 @@ class ZBEAPI Event {
      *
      */
     inline int64_t getTime() const{
-      return time;
+      return static_cast<int64_t>(time);
     }
 
     /** \brief Get the id from this even.
@@ -56,7 +56,7 @@ class ZBEAPI Event {
      *
      * \return Return true if this occurs earlier than e.
      */
-    bool operator<(const Event & e) {
+    bool operator<(const Event & e) const {
       return getTime() < e.getTime();
     }
 

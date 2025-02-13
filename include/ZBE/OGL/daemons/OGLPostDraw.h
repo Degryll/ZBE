@@ -25,7 +25,7 @@ public:
 
   OGLPostDraw() : window(nullptr) {}
 
-  OGLPostDraw(std::shared_ptr<zbe::SDLOGLWindow> window) : window(window) {}
+  explicit OGLPostDraw(std::shared_ptr<zbe::SDLOGLWindow> window) : window(window) {}
 
   /** \brief Destructor.
    */
@@ -33,11 +33,11 @@ public:
 
   /** \brief Do the actual Daemon job.
    */
-  void run() {
+  void run() override {
     window->glSwap();
   }
 
-  void setWindow(std::shared_ptr<zbe::SDLOGLWindow> window){
+  void setWindow(std::shared_ptr<zbe::SDLOGLWindow> window) {
     this->window = window;
   }
 

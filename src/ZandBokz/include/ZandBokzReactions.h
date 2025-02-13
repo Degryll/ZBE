@@ -52,7 +52,7 @@ public:
 
   /** brief Reposition entity on plane.
   */
-  void operator()(zbe::CollisionData3D cData, Platform platform) {
+  void operator()(zbe::CollisionData3D, Platform platform) override {
 
     auto planeE1 = platform[2]->get();
     auto planeE2 = platform[1]->get();
@@ -89,7 +89,7 @@ public:
     zbe::Vector3D pos = avatar->get<5, zbe::Vector3D>()->get();
     zbe::Vector3D camPos = avatar->get<6, zbe::Vector3D>()->get();
 
-    float normalDiffAngle = angle(oldyv, oldcu);
+    float normalDiffAngle = static_cast<float>(angle(oldyv, oldcu));
     // normalDiffAngle = (isnan(normalDiffAngle)? 0 : normalDiffAngle);
     zbe::Vector3D rotv = cross(normal, orientPrima);
     glm::vec3 rot{rotv.x, rotv.y, rotv.z};
@@ -126,7 +126,7 @@ private:
 
 class AttachRedirectionReactionBldr : public zbe::Funct<std::shared_ptr<zbe::Funct<void, zbe::CollisionData3D, Platform>>, std::shared_ptr<zbe::Entity>> {
 public:
-  std::shared_ptr<zbe::Funct<void, zbe::CollisionData3D, Platform>> operator()(std::shared_ptr<zbe::Entity> ent){
+  std::shared_ptr<zbe::Funct<void, zbe::CollisionData3D, Platform>> operator()(std::shared_ptr<zbe::Entity> ent) override {
     auto avt = std::make_shared<zbe::MBaseAvatar< zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D>>();
     avt->setupEntity(ent, idxArr);
     return std::make_shared<AttachRedirectionReaction>(avt);
@@ -141,14 +141,14 @@ private:
 
 class AttachRedirectionReactionBldrFtry : public zbe::Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<AttachRedirectionReactionBldr> arrb = std::make_shared<AttachRedirectionReactionBldr>();
     mainRsrc.insert("Function."s + name, arrb);
     specificRsrc.insert("AttachRedirectionReactionBldr."s + name, arrb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -193,7 +193,7 @@ public:
 
   /** brief Reposition entity on plane.
   */
-  void operator()(FGravityData gData, Attractor) {
+  void operator()(FGravityData gData, Attractor) override {
 
     auto vposition = avatar->get<1, zbe::Vector3D>();
     auto vcenter = avatar->get<2, zbe::Vector3D>();
@@ -221,7 +221,7 @@ private:
 
 class ClosestCenterStoreReactionBldr : public zbe::Funct<std::shared_ptr<zbe::Funct<void, FGravityData, Attractor>>, std::shared_ptr<zbe::Entity>> {
 public:
-  std::shared_ptr<zbe::Funct<void, FGravityData, Attractor>> operator()(std::shared_ptr<zbe::Entity> ent){
+  std::shared_ptr<zbe::Funct<void, FGravityData, Attractor>> operator()(std::shared_ptr<zbe::Entity> ent) override {
     auto avt = std::make_shared<zbe::MBaseAvatar<double, zbe::Vector3D, zbe::Vector3D>>();
     avt->setupEntity(ent, idxArr);
     return std::make_shared<ClosestCenterStoreReaction>(avt);
@@ -236,14 +236,14 @@ private:
 
 class ClosestCenterStoreReactionBldrFtry : public zbe::Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<ClosestCenterStoreReactionBldr> arrb = std::make_shared<ClosestCenterStoreReactionBldr>();
     mainRsrc.insert("Function."s + name, arrb);
     specificRsrc.insert("ClosestCenterStoreReactionBldr."s + name, arrb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -288,7 +288,7 @@ public:
 
   /** brief Reposition entity on plane.
   */
-  void operator()(zbe::CollisionData3D cData, Platform platform) {
+  void operator()(zbe::CollisionData3D cData, Platform platform) override {
 
     //auto vpos2D = avatar->get<2, zbe::Vector2D>();
 
@@ -322,7 +322,7 @@ private:
 
 class AttachRepositionReactionBldr : public zbe::Funct<std::shared_ptr<zbe::Funct<void, zbe::CollisionData3D, Platform>>, std::shared_ptr<zbe::Entity>> {
 public:
-  std::shared_ptr<zbe::Funct<void, zbe::CollisionData3D, Platform>> operator()(std::shared_ptr<zbe::Entity> ent){
+  std::shared_ptr<zbe::Funct<void, zbe::CollisionData3D, Platform>> operator()(std::shared_ptr<zbe::Entity> ent) override {
     auto avt = std::make_shared<zbe::MBaseAvatar<zbe::Vector2D, zbe::Vector2D, zbe::Vector3D>>();
     avt->setupEntity(ent, idxArr);
     return std::make_shared<AttachRepositionReaction>(avt);
@@ -337,14 +337,14 @@ private:
 
 class AttachRepositionReactionBldrFtry : public zbe::Factory {
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<AttachRepositionReactionBldr> arrb = std::make_shared<AttachRepositionReactionBldr>();
     mainRsrc.insert("Function."s + name, arrb);
     specificRsrc.insert("AttachRepositionReactionBldr."s + name, arrb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -392,7 +392,7 @@ public:
  /** brief Erases entity
   *  param time not used
   */
- void operator()(IData, Trait) {
+ void operator()(IData, Trait) override {
      auto val = avt->get()->get();
      zbe::Vector3D newVal = -val;
      //avt->set(std::make_shared<zbe::SimpleValue<zbe::Vector3D>>(newVal));
@@ -405,7 +405,7 @@ private:
 template<typename IData, typename Trait>
 class ReverseDirectionReactionBldr : public zbe::Funct<std::shared_ptr<zbe::Funct<void, IData, Trait>>, std::shared_ptr<zbe::Entity>> {
 public:
- std::shared_ptr<zbe::Funct<void, IData, Trait>> operator()(std::shared_ptr<zbe::Entity> ent){
+ std::shared_ptr<zbe::Funct<void, IData, Trait>> operator()(std::shared_ptr<zbe::Entity> ent) override {
    auto avt = std::make_shared<zbe::SBaseAvatar<zbe::Vector3D>>();
    avt->setupEntity(ent, idx);
    return std::make_shared<ReverseDirectionReaction<IData, Trait>>(avt);
@@ -422,14 +422,14 @@ template<typename IData, typename Trait>
 class ReverseDirectionReactionBldrFtry : public zbe::Factory {
 // This class where c&p from DerivedPosMovingSphereAvtBldrFtry removing list managment
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<ReverseDirectionReactionBldr<IData, Trait>> rdrb = std::make_shared<ReverseDirectionReactionBldr<IData, Trait>>();
     mainRsrc.insert("Function."s + name, rdrb);
     specificRsrc.insert("ReverseDirectionReactionBldr."s + name, rdrb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
@@ -480,7 +480,7 @@ public:
  /** brief Erases entity
   *  param time not used
   */
-  void operator()(IData idata, Trait) {
+  void operator()(IData idata, Trait) override {
     auto vval = avt->get<1, zbe::Vector3D>();
     auto uval = avt->get<2, zbe::Vector3D>();
     zbe::Vector3D newvVal = vval->get().reflect(idata.normal);
@@ -495,7 +495,7 @@ private:
 template<typename IData, typename Trait>
 class BounceReactionBldr : public zbe::Funct<std::shared_ptr<zbe::Funct<void, IData, Trait>>, std::shared_ptr<zbe::Entity>> {
 public:
- std::shared_ptr<zbe::Funct<void, IData, Trait>> operator()(std::shared_ptr<zbe::Entity> ent){
+ std::shared_ptr<zbe::Funct<void, IData, Trait>> operator()(std::shared_ptr<zbe::Entity> ent) override {
    auto avt = std::make_shared<zbe::MBaseAvatar<zbe::Vector3D, zbe::Vector3D>>();
    avt->setupEntity(ent, {uidx, vidx});
    return std::make_shared<BounceReaction<IData, Trait>>(avt);
@@ -514,14 +514,14 @@ template<typename IData, typename Trait>
 class BounceReactionBldrFtry : public zbe::Factory {
 // This class where c&p from DerivedPosMovingSphereAvtBldrFtry removing list managment
 public:
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<BounceReactionBldr<IData, Trait>> rdrb = std::make_shared<BounceReactionBldr<IData, Trait>>();
     mainRsrc.insert("Function."s + name, rdrb);
     specificRsrc.insert("BounceReactionBldr."s + name, rdrb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);

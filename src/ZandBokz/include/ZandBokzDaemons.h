@@ -50,7 +50,7 @@ class FixedValueSetterDmn : virtual public zbe::Daemon {
       this->fixed = fixed;
     }
 
-    void run() {
+    void run() override {
       // for(auto it = list.begin(); it != list.end(); ++it) {
       //   (*it)->run();
       // }
@@ -68,14 +68,14 @@ template<typename T>
 class FixedValueSetterDmnFtry : virtual public zbe::Factory {
 public:
 
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<FixedValueSetterDmn<T>> fvsd = std::make_shared<FixedValueSetterDmn<T>>();
     daemonRsrc.insert("Daemon."s + name, fvsd);
     fvsdRsrc.insert("FixedValueSetterDmn."s + name, fvsd);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);

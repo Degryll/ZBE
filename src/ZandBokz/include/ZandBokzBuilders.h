@@ -32,8 +32,8 @@ namespace zandbokz {
 
 class Triangle3Dto2DCacheBldr : public zbe::Funct<void, std::shared_ptr<zbe::Entity>> {
 public:
- void operator()(std::shared_ptr<zbe::Entity> entity) {
-    float baseScale = (float)entity->getDouble(sizeIdx)->get();
+ void operator()(std::shared_ptr<zbe::Entity> entity) override {
+    float baseScale = static_cast<float>(entity->getDouble(sizeIdx)->get());
     // Calculate plane
     glm::mat4 mat(1.0);
     glm::vec3 glPos(0.0, 0.0, 0.0);
@@ -66,7 +66,7 @@ public:
     auto vcaux = caux->get();
   }
 
-  std::shared_ptr<zbe::Value<zbe::Vector2D>> transformPointCoords(glm::vec3 p, zbe::Vector3D bx, zbe::Vector3D by, zbe::Vector3D bz) {
+  std::shared_ptr<zbe::Value<zbe::Vector2D>> transformPointCoords(glm::vec3 p, zbe::Vector3D bx, zbe::Vector3D by, zbe::Vector3D) {
 
     auto diff = zbe::Vector3D{p.x, p.y, p.z};
 
@@ -97,14 +97,14 @@ private:
 };
 
 class Triangle3Dto2DCacheBldrFtry : public zbe::Factory {
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<Triangle3Dto2DCacheBldr> t3dt2dcb = std::make_shared<Triangle3Dto2DCacheBldr>();
     mainRsrc.insert(zbe::factories::functionName_ + name, t3dt2dcb);
     specificRsrc.insert("Triangle3Dto2DCacheBldr."s + name, t3dt2dcb);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);

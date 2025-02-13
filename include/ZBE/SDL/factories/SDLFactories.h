@@ -1,6 +1,6 @@
 /**
  * Copyright 2012 Batis Degryll Ludo
- * @file CommonFactories.h
+ * @file SDLFactories.h
  * @since 2019-02-20
  * @date 2019-02-20
  * @author Ludo Degryll Batis
@@ -39,13 +39,13 @@ public:
 
   /** \brief It will Load the factories calling the load method.
   */
-  void run() {
+  void run() override {
     load();
   };
 
   /** \brief It loads all factories.
   */
-  static void load(){
+  static void load() {
     auto& factories = RsrcStore<Factory>::getInstance();
     factories.insert("SDLWindowFtry", std::make_shared<SDLWindowFtry>());
     factories.insert("SDLOGLWindowFtry", std::make_shared<SDLOGLWindowFtry>());

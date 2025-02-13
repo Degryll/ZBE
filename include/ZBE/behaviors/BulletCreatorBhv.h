@@ -27,7 +27,7 @@ class BulletCreatorBhv : virtual public Behavior<Vector3D, Vector3D> {
 public:
   friend class BulletCreatorBhvFtry;
 
-  BulletCreatorBhv(std::shared_ptr<BulletCreator> creator) : creator(creator) {}
+  explicit BulletCreatorBhv(std::shared_ptr<BulletCreator> creator) : creator(creator) {}
 
   /** \brief Virtual destructor.
    */
@@ -67,7 +67,7 @@ public:
 
   /** \brief BulletCreatorBhv given avatar.
    */
-  void apply(std::shared_ptr<MAvatar<Vector3D, Vector3D> > avatar);
+  void apply(std::shared_ptr<MAvatar<Vector3D, Vector3D> > avatar) override;
 
 private:
 
@@ -82,9 +82,9 @@ private:
 
 class ZBEAPI BulletCreatorBhvFtry : virtual public Factory  {
 public:
-  void create(std::string name, uint64_t);
+  void create(std::string name, uint64_t) override;
 
-  void setup(std::string name, uint64_t cfgId);
+  void setup(std::string name, uint64_t cfgId) override;
 private:
   RsrcStore<nlohmann::json>& configStore = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<Behavior<Vector3D, Vector3D>>& behaviorStore = RsrcStore<Behavior<Vector3D, Vector3D>>::getInstance();

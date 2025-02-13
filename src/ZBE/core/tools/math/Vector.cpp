@@ -7,9 +7,11 @@
  * @brief Vector functions.
  */
 
+#include <cstdint>
+#include <cstdio>
+
 #include "ZBE/core/tools/math/Vector.h"
 #include "ZBE/core/system/system.h"
-#include <cstdio>
 
 namespace zbe {
 

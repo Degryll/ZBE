@@ -18,10 +18,10 @@ namespace zbe {
  */
 inline SDL_Rect convert2SDLRect(const Region2D& region2d) {
   SDL_Rect rect;
-  rect.x = region2d.p.x;
-  rect.y = region2d.p.y;
-  rect.w = region2d.v.x;
-  rect.h = region2d.v.y;
+  rect.x = static_cast<int>(region2d.p.x);
+  rect.y = static_cast<int>(region2d.p.y);
+  rect.w = static_cast<int>(region2d.v.x);
+  rect.h = static_cast<int>(region2d.v.y);
   return (rect);
 }
 

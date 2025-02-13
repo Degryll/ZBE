@@ -34,13 +34,13 @@ public:
    *  \param name Name for the created item.
    *  \param cfgId item's configuration id.
    */
-  void create(std::string name, uint64_t);
+  void create(std::string name, uint64_t) override;
 
   /** \brief Set-up an item.
    *  \param name Name for the created item.
    *  \param cfgId item's configuration id.
    */
-  void setup(std::string, uint64_t) {}
+  void setup(std::string, uint64_t) override {}
 
 private:
   RsrcStore<Generic> &grsrc = RsrcStore<Generic>::getInstance();
@@ -65,19 +65,19 @@ public:
   /** \brief Parametrized constructor
     * \param type Dictionary entry for this item.
     */
-  GenericFtry(std::string gtype) : gtype(gtype) {}
+  explicit GenericFtry(std::string gtype) : gtype(gtype) {}
 
   /** \brief Creates an item from a file.
    *  \param name Name for the created item.
    *  \param cfgId item's configuration id.
    */
-  void create(std::string name, uint64_t);
+  void create(std::string name, uint64_t) override;
 
   /** \brief Set-up an item.
    *  \param name Name for the created item.
    *  \param cfgId item's configuration id.
    */
-  void setup(std::string, uint64_t) {}
+  void setup(std::string, uint64_t) override {}
 
 private:
   RsrcStore<Generic> &grsrc = RsrcStore<Generic>::getInstance();

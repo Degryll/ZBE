@@ -27,13 +27,13 @@ namespace zbe {
  */
 struct AvatarImp : virtual public Avatar {
 
-  AvatarImp(std::shared_ptr<Entity> entity) : e(entity) {}
+  explicit AvatarImp(std::shared_ptr<Entity> entity) : e(entity) {}
 
   /** \brief Register a new Ticket from a list.
    *  \param id Id to identify the list.
    *  \param ticket The ticket to be stored.
    */
-  void addTicket(uint64_t id, std::shared_ptr<Ticket> ticket) {
+  void addTicket(uint64_t id, std::shared_ptr<Ticket> ticket) override {
     e->addTicket(id, ticket);
   }
 
@@ -41,65 +41,65 @@ struct AvatarImp : virtual public Avatar {
    *  \param id Id to identify the ticket origin.
    *  \param ticket The ticket to be stored.
    */
-  void replaceTicket(uint64_t id, std::shared_ptr<Ticket> ticket) {
+  void replaceTicket(uint64_t id, std::shared_ptr<Ticket> ticket) override {
     e->replaceTicket(id, ticket);
   }
 
   /** \brief Change the state of this avatar in the list identified by id to ACTIVE.
    *  \param id Id to identify the list.
    */
-  void setACTIVE(uint64_t id) {
+  void setACTIVE(uint64_t id) override {
       e->setACTIVE(id);
   }
 
   /** \brief Change the state of this avatar in the list identified by id to INACTIVE.
    *  \param id Id to identify the list.
    */
-  void setINACTIVE(uint64_t id){
+  void setINACTIVE(uint64_t id) override {
       e->setINACTIVE(id);
   }
 
   /** \brief Change the state of this avatar in the list identified by id to ACTIVE.
    *  \param id Id to identify the list.
    */
-  void setERASED(uint64_t id){
+  void setERASED(uint64_t id) override {
       e->setERASED(id);
   }
 
   /** \brief Change the state of this avatar for all list to ACTIVE.
    */
-  void setACTIVE(){
+  void setACTIVE() override {
       e->setACTIVE();
   }
 
   /** \brief Change the state of this avatar for all list to INACTIVE.
    */
-  void setINACTIVE(){
+  void setINACTIVE() override {
       e->setINACTIVE();
   }
 
   /** \brief Change the state of this avatar for all list to ERASED.
    */
-  void setERASED(){
+  void setERASED() override {
       e->setERASED();
   }
 
   /** \brief Changes the contextTime of this entity to the value of cTime.
    *  \param cTime Value to put in the Entity's cTime
    */
-  void setContextTime(std::shared_ptr<ContextTime> cTime) {
+  void setContextTime(std::shared_ptr<ContextTime> cTime) override {
     e->setContextTime(cTime);
   }
 
   /** \brief Returns the context time of the Entity.
    */
-  std::shared_ptr<ContextTime> getContextTime() {
+  std::shared_ptr<ContextTime> getContextTime() override {
     return e->getContextTime();
   }
 
   /** \brief Access the underliying entity (if allowed)
    */
-  virtual std::shared_ptr<Entity> getEntity() = 0;
+  virtual std::shared_ptr<Entity> getEntity() override = 0;
 
 protected:
   AvatarImp() : e() {}
@@ -114,11 +114,11 @@ protected:
  */
 struct AwareAvatar : public AvatarImp {
 public:
-  AwareAvatar(std::shared_ptr<Entity> entity) : AvatarImp(entity) {}
+  explicit AwareAvatar(std::shared_ptr<Entity> entity) : AvatarImp(entity) {}
 
   /** \brief Access the underliying entity (if allowed)
    */
-  std::shared_ptr<Entity> getEntity() {
+  std::shared_ptr<Entity> getEntity() override {
     return e;
   }
 protected:
@@ -131,12 +131,13 @@ protected:
  */
 struct BaseAvatar : public AvatarImp {
 public:
-  BaseAvatar(std::shared_ptr<Entity> entity) : AvatarImp(entity) {}
+  explicit BaseAvatar(std::shared_ptr<Entity> entity) : AvatarImp(entity) {}
 
   /** \brief Access the underliying entity (if allowed)
    */
-  std::shared_ptr<Entity> getEntity() {
+  std::shared_ptr<Entity> getEntity() override {
     assert(false);
+    return 0;
   }
 protected:
   BaseAvatar() : AvatarImp() {}
@@ -196,13 +197,13 @@ public:
   _BaseAvatar() : A(), _Avatar<n, T>(), v() { setCallback();}
   _BaseAvatar(std::shared_ptr<Entity> entity, uint64_t id)
    : A(entity),
-     _Avatar<n, T>(&_BaseAvatar::getImpl, &_BaseAvatar::setImpl, (void*)this),
+     _Avatar<n, T>(&_BaseAvatar::getImpl, &_BaseAvatar::setImpl, static_cast<void*>(this)),
      v(entity->get<T, std::shared_ptr<zbe::Value<T> > >(id)) {
        setCallback();
      }
  _BaseAvatar(std::shared_ptr<Entity> entity, typename std::array<uint64_t, 1>::iterator idsi)
   : A(entity),
-    _Avatar<n, T>(&_BaseAvatar::getImpl, &_BaseAvatar::setImpl, (void*)this),
+    _Avatar<n, T>(&_BaseAvatar::getImpl, &_BaseAvatar::setImpl, static_cast<void*>(this)),
     v(entity->get<T, std::shared_ptr<zbe::Value<T> > >(*idsi)) {
       setCallback();
     }
@@ -211,24 +212,24 @@ public:
 
   void setupEntity(std::shared_ptr<Entity> entity, uint64_t id) {
     A::setupEntity(entity);
-    _Avatar<n, T>::setup(&_BaseAvatar::getImpl, &_BaseAvatar::setImpl, (void*)this);
+    _Avatar<n, T>::setup(&_BaseAvatar::getImpl, &_BaseAvatar::setImpl, static_cast<void*>(this));
     v = entity->get<T, std::shared_ptr<zbe::Value<T> > >(id);
   }
 
   void setupEntity(std::shared_ptr<Entity> entity, typename std::array<uint64_t, 1>::iterator idsi) {
     A::setupEntity(entity);
-    _Avatar<n, T>::setup(&_BaseAvatar::getImpl, &_BaseAvatar::setImpl, (void*)this);
+    _Avatar<n, T>::setup(&_BaseAvatar::getImpl, &_BaseAvatar::setImpl, static_cast<void*>(this));
     v = entity->get<T, std::shared_ptr<zbe::Value<T> > >(*idsi);
   }
 
   static std::shared_ptr<Value<T> > getImpl(void *instance) {
     //TODO asegurarse de que este casting es en tiempo de compilación (static cast?)
-    return (((_BaseAvatar<A, n, T>*)instance)->v);
+    return (static_cast<_BaseAvatar<A, n, T>*>(instance)->v);
   }
 
   static void setImpl(void *instance, T value) {
     //TODO asegurarse de que este casting es en tiempo de compilación (static cast?)
-    ((_BaseAvatar<A, n, T>*)instance)->v->set(value);
+    static_cast<_BaseAvatar<A, n, T>*>(instance)->v->set(value);
   }
 
   constexpr static unsigned size() {
@@ -237,7 +238,7 @@ public:
 
 protected:
   void setCallback() {
-    _Avatar<n, T>::setup(&_BaseAvatar::getImpl, &_BaseAvatar::setImpl, (void*)this);
+    _Avatar<n, T>::setup(&_BaseAvatar::getImpl, &_BaseAvatar::setImpl, static_cast<void*>(this));
   }
 private:
   std::shared_ptr<Value<T> > v;
@@ -296,14 +297,14 @@ public:
   _DynamicAvatar() : A(), _Avatar<n, T>(), entity(), id() { setCallback();}
   _DynamicAvatar(std::shared_ptr<Entity> entity, uint64_t id)
    : A(entity),
-     _Avatar<n, T>(&_DynamicAvatar::getImpl, &_DynamicAvatar::setImpl, (void*)this),
+     _Avatar<n, T>(&_DynamicAvatar::getImpl, &_DynamicAvatar::setImpl, static_cast<void*>(this)),
      entity(entity), id(id) {
        setCallback();
      }
  _DynamicAvatar(std::shared_ptr<Entity> entity, typename std::array<uint64_t, 1>::iterator idsi)
   : A(entity),
-    _Avatar<n, T>(&_DynamicAvatar::getImpl, &_DynamicAvatar::setImpl, (void*)this),
-    entity(entity), id(id) {
+    _Avatar<n, T>(&_DynamicAvatar::getImpl, &_DynamicAvatar::setImpl, static_cast<void*>(this)),
+    entity(entity), id(idsi[0]) {
       setCallback();
     }
 
@@ -311,27 +312,27 @@ public:
 
   void setupEntity(std::shared_ptr<Entity> entity, uint64_t id) {
     A::setupEntity(entity);
-    _Avatar<n, T>::setup(&_DynamicAvatar::getImpl, &_DynamicAvatar::setImpl, (void*)this);
+    _Avatar<n, T>::setup(&_DynamicAvatar::getImpl, &_DynamicAvatar::setImpl, static_cast<void*>(this));
     this->entity = entity;
     this->id = id;
   }
 
   void setupEntity(std::shared_ptr<Entity> entity, typename std::array<uint64_t, 1>::iterator idsi) {
     A::setupEntity(entity);
-    _Avatar<n, T>::setup(&_DynamicAvatar::getImpl, &_DynamicAvatar::setImpl, (void*)this);
+    _Avatar<n, T>::setup(&_DynamicAvatar::getImpl, &_DynamicAvatar::setImpl, static_cast<void*>(this));
     this->entity = entity;
-    this->id = id;
+    this->id = idsi[0];
   }
 
   static std::shared_ptr<Value<T> > getImpl(void *instance) {
-    auto da = ((_DynamicAvatar<A, n, T>*)instance);
+    auto da = static_cast<_DynamicAvatar<A, n, T>*>(instance);
     auto& ent = *(da->entity.get());
     uint64_t id = da->id;
     return (ent.template get<T, std::shared_ptr<zbe::Value<T> >>(id));
   }
 
   static void setImpl(void *instance, T value) {
-    auto da = ((_DynamicAvatar<A, n, T>*)instance);
+    auto da = static_cast<_DynamicAvatar<A, n, T>*>(instance);
     auto& ent = *(da->entity.get());
     uint64_t id = da->id;
     (ent.template get<T, std::shared_ptr<zbe::Value<T> >>(id))->set(value);
@@ -343,7 +344,7 @@ public:
 
 protected:
   void setCallback() {
-    _Avatar<n, T>::setup(&_DynamicAvatar::getImpl, &_DynamicAvatar::setImpl, (void*)this);
+    _Avatar<n, T>::setup(&_DynamicAvatar::getImpl, &_DynamicAvatar::setImpl, static_cast<void*>(this));
   }
 private:
   std::shared_ptr<Entity> entity;

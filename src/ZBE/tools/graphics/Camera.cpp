@@ -23,7 +23,7 @@ namespace zbe {
   }
 
   void Camera::setPerspective(float fov, float aspect, float znear, float zfar) {
-    float tangent = tan(float(TORADIANS) * (fov / 2.0f));
+    float tangent = static_cast<float>(tan(TORADIANS * (static_cast<double>(fov) / 2.0)));
     float height = znear * tangent;
     float width = height * aspect;
     setFrustum(-width, width, -height, height, znear, zfar);
@@ -41,25 +41,25 @@ namespace zbe {
     Vector3D  s = cross(f, u).normalize();
     u = cross(s, f);
 
-    transform[0] = s.x;
-    transform[1] = u.x;
-    transform[2] =-f.x;
-    transform[3] = 0;
+    transform[0u] = static_cast<float>(s.x);
+    transform[1u] = static_cast<float>(u.x);
+    transform[2u] =-static_cast<float>(f.x);
+    transform[3u] = .0f;
 
-    transform[4] = s.y;
-    transform[5] = u.y;
-    transform[6] =-f.y;
-    transform[7] = 0;
+    transform[4u] = static_cast<float>(s.y);
+    transform[5u] = static_cast<float>(u.y);
+    transform[6u] =-static_cast<float>(f.y);
+    transform[7u] = .0f;
 
-    transform[8]  = s.z;
-    transform[9]  = u.z;
-    transform[10] =-f.z;
-    transform[11] = 0;
+    transform[8u]  = static_cast<float>(s.z);
+    transform[9u]  = static_cast<float>(u.z);
+    transform[10u] =-static_cast<float>(f.z);
+    transform[11u] = .0f;
 
-    transform[12] = -(s * eye);
-    transform[13] = -(u * eye);
-    transform[14] =  (f * eye);
-    transform[15] = 1;
+    transform[12u] = -static_cast<float>(s * eye);
+    transform[13u] = -static_cast<float>(u * eye);
+    transform[14u] =  static_cast<float>(f * eye);
+    transform[15u] = 1.0f;
   }
 
 }  // namespace zbe

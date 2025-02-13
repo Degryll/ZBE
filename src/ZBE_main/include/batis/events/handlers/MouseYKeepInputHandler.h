@@ -25,7 +25,7 @@ class MouseYKeepInputHandler : public zbe::InputHandler {
 
   	MouseYKeepInputHandler() : keeper(batis::MouseKeeper::getInstance()) {}
 
-  	void run(float status) {
+  	void run(float status) override {
       keeper.setY(status);
   	}
 

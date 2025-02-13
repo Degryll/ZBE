@@ -27,7 +27,7 @@ public:
 
   /** \brief Do the Handler job.
    */
-  virtual void run(uint32_t sequence, SDLSocket socket, std::vector<char> msg) = 0;
+  virtual void run(uint64_t sequence, SDLSocket socket, std::vector<char> msg) = 0;
 
 };
 

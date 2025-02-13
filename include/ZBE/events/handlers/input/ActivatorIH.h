@@ -40,7 +40,7 @@ public:
   /** brief Parametrized constructor
     * param value where to store input.
    */
-  ActivatorIH(std::shared_ptr<Ticket> ticket) : ticket(ticket) {}
+  explicit ActivatorIH(std::shared_ptr<Ticket> ticket) : ticket(ticket) {}
 
   /** \brief Set Value<double> where input will be stored.
    *  \param ticket ticket to be activated
@@ -52,7 +52,7 @@ public:
   /** brief stores input value to the value.
     * param status value from input.
    */
-  void run(uint32_t, float status) {
+  void run(uint32_t, float status) override {
     if (!status) {
       ticket->setACTIVE();
     }
@@ -66,13 +66,13 @@ private:
 class ZBEAPI ActivatorIHFtry : public Factory {
 
 
-  void create(std::string name, uint64_t);
+  void create(std::string name, uint64_t) override;
 
   /** \brief Setup the desired tool. The tool will be complete after this step.
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId);
+  void setup(std::string name, uint64_t cfgId) override;
 
 private:
   RsrcStore<nlohmann::json> &configStore         = RsrcStore<nlohmann::json>::getInstance();

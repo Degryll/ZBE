@@ -14,14 +14,13 @@
 
 #include <cstdio>
 
-#include <GL/glew.h>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
 #include "ZBE/core/behaviors/Behavior.h"
 
-#include "ZBE/core/entities/AvatarEntity.h"
+
 
 #include "ZBE/core/tools/containers/RsrcStore.h"
 #include "ZBE/OGL/graphics/OGLModelSheet.h"
@@ -57,16 +56,16 @@ class OGLModelSheetDrawer : public Behavior<T, Ts...> {
     /** \brief Draws the given entity.
      *  \param The entity to be drawn.
      */
-    void apply(std::shared_ptr<MAvatar<T, Ts...> > avatar) {
+    void apply(std::shared_ptr<MAvatar<T, Ts...> > avatar) override {
       std::shared_ptr<_Avatar<idx, uint64_t> > av = avatar;
       auto val = av->get();
       uint64_t gId = val->get();
       std::shared_ptr<OGLModelSheet<T, Ts...> > oglMs = rsOglMs.get(gId);
       OGLModel model = oglMs->generateModel(avatar);
-      GLuint modelViewLoc = glGetUniformLocation(gProgramID, "modelMat" );
-      glUniformMatrix4fv(modelViewLoc, 1, false, (GLfloat*) glm::value_ptr(model.modelMat));
-      GLuint texCoordLoc = glGetUniformLocation(gProgramID, "texCoordMat" );
-      glUniformMatrix4fv(texCoordLoc, 1, false, (GLfloat*) glm::value_ptr(model.texCoordMat));
+      GLint modelViewLoc = glGetUniformLocation(gProgramID, "modelMat" );
+      glUniformMatrix4fv(modelViewLoc, 1, false, glm::value_ptr(model.modelMat));
+      GLint texCoordLoc = glGetUniformLocation(gProgramID, "texCoordMat" );
+      glUniformMatrix4fv(texCoordLoc, 1, false, glm::value_ptr(model.texCoordMat));
       glActiveTexture(GL_TEXTURE0);
       glBindTexture(GL_TEXTURE_2D, model.textures[0]);
       glBindVertexArray(model.vao);

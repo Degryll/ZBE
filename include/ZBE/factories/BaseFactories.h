@@ -28,8 +28,6 @@
 #include "ZBE/factories/implementations/events/handlers/input/InputToValueFtry.h"
 #include "ZBE/factories/implementations/events/handlers/time/DaemonTimeHandlerFtry.h"
 #include "ZBE/factories/implementations/events/handlers/time/TicketEraserFtry.h"
-#include "ZBE/factories/implementations/events/handlers/actuators/DmnSelectorAtorFtry.h"
-#include "ZBE/factories/implementations/events/handlers/actuators/StateChangerAtorFtry.h"
 #include "ZBE/factories/implementations/events/generators/TimeEventGnFtry.h"
 
 #include "ZBE/events/handlers/input/TicketTogglerIH.h"
@@ -69,7 +67,7 @@ public:
 
   /** \brief It will Load the factories calling the load method.
   */
-  void run() {
+  void run() override {
     load();
   };
 

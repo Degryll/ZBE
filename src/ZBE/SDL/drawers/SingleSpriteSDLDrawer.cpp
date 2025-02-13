@@ -19,13 +19,13 @@ void SingleSpriteSDLDrawer::apply(std::shared_ptr<MAvatar<uint64_t, Vector2D, Ve
   SDL_Rect src,dst;
   src.x = 0;
   src.y = 0;
-  src.w = vsize->get().x;
-  src.h = vsize->get().y;
+  src.w = static_cast<int>(vsize->get().x);
+  src.h = static_cast<int>(vsize->get().y);
 
-  dst.x = vpos->get().x;
-  dst.y = vpos->get().y;
-  dst.w = vsize->get().x;
-  dst.h = vsize->get().y;
+  dst.x = static_cast<int>(vpos->get().x);
+  dst.y = static_cast<int>(vpos->get().y);
+  dst.w = static_cast<int>(vsize->get().x);
+  dst.h = static_cast<int>(vsize->get().y);
   window->render(imgStore->getTexture(vgid->get()), &src, &dst);
 }
 

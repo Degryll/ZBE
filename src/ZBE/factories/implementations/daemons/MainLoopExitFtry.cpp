@@ -56,7 +56,7 @@ void MainLoopExitFtry::setup(std::string name, uint64_t cfgId) {
     uint64_t value = uintStore.get(outValueName.get<std::string>());
     mle->setMainLoop(ml);
     mle->setValue(valueHolder);
-    mle->setExitValue(value);
+    mle->setExitValue(static_cast<int64_t>(value));
   } else {
     SysError::setError("MainLoopExitFtry config for "s + name + " not found."s);
   }

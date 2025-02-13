@@ -24,7 +24,7 @@ namespace TimeEventFactoriesTest {
 
 struct DummyDaemon : public zbe::Daemon {
   DummyDaemon() : executed(false) {}
-  void run() {
+  void run() override {
     executed = true;
   }
 

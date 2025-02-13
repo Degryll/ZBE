@@ -24,13 +24,13 @@ public:
 
   DummyFtry() : createSet(), setupSet(), createCfgId() {}
 
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     EXPECT_EQ(setupSet.find(name), setupSet.end()) << "Must call create first and only once per cfg";
     createCfgId[name] = cfgId;
     createSet.insert(name);
   };
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     EXPECT_NE(createSet.find(name), createSet.end()) << "Must call create first.";
     EXPECT_EQ(createCfgId[name], cfgId) << "Must recieve the same cfgId as create.";
     setupSet.insert(name);

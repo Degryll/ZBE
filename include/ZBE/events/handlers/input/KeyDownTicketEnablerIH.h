@@ -40,7 +40,7 @@ public:
   /** brief Parametrized constructor
     * param value where to store input.
    */
-  KeyDownTicketEnablerIH(std::shared_ptr<Ticket> ticket) : ticket(ticket) {}
+  explicit KeyDownTicketEnablerIH(std::shared_ptr<Ticket> ticket) : ticket(ticket) {}
 
   /** \brief Set Value<double> where input will be stored.
    *  \param value where input will be stored.
@@ -52,8 +52,8 @@ public:
   /** brief stores input value to the value.
     * param status value from input.
    */
-  void run(uint32_t, float status) {
-    if (status < 0.5) {
+  void run(uint32_t, float status) override {
+    if (status < 0.5f) {
       ticket->setINACTIVE();
     } else {
       ticket->setACTIVE();
@@ -73,13 +73,13 @@ class ZBEAPI KeyDownTicketEnablerIHFtry : public Factory {
    *  \param name Name for the created SDLWindow.
    *  \param cfgId SDLWindow's configuration id.
    */
-  void create(std::string name, uint64_t);
+  void create(std::string name, uint64_t) override;
 
   /** \brief Setup the desired tool. The tool will be complete after this step.
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId);
+  void setup(std::string name, uint64_t cfgId) override;
 
 private:
   RsrcStore<nlohmann::json> &configRsrc    = RsrcStore<nlohmann::json>::getInstance();

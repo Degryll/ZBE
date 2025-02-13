@@ -25,7 +25,7 @@ public:
 
   /** \brief Virtual destructor.
    */
-  virtual ~InteractionTester(){}
+  virtual ~InteractionTester() {}
 
   /** \brief Tells if interaction condition is fullfilled.
    * \return true if interaction condition is fullfilled.

@@ -55,21 +55,21 @@ public:
    *  \param timers The multiset where the timer is stored.
    *  \param eventId Event Id.
    */
-  TimerTicket(std::multiset<TimerData>::iterator iter, std::multiset<TimerData>& timers, int eventId, std::shared_ptr<ContextTime> contextTime) : s(ACTIVE), iter(iter), timers(timers), eventId(eventId), es(EventStore::getInstance()), contextTime(contextTime), td((*iter)) {}
+  TimerTicket(std::multiset<TimerData>::iterator iter, std::multiset<TimerData>& timers, uint64_t eventId, std::shared_ptr<ContextTime> contextTime) : s(ACTIVE), iter(iter), timers(timers), eventId(eventId), es(EventStore::getInstance()), contextTime(contextTime), td((*iter)) {}
 
-  void setACTIVE();    //!< Set the state as ACTIVE.
-  void setINACTIVE();  //!< Set the state as INACTIVE.
-  void setERASED();    //!< Set the state as ERASED
-  void toggle();  //!< Set the state as state.
+  void setACTIVE() override;    //!< Set the state as ACTIVE.
+  void setINACTIVE() override;  //!< Set the state as INACTIVE.
+  void setERASED() override;    //!< Set the state as ERASED
+  void toggle() override;  //!< Set the state as state.
 
-  void setState(State state);  //!< Set the state as state.
+  void setState(State state) override;  //!< Set the state as state.
 
-  inline bool isACTIVE()    {return (s == ACTIVE);}    //!< True if state is ACTIVE.
-  inline bool isNotACTIVE() {return (s != ACTIVE);}    //!< True if state is not ACTIVE, either INACTIVE or ERASED.
-  inline bool isINACTIVE()  {return (s == INACTIVE);}  //!< True if state is INACTIVE.
-  inline bool isERASED()    {return (s == ERASED);}    //!< True if state is ERASED.
+  inline bool isACTIVE()    override {return (s == ACTIVE);}    //!< True if state is ACTIVE.
+  inline bool isNotACTIVE() override {return (s != ACTIVE);}    //!< True if state is not ACTIVE, either INACTIVE or ERASED.
+  inline bool isINACTIVE()  override {return (s == INACTIVE);}  //!< True if state is INACTIVE.
+  inline bool isERASED()    override {return (s == ERASED);}    //!< True if state is ERASED.
 
-  State getState() {return (s);}  //!< Return the state of the ticket.
+  State getState() override {return (s);}  //!< Return the state of the ticket.
 
   /** \brief Increases the time in a given amount (that can be negative). If the incremented time is zero or less, the event is triggered.
    * return true if the increment makes the timer go to zero or less.
@@ -79,15 +79,15 @@ public:
   /** \brief Returns the event time.
    * \return The event time.
   */
-  int64_t getTime() {
-    return (iter->time);
+  int64_t getTime() const {
+    return static_cast<int64_t>(iter->time);
   }
 
 private:
   State s;  //!< State of the object
   std::multiset<TimerData>::iterator iter;
   std::multiset<TimerData>& timers;
-  int eventId;
+  uint64_t eventId;
   EventStore& es;
   std::shared_ptr<ContextTime> contextTime;
   TimerData td;
@@ -105,7 +105,7 @@ class ZBEAPI TimeEventGenerator : virtual public Daemon {
      *  \param eventId event id.
      *  \param contextTime ContextTime to use.
      */
-    TimeEventGenerator(uint64_t eventId, std::shared_ptr<ContextTime> contextTime = SysTime::getInstance()) : eventId(eventId), es(EventStore::getInstance()), timers(), contextTime(contextTime) {}
+    explicit TimeEventGenerator(uint64_t eventId, std::shared_ptr<ContextTime> contextTime = SysTime::getInstance()) : eventId(eventId), es(EventStore::getInstance()), timers(), contextTime(contextTime) {}
 
     /** Add a new Timer that only triggers onces.
      * \param id Id of the Timer, to identify the action to accomplish when the event is triggered
@@ -143,7 +143,7 @@ class ZBEAPI TimeEventGenerator : virtual public Daemon {
 
     /** \brief It will look for time events occurred within the available.
      */
-    void run();
+    void run() override;
 
   private:
     uint64_t eventId;

@@ -28,7 +28,7 @@ public:
   /** \brief parametrized constructor
    *  \param l The joint.
    */
-  JointIterator(J *l) : l(l), jit(firstNonEmptyL()), lit(firstElement()) {}
+  explicit JointIterator(J *l) : l(l), jit(firstNonEmptyL()), lit(firstElement()) {}
 
   /** \brief parametrized constructor
    *  \param l The joint.
@@ -42,7 +42,7 @@ public:
 
   /** \brief operator =
    */
-  JointIterator& operator=(const JointIterator& rhs){
+  JointIterator& operator=(const JointIterator& rhs) {
     this->l = rhs.l;
     this->jit = rhs.jit;
     this->lit = rhs.lit;
@@ -52,10 +52,10 @@ public:
   /** \brief operator ++
    */
   JointIterator& operator++() {
-    lit++;
-    if(lit == (*jit)->end()){
+    ++lit;
+    if(lit == (*jit)->end()) {
       jit = nextNonEmptyL(++jit);
-      if(jit != l->end()){
+      if(jit != l->end()) {
         lit = (*jit)->begin();
       }
     }
@@ -78,19 +78,19 @@ public:
 
   /** \brief operator !=
    */
-  bool operator!=(const JointIterator& rhs){
+  bool operator!=(const JointIterator& rhs) {
     return (!((*this)==rhs));
   }
 
   /** \brief operator *
    */
-  E operator*(){
+  E operator*() {
     return (*lit);
   }
 
   /** \brief operator ->
    */
-  E operator->(){
+  E operator->() {
     return (*lit);
   }
 
@@ -142,13 +142,13 @@ public:
 
     /** \brief Returns an interator refering to the beginning of the list.
      */
-    iterator begin(){
+    iterator begin() {
       return (iterator(&l));
     }
 
     /** \brief Returns an interator refering to the end of the list.
      */
-    iterator end(){
+    iterator end() {
       return (iterator(&l, l.end()));
     }
 
@@ -177,13 +177,13 @@ public:
 
     /** \brief Returns an iterator refering to the first element of the first list.
      */
-    iterator begin(){
+    iterator begin() {
       return (iterator(&l));
     }
 
     /** \brief Returns an iterator refering to the end of the list.
      */
-    iterator end(){
+    iterator end() {
       return (iterator(&l, l.end()));
     }
 

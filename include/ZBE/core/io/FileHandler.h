@@ -72,7 +72,7 @@ public:
    *  \return True if filename is a directory.
    *  \sa exist
    */
-  static bool existDir(const char* filename);
+  static bool existDir(const char* dirname);
 
   /** \brief Removes a normal file.
    *  \param filename Path to the file to be removed.
@@ -101,7 +101,7 @@ public:
    *  \param size Size maximum number of bytes read.
    *  \return buffer.
    */
-  char*  readln(char* buffer, size_t size);
+  char*  readln(char* buffer, size_t buffersize);
 
   /** \brief Write a text into the file.
    *  \param text Text to be written

@@ -42,6 +42,7 @@ public:
   Reactor(const Reactor& rhs) : Reactor<IData, Traits>(rhs)... {};
 
   template <typename ...U>
+  // cppcheck-suppress noExplicitConstructor
   Reactor(Reactor<IData, U...> payload) : Reactor<IData, Traits>()... {
     std::initializer_list<int>{(this->Reactor<IData, U>::setPayload(payload) , 0)... };
   }
@@ -57,7 +58,7 @@ public:
   // }
 
   void callActor(Actor<IData, Traits...>*  actor, IData data) {
-    std::initializer_list<int>{(actor->act((Reactor<IData, Traits>*)this, data), 0)... };
+    std::initializer_list<int>{(actor->act(static_cast<Reactor<IData, Traits>*>(this), data), 0)... };
   }
 };
 
@@ -65,7 +66,10 @@ template<typename IData, typename Trait>
 class Reactor<IData, Trait> {
 public:
     Reactor() : reaction(noReaction) {}
+
+    // cppcheck-suppress noExplicitConstructor
     Reactor(std::shared_ptr<Funct<void,IData, Trait>> reaction) : reaction(reaction) {}
+    // cppcheck-suppress noExplicitConstructor
     Reactor(const Reactor& rhs) : reaction(rhs.reaction) {}
     static std::shared_ptr<Funct<void,IData, Trait>> noReaction;
 
@@ -100,6 +104,7 @@ public:
   //   std::initializer_list<int>{(this->Actor<IData, U>::setPayload(payload) , 0)... };
   // }
 
+  // cppcheck-suppress noExplicitConstructor
   Actor(std::shared_ptr<Funct<void, Reactor<IData, Traits>*, IData>>... sa) : Actor<IData, Traits>(sa)... {}
 
   template <typename U>
@@ -125,6 +130,7 @@ public:
   static void noAct(Reactor<IData, Trait>*, IData) {}
 
   Actor() : sa(std::make_shared<WrapperFunct<void, Reactor<IData, Trait>*, IData>>(noAct)) {}
+  // cppcheck-suppress noExplicitConstructor
   Actor(std::shared_ptr<Funct<void,Reactor<IData, Trait>*, IData>> sa) : sa(sa) {}
 
   void setTrait(std::shared_ptr<Funct<void, Reactor<IData, Trait>*, IData>> sa) {
@@ -144,7 +150,7 @@ public:
   // }
 
 protected:
-  //Actor(subAct sa) : sa(sa){  }
+  //Actor(subAct sa) : sa(sa) {  }
 
   void setAct(subAct sa) {
     this->sa = sa;
@@ -170,8 +176,8 @@ private:
 template<typename IData, typename Trait>
 class AvtEnabledTrait : public Funct<void, Reactor<IData, Trait>*, IData>  {
 public:
-  AvtEnabledTrait(std::shared_ptr<SAvatar<Trait>> avt) : avt(avt) {}
-  void operator()(Reactor<IData, Trait>* reactor, IData data) {
+  explicit AvtEnabledTrait(std::shared_ptr<SAvatar<Trait>> avt) : avt(avt) {}
+  void operator()(Reactor<IData, Trait>* reactor, IData data) override {
     auto trait = avt->get();
     reactor->react(data, trait);
   }
@@ -182,7 +188,7 @@ private:
 template<typename IData, typename Trait>
 class EnabledEmptyTrait : public Funct<void, Reactor<IData, Trait>*, IData> {
 public:
-  void operator()(Reactor<IData, Trait>* reactor, IData data) {
+  void operator()(Reactor<IData, Trait>* reactor, IData data) override {
     Trait t;
     reactor->react(data, t);
   }
@@ -193,7 +199,7 @@ public:
 // template<typename IData, typename Trait, typename Base, typename ...Bases>
 // struct ReactionPrint {
 //   ReactionPrint(std::shared_ptr<zbe::MAvatar<Base, Bases...>> avt) : avt(avt) {}
-//   void operator() (IData data, Trait trait){
+//   void operator() (IData data, Trait trait) override {
 //       std::cout << "Typeid name: " << typeid(trait).name() << " With value " << trait << std::endl;
 //       std::cout << "Interaction data: " << data << std::endl;
 //       auto val = zbe::AvtUtil::get<2, Base >(avt);
@@ -218,7 +224,7 @@ void imprimirNombreTipo() {
 
 template<typename IData, typename Trait>
 struct ReactionPrint : zbe::Funct<void, IData, Trait> {
-  void operator() (IData data, Trait trait){
+  void operator() (IData, Trait) override {
       imprimirNombreTipo<Trait>();
       //std::cout << "Interaction data: " << data << std::endl;
   }
@@ -227,7 +233,7 @@ struct ReactionPrint : zbe::Funct<void, IData, Trait> {
 template<typename IData, typename Trait, typename ReactionType>
 class ReactionBldr : public zbe::Funct<std::shared_ptr<zbe::Funct<void, IData, Trait>>, std::shared_ptr<zbe::Entity>> {
 public:
-  std::shared_ptr<zbe::Funct<void, IData, Trait>> operator()(std::shared_ptr<zbe::Entity> ent){
+  std::shared_ptr<zbe::Funct<void, IData, Trait>> operator()(std::shared_ptr<zbe::Entity>) override {
     return std::make_shared<ReactionType>();
   }
 };
@@ -246,7 +252,7 @@ struct InteractionEvent : public Event {
   IData data;
   ActorType actor;
   ReactorType reactor;
-  void manage() {
+  void manage() override {
     reactor.callActor(&actor, data);
   }
 };
@@ -255,10 +261,10 @@ template <typename S, typename ...Shapes>
 class AvtShape : public zbe::Shape<Shapes...> {
 public:
 
-  AvtShape(std::shared_ptr<SAvatar<S>> avt) : avt(avt) {}
+  explicit AvtShape(std::shared_ptr<SAvatar<S>> avt) : avt(avt) {}
   virtual ~AvtShape() = default;
 
-  std::variant<std::shared_ptr<Shapes>...> getShape() {
+  std::variant<std::shared_ptr<Shapes>...> getShape() override {
     return std::make_shared<S>(avt->get()->get());
   };
 private:
@@ -268,12 +274,20 @@ private:
 template<typename ActorType, typename ReactorType, typename ...Shapes>
 class Interactioner {
 public:
-  Interactioner(std::shared_ptr<Shape<Shapes...>> shape) : shape(shape), actor(), reactor() {}
+  explicit Interactioner(std::shared_ptr<Shape<Shapes...>> shape) : shape(shape), actor(), reactor() {}
   Interactioner(std::shared_ptr<Shape<Shapes...>> shape, ActorType actor, ReactorType reactor) : shape(shape), actor(actor), reactor(reactor) {}
 
-  std::shared_ptr<Shape<Shapes...>> getShape()   {return shape;}
-  ActorType                         getActor()   {return actor;}
-  ReactorType                       getReactor() {return reactor;}
+  std::shared_ptr<Shape<Shapes...>> getShape() {
+    return shape;
+  }
+
+  ActorType getActor() const {
+    return actor;
+  }
+
+  ReactorType getReactor() const {
+    return ReactorType(reactor);
+  }
 
   void setShape(std::shared_ptr<Shape<Shapes...>> shape) {
     this->shape = shape;
@@ -348,6 +362,7 @@ protected:
 template <typename ActorType, typename ReactorType, typename ...Shapes>
 class Interactionator : public Interactioner<ActorType, ReactorType, Shapes...> {
 public:
+  // cppcheck-suppress noExplicitConstructor
   Interactionator(std::shared_ptr<Shape<Shapes...>> shape) : Interactioner<ActorType, ReactorType, Shapes...>(shape), iners() {}
   Interactionator(std::shared_ptr<Shape<Shapes...>> shape, ActorType actor, ReactorType reactor) : Interactioner<ActorType, ReactorType, Shapes...>(shape, actor, reactor), iners() {}
 
@@ -368,7 +383,7 @@ template <typename Overloaded, typename IData, typename ActorType, typename Reac
 class InteractionEventGenerator : virtual public Daemon {
 public:
 
-  InteractionEventGenerator(uint64_t id = 0) : id(id), ators(), contextTime(), es(EventStore::getInstance()) {}
+  explicit InteractionEventGenerator(uint64_t id = 0) : id(id), ators(), contextTime(), es(EventStore::getInstance()) {}
 
   void setAtorList(std::shared_ptr<zbe::TicketedForwardList<Interactionator<ActorType, ReactorType, Shapes...>>> ators) {
     this->ators = ators;
@@ -378,7 +393,7 @@ public:
     this->contextTime = contextTime;
   }
 
-  void run() {
+  void run() override {
     uint64_t timeLimit = contextTime->getRemainTime();
     for(auto iator : (*ators)) {
       getCollision(iator, timeLimit);
@@ -429,14 +444,14 @@ public:
   using IEG = InteractionEventGenerator<Overloaded, IData, ActorType, ReactorType, Shapes...>;
   using ATOR = Interactionator<ActorType, ReactorType, Shapes...>;
 
-  void create(std::string name, uint64_t) {
+  void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<IEG> ieg = std::shared_ptr<IEG>(new IEG);  // std::make_shared<SineOscillator>();
     daemonStore.insert("Daemon."s + name, ieg);
     iegStore.insert("InteractionEventGenerator."s + name, ieg);
   }
 
-  void setup(std::string name, uint64_t cfgId) {
+  void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configStore.get(cfgId);
@@ -481,7 +496,7 @@ public:
 
       auto ieg = iegStore.get("InteractionEventGenerator."s + name);
 
-      ieg->setEventId(eventId);
+      ieg->setEventId(static_cast<uint>(eventId));
       ieg->setAtorList(ators);
       ieg->setContextTime(contextTime);
 

@@ -45,7 +45,7 @@ class Actuator : public R {
 
     /** \brief It executes the actuator's logic.
      */
-    void run(std::shared_ptr<T> collisioner, std::shared_ptr<ReactObject<R> > rObject, typename R::InteractionData* iData){
+    void run(std::shared_ptr<T> collisioner, std::shared_ptr<ReactObject<R> > rObject, typename R::InteractionData* iData) {
 			this->collisioner = collisioner;
       this->iData = iData;
       rObject->act(this);

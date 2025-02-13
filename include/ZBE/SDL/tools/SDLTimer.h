@@ -36,31 +36,31 @@ public:
 
   /** \brief Start the timer.
    */
-  void     start();
+  void start() override;
 
   /** \brief Stop the timer, the current count holds.
    *  \return The current time.
    */
-  int64_t stop();
+  int64_t stop() override;
 
   /** \brief Stop the timer and reset to 0.
    */
-  void     reset();
+  void reset() override;
 
   /** \brief Return the lap time.
    *  \return The time since the last call to start, stop or lapTime.
    */
-  int64_t lapTime();
+  int64_t lapTime() override;
 
   /** \brief Return the total time, it doesn't stop the timer.
    *  \return The time since start.
    */
-  int64_t totalTime();
+  int64_t totalTime() override;
 
   /** \brief Return True if the timer is counting.
    *  \return True if the timer is running, false otherwise.
    */
-  bool isRunning() {return (running);} //time is running out lalala
+  bool isRunning() override {return (running);} //time is running out lalala
 
 protected:
   SDL_Starter &sdl;         //!< Singleton to init SDL subsystems.

@@ -38,9 +38,9 @@ public:
     this->audioDefLoader = audioDefLoader;
   }  
 
-  void load(std::filesystem::path filePath);
+  void load(std::filesystem::path filePath) override ;
 
-  bool isLoadable(std::filesystem::path extension);
+  bool isLoadable(std::filesystem::path extension) override ;
 
 private:
 
@@ -54,7 +54,7 @@ private:
 
 class ZBEAPI OALAudioLoaderFtry : public Factory {
 public:
-   void create(std::string name, uint64_t) {
+   void create(std::string name, uint64_t) override {
      using namespace std::string_literals;
 
      auto loader = std::make_shared<OALAudioLoader>();
@@ -62,7 +62,7 @@ public:
      mainRsrc.insert("RsrcLoader."s + name, loader);
    }
 
-   void setup(std::string name, uint64_t cfgId) {
+   void setup(std::string name, uint64_t cfgId) override {
     using namespace std::string_literals;
     using namespace nlohmann;
     std::shared_ptr<json> cfg = configRsrc.get(cfgId);

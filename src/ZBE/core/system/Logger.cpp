@@ -19,10 +19,10 @@ LoggerMsg& LoggerMsg::operator<<(bool b) {
   return (*this);
 }
 
-const int Logger::NINFO = 1;
-const int Logger::NDEBUG = 2;
-const int Logger::NWARNING = 3;
-const int Logger::NERROR = 4;
+const int Logger::IDINFO = 1;
+const int Logger::IDDEBUG = 2;
+const int Logger::IDWARNING = 3;
+const int Logger::IDERROR = 4;
 
 const char Logger::TINFO[] = "[INFO]";
 const char Logger::TDEBUG[] = "[DEBUG]";

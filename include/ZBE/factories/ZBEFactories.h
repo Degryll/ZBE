@@ -16,7 +16,6 @@
 #include "ZBE/factories/genericFactoryConstants.h"
 #include "ZBE/factories/implementations/GenericFtry.h"
 #include "ZBE/factories/implementations/daemons/BehaviorDmnFtry.h"
-#include "ZBE/factories/implementations/entities/avatars/SimpleAnimSprtFtry.h"
 #include "ZBE/factories/implementations/entities/avatars/BaseAvatarFtry.h"
 
 #include "ZBE/core/entities/avatars/Avatar.h"
@@ -40,7 +39,7 @@ public:
 
   /** \brief It will Load the factories calling the load method.
   */
-  void run() {
+  void run() override {
     load();
   };
 
@@ -173,6 +172,7 @@ public:
     factories.insert("DerivedPosMovingSphereAvtFtry", std::make_shared<DerivedPosMovingSphereAvtFtry>());
 
     // Daemons & List
+    // TODO Todas las listas deben ser renombradas para que no lleven AEC en el nombre. Ya no lo usan.
 
     factories.insert("VoidBvrDmnFtry", std::make_shared<VoidAvtBhvr>());
     factories.insert("TFAEVoidFtry" , std::make_shared<SimpleGenericFtry<VoidAvtList> >(factories::listName));
