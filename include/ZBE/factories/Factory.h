@@ -11,6 +11,7 @@
 #define ZBE_FACTORIES_FACTORY_H_
 
 #include <string>
+#include <cstdint>
 
 #include "ZBE/core/system/system.h"
 
