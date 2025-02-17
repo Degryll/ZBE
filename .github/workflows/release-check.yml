@@ -52,6 +52,16 @@ jobs:
         sudo apt-get update
         sudo apt-get install libfreetype-dev
         
+    - name: Install Zlib Using Scoop
+      if: contains(matrix.os, 'windows')
+      run: |
+        echo "C:/Users/runneradmin/scoop/shims" >> $env:GITHUB_PATH
+        Import-Module "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
+        refreshenv
+        scoop bucket add extras
+        scoop install zlib
+        regedit /s "C:\\Users\\runneradmin\\scoop\\apps\\zlib\\current\\register.reg"
+        
     - name: Set reusable strings
       # Turn repeated input strings (such as the build output directory) into step outputs. These step outputs can be used throughout the workflow file.
       id: strings
