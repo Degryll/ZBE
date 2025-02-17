@@ -46,15 +46,19 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Install deps
+    - name: Install deps ubuntu
       if: contains(matrix.os, 'ubuntu')
       run: |
         sudo apt-get update
         sudo apt-get install libfreetype-dev
         
-    - name: Install Zlib Using Scoop
+    - name: Instalar zlib through vcpkg
       if: contains(matrix.os, 'windows')
-      run: choco install zlib
+      run: |
+        git clone https://github.com/Microsoft/vcpkg.git
+        cd vcpkg
+        .\bootstrap-vcpkg.bat
+        .\vcpkg.exe install zlib
         
     - name: Set reusable strings
       # Turn repeated input strings (such as the build output directory) into step outputs. These step outputs can be used throughout the workflow file.
