@@ -6,6 +6,7 @@ include(FetchContent)
 # targets
 function(ZBE_setup_dependencies)
 
+  find_package(ZLIB REQUIRED)
   # For each dependency, see if it's
   # already been provided to us by a parent project
 
