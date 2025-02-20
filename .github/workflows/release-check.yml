@@ -50,7 +50,7 @@ jobs:
       if: contains(matrix.os, 'ubuntu')
       run: |
         sudo apt-get update
-        sudo apt-get install libfreetype-dev
+        sudo apt-get install libfreetype-dev mesa-utils libglu1-mesa-dev freeglut3-dev mesa-common-dev
         
     - name: Instalar zlib through vcpkg
       if: contains(matrix.os, 'windows')
