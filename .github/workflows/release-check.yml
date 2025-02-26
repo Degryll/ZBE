@@ -24,12 +24,12 @@ jobs:
       # To add more build types (Release, Debug, RelWithDebInfo, etc.) customize the build_type list.
       matrix:
         os: [ubuntu-latest, windows-latest]
-        build_type: [Debug]
+        build_type: [Release]
         c_compiler: [gcc, clang, cl]
         include:
-          # - os: windows-latest
-          #   c_compiler: cl
-          #   cpp_compiler: cl
+          - os: windows-latest
+            c_compiler: cl
+            cpp_compiler: cl
           - os: ubuntu-latest
             c_compiler: gcc
             cpp_compiler: g++
@@ -50,7 +50,7 @@ jobs:
       if: contains(matrix.os, 'ubuntu')
       run: |
         sudo apt-get update
-        sudo apt-get install libfreetype-dev mesa-utils libglu1-mesa-dev freeglut3-dev mesa-common-dev
+        sudo apt-get install ninja-build libfreetype-dev mesa-utils libglu1-mesa-dev freeglut3-dev mesa-common-dev
         
     - name: Instalar zlib through vcpkg
       if: contains(matrix.os, 'windows')
@@ -72,6 +72,7 @@ jobs:
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
       run: >
         cmake -B ${{ steps.strings.outputs.build-output-dir }}
+        -G Ninja 
         -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
         -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
         -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
