@@ -1,4 +1,3 @@
-build
 builds/codeblocks/ZBE/obj/
 builds/codeblocks/ZBETest/obj/
 builds/codeblocks/ZBE_main/obj/
@@ -12,5 +11,6 @@ lib/libZBE_x64d.a
 lib/libZBE_x64d.so
 lib/libZBE_x64.dll
 lib/libZBE_x64d.dll
+out
 *.layout
 *.depend
