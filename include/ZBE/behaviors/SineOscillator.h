@@ -110,7 +110,7 @@ public:
   *   \param cTime Local time
   *   \param period Oscillation period
   */
-  SineOscillatorV3D(float min, float max, int64_t period, int64_t component) : min(min), max(max), period(period), component(component) {}
+  SineOscillatorV3D(float min, float max, int64_t period, int64_t component) : min(static_cast<double>(min)), max(static_cast<double>(max)), period(period), component(component) {}
 
   /** \brief Virtual destructor.
    */
@@ -125,7 +125,7 @@ public:
   *   \param min Min range value
   *   \param max Max range value
   */
-  void setRange(float min, float max) {this->min = min; this->max = max;}
+  void setRange(float min, float max) {this->min = static_cast<double>(min); this->max = static_cast<double>(max);}
 
   /** \brief sets period and context time to use.
   *   \param cTime Local time
@@ -143,7 +143,7 @@ public:
   }
 
 private:
-  SineOscillatorV3D() : min(-1.0f), max(1.0f), period(0), component(0) {}
+  SineOscillatorV3D() : min(-1.0), max(1.0), period(0), component(0) {}
 
   double min;
   double max;

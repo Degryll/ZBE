@@ -14,7 +14,7 @@
 #include <cstdint>
 #include <nlohmann/json.hpp>
 
-#include <SDL2/SDL.h>
+#include "ZBE/SDL/sdl_warning_suppressor.h"
 
 #include "ZBE/SDL/events/SDLEventDispatcher.h"
 #include "ZBE/SDL/events/SDLEventWatcher.h"

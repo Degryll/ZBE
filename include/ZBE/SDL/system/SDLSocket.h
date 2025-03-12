@@ -13,7 +13,7 @@
 #include <cstdint>
 #include <vector>
 
-#include <SDL_net.h>
+#include "ZBE/SDL/sdl_warning_suppressor.h"
 
 #include "ZBE/core/events/handlers/NetHandler.h"
 #include "ZBE/core/system/SysError.h"

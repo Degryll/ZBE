@@ -51,7 +51,6 @@ public:
   void setup(std::string name, uint64_t cfgId) override;
 
 private:
-  RsrcDictionary<std::string>& strStore = RsrcDictionary<std::string>::getInstance();
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<SDLOGLWindow> &sdloglWindowRsrc = RsrcStore<SDLOGLWindow>::getInstance();
   RsrcStore<Camera> &cameraRsrc = RsrcStore<Camera>::getInstance();

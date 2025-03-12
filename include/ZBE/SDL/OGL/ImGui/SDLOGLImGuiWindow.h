@@ -21,8 +21,7 @@
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_opengl3.h"
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_opengl.h>
+#include "ZBE/SDL/sdl_warning_suppressor.h"
 
 #include "ZBE/core/system/SysError.h"
 

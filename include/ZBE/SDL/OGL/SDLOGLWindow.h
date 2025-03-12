@@ -18,8 +18,8 @@
 #include <tuple>
 
 #include <GL/glew.h>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_opengl.h>
+
+#include "ZBE/SDL/sdl_warning_suppressor.h"
 
 #include "ZBE/core/system/SysError.h"
 #include "ZBE/core/tools/containers/RsrcDictionary.h"

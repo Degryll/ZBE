@@ -15,6 +15,7 @@
 #include <limits>
 #include <cstdint>
 #include <iostream>
+#include <array>
 
 #include "ZBE/core/tools/math/math.h"
 #include "ZBE/core/tools/math/Point.h"
@@ -35,7 +36,7 @@ it occured, and the normal into parameters.
  *  \param normal Stores the collision point's normal.
  */
 template <unsigned dim>
-bool intersectionMovingNSphereOutsideAABB(NSphere<dim> nsphere, Vector<dim> direction, AABB<dim> box, uint64_t& time, Point<dim>& point) {SysError::setError("intersectionMovingNSphereOutsideAABB: Not implemented yet."); return false;}
+bool intersectionMovingNSphereOutsideAABB(NSphere<dim>, Vector<dim>, AABB<dim>, uint64_t&, Point<dim>&) {SysError::setError("intersectionMovingNSphereOutsideAABB: Not implemented yet."); return false;}
 //inline bool IntersectionMovingCircleOutsideAABB2D(Circle circle, Vector2D direction, AABB2D box, uint64_t& time, Point2D& point) {return (intersectionMovingNSphereOutsideAABB<2>(circle,direction,box,time,point));}  //!< 2D allias of IntersectionMovingNSphereOutsideAABB.
 ZBEAPI bool IntersectionMovingSphereOutsideAABB3D(Sphere sphere, Vector3D direction, AABB3D box, uint64_t& time, Point3D& point);  //!< 3D allias of IntersectionMovingNSphereOutsideAABB.
 

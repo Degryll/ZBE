@@ -49,7 +49,6 @@ public:
   void setup(std::string name, uint64_t cfgId) override;
 
 private:
-  NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<Ticket> &ticketRsrc = RsrcStore<Ticket>::getInstance();
   RsrcStore<TimeHandler> &timeRsrc = RsrcStore<TimeHandler>::getInstance();

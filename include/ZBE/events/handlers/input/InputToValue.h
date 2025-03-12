@@ -48,7 +48,7 @@ public:
     * param status value from input.
    */
   void run(uint32_t, float status) override {
-    val->set(status);
+    val->set(static_cast<double>(status));
   }
 
 private:

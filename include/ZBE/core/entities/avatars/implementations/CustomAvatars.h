@@ -430,7 +430,7 @@ public:
      return 0;
    }
 
-   void setRange(float min, float max) {this->min = min; this->max = max;}
+   void setRange(float min, float max) {this->min = static_cast<double>(min); this->max = static_cast<double>(max);}
 
    void setPeriod(int64_t period) {this->period = period;}
 
@@ -468,7 +468,7 @@ public:
     auto v = velocity->get();
     auto r = msa->radius->get();
     //auto time = msa->cTime->getTotalTime();
-    Sphere s(p.toPoint(), r);
+    Sphere s(p.toPoint(), static_cast<double>(r));
     MovingSphere ms{s, v};
     auto out = std::make_shared<SimpleValue<MovingSphere> >();
     out->set(ms);
@@ -664,7 +664,7 @@ public:
     glm::vec3 glPos(pos.x, pos.y, pos.z);
     glm::vec3 glDir(ori.x, ori.y, ori.z);
 
-    glm::mat4 mat(1.0);
+    // glm::mat4 mat(1.0);
 
     glm::mat4 translate = glm::translate(glm::mat4(1.0f), glPos);
     glm::mat4 rotate    = glm::rotate(   glm::mat4(1.0f), angle, glDir);
@@ -674,9 +674,9 @@ public:
     glm::vec3 b = m * glm::vec4(mtra->baseT.b.x, mtra->baseT.b.y, mtra->baseT.b.z, 1.0);
     glm::vec3 c = m * glm::vec4(mtra->baseT.c.x, mtra->baseT.c.y, mtra->baseT.c.z, 1.0);
 
-    Point3D pa{a.x, a.y, a.z};
-    Point3D pb{b.x, b.y, b.z};
-    Point3D pc{c.x, c.y, c.z};
+    Point3D pa{static_cast<double>(a.x), static_cast<double>(a.y), static_cast<double>(a.z)};
+    Point3D pb{static_cast<double>(b.x), static_cast<double>(b.y), static_cast<double>(b.z)};
+    Point3D pc{static_cast<double>(c.x), static_cast<double>(c.y), static_cast<double>(c.z)};
 
     Triangle3D t{pa, pb, pc};
     MovingTriangle3D mt{t, vel};
@@ -1688,7 +1688,7 @@ public:
       double newVal = ((cosine + 1.0) / 2.0) * (dpmsa->max - dpmsa->min) + dpmsa->min;
       Vector3D v{0.0, 0.0, 0.0};
       v[static_cast<unsigned>(dpmsa->component)] = newVal / static_cast<double>(time);
-      Sphere s(p.toPoint(), r);
+      Sphere s(p.toPoint(), static_cast<double>(r));
       MovingSphere ms{s, v};
       auto out = std::make_shared<SimpleValue<MovingSphere> >();
       out->set(ms);
@@ -1704,7 +1704,7 @@ public:
     return 0;
     }
 
-    void setRange(float min, float max) {this->min = min; this->max = max;}
+    void setRange(float min, float max) {this->min = static_cast<double>(min); this->max = static_cast<double>(max);}
 
     void setPeriod(int64_t period) {this->period = period;}
 

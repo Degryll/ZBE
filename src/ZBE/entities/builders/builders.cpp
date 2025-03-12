@@ -25,7 +25,7 @@ void combineRotations(glm::vec3 originDirection, glm::vec3 originUp, glm::vec3 d
     glm::quat quaternion = glm::quat_cast(rotationMatrix);
 
     // Obtener el ángulo y el vector de rotación del cuaternión
-    rotationAngle = 2 * acos(quaternion.w);
+    rotationAngle = 2 * acos(static_cast<double>(quaternion.w));
     rotationAxis = glm::normalize(glm::vec3(quaternion.x, quaternion.y, quaternion.z));
 }
 

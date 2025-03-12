@@ -19,8 +19,7 @@
 #include <mutex>
 #include <vector>
 
-#include <SDL2/SDL.h>
-#include <SDL_ttf.h>
+#include "ZBE/SDL/sdl_warning_suppressor.h"
 
 #include "ZBE/core/system/SysError.h"
 

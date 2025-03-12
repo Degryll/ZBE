@@ -11,8 +11,6 @@
 #define ZBE_SDL_DRAWERS_SIMPLETEXTSDLDRAWER_H_
 
 #include <memory>
-#include <SDL2/SDL.h>
-#include <SDL_ttf.h>
 
 #include "ZBE/core/behaviors/Behavior.h"
 #include "ZBE/entities/avatars/SingleTextSprite.h"

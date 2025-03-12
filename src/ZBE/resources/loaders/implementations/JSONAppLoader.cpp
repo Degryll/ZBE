@@ -62,7 +62,7 @@ void JSONAppLoader::loadLiteralConfig(std::string name, json& value) {
     intStore.insert(name, value.get<int64_t>());
     uintStore.insert(name, value.get<uint64_t>());
   } else if (value.is_number_float()) {
-    doubleStore.insert(name, value.get<float>());
+    doubleStore.insert(name, value.get<double>());
   } else if (value.is_string()) {
     std::string aux = value.get<std::string>();
     stringStore.insert(name, aux);

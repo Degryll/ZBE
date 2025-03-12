@@ -58,7 +58,24 @@ public:
   // }
 
   void callActor(Actor<IData, Traits...>*  actor, IData data) {
+    #if defined(__GNUC__) || defined(__clang__)
+    #pragma GCC diagnostic push
+    #pragma GCC diagnostic ignored "-Wunused-value"
+    // Añade aquí otros warnings específicos de GCC/Clang que quieras suprimir
+    #elif defined(_MSC_VER)
+          //  #pragma warning(push)
+          //  #pragma warning(disable: 4244) // Ejemplo de warning de MSVC (conversión de tipos)
+          //  // Añade aquí otros warnings específicos de MSVC que quieras suprimir
+          // TODO averiguar el equivalente MSC para -Wunused-value
+    #endif
+
     std::initializer_list<int>{(actor->act(static_cast<Reactor<IData, Traits>*>(this), data), 0)... };
+
+    #if defined(__GNUC__) || defined(__clang__)
+    #pragma GCC diagnostic pop
+    #elif defined(_MSC_VER)
+    //        #pragma warning(pop)
+    #endif
   }
 };
 
@@ -73,7 +90,7 @@ public:
     Reactor(const Reactor& rhs) : reaction(rhs.reaction) {}
     static std::shared_ptr<Funct<void,IData, Trait>> noReaction;
 
-    void setReaction(std::shared_ptr<Funct<void,IData, Trait>> reaction) {
+    void setReaction(std::shared_ptr<Funct<void, IData, Trait>> reaction) {
       this->reaction = reaction;
     }
 

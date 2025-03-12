@@ -831,12 +831,12 @@ private:
 
 };
 
-template<template<typename ...Ts> class AVT, typename... Ts>
+template<template<typename T, typename ...Ts> class AVT, typename T, typename... Ts>
 class _AvatarBldrFtry : public Factory {
 public:
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
-    std::shared_ptr<AvatarBldr<AVT, Ts...>> ab = std::make_shared<AvatarBldr<AVT, Ts...>>();
+    std::shared_ptr<AvatarBldr<AVT, T, Ts...>> ab = std::make_shared<AvatarBldr<AVT, T, Ts...>>();
     mainRsrc.insert(zbe::factories::functionName_ + name, ab);
     specificRsrc.insert("AvatarBldr."s + name, ab);
   }
@@ -859,14 +859,14 @@ public:
     }
     ab->setIdxArr(*arr);
 
-    JSONFactory::loadAllIndexed<TicketedForwardList<typename AvatarBldr<AVT, Ts...>::AvtBaseType>>(listRsrc, uintDict, j, zbe::factories::listName, "lists"s, "AvatarBldrFtry"s,
+    JSONFactory::loadAllIndexed<TicketedForwardList<typename AvatarBldr<AVT, T, Ts...>::AvtBaseType>>(listRsrc, uintDict, j, zbe::factories::listName, "lists"s, "AvatarBldrFtry"s,
         [&](uint64_t idx, std::shared_ptr<ListType> list) {
           ab->addIndexNlist(idx, list);
           return true;
         }
     );
 
-    JSONFactory::loadAllIndexed<TicketedForwardList<typename AvatarBldr<AVT, Ts...>::AvtBaseType>>(listRsrc, uintDict, j, zbe::factories::listName, "deactivatedlists"s, "AvatarBldrFtry"s,
+    JSONFactory::loadAllIndexed<TicketedForwardList<typename AvatarBldr<AVT, T, Ts...>::AvtBaseType>>(listRsrc, uintDict, j, zbe::factories::listName, "deactivatedlists"s, "AvatarBldrFtry"s,
         [&](uint64_t idx, std::shared_ptr<ListType> list) {
           ab->addDeactivatedIndexNlist(idx, list);
           return true;
@@ -875,12 +875,12 @@ public:
   }
 
 private:
-  static const unsigned expectedIndexes = sizeof...(Ts);
+  static const unsigned expectedIndexes = sizeof...(Ts) + 1;
   using FunctionType = Funct<void, std::shared_ptr<Entity>>;
-  using ListType = TicketedForwardList<typename AvatarBldr<AVT, Ts...>::AvtBaseType>;
+  using ListType = TicketedForwardList<typename AvatarBldr<AVT, T, Ts...>::AvtBaseType>;
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
-  RsrcStore<AvatarBldr<AVT, Ts...>>& specificRsrc = RsrcStore<AvatarBldr<AVT, Ts...>>::getInstance();
+  RsrcStore<AvatarBldr<AVT, T, Ts...>>& specificRsrc = RsrcStore<AvatarBldr<AVT, T, Ts...>>::getInstance();
   RsrcStore<ListType>& listRsrc = RsrcStore<ListType>::getInstance();
   RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
 };
@@ -1114,7 +1114,24 @@ public:
   Actor<IData, Trait, Traits...> operator()(std::shared_ptr<Entity> ent) override {
     Actor<IData, Trait, Traits...> actor;
     actor.setTrait(buildFunct<Trait>(ent));
+
+    #if defined(__GNUC__) || defined(__clang__)
+    #pragma GCC diagnostic push
+    #pragma GCC diagnostic ignored "-Wunused-value"
+    // Añade aquí otros warnings específicos de GCC/Clang que quieras suprimir
+    #elif defined(_MSC_VER)
+          //  #pragma warning(push)
+          //  #pragma warning(disable: 4244) // Ejemplo de warning de MSVC (conversión de tipos)
+          //  // Añade aquí otros warnings específicos de MSVC que quieras suprimir
+          // TODO averiguar el equivalente MSC para -Wunused-value
+    #endif
     std::initializer_list<int>{(actor.setTrait(buildFunct<Traits>(ent)) , 0)... };
+    #if defined(__GNUC__) || defined(__clang__)
+    #pragma GCC diagnostic pop
+    #elif defined(_MSC_VER)
+    //        #pragma warning(pop)
+    #endif
+
     return actor;
   }
 
@@ -1191,7 +1208,24 @@ public:
   Reactor<IData, Trait, Traits...> operator()(std::shared_ptr<Entity> ent) override {
     Reactor<IData, Trait, Traits...> reactor;
     reactor.Reactor<IData, Trait>::setReaction(buildFunct<Trait>(ent));
+    #if defined(__GNUC__) || defined(__clang__)
+    #pragma GCC diagnostic push
+    #pragma GCC diagnostic ignored "-Wunused-value"
+    // Añade aquí otros warnings específicos de GCC/Clang que quieras suprimir
+    #elif defined(_MSC_VER)
+          //  #pragma warning(push)
+          //  #pragma warning(disable: 4244) // Ejemplo de warning de MSVC (conversión de tipos)
+          //  // Añade aquí otros warnings específicos de MSVC que quieras suprimir
+          // TODO averiguar el equivalente MSC para -Wunused-value
+    #endif
+
     std::initializer_list<int>{(reactor.Reactor<IData, Traits>::setReaction(buildFunct<Traits>(ent)) , 0)... };
+
+    #if defined(__GNUC__) || defined(__clang__)
+    #pragma GCC diagnostic pop
+    #elif defined(_MSC_VER)
+    //        #pragma warning(pop)
+    #endif
     return reactor;
   }
 
@@ -1306,7 +1340,23 @@ public:
     auto j = *cfg;
     uint i = 0;
     bool failed = false;
+
+    #if defined(__GNUC__) || defined(__clang__)
+    #pragma GCC diagnostic push
+    #pragma GCC diagnostic ignored "-Wunused-value"
+    // Añade aquí otros warnings específicos de GCC/Clang que quieras suprimir
+    #elif defined(_MSC_VER)
+          //  #pragma warning(push)
+          //  #pragma warning(disable: 4244) // Ejemplo de warning de MSVC (conversión de tipos)
+          //  // Añade aquí otros warnings específicos de MSVC que quieras suprimir
+          // TODO averiguar el equivalente MSC para -Wunused-value
+    #endif
     std::initializer_list<int>({(addTraitBuilder<Traits>(traitCfgNames[i++], j, ab, failed), 0)...});
+    #if defined(__GNUC__) || defined(__clang__)
+    #pragma GCC diagnostic pop
+    #elif defined(_MSC_VER)
+    //        #pragma warning(pop)
+    #endif
   }
 
 private:
@@ -1370,7 +1420,22 @@ public:
     auto j = *cfg;
     uint i = 0;
     bool failed = false;
+    #if defined(__GNUC__) || defined(__clang__)
+    #pragma GCC diagnostic push
+    #pragma GCC diagnostic ignored "-Wunused-value"
+    // Añade aquí otros warnings específicos de GCC/Clang que quieras suprimir
+    #elif defined(_MSC_VER)
+          //  #pragma warning(push)
+          //  #pragma warning(disable: 4244) // Ejemplo de warning de MSVC (conversión de tipos)
+          //  // Añade aquí otros warnings específicos de MSVC que quieras suprimir
+          // TODO averiguar el equivalente MSC para -Wunused-value
+    #endif
     std::initializer_list<int>({(addReactionBuilder<Traits>(traitCfgNames[i++], j, ab, failed), 0)...});
+    #if defined(__GNUC__) || defined(__clang__)
+    #pragma GCC diagnostic pop
+    #elif defined(_MSC_VER)
+    //        #pragma warning(pop)
+    #endif
   }
 
 private:
@@ -1515,12 +1580,10 @@ private:
   RsrcDictionary<float>& floatStore = RsrcDictionary<float>::getInstance();
   RsrcDictionary<bool>& boolStore = RsrcDictionary<bool>::getInstance();
   RsrcDictionary<std::string>& stringStore = RsrcDictionary<std::string>::getInstance();
-  RsrcStore<ContextTime>& cTimeRsrc = RsrcStore<ContextTime>::getInstance();
 
   RsrcStore<Funct<void, std::shared_ptr<Entity>>>& mainRsrc = RsrcStore<Funct<void, std::shared_ptr<Entity>>>::getInstance();
   RsrcStore<EntitySetter>& specificRsrc = RsrcStore<EntitySetter>::getInstance();
 
-  RsrcStore<Funct<void, std::shared_ptr<Entity>>>& extraBldrStore = RsrcStore<Funct<void, std::shared_ptr<Entity>>>::getInstance();
 
   RsrcStore<Value<double> > &valueDRsrc = RsrcStore<Value<double> >::getInstance();
   RsrcStore<Value<float> > &valueFRsrc = RsrcStore<Value<float> >::getInstance();
@@ -1676,7 +1739,7 @@ struct BuildUpDirToOriBldr : public Funct<std::shared_ptr<Value<Vector3D>>, std:
     glm::vec3 rotationAxis;
     double rotationAngle;
     combineRotations(baseOri, baseUpw, gupwards, gori, rotationAxis, rotationAngle);
-    Vector3D out{rotationAxis.x, rotationAxis.y, rotationAxis.z};
+    Vector3D out{static_cast<double>(rotationAxis.x), static_cast<double>(rotationAxis.y), static_cast<double>(rotationAxis.z)};
     return std::make_shared<SimpleValue<Vector3D>>(out);
   }
 
@@ -1975,7 +2038,7 @@ public:
     || !addList2Bldr<Vector3D>(j, eb)
     || !addList2Bldr<Vector2D>(j, eb)
     || !addList2Bldr<std::string>(j, eb)
-    || !addList2Bldr<std::vector<std::string>>>(j, eb)) {
+    || !addList2Bldr<std::vector<std::string>>(j, eb)) {
       return;
     };
 

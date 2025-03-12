@@ -292,7 +292,7 @@ class Rotation3D : virtual public Behavior<Vector3D, Vector3D>, public Parametri
       glm::vec3 rot(vrot->get().x, vrot->get().y, vrot->get().z);
 
       pos = glm::rotate(pos, radians, rot);
-      avatar->set<1, Vector3D>(Vector3D{pos.x, pos.y, pos.z});
+      avatar->set<1, Vector3D>(Vector3D{static_cast<double>(pos.x), static_cast<double>(pos.y), static_cast<double>(pos.z)});
     }
 
   private:

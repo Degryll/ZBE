@@ -10,7 +10,7 @@
 #ifndef ZBE_SDL_TOOLS_SDLUTILS_H_
 #define ZBE_SDL_TOOLS_SDLUTILS_H_
 
-#include <SDL2/SDL.h>
+#include "ZBE/SDL/sdl_warning_suppressor.h"
 
 namespace zbe {
 

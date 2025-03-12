@@ -83,7 +83,6 @@ class ZBEAPI KeyDownTicketEnablerIHFtry : public Factory {
 
 private:
   RsrcStore<nlohmann::json> &configRsrc    = RsrcStore<nlohmann::json>::getInstance();
-  RsrcDictionary<std::string>& strStore    = RsrcDictionary<std::string>::getInstance();
   RsrcDictionary<ZBE_K>& keyStore          = RsrcDictionary<ZBE_K>::getInstance();
   RsrcStore<KeyDownTicketEnablerIH>& ttihRsrc     = RsrcStore<KeyDownTicketEnablerIH>::getInstance();
   RsrcStore<InputHandler>& ihRsrc          = RsrcStore<InputHandler>::getInstance();

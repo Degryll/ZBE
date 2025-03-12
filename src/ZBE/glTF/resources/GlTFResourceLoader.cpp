@@ -123,10 +123,10 @@ namespace zbe {
         uint64_t ne = bufferView.byteLength / (sizeof(float) * 3u * 3u);
         auto modelName = model.meshes[0].name;
         for(uint64_t j = 0; j < ne; ++j) {
-          uint64_t index = j * 9u;
-          Point3D a{p[index+0],p[index+1],p[index+2]};
-          Point3D b{p[index+3],p[index+4],p[index+5]};
-          Point3D c{p[index+6],p[index+7],p[index+8]};
+          uint64_t index = j * 9u; 
+          Point3D a{static_cast<double>(p[index+0]),static_cast<double>(p[index+1]),static_cast<double>(p[index+2])};
+          Point3D b{static_cast<double>(p[index+3]),static_cast<double>(p[index+4]),static_cast<double>(p[index+5])};
+          Point3D c{static_cast<double>(p[index+6]),static_cast<double>(p[index+7]),static_cast<double>(p[index+8])};
           Triangle3D t{a,b,c};
           listT3D->push_front(t);
         }

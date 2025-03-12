@@ -172,7 +172,7 @@ public:
     //Vector3D newPos3D = planePos + (Matrix(vplaneE1,vplaneE2) * newPos2D);
     // TODO esto es una teoria.
     Vector3D newVel3D = (planeE1 * vel2D.x + planeE2 * vel2D.y);
-    auto distanceVect = (cross(planeE1, planeE2)).setModule(distance->get());
+    auto distanceVect = (cross(planeE1, planeE2)).setModule(static_cast<double>(distance->get()));
     
     avatar->set<4, Vector3D>(newPos3D + distanceVect);
     avatar->set<5, Vector3D>(newVel3D);

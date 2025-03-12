@@ -94,7 +94,7 @@ public:
     zbe::Vector3D rotv = cross(normal, orientPrima);
     glm::vec3 rot{rotv.x, rotv.y, rotv.z};
     auto newCamUpGlm = glm::rotate(glm::vec3{normal.x, normal.y, normal.z}, -normalDiffAngle,  rot);
-    zbe::Vector3D newCamUp{newCamUpGlm.x ,newCamUpGlm.y, newCamUpGlm.z};
+    zbe::Vector3D newCamUp{static_cast<double>(newCamUpGlm.x), static_cast<double>(newCamUpGlm.y), static_cast<double>(newCamUpGlm.z)};
     zbe::Vector3D newPitchVect = zbe::cross(newCamUp, (pos- camPos)).normalize();
 
     // printf("-########################## init ##########################-\n");fflush(stdout);

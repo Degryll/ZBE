@@ -20,6 +20,17 @@
 
 #include "ZBE/core/system/system.h"
 
+#if defined(__GNUC__) || defined(__clang__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+// Añade aquí otros warnings específicos de GCC/Clang que quieras suprimir
+#elif defined(_MSC_VER)
+      //  #pragma warning(push)
+      //  #pragma warning(disable: 4244) // Ejemplo de warning de MSVC (conversión de tipos)
+      //  // Añade aquí otros warnings específicos de MSVC que quieras suprimir
+      // TODO averiguar el equivalente MSC para -Wdeprecated-declarations
+#endif
+
 namespace zbe {
 
 /** \brief Iterator for a ticketed forward list.
@@ -221,5 +232,11 @@ private:
   using TicketedFLConstIterator = TicketedForwardListIterator<T const>;
 
 }  // namespace zbe
+
+#if defined(__GNUC__) || defined(__clang__)
+#pragma GCC diagnostic pop
+#elif defined(_MSC_VER)
+//        #pragma warning(pop)
+#endif
 
 #endif  // ZBE_CORE_TOOLS_CONTAINERS_TICKETEDFORWARDLIST_H_

@@ -17,7 +17,7 @@
 // #include <imgui.h>
 // #include <imgui_impl_sdl.h>
 
-#include <SDL2/SDL.h>
+#include "ZBE/SDL/sdl_warning_suppressor.h"
 
 #include "ZBE/SDL/starters/SDL_Starter.h"
 #include "ZBE/SDL/events/SDLEventWatcher.h"

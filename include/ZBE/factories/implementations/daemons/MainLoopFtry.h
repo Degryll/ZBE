@@ -47,7 +47,6 @@ public:
   void setup(std::string name, uint64_t cfgId) override;
 
 private:
-  NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<Daemon> &daemonRsrc = RsrcStore<Daemon>::getInstance();
   RsrcStore<MainLoop> &mainLoopRsrc = RsrcStore<MainLoop>::getInstance();

@@ -47,11 +47,9 @@ public:
 
 private:
   RsrcDictionary<uint64_t>& uDict = RsrcDictionary<uint64_t>::getInstance();
-  NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<Daemon> &daemonRsrc = RsrcStore<Daemon>::getInstance();
   RsrcStore<StateMachineDaemon> &stateMachinedaemonRsrc = RsrcStore<StateMachineDaemon>::getInstance();
-  RsrcStore<Value<int64_t> > &valueRsrc = RsrcStore<Value<int64_t> >::getInstance();
 
 };
 

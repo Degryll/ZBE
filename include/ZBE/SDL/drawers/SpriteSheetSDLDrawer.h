@@ -13,7 +13,7 @@
 #include <memory>
 #include <cstdint>
 
-#include <SDL2/SDL.h>
+#include "ZBE/SDL/sdl_warning_suppressor.h"
 
 #include "ZBE/core/behaviors/Behavior.h"
 

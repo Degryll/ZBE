@@ -84,7 +84,6 @@ class ZBEAPI ParametricActivatorIHFtry : public Factory {
 
 private:
   RsrcStore<nlohmann::json> &configStore         = RsrcStore<nlohmann::json>::getInstance();
-  RsrcDictionary<std::string>& strDict           = RsrcDictionary<std::string>::getInstance();
   RsrcDictionary<ZBE_K>& keyDict                 = RsrcDictionary<ZBE_K>::getInstance();
   RsrcStore<ParametricActivatorIH>& paihStore    = RsrcStore<ParametricActivatorIH>::getInstance();
   RsrcStore<InputHandler>& ihStore               = RsrcStore<InputHandler>::getInstance();

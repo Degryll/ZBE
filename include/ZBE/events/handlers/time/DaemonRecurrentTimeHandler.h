@@ -149,8 +149,8 @@ void setup(std::string name, uint64_t cfgId) override {
     auto j = *cfg;
     std::shared_ptr<Daemon> daemon;
     std::shared_ptr<TimeEventGenerator> teg;
-    uint64_t ticketid;
-    uint64_t period;
+    uint64_t ticketid = 0;
+    uint64_t period = 0;
     if (j["daemon"].is_string()) {
       std::string dname = j["daemon"].get<std::string>();
       daemon = dmnRsrc.get("Daemon."s + dname);

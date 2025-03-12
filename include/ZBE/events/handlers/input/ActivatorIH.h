@@ -53,7 +53,7 @@ public:
     * param status value from input.
    */
   void run(uint32_t, float status) override {
-    if (!status) {
+    if (status==0.0f) {
       ticket->setACTIVE();
     }
   }
@@ -76,7 +76,6 @@ class ZBEAPI ActivatorIHFtry : public Factory {
 
 private:
   RsrcStore<nlohmann::json> &configStore         = RsrcStore<nlohmann::json>::getInstance();
-  RsrcDictionary<std::string>& strDict           = RsrcDictionary<std::string>::getInstance();
   RsrcDictionary<ZBE_K>& keyDict                 = RsrcDictionary<ZBE_K>::getInstance();
   RsrcStore<ActivatorIH>& paihStore              = RsrcStore<ActivatorIH>::getInstance();
   RsrcStore<InputHandler>& ihStore               = RsrcStore<InputHandler>::getInstance();

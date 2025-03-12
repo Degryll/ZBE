@@ -12,7 +12,7 @@
 
 #include <cstdint>
 #include <limits>
-#include <SDL_net.h>
+#include "ZBE/SDL/sdl_warning_suppressor.h"
 
 #include "ZBE/SDL/system/SDLSocket.h"
 

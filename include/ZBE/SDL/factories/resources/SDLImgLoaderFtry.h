@@ -47,9 +47,6 @@ public:
   void setup(std::string name, uint64_t cfgId) override;
 
 private:
-  //NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();
-  RsrcDictionary<std::string>& strStore = RsrcDictionary<std::string>::getInstance();
-  RsrcDictionary<int64_t>& intStore = RsrcDictionary<int64_t>::getInstance();
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<SDLImgLoader> &sdlImgLoaderRsrc = RsrcStore<SDLImgLoader>::getInstance();
   RsrcStore<RsrcLoader> &rsrcLoaderRsrc = RsrcStore<RsrcLoader>::getInstance();

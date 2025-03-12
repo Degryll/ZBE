@@ -8,7 +8,7 @@
  */
 
  #ifndef ZANDBOKZ_ZANDBOKZBUILDERS_H_
- #define ZANDBOKZ_ZANDBOKZBUILDERS_H__
+ #define ZANDBOKZ_ZANDBOKZBUILDERS_H_
 
 #include <cstdint>
 #include <memory>
@@ -35,7 +35,7 @@ public:
  void operator()(std::shared_ptr<zbe::Entity> entity) override {
     float baseScale = static_cast<float>(entity->getDouble(sizeIdx)->get());
     // Calculate plane
-    glm::mat4 mat(1.0);
+    // glm::mat4 mat(1.0);
     glm::vec3 glPos(0.0, 0.0, 0.0);
     glm::mat4 translate = glm::translate(glm::mat4(1.0f), glPos);
     glm::mat4 m     = glm::scale(glm::mat4(1.0f), glm::vec3(baseScale)) * translate;
@@ -43,9 +43,9 @@ public:
     glm::vec3 b = m * glm::vec4(baseT.b.x, baseT.b.y, baseT.b.z, 1.0);
     glm::vec3 c = m * glm::vec4(baseT.c.x, baseT.c.y, baseT.c.z, 1.0);
 
-    zbe::Point3D pa{a.x, a.y, a.z};
-    zbe::Point3D pb{b.x, b.y, b.z};
-    zbe::Point3D pc{c.x, c.y, c.z};
+    zbe::Point3D pa{static_cast<double>(a.x), static_cast<double>(a.y), static_cast<double>(a.z)};
+    zbe::Point3D pb{static_cast<double>(b.x), static_cast<double>(b.y), static_cast<double>(b.z)};
+    zbe::Point3D pc{static_cast<double>(c.x), static_cast<double>(c.y), static_cast<double>(c.z)};
 
     zbe::Point3D origin = pa;
     zbe::Vector3D e1 = (pb - origin).normalize();
@@ -68,7 +68,7 @@ public:
 
   std::shared_ptr<zbe::Value<zbe::Vector2D>> transformPointCoords(glm::vec3 p, zbe::Vector3D bx, zbe::Vector3D by, zbe::Vector3D) {
 
-    auto diff = zbe::Vector3D{p.x, p.y, p.z};
+    auto diff = zbe::Vector3D{static_cast<double>(p.x), static_cast<double>(p.y), static_cast<double>(p.z)};
 
     double x = diff * zbe::Vector3D{bx.x, bx.y, bx.z};
     double y = diff * zbe::Vector3D{by.x, by.y, by.z};
@@ -154,4 +154,4 @@ private:
 
 } // namespace zandbokz
 
-#endif  // ZANDBOKZ_ZANDBOKZBUILDERS_H__
+#endif  // ZANDBOKZ_ZANDBOKZBUILDERS_H_

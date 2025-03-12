@@ -358,7 +358,6 @@ private:
 
   zbe::RsrcStore<nlohmann::json>& configRsrc = zbe::RsrcStore<nlohmann::json>::getInstance();
   zbe::RsrcDictionary<zbe::Vector3D>& vecStore = zbe::RsrcDictionary<zbe::Vector3D>::getInstance();
-  zbe::RsrcStore<zbe::Value<zbe::Vector3D> > &vv3Rsrc = zbe::RsrcStore<zbe::Value<zbe::Vector3D> >::getInstance();
   zbe::RsrcStore<zbe::Behavior<zbe::Vector3D, zbe::Vector3D> >& behaviorRsrc = zbe::RsrcStore<zbe::Behavior<zbe::Vector3D, zbe::Vector3D> >::getInstance();
   zbe::RsrcStore<GravityMotion3D>& gm3dRsrc = zbe::RsrcStore<GravityMotion3D>::getInstance();
 };
@@ -413,7 +412,7 @@ class NonRealGravityVelSetterBhv : virtual public zbe::Behavior<zbe::Vector3D, z
     }
 
     void closest(zbe::Vector3D &pos, zbe::Vector3D &fakeGrav) {
-      double bestDistance = INFINITY;
+      double bestDistance = static_cast<double>(INFINITY);
       for (auto attractor : *attractors) {
         auto v = attractor->get();
         zbe::Vector3D v3 = v->get();

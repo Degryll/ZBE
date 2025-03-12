@@ -101,5 +101,6 @@
         "shared_mutex": "cpp",
         "__memory": "cpp",
         "charconv": "cpp"
-    }
+    },
+    "DockerRun.DisableAutoGenerateConfig": true
 }

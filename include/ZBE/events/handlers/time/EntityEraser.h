@@ -140,7 +140,6 @@ public:
 
 
 private:
-  NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();
   RsrcStore<nlohmann::json> &configStore = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<Entity> &entityStore = RsrcStore<Entity>::getInstance();
   RsrcStore<TimeHandler> &timeStore = RsrcStore<TimeHandler>::getInstance();

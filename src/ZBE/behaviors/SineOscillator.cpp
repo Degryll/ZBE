@@ -16,7 +16,7 @@ void SineOscillatorF::apply(std::shared_ptr<SAvatar<float> > avatar) {
   auto value = avatar->get<1, float>();
   auto cTime = avatar->getContextTime();
   float div = (static_cast<float>(cTime->getTotalTime())/static_cast<float>(period))*static_cast<float>(TAU);
-  float cosine = static_cast<float>(cos(div));
+  float cosine = static_cast<float>(cos(static_cast<double>(div)));
   float newVal = ((cosine+1.0f)/2.0f)*(max-min)+min;
   value->set(newVal);
 }

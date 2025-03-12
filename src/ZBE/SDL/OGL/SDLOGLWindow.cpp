@@ -370,10 +370,10 @@ void OGLShaderStore::printShaderLog(GLuint shader) {
   //TODO use logger
   printf( "Shader compilation error:\n");
   if( glIsShader( shader ) ) {
-      int infoLogLength = 0;
-      int maxLength = infoLogLength;
+      GLsizei infoLogLength = 0;
+      GLsizei maxLength = infoLogLength;
       glGetShaderiv( shader, GL_INFO_LOG_LENGTH, &maxLength );
-      char* infoLog = new char[ maxLength ];
+      char* infoLog = new char[ static_cast<unsigned>(maxLength) ];
       glGetShaderInfoLog( shader, maxLength, &infoLogLength, infoLog );
       if( infoLogLength > 0 ){ printf( "%s\n", infoLog );}
       delete[] infoLog;

@@ -101,7 +101,6 @@ OGLModel LookAtOGLModelSheet::generateModel(std::shared_ptr<MAvatar<uint64_t, do
   glm::vec3 glDir(dir.x, dir.y, dir.z);
 
   float baseScale = static_cast<float>(avatar->get<4, double>()->get());
-  glm::mat4 mat(1.0);
 
   glm::mat4 translate = glm::translate(glm::mat4(1.0f), glPos);
 
