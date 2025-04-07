@@ -142,6 +142,8 @@ target_include_directories(ZBE_LIB SYSTEM PRIVATE ${SDL2_net_SOURCE_DIR})
 target_include_directories(ZBE_LIB SYSTEM PRIVATE ${tinygltf_SOURCE_DIR})
 target_include_directories(ZBE_LIB SYSTEM PRIVATE ${vorbis_SOURCE_DIR}/include)
 target_include_directories(ZBE_LIB SYSTEM PRIVATE ${ogg_SOURCE_DIR})
+# target_include_directories(ZBE_LIB SYSTEM PRIVATE ${nlohmann_SOURCE_DIR}/include)
+# target_include_directories(ZBE_LIB SYSTEM PRIVATE /media/ludo/D4D679EDD679D06A/workspace/ZBE/build/_deps/json-src/include)
 
 
 # target_include_directories(ZBE_LIB SYSTEM PRIVATE ../../extlibs/stb)

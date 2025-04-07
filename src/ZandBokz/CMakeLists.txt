@@ -31,6 +31,8 @@ target_include_directories(ZANDBOKZ SYSTEM PRIVATE ${SDL2_SOURCE_DIR})
 target_include_directories(ZANDBOKZ SYSTEM PRIVATE ${tinygltf_SOURCE_DIR})
 target_include_directories(ZANDBOKZ SYSTEM PRIVATE ${vorbis_SOURCE_DIR}/include)
 target_include_directories(ZANDBOKZ SYSTEM PRIVATE ${ogg_SOURCE_DIR})
+# target_include_directories(ZANDBOKZ SYSTEM PRIVATE ${nlohmann_SOURCE_DIR}/include)
+# target_include_directories(ZANDBOKZ SYSTEM PRIVATE /media/ludo/D4D679EDD679D06A/workspace/ZBE/build/_deps/json-src/include)
 
 
 # target_compile_features(ZANDBOKZ PUBLIC cxx_std_20)

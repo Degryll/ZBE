@@ -82,9 +82,9 @@ jobs:
         cmake -B ./build 
         -S . 
         -G Ninja 
-        -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
-        -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
-        -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+        -DCMAKE_CXX_COMPILER=/usr/bin/g++ 
+        -DCMAKE_C_COMPILER=/usr/bin/gcc 
+        -DCMAKE_BUILD_TYPE=Release 
         -DCMAKE_CXX_STANDARD=20 
         -DZBE_ENABLE_CPPCHECK:BOOL="0" 
         -DZBE_BUILD_FUZZ_TESTS:BOOL="0" 
