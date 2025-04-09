@@ -72,7 +72,8 @@ jobs:
       id: strings
       shell: bash
       run: |
-        echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
+        echo "github.workspace =${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
+        echo "steps.strings.outputs.build-output-dir = ${{ steps.strings.outputs.build-output-dir }}
 
     - name: info
       run: |
