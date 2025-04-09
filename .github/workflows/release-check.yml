@@ -51,6 +51,13 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install ninja-build libfreetype-dev mesa-utils libglu1-mesa-dev freeglut3-dev mesa-common-dev
+
+    - name: switch to gcc-11 on linux
+      if: contains(matrix.c_compiler, 'gcc')
+      run: |
+        sudo apt install gcc-11 g++-11
+        sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 100 --slave /usr/bin/g++ g++ /usr/bin/g++-11 --slave /usr/bin/gcov gcov /usr/bin/gcov-11
+        sudo update-alternatives --set gcc /usr/bin/gcc-11  
         
     - name: Instalar zlib through vcpkg
       if: contains(matrix.os, 'windows')
