@@ -72,12 +72,13 @@ jobs:
       id: strings
       shell: bash
       run: |
-        echo "github.workspace =${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
-        echo "steps.strings.outputs.build-output-dir = ${{ steps.strings.outputs.build-output-dir }}
+        echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
 
     - name: info
       run: |
         ${{matrix.cpp_compiler}} -v
+        echo "steps.strings.outputs.build-output-dir = ${{ steps.strings.outputs.build-output-dir }}"
+
 
     - name: create directory
       run: |
