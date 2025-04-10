@@ -16,7 +16,7 @@ macro(
   elseif(CMAKE_CXX_COMPILER_ID MATCHES ".*Clang|GNU")
     set(NEW_CXX_DEFINITIONS "${NEW_CXX_DEFINITIONS} -D_GLIBCXX_ASSERTIONS")
     message(STATUS "*** GLIBC++ Assertions (vector[], string[], ...) enabled")
-
+    // TODO D_FORTIFY_SOURCE could be higher. Its set to 2 to avoid incompativility with some systems.
     set(NEW_COMPILE_OPTIONS "${NEW_COMPILE_OPTIONS} -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2")
     message(STATUS "*** g++/clang _FORTIFY_SOURCE=2 enabled")
 
