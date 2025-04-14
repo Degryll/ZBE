@@ -95,4 +95,8 @@ macro(
     target_link_options(${target} INTERFACE ${NEW_LINK_OPTIONS})
     target_compile_definitions(${target} INTERFACE ${NEW_CXX_DEFINITIONS})
   endif()
+
+  if(CMAKE_CXX_COMPILER_ID MATCHES ".*Clang")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
+  endif()
 endmacro()
