@@ -146,43 +146,43 @@ class AddVelIHBldrFtry : public Factory {
 
     auto avihb = specificRsrc.get("AddVelIHBldr."s + name);
 
-    auto orientation2DIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "orientation2DIdx"s, "Add2DVelIHBldrFtry"s);
+    auto orientation2DIdx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "orientation2DIdx"s, "Add2DVelIHBldrFtry"s);
     if(!orientation2DIdx) {
       SysError::setError("Add2DVelIHBldrFtry config for orientation2DIdx is invalid"s);
       return;
     }
 
-    auto velocity2DIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "velocity2DIdx"s, "Add2DVelIHBldrFtry"s);
+    auto velocity2DIdx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "velocity2DIdx"s, "Add2DVelIHBldrFtry"s);
     if(!velocity2DIdx) {
       SysError::setError("Add2DVelIHBldrFtry config for velocity2DIdx is invalid"s);
       return;
     }
 
-    auto velocity2DsrcIds = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "velocity2DsrcIds"s, "Add2DVelIHBldrFtry"s);
+    auto velocity2DsrcIds = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "velocity2DsrcIds"s, "Add2DVelIHBldrFtry"s);
     if(!velocity2DsrcIds) {
       SysError::setError("Add2DVelIHBldrFtry config for velocity2DsrcIds is invalid"s);
       return;
     }
 
-    auto ieg = JSONFactory::loadParamCfgStoreP<InputEventGenerator>(iegStore, j, "InputEventGenerator"s, "inputEventGenerator"s, "Add2DVelIHBldrFtry"s);
+    auto ieg = JSONFactory::StoreLoader<InputEventGenerator>::loadParamCfgStoreP(iegStore, j, "InputEventGenerator"s, "inputEventGenerator"s, "Add2DVelIHBldrFtry"s);
     if(!ieg) {
       SysError::setError("Add2DVelIHBldrFtry config for inputEventGenerator is invalid"s);
       return;
     }
 
-    auto key = JSONFactory::loadParamCfgDict<ZBE_K>(keyStore, j, "key"s, "Add2DVelIHBldrFtry"s);
+    auto key = JSONFactory::DictLoader<ZBE_K>::loadParamCfgDict(keyStore, j, "key"s, "Add2DVelIHBldrFtry"s);
     if(!key) {
       SysError::setError("Add2DVelIHBldrFtry config for key is invalid"s);
       return;
     }
 
-    auto multiplier = JSONFactory::loadParamCfgDict<double>(doubleDict, j, "multiplier"s, "Add2DVelIHBldrFtry"s);
+    auto multiplier = JSONFactory::DictLoader<double>::loadParamCfgDict(doubleDict, j, "multiplier"s, "Add2DVelIHBldrFtry"s);
     if(!multiplier) {
       SysError::setError("Add2DVelIHBldrFtry config for multiplier is invalid"s);
       return;
     }
 
-    auto tolerance = JSONFactory::loadParamCfgDict<double>(doubleDict, j, "tolerance"s, "Add2DVelIHBldrFtry"s);
+    auto tolerance = JSONFactory::DictLoader<double>::loadParamCfgDict(doubleDict, j, "tolerance"s, "Add2DVelIHBldrFtry"s);
     if(!tolerance) {
       SysError::setError("Add2DVelIHBldrFtry config for tolerance is invalid"s);
       return;

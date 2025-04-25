@@ -90,19 +90,19 @@ class KeyValueSetterIHFtry : public Factory {
     auto kvsih = specificRsrcStore.get("KeyValueSetterIH."s + name);
     auto j = *cfg;
 
-    auto valuePressed = JSONFactory::loadParamCfgDict<T>(tDict, j, "valuePressed"s, "KeyValueSetterIHFtry"s);
+    auto valuePressed = JSONFactory::DictLoader<T>::loadParamCfgDict(tDict, j, "valuePressed"s, "KeyValueSetterIHFtry"s);
     if(!valuePressed) {
       SysError::setError("KeyValueSetterIHFtry config for valuePressed is invalid"s);
       return;
     }
 
-    auto valueReleased = JSONFactory::loadParamCfgDict<T>(tDict, j, "valueReleased"s, "KeyValueSetterIHFtry"s);
+    auto valueReleased = JSONFactory::DictLoader<T>::loadParamCfgDict(tDict, j, "valueReleased"s, "KeyValueSetterIHFtry"s);
     if(!valueReleased) {
       SysError::setError("KeyValueSetterIHFtry config for valueReleased is invalid"s);
       return;
     }
 
-    auto value = JSONFactory::loadParamCfgStore<Value<T>>(valueStore, j, "value"s, "KeyValueSetterIHFtry"s);
+    auto value = JSONFactory::StoreLoader<Value<T>>::loadParamCfgStore(valueStore, j, "value"s, "KeyValueSetterIHFtry"s);
     if(!value) {
       SysError::setError("KeyValueSetterIHFtry config for value is invalid"s);
       return;
@@ -127,8 +127,8 @@ class KeyValueSetterIHFtry : public Factory {
     kvsih->setValue(*value);
 
     if(haskey) {
-      auto ieg = JSONFactory::loadParamCfgStoreP<InputEventGenerator>(iegStore, j, "InputEventGenerator"s, "inputEventGenerator"s, "KeyValueSetterIHFtry"s);
-      auto key = JSONFactory::loadParamCfgDict<ZBE_K>(keyDict, j, "key"s, "KeyValueSetterIHFtry"s);
+      auto ieg = JSONFactory::StoreLoader<InputEventGenerator>::loadParamCfgStoreP(iegStore, j, "InputEventGenerator"s, "inputEventGenerator"s, "KeyValueSetterIHFtry"s);
+      auto key = JSONFactory::DictLoader<ZBE_K>::loadParamCfgDict(keyDict, j, "key"s, "KeyValueSetterIHFtry"s);
       if(!ieg) {
         SysError::setError("KeyValueSetterIHFtry config for inputEventGenerator is invalid"s);
         return;

@@ -306,17 +306,17 @@ public:
 
       auto t2dab = specificRsrc.get("Triangle2DShapeAvtBldr."s + name);
 
-      auto aIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "aIdx"s, "Triangle2DShapeAvtBldrFtry"s);
+      auto aIdx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "aIdx"s, "Triangle2DShapeAvtBldrFtry"s);
       if(!aIdx) {
         return;
       }
 
-      auto bIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "bIdx"s, "Triangle2DShapeAvtBldrFtry"s);
+      auto bIdx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "bIdx"s, "Triangle2DShapeAvtBldrFtry"s);
       if(!aIdx) {
         return;
       }
 
-      auto cIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "cIdx"s, "Triangle2DShapeAvtBldrFtry"s);
+      auto cIdx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "cIdx"s, "Triangle2DShapeAvtBldrFtry"s);
       if(!aIdx) {
         return;
       }
@@ -356,12 +356,12 @@ public:
 
       auto mp2dab = specificRsrc.get("MovingPointShapeAvtBldr."s + name);
 
-      auto positionIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionIdx"s, "MovingPointShapeAvtBldrFtry"s);
+      auto positionIdx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "positionIdx"s, "MovingPointShapeAvtBldrFtry"s);
       if(!positionIdx) {
         return;
       }
 
-      auto velocityIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "velocityIdx"s, "MovingPointShapeAvtBldrFtry"s);
+      auto velocityIdx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "velocityIdx"s, "MovingPointShapeAvtBldrFtry"s);
       if(!velocityIdx) {
         return;
       }
@@ -532,15 +532,15 @@ public:
 
       auto msasb = specificRsrc.get("MovingSphereAvtShapeBldr."s + name);
 
-      auto positionIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionIdx"s, "MovingSphereAvtShapeBldrFtry"s);
+      auto positionIdx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "positionIdx"s, "MovingSphereAvtShapeBldrFtry"s);
       if(!positionIdx) {
         return;
       }
-      auto velocityIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "velocityIdx"s, "MovingSphereAvtShapeBldrFtry"s);
+      auto velocityIdx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "velocityIdx"s, "MovingSphereAvtShapeBldrFtry"s);
       if(!velocityIdx) {
         return;
       }
-      auto radiusidx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "radiusIdx"s, "MovingSphereAvtShapeBldrFtry"s);
+      auto radiusidx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "radiusIdx"s, "MovingSphereAvtShapeBldrFtry"s);
       if(!radiusidx) {
         return;
       }
@@ -609,15 +609,15 @@ public:
 
       auto msab = specificRsrc.get("MovingSphereAvtBldr."s + name);
 
-      auto positionIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionIdx"s, "MovingSphereAvtBldrFtry"s);
+      auto positionIdx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "positionIdx"s, "MovingSphereAvtBldrFtry"s);
       if(!positionIdx) {
         return;
       }
-      auto velocityIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "velocityIdx"s, "MovingSphereAvtBldrFtry"s);
+      auto velocityIdx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "velocityIdx"s, "MovingSphereAvtBldrFtry"s);
       if(!velocityIdx) {
         return;
       }
-      auto radiusidx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "radiusIdx"s, "MovingSphereAvtBldrFtry"s);
+      auto radiusidx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "radiusIdx"s, "MovingSphereAvtBldrFtry"s);
       if(!radiusidx) {
         return;
       }
@@ -772,36 +772,36 @@ public:
 
       auto mt3rasb = specificRsrc.get("MovingTriangle3DRscAvtShapeBldr."s + name);
 
-      auto velocityIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "velocityIdx"s, "MovingTriangle3DRscAvtShapeBldrFtry"s);
+      auto velocityIdx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "velocityIdx"s, "MovingTriangle3DRscAvtShapeBldrFtry"s);
       if(!velocityIdx) {
         return;
       }
-      auto orientationIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "orientationIdx"s, "MovingTriangle3DRscAvtShapeBldrFtry"s);
+      auto orientationIdx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "orientationIdx"s, "MovingTriangle3DRscAvtShapeBldrFtry"s);
       if(!orientationIdx) {
         return;
       }
-      auto positionIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionIdx"s, "MovingTriangle3DRscAvtShapeBldrFtry"s);
+      auto positionIdx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "positionIdx"s, "MovingTriangle3DRscAvtShapeBldrFtry"s);
       if(!positionIdx) {
         return;
       }
-      auto radsIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "radsIdx"s, "MovingTriangle3DRscAvtShapeBldrFtry"s);
+      auto radsIdx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "radsIdx"s, "MovingTriangle3DRscAvtShapeBldrFtry"s);
       if(!radsIdx) {
         return;
       }
-      auto sizeIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "sizeIdx"s, "MovingTriangle3DRscAvtShapeBldrFtry"s);
+      auto sizeIdx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "sizeIdx"s, "MovingTriangle3DRscAvtShapeBldrFtry"s);
       if(!sizeIdx) {
         return;
       }
-      auto e1Idx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "e1Idx"s, "MovingTriangle3DRscAvtShapeBldrFtry"s);
+      auto e1Idx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "e1Idx"s, "MovingTriangle3DRscAvtShapeBldrFtry"s);
       if(!e1Idx) {
         return;
       }
-      auto e2Idx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "e2Idx"s, "MovingTriangle3DRscAvtShapeBldrFtry"s);
+      auto e2Idx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "e2Idx"s, "MovingTriangle3DRscAvtShapeBldrFtry"s);
       if(!e2Idx) {
         return;
       }
 
-      auto triangleList = JSONFactory::loadParamCfgStoreP<std::forward_list<Triangle3D>>(triangle3DListRsrc, j, "TriangleList"s, "triangle"s, "MovingTriangle3DRscAvtShapeBldrFtry"s);
+      auto triangleList = JSONFactory::StoreLoader<std::forward_list<Triangle3D>>::loadParamCfgStoreP(triangle3DListRsrc, j, "TriangleList"s, "triangle"s, "MovingTriangle3DRscAvtShapeBldrFtry"s);
       if(!triangleList) {
         SysError::setError("EntityTimerBldrFtry config for contextTime is invalid"s);
         return;
@@ -916,20 +916,20 @@ public:
 
       auto msasb = specificRsrc.get("MovingTriangle3DAvtShapeBldr."s + name);
 
-      auto positionAIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionAIdx"s, "MovingTriangle3DAvtShapeBldrFtry"s);
+      auto positionAIdx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "positionAIdx"s, "MovingTriangle3DAvtShapeBldrFtry"s);
       if(!positionAIdx) {
         return;
       }
-      auto positionBIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionBIdx"s, "MovingTriangle3DAvtShapeBldrFtry"s);
+      auto positionBIdx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "positionBIdx"s, "MovingTriangle3DAvtShapeBldrFtry"s);
       if(!positionBIdx) {
         return;
       }
-      auto positionCIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionCIdx"s, "MovingTriangle3DAvtShapeBldrFtry"s);
+      auto positionCIdx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "positionCIdx"s, "MovingTriangle3DAvtShapeBldrFtry"s);
       if(!positionCIdx) {
         return;
       }
 
-      auto velocityIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "velocityIdx"s, "MovingTriangle3DAvtShapeBldrFtry"s);
+      auto velocityIdx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "velocityIdx"s, "MovingTriangle3DAvtShapeBldrFtry"s);
       if(!velocityIdx) {
         return;
       }
@@ -1000,22 +1000,22 @@ public:
 
       auto mtab = specificRsrc.get("MovingTriangle3DAvtBldr."s + name);
 
-      auto positionAIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionAIdx"s, "MovingTriangle3DAvtBldrFtry"s);
+      auto positionAIdx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "positionAIdx"s, "MovingTriangle3DAvtBldrFtry"s);
       if(!positionAIdx) {
         return;
       }
 
-      auto positionBIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionBIdx"s, "MovingTriangle3DAvtBldrFtry"s);
+      auto positionBIdx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "positionBIdx"s, "MovingTriangle3DAvtBldrFtry"s);
       if(!positionBIdx) {
         return;
       }
 
-      auto positionCIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionCIdx"s, "MovingTriangle3DAvtBldrFtry"s);
+      auto positionCIdx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "positionCIdx"s, "MovingTriangle3DAvtBldrFtry"s);
       if(!positionCIdx) {
         return;
       }
 
-      auto velocityIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "velocityIdx"s, "MovingTriangle3DAvtBldrFtry"s);
+      auto velocityIdx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "velocityIdx"s, "MovingTriangle3DAvtBldrFtry"s);
       if(!velocityIdx) {
         return;
       }
@@ -1240,15 +1240,15 @@ public:
 
       auto pttpdvb = specificRsrc.get("PosUpwardsTargetToPosUpwardsDirAvtBldr."s + name);
 
-      auto positionIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionIdx"s, "PosUpwardsTargetToPosUpwardsDirAvtBldrFtry"s);
+      auto positionIdx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "positionIdx"s, "PosUpwardsTargetToPosUpwardsDirAvtBldrFtry"s);
       if(!positionIdx) {
         return;
       }
-      auto targetIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "targetIdx"s, "PosUpwardsTargetToPosUpwardsDirAvtBldrFtry"s);
+      auto targetIdx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "targetIdx"s, "PosUpwardsTargetToPosUpwardsDirAvtBldrFtry"s);
       if(!targetIdx) {
         return;
       }
-      auto upwardsIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "upwardsIdx"s, "PosUpwardsTargetToPosUpwardsDirAvtBldrFtry"s);
+      auto upwardsIdx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "upwardsIdx"s, "PosUpwardsTargetToPosUpwardsDirAvtBldrFtry"s);
       if(!upwardsIdx) {
         return;
       }
@@ -1394,15 +1394,15 @@ private:
 
 //       auto ptutpdaab = specificRsrc.get("PosTargetUpwardsToPosDirAngleAvtBldr."s + name);
 
-//       auto positionIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionIdx"s, "PosTargetUpwardsToPosDirAngleAvtBldrFtry"s);
+//       auto positionIdx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "positionIdx"s, "PosTargetUpwardsToPosDirAngleAvtBldrFtry"s);
 //       if(!positionIdx) {
 //         return;
 //       }
-//       auto targetIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "targetIdx"s, "PosTargetUpwardsToPosDirAngleAvtBldrFtry"s);
+//       auto targetIdx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "targetIdx"s, "PosTargetUpwardsToPosDirAngleAvtBldrFtry"s);
 //       if(!targetIdx) {
 //         return;
 //       }
-//       auto upwardsIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "upwardsIdx"s, "PosTargetUpwardsToPosDirAngleAvtBldrFtry"s);
+//       auto upwardsIdx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "upwardsIdx"s, "PosTargetUpwardsToPosDirAngleAvtBldrFtry"s);
 //       if(!upwardsIdx) {
 //         return;
 //       }
@@ -1537,20 +1537,20 @@ private:
 
 //       auto mt3hasb = specificRsrc.get("MovingTriangle3DHitboxAvtShapeBldr."s + name);
 
-//       auto positionidx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionidx"s, "MovingTriangle3DHitboxAvtShapeBldrFtry"s);
+//       auto positionidx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "positionidx"s, "MovingTriangle3DHitboxAvtShapeBldrFtry"s);
 //       if(!positionidx) {
 //         return;
 //       }
-//       auto velocityidx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "velocityidx"s, "MovingTriangle3DHitboxAvtShapeBldrFtry"s);
+//       auto velocityidx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "velocityidx"s, "MovingTriangle3DHitboxAvtShapeBldrFtry"s);
 //       if(!velocityidx) {
 //         return;
 //       }
-//       auto orientationidx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "orientationidx"s, "MovingTriangle3DHitboxAvtShapeBldrFtry"s);
+//       auto orientationidx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "orientationidx"s, "MovingTriangle3DHitboxAvtShapeBldrFtry"s);
 //       if(!orientationidx) {
 //         return;
 //       }
 
-//       auto sizeidx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "sizeidx"s, "MovingTriangle3DHitboxAvtShapeBldrFtry"s);
+//       auto sizeidx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "sizeidx"s, "MovingTriangle3DHitboxAvtShapeBldrFtry"s);
 //       if(!sizeidx) {
 //         return;
 //       }
@@ -1621,22 +1621,22 @@ private:
 
 //       auto mt3hab = specificRsrc.get("MovingTriangle3DHitboxAvtBldr."s + name);
 
-//       auto positionidx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionidx"s, "MovingTriangle3DHitboxAvtBldrFtry"s);
+//       auto positionidx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "positionidx"s, "MovingTriangle3DHitboxAvtBldrFtry"s);
 //       if(!positionidx) {
 //         return;
 //       }
 
-//       auto velocityidx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "velocityidx"s, "MovingTriangle3DHitboxAvtBldrFtry"s);
+//       auto velocityidx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "velocityidx"s, "MovingTriangle3DHitboxAvtBldrFtry"s);
 //       if(!velocityidx) {
 //         return;
 //       }
 
-//       auto orientationidx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "orientationidx"s, "MovingTriangle3DHitboxAvtBldrFtry"s);
+//       auto orientationidx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "orientationidx"s, "MovingTriangle3DHitboxAvtBldrFtry"s);
 //       if(!orientationidx) {
 //         return;
 //       }
 
-//       auto sizeidx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "sizeidx"s, "MovingTriangle3DHitboxAvtBldrFtry"s);
+//       auto sizeidx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "sizeidx"s, "MovingTriangle3DHitboxAvtBldrFtry"s);
 //       if(!sizeidx) {
 //         return;
 //       }
@@ -2095,19 +2095,19 @@ public:
 
       auto ttdab = specificRsrc.get("TargetToDirAvtBldr."s + name);
 
-      auto positionIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionIdx"s, "TargetToDirAvtBldrFtry"s);
+      auto positionIdx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "positionIdx"s, "TargetToDirAvtBldrFtry"s);
       if(!positionIdx) {
         return;
       }
-      auto targetIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "targetIdx"s, "TargetToDirAvtBldrFtry"s);
+      auto targetIdx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "targetIdx"s, "TargetToDirAvtBldrFtry"s);
       if(!targetIdx) {
         return;
       }
-      auto upwardsIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "upwardsIdx"s, "TargetToDirAvtBldrFtry"s);
+      auto upwardsIdx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "upwardsIdx"s, "TargetToDirAvtBldrFtry"s);
       if(!upwardsIdx) {
         return;
       }
-      auto scaleIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "scaleIdx"s, "TargetToDirAvtBldrFtry"s);
+      auto scaleIdx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "scaleIdx"s, "TargetToDirAvtBldrFtry"s);
       if(!scaleIdx) {
         return;
       }
@@ -2154,11 +2154,11 @@ public:
 
       auto pttpdvb = specificRsrc.get("PosTargetToPosDirAvtBldr."s + name);
 
-      auto positionIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionIdx"s, "PosTargetToPosDirAvtBldrFtry"s);
+      auto positionIdx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "positionIdx"s, "PosTargetToPosDirAvtBldrFtry"s);
       if(!positionIdx) {
         return;
       }
-      auto targetIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "targetIdx"s, "PosTargetToPosDirAvtBldrFtry"s);
+      auto targetIdx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "targetIdx"s, "PosTargetToPosDirAvtBldrFtry"s);
       if(!targetIdx) {
         return;
       }
@@ -2205,23 +2205,23 @@ public:
 
       auto dcvab = specificRsrc.get("DerivedCosVelAvtBldr."s + name);
 
-      auto positionIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionIdx"s, "DerivedCosVelAvtBldrFtry"s);
+      auto positionIdx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "positionIdx"s, "DerivedCosVelAvtBldrFtry"s);
       if(!positionIdx) {
         return;
       }
-      auto min = JSONFactory::loadParamCfgDict<float>(floatDict, j, "min"s, "DerivedCosVelAvtBldrFtry"s);
+      auto min = JSONFactory::DictLoader<float>::loadParamCfgDict(floatDict, j, "min"s, "DerivedCosVelAvtBldrFtry"s);
       if(!min) {
         return;
       }
-      auto max = JSONFactory::loadParamCfgDict<float>(floatDict, j, "max"s, "DerivedCosVelAvtBldrFtry"s);
+      auto max = JSONFactory::DictLoader<float>::loadParamCfgDict(floatDict, j, "max"s, "DerivedCosVelAvtBldrFtry"s);
       if(!max) {
         return;
       }
-      auto period = JSONFactory::loadParamCfgDict<int64_t>(intDict, j, "period"s, "DerivedCosVelAvtBldrFtry"s);
+      auto period = JSONFactory::DictLoader<int64_t>::loadParamCfgDict(intDict, j, "period"s, "DerivedCosVelAvtBldrFtry"s);
       if(!period) {
         return;
       }
-      auto component = JSONFactory::loadParamCfgDict<int64_t>(intDict, j, "component"s, "DerivedCosVelAvtBldrFtry"s);
+      auto component = JSONFactory::DictLoader<int64_t>::loadParamCfgDict(intDict, j, "component"s, "DerivedCosVelAvtBldrFtry"s);
       if(!component) {
         return;
       }
@@ -2274,27 +2274,27 @@ public:
 
       auto dpmsa = specificRsrc.get("DerivedPosMovingSphereAvtShapeBldr."s + name);
 
-      auto positionIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionIdx"s, "DerivedPosMovingSphereAvtShapeBldrFtry"s);
+      auto positionIdx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "positionIdx"s, "DerivedPosMovingSphereAvtShapeBldrFtry"s);
       if(!positionIdx) {
         return;
       }
-      auto radiusidx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "radiusIdx"s, "DerivedPosMovingSphereAvtShapeBldrFtry"s);
+      auto radiusidx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "radiusIdx"s, "DerivedPosMovingSphereAvtShapeBldrFtry"s);
       if(!positionIdx) {
         return;
       }
-      auto min = JSONFactory::loadParamCfgDict<float>(floatDict, j, "min"s, "DerivedPosMovingSphereAvtShapeBldrFtry"s);
+      auto min = JSONFactory::DictLoader<float>::loadParamCfgDict(floatDict, j, "min"s, "DerivedPosMovingSphereAvtShapeBldrFtry"s);
       if(!min) {
         return;
       }
-      auto max = JSONFactory::loadParamCfgDict<float>(floatDict, j, "max"s, "DerivedPosMovingSphereAvtShapeBldrFtry"s);
+      auto max = JSONFactory::DictLoader<float>::loadParamCfgDict(floatDict, j, "max"s, "DerivedPosMovingSphereAvtShapeBldrFtry"s);
       if(!max) {
         return;
       }
-      auto period = JSONFactory::loadParamCfgDict<int64_t>(intDict, j, "period"s, "DerivedPosMovingSphereAvtShapeBldrFtry"s);
+      auto period = JSONFactory::DictLoader<int64_t>::loadParamCfgDict(intDict, j, "period"s, "DerivedPosMovingSphereAvtShapeBldrFtry"s);
       if(!period) {
         return;
       }
-      auto component = JSONFactory::loadParamCfgDict<int64_t>(intDict, j, "component"s, "DerivedPosMovingSphereAvtShapeBldrFtry"s);
+      auto component = JSONFactory::DictLoader<int64_t>::loadParamCfgDict(intDict, j, "component"s, "DerivedPosMovingSphereAvtShapeBldrFtry"s);
       if(!component) {
         return;
       }
@@ -2339,27 +2339,27 @@ public:
 
       auto dpmsa = specificRsrc.get("DerivedPosMovingSphereAvtBldr."s + name);
 
-      auto positionIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionIdx"s, "DerivedPosMovingSphereAvtBldrFtry"s);
+      auto positionIdx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "positionIdx"s, "DerivedPosMovingSphereAvtBldrFtry"s);
       if(!positionIdx) {
         return;
       }
-      auto radiusidx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "radiusIdx"s, "DerivedPosMovingSphereAvtBldrFtry"s);
+      auto radiusidx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "radiusIdx"s, "DerivedPosMovingSphereAvtBldrFtry"s);
       if(!positionIdx) {
         return;
       }
-      auto min = JSONFactory::loadParamCfgDict<float>(floatDict, j, "min"s, "DerivedPosMovingSphereAvtBldrFtry"s);
+      auto min = JSONFactory::DictLoader<float>::loadParamCfgDict(floatDict, j, "min"s, "DerivedPosMovingSphereAvtBldrFtry"s);
       if(!min) {
         return;
       }
-      auto max = JSONFactory::loadParamCfgDict<float>(floatDict, j, "max"s, "DerivedPosMovingSphereAvtBldrFtry"s);
+      auto max = JSONFactory::DictLoader<float>::loadParamCfgDict(floatDict, j, "max"s, "DerivedPosMovingSphereAvtBldrFtry"s);
       if(!max) {
         return;
       }
-      auto period = JSONFactory::loadParamCfgDict<int64_t>(intDict, j, "period"s, "DerivedPosMovingSphereAvtBldrFtry"s);
+      auto period = JSONFactory::DictLoader<int64_t>::loadParamCfgDict(intDict, j, "period"s, "DerivedPosMovingSphereAvtBldrFtry"s);
       if(!period) {
         return;
       }
-      auto component = JSONFactory::loadParamCfgDict<int64_t>(intDict, j, "component"s, "DerivedPosMovingSphereAvtBldrFtry"s);
+      auto component = JSONFactory::DictLoader<int64_t>::loadParamCfgDict(intDict, j, "component"s, "DerivedPosMovingSphereAvtBldrFtry"s);
       if(!component) {
         return;
       }
@@ -2410,15 +2410,15 @@ public:
 
       auto latpab = specificRsrc.get("LookAtToPitchAvtBldr."s + name);
 
-      auto positionIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionIdx"s, "LookAtToPitchAvtBldrFtry"s);
+      auto positionIdx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "positionIdx"s, "LookAtToPitchAvtBldrFtry"s);
       if(!positionIdx) {
         return;
       }
-      auto targetidx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "targetidx"s, "LookAtToPitchAvtBldrFtry"s);
+      auto targetidx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "targetidx"s, "LookAtToPitchAvtBldrFtry"s);
       if(!targetidx) {
         return;
       }
-      auto upwardsidx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "upwardsidx"s, "LookAtToPitchAvtBldrFtry"s);
+      auto upwardsidx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "upwardsidx"s, "LookAtToPitchAvtBldrFtry"s);
       if(!upwardsidx) {
         return;
       }
@@ -2462,15 +2462,15 @@ public:
 
       auto latyab = specificRsrc.get("LookAtToYawAvtBldr."s + name);
 
-      auto positionIdx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "positionIdx"s, "LookAtToYawAvtBldrFtry"s);
+      auto positionIdx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "positionIdx"s, "LookAtToYawAvtBldrFtry"s);
       if(!positionIdx) {
         return;
       }
-      auto targetidx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "targetidx"s, "LookAtToYawAvtBldrFtry"s);
+      auto targetidx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "targetidx"s, "LookAtToYawAvtBldrFtry"s);
       if(!targetidx) {
         return;
       }
-      auto upwardsidx = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "upwardsidx"s, "LookAtToYawAvtBldrFtry"s);
+      auto upwardsidx = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "upwardsidx"s, "LookAtToYawAvtBldrFtry"s);
       if(!upwardsidx) {
         return;
       }

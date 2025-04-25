@@ -91,7 +91,7 @@ public:
         }
       );
 
-      auto fixed = zbe::JSONFactory::loadParamCfgDict<T>(tDic, j, "fixedvalue"s, "FixedValueSetterDmnFtry"s);
+      auto fixed = zbe::JSONFactory::DictLoader<T>::loadParamCfgDict(tDic, j, "fixedvalue"s, "FixedValueSetterDmnFtry"s);
       if(!fixed) {
         return;
       }

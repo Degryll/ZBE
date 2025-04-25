@@ -13,7 +13,7 @@
 namespace zbe {
 
 
-inline void TimerTicket::setACTIVE() {
+void TimerTicket::setACTIVE() {
   if(s != ERASED) {
     if((s == INACTIVE) && (td.time > 0)) {
       td.time += contextTime->getEventTime();
@@ -23,7 +23,7 @@ inline void TimerTicket::setACTIVE() {
   }
 }
 
-inline void TimerTicket::setINACTIVE() {
+void TimerTicket::setINACTIVE() {
   if(s != ERASED) {
     if(s == ACTIVE) {
       td = (*iter);
@@ -34,7 +34,7 @@ inline void TimerTicket::setINACTIVE() {
   }
 }
 
-inline void TimerTicket::setERASED() {
+void TimerTicket::setERASED() {
   if(s != ERASED) {
     if(s == ACTIVE){
       timers.erase(iter);
@@ -43,7 +43,7 @@ inline void TimerTicket::setERASED() {
   }
 }
 
-inline void TimerTicket::toggle() {
+void TimerTicket::toggle() {
   if(s == ACTIVE) {
     s = INACTIVE;
   } else if(s == INACTIVE) {
@@ -51,7 +51,7 @@ inline void TimerTicket::toggle() {
   }
 }  //!< Set the state as state.
 
-inline void TimerTicket::setState(State state) {
+void TimerTicket::setState(State state) {
   if(state == ACTIVE) this->setACTIVE();
   if(state == INACTIVE) this->setINACTIVE();
   if(state == ERASED) this->setERASED();

@@ -439,7 +439,7 @@ public:
 
       auto msasb = specificRsrc.get("ReverseDirectionReactionBldr."s + name);
 
-      auto vectorIdx = zbe::JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "vectorIdx"s, "ReverseDirectionReactionBldrFtry"s);
+      auto vectorIdx = zbe::JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "vectorIdx"s, "ReverseDirectionReactionBldrFtry"s);
       if(!vectorIdx) {
         return;
       }
@@ -531,12 +531,12 @@ public:
 
       auto msasb = specificRsrc.get("BounceReactionBldr."s + name);
 
-      auto vectorIdx = zbe::JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "vectorIdx"s, "BounceReactionBldrFtry"s);
+      auto vectorIdx = zbe::JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "vectorIdx"s, "BounceReactionBldrFtry"s);
       if(!vectorIdx) {
         return;
       }
 
-      auto upwardsIdx = zbe::JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "upwardsIdx"s, "BounceReactionBldrFtry"s);
+      auto upwardsIdx = zbe::JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "upwardsIdx"s, "BounceReactionBldrFtry"s);
       if(!upwardsIdx) {
         return;
       }

@@ -157,17 +157,17 @@ public:
 
       auto msvb = specificRsrc.get("MovingSphereAvtBldr."s + name);
 
-      auto centeridx = zbe::JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "centerIdx"s, "MovingSphereAvtBldrFtry"s);
+      auto centeridx = zbe::JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "centerIdx"s, "MovingSphereAvtBldrFtry"s);
       if(!centeridx) {
         return;
       }
 
-      auto radiusidx = zbe::JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "radiusidx"s, "MovingSphereAvtBldrFtry"s);
+      auto radiusidx = zbe::JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "radiusidx"s, "MovingSphereAvtBldrFtry"s);
       if(!radiusidx) {
         return;
       }
 
-      auto velocityidx = zbe::JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "velocityidx"s, "MovingSphereAvtBldrFtry"s);
+      auto velocityidx = zbe::JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "velocityidx"s, "MovingSphereAvtBldrFtry"s);
       if(!velocityidx) {
         return;
       }

@@ -148,14 +148,14 @@ public:
     auto foald = specificRsrc.get("FunctOverAvtListDmn."s + name);
     auto j = *cfg;
 
-    if(auto funct = JSONFactory::loadParamCfgStoreP<F>(functRsrc, j, zbe::factories::functionName, "function", "FunctOverAvtListDmnFtry"s)) {
+    if(auto funct = JSONFactory::StoreLoader<F>::loadParamCfgStoreP(functRsrc, j, zbe::factories::functionName, "function", "FunctOverAvtListDmnFtry"s)) {
       foald->setFunct(*funct);
     } else {
       SysError::setError("FunctOverAvtListDmnFtry config for function is not an adecuate function name. Either it doesn't exist or type doesn't match"s);
       return;
     }
 
-    if(auto list = JSONFactory::loadParamCfgStoreP<L>(listRsrc, j, zbe::factories::listName, "list", "FunctOverAvtListDmnFtry"s)) {
+    if(auto list = JSONFactory::StoreLoader<L>::loadParamCfgStoreP(listRsrc, j, zbe::factories::listName, "list", "FunctOverAvtListDmnFtry"s)) {
       foald->setList(*list);
     } else {
       SysError::setError("FunctOverAvtListDmnFtry config for list is not an adecuate list name. Either it doesn't exist or type doesn't match"s);
@@ -559,7 +559,7 @@ public:
     auto j = *cfg;
     auto smd = specificRsrc.get("StatedDaemon."s + name);
 
-    if(auto value = JSONFactory::loadParamCfgStore<Value<int64_t>>(valueIRsrc, j, "value"s, "StatedDaemonFtry"s)) {
+    if(auto value = JSONFactory::StoreLoader<Value<int64_t>>::loadParamCfgStore(valueIRsrc, j, "value"s, "StatedDaemonFtry"s)) {
       smd->setStateValue(*value);
     } else {
       SysError::setError("StatedDaemonFtry config for value is not an adecuate value name."s);
@@ -655,21 +655,21 @@ public:
     auto cid = specificRsrc.get("ConditionalIntDaemon."s + name);
     auto j = *cfg;
 
-    if(auto daemon = JSONFactory::loadParamCfgStoreP<Daemon>(mainRsrc, j, zbe::factories::daemonName, "daemon", "ConditionalIntDaemonFtry"s)) {
+    if(auto daemon = JSONFactory::StoreLoader<Daemon>::loadParamCfgStoreP(mainRsrc, j, zbe::factories::daemonName, "daemon", "ConditionalIntDaemonFtry"s)) {
       cid->setDaemon(*daemon);
     } else {
       SysError::setError("ConditionalIntDaemonFtry config for daemon is not an adecuate daemon name."s);
       return;
     }
 
-    if(auto value = JSONFactory::loadParamCfgStore<Value<int64_t>>(valueIRsrc, j, "value"s, "ConditionalIntDaemonFtry"s)) {
+    if(auto value = JSONFactory::StoreLoader<Value<int64_t>>::loadParamCfgStore(valueIRsrc, j, "value"s, "ConditionalIntDaemonFtry"s)) {
       cid->setConditionValue(*value);
     } else {
       SysError::setError("ConditionalIntDaemonFtry config for value is not an adecuate value name."s);
       return;
     }
 
-    if(auto condition = JSONFactory::loadParamCfgDict<int64_t>(intStore, j, "condition"s, "ConditionalIntDaemonFtry"s)) {
+    if(auto condition = JSONFactory::DictLoader<int64_t>::loadParamCfgDict(intStore, j, "condition"s, "ConditionalIntDaemonFtry"s)) {
       cid->setCondition(*condition);
     } else {
       SysError::setError("ConditionalIntDaemonFtry config for condition is not an adecuate int name."s);

@@ -120,13 +120,13 @@ void setup(std::string name, uint64_t cfgId) override {
       equal = j["equal"].get<bool>();
     }
 
-    auto expected = JSONFactory::loadParamCfgDict<T>(tDict, j, "expected"s, "ConditionalDaemonIHFtry"s);
+    auto expected = JSONFactory::DictLoader<T>::loadParamCfgDict(tDict, j, "expected"s, "ConditionalDaemonIHFtry"s);
     if(!expected) {
       SysError::setError("ConditionalDaemonIHFtry config for expected is invalid"s);
       return;
     }
 
-    auto condition = JSONFactory::loadParamCfgStore<Value<T>>(valueRsrc, j, "condition"s, "ConditionalDaemonIHFtry"s);
+    auto condition = JSONFactory::StoreLoader<Value<T>>::loadParamCfgStore(valueRsrc, j, "condition"s, "ConditionalDaemonIHFtry"s);
     if(!condition) {
       SysError::setError("ConditionalDaemonIHFtry config for condition is invalid"s);
       return;
@@ -243,13 +243,13 @@ void setup(std::string name, uint64_t cfgId) override {
       equal = j["equal"].get<bool>();
     }
 
-    auto expected = JSONFactory::loadParamCfgDict<T>(tDict, j, "expected"s, "ConditionalCompositeIHFtry"s);
+    auto expected = JSONFactory::DictLoader<T>::loadParamCfgDict(tDict, j, "expected"s, "ConditionalCompositeIHFtry"s);
     if(!expected) {
       SysError::setError("ConditionalCompositeIHFtry config for expected is invalid"s);
       return;
     }
 
-    auto condition = JSONFactory::loadParamCfgStore<Value<T>>(valueRsrc, j, "condition"s, "ConditionalCompositeIHFtry"s);
+    auto condition = JSONFactory::StoreLoader<Value<T>>::loadParamCfgStore(valueRsrc, j, "condition"s, "ConditionalCompositeIHFtry"s);
     if(!condition) {
       SysError::setError("ConditionalCompositeIHFtry config for condition is invalid"s);
       return;

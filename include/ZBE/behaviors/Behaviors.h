@@ -159,7 +159,7 @@ public:
 
       auto batb = specificRsrc.get("BoundedAddTriggerBvr."s + name);
 
-      auto daemon = JSONFactory::loadParamCfgStoreP<Daemon>(daemonRsrc, j, "Daemon"s, "daemon"s, "BoundedAddTriggerBvrFtry"s);
+      auto daemon = JSONFactory::StoreLoader<Daemon>::loadParamCfgStoreP(daemonRsrc, j, "Daemon"s, "daemon"s, "BoundedAddTriggerBvrFtry"s);
       if(!daemon) {
         SysError::setError("BoundedAddTriggerBvrFtry config for daemon must be a valid Daemon name."s);
         return;
@@ -199,7 +199,7 @@ public:
 
       auto tdb = vsfbRsrc.get("ValueSetterFixedBvr."s + name);
 
-      auto value = JSONFactory::loadParamCfgDict<T>(tDict, j, "value"s, "ValueSetterFixedBvrFtry"s);
+      auto value = JSONFactory::DictLoader<T>::loadParamCfgDict(tDict, j, "value"s, "ValueSetterFixedBvrFtry"s);
       if(!value) {
         return;
       }

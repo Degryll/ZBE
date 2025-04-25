@@ -283,7 +283,7 @@ public:
       SysError::setError("EntityFileBldrFtry config for builders, if present, must be a array."s);
     }
 
-    auto contextTime = JSONFactory::loadParamCfgStoreP<ContextTime>(cTimeRsrc, j, zbe::factories::contextimeName, "contextTime"s, "EntityFileBldrFtry"s);
+    auto contextTime = JSONFactory::StoreLoader<ContextTime>::loadParamCfgStoreP(cTimeRsrc, j, zbe::factories::contextimeName, "contextTime"s, "EntityFileBldrFtry"s);
     if(!contextTime) {
       SysError::setError("EntityFileBldrFtry config for contextTime is invalid"s);
       return;
@@ -1468,7 +1468,7 @@ public:
     }
     auto sb = specificRsrc.get("ShapeBldr."s + name);
     auto j = *cfg;
-    if(auto shapeBuilderFunct = JSONFactory::loadParamCfgStoreP<typename ShapeBldr<S, Shapes...>::SubBuild>(shapeBuilderFunctStore, j, zbe::factories::functionName, "shapetype", "ShapeBldrFtry"s)) {
+    if(auto shapeBuilderFunct = JSONFactory::StoreLoader<typename ShapeBldr<S, Shapes...>::SubBuild>::loadParamCfgStoreP(shapeBuilderFunctStore, j, zbe::factories::functionName, "shapetype", "ShapeBldrFtry"s)) {
       sb->setBuildFunct(*shapeBuilderFunct);
       return;
     } else {
@@ -1522,7 +1522,7 @@ public:
       SysError::setError("EntityBldrFtry config for builders, if present, must be a array."s);
     }
 
-    auto contextTime = JSONFactory::loadParamCfgStoreP<ContextTime>(cTimeRsrc, j, zbe::factories::contextimeName, "contextTime"s, "EntityBldrFtry"s);
+    auto contextTime = JSONFactory::StoreLoader<ContextTime>::loadParamCfgStoreP(cTimeRsrc, j, zbe::factories::contextimeName, "contextTime"s, "EntityBldrFtry"s);
     if(!contextTime) {
       SysError::setError("EntityBldrFtry config for contextTime is invalid"s);
       return;
@@ -1882,7 +1882,7 @@ public:
     }
     auto bcvmb = specificRsrc.get("BuildCopyVectModuleBldr."s + name);
     auto j = *cfg;
-    auto module = JSONFactory::loadParamCfgDict<double>(doubleDict, j, "module"s, "BuildCopyVectModuleBldrFtry"s);
+    auto module = JSONFactory::DictLoader<double>::loadParamCfgDict(doubleDict, j, "module"s, "BuildCopyVectModuleBldrFtry"s);
     if(!module) {
       SysError::setError("BuildCopyVectModuleBldrFtry config for module is invalid"s);
       return;
@@ -1932,7 +1932,7 @@ public:
     || !addList2Bldr<std::vector<std::string>>(j, "VString"s, eb)) {
       return;
     }
-    auto contextTime = JSONFactory::loadParamCfgStoreP<ContextTime>(cTimeRsrc, j, zbe::factories::contextimeName, "contextTime"s, "BehaviorEntityBldrFtry"s);
+    auto contextTime = JSONFactory::StoreLoader<ContextTime>::loadParamCfgStoreP(cTimeRsrc, j, zbe::factories::contextimeName, "contextTime"s, "BehaviorEntityBldrFtry"s);
     if(!contextTime) {
       SysError::setError("BehaviorEntityBldrFtry config for contextTime is invalid"s);
       return;
@@ -1967,7 +1967,7 @@ private:
       auto dcfg = j[type];
       for (auto item : dcfg.items()) {
         auto key = item.key();
-        auto idx = JSONFactory::loadParamStrDict<uint64_t>(uintDict, key, "BehaviorEntityBldrFtry"s);
+        auto idx = JSONFactory::DictLoader<uint64_t>::loadParamStrDict(uintDict, key, "BehaviorEntityBldrFtry"s);
         if(!idx) {
           SysError::setError("BehaviorEntityBldrFtry config for " + type + " " + key +" is not an uint name."s);
           return false;
@@ -1977,7 +1977,7 @@ private:
         //   auto valueBuilder = buildValueBldr<VT>(valueCfg);
         //   eb->addValueBldr({*idx, valueBuilder});
         // } else {
-          auto valueBuilder = JSONFactory::loadParamCfgStoreP<ValueBldr<VT>>(RsrcStore<ValueBldr<VT>>::getInstance(), dcfg, zbe::factories::functionName, key, "BehaviorEntityBldrFtry"s);
+          auto valueBuilder = JSONFactory::StoreLoader<ValueBldr<VT>>::loadParamCfgStoreP(RsrcStore<ValueBldr<VT>>::getInstance(), dcfg, zbe::factories::functionName, key, "BehaviorEntityBldrFtry"s);
           if(valueBuilder) {
             eb->addValueBldr({*idx, *valueBuilder});
           } else {
@@ -2067,7 +2067,7 @@ private:
       auto dcfg = j[type];
       for (auto item : dcfg.items()) {
         auto key = item.key();
-        if(auto valueBuilder = JSONFactory::loadParamCfgStoreP<ValueBldr<double>>(doubleBldrStore, dcfg, zbe::factories::functionName, key, "BehaviorEntityBldrFtry"s)) {
+        if(auto valueBuilder = JSONFactory::StoreLoader<ValueBldr<double>>::loadParamCfgStoreP(doubleBldrStore, dcfg, zbe::factories::functionName, key, "BehaviorEntityBldrFtry"s)) {
           eb->addValueBldr(valueBuilder);
           return true;
         } else {
@@ -2130,23 +2130,23 @@ public:
     }
     auto inatorb = specificRsrc.get("InteractionatorBldr."s + name);
     auto j = *cfg;
-    auto actorBuilder = JSONFactory::loadParamCfgStoreP<typename InatorBldr::ActorTypeBldr>(actorBldrRsrc, j, zbe::factories::functionName, "actorbuilder"s, "InteractionatorBldrFtry"s);
+    auto actorBuilder = JSONFactory::StoreLoader<typename InatorBldr::ActorTypeBldr>::loadParamCfgStoreP(actorBldrRsrc, j, zbe::factories::functionName, "actorbuilder"s, "InteractionatorBldrFtry"s);
     if(!actorBuilder) {
       SysError::setError("InteractionatorBldrFtry config for actorbuilder is invalid"s);
       return;
     }
-    auto reactorBuilder = JSONFactory::loadParamCfgStoreP<typename InatorBldr::ReactorTypeBldr>(reactorBldrRsrc, j, zbe::factories::functionName, "reactorbuilder"s, "InteractionatorBldrFtry"s);
+    auto reactorBuilder = JSONFactory::StoreLoader<typename InatorBldr::ReactorTypeBldr>::loadParamCfgStoreP(reactorBldrRsrc, j, zbe::factories::functionName, "reactorbuilder"s, "InteractionatorBldrFtry"s);
     if(!reactorBuilder) {
       SysError::setError("InteractionatorBldrFtry config for reactorbuilder is invalid"s);
       return;
     }
 
-    auto shapeBuilder = JSONFactory::loadParamCfgStoreP<typename InatorBldr::ShapeBldr>(shapeBldrRsrc, j, zbe::factories::functionName, "shapebuilder"s, "InteractionatorBldrFtry"s);
+    auto shapeBuilder = JSONFactory::StoreLoader<typename InatorBldr::ShapeBldr>::loadParamCfgStoreP(shapeBldrRsrc, j, zbe::factories::functionName, "shapebuilder"s, "InteractionatorBldrFtry"s);
     if(!shapeBuilder) {
       SysError::setError("InteractionatorBldrFtry config for shapebuilder is invalid"s);
       return;
     }
-    auto list = JSONFactory::loadParamCfgStoreP<typename InatorBldr::InerList>(listInerRsrc, j, zbe::factories::listName, "interactioners"s, "InteractionatorBldrFtry"s);
+    auto list = JSONFactory::StoreLoader<typename InatorBldr::InerList>::loadParamCfgStoreP(listInerRsrc, j, zbe::factories::listName, "interactioners"s, "InteractionatorBldrFtry"s);
     if(!list) {
       SysError::setError("InteractionatorBldrFtry config for shapebuilder is invalid"s);
       return;
@@ -2221,18 +2221,18 @@ public:
     }
     auto inerb = specificRsrc.get("InteractionerBldr."s + name);
     auto j = *cfg;
-    auto actorBuilder = JSONFactory::loadParamCfgStoreP<typename InerBldr::ActorTypeBldr>(actorBldrRsrc, j, zbe::factories::functionName, "actorbuilder"s, "InteractionerBldr"s);
+    auto actorBuilder = JSONFactory::StoreLoader<typename InerBldr::ActorTypeBldr>::loadParamCfgStoreP(actorBldrRsrc, j, zbe::factories::functionName, "actorbuilder"s, "InteractionerBldr"s);
     if(!actorBuilder) {
       SysError::setError("InteractionerBldrFtry config for actorbuilder is invalid"s);
       return;
     }
 
-    auto reactorBuilder = JSONFactory::loadParamCfgStoreP<typename InerBldr::ReactorTypeBldr>(reactorBldrRsrc, j, zbe::factories::functionName, "reactorbuilder"s, "InteractionerBldr"s);
+    auto reactorBuilder = JSONFactory::StoreLoader<typename InerBldr::ReactorTypeBldr>::loadParamCfgStoreP(reactorBldrRsrc, j, zbe::factories::functionName, "reactorbuilder"s, "InteractionerBldr"s);
     if(!reactorBuilder) {
       SysError::setError("InteractionerBldrFtry config for reactorbuilder is invalid"s);
       return;
     }
-    auto shapeBuilder = JSONFactory::loadParamCfgStoreP<typename InerBldr::ShapeBldr>(shapeBldrRsrc, j, zbe::factories::functionName, "shapebuilder"s, "InteractionerBldr"s);
+    auto shapeBuilder = JSONFactory::StoreLoader<typename InerBldr::ShapeBldr>::loadParamCfgStoreP(shapeBldrRsrc, j, zbe::factories::functionName, "shapebuilder"s, "InteractionerBldr"s);
     if(!shapeBuilder) {
       SysError::setError("InteractionerBldrFtry config for shapebuilder is invalid"s);
       return;
@@ -2318,32 +2318,32 @@ public:
     auto etb = specificRsrc.get("EntityTimerBldr."s + name);
     auto j = *cfg;
 
-    auto handlerBldr = JSONFactory::loadParamCfgStoreP<HandlerBldrType>(handlerBldrRsrc, j, zbe::factories::functionName, "handlerbuilder"s, "EntityTimerBldrFtry"s);
+    auto handlerBldr = JSONFactory::StoreLoader<HandlerBldrType>::loadParamCfgStoreP(handlerBldrRsrc, j, zbe::factories::functionName, "handlerbuilder"s, "EntityTimerBldrFtry"s);
     if(!handlerBldr) {
       SysError::setError("EntityTimerBldrFtry config for handlerbuilder is invalid"s);
       return;
     }
     etb->setHandlerBuilder(*handlerBldr);
 
-    auto contextTime = JSONFactory::loadParamCfgStoreP<ContextTime>(cTimeRsrc, j, zbe::factories::contextimeName, "contextTime"s, "EntityTimerBldrFtry"s);
+    auto contextTime = JSONFactory::StoreLoader<ContextTime>::loadParamCfgStoreP(cTimeRsrc, j, zbe::factories::contextimeName, "contextTime"s, "EntityTimerBldrFtry"s);
     if(!contextTime) {
       SysError::setError("EntityTimerBldrFtry config for contextTime is invalid"s);
       return;
     }
 
-    auto teg = JSONFactory::loadParamCfgStoreP<TimeEventGenerator>(tegRsrc, j, "TimeEventGenerator"s, "teg"s, "EntityTimerBldrFtry"s);
+    auto teg = JSONFactory::StoreLoader<TimeEventGenerator>::loadParamCfgStoreP(tegRsrc, j, "TimeEventGenerator"s, "teg"s, "EntityTimerBldrFtry"s);
     if(!teg) {
       SysError::setError("EntityTimerBldrFtry config for teg is invalid"s);
       return;
     }
 
-    auto time = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "time"s, "EntityTimerBldrFtry"s);
+    auto time = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "time"s, "EntityTimerBldrFtry"s);
     if(!time) {
       SysError::setError("EntityTimerBldrFtry config for time is invalid"s);
       return;
     }
 
-    auto ticketId = JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "ticketId"s, "EntityTimerBldrFtry"s);
+    auto ticketId = JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "ticketId"s, "EntityTimerBldrFtry"s);
     if(!ticketId) {
       SysError::setError("EntityTimerBldrFtry config for time is invalid"s);
       return;

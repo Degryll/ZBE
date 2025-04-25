@@ -103,12 +103,12 @@ void Sound3DOALPlayerFtry::setup(std::string name, uint64_t cfgId){
   }
   auto j = *cfg;
   auto s3daolp = specificRsrc.get("Sound3DOALPlayer."s + name);
-  auto audioStore = JSONFactory::loadParamCfgStoreP<OALAudioStore>(audioStoreRsrc, j, "OALAudioStore", "audiostore"s, "Sound3DOALPlayerFtry"s);
+  auto audioStore = JSONFactory::StoreLoader<OALAudioStore>::loadParamCfgStoreP(audioStoreRsrc, j, "OALAudioStore", "audiostore"s, "Sound3DOALPlayerFtry"s);
   if(!audioStore) {
     SysError::setError("Sound3DOALPlayerFtry config for audiostore is invalid"s);
     return;
   }
-  auto cam = JSONFactory::loadParamCfgStoreP<Camera>(cameraRsrc, j,"Camera", "camera"s, "Sound3DOALPlayerFtry"s);
+  auto cam = JSONFactory::StoreLoader<Camera>::loadParamCfgStoreP(cameraRsrc, j,"Camera", "camera"s, "Sound3DOALPlayerFtry"s);
   if(!cam) {
     SysError::setError("Sound3DOALPlayerFtry config for camera is invalid"s);
     return;

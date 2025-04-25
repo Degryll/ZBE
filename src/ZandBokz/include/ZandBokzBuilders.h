@@ -115,27 +115,27 @@ class Triangle3Dto2DCacheBldrFtry : public zbe::Factory {
     auto t3dt2dcb = specificRsrc.get("Triangle3Dto2DCacheBldr."s + name);
     auto j = *cfg;
 
-    auto aIdx = zbe::JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "aIdx"s, "Triangle3Dto2DCacheBldrFtry"s);
+    auto aIdx = zbe::JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "aIdx"s, "Triangle3Dto2DCacheBldrFtry"s);
     if(!aIdx) {
       return;
     }
 
-    auto bIdx = zbe::JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "bIdx"s, "Triangle3Dto2DCacheBldrFtry"s);
+    auto bIdx = zbe::JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "bIdx"s, "Triangle3Dto2DCacheBldrFtry"s);
     if(!bIdx) {
       return;
     }
 
-    auto cIdx = zbe::JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "cIdx"s, "Triangle3Dto2DCacheBldrFtry"s);
+    auto cIdx = zbe::JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "cIdx"s, "Triangle3Dto2DCacheBldrFtry"s);
     if(!cIdx) {
       return;
     }
 
-    auto sizeIdx = zbe::JSONFactory::loadParamCfgDict<uint64_t>(uintDict, j, "sizeIdx"s, "Triangle3Dto2DCacheBldrFtry"s);
+    auto sizeIdx = zbe::JSONFactory::DictLoader<uint64_t>::loadParamCfgDict(uintDict, j, "sizeIdx"s, "Triangle3Dto2DCacheBldrFtry"s);
     if(!sizeIdx) {
       return;
     }
 
-    auto triangleList = zbe::JSONFactory::loadParamCfgStoreP<std::forward_list<zbe::Triangle3D>>(triangle3DListRsrc, j, "TriangleList"s, "triangle"s, "Triangle3Dto2DCacheBldrFtry"s);
+    auto triangleList = zbe::JSONFactory::StoreLoader<std::forward_list<zbe::Triangle3D>>::loadParamCfgStoreP(triangle3DListRsrc, j, "TriangleList"s, "triangle"s, "Triangle3Dto2DCacheBldrFtry"s);
     if(!triangleList) {
       zbe::SysError::setError("Triangle3Dto2DCacheBldrFtry config for contextTime is invalid"s);
       return;

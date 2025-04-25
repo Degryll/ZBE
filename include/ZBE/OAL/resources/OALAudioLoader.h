@@ -73,13 +73,13 @@ public:
     auto oalal = specificRsrc.get("OALAudioLoader."s + name);
     auto j = *cfg;
 
-    auto defLoader = JSONFactory::loadParamCfgStoreP<RsrcDefLoader>(rsrcDefLoaderRsrc, j, "RsrcDefLoader", "audiodef"s, "OALAudioLoaderFtry"s);
+    auto defLoader = JSONFactory::StoreLoader<RsrcDefLoader>::loadParamCfgStoreP(rsrcDefLoaderRsrc, j, "RsrcDefLoader", "audiodef"s, "OALAudioLoaderFtry"s);
     if(!defLoader) {
       SysError::setError("OALAudioLoaderFtry config for audiodef is invalid"s);
       return;
     }
 
-    auto audioStore = JSONFactory::loadParamCfgStoreP<OALAudioStore>(audioStoreRsrc, j, "OALAudioStore", "audiostore"s, "OALAudioLoaderFtry"s);
+    auto audioStore = JSONFactory::StoreLoader<OALAudioStore>::loadParamCfgStoreP(audioStoreRsrc, j, "OALAudioStore", "audiostore"s, "OALAudioLoaderFtry"s);
     if(!audioStore) {
       SysError::setError("OALAudioLoaderFtry config for audiostore is invalid"s);
       return;

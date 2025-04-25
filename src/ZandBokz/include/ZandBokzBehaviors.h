@@ -272,7 +272,7 @@ public:
 
     if(cfg) {
         auto j = *cfg;
-        auto g = zbe::JSONFactory::loadParamCfgDict<zbe::Vector3D>(vecStore, j, "gravity"s, "GravityMotion3DFtry"s);
+        auto g = zbe::JSONFactory::DictLoader<zbe::Vector3D>::loadParamCfgDict(vecStore, j, "gravity"s, "GravityMotion3DFtry"s);
         if(!g) {
             return;
         }
@@ -342,7 +342,7 @@ public:
 
     if(cfg) {
         auto j = *cfg;
-        auto g = zbe::JSONFactory::loadParamCfgDict<zbe::Vector3D>(vecStore, j, "gravity"s, "GravityMotion3DFtry"s);
+        auto g = zbe::JSONFactory::DictLoader<zbe::Vector3D>::loadParamCfgDict(vecStore, j, "gravity"s, "GravityMotion3DFtry"s);
         if(!g) {
             return;
         }
@@ -481,18 +481,18 @@ public:
         auto j = *cfg;
         auto nrgvs = specifcRsrc.get("NonRealGravityVelSetterBhv."s + name);
 
-        auto ratio = zbe::JSONFactory::loadParamCfgDict<double>(dStore, j, "ratio"s, "NonRealGravityVelSetterBhvFtry"s);
+        auto ratio = zbe::JSONFactory::DictLoader<double>::loadParamCfgDict(dStore, j, "ratio"s, "NonRealGravityVelSetterBhvFtry"s);
         if(!ratio) {
             return;
         }
         nrgvs->setRatio(*ratio);
 
-        auto radius = zbe::JSONFactory::loadParamCfgDict<double>(dStore, j, "radius"s, "NonRealGravityVelSetterBhvFtry"s);
+        auto radius = zbe::JSONFactory::DictLoader<double>::loadParamCfgDict(dStore, j, "radius"s, "NonRealGravityVelSetterBhvFtry"s);
         if(!radius) {
             return;
         }
         nrgvs->setRadius(*radius);
-        auto attractors = zbe::JSONFactory::loadParamCfgStoreP<NonRealGravityVelSetterBhv::ListType>(rsrclists, j, zbe::factories::listName, "list"s, "NonRealGravityVelSetterBhvFtry"s);
+        auto attractors = zbe::JSONFactory::StoreLoader<NonRealGravityVelSetterBhv::ListType>::loadParamCfgStoreP(rsrclists, j, zbe::factories::listName, "list"s, "NonRealGravityVelSetterBhvFtry"s);
         if(!radius) {
             return;
         }

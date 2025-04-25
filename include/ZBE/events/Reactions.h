@@ -233,7 +233,7 @@ public:
 
       auto drb = specificRsrc.get("DaemonRctBldr."s + name);
 
-      auto dmn = JSONFactory::loadParamCfgStoreP<Daemon>(dmnRsrc, j, "Daemon", "daemon"s, "DaemonRctBldrFtry"s);
+      auto dmn = JSONFactory::StoreLoader<Daemon>::loadParamCfgStoreP(dmnRsrc, j, "Daemon", "daemon"s, "DaemonRctBldrFtry"s);
       if(!dmn) {
         SysError::setError("KeyValueSetterIHFtry config for daemon is invalid"s);
         return;

@@ -61,13 +61,13 @@ void BroadcastIHFtry::setup(std::string name, uint64_t cfgId) {
   }
 
   if(haskey) {
-    auto ieg = JSONFactory::loadParamCfgStoreP<InputEventGenerator>(iegStore, j, "InputEventGenerator"s, "inputEventGenerator"s, "BroadcastIHFtry"s);
+    auto ieg = JSONFactory::StoreLoader<InputEventGenerator>::loadParamCfgStoreP(iegStore, j, "InputEventGenerator"s, "inputEventGenerator"s, "BroadcastIHFtry"s);
     if(!ieg) {
       SysError::setError("BroadcastIHFtry config for inputEventGenerator is invalid"s);
       return;
     }
 
-    auto key = JSONFactory::loadParamCfgDict<ZBE_K>(keyDict, j, "key"s, "BroadcastIHFtry"s);
+    auto key = JSONFactory::DictLoader<ZBE_K>::loadParamCfgDict(keyDict, j, "key"s, "BroadcastIHFtry"s);
     if(!key) {
       SysError::setError("BroadcastIHFtry config for key is invalid"s);
       return;

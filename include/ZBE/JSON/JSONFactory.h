@@ -27,71 +27,89 @@ namespace JSONFactory {
 using namespace nlohmann;
 
 template<typename T, typename Store>
-std::optional<typename Store::StoredType> loadParamStrP(Store& store, std::string prefix, std::string parameter, std::string factoryName) {
-  using namespace std::string_literals;
-  std::string paramName = prefix + zbe::factories::separator + parameter;
-  if(!store.contains(paramName)) {
-    SysError::setError(factoryName + " config for " + parameter + " inside " + prefix + " does not exist."s);
-    return std::nullopt;
+class AgnosticLoader {
+public:
+  static std::optional<typename Store::StoredType> loadParamStrP(Store& store, std::string prefix, std::string parameter, std::string factoryName) {
+    using namespace std::string_literals;
+    std::string paramName = prefix + zbe::factories::separator + parameter;
+    if(!store.contains(paramName)) {
+      SysError::setError(factoryName + " config for " + parameter + " inside " + prefix + " does not exist."s);
+      return std::nullopt;
+    }
+
+    return store.get(paramName);
   }
 
-  return store.get(paramName);
-}
-
-template<typename T, typename Store>
-std::optional<typename Store::StoredType> loadParamCfgP(Store& store, json cfg, std::string prefix, std::string parameter, std::string factoryName) {
-  using namespace std::string_literals;
-  if (!cfg[parameter].is_string()) {
-    SysError::setError(factoryName + " config for "s + parameter + " must be a string."s);
-    return std::nullopt;
-  }
-  return loadParamStrP<T, Store>(store, prefix, cfg[parameter].get<std::string>(), factoryName);
-}
-
-template<typename T, typename Store>
-std::optional<typename Store::StoredType> loadParamStr(Store& store, std::string parameter, std::string factoryName) {
-  using namespace std::string_literals;
-  if(!store.contains(parameter)) {
-    SysError::setError(factoryName + " config for " + parameter + " does not exist."s);
-    return std::nullopt;
+  static std::optional<typename Store::StoredType> loadParamCfgP(Store& store, json cfg, std::string prefix, std::string parameter, std::string factoryName) {
+    using namespace std::string_literals;
+    if (!cfg[parameter].is_string()) {
+      SysError::setError(factoryName + " config for "s + parameter + " must be a string."s);
+      return std::nullopt;
+    }
+    return loadParamStrP(store, prefix, cfg[parameter].get<std::string>(), factoryName);
   }
 
-  return store.get(parameter);
-}
+  static std::optional<typename Store::StoredType> loadParamStr(Store& store, std::string parameter, std::string factoryName) {
+    using namespace std::string_literals;
+    if(!store.contains(parameter)) {
+      SysError::setError(factoryName + " config for " + parameter + " does not exist."s);
+      return std::nullopt;
+    }
 
-template<typename T, typename Store>
-std::optional<typename Store::StoredType> loadParamCfg(Store& store, json cfg, std::string parameter, std::string factoryName) {
-  using namespace std::string_literals;
-  if (!cfg[parameter].is_string()) {
-    SysError::setError(factoryName + " config for "s + parameter + " must be a string."s);
-    return std::nullopt;
+    return store.get(parameter);
   }
-  return loadParamStr<T, Store>(store, cfg[parameter].get<std::string>(), factoryName);
-}
+
+  static std::optional<typename Store::StoredType> loadParamCfg(Store& store, json cfg, std::string parameter, std::string factoryName) {
+    using namespace std::string_literals;
+    if (!cfg[parameter].is_string()) {
+      SysError::setError(factoryName + " config for "s + parameter + " must be a string."s);
+      return std::nullopt;
+    }
+    return loadParamStr(store, cfg[parameter].get<std::string>(), factoryName);
+  }
+
+};
 
 template<typename T>
-const auto loadParamCfgStore = loadParamCfg<T, RsrcStore<T>>;
+class StoreLoader : private AgnosticLoader<T, RsrcStore<T>> {
+public:
+  static std::optional<typename RsrcStore<T>::StoredType> loadParamCfgStore(RsrcStore<T>& store, json cfg, std::string parameter, std::string factoryName) {
+    return AgnosticLoader<T, RsrcStore<T>>::loadParamCfg(store, cfg, parameter, factoryName);
+  }
+
+  static std::optional<typename RsrcStore<T>::StoredType> loadParamStrStore(RsrcStore<T>& store, std::string parameter, std::string factoryName) {
+    return AgnosticLoader<T, RsrcStore<T>>::loadParamStr(store, parameter, factoryName);
+  }
+
+  static std::optional<typename RsrcStore<T>::StoredType> loadParamCfgStoreP(RsrcStore<T>& store, json cfg, std::string prefix, std::string parameter, std::string factoryName) {
+    return AgnosticLoader<T, RsrcStore<T>>::loadParamCfgP(store, cfg, prefix, parameter, factoryName);
+  }
+
+  static std::optional<typename RsrcStore<T>::StoredType> loadParamStrStoreP(RsrcStore<T>& store, std::string prefix, std::string parameter, std::string factoryName) {
+    return AgnosticLoader<T, RsrcStore<T>>::loadParamStrP(store, prefix, parameter, factoryName);
+  }
+
+};
 
 template<typename T>
-const auto loadParamCfgDict = loadParamCfg<T, RsrcDictionary<T>>;
+class DictLoader : private AgnosticLoader<T, RsrcDictionary<T>> {
+public:
+  static std::optional<typename RsrcDictionary<T>::StoredType> loadParamCfgDict(RsrcDictionary<T>& store, json cfg, std::string parameter, std::string factoryName) {
+    return AgnosticLoader<T, RsrcDictionary<T>>::loadParamCfg(store, cfg, parameter, factoryName);
+  }
 
-template<typename T>
-const auto loadParamStrStore = loadParamStr<T, RsrcStore<T>>;
+  static std::optional<typename RsrcDictionary<T>::StoredType> loadParamStrDict(RsrcDictionary<T>& store, std::string parameter, std::string factoryName) {
+    return AgnosticLoader<T, RsrcDictionary<T>>::loadParamStr(store, parameter, factoryName);
+  }
 
-template<typename T>
-const auto loadParamStrDict = loadParamStr<T, RsrcDictionary<T>>;
+  static std::optional<typename RsrcDictionary<T>::StoredType> loadParamCfgDictP(RsrcDictionary<T>& store, json cfg, std::string prefix, std::string parameter, std::string factoryName) {
+    return AgnosticLoader<T, RsrcDictionary<T>>::loadParamCfgP(store, cfg, prefix, parameter, factoryName);
+  }
 
-template<typename T>
-const auto loadParamCfgStoreP = loadParamCfgP<T, RsrcStore<T>>;
-
-template<typename T>
-const auto loadParamCfgDictP = loadParamCfgP<T, RsrcDictionary<T>>;
-
-template<typename T>
-const auto loadParamStrStoreP = loadParamStrP<T, RsrcStore<T>>;
-
-template<typename T>
-const auto loadParamStrDictP = loadParamStrP<T, RsrcDictionary<T>>;
+  static std::optional<typename RsrcDictionary<T>::StoredType> loadParamStrDictP(RsrcDictionary<T>& store, std::string prefix, std::string parameter, std::string factoryName) {
+    return AgnosticLoader<T, RsrcDictionary<T>>::loadParamStrP(store, prefix, parameter, factoryName);
+  }
+};
 
 
 // template<typename T>
@@ -137,7 +155,7 @@ bool loadAllIndexed(RsrcStore<T>& store, RsrcDictionary<uint64_t>& uintDict, jso
     for (auto item : arrayCfg.items()) { //+ zbe::factories::separator
       auto key = item.key();
 
-      auto element = loadParamStrStoreP<T>(store, prefix, key, factoryName);
+      auto element = StoreLoader<T>::loadParamStrStoreP(store, prefix, key, factoryName);
       if(!element) {
         SysError::setError(factoryName + " config for "s + parameter + " contains a non valid element name:"s + key);
         return false;
@@ -185,7 +203,7 @@ bool loadAllIndexedRev(RsrcStore<T>& store, RsrcDictionary<D>& dict, json cfg, s
       }
       
       auto elementName = item.value().get<std::string>();
-      auto element = loadParamStrStoreP<T>(store, prefix, elementName, factoryName);
+      auto element = StoreLoader<T>::loadParamStrStoreP(store, prefix, elementName, factoryName);
       if(!element) {
         SysError::setError(factoryName + " config for "s + parameter + " contains a non valid element name:"s + elementName);
         return false;
@@ -213,7 +231,7 @@ bool loadAllP(RsrcStore<T>& store, json cfg, std::string prefix, std::string par
         return false;
       }
       auto value = jvalue.get<std::string>();
-      auto element = loadParamStrStoreP<T>(store, prefix, value, factoryName);
+      auto element = StoreLoader<T>::loadParamStrStoreP(store, prefix, value, factoryName);
       if(!element) {
         SysError::setError(factoryName + " config for "s + parameter + " contains a non valid element name:"s + value);
         return false;
@@ -242,7 +260,7 @@ bool loadAll(RsrcStore<T>& store, json cfg, std::string parameter, std::string f
         return false;
       }
       auto value = jvalue.get<std::string>();
-      auto element = loadParamStrStore<T>(store, value, factoryName);
+      auto element = StoreLoader<T>::loadParamStrStore(store, value, factoryName);
       if(!element) {
         SysError::setError(factoryName + " config for "s + parameter + " contains a non valid element name:"s + value);
         return false;
