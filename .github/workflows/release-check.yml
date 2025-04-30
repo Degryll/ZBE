@@ -60,7 +60,7 @@ jobs:
         sudo update-alternatives --set gcc /usr/bin/gcc-11  
 
     - name: Set up MSVC environment
-      if: contains(matrix.c_compiler, 'cl')
+      if: contains(matrix.os, 'windows')
       uses: ilammy/msvc-dev-cmd@v1
         
     - name: Instalar zlib through vcpkg
@@ -116,8 +116,8 @@ jobs:
         -DZBE_ENABLE_SANITIZER_UNDEFINED:BOOL="0" 
         -DZBE_ENABLE_SANITIZER_ADDRESS:BOOL="0"
 
-    - name: Configure CMake cl
-      if: contains(matrix.c_compiler, 'cl')
+    - name: Configure CMake windows
+      if: contains(matrix.os, 'windows')
       shell: powershell
       run: cmake -B ./build -S . -DCMAKE_TOOLCHAIN_FILE=./vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-windows -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_STANDARD=20 -DZBE_ENABLE_CPPCHECK:BOOL="0" -DZBE_BUILD_FUZZ_TESTS:BOOL="0" -DZBE_ENABLE_SANITIZER_UNDEFINED:BOOL="0" -DZBE_ENABLE_SANITIZER_ADDRESS:BOOL="0"
 
