@@ -118,7 +118,9 @@ jobs:
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
       run: >
         cmake -B ./build 
-        -S . 
+        -S .
+        -DCMAKE_TOOLCHAIN_FILE=./vcpkg/scripts/buildsystems/vcpkg.cmake
+        -DVCPKG_TARGET_TRIPLET=x64-windows
         -G Ninja
         -DCMAKE_BUILD_TYPE=Release 
         -DCMAKE_CXX_STANDARD=20 
