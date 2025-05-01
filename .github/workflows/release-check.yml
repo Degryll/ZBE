@@ -119,9 +119,19 @@ jobs:
     - name: Configure CMake windows
       if: contains(matrix.os, 'windows')
       shell: powershell
-      run: cmake -DCMAKE_TOOLCHAIN_FILE=D:/a/ZBE/ZBE/vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-windows -S . -B ./build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_STANDARD=20 -DZBE_ENABLE_CPPCHECK:BOOL="0" -DZBE_BUILD_FUZZ_TESTS:BOOL="0" -DZBE_ENABLE_SANITIZER_UNDEFINED:BOOL="0" -DZBE_ENABLE_SANITIZER_ADDRESS:BOOL="0"
-
-
+      # run: cmake -DCMAKE_TOOLCHAIN_FILE=D:/a/ZBE/ZBE/vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-windows -S . -B ./build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_STANDARD=20 -DZBE_ENABLE_CPPCHECK:BOOL="0" -DZBE_BUILD_FUZZ_TESTS:BOOL="0" -DZBE_ENABLE_SANITIZER_UNDEFINED:BOOL="0" -DZBE_ENABLE_SANITIZER_ADDRESS:BOOL="0"
+      run: |
+        cmake `
+          -DCMAKE_TOOLCHAIN_FILE=D:/a/ZBE/ZBE/vcpkg/scripts/buildsystems/vcpkg.cmake `
+          -DVCPKG_TARGET_TRIPLET=x64-windows `
+          -S . -B ./build -G Ninja `
+          -DCMAKE_BUILD_TYPE=Release `
+          -DCMAKE_CXX_STANDARD=20 `
+          -DZBE_ENABLE_CPPCHECK:BOOL="0" `
+          -DZBE_BUILD_FUZZ_TESTS:BOOL="0" `
+          -DZBE_ENABLE_SANITIZER_UNDEFINED:BOOL="0" `
+          -DZBE_ENABLE_SANITIZER_ADDRESS:BOOL="0" `
+          -DCMAKE_CXX_FLAGS="$env:CXXFLAGS -DZBE_EXPORTS"
 
     - name: Build
       # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
