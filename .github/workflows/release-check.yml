@@ -130,8 +130,7 @@ jobs:
           -DZBE_ENABLE_CPPCHECK:BOOL="0" `
           -DZBE_BUILD_FUZZ_TESTS:BOOL="0" `
           -DZBE_ENABLE_SANITIZER_UNDEFINED:BOOL="0" `
-          -DZBE_ENABLE_SANITIZER_ADDRESS:BOOL="0" `
-          -DCMAKE_CXX_FLAGS="$env:CXXFLAGS -DZBE_EXPORTS"
+          -DZBE_ENABLE_SANITIZER_ADDRESS:BOOL="0"
 
     - name: Build
       # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).

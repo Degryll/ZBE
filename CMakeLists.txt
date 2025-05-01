@@ -36,6 +36,11 @@ ZBE_setup_dependencies()
 
 ZBE_local_options()
 
+if(WIN32)
+  message(STATUS "On Windows")
+  add_definitions(-DZBE_EXPORTS) 
+endif()
+
 # don't know if this should be set globally from here or not...
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 
