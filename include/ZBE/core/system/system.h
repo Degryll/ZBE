@@ -12,11 +12,11 @@
 
 #ifdef _WIN32
 
-  #ifdef ZBE_EXPORTS
+  // #ifdef ZBE_EXPORTS
     #define ZBEAPI __declspec(dllexport)
-  #else
-    #define ZBEAPI __declspec(dllimport)
-  #endif
+  // #else
+  //   #define ZBEAPI __declspec(dllimport)
+  // #endif
 
   #define ZBECALL __cdecl
 
