@@ -21,7 +21,7 @@ namespace zbe {
  *  Store the number of errors (calls to setError) and the text for the first
  *  error.
  */
-class ZBEAPI SysError {
+class SysError {
 public:
 
   /** \brief Set a new error
@@ -32,14 +32,14 @@ public:
    * \param errorString the description of the error
    * \sa getNErrors() and getFirstErrorString()
    */
-  static void setError(std::string errorString);
+  static ZBEAPI void setError(std::string errorString);
 
   /** \brief Return the number of calls to setError.
    *
    * \return the number of errors so far.
    * \sa setError() and clear()
    */
-  static int getNErrors();
+  static ZBEAPI int getNErrors();
 
   /** \brief Return the error message of the first error.
    *
@@ -49,11 +49,11 @@ public:
    * \return the first (if any) error string.
    * \sa setError() and clear()
    */
-  static std::string getFirstErrorString();
+  static ZBEAPI std::string getFirstErrorString();
 
   /** \brief Set error counter to 0 and empty the error string.
    */
-  static void clear();
+  static ZBEAPI void clear();
 
 private:
 
