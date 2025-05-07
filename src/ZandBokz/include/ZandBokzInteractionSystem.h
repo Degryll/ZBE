@@ -32,7 +32,7 @@ protected:
 struct Solid {};
 struct Goal {};
 
-const uint PLATFORMPARAMS = 3;
+const unsigned PLATFORMPARAMS = 3;
 using Platform = std::array<std::shared_ptr<zbe::Value<zbe::Vector3D>>, PLATFORMPARAMS>;
 
 using ZBActor = zbe::Actor<zbe::CollisionData3D, Solid, Platform, Goal>;

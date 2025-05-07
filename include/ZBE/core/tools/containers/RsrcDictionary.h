@@ -23,16 +23,16 @@ namespace zbe {
 /** \brief A class that translate a name to a globaly accesible resource id.
  */
 template<typename T>
-class ZBEAPI RsrcDictionary {
+class RsrcDictionary {
   public:
     using StoredType = T;
-    RsrcDictionary(RsrcDictionary const&)    = delete;  //!< Needed for singleton.
-    void operator=(RsrcDictionary const&) = delete;  //!< Needed for singleton.
+    ZBEAPI RsrcDictionary(RsrcDictionary const&)    = delete;  //!< Needed for singleton.
+    void ZBEAPI operator=(RsrcDictionary const&) = delete;  //!< Needed for singleton.
 
     /** \brief Singleton implementation.
      *  \return The only instance of the RsrcDictionary.
      */
-    static RsrcDictionary& getInstance() {
+    static ZBEAPI RsrcDictionary& getInstance() {
       static RsrcDictionary instance;
       return (instance);
     }
@@ -42,7 +42,7 @@ class ZBEAPI RsrcDictionary {
      *  \param id Id of the resource in the adecuate store.
      *  \sa get(string name)
      */
-    void insert(std::string name, T rsrc) {
+    void ZBEAPI insert(std::string name, T rsrc) {
       auto it = l.find(name);
       if (it != l.end()) {
         SysError::setError("Name " + name + " already in use.");
@@ -56,7 +56,7 @@ class ZBEAPI RsrcDictionary {
      *  \return The resource.
      *  \sa insert
      */
-    T get(std::string name) {
+    T ZBEAPI get(std::string name) {
       auto it = l.find(name);
       if (it == l.end()) {
         SysError::setError("Resource id not found:" + name);
@@ -70,7 +70,7 @@ class ZBEAPI RsrcDictionary {
      *  \param name of the entry.
      *  \return The entry value.
      */
-    T remove(std::string name) {
+    T ZBEAPI remove(std::string name) {
       auto it = l.find(name);
       if (it == l.end()) {
         SysError::setError("Resource id not found:" + name);
@@ -87,14 +87,14 @@ class ZBEAPI RsrcDictionary {
      *  \return True if a resource named "name" exist in this dictionary. False otherwise.
      *  \sa get
      */
-    bool contains(std::string name) {
+    bool ZBEAPI contains(std::string name) {
       auto it = l.find(name);
       return (it != l.end());
     }
 
     /** \brief Clear the container.
      */
-    void clear() {
+    void ZBEAPI clear() {
       l.clear();
     }
 

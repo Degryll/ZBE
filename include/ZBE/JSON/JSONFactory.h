@@ -291,7 +291,7 @@ std::optional<std::array<T, n>> loadLiteralArray(RsrcDictionary<T>& dict, json c
   }
 
   std::array<T, n> arr{};
-  uint i = 0;
+  size_t i = 0;
   for (auto& name : cfg.items()) {
     arr[i] = dict.get(name.value().get<std::string>());
     i++;

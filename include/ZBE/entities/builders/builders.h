@@ -1338,7 +1338,7 @@ public:
     }
     auto ab = specificRsrc.get("ActorBldr."s + name);
     auto j = *cfg;
-    uint i = 0;
+    size_t i = 0;
     bool failed = false;
 
     #if defined(__GNUC__) || defined(__clang__)
@@ -1418,7 +1418,7 @@ public:
     }
     auto ab = specificRsrc.get("ReactorBldr."s + name);
     auto j = *cfg;
-    uint i = 0;
+    size_t i = 0;
     bool failed = false;
     #if defined(__GNUC__) || defined(__clang__)
     #pragma GCC diagnostic push
@@ -1969,7 +1969,7 @@ private:
         auto key = item.key();
         auto idx = JSONFactory::DictLoader<uint64_t>::loadParamStrDict(uintDict, key, "BehaviorEntityBldrFtry"s);
         if(!idx) {
-          SysError::setError("BehaviorEntityBldrFtry config for " + type + " " + key +" is not an uint name."s);
+          SysError::setError("BehaviorEntityBldrFtry config for " + type + " " + key +" is not an uint64_t name."s);
           return false;
         }
         // auto valueCfg = item.value();
