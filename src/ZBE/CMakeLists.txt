@@ -145,24 +145,4 @@ target_include_directories(ZBE_LIB SYSTEM PRIVATE ${ogg_SOURCE_DIR})
 # target_include_directories(ZBE_LIB SYSTEM PRIVATE ${nlohmann_SOURCE_DIR}/include)
 # target_include_directories(ZBE_LIB SYSTEM PRIVATE /media/ludo/D4D679EDD679D06A/workspace/ZBE/build/_deps/json-src/include)
 
-
-# target_include_directories(ZBE_LIB SYSTEM PRIVATE ../../extlibs/stb)
-
-message(" ################## SOURCE DIRs ##################")
-message(${PROJECT_SOURCE_DIR})
-message(${PROJECT_BINARY_DIR})
-
-
-# target_compile_features(ZBE_LIB PUBLIC cxx_std_20)
-
-# set_target_properties(
-#   ZBE_LIB
-#   PROPERTIES VERSION ${PROJECT_VERSION}
-#              CXX_VISIBILITY_PRESET hidden
-#              VISIBILITY_INLINES_HIDDEN YES)
-
-# generate_export_header(ZBE_LIB EXPORT_FILE_NAME ${PROJECT_BINARY_DIR}/include/ZBE/zbe.h)
-
-# if(NOT BUILD_SHARED_LIBS)
-#   target_compile_definitions(ZBE_LIB PUBLIC SAMPLE_LIBRARY_STATIC_DEFINE)
-# endif()
+target_compile_definitions(ZBE_LIB PRIVATE ZBE_EXPORTS)
