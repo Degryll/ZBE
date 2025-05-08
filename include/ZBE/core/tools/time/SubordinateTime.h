@@ -21,7 +21,7 @@ namespace zbe {
 
 /** \brief Tool used to ask about time inside a subordinated context.
 */
-class ZBEAPI SubordinateTime : public ContextTime {
+class SubordinateTime : public ContextTime {
 public:
 
   // cppcheck-suppress noExplicitConstructor
