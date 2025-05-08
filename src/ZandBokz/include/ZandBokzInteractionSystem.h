@@ -336,7 +336,7 @@ public:
   std::shared_ptr<zbe::Funct<void, zbe::Reactor<zbe::CollisionData3D, Platform>*, zbe::CollisionData3D>> operator()(std::shared_ptr<zbe::Entity> ent) override {
     // TODO deshaz esta barbarie
     Platform* p = new Platform{};
-    for(uint i = 0; i<PLATFORMPARAMS; i++) {
+    for(size_t i = 0; i<PLATFORMPARAMS; i++) {
       (*p)[i] = ent->getVector3D(idx[i]);
     }
 

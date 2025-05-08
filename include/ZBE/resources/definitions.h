@@ -21,9 +21,9 @@ const Vector2D DFLT_OFFSET = {0.0, 0.0};
 
 /** \brief Definition of graphical data asociated to an image.
  */
-struct ZBEAPI ImgDef {
+struct ImgDef {
 
-  ImgDef(uint64_t imgSrcId, uint64_t frameTime, unsigned frameAmount, Region2D region, Vector2D regionOffset, Region2D texCoord, Vector2D texCoordOffset)
+  ZBEAPI ImgDef(uint64_t imgSrcId, uint64_t frameTime, unsigned frameAmount, Region2D region, Vector2D regionOffset, Region2D texCoord, Vector2D texCoordOffset)
     : imgSrcId(imgSrcId),
       frameTime(frameTime),
       frameAmount(frameAmount),
@@ -33,7 +33,7 @@ struct ZBEAPI ImgDef {
       texCoordOffset(texCoordOffset) {}
 
 
-  ImgDef(uint64_t imgSrcId = 0) : imgSrcId(imgSrcId), frameTime(SECOND), frameAmount(1), region({0.0,0.0}, {1.0,1.0}), regionOffset({0.0,0.0}), texCoord({0.0,0.0}, {0.0,0.0}), texCoordOffset({0.0,0.0}) {}
+  ZBEAPI ImgDef(uint64_t imgSrcId = 0) : imgSrcId(imgSrcId), frameTime(SECOND), frameAmount(1), region({0.0,0.0}, {1.0,1.0}), regionOffset({0.0,0.0}), texCoord({0.0,0.0}, {0.0,0.0}), texCoordOffset({0.0,0.0}) {}
 
   uint64_t imgSrcId;
   uint64_t frameTime;
@@ -47,9 +47,9 @@ struct ZBEAPI ImgDef {
 
 /** \brief Definition of a partial sprite.
  */
-struct ZBEAPI SprtDef {
+struct SprtDef {
 
-    SprtDef(ImgDef img = 0, Vector2D drawOffset = DFLT_OFFSET, Vector2D scale = DFLT_SCALE)
+    ZBEAPI SprtDef(ImgDef img = 0, Vector2D drawOffset = DFLT_OFFSET, Vector2D scale = DFLT_SCALE)
       : img(img), drawOffset(drawOffset), scale(scale) {}
 
     ImgDef img;

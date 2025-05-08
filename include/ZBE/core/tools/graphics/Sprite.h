@@ -20,7 +20,7 @@ namespace zbe {
 
 /** \brief Structure representing from where and where to draw a graphic element.
  */
-struct ZBEAPI Sprite {
+struct Sprite {
 
   /** \brief Builds a Sprite with all its needed data.
    *
@@ -29,7 +29,7 @@ struct ZBEAPI Sprite {
    *  \param angle destiny angle rotation
    *  \param graphics Graphic resource id
    */
-  Sprite(Region2D src, Region2D dst, double angle, uint64_t graphics) : src(src), dst(dst), a(angle), g(graphics) {};
+  ZBEAPI Sprite(Region2D src, Region2D dst, double angle, uint64_t graphics) : src(src), dst(dst), a(angle), g(graphics) {};
 
   Region2D src; //!< Source region
   Region2D dst; //!< Destiny region

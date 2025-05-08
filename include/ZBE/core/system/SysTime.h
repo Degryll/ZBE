@@ -30,12 +30,12 @@ public:
   SysTime(const SysTime&) = delete;
   void operator=(const SysTime&) = delete;
 
-  ~SysTime() {}
+  ZBEAPI ~SysTime() {}
 
   /** \brief Get the singleton instance of the SystemTime.
   * \return Singleton instance of the SystemTime.
   */
-  static std::shared_ptr<SysTime> getInstance() {
+  static ZBEAPI std::shared_ptr<SysTime> getInstance() {
    static std::shared_ptr<SysTime> instance(new SysTime());
    return (instance);
   }
@@ -43,11 +43,11 @@ public:
   /** \brief Get the total time passed until the end of last frame.
   * \return Total time passed until last frame.
   */
-  std::shared_ptr<ContextTime> clone() override {
+  std::shared_ptr<ContextTime> ZBEAPI clone() override {
    return getInstance();
   }
 
-  inline void setSystemTimer(std::shared_ptr<Timer> timer) {
+  inline void ZBEAPI setSystemTimer(std::shared_ptr<Timer> timer) {
     if (!timer) {
       zbe::SysError::setError(std::string("ERROR: System timer can only be set once"));
     } else {
