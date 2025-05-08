@@ -37,56 +37,56 @@ class ZBEAPI Entity {
 
     /** \brief The destructor make sure the entity is marked as ERASED in every Ticket.
      */
-    ZBEAPI virtual ~Entity();
+    virtual ~Entity();
 
     /** \brief Register a new Ticket from a list.
      *  \param id Id to identify the list.
      *  \param ticket The ticket to be stored.
      */
-    ZBEAPI void addTicket(uint64_t id, std::shared_ptr<Ticket> ticket);
+    void addTicket(uint64_t id, std::shared_ptr<Ticket> ticket);
 
     /** \brief Register a new Ticket, if there is a ticket on the id, will be replaced.
      *  \param id Id to identify the ticket origin.
      *  \param ticket The ticket to be stored.
      */
-    ZBEAPI void replaceTicket(uint64_t id, std::shared_ptr<Ticket> ticket);
+    void replaceTicket(uint64_t id, std::shared_ptr<Ticket> ticket);
 
     /** \brief Changes the state of this entity in the list identified by id to ACTIVE.
      *  \param id Id to identify the list.
      */
-    ZBEAPI void setACTIVE(uint64_t id);
+    void setACTIVE(uint64_t id);
 
     /** \brief Changes the state of this entity in the list identified by id to INACTIVE.
      *  \param id Id to identify the list.
      */
-    ZBEAPI void setINACTIVE(uint64_t id);
+    void setINACTIVE(uint64_t id);
 
     /** \brief Changes the state of this entity in the list identified by id to ACTIVE.
      *  \param id Id to identify the list.
      */
-    ZBEAPI void setERASED(uint64_t id);
+    void setERASED(uint64_t id);
 
     /** \brief Changes the state of this entity for all lists to ERASED.
      *  \param id Id to identify the list.
      */
-    ZBEAPI void setACTIVE();
+    void setACTIVE();
 
     /** \brief Changes the state of this entity for all lists to INACTIVE.
      */
-    ZBEAPI void setINACTIVE();
+    void setINACTIVE();
 
     /** \brief Changes the state of this entity for all lists to ERASED.
      */
-    ZBEAPI void setERASED();
+    void setERASED();
 
     /** \brief Changes the contextTime of this entity to the value of cTime.
      *  \param cTime Value to put in the Entity's cTime
      */
-    ZBEAPI void setContextTime(std::shared_ptr<ContextTime> cTime);
+    void setContextTime(std::shared_ptr<ContextTime> cTime);
 
     /** \brief Returns the context time of the Entity.
      */
-    ZBEAPI std::shared_ptr<ContextTime> getContextTime();
+    std::shared_ptr<ContextTime> getContextTime();
 
     /** \brief Sets a Value<double> at identifier id.
      * This method should be called only once per id.
@@ -94,9 +94,9 @@ class ZBEAPI Entity {
      *  \param val Value<double> to be set.
      *  \sa getDobule, setFloat, setUint, setInt
      */
-    ZBEAPI void setDouble(uint64_t id, std::shared_ptr<Value<double> > val);
+    void setDouble(uint64_t id, std::shared_ptr<Value<double> > val);
     template<typename T>
-    ZBEAPI typename std::enable_if<std::is_same<double, T>::value, void>::type
+    typename std::enable_if<std::is_same<double, T>::value, void>::type
     set(uint64_t id, std::shared_ptr<Value<T> > val) {setDouble(id, val);}
 
     /** \brief Sets a Value<float> at identifier id.
@@ -105,9 +105,9 @@ class ZBEAPI Entity {
      *  \param val Value<float> to be set.
      *  \sa getFloat, setDouble, setUint, setInt
      */
-    ZBEAPI void setFloat(uint64_t id, std::shared_ptr<Value<float> > val);
+    void setFloat(uint64_t id, std::shared_ptr<Value<float> > val);
     template<typename T>
-    ZBEAPI typename std::enable_if<std::is_same<float, T>::value, void>::type
+    typename std::enable_if<std::is_same<float, T>::value, void>::type
     set(uint64_t id, std::shared_ptr<Value<T> > val) {setFloat(id, val);}
 
     /** \brief Sets a Value<uint64_t> at identifier id.
@@ -116,9 +116,9 @@ class ZBEAPI Entity {
      *  \param val Value<uint64_t> to be set.
      *  \sa getUint, setInt, setDouble, setFloat
      */
-    ZBEAPI void setUint(uint64_t id, std::shared_ptr<Value<uint64_t> > val);
+    void setUint(uint64_t id, std::shared_ptr<Value<uint64_t> > val);
     template<typename T>
-    ZBEAPI typename std::enable_if<std::is_same<uint64_t, T>::value, void>::type
+    typename std::enable_if<std::is_same<uint64_t, T>::value, void>::type
     set(uint64_t id, std::shared_ptr<Value<T> > val) {setUint(id, val);}
 
     /** \brief Sets a Value<int64_t> at identifier id.
@@ -127,9 +127,9 @@ class ZBEAPI Entity {
      *  \param val Value<int64_t> to be set.
      *  \sa getInt, setUint, setDouble, setFloat
      */
-    ZBEAPI void setInt(uint64_t id, std::shared_ptr<Value<int64_t> > val);
+    void setInt(uint64_t id, std::shared_ptr<Value<int64_t> > val);
     template<typename T>
-    ZBEAPI typename std::enable_if<std::is_same<int64_t, T>::value, void>::type
+    typename std::enable_if<std::is_same<int64_t, T>::value, void>::type
     set(uint64_t id, std::shared_ptr<Value<T> > val) {setInt(id, val);}
 
     /** \brief Sets a Value<int64_t> at identifier id.
@@ -138,9 +138,9 @@ class ZBEAPI Entity {
      *  \param val Value<int64_t> to be set.
      *  \sa getInt, setUint, setDouble, setFloat
      */
-    ZBEAPI void setBool(uint64_t id, std::shared_ptr<Value<bool> > val);
+    void setBool(uint64_t id, std::shared_ptr<Value<bool> > val);
     template<typename T>
-    ZBEAPI typename std::enable_if<std::is_same<bool, T>::value, void>::type
+    typename std::enable_if<std::is_same<bool, T>::value, void>::type
     set(uint64_t id, std::shared_ptr<Value<T> > val) {setBool(id, val);}
 
     /** \brief Sets a Value<Vector3D> at identifier id.
@@ -149,9 +149,9 @@ class ZBEAPI Entity {
      *  \param val Value<Vector3D> to be set.
      *  \sa getInt, setUint, setDouble, setFloat
      */
-    ZBEAPI void setVector3D(uint64_t id, std::shared_ptr<Value<Vector3D> > val);
+    void setVector3D(uint64_t id, std::shared_ptr<Value<Vector3D> > val);
     template<typename T>
-    ZBEAPI typename std::enable_if<std::is_same<Vector3D, T>::value, void>::type
+    typename std::enable_if<std::is_same<Vector3D, T>::value, void>::type
     set(uint64_t id, std::shared_ptr<Value<T> > val) {setVector3D(id, val);}
 
     /** \brief Sets a Value<Vector2D> at identifier id.
@@ -160,9 +160,9 @@ class ZBEAPI Entity {
      *  \param val Value<Vector2D> to be set.
      *  \sa getInt, setUint, setDouble, setFloat
      */
-    ZBEAPI void setVector2D(uint64_t id, std::shared_ptr<Value<Vector2D> > val);
+    void setVector2D(uint64_t id, std::shared_ptr<Value<Vector2D> > val);
     template<typename T>
-    ZBEAPI typename std::enable_if<std::is_same<Vector2D, T>::value, void>::type
+    typename std::enable_if<std::is_same<Vector2D, T>::value, void>::type
     set(uint64_t id, std::shared_ptr<Value<T> > val) {setVector2D(id, val);}
 
     /** \brief Sets a Value<Vector2D> at identifier id.
@@ -171,9 +171,9 @@ class ZBEAPI Entity {
      *  \param val Value<Vector2D> to be set.
      *  \sa getInt, setUint, setDouble, setFloat
      */
-    ZBEAPI void setString(uint64_t id, std::shared_ptr<Value<std::string> > val);
+    void setString(uint64_t id, std::shared_ptr<Value<std::string> > val);
     template<typename T>
-    ZBEAPI typename std::enable_if<std::is_same<std::string, T>::value, void>::type
+    typename std::enable_if<std::is_same<std::string, T>::value, void>::type
     set(uint64_t id, std::shared_ptr<Value<T> > val) {setString(id, val);}
 
     /** \brief Sets a Value<std::vector<std::string> > at identifier id.
@@ -182,9 +182,9 @@ class ZBEAPI Entity {
      *  \param val Value<std::vector<std::string> > to be set.
      *  \sa getInt, setUint, setDouble, setFloat, setString
      */
-    ZBEAPI void setStringVector(uint64_t id, std::shared_ptr<Value<std::vector<std::string> > > val);
+    void setStringVector(uint64_t id, std::shared_ptr<Value<std::vector<std::string> > > val);
     template<typename T>
-    ZBEAPI typename std::enable_if<std::is_same<std::vector<std::string> , T>::value, void>::type
+    typename std::enable_if<std::is_same<std::vector<std::string> , T>::value, void>::type
     set(uint64_t id, std::shared_ptr<Value<T> > val) {setStringVector(id, val);}
     /** \brief Overrides aValue<double> at identifier id.
      * This method should be called only once per id.
@@ -192,9 +192,9 @@ class ZBEAPI Entity {
      *  \param val Value<double> to be set.
      *  \sa getDobule, setFloat, setUint, setInt
      */
-    ZBEAPI void overrideDouble(uint64_t id, std::shared_ptr<Value<double> > val);
+    void overrideDouble(uint64_t id, std::shared_ptr<Value<double> > val);
     template<typename T>
-    ZBEAPI typename std::enable_if<std::is_same<double, T>::value, void>::type
+    typename std::enable_if<std::is_same<double, T>::value, void>::type
     override(uint64_t id, std::shared_ptr<Value<T> > val) {overrideDouble(id, val);}
 
     /** \brief Overrides aValue<float> at identifier id.
@@ -203,9 +203,9 @@ class ZBEAPI Entity {
      *  \param val Value<float> to be set.
      *  \sa getFloat, setDouble, setUint, setInt
      */
-    ZBEAPI void overrideFloat(uint64_t id, std::shared_ptr<Value<float> > val);
+    void overrideFloat(uint64_t id, std::shared_ptr<Value<float> > val);
     template<typename T>
-    ZBEAPI typename std::enable_if<std::is_same<float, T>::value, void>::type
+    typename std::enable_if<std::is_same<float, T>::value, void>::type
     override(uint64_t id, std::shared_ptr<Value<T> > val) {overrideFloat(id, val);}
 
     /** \brief Overrides aValue<uint64_t> at identifier id.
@@ -214,9 +214,9 @@ class ZBEAPI Entity {
      *  \param val Value<uint64_t> to be set.
      *  \sa getUint, setInt, setDouble, setFloat
      */
-    ZBEAPI void overrideUint(uint64_t id, std::shared_ptr<Value<uint64_t> > val);
+    void overrideUint(uint64_t id, std::shared_ptr<Value<uint64_t> > val);
     template<typename T>
-    ZBEAPI typename std::enable_if<std::is_same<uint64_t, T>::value, void>::type
+    typename std::enable_if<std::is_same<uint64_t, T>::value, void>::type
     override(uint64_t id, std::shared_ptr<Value<T> > val) {overrideUint(id, val);}
 
     /** \brief Overrides aValue<int64_t> at identifier id.
@@ -225,9 +225,9 @@ class ZBEAPI Entity {
      *  \param val Value<int64_t> to be set.
      *  \sa getInt, setUint, setDouble, setFloat
      */
-    ZBEAPI void overrideInt(uint64_t id, std::shared_ptr<Value<int64_t> > val);
+    void overrideInt(uint64_t id, std::shared_ptr<Value<int64_t> > val);
     template<typename T>
-    ZBEAPI typename std::enable_if<std::is_same<int64_t, T>::value, void>::type
+    typename std::enable_if<std::is_same<int64_t, T>::value, void>::type
     override(uint64_t id, std::shared_ptr<Value<T> > val) {overrideInt(id, val);}
 
     /** \brief Overrides aValue<int64_t> at identifier id.
@@ -236,9 +236,9 @@ class ZBEAPI Entity {
      *  \param val Value<int64_t> to be set.
      *  \sa getInt, setUint, setDouble, setFloat
      */
-    ZBEAPI void overrideBool(uint64_t id, std::shared_ptr<Value<bool> > val);
+    void overrideBool(uint64_t id, std::shared_ptr<Value<bool> > val);
     template<typename T>
-    ZBEAPI typename std::enable_if<std::is_same<bool, T>::value, void>::type
+    typename std::enable_if<std::is_same<bool, T>::value, void>::type
     override(uint64_t id, std::shared_ptr<Value<T> > val) {overrideBool(id, val);}
 
     /** \brief Overrides aValue<Vector3D> at identifier id.
@@ -247,9 +247,9 @@ class ZBEAPI Entity {
      *  \param val Value<Vector3D> to be set.
      *  \sa getInt, setUint, setDouble, setFloat
      */
-    ZBEAPI void overrideVector3D(uint64_t id, std::shared_ptr<Value<Vector3D> > val);
+    void overrideVector3D(uint64_t id, std::shared_ptr<Value<Vector3D> > val);
     template<typename T>
-    ZBEAPI typename std::enable_if<std::is_same<Vector3D, T>::value, void>::type
+    typename std::enable_if<std::is_same<Vector3D, T>::value, void>::type
     override(uint64_t id, std::shared_ptr<Value<T> > val) {overrideVector3D(id, val);}
 
     /** \brief Overrides aValue<Vector2D> at identifier id.
@@ -258,9 +258,9 @@ class ZBEAPI Entity {
      *  \param val Value<Vector2D> to be set.
      *  \sa getInt, setUint, setDouble, setFloat
      */
-    ZBEAPI void overrideVector2D(uint64_t id, std::shared_ptr<Value<Vector2D> > val);
+    void overrideVector2D(uint64_t id, std::shared_ptr<Value<Vector2D> > val);
     template<typename T>
-    ZBEAPI typename std::enable_if<std::is_same<Vector2D, T>::value, void>::type
+    typename std::enable_if<std::is_same<Vector2D, T>::value, void>::type
     override(uint64_t id, std::shared_ptr<Value<T> > val) {overrideVector2D(id, val);}
 
     /** \brief Overrides aValue<Vector2D> at identifier id.
@@ -269,9 +269,9 @@ class ZBEAPI Entity {
      *  \param val Value<Vector2D> to be set.
      *  \sa getInt, setUint, setDouble, setFloat
      */
-    ZBEAPI void overrideString(uint64_t id, std::shared_ptr<Value<std::string> > val);
+    void overrideString(uint64_t id, std::shared_ptr<Value<std::string> > val);
     template<typename T>
-    ZBEAPI typename std::enable_if<std::is_same<std::string, T>::value, void>::type
+    typename std::enable_if<std::is_same<std::string, T>::value, void>::type
     override(uint64_t id, std::shared_ptr<Value<T> > val) {overrideString(id, val);}
 
     /** \brief Overrides aValue<std::vector<std::string> > at identifier id.
@@ -280,9 +280,9 @@ class ZBEAPI Entity {
      *  \param val Value<std::vector<std::string> > to be set.
      *  \sa getInt, setUint, setDouble, setFloat, setString
      */
-    ZBEAPI void overrideStringVector(uint64_t id, std::shared_ptr<Value<std::vector<std::string> > > val);
+    void overrideStringVector(uint64_t id, std::shared_ptr<Value<std::vector<std::string> > > val);
     template<typename T>
-    ZBEAPI typename std::enable_if<std::is_same<std::vector<std::string> , T>::value, void>::type
+    typename std::enable_if<std::is_same<std::vector<std::string> , T>::value, void>::type
     override(uint64_t id, std::shared_ptr<Value<T> > val) {overrideStringVector(id, val);}
     
     /** \brief Returns the Value<double> associated the identifier id.
@@ -290,9 +290,9 @@ class ZBEAPI Entity {
      *  \return Value<double>.
      *  \sa setDouble, getFloat, getUint, getInt
      */
-    ZBEAPI std::shared_ptr<Value<double> > getDouble(uint64_t id);
+    std::shared_ptr<Value<double> > getDouble(uint64_t id);
     template<typename T, typename U>
-    ZBEAPI typename std::enable_if<std::is_same<T, double>::value && std::is_same<U, std::shared_ptr<Value<T> > >::value, U>::type
+    typename std::enable_if<std::is_same<T, double>::value && std::is_same<U, std::shared_ptr<Value<T> > >::value, U>::type
     get(uint64_t id) {return getDouble(id);}
 
     /** \brief Returns the Value<uint64_t> associated the identifier id.
@@ -300,9 +300,9 @@ class ZBEAPI Entity {
      *  \return Value<uint64_t>.
      *  \sa setUint, getInt, getDouble, getFloat
      */
-    ZBEAPI std::shared_ptr<Value<uint64_t> > getUint(uint64_t id);
+    std::shared_ptr<Value<uint64_t> > getUint(uint64_t id);
     template<typename T, typename U>
-    ZBEAPI typename std::enable_if<std::is_same<T, uint64_t>::value && std::is_same<U, std::shared_ptr<Value<T> > >::value, U>::type
+    typename std::enable_if<std::is_same<T, uint64_t>::value && std::is_same<U, std::shared_ptr<Value<T> > >::value, U>::type
     get(uint64_t id) {return getUint(id);}
 
     /** \brief Returns the Value<int64_t> associated the identifier id.
@@ -310,9 +310,9 @@ class ZBEAPI Entity {
      *  \return Value<int64_t>.
      *  \sa setInt, getUint, getDouble, getFloat
      */
-    ZBEAPI std::shared_ptr<Value<int64_t> > getInt(uint64_t id);
+    std::shared_ptr<Value<int64_t> > getInt(uint64_t id);
     template<typename T, typename U>
-    ZBEAPI typename std::enable_if<std::is_same<T, int64_t>::value && std::is_same<U, std::shared_ptr<Value<T> >>::value, U>::type
+    typename std::enable_if<std::is_same<T, int64_t>::value && std::is_same<U, std::shared_ptr<Value<T> >>::value, U>::type
     get(uint64_t id) {return getInt(id);}
 
     /** \brief Returns the Value<float> associated the identifier id.
@@ -320,9 +320,9 @@ class ZBEAPI Entity {
      *  \return Value<float>.
      *  \sa setFloat, getDouble, getUint, getInt
      */
-    ZBEAPI std::shared_ptr<Value<float> > getFloat(uint64_t id);
+    std::shared_ptr<Value<float> > getFloat(uint64_t id);
     template<typename T, typename U>
-    ZBEAPI typename std::enable_if<std::is_same<T, float>::value && std::is_same<U, std::shared_ptr<Value<T> > >::value, U>::type
+    typename std::enable_if<std::is_same<T, float>::value && std::is_same<U, std::shared_ptr<Value<T> > >::value, U>::type
     get(uint64_t id) {return getFloat(id);}
 
     /** \brief Returns the Value<bool> associated the identifier id.
@@ -330,9 +330,9 @@ class ZBEAPI Entity {
      *  \return Value<bool>.
      *  \sa setFloat, getDouble, getUint, getInt
      */
-    ZBEAPI std::shared_ptr<Value<bool> > getBool(uint64_t id);
+    std::shared_ptr<Value<bool> > getBool(uint64_t id);
     template<typename T, typename U>
-    ZBEAPI typename std::enable_if<std::is_same<T, bool>::value && std::is_same<U, std::shared_ptr<Value<T> > >::value, U>::type
+    typename std::enable_if<std::is_same<T, bool>::value && std::is_same<U, std::shared_ptr<Value<T> > >::value, U>::type
     get(uint64_t id) {return getBool(id);}
 
     /** \brief Returns the Value<Vector3D> associated the identifier id.
@@ -340,9 +340,9 @@ class ZBEAPI Entity {
      *  \return Value<Vector3D>.
      *  \sa setFloat, getDouble, getUint, getInt
      */
-    ZBEAPI std::shared_ptr<Value<Vector3D> > getVector3D(uint64_t id);
+    std::shared_ptr<Value<Vector3D> > getVector3D(uint64_t id);
     template<typename T, typename U>
-    ZBEAPI typename std::enable_if<std::is_same<T, Vector<3>>::value && std::is_same<U, std::shared_ptr<Value<T> > >::value, U>::type
+    typename std::enable_if<std::is_same<T, Vector<3>>::value && std::is_same<U, std::shared_ptr<Value<T> > >::value, U>::type
     get(uint64_t id) {return getVector3D(id);}
 
     /** \brief Returns the Value<Vector2D> associated the identifier id.
@@ -350,9 +350,9 @@ class ZBEAPI Entity {
      *  \return Value<Vector2D>.
      *  \sa setFloat, getDouble, getUint, getInt
      */
-    ZBEAPI std::shared_ptr<Value<Vector2D> > getVector2D(uint64_t id);
+    std::shared_ptr<Value<Vector2D> > getVector2D(uint64_t id);
     template<typename T, typename U>
-    ZBEAPI typename std::enable_if<std::is_same<T, Vector<2>>::value && std::is_same<U, std::shared_ptr<Value<T> > >::value, U>::type
+    typename std::enable_if<std::is_same<T, Vector<2>>::value && std::is_same<U, std::shared_ptr<Value<T> > >::value, U>::type
     get(uint64_t id) {return getVector2D(id);}
 
     /** \brief Returns the Value<std::string> associated the identifier id.
@@ -360,9 +360,9 @@ class ZBEAPI Entity {
      *  \return Value<std::string>.
      *  \sa setFloat, getDouble, getUint, getInt
      */
-    ZBEAPI std::shared_ptr<Value<std::string> > getString(uint64_t id);
+    std::shared_ptr<Value<std::string> > getString(uint64_t id);
     template<typename T, typename U>
-    ZBEAPI typename std::enable_if<std::is_same<T, std::string>::value && std::is_same<U, std::shared_ptr<Value<T> > >::value, U>::type
+    typename std::enable_if<std::is_same<T, std::string>::value && std::is_same<U, std::shared_ptr<Value<T> > >::value, U>::type
     get(uint64_t id) {return getString(id);}
 
     /** \brief Returns the Value<std::vector<std::string> > associated the identifier id.
@@ -370,9 +370,9 @@ class ZBEAPI Entity {
      *  \return Value<std::vector<std::string> >.
      *  \sa setFloat, getDouble, getUint, getInt, getString
      */
-    ZBEAPI std::shared_ptr<Value<std::vector<std::string> > > getStringVector(uint64_t id);
+    std::shared_ptr<Value<std::vector<std::string> > > getStringVector(uint64_t id);
     template<typename T, typename U>
-    ZBEAPI typename std::enable_if<std::is_same<T, std::vector<std::string> >::value && std::is_same<U, std::shared_ptr<Value<T> > >::value, U>::type
+    typename std::enable_if<std::is_same<T, std::vector<std::string> >::value && std::is_same<U, std::shared_ptr<Value<T> > >::value, U>::type
     get(uint64_t id) {return getStringVector(id);}
 
   private:
