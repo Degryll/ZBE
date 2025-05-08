@@ -95,11 +95,14 @@ add_library(ZBE_LIB
 
 list(APPEND CMAKE_CXX_CPPCHECK --exclude=../../extlibs/stb/)
 
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+
 add_library(ZBE::ZBE_LIB ALIAS ZBE_LIB)
 
 add_library(glew STATIC IMPORTED) # or STATIC instead of SHARED
 
 IF (WIN32)
+  target_compile_definitions(ZBE_LIB PRIVATE ZBE_EXPORTS)
   set_target_properties(glew PROPERTIES
     IMPORTED_LOCATION "${PROJECT_SOURCE_DIR}/extlibs/glew/2.2.0/windows/x64/glew32s.lib"
     INTERFACE_INCLUDE_DIRECTORIES "${PROJECT_SOURCE_DIR}/extlibs/glew/2.2.0/include"
@@ -144,5 +147,3 @@ target_include_directories(ZBE_LIB SYSTEM PRIVATE ${vorbis_SOURCE_DIR}/include)
 target_include_directories(ZBE_LIB SYSTEM PRIVATE ${ogg_SOURCE_DIR})
 # target_include_directories(ZBE_LIB SYSTEM PRIVATE ${nlohmann_SOURCE_DIR}/include)
 # target_include_directories(ZBE_LIB SYSTEM PRIVATE /media/ludo/D4D679EDD679D06A/workspace/ZBE/build/_deps/json-src/include)
-
-target_compile_definitions(ZBE_LIB PRIVATE ZBE_EXPORTS)
