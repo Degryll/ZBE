@@ -21,21 +21,21 @@ namespace zbe {
 
 /** \brief Tool used to ask about time inside a subordinated context.
 */
-class SubordinateTime : public ContextTime {
+class ZBEAPI SubordinateTime : public ContextTime {
 public:
 
   // cppcheck-suppress noExplicitConstructor
-  ZBEAPI SubordinateTime(std::shared_ptr<ContextTime> parent) : parent(parent) {}
-  ZBEAPI SubordinateTime(const SubordinateTime& sibling) : parent(sibling.parent) {}
+  SubordinateTime(std::shared_ptr<ContextTime> parent) : parent(parent) {}
+  SubordinateTime(const SubordinateTime& sibling) : parent(sibling.parent) {}
 
   /** \brief Get the total time passed until the end of last frame.
   * \return Total time passed until last frame.
   */
-  ZBEAPI std::shared_ptr<ContextTime> clone() override {
+  std::shared_ptr<ContextTime> clone() override {
     return std::make_shared<SubordinateTime>(this->parent);
   }
 
-  ZBEAPI static std::shared_ptr<ContextTime> child(std::shared_ptr<ContextTime> parent) {
+  static std::shared_ptr<ContextTime> child(std::shared_ptr<ContextTime> parent) {
     return std::make_shared<SubordinateTime>(parent);
   }
 
