@@ -31,11 +31,11 @@ public:
   /** \brief Get the total time passed until the end of last frame.
   * \return Total time passed until last frame.
   */
-  std::shared_ptr<ContextTime> ZBEAPI clone() override {
+  ZBEAPI std::shared_ptr<ContextTime> clone() override {
     return std::make_shared<SubordinateTime>(this->parent);
   }
 
-  static std::shared_ptr<ContextTime> ZBEAPI child(std::shared_ptr<ContextTime> parent) {
+  ZBEAPI static std::shared_ptr<ContextTime> child(std::shared_ptr<ContextTime> parent) {
     return std::make_shared<SubordinateTime>(parent);
   }
 

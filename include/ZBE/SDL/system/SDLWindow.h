@@ -271,11 +271,11 @@ public:
     /** \brief Creates a new SDLImageStore associated to a renderer.
      *  \param renderer SDL_Renderer to use.
      */
-    explicit ZBEAPI SDLImageStore(SDL_Renderer* renderer);
+    ZBEAPI explicit SDLImageStore(SDL_Renderer* renderer);
 
     /** \brief Default destructor. Will free all loaded textures.
      */
-    virtual ZBEAPI ~SDLImageStore();
+    ZBEAPI virtual ~SDLImageStore();
 
     /** \brief Store a texture.
      *
@@ -283,7 +283,7 @@ public:
      *  \return An id to the texture loaded. Use this id to render the texture or to change the image associated with the texture.
      *  \sa reloadImg(), loadImg()
      */
-    uint64_t ZBEAPI storeTexture(SDL_Texture * texture);
+    ZBEAPI uint64_t storeTexture(SDL_Texture * texture);
 
     /** \brief Load an image to create a texture in this store.
      *
@@ -291,7 +291,7 @@ public:
      *  \return An id to the texture loaded. Use this id to render the texture or to change the image associated with the texture.
      *  \sa reloadImg(), storeTexture()
      */
-    uint64_t ZBEAPI loadImg(const char *url);
+    ZBEAPI uint64_t loadImg(const char *url);
 
     /** \brief Load an image from an array to create a texture in this store.
      *
@@ -303,7 +303,7 @@ public:
      *  \return An id to the texture loaded. Use this id to render the texture or to change the image associated with the texture.
      *  \sa reloadImg(), storeTexture()
      */
-    uint64_t ZBEAPI loadImg(const char *data, int width, int height, int depth, int pitch);
+    ZBEAPI uint64_t loadImg(const char *data, int width, int height, int depth, int pitch);
 
     /** \brief Reload an image to an already created texture.
      *
@@ -311,14 +311,14 @@ public:
      *  \param An id to the texture already created.
      *  \sa loadImg(), storeTexture()
      */
-    uint64_t ZBEAPI reloadImg(const char *url, uint64_t id);
+    ZBEAPI uint64_t reloadImg(const char *url, uint64_t id);
 
     /** \brief Return a stored texture;
      *  \param An id to the texture already created.
      *  \return a texture.
      *  \sa loadImg(), storeTexture()
      */
-    SDL_Texture* ZBEAPI getTexture(uint64_t id);
+    ZBEAPI SDL_Texture* getTexture(uint64_t id);
 
 private:
 
