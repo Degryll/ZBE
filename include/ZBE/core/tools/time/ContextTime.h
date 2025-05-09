@@ -17,8 +17,6 @@
 
 namespace zbe {
 
-class ZBEAPI SubordinateTime;
-
 /** \brief
 */
 class ZBEAPI ContextTime {
