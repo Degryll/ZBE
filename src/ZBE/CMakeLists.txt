@@ -1,5 +1,6 @@
 # include(GenerateExportHeader)
 
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
 add_library(ZBE_LIB 
   JSON/JSONFactory.cpp
@@ -94,8 +95,6 @@ add_library(ZBE_LIB
 )
 
 list(APPEND CMAKE_CXX_CPPCHECK --exclude=../../extlibs/stb/)
-
-set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
 add_library(ZBE::ZBE_LIB ALIAS ZBE_LIB)
 
