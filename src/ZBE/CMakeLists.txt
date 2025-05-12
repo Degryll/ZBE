@@ -87,7 +87,7 @@ add_library(ZBE_LIB
   factories/implementations/events/handlers/time/TicketEraserFtry.cpp
   factories/implementations/events/handlers/time/DaemonTimeHandlerFtry.cpp
   glTF/resources/GlTFResourceLoader.cpp
-  resources/contextname.cpp
+  resources/contextnames.cpp
   resources/loaders/RsrcFolderLoader.cpp
   resources/loaders/implementations/JSONAppLoader.cpp
   sytem/SystemResources.cpp

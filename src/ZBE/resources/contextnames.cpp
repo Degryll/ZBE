@@ -11,6 +11,12 @@
 
 namespace zbe {
 
+#ifdef _WIN32
+
+template class ZBEAPI std::string;
+
+#endif // OS
+
 const std::string cn::SEPARATOR = ".";
 
 const std::string cn::IMGDEF = "imgdef";
