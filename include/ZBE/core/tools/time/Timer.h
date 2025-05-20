@@ -23,7 +23,7 @@ class ZBEAPI Timer {
 public:
   /** \brief Virtual destructor.
    */
-  virtual ~Timer() {}
+  virtual ~Timer() = default;
 
   /** \brief Starts counting.
   */
