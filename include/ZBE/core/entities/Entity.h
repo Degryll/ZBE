@@ -376,6 +376,7 @@ class ZBEAPI Entity {
     get(uint64_t id) {return getStringVector(id);}
 
   private:
+    DISABLE_DLL_WARN
     std::unordered_map<uint64_t, std::shared_ptr<Ticket> > tl;
 
     /* WARNING */
@@ -393,6 +394,7 @@ class ZBEAPI Entity {
     std::unordered_map<uint64_t, std::shared_ptr<Value<Vector2D> > > v2v;
     std::unordered_map<uint64_t, std::shared_ptr<Value<std::string> > > sv;
     std::unordered_map<uint64_t, std::shared_ptr<Value<std::vector<std::string> > > > svv;
+    DISABLE_WARNING_POP()
 };
 
 template<unsigned n>

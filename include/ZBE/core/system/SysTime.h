@@ -56,6 +56,7 @@ public:
   }
 
 private:
+  DISABLE_DLL_WARN
   SysTime() : timer(nullptr) {}  //!< Basic constructor to be used internally.
 
   std::shared_ptr<Timer> timer;      //!< Actual implementation of Timer to be used.
@@ -67,7 +68,8 @@ private:
   uint64_t _getInitTime() override {
     return endT;
   }
-
+  
+  DISABLE_WARNING_POP()
 };
 
 } // namespace zbe

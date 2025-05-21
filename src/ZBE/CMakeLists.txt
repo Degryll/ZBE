@@ -56,7 +56,6 @@ add_library(ZBE_LIB
   core/system/SysIdGenerator.cpp
   core/system/SysError.cpp
   core/system/Logger.cpp
-  core/system/SysTime.cpp
   core/tools/math/Vector.cpp
   core/tools/math/collisions/intersections.cpp
   core/tools/shared/implementations/SimpleValue.cpp
