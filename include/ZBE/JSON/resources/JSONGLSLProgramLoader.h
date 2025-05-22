@@ -49,12 +49,13 @@ public:
  }
 
 private:
+DISABLE_DLL_WARN
   std::shared_ptr<SDLOGLWindow> window = nullptr;
   //RsrcStore<zbe::SpriteSheet<uint64_t, int64_t, double, Vector2D, Vector2D> >& rsrcAnimSprt = RsrcStore<zbe::SpriteSheet<uint64_t, int64_t, double, Vector2D, Vector2D> >::getInstance();
   //RsrcStore<zbe::OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> >& rsrcModelSheet = RsrcStore<zbe::OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> >::getInstance();
   RsrcDictionary<uint64_t>& uintStore = RsrcDictionary<uint64_t>::getInstance();
   //NameRsrcDictionary& nrd = NameRsrcDictionary::getInstance();
-
+DISABLE_WARNING_POP()
 };
 
 }  // namespace zbe
