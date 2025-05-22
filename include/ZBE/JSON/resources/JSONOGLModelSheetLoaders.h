@@ -66,10 +66,12 @@ public:
  }
 
 private:
+DISABLE_DLL_WARN
   std::shared_ptr<SDLOGLWindow> window = nullptr;
   RsrcStore<zbe::OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> >& rsrcModelSheet = RsrcStore<zbe::OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> >::getInstance();
   NameRsrcDictionary& nrd = NameRsrcDictionary::getInstance();
   RsrcStore<OGLGraphics> &graphicsStore = RsrcStore<OGLGraphics>::getInstance();
+DISABLE_WARNING_POP()
 };
 
 /** \brief Factory for JSONSimpleOGLModelSheetLoader.
@@ -117,11 +119,12 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<SDLOGLWindow> &sdlOGLWindowRsrc = RsrcStore<SDLOGLWindow>::getInstance();
   RsrcStore<JSONSimpleOGLModelSheetLoader> &jsoglmslRsrc = RsrcStore<JSONSimpleOGLModelSheetLoader>::getInstance();
   RsrcStore<RsrcLoader> &rsrclRsrc = RsrcStore<RsrcLoader>::getInstance();
-
+DISABLE_WARNING_POP()
 };
 
 //------------------------

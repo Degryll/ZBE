@@ -85,13 +85,14 @@ public:
     uint64_t storeTexture(const GLuint tex);
 
 private:
-
+DISABLE_DLL_WARN
   void overwriteTexture(uint64_t index, const GLuint tex);
   GLuint _createTexture(const GLvoid *data, unsigned w, unsigned h);
   static std::vector<unsigned char> loadPNG(const char* filename, unsigned &width, unsigned &height);
 
   std::vector<GLuint> texCollection;  //!< Collection of textures.
   std::mutex m;                       //!< Mutex to avoid race conditions.
+DISABLE_WARNING_POP()
 };
 
 
@@ -122,16 +123,20 @@ public:
     std::tuple<GLuint, GLsizei> getModel(uint64_t id);
 
 private:
+DISABLE_DLL_WARN
   NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();
   std::vector<std::tuple<GLuint, GLsizei> > modelCollection;  //!< Collection of textures.
   std::mutex m;
+DISABLE_WARNING_POP()
 };
 
 struct ZBEAPI ShaderDef {
+DISABLE_DLL_WARN
   ShaderDef() : filename(), type() {}
   ShaderDef(std::string filename, GLenum type) : filename(filename), type(type) {}
   std::string filename;
   GLenum type;
+DISABLE_WARNING_POP()
 };
 
 class ZBEAPI OGLShaderStore {
