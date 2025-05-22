@@ -13,10 +13,4 @@ namespace zbe {
 
 uint64_t ContextTime::maxFrameTime = 2048;
 
-#ifdef _WIN32
-
-template class ZBEAPI std::shared_ptr<ContextTime>;
-
-#endif // OS
-
 }  // namespace zbe

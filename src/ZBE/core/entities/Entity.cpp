@@ -12,12 +12,6 @@
 
 namespace zbe {
 
-#ifdef _WIN32
-
-template class ZBEAPI std::unordered_map<uint64_t, std::shared_ptr<Ticket> >;
-
-#endif // OS
-
 Entity::~Entity() {
   for(auto it = tl.begin(); it != tl.end(); it++) {
     it->second->setERASED();

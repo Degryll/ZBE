@@ -146,6 +146,7 @@ public:
   GLuint getShader(uint64_t id) const ;
 
 private:
+DISABLE_DLL_WARN
   static const std::string readFile(const char* filename);
   static void printShaderLog(GLuint shader);
   static void printProgramLog(GLuint program);
@@ -155,6 +156,7 @@ private:
 
   std::vector<GLuint> programCollection;  //!< Collection of textures.
   std::mutex m;
+DISABLE_WARNING_POP()
 };
 
 

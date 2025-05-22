@@ -23,7 +23,7 @@ namespace zbe {
 /** \brief Structure representing from where and where to draw a graphic element.
  */
 struct ZBEAPI OGLModel {
-
+DISABLE_DLL_WARN
   // OGLModel() = default;
   OGLModel(const OGLModel&) = delete;
   OGLModel operator=(const OGLModel&) = delete;
@@ -39,6 +39,7 @@ struct ZBEAPI OGLModel {
   GLenum  mode;
   GLenum  type;
   const GLvoid* offset;
+DISABLE_WARNING_POP()
 };
 
 }  // namespace zbe

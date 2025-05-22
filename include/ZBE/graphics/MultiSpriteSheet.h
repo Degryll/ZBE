@@ -100,9 +100,12 @@ public:
   }
 
 private:
+  DISABLE_DLL_WARN
   std::vector<SprtDef> spriteDefintions;
   int64_t size;
   SprtDef defaultSD;
+  
+  DISABLE_WARNING_POP()
 };
 
 }  // namespace zbe

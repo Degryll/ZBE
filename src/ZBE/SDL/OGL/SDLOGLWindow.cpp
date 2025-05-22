@@ -21,16 +21,6 @@
 
 namespace zbe {
 
-#ifdef _WIN32
-
-template class ZBEAPI std::vector<GLuint>;
-template class ZBEAPI std::mutex;
-template class ZBEAPI std::vector<std::tuple<GLuint, GLsizei> >;
-template class ZBEAPI std::string;
-template class ZBEAPI std::vector<GLuint>;
-
-#endif // OS
-
 const GLuint V_POS = 0;
 const GLuint VT_POS = 1;
 

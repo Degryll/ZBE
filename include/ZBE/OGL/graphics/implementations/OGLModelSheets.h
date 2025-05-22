@@ -79,6 +79,7 @@ public:
   OGLModel generateModel(std::shared_ptr<MAvatar<uint64_t, double, Vector3D, Vector3D, Vector3D> > avatar) override;
 
 private:
+DISABLE_DLL_WARN
   std::shared_ptr<OGLGraphics> graphic;
   GLuint vao;
   GLsizei nvertex;
@@ -86,6 +87,7 @@ private:
   GLenum  mode;
   GLenum  type;
   const GLvoid* offset;
+DISABLE_WARNING_POP()
 };
 
 /** \brief Interface capable of generate a sprite from a given entity.

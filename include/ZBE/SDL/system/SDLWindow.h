@@ -247,6 +247,7 @@ protected:
   }
 
 private:
+DISABLE_DLL_WARN
   const char* title;
   int x, y, width, height;
   Uint32 window_flags, renderer_flags;
@@ -257,6 +258,7 @@ private:
   SDL_Texture* output;                         //!< Output texture.
   std::shared_ptr<SDLImageStore> imgStore;     //!< Store for images.
   std::shared_ptr<SDLTextFontStore> fontStore; //!< Store for text fonts.
+DISABLE_WARNING_POP()
 };
 
 /**
@@ -321,13 +323,14 @@ public:
     SDL_Texture* getTexture(uint64_t id);
 
 private:
-
+DISABLE_DLL_WARN
     uint64_t ntextures;                       //!< Number of loaded textures.
     std::vector<SDL_Texture*> imgCollection;  //!< Collection of textures.
     std::mutex m;                             //!< Mutex to avoid race conditions.
     //std::mutex mf;                            //!< Another mutex to avoid race conditions.
     SDL_Renderer* renderer;
 
+DISABLE_WARNING_POP()
 };
 
 struct ZBEAPI ZBE_Font {
@@ -376,14 +379,14 @@ public:
     SDL_Texture* renderText(uint64_t fontID, const char *text);
 
 private:
-
+DISABLE_DLL_WARN
     uint64_t nfonts;                          //!< Number of loaded fonts.
     std::vector<ZBE_Font> fontCollection;     //!< Collection of fonts.
     std::mutex m;                             //!< Mutex to avoid race conditions.
     std::mutex mf;                            //!< Another mutex to avoid race conditions.
     std::shared_ptr<SDLImageStore> imageStore; //!< ImageStore to store pre-rendered texts.
     SDL_Renderer* renderer;                   //!< Renderer to be used for drawing.
-
+DISABLE_WARNING_POP()
 };
 
 }  // namespace zbe

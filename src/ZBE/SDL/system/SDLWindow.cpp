@@ -15,17 +15,6 @@
 
 namespace zbe {
 
-#ifdef _WIN32
-
-template class ZBEAPI std::shared_ptr<SDLImageStore>;
-template class ZBEAPI std::shared_ptr<SDLTextFontStore>;
-template class ZBEAPI std::vector<SDL_Texture*>;
-template class ZBEAPI std::mutex;
-template class ZBEAPI std::vector<ZBE_Font>;
-template class ZBEAPI std::shared_ptr<SDLImageStore>;
-
-#endif // OS
-
 SDLWindow::SDLWindow(const char* title, int width, int height, Uint32 window_flags, Uint32 renderer_flags)
   : SDLWindow(title, 0, 0, width, height, window_flags, renderer_flags) {}
 

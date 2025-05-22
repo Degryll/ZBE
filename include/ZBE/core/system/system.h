@@ -29,6 +29,7 @@
 #endif // OS
 
 #ifdef _MSC_VER
+  #pragma warning(disable:C4458)
   #define DISABLE_WARNING_PUSH(code) \
     __pragma(warning(push))          \
     __pragma(warning(disable : code))
