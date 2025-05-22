@@ -40,15 +40,16 @@ namespace zbe {
 */
 class ZBEAPI JSONSimpleOGLModelSheetLoader : public RsrcLoader {
 public:
-
  /** \brief Empty constructir. Creted object needs to be setup
   */
 //JSONSimpleOGLModelSheetLoader() = default;
  /* \brief It sets up the window to be used.
  */
+DISABLE_DLL_WARN
  void setWindow(std::shared_ptr<SDLOGLWindow> window) {
    this->window = window;
  }
+DISABLE_WARNING_POP()
 
  /** \brief Load an image
   *  \param filePath Path to image file.
@@ -132,9 +133,11 @@ DISABLE_WARNING_POP()
 class ZBEAPI JSONLookAtOGLModelSheetLoader : public RsrcLoader {
 public:
 
+DISABLE_DLL_WARN
  void setWindow(std::shared_ptr<SDLOGLWindow> window) {
    this->window = window;
  }
+DISABLE_WARNING_POP()
 
  /** \brief Load an image
   *  \param filePath Path to image file.
@@ -152,10 +155,12 @@ public:
  }
 
 private:
+DISABLE_DLL_WARN
   std::shared_ptr<SDLOGLWindow> window = nullptr;
   RsrcStore<zbe::OGLModelSheet<uint64_t, double, Vector3D, Vector3D, Vector3D> >& rsrcModelSheet = RsrcStore<zbe::OGLModelSheet<uint64_t, double, Vector3D, Vector3D, Vector3D> >::getInstance();
   NameRsrcDictionary& nrd = NameRsrcDictionary::getInstance();
   RsrcStore<OGLGraphics> &graphicsStore = RsrcStore<OGLGraphics>::getInstance();
+DISABLE_WARNING_POP()
 };
 
 /** \brief Factory for JSONLookAtOGLModelSheetLoader.
