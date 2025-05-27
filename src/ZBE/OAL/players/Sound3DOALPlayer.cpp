@@ -11,6 +11,10 @@
 
 namespace zbe {
 
+const uint64_t Sound3DOALPlayer::NEW = 0;
+const uint64_t Sound3DOALPlayer::PLAYING = 1;
+const uint64_t Sound3DOALPlayer::STOPPED = 2;
+
 //Vector3D transformAudioPos(Vector3D p, std::vector<float>& tm) {
 //  Vector3D out;
 //  out.x = p.x * tm[0] + p.y * tm[1] + p.z * tm[2] + tm[3];

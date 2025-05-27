@@ -10,6 +10,7 @@
 #include "ZBE/OAL/daemons/OALContextDaemon.h"
 
 #include <memory>
+#include <string>
 
 namespace zbe {
 
@@ -44,7 +45,12 @@ ALCchar* OALContextDaemon::getLastAudioDevice(const ALCchar *devices) {
   ALCchar *out = static_cast<ALCchar*>(malloc(sizeof(ALCchar)*1024));
 
   while (device && *device != '\0' && next && *next != '\0') {
-    strcpy(out,  device);
+
+#ifdef _WIN32
+  strcpy_s(out, sizeof(ALCchar)*1024,  device);
+#else
+  strcpy(out,  device); 
+#endif // OS
     //fprintf(stdout, "%s\n", device);
     size_t len = strlen(device);
     device += (len + 1);

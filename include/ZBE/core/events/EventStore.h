@@ -67,6 +67,7 @@ public:
   uint64_t getTime() const;
 
 private:
+DISABLE_DLL_WARN
   void clearStore(std::forward_list<Event*>&);
 
   void manageStore(std::forward_list<Event*>&);
@@ -75,6 +76,7 @@ private:
   std::forward_list<Event*> timedStore;
   std::forward_list<Event*> instantStore;
   uint64_t bettertime;
+DISABLE_WARNING_POP()
 };
 
 }  // namespace zbe

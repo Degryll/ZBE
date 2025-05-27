@@ -42,7 +42,7 @@ namespace zbe {
 
 /** \brief Interface for all daemons. Daemons are responsible for execute automated processes. Basically Daemons rules the world.
  */
-class Daemon {
+class ZBEAPI Daemon {
 public:
 
   /** \brief Do the actual Daemon job.
@@ -54,7 +54,7 @@ public:
   virtual ~Daemon() {};
 };
 
-class CallDmn : public Daemon {
+class ZBEAPI CallDmn : public Daemon {
 public:
   CallDmn() : fs() {}
   void run() override {
@@ -68,10 +68,12 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
   std::forward_list<std::shared_ptr<Funct<void>>> fs;
+DISABLE_WARNING_POP()
 };
 
-class CallDmnFtry : public Factory {
+class ZBEAPI CallDmnFtry : public Factory {
 public:
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
@@ -99,10 +101,12 @@ public:
     );
   }
 private:
+DISABLE_DLL_WARN
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<Daemon>& mainRsrc = RsrcStore<Daemon>::getInstance();
   RsrcStore<CallDmn>& specificRsrc = RsrcStore<CallDmn>::getInstance();
   RsrcStore<Funct<void>>& functRsrc = RsrcStore<Funct<void>>::getInstance();
+DISABLE_WARNING_POP()
 };
 
 template<typename F, typename L>
@@ -123,12 +127,14 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
   std::shared_ptr<F> f{};
   std::shared_ptr<L> l{};
+DISABLE_WARNING_POP()
 };
 
 template<typename F, typename L>
-class FunctOverAvtListDmnFtry : public Factory {
+class ZBEAPI FunctOverAvtListDmnFtry : public Factory {
 public:
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
@@ -163,6 +169,7 @@ public:
     }
   }
 private:
+DISABLE_DLL_WARN
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<Daemon>& mainRsrc = RsrcStore<Daemon>::getInstance();
   RsrcStore<FunctOverAvtListDmn<F,L>>& specificRsrc = RsrcStore<FunctOverAvtListDmn<F,L>>::getInstance();
@@ -170,6 +177,7 @@ private:
   RsrcStore<F>& functRsrc = RsrcStore<F>::getInstance();
 
   //RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
+DISABLE_WARNING_POP()
 };
 
 /** \brief DaemonMaster is a Daemon responsible for run others Daemons. This is necessary to build the Daemons tree.
@@ -324,6 +332,7 @@ public:
   void stop() {keep = false;}
 
 private:
+DISABLE_DLL_WARN
   std::shared_ptr<Daemon> dPre;
   std::shared_ptr<Daemon> dPost;
   std::shared_ptr<Daemon> dTE;
@@ -335,7 +344,7 @@ private:
   zbe::EventStore &store;
 
   bool keep;
-
+DISABLE_WARNING_POP()
 };
 
 /** \brief Daemon capable of end a MainLoop
@@ -379,15 +388,17 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
   std::shared_ptr<MainLoop> mainLoop;
   std::shared_ptr< Value<int64_t> > value;
   int64_t exitValue;
+DISABLE_WARNING_POP()
 };
 
 /** \brief Daemon that applies a "punish" over a list of elements.
  */
 template<typename P, typename L>
-class PunisherDaemon : public Daemon {
+class ZBEAPI PunisherDaemon : public Daemon {
 public:
 
   PunisherDaemon(const PunisherDaemon&) = delete; //!< Avoid copy.
@@ -422,8 +433,10 @@ public:
   void run() override;
 
 private:
+DISABLE_DLL_WARN
   std::shared_ptr<P> punish;
   std::shared_ptr<L> list;
+DISABLE_WARNING_POP()
 };
 
 template<typename P, typename L>
@@ -481,8 +494,10 @@ public:
   void run() override;
 
 private:
+DISABLE_DLL_WARN
   std::unordered_map<int64_t, std::shared_ptr<Daemon> > daemons;
   std::shared_ptr<Value<int64_t> > state;
+DISABLE_WARNING_POP()
 };
 
 
@@ -535,11 +550,13 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
   std::unordered_map<int64_t, std::shared_ptr<Daemon> > daemons;
   std::shared_ptr<Value<int64_t> > state;
+DISABLE_WARNING_POP()
 };
 
-class StatedDaemonFtry : public Factory {
+class ZBEAPI StatedDaemonFtry : public Factory {
 public:
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
@@ -574,16 +591,18 @@ public:
 
   }
 private:
+DISABLE_DLL_WARN
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<Daemon>& mainRsrc = RsrcStore<Daemon>::getInstance();
   RsrcStore<StatedDaemon>& specificRsrc = RsrcStore<StatedDaemon>::getInstance();
   RsrcStore<Value<int64_t> > &valueIRsrc = RsrcStore<Value<int64_t> >::getInstance();
   RsrcDictionary<int64_t>& intDict = RsrcDictionary<int64_t>::getInstance();
+DISABLE_WARNING_POP()
 };
 
 /** \brief Daemon that does nothing.
  */
-class VoidDaemon : public Daemon {
+class ZBEAPI VoidDaemon : public Daemon {
 public:
 
   /** \brief Do nothing.
@@ -628,14 +647,14 @@ public:
   }
 
 private:
-
+DISABLE_DLL_WARN
   int64_t condition;
   std::shared_ptr<Value<int64_t> > val;
   std::shared_ptr<Daemon> daemon;
-
+DISABLE_WARNING_POP()
 };
 
-class ConditionalIntDaemonFtry : public Factory {
+class ZBEAPI ConditionalIntDaemonFtry : public Factory {
 public:
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
@@ -678,11 +697,13 @@ public:
 
   }
 private:
+DISABLE_DLL_WARN
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<Daemon>& mainRsrc = RsrcStore<Daemon>::getInstance();
   RsrcStore<ConditionalIntDaemon>& specificRsrc = RsrcStore<ConditionalIntDaemon>::getInstance();
   RsrcStore<Value<int64_t> > &valueIRsrc = RsrcStore<Value<int64_t> >::getInstance();
   RsrcDictionary<int64_t>& intStore = RsrcDictionary<int64_t>::getInstance();
+DISABLE_WARNING_POP()
 };
 
 }  // namespace zbe

@@ -69,7 +69,7 @@ public:
     ALuint getAudio(uint64_t id) const;
 
 private:
-
+DISABLE_DLL_WARN
     static bool checkErrors(const char *job);
     static void logOALError(const char *job, std::string error);
 
@@ -78,7 +78,7 @@ private:
     //void _loadAudio(const char *url);
     std::vector<ALuint> audioCollection;  //!< Collection of textures.
     std::mutex m;                             //!< Mutex to avoid race conditions.
-
+DISABLE_WARNING_POP()
 };
 
 }  // namespace zbe

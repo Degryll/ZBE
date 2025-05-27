@@ -70,6 +70,7 @@ public:
   std::vector<float>& getProjectionMat() { return projection; }
 
 private:
+DISABLE_DLL_WARN
   std::shared_ptr<Value<Vector3D> > eye;
   std::shared_ptr<Value<Vector3D> > target;
   std::shared_ptr<Value<Vector3D> > up;
@@ -81,6 +82,7 @@ private:
 
   std::vector<float> transform;
   std::vector<float> projection;
+DISABLE_WARNING_POP()
 };
 
 }  // namespace zbe

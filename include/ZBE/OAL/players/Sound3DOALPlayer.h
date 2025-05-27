@@ -40,7 +40,7 @@ class ZBEAPI Sound3DOALPlayerFtry;
 class ZBEAPI Sound3DOALPlayer : public Behavior<uint64_t, uint64_t, uint64_t, Vector3D, Vector3D> {
 public:
   friend class Sound3DOALPlayerFtry;
-  const static uint64_t NEW = 0, PLAYING = 1, STOPPED = 2;
+  const static uint64_t NEW, PLAYING, STOPPED;
 
   Sound3DOALPlayer(std::shared_ptr<OALAudioStore> store, std::shared_ptr<Camera> cam) : store(store), cam(cam) {}
 
@@ -53,6 +53,7 @@ public:
   void setCamera(std::shared_ptr<Camera> cam);
 
 private:
+DISABLE_DLL_WARN
   Sound3DOALPlayer() : store() {}
   void setUp(std::shared_ptr<OALAudioStore> store, std::shared_ptr<Camera> cam) {
     this->store = store;
@@ -61,6 +62,7 @@ private:
 
   std::shared_ptr<OALAudioStore> store;
   std::shared_ptr<Camera> cam;
+DISABLE_WARNING_POP()
 };
 
 
@@ -71,11 +73,13 @@ public:
   void setup(std::string name, uint64_t cfgId) override;
 
 private:
+DISABLE_DLL_WARN
   RsrcStore<nlohmann::json>& configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<Behavior<uint64_t, uint64_t, uint64_t, Vector3D, Vector3D> >& mainRsrc = RsrcStore<Behavior<uint64_t, uint64_t, uint64_t, Vector3D, Vector3D> >::getInstance();
   RsrcStore<Sound3DOALPlayer>& specificRsrc = RsrcStore<Sound3DOALPlayer>::getInstance();
   RsrcStore<OALAudioStore> &audioStoreRsrc = RsrcStore<OALAudioStore>::getInstance();
   RsrcStore<Camera> &cameraRsrc = RsrcStore<Camera>::getInstance();
+DISABLE_WARNING_POP()
 };
 
 }  // namespace zbe
