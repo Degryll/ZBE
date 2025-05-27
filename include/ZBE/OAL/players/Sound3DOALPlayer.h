@@ -40,7 +40,9 @@ class ZBEAPI Sound3DOALPlayerFtry;
 class ZBEAPI Sound3DOALPlayer : public Behavior<uint64_t, uint64_t, uint64_t, Vector3D, Vector3D> {
 public:
   friend class Sound3DOALPlayerFtry;
-  constexpr static uint64_t NEW = 0, PLAYING = 1, STOPPED = 2;
+  constexpr static uint64_t NEW = 0;
+  constexpr static uint64_t PLAYING = 1;
+  constexpr static uint64_t STOPPED = 2;
 
   Sound3DOALPlayer(std::shared_ptr<OALAudioStore> store, std::shared_ptr<Camera> cam) : store(store), cam(cam) {}
 

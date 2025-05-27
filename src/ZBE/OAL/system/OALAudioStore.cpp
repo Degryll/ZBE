@@ -77,7 +77,7 @@ ALuint OALAudioStore::_loadAudio(const char *url) {
     // Abrir el archivo
 #ifdef _WIN32
     FILE* file;
-    fopen_s(file, url, "rb");
+    fopen_s(&file, url, "rb");
 #else
     FILE* file = fopen(url, "rb");
 #endif // OS
