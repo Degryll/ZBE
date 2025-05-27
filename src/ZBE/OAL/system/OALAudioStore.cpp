@@ -75,7 +75,12 @@ ALuint OALAudioStore::_loadAudio(const char *url) {
     ALsizei freq;
 
     // Abrir el archivo
+#ifdef _WIN32
+    FILE* file;
+    fopen_s(file, url, "rb");
+#else
     FILE* file = fopen(url, "rb");
+#endif // OS
     if (!file) {
         std::cerr << "Error abriendo el archivo: " << url << std::endl;
         return 0;
