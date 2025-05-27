@@ -204,7 +204,9 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
   TicketedForwardList<Daemon> daemonList{};
+DISABLE_WARNING_POP()
 };
 
 

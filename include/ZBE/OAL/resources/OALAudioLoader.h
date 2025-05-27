@@ -43,13 +43,13 @@ public:
   bool isLoadable(std::filesystem::path extension) override ;
 
 private:
-
+DISABLE_DLL_WARN
  std::filesystem::path generateDefPath(const std::filesystem::path& p);
 
  std::shared_ptr<OALAudioStore> audioStore;
  std::shared_ptr<RsrcDefLoader> audioDefLoader;
  static std::filesystem::path ext;
-
+DISABLE_WARNING_POP()
 };
 
 class ZBEAPI OALAudioLoaderFtry : public Factory {
