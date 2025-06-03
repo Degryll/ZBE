@@ -67,8 +67,6 @@ cpmaddpackage("gh:syoyo/tinygltf@2.8.22")
 
 cpmaddpackage("gh:nemtrif/utfcpp@4.0.5")
 
-set(PNG_CONFIGURE_LIBPNG ON CACHE BOOL "" FORCE)
-set(PNG_BUILD_ZLIB ON CACHE BOOL "" FORCE)
 cpmaddpackage("gh:pnggroup/libpng@1.6.43")
 
 

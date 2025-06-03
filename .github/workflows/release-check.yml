@@ -132,6 +132,11 @@ jobs:
           -DZBE_ENABLE_SANITIZER_UNDEFINED:BOOL="0" `
           -DZBE_ENABLE_SANITIZER_ADDRESS:BOOL="0"
 
+    - name: Copy pnglibconf.h
+      if: contains(matrix.os, 'windows')
+      run: copy build\_deps\libpng-src\scripts\pnglibconf.h.prebuilt build\_deps\libpng-src\pnglibconf.h
+      shell: cmd
+
     - name: Build
       # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
       # run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }}
