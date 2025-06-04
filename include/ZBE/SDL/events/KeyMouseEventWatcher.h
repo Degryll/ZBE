@@ -34,7 +34,7 @@ class KeyMouseEventWatcherFtry;
 
 /** \brief Dispatcher for sdl events.
  */
-class KeyMouseEventWatcher : public SDLEventWatcher {
+class ZBEAPI KeyMouseEventWatcher : public SDLEventWatcher {
 public:
   friend class KeyMouseEventWatcherFtry;
 
@@ -143,12 +143,14 @@ private:
     setState(ZBEK_MOUSE_OFFSET_Y, static_cast<float>(event.motion.yrel), event.key.timestamp);
   }
 
+DISABLE_DLL_WARN
   std::shared_ptr<InputBuffer> inputBuffer;
   std::shared_ptr<InputTextBuffer> inputTextBuffer;
   std::shared_ptr<ContextTime> contextTime;
+DISABLE_WARNING_POP()
 };
 
-class KeyMouseEventWatcherFtry : public Factory {
+class ZBEAPI KeyMouseEventWatcherFtry : public Factory {
 public:
 
   /** \brief Builds a SDLWindow.
@@ -217,13 +219,14 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<KeyMouseEventWatcher> &kmewRsrc = RsrcStore<KeyMouseEventWatcher>::getInstance();
   RsrcStore<InputBuffer>& ibuffRsrc = RsrcStore<InputBuffer>::getInstance();
   RsrcStore<InputTextBuffer>& itBuffRsrc = RsrcStore<InputTextBuffer>::getInstance();
   RsrcStore<ContextTime>& cTimeRsrc = RsrcStore<ContextTime>::getInstance();
   RsrcStore<SDLEventDispatcher>& sdlEDRsrc = RsrcStore<SDLEventDispatcher>::getInstance();
-
+DISABLE_WARNING_POP()
 };
 
 }  // namespace zbe

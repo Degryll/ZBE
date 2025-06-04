@@ -24,78 +24,80 @@ namespace zbe {
 
 /** \brief This draws a simple sprite (an image).
  */
-class ConsoleTextDrawer : public Behavior<uint64_t, std::string, int64_t, std::vector<std::string> > {
-  public:
-    ConsoleTextDrawer(const ConsoleTextDrawer&) = delete; //!< Avoid copy.
-    void operator=(const ConsoleTextDrawer&) = delete; //!< Avoid copy.
+class ZBEAPI ConsoleTextDrawer : public Behavior<uint64_t, std::string, int64_t, std::vector<std::string> > {
+public:
+  ConsoleTextDrawer(const ConsoleTextDrawer&) = delete; //!< Avoid copy.
+  void operator=(const ConsoleTextDrawer&) = delete; //!< Avoid copy.
 
-    /** \brief Empty constructor.
-     */
-    ConsoleTextDrawer()
-      : window(nullptr), textFontStore(nullptr) {}
+  /** \brief Empty constructor.
+   */
+  ConsoleTextDrawer()
+    : window(nullptr), textFontStore(nullptr) {}
 
-    /** \brief Create a new drawer in the given context.
-     *  \param window A SDLwindow with its context.
-     */
-    ConsoleTextDrawer(std::shared_ptr<SDLWindow> window)
-      : window(window), textFontStore(window->getFontStore()) {}
+  /** \brief Create a new drawer in the given context.
+   *  \param window A SDLwindow with its context.
+   */
+  ConsoleTextDrawer(std::shared_ptr<SDLWindow> window)
+    : window(window), textFontStore(window->getFontStore()) {}
 
-    /** \brief Destructor.
-     */
-    ~ConsoleTextDrawer() {}
+  /** \brief Destructor.
+   */
+  ~ConsoleTextDrawer() {}
 
-    /** \brief sets the window, imgStore and rmss.
-     *  \param window A SDLwindow with its context.
-     */
-    void setWindow(std::shared_ptr<SDLWindow> window) {
-      this->window = window;
-      textFontStore = window->getFontStore();
-    }
+  /** \brief sets the window, imgStore and rmss.
+   *  \param window A SDLwindow with its context.
+   */
+  void setWindow(std::shared_ptr<SDLWindow> window) {
+    this->window = window;
+    textFontStore = window->getFontStore();
+  }
 
-    /** \brief Draws the given entity.
-     *  \param The entity to be drawn.
-     */
-    void apply(std::shared_ptr<MAvatar<uint64_t, std::string, int64_t, std::vector<std::string> > > avatar) override {
-      using namespace std::string_literals;
+  /** \brief Draws the given entity.
+   *  \param The entity to be drawn.
+   */
+  void apply(std::shared_ptr<MAvatar<uint64_t, std::string, int64_t, std::vector<std::string> > > avatar) override {
+    using namespace std::string_literals;
 
-      auto fid = avatar->get<4, uint64_t>()->get();
-      auto vc = avatar->get<3, std::string>()->get();
-      auto vl = avatar->get<2, int64_t>()->get();
-      auto vh = avatar->get<1, std::vector<std::string> >()->get();
+    auto fid = avatar->get<4, uint64_t>()->get();
+    auto vc = avatar->get<3, std::string>()->get();
+    auto vl = avatar->get<2, int64_t>()->get();
+    auto vh = avatar->get<1, std::vector<std::string> >()->get();
 
 //      // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
 //      if (show_demo_window)
 //        ImGui::ShowDemoWindow(&show_demo_window);
 
 
-      int ini = std::max(0ll, vl - 10ll);
-      int fin = vl;
-      int posy = 0;
+    int ini = std::max(0ll, vl - 10ll);
+    int fin = vl;
+    int posy = 0;
 
-      for(int i = ini; i < fin; i++) {
-        renderText(fid, ">> "s + vh[i], posy);
-      }
-
-      renderText(fid, ">> "s + vc, posy);
+    for(int i = ini; i < fin; i++) {
+      renderText(fid, ">> "s + vh[i], posy);
     }
 
-  protected:
-    void renderText(uint64_t fid, std::string text, int& posy) {
-      int w = 0;
-      int h = 0;
-      SDL_Texture* t = textFontStore->renderText(fid, text.c_str());
-      SDL_QueryTexture(t, 0, 0, &w, &h);
-      SDL_Rect dst = {0, posy, w, h};
-      posy += h;
-      window->render(t, nullptr, &dst);
-      SDL_DestroyTexture(t);
-    }
+    renderText(fid, ">> "s + vc, posy);
+  }
 
-  private:
-    std::shared_ptr<SDLWindow> window;  //!< A SDL window with its context.
-    std::shared_ptr<SDLTextFontStore> textFontStore; //!< Where the images are stored.
+protected:
+  void renderText(uint64_t fid, std::string text, int& posy) {
+    int w = 0;
+    int h = 0;
+    SDL_Texture* t = textFontStore->renderText(fid, text.c_str());
+    SDL_QueryTexture(t, 0, 0, &w, &h);
+    SDL_Rect dst = {0, posy, w, h};
+    posy += h;
+    window->render(t, nullptr, &dst);
+    SDL_DestroyTexture(t);
+  }
 
-    bool show_demo_window = true;
+private:
+DISABLE_DLL_WARN
+  std::shared_ptr<SDLWindow> window;  //!< A SDL window with its context.
+  std::shared_ptr<SDLTextFontStore> textFontStore; //!< Where the images are stored.
+
+  bool show_demo_window = true;
+DISABLE_WARNING_POP()
 };
 
 }  // namespace zbe

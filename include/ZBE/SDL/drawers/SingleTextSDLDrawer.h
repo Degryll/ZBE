@@ -24,62 +24,64 @@ namespace zbe {
 /** \brief This draws a simple sprite (an image).
  */
 class ZBEAPI SingleTextSDLDrawer : public Behavior<std::string, uint64_t, Vector2D, Vector2D> {
-  public:
-    SingleTextSDLDrawer(const SingleTextSDLDrawer&) = delete; //!< Avoid copy.
-    void operator=(const SingleTextSDLDrawer&) = delete; //!< Avoid copy.
+public:
+  SingleTextSDLDrawer(const SingleTextSDLDrawer&) = delete; //!< Avoid copy.
+  void operator=(const SingleTextSDLDrawer&) = delete; //!< Avoid copy.
 
-    /** \brief Empty constructor.
-     */
-    SingleTextSDLDrawer()
-      : window(nullptr), textFontStore(nullptr) {}
+  /** \brief Empty constructor.
+   */
+  SingleTextSDLDrawer()
+    : window(nullptr), textFontStore(nullptr) {}
 
-    /** \brief Create a new drawer in the given context.
-     *  \param window A SDLwindow with its context.
-     */
-    SingleTextSDLDrawer(std::shared_ptr<SDLWindow> window)
-      : window(window), textFontStore(window->getFontStore()) {}
+  /** \brief Create a new drawer in the given context.
+   *  \param window A SDLwindow with its context.
+   */
+  SingleTextSDLDrawer(std::shared_ptr<SDLWindow> window)
+    : window(window), textFontStore(window->getFontStore()) {}
 
-    /** \brief Destructor.
-     */
-    ~SingleTextSDLDrawer() {}
+  /** \brief Destructor.
+   */
+  ~SingleTextSDLDrawer() {}
 
-    /** \brief sets the window, imgStore and rmss.
-     *  \param window A SDLwindow with its context.
-     */
-    void setWindow(std::shared_ptr<SDLWindow> window) {
-      this->window = window;
-      textFontStore = window->getFontStore();
-    }
+  /** \brief sets the window, imgStore and rmss.
+   *  \param window A SDLwindow with its context.
+   */
+  void setWindow(std::shared_ptr<SDLWindow> window) {
+    this->window = window;
+    textFontStore = window->getFontStore();
+  }
 
-    /** \brief Draws the given entity.
-     *  \param The entity to be drawn.
-     */
-    void apply(std::shared_ptr<MAvatar<std::string, uint64_t, Vector2D, Vector2D> > avatar) override{
-      SDL_Texture* t = textFontStore->renderText(avatar->get<3, uint64_t>()->get(), avatar->get<4, std::string>()->get().c_str());
+  /** \brief Draws the given entity.
+   *  \param The entity to be drawn.
+   */
+  void apply(std::shared_ptr<MAvatar<std::string, uint64_t, Vector2D, Vector2D> > avatar) override{
+    SDL_Texture* t = textFontStore->renderText(avatar->get<3, uint64_t>()->get(), avatar->get<4, std::string>()->get().c_str());
 
-      int tw, th, aw, ah;
-      SDL_QueryTexture(t, NULL,NULL, &tw, &th);
-      SDL_Rect src,dst;
-      auto dim = avatar->get<2, Vector2D>()->get();
-      aw = static_cast<int>(dim.x);
-      ah = static_cast<int>(dim.y);
-      src.w = std::min(tw,aw);
-      src.h = std::min(th,ah);
-      dst.w = src.w;
-      dst.h = src.h;
-      src.x = 0;
-      src.y = 0;
-      auto pos = avatar->get<1, Vector2D>()->get();
-      dst.x = static_cast<int>(pos.x + (aw - dst.w));
-      dst.y = static_cast<int>(pos.y + (ah - dst.h));
+    int tw, th, aw, ah;
+    SDL_QueryTexture(t, NULL,NULL, &tw, &th);
+    SDL_Rect src,dst;
+    auto dim = avatar->get<2, Vector2D>()->get();
+    aw = static_cast<int>(dim.x);
+    ah = static_cast<int>(dim.y);
+    src.w = std::min(tw,aw);
+    src.h = std::min(th,ah);
+    dst.w = src.w;
+    dst.h = src.h;
+    src.x = 0;
+    src.y = 0;
+    auto pos = avatar->get<1, Vector2D>()->get();
+    dst.x = static_cast<int>(pos.x + (aw - dst.w));
+    dst.y = static_cast<int>(pos.y + (ah - dst.h));
 
-      window->render(t, &src, &dst);
-      SDL_DestroyTexture(t);
-    }
+    window->render(t, &src, &dst);
+    SDL_DestroyTexture(t);
+  }
 
-  private:
-    std::shared_ptr<SDLWindow> window;  //!< A SDL window with its context.
-    std::shared_ptr<SDLTextFontStore> textFontStore; //!< Where the images are stored.
+private:
+DISABLE_DLL_WARN
+  std::shared_ptr<SDLWindow> window;  //!< A SDL window with its context.
+  std::shared_ptr<SDLTextFontStore> textFontStore; //!< Where the images are stored.
+DISABLE_WARNING_POP()
 };
 
 }  // namespace zbe

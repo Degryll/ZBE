@@ -24,27 +24,29 @@ namespace zbe {
 /** \brief This draws a simple sprite (an image).
  */
 class ZBEAPI SingleSpriteSDLDrawer : public Behavior<uint64_t, Vector2D, Vector2D> {
-  public:
-    SingleSpriteSDLDrawer(const SingleSpriteSDLDrawer&) = delete; //!< Avoid copy.
-    void operator=(const SingleSpriteSDLDrawer&) = delete; //!< Avoid copy.
+public:
+  SingleSpriteSDLDrawer(const SingleSpriteSDLDrawer&) = delete; //!< Avoid copy.
+  void operator=(const SingleSpriteSDLDrawer&) = delete; //!< Avoid copy.
 
-    /** \brief Create a new drawer in the given context.
-     *  \param window A SDLwindow with its context.
-     */
-    explicit SingleSpriteSDLDrawer(std::shared_ptr<SDLWindow> window) : window(window), imgStore(window->getImgStore()) {}
+  /** \brief Create a new drawer in the given context.
+   *  \param window A SDLwindow with its context.
+   */
+  explicit SingleSpriteSDLDrawer(std::shared_ptr<SDLWindow> window) : window(window), imgStore(window->getImgStore()) {}
 
-    /** \brief Destructor.
-     */
-    ~SingleSpriteSDLDrawer() {}
+  /** \brief Destructor.
+   */
+  ~SingleSpriteSDLDrawer() {}
 
-    /** \brief Draws the given entity.
-     *  \param The entity to be drawn.
-     */
-    void apply(std::shared_ptr<MAvatar<uint64_t, Vector2D, Vector2D> > avatar) override;
+  /** \brief Draws the given entity.
+   *  \param The entity to be drawn.
+   */
+  void apply(std::shared_ptr<MAvatar<uint64_t, Vector2D, Vector2D> > avatar) override;
 
-  private:
-    std::shared_ptr<SDLWindow> window;  //!< A SDL window with its context.
-    std::shared_ptr<SDLImageStore> imgStore; //!< Where the images are stored.
+private:
+DISABLE_DLL_WARN
+  std::shared_ptr<SDLWindow> window;  //!< A SDL window with its context.
+  std::shared_ptr<SDLImageStore> imgStore; //!< Where the images are stored.
+DISABLE_WARNING_POP()
 };
 
 }  // namespace zbe
