@@ -159,13 +159,6 @@ GLuint OGLTextureStore::_createTexture(const GLvoid *data, unsigned w, unsigned 
   return texture;
 }
 
-void readPng(png_structp png, png_infop info) {
-  if (setjmp(png_jmpbuf(png))) {
-    png_destroy_read_struct(&png, &info, nullptr);
-    zbe::SysError::setError(std::string("Error during PNG creation."));
-  }
-}
-
 std::vector<unsigned char> OGLTextureStore::loadPNG(const char* filename, unsigned &width, unsigned &height) {
     // Abrir archivo con ifstream en modo binario
     std::ifstream file(std::string(filename), std::ios::binary);
@@ -191,11 +184,13 @@ std::vector<unsigned char> OGLTextureStore::loadPNG(const char* filename, unsign
         zbe::SysError::setError(std::string("Failed to create PNG info structure."));
     }
 
-    // if (setjmp(png_jmpbuf(png))) {
-    //     png_destroy_read_struct(&png, &info, nullptr);
-    //     zbe::SysError::setError(std::string("Error during PNG creation."));
-    // }
-    readPng(png, info);
+    #pragma warning( push )
+    #pragma warning( disable : 4611)
+    if (setjmp(png_jmpbuf(png))) {
+        png_destroy_read_struct(&png, &info, nullptr);
+        zbe::SysError::setError(std::string("Error during PNG creation."));
+    }
+    #pragma warning( pop )
 
     // Usar función personalizada para manejar el ifstream con libpng
     png_set_read_fn(png, static_cast<png_voidp>(&file), [](png_structp png_ptr, png_bytep outBytes, png_size_t byteCountToRead) {
