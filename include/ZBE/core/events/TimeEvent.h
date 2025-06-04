@@ -58,7 +58,9 @@ public:
   };
 
 private:
+DISABLE_DLL_WARN
   std::shared_ptr<TimeHandler> handler;
+DISABLE_WARNING_POP()
 };
 
 }  // namespace zbe

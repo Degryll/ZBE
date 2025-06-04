@@ -272,6 +272,7 @@ class ZBEAPI InputEventGenerator : virtual public Daemon {
       this->contextTime = contextTime;
     }
 
+DISABLE_DLL_WARN
     std::shared_ptr<InputBuffer> inputBuffer;
     std::shared_ptr<InputTextBuffer> inputTextBuffer;
     MappedInputStatusManager mism;
@@ -279,6 +280,7 @@ class ZBEAPI InputEventGenerator : virtual public Daemon {
     EventStore &store;
     std::shared_ptr<TextHandler> handler;
     std::shared_ptr<ContextTime> contextTime;
+DISABLE_WARNING_POP()
 };
 
 class ZBEAPI InputEventGeneratorFtry : public Factory {

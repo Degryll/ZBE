@@ -84,6 +84,7 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
   State s;  //!< State of the object
   std::multiset<TimerData>::iterator iter;
   std::multiset<TimerData>& timers;
@@ -91,6 +92,7 @@ private:
   EventStore& es;
   std::shared_ptr<ContextTime> contextTime;
   TimerData td;
+DISABLE_WARNING_POP()
 };
 
 /** \brief Generate collision events.
