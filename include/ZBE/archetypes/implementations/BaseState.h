@@ -43,7 +43,9 @@ public:
   int64_t getState() {return (s->get());}
 
 private:
+DISABLE_DLL_WARN
 	std::shared_ptr<Value<int64_t> > s;
+DISABLE_WARNING_POP()
 };
 
 }  // namespace zbe

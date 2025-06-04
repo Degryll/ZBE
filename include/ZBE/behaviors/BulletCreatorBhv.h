@@ -70,7 +70,7 @@ public:
   void apply(std::shared_ptr<MAvatar<Vector3D, Vector3D> > avatar) override;
 
 private:
-
+DISABLE_DLL_WARN
   BulletCreatorBhv() : creator() {};
 
   void setCreator(std::shared_ptr<BulletCreator> creator) {
@@ -78,6 +78,7 @@ private:
   }
 
   std::shared_ptr<BulletCreator> creator;
+DISABLE_WARNING_POP()
 };
 
 class ZBEAPI BulletCreatorBhvFtry : virtual public Factory  {

@@ -134,7 +134,9 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
   std::shared_ptr<Daemon> dmn;
+DISABLE_WARNING_POP()
 };
 
 

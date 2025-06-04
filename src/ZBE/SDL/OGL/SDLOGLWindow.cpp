@@ -184,13 +184,12 @@ std::vector<unsigned char> OGLTextureStore::loadPNG(const char* filename, unsign
         zbe::SysError::setError(std::string("Failed to create PNG info structure."));
     }
 
-    #pragma warning( push )
-    #pragma warning( disable : 4611)
+    DISABLE_WARNING_PUSH(4611)
     if (setjmp(png_jmpbuf(png))) {
         png_destroy_read_struct(&png, &info, nullptr);
         zbe::SysError::setError(std::string("Error during PNG creation."));
     }
-    #pragma warning( pop )
+    DISABLE_WARNING_POP()
 
     // Usar función personalizada para manejar el ifstream con libpng
     png_set_read_fn(png, static_cast<png_voidp>(&file), [](png_structp png_ptr, png_bytep outBytes, png_size_t byteCountToRead) {

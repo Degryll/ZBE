@@ -35,7 +35,9 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
   std::shared_ptr<Value<T> > ni;
+DISABLE_WARNING_POP()
 };
 
 }  // namespace zbe

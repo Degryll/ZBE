@@ -68,9 +68,10 @@ public:
   }
 
 private:
-
+DISABLE_DLL_WARN
   SDL_Starter &sdl;
   std::forward_list<std::shared_ptr<SDLEventWatcher> > watchers;
+DISABLE_WARNING_POP()
 };
 
 }  // namespace zbe

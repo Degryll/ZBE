@@ -59,9 +59,11 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
   GLuint gProgramID;
   std::shared_ptr<Camera> cam;
   std::shared_ptr<SDLEventDispatcher> sdled;
+DISABLE_WARNING_POP()
 };
 
 }  // namespace zbe

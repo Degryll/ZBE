@@ -48,8 +48,10 @@ public:
   bool operator<(const InputText& rhs) const {return time<rhs.getTime();}
 
 private:
+DISABLE_DLL_WARN
   std::string text;
   uint64_t time;
+DISABLE_WARNING_POP()
 };
 
 }  // namespace zbe
