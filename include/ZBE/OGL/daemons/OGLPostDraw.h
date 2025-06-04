@@ -42,7 +42,9 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
   std::shared_ptr<zbe::SDLOGLWindow> window;
+DISABLE_WARNING_POP()
 };
 
 }  // namespace zbe

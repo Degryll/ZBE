@@ -56,8 +56,10 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
   uint64_t t;    //!< Frame of the animation
   std::shared_ptr<ContextTime> contextTime;
+DISABLE_WARNING_POP()
 };
 
 }  // namespace zbe

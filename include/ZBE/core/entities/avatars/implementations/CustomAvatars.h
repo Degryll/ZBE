@@ -2971,7 +2971,7 @@ private:
   RsrcStore<TicketedForwardList<MAvatar<MovingSphere> > >& listStore = RsrcStore<TicketedForwardList<MAvatar<MovingSphere> > >::getInstance();
 };
 
-class LookAtToPitchAvtFtry : public Factory {
+class ZBEAPI LookAtToPitchAvtFtry : public Factory {
   /** \brief Builds a LookAtToPitchAvt.
    *  \param name Name for the created LookAtToPitchAvt.
    *  \param cfgId LookAtToPitchAvt's configuration id.
@@ -3070,7 +3070,7 @@ private:
   RsrcStore<TicketedForwardList<MAvatar<Vector3D, Vector3D> > >& listStore = RsrcStore<TicketedForwardList<MAvatar<Vector3D, Vector3D> > >::getInstance();
 };
 
-class LookAtToYawAvtFtry : public Factory {
+class ZBEAPI LookAtToYawAvtFtry : public Factory {
   /** \brief Builds a LookAtToYawAvt.
    *  \param name Name for the created LookAtToYawAvt.
    *  \param cfgId LookAtToYawAvt's configuration id.

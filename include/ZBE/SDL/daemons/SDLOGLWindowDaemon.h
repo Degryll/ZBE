@@ -60,12 +60,14 @@ public:
   void run() override;
 
 private:
+DISABLE_DLL_WARN
   zbe::RsrcStore<SDLOGLWindow>& rs = zbe::RsrcStore<SDLOGLWindow>::getInstance();
 
   std::string name;
   const char* title;
   int x, y, width, height;
   Uint32 window_flags, renderer_flags;
+DISABLE_WARNING_POP()
 };
 
 }  // namespace zbe
