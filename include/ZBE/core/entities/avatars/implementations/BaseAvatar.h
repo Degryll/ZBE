@@ -161,7 +161,12 @@ public:
   void setupEntity(std::shared_ptr<Entity> entity, std::array<uint64_t, n> ids) {
     A::setupEntity(entity);
     _BaseAvatar<A, n, T>::setupEntity(entity, ids[0]);
-    _BaseAvatar<A, n-1, Ts...>::setupEntity(entity, ids.begin()+1);
+    // std::array<uint64_t, n-1> idsaux;
+    // std::copy(ids.begin()+1, ids.end(), idsaux.begin());
+    // _BaseAvatar<A, n-1, Ts...>::setupEntity(entity, idsaux);
+    // _BaseAvatar<A, n-1, Ts...>::setupEntity(entity, ids.begin()+1);
+    auto it = std::next(ids.begin());
+    _BaseAvatar<A, n-1, Ts...>::setupEntity(entity, it);
   }
 
   constexpr static unsigned size() {
@@ -376,7 +381,7 @@ template<typename T>
 using SDynamicAwareAvatar = _DynamicAvatar<AwareAvatar, 1, T>;
 
 
-
+DISABLE_WARNING_POP()
 }  // namespace zbe
 
 #endif  // ZBE_CORE_ENTITIES_AVATARS_IMPLEMENTATIONS_BASEAVATAR_H_
