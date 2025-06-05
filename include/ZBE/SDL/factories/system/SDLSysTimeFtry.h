@@ -47,12 +47,14 @@ public:
   void setup(std::string, uint64_t) override;
 
 private:
+DISABLE_DLL_WARN
   RsrcStore<Timer> &timerRsrc = RsrcStore<Timer>::getInstance();
   RsrcStore<SDLTimer> &sdlTimerRsrc = RsrcStore<SDLTimer>::getInstance();
   RsrcStore<ContextTime> &contextTimeRsrc = RsrcStore<ContextTime>::getInstance();
   NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();
 
   std::shared_ptr<SysTime> st = SysTime::getInstance();
+DISABLE_WARNING_POP()
 };
 
 } // namespace zbe

@@ -68,9 +68,9 @@ public:
   */
  void load(std::filesystem::path filePath) override {
     #ifdef _WIN32
-      uint64_t imgId = imgStore->loadImg(filePath.wstring().c_str()); // TODO test with ut8
+      uint64_t imgId = imgStore->loadImg(filePath.string().c_str()); // TODO test with ut8
     #else
-    uint64_t imgId = imgStore->loadImg(filePath.c_str()); // TODO test with ut8
+      uint64_t imgId = imgStore->loadImg(filePath.c_str()); // TODO test with ut8
     #endif
     
     if(imgId > 0) {

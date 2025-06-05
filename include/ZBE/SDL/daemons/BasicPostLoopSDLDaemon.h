@@ -53,7 +53,9 @@ public:
     window->present();
   }
 private:
+DISABLE_DLL_WARN
   std::shared_ptr<zbe::SDLWindow> window;
+DISABLE_WARNING_POP()
 };
 
 }  // namespace zbe
