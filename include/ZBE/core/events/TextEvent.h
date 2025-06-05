@@ -58,8 +58,10 @@ public:
   void manage() override;
 
 private:
+DISABLE_DLL_WARN
   std::string text;
   std::shared_ptr<TextHandler> handler;
+DISABLE_WARNING_POP()
 };
 
 }  // namespace zbe

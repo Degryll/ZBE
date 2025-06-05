@@ -67,7 +67,12 @@ public:
   *  \return An id to the image loaded.
   */
  void load(std::filesystem::path filePath) override {
-    uint64_t imgId = imgStore->loadImg(filePath.c_str());  // TODO test with ut8
+    #ifdef _WIN32
+      uint64_t imgId = imgStore->loadImg(filePath.wstring().c_str()); // TODO test with ut8
+    #else
+    uint64_t imgId = imgStore->loadImg(filePath.c_str()); // TODO test with ut8
+    #endif
+    
     if(imgId > 0) {
       std::filesystem::path defFilePath = generateDefPath(filePath);
       imgDefLoader->loadRsrcDef(defFilePath, imgId);
@@ -90,9 +95,11 @@ private:
     return (out.replace_extension(dlExt));
   }
 
+DISABLE_DLL_WARN
   std::shared_ptr<zbe::SDLImageStore> imgStore;
   std::shared_ptr<RsrcDefLoader> imgDefLoader;
   std::filesystem::path ext;
+DISABLE_WARNING_POP()
 };
 
 }  // namespace zbe

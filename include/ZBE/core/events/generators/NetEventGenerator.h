@@ -50,10 +50,12 @@ public:
   void run() override;
 
 private:
+DISABLE_DLL_WARN
   uint64_t eventId;
   std::shared_ptr<NetBuffer> netBuffer;
   std::shared_ptr<ContextTime> contextTime;
   EventStore &store;
+DISABLE_WARNING_POP()
 };
 
 }  // namespace zbe

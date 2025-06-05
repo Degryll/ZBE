@@ -67,7 +67,12 @@ public:
   *  \return An id to the image loaded.
   */
  void load(std::filesystem::path filePath) override {
-    uint64_t imgId = texStore->loadImg(filePath.string().c_str());  // TODO test with ut8
+    #ifdef _WIN32
+      uint64_t imgId = texStore->loadImg(filePath.wstring().c_str());  // TODO test with ut8
+    #else
+      uint64_t imgId = texStore->loadImg(filePath.c_str());  // TODO test with ut8
+    #endif
+    
     if(imgId > 0) {
       std::filesystem::path defFilePath = generateDefPath(filePath);
       imgDefLoader->loadRsrcDef(defFilePath, imgId);
