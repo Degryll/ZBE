@@ -147,6 +147,7 @@ protected:
 
 // --------- BaseAvatar
 
+DISABLE_WARNING_PUSH(4250) // inherits via dominance. It advises us of things we want to do
 template <typename A, unsigned n, typename T, typename... Ts>
 class _BaseAvatar : virtual public _Avatar<n, T, Ts...>,
                             public _BaseAvatar<A, n, T>,
