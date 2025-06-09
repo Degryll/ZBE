@@ -61,10 +61,12 @@ public:
   bool operator<(const NetMessage& rhs) const {return time < rhs.getTime();}
 
 private:
+DISABLE_DLL_WARN
   uint64_t sequence;
   SDLSocket socket;
   std::vector<char> msg;
   uint64_t time;
+DISABLE_WARNING_POP()
 };
 
 }  // namespace zbe

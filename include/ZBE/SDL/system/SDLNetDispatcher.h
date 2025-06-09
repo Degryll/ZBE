@@ -90,11 +90,13 @@ private:
     : sdl(SDL_Starter::getInstance(SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC | SDL_INIT_GAMECONTROLLER | SDL_INIT_EVENTS, SDL_Starter::SDLNET)),
       netBuffer(std::make_shared<NetBuffer>()), contextTime(SysTime::getInstance()), sset(SDLNet_AllocSocketSet(64)), sockets() {}
 
+DISABLE_DLL_WARN
   SDL_Starter &sdl;
   std::shared_ptr<NetBuffer> netBuffer;
   std::shared_ptr<ContextTime> contextTime;
   SDLNet_SocketSet sset;
   std::forward_list<SDLSocket> sockets;
+DISABLE_WARNING_POP()
 };
 
 }  // namespace zbe

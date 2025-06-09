@@ -31,8 +31,10 @@ namespace zbe {
 /** \brief Stores de time of a timer, and the handler that will be launched when timer reaches 0;
  */
 struct ZBEAPI TimerData {
+DISABLE_DLL_WARN
   std::shared_ptr<TimeHandler> handler;    //!< A handler that will be executed when the event is triggered.
   uint64_t time;  //!< When time reaches 0, the time event is triggered.
+DISABLE_WARNING_POP()
 
   /** \brief Builds a TimerData with the TimeHandler and the time.
    *
@@ -98,60 +100,62 @@ DISABLE_WARNING_POP()
 /** \brief Generate collision events.
  */
 class ZBEAPI TimeEventGenerator : virtual public Daemon {
-  public:
-    /** \brief Empty Constructor.
-     */
-    TimeEventGenerator() : eventId(), es(EventStore::getInstance()), timers(), contextTime() {}
+public:
+  /** \brief Empty Constructor.
+   */
+  TimeEventGenerator() : eventId(), es(EventStore::getInstance()), timers(), contextTime() {}
 
-    /** \brief Parametrized constructor.
-     *  \param eventId event id.
-     *  \param contextTime ContextTime to use.
-     */
-    explicit TimeEventGenerator(uint64_t eventId, std::shared_ptr<ContextTime> contextTime = SysTime::getInstance()) : eventId(eventId), es(EventStore::getInstance()), timers(), contextTime(contextTime) {}
+  /** \brief Parametrized constructor.
+   *  \param eventId event id.
+   *  \param contextTime ContextTime to use.
+   */
+  explicit TimeEventGenerator(uint64_t eventId, std::shared_ptr<ContextTime> contextTime = SysTime::getInstance()) : eventId(eventId), es(EventStore::getInstance()), timers(), contextTime(contextTime) {}
 
-    /** Add a new Timer that only triggers onces.
-     * \param id Id of the Timer, to identify the action to accomplish when the event is triggered
-     * \param time The amount of time to wait until the time event is triggered
-     * \return return A ticket used to modify or erase the timer.
-     * \sa eraseTimer
-     */
-    inline std::shared_ptr<TimerTicket> addAbsoluteTimer(std::shared_ptr<TimeHandler> handler, uint64_t time) {
-      return (std::make_shared<TimerTicket>(timers.insert(TimerData(handler,quantizeTime(time))), timers, eventId, contextTime));
-    }
+  /** Add a new Timer that only triggers onces.
+   * \param id Id of the Timer, to identify the action to accomplish when the event is triggered
+   * \param time The amount of time to wait until the time event is triggered
+   * \return return A ticket used to modify or erase the timer.
+   * \sa eraseTimer
+   */
+  inline std::shared_ptr<TimerTicket> addAbsoluteTimer(std::shared_ptr<TimeHandler> handler, uint64_t time) {
+    return (std::make_shared<TimerTicket>(timers.insert(TimerData(handler,quantizeTime(time))), timers, eventId, contextTime));
+  }
 
-    /** Add a new Timer that only triggers onces.
-     * \param id Id of the Timer, to identify the action to accomplish when the event is triggered
-     * \param time The amount of time to wait until the time event is triggered
-     * \return return A ticket used to modify or erase the timer.
-     * \sa eraseTimer
-     */
-    inline std::shared_ptr<TimerTicket> addRelativeTimer(std::shared_ptr<TimeHandler> handler, uint64_t time) {
-      return addAbsoluteTimer(handler, contextTime->getEventTime() + time);
-    }
+  /** Add a new Timer that only triggers onces.
+   * \param id Id of the Timer, to identify the action to accomplish when the event is triggered
+   * \param time The amount of time to wait until the time event is triggered
+   * \return return A ticket used to modify or erase the timer.
+   * \sa eraseTimer
+   */
+  inline std::shared_ptr<TimerTicket> addRelativeTimer(std::shared_ptr<TimeHandler> handler, uint64_t time) {
+    return addAbsoluteTimer(handler, contextTime->getEventTime() + time);
+  }
 
-    /** Set the event id that created events will have.
-     * \param eventId event id.
-     */
-    void setEventId(uint64_t eventId) {
-      this->eventId = eventId;
-    }
+  /** Set the event id that created events will have.
+   * \param eventId event id.
+   */
+  void setEventId(uint64_t eventId) {
+    this->eventId = eventId;
+  }
 
-    /** Set the ContextTime to use.
-     * \param contextTime ContextTime to use.
-     */
-    void setContextTime(std::shared_ptr<ContextTime> contextTime) {
-      this->contextTime = contextTime;
-    }
+  /** Set the ContextTime to use.
+   * \param contextTime ContextTime to use.
+   */
+  void setContextTime(std::shared_ptr<ContextTime> contextTime) {
+    this->contextTime = contextTime;
+  }
 
-    /** \brief It will look for time events occurred within the available.
-     */
-    void run() override;
+  /** \brief It will look for time events occurred within the available.
+   */
+  void run() override;
 
-  private:
-    uint64_t eventId;
-    EventStore& es;
-    std::multiset<TimerData> timers;
-    std::shared_ptr<ContextTime> contextTime;
+private:
+DISABLE_DLL_WARN
+  uint64_t eventId;
+  EventStore& es;
+  std::multiset<TimerData> timers;
+  std::shared_ptr<ContextTime> contextTime;
+DISABLE_WARNING_POP()
 };
 
 }  // namespace zbe
