@@ -188,7 +188,13 @@ protected:
   void setupEntity(std::shared_ptr<Entity> entity, typename std::array<uint64_t, m>::iterator idsi, typename std::enable_if<(m!=2)>::type * = nullptr) {
     A::setupEntity(entity);
     _BaseAvatar<A, m, T>::setupEntity(entity, *idsi);
-    _BaseAvatar<A, m-1, Ts...>::setupEntity(entity, idsi+1);
+#ifdef _WIN32
+    std::array<uint64_t, m-1> dest;
+    std::copy(std::next(idsi.begin()), idsi.end(), dest.begin());
+    _BaseAvatar<A, m-1, Ts...>::setupEntity(entity, dest.begin());
+#else
+    _BaseAvatar<A, m-1, Ts...>::setupEntity(entity, std::next(idsi));
+#endif // OS
   }
 
   template <unsigned m = n>
@@ -269,7 +275,13 @@ public:
   void setupEntity(std::shared_ptr<Entity> entity, std::array<uint64_t, n> ids) {
     A::setupEntity(entity);
     _DynamicAvatar<A, n, T>::setupEntity(entity, ids[0]);
-    _DynamicAvatar<A, n-1, Ts...>::setupEntity(entity, ids.begin()+1);
+#ifdef _WIN32
+    std::array<uint64_t, n-1> dest;
+    std::copy(std::next(ids.begin()), ids.end(), dest.begin());
+    _DynamicAvatar<A, n-1, Ts...>::setupEntity(entity, dest.begin());
+#else
+    _DynamicAvatar<A, n-1, Ts...>::setupEntity(entity, std::next(ids.begin()));
+#endif // OS
   }
 
   constexpr static unsigned size() {
@@ -288,7 +300,13 @@ protected:
   void setupEntity(std::shared_ptr<Entity> entity, typename std::array<uint64_t, m>::iterator idsi, typename std::enable_if<(m!=2)>::type * = nullptr) {
     A::setupEntity(entity);
     _DynamicAvatar<A, m, T>::setupEntity(entity, *idsi);
-    _DynamicAvatar<A, m-1, Ts...>::setupEntity(entity, idsi+1);
+#ifdef _WIN32
+    std::array<uint64_t, m-1> dest;
+    std::copy(std::next(idsi.begin()), idsi.end(), dest.begin());
+    _DynamicAvatar<A, m-1, Ts...>::setupEntity(entity, dest.begin());
+#else
+    _DynamicAvatar<A, m-1, Ts...>::setupEntity(entity, std::next(idsi));
+#endif // OS
   }
 
   template <unsigned m = n>
