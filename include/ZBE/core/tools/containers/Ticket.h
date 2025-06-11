@@ -18,7 +18,7 @@ namespace zbe {
 
 /** \brief Ticket to send to and entities so it can mark itself as active, inactive or erase in the related list.
  */
-class Ticket {
+class ZBEAPI Ticket {
 public:
   enum State{ACTIVE,INACTIVE,ERASED};  //!< The different states.
 

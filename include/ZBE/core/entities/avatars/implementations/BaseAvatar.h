@@ -166,7 +166,7 @@ public:
     // std::copy(ids.begin()+1, ids.end(), idsaux.begin());
     // _BaseAvatar<A, n-1, Ts...>::setupEntity(entity, idsaux);
     // _BaseAvatar<A, n-1, Ts...>::setupEntity(entity, ids.begin()+1);
-    auto it = std::next(ids.begin());
+    typename std::array<uint64_t, n>::iterator it = std::next(ids.begin());
     _BaseAvatar<A, n-1, Ts...>::setupEntity(entity, it);
   }
 
