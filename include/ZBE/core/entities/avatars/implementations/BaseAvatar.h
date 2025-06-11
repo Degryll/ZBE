@@ -162,12 +162,14 @@ public:
   void setupEntity(std::shared_ptr<Entity> entity, std::array<uint64_t, n> ids) {
     A::setupEntity(entity);
     _BaseAvatar<A, n, T>::setupEntity(entity, ids[0]);
-    // std::array<uint64_t, n-1> idsaux;
-    // std::copy(ids.begin()+1, ids.end(), idsaux.begin());
-    // _BaseAvatar<A, n-1, Ts...>::setupEntity(entity, idsaux);
-    // _BaseAvatar<A, n-1, Ts...>::setupEntity(entity, ids.begin()+1);
+#ifdef _WIN32
+    std::array<uint64_t, n-1> dest;
+    std::copy(std::next(ids.begin()), ids.end(), dest.begin());
+    _BaseAvatar<A, n-1, Ts...>::setupEntity(entity, dest.begin());
+#else
     typename std::array<uint64_t, n-1>::iterator it = std::next(ids.begin());
     _BaseAvatar<A, n-1, Ts...>::setupEntity(entity, it);
+#endif // OS
   }
 
   constexpr static unsigned size() {
