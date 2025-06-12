@@ -115,14 +115,14 @@ private:
         //return sr;
       return literalStore.get(value.get<std::string>());
     } else if(value.is_array() && (value.size() == 1)
-           && ((std::is_floating_point<T>::value && value.at(0).is_number_float())
-              ||(std::is_integral<T>::value && value.at(0).is_number_integer())
-              ||(std::is_same<T, bool>::value && value.at(0).is_boolean())
-              ||(std::is_same<T, std::string>::value && value.at(0).is_string()))) {
+           && ((value.at(0).is_number_float() && std::is_floating_point<T>::value)
+              ||(value.at(0).is_number_integer() && std::is_integral<T>::value)
+              ||(value.at(0).is_boolean() && std::is_same<T, bool>::value)
+              ||(value.at(0).is_string() && std::is_same<T, std::string>::value))) {
       return value.at(0).get<T>();
-    } else if((std::is_floating_point<T>::value && value.is_number_float())
-           ||(std::is_integral<T>::value && value.is_number_integer())
-           ||static_cast<bool>(std::is_same<T, bool>::value && value.is_boolean())) {
+    } else if((value.is_number_float() && std::is_floating_point<T>::value)
+           ||(value.is_number_integer() && std::is_integral<T>::value)
+           ||(value.is_boolean() && std::is_same<T, bool>::value)) {
       return value.get<T>();
     } else {
         SysError::setError("SimpleValueFtry parseArrayElement error: "s + value.get<std::string>() + " has invalid type."s);
