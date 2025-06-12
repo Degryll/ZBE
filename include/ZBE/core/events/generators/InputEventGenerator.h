@@ -165,10 +165,11 @@ private:
     }
   }
 
+DISABLE_DLL_WARN
   uint64_t eventId;
   EventStore &store;
   std::unordered_map<uint32_t, Handlers> handlers;
-
+DISABLE_WARNING_POP()
 };
 
 class ZBEAPI AnyInputStatusManager : public InputStatusManager {

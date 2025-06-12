@@ -12,6 +12,8 @@
 
 #ifdef _WIN32
 
+  #define _SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING
+  
   #ifdef ZBE_EXPORTS
     #define ZBEAPI __declspec(dllexport)
     #define EXPIMP_TEMPLATE

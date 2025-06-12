@@ -74,10 +74,12 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
   uint64_t sequence;
   SDLSocket socket;
   std::vector<char> msg;
   NetHandler* handler;
+DISABLE_WARNING_POP()
 };
 
 }  // namespace zbe
