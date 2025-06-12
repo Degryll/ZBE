@@ -32,7 +32,7 @@ bool FileHandler::exist(const char* filename) {
 
 #elif _WIN32
   std::wstring fn;
-  zbe::utf8to16(back_inserter(fn),filename);
+  zbe::utf8to16(std::back_inserter(fn),filename);
 
   struct _stat buffer;
   return (_wstat(fn.c_str(), &buffer) == 0 && (buffer.st_mode & _S_IFREG));
@@ -48,7 +48,7 @@ bool FileHandler::existDir(const char* dirname) {
 
 #elif _WIN32
   std::wstring fn;
-  zbe::utf8to16(back_inserter(fn),dirname);
+  zbe::utf8to16(std::back_inserter(fn),dirname);
 
   struct _stat buffer;
   return (_wstat(fn.c_str(), &buffer) == 0 && (buffer.st_mode & _S_IFDIR));
@@ -64,7 +64,7 @@ bool FileHandler::rm(const char* filename) {
 
 #elif _WIN32
   std::wstring fn;
-  zbe::utf8to16(back_inserter(fn),filename);
+  zbe::utf8to16(std::back_inserter(fn),filename);
 
   return (_wremove(fn.c_str()));
 
@@ -79,7 +79,7 @@ bool FileHandler::rmdir(const char* dirname) {
 
 #elif _WIN32
   std::wstring fn;
-  zbe::utf8to16(back_inserter(fn),dirname);
+  zbe::utf8to16(std::back_inserter(fn),dirname);
 
   return (!RemoveDirectoryW(fn.c_str()));
 
@@ -104,7 +104,7 @@ FileHandler::FileHandler(const char* filename, const char* mode, bool createPath
 
 #elif _WIN32
   std::wstring fn;
-  zbe::utf8to16(back_inserter(fn),filename);
+  zbe::utf8to16(std::back_inserter(fn),filename);
 
   if (createPath) {
     size_t lastslash = fn.find_last_of(SEPARATORS);
@@ -114,7 +114,7 @@ FileHandler::FileHandler(const char* filename, const char* mode, bool createPath
   }
 
   std::wstring m;
-  zbe::utf8to16(back_inserter(m),mode);
+  zbe::utf8to16(std::back_inserter(m),mode);
   if(_wfopen_s(&f,fn.c_str(), m.c_str())) {
     SysError::setError("FILE ERROR: Can't open file.");
   }

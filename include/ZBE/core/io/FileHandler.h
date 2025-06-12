@@ -32,7 +32,7 @@ public:
   const std::string SEPARATORS = "\\/";  //!< Directory separators "\" and "/"
 
 #elif _WIN32
-  static const std::wstring SEPARATORS;  //!< Directory separators "\" and "/"
+  static ZBEAPI const std::wstring SEPARATORS;  //!< Directory separators "\" and "/"
 
 #endif // OS
 

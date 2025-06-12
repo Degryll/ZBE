@@ -13,6 +13,7 @@
 #ifdef _WIN32
 
   #define _SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING
+  #define _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS
   
   #ifdef ZBE_EXPORTS
     #define ZBEAPI __declspec(dllexport)
