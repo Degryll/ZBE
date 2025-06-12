@@ -190,7 +190,7 @@ protected:
     _BaseAvatar<A, m, T>::setupEntity(entity, *idsi);
 #ifdef _WIN32
     std::array<uint64_t, m-1> dest;
-    std::copy(std::next(idsi.begin()), idsi.end(), dest.begin());
+    std::copy(std::next(idsi), idsi.end(), dest.begin());
     _BaseAvatar<A, m-1, Ts...>::setupEntity(entity, dest.begin());
 #else
     _BaseAvatar<A, m-1, Ts...>::setupEntity(entity, std::next(idsi));
@@ -302,7 +302,7 @@ protected:
     _DynamicAvatar<A, m, T>::setupEntity(entity, *idsi);
 #ifdef _WIN32
     std::array<uint64_t, m-1> dest;
-    std::copy(std::next(idsi.begin()), idsi.end(), dest.begin());
+    std::copy(std::next(idsi), idsi.end(), dest.begin());
     _DynamicAvatar<A, m-1, Ts...>::setupEntity(entity, dest.begin());
 #else
     _DynamicAvatar<A, m-1, Ts...>::setupEntity(entity, std::next(idsi));

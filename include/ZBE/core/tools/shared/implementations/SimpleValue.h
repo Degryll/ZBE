@@ -122,7 +122,7 @@ private:
       return value.at(0).get<T>();
     } else if((std::is_floating_point<T>::value && value.is_number_float())
            ||(std::is_integral<T>::value && value.is_number_integer())
-           ||(std::is_same<T, bool>::value && value.is_boolean())) {
+           ||static_cast<bool>(std::is_same<T, bool>::value && value.is_boolean())) {
       return value.get<T>();
     } else {
         SysError::setError("SimpleValueFtry parseArrayElement error: "s + value.get<std::string>() + " has invalid type."s);
