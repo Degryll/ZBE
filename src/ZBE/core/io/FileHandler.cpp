@@ -26,70 +26,70 @@ namespace zbe {
 #endif // OS
 
 bool FileHandler::exist(const char* filename) {
-#ifdef __linux__
+// #ifdef __linux__
   struct stat buffer;
   return (stat(filename, &buffer) == 0 && (buffer.st_mode & S_IFREG));
 
-#elif _WIN32
-  std::wstring fn;
-  zbe::utf8to16(std::back_inserter(fn),filename);
+// #elif _WIN32
+//   std::wstring fn;
+//   zbe::utf8to16(std::back_inserter(fn),filename);
 
-  struct _stat buffer;
-  return (_wstat(fn.c_str(), &buffer) == 0 && (buffer.st_mode & _S_IFREG));
-#else
-  return false;
-#endif // OS
+//   struct _stat buffer;
+//   return (_wstat(fn.c_str(), &buffer) == 0 && (buffer.st_mode & _S_IFREG));
+// #else
+//   return false;
+// #endif // OS
 }
 
 bool FileHandler::existDir(const char* dirname) {
-#ifdef __linux__
+// #ifdef __linux__
   struct stat buffer;
   return (stat(dirname, &buffer) == 0 && (buffer.st_mode & S_IFDIR));
 
-#elif _WIN32
-  std::wstring fn;
-  zbe::utf8to16(std::back_inserter(fn),dirname);
+// #elif _WIN32
+//   std::wstring fn;
+//   zbe::utf8to16(std::back_inserter(fn),dirname);
 
-  struct _stat buffer;
-  return (_wstat(fn.c_str(), &buffer) == 0 && (buffer.st_mode & _S_IFDIR));
+//   struct _stat buffer;
+//   return (_wstat(fn.c_str(), &buffer) == 0 && (buffer.st_mode & _S_IFDIR));
 
-#else
-  return false;
-#endif // OS
+// #else
+//   return false;
+// #endif // OS
 }
 
 bool FileHandler::rm(const char* filename) {
-#ifdef __linux__
+// #ifdef __linux__
   return (remove(filename));
 
-#elif _WIN32
-  std::wstring fn;
-  zbe::utf8to16(std::back_inserter(fn),filename);
+// #elif _WIN32
+//   std::wstring fn;
+//   zbe::utf8to16(std::back_inserter(fn),filename);
 
-  return (_wremove(fn.c_str()));
+//   return (_wremove(fn.c_str()));
 
-#else
-  return false;
-#endif // OS
+// #else
+//   return false;
+// #endif // OS
 }
 
 bool FileHandler::rmdir(const char* dirname) {
-#ifdef __linux__
+// #ifdef __linux__
   return (remove(dirname));
 
-#elif _WIN32
-  std::wstring fn;
-  zbe::utf8to16(std::back_inserter(fn),dirname);
+// #elif _WIN32
+//   std::wstring fn;
+//   zbe::utf8to16(std::back_inserter(fn),dirname);
 
-  return (!RemoveDirectoryW(fn.c_str()));
+//   return (!RemoveDirectoryW(fn.c_str()));
 
-#else
-  return false;
-#endif // OS
+// #else
+//   return false;
+// #endif // OS
 }
 
 FileHandler::FileHandler(const char* filename, const char* mode, bool createPath) : f(0) {
-#ifdef __linux__
+// #ifdef __linux__
   std::string s(filename);
   if (createPath) {
     size_t lastslash = s.find_last_of(SEPARATORS);
@@ -102,24 +102,24 @@ FileHandler::FileHandler(const char* filename, const char* mode, bool createPath
     SysError::setError("FILE ERROR: Can't open file.");
   }
 
-#elif _WIN32
-  std::wstring fn;
-  zbe::utf8to16(std::back_inserter(fn),filename);
+// #elif _WIN32
+//   std::wstring fn;
+//   zbe::utf8to16(std::back_inserter(fn),filename);
 
-  if (createPath) {
-    size_t lastslash = fn.find_last_of(SEPARATORS);
-    if(lastslash != std::wstring::npos) {
-      if (createDirectories(fn.substr(0,lastslash))) return;
-    }
-  }
+//   if (createPath) {
+//     size_t lastslash = fn.find_last_of(SEPARATORS);
+//     if(lastslash != std::wstring::npos) {
+//       if (createDirectories(fn.substr(0,lastslash))) return;
+//     }
+//   }
 
-  std::wstring m;
-  zbe::utf8to16(std::back_inserter(m),mode);
-  if(_wfopen_s(&f,fn.c_str(), m.c_str())) {
-    SysError::setError("FILE ERROR: Can't open file.");
-  }
+//   std::wstring m;
+//   zbe::utf8to16(std::back_inserter(m),mode);
+//   if(_wfopen_s(&f,fn.c_str(), m.c_str())) {
+//     SysError::setError("FILE ERROR: Can't open file.");
+//   }
 
-#endif // OS
+// #endif // OS
 }
 
 FileHandler::~FileHandler() {
@@ -203,7 +203,7 @@ void FileHandler::flush() {
   fflush(f);
 }
 
-#ifdef __linux__
+// #ifdef __linux__
 
 bool FileHandler::createDirectories(std::string path) {
     std::size_t slashIndex = path.find_last_of(SEPARATORS);
@@ -221,25 +221,25 @@ bool FileHandler::createDirectories(std::string path) {
     return 0;
 }
 
-#elif _WIN32
+// #elif _WIN32
 
-bool FileHandler::createDirectories(std::wstring path) {
-    std::size_t slashIndex = path.find_last_of(SEPARATORS);
-    if(slashIndex != std::wstring::npos) {
-      createDirectories(path.substr(0, slashIndex));
-    }
+// bool FileHandler::createDirectories(std::wstring path) {
+//     std::size_t slashIndex = path.find_last_of(SEPARATORS);
+//     if(slashIndex != std::wstring::npos) {
+//       createDirectories(path.substr(0, slashIndex));
+//     }
 
-    BOOL result = ::CreateDirectoryW(path.c_str(), 0);
-    if(result == FALSE) {
-      if (GetLastError() != ERROR_ALREADY_EXISTS) {
-        SysError::setError("FILE ERROR: Can't create directory.");
-        return 1;
-      }
-    }
+//     BOOL result = ::CreateDirectoryW(path.c_str(), 0);
+//     if(result == FALSE) {
+//       if (GetLastError() != ERROR_ALREADY_EXISTS) {
+//         SysError::setError("FILE ERROR: Can't create directory.");
+//         return 1;
+//       }
+//     }
 
-    return 0;
-}
+//     return 0;
+// }
 
-#endif // OS
+// #endif // OS
 
 }  // namespace zbe
