@@ -12,6 +12,7 @@
 
 #ifdef __linux__
 #include <errno.h>
+#include <iterator>
 
 #elif _WIN32
 #include <windows.h>
@@ -32,8 +33,9 @@ public:
   const std::string SEPARATORS = "\\/";  //!< Directory separators "\" and "/"
 
 #elif _WIN32
-  static ZBEAPI const std::wstring SEPARATORS;  //!< Directory separators "\" and "/"
-
+DISABLE_DLL_WARN
+  static const std::wstring SEPARATORS;  //!< Directory separators "\" and "/"
+DISABLE_WARNING_POP()
 #endif // OS
 
   /** \brief Copy constructor. It builds another FileHandler over the same file as given one.
