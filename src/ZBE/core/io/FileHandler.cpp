@@ -17,13 +17,13 @@
 
 namespace zbe {
 
-#ifdef __linux__
+// #ifdef __linux__
 //  const std::string FileHandler::SEPARATORS("\\/");
 
-#elif _WIN32
-  const std::wstring FileHandler::SEPARATORS(L"\\/");
+// #elif _WIN32
+//   const std::wstring FileHandler::SEPARATORS(L"\\/");
 
-#endif // OS
+// #endif // OS
 
 bool FileHandler::exist(const char* filename) {
 // #ifdef __linux__

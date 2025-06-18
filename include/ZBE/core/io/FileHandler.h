@@ -29,14 +29,14 @@ namespace zbe {
  */
 class ZBEAPI FileHandler {
 public:
-#ifdef __linux__
+// #ifdef __linux__
   const std::string SEPARATORS = "\\/";  //!< Directory separators "\" and "/"
 
-#elif _WIN32
-DISABLE_DLL_WARN
-  static const std::wstring SEPARATORS;  //!< Directory separators "\" and "/"
-DISABLE_WARNING_POP()
-#endif // OS
+// #elif _WIN32
+// DISABLE_DLL_WARN
+//   static const std::wstring SEPARATORS;  //!< Directory separators "\" and "/"
+// DISABLE_WARNING_POP()
+// #endif // OS
 
   /** \brief Copy constructor. It builds another FileHandler over the same file as given one.
    *  \param rhs Instance to copy.
