@@ -88,7 +88,7 @@ bool FileHandler::rmdir(const char* dirname) {
 // #endif // OS
 }
 
-FileHandler::FileHandler(const char* filename, const char* mode, bool createPath) : f(0) {
+FileHandler::FileHandler(const char* filename, const char* mode, bool createPath) : f(nullptr) {
 // #ifdef __linux__
   std::string s(filename);
   if (createPath) {
@@ -99,7 +99,12 @@ FileHandler::FileHandler(const char* filename, const char* mode, bool createPath
     }
   }
 
+#ifdef __linux__
   if(!(f=fopen(filename, mode))) {
+#elif _WIN32
+  fopen_s(&f, filename, mode)
+  if(!f) {
+#endif // OS
     SysError::setError("FILE ERROR: Can't open file.");
   }
 
