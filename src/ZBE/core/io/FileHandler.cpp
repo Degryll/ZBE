@@ -18,7 +18,7 @@
 namespace zbe {
 
 // #ifdef __linux__
-const std::string FileHandler::SEPARATORS = "\\/";
+// const std::string FileHandler::SEPARATORS = "\\/";
 
 // #elif _WIN32
 //   const std::wstring FileHandler::SEPARATORS(L"\\/");

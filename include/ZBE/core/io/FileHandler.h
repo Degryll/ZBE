@@ -30,7 +30,8 @@ namespace zbe {
 class ZBEAPI FileHandler {
 public:
 // #ifdef __linux__
-  static const std::string SEPARATORS; // = "\\/";  //!< Directory separators "\" and "/"
+  // static const std::string SEPARATORS; // = "\\/";  //!< Directory separators "\" and "/"
+  static constexpr const char* SEPARATORS = "\\/";
 
 // #elif _WIN32
 // DISABLE_DLL_WARN
