@@ -169,21 +169,21 @@ public:
 //seek and set get pos
 
 protected:
-#ifdef __linux__
+// #ifdef __linux__
   /** \brief Create a directory .
    *  \param path Path to be created
    *  \return Zero on success.
    */
   bool createDirectories(std::string path);
 
-#elif _WIN32
-  /** \brief Create a directory .
-   *  \param path Path to be created
-   *  \return Zero on success.
-   */
-  bool createDirectories(std::wstring path);
+// #elif _WIN32
+//   /** \brief Create a directory .
+//    *  \param path Path to be created
+//    *  \return Zero on success.
+//    */
+//   bool createDirectories(std::wstring path);
 
-#endif // OS
+// #endif // OS
 
 private:
   FILE *f;  //!< File object.
