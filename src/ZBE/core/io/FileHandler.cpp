@@ -94,7 +94,8 @@ FileHandler::FileHandler(const char* filename, const char* mode, bool createPath
   if (createPath) {
     size_t lastslash = s.find_last_of(SEPARATORS);
     if(lastslash != std::string::npos) {
-      if (createDirectories(s.substr(0,lastslash))) return;
+      std::string subs = s.substr(0,lastslash);
+      if (createDirectories(subs)) return;
     }
   }
 
@@ -208,7 +209,8 @@ void FileHandler::flush() {
 bool FileHandler::createDirectories(std::string path) {
     std::size_t slashIndex = path.find_last_of(SEPARATORS);
     if(slashIndex != std::string::npos) {
-      createDirectories(path.substr(0, slashIndex));
+      std::string subs = path.substr(0, slashIndex);
+      createDirectories(subs);
     }
 
     if(mkdir(path.c_str(), 0777)) {
