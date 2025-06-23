@@ -44,7 +44,14 @@ FileHandler::FileHandler(const char* filename, const char* mode, bool createPath
         }
     }
 
+#if defined(_MSC_VER)  // Use "safe" fopen_s in MSVC
+    if (fopen_s(&f, filename, mode) != 0) {
+        f = nullptr;
+    }
+#else
     f = fopen(filename, mode);
+#endif
+
     if (!f) {
         SysError::setError("FILE ERROR: Can't open file.");
     }

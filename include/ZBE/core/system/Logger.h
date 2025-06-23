@@ -110,7 +110,9 @@ public:
    */
   LoggerMsg& operator<<(bool b);
 
+DISABLE_DLL_WARN
   std::stringstream msg; //!< Used to store the Logger message.
+DISABLE_WARNING_POP()
 };
 
 template <typename T>
