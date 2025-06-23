@@ -105,12 +105,13 @@ private:
 };
 
 template <typename T, typename UnqualifiedType>
-class TicketedForwardListIterator : public std::iterator<std::forward_iterator_tag,
-                                           UnqualifiedType,
-                                           std::ptrdiff_t,
-                                           T*,
-                                           T&> {
-public:
+class TicketedForwardListIterator {
+  public:
+    using iterator_category = std::forward_iterator_tag;
+    using value_type        = UnqualifiedType;
+    using difference_type   = std::ptrdiff_t;
+    using pointer           = T*;
+    using reference         = T&;
 
   /** \brief Empty constructor.
    */
