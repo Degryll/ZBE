@@ -957,7 +957,7 @@ bool intersectionMovingNSphereOutsideMovingNTriangle(NSphere<dim> sphere, Vector
     return false;
 }
 
-bool intersectionMovingRay2DRay2D(Ray2D r1, Ray2D r2, uint64_t& time, Point2D& point, Vector2D& normal);
+bool ZBEAPI intersectionMovingRay2DRay2D(Ray2D r1, Ray2D r2, uint64_t& time, Point2D& point, Vector2D& normal);
 
 }  // namespace zbe
 

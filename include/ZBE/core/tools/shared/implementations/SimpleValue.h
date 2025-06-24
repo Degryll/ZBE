@@ -105,6 +105,7 @@ private:
       }
   }
 
+DISABLE_WARNING_PUSH(4127) // warning C4127: conditional expression is constant. IS NOT
   template <typename T>
   T parseArrayElement(nlohmann::json value, RsrcDictionary<T> &literalStore) {
     using namespace std::string_literals;
@@ -150,6 +151,7 @@ private:
       return T();
     }
   }
+DISABLE_WARNING_POP()
 
   template <typename T>
   inline void parse(std::string name, nlohmann::json cfg, RsrcStore<Value<T> > &valueRsrc, RsrcDictionary<T> &literalStore) {
