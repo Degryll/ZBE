@@ -13,7 +13,14 @@
 #include <cstdint>
 #include <iostream>
 #include <variant>
+
+#ifdef _MSC_VER
+#include <dbghelp.h>
+#pragma comment(lib, "dbghelp.lib")
+#else
 #include <cxxabi.h>
+#endif 
+
 #include <typeinfo>
 
 #include "ZBE/core/daemons/Daemon.h"
@@ -229,14 +236,23 @@ public:
 
 template <typename T>
 void imprimirNombreTipo() {
-    int status;
-    char* realname = abi::__cxa_demangle(typeid(T).name(), 0, 0, &status);
-    if (status == 0) {
-        printf("Reaction: %s\n", realname);fflush(stdout);
-        free(realname);
-    } else {
-        printf("Error al obtener el nombre del tipo\n");
-    }
+#ifdef _MSC_VER
+  char demangledName[1024];
+  if (UnDecorateSymbolName(typeid(T).name(), demangledName, sizeof(demangledName), UNDNAME_COMPLETE)) {
+    printf("Reaction: %s\n", demangledName);fflush(stdout);
+  } else {
+    printf("Error al obtener el nombre del tipo\n");
+  }
+#else
+  int status;
+  char* realname = abi::__cxa_demangle(typeid(T).name(), 0, 0, &status);
+  if (status == 0) {
+      printf("Reaction: %s\n", realname);fflush(stdout);
+      free(realname);
+  } else {
+      printf("Error al obtener el nombre del tipo\n");
+  }
+#endif 
 }
 
 template<typename IData, typename Trait>
