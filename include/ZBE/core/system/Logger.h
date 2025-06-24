@@ -253,10 +253,11 @@ protected:
 private:
   Logger() : filename(), writers(), m() {}
 
+DISABLE_DLL_WARN
   std::string filename;
   std::forward_list<WriterCallback> writers;
   std::mutex m;
-
+DISABLE_WARNING_POP()
 };
 
 }  // namespace zbe

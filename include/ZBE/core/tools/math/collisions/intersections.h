@@ -807,7 +807,7 @@ bool intersectionMovingNSphereOutsideMovingNTriangle(NSphere<dim> sphere, Vector
 
         double tbar = (sphere.r - dotUDelta0) / dotUV;
         bool foundContact = true;
-        for (uint i = 0; i < 3; ++i) {
+        for (unsigned i = 0; i < 3; ++i) {
             double phi = dot(ExU[i], Delta[i]);
             double psi = dot(ExU[i], V);
             if (phi + psi * tbar > 0.0) {
