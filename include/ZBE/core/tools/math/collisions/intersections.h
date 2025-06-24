@@ -840,7 +840,7 @@ bool intersectionMovingNSphereOutsideMovingNTriangle(NSphere<dim> sphere, Vector
 
         double tbar = (-sphere.r - dotUDelta0) / dotUV;
         bool foundContact = true;
-        for (uint i = 0; i < 3; ++i) {
+        for (unsigned i = 0; i < 3; ++i) {
             double phi = dot(ExU[i], Delta[i]);
             double psi = dot(ExU[i], V);
             if (phi + psi * tbar > 0.0) {
@@ -877,13 +877,13 @@ bool intersectionMovingNSphereOutsideMovingNTriangle(NSphere<dim> sphere, Vector
     //TODO: cambiar estos tipos por vectores.
 
     std::array<double, 3> del{}, delp{}, nu{};
-    for (uint im1 = 2, i = 0; i < 3; im1 = i++) {
+    for (unsigned im1 = 2, i = 0; i < 3; im1 = i++) {
         del[i] = dot(E[i], Delta[i]);
         delp[im1] = dot(E[im1], Delta[i]);
         nu[i] = dot(E[i], V);
     }
 
-    for (uint i = 2, ip1 = 0; ip1 < 3; i = ip1++) {//Vector3<T> hatV = V - E[i] * nu[i] / sqrLenE[i];
+    for (unsigned i = 2, ip1 = 0; ip1 < 3; i = ip1++) {//Vector3<T> hatV = V - E[i] * nu[i] / sqrLenE[i];
         Vector<dim> hatV = V - E[i] * nu[i]/ sqrLenE[i];
         double sqrLenHatV = dot(hatV, hatV);
         if (sqrLenHatV > 0.0) {
@@ -925,7 +925,7 @@ bool intersectionMovingNSphereOutsideMovingNTriangle(NSphere<dim> sphere, Vector
   // volume.  We know that |V|^2 > 0 because of a previous
   // early-exit test.
 
-    for (uint im1 = 2, i = 0; i < 3; im1 = i++) {
+    for (unsigned im1 = 2, i = 0; i < 3; im1 = i++) {
         double alpha = - dot(V, Delta[i]);
         if (alpha >= 0.0)
         {
