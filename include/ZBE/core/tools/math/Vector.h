@@ -613,15 +613,7 @@ class Vector<3> : public _VECTOR<3> {
       data[2] = v2;
       return (*this);
     }
-
-    /** \brief Implements Vector addition.
-     *
-     * \param lhs First vector.
-     * \param rhs Second vector.
-     * \return A vector with the cross product.
-     * \sa cross().
-     */
-    friend Vector<3> cross(Vector<3> lhs, const Vector<3>& rhs);
+    // friend Vector<3> cross(Vector<3> lhs, const Vector<3>& rhs);
 
     /** \brief Implements vector between two angles.
      *
@@ -633,6 +625,13 @@ class Vector<3> : public _VECTOR<3> {
 
 };
 
+/** \brief Implements Vector addition.
+ *
+ * \param lhs First vector.
+ * \param rhs Second vector.
+ * \return A vector with the cross product.
+ * \sa cross().
+ */
 Vector<3> ZBEAPI cross(Vector<3> lhs, const Vector<3>& rhs);
 
 double ZBEAPI angle(Vector<3> lhs, Vector<3> rhs);
@@ -643,8 +642,8 @@ Point2D ZBEAPI triangleCenter(Point2D vertex1, Point2D vertex2, Point2D vertex3)
 
 using Vector3D = Vector<3>; //!< An alias to Vector<3>.
 
-ZBEAPI ZBEAPI Vector<2> reflect(Vector<2> ray, const Vector<2> &normal);
-ZBEAPI ZBEAPI Vector<3> reflect(Vector<3> ray, const Vector<3> &normal);
+ZBEAPI Vector<2> reflect(Vector<2> ray, const Vector<2> &normal);
+ZBEAPI Vector<3> reflect(Vector<3> ray, const Vector<3> &normal);
 
 }  // namespace zbe
 
