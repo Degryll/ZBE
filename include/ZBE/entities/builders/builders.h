@@ -132,7 +132,7 @@ private:
   //     ent->set<U>(cfg.first, (*second)(avt)); //*(cfg.second)
   //   }
   // }
-
+DISABLE_WARNING_PUSH(4127) // warning C4127: conditional expression is constant. IS NOT
   template <typename T>
   inline void parse(nlohmann::json cfg, RsrcStore<Value<T> > &valueRsrc, RsrcDictionary<T> &literalStore, std::shared_ptr<Entity> ent) {
     using namespace std::string_literals;
@@ -219,6 +219,8 @@ private:
       }
     }
   }
+
+DISABLE_WARNING_POP()
 
   std::deque<std::shared_ptr<Funct<void, std::shared_ptr<Entity>>>> builders;
   std::shared_ptr<ContextTime> contextTime;
@@ -1597,6 +1599,7 @@ private:
   RsrcDictionary<Vector2D> &literalStoreV2D = RsrcDictionary<Vector2D>::getInstance();
   RsrcDictionary<Vector3D> &literalStoreV3D = RsrcDictionary<Vector3D>::getInstance();
 
+DISABLE_WARNING_PUSH(4127) // warning C4127: conditional expression is constant. IS NOT
   template <typename T>
   inline void parse(nlohmann::json cfg, RsrcStore<Value<T> > &valueRsrc, RsrcDictionary<T> &literalStore, std::shared_ptr<EntitySetter> es) {
     using namespace std::string_literals;
@@ -1685,7 +1688,7 @@ private:
     }
   }
 };
-
+DISABLE_WARNING_POP()
 // template<typename VT, typename T, typename ...Ts>
 // std::shared_ptr<Funct<std::shared_ptr<Value<VT>>, std::shared_ptr<MAvatar<T, Ts...>>>> buildValueBldr(nlohmann::json cfg) {
 //   if(cfg["copy"] es numero) {
