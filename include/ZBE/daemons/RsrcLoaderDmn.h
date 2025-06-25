@@ -49,8 +49,10 @@ public:
   void setUrl(std::string url);
 
 private:
+DISABLE_DLL_WARN
   std::shared_ptr<RsrcLoader> rsrcLoader;
   std::filesystem::path filePath;
+DISABLE_WARNING_POP()
 };
 
 }  // namespace zbe

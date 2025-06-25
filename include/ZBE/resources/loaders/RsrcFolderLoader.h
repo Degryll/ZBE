@@ -33,7 +33,9 @@ public:
   void load(std::string folder);
 
 private:
+DISABLE_DLL_WARN
   std::shared_ptr<RsrcLoader> rsrcLoader;
+DISABLE_WARNING_POP()
 };
 
 }  // namespace zbe

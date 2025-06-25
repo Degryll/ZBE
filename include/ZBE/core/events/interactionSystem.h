@@ -531,7 +531,7 @@ public:
 
       auto ieg = iegStore.get("InteractionEventGenerator."s + name);
 
-      ieg->setEventId(static_cast<uint>(eventId));
+      ieg->setEventId(static_cast<unsigned>(eventId));
       ieg->setAtorList(ators);
       ieg->setContextTime(contextTime);
 
