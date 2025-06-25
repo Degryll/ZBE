@@ -18,7 +18,7 @@ namespace zbe {
 
 /** \brief Receives a time event and reacts to it.
  */
-class TimeHandler {
+class ZBEAPI TimeHandler {
 public:
 
   /** \brief Destructor.
