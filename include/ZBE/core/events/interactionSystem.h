@@ -15,6 +15,7 @@
 #include <variant>
 
 #ifdef _MSC_VER
+#define NOMINMAX
 #include <windows.h>
 #include <dbghelp.h>
 #pragma comment(lib, "dbghelp.lib")
