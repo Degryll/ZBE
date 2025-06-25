@@ -20,23 +20,25 @@
 namespace zbe {
 
 class ZBEAPI BroadcastIH : public InputHandler {
-	public:
+public:
 
-  	BroadcastIH() : ihs() {}
-    ~BroadcastIH() {}
+  BroadcastIH() : ihs() {}
+  ~BroadcastIH() {}
 
-  	void run(uint32_t key, float state) override {
-      for (auto ih : ihs) {
-        ih->run(key, state);
-      }
-  	}
-
-    void addHandler(std::shared_ptr<InputHandler> ih) {
-      ihs.push_back(ih);
+  void run(uint32_t key, float state) override {
+    for (auto ih : ihs) {
+      ih->run(key, state);
     }
+  }
 
-	private:
-    std::vector<std::shared_ptr<InputHandler> > ihs;
+  void addHandler(std::shared_ptr<InputHandler> ih) {
+    ihs.push_back(ih);
+  }
+
+private:
+DISABLE_DLL_WARN
+  std::vector<std::shared_ptr<InputHandler> > ihs;
+DISABLE_WARNING_POP()
 
 };
 }  // namespace zbe

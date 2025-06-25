@@ -94,10 +94,12 @@ void run(uint32_t, float state) override {
 }
 
 private:
+DISABLE_DLL_WARN
   Region2D a;
   std::shared_ptr<Value<double> > xval;
   std::shared_ptr<Value<double> > yval;
   std::shared_ptr<Daemon> d;
+DISABLE_WARNING_POP()
 };
 
 }  // namespace zbe

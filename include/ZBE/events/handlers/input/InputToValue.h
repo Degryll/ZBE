@@ -52,7 +52,9 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
   std::shared_ptr<Value<double> > val;
+DISABLE_WARNING_POP()
 };
 
 }  // namespace zbe

@@ -70,7 +70,7 @@ private:
   RsrcStore<Value<std::vector<std::string> > > &valueVSRsrc = RsrcStore<Value<std::vector<std::string> > >::getInstance();
   RsrcDictionary<Vector2D> &literalStoreV2D = RsrcDictionary<Vector2D>::getInstance();
   RsrcDictionary<Vector3D> &literalStoreV3D = RsrcDictionary<Vector3D>::getInstance();
-
+DISABLE_WARNING_PUSH(4127) // warning C4127: conditional expression is constant. IS NOT
   template <typename T>
   T parseArrayElement(nlohmann::json value, RsrcDictionary<T> &literalStore) {
     using namespace std::string_literals;
@@ -177,6 +177,7 @@ private:
     }
     return val;
   }
+DISABLE_WARNING_POP()
 
 inline void parseV3D(nlohmann::json cfg, std::shared_ptr<Entity> e) {
     for (auto item : cfg.items()) {

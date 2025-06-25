@@ -59,8 +59,10 @@ public:
 	}
 
 private:
+DISABLE_DLL_WARN
 	std::shared_ptr<Daemon> d;
 	float value;
+DISABLE_WARNING_POP()
 };
 
 /** \brief Input handler capable of run a daemon.
@@ -116,11 +118,13 @@ public:
 	}
 
 private:
+DISABLE_DLL_WARN
 	std::shared_ptr<Daemon> d;
 	float value;
 	std::shared_ptr<Value<T>> cValue;
 	T cExpected;
 	bool equal;
+DISABLE_WARNING_POP()
 };
 
 /** \brief Input handler capable of run another input handler if a condition is fullfilled.
@@ -167,10 +171,12 @@ public:
 	}
 
 private:
+DISABLE_DLL_WARN
 	std::shared_ptr<InputHandler> ih;
 	std::shared_ptr<Value<T>> cValue;
 	T cExpected;
 	bool equal;
+DISABLE_WARNING_POP()
 };
 }  // namespace zbe
 
