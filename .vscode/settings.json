@@ -100,7 +100,8 @@
         "ios": "cpp",
         "shared_mutex": "cpp",
         "__memory": "cpp",
-        "charconv": "cpp"
+        "charconv": "cpp",
+        "print": "cpp"
     },
     "DockerRun.DisableAutoGenerateConfig": true
 }

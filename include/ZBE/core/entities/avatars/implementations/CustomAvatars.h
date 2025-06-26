@@ -40,7 +40,7 @@
 #include "ZBE/JSON/JSONFactory.h"
 
 namespace zbe{
-
+DISABLE_WARNING_PUSH(4250)
 // Convierte de una entidad con lookAt a un avatar de posicion y velocidad.
 // TODO: copiar TargetToDirAvt y quitarle el up
 // TODO: pero antes probar si podemos usar el de tres vectores
@@ -3207,6 +3207,8 @@ private:
   RsrcStore<Entity>& entityStore            = RsrcStore<Entity>::getInstance();
   RsrcStore<TicketedForwardList<MAvatar<Vector3D, Vector3D> > >& listStore = RsrcStore<TicketedForwardList<MAvatar<Vector3D, Vector3D> > >::getInstance();
 };
+
+DISABLE_WARNING_POP()
 }  // namespace zbe
 
 #endif  // ZBE_CORE_ENTITIES_AVATARS_IMPLEMENTATIONS_CUSTOMAVATARS_H_
