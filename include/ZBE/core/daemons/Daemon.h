@@ -432,7 +432,11 @@ public:
 
   /** \brief It will run the Behavior over the entity list.
    */
-  void run() override;
+   void run() override {
+    for(auto e : (*list)) {
+      punish->apply(e);
+    }
+  }
 
 private:
 DISABLE_DLL_WARN
@@ -440,13 +444,6 @@ DISABLE_DLL_WARN
   std::shared_ptr<L> list;
 DISABLE_WARNING_POP()
 };
-
-template<typename P, typename L>
-void PunisherDaemon<P, L>::run() {
-  for(auto e : (*list)) {
-    punish->apply(e);
-  }
-}
 
 /** \brief Punishers that applies Behaviors over a list of entities.
 */

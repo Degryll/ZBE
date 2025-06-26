@@ -44,7 +44,7 @@ namespace zbe{
 // Convierte de una entidad con lookAt a un avatar de posicion y velocidad.
 // TODO: copiar TargetToDirAvt y quitarle el up
 // TODO: pero antes probar si podemos usar el de tres vectores
-class ZBEAPI TargetToDirAvt : public MAvatar<Vector3D, Vector3D, Vector3D>, AvatarImp {
+class ZBEAPI TargetToDirAvt : public MAvatar<Vector3D, Vector3D, Vector3D>, public AvatarImp {
 public:
   /** \brief
    */
@@ -122,7 +122,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class ZBEAPI PosTargetToPosDirAvt : public MAvatar<Vector3D, Vector3D>, AvatarImp {
+class ZBEAPI PosTargetToPosDirAvt : public MAvatar<Vector3D, Vector3D>, public AvatarImp {
 public:
 
   /** \brief
@@ -174,7 +174,7 @@ private:
 };
 
 template<unsigned s>
-class MovingPointAvt : public SAvatar<MovingPoint<s>>, AvatarImp {
+class MovingPointAvt : public SAvatar<MovingPoint<s>>, public AvatarImp {
 public:
   void setupEntity(std::shared_ptr<Entity> entity, uint64_t positionidx, uint64_t velocityidx) {
     AvatarImp::setupEntity(entity);
@@ -211,7 +211,7 @@ private:
  std::shared_ptr<Value<Vector<s>> > velocity;
 };
 
-class ZBEAPI Triangle2DAvt : public SAvatar<Triangle2D>, AvatarImp {
+class ZBEAPI Triangle2DAvt : public SAvatar<Triangle2D>, public AvatarImp {
 public:
   void setupEntity(std::shared_ptr<Entity> entity, uint64_t aidx, uint64_t bidx, uint64_t cidx) {
     AvatarImp::setupEntity(entity);
@@ -385,7 +385,7 @@ private:
 
 // -------------------------------------------- --------------------------------------------
 
-class ZBEAPI DerivedCosVelAvt : public MAvatar<Vector3D, Vector3D>, AvatarImp {
+class ZBEAPI DerivedCosVelAvt : public MAvatar<Vector3D, Vector3D>, public AvatarImp {
 public:
 
   /** \brief
@@ -1038,7 +1038,7 @@ private:
   RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
 };
 
-class ZBEAPI PosUpwardsTargetToPosUpwardsDirAvt : public MAvatar<Vector3D, Vector3D, Vector3D>, AvatarImp {
+class ZBEAPI PosUpwardsTargetToPosUpwardsDirAvt : public MAvatar<Vector3D, Vector3D, Vector3D>, public AvatarImp {
 /*  TODO:
   La objetos que se pintan hacia donde se mueven tienen que tener un atributo mas asociado al movimiento: upwards.
   La castaña heredará el upwards de la camara y este se reflejará en los comportamientos de bote.
@@ -1281,7 +1281,7 @@ private:
 };
 
 // // ---------------------- TODO PosTargetUpwardsToPosDirAngleAvt
-// class PosTargetUpwardsToPosDirAngleAvt : public MAvatar<double, Vector3D, Vector3D>, AvatarImp {
+// class PosTargetUpwardsToPosDirAngleAvt : public MAvatar<double, Vector3D, Vector3D>, public AvatarImp {
 // public:
 
 //   /** \brief
@@ -1727,7 +1727,7 @@ private:
   int64_t component;
 };
 
-class ZBEAPI LookAtToPitchAvt : public MAvatar<Vector3D, Vector3D>, AvatarImp {
+class ZBEAPI LookAtToPitchAvt : public MAvatar<Vector3D, Vector3D>, public AvatarImp {
 public:
 
 /** \brief
@@ -1792,7 +1792,7 @@ private:
   Vector3D dxu;
 };
 
-class ZBEAPI LookAtToYawAvt : public MAvatar<Vector3D, Vector3D>, AvatarImp {
+class ZBEAPI LookAtToYawAvt : public MAvatar<Vector3D, Vector3D>, public AvatarImp {
 public:
 
   /** \brief
