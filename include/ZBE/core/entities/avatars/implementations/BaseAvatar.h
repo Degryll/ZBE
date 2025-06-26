@@ -102,11 +102,13 @@ struct ZBEAPI AvatarImp : virtual public Avatar {
   virtual std::shared_ptr<Entity> getEntity() override = 0;
 
 protected:
+DISABLE_DLL_WARN
   AvatarImp() : e() {}
 
   void setupEntity(std::shared_ptr<Entity> entity) { e = entity;}
 
   std::shared_ptr<Entity> e;
+DISABLE_WARNING_POP()
 };
 
 
@@ -400,7 +402,6 @@ using MDynamicAwareAvatar = _DynamicAvatar<AwareAvatar, sizeof...(Ts)+1, T, Ts..
 
 template<typename T>
 using SDynamicAwareAvatar = _DynamicAvatar<AwareAvatar, 1, T>;
-
 
 DISABLE_WARNING_POP()
 }  // namespace zbe

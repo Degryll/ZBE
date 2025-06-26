@@ -169,8 +169,10 @@ public:
     return 0;
   }
 private:
+DISABLE_DLL_WARN
   std::shared_ptr<Value<Vector3D> > position;
   std::shared_ptr<Value<Vector3D> > target;
+DISABLE_WARNING_POP()
 };
 
 template<unsigned s>
@@ -207,8 +209,10 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
  std::shared_ptr<Value<Vector<s>> > position;
  std::shared_ptr<Value<Vector<s>> > velocity;
+DISABLE_WARNING_POP()
 };
 
 class ZBEAPI Triangle2DAvt : public SAvatar<Triangle2D>, public AvatarImp {
@@ -242,7 +246,9 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
   std::shared_ptr<Value<Triangle2D> > triangle;
+DISABLE_WARNING_POP()
 };
 
 // TODO: ¿Quien escribe a b y c en 2d en el triangulo?
@@ -442,6 +448,7 @@ public:
    }
 
 private:
+DISABLE_DLL_WARN
   std::shared_ptr<Value<Vector3D> > position;
   std::shared_ptr<ContextTime> cTime;
 
@@ -449,6 +456,7 @@ private:
   double max;
   int64_t period;
   int64_t component;
+DISABLE_WARNING_POP()
 };
 
 class ZBEAPI MovingSphereAvt : public SAvatar<MovingSphere>, public AvatarImp {
@@ -487,10 +495,12 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
  std::shared_ptr<Value<Vector3D> > position;
  std::shared_ptr<Value<Vector3D> > velocity;
  std::shared_ptr<Value<float> > radius;
  std::shared_ptr<ContextTime> cTime;
+DISABLE_WARNING_POP()
 };
 
 class ZBEAPI MovingSphereAvtShapeBldr  : public Funct<std::shared_ptr<SAvatar<MovingSphere>>, std::shared_ptr<Entity>> {
@@ -586,10 +596,12 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
  uint64_t positionidx;
  uint64_t velocityidx;
  uint64_t radiusidx;
  std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> indexNLists;
+DISABLE_WARNING_POP()
 };
 
 class ZBEAPI MovingSphereAvtBldrFtry : public Factory {
@@ -708,6 +720,7 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
  std::shared_ptr<Value<Vector3D> > position;
  std::shared_ptr<Value<Vector3D> > velocity;
  std::shared_ptr<Value<Vector3D> > orientation;
@@ -718,6 +731,7 @@ private:
 
  Triangle3D baseT;
  std::shared_ptr<ContextTime> cTime;
+DISABLE_WARNING_POP()
 };
 
 class ZBEAPI MovingTriangle3DRscAvtShapeBldr  : public Funct<std::shared_ptr<SAvatar<MovingTriangle3D>>, std::shared_ptr<Entity>> {
@@ -869,11 +883,13 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
  std::shared_ptr<Value<Vector3D> > positionA;
  std::shared_ptr<Value<Vector3D> > positionB;
  std::shared_ptr<Value<Vector3D> > positionC;
  std::shared_ptr<Value<Vector3D> > velocity;
  std::shared_ptr<ContextTime> cTime;
+DISABLE_WARNING_POP()
 };
 
 class ZBEAPI MovingTriangle3DAvtShapeBldr  : public Funct<std::shared_ptr<SAvatar<MovingTriangle3D>>, std::shared_ptr<Entity>> {
@@ -976,11 +992,13 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
  uint64_t positionAidx;
  uint64_t positionBidx;
  uint64_t positionCidx;
  uint64_t velocityidx;
  std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> indexNLists;
+DISABLE_WARNING_POP()
 };
 
 class ZBEAPI MovingTriangle3DAvtBldrFtry : public Factory {
@@ -1093,9 +1111,11 @@ public:
   return 0;
   }
 private:
+DISABLE_DLL_WARN
   std::shared_ptr<Value<Vector3D> > position;
   std::shared_ptr<Value<Vector3D> > target;
   std::shared_ptr<Value<Vector3D> > upwards;
+DISABLE_WARNING_POP()
 };
 
 class ZBEAPI PosUpwardsTargetToPosUpwardsDirAvtFtry : public Factory {
@@ -1218,10 +1238,12 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
   uint64_t positionidx;
   uint64_t targetidx;
   uint64_t upwardsidx;
   std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> indexNLists;
+DISABLE_WARNING_POP()
 };
 
 class ZBEAPI PosUpwardsTargetToPosUpwardsDirAvtBldrFtry : public Factory {
@@ -1717,6 +1739,7 @@ public:
     }
 
 private:
+DISABLE_DLL_WARN
   std::shared_ptr<Value<Vector3D> > position;
   std::shared_ptr<Value<float> > radius;
   std::shared_ptr<ContextTime> cTime;
@@ -1725,6 +1748,7 @@ private:
   double max;
   int64_t period;
   int64_t component;
+DISABLE_WARNING_POP()
 };
 
 class ZBEAPI LookAtToPitchAvt : public MAvatar<Vector3D, Vector3D>, public AvatarImp {
@@ -1785,11 +1809,12 @@ public:
   }
 
 private:
-
+DISABLE_DLL_WARN
   std::shared_ptr<Value<Vector3D> > position;
   std::shared_ptr<Value<Vector3D> > target;
   std::shared_ptr<Value<Vector3D> > upwards;
   Vector3D dxu;
+DISABLE_WARNING_POP()
 };
 
 class ZBEAPI LookAtToYawAvt : public MAvatar<Vector3D, Vector3D>, public AvatarImp {
@@ -1835,10 +1860,11 @@ public:
     }
 
 private:
-
+DISABLE_DLL_WARN
   std::shared_ptr<Value<Vector3D> > position;
   std::shared_ptr<Value<Vector3D> > target;
   std::shared_ptr<Value<Vector3D> > upwards;
+DISABLE_WARNING_POP()
 };
 
 class ZBEAPI TargetToDirAvtBldr : public Funct<void, std::shared_ptr<Entity>> {
@@ -1865,11 +1891,13 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
   uint64_t positionidx;
   uint64_t targetidx;
   uint64_t upwardsidx;
   uint64_t scaleidx;
   std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> indexNLists;
+DISABLE_WARNING_POP()
 };
 
 class ZBEAPI PosTargetToPosDirAvtBldr : public Funct<void, std::shared_ptr<Entity>> {
@@ -1895,9 +1923,11 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
   uint64_t positionidx;
   uint64_t targetidx;
   std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> indexNLists;
+DISABLE_WARNING_POP()
 };
 
 class ZBEAPI DerivedCosVelAvtBldr : public Funct<void, std::shared_ptr<Entity>> {
@@ -1934,12 +1964,14 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
     float min;
     float max;
     int64_t period;
     int64_t component;
     uint64_t positionidx;
     std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> indexNLists;
+DISABLE_WARNING_POP()
 };
 
 class ZBEAPI DerivedPosMovingSphereAvtShapeBldr : public Funct<std::shared_ptr<SAvatar<MovingSphere>>, std::shared_ptr<Entity>> {
@@ -2013,6 +2045,7 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
  float min;
  float max;
  int64_t period;
@@ -2020,6 +2053,7 @@ private:
  uint64_t positionidx;
  uint64_t radiusidx;
  std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> indexNLists;
+DISABLE_WARNING_POP()
 };
 
 class ZBEAPI LookAtToPitchAvtBldr : public Funct<void, std::shared_ptr<Entity>> {
@@ -2045,10 +2079,12 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
   uint64_t positionidx;
   uint64_t targetidx;
   uint64_t upwardsidx;
   std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> indexNLists;
+DISABLE_WARNING_POP()
 };
 
 class ZBEAPI LookAtToYawAvtBldr : public Funct<void, std::shared_ptr<Entity>> {
@@ -2074,10 +2110,12 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
   uint64_t positionidx;
   uint64_t targetidx;
   uint64_t upwardsidx;
   std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> indexNLists;
+DISABLE_WARNING_POP()
 };
 
 //---------------------------- NUEVAS
