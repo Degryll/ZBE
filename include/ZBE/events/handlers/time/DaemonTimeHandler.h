@@ -44,7 +44,9 @@ void operator=(const DaemonTimeHandler&) = delete; //!< Avoid copy.
 	}
 
 private:
+DISABLE_DLL_WARN
 	std::shared_ptr<Daemon> d;
+DISABLE_WARNING_POP()
 };
 
 }  // namespace zbe

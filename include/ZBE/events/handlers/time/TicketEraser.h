@@ -44,7 +44,9 @@ class ZBEAPI TicketEraser : public TimeHandler {
   	}
 
   private:
+DISABLE_DLL_WARN
     std::shared_ptr<zbe::Ticket> t;
+DISABLE_WARNING_POP()
 };
 
 }  // namespace zbe

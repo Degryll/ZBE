@@ -86,11 +86,13 @@ void operator=(const DaemonRecurrentTimeHandler&) = delete; //!< Deleted copy co
 	}
 
 private:
+DISABLE_DLL_WARN
 	std::shared_ptr<Daemon> d;
   std::shared_ptr<TimeEventGenerator> teg;
   std::shared_ptr<Avatar> avatar;
 	uint64_t ticketid;
 	uint64_t period;
+DISABLE_WARNING_POP()
 };
 
 
@@ -124,10 +126,12 @@ public:
 	void setPeriod(uint64_t period) {this->period = period;}
 
 private:
+DISABLE_DLL_WARN
   std::shared_ptr<Daemon> d;
   std::shared_ptr<TimeEventGenerator> teg;
   uint64_t ticketid;
   uint64_t period;
+DISABLE_WARNING_POP()
 };
 
 class DaemonRecurrentTHBldrFtry : public Factory {
