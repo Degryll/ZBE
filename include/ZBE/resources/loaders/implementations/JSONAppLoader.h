@@ -60,6 +60,7 @@ private:
     uint64_t cfgId;
   };
 
+DISABLE_DLL_WARN
   void loadLiteralConfig(std::string name, json& value);
   FtryData readFactoryConfig(json ftryCfg);
   void checkAndCall(json& call, json& phase);
@@ -80,6 +81,7 @@ private:
 
   std::forward_list<FtryData> appLists;
   std::forward_list<FtryData> appFactories;
+DISABLE_WARNING_POP()
 };
 
 }  // namespace zbe
