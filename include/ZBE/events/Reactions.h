@@ -132,7 +132,7 @@ public:
 
  void operator()(IData, std::array<std::shared_ptr<Value<ValueType>>, n> trait) override {
    auto ent = avt->getEntity();
-   for(uint i =0; i< n; i++) {
+   for(unsigned i =0; i< n; i++) {
      ent->override<ValueType>(dest[i], trait[i]);
    }
  }
