@@ -22,6 +22,7 @@
 #include "ZandBokzInteractionSystem.h"
 
 namespace zandbokz {
+DISABLE_WARNING_PUSH(4250)
 
 class MovingSphereAvt : public zbe::SAvatar<zbe::MovingSphere>, zbe::AvatarImp  {
 public:
@@ -189,7 +190,7 @@ private:
   zbe::RsrcStore<ListType>& listRsrc = zbe::RsrcStore<ListType>::getInstance();
 };
 
-
+DISABLE_WARNING_POP()
 }  // namespace zandbokz
 
 #endif  // ZANDBOKZ_ZANDBOKZCUSTOMAVATARS_H_

@@ -68,7 +68,9 @@ public:
   */
  void load(std::filesystem::path filePath) override {
     #ifdef _WIN32
-      uint64_t imgId = texStore->loadImg(filePath.u8string().c_str());  // TODO test with ut8
+      std::u8string u8 = filePath.u8string();
+      std::string utf8Str(u8.begin(), u8.end());  // convierte char8_t -> char
+      uint64_t imgId = texStore->loadImg(utf8Str.c_str());
     #else
       uint64_t imgId = texStore->loadImg(filePath.c_str());  // TODO test with ut8
     #endif
