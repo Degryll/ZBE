@@ -19,7 +19,7 @@ add_executable(ZANDBOKZ
 
 target_link_libraries(ZANDBOKZ
 PRIVATE ZBE_LIB
-PRIVATE png #TODO ver si funciona sin este
+# PRIVATE png #TODO ver si funciona sin este
 )
 
 target_include_directories(ZANDBOKZ PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>)
