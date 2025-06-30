@@ -124,7 +124,6 @@ target_link_libraries(ZBE_LIB PUBLIC
   PUBLIC nlohmann_json::nlohmann_json
   PUBLIC tinygltf
   PUBLIC PNG::PNG
-  PUBLIC png
   PUBLIC glew
   PUBLIC GL
   PUBLIC glm
@@ -134,6 +133,9 @@ target_link_libraries(ZBE_LIB PUBLIC
   PUBLIC vorbisfile
   # Vorbis & openal
 )
+
+message(STATUS "PNG includes: ${PNG_INCLUDE_DIRS}")
+message(STATUS "PNG libraries: ${PNG_LIBRARIES}")
 
 # TODO revisar cual es la carpeta correcta en la que deshabilitar los warnings
 target_include_directories(ZBE_LIB PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>)
