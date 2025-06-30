@@ -123,6 +123,7 @@ target_link_libraries(ZBE_LIB PUBLIC
   PUBLIC SDL2_ttf
   PUBLIC nlohmann_json::nlohmann_json
   PUBLIC tinygltf
+  PUBLIC PNG::PNG
   PUBLIC png
   PUBLIC glew
   PUBLIC GL
