@@ -63,13 +63,13 @@ jobs:
       if: contains(matrix.os, 'windows')
       uses: ilammy/msvc-dev-cmd@v1
         
-    - name: Instalar zlib through vcpkg
+    - name: Instalar libpng and zlib through vcpkg
       if: contains(matrix.os, 'windows')
       run: |
         git clone https://github.com/Microsoft/vcpkg.git
         cd vcpkg
         .\bootstrap-vcpkg.bat
-        .\vcpkg.exe install zlib
+        .\vcpkg.exe install libpng
         
     - name: Set reusable strings
       # Turn repeated input strings (such as the build output directory) into step outputs. These step outputs can be used throughout the workflow file.
@@ -122,7 +122,7 @@ jobs:
       # run: cmake -DCMAKE_TOOLCHAIN_FILE=D:/a/ZBE/ZBE/vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-windows -S . -B ./build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_STANDARD=20 -DZBE_ENABLE_CPPCHECK:BOOL="0" -DZBE_BUILD_FUZZ_TESTS:BOOL="0" -DZBE_ENABLE_SANITIZER_UNDEFINED:BOOL="0" -DZBE_ENABLE_SANITIZER_ADDRESS:BOOL="0"
       run: |
         cmake `
-          -DCMAKE_TOOLCHAIN_FILE=D:/a/ZBE/ZBE/vcpkg/scripts/buildsystems/vcpkg.cmake `
+          -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}\vcpkg\scripts\buildsystems\vcpkg.cmake `
           -DVCPKG_TARGET_TRIPLET=x64-windows `
           -S . -B ./build -G Ninja `
           -DCMAKE_BUILD_TYPE=Release `
@@ -132,10 +132,10 @@ jobs:
           -DZBE_ENABLE_SANITIZER_UNDEFINED:BOOL="0" `
           -DZBE_ENABLE_SANITIZER_ADDRESS:BOOL="0"
 
-    - name: Copy pnglibconf.h
-      if: contains(matrix.os, 'windows')
-      run: copy build\_deps\libpng-src\scripts\pnglibconf.h.prebuilt build\_deps\libpng-src\pnglibconf.h
-      shell: cmd
+    # - name: Copy pnglibconf.h
+    #   if: contains(matrix.os, 'windows')
+    #   run: copy build\_deps\libpng-src\scripts\pnglibconf.h.prebuilt build\_deps\libpng-src\pnglibconf.h
+    #   shell: cmd
 
     - name: Build
       # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
