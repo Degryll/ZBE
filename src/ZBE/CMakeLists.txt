@@ -1,5 +1,5 @@
 # include(GenerateExportHeader)
-
+find_package(PNG REQUIRED)
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
 add_library(ZBE_LIB 
