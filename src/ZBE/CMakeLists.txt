@@ -1,5 +1,6 @@
 # include(GenerateExportHeader)
 find_package(PNG REQUIRED)
+find_package(OpenGL REQUIRED)
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
 add_library(ZBE_LIB 
@@ -125,7 +126,7 @@ target_link_libraries(ZBE_LIB PUBLIC
   PUBLIC tinygltf
   PUBLIC PNG::PNG
   PUBLIC glew
-  PUBLIC GL
+  PUBLIC OpenGL::GL
   PUBLIC glm
   PUBLIC OpenAL
   PUBLIC ogg
