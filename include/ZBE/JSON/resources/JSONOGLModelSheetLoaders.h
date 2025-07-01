@@ -130,7 +130,7 @@ DISABLE_WARNING_POP()
 
 //------------------------
 
-class ZBEAPI JSONLookAtOGLModelSheetLoader : public RsrcLoader {
+class JSONLookAtOGLModelSheetLoader : public RsrcLoader {
 public:
 
 DISABLE_DLL_WARN
@@ -218,7 +218,7 @@ private:
 
 /** \brief JSON loader for SimpleModelOGLModelSheet's
 */
-class ZBEAPI JSONSpriteOGLModelSheetLoader : public RsrcLoader {
+class JSONSpriteOGLModelSheetLoader : public RsrcLoader {
 public:
 
  /** \brief Empty constructir. Creted object needs to be setup

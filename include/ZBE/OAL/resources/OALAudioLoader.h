@@ -25,7 +25,7 @@
 
 namespace zbe {
 
-class ZBEAPI OALAudioLoader : public RsrcLoader {
+class OALAudioLoader : public RsrcLoader {
 public:
 
   OALAudioLoader() : audioStore(), audioDefLoader() {}
