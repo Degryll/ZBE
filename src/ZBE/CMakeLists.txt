@@ -95,6 +95,8 @@ add_library(ZBE_LIB
   tools/graphics/Camera.cpp
 )
 
+target_compile_definitions(ZBE_LIB PRIVATE ZBE_EXPORTS)
+
 list(APPEND CMAKE_CXX_CPPCHECK --exclude=../../extlibs/stb/)
 
 add_library(ZBE::ZBE_LIB ALIAS ZBE_LIB)
