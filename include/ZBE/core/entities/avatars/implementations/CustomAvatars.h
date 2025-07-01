@@ -44,7 +44,7 @@ DISABLE_WARNING_PUSH(4250)
 // Convierte de una entidad con lookAt a un avatar de posicion y velocidad.
 // TODO: copiar TargetToDirAvt y quitarle el up
 // TODO: pero antes probar si podemos usar el de tres vectores
-class ZBEAPI TargetToDirAvt : public MAvatar<Vector3D, Vector3D, Vector3D>, public AvatarImp {
+class TargetToDirAvt : public MAvatar<Vector3D, Vector3D, Vector3D>, public AvatarImp {
 public:
   /** \brief
    */
@@ -122,7 +122,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class ZBEAPI PosTargetToPosDirAvt : public MAvatar<Vector3D, Vector3D>, public AvatarImp {
+class PosTargetToPosDirAvt : public MAvatar<Vector3D, Vector3D>, public AvatarImp {
 public:
 
   /** \brief
@@ -215,7 +215,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class ZBEAPI Triangle2DAvt : public SAvatar<Triangle2D>, public AvatarImp {
+class Triangle2DAvt : public SAvatar<Triangle2D>, public AvatarImp {
 public:
   void setupEntity(std::shared_ptr<Entity> entity, uint64_t aidx, uint64_t bidx, uint64_t cidx) {
     AvatarImp::setupEntity(entity);
@@ -254,7 +254,7 @@ DISABLE_WARNING_POP()
 // TODO: ¿Quien escribe a b y c en 2d en el triangulo?
 // -------------------------------------------- --------------------------------------------
 
-class ZBEAPI Triangle2DShapeAvtBldr : public Funct<std::shared_ptr<SAvatar<Triangle2D>>, std::shared_ptr<Entity>> {
+class Triangle2DShapeAvtBldr : public Funct<std::shared_ptr<SAvatar<Triangle2D>>, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = SAvatar<Triangle2D>;
   std::shared_ptr<SAvatar<Triangle2D>> operator()(std::shared_ptr<Entity> ent) override {
@@ -295,7 +295,7 @@ private:
  uint64_t velocityIdx;
 };
 
-class ZBEAPI Triangle2DShapeAvtBldrFtry : public Factory {
+class Triangle2DShapeAvtBldrFtry : public Factory {
 public:
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
@@ -391,7 +391,7 @@ private:
 
 // -------------------------------------------- --------------------------------------------
 
-class ZBEAPI DerivedCosVelAvt : public MAvatar<Vector3D, Vector3D>, public AvatarImp {
+class DerivedCosVelAvt : public MAvatar<Vector3D, Vector3D>, public AvatarImp {
 public:
 
   /** \brief
@@ -459,7 +459,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class ZBEAPI MovingSphereAvt : public SAvatar<MovingSphere>, public AvatarImp {
+class MovingSphereAvt : public SAvatar<MovingSphere>, public AvatarImp {
 public:
   void setupEntity(std::shared_ptr<Entity> entity, uint64_t positionidx, uint64_t velocityidx, uint64_t radiusidx) {
     AvatarImp::setupEntity(entity);
@@ -651,7 +651,7 @@ private:
   RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
 };
 
-class ZBEAPI MovingTriangle3DRscAvt : public SAvatar<MovingTriangle3D>, public AvatarImp {
+class MovingTriangle3DRscAvt : public SAvatar<MovingTriangle3D>, public AvatarImp {
 public:
 
   void setupEntity(std::shared_ptr<Entity> entity, uint64_t velocityIdx, uint64_t orientationIdx, uint64_t positionIdx, uint64_t radsIdx, uint64_t sizeIdx, uint64_t e1Idx, uint64_t e2Idx) {
@@ -843,7 +843,7 @@ private:
 
 // TODO shape builders, factorias y demas pestes
 
-class ZBEAPI MovingTriangle3DAvt : public SAvatar<MovingTriangle3D>, public AvatarImp {
+class MovingTriangle3DAvt : public SAvatar<MovingTriangle3D>, public AvatarImp {
 public:
   void setupEntity(std::shared_ptr<Entity> entity, uint64_t positionAidx, uint64_t positionBidx, uint64_t positionCidx, uint64_t velocityidx) {
     AvatarImp::setupEntity(entity);
@@ -1056,7 +1056,7 @@ private:
   RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
 };
 
-class ZBEAPI PosUpwardsTargetToPosUpwardsDirAvt : public MAvatar<Vector3D, Vector3D, Vector3D>, public AvatarImp {
+class PosUpwardsTargetToPosUpwardsDirAvt : public MAvatar<Vector3D, Vector3D, Vector3D>, public AvatarImp {
 /*  TODO:
   La objetos que se pintan hacia donde se mueven tienen que tener un atributo mas asociado al movimiento: upwards.
   La castaña heredará el upwards de la camara y este se reflejará en los comportamientos de bote.
@@ -1689,7 +1689,7 @@ private:
 // MovingTriangle3DAvtBldrFtry
 
 // -----
-class ZBEAPI DerivedPosMovingSphereAvt : public SAvatar<MovingSphere>, public AvatarImp {
+class DerivedPosMovingSphereAvt : public SAvatar<MovingSphere>, public AvatarImp {
 public:
 
   /** \brief
@@ -1751,7 +1751,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class ZBEAPI LookAtToPitchAvt : public MAvatar<Vector3D, Vector3D>, public AvatarImp {
+class LookAtToPitchAvt : public MAvatar<Vector3D, Vector3D>, public AvatarImp {
 public:
 
 /** \brief
@@ -1817,7 +1817,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class ZBEAPI LookAtToYawAvt : public MAvatar<Vector3D, Vector3D>, public AvatarImp {
+class LookAtToYawAvt : public MAvatar<Vector3D, Vector3D>, public AvatarImp {
 public:
 
   /** \brief
