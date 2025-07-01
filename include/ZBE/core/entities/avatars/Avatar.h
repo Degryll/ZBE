@@ -26,7 +26,7 @@ class Avatar;
 
 /** \brief This define an avatar that can be used to deactivate/activate or erase the corresponding entity.
  */
-class ZBEAPI Avatar {
+class Avatar {
 public:
     using Base = void; //!< Inheritance info.
 
