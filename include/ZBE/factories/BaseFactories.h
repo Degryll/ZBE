@@ -61,7 +61,7 @@ namespace zbe {
 
 /** \brief Daemon capable of load all base factories.
  */
-class ZBEAPI BaseFactories : public Daemon {
+class BaseFactories : public Daemon {
 public:
   ~BaseFactories() {}
 

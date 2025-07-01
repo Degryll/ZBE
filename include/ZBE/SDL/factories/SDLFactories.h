@@ -33,7 +33,7 @@ namespace zbe {
 
 /** \brief Define the interface of a Factory.
  */
-class ZBEAPI SDLFactories : public Daemon {
+class SDLFactories : public Daemon {
 public:
   ~SDLFactories() {}
 

@@ -32,7 +32,7 @@ namespace zbe {
 /**
  * @brief A store for audio samples.
  */
-class ZBEAPI OALAudioStore {
+class OALAudioStore {
 public:
     OALAudioStore(const OALAudioStore&) = delete; //!< Delete copy constructor
     void operator=(const OALAudioStore&) = delete; //!< Delete assing aperator

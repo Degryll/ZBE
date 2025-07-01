@@ -29,7 +29,7 @@ namespace zbe {
 
 /** \brief Implementation of RsrcLoader capable of load an app config from a .json file
  */
-class ZBEAPI JSONAppLoader : public RsrcLoader {
+class JSONAppLoader : public RsrcLoader {
 public:
   using json = nlohmann::json;
 

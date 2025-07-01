@@ -28,7 +28,7 @@
 namespace zbe {
   /** \brief Daemon that generates an OpenAL context.
    */
-class ZBEAPI OALContextDaemon : public Daemon {
+class OALContextDaemon : public Daemon {
 public:
 
   OALContextDaemon(const OALContextDaemon&) = delete; //!< Avoid copy.

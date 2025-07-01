@@ -22,7 +22,7 @@ namespace zbe {
 
 /** \brief Define the interface of a Factory.
  */
-class ZBEAPI Camera {
+class Camera {
 public:
   Camera() : eye(), target(), up(), transform(16, 0), projection(16, 0) {
     transform[0] = 1;

@@ -22,9 +22,9 @@
 
 namespace zbe {
 
-struct ZBEAPI SDLSocketHasher;
+struct SDLSocketHasher;
 
-class ZBEAPI SDLSocket {
+class SDLSocket {
 public:
   enum Type {TCP = 0, UDP = 1};
 
@@ -51,7 +51,7 @@ public:
 
   void setHandler(NetHandler* handler) {this->handler = handler;}
 
-  friend struct ZBEAPI SDLSocketHasher;
+  friend struct SDLSocketHasher;
 
 private:
   int getTCPMsg(uint64_t &sequence, std::vector<char> &msg);
@@ -66,7 +66,7 @@ private:
   NetHandler* handler;
 };
 
-struct ZBEAPI SDLSocketHasher {
+struct SDLSocketHasher {
   std::size_t operator()(const SDLSocket& k) const {
     using std::size_t;
     using std::hash;

@@ -30,7 +30,7 @@ namespace zbe {
 
 /** \brief Tool capable of generate a sprite from a AnimatedSprite.
  */
-class ZBEAPI MultiSpriteSheet : public SpriteSheet<uint64_t, int64_t, double, Vector2D, Vector2D> {
+class MultiSpriteSheet : public SpriteSheet<uint64_t, int64_t, double, Vector2D, Vector2D> {
 public:
 
   /** \brief Parametriced constructor

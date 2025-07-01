@@ -19,7 +19,7 @@ namespace zbe {
 
 /** \brief Interface for classes that loads resources.
 */
-class ZBEAPI RsrcLoader {
+class RsrcLoader {
 public:
 
  virtual ~RsrcLoader() {} //!< Virtual destructor.

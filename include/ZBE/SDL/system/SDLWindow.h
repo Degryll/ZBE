@@ -29,14 +29,14 @@
 
 namespace zbe {
 
-class ZBEAPI SDLTextFontStore;
-class ZBEAPI SDLImageStore;
+class SDLTextFontStore;
+class SDLImageStore;
 
 /**
- * @class ZBEAPI SDLWindow
+ * @class SDLWindow
  * @brief Used to create windows using SDL 2.0.
  */
-class ZBEAPI SDLWindow {
+class SDLWindow {
 public:
   SDLWindow(const SDLWindow&) = delete;  //!< Does not make sense to "copy" a SDLWindow.
   void operator=(const SDLWindow&) = delete;  //!< Does not make sense to "copy" a SDLWindow.
@@ -262,10 +262,10 @@ DISABLE_WARNING_POP()
 };
 
 /**
- * @class ZBEAPI SDLImageStore
+ * @class SDLImageStore
  * @brief Structure for load and store images using SDL.
  */
-class ZBEAPI SDLImageStore {
+class SDLImageStore {
 public:
     SDLImageStore(const SDLImageStore&) = delete; //!< Delete copy constructor
     void operator=(const SDLImageStore&) = delete; //!< Delete assing aperator
@@ -333,16 +333,16 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-struct ZBEAPI ZBE_Font {
+struct ZBE_Font {
   TTF_Font* font;
   SDL_Color color;
 };
 
 /**
- * @class ZBEAPI SDLFontStore
+ * @class SDLFontStore
  * @brief Structure for load and store TTF fonts using SDL.
  */
-class ZBEAPI SDLTextFontStore {
+class SDLTextFontStore {
 public:
 
     SDLTextFontStore(const SDLTextFontStore&) = delete; //!< Delete copy constructor

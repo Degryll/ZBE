@@ -19,7 +19,7 @@ namespace zbe {
 
 /** \brief Interface for classes that loads images. It will return an identifier
 */
-class ZBEAPI RsrcFolderLoader {
+class RsrcFolderLoader {
 public:
 
   RsrcFolderLoader() : rsrcLoader(nullptr) {}
