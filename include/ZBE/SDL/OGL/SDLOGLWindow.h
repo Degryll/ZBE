@@ -169,7 +169,7 @@ DISABLE_WARNING_POP()
  * @class ZBEAPI SDLOGLWindow
  * @brief Used to create windows using SDL 2.0. with OpenGL support.
  */
-class ZBEAPI SDLOGLWindow : public SDLWindow {
+class SDLOGLWindow : public SDLWindow {
 public:
   SDLOGLWindow(const SDLOGLWindow&) = delete;  //!< Does not make sense to "copy" a SDLOGLWindow.
   void operator=(const SDLOGLWindow&) = delete;  //!< Does not make sense to "copy" a SDLOGLWindow.

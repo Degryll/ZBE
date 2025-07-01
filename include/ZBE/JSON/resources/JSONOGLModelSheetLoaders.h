@@ -38,7 +38,7 @@ namespace zbe {
 
 /** \brief JSON loader for SimpleModelOGLModelSheet's
 */
-class ZBEAPI JSONSimpleOGLModelSheetLoader : public RsrcLoader {
+class JSONSimpleOGLModelSheetLoader : public RsrcLoader {
 public:
  /** \brief Empty constructir. Creted object needs to be setup
   */

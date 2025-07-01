@@ -114,7 +114,7 @@ DISABLE_WARNING_POP()
 
 /** \brief Base implementation of avatar that uses an Entity.
  */
-struct ZBEAPI AwareAvatar : public AvatarImp {
+struct AwareAvatar : public AvatarImp {
 public:
   explicit AwareAvatar(std::shared_ptr<Entity> entity) : AvatarImp(entity) {}
 
