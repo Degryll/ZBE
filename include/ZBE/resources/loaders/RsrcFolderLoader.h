@@ -29,9 +29,11 @@ public:
   void setRsrcLoader(std::shared_ptr<RsrcLoader> rsrcLoader) {
     this->rsrcLoader = rsrcLoader;
   }
+  
+  void load(std::filesystem::path folder) override;
 
-  void load(std::string folder);
-
+  bool isLoadable(std::filesystem::path) override { return false; }
+  
 private:
 DISABLE_DLL_WARN
   std::shared_ptr<RsrcLoader> rsrcLoader;
