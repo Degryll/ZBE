@@ -25,7 +25,7 @@ namespace zbe {
 
 /** \brief Base implementation of avatar that uses an Entity.
  */
-struct ZBEAPI AvatarImp : virtual public Avatar {
+struct AvatarImp : virtual public Avatar {
 
   explicit AvatarImp(std::shared_ptr<Entity> entity) : e(entity) {}
 
