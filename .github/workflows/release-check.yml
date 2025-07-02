@@ -137,11 +137,11 @@ jobs:
       shell: pwsh
       run: |
         git clone https://github.com/nigels-com/glew.git
-        cd glew/build/vc15
-        nmake -f Makefile.msvc GLEW_DEST=../../build/glew install
-        cd ../..
+        cd glew/build/win32
+        nmake /f makefile.vc mode=static glew_lib_dir=../../lib
+        cd ../../..
         New-Item -ItemType Directory -Force -Path $env:GITHUB_WORKSPACE/extlibs/glew/2.2.0/windows/x64
-        Copy-Item build/glew/lib/Release/x64/glew32s.lib $env:GITHUB_WORKSPACE/extlibs/glew/2.2.0/windows/x64/glew32s.lib
+        Copy-Item glew/lib/glew32s.lib $env:GITHUB_WORKSPACE/extlibs/glew/2.2.0/windows/x64/glew32s.lib
 
     # - name: Copy pnglibconf.h
     #   if: contains(matrix.os, 'windows')
