@@ -1,5 +1,10 @@
 cmake_minimum_required(VERSION 3.21)
 
+# Forzar el uso del runtime DLL en MSVC para evitar conflictos de runtime
+if(MSVC)
+  set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
+endif()
+
 # This template attempts to be "fetch_content"-able
 # so that it works well with tools like CPM or other
 # manual dependency management
