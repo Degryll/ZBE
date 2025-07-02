@@ -132,6 +132,17 @@ jobs:
           -DZBE_ENABLE_SANITIZER_UNDEFINED:BOOL="0" `
           -DZBE_ENABLE_SANITIZER_ADDRESS:BOOL="0"
 
+    - name: Download and build GLEW (Windows)
+      if: contains(matrix.os, 'windows')
+      shell: pwsh
+      run: |
+        git clone https://github.com/nigels-com/glew.git
+        cd glew/build/cmake
+        cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -G "Ninja" ..
+        cmake --build . --config Release
+        mkdir -p $env:GITHUB_WORKSPACE/extlibs/glew/2.2.0/windows/x64
+        Copy-Item Release/glew32s.lib $env:GITHUB_WORKSPACE/extlibs/glew/2.2.0/windows/x64/glew32s.lib
+
     # - name: Copy pnglibconf.h
     #   if: contains(matrix.os, 'windows')
     #   run: copy build\_deps\libpng-src\scripts\pnglibconf.h.prebuilt build\_deps\libpng-src\pnglibconf.h
