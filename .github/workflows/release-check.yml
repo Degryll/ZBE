@@ -148,15 +148,16 @@ jobs:
     - name: Build GLEW (static, /MD)
       if: contains(matrix.os, 'windows')
       run: |
-        cd glew-glew-2.2.0/build/cmake
-        cmake -G "Ninja" -A x64 -DBUILD_SHARED_LIBS=OFF -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreadedDLL ..
+        mkdir glew_build
+        cd glew_build
+        cmake -G "Ninja" -A x64 -DBUILD_SHARED_LIBS=OFF -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreadedDLL ../glew-glew-2.2.0/build/cmake
         cmake --build . --config Release
 
     - name: Copy GLEW static lib to extlibs
       if: contains(matrix.os, 'windows')
       run: |
         mkdir -p ${{ github.workspace }}/extlibs/glew/2.2.0/windows/x64/
-        cp glew-glew-2.2.0/build/cmake/lib/Release/glew32s.lib ${{ github.workspace }}/extlibs/glew/2.2.0/windows/x64/glew32s.lib
+        cp glew_build/lib/Release/glew32s.lib ${{ github.workspace }}/extlibs/glew/2.2.0/windows/x64/glew32s.lib
         cp -r glew-glew-2.2.0/include/GL ${{ github.workspace }}/extlibs/glew/2.2.0/include/
 
     - name: Build
