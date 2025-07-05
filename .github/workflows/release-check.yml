@@ -150,7 +150,7 @@ jobs:
       run: |
         mkdir glew_build
         cd glew_build
-        cmake -G "Ninja" -DBUILD_SHARED_LIBS=OFF -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreadedDLL ../glew-glew-2.2.0
+        cmake -G "Ninja" -DBUILD_SHARED_LIBS=OFF -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreadedDLL -DGLEW_SOURCE_DIR=../glew-glew-2.2.0 ../glew-glew-2.2.0/build/cmake
         cmake --build . --config Release
 
     - name: Copy GLEW static lib to extlibs
