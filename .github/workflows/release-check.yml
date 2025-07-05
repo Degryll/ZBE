@@ -142,13 +142,13 @@ jobs:
     - name: Download GLEW
       if: contains(matrix.os, 'windows')
       run: |
-        curl -L -o glew.zip https://github.com/nigels-com/glew/archive/refs/tags/glew-2.2.0.zip
+        curl -L -o glew.zip https://sourceforge.net/projects/glew/files/glew/2.2.0/glew-2.2.0.zip/download
         unzip glew.zip
 
     - name: Build GLEW (static, /MD)
       if: contains(matrix.os, 'windows')
       run: |
-        cd glew-glew-2.2.0
+        cd glew-2.2.0
         mkdir build_cmake
         cd build_cmake
         cmake -G "Ninja" -DBUILD_SHARED_LIBS=OFF -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreadedDLL ../build/cmake
@@ -158,8 +158,8 @@ jobs:
       if: contains(matrix.os, 'windows')
       run: |
         mkdir -p ${{ github.workspace }}/extlibs/glew/2.2.0/windows/x64/
-        cp glew-glew-2.2.0/build_cmake/lib/Release/glew32s.lib ${{ github.workspace }}/extlibs/glew/2.2.0/windows/x64/glew32s.lib
-        cp -r glew-glew-2.2.0/include/GL ${{ github.workspace }}/extlibs/glew/2.2.0/include/
+        cp glew-2.2.0/build_cmake/lib/Release/glew32s.lib ${{ github.workspace }}/extlibs/glew/2.2.0/windows/x64/glew32s.lib
+        cp -r glew-2.2.0/include/GL ${{ github.workspace }}/extlibs/glew/2.2.0/include/
 
     - name: Build
       # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
