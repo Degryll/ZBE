@@ -151,7 +151,7 @@ jobs:
         cd glew-2.2.0
         mkdir build_cmake
         cd build_cmake
-        cmake -G "Ninja" -DBUILD_SHARED_LIBS=OFF -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreadedDLL ../build/cmake
+        cmake -G "Ninja" -DBUILD_SHARED_LIBS=OFF -DBUILD_STATIC=ON -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreadedDLL ../build/cmake
         cmake --build . --config Release
 
     - name: List GLEW build output
@@ -166,7 +166,7 @@ jobs:
       shell: bash
       run: |
         mkdir -p ${{ github.workspace }}/extlibs/glew/2.2.0/windows/x64/
-        cp glew-2.2.0/build_cmake/lib/Release/glew32s.lib ${{ github.workspace }}/extlibs/glew/2.2.0/windows/x64/glew32s.lib
+        cp glew-2.2.0/build_cmake/lib/glew32s.lib ${{ github.workspace }}/extlibs/glew/2.2.0/windows/x64/glew32s.lib
         cp -r glew-2.2.0/include/GL ${{ github.workspace }}/extlibs/glew/2.2.0/include/
 
     - name: Build
