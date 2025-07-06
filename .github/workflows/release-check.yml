@@ -160,6 +160,8 @@ jobs:
       run: |
         echo 'Listing build_cmake:'
         ls -lR glew-2.2.0/build_cmake
+        echo 'Listing build_cmake/lib:'
+        ls -l glew-2.2.0/build_cmake/lib
 
     - name: Copy GLEW static lib to extlibs
       if: contains(matrix.os, 'windows')
