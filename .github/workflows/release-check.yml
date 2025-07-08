@@ -168,7 +168,7 @@ jobs:
       shell: bash
       run: |
         mkdir -p ${{ github.workspace }}/extlibs/glew/2.2.0/windows/x64/
-        cp glew-2.2.0/build_cmake/lib/glew32.lib ${{ github.workspace }}/extlibs/glew/2.2.0/windows/x64/glew32s.lib
+        cp glew-2.2.0/build_cmake/lib/glew32.lib ${{ github.workspace }}/extlibs/glew/2.2.0/windows/x64/glew32.lib
         cp -r glew-2.2.0/include/GL ${{ github.workspace }}/extlibs/glew/2.2.0/include/
 
     - name: Build
