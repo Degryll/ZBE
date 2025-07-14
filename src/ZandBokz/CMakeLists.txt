@@ -5,8 +5,6 @@ add_executable(ZANDBOKZ
   src/zandbokz.cpp
 )
 
-target_compile_definitions(ZANDBOKZ PRIVATE GLEW_STATIC)
-
 # IF (WIN32)
 #   set_target_properties(glew PROPERTIES
 #     IMPORTED_LOCATION "${PROJECT_SOURCE_DIR}/extlibs/glew/2.2.0/windows/x64/glew32s.lib"
