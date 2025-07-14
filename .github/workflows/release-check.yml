@@ -134,42 +134,42 @@ jobs:
 
 
 
-    # - name: Copy pnglibconf.h
+    # # - name: Copy pnglibconf.h
+    # #   if: contains(matrix.os, 'windows')
+    # #   run: copy build\_deps\libpng-src\scripts\pnglibconf.h.prebuilt build\_deps\libpng-src\pnglibconf.h
+    # #   shell: cmd
+
+    # - name: Download GLEW
     #   if: contains(matrix.os, 'windows')
-    #   run: copy build\_deps\libpng-src\scripts\pnglibconf.h.prebuilt build\_deps\libpng-src\pnglibconf.h
-    #   shell: cmd
+    #   run: |
+    #     curl -L -o glew.zip https://sourceforge.net/projects/glew/files/glew/2.2.0/glew-2.2.0.zip/download
+    #     unzip glew.zip
 
-    - name: Download GLEW
-      if: contains(matrix.os, 'windows')
-      run: |
-        curl -L -o glew.zip https://sourceforge.net/projects/glew/files/glew/2.2.0/glew-2.2.0.zip/download
-        unzip glew.zip
+    # - name: Build GLEW (static, /MD)
+    #   if: contains(matrix.os, 'windows')
+    #   run: |
+    #     cd glew-2.2.0
+    #     mkdir build_cmake
+    #     cd build_cmake
+    #     cmake -G "Ninja" -DBUILD_SHARED_LIBS=OFF -DBUILD_STATIC=ON -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreadedDLL ../build/cmake
+    #     cmake --build . --config Release
 
-    - name: Build GLEW (static, /MD)
-      if: contains(matrix.os, 'windows')
-      run: |
-        cd glew-2.2.0
-        mkdir build_cmake
-        cd build_cmake
-        cmake -G "Ninja" -DBUILD_SHARED_LIBS=OFF -DBUILD_STATIC=ON -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreadedDLL ../build/cmake
-        cmake --build . --config Release
+    # - name: List GLEW build output
+    #   if: contains(matrix.os, 'windows')
+    #   shell: bash
+    #   run: |
+    #     echo 'Listing build_cmake:'
+    #     ls -lR glew-2.2.0/build_cmake
+    #     echo 'Listing build_cmake/lib:'
+    #     ls -l glew-2.2.0/build_cmake/lib
 
-    - name: List GLEW build output
-      if: contains(matrix.os, 'windows')
-      shell: bash
-      run: |
-        echo 'Listing build_cmake:'
-        ls -lR glew-2.2.0/build_cmake
-        echo 'Listing build_cmake/lib:'
-        ls -l glew-2.2.0/build_cmake/lib
-
-    - name: Copy GLEW static lib to extlibs
-      if: contains(matrix.os, 'windows')
-      shell: bash
-      run: |
-        mkdir -p ${{ github.workspace }}/extlibs/glew/2.2.0/windows/x64/
-        cp glew-2.2.0/build_cmake/lib/glew32.lib ${{ github.workspace }}/extlibs/glew/2.2.0/windows/x64/glew32s.lib
-        cp -r glew-2.2.0/include/GL ${{ github.workspace }}/extlibs/glew/2.2.0/include/
+    # - name: Copy GLEW static lib to extlibs
+    #   if: contains(matrix.os, 'windows')
+    #   shell: bash
+    #   run: |
+    #     mkdir -p ${{ github.workspace }}/extlibs/glew/2.2.0/windows/x64/
+    #     cp glew-2.2.0/build_cmake/lib/glew32.lib ${{ github.workspace }}/extlibs/glew/2.2.0/windows/x64/glew32s.lib
+    #     cp -r glew-2.2.0/include/GL ${{ github.workspace }}/extlibs/glew/2.2.0/include/
 
     - name: Build
       # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).

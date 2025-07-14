@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.21)
 # Forzar el uso del runtime DLL en MSVC para evitar conflictos de runtime
 if(MSVC)
   set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreadedDLL" CACHE STRING "" FORCE)
+  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB:library")
 endif()
 
 # This template attempts to be "fetch_content"-able
