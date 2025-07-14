@@ -105,7 +105,7 @@ IF (WIN32)
   target_compile_definitions(ZBE_LIB PRIVATE GLEW_STATIC)
   target_compile_definitions(ZBE_LIB PRIVATE ZBE_EXPORTS)
   set_target_properties(glew PROPERTIES
-    IMPORTED_LOCATION "${PROJECT_SOURCE_DIR}/extlibs/glew/2.2.0/windows/x64/glew32.lib"
+    IMPORTED_LOCATION "${PROJECT_SOURCE_DIR}/extlibs/glew/2.2.0/windows/x64/glew32s.lib"
     INTERFACE_INCLUDE_DIRECTORIES "${PROJECT_SOURCE_DIR}/extlibs/glew/2.2.0/include"
   )
 ELSE()
