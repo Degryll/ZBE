@@ -152,3 +152,9 @@ target_include_directories(ZBE_LIB SYSTEM PRIVATE ${ogg_SOURCE_DIR})
 target_include_directories(ZBE_LIB SYSTEM PRIVATE ${libpng_SOURCE_DIR})
 # target_include_directories(ZBE_LIB SYSTEM PRIVATE ${nlohmann_SOURCE_DIR}/include)
 # target_include_directories(ZBE_LIB SYSTEM PRIVATE /media/ludo/D4D679EDD679D06A/workspace/ZBE/build/_deps/json-src/include)
+
+get_target_property(defs_publicas ZBE_LIB INTERFACE_COMPILE_DEFINITIONS)
+get_target_property(defs_privadas ZBE_LIB COMPILE_DEFINITIONS)
+
+message(STATUS "Definiciones ZBE_LIB PUBLICAS: ${defs_publicas}")
+message(STATUS "Definiciones ZBE_LIB PRIVADAS: ${defs_privadas}")

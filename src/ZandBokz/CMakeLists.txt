@@ -32,5 +32,8 @@ target_include_directories(ZANDBOKZ SYSTEM PRIVATE ${vorbis_SOURCE_DIR}/include)
 target_include_directories(ZANDBOKZ SYSTEM PRIVATE ${ogg_SOURCE_DIR})
 target_include_directories(ZANDBOKZ SYSTEM PRIVATE ${libpng_SOURCE_DIR})
 
-get_target_property(defs ZANDBOKZ COMPILE_DEFINITIONS)
-message(STATUS "Definiciones de compilación para ZANDBOKZ: ${defs}")
+get_target_property(defs_publicas ZANDBOKZ INTERFACE_COMPILE_DEFINITIONS)
+get_target_property(defs_privadas ZANDBOKZ COMPILE_DEFINITIONS)
+
+message(STATUS "Definiciones ZANDBOKZ PUBLICAS: ${defs_publicas}")
+message(STATUS "Definiciones ZANDBOKZ PRIVADAS: ${defs_privadas}")
