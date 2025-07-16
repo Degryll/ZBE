@@ -1,6 +1,5 @@
 # include(GenerateExportHeader)
 
-
 add_executable(ZANDBOKZ 
   src/zandbokz.cpp
 )
@@ -32,10 +31,6 @@ target_include_directories(ZANDBOKZ SYSTEM PRIVATE ${tinygltf_SOURCE_DIR})
 target_include_directories(ZANDBOKZ SYSTEM PRIVATE ${vorbis_SOURCE_DIR}/include)
 target_include_directories(ZANDBOKZ SYSTEM PRIVATE ${ogg_SOURCE_DIR})
 target_include_directories(ZANDBOKZ SYSTEM PRIVATE ${libpng_SOURCE_DIR})
-# target_include_directories(ZANDBOKZ SYSTEM PRIVATE ${nlohmann_SOURCE_DIR}/include)
-# target_include_directories(ZANDBOKZ SYSTEM PRIVATE /media/ludo/D4D679EDD679D06A/workspace/ZBE/build/_deps/json-src/include)
 
-
-# target_compile_features(ZANDBOKZ PUBLIC cxx_std_20)
-
-# set_target_properties(ZANDBOKZ PROPERTIES VERSION ${PROJECT_VERSION} CXX_VISIBILITY_PRESET hidden VISIBILITY_INLINES_HIDDEN YES)
+get_target_property(defs ZANDBOKZ COMPILE_DEFINITIONS)
+message(STATUS "Definiciones de compilación para ZANDBOKZ: ${defs}")
