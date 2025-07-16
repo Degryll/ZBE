@@ -21,9 +21,9 @@ PRIVATE ZBE_LIB
 # PRIVATE png #TODO ver si funciona sin este
 )
 
-target_include_directories(ZANDBOKZ PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>)
-target_include_directories(ZANDBOKZ PUBLIC $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>)
-target_include_directories(ZANDBOKZ PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/src/ZandBokz/include>)
+target_include_directories(ZANDBOKZ PRIVATE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>)
+target_include_directories(ZANDBOKZ PRIVATE $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>)
+target_include_directories(ZANDBOKZ PRIVATE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/src/ZandBokz/include>)
 
 target_include_directories(ZANDBOKZ SYSTEM PRIVATE ${glm_SOURCE_DIR})
 target_include_directories(ZANDBOKZ SYSTEM PRIVATE ${SDL2_SOURCE_DIR})
