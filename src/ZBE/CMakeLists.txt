@@ -1,7 +1,7 @@
 # include(GenerateExportHeader)
 find_package(PNG REQUIRED)
 find_package(OpenGL REQUIRED)
-set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+# set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
 add_library(ZBE_LIB 
   JSON/JSONFactory.cpp
