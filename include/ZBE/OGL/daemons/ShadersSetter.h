@@ -12,9 +12,9 @@
 
 #include <memory>
 #include <cstdio>
-#define GLEW_STATIC
-#include <GL/glew.h>
 #include <nlohmann/json.hpp>
+
+#include "ZBE/OGL/OglStaticGlew.h"
 
 #include "ZBE/core/tools/math/math.h"
 
