@@ -56,9 +56,10 @@ public:
   static void clear();
 
 private:
-
+DISABLE_DLL_WARN
   static int nerrors;
   static std::string errorString;
+DISABLE_WARNING_POP()
 
 };
 
