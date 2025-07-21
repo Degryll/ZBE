@@ -1,12 +1,9 @@
 /**
- * Copyright 2010 Batis Degryll Ludo
+ * Copyright 2025 Batis Degryll Ludo
  * @file OglStaticGlew.h
- * @since 2018-05-28
- * @date 2018-05-28
- * @author Degryll Ludo
- * @brief Defines the following structures:
- *  - SDLOGLWindow: Create a windows using SDL 2.0. with OpenGL support
- *  - OGLTextureStore:
+ * @since 2025-07-21
+ * @author Degryll Ludo Batis
+ * @brief 
  */
 
 #pragma once
@@ -15,7 +12,8 @@
 #define ZBE_OGL_OGLSTATICGLEW_H_
 
   #ifndef GLEW_STATIC
-  #define GLEW_STATIC
+    #define GLEW_STATIC
+  #endif  // GLEW_STATIC
   #include <GL/glew.h>
 
 #else
