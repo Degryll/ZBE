@@ -1,8 +1,8 @@
 # include(GenerateExportHeader)
-
 add_executable(ZANDBOKZ 
   src/zandbokz.cpp
 )
+set_target_properties(ZANDBOKZ PROPERTIES ENABLE_EXPORTS OFF)
 
 # IF (WIN32)
 #   set_target_properties(glew PROPERTIES
