@@ -2,7 +2,12 @@
 add_executable(ZANDBOKZ 
   src/zandbokz.cpp
 )
-set_target_properties(ZANDBOKZ PROPERTIES ENABLE_EXPORTS OFF)
+set_target_properties(ZANDBOKZ PROPERTIES
+  ENABLE_EXPORTS OFF
+  IMPORT_LIBRARY ""
+  ARCHIVE_OUTPUT_NAME ""
+  RUNTIME_OUTPUT_NAME ZANDBOKZ
+)
 
 # IF (WIN32)
 #   set_target_properties(glew PROPERTIES
