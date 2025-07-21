@@ -21,7 +21,7 @@ namespace zbe {
 
 /** \brief Dispatcher for sdl events.
  */
-class ImGuiEventWatcher : public SDLEventWatcher {
+class ZBEAPI ImGuiEventWatcher : public SDLEventWatcher {
 public:
 
   /** \brief Empty Destructor

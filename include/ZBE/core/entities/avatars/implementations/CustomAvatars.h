@@ -44,7 +44,7 @@ DISABLE_WARNING_PUSH(4250)
 // Convierte de una entidad con lookAt a un avatar de posicion y velocidad.
 // TODO: copiar TargetToDirAvt y quitarle el up
 // TODO: pero antes probar si podemos usar el de tres vectores
-class TargetToDirAvt : public MAvatar<Vector3D, Vector3D, Vector3D>, public AvatarImp {
+class ZBEAPI TargetToDirAvt : public MAvatar<Vector3D, Vector3D, Vector3D>, public AvatarImp {
 public:
   /** \brief
    */
@@ -122,7 +122,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class PosTargetToPosDirAvt : public MAvatar<Vector3D, Vector3D>, public AvatarImp {
+class ZBEAPI PosTargetToPosDirAvt : public MAvatar<Vector3D, Vector3D>, public AvatarImp {
 public:
 
   /** \brief
@@ -215,7 +215,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class Triangle2DAvt : public SAvatar<Triangle2D>, public AvatarImp {
+class ZBEAPI Triangle2DAvt : public SAvatar<Triangle2D>, public AvatarImp {
 public:
   void setupEntity(std::shared_ptr<Entity> entity, uint64_t aidx, uint64_t bidx, uint64_t cidx) {
     AvatarImp::setupEntity(entity);
@@ -254,7 +254,7 @@ DISABLE_WARNING_POP()
 // TODO: ¿Quien escribe a b y c en 2d en el triangulo?
 // -------------------------------------------- --------------------------------------------
 
-class Triangle2DShapeAvtBldr : public Funct<std::shared_ptr<SAvatar<Triangle2D>>, std::shared_ptr<Entity>> {
+class ZBEAPI Triangle2DShapeAvtBldr : public Funct<std::shared_ptr<SAvatar<Triangle2D>>, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = SAvatar<Triangle2D>;
   std::shared_ptr<SAvatar<Triangle2D>> operator()(std::shared_ptr<Entity> ent) override {
@@ -295,7 +295,7 @@ private:
  uint64_t velocityIdx;
 };
 
-class Triangle2DShapeAvtBldrFtry : public Factory {
+class ZBEAPI Triangle2DShapeAvtBldrFtry : public Factory {
 public:
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
@@ -391,7 +391,7 @@ private:
 
 // -------------------------------------------- --------------------------------------------
 
-class DerivedCosVelAvt : public MAvatar<Vector3D, Vector3D>, public AvatarImp {
+class ZBEAPI DerivedCosVelAvt : public MAvatar<Vector3D, Vector3D>, public AvatarImp {
 public:
 
   /** \brief
@@ -459,7 +459,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class MovingSphereAvt : public SAvatar<MovingSphere>, public AvatarImp {
+class ZBEAPI MovingSphereAvt : public SAvatar<MovingSphere>, public AvatarImp {
 public:
   void setupEntity(std::shared_ptr<Entity> entity, uint64_t positionidx, uint64_t velocityidx, uint64_t radiusidx) {
     AvatarImp::setupEntity(entity);
@@ -503,7 +503,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class MovingSphereAvtShapeBldr  : public Funct<std::shared_ptr<SAvatar<MovingSphere>>, std::shared_ptr<Entity>> {
+class ZBEAPI MovingSphereAvtShapeBldr  : public Funct<std::shared_ptr<SAvatar<MovingSphere>>, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = SAvatar<MovingSphere>;
   std::shared_ptr<SAvatar<MovingSphere>> operator()(std::shared_ptr<Entity> ent) override {
@@ -524,7 +524,7 @@ private:
  uint64_t radiusidx;
 };
 
-class MovingSphereAvtShapeBldrFtry : public Factory {
+class ZBEAPI MovingSphereAvtShapeBldrFtry : public Factory {
 // This class where c&p from DerivedPosMovingSphereAvtBldrFtry removing list managment
 public:
   void create(std::string name, uint64_t) override {
@@ -572,7 +572,7 @@ private:
   RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
 };
 
-class MovingSphereAvtBldr : public Funct<std::shared_ptr<SAvatar<MovingSphere>>, std::shared_ptr<Entity>> {
+class ZBEAPI ZBEAPI MovingSphereAvtBldr : public Funct<std::shared_ptr<SAvatar<MovingSphere>>, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = SAvatar<MovingSphere>;
   std::shared_ptr<SAvatar<MovingSphere>> operator()(std::shared_ptr<Entity> ent) override {
@@ -604,7 +604,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class MovingSphereAvtBldrFtry : public Factory {
+class ZBEAPI MovingSphereAvtBldrFtry : public Factory {
 public:
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
@@ -651,7 +651,7 @@ private:
   RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
 };
 
-class MovingTriangle3DRscAvt : public SAvatar<MovingTriangle3D>, public AvatarImp {
+class ZBEAPI MovingTriangle3DRscAvt : public SAvatar<MovingTriangle3D>, public AvatarImp {
 public:
 
   void setupEntity(std::shared_ptr<Entity> entity, uint64_t velocityIdx, uint64_t orientationIdx, uint64_t positionIdx, uint64_t radsIdx, uint64_t sizeIdx, uint64_t e1Idx, uint64_t e2Idx) {
@@ -734,7 +734,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class MovingTriangle3DRscAvtShapeBldr  : public Funct<std::shared_ptr<SAvatar<MovingTriangle3D>>, std::shared_ptr<Entity>> {
+class ZBEAPI MovingTriangle3DRscAvtShapeBldr  : public Funct<std::shared_ptr<SAvatar<MovingTriangle3D>>, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = SAvatar<MovingSphere>;
   std::shared_ptr<SAvatar<MovingTriangle3D>> operator()(std::shared_ptr<Entity> ent) override {
@@ -769,7 +769,7 @@ private:
   Triangle3D baseT;
 };
 
-class MovingTriangle3DRscAvtShapeBldrFtry : public Factory {
+class ZBEAPI MovingTriangle3DRscAvtShapeBldrFtry : public Factory {
 public:
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
@@ -843,7 +843,7 @@ private:
 
 // TODO shape builders, factorias y demas pestes
 
-class MovingTriangle3DAvt : public SAvatar<MovingTriangle3D>, public AvatarImp {
+class ZBEAPI MovingTriangle3DAvt : public SAvatar<MovingTriangle3D>, public AvatarImp {
 public:
   void setupEntity(std::shared_ptr<Entity> entity, uint64_t positionAidx, uint64_t positionBidx, uint64_t positionCidx, uint64_t velocityidx) {
     AvatarImp::setupEntity(entity);
@@ -892,7 +892,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class MovingTriangle3DAvtShapeBldr  : public Funct<std::shared_ptr<SAvatar<MovingTriangle3D>>, std::shared_ptr<Entity>> {
+class ZBEAPI MovingTriangle3DAvtShapeBldr  : public Funct<std::shared_ptr<SAvatar<MovingTriangle3D>>, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = SAvatar<MovingSphere>;
   std::shared_ptr<SAvatar<MovingTriangle3D>> operator()(std::shared_ptr<Entity> ent) override {
@@ -915,7 +915,7 @@ private:
  uint64_t velocityidx;
 };
 
-class MovingTriangle3DAvtShapeBldrFtry : public Factory {
+class ZBEAPI MovingTriangle3DAvtShapeBldrFtry : public Factory {
 public:
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
@@ -967,7 +967,7 @@ private:
   RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
 };
 
-class MovingTriangle3DAvtBldr : public Funct<std::shared_ptr<SAvatar<MovingTriangle3D>>, std::shared_ptr<Entity>> {
+class ZBEAPI MovingTriangle3DAvtBldr : public Funct<std::shared_ptr<SAvatar<MovingTriangle3D>>, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = SAvatar<MovingTriangle3D>;
   std::shared_ptr<SAvatar<MovingTriangle3D>> operator()(std::shared_ptr<Entity> ent) override {
@@ -1001,7 +1001,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class MovingTriangle3DAvtBldrFtry : public Factory {
+class ZBEAPI MovingTriangle3DAvtBldrFtry : public Factory {
 public:
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
@@ -1056,7 +1056,7 @@ private:
   RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
 };
 
-class PosUpwardsTargetToPosUpwardsDirAvt : public MAvatar<Vector3D, Vector3D, Vector3D>, public AvatarImp {
+class ZBEAPI PosUpwardsTargetToPosUpwardsDirAvt : public MAvatar<Vector3D, Vector3D, Vector3D>, public AvatarImp {
 /*  TODO:
   La objetos que se pintan hacia donde se mueven tienen que tener un atributo mas asociado al movimiento: upwards.
   La castaña heredará el upwards de la camara y este se reflejará en los comportamientos de bote.
@@ -1118,7 +1118,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class PosUpwardsTargetToPosUpwardsDirAvtFtry : public Factory {
+class ZBEAPI PosUpwardsTargetToPosUpwardsDirAvtFtry : public Factory {
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
 
@@ -1214,7 +1214,7 @@ private:
   RsrcStore<TicketedForwardList<MAvatar<Vector3D, Vector3D, Vector3D> > >& listStore = RsrcStore<TicketedForwardList<MAvatar<Vector3D, Vector3D, Vector3D> > >::getInstance();
 };
 
-class PosUpwardsTargetToPosUpwardsDirAvtBldr : public Funct<void, std::shared_ptr<Entity>> {
+class ZBEAPI PosUpwardsTargetToPosUpwardsDirAvtBldr : public Funct<void, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = MAvatar<Vector3D, Vector3D, Vector3D>;
   void operator()(std::shared_ptr<Entity> ent) override {
@@ -1246,7 +1246,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class PosUpwardsTargetToPosUpwardsDirAvtBldrFtry : public Factory {
+class ZBEAPI PosUpwardsTargetToPosUpwardsDirAvtBldrFtry : public Factory {
 public:
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
@@ -1303,7 +1303,7 @@ private:
 };
 
 // // ---------------------- TODO PosTargetUpwardsToPosDirAngleAvt
-// class PosTargetUpwardsToPosDirAngleAvt : public MAvatar<double, Vector3D, Vector3D>, public AvatarImp {
+// class ZBEAPI PosTargetUpwardsToPosDirAngleAvt : public MAvatar<double, Vector3D, Vector3D>, public AvatarImp {
 // public:
 
 //   /** \brief
@@ -1370,7 +1370,7 @@ private:
 //   std::shared_ptr<Value<Vector3D> > upwards;
 // };
 
-// class PosTargetUpwardsToPosDirAngleAvtBldr : public Funct<void, std::shared_ptr<Entity>> {
+// class ZBEAPI PosTargetUpwardsToPosDirAngleAvtBldr : public Funct<void, std::shared_ptr<Entity>> {
 // public:
 //   using AvtBaseType = MAvatar<double, Vector3D, Vector3D>;
 //   void operator()(std::shared_ptr<Entity> ent) override {
@@ -1400,7 +1400,7 @@ private:
 //   uint64_t upwardsidx;
 //   std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> indexNLists;
 // };
-// class PosTargetUpwardsToPosDirAngleAvtBldrFtry : public Factory {
+// class ZBEAPI PosTargetUpwardsToPosDirAngleAvtBldrFtry : public Factory {
 // public:
 //   void create(std::string name, uint64_t) override {
 //     using namespace std::string_literals;
@@ -1458,7 +1458,7 @@ private:
 
 // // ------- TODO aquí estamos creando avatares , bldrs y factorias para movig Triangle HitBox.
 
-// class MovingTriangle3DHitboxAvt : public SAvatar<MovingTriangle3D>, public AvatarImp {
+// class ZBEAPI MovingTriangle3DHitboxAvt : public SAvatar<MovingTriangle3D>, public AvatarImp {
 // public:
 //   void setupEntity(std::shared_ptr<Entity> entity, uint64_t positionidx, uint64_t velocityidx, uint64_t orientationidx, uint64_t sizeidx) {
 //     AvatarImp::setupEntity(entity);
@@ -1519,7 +1519,7 @@ private:
 //  std::shared_ptr<ContextTime> cTime;
 // };
 
-// class MovingTriangle3DHitboxAvtShapeBldr  : public Funct<std::shared_ptr<SAvatar<MovingTriangle3D>>, std::shared_ptr<Entity>> {
+// class ZBEAPI MovingTriangle3DHitboxAvtShapeBldr  : public Funct<std::shared_ptr<SAvatar<MovingTriangle3D>>, std::shared_ptr<Entity>> {
 // public:
 //   using AvtBaseType = SAvatar<MovingSphere>;
 //   std::shared_ptr<SAvatar<MovingTriangle3D>> operator()(std::shared_ptr<Entity> ent) override {
@@ -1543,7 +1543,7 @@ private:
 
 // };
 
-// class MovingTriangle3DHitboxAvtShapeBldrFtry : public Factory {
+// class ZBEAPI MovingTriangle3DHitboxAvtShapeBldrFtry : public Factory {
 // public:
 //   void create(std::string name, uint64_t) override {
 //     using namespace std::string_literals;
@@ -1595,7 +1595,7 @@ private:
 //   RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
 // };
 
-// class MovingTriangle3DHitboxAvtBldr : public Funct<std::shared_ptr<SAvatar<MovingTriangle3D>>, std::shared_ptr<Entity>> {
+// class ZBEAPI MovingTriangle3DHitboxAvtBldr : public Funct<std::shared_ptr<SAvatar<MovingTriangle3D>>, std::shared_ptr<Entity>> {
 // public:
 //   using AvtBaseType = SAvatar<MovingTriangle3D>;
 //   std::shared_ptr<SAvatar<MovingTriangle3D>> operator()(std::shared_ptr<Entity> ent) override {
@@ -1627,7 +1627,7 @@ private:
 //  std::vector<std::pair<uint64_t, std::shared_ptr<TicketedForwardList<AvtBaseType>>>> indexNLists;
 // };
 
-// class MovingTriangle3DHitboxAvtBldrFtry : public Factory {
+// class ZBEAPI MovingTriangle3DHitboxAvtBldrFtry : public Factory {
 // public:
 //   void create(std::string name, uint64_t) override {
 //     using namespace std::string_literals;
@@ -1689,7 +1689,7 @@ private:
 // MovingTriangle3DAvtBldrFtry
 
 // -----
-class DerivedPosMovingSphereAvt : public SAvatar<MovingSphere>, public AvatarImp {
+class ZBEAPI DerivedPosMovingSphereAvt : public SAvatar<MovingSphere>, public AvatarImp {
 public:
 
   /** \brief
@@ -1751,7 +1751,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class LookAtToPitchAvt : public MAvatar<Vector3D, Vector3D>, public AvatarImp {
+class ZBEAPI LookAtToPitchAvt : public MAvatar<Vector3D, Vector3D>, public AvatarImp {
 public:
 
 /** \brief
@@ -1817,7 +1817,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class LookAtToYawAvt : public MAvatar<Vector3D, Vector3D>, public AvatarImp {
+class ZBEAPI LookAtToYawAvt : public MAvatar<Vector3D, Vector3D>, public AvatarImp {
 public:
 
   /** \brief
@@ -1867,7 +1867,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class TargetToDirAvtBldr : public Funct<void, std::shared_ptr<Entity>> {
+class ZBEAPI TargetToDirAvtBldr : public Funct<void, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = MAvatar<Vector3D, Vector3D, Vector3D>;
   void operator()(std::shared_ptr<Entity> ent) override {
@@ -1900,7 +1900,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class PosTargetToPosDirAvtBldr : public Funct<void, std::shared_ptr<Entity>> {
+class ZBEAPI PosTargetToPosDirAvtBldr : public Funct<void, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = MAvatar<Vector3D, Vector3D>;
   void operator()(std::shared_ptr<Entity> ent) override {
@@ -1930,7 +1930,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class DerivedCosVelAvtBldr : public Funct<void, std::shared_ptr<Entity>> {
+class ZBEAPI DerivedCosVelAvtBldr : public Funct<void, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = MAvatar<Vector3D, Vector3D>;
   void operator()(std::shared_ptr<Entity> ent) override {
@@ -1974,8 +1974,8 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class DerivedPosMovingSphereAvtShapeBldr : public Funct<std::shared_ptr<SAvatar<MovingSphere>>, std::shared_ptr<Entity>> {
-// This class where c&p from DerivedPosMovingSphereAvtBldr removing list managment
+class ZBEAPI DerivedPosMovingSphereAvtShapeBldr : public Funct<std::shared_ptr<SAvatar<MovingSphere>>, std::shared_ptr<Entity>> {
+// This class ZBEAPI where c&p from DerivedPosMovingSphereAvtBldr removing list managment
 public:
   using AvtBaseType = SAvatar<MovingSphere>;
   std::shared_ptr<SAvatar<MovingSphere>> operator()(std::shared_ptr<Entity> ent) override {
@@ -2010,8 +2010,8 @@ private:
  uint64_t radiusidx;
 };
 
-class DerivedPosMovingSphereAvtBldr : public Funct<void, std::shared_ptr<Entity>> {
-// This class where c&p to DerivedPosMovingSphereAvtShapeBldr
+class ZBEAPI DerivedPosMovingSphereAvtBldr : public Funct<void, std::shared_ptr<Entity>> {
+// This class ZBEAPI where c&p to DerivedPosMovingSphereAvtShapeBldr
 public:
   using AvtBaseType = SAvatar<MovingSphere>;
   void operator()(std::shared_ptr<Entity> ent) override {
@@ -2056,7 +2056,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class LookAtToPitchAvtBldr : public Funct<void, std::shared_ptr<Entity>> {
+class ZBEAPI LookAtToPitchAvtBldr : public Funct<void, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = MAvatar<Vector3D, Vector3D>;
   void operator()(std::shared_ptr<Entity> ent) override {
@@ -2087,7 +2087,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class LookAtToYawAvtBldr : public Funct<void, std::shared_ptr<Entity>> {
+class ZBEAPI LookAtToYawAvtBldr : public Funct<void, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = MAvatar<Vector3D, Vector3D>;
   void operator()(std::shared_ptr<Entity> ent) override {
@@ -2120,7 +2120,7 @@ DISABLE_WARNING_POP()
 
 //---------------------------- NUEVAS
 
-class TargetToDirAvtBldrFtry : public Factory {
+class ZBEAPI TargetToDirAvtBldrFtry : public Factory {
 public:
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
@@ -2180,7 +2180,7 @@ private:
   RsrcStore<ListType>& listRsrc = RsrcStore<ListType>::getInstance();
 };
 
-class PosTargetToPosDirAvtBldrFtry : public Factory {
+class ZBEAPI PosTargetToPosDirAvtBldrFtry : public Factory {
 public:
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
@@ -2232,7 +2232,7 @@ private:
   RsrcStore<ListType>& listRsrc = RsrcStore<ListType>::getInstance();
 };
 
-class DerivedCosVelAvtBldrFtry : public Factory {
+class ZBEAPI DerivedCosVelAvtBldrFtry : public Factory {
 public:
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
@@ -2300,8 +2300,8 @@ private:
   RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
 };
 
-class DerivedPosMovingSphereAvtShapeBldrFtry : public Factory {
-// This class where c&p from DerivedPosMovingSphereAvtBldrFtry removing list managment
+class ZBEAPI DerivedPosMovingSphereAvtShapeBldrFtry : public Factory {
+// This class ZBEAPI where c&p from DerivedPosMovingSphereAvtBldrFtry removing list managment
 public:
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
@@ -2365,7 +2365,7 @@ private:
   RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
 };
 
-class DerivedPosMovingSphereAvtBldrFtry : public Factory {
+class ZBEAPI DerivedPosMovingSphereAvtBldrFtry : public Factory {
 // This class where c&p to DerivedPosMovingSphereAvtShapeBldrFtry
 public:
   void create(std::string name, uint64_t) override {
@@ -2438,7 +2438,7 @@ private:
   RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
 };
 
-class LookAtToPitchAvtBldrFtry : public Factory {
+class ZBEAPI LookAtToPitchAvtBldrFtry : public Factory {
 public:
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
@@ -2490,7 +2490,7 @@ private:
   RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
 };
 
-class LookAtToYawAvtBldrFtry : public Factory {
+class ZBEAPI LookAtToYawAvtBldrFtry : public Factory {
 public:
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
@@ -2544,7 +2544,7 @@ private:
 };
 
 //---------------------------- NUEVAS
-class TargetToDirAvtFtry : public Factory {
+class ZBEAPI TargetToDirAvtFtry : public Factory {
   /** \brief Builds a TargetToDirAvt.
    *  \param name Name for the created TargetToDirAvt.
    *  \param cfgId TargetToDirAvt's configuration id.
@@ -2654,7 +2654,7 @@ private:
   RsrcStore<TicketedForwardList<MAvatar<Vector3D, Vector3D, Vector3D> > >& listStore = RsrcStore<TicketedForwardList<MAvatar<Vector3D, Vector3D, Vector3D> > >::getInstance();
 };
 
-class PosTargetToPosDirAvtFtry : public Factory {
+class ZBEAPI PosTargetToPosDirAvtFtry : public Factory {
   /** \brief Builds a TargetToDirAvt.
    *  \param name Name for the created TargetToDirAvt.
    *  \param cfgId TargetToDirAvt's configuration id.
@@ -2745,7 +2745,7 @@ private:
 };
 
 //-----
-class DerivedCosVelAvtFtry : public Factory {
+class ZBEAPI DerivedCosVelAvtFtry : public Factory {
   /** \brief Builds a TargetToDirAvt.
    *  \param name Name for the created TargetToDirAvt.
    *  \param cfgId TargetToDirAvt's configuration id.
@@ -2871,7 +2871,7 @@ private:
   RsrcStore<Entity>& entityRsrc                                  = RsrcStore<Entity>::getInstance();
   RsrcStore<TicketedForwardList<MAvatar<Vector3D> > >& listStore = RsrcStore<TicketedForwardList<MAvatar<Vector3D> > >::getInstance();
 };
-class DerivedPosMovingSphereAvtFtry : public Factory {
+class ZBEAPI DerivedPosMovingSphereAvtFtry : public Factory {
   /** \brief Builds a TargetToDirAvt.
    *  \param name Name for the created TargetToDirAvt.
    *  \param cfgId TargetToDirAvt's configuration id.
@@ -3009,7 +3009,7 @@ private:
   RsrcStore<TicketedForwardList<MAvatar<MovingSphere> > >& listStore = RsrcStore<TicketedForwardList<MAvatar<MovingSphere> > >::getInstance();
 };
 
-class LookAtToPitchAvtFtry : public Factory {
+class ZBEAPI LookAtToPitchAvtFtry : public Factory {
   /** \brief Builds a LookAtToPitchAvt.
    *  \param name Name for the created LookAtToPitchAvt.
    *  \param cfgId LookAtToPitchAvt's configuration id.
@@ -3108,7 +3108,7 @@ private:
   RsrcStore<TicketedForwardList<MAvatar<Vector3D, Vector3D> > >& listStore = RsrcStore<TicketedForwardList<MAvatar<Vector3D, Vector3D> > >::getInstance();
 };
 
-class LookAtToYawAvtFtry : public Factory {
+class ZBEAPI LookAtToYawAvtFtry : public Factory {
   /** \brief Builds a LookAtToYawAvt.
    *  \param name Name for the created LookAtToYawAvt.
    *  \param cfgId LookAtToYawAvt's configuration id.

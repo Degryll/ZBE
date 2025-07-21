@@ -23,7 +23,7 @@ class ZBEAPI BulletCreatorBhvFtry;
 
 /** \brief BulletCreatorBhv given avatar.
  */
-class BulletCreatorBhv : virtual public Behavior<Vector3D, Vector3D> {
+class ZBEAPI BulletCreatorBhv : virtual public Behavior<Vector3D, Vector3D> {
 public:
   friend class BulletCreatorBhvFtry;
 

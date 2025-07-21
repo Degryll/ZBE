@@ -26,7 +26,7 @@
   #define ZBECALL __cdecl
 
 #else
-  #define ZBEAPI
+  #define ZBEAPI __attribute__((visibility("default")))
   #define ZBECALL
 
 #endif // OS

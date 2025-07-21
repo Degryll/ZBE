@@ -28,7 +28,7 @@ namespace zbe {
 
 /** \brief JSON implementation of a RsrcDefLoader for audio.
  */
-class JSONAudioDefLoader : public RsrcDefLoader {
+class ZBEAPI JSONAudioDefLoader : public RsrcDefLoader {
 public:
 
  /** \brief Load an audio definition

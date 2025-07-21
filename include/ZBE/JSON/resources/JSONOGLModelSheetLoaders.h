@@ -38,7 +38,7 @@ namespace zbe {
 
 /** \brief JSON loader for SimpleModelOGLModelSheet's
 */
-class JSONSimpleOGLModelSheetLoader : public RsrcLoader {
+class ZBEAPI JSONSimpleOGLModelSheetLoader : public RsrcLoader {
 public:
  /** \brief Empty constructir. Creted object needs to be setup
   */
@@ -78,7 +78,7 @@ DISABLE_WARNING_POP()
 /** \brief Factory for JSONSimpleOGLModelSheetLoader.
  */
 //template <typename T>
-class JSONSimpleOGLModelSheetLoaderFtry : virtual public Factory {
+class ZBEAPI JSONSimpleOGLModelSheetLoaderFtry : virtual public Factory {
 public:
 
   /** \brief Builds a JSONSimpleOGLModelSheetLoader.
@@ -130,7 +130,7 @@ DISABLE_WARNING_POP()
 
 //------------------------
 
-class JSONLookAtOGLModelSheetLoader : public RsrcLoader {
+class ZBEAPI JSONLookAtOGLModelSheetLoader : public RsrcLoader {
 public:
 
 DISABLE_DLL_WARN
@@ -166,7 +166,7 @@ DISABLE_WARNING_POP()
 /** \brief Factory for JSONLookAtOGLModelSheetLoader.
  */
 //template <typename T>
-class JSONLookAtOGLModelSheetLoaderFtry : virtual public Factory {
+class ZBEAPI JSONLookAtOGLModelSheetLoaderFtry : virtual public Factory {
 public:
 
   /** \brief Builds a JSONLookAtOGLModelSheetLoader.
@@ -218,7 +218,7 @@ private:
 
 /** \brief JSON loader for SimpleModelOGLModelSheet's
 */
-class JSONSpriteOGLModelSheetLoader : public RsrcLoader {
+class ZBEAPI JSONSpriteOGLModelSheetLoader : public RsrcLoader {
 public:
 
  /** \brief Empty constructir. Creted object needs to be setup
@@ -255,7 +255,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class JSONSpriteOGLModelSheetLoaderFtry : virtual public Factory {
+class ZBEAPI JSONSpriteOGLModelSheetLoaderFtry : virtual public Factory {
 public:
 
   /** \brief Builds a JSONSpriteOGLModelSheetLoader.

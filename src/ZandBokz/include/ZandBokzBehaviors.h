@@ -38,7 +38,7 @@
 namespace zandbokz {
 
 
-class ZandBockPlayerResetBhv : virtual public zbe::Behavior<int64_t, double, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D> {
+class ZBEAPI ZandBockPlayerResetBhv : virtual public zbe::Behavior<int64_t, double, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D> {
   public:
   virtual ~ZandBockPlayerResetBhv() = default;
   void apply(std::shared_ptr<zbe::MAvatar<int64_t, double, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D> > avatar) override{
@@ -66,7 +66,7 @@ class ZandBockPlayerResetBhv : virtual public zbe::Behavior<int64_t, double, zbe
 };
 
 
-class KeepDistanceBhv : virtual public zbe::Behavior<double, zbe::Vector3D, zbe::Vector3D> {
+class ZBEAPI KeepDistanceBhv : virtual public zbe::Behavior<double, zbe::Vector3D, zbe::Vector3D> {
   public:
   virtual ~KeepDistanceBhv() = default;
   void apply(std::shared_ptr<zbe::MAvatar<double, zbe::Vector3D, zbe::Vector3D> > avatar) override {
@@ -85,7 +85,7 @@ class KeepDistanceBhv : virtual public zbe::Behavior<double, zbe::Vector3D, zbe:
   }
 };
 
-class CopyV3DIfNotZeroBhv : virtual public zbe::Behavior<zbe::Vector3D, zbe::Vector3D> {
+class ZBEAPI CopyV3DIfNotZeroBhv : virtual public zbe::Behavior<zbe::Vector3D, zbe::Vector3D> {
   public:
   virtual ~CopyV3DIfNotZeroBhv() = default;
   void apply(std::shared_ptr<zbe::MAvatar<zbe::Vector3D, zbe::Vector3D> > avatar) override {
@@ -100,7 +100,7 @@ class CopyV3DIfNotZeroBhv : virtual public zbe::Behavior<zbe::Vector3D, zbe::Vec
   }
 };
 
-class ProjectV3DOnPlaneBhv : virtual public zbe::Behavior<zbe::Vector2D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D> {
+class ZBEAPI ProjectV3DOnPlaneBhv : virtual public zbe::Behavior<zbe::Vector2D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D> {
   public:
   virtual ~ProjectV3DOnPlaneBhv() = default;
   void apply(std::shared_ptr<zbe::MAvatar<zbe::Vector2D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D> > avatar) override {
@@ -131,7 +131,7 @@ class ProjectV3DOnPlaneBhv : virtual public zbe::Behavior<zbe::Vector2D, zbe::Ve
   }
 };
 
-class Vec3DAccumBhv : virtual public zbe::Behavior<zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D > {
+class ZBEAPI Vec3DAccumBhv : virtual public zbe::Behavior<zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D > {
   public:
   virtual ~Vec3DAccumBhv() = default;
   void apply(std::shared_ptr<zbe::MAvatar<zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D > > avatar) override {
@@ -149,7 +149,7 @@ class Vec3DAccumBhv : virtual public zbe::Behavior<zbe::Vector3D, zbe::Vector3D,
   }
 };
 
-class CalculeOrientationBhv : virtual public zbe::Behavior<zbe::Vector3D, zbe::Vector3D, zbe::Vector3D ,zbe::Vector3D> {
+class ZBEAPI CalculeOrientationBhv : virtual public zbe::Behavior<zbe::Vector3D, zbe::Vector3D, zbe::Vector3D ,zbe::Vector3D> {
   public:
   virtual ~CalculeOrientationBhv() = default;
 
@@ -176,7 +176,7 @@ class CalculeOrientationBhv : virtual public zbe::Behavior<zbe::Vector3D, zbe::V
   }
 };
 
-class OrientationRelativeVelSetter : virtual public zbe::Behavior<double, double, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D > {
+class ZBEAPI OrientationRelativeVelSetter : virtual public zbe::Behavior<double, double, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D > {
   public:
   virtual ~OrientationRelativeVelSetter() = default;
   void apply(std::shared_ptr<zbe::MAvatar<double, double, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D > > avatar) override {
@@ -197,7 +197,7 @@ class OrientationRelativeVelSetter : virtual public zbe::Behavior<double, double
   }
 };
 
-class OrientationRelative2DVelSetter : virtual public zbe::Behavior<double, double, zbe::Vector2D, zbe::Vector2D > {
+class ZBEAPI OrientationRelative2DVelSetter : virtual public zbe::Behavior<double, double, zbe::Vector2D, zbe::Vector2D > {
   public:
   virtual ~OrientationRelative2DVelSetter() = default;
   void apply(std::shared_ptr<zbe::MAvatar<double, double, zbe::Vector2D, zbe::Vector2D > > avatar) override {
@@ -223,7 +223,7 @@ class OrientationRelative2DVelSetter : virtual public zbe::Behavior<double, doub
   }
 };
 
-class GravityMotion3D : virtual public zbe::Behavior<zbe::Vector3D, zbe::Vector3D > {
+class ZBEAPI GravityMotion3D : virtual public zbe::Behavior<zbe::Vector3D, zbe::Vector3D > {
   public:
     virtual ~GravityMotion3D() = default;
 
@@ -255,7 +255,7 @@ class GravityMotion3D : virtual public zbe::Behavior<zbe::Vector3D, zbe::Vector3
     zbe::Vector3D g;
 };
 
-class GravityMotion3DFtry : virtual public zbe::Factory {
+class ZBEAPI GravityMotion3DFtry : virtual public zbe::Factory {
 public:
 
   void create(std::string name, uint64_t) override {
@@ -293,7 +293,7 @@ private:
   zbe::RsrcStore<GravityMotion3D>& gm3dRsrc = zbe::RsrcStore<GravityMotion3D>::getInstance();
 };
 
-class FollowTargetBvr : virtual public zbe::Behavior<zbe::Vector3D, zbe::Vector3D > {
+class ZBEAPI FollowTargetBvr : virtual public zbe::Behavior<zbe::Vector3D, zbe::Vector3D > {
   public:
     virtual ~FollowTargetBvr() = default;
 
@@ -325,7 +325,7 @@ class FollowTargetBvr : virtual public zbe::Behavior<zbe::Vector3D, zbe::Vector3
     zbe::Vector3D g;
 };
 
-class FollowTargetBvrFtry : virtual public zbe::Factory {
+class ZBEAPI FollowTargetBvrFtry : virtual public zbe::Factory {
 public:
 
   void create(std::string name, uint64_t) override {
@@ -362,7 +362,7 @@ private:
   zbe::RsrcStore<GravityMotion3D>& gm3dRsrc = zbe::RsrcStore<GravityMotion3D>::getInstance();
 };
 
-class NonRealGravityVelSetterResetBhv : virtual public zbe::Behavior<double, double, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D> {
+class ZBEAPI NonRealGravityVelSetterResetBhv : virtual public zbe::Behavior<double, double, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D> {
   void apply(std::shared_ptr<zbe::MAvatar<double, double, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D> > avatar) override {
     //["bestCenterDistIdx","attractionRatioIdx","velocityPre3Idx", "bestCenterIdx","positionIdx"],
     auto vpos = avatar->get<1, zbe::Vector3D>();
@@ -382,7 +382,7 @@ class NonRealGravityVelSetterResetBhv : virtual public zbe::Behavior<double, dou
   }
 };
 
-class NonRealGravityVelSetterBhv : virtual public zbe::Behavior<zbe::Vector3D, zbe::Vector3D> {
+class ZBEAPI NonRealGravityVelSetterBhv : virtual public zbe::Behavior<zbe::Vector3D, zbe::Vector3D> {
   public:
     using ListType = zbe::TicketedForwardList<zbe::SAvatar<zbe::Vector3D>>;
     virtual ~NonRealGravityVelSetterBhv() = default;
@@ -462,7 +462,7 @@ class NonRealGravityVelSetterBhv : virtual public zbe::Behavior<zbe::Vector3D, z
     std::shared_ptr<zbe::TicketedForwardList<zbe::SAvatar<zbe::Vector3D>>> attractors;
 };
 
-class NonRealGravityVelSetterBhvFtry : virtual public zbe::Factory {
+class ZBEAPI NonRealGravityVelSetterBhvFtry : virtual public zbe::Factory {
 public:
 
   void create(std::string name, uint64_t) override {

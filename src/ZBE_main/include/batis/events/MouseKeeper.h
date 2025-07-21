@@ -12,7 +12,7 @@
 
 namespace batis {
 
-class MouseKeeper {
+class ZBEAPI MouseKeeper {
 	public:
 
   	static MouseKeeper& getInstance() {

@@ -96,7 +96,7 @@ DISABLE_WARNING_POP()
 };
 
 
-class DaemonRecurrentTHBldr : public Funct<std::shared_ptr<TimeHandler>, std::shared_ptr<Entity>> {
+class ZBEAPI DaemonRecurrentTHBldr : public Funct<std::shared_ptr<TimeHandler>, std::shared_ptr<Entity>> {
 public:
   DaemonRecurrentTHBldr() = default;
   
@@ -134,7 +134,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class DaemonRecurrentTHBldrFtry : public Factory {
+class ZBEAPI DaemonRecurrentTHBldrFtry : public Factory {
 
 void create(std::string name, uint64_t) override {
   using namespace std::string_literals;

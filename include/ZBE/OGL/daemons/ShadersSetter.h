@@ -12,6 +12,7 @@
 
 #include <memory>
 #include <cstdio>
+#define GLEW_STATIC
 #include <GL/glew.h>
 #include <nlohmann/json.hpp>
 
@@ -34,7 +35,7 @@ namespace zbe {
 
 /** \brief Interface for all daemons. Daemons are responsible for execute automated processes. Basically Daemons rules the world.
  */
-class ShadersSetter3D : public Daemon {
+class ZBEAPI ShadersSetter3D : public Daemon {
 public:
   friend class ShadersSetter3DFtry;
   /** \brief Destructor.
@@ -75,7 +76,7 @@ private:
 
 /** \brief Interface for all daemons. Daemons are responsible for execute automated processes. Basically Daemons rules the world.
  */
-class ShadersSetter2D : public Daemon {
+class ZBEAPI ShadersSetter2D : public Daemon {
 public:
   /** \brief Destructor.
    */
@@ -123,7 +124,7 @@ private:
 
 /** \brief Factory for ShadersSetter2DFtry.
  */
-class ShadersSetter2DFtry : virtual public Factory {
+class ZBEAPI ShadersSetter2DFtry : virtual public Factory {
 public:
   /** \brief Builds a ShadersSetter2D.
    *  \param name Name for the created ShadersSetter2D.

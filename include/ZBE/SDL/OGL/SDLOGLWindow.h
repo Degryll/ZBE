@@ -17,6 +17,7 @@
 #include <vector>
 #include <tuple>
 
+#define GLEW_STATIC
 #include <GL/glew.h>
 
 #include "ZBE/SDL/sdl_warning_suppressor.h"
@@ -169,7 +170,7 @@ DISABLE_WARNING_POP()
  * @class ZBEAPI SDLOGLWindow
  * @brief Used to create windows using SDL 2.0. with OpenGL support.
  */
-class SDLOGLWindow : public SDLWindow {
+class ZBEAPI SDLOGLWindow : public SDLWindow {
 public:
   SDLOGLWindow(const SDLOGLWindow&) = delete;  //!< Does not make sense to "copy" a SDLOGLWindow.
   void operator=(const SDLOGLWindow&) = delete;  //!< Does not make sense to "copy" a SDLOGLWindow.

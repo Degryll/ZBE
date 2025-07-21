@@ -38,7 +38,7 @@
 
 namespace zandbokz {
 
-class AttachRedirectionReaction : public zbe::Funct<void, zbe::CollisionData3D, Platform> {
+class ZBEAPI AttachRedirectionReaction : public zbe::Funct<void, zbe::CollisionData3D, Platform> {
 public:
   AttachRedirectionReaction(const AttachRedirectionReaction&) = delete; //!< Avoid copy.
   void operator=(const AttachRedirectionReaction&) = delete; //!< Avoid copy.
@@ -124,7 +124,7 @@ private:
   std::shared_ptr<zbe::MAvatar<zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D>> avatar;
 };
 
-class AttachRedirectionReactionBldr : public zbe::Funct<std::shared_ptr<zbe::Funct<void, zbe::CollisionData3D, Platform>>, std::shared_ptr<zbe::Entity>> {
+class ZBEAPI AttachRedirectionReactionBldr : public zbe::Funct<std::shared_ptr<zbe::Funct<void, zbe::CollisionData3D, Platform>>, std::shared_ptr<zbe::Entity>> {
 public:
   std::shared_ptr<zbe::Funct<void, zbe::CollisionData3D, Platform>> operator()(std::shared_ptr<zbe::Entity> ent) override {
     auto avt = std::make_shared<zbe::MBaseAvatar< zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D>>();
@@ -139,7 +139,7 @@ private:
   std::array<uint64_t, AttachRedirectionReaction::AVTSIZE> idxArr {};
 };
 
-class AttachRedirectionReactionBldrFtry : public zbe::Factory {
+class ZBEAPI AttachRedirectionReactionBldrFtry : public zbe::Factory {
 public:
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
@@ -179,7 +179,7 @@ private:
 };
 
 //template<typename IData, typename Trait>
-class ClosestCenterStoreReaction : public zbe::Funct<void, FGravityData, Attractor> {
+class ZBEAPI ClosestCenterStoreReaction : public zbe::Funct<void, FGravityData, Attractor> {
 public:
   ClosestCenterStoreReaction(const ClosestCenterStoreReaction&) = delete; //!< Avoid copy.
   void operator=(const ClosestCenterStoreReaction&) = delete; //!< Avoid copy.
@@ -219,7 +219,7 @@ private:
   std::shared_ptr<zbe::MAvatar<double, zbe::Vector3D, zbe::Vector3D>> avatar;
 };
 
-class ClosestCenterStoreReactionBldr : public zbe::Funct<std::shared_ptr<zbe::Funct<void, FGravityData, Attractor>>, std::shared_ptr<zbe::Entity>> {
+class ZBEAPI ClosestCenterStoreReactionBldr : public zbe::Funct<std::shared_ptr<zbe::Funct<void, FGravityData, Attractor>>, std::shared_ptr<zbe::Entity>> {
 public:
   std::shared_ptr<zbe::Funct<void, FGravityData, Attractor>> operator()(std::shared_ptr<zbe::Entity> ent) override {
     auto avt = std::make_shared<zbe::MBaseAvatar<double, zbe::Vector3D, zbe::Vector3D>>();
@@ -234,7 +234,7 @@ private:
   std::array<uint64_t, ClosestCenterStoreReaction::AVTSIZE> idxArr {};
 };
 
-class ClosestCenterStoreReactionBldrFtry : public zbe::Factory {
+class ZBEAPI ClosestCenterStoreReactionBldrFtry : public zbe::Factory {
 public:
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
@@ -274,7 +274,7 @@ private:
 };
 
 //template<typename IData, typename Trait>
-class AttachRepositionReaction : public zbe::Funct<void, zbe::CollisionData3D, Platform> {
+class ZBEAPI AttachRepositionReaction : public zbe::Funct<void, zbe::CollisionData3D, Platform> {
 public:
   AttachRepositionReaction(const AttachRepositionReaction&) = delete; //!< Avoid copy.
   void operator=(const AttachRepositionReaction&) = delete; //!< Avoid copy.
@@ -320,7 +320,7 @@ private:
   std::shared_ptr<zbe::MAvatar<zbe::Vector2D, zbe::Vector2D, zbe::Vector3D>> avatar;
 };
 
-class AttachRepositionReactionBldr : public zbe::Funct<std::shared_ptr<zbe::Funct<void, zbe::CollisionData3D, Platform>>, std::shared_ptr<zbe::Entity>> {
+class ZBEAPI AttachRepositionReactionBldr : public zbe::Funct<std::shared_ptr<zbe::Funct<void, zbe::CollisionData3D, Platform>>, std::shared_ptr<zbe::Entity>> {
 public:
   std::shared_ptr<zbe::Funct<void, zbe::CollisionData3D, Platform>> operator()(std::shared_ptr<zbe::Entity> ent) override {
     auto avt = std::make_shared<zbe::MBaseAvatar<zbe::Vector2D, zbe::Vector2D, zbe::Vector3D>>();
@@ -335,7 +335,7 @@ private:
   std::array<uint64_t, AttachRepositionReaction::AVTSIZE> idxArr {};
 };
 
-class AttachRepositionReactionBldrFtry : public zbe::Factory {
+class ZBEAPI AttachRepositionReactionBldrFtry : public zbe::Factory {
 public:
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;

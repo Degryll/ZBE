@@ -29,7 +29,7 @@
 
 namespace zbe {
 
-class LimitedExcentricalRotation3D : virtual public Behavior<float, float, Vector3D,Vector3D, Vector3D, Vector3D>, public Parametric<float> {
+class ZBEAPI LimitedExcentricalRotation3D : virtual public Behavior<float, float, Vector3D,Vector3D, Vector3D, Vector3D>, public Parametric<float> {
    public:
     
     LimitedExcentricalRotation3D() = default;
@@ -102,7 +102,7 @@ class LimitedExcentricalRotation3D : virtual public Behavior<float, float, Vecto
     float sensibility;
 };
 
-class LimitedExcentricalRotation3DFtry : virtual public Factory {
+class ZBEAPI LimitedExcentricalRotation3DFtry : virtual public Factory {
 public:
   /** \brief Builds a Rotation2D.
    *  \param name Name for the created Rotation2D.
@@ -159,7 +159,7 @@ private:
 };
 
 
-class ExcentricalRotation3D : virtual public Behavior<Vector3D,Vector3D, Vector3D>, public Parametric<float> {
+class ZBEAPI ExcentricalRotation3D : virtual public Behavior<Vector3D,Vector3D, Vector3D>, public Parametric<float> {
    public:
 
     ExcentricalRotation3D() = default;
@@ -207,7 +207,7 @@ class ExcentricalRotation3D : virtual public Behavior<Vector3D,Vector3D, Vector3
     float sensibility;
 };
 
-class ExcentricalRotation3DFtry : virtual public Factory {
+class ZBEAPI ExcentricalRotation3DFtry : virtual public Factory {
 public:
   /** \brief Builds a Rotation2D.
    *  \param name Name for the created Rotation2D.
@@ -265,7 +265,7 @@ private:
 
 /** \brief Define the minimal functions of every behavior.
  */
-class Rotation3D : virtual public Behavior<Vector3D, Vector3D>, public Parametric<float> {
+class ZBEAPI Rotation3D : virtual public Behavior<Vector3D, Vector3D>, public Parametric<float> {
   public:
 
     Rotation3D() = default;
@@ -302,7 +302,7 @@ class Rotation3D : virtual public Behavior<Vector3D, Vector3D>, public Parametri
 
 /** \brief Factory for Rotation2DFtry.
  */
-class Rotation3DFtry : virtual public Factory {
+class ZBEAPI Rotation3DFtry : virtual public Factory {
 public:
   /** \brief Builds a Rotation2D.
    *  \param name Name for the created Rotation2D.

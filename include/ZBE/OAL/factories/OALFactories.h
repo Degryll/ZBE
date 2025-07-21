@@ -24,7 +24,7 @@ namespace zbe {
 
 /** \brief Define the interface of a Factory.
  */
-class OALFactories : public Daemon {
+class ZBEAPI OALFactories : public Daemon {
 public:
   ~OALFactories() {}
 

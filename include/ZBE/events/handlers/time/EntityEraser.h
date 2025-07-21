@@ -34,7 +34,7 @@
 
 namespace zbe {
 
-class EntityEraserTH : public TimeHandler {
+class ZBEAPI EntityEraserTH : public TimeHandler {
 public:
 	EntityEraserTH(const EntityEraserTH&) = delete; //!< Avoid copy.
 	void operator=(const EntityEraserTH&) = delete; //!< Avoid copy.
@@ -98,7 +98,7 @@ class EntityEraserReactionBldr : public Funct<std::shared_ptr<Funct<void, IData,
 
 /** \brief Factory for EntityEraserTH.
  */
-class EntityEraserTHFtry : virtual public Factory {
+class ZBEAPI EntityEraserTHFtry : virtual public Factory {
 public:
 
 /** \brief Create the desired tool, probably incomplete.
@@ -146,7 +146,7 @@ private:
   RsrcStore<EntityEraserTH> &timeEraserStore = RsrcStore<EntityEraserTH>::getInstance();
 };
 
-class EntityEraserTHBldr : public Funct<std::shared_ptr<TimeHandler>, std::shared_ptr<Entity>> {
+class ZBEAPI EntityEraserTHBldr : public Funct<std::shared_ptr<TimeHandler>, std::shared_ptr<Entity>> {
   std::shared_ptr<TimeHandler> operator()(std::shared_ptr<Entity> ent) override {
       return std::make_shared<EntityEraserTH>(ent);
   }

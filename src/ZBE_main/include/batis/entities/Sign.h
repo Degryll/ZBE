@@ -18,7 +18,7 @@
 
 namespace batis{
 
-class Sign: public zbe::TextDrawable, public zbe::AvatarEntityAdapted<zbe::SingleTextSprite> {
+class ZBEAPI Sign: public zbe::TextDrawable, public zbe::AvatarEntityAdapted<zbe::SingleTextSprite> {
 
 public:
   Sign(const Sign&) = delete;

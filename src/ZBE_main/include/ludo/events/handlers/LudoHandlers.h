@@ -17,7 +17,7 @@
 
 namespace ludo {
 
-class ExitInputHandler : public zbe::InputHandler {
+class ZBEAPI ExitInputHandler : public zbe::InputHandler {
 	public:
 	  ExitInputHandler(const ExitInputHandler&) = delete;
 	  void operator=(const ExitInputHandler&) = delete;

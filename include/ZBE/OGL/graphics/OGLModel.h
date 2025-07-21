@@ -12,6 +12,7 @@
 
 #include <cstdint>
 #include <vector>
+#define GLEW_STATIC
 #include <GL/glew.h>
 
 #include <glm/mat4x4.hpp>

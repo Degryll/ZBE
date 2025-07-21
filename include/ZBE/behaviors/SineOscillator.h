@@ -30,7 +30,7 @@ class SineOscillatorFFtry;
 
 /** \brief Oscillates given avatar's value.
  */
-class SineOscillatorF : virtual public Behavior<float> {
+class ZBEAPI SineOscillatorF : virtual public Behavior<float> {
 public:
   friend class SineOscillatorFFtry;
 
@@ -100,7 +100,7 @@ class SineOscillatorV3DFtry;
 
 /** \brief Oscillates given avatar's value.
  */
-class SineOscillatorV3D : virtual public Behavior<Vector3D> {
+class ZBEAPI SineOscillatorV3D : virtual public Behavior<Vector3D> {
 public:
   friend class SineOscillatorV3DFtry;
 

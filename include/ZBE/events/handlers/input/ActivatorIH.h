@@ -33,7 +33,7 @@ class ActivatorIHFtry;
 
 /** \brief Handler that stores input value to a Value<double>
  */
-class ActivatorIH : public InputHandler {
+class ZBEAPI ActivatorIH : public InputHandler {
 public:
   friend class ActivatorIHFtry;
 

@@ -6,7 +6,7 @@
 
 namespace game {
 
-class StepInputHandler : public zbe::InputHandler {
+class ZBEAPI StepInputHandler : public zbe::InputHandler {
 	public:
 	  StepInputHandler(const StepInputHandler&) = delete;
 	  void operator=(const StepInputHandler&) = delete;

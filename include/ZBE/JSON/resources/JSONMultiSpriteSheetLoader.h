@@ -25,7 +25,7 @@ namespace zbe {
 
 /** \brief SDL implementation of ImgLoader.
 */
-class JSONMultiSpriteSheetLoader : public RsrcLoader {
+class ZBEAPI JSONMultiSpriteSheetLoader : public RsrcLoader {
 public:
 
  /** \brief Load an image

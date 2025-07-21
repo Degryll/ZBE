@@ -18,7 +18,7 @@
 
 namespace batis {
 
-class MKBallInputHandler : public zbe::InputHandler {
+class ZBEAPI MKBallInputHandler : public zbe::InputHandler {
 	public:
 	  MKBallInputHandler(const MKBallInputHandler&) = delete;
 	  void operator=(const MKBallInputHandler&) = delete;

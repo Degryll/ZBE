@@ -19,7 +19,7 @@ namespace zbe {
 
 /** \brief A system class ZBEAPI to get unique Ids.
  */
-class SysIdGenerator {
+class ZBEAPI SysIdGenerator {
 public:
 
   /** \brief Each time it's called return an unique id.

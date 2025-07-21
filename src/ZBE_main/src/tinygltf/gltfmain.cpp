@@ -1,6 +1,8 @@
 // #include <fstream>
 // #include <iostream>
 //
+// Por si se recuperase este código
+// #define GLEW_STATIC
 // #include <GL/glew.h>
 // #include <GLFW/glfw3.h>
 // #include <glm/gtc/matrix_transform.hpp>

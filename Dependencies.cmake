@@ -64,6 +64,9 @@ function(ZBE_setup_dependencies)
 cpmaddpackage("gh:kcat/openal-soft#1.23.1")
 
 cpmaddpackage("gh:syoyo/tinygltf@2.8.22")
+if(tinygltf_ADDED)
+  set_target_properties(tinygltf PROPERTIES POSITION_INDEPENDENT_CODE ON)
+endif()
 
 cpmaddpackage("gh:nemtrif/utfcpp@4.0.5")
 

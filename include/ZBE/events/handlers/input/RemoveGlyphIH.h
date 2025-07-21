@@ -22,7 +22,7 @@ namespace zbe {
 
 /** \brief Input handler capable of run a daemon.
  */
-class RemoveGlyphIH : public InputHandler {
+class ZBEAPI RemoveGlyphIH : public InputHandler {
 public:
 
   /** \brief Constructs a RemoveGlyphIH from a daemon.

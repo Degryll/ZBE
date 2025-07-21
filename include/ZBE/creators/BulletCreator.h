@@ -43,7 +43,7 @@ namespace zbe {
 
 class BulletCreatorFtry;
 
-class BulletCreator {
+class ZBEAPI BulletCreator {
 public:
   friend class BulletCreatorFtry;
 
@@ -174,7 +174,7 @@ private:
   std::shared_ptr<ContextTime> cTime;
 };
 
-class BulletCreatorFtry : virtual public Factory {
+class ZBEAPI BulletCreatorFtry : virtual public Factory {
 public:
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;

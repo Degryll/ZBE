@@ -26,7 +26,7 @@
 namespace zbe {
 /** \brief
  */
-class ImGuiPreLoopDaemon : public Daemon {
+class ZBEAPI ImGuiPreLoopDaemon : public Daemon {
 public:
 
   ImGuiPreLoopDaemon(const ImGuiPreLoopDaemon&) = delete; //!< Avoid copy.

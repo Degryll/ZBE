@@ -23,7 +23,7 @@
 namespace zbe {
 /** \brief Daemon that applies a "punish" over a list of elements.
  */
-class OnceDaemon : public Daemon {
+class ZBEAPI OnceDaemon : public Daemon {
 public:
 
   /** \brief Destroys the OnceDaemon.
@@ -50,7 +50,7 @@ private:
   std::shared_ptr<Ticket> t;
 };
 
-class OnceDaemonFtry : public Factory {
+class ZBEAPI OnceDaemonFtry : public Factory {
 public:
 
   /** \brief Creates a OnceDaemon from a file.

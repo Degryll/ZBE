@@ -31,7 +31,7 @@ namespace zbe {
 
 /** \brief Interface for all daemons. Daemons are responsible for execute automated processes. Basically Daemons rules the world.
  */
-class SimpleImGuiTest : public Daemon {
+class ZBEAPI SimpleImGuiTest : public Daemon {
 public:
 
   SimpleImGuiTest(std::shared_ptr<SDLOGLImGuiWindow> window) : window(window) {}

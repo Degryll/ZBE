@@ -24,7 +24,7 @@ namespace zbe {
 
 struct SDLSocketHasher;
 
-class SDLSocket {
+class ZBEAPI SDLSocket {
 public:
   enum Type {TCP = 0, UDP = 1};
 

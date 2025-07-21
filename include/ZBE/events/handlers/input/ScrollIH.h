@@ -23,7 +23,7 @@ namespace zbe {
 
 /** \brief Input handler capable of run a daemon.
  */
-class ScrollIH : public InputHandler {
+class ZBEAPI ScrollIH : public InputHandler {
 public:
 
   /** \brief Constructs a ScrollIH from a daemon.

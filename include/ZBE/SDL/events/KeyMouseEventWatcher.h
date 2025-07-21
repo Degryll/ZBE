@@ -30,7 +30,7 @@
 
 namespace zbe {
 
-class KeyMouseEventWatcherFtry;
+class ZBEAPI KeyMouseEventWatcherFtry;
 
 /** \brief Dispatcher for sdl events.
  */

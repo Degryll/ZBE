@@ -18,7 +18,7 @@ namespace zbe {
 
 /** \brief This define an avatar that can be drawn in any direction.
  */
-class RotatedSprite : virtual public SingleSprite {
+class ZBEAPI RotatedSprite : virtual public SingleSprite {
 public:
   using Base = SingleSprite; //!< Inheritance info.
 

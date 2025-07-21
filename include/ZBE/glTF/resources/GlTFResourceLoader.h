@@ -55,7 +55,7 @@
 
 namespace zbe {
 
-class GlTFResourceLoader : public RsrcLoader {
+class ZBEAPI GlTFResourceLoader : public RsrcLoader {
 public:
 
 // __declspec(noinline) GlTFResourceLoader() : ext(".gltf"), texStore(nullptr), modelStore(nullptr), graphicsStore(RsrcStore<OGLGraphics>::getInstance()), dict(NameRsrcDictionary::getInstance()) {
@@ -119,7 +119,7 @@ private:
 
 };
 
-class GlTFResourceLoaderFtry : virtual public Factory {
+class ZBEAPI GlTFResourceLoaderFtry : virtual public Factory {
 public:
 
   /** \brief Builds a GlTFResourceLoader.

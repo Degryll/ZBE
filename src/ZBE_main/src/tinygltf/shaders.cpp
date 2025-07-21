@@ -3,8 +3,8 @@
 #include <vector>
 
 
+#define GLEW_STATIC
 #include <GL/glew.h>
-//#include <GLFW/glfw3.h>
 
 std::string FragmentShaderCode =
 "#version 330 core\n\

@@ -18,7 +18,7 @@ namespace zbe {
 
 /** \brief This defines an avatar that will have a state.
  */
-class Stated {
+class ZBEAPI Stated {
   public:
     using Base = void;//!< inheritance info
 

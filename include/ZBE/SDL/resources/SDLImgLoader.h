@@ -26,7 +26,7 @@ namespace zbe {
 
 /** \brief SDL implementation of ImgLoader.
 */
-class SDLImgLoader : public RsrcLoader {
+class ZBEAPI SDLImgLoader : public RsrcLoader {
 public:
 
  /** \brief Empty constructor, extension is ".png" by default.

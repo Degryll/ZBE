@@ -33,7 +33,7 @@ class TicketTogglerIHFtry;
 
 /** \brief Handler that stores input value to a Value<double>
  */
-class TicketTogglerIH : public InputHandler {
+class ZBEAPI TicketTogglerIH : public InputHandler {
 public:
   friend class TicketTogglerIHFtry;
 

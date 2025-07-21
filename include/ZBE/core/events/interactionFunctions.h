@@ -91,7 +91,7 @@ bool sameHalfSpace(Point2D pl1, Point2D pl2, Point2D a, Point2D b) {
     int result2 = halfspace(b, pl1, pl2);
     return (result1 == result2);
 }
-class MovingPoint2DTriangle2DFunctor {
+class ZBEAPI MovingPoint2DTriangle2DFunctor {
 public:
   bool operator()(std::shared_ptr<MovingPoint2D> movingpoint, std::shared_ptr<Triangle2D> triangle, uint64_t time, NewCollisionData<2> &data) const {
     NewCollisionData<2> bestData;

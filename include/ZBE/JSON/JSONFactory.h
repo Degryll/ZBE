@@ -326,7 +326,7 @@ std::optional<std::forward_list<T>> loadLiteralList(RsrcDictionary<T>& dict, jso
   return list;
 }
 
-Vector3D parseV3DFromCfg(nlohmann::json cfgValue, std::string paramName, std::string factoryName);
+Vector3D ZBEAPI parseV3DFromCfg(nlohmann::json cfgValue, std::string paramName, std::string factoryName);
 
 }  // namespace JSONFactory
 

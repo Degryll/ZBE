@@ -28,7 +28,7 @@ namespace zbe {
 
 /** \brief Factory for JSONGLSLProgramLoader.
  */
-class JSONGLSLProgramLoaderFtry : virtual public Factory {
+class ZBEAPI JSONGLSLProgramLoaderFtry : virtual public Factory {
 public:
 
   /** \brief Builds a JSONGLSLProgramFileLoad.

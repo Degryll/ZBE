@@ -34,7 +34,7 @@ class ParametricActivatorIHFtry;
 
 /** \brief Handler that stores input value to a Value<double>
  */
-class ParametricActivatorIH : public InputHandler {
+class ZBEAPI ParametricActivatorIH : public InputHandler {
 public:
   friend class ParametricActivatorIHFtry;
 

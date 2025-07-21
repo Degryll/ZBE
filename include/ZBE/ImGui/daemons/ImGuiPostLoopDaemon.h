@@ -28,7 +28,7 @@
 namespace zbe {
 /** \brief Basic post-loop daemon used for SDL
  */
-class ImGuiPostLoopDaemon : public Daemon {
+class ZBEAPI ImGuiPostLoopDaemon : public Daemon {
 public:
   ImGuiPostLoopDaemon(const ImGuiPostLoopDaemon&) = delete; //!< Avoid copy.
   void operator=(const ImGuiPostLoopDaemon&) = delete; //!< Avoid copy.

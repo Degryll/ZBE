@@ -36,7 +36,7 @@ class SDLImageStore;
  * @class SDLWindow
  * @brief Used to create windows using SDL 2.0.
  */
-class SDLWindow {
+class ZBEAPI SDLWindow {
 public:
   SDLWindow(const SDLWindow&) = delete;  //!< Does not make sense to "copy" a SDLWindow.
   void operator=(const SDLWindow&) = delete;  //!< Does not make sense to "copy" a SDLWindow.
@@ -265,7 +265,7 @@ DISABLE_WARNING_POP()
  * @class SDLImageStore
  * @brief Structure for load and store images using SDL.
  */
-class SDLImageStore {
+class ZBEAPI SDLImageStore {
 public:
     SDLImageStore(const SDLImageStore&) = delete; //!< Delete copy constructor
     void operator=(const SDLImageStore&) = delete; //!< Delete assing aperator
@@ -342,7 +342,7 @@ struct ZBE_Font {
  * @class SDLFontStore
  * @brief Structure for load and store TTF fonts using SDL.
  */
-class SDLTextFontStore {
+class ZBEAPI SDLTextFontStore {
 public:
 
     SDLTextFontStore(const SDLTextFontStore&) = delete; //!< Delete copy constructor

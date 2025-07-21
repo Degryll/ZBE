@@ -18,7 +18,7 @@ namespace zbe {
 
 /** \brief This define an avatar that can be drawn.
  */
-class  SingleSprite {
+class  ZBEAPI SingleSprite {
 public:
   using Base = void; //!< Inheritance info.
 

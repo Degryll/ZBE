@@ -24,7 +24,7 @@ namespace zbe {
 
 /** \brief JSON loader for GLSL programss
 */
-class JSONGLSLProgramLoader : public RsrcLoader {
+class ZBEAPI JSONGLSLProgramLoader : public RsrcLoader {
 public:
 
  /* \brief It sets up the window to be used.

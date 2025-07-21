@@ -611,7 +611,7 @@ public:
 
 /** \brief Daemon that does nothing.
  */
-class ConditionalIntDaemon : public Daemon {
+class ZBEAPI ConditionalIntDaemon : public Daemon {
 public:
 
   ConditionalIntDaemon() = default;

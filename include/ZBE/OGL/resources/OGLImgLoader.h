@@ -26,7 +26,7 @@ namespace zbe {
 
 /** \brief OGL implementation of ImgLoader.
 */
-class OGLImgLoader : public RsrcLoader {
+class ZBEAPI OGLImgLoader : public RsrcLoader {
 public:
 
  /** \brief Empty constructor, extension is ".png" by default.
@@ -104,7 +104,7 @@ private:
 
 /** \brief Factory for OGLImgLoader.
  */
-class OGLImgLoaderFtry : virtual public Factory {
+class ZBEAPI OGLImgLoaderFtry : virtual public Factory {
 public:
 
   /** \brief Builds a OGLImgLoader.

@@ -11,7 +11,7 @@
 
 namespace game {
 
-class TtpHandler : public zbe::TimeHandler {
+class ZBEAPI TtpHandler : public zbe::TimeHandler {
 	public:
 	  TtpHandler(const TtpHandler&) = delete;
 	  void operator=(const TtpHandler&) = delete;

@@ -21,7 +21,7 @@ namespace zbe {
  *  Store the number of errors (calls to setError) and the text for the first
  *  error.
  */
-class SysError {
+class ZBEAPI SysError {
 public:
 
   /** \brief Set a new error

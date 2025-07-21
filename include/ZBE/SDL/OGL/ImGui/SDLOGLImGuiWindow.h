@@ -36,7 +36,7 @@ namespace zbe {
  * @class ZBEAPI SDLOGLWindow
  * @brief Used to create windows using SDL 2.0. with OpenGL support.
  */
-class SDLOGLImGuiWindow : public SDLOGLWindow {
+class ZBEAPI SDLOGLImGuiWindow : public SDLOGLWindow {
 public:
   SDLOGLImGuiWindow(const char* title, int x, int y, int width, int height, Uint32 window_flags = 0, Uint32 rederer_flags = 0) : SDLOGLWindow(title, x, y, width, height, window_flags | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI, rederer_flags), io() {
     const char* glsl_version = "#version 130";

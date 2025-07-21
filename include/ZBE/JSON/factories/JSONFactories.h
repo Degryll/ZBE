@@ -28,7 +28,7 @@ namespace zbe {
 
 /** \brief Define the interface of a Factory.
  */
-class JSONFactories : public Daemon {
+class ZBEAPI JSONFactories : public Daemon {
 public:
   ~JSONFactories() = default;
 

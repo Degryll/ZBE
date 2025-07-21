@@ -23,7 +23,7 @@ namespace zbe {
 /** \brief Implements the interface of an object that interacts actively with other objects.
  *  Please, if inherit from this class, use APO for naming.
  */
-class SimpleActivePhysicalObject : virtual public ActivePhysicalObject, public SimplePhysicalObject {
+class ZBEAPI SimpleActivePhysicalObject : virtual public ActivePhysicalObject, public SimplePhysicalObject {
 public:
   /** \brief Creates an Active physical object with two lists, his actuators and the collisionables.
    *  \param actuatorsList Index of a list of actuators. This actuators will be called when this object collide.

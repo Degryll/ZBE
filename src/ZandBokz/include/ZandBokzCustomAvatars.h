@@ -24,7 +24,7 @@
 namespace zandbokz {
 DISABLE_WARNING_PUSH(4250)
 
-class MovingSphereAvt : public zbe::SAvatar<zbe::MovingSphere>, zbe::AvatarImp  {
+class ZBEAPI MovingSphereAvt : public zbe::SAvatar<zbe::MovingSphere>, zbe::AvatarImp  {
 public:
   void setupEntity(std::shared_ptr<zbe::Entity> entity, uint64_t centeridx, uint64_t radiusidx, uint64_t velocityidx) {
     zbe::AvatarImp::setupEntity(entity);
@@ -116,7 +116,7 @@ private:
 //   std::shared_ptr<ContextTime> cTime;
 // };
 
-class MovingSphereAvtBldr : public zbe::Funct<std::shared_ptr<zbe::SAvatar<zbe::MovingSphere>>, std::shared_ptr<zbe::Entity>> {
+class ZBEAPI MovingSphereAvtBldr : public zbe::Funct<std::shared_ptr<zbe::SAvatar<zbe::MovingSphere>>, std::shared_ptr<zbe::Entity>> {
 public:
   std::shared_ptr<zbe::SAvatar<zbe::MovingSphere>> operator()(std::shared_ptr<zbe::Entity> ent) override {
     std::shared_ptr<MovingSphereAvt> avt = std::make_shared<MovingSphereAvt>();
@@ -139,7 +139,7 @@ private:
 // Se está usando esta copia y no la de customs avatars. Resulta que funciona...
 // así que habrá que ver diferencias con la de custom avatars, porque MovingTriangle3DAvt
 // Está basada en aquella y, no en esta, y no funciona.
-class MovingSphereAvtBldrFtry : public zbe::Factory {
+class ZBEAPI MovingSphereAvtBldrFtry : public zbe::Factory {
 public:
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;

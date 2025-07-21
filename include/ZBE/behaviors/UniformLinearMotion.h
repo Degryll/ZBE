@@ -30,7 +30,7 @@
 namespace zbe {
 /*TODO make this a template.
 template<unsigned s>
-class UniformLinearMotion : virtual public Behavior<Vector<s>, Vector<s> > { ... }
+class ZBEAPI UniformLinearMotion : virtual public Behavior<Vector<s>, Vector<s> > { ... }
 We have tried this but:
 "void apply(std::shared_ptr<MAvatar<Vector<s>, Vector<s> > > avatar) {
   std::shared_ptr<Vector<s> > p = avatar->get<1, Vector<s> >();
@@ -41,7 +41,7 @@ std::shared_ptr<Vector<s> > p = avatar->get<1, Vector<s> >();
 
 /** \brief Define the minimal functions of every behavior.
  */
-class UniformLinearMotion2D : virtual public Behavior<Vector<2>, Vector<2> > {
+class ZBEAPI UniformLinearMotion2D : virtual public Behavior<Vector<2>, Vector<2> > {
   public:
 
     /** \brief Virtual destructor.
@@ -61,7 +61,7 @@ class UniformLinearMotion2D : virtual public Behavior<Vector<2>, Vector<2> > {
 
 /** \brief Define the minimal functions of every behavior.
  */
-class UniformLinearMotion3D : virtual public Behavior<Vector3D, Vector3D > {
+class ZBEAPI UniformLinearMotion3D : virtual public Behavior<Vector3D, Vector3D > {
   public:
 
     /** \brief Virtual destructor.
@@ -82,7 +82,7 @@ class UniformLinearMotion3D : virtual public Behavior<Vector3D, Vector3D > {
 
 /** \brief Define the minimal functions of every behavior.
  */
-class RelativeUniformLinearMotion3D : virtual public Behavior<Vector3D, Vector3D, Vector3D > {
+class ZBEAPI RelativeUniformLinearMotion3D : virtual public Behavior<Vector3D, Vector3D, Vector3D > {
   public:
     /** \brief Virtual destructor.
      */
@@ -116,7 +116,7 @@ class RelativeUniformLinearMotion3D : virtual public Behavior<Vector3D, Vector3D
 
 /** \brief Define the minimal functions of every behavior.
  */
-class FixedUniformLinearMotion3D : virtual public Behavior<Vector3D > {
+class ZBEAPI FixedUniformLinearMotion3D : virtual public Behavior<Vector3D > {
 public:
   /** \brief Virtual destructor.
    */
@@ -139,7 +139,7 @@ private:
   Vector3D vvel;
 };
 
-class UniformLinearMotion2DOnPlane : virtual public Behavior<float, Vector2D, Vector2D, Vector3D, Vector3D, Vector3D, Vector3D, Vector3D> {
+class ZBEAPI UniformLinearMotion2DOnPlane : virtual public Behavior<float, Vector2D, Vector2D, Vector3D, Vector3D, Vector3D, Vector3D, Vector3D> {
 public:
   virtual ~UniformLinearMotion2DOnPlane() = default;
 
@@ -183,7 +183,7 @@ public:
 
 /** \brief Factory for FixedUniformLinearMotion3DFtry.
  */
-class FixedUniformLinearMotion3DFtry : virtual public Factory {
+class ZBEAPI FixedUniformLinearMotion3DFtry : virtual public Factory {
 public:
   /** \brief Builds a FixedUniformLinearMotion3D.
    *  \param name Name for the created FixedUniformLinearMotion3D.
@@ -238,7 +238,7 @@ private:
 };
 
 
-class RelativeUniformLinearMotion3DFtry : virtual public Factory {
+class ZBEAPI RelativeUniformLinearMotion3DFtry : virtual public Factory {
 public:
 
   void create(std::string name, uint64_t) override {

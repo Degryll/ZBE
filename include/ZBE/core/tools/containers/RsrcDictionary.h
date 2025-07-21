@@ -108,7 +108,7 @@ using NameRsrcDictionary = RsrcDictionary<uint64_t>;
 
 /** \brief A class ZBEAPI that translate a local resource id to a globaly accesible resource id.
  */
-class IdRsrcDictionary {
+class ZBEAPI IdRsrcDictionary {
   public:
     IdRsrcDictionary(IdRsrcDictionary const&)    = delete;  //!< Needed for singleton.
     void operator=(IdRsrcDictionary const&) = delete;  //!< Needed for singleton.

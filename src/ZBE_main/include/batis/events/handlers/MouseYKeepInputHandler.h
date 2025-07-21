@@ -18,7 +18,7 @@
 
 namespace batis {
 
-class MouseYKeepInputHandler : public zbe::InputHandler {
+class ZBEAPI MouseYKeepInputHandler : public zbe::InputHandler {
 	public:
 	  MouseYKeepInputHandler(const MouseYKeepInputHandler&) = delete;
 	  void operator=(const MouseYKeepInputHandler&) = delete;

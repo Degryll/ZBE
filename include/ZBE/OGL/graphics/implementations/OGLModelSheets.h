@@ -94,7 +94,7 @@ DISABLE_WARNING_POP()
 
 /** \brief Interface capable of generate a sprite from a given entity.
  */
-class SpriteOGLModelSheet : public OGLModelSheet<uint64_t, Vector2D, Vector2D> { // TODO llevar esto tipos al JSONGraphicsLoaders (linea 74)
+class ZBEAPI SpriteOGLModelSheet : public OGLModelSheet<uint64_t, Vector2D, Vector2D> { // TODO llevar esto tipos al JSONGraphicsLoaders (linea 74)
 public:
   SpriteOGLModelSheet(const SpriteOGLModelSheet&) = delete;
   SpriteOGLModelSheet operator=(const SpriteOGLModelSheet&) = delete;
@@ -169,7 +169,7 @@ private:
 /** \brief Interface capable of generate a sprite from a given entity.
  */
 
-class ParametricSpriteOGLModelSheet : public OGLModelSheet<uint64_t, int64_t, int64_t, Vector2D, Vector2D> { // TODO llevar esto tipos al JSONGraphicsLoaders (linea 74)
+class ZBEAPI ParametricSpriteOGLModelSheet : public OGLModelSheet<uint64_t, int64_t, int64_t, Vector2D, Vector2D> { // TODO llevar esto tipos al JSONGraphicsLoaders (linea 74)
 public:
   ParametricSpriteOGLModelSheet(const ParametricSpriteOGLModelSheet&) = delete;
   ParametricSpriteOGLModelSheet operator=(const ParametricSpriteOGLModelSheet&) = delete;

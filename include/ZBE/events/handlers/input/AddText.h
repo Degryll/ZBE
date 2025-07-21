@@ -25,7 +25,7 @@ namespace zbe {
 
 /** \brief Handler that stores input value to a Value<double>
  */
-class AddText : public TextHandler {
+class ZBEAPI AddText : public TextHandler {
 public:
   AddText(const AddText&) = delete; //!< Deleted copy constructor.
   void operator=(const AddText&) = delete; //!< Deleted operator.

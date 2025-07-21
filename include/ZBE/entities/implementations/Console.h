@@ -25,7 +25,7 @@ namespace zbe {
 
 /** \brief A simple active game element in 2D..
  */
-class Console : public zbe::Entity {
+class ZBEAPI Console : public zbe::Entity {
 public:
   Console(uint64_t fontId) {
     auto fid = std::make_shared<zbe::SimpleValue<uint64_t> >(fontId);

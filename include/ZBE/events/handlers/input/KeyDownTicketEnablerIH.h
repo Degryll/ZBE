@@ -33,7 +33,7 @@ class KeyDownTicketEnablerIHFtry;
 
 /** \brief Handler that stores input value to a Value<double>
  */
-class KeyDownTicketEnablerIH : public InputHandler {
+class ZBEAPI KeyDownTicketEnablerIH : public InputHandler {
 public:
   friend class KeyDownTicketEnablerIHFtry;
 

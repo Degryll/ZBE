@@ -256,7 +256,7 @@ bool gravityCenterMovingPointMovingTriangle(std::shared_ptr<zbe::MovingPoint3D> 
   return true;
 }
 
-class GravityCenterMovingPointMovingTriangleFunctor {
+class ZBEAPI GravityCenterMovingPointMovingTriangleFunctor {
 public:
   bool operator()(std::shared_ptr<zbe::MovingPoint3D> arg1, std::shared_ptr<zbe::MovingTriangle3D> arg2, uint64_t time, FGravityData &data){
     return gravityCenterMovingPointMovingTriangle(arg1, arg2, time, data);
@@ -279,7 +279,7 @@ public:
 
 using FGravity3DOverloaded = zbe::overloaded<NotFGravityFunctor<zbe::MovingPoint3D,zbe::MovingPoint3D>, GravityCenterMovingPointMovingTriangleFunctor, NotFGravityFunctor<zbe::MovingTriangle3D,zbe::MovingPoint3D>, NotFGravityFunctor<zbe::MovingTriangle3D, zbe::MovingTriangle3D>>;
 
-class FGravity3DSelector : public zbe::InteractionSelector<FGravityData, FGravity3DOverloaded, zbe::MovingPoint3D, zbe::MovingTriangle3D> {
+class ZBEAPI FGravity3DSelector : public zbe::InteractionSelector<FGravityData, FGravity3DOverloaded, zbe::MovingPoint3D, zbe::MovingTriangle3D> {
 public:
   virtual ~FGravity3DSelector() = default;
 protected:
@@ -317,7 +317,7 @@ using IEGFGFtry = zbe::InteractionEventGeneratorFtry<FGravity3DSelector, FGravit
 
 // -----------
 
-class PlatformTrait : public zbe::Funct<void, zbe::Reactor<zbe::CollisionData3D, Platform>*, zbe::CollisionData3D> {
+class ZBEAPI PlatformTrait : public zbe::Funct<void, zbe::Reactor<zbe::CollisionData3D, Platform>*, zbe::CollisionData3D> {
 public:
   PlatformTrait(Platform p) : p(p) {}
 
@@ -331,7 +331,7 @@ private:
   Platform p;
 };
 
-class PlatformTraitBldr : public zbe::Funct<std::shared_ptr<zbe::Funct<void, zbe::Reactor<zbe::CollisionData3D, Platform>*, zbe::CollisionData3D>>, std::shared_ptr<zbe::Entity>> {
+class ZBEAPI PlatformTraitBldr : public zbe::Funct<std::shared_ptr<zbe::Funct<void, zbe::Reactor<zbe::CollisionData3D, Platform>*, zbe::CollisionData3D>>, std::shared_ptr<zbe::Entity>> {
 public:
   std::shared_ptr<zbe::Funct<void, zbe::Reactor<zbe::CollisionData3D, Platform>*, zbe::CollisionData3D>> operator()(std::shared_ptr<zbe::Entity> ent) override {
     // TODO deshaz esta barbarie
@@ -351,7 +351,7 @@ private:
   std::array<uint64_t, 3> idx;
 };
 
-class PlatformTraitBldrFtry : public zbe::Factory {
+class ZBEAPI PlatformTraitBldrFtry : public zbe::Factory {
 public:
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
