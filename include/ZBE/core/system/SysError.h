@@ -32,14 +32,14 @@ public:
    * \param errorString the description of the error
    * \sa getNErrors() and getFirstErrorString()
    */
-  static ZBEAPI void setError(std::string errorString);
+  static void setError(std::string errorString);
 
   /** \brief Return the number of calls to setError.
    *
    * \return the number of errors so far.
    * \sa setError() and clear()
    */
-  static ZBEAPI int getNErrors();
+  static int getNErrors();
 
   /** \brief Return the error message of the first error.
    *
@@ -49,11 +49,11 @@ public:
    * \return the first (if any) error string.
    * \sa setError() and clear()
    */
-  static ZBEAPI std::string getFirstErrorString();
+  static std::string getFirstErrorString();
 
   /** \brief Set error counter to 0 and empty the error string.
    */
-  static ZBEAPI void clear();
+  static void clear();
 
 private:
 

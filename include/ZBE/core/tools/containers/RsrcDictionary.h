@@ -32,7 +32,7 @@ class RsrcDictionary {
     /** \brief Singleton implementation.
      *  \return The only instance of the RsrcDictionary.
      */
-    static ZBEAPI RsrcDictionary& getInstance() {
+    static RsrcDictionary& getInstance() {
       static RsrcDictionary instance;
       return (instance);
     }
@@ -116,7 +116,7 @@ class ZBEAPI IdRsrcDictionary {
     /** \brief Singleton implementation.
      *  \return The only instance of the IdRsrcDictionary.
      */
-    static ZBEAPI IdRsrcDictionary& getInstance() {
+    static IdRsrcDictionary& getInstance() {
       static IdRsrcDictionary instance;
       return (instance);
     }

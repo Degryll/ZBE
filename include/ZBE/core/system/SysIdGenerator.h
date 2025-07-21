@@ -25,7 +25,7 @@ public:
   /** \brief Each time it's called return an unique id.
    * \return A new Id.
    */
-  static ZBEAPI uint64_t getId();
+  static uint64_t getId();
 
 private:
     SysIdGenerator() {};
