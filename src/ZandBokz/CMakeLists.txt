@@ -16,6 +16,9 @@ add_executable(ZANDBOKZ
 #   )
 # ENDIF()
 
+set_target_properties(ZANDBOKZ PROPERTIES ENABLE_EXPORTS OFF)
+set_target_properties(ZANDBOKZ PROPERTIES IMPORT_LIBRARY "")
+
 target_link_libraries(ZANDBOKZ
 PRIVATE ZBE_LIB
 # PRIVATE png #TODO ver si funciona sin este
