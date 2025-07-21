@@ -4,8 +4,7 @@
 #include <cstdint>
 #include <vector>
 
-#define GLEW_STATIC
-#include <GL/glew.h>
+#include "ZBE/OGL/OglStaticGlew.h"
 
 #include "ZBE/core/tools/containers/RsrcDictionary.h"
 

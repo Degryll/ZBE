@@ -2,9 +2,7 @@
 #include <iostream>
 #include <vector>
 
-
-#define GLEW_STATIC
-#include <GL/glew.h>
+#include "ZBE/OGL/OglStaticGlew.h"
 
 std::string FragmentShaderCode =
 "#version 330 core\n\

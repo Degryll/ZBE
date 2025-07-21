@@ -1,7 +1,6 @@
 #pragma once
 
-#define GLEW_STATIC
-#include <GL/glew.h>
+#include "ZBE/OGL/OglStaticGlew.h"
 //#include <GLFW/glfw3.h>
 
 class Shaders

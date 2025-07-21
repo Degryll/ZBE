@@ -14,8 +14,7 @@
 //#include <SDL_ttf.h>
 //
 // Por si se recuperase este código
-// #define GLEW_STATIC
-//#include <GL/glew.h>
+//#include "ZBE/OGL/OglStaticGlew.h"
 //
 //#include <chaiscript/chaiscript.hpp>
 //

@@ -29,8 +29,9 @@ public:
 
 private:
     SysIdGenerator() {};
-
+DISABLE_DLL_WARN
     static std::atomic<uint64_t> id;
+DISABLE_WARNING_POP()
 };
 
 }  // namespace zbe
