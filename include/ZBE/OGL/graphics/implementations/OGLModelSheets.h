@@ -154,6 +154,7 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
   NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();
   SprtDef spriteDefintion;
   GLuint vao;
@@ -164,6 +165,7 @@ private:
   const GLvoid* offset;
 
   std::shared_ptr<SDLOGLWindow> window;
+DISABLE_WARNING_POP()
 };
 
 /** \brief Interface capable of generate a sprite from a given entity.

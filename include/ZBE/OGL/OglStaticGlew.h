@@ -9,6 +9,8 @@
  *  - OGLTextureStore:
  */
 
+#pragma once
+
 #ifndef ZBE_OGL_OGLSTATICGLEW_H_
 #define ZBE_OGL_OGLSTATICGLEW_H_
 
