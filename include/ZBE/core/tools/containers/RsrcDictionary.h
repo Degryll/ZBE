@@ -126,7 +126,7 @@ class ZBEAPI IdRsrcDictionary {
      *  \param global Id of the resource in the adecuate store. (globaly accesible)
      *  \sa get(string name)
      */
-    void ZBEAPI insert(uint64_t local, uint64_t global) {
+    void insert(uint64_t local, uint64_t global) {
       auto it = l.find(local);
       if (it != l.end()) {
         SysError::setError(std::string("Local id ") + std::to_string(local) + std::string(" already in use."));
@@ -142,7 +142,7 @@ class ZBEAPI IdRsrcDictionary {
      *  \return The resource id.
      *  \sa insert
      */
-    uint64_t ZBEAPI get(uint64_t local) {
+    uint64_t get(uint64_t local) {
       auto it = l.find(local);
       if (it == l.end()) {
         SysError::setError("Resource id not found:" + std::to_string(local));
@@ -156,7 +156,7 @@ class ZBEAPI IdRsrcDictionary {
      *  \param local id of the entry.
      *  \return The entry value.
      */
-    uint64_t ZBEAPI remove(uint64_t local) {
+    uint64_t remove(uint64_t local) {
       auto it = l.find(local);
       if (it == l.end()) {
         SysError::setError("Resource id not found:" + std::to_string(local));
@@ -177,7 +177,9 @@ class ZBEAPI IdRsrcDictionary {
   private:
     IdRsrcDictionary() : l() {};  //!< Needed for singleton.
 
+DISABLE_DLL_WARN
     std::map<uint64_t, uint64_t> l;  //!< Map that associates resources with ids.
+DISABLE_WARNING_POP()
 };
 
 

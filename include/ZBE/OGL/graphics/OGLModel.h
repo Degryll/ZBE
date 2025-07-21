@@ -12,11 +12,10 @@
 
 #include <cstdint>
 #include <vector>
-#define GLEW_STATIC
 #include <GL/glew.h>
-
 #include <glm/mat4x4.hpp>
 
+#include "ZBE/OGL/OglStaticGlew.h"
 #include "ZBE/core/system/system.h"
 
 namespace zbe {

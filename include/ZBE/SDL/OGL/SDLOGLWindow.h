@@ -17,8 +17,7 @@
 #include <vector>
 #include <tuple>
 
-#define GLEW_STATIC
-#include <GL/glew.h>
+#include "ZBE/OGL/OglStaticGlew.h"
 
 #include "ZBE/SDL/sdl_warning_suppressor.h"
 
