@@ -10,7 +10,7 @@
  */
 
 #ifndef ZBE_OGL_OGLSTATICGLEW_H_
-#define ZBE_OGL_OGLSTATICGLEW_H_h
+#define ZBE_OGL_OGLSTATICGLEW_H_
 
   #define GLEW_STATIC
   #include <GL/glew.h>

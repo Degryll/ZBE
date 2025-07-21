@@ -40,7 +40,9 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
   std::shared_ptr<ContextTime> parent;
+DISABLE_WARNING_POP()
   uint64_t _getTotalTime() override {
     return parent->getTotalTime() - lostTime;
   }
