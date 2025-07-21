@@ -3,7 +3,7 @@ find_package(PNG REQUIRED)
 find_package(OpenGL REQUIRED)
 # set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
-add_library(ZBE_LIB 
+add_library(ZBE_LIB SHARED
   JSON/JSONFactory.cpp
   JSON/graphics/JSONGraphicsLoaders.cpp
   JSON/resources/JSONOGLModelSheetLoaders.cpp
