@@ -15,7 +15,7 @@
   #define GLEW_STATIC
   #include <GL/glew.h>
 
-#elif
+#else
 
   #include <GL/glew.h>
 
