@@ -96,7 +96,6 @@ endif()
 # so that it behaves well with MSVC's debugger, and we can run the target from visual studio
 if(MSVC)
   get_all_installable_targets(all_targets)
-  add_compile_options(/wd4251)
   message("all_targets=${all_targets}")
   set_target_properties(${all_targets} PROPERTIES VS_DEBUGGER_ENVIRONMENT "PATH=$(VC_ExecutablePath_x64);%PATH%")
 endif()

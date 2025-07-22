@@ -70,8 +70,10 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
   GLuint gProgramID;
   std::shared_ptr<Camera> cam;
+DISABLE_WARNING_POP()
 };
 
 /** \brief Interface for all daemons. Daemons are responsible for execute automated processes. Basically Daemons rules the world.
