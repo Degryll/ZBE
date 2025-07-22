@@ -98,6 +98,7 @@ if(MSVC)
   get_all_installable_targets(all_targets)
   message("all_targets=${all_targets}")
   set_target_properties(${all_targets} PROPERTIES VS_DEBUGGER_ENVIRONMENT "PATH=$(VC_ExecutablePath_x64);%PATH%")
+  add_compile_options(/bigobj)
 endif()
 
 # set the startup project for the "play" button in MSVC

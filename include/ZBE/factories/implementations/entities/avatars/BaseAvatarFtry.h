@@ -128,7 +128,7 @@ void BaseAvatarFtry<T, Ts...>::setup(std::string name, uint64_t cfgId) {
       return;
     }
 
-    std::array<uint64_t, expectedIndexes> idxArr;
+    std::array<uint64_t, expectedIndexes> idxArr{};
     size_t i = 0;
     for (auto& idxName : idxCfg.items()) {
       idxArr[i] = dict.get(idxName.value().get<std::string>());
