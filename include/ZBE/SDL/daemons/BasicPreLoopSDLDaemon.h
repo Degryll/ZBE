@@ -57,8 +57,10 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
   std::shared_ptr<zbe::SDLWindow> window;
   zbe::SDLEventDispatcher& sdlEventDist;
+DISABLE_WARNING_POP()
 };
 
 }  // namespace zbe
