@@ -316,13 +316,13 @@ public:
   }
 
 private:
-
+DISABLE_DLL_WARN
   RsrcStore<nlohmann::json>& configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<Funct<void>>& mainRsrc = RsrcStore<Funct<void>>::getInstance();
   RsrcStore<EntityFileBldr>& specificRsrc = RsrcStore<EntityFileBldr>::getInstance();
   RsrcStore<Funct<void, std::shared_ptr<Entity>>>& extraBldrStore = RsrcStore<Funct<void, std::shared_ptr<Entity>>>::getInstance();
   RsrcStore<ContextTime>& cTimeRsrc = RsrcStore<ContextTime>::getInstance();
-
+DISABLE_WARNING_POP()
 };
 
 
@@ -941,6 +941,7 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
   using FunctionType = Funct<void, std::shared_ptr<Entity>>;
   using ListType = TicketedForwardList<typename AvatarBldr<AvtVoid, void>::AvtBaseType>;
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
@@ -948,6 +949,7 @@ private:
   RsrcStore<AvatarBldr<AvtVoid, void>>& specificRsrc = RsrcStore<AvatarBldr<AvtVoid, void>>::getInstance();
   RsrcStore<ListType>& listRsrc = RsrcStore<ListType>::getInstance();
   RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
+DISABLE_WARNING_POP()
 };
 
 
@@ -1537,13 +1539,13 @@ public:
   }
 
 private:
-
+DISABLE_DLL_WARN
   RsrcStore<nlohmann::json>& configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<Funct<void>>& mainRsrc = RsrcStore<Funct<void>>::getInstance();
   RsrcStore<EntityBldr>& specificRsrc = RsrcStore<EntityBldr>::getInstance();
   RsrcStore<Funct<void, std::shared_ptr<Entity>>>& extraBldrStore = RsrcStore<Funct<void, std::shared_ptr<Entity>>>::getInstance();
   RsrcStore<ContextTime>& cTimeRsrc = RsrcStore<ContextTime>::getInstance();
-
+DISABLE_WARNING_POP()
 };
 
 class ZBEAPI EntitySetterFtry : virtual public Factory {
@@ -1578,6 +1580,7 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
 
   RsrcDictionary<int64_t>& intStore = RsrcDictionary<int64_t>::getInstance();
@@ -1602,7 +1605,7 @@ private:
   RsrcStore<Value<std::vector<std::string> > > &valueVSRsrc = RsrcStore<Value<std::vector<std::string> > >::getInstance();
   RsrcDictionary<Vector2D> &literalStoreV2D = RsrcDictionary<Vector2D>::getInstance();
   RsrcDictionary<Vector3D> &literalStoreV3D = RsrcDictionary<Vector3D>::getInstance();
-
+DISABLE_WARNING_POP()
 DISABLE_WARNING_PUSH(4127) // warning C4127: conditional expression is constant. IS NOT
   template <typename T>
   inline void parse(nlohmann::json cfg, RsrcStore<Value<T> > &valueRsrc, RsrcDictionary<T> &literalStore, std::shared_ptr<EntitySetter> es) {
@@ -2297,11 +2300,13 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
   std::shared_ptr<Funct<std::shared_ptr<TimeHandler>, std::shared_ptr<Entity>>> handlerBuilder;
   std::shared_ptr<TimeEventGenerator> teg;
   uint64_t time;
   uint64_t ticketId;
   bool enabled;
+DISABLE_WARNING_POP()
 };
 
 class ZBEAPI EntityTimerBldrFtry : public Factory {
@@ -2365,6 +2370,7 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
   using HandlerBldrType = Funct<std::shared_ptr<TimeHandler>, std::shared_ptr<Entity>>;
   RsrcStore<nlohmann::json>& configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<Funct<void, std::shared_ptr<Entity>>>& mainRsrc = RsrcStore<Funct<void, std::shared_ptr<Entity>>>::getInstance();
@@ -2374,6 +2380,7 @@ private:
   RsrcStore<TimeEventGenerator>& tegRsrc = RsrcStore<TimeEventGenerator>::getInstance();
   RsrcStore<HandlerBldrType>& handlerBldrRsrc = RsrcStore<HandlerBldrType>::getInstance();
   RsrcDictionary<uint64_t> &uintDict = RsrcDictionary<uint64_t>::getInstance();
+DISABLE_WARNING_POP()
 };
 
 }  // namespace zbe
