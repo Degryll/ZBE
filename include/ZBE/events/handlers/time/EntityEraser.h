@@ -58,7 +58,9 @@ public:
   	}
 
   private:
+DISABLE_DLL_WARN
     std::shared_ptr<zbe::Entity> e;
+DISABLE_WARNING_POP()
 };
 
 template<typename IData, typename Trait>
