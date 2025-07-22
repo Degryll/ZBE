@@ -57,8 +57,10 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
   std::deque<std::shared_ptr<Funct<void, std::shared_ptr<Entity>>>> builders;
   std::shared_ptr<ContextTime> contextTime;
+DISABLE_WARNING_POP()
 };
 
 template <typename T>
@@ -221,7 +223,7 @@ DISABLE_WARNING_PUSH(4127) // warning C4127: conditional expression is constant.
   }
 
 DISABLE_WARNING_POP()
-
+DISABLE_DLL_WARN
   std::deque<std::shared_ptr<Funct<void, std::shared_ptr<Entity>>>> builders;
   std::shared_ptr<ContextTime> contextTime;
   nlohmann::json cfgs;
@@ -243,7 +245,7 @@ DISABLE_WARNING_POP()
   RsrcStore<Value<std::vector<std::string> > > &valueVSRsrc = RsrcStore<Value<std::vector<std::string> > >::getInstance();
   RsrcDictionary<Vector2D> &literalStoreV2D = RsrcDictionary<Vector2D>::getInstance();
   RsrcDictionary<Vector3D> &literalStoreV3D = RsrcDictionary<Vector3D>::getInstance();
-
+DISABLE_WARNING_POP()
 };
 
 

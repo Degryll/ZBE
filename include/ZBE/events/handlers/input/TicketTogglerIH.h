@@ -57,9 +57,10 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
   TicketTogglerIH() : ticket(nullptr) {}
-
   std::shared_ptr<Ticket> ticket;
+DISABLE_WARNING_POP()
 };
 
 class ZBEAPI TicketTogglerIHFtry : public Factory {

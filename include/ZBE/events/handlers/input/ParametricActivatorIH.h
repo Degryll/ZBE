@@ -66,9 +66,11 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
   ParametricActivatorIH() : ticket(nullptr), parametric(nullptr) {}
   std::shared_ptr<Ticket> ticket;
   std::shared_ptr<Parametric<float> > parametric;
+DISABLE_WARNING_POP()
 };
 
 class ZBEAPI ParametricActivatorIHFtry : public Factory {
