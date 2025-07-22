@@ -252,7 +252,9 @@ class ZBEAPI GravityMotion3D : virtual public zbe::Behavior<zbe::Vector3D, zbe::
     }
 
   private:
+DISABLE_DLL_WARN
     zbe::Vector3D g;
+DISABLE_WARNING_POP()
 };
 
 class ZBEAPI GravityMotion3DFtry : virtual public zbe::Factory {
@@ -322,7 +324,9 @@ class ZBEAPI FollowTargetBvr : virtual public zbe::Behavior<zbe::Vector3D, zbe::
     }
 
   private:
+DISABLE_DLL_WARN
     zbe::Vector3D g;
+DISABLE_WARNING_POP()
 };
 
 class ZBEAPI FollowTargetBvrFtry : virtual public zbe::Factory {
@@ -457,9 +461,11 @@ class ZBEAPI NonRealGravityVelSetterBhv : virtual public zbe::Behavior<zbe::Vect
     }
 
   private:
-    double radius;
+DISABLE_DLL_WARN
+  double radius;
     double ratio;
     std::shared_ptr<zbe::TicketedForwardList<zbe::SAvatar<zbe::Vector3D>>> attractors;
+DISABLE_WARNING_POP()
 };
 
 class ZBEAPI NonRealGravityVelSetterBhvFtry : virtual public zbe::Factory {

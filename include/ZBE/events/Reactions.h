@@ -210,7 +210,9 @@ std::shared_ptr<Funct<void, IData, std::array<std::shared_ptr<Value<ValueType>>,
    this->dest = dest;
  }
 private:
+DISABLE_DLL_WARN
  std::array<uint64_t, n> dest {};
+DISABLE_WARNING_POP()
 };
 
 template<typename IData, typename Trait>

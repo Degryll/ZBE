@@ -121,7 +121,9 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
   std::shared_ptr<zbe::MAvatar<zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D>> avatar;
+DISABLE_WARNING_POP()
 };
 
 class ZBEAPI AttachRedirectionReactionBldr : public zbe::Funct<std::shared_ptr<zbe::Funct<void, zbe::CollisionData3D, Platform>>, std::shared_ptr<zbe::Entity>> {
@@ -136,7 +138,9 @@ public:
     this->idxArr = idxArr;
   }
 private:
+DISABLE_DLL_WARN
   std::array<uint64_t, AttachRedirectionReaction::AVTSIZE> idxArr {};
+DISABLE_WARNING_POP()
 };
 
 class ZBEAPI AttachRedirectionReactionBldrFtry : public zbe::Factory {
@@ -216,7 +220,9 @@ public:
     //}
   }
 private:
+DISABLE_DLL_WARN
   std::shared_ptr<zbe::MAvatar<double, zbe::Vector3D, zbe::Vector3D>> avatar;
+DISABLE_WARNING_POP()
 };
 
 class ZBEAPI ClosestCenterStoreReactionBldr : public zbe::Funct<std::shared_ptr<zbe::Funct<void, FGravityData, Attractor>>, std::shared_ptr<zbe::Entity>> {
@@ -231,7 +237,9 @@ public:
     this->idxArr = idxArr;
   }
 private:
+DISABLE_DLL_WARN
   std::array<uint64_t, ClosestCenterStoreReaction::AVTSIZE> idxArr {};
+DISABLE_WARNING_POP()
 };
 
 class ZBEAPI ClosestCenterStoreReactionBldrFtry : public zbe::Factory {
@@ -317,7 +325,9 @@ public:
     avatar->set<2, zbe::Vector2D>(newPos2D);
   }
 private:
+DISABLE_DLL_WARN
   std::shared_ptr<zbe::MAvatar<zbe::Vector2D, zbe::Vector2D, zbe::Vector3D>> avatar;
+DISABLE_WARNING_POP()
 };
 
 class ZBEAPI AttachRepositionReactionBldr : public zbe::Funct<std::shared_ptr<zbe::Funct<void, zbe::CollisionData3D, Platform>>, std::shared_ptr<zbe::Entity>> {
@@ -332,7 +342,9 @@ public:
     this->idxArr = idxArr;
   }
 private:
+DISABLE_DLL_WARN
   std::array<uint64_t, AttachRepositionReaction::AVTSIZE> idxArr {};
+DISABLE_WARNING_POP()
 };
 
 class ZBEAPI AttachRepositionReactionBldrFtry : public zbe::Factory {
@@ -399,7 +411,9 @@ public:
      avt->set(newVal);
  }
 private:
+DISABLE_DLL_WARN
  std::shared_ptr<zbe::SAvatar<zbe::Vector3D>> avt;
+DISABLE_WARNING_POP()
 };
 
 template<typename IData, typename Trait>

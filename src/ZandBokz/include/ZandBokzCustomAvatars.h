@@ -56,9 +56,11 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
   std::shared_ptr<zbe::Value<zbe::Vector3D> > velocity{};
   std::shared_ptr<zbe::Value<zbe::Vector3D> > center{};
   std::shared_ptr<zbe::Value<double> > radius{};
+DISABLE_WARNING_POP()
 };
 
 // class MovingSphereDerivedVelAvt : public zbe::SAvatar<zbe::MovingSphere>, zbe::AvatarImp  {

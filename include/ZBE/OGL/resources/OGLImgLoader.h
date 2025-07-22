@@ -96,10 +96,11 @@ private:
     std::filesystem::path out = p;
     return (out.replace_extension(dlExt));
   }
-
+DISABLE_DLL_WARN
   zbe::OGLTextureStore* texStore;
   std::shared_ptr<RsrcDefLoader> imgDefLoader;
   std::filesystem::path ext;
+DISABLE_WARNING_POP()
 };
 
 /** \brief Factory for OGLImgLoader.

@@ -572,7 +572,7 @@ private:
   RsrcStore<FunctionType>& mainRsrc = RsrcStore<FunctionType>::getInstance();
 };
 
-class ZBEAPI ZBEAPI MovingSphereAvtBldr : public Funct<std::shared_ptr<SAvatar<MovingSphere>>, std::shared_ptr<Entity>> {
+class ZBEAPI MovingSphereAvtBldr : public Funct<std::shared_ptr<SAvatar<MovingSphere>>, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = SAvatar<MovingSphere>;
   std::shared_ptr<SAvatar<MovingSphere>> operator()(std::shared_ptr<Entity> ent) override {
