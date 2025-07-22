@@ -46,8 +46,10 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
   std::shared_ptr<Daemon> d;
   std::shared_ptr<Ticket> t;
+DISABLE_WARNING_POP()
 };
 
 class ZBEAPI OnceDaemonFtry : public Factory {

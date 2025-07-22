@@ -110,7 +110,9 @@ class ZBEAPI RelativeUniformLinearMotion3D : virtual public Behavior<Vector3D, V
     }
 
   private:
+DISABLE_DLL_WARN
     Vector3D vel;
+DISABLE_WARNING_POP()
 };
 
 
@@ -136,7 +138,9 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
   Vector3D vvel;
+DISABLE_WARNING_POP()
 };
 
 class ZBEAPI UniformLinearMotion2DOnPlane : virtual public Behavior<float, Vector2D, Vector2D, Vector3D, Vector3D, Vector3D, Vector3D, Vector3D> {
@@ -230,11 +234,12 @@ public:
   }
 
 private:
-
+DISABLE_DLL_WARN
   RsrcStore<nlohmann::json>& configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcDictionary<Vector3D>& vecStore = RsrcDictionary<Vector3D>::getInstance();
   RsrcStore<Behavior<Vector3D> >& behaviorRsrc = RsrcStore<Behavior<Vector3D> >::getInstance();
   RsrcStore<FixedUniformLinearMotion3D>& fulm3dRsrc = RsrcStore<FixedUniformLinearMotion3D>::getInstance();
+DISABLE_WARNING_POP()
 };
 
 

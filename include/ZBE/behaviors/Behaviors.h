@@ -236,7 +236,9 @@ public:
     }
 
 private:
-    std::forward_list<uint64_t> list;
+DISABLE_DLL_WARN
+  std::forward_list<uint64_t> list;
+DISABLE_WARNING_POP()
 };
 
 class ZBEAPI TicketDeactivatorBvr : virtual public Behavior<void> {
@@ -255,7 +257,9 @@ public:
     }
 
 private:
+DISABLE_DLL_WARN
     std::forward_list<uint64_t> list;
+DISABLE_WARNING_POP()
 };
 
 // TODO: buscar la forma de hacer un toggler.
