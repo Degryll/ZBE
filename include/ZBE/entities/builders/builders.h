@@ -675,6 +675,7 @@ private:
     }
   }
 
+DISABLE_DLL_WARN
   std::forward_list<std::pair<uint64_t, double>> newDoubleValues;
   std::forward_list<std::pair<uint64_t, std::shared_ptr<Value<double>>>> sharedDoubleValues;
   std::forward_list<std::pair<uint64_t, float>> newFloatValues;
@@ -693,6 +694,7 @@ private:
   std::forward_list<std::pair<uint64_t, std::shared_ptr<Value<std::string>>>> sharedStringValues;
   std::forward_list<std::pair<uint64_t, std::vector<std::string>>> newVStringValues;
   std::forward_list<std::pair<uint64_t, std::shared_ptr<Value<std::vector<std::string>>>>> sharedVStringValues;
+DISABLE_WARNING_POP()
 };
 
 template<template<typename T, typename ...Ts> class AVT, typename T, typename ...Ts>

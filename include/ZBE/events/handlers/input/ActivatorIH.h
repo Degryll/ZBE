@@ -59,8 +59,10 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
   ActivatorIH() : ticket(nullptr) {}
   std::shared_ptr<Ticket> ticket;
+DISABLE_WARNING_POP()
 };
 
 class ZBEAPI ActivatorIHFtry : public Factory {
