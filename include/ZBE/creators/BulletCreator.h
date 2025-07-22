@@ -152,6 +152,7 @@ public:
   }
 
 private:
+DISABLE_DLL_WARN
   using GraphicList = TicketedForwardList<MAvatar<uint64_t, double, double, Vector3D, Vector3D> >;
   using BehaviorList = TicketedForwardList<MAvatar<Vector3D, Vector3D> >;
   double speed;
@@ -172,6 +173,7 @@ private:
   uint64_t time;
   uint64_t ticketId;
   std::shared_ptr<ContextTime> cTime;
+DISABLE_WARNING_POP()
 };
 
 class ZBEAPI BulletCreatorFtry : virtual public Factory {
