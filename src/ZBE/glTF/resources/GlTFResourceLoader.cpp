@@ -149,7 +149,7 @@ namespace zbe {
           size = accessor.type;
         }
 
-        GLuint vaa;
+        GLuint vaa = 0;
         bool valid = false;
         if (attrib.first.compare("POSITION") == 0) { vaa = 0; valid = true;}
         if (attrib.first.compare("NORMAL") == 0) { vaa = 2; valid = true;}
