@@ -104,7 +104,7 @@ add_library(glew STATIC IMPORTED) # or STATIC instead of SHARED
 IF (MSVC)
   target_compile_definitions(ZBE_LIB PRIVATE GLEW_STATIC)
   target_compile_definitions(ZBE_LIB PRIVATE ZBE_EXPORTS)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj")
+  target_compile_options(ZBE_LIB PRIVATE /bigobj)
   set_target_properties(glew PROPERTIES
     IMPORTED_LOCATION "${PROJECT_SOURCE_DIR}/extlibs/glew/2.2.0/windows/x64/glew32s.lib"
     INTERFACE_INCLUDE_DIRECTORIES "${PROJECT_SOURCE_DIR}/extlibs/glew/2.2.0/include"
@@ -159,3 +159,7 @@ get_target_property(defs_privadas ZBE_LIB COMPILE_DEFINITIONS)
 
 message(STATUS "Definiciones ZBE_LIB PUBLICAS: ${defs_publicas}")
 message(STATUS "Definiciones ZBE_LIB PRIVADAS: ${defs_privadas}")
+
+if(MSVC)
+  target_compile_options(ZBE_LIB PRIVATE /bigobj)
+endif()
