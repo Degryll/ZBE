@@ -1,12 +1,5 @@
 cmake_minimum_required(VERSION 3.21)
 
-# Forzar el uso del runtime DLL en MSVC para evitar conflictos de runtime
-if(MSVC)
-  add_compile_options(/bigobj)
-  set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreadedDLL" CACHE STRING "" FORCE)
-  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB")
-endif()
-
 # This template attempts to be "fetch_content"-able
 # so that it works well with tools like CPM or other
 # manual dependency management
@@ -34,6 +27,12 @@ project(
 include(cmake/PreventInSourceBuilds.cmake)
 include(ProjectOptions.cmake)
 
+# Forzar el uso del runtime DLL en MSVC para evitar conflictos de runtime
+if(MSVC)
+  add_compile_options(/bigobj)
+  set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreadedDLL" CACHE STRING "" FORCE)
+  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB")
+endif()
 
 ZBE_setup_options()
 

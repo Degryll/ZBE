@@ -101,7 +101,7 @@ add_library(ZBE::ZBE_LIB ALIAS ZBE_LIB)
 
 add_library(glew STATIC IMPORTED) # or STATIC instead of SHARED
 
-IF (WIN32)
+IF (MSVC)
   target_compile_definitions(ZBE_LIB PRIVATE GLEW_STATIC)
   target_compile_definitions(ZBE_LIB PRIVATE ZBE_EXPORTS)
   target_compile_options(ZBE_LIB PRIVATE /bigobj)
