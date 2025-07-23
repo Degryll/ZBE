@@ -104,7 +104,7 @@ add_library(glew STATIC IMPORTED) # or STATIC instead of SHARED
 IF (MSVC)
   target_compile_definitions(ZBE_LIB PRIVATE GLEW_STATIC)
   target_compile_definitions(ZBE_LIB PRIVATE ZBE_EXPORTS)
-  target_compile_options(ZBE_LIB PRIVATE /bigobj)
+  target_compile_options(ZBE_LIB PRIVATE "$<$<CXX_COMPILER_ID:MSVC>:/bigobj>")
   set_target_properties(glew PROPERTIES
     IMPORTED_LOCATION "${PROJECT_SOURCE_DIR}/extlibs/glew/2.2.0/windows/x64/glew32s.lib"
     INTERFACE_INCLUDE_DIRECTORIES "${PROJECT_SOURCE_DIR}/extlibs/glew/2.2.0/include"
