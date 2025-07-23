@@ -159,7 +159,3 @@ get_target_property(defs_privadas ZBE_LIB COMPILE_DEFINITIONS)
 
 message(STATUS "Definiciones ZBE_LIB PUBLICAS: ${defs_publicas}")
 message(STATUS "Definiciones ZBE_LIB PRIVADAS: ${defs_privadas}")
-
-if(MSVC)
-  target_compile_options(ZBE_LIB PRIVATE /bigobj)
-endif()

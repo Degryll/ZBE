@@ -9,17 +9,10 @@ set_target_properties(ZANDBOKZ PROPERTIES
   RUNTIME_OUTPUT_NAME ZANDBOKZ
 )
 
-# IF (WIN32)
-#   set_target_properties(glew PROPERTIES
-#     IMPORTED_LOCATION "${PROJECT_SOURCE_DIR}/extlibs/glew/2.2.0/windows/x64/glew32s.lib"
-#     INTERFACE_INCLUDE_DIRECTORIES "${PROJECT_SOURCE_DIR}/extlibs/glew/2.2.0/include"
-#   )
-# ELSE()
-#   set_target_properties(glew PROPERTIES
-#     IMPORTED_LOCATION "${PROJECT_SOURCE_DIR}/extlibs/glew/2.2.0/linux/libGLEW.a"
-#     INTERFACE_INCLUDE_DIRECTORIES "${PROJECT_SOURCE_DIR}/extlibs/glew/2.2.0/include"
-#   )
-# ENDIF()
+IF (MSVC)
+  target_compile_options(ZANDBOKZ PRIVATE /bigobj)
+ENDIF()
+
 
 set_target_properties(ZANDBOKZ PROPERTIES ENABLE_EXPORTS OFF)
 set_target_properties(ZANDBOKZ PROPERTIES IMPORT_LIBRARY "")
