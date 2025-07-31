@@ -15,7 +15,7 @@
 #include "ZBE/core/system/system.h"
 
 namespace zbe {
-struct ZBEAPI cn {
+struct cn {
 DISABLE_DLL_WARN
   static const std::string SEPARATOR;
 

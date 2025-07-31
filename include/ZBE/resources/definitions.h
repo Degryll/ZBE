@@ -23,7 +23,7 @@ const Vector2D DFLT_OFFSET = {0.0, 0.0};
  */
 struct ImgDef {
 
-  ZBEAPI ImgDef(uint64_t imgSrcId, uint64_t frameTime, unsigned frameAmount, Region2D region, Vector2D regionOffset, Region2D texCoord, Vector2D texCoordOffset)
+  ImgDef(uint64_t imgSrcId, uint64_t frameTime, unsigned frameAmount, Region2D region, Vector2D regionOffset, Region2D texCoord, Vector2D texCoordOffset)
     : imgSrcId(imgSrcId),
       frameTime(frameTime),
       frameAmount(frameAmount),
@@ -32,8 +32,7 @@ struct ImgDef {
       texCoord(texCoord),
       texCoordOffset(texCoordOffset) {}
 
-
-  ZBEAPI ImgDef(uint64_t imgSrcId = 0) : imgSrcId(imgSrcId), frameTime(SECOND), frameAmount(1), region({0.0,0.0}, {1.0,1.0}), regionOffset({0.0,0.0}), texCoord({0.0,0.0}, {0.0,0.0}), texCoordOffset({0.0,0.0}) {}
+  ImgDef(uint64_t imgSrcId = 0) : imgSrcId(imgSrcId), frameTime(SECOND), frameAmount(1), region({0.0,0.0}, {1.0,1.0}), regionOffset({0.0,0.0}), texCoord({0.0,0.0}, {0.0,0.0}), texCoordOffset({0.0,0.0}) {}
 
   uint64_t imgSrcId;
   uint64_t frameTime;
@@ -49,7 +48,7 @@ struct ImgDef {
  */
 struct SprtDef {
 
-    ZBEAPI SprtDef(ImgDef img = 0, Vector2D drawOffset = DFLT_OFFSET, Vector2D scale = DFLT_SCALE)
+    SprtDef(ImgDef img = 0, Vector2D drawOffset = DFLT_OFFSET, Vector2D scale = DFLT_SCALE)
       : img(img), drawOffset(drawOffset), scale(scale) {}
 
     ImgDef img;

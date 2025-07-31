@@ -53,7 +53,7 @@ bool IntersectionMovingSphereInsideAABB3D(Sphere sphere, Vector3D direction, AAB
  * \param point Stores the point of collision, if any.
  * \return True if there is a collision before the initial value of time, false otherwise.
  */
-bool ZBEAPI IntersectionMovingCircleOutsideAABB2D(Circle circle, Vector2D direction, AABB2D box, uint64_t& time, Point2D& point, Vector2D& normal) {
+bool IntersectionMovingCircleOutsideAABB2D(Circle circle, Vector2D direction, AABB2D box, uint64_t& time, Point2D& point, Vector2D& normal) {
   double r = circle.r;
   AABB2D e = box;
   e.minimum[0] -= r;
@@ -138,7 +138,7 @@ bool ZBEAPI IntersectionMovingCircleOutsideAABB2D(Circle circle, Vector2D direct
   }  // if extended box collision
 }
 
-bool ZBEAPI intersectionMovingRay2DRay2D(Ray2D r1, Ray2D r2, uint64_t& time, Point2D& point, Vector2D& normal) {
+bool intersectionMovingRay2DRay2D(Ray2D r1, Ray2D r2, uint64_t& time, Point2D& point, Vector2D& normal) {
     Vector2D d1 = r1.d;
     Vector2D d2 = r2.d;
     Vector2D n2 = Vector2D{d2.y, -d2.x};
