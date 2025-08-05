@@ -96,7 +96,7 @@ private:
   zbe::Triangle3D baseT{};
 };
 
-class ZBEAPI Triangle3Dto2DCacheBldrFtry : public zbe::Factory {
+class Triangle3Dto2DCacheBldrFtry : public zbe::Factory {
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
     std::shared_ptr<Triangle3Dto2DCacheBldr> t3dt2dcb = std::make_shared<Triangle3Dto2DCacheBldr>();

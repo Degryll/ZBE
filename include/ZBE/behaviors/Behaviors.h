@@ -25,7 +25,7 @@
 
 namespace zbe {
 
-class ZBEAPI CopyVectorResizedBvr : virtual public Behavior<Vector3D, Vector3D, double> {
+class CopyVectorResizedBvr : virtual public Behavior<Vector3D, Vector3D, double> {
 public:
   void apply(std::shared_ptr<MAvatar<Vector3D, Vector3D, double>> avatar) override {
     auto vsize = avatar->get<1, double>();
@@ -220,7 +220,7 @@ private:
   RsrcStore<ValueSetterFixedBvr<T>>& vsfbRsrc = RsrcStore<ValueSetterFixedBvr<T>>::getInstance();
 };
 
-class ZBEAPI TicketActivatorBvr : virtual public Behavior<void> {
+class TicketActivatorBvr : virtual public Behavior<void> {
 public:
 
     virtual ~TicketActivatorBvr() {}
@@ -241,7 +241,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class ZBEAPI TicketDeactivatorBvr : virtual public Behavior<void> {
+class TicketDeactivatorBvr : virtual public Behavior<void> {
 public:
 
     virtual ~TicketDeactivatorBvr() {}
@@ -264,7 +264,7 @@ DISABLE_WARNING_POP()
 
 // TODO: buscar la forma de hacer un toggler.
 
-class ZBEAPI TicketActivatorBvrFtry : public Factory {
+class TicketActivatorBvrFtry : public Factory {
 public:
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
@@ -302,7 +302,7 @@ private:
   RsrcStore<TicketActivatorBvr>& tebRsrc = RsrcStore<TicketActivatorBvr>::getInstance();
 };
 
-class ZBEAPI TicketDeactivatorBvrFtry : public Factory {
+class TicketDeactivatorBvrFtry : public Factory {
 public:
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;

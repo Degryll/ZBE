@@ -68,7 +68,7 @@ DISABLE_WARNING_POP()
 };
 
 
-class ZBEAPI Sound3DOALPlayerFtry : public Factory {
+class Sound3DOALPlayerFtry : public Factory {
 public:
   void create(std::string name, uint64_t) override;
 

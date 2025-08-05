@@ -119,7 +119,7 @@ private:
 
 };
 
-class ZBEAPI GlTFResourceLoaderFtry : virtual public Factory {
+class GlTFResourceLoaderFtry : virtual public Factory {
 public:
 
   /** \brief Builds a GlTFResourceLoader.

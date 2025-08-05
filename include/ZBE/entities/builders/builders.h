@@ -38,7 +38,7 @@
 namespace zbe {
 
 
-class ZBEAPI EntityBldr : public Funct<void> {
+class EntityBldr : public Funct<void> {
 public:
   void operator()() override {
     std::shared_ptr<Entity> ent = std::make_shared<Entity>();
@@ -88,7 +88,7 @@ T parseArrayElement(nlohmann::json value, RsrcDictionary<T> &literalStore) {
   }
 }
 
-class ZBEAPI EntityFileBldr : public Funct<void> {
+class EntityFileBldr : public Funct<void> {
 public:
   void operator()() override {
     for(auto cfg : cfgs) {
@@ -250,7 +250,7 @@ DISABLE_WARNING_POP()
 
 
 
-class ZBEAPI EntityFileBldrFtry : public Factory {
+class EntityFileBldrFtry : public Factory {
 public:
 
   void create(std::string name, uint64_t) override {
@@ -504,7 +504,7 @@ private:
 
 };
 
-class ZBEAPI EntitySetter : public Funct<void, std::shared_ptr<Entity>> {
+class EntitySetter : public Funct<void, std::shared_ptr<Entity>> {
 public:
   void operator()(std::shared_ptr<Entity> ent) override {
     addValues<double>(ent, newDoubleValues, sharedDoubleValues);
@@ -904,7 +904,7 @@ template<typename T>
 using SDynamicAvatarBldrFtry = _AvatarBldrFtry<SDynamicAvatar, T>;
 
 
-class ZBEAPI AvatarBldrFtry : public Factory {
+class AvatarBldrFtry : public Factory {
 public:
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
@@ -1493,7 +1493,7 @@ private:
   RsrcStore<ShapeBldr<S, Shapes...>>& specificRsrc = RsrcStore<ShapeBldr<S, Shapes...>>::getInstance();
 };
 
-class ZBEAPI EntityBldrFtry : public Factory {
+class EntityBldrFtry : public Factory {
 public:
 
   void create(std::string name, uint64_t) override {
@@ -1548,7 +1548,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class ZBEAPI EntitySetterFtry : virtual public Factory {
+class EntitySetterFtry : virtual public Factory {
 public:
 
   void create(std::string name, uint64_t) override {
@@ -1733,8 +1733,23 @@ private:
   double module{};
 };
 
+void combineRotations(glm::vec3 originDirection, glm::vec3 originUp, glm::vec3 destinationDirection, glm::vec3 destinationUp, glm::vec3& rotationAxis, double& rotationAngle) {
+    // Crear las matrices de orientación
+    glm::mat4 originOrientation = glm::lookAt(glm::vec3(0.0f), originDirection, originUp);
+    glm::mat4 destinationOrientation = glm::lookAt(glm::vec3(0.0f), destinationDirection, destinationUp);
 
-void ZBEAPI combineRotations(glm::vec3 originDirection, glm::vec3 originUp, glm::vec3 destinationDirection, glm::vec3 destinationUp, glm::vec3& rotationAxis, double& rotationAngle);
+    // Calcular la matriz de rotación
+    glm::mat4 rotationMatrix = glm::inverse(originOrientation) * destinationOrientation;
+
+    rotationMatrix = glm::transpose(rotationMatrix);
+
+    // Convertir la matriz de rotación a un cuaternión
+    glm::quat quaternion = glm::quat_cast(rotationMatrix);
+
+    // Obtener el ángulo y el vector de rotación del cuaternión
+    rotationAngle = 2 * acos(static_cast<double>(quaternion.w));
+    rotationAxis = glm::normalize(glm::vec3(quaternion.x, quaternion.y, quaternion.z));
+}
 
 template<typename T, typename ...Ts>
 struct BuildUpDirToOriBldr : public Funct<std::shared_ptr<Value<Vector3D>>, std::shared_ptr<MAvatar<T, Ts...>>> {
@@ -2277,7 +2292,7 @@ private:
   RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
 };
 
-class ZBEAPI EntityTimerBldr : public Funct<void, std::shared_ptr<Entity>> {
+class EntityTimerBldr : public Funct<void, std::shared_ptr<Entity>> {
 public:
   EntityTimerBldr() = default;
   void operator()(std::shared_ptr<Entity> ent) override {
@@ -2309,7 +2324,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class ZBEAPI EntityTimerBldrFtry : public Factory {
+class EntityTimerBldrFtry : public Factory {
 public:
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;

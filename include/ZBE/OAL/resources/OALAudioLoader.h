@@ -52,7 +52,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class ZBEAPI OALAudioLoaderFtry : public Factory {
+class OALAudioLoaderFtry : public Factory {
 public:
    void create(std::string name, uint64_t) override {
      using namespace std::string_literals;

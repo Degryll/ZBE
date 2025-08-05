@@ -257,7 +257,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class ZBEAPI GravityMotion3DFtry : virtual public zbe::Factory {
+class GravityMotion3DFtry : virtual public zbe::Factory {
 public:
 
   void create(std::string name, uint64_t) override {
@@ -290,7 +290,6 @@ private:
 
   zbe::RsrcStore<nlohmann::json>& configRsrc = zbe::RsrcStore<nlohmann::json>::getInstance();
   zbe::RsrcDictionary<zbe::Vector3D>& vecStore = zbe::RsrcDictionary<zbe::Vector3D>::getInstance();
-  zbe::RsrcStore<zbe::Value<zbe::Vector3D> > &vv3Rsrc = zbe::RsrcStore<zbe::Value<zbe::Vector3D> >::getInstance();
   zbe::RsrcStore<zbe::Behavior<zbe::Vector3D, zbe::Vector3D> >& behaviorRsrc = zbe::RsrcStore<zbe::Behavior<zbe::Vector3D, zbe::Vector3D> >::getInstance();
   zbe::RsrcStore<GravityMotion3D>& gm3dRsrc = zbe::RsrcStore<GravityMotion3D>::getInstance();
 };
@@ -329,7 +328,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class ZBEAPI FollowTargetBvrFtry : virtual public zbe::Factory {
+class FollowTargetBvrFtry : virtual public zbe::Factory {
 public:
 
   void create(std::string name, uint64_t) override {
@@ -468,7 +467,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class ZBEAPI NonRealGravityVelSetterBhvFtry : virtual public zbe::Factory {
+class NonRealGravityVelSetterBhvFtry : virtual public zbe::Factory {
 public:
 
   void create(std::string name, uint64_t) override {

@@ -16,24 +16,15 @@ add_library(ZBE_LIB SHARED
   OAL/resources/OALAudioLoader.cpp
   OAL/system/OALAudioStore.cpp
   OAL/tools/OALUtils.cpp
-  OGL/daemons/ShadersSetter.cpp
   OGL/graphics/implementations/OGLModelSheets.cpp
   SDL/OGL/SDLOGLWindow.cpp
   SDL/OGL/daemons/OGLPreDrawer.cpp
-  SDL/OGL/factories/daemons/OGLPreDrawFtry.cpp
-  SDL/OGL/factories/daemons/OGLPostDrawFtry.cpp
   SDL/daemons/SDLWindowDaemon.cpp
   SDL/daemons/SDLOGLWindowDaemon.cpp
   SDL/daemons/IOPreLoopSDL.cpp
   SDL/drawers/SingleSpriteSDLDrawer.cpp
   SDL/factories/SDLWindowDmnFtry.cpp
-  SDL/factories/SDLOGLWindowDmnFtry.cpp
-  SDL/factories/daemons/BasicPreLoopSDLDaemonFtry.cpp
-  SDL/factories/daemons/BasicPostLoopSDLDaemonFtry.cpp
   SDL/factories/drawers/SingleTextSDLDrawerFtry.cpp
-  SDL/factories/resources/SDLImgLoaderFtry.cpp
-  SDL/factories/system/SDLWindowFtry.cpp
-  SDL/factories/system/SDLSysTimeFtry.cpp
   SDL/factories/system/SDLOGLWindowFtry.cpp
   SDL/starters/SDL_Starter.cpp
   SDL/system/SDLWindow.cpp
@@ -64,7 +55,6 @@ add_library(ZBE_LIB SHARED
   core/tools/time/ContextTime.cpp
   daemons/RsrcLoaderDmn.cpp
   daemons/RsrcFolderLoaderDmn.cpp
-  entities/builders/builders.cpp
   events/handlers/input/TicketTogglerIH.cpp
   events/handlers/input/ParametricActivatorIH.cpp
   events/handlers/input/KeyDownTicketEnablerIH.cpp
@@ -91,7 +81,6 @@ add_library(ZBE_LIB SHARED
   resources/loaders/RsrcFolderLoader.cpp
   resources/loaders/implementations/JSONAppLoader.cpp
   sytem/SystemResources.cpp
-  tools/graphics/CameraFtry.cpp
   tools/graphics/Camera.cpp
 )
 

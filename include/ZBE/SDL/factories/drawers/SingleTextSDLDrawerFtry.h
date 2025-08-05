@@ -30,7 +30,7 @@ namespace zbe {
 
 /** \brief Factory for Single Text SDL Drawer
  */
-class ZBEAPI SingleTextSDLDrawerFtry : virtual public Factory {
+class SingleTextSDLDrawerFtry : virtual public Factory {
 public:
   /** \brief Builds a SingleText SDL Drawer.
    *  \param name Name for the created SingleText SDL Drawer.

@@ -78,7 +78,7 @@ DISABLE_WARNING_POP()
 /** \brief Factory for JSONSimpleOGLModelSheetLoader.
  */
 //template <typename T>
-class ZBEAPI JSONSimpleOGLModelSheetLoaderFtry : virtual public Factory {
+class JSONSimpleOGLModelSheetLoaderFtry : virtual public Factory {
 public:
 
   /** \brief Builds a JSONSimpleOGLModelSheetLoader.
@@ -166,7 +166,7 @@ DISABLE_WARNING_POP()
 /** \brief Factory for JSONLookAtOGLModelSheetLoader.
  */
 //template <typename T>
-class ZBEAPI JSONLookAtOGLModelSheetLoaderFtry : virtual public Factory {
+class JSONLookAtOGLModelSheetLoaderFtry : virtual public Factory {
 public:
 
   /** \brief Builds a JSONLookAtOGLModelSheetLoader.
@@ -255,7 +255,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class ZBEAPI JSONSpriteOGLModelSheetLoaderFtry : virtual public Factory {
+class JSONSpriteOGLModelSheetLoaderFtry : virtual public Factory {
 public:
 
   /** \brief Builds a JSONSpriteOGLModelSheetLoader.

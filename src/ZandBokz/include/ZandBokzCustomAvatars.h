@@ -141,7 +141,7 @@ private:
 // Se está usando esta copia y no la de customs avatars. Resulta que funciona...
 // así que habrá que ver diferencias con la de custom avatars, porque MovingTriangle3DAvt
 // Está basada en aquella y, no en esta, y no funciona.
-class ZBEAPI MovingSphereAvtBldrFtry : public zbe::Factory {
+class MovingSphereAvtBldrFtry : public zbe::Factory {
 public:
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;

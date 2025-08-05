@@ -105,7 +105,7 @@ DISABLE_WARNING_POP()
 
 /** \brief Factory for OGLImgLoader.
  */
-class ZBEAPI OGLImgLoaderFtry : virtual public Factory {
+class OGLImgLoaderFtry : virtual public Factory {
 public:
 
   /** \brief Builds a OGLImgLoader.

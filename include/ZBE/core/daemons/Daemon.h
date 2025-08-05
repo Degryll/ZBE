@@ -51,10 +51,10 @@ public:
 
   /** \brief Destructor.
    */
-  virtual ~Daemon() {};
+  virtual ~Daemon() = default;
 };
 
-class ZBEAPI CallDmn : public Daemon {
+class CallDmn : public Daemon {
 public:
   CallDmn() : fs() {}
   void run() override {
@@ -73,7 +73,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class ZBEAPI CallDmnFtry : public Factory {
+class CallDmnFtry : public Factory {
 public:
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
@@ -134,7 +134,7 @@ DISABLE_WARNING_POP()
 };
 
 template<typename F, typename L>
-class ZBEAPI FunctOverAvtListDmnFtry : public Factory {
+class FunctOverAvtListDmnFtry : public Factory {
 public:
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
@@ -199,7 +199,7 @@ public:
    * \return void
    *
    */
-  std::shared_ptr<Ticket> addDaemon(std::shared_ptr<Daemon> daemon) {
+  inline std::shared_ptr<Ticket> addDaemon(std::shared_ptr<Daemon> daemon) {
     return daemonList.push_front(daemon);
   }
 
@@ -213,7 +213,7 @@ DISABLE_WARNING_POP()
 
 // /** \brief StatedDaemonMaster is a Daemon responsible for run others Daemons. This is necessary to build the Daemons tree.
 //  */
-// class ZBEAPI StatedDaemonMaster : public Daemon {
+// class StatedDaemonMaster : public Daemon {
 // public:
 
 //   /** \brief Destructor and the contained Daemons.
@@ -327,11 +327,11 @@ public:
   /** \brief Setter for the context time.
    * \param contextTime Pointer to the context time desired to be used.
    */
-  void setContextTime(std::shared_ptr<ContextTime> contextTime) {this->contextTime = contextTime;}
+  inline void setContextTime(std::shared_ptr<ContextTime> contextTime) {this->contextTime = contextTime;}
 
   /** \brief Stops current loop.
    */
-  void stop() {keep = false;}
+  inline void stop() {keep = false;}
 
 private:
 DISABLE_DLL_WARN
@@ -351,7 +351,7 @@ DISABLE_WARNING_POP()
 
 /** \brief Daemon capable of end a MainLoop
  */
-class ZBEAPI MainLoopExit : virtual public Daemon {
+class MainLoopExit : virtual public Daemon {
 public:
 
   /** \brief Builds an empty MainLoopExit.
@@ -503,7 +503,7 @@ DISABLE_WARNING_POP()
 /** \brief A Daemon capable of execute an specific sub Daemon depending on
 * an state.
 */
-class ZBEAPI StatedDaemon : public Daemon {
+class StatedDaemon : public Daemon {
 public:
 
   StatedDaemon(const StateMachineDaemon&) = delete;
@@ -555,7 +555,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class ZBEAPI StatedDaemonFtry : public Factory {
+class StatedDaemonFtry : public Factory {
 public:
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
@@ -601,7 +601,7 @@ DISABLE_WARNING_POP()
 
 /** \brief Daemon that does nothing.
  */
-class ZBEAPI VoidDaemon : public Daemon {
+class VoidDaemon : public Daemon {
 public:
 
   /** \brief Do nothing.
@@ -611,7 +611,7 @@ public:
 
 /** \brief Daemon that does nothing.
  */
-class ZBEAPI ConditionalIntDaemon : public Daemon {
+class ConditionalIntDaemon : public Daemon {
 public:
 
   ConditionalIntDaemon() = default;
@@ -653,7 +653,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class ZBEAPI ConditionalIntDaemonFtry : public Factory {
+class ConditionalIntDaemonFtry : public Factory {
 public:
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;

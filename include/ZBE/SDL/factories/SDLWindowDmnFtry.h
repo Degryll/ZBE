@@ -30,7 +30,7 @@ namespace zbe {
 
 /** \brief Factory for SDLWindow Daemon.
  */
-class ZBEAPI SDLWindowDmnFtry : virtual public Factory {
+class SDLWindowDmnFtry : virtual public Factory {
 public:
 
   /** \brief Builds a SDLWindowDaemon.
