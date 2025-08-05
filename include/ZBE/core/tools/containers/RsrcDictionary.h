@@ -26,8 +26,8 @@ template<typename T>
 class RsrcDictionary {
   public:
     using StoredType = T;
-    ZBEAPI RsrcDictionary(RsrcDictionary const&)    = delete;  //!< Needed for singleton.
-    void ZBEAPI operator=(RsrcDictionary const&) = delete;  //!< Needed for singleton.
+    RsrcDictionary(RsrcDictionary const&)    = delete;  //!< Needed for singleton.
+    void operator=(RsrcDictionary const&) = delete;  //!< Needed for singleton.
 
     /** \brief Singleton implementation.
      *  \return The only instance of the RsrcDictionary.
@@ -42,7 +42,7 @@ class RsrcDictionary {
      *  \param id Id of the resource in the adecuate store.
      *  \sa get(string name)
      */
-    void ZBEAPI insert(std::string name, T rsrc) {
+    void insert(std::string name, T rsrc) {
       auto it = l.find(name);
       if (it != l.end()) {
         SysError::setError("Name " + name + " already in use.");
@@ -56,7 +56,7 @@ class RsrcDictionary {
      *  \return The resource.
      *  \sa insert
      */
-    T ZBEAPI get(std::string name) {
+    T get(std::string name) {
       auto it = l.find(name);
       if (it == l.end()) {
         SysError::setError("Resource id not found:" + name);
@@ -70,7 +70,7 @@ class RsrcDictionary {
      *  \param name of the entry.
      *  \return The entry value.
      */
-    T ZBEAPI remove(std::string name) {
+    T remove(std::string name) {
       auto it = l.find(name);
       if (it == l.end()) {
         SysError::setError("Resource id not found:" + name);
@@ -87,14 +87,14 @@ class RsrcDictionary {
      *  \return True if a resource named "name" exist in this dictionary. False otherwise.
      *  \sa get
      */
-    bool ZBEAPI contains(std::string name) {
+    bool contains(std::string name) {
       auto it = l.find(name);
       return (it != l.end());
     }
 
     /** \brief Clear the container.
      */
-    void ZBEAPI clear() {
+    void clear() {
       l.clear();
     }
 
@@ -106,9 +106,9 @@ class RsrcDictionary {
 
 using NameRsrcDictionary = RsrcDictionary<uint64_t>;
 
-/** \brief A class ZBEAPI that translate a local resource id to a globaly accesible resource id.
+/** \brief A class that translate a local resource id to a globaly accesible resource id.
  */
-class ZBEAPI IdRsrcDictionary {
+class IdRsrcDictionary {
   public:
     IdRsrcDictionary(IdRsrcDictionary const&)    = delete;  //!< Needed for singleton.
     void operator=(IdRsrcDictionary const&) = delete;  //!< Needed for singleton.
