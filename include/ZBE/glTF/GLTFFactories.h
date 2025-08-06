@@ -23,7 +23,7 @@ namespace zbe {
 
 /** \brief Define the interface of a Factory.
  */
-class ZBEAPI GLTFFactories : public Daemon {
+class GLTFFactories : public Daemon {
 public:
   ~GLTFFactories() {}
 

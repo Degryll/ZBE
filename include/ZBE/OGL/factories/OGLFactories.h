@@ -29,7 +29,7 @@ namespace zbe {
 
 /** \brief Define the interface of a Factory.
  */
-class ZBEAPI OGLFactories : public Daemon {
+class OGLFactories : public Daemon {
 public:
   ~OGLFactories() {}
 
