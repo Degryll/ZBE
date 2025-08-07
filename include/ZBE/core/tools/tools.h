@@ -87,7 +87,7 @@ struct TypeContainer<T> {
 template<typename RetVal, typename ...Ts>
 class Funct {
 public:
-  inline virtual ~Funct() {};
+  virtual ~Funct() = default;
   virtual RetVal operator()(Ts...) = 0;
 };
 

@@ -223,7 +223,7 @@ private:
 class TicketActivatorBvr : virtual public Behavior<void> {
 public:
 
-    virtual ~TicketActivatorBvr() {}
+    virtual ~TicketActivatorBvr() = default;
 
     void apply(std::shared_ptr<Avatar> avatar) override {
         for(auto& t : list ) {

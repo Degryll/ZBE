@@ -57,7 +57,7 @@ class Behavior<void> {
 public:
   /** \brief Virtual destructor.
    */
-  inline virtual ~Behavior() {}
+  virtual ~Behavior() = default;
 
   /** \brief Do the behavior work over the given entity
    *  \param entity The entity to behave.

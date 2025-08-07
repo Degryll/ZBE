@@ -32,7 +32,7 @@ public:
 
     /** \brief Virtual destructor.
      */
-    virtual ~Avatar() {}
+    virtual ~Avatar() = default;
 
     /** \brief Register a new Ticket.
      *  \param id Id to identify the ticket origin.
@@ -92,7 +92,7 @@ class _Avatar : virtual public _Avatar<n, T>, virtual public _Avatar<n-1, Ts...>
 public:
   using Base = _Avatar<n+1, Ts...>;
   //_Avatar() : _Avatar<n, T>(nullptr, nullptr) {}
-  virtual ~_Avatar() {}
+  virtual ~_Avatar() = default;
 
   template <unsigned m, typename U>
   std::shared_ptr<Value<U> > get() {
@@ -112,7 +112,7 @@ public:
   explicit _Avatar(const _Avatar& rhs) : subGetter(rhs.subGetter), subSetter(rhs.subSetter), instance(rhs.instance) {}
   void operator=(const _Avatar&) = delete;
 
-  virtual ~_Avatar() {}
+  virtual ~_Avatar() = default;
 
   template <unsigned m = n, typename U = T>
   std::shared_ptr<Value<U> > get() {
