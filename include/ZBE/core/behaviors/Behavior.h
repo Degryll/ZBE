@@ -25,7 +25,7 @@ class Behavior {
 public:
   /** \brief Virtual destructor.
    */
-  virtual ~Behavior() {}
+  virtual ~Behavior() = default;
 
   /** \brief Do the behavior work over the given entity
    *  \param entity The entity to behave.
@@ -41,7 +41,7 @@ class Behavior<T> {
 public:
   /** \brief Virtual destructor.
    */
-  virtual ~Behavior() {}
+  virtual ~Behavior() = default;
 
   /** \brief Do the behavior work over the given entity
    *  \param entity The entity to behave.
