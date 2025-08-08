@@ -148,7 +148,7 @@ private:
   RsrcStore<EntityEraserTH> &timeEraserStore = RsrcStore<EntityEraserTH>::getInstance();
 };
 
-class ZBEAPI EntityEraserTHBldr : public Funct<std::shared_ptr<TimeHandler>, std::shared_ptr<Entity>> {
+class EntityEraserTHBldr : public Funct<std::shared_ptr<TimeHandler>, std::shared_ptr<Entity>> {
   std::shared_ptr<TimeHandler> operator()(std::shared_ptr<Entity> ent) override {
       return std::make_shared<EntityEraserTH>(ent);
   }

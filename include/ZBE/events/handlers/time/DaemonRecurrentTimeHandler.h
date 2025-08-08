@@ -96,7 +96,7 @@ DISABLE_WARNING_POP()
 };
 
 
-class ZBEAPI DaemonRecurrentTHBldr : public Funct<std::shared_ptr<TimeHandler>, std::shared_ptr<Entity>> {
+class DaemonRecurrentTHBldr : public Funct<std::shared_ptr<TimeHandler>, std::shared_ptr<Entity>> {
 public:
   DaemonRecurrentTHBldr() = default;
   
