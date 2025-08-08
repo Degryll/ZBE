@@ -220,8 +220,7 @@ private:
   RsrcStore<ValueSetterFixedBvr<T>>& vsfbRsrc = RsrcStore<ValueSetterFixedBvr<T>>::getInstance();
 };
 
-using BehaviorVoid = Behavior<void>;
-class TicketActivatorBvr : virtual public BehaviorVoid {
+class TicketActivatorBvr : virtual public Behavior<void> {
 public:
 
     virtual ~TicketActivatorBvr() = default;
@@ -242,10 +241,10 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class TicketDeactivatorBvr : virtual public BehaviorVoid {
+class TicketDeactivatorBvr : virtual public Behavior<void> {
 public:
 
-    virtual ~TicketDeactivatorBvr() {}
+    virtual ~TicketDeactivatorBvr() = default;
 
     void apply(std::shared_ptr<Avatar> avatar) override {
         for(auto& t : list ) {
@@ -299,7 +298,7 @@ private:
 
   RsrcStore<nlohmann::json>& configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
-  RsrcStore<BehaviorVoid>& behaviorRsrc = RsrcStore<BehaviorVoid>::getInstance();
+  RsrcStore<Behavior<void>>& behaviorRsrc = RsrcStore<Behavior<void>>::getInstance();
   RsrcStore<TicketActivatorBvr>& tebRsrc = RsrcStore<TicketActivatorBvr>::getInstance();
 };
 
@@ -337,7 +336,7 @@ private:
 
   RsrcStore<nlohmann::json>& configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcDictionary<uint64_t>& uintDict = RsrcDictionary<uint64_t>::getInstance();
-  RsrcStore<BehaviorVoid>& behaviorRsrc = RsrcStore<BehaviorVoid>::getInstance();
+  RsrcStore<Behavior<void>>& behaviorRsrc = RsrcStore<Behavior<void>>::getInstance();
   RsrcStore<TicketDeactivatorBvr>& tdbRsrc = RsrcStore<TicketDeactivatorBvr>::getInstance();
 };
 
