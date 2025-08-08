@@ -21,7 +21,7 @@ namespace zbe {
 
 /** \brief Erase given avatar.
  */
-class ZBEAPI Erase : virtual public Behavior<void> {
+class Erase : virtual public Behavior<void> {
   public:
 
     /** \brief Virtual destructor.
@@ -35,7 +35,7 @@ class ZBEAPI Erase : virtual public Behavior<void> {
     }
 };
 
-class ZBEAPI EraseEntity : virtual public Behavior<void> {
+class EraseEntity : virtual public Behavior<void> {
   public:
 
     /** \brief Virtual destructor.
