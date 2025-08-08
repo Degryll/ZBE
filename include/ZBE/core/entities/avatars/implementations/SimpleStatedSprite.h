@@ -26,7 +26,7 @@ public:
 
   /** \brief Empty Constructor.
    */
-  SimpleStatedSprite() :  SimpleRotatedSprite(), state() {}
+  SimpleStatedSprite() = default;
 
   /** \brief Parametrized Constructor.
    *  \param x x coord

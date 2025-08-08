@@ -21,7 +21,7 @@ class PhysicalObject {
 public:
   /** \brief Virtual destructor.
    */
-  virtual ~PhysicalObject() {}
+  virtual ~PhysicalObject() = default;
 
   /** \brief Set the actuators list.
    *  \param actuatorsList The actuators list index.

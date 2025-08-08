@@ -29,7 +29,7 @@ public:
 
   /** \brief Virtual destructor.
    */
-  virtual ~SimpleTimeStamp() {}
+  virtual ~SimpleTimeStamp() = default;
 
   /** \brief Set the time stamp.
    *  \param timeStamp Time stamp.

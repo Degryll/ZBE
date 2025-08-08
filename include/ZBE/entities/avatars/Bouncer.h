@@ -26,7 +26,7 @@ class Bouncer : virtual public Movable<s> {
 
     /** \brief Virtual destructor.
      */
-    virtual ~Bouncer() {}
+    virtual ~Bouncer() = default;
 
     /** \brief Adds a normal to current bounce measurement
      * \param normal Normal value to add

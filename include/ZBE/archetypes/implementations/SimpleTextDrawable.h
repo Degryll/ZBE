@@ -26,7 +26,7 @@ public:
 
   /** \brief Virtual destructor.
    */
-  virtual ~SimpleTextDrawable() {}
+  virtual ~SimpleTextDrawable() = default;
 
   /** \brief Returns x coord value
    * \return int x coord value

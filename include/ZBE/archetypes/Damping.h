@@ -20,7 +20,7 @@ class Damping {
 public:
   /** \brief Virtual destructor.
    */
-  virtual ~Damping() {}
+  virtual ~Damping() = default;
 
   /** \brief Sets the damping factor to factor.
    *  \param factor The damping factor.

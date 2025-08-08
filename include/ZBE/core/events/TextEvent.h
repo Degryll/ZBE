@@ -43,7 +43,7 @@ public:
 
   /** \brief base destructor.
    */
-  ~TextEvent() {}
+  ~TextEvent() = default;
 
   /** \brief Get the text of this event.
    * \return A string.

@@ -30,7 +30,7 @@ class SimpleValue : public Value<T> {
 public:
   /** brief Void constructor.
    */
-  SimpleValue() : v() {}
+  SimpleValue() = default;
 
   /** brief Parametrized contructor.
    *  param value Value to store.

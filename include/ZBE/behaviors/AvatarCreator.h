@@ -33,7 +33,7 @@ class AvatarCreator : virtual public Behavior<T, Ts...> {
 
     /** \brief Virtual destructor.
      */
-    virtual ~AvatarCreator() {}
+    virtual ~AvatarCreator() = default;
 
     /** \brief Erase given avatar.
      */

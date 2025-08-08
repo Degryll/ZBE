@@ -35,7 +35,7 @@ public:
 
   /** \brief Destructor.
    */
-  ~SingleSpriteSDLDrawer() {}
+  ~SingleSpriteSDLDrawer() = default;
 
   /** \brief Draws the given entity.
    *  \param The entity to be drawn.

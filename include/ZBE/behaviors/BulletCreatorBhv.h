@@ -71,7 +71,7 @@ public:
 
 private:
 DISABLE_DLL_WARN
-  BulletCreatorBhv() : creator() {};
+  BulletCreatorBhv() = default;
 
   void setCreator(std::shared_ptr<BulletCreator> creator) {
     this->creator = creator;

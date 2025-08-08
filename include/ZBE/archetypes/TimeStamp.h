@@ -22,7 +22,7 @@ class TimeStamp {
 public:
   /** \brief Virtual destructor.
    */
-  virtual ~TimeStamp() {}
+  virtual ~TimeStamp() = default;
 
   /** \brief Returns a time stamp.
    *  \return The time stamp.

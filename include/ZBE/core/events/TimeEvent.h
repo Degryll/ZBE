@@ -39,7 +39,7 @@ public:
 
   /** \brief base destructor.
    */
-  ~TimeEvent() {}
+  ~TimeEvent() = default;
 
   /** \brief Return the handler that will be executed when the event is triggered.
    *

@@ -33,7 +33,7 @@ class Actuator : public R {
 
     /** \brief Empty destructor.
      */
-  	virtual ~Actuator() {};
+  	virtual ~Actuator() = default;
 
     /** \brief Getter for a collisioner attribute.
      */

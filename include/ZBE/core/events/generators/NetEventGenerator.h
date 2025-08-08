@@ -41,7 +41,7 @@ public:
 
   /** \brief Empty destructor.
    */
-  ~NetEventGenerator() {}
+  ~NetEventGenerator() = default;
 
   /** Will search for input events occurred between initTime and finalTime and send it to the EventStore.
    * \param initTime Time from which events are generated

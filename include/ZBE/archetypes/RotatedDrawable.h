@@ -22,7 +22,7 @@ class ZBEAPI RotatedDrawable : virtual public Drawable {
 public:
   /** \brief Virtual destructor.
    */
-  virtual ~RotatedDrawable() {}
+  virtual ~RotatedDrawable() = default;
 
   /** \brief Gets the degrees of rotation.
    *  \return The angle of rotation in degrees.

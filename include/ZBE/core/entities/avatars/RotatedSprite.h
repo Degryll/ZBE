@@ -24,7 +24,7 @@ public:
 
   /** \brief Virtual Destructor.
    */
-  virtual ~RotatedSprite() {};
+  virtual ~RotatedSprite() = default;
 
   /** \brief Returns degrees.
    *  \return degrees.

@@ -27,7 +27,7 @@ class ZBEAPI BaseResizableArea : virtual public Resizable {
 
     /** \brief Virtual destructor.
      */
-    virtual ~BaseResizableArea() {}
+    virtual ~BaseResizableArea() = default;
 
     /** \brief Builds this BaseResizableArea with a Position.
      */

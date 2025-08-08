@@ -27,7 +27,7 @@ class Mobile : virtual public Position<s> {
 public:
   /** \brief Virtual destructor.
    */
-  virtual ~Mobile() {}
+  virtual ~Mobile() = default;
 
   /** \brief Sets velocity using a Vector.
    *  \param velocity Vector with the values of the velocity.

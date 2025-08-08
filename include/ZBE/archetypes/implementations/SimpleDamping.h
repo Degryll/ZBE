@@ -31,7 +31,7 @@ public:
 
   /** \brief Virtual destructor.
    */
-  virtual ~SimpleDamping() {}
+  virtual ~SimpleDamping() = default;
 
   /** \brief Sets the damping factor to factor.
    *  \param factor The damping factor.

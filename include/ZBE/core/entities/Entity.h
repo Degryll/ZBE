@@ -31,9 +31,6 @@ namespace zbe {
  */
 class ZBEAPI Entity {
   public:
-    /** \brief Empty constructor.
-     */
-    Entity() : tl(), cTime(), dv(), fv(), uv(), iv(), bv(), v3v(), v2v(), sv(), svv() {}
 
     /** \brief The destructor make sure the entity is marked as ERASED in every Ticket.
      */

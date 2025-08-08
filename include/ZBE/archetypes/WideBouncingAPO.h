@@ -24,7 +24,7 @@ class WideBouncingAPO : virtual public Wide, virtual public BouncingAPO<s> {
 public:
   /** \brief Virtual destructor.
    */
-  virtual ~WideBouncingAPO() {}
+  virtual ~WideBouncingAPO() = default;
 };
 
 }  // namespace zbe

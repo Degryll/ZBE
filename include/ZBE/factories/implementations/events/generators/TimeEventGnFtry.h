@@ -38,7 +38,7 @@ namespace zbe {
 class ZBEAPI TimeEventGnFtry : virtual public Factory {
 public:
 
-//  ~TimeEventGnFtry() {}
+//  ~TimeEventGnFtry() = default;
 
   /** \brief Builds a TimeEventGenerators.
    *  \param name Name for the created MainLoopFtry.

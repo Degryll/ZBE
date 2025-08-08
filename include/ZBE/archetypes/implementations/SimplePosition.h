@@ -27,7 +27,7 @@ class SimplePosition : virtual public Position<s> {
 public:
   /** \brief Empty constructor. Position is set to 0.
    */
-  SimplePosition() : p() {}
+  SimplePosition() = default;
 
   /** \brief Position is set by an initilizer list.
    */
@@ -39,7 +39,7 @@ public:
 
   /** \brief Virtual destructor.
    */
-  virtual ~SimplePosition() {}
+  virtual ~SimplePosition() = default;
 
   /** \brief Sets the position using a Point.
    *  \param position Position with the values of the position.

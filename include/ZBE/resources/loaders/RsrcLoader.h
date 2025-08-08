@@ -22,7 +22,7 @@ namespace zbe {
 class ZBEAPI RsrcLoader {
 public:
 
- virtual ~RsrcLoader() {} //!< Virtual destructor.
+ virtual ~RsrcLoader() = default; //!< Virtual destructor.
 
  /** \brief Load a resource
   *  \param filePath Path to resource file.

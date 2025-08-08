@@ -33,7 +33,7 @@ public:
 
   /** \brief Virtual destructor.
    */
-  virtual ~SimpleDrawable() {}
+  virtual ~SimpleDrawable() = default;
 
   /** \brief Gets the left coordinate.
    *  \return The left coordinate.

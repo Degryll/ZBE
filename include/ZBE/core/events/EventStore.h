@@ -31,7 +31,7 @@ public:
    */
   static EventStore& getInstance();
 
-  ~EventStore() {};  //!< Empty destructor.
+  ~EventStore() = default;  //!< Empty destructor.
 
   /** \brief Store an event if the event time is the same of the current
    *  stored ones. If event happen after current ones, it will be ignored. If it happen after, all

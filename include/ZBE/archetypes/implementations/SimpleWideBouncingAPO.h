@@ -81,7 +81,7 @@ public:
 
   /** \brief Virtual destructor.
    */
-  virtual ~SimpleWideBouncingAPO() {}
+  virtual ~SimpleWideBouncingAPO() = default;
 };
 
 }  // namespace zbe

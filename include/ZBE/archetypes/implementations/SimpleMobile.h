@@ -29,7 +29,7 @@ class SimpleMobile : virtual public Mobile<s>, public SimplePosition<s> {
 public:
   /** \brief Empty constructor. Position and velocity are set to 0.
    */
-  SimpleMobile() : SimplePosition<s>(), v() {}
+  SimpleMobile() = default;
 
   /** \brief Position is set by an initilizer list, velocity is set to 0.
    */
@@ -61,7 +61,7 @@ public:
 
   /** \brief Virtual destructor.
    */
-  virtual ~SimpleMobile() {}
+  virtual ~SimpleMobile() = default;
 
   /** \brief Sets velocity using a Vector.
    *  \param velocity Vector with the values of the velocity.

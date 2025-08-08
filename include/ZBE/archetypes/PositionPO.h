@@ -24,7 +24,7 @@ class PositionPO : virtual public Position<s>, virtual public PhysicalObject {
 public:
   /** \brief Virtual destructor.
    */
-  virtual ~PositionPO() {}
+  virtual ~PositionPO() = default;
 };
 
 }  // namespace zbe

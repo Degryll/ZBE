@@ -36,7 +36,7 @@ public:
 
   /** \brief Empty constructor.
    */
-  OALContextDaemon() {}
+  OALContextDaemon() = default;
 
   void run() override;
 private:

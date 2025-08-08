@@ -62,7 +62,7 @@ public:
 
   /** \brief Virtual destructor.
    */
-  virtual ~SimpleWideMobile() {}
+  virtual ~SimpleWideMobile() = default;
 };
 
 }  // namespace

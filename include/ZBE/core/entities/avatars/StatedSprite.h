@@ -26,7 +26,7 @@ public:
 
   /** \brief Virtual Destructor.
    */
-  virtual ~StatedSprite() {};
+  virtual ~StatedSprite() = default;
 
   /** \brief Returns state.
    *  \return state.

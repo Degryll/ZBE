@@ -54,7 +54,7 @@ public:
 
   /** \brief Empty constructor.
    */
-  TicketedForwardList() : l() {}
+  TicketedForwardList() = default;
 
   /** \brief Inserts a new element at the beginning of the forward_list, right before its current first element. The content of val is copied (or moved) to the inserted element.
    *  \param val Value to be copied (or moved) to the inserted element.

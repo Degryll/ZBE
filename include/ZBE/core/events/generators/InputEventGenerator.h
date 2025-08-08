@@ -44,7 +44,7 @@ using HandlerTicket = HandlerList::iterator;
 class ZBEAPI InputStatusManager {
 public:
 
-  virtual ~InputStatusManager() {}
+  virtual ~InputStatusManager() = default;
 
   /** \brief Generate events if the InputStatus match some condition.
    *  Implementation dependant.

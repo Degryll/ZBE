@@ -21,7 +21,7 @@ public:
 
   /** \brief Destructor.
    */
-  virtual ~InputHandler() {}
+  virtual ~InputHandler() = default;
 
   /** \brief Do the Handler job.
    */

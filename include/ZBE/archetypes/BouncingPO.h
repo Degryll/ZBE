@@ -26,7 +26,7 @@ class BouncingPO : virtual public Bouncing<s>, virtual public PhysicalObject {
 public:
   /** \brief Virtual destructor.
    */
-  virtual ~BouncingPO() {}
+  virtual ~BouncingPO() = default;
 };
 
 }  // namespace zbe

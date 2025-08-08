@@ -34,7 +34,7 @@ namespace zandbokz {
  */
 class ZandBokzFactories : public zbe::Daemon {
 public:
-  ~ZandBokzFactories() {}
+  ~ZandBokzFactories() = default;
 
   /** \brief It will Load the factories calling the load method.
   */

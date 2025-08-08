@@ -22,7 +22,7 @@ class Bouncing : virtual public Mobile<s> {
 public:
   /** \brief Virtual destructor.
    */
-  virtual ~Bouncing() {}
+  virtual ~Bouncing() = default;
 
   /** \brief Add a new normal.
    *  \param normal The normal to be added.

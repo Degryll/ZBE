@@ -77,7 +77,7 @@
 
 //   /** \brief Empty destructor.
 //   */
-//   virtual ~InteractionEventGenerator() {}
+//   virtual ~InteractionEventGenerator() = default;
 
 //   /** \brief It will look for interaction events occurred within the available
 //    *  time and it will send them to the EventStore.
@@ -151,8 +151,7 @@
 
 //   /** \brief Empty constructor.
 //    */
-//   InstantInteractionEventGenerator(): InteractionEventGenerator<R, IS, LN, LT>() {}
-
+//   InstantInteractionEventGenerator() = default;
 //   /** \brief Parametrized Constructor.
 //    * \param list The list id of interactionators.
 //    * \param eventId Id for the interaction events.

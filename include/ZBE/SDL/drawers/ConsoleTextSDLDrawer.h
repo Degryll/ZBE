@@ -42,7 +42,7 @@ public:
 
   /** \brief Destructor.
    */
-  ~ConsoleTextDrawer() {}
+  ~ConsoleTextDrawer() = default;
 
   /** \brief sets the window, imgStore and rmss.
    *  \param window A SDLwindow with its context.

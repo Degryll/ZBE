@@ -25,7 +25,7 @@ namespace zbe {
  */
 class GLTFFactories : public Daemon {
 public:
-  ~GLTFFactories() {}
+  ~GLTFFactories() = default;
 
   /** \brief It will Load the factories calling the load method.
   */

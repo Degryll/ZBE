@@ -24,7 +24,7 @@ class ZBEAPI Stated {
 
     /** \brief Virtual destructor.
      */
-    virtual ~Stated() {}
+    virtual ~Stated() = default;
 
     /** \brief Setter for the state
      *  \param state The integer value for the state.

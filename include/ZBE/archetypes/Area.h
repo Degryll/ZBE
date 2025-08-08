@@ -20,7 +20,7 @@ class ZBEAPI Area {
 public:
   /** \brief Virtual destructor.
    */
-  virtual ~Area() {}
+  virtual ~Area() = default;
 
   /** \brief Set area height
    *  \param height

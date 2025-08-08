@@ -29,7 +29,7 @@ class TimedBuffer {
 public:
   /** \brief Construct a new InputBuffer.
    */
-  TimedBuffer() : buffer() {}
+  TimedBuffer() = default;
 
   /** \brief inserts a timedElement into the buffer in order.
    *  \param element timedElement with the info.

@@ -22,8 +22,8 @@ namespace zbe {
 class ZBEAPI BroadcastIH : public InputHandler {
 public:
 
-  BroadcastIH() : ihs() {}
-  ~BroadcastIH() {}
+  BroadcastIH() = default;
+  ~BroadcastIH() = default;
 
   void run(uint32_t key, float state) override {
     for (auto ih : ihs) {

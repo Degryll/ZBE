@@ -29,7 +29,7 @@ public:
 
   /** \brief Virtual Destructor.
    */
-  virtual ~SingleModel() {};
+  virtual ~SingleModel() = default;
 
   /** \brief Returns the position.
    *  \return x.

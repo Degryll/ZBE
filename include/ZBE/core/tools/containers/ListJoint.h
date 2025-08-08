@@ -123,7 +123,7 @@ class ListJoint {
 public:
     /** \brief empty constructor
     */
-    ListJoint() : l() {}
+    ListJoint() = default;
 
     using iterator = JointIterator<std::forward_list<L*>, L, T>;
 
@@ -165,7 +165,7 @@ class ListTicketedJoint {
 public:
     /** \brief Empty constructor.
      */
-    ListTicketedJoint() : l() {}
+    ListTicketedJoint() = default;
 
     using iterator = JointIterator<TicketedForwardList<L>, L, T>;
 

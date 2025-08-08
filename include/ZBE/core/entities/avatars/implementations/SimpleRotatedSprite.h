@@ -25,7 +25,7 @@ class ZBEAPI SimpleRotatedSprite : virtual public RotatedSprite, public SimpleSi
 public:
   /** \brief Empty Constructor.
    */
-  SimpleRotatedSprite() : SimpleSingleSprite(), degrees() {}
+  SimpleRotatedSprite() = default;
 
   /** \brief Parametrized Constructor.
    *  \param degrees Rotation degrees.

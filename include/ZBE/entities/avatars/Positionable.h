@@ -27,7 +27,7 @@ class Positionable {
 
     /** \brief Virtual destructor.
      */
-    virtual ~Positionable() {}
+    virtual ~Positionable() = default;
 
     /** \brief Sets the position for this Positionable.
      * \param List of values for the position..

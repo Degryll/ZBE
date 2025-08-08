@@ -26,7 +26,7 @@ namespace zbe {
  */
 class OALFactories : public Daemon {
 public:
-  ~OALFactories() {}
+  ~OALFactories() = default;
 
   /** \brief It will Load the factories calling the load method.
   */

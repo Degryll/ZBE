@@ -42,7 +42,7 @@ public:
 
   /** \brief Virtual destructor.
    */
-  virtual ~SimplePositionPO() {}
+  virtual ~SimplePositionPO() = default;
 };
 
 }  // namespace zbe

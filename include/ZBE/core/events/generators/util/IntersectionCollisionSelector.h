@@ -29,7 +29,7 @@ class ZBEAPI IntersectionCollisionSelector : public CollisionSelector {
 public:
     /** \brief Empty constructor
      */
-    IntersectionCollisionSelector() {}
+    IntersectionCollisionSelector() = default;
 
     /** \brief Solve an intersection between a StaticSolidAABB2D and a StaticSolidAABB2D.
      *  \param param1 First element interested in the collision

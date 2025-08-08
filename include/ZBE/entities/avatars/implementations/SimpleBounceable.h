@@ -27,7 +27,7 @@ class ZBEAPI SimpleBounceable : public Bounceable{
 
     /** \brief Virtual destructor.
      */
-    virtual ~SimpleBounceable() {}
+    virtual ~SimpleBounceable() = default;
 
     /** \brief Return the bounce factor.
      * \return The bounce factor.

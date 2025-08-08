@@ -38,7 +38,7 @@ public:
 
   /** \brief Virtual destructor.
    */
-  virtual ~StateSetter() {}
+  virtual ~StateSetter() = default;
 
   /** \brief Set the state.
    */

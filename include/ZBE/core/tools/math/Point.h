@@ -67,7 +67,7 @@ class _POINT {
 
     /** \brief Virtual destructor (this class ZBEAPI is a base class).
      */
-    virtual ~_POINT() {}
+    virtual ~_POINT() = default;
 
     /** \brief This class ZBEAPI let you assign initializer lists to _POINT.
      *  \param l initializer list
@@ -212,7 +212,7 @@ class Point : public _POINT<s> {
   public:
     /** \brief Void constructor, the Point's values are unknown.
      */
-    Point() : _POINT<s>() {}
+    Point() : _POINT<s>() = default;
 
     /** \brief A list initializer constructor.
      *

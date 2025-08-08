@@ -65,7 +65,7 @@ class _VECTOR {
 
     /** \brief Virtual destructor (this class is a base class).
      */
-    virtual ~_VECTOR() {}
+    virtual ~_VECTOR() = default;
 
     /** \brief This class let you assign initializer lists to _VECTOR.
      *  \param l Initializer list with the vector coordinates
@@ -436,7 +436,7 @@ class Vector : public _VECTOR<dim> {
     /** \brief Void constructor, the Vector's values are unknown.
      */
     // cppcheck-suppress uninitMemberVar
-    Vector() : _VECTOR<dim>() {}
+    Vector() : _VECTOR<dim>() = default;
 
     /** \brief A list initializer constructor.
      *

@@ -59,7 +59,7 @@ public:
   }
 
 private:
-  KeyValueSetterIH() : value(), pressedVal(), releaseVal() {}
+  KeyValueSetterIH() = default;
 
   std::shared_ptr<Value<T>> value;
   T pressedVal;

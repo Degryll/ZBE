@@ -33,7 +33,7 @@ public:
 
   /** \brief Virtual destructor.
    */
-  virtual ~SimpleActivePhysicalObject() {}
+  virtual ~SimpleActivePhysicalObject() = default;
 
   /** \brief Set the collisionables list.
    *  \param collisionablesList The collisionables list index.

@@ -26,7 +26,7 @@ namespace zbe {
  */
 class ZBEAPI SystemResources : public Daemon {
 public:
-  ~SystemResources() {}
+  ~SystemResources() = default;
 
   /** \brief It will Load the system resources.
   */

@@ -24,7 +24,7 @@ class ZBEAPI SimpleSingleSprite : virtual public SingleSprite {
 public:
   /** \brief Empty Constructor.
   */
-  SimpleSingleSprite () : x(), y(), w(), h(), graphics() {}
+  SimpleSingleSprite () = default;
 
   /** \brief Parametrized Constructor.
   *  \param x X coordinate (horizontal).

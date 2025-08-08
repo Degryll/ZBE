@@ -49,7 +49,7 @@ public:
   }
 
 private:
-  KeyMouseEventWatcher() : inputBuffer(), inputTextBuffer(), contextTime() {}
+  KeyMouseEventWatcher() = default;
 
   void set(std::shared_ptr<InputBuffer> inputBuffer, std::shared_ptr<InputTextBuffer> inputTextBuffer, std::shared_ptr<ContextTime> contextTime) {
     this->inputBuffer = inputBuffer;

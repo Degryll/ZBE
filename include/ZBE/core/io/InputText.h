@@ -24,7 +24,7 @@ public:
 
   /** \brief Empty constructor (0 id, 0.0 status).
    */
-  InputText() : text(), time() {}
+  InputText() = default;
 
   /** \brief Construct an input status.
    *  \param text The input Text.

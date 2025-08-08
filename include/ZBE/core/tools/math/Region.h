@@ -29,7 +29,7 @@ public:
   /** \brief Empty constructor
    *  the Point's values are unknown.
    */
-  _REGION() : _p(), _v() {}
+  _REGION() = default;
 
   /** \brief Parametrized constructor
    *  \param lp Coordinates of the origin point

@@ -46,7 +46,7 @@ public:
 
   Sound3DOALPlayer(std::shared_ptr<OALAudioStore> store, std::shared_ptr<Camera> cam) : store(store), cam(cam) {}
 
-  ~Sound3DOALPlayer() {}
+  ~Sound3DOALPlayer() = default;
 
   /** \brief Plays the Sound3D.
    */
@@ -56,7 +56,7 @@ public:
 
 private:
 DISABLE_DLL_WARN
-  Sound3DOALPlayer() : store() {}
+  Sound3DOALPlayer() = default;
   void setUp(std::shared_ptr<OALAudioStore> store, std::shared_ptr<Camera> cam) {
     this->store = store;
     this->cam = cam;

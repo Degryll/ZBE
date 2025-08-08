@@ -29,7 +29,7 @@ public:
 
   /** \brief Destructor.
    */
-  ~OGLPostDraw() {}
+  ~OGLPostDraw() = default;
 
   /** \brief Do the actual Daemon job.
    */

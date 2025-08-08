@@ -26,7 +26,7 @@ class ActivePhysicalObject : virtual public PhysicalObject {
 public:
   /** \brief Virtual destructor.
    */
-  virtual ~ActivePhysicalObject() {}
+  virtual ~ActivePhysicalObject() = default;
 
   /** \brief Set the collisionables list.
    *  \param collisionablesList The collisionables list index.

@@ -46,7 +46,7 @@ class CustomMotion : virtual public Behavior<Vector<s>, Vector<s>, Vector<s> > {
 
     /** \brief Default constructor.
      */
-    CustomMotion() : f() {}
+    CustomMotion() = default;
 
     /** \brief Virtual destructor.
      */

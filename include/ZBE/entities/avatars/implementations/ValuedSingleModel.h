@@ -37,7 +37,7 @@ public:
 
   /** \brief Virtual Destructor.
    */
-  virtual ~ValuedSingleModel() {};
+  virtual ~ValuedSingleModel() = default;
 
   /** \brief Returns the position.
    *  \return x.

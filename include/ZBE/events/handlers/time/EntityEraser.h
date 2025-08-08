@@ -41,7 +41,7 @@ public:
 
     /** brief Empty constructor
      */
-  	EntityEraserTH() : e() {}
+  	EntityEraserTH() = default;
 
     /** brief Parametrized constructor
      * param entity Entity to be erased

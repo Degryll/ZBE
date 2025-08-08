@@ -44,7 +44,7 @@ public:
 
   /** \brief Destroys the ImGuiPostLoopDaemon
    */
-  ~ImGuiPostLoopDaemon() {}
+  ~ImGuiPostLoopDaemon() = default;
 
   /** \brief Sets the the window. Use with empty constructor.
    *  \param window windo to use.

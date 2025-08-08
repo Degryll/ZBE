@@ -43,7 +43,7 @@ public:
 
   /** \brief base destructor.
    */
-  ~NetEvent() {}
+  ~NetEvent() = default;
 
   /** \brief Get the id of the key related with this event.
    * \return An integer that identifies the key.

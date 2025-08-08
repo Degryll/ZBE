@@ -103,7 +103,7 @@ struct ZBEAPI AvatarImp : virtual public Avatar {
 
 protected:
 DISABLE_DLL_WARN
-  AvatarImp() : e() {}
+  AvatarImp() = default;
 
   void setupEntity(std::shared_ptr<Entity> entity) { e = entity;}
 
@@ -124,7 +124,7 @@ public:
     return e;
   }
 protected:
-  AwareAvatar() : AvatarImp() {}
+  AwareAvatar() = default;
 
   void setupEntity(std::shared_ptr<Entity> entity) { AvatarImp::setupEntity(entity); }
 };
@@ -142,7 +142,7 @@ public:
     return 0;
   }
 protected:
-  BaseAvatar() : AvatarImp() {}
+  BaseAvatar() = default;
 
   void setupEntity(std::shared_ptr<Entity> entity) { AvatarImp::setupEntity(entity); }
 };
@@ -157,9 +157,10 @@ class _BaseAvatar : virtual public _Avatar<n, T, Ts...>,
 public:
   _BaseAvatar(std::shared_ptr<Entity> entity, std::array<uint64_t, n> ids) : A(entity), _BaseAvatar<A, n, T>(entity, ids[0]), _BaseAvatar<A, n-1, Ts...>(entity, ids.begin()+1) {}
 
-  _BaseAvatar() : A(), _BaseAvatar<A, n, T>(), _BaseAvatar<A, n-1, Ts...>() {}
+  // _BaseAvatar() : A(), _BaseAvatar<A, n, T>(), _BaseAvatar<A, n-1, Ts...>() {}
+  _BaseAvatar() = default;
 
-  virtual ~_BaseAvatar() {}
+  virtual ~_BaseAvatar() = default;
 
   void setupEntity(std::shared_ptr<Entity> entity, std::array<uint64_t, n> ids) {
     A::setupEntity(entity);
@@ -224,7 +225,7 @@ public:
       setCallback();
     }
 
-  virtual ~_BaseAvatar() {}
+  virtual ~_BaseAvatar() = default;
 
   void setupEntity(std::shared_ptr<Entity> entity, uint64_t id) {
     A::setupEntity(entity);
@@ -270,9 +271,10 @@ class _DynamicAvatar : virtual public _Avatar<n, T, Ts...>,
 public:
   _DynamicAvatar(std::shared_ptr<Entity> entity, std::array<uint64_t, n> ids) : A(entity), _DynamicAvatar<A, n, T>(entity, ids[0]), _DynamicAvatar<A, n-1, Ts...>(entity, ids.begin()+1) {}
 
-  _DynamicAvatar() : A(), _DynamicAvatar<A, n, T>(), _DynamicAvatar<A, n-1, Ts...>() {}
+  // _DynamicAvatar() : A(), _DynamicAvatar<A, n, T>(), _DynamicAvatar<A, n-1, Ts...>() {}
+  _DynamicAvatar() = default;
 
-  virtual ~_DynamicAvatar() {}
+  virtual ~_DynamicAvatar() = default;
 
   void setupEntity(std::shared_ptr<Entity> entity, std::array<uint64_t, n> ids) {
     A::setupEntity(entity);
@@ -336,7 +338,7 @@ public:
       setCallback();
     }
 
-  virtual ~_DynamicAvatar() {}
+  virtual ~_DynamicAvatar() = default;
 
   void setupEntity(std::shared_ptr<Entity> entity, uint64_t id) {
     A::setupEntity(entity);

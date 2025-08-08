@@ -24,7 +24,7 @@ public:
 
   /** \brief Virtual Destructor.
    */
-  virtual ~SingleSprite() {};
+  virtual ~SingleSprite() = default;
 
   /** \brief Returns x.
    *  \return x.

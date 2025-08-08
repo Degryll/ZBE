@@ -40,7 +40,7 @@ public:
 
   /** \brief Destructor.
    */
-  ~OGLPreDrawer() {}
+  ~OGLPreDrawer() = default;
 
   /** \brief Do the actual Daemon job.
    */

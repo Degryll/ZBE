@@ -63,7 +63,7 @@ public:
 
   /** \brief Virtual destructor.
    */
-  virtual ~SimpleMobileAPO() {}
+  virtual ~SimpleMobileAPO() = default;
 };
 
 }  // namespace zbe

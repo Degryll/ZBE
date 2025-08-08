@@ -251,9 +251,9 @@ void triangle3Dto2DCacheBldrTest(std::shared_ptr<zbe::Entity> ent, zbe::Triangle
   auto a = ent->getVector2D(aIdx)->get();
   auto b = ent->getVector2D(bIdx)->get();
   auto c = ent->getVector2D(cIdx)->get();
-  std::cout << "triangle3Dto2DCacheBldrTest a: " << a.x << "," << a.y << std::endl;;
-  std::cout << "triangle3Dto2DCacheBldrTest b: " << b.x << "," << b.y << std::endl;;
-  std::cout << "triangle3Dto2DCacheBldrTest c: " << c.x << "," << c.y << std::endl;;
+  std::cout << "triangle3Dto2DCacheBldrTest a: " << a.x << "," << a.y << std::endl;
+  std::cout << "triangle3Dto2DCacheBldrTest b: " << b.x << "," << b.y << std::endl;
+  std::cout << "triangle3Dto2DCacheBldrTest c: " << c.x << "," << c.y << std::endl;
 }
 
 int testingmain(int, char** ) {

@@ -42,7 +42,7 @@ public:
 
   /** \brief base destructor.
    */
-  ~InputEvent() {}
+  ~InputEvent() = default;
 
   /** \brief Get the id of the key related with this event.
    * \return An integer that identifies the key.

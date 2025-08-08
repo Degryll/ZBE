@@ -368,7 +368,7 @@ public:
 
   /** \brief Virtual destructor.
    */
-  ~MainLoopExit() {}
+  ~MainLoopExit() = default;
 
   void setMainLoop(std::shared_ptr<MainLoop> mainLoop) {
     this->mainLoop = mainLoop;
@@ -471,7 +471,7 @@ public:
 
   /** \brief Destroys the StateMachineDaemon.
    */
-  virtual ~StateMachineDaemon() {}
+  virtual ~StateMachineDaemon() = default;
 
   /** \brief Sets the Daemon to use for a given state.
    * |param state desired state
@@ -521,7 +521,7 @@ public:
 
   /** \brief Destroys the StateMachineDaemon.
    */
-  virtual ~StatedDaemon() {}
+  virtual ~StatedDaemon() = default;
 
   /** \brief Sets the Daemon to use for a given state.
    * |param state desired state

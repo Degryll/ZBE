@@ -28,7 +28,7 @@ public:
 
   /** \brief Virtual destructor.
    */
-  virtual ~Bounce() {}
+  virtual ~Bounce() = default;
 
   /** \brief Changes the entity velocity with the accumulated normals.
    */

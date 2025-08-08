@@ -25,7 +25,7 @@ public:
 
   /** \brief Virtual destructor.
    */
-  virtual ~Adaptor() {}
+  virtual ~Adaptor() = default;
 
   /** \brief returns avatar
    *  \return the avatar

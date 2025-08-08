@@ -51,7 +51,7 @@ public:
 
   /** \brief Destructor.
    */
-  ~SpriteSheetSDLDrawer() {}
+  ~SpriteSheetSDLDrawer() = default;
 
   /** \brief sets the window, imgStore and rmss.
    *  \param window A SDLwindow with its context.

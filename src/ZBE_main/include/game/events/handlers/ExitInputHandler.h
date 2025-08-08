@@ -11,7 +11,7 @@ class ZBEAPI ExitInputHandler : public zbe::InputHandler {
 	  ExitInputHandler(const ExitInputHandler&) = delete;
 	  void operator=(const ExitInputHandler&) = delete;
 
-  	ExitInputHandler() {}
+  	ExitInputHandler() = default;
 
   	void run(float status) override {
       if( status) {

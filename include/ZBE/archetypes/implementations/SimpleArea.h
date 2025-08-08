@@ -23,7 +23,7 @@ public:
 
   /** \brief Empty constructor
    */
-  SimpleArea() : w(), h() {}
+  SimpleArea() = default;
 
   /** \brief Constructor with initial data
    */
@@ -31,7 +31,7 @@ public:
 
   /** \brief Virtual destructor.
    */
-  ~SimpleArea() {}
+  ~SimpleArea() = default;
 
   /** \brief Set area height
    *  \param height

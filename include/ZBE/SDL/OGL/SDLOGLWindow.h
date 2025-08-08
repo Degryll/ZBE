@@ -45,7 +45,7 @@ public:
 
     /** \brief Default destructor. Will free all loaded textures.
      */
-    ~OGLTextureStore() {};
+    ~OGLTextureStore() = default;
 
     /** \brief Creates an empty texture.
      *
@@ -101,7 +101,7 @@ public:
     OGLModelStore(const OGLModelStore&) = delete; //!< Delete copy constructor
     void operator=(const OGLModelStore&) = delete; //!< Delete assing aperator
 
-    OGLModelStore() : modelCollection(), m() {}
+    OGLModelStore() = default;
 
     virtual ~OGLModelStore() = default;
 
@@ -132,7 +132,7 @@ DISABLE_WARNING_POP()
 
 struct ZBEAPI ShaderDef {
 DISABLE_DLL_WARN
-  ShaderDef() : filename(), type() {}
+  ShaderDef() = default;
   ShaderDef(std::string filename, GLenum type) : filename(filename), type(type) {}
   std::string filename;
   GLenum type;
@@ -144,7 +144,7 @@ public:
   OGLShaderStore(const OGLShaderStore&) = delete; //!< Delete copy constructor
   void operator=(const OGLShaderStore&) = delete; //!< Delete assing aperator
 
-  OGLShaderStore() : programCollection(), m() {}
+  OGLShaderStore() = default;
 
   uint64_t loadShader(std::vector<ShaderDef> shaderDefs);
 
@@ -183,7 +183,7 @@ public:
    *  \param window_flags Flags for the SDLOGLWindow creation. Default no flags.
    *  \param rederer_flags Flags for the Renderer creation. Default no flags.
    */
-  SDLOGLWindow() : SDLWindow(), glContext(), texStore(), modelStore(), shaderStore() {}
+  SDLOGLWindow() = default;
 
   /** \brief Creates a new SDLOGLWindow and a Renderer.
    *
@@ -215,7 +215,7 @@ public:
 
   /** \brief Free resources and destroy the Renderer and the SDLOGLWindow.
    */
-  virtual ~SDLOGLWindow() {};
+  virtual ~SDLOGLWindow() = default;
 
   /** \brief Sets the window flags
    *  \param window_flags The widnow flags, like borderless, resizable, etc.

@@ -31,7 +31,7 @@ class ZBEAPI Event {
      */
     Event(uint64_t id, uint64_t time) : id(id), time(time) {}
 
-    virtual ~Event() {};  //!< Empty destructor
+    virtual ~Event() = default;  //!< Empty destructor
 
     /** \brief Get the exact moment in which event occurred
      *

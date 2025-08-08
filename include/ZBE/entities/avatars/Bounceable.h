@@ -22,7 +22,7 @@ class ZBEAPI Bounceable {
 
     /** \brief Virtual destructor.
      */
-    virtual ~Bounceable() {};
+    virtual ~Bounceable() = default;
 
     /** \brief Return the bounce factor.
      * \return The bounce factor.

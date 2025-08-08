@@ -63,7 +63,7 @@ namespace zbe {
  */
 class BaseFactories : public Daemon {
 public:
-  ~BaseFactories() {}
+  ~BaseFactories() = default;
 
   /** \brief It will Load the factories calling the load method.
   */

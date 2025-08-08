@@ -26,7 +26,7 @@ class ZBEAPI TextDrawable : virtual public Drawable {
 public:
   /** \brief Virtual destructor.
    */
-  virtual ~TextDrawable() {}
+  virtual ~TextDrawable() = default;
 
   /** \brief Gets the text.
    *  \return Return string text.

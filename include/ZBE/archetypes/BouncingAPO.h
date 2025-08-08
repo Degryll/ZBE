@@ -24,7 +24,7 @@ class BouncingAPO : virtual public BouncingPO<s>, virtual public ActivePhysicalO
 public:
   /** \brief Virtual destructor.
    */
-  virtual ~BouncingAPO() {}
+  virtual ~BouncingAPO() = default;
 };
 
 }  // namespace zbe

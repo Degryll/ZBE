@@ -22,7 +22,7 @@ class ZBEAPI Ticket {
 public:
   enum State{ACTIVE,INACTIVE,ERASED};  //!< The different states.
 
-  virtual ~Ticket() {}
+  virtual ~Ticket() = default;
 
   virtual void setACTIVE() = 0;    //!< Set the state as ACTIVE.
   virtual void setINACTIVE() = 0;  //!< Set the state as INACTIVE.

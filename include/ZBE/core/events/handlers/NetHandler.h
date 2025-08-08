@@ -23,7 +23,7 @@ public:
 
   /** \brief Destructor.
    */
-  virtual ~NetHandler() {}
+  virtual ~NetHandler() = default;
 
   /** \brief Do the Handler job.
    */

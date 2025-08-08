@@ -24,7 +24,7 @@ class MobileAPO : virtual public MobilePO<s>, virtual public ActivePhysicalObjec
 public:
   /** \brief Virtual destructor.
    */
-  virtual ~MobileAPO() {}
+  virtual ~MobileAPO() = default;
 };
 
 }  // namespace zbe

@@ -65,7 +65,7 @@ namespace JSONGraphicsLoaders{
   ZBEAPI void JSONGLSLProgramFileLoad(std::istream& is, std::shared_ptr<SDLOGLWindow> window, RsrcDictionary<uint64_t>& uintStore);
 
 // private:
-//  JSONGraphicsLoaders() {}
+//  JSONGraphicsLoaders() = default;
 
 //  RsrcStore<zbe::SpriteSheet<uint64_t, int64_t, double, Vector2D, Vector2D> >& rsrcAnimSprt = RsrcStore<zbe::SpriteSheet<uint64_t, int64_t, double, Vector2D, Vector2D> >::getInstance();
 //  RsrcStore<ImgDef>& rsrcImgDef = RsrcStore<ImgDef>::getInstance();

@@ -25,7 +25,7 @@ public:
 
   /** \brief Virtual Destructor.
    */
-  virtual ~AnimatedSprite() {};
+  virtual ~AnimatedSprite() = default;
 
   /** \brief Returns time.
    *  \return time.

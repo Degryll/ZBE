@@ -28,7 +28,7 @@ public:
   static uint64_t getId();
 
 private:
-    SysIdGenerator() {};
+    SysIdGenerator() = default;
 DISABLE_DLL_WARN
     static std::atomic<uint64_t> id;
 DISABLE_WARNING_POP()

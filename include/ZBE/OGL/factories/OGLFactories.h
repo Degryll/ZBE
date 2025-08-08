@@ -31,7 +31,7 @@ namespace zbe {
  */
 class OGLFactories : public Daemon {
 public:
-  ~OGLFactories() {}
+  ~OGLFactories() = default;
 
   /** \brief It will Load the factories calling the load method.
   */

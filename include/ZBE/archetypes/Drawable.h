@@ -22,7 +22,7 @@ class Drawable {
 public:
   /** \brief Virtual destructor.
    */
-  virtual ~Drawable() {}
+  virtual ~Drawable() = default;
 
   /** \brief Gets the left coordinate.
    *  \return The left coordinate.

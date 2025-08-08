@@ -25,7 +25,7 @@ class Position {
 public:
   /** \brief Virtual destructor.
    */
-  virtual ~Position() {}
+  virtual ~Position() = default;
 
   /** \brief Sets the position using a Point.
    *  \param position Position with the values of the position.

@@ -93,13 +93,13 @@ class ZBEAPI LoggerMsg {
 public:
   /** \brief Void constructor.
    */
-  LoggerMsg() : msg() {};
+  LoggerMsg() = default;
 
   /** \brief Copy constructor.
    */
   LoggerMsg(const LoggerMsg &l) : msg() {this->msg << l.msg.str();};
 
-  ~LoggerMsg() {};
+  ~LoggerMsg() = default;
 
   /** \brief Define operator<< to build a std::stringstream.
    */
@@ -251,7 +251,7 @@ protected:
   static void defaultCommandLineWriter(int ntype, const char * msgtype, const char * msg);
 
 private:
-  Logger() : filename(), writers(), m() {}
+  Logger() = default;
 
 DISABLE_DLL_WARN
   std::string filename;

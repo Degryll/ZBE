@@ -17,7 +17,7 @@ namespace zbe {
 
 template <typename Shape, unsigned s>
 struct Moving : public Shape {
-  Moving() : Shape(), v() {}
+  Moving() = default;
   Moving(Shape shape, Vector<s> v) : Shape(shape), v(v) {}
   Shape* getShape() {
     return this;

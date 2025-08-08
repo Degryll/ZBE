@@ -23,7 +23,7 @@ public:
 
   /** \brief Destructor.
    */
-  virtual ~TimeHandler() {}
+  virtual ~TimeHandler() = default;
 
   /** \brief Do the Handler job.
    */

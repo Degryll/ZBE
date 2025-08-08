@@ -20,7 +20,7 @@ class Wide {
 public:
   /** \brief Virtual destructor.
    */
-  virtual ~Wide() {}
+  virtual ~Wide() = default;
 
   /** \brief Set the width.
    *  \param width width.

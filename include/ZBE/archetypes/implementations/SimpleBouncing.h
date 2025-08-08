@@ -60,7 +60,7 @@ public:
 
   /** \brief Virtual destructor.
    */
-  virtual ~SimpleBouncing() {}
+  virtual ~SimpleBouncing() = default;
 
   /** \brief Add a new normal.
    *  \param normal The normal to be added.

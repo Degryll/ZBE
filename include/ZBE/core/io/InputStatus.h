@@ -23,7 +23,7 @@ public:
 
   /** \brief Empty constructor (0 id, 0.0 status).
    */
-  InputStatus() : id(), status(), time() {}
+  InputStatus() = default;
 
   /** \brief Construct an input status.
    *  \param id Id of the input (key, button, mouse move, etc.).

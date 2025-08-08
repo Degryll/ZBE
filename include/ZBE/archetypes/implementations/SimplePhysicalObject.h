@@ -31,7 +31,7 @@ public:
 
   /** \brief Virtual destructor.
    */
-  virtual ~SimplePhysicalObject() {}
+  virtual ~SimplePhysicalObject() = default;
 
   /** \brief Set the actuators list.
    *  \param actuatorsList The actuators list index.

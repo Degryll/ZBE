@@ -31,7 +31,7 @@ public:
     transform[15] = 1;
   }
 
-  ~Camera() {}
+  ~Camera() = default;
 
   void setEyeValue(std::shared_ptr<Value<Vector3D> > eye) {
     this->eye = eye;

@@ -43,7 +43,7 @@ public:
 
   /** \brief Destroys the ImGuiPreLoopDaemon
    */
-  virtual ~ImGuiPreLoopDaemon() {}
+  virtual ~ImGuiPreLoopDaemon() = default;
 
   /** \brief Sets the window. Use with empty constructor.
    *  \param window windo to use.

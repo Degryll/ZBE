@@ -26,7 +26,7 @@ class ZBEAPI Erase : virtual public Behavior<void> {
 
     /** \brief Virtual destructor.
      */
-    virtual ~Erase() {}
+    virtual ~Erase() = default;
 
     /** \brief Erase given avatar.
      */
@@ -40,7 +40,7 @@ class ZBEAPI EraseEntity : virtual public Behavior<void> {
 
     /** \brief Virtual destructor.
      */
-    virtual ~EraseEntity() {}
+    virtual ~EraseEntity() = default;
 
     /** \brief Erase given avatar.
      */

@@ -133,7 +133,7 @@ class RsrcStore {
     }
 
   private:
-    RsrcStore() : l() {} //!< Needed for singleton.
+    RsrcStore() = default; //!< Needed for singleton.
 
     std::map<uint64_t, std::shared_ptr<T> > l;  //!< Map that associates resources with ids.
     NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();  //!< Nuevo, maho y reshulón-----------------

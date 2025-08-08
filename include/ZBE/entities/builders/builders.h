@@ -1191,7 +1191,7 @@ public:
   using SubBuild = Funct<std::shared_ptr<ReactFunct>, std::shared_ptr<Entity>>;
 
   //_ReactorBldr() : sb(std::make_shared<WrapperFunct<std::shared_ptr<ReactFunct>, std::shared_ptr<Entity>>>(noReactionSubBuild)) {}
-  _ReactorBldr() : sb() {}
+  _ReactorBldr() = default;
 
   virtual ~_ReactorBldr() = default;
 

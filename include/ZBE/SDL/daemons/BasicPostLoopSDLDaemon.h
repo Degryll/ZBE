@@ -38,7 +38,7 @@ public:
 
   /** \brief Destroys the BasicPostLoopSDLDaemon
    */
-  ~BasicPostLoopSDLDaemon() {}
+  ~BasicPostLoopSDLDaemon() = default;
 
   /** \brief Sets the the window. Use with empty constructor.
    *  \param window windo to use.

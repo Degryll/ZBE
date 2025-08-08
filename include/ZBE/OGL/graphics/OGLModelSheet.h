@@ -27,7 +27,7 @@ public:
 
   /** \brief Virtual destructor
   */
-  virtual ~OGLModelSheet() {} //!< Virtual destrutor.
+  virtual ~OGLModelSheet() = default; //!< Virtual destrutor.
 
   /** \brief Generate a sprite from a given entity.
    *  \return generated sprite

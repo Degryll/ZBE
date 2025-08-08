@@ -38,7 +38,7 @@ public:
 
   /** \brief Destructor.
    */
-  ~SimpleImGuiTest() {}
+  ~SimpleImGuiTest() = default;
 
   /** \brief Do the actual Daemon job.
    */

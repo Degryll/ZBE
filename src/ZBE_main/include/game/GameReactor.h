@@ -13,9 +13,9 @@ typedef zbe::Reactor<zbe::CollisionData, zbe::CollisionObject, void> GameReactor
 
 //class GameReactor {
 //public:
-//  virtual ~GameReactor() {}
+//  virtual ~GameReactor() = default;
 //
-//  virtual void act() {}
+//  virtual void act() = default;
 //};
 
 }  // namespace game

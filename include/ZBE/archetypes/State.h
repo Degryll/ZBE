@@ -20,7 +20,7 @@ class State {
 public:
   /** \brief Virtual destructor.
    */
-  virtual ~State() {}
+  virtual ~State() = default;
 
   /** \brief Setter for the state attribute.
    *  \param state The integer value for the state.

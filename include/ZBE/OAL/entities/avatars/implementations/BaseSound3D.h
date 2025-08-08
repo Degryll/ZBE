@@ -40,7 +40,7 @@ public:
 
   /** \brief Virtual destructor.
    */
-  virtual ~BaseSound3D() {}
+  virtual ~BaseSound3D() = default;
 
   /** \brief Getter for the position.
   *  \return Emisor position.

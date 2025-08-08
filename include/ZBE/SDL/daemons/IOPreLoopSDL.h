@@ -35,7 +35,7 @@ namespace zbe {
 
       /** \brief Destroys the IOPreLoopSDL
        */
-      virtual ~IOPreLoopSDL() {}
+      virtual ~IOPreLoopSDL() = default;
 
       /** \brief Runs the daemon.
        */

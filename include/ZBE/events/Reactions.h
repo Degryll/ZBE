@@ -40,7 +40,7 @@ public:
 
   /** brief Empty constructor
    */
-  DaemonRct() : dmn() {};
+  DaemonRct() = default;
 
   /** brief Parametrized constructor
    */
@@ -66,7 +66,7 @@ public:
 
   /** brief Empty constructor
    */
-  TicketActivatorRct() : avt(), list() {};
+  TicketActivatorRct() = default;
 
   /** brief Parametrized constructor
    */
@@ -95,7 +95,7 @@ public:
 
   /** brief Empty constructor
    */
-  TicketDeactivatorRct() : avt(), list() {}
+  TicketDeactivatorRct() = default;
 
   /** brief Parametrized constructor
    */
@@ -124,7 +124,7 @@ class StoreValuesRct : public Funct<void, IData, std::array<std::shared_ptr<Valu
 public:
  /** brief Empty constructor
   */
- StoreValuesRct() :avt(), dest() {}
+ StoreValuesRct() = default;
 
   /** brief Parametrized constructor
   */

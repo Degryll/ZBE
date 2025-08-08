@@ -54,7 +54,7 @@ public:
 
 private:
   struct FtryData {
-    FtryData() : ftry(), name(), cfgId() {}
+    FtryData() = default;
     std::shared_ptr<Factory> ftry;
     std::string name;
     uint64_t cfgId;

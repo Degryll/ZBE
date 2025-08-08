@@ -99,7 +99,7 @@ class RsrcDictionary {
     }
 
   private:
-    RsrcDictionary() : l() {};  //!< Needed for singleton.
+    RsrcDictionary() = default;  //!< Needed for singleton.
 
     std::map<std::string, T> l;  //!< Map that associates resources with ids.
 };
@@ -175,7 +175,7 @@ class IdRsrcDictionary {
     }
 
   private:
-    IdRsrcDictionary() : l() {};  //!< Needed for singleton.
+    IdRsrcDictionary() = default;  //!< Needed for singleton.
 
 DISABLE_DLL_WARN
     std::map<uint64_t, uint64_t> l;  //!< Map that associates resources with ids.

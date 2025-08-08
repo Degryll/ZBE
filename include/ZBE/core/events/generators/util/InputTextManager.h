@@ -25,7 +25,7 @@ class ZBEAPI InputTextManager {
 public:
   InputTextManager(int eventId) : eventId(eventId), store(EventStore::getInstance()), handler(nullptr) {}
 
-  ~InputTextManager() {}
+  ~InputTextManager() = default;
 
   void setHandler(std::shared_ptr<TextHandler> handler) {
     this->handler = handler;

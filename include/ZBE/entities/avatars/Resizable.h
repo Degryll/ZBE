@@ -22,7 +22,7 @@ class ZBEAPI Resizable {
 
     /** \brief Virtual destructor.
      */
-    virtual ~Resizable() {}
+    virtual ~Resizable() = default;
 
     /** \brief Sets the size for this Resizable.
      * \param size The desired size
@@ -34,7 +34,7 @@ class ZBEAPI Resizable {
      */
     virtual double getSize() = 0;
 
-    /** \brief Increase entity size with given increment. TODO por qué?
+    /** \brief Increase entity size with given increment. TODO por quï¿½?
      * \param size The desired increment
      */
     void increaseSize(double increment) {

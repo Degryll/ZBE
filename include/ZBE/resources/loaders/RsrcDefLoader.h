@@ -20,7 +20,7 @@ namespace zbe {
  */
 class ZBEAPI RsrcDefLoader {
 public:
- virtual ~RsrcDefLoader() {} //!< Virtual destructor.
+ virtual ~RsrcDefLoader() = default; //!< Virtual destructor.
 
  /** \brief Load a resource definition
   *  \param url resource definition file to be loaded.

@@ -28,11 +28,11 @@ public:
 
   /** \brief Empty constructor.
    */
-  RsrcFolderLoaderDmn() : rsrcFolderLoader(), folderPath() {}
+  RsrcFolderLoaderDmn() = default;
 
   /** \brief Destructor and the contained Daemons.
    */
-  ~RsrcFolderLoaderDmn() {}
+  ~RsrcFolderLoaderDmn() = default;
 
   /** \brief It will run all Daemons added to this DaemonMaster.
    */

@@ -48,7 +48,7 @@ class InteractionEvent : public Event {
 
     /** \brief base destructor.
     */
-    virtual ~InteractionEvent() {};
+    virtual ~InteractionEvent() = default;
 
     /** \brief Copy Operator.
      */

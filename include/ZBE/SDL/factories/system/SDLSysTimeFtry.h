@@ -32,7 +32,7 @@ public:
 
   /** \brief Empty constructor
     */
-  SDLSysTimeFtry() {}
+  SDLSysTimeFtry() = default;
 
   /** \brief Configures SysTime to use and SDLTimer.
    *  \param name Name for the created item.

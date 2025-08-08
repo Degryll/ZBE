@@ -40,7 +40,7 @@ public:
 
   /** \brief Destroys the BasicPreLoopSDLDaemon
    */
-  virtual ~BasicPreLoopSDLDaemon() {}
+  virtual ~BasicPreLoopSDLDaemon() = default;
 
   /** \brief Sets the window. Use with empty constructor.
    *  \param window windo to use.

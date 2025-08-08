@@ -45,10 +45,10 @@ struct Covariance_Traits {
 template<typename T>
 struct Covariance_Traits<T, void> {
   struct Type {
-    Type() {}
+    Type() = default;
     template<typename ...Ts>
     explicit Type(Ts...) {}
-    virtual ~Type() {}
+    virtual ~Type() = default;
   };
 };
 
@@ -62,7 +62,7 @@ struct TypeGimmick { typedef T type; };
 template <typename T, typename... Bases>
 struct TypeContainer : public TypeContainer<T>, public TypeContainer<Bases...> {
   TypeContainer(T* t, Bases*...bases): TypeContainer<T>(t), TypeContainer<Bases...>(bases...) {}
-  ~TypeContainer() {}
+  ~TypeContainer() = default;
 };
 
 /** \brief Base case of.
@@ -74,7 +74,7 @@ struct TypeContainer<T> {
   void operator=(const TypeContainer<T>&) = delete;
 
   explicit TypeContainer(T* t): t(t) {}
-  ~TypeContainer() {}
+  ~TypeContainer() = default;
 
   /** \brief Return the stored instance.
    *

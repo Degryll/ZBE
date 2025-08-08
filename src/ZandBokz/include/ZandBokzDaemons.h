@@ -39,7 +39,7 @@ namespace zandbokz {
 template<typename T>
 class FixedValueSetterDmn : virtual public zbe::Daemon {
   public:
-    FixedValueSetterDmn() : list(), fixed() {};
+    FixedValueSetterDmn() = default;
     virtual ~FixedValueSetterDmn() = default;
 
     void addValue(std::shared_ptr<zbe::Value<T>> val) {

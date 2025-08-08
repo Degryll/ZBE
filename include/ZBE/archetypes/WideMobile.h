@@ -24,7 +24,7 @@ class WideMobile : virtual public Wide, virtual public Mobile<s> {
 public:
   /** \brief Virtual destructor.
    */
-  virtual ~WideMobile() {}
+  virtual ~WideMobile() = default;
 };
 
 }  // namespace zbe

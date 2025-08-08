@@ -27,7 +27,7 @@ template <unsigned s>
 struct Ray {
   /** \brief Void constructor, the Ray's values are unknown.
    */
-  Ray() {}
+  Ray() = default;
 
   /** \brief Parametrized constructor.
    *
@@ -65,7 +65,7 @@ template <>
 struct Ray<2> {
   /** \brief Void constructor, the 2D Ray's values are unknown.
    */
-  Ray() : o(), d() {}
+  Ray() = default;
 
   /** \brief Parametrized constructor.
    *
@@ -105,7 +105,7 @@ template <>
 struct Ray<3> {
   /** \brief Void constructor, the 3D Ray's values are unknown.
    */
-  Ray() : o(), d() {}
+  Ray() = default;
 
   /** \brief Parametrized constructor.
    *
@@ -141,7 +141,7 @@ template <unsigned s>
 struct NSphere {
   /** \brief Void constructor, the NSphere's values are unknown.
    */
-  NSphere() : c(), r() {}
+  NSphere() = default;
 
   /** \brief Parametrized constructor.
    *
@@ -177,7 +177,7 @@ template <>
 struct NSphere<2> {
   /** \brief Void constructor, the Circle's values are unknown.
    */
-  NSphere() : c(), r() {}
+  NSphere() = default;
 
   /** \brief Parametrized constructor.
    *
@@ -215,7 +215,7 @@ template <>
 struct NSphere<3> {
   /** \brief Void constructor, the Sphere's values are unknown.
    */
-  NSphere() : c(), r() {}
+  NSphere() = default;
 
   /** \brief Parametrized constructor.
    *
@@ -253,7 +253,7 @@ template <unsigned s>
 struct AABB {
   /** \brief Void constructor, the AABB's values are unknown.
    */
-  AABB() {}
+  AABB() = default;
 
   /** \brief Parametrized constructor.
    *
@@ -291,7 +291,7 @@ template <>
 struct AABB<2> {
   /** \brief Void constructor, the AABB2D's values are unknown.
    */
-  AABB() : minimum(), maximum() {}
+  AABB() = default;
 
   /** \brief Parametrized constructor.
    *
@@ -331,7 +331,7 @@ template <>
 struct AABB<3> {
   /** \brief Void constructor, the AABB3D's values are unknown.
    */
-  AABB() : minimum(), maximum() {}
+  AABB() = default;
 
   /** \brief Parametrized constructor.
    *

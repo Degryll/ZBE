@@ -27,7 +27,7 @@ public:
 
   /** \brief Virtual destructor.
    */
-  virtual ~SimpleWide() {}
+  virtual ~SimpleWide() = default;
 
   /** \brief Set the size of the archetype.
    *  \param width Size of the archetype.

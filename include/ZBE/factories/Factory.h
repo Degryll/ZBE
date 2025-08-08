@@ -23,7 +23,7 @@ class ZBEAPI Factory {
 public:
   /** \brief Virtual destructor.
    */
-  virtual ~Factory() {}
+  virtual ~Factory() = default;
 
   /** \brief Create the desired tool, probably incomplete.
    *  \param name Name for the created tool.

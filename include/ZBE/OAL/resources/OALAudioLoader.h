@@ -28,7 +28,7 @@ namespace zbe {
 class ZBEAPI OALAudioLoader : public RsrcLoader {
 public:
 
-  OALAudioLoader() : audioStore(), audioDefLoader() {}
+  OALAudioLoader() = default;
 
   OALAudioLoader(std::shared_ptr<OALAudioStore> audioStore, std::shared_ptr<RsrcDefLoader> audioDefLoader)
     : audioStore(audioStore), audioDefLoader(audioDefLoader) {}
