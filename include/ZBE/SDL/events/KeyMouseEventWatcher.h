@@ -150,7 +150,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class ZBEAPI KeyMouseEventWatcherFtry : public Factory {
+class KeyMouseEventWatcherFtry : public Factory {
 public:
 
   /** \brief Builds a SDLWindow.

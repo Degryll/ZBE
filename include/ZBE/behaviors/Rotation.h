@@ -29,7 +29,7 @@
 
 namespace zbe {
 
-class ZBEAPI LimitedExcentricalRotation3D : virtual public Behavior<float, float, Vector3D,Vector3D, Vector3D, Vector3D>, public Parametric<float> {
+class LimitedExcentricalRotation3D : virtual public Behavior<float, float, Vector3D,Vector3D, Vector3D, Vector3D>, public Parametric<float> {
    public:
     
     LimitedExcentricalRotation3D() = default;
@@ -102,7 +102,7 @@ class ZBEAPI LimitedExcentricalRotation3D : virtual public Behavior<float, float
     float sensibility;
 };
 
-class ZBEAPI LimitedExcentricalRotation3DFtry : virtual public Factory {
+class LimitedExcentricalRotation3DFtry : virtual public Factory {
 public:
   /** \brief Builds a Rotation2D.
    *  \param name Name for the created Rotation2D.
@@ -159,7 +159,7 @@ private:
 };
 
 
-class ZBEAPI ExcentricalRotation3D : virtual public Behavior<Vector3D,Vector3D, Vector3D>, public Parametric<float> {
+class ExcentricalRotation3D : virtual public Behavior<Vector3D,Vector3D, Vector3D>, public Parametric<float> {
    public:
 
     ExcentricalRotation3D() = default;
@@ -207,7 +207,7 @@ class ZBEAPI ExcentricalRotation3D : virtual public Behavior<Vector3D,Vector3D, 
     float sensibility;
 };
 
-class ZBEAPI ExcentricalRotation3DFtry : virtual public Factory {
+class ExcentricalRotation3DFtry : virtual public Factory {
 public:
   /** \brief Builds a Rotation2D.
    *  \param name Name for the created Rotation2D.
@@ -302,7 +302,7 @@ class ZBEAPI Rotation3D : virtual public Behavior<Vector3D, Vector3D>, public Pa
 
 /** \brief Factory for Rotation2DFtry.
  */
-class ZBEAPI Rotation3DFtry : virtual public Factory {
+class Rotation3DFtry : virtual public Factory {
 public:
   /** \brief Builds a Rotation2D.
    *  \param name Name for the created Rotation2D.

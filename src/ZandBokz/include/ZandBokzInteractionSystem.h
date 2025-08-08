@@ -351,7 +351,7 @@ private:
   std::array<uint64_t, 3> idx;
 };
 
-class ZBEAPI PlatformTraitBldrFtry : public zbe::Factory {
+class PlatformTraitBldrFtry : public zbe::Factory {
 public:
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;

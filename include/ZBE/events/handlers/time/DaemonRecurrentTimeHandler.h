@@ -134,7 +134,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class ZBEAPI DaemonRecurrentTHBldrFtry : public Factory {
+class DaemonRecurrentTHBldrFtry : public Factory {
 
 void create(std::string name, uint64_t) override {
   using namespace std::string_literals;

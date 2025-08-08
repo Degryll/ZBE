@@ -62,7 +62,7 @@ private:
 /** \brief Factory for DaemonIH.
  */
 template<typename T>
-class ZBEAPI ConditionalDaemonIHFtry : virtual public Factory {
+class ConditionalDaemonIHFtry : virtual public Factory {
 public:
 
 /** \brief Create the desired tool, probably incomplete.
@@ -190,7 +190,7 @@ private:
 /** \brief Factory for DaemonIH.
  */
 template<typename T>
-class ZBEAPI ConditionalCompositeIHFtry : virtual public Factory {
+class ConditionalCompositeIHFtry : virtual public Factory {
 public:
 
 /** \brief Create the desired tool, probably incomplete.

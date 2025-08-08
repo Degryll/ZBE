@@ -100,7 +100,7 @@ class EntityEraserReactionBldr : public Funct<std::shared_ptr<Funct<void, IData,
 
 /** \brief Factory for EntityEraserTH.
  */
-class ZBEAPI EntityEraserTHFtry : virtual public Factory {
+class EntityEraserTHFtry : virtual public Factory {
 public:
 
 /** \brief Create the desired tool, probably incomplete.

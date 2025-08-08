@@ -52,7 +52,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class ZBEAPI OnceDaemonFtry : public Factory {
+class OnceDaemonFtry : public Factory {
 public:
 
   /** \brief Creates a OnceDaemon from a file.

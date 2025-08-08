@@ -143,7 +143,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class ZBEAPI AttachRedirectionReactionBldrFtry : public zbe::Factory {
+class AttachRedirectionReactionBldrFtry : public zbe::Factory {
 public:
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
@@ -242,7 +242,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class ZBEAPI ClosestCenterStoreReactionBldrFtry : public zbe::Factory {
+class ClosestCenterStoreReactionBldrFtry : public zbe::Factory {
 public:
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
@@ -347,7 +347,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class ZBEAPI AttachRepositionReactionBldrFtry : public zbe::Factory {
+class AttachRepositionReactionBldrFtry : public zbe::Factory {
 public:
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
