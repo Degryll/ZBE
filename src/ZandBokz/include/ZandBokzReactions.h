@@ -38,7 +38,7 @@
 
 namespace zandbokz {
 
-class ZBEAPI AttachRedirectionReaction : public zbe::Funct<void, zbe::CollisionData3D, Platform> {
+class AttachRedirectionReaction : public zbe::Funct<void, zbe::CollisionData3D, Platform> {
 public:
   AttachRedirectionReaction(const AttachRedirectionReaction&) = delete; //!< Avoid copy.
   void operator=(const AttachRedirectionReaction&) = delete; //!< Avoid copy.
@@ -126,7 +126,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class ZBEAPI AttachRedirectionReactionBldr : public zbe::Funct<std::shared_ptr<zbe::Funct<void, zbe::CollisionData3D, Platform>>, std::shared_ptr<zbe::Entity>> {
+class AttachRedirectionReactionBldr : public zbe::Funct<std::shared_ptr<zbe::Funct<void, zbe::CollisionData3D, Platform>>, std::shared_ptr<zbe::Entity>> {
 public:
   std::shared_ptr<zbe::Funct<void, zbe::CollisionData3D, Platform>> operator()(std::shared_ptr<zbe::Entity> ent) override {
     auto avt = std::make_shared<zbe::MBaseAvatar< zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D>>();
@@ -183,7 +183,7 @@ private:
 };
 
 //template<typename IData, typename Trait>
-class ZBEAPI ClosestCenterStoreReaction : public zbe::Funct<void, FGravityData, Attractor> {
+class ClosestCenterStoreReaction : public zbe::Funct<void, FGravityData, Attractor> {
 public:
   ClosestCenterStoreReaction(const ClosestCenterStoreReaction&) = delete; //!< Avoid copy.
   void operator=(const ClosestCenterStoreReaction&) = delete; //!< Avoid copy.
@@ -225,7 +225,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class ZBEAPI ClosestCenterStoreReactionBldr : public zbe::Funct<std::shared_ptr<zbe::Funct<void, FGravityData, Attractor>>, std::shared_ptr<zbe::Entity>> {
+class ClosestCenterStoreReactionBldr : public zbe::Funct<std::shared_ptr<zbe::Funct<void, FGravityData, Attractor>>, std::shared_ptr<zbe::Entity>> {
 public:
   std::shared_ptr<zbe::Funct<void, FGravityData, Attractor>> operator()(std::shared_ptr<zbe::Entity> ent) override {
     auto avt = std::make_shared<zbe::MBaseAvatar<double, zbe::Vector3D, zbe::Vector3D>>();
@@ -282,7 +282,7 @@ private:
 };
 
 //template<typename IData, typename Trait>
-class ZBEAPI AttachRepositionReaction : public zbe::Funct<void, zbe::CollisionData3D, Platform> {
+class AttachRepositionReaction : public zbe::Funct<void, zbe::CollisionData3D, Platform> {
 public:
   AttachRepositionReaction(const AttachRepositionReaction&) = delete; //!< Avoid copy.
   void operator=(const AttachRepositionReaction&) = delete; //!< Avoid copy.
@@ -330,7 +330,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class ZBEAPI AttachRepositionReactionBldr : public zbe::Funct<std::shared_ptr<zbe::Funct<void, zbe::CollisionData3D, Platform>>, std::shared_ptr<zbe::Entity>> {
+class AttachRepositionReactionBldr : public zbe::Funct<std::shared_ptr<zbe::Funct<void, zbe::CollisionData3D, Platform>>, std::shared_ptr<zbe::Entity>> {
 public:
   std::shared_ptr<zbe::Funct<void, zbe::CollisionData3D, Platform>> operator()(std::shared_ptr<zbe::Entity> ent) override {
     auto avt = std::make_shared<zbe::MBaseAvatar<zbe::Vector2D, zbe::Vector2D, zbe::Vector3D>>();

@@ -30,7 +30,7 @@
 
 namespace zandbokz {
 
-class ZBEAPI Triangle3Dto2DCacheBldr : public zbe::Funct<void, std::shared_ptr<zbe::Entity>> {
+class Triangle3Dto2DCacheBldr : public zbe::Funct<void, std::shared_ptr<zbe::Entity>> {
 public:
  void operator()(std::shared_ptr<zbe::Entity> entity) override {
     float baseScale = static_cast<float>(entity->getDouble(sizeIdx)->get());

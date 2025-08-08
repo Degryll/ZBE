@@ -265,7 +265,7 @@ private:
 
 /** \brief Define the minimal functions of every behavior.
  */
-class ZBEAPI Rotation3D : virtual public Behavior<Vector3D, Vector3D>, public Parametric<float> {
+class Rotation3D : virtual public Behavior<Vector3D, Vector3D>, public Parametric<float> {
   public:
 
     Rotation3D() = default;

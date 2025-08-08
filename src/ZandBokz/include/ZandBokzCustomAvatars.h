@@ -24,7 +24,7 @@
 namespace zandbokz {
 DISABLE_WARNING_PUSH(4250)
 
-class ZBEAPI MovingSphereAvt : public zbe::SAvatar<zbe::MovingSphere>, zbe::AvatarImp  {
+class MovingSphereAvt : public zbe::SAvatar<zbe::MovingSphere>, zbe::AvatarImp  {
 public:
   void setupEntity(std::shared_ptr<zbe::Entity> entity, uint64_t centeridx, uint64_t radiusidx, uint64_t velocityidx) {
     zbe::AvatarImp::setupEntity(entity);
@@ -118,7 +118,7 @@ DISABLE_WARNING_POP()
 //   std::shared_ptr<ContextTime> cTime;
 // };
 
-class ZBEAPI MovingSphereAvtBldr : public zbe::Funct<std::shared_ptr<zbe::SAvatar<zbe::MovingSphere>>, std::shared_ptr<zbe::Entity>> {
+class MovingSphereAvtBldr : public zbe::Funct<std::shared_ptr<zbe::SAvatar<zbe::MovingSphere>>, std::shared_ptr<zbe::Entity>> {
 public:
   std::shared_ptr<zbe::SAvatar<zbe::MovingSphere>> operator()(std::shared_ptr<zbe::Entity> ent) override {
     std::shared_ptr<MovingSphereAvt> avt = std::make_shared<MovingSphereAvt>();

@@ -503,7 +503,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class MovingSphereAvtShapeBldr  : public Funct<std::shared_ptr<SAvatar<MovingSphere>>, std::shared_ptr<Entity>> {
+class MovingSphereAvtShapeBldr : public Funct<std::shared_ptr<SAvatar<MovingSphere>>, std::shared_ptr<Entity>> {
 public:
   using AvtBaseType = SAvatar<MovingSphere>;
   std::shared_ptr<SAvatar<MovingSphere>> operator()(std::shared_ptr<Entity> ent) override {
