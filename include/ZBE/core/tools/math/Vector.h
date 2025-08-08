@@ -436,7 +436,7 @@ class Vector : public _VECTOR<dim> {
     /** \brief Void constructor, the Vector's values are unknown.
      */
     // cppcheck-suppress uninitMemberVar
-    Vector() : _VECTOR<dim>() = default;
+    Vector() = default;
 
     /** \brief A list initializer constructor.
      *

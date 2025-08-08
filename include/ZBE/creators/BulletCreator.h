@@ -64,7 +64,7 @@ public:
     teg(),
     time(),
     ticketId(),
-    cTime() = default;
+    cTime() {}
 
   void operator()(Vector3D position, Vector3D direction) {
       using namespace std::string_literals;

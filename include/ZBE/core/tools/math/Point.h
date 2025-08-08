@@ -212,7 +212,7 @@ class Point : public _POINT<s> {
   public:
     /** \brief Void constructor, the Point's values are unknown.
      */
-    Point() : _POINT<s>() = default;
+    Point() = default;
 
     /** \brief A list initializer constructor.
      *
