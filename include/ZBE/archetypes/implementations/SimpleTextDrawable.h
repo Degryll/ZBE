@@ -18,7 +18,7 @@ namespace zbe {
 
 /** \brief This implements an entity that can be wrote.
  */
-class ZBEAPI SimpleTextDrawable : virtual public Drawable {
+class SimpleTextDrawable : virtual public Drawable {
 public:
   /** \brief Constructs a SimpleTextDrawable with position as x - y, size as w - h, graphics id to use, text value and color.
    */
@@ -31,47 +31,47 @@ public:
   /** \brief Returns x coord value
    * \return int x coord value
    */
-  int      getX()        {return (x);}
+  int64_t getX() {return (x);}
 
   /** \brief Returns y coord value
    * \return int y coord value
    */
-  int      getY()        {return (y);}
+  int64_t getY() {return (y);}
 
   /** \brief Returns Width value
    * \return width value
    */
-  unsigned getW()        {return (w);}
+  int64_t getW() {return (w);}
 
   /** \brief Returns Height value
    * \return height value
    */
-  unsigned getH()        {return (h);}
+  int64_t getH() {return (h);}
 
   /** \brief Returns the graphics id
    * \return graphics id
    */
-  int      getGraphics() {return (graphics);}
+  uint64_t getGraphics() {return (graphics);}
 
   /** \brief Sets x coord
    *  \param x value for x coord.
    */
-  void setX(int x)               {this->x = x;}
+  void setX(int64_t x) {this->x = x;}
 
   /** \brief Sets the Y coord
    *  \param y value for x coord.
    */
-  void setY(int y)               {this->y = y;}
+  void setY(int64_t y) {this->y = y;}
 
   /** \brief Sets width
    *  \param w value for width
    */
-  void setW(unsigned w)          {this->w = w;}
+  void setW(uint64_t w) {this->w = w;}
 
   /** \brief Sets height
    *  \param h value for height
    */
-  void setH(unsigned h)          {this->h = h;}
+  void setH(uint64_t h) {this->h = h;}
 
   /** \brief Sets the graphics id
    *  \param graphics The graphics id
@@ -79,11 +79,11 @@ public:
   void setGraphics(int graphics) {this->graphics = graphics;}
 
 private:
-  int x;      //!< X coordinate
-  int y;      //!< Y coordinate
-  unsigned w; //!< width
-  unsigned h; //!< height
-  int graphics;    //!< Image index
+  int64_t x;      //!< X coordinate
+  int64_t y;      //!< Y coordinate
+  int64_t w; //!< width
+  int64_t h; //!< height
+  uint64_t graphics;    //!< Image index
 };
 
 }  // namespace zbe

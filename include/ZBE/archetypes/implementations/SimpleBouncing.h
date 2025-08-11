@@ -4,7 +4,7 @@
  * @since 2017-03-07
  * @date 2018-02-22
  * @author Batis Degryll Ludo
- * @brief Implements the interface of a class ZBEAPI that stores normals to bounce.
+ * @brief Implements the  interface of a class that stores normals to bounce.
  */
 
 #ifndef ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEBOUNCING_H
@@ -21,7 +21,7 @@
 
 namespace zbe {
 
-/** \brief Implements the interface of a class ZBEAPI that stores normals to bounce.
+/** \brief Implements the  interface of a class that stores normals to bounce.
  */
 template <unsigned s>
 class SimpleBouncing : virtual public Bouncing<s>, public SimpleMobile<s> {

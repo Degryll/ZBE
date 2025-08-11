@@ -4,7 +4,7 @@
  * @since 2017-03-07
  * @date 2018-02-25
  * @author Batis Degryll Ludo
- * @brief Defines the interface of a class ZBEAPI that stores normals for to bounce.
+ * @brief Defines the interface of a class that stores normals for to bounce.
  */
 
 #ifndef ZBE_ARCHETYPES_BOUNCING_H

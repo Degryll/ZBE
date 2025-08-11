@@ -81,7 +81,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class BulletCreatorBhvFtry : virtual public Factory  {
+class ZBEAPI BulletCreatorBhvFtry : virtual public Factory  {
 public:
   void create(std::string name, uint64_t) override;
 

@@ -41,7 +41,7 @@ std::shared_ptr<Vector<s> > p = avatar->get<1, Vector<s> >();
 
 /** \brief Define the minimal functions of every behavior.
  */
-class ZBEAPI UniformLinearMotion2D : virtual public Behavior<Vector<2>, Vector<2> > {
+class UniformLinearMotion2D : virtual public Behavior<Vector<2>, Vector<2> > {
   public:
 
     /** \brief Virtual destructor.
@@ -143,7 +143,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class ZBEAPI UniformLinearMotion2DOnPlane : virtual public Behavior<float, Vector2D, Vector2D, Vector3D, Vector3D, Vector3D, Vector3D, Vector3D> {
+class UniformLinearMotion2DOnPlane : virtual public Behavior<float, Vector2D, Vector2D, Vector3D, Vector3D, Vector3D, Vector3D, Vector3D> {
 public:
   virtual ~UniformLinearMotion2DOnPlane() = default;
 

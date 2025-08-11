@@ -23,7 +23,7 @@ namespace zbe {
 
 /** \brief Base implementation of the State interface using a Value<uint64_t>.
  */
-class ZBEAPI BaseState : public State {
+class BaseState : public State {
 public:
   BaseState(std::shared_ptr<Value<int64_t> > state) : s(state) {}
 

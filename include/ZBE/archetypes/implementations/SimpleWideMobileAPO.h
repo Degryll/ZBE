@@ -4,7 +4,7 @@
  * @since 2017-01-30
  * @date 2018-02-25
  * @author Degryll Batis Ludo
- * @brief Implements the interface of a class ZBEAPI with a position, velocity, width and interacts actively with other objects.
+ * @brief Implements the  interface of a class with a position, velocity, width and interacts actively with other objects.
  */
 
 #ifndef ZBE_ARCHETYPES_IMPLEMENTATIONS_SIMPLEWIDEMOBILEAPO_H
@@ -25,7 +25,7 @@
 
 namespace zbe {
 
-/** \brief Implements the interface of a class ZBEAPI with a position, velocity, width and interacts actively with other objects.
+/** \brief Implements the  interface of a class with a position, velocity, width and interacts actively with other objects.
  */
 template <unsigned s>
 class SimpleWideMobileAPO : virtual public WideMobileAPO<s>, public SimpleWide, public SimpleMobile<s> public SimpleActivePhysicalObject {

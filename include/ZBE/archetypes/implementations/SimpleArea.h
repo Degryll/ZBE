@@ -18,7 +18,7 @@ namespace zbe {
 
 /** @brief Implementation of an archetype that has an area.
 */
-class ZBEAPI SimpleArea : virtual public Area {
+class SimpleArea : virtual public Area {
 public:
 
   /** \brief Empty constructor

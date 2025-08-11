@@ -18,7 +18,7 @@ namespace zbe {
 
 /** \brief Simple implementation of the Wide archetype.
  */
-class ZBEAPI SimpleWide : virtual public Wide {
+class SimpleWide : virtual public Wide {
 public:
   /** \brief Parametrized constructor. Set the size of the archetype.
    *  \param width Size of the archetype.
