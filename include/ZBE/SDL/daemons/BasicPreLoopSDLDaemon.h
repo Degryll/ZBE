@@ -23,7 +23,7 @@
 namespace zbe {
 /** \brief
  */
-class ZBEAPI BasicPreLoopSDLDaemon : public Daemon {
+class BasicPreLoopSDLDaemon : public Daemon {
 public:
 
   BasicPreLoopSDLDaemon(const BasicPreLoopSDLDaemon&) = delete; //!< Avoid copy.

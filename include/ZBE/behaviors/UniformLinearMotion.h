@@ -30,7 +30,7 @@
 namespace zbe {
 /*TODO make this a template.
 template<unsigned s>
-class ZBEAPI UniformLinearMotion : virtual public Behavior<Vector<s>, Vector<s> > { ... }
+class UniformLinearMotion : virtual public Behavior<Vector<s>, Vector<s> > { ... }
 We have tried this but:
 "void apply(std::shared_ptr<MAvatar<Vector<s>, Vector<s> > > avatar) {
   std::shared_ptr<Vector<s> > p = avatar->get<1, Vector<s> >();
@@ -61,7 +61,7 @@ class UniformLinearMotion2D : virtual public Behavior<Vector<2>, Vector<2> > {
 
 /** \brief Define the minimal functions of every behavior.
  */
-class ZBEAPI UniformLinearMotion3D : virtual public Behavior<Vector3D, Vector3D > {
+class UniformLinearMotion3D : virtual public Behavior<Vector3D, Vector3D > {
   public:
 
     /** \brief Virtual destructor.
@@ -82,7 +82,7 @@ class ZBEAPI UniformLinearMotion3D : virtual public Behavior<Vector3D, Vector3D 
 
 /** \brief Define the minimal functions of every behavior.
  */
-class ZBEAPI RelativeUniformLinearMotion3D : virtual public Behavior<Vector3D, Vector3D, Vector3D > {
+class RelativeUniformLinearMotion3D : virtual public Behavior<Vector3D, Vector3D, Vector3D > {
   public:
     /** \brief Virtual destructor.
      */
@@ -118,7 +118,7 @@ DISABLE_WARNING_POP()
 
 /** \brief Define the minimal functions of every behavior.
  */
-class ZBEAPI FixedUniformLinearMotion3D : virtual public Behavior<Vector3D > {
+class FixedUniformLinearMotion3D : virtual public Behavior<Vector3D > {
 public:
   /** \brief Virtual destructor.
    */

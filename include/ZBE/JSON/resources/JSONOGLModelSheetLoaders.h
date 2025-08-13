@@ -38,7 +38,7 @@ namespace zbe {
 
 /** \brief JSON loader for SimpleModelOGLModelSheet's
 */
-class ZBEAPI JSONSimpleOGLModelSheetLoader : public RsrcLoader {
+class JSONSimpleOGLModelSheetLoader : public RsrcLoader {
 public:
  /** \brief Empty constructir. Creted object needs to be setup
   */
@@ -51,20 +51,23 @@ DISABLE_DLL_WARN
  }
 DISABLE_WARNING_POP()
 
- /** \brief Load an image
+  /** \brief Load an image
   *  \param filePath Path to image file.
   *  \return An id to the image loaded.
   */
- void load(std::filesystem::path filePath) override;
+  void load(std::filesystem::path filePath) override {
+    std::ifstream ifs(filePath);
+    JSONGraphicsLoaders::JSONSimpleModelSheetFileLoad(ifs, window, nrd, rsrcModelSheet, graphicsStore);
+  }
 
- /** \brief Tells if a file extension is loadable.
+  /** \brief Tells if a file extension is loadable.
   *  \param extension Image file extension.
   *  \return True if the extensions is loadable.
   */
- bool isLoadable(std::filesystem::path extension) override {
-   static const std::filesystem::path ext(".json");
-   return (ext.compare(extension) == 0);
- }
+  bool isLoadable(std::filesystem::path extension) override {
+    static const std::filesystem::path ext(".json");
+    return (ext.compare(extension) == 0);
+  }
 
 private:
 DISABLE_DLL_WARN
@@ -130,29 +133,32 @@ DISABLE_WARNING_POP()
 
 //------------------------
 
-class ZBEAPI JSONLookAtOGLModelSheetLoader : public RsrcLoader {
+class JSONLookAtOGLModelSheetLoader : public RsrcLoader {
 public:
 
 DISABLE_DLL_WARN
- void setWindow(std::shared_ptr<SDLOGLWindow> window) {
-   this->window = window;
- }
+  void setWindow(std::shared_ptr<SDLOGLWindow> window) {
+    this->window = window;
+  }
 DISABLE_WARNING_POP()
 
- /** \brief Load an image
+  /** \brief Load an image
   *  \param filePath Path to image file.
   *  \return An id to the image loaded.
   */
- void load(std::filesystem::path filePath) override;
+  void load(std::filesystem::path filePath) override {
+    std::ifstream ifs(filePath);
+    JSONGraphicsLoaders::JSONLookAtOGLModelSheetFileLoad(ifs, window, nrd, rsrcModelSheet, graphicsStore);
+  }
 
- /** \brief Tells if a file extension is loadable.
+  /** \brief Tells if a file extension is loadable.
   *  \param extension Image file extension.
   *  \return True if the extensions is loadable.
   */
- bool isLoadable(std::filesystem::path extension) override {
-   static const std::filesystem::path ext(".json");
-   return (ext.compare(extension) == 0);
- }
+  bool isLoadable(std::filesystem::path extension) override {
+    static const std::filesystem::path ext(".json");
+    return (ext.compare(extension) == 0);
+  }
 
 private:
 DISABLE_DLL_WARN
@@ -218,32 +224,37 @@ private:
 
 /** \brief JSON loader for SimpleModelOGLModelSheet's
 */
-class ZBEAPI JSONSpriteOGLModelSheetLoader : public RsrcLoader {
+class JSONSpriteOGLModelSheetLoader : public RsrcLoader {
 public:
 
- /** \brief Empty constructir. Creted object needs to be setup
+  /** \brief Empty constructir. Creted object needs to be setup
   */
-//JSONSpriteOGLModelSheetLoader() = default;
- /* \brief It sets up the window to be used.
- */
- void setWindow(std::shared_ptr<SDLOGLWindow> window) {
-   this->window = window;
- }
+  //JSONSpriteOGLModelSheetLoader() = default;
+  /* \brief It sets up the window to be used.
+  */
+  void setWindow(std::shared_ptr<SDLOGLWindow> window) {
+    this->window = window;
+  }
 
- /** \brief Load an image
+  /** \brief Load an image
   *  \param filePath Path to image file.
   *  \return An id to the image loaded.
   */
- void load(std::filesystem::path filePath) override;
+  void load(std::filesystem::path filePath) override {
+    std::ifstream ifs(filePath);
+    JSONGraphicsLoaders::JSONSpriteOGLModelSheetFileLoad(ifs, window, rsrcModelSheet, nrd, rsrcImgDef);
+    std::ifstream ifs2(filePath);
+    JSONGraphicsLoaders::JSONParametricSpriteOGLModelSheetFileLoad(ifs2, window, rsrcParamModelSheet, nrd, rsrcImgDef);
+  }
 
- /** \brief Tells if a file extension is loadable.
+  /** \brief Tells if a file extension is loadable.
   *  \param extension Image file extension.
   *  \return True if the extensions is loadable.
   */
- bool isLoadable(std::filesystem::path extension) override {
-   static const std::filesystem::path ext(".json");
-   return (ext.compare(extension) == 0);
- }
+  bool isLoadable(std::filesystem::path extension) override {
+    static const std::filesystem::path ext(".json");
+    return (ext.compare(extension) == 0);
+  }
 
 private:
 DISABLE_DLL_WARN

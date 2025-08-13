@@ -23,7 +23,7 @@
 namespace zbe {
 /** \brief Daemon that applies a "punish" over a list of elements.
  */
-class ZBEAPI OnceDaemon : public Daemon {
+class OnceDaemon : public Daemon {
 public:
 
   /** \brief Destroys the OnceDaemon.

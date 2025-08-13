@@ -25,7 +25,7 @@ namespace zbe {
 
 /** \brief Time handler capable of run a daemon.
  */
-class ZBEAPI DaemonRecurrentTimeHandler : public TimeHandler {
+class DaemonRecurrentTimeHandler : public TimeHandler {
 public:
 DaemonRecurrentTimeHandler(const DaemonRecurrentTimeHandler&) = delete; //!< Deleted copy constructor.
 void operator=(const DaemonRecurrentTimeHandler&) = delete; //!< Deleted copy constructor.

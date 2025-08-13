@@ -6,11 +6,6 @@ find_package(OpenGL REQUIRED)
 add_library(ZBE_LIB SHARED
   JSON/JSONFactory.cpp
   JSON/graphics/JSONGraphicsLoaders.cpp
-  JSON/resources/JSONOGLModelSheetLoaders.cpp
-  JSON/resources/JSONMultiSpriteSheetLoader.cpp
-  JSON/resources/JSONGLSLProgramLoaderFtry.cpp
-  JSON/resources/JSONGLSLProgramLoader.cpp
-  JSON/resources/JSONAudioDefLoader.cpp
   OAL/daemons/OALContextDaemon.cpp
   OAL/players/Sound3DOALPlayer.cpp
   OAL/resources/OALAudioLoader.cpp

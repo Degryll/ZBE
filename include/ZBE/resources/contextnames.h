@@ -17,12 +17,12 @@
 namespace zbe {
 struct cn {
 DISABLE_DLL_WARN
-  static const std::string SEPARATOR;
+  ZBEAPI static const std::string SEPARATOR;
 
-  static const std::string IMGDEF;
-  static const std::string AUDIO;
-  static const std::string STATE;
-  static const std::string SPRTSHEET;
+  ZBEAPI static const std::string IMGDEF;
+  ZBEAPI static const std::string AUDIO;
+  ZBEAPI static const std::string STATE;
+  ZBEAPI static const std::string SPRTSHEET;
 
 DISABLE_WARNING_POP()
 };

@@ -23,7 +23,7 @@ namespace zbe {
 
 /** \brief JSON implementation of a RsrcDefLoader for images.
  */
-class ZBEAPI JSONImgDefLoader : public RsrcDefLoader {
+class JSONImgDefLoader : public RsrcDefLoader {
 public:
  /** \brief Load an image definition
   *  \param url Image definition file to be loaded.

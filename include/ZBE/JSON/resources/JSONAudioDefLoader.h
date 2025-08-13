@@ -28,27 +28,39 @@ namespace zbe {
 
 /** \brief JSON implementation of a RsrcDefLoader for audio.
  */
-class ZBEAPI JSONAudioDefLoader : public RsrcDefLoader {
+class JSONAudioDefLoader : public RsrcDefLoader {
 public:
 
- /** \brief Load an audio definition
+  /** \brief Load an audio definition
   *  \param url Image definition file to be loaded.
   *  \param imgId Associated audio id
   *  \return An id to the audio definition.
   */
- void loadRsrcDef(const std::filesystem::path& url, uint64_t imgId) override;
+  void loadRsrcDef(const std::filesystem::path& url, uint64_t audioId) override {
+    std::ifstream ifs(url);
+    json j;
+    try {
+      ifs >> j;
+      std::string name = j["name"];
+      nrd.insert(cn::AUDIO + cn::SEPARATOR + name, audioId);
+    } catch (json::parse_error &e) {
+      SysError::setError(std::string("JSONAudioDefLoader - ERROR: Json failed to parse: ") + std::string(e.what()));
+    } catch (nlohmann::detail::type_error &e) {
+      SysError::setError(std::string("JSONAudioDefLoader - ERROR: Json failed to load audio def for id ") + std::to_string(audioId) + std::string(" because: ") + std::string(e.what()));
+    }
+  }
 
- /** \brief Returns the file extension.
+  /** \brief Returns the file extension.
   *  \return The file extension.
   */
- const std::filesystem::path getExtension() override {
-   static const std::filesystem::path p(".json");
-   return p;
- }
+  const std::filesystem::path getExtension() override {
+    static const std::filesystem::path p(".json");
+    return p;
+  }
 
 private:
- using json = nlohmann::json;
- NameRsrcDictionary& nrd = NameRsrcDictionary::getInstance();
+  using json = nlohmann::json;
+  NameRsrcDictionary& nrd = NameRsrcDictionary::getInstance();
 
 };
 

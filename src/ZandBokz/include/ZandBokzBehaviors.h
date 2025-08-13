@@ -41,7 +41,7 @@ namespace zandbokz {
 class ZandBockPlayerResetBhv : virtual public zbe::Behavior<int64_t, double, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D> {
   public:
   virtual ~ZandBockPlayerResetBhv() = default;
-  void apply(std::shared_ptr<zbe::MAvatar<int64_t, double, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D> > avatar) override{
+  void apply(std::shared_ptr<zbe::MAvatar<int64_t, double, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D> > avatar) override {
     //"attribIndexes" : ["currentbloodIdx", "bestCenterDistIdx", "bestCenterIdx", "positionIdx", "velocityIdx", "upwardsIdx", "pitchvectorIdx", "yawvectorIdx", "camUpwardsIdx"],
     auto vblood       = avatar->get<9, int64_t>();
     auto vcdistance   = avatar->get<8, double>();

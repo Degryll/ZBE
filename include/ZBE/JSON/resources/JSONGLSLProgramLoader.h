@@ -24,29 +24,32 @@ namespace zbe {
 
 /** \brief JSON loader for GLSL programss
 */
-class ZBEAPI JSONGLSLProgramLoader : public RsrcLoader {
+class JSONGLSLProgramLoader : public RsrcLoader {
 public:
 
- /* \brief It sets up the window to be used.
- */
- void setWindow(std::shared_ptr<SDLOGLWindow> window) {
-   this->window = window;
- }
+  /* \brief It sets up the window to be used.
+  */
+  void setWindow(std::shared_ptr<SDLOGLWindow> window) {
+    this->window = window;
+  }
 
- /** \brief Loads a glsl program
+  /** \brief Loads a glsl program
   *  \param filePath Path to image file.
   *  \return An id to the image loaded.
   */
- void load(std::filesystem::path filePath) override;
+  void load(std::filesystem::path filePath) override {
+    std::ifstream ifs(filePath);
+    JSONGraphicsLoaders::JSONGLSLProgramFileLoad(ifs, window, uintStore);
+  }
 
- /** \brief Tells if a file extension is loadable.
+  /** \brief Tells if a file extension is loadable.
   *  \param extension Image file extension.
   *  \return True if the extensions is loadable.
   */
- bool isLoadable(std::filesystem::path extension) override {
-   static const std::filesystem::path ext(".json");
-   return (ext.compare(extension) == 0);
- }
+  bool isLoadable(std::filesystem::path extension) override {
+    static const std::filesystem::path ext(".json");
+    return (ext.compare(extension) == 0);
+  }
 
 private:
 DISABLE_DLL_WARN

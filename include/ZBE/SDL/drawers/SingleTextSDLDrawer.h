@@ -54,7 +54,7 @@ public:
   /** \brief Draws the given entity.
    *  \param The entity to be drawn.
    */
-  void apply(std::shared_ptr<MAvatar<std::string, uint64_t, Vector2D, Vector2D> > avatar) override{
+  void apply(std::shared_ptr<MAvatar<std::string, uint64_t, Vector2D, Vector2D> > avatar) override {
     SDL_Texture* t = textFontStore->renderText(avatar->get<3, uint64_t>()->get(), avatar->get<4, std::string>()->get().c_str());
 
     int tw, th, aw, ah;

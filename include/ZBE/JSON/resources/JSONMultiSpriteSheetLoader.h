@@ -25,23 +25,26 @@ namespace zbe {
 
 /** \brief SDL implementation of ImgLoader.
 */
-class ZBEAPI JSONMultiSpriteSheetLoader : public RsrcLoader {
+class JSONMultiSpriteSheetLoader : public RsrcLoader {
 public:
 
- /** \brief Load an image
+  /** \brief Load an image
   *  \param filePath Path to image file.
   *  \return An id to the image loaded.
   */
- void load(std::filesystem::path filePath) override;
+  void load(std::filesystem::path filePath) override {
+    std::ifstream ifs(filePath);
+    JSONGraphicsLoaders::JSONMultiSpriteSheetFileLoad(ifs, rsrcAnimSprt, nrd, rsrcModelSheet, rsrcImgDef);
+  }
 
- /** \brief Tells if a file extension is loadable.
+  /** \brief Tells if a file extension is loadable.
   *  \param extension Image file extension.
   *  \return True if the extensions is loadable.
   */
- bool isLoadable(std::filesystem::path extension) override {
-   static const std::filesystem::path ext(".json");
-   return (ext.compare(extension) == 0);
- }
+  bool isLoadable(std::filesystem::path extension) override {
+    static const std::filesystem::path ext(".json");
+    return (ext.compare(extension) == 0);
+  }
 
 private:
   RsrcStore<zbe::SpriteSheet<uint64_t, int64_t, double, Vector2D, Vector2D> >& rsrcAnimSprt = RsrcStore<zbe::SpriteSheet<uint64_t, int64_t, double, Vector2D, Vector2D> >::getInstance();
