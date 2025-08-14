@@ -34,7 +34,7 @@ namespace zbe {
 
 /** \brief Factory for DaemonIH.
  */
-class ZBEAPI DaemonIHFtry : virtual public Factory {
+class DaemonIHFtry : virtual public Factory {
 public:
 
   /** \brief Create the desired tool, probably incomplete.
