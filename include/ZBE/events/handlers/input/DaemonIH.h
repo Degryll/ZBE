@@ -130,7 +130,7 @@ DISABLE_WARNING_POP()
 /** \brief Input handler capable of run another input handler if a condition is fullfilled.
  */
 template<typename T>
-class ZBEAPI ConditionalCompositeIH : public InputHandler {
+class ConditionalCompositeIH : public InputHandler {
 public:
 
   	/** \brief Constructs a DaemonIH from a daemon.

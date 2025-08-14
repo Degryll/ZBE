@@ -65,7 +65,6 @@ add_library(ZBE_LIB SHARED
   factories/implementations/entities/EntityFtry.cpp
   factories/implementations/events/generators/TimeEventGnFtry.cpp
   factories/implementations/events/handlers/input/InputToValueFtry.cpp
-  factories/implementations/events/handlers/input/DaemonIHFtry.cpp
   factories/implementations/events/handlers/input/DaemonClickIHFtry.cpp
   factories/implementations/events/handlers/input/BroadcastIHFtry.cpp
   factories/implementations/events/handlers/time/TicketEraserFtry.cpp
