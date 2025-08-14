@@ -68,7 +68,7 @@ DISABLE_WARNING_POP()
 /** \brief Input handler capable of run a daemon.
  */
 template<typename T>
-class ZBEAPI ConditionalDaemonIH : public InputHandler {
+class ConditionalDaemonIH : public InputHandler {
 public:
 
 	/** \brief Constructs a DaemonIH from a daemon.
