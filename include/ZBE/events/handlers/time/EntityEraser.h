@@ -34,7 +34,7 @@
 
 namespace zbe {
 
-class ZBEAPI EntityEraserTH : public TimeHandler {
+class EntityEraserTH : public TimeHandler {
 public:
 	EntityEraserTH(const EntityEraserTH&) = delete; //!< Avoid copy.
 	void operator=(const EntityEraserTH&) = delete; //!< Avoid copy.

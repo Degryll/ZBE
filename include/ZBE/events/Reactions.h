@@ -197,7 +197,7 @@ std::forward_list<uint64_t> list {};
 template<typename IData, typename ValueType, unsigned n>
 //class StoreValuesRctBldr : public Funct<std::shared_ptr<Funct<Funct<std::shared_ptr<Funct<void, IData, std::array<std::shared_ptr<Value<ValueType>>, n>>>>,std::shared_ptr<Entity>>>> {
 
-class ZBEAPI StoreValuesRctBldr : public Funct<std::shared_ptr<Funct<void, IData, std::array<std::shared_ptr<Value<ValueType>>, n>>>, std::shared_ptr<Entity>> {
+class StoreValuesRctBldr : public Funct<std::shared_ptr<Funct<void, IData, std::array<std::shared_ptr<Value<ValueType>>, n>>>, std::shared_ptr<Entity>> {
 public:
 std::shared_ptr<Funct<void, IData, std::array<std::shared_ptr<Value<ValueType>>, n>>> operator()(std::shared_ptr<Entity> ent) override {
   auto avt = std::make_shared<AwareAvatar>(ent);
@@ -476,6 +476,9 @@ private:
   std::string msg;
 };
 
+
+// TODO parace que, otra vez, no encuentra el constructor de Funct<void ....
+// Es posible que otro esté heredando de Funct<tatata y le esté poniendo el ZBEAPI?
 template<typename IData, typename Trait>
 class PrintfRctBldr : public Funct<std::shared_ptr<Funct<void, IData, Trait>>, std::shared_ptr<Entity>> {
 public:

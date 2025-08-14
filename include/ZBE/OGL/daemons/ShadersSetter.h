@@ -35,7 +35,7 @@ namespace zbe {
 
 /** \brief Interface for all daemons. Daemons are responsible for execute automated processes. Basically Daemons rules the world.
  */
-class ZBEAPI ShadersSetter3D : public Daemon {
+class ShadersSetter3D : public Daemon {
 public:
   friend class ShadersSetter3DFtry;
   /** \brief Destructor.
@@ -78,7 +78,7 @@ DISABLE_WARNING_POP()
 
 /** \brief Interface for all daemons. Daemons are responsible for execute automated processes. Basically Daemons rules the world.
  */
-class ZBEAPI ShadersSetter2D : public Daemon {
+class ShadersSetter2D : public Daemon {
 public:
   /** \brief Destructor.
    */

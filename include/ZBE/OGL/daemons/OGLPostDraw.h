@@ -20,7 +20,7 @@ namespace zbe {
 
 /** \brief OGL Daemon that swap buffers after the drawers end.
  */
-class ZBEAPI OGLPostDraw : public Daemon {
+class OGLPostDraw : public Daemon {
 public:
 
   OGLPostDraw() : window(nullptr) {}

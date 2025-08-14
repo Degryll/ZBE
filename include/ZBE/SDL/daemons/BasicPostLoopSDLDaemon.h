@@ -22,7 +22,7 @@
 namespace zbe {
 /** \brief Basic post-loop daemon used for SDL
  */
-class ZBEAPI BasicPostLoopSDLDaemon : public Daemon {
+class BasicPostLoopSDLDaemon : public Daemon {
 public:
   BasicPostLoopSDLDaemon(const BasicPostLoopSDLDaemon&) = delete; //!< Avoid copy.
   void operator=(const BasicPostLoopSDLDaemon&) = delete; //!< Avoid copy.

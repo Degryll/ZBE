@@ -30,13 +30,10 @@ namespace zbe {
 
 /** \brief Interface for all daemons. Daemons are responsible for execute automated processes. Basically Daemons rules the world.
  */
-class ZBEAPI OGLPreDrawer : public Daemon {
+class OGLPreDrawer : public Daemon {
 public:
 
   OGLPreDrawer() : gProgramID(0),  cam(), sdled() {}
-
-  //OGLPreDrawer(std::shared_ptr<SDLOGLWindow> window, uint64_t programId, std::shared_ptr<Camera> cam)
-  //  : gProgramID(window->getShaderStore()->getShader(programId)),  cam(cam) {}
 
   /** \brief Destructor.
    */
@@ -44,7 +41,11 @@ public:
 
   /** \brief Do the actual Daemon job.
    */
-  void run() override;
+  void run() override {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    sdled->run();
+    cam->update();
+  }
 
   void setProgram(std::shared_ptr<SDLOGLWindow> window, uint64_t programId) {
     gProgramID = window->getShaderStore()->getShader(programId);

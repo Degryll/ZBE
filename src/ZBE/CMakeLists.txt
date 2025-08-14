@@ -13,7 +13,6 @@ add_library(ZBE_LIB SHARED
   OAL/tools/OALUtils.cpp
   OGL/graphics/implementations/OGLModelSheets.cpp
   SDL/OGL/SDLOGLWindow.cpp
-  SDL/OGL/daemons/OGLPreDrawer.cpp
   SDL/daemons/SDLWindowDaemon.cpp
   SDL/daemons/SDLOGLWindowDaemon.cpp
   SDL/daemons/IOPreLoopSDL.cpp
