@@ -11,6 +11,7 @@ set_target_properties(ZANDBOKZ PROPERTIES
 
 IF (MSVC)
   target_compile_options(ZANDBOKZ PRIVATE /bigobj)
+  set_target_properties(ZANDBOKZ PROPERTIES WIN32_EXECUTABLE OFF)
 ENDIF()
 
 
