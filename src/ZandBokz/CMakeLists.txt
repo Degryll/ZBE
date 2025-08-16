@@ -11,7 +11,8 @@ endif()
 # Forzar que NO genere .lib de importación
 set_target_properties(ZANDBOKZ PROPERTIES
     ENABLE_EXPORTS OFF
-    IMPORT_LIBRARY ""
+    IMPORT_LIBRARY ""   # limpia implib
+    LINK_FLAGS "/NOENTRY"  # hack: fuerza a MSVC a NO generar implib
 )
 
 target_link_libraries(ZANDBOKZ
