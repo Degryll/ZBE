@@ -33,5 +33,14 @@ target_include_directories(ZANDBOKZ SYSTEM PRIVATE
     ${libpng_SOURCE_DIR}
 )
 
+# --- Debug: comprobar si el ejecutable está generando import library ---
+get_target_property(outimplib ZANDBOKZ IMPORT_LIBRARY)
+if(outimplib)
+    message(WARNING "X ZANDBOKZ está configurado con IMPORT_LIBRARY='${outimplib}' (puede estar tratándose como DLL)")
+else()
+    message(STATUS "V ZANDBOKZ no genera import library (es un ejecutable puro)")
+endif()
+
+# También mostrar WIN32_EXECUTABLE para confirmar
 get_target_property(exe_type ZANDBOKZ WIN32_EXECUTABLE)
 message(STATUS "WIN32_EXECUTABLE for ZANDBOKZ = ${exe_type}")
