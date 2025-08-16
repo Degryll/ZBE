@@ -24,3 +24,6 @@ target_include_directories(ZANDBOKZ SYSTEM PRIVATE
     ${ogg_SOURCE_DIR}
     ${libpng_SOURCE_DIR}
 )
+
+get_target_property(exe_type ZANDBOKZ WIN32_EXECUTABLE)
+message(STATUS "WIN32_EXECUTABLE for ZANDBOKZ = ${exe_type}")
