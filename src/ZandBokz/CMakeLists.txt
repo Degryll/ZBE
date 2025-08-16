@@ -1,4 +1,3 @@
-# include(GenerateExportHeader)
 add_executable(ZANDBOKZ 
   src/zandbokz.cpp
 )
@@ -9,7 +8,6 @@ ENDIF()
 
 target_link_libraries(ZANDBOKZ
 PRIVATE ZBE_LIB
-# PRIVATE png #TODO ver si funciona sin este
 )
 
 target_include_directories(ZANDBOKZ PRIVATE
@@ -26,9 +24,3 @@ target_include_directories(ZANDBOKZ SYSTEM PRIVATE
     ${ogg_SOURCE_DIR}
     ${libpng_SOURCE_DIR}
 )
-
-get_target_property(defs_publicas ZANDBOKZ INTERFACE_COMPILE_DEFINITIONS)
-get_target_property(defs_privadas ZANDBOKZ COMPILE_DEFINITIONS)
-
-message(STATUS "Definiciones ZANDBOKZ PUBLICAS: ${defs_publicas}")
-message(STATUS "Definiciones ZANDBOKZ PRIVADAS: ${defs_privadas}")
