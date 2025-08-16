@@ -2,10 +2,14 @@ add_executable(ZANDBOKZ
   src/zandbokz.cpp
 )
 
-IF (MSVC)
-  set_target_properties(ZANDBOKZ PROPERTIES WIN32_EXECUTABLE OFF)
-  target_compile_options(ZANDBOKZ PRIVATE /bigobj)
-ENDIF()
+if(MSVC)
+    # Permite compilar proyectos grandes
+    target_compile_options(ZANDBOKZ PRIVATE /bigobj)
+    # Forzar que sea ejecutable de consola (no Win32 GUI)
+    set_target_properties(ZANDBOKZ PROPERTIES WIN32_EXECUTABLE OFF)
+    # Asegurar el subsystem de consola explícitamente
+    set_target_properties(ZANDBOKZ PROPERTIES LINK_FLAGS "/SUBSYSTEM:CONSOLE")
+endif()
 
 target_link_libraries(ZANDBOKZ
 PRIVATE ZBE_LIB
