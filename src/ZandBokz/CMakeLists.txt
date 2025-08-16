@@ -2,37 +2,30 @@
 add_executable(ZANDBOKZ 
   src/zandbokz.cpp
 )
-set_target_properties(ZANDBOKZ PROPERTIES
-  ENABLE_EXPORTS OFF
-  IMPORT_LIBRARY ""
-  ARCHIVE_OUTPUT_NAME ""
-  RUNTIME_OUTPUT_NAME ZANDBOKZ
-)
 
 IF (MSVC)
   target_compile_options(ZANDBOKZ PRIVATE /bigobj)
-  set_target_properties(ZANDBOKZ PROPERTIES WIN32_EXECUTABLE OFF)
 ENDIF()
-
-
-set_target_properties(ZANDBOKZ PROPERTIES ENABLE_EXPORTS OFF)
-set_target_properties(ZANDBOKZ PROPERTIES IMPORT_LIBRARY "")
 
 target_link_libraries(ZANDBOKZ
 PRIVATE ZBE_LIB
 # PRIVATE png #TODO ver si funciona sin este
 )
 
-target_include_directories(ZANDBOKZ PRIVATE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>)
-target_include_directories(ZANDBOKZ PRIVATE $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>)
-target_include_directories(ZANDBOKZ PRIVATE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/src/ZandBokz/include>)
+target_include_directories(ZANDBOKZ PRIVATE
+    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+    $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>
+    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/src/ZandBokz/include>
+)
 
-target_include_directories(ZANDBOKZ SYSTEM PRIVATE ${glm_SOURCE_DIR})
-target_include_directories(ZANDBOKZ SYSTEM PRIVATE ${SDL2_SOURCE_DIR})
-target_include_directories(ZANDBOKZ SYSTEM PRIVATE ${tinygltf_SOURCE_DIR})
-target_include_directories(ZANDBOKZ SYSTEM PRIVATE ${vorbis_SOURCE_DIR}/include)
-target_include_directories(ZANDBOKZ SYSTEM PRIVATE ${ogg_SOURCE_DIR})
-target_include_directories(ZANDBOKZ SYSTEM PRIVATE ${libpng_SOURCE_DIR})
+target_include_directories(ZANDBOKZ SYSTEM PRIVATE
+    ${glm_SOURCE_DIR}
+    ${SDL2_SOURCE_DIR}
+    ${tinygltf_SOURCE_DIR}
+    ${vorbis_SOURCE_DIR}/include
+    ${ogg_SOURCE_DIR}
+    ${libpng_SOURCE_DIR}
+)
 
 get_target_property(defs_publicas ZANDBOKZ INTERFACE_COMPILE_DEFINITIONS)
 get_target_property(defs_privadas ZANDBOKZ COMPILE_DEFINITIONS)
