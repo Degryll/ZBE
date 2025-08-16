@@ -176,7 +176,7 @@ jobs:
       # run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }}
       run: |
        cd build
-       ninja
+       ninja -v
 
     # - name: Test
     # TODO
