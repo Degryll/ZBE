@@ -8,11 +8,9 @@ if(MSVC)
     set_target_properties(ZANDBOKZ PROPERTIES LINK_FLAGS "/SUBSYSTEM:CONSOLE")
 endif()
 
-# Forzar que NO genere .lib de importación
 set_target_properties(ZANDBOKZ PROPERTIES
     ENABLE_EXPORTS OFF
-    IMPORT_LIBRARY ""   # limpia implib
-    LINK_FLAGS "/NOENTRY"  # hack: fuerza a MSVC a NO generar implib
+    IMPORT_LIBRARY "" 
 )
 
 target_link_libraries(ZANDBOKZ
