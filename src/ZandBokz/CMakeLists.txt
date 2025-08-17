@@ -4,14 +4,16 @@ add_executable(ZANDBOKZ
 
 if(MSVC)
     target_compile_options(ZANDBOKZ PRIVATE /bigobj)
-    set_target_properties(ZANDBOKZ PROPERTIES WIN32_EXECUTABLE OFF)
-    set_target_properties(ZANDBOKZ PROPERTIES LINK_FLAGS "/SUBSYSTEM:CONSOLE")
+    set_target_properties(ZANDBOKZ PROPERTIES
+        WIN32_EXECUTABLE OFF
+        ENABLE_EXPORTS OFF
+        IMPORT_LIBRARY ""
+    )
+    target_link_options(ZANDBOKZ PRIVATE
+        /SUBSYSTEM:CONSOLE
+        /NOIMPLIB
+    )
 endif()
-
-set_target_properties(ZANDBOKZ PROPERTIES
-    ENABLE_EXPORTS OFF
-    IMPORT_LIBRARY "" 
-)
 
 target_link_libraries(ZANDBOKZ
     PRIVATE ZBE_LIB
