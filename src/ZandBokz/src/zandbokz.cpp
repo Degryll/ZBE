@@ -7,6 +7,7 @@
  * @brief Main file for ZandBokz game.
  */
 
+#define SDL_MAIN_HANDLED
 #include <iostream>
 
 #include "ZBE/core/zbe.h"
