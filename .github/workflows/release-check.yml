@@ -32,11 +32,11 @@ jobs:
             c_compiler: cl
             cpp_compiler: cl
           - os: ubuntu-latest
-            container: ubuntu:22.04
+            container: ubuntu-22.04
             c_compiler: gcc
             cpp_compiler: g++
           - os: ubuntu-latest
-            container: ubuntu:22.04
+            container: ubuntu-22.04
             c_compiler: clang
             cpp_compiler: clang++
         exclude:
