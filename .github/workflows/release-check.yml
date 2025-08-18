@@ -63,9 +63,10 @@ jobs:
     - name: Switch to clang-11
       if: matrix.c_compiler == 'clang'
       run: |
-        sudo apt-get install -y clang-11
-        sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-11 100 --slave /usr/bin/clang++ clang++ /usr/bin/clang++-11
+        sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-11 100
+        sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-11 100
         sudo update-alternatives --set clang /usr/bin/clang-11
+        sudo update-alternatives --set clang++ /usr/bin/clang++-11
 
     - name: Set up MSVC environment
       if: contains(matrix.os, 'windows')
