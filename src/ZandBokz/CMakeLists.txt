@@ -19,10 +19,6 @@ target_link_libraries(ZANDBOKZ
     PRIVATE ZBE_LIB
 )
 
-if (WIN32)
-    target_link_libraries(ZANDBOKZ PRIVATE SDL2main)
-endif()
-
 target_include_directories(ZANDBOKZ PRIVATE
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
     $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>
