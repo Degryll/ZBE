@@ -60,13 +60,16 @@ jobs:
         sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 100 --slave /usr/bin/g++ g++ /usr/bin/g++-11 --slave /usr/bin/gcov gcov /usr/bin/gcov-11
         sudo update-alternatives --set gcc /usr/bin/gcc-11  
 
-    - name: Switch to clang-11
+    - name: Install Clang 14
       if: matrix.c_compiler == 'clang'
       run: |
-        sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-11 100
-        sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-11 100
-        sudo update-alternatives --set clang /usr/bin/clang-11
-        sudo update-alternatives --set clang++ /usr/bin/clang++-11
+        wget https://apt.llvm.org/llvm.sh
+        chmod +x llvm.sh
+        ./llvm.sh 18
+        update-alternatives --install /usr/bin/clang clang /usr/bin/clang-18 100
+        update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-18 100
+        update-alternatives --set clang /usr/bin/clang-18
+        update-alternatives --set clang++ /usr/bin/clang++-18
 
     - name: Set up MSVC environment
       if: contains(matrix.os, 'windows')
