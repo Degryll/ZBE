@@ -65,11 +65,11 @@ jobs:
       run: |
         wget https://apt.llvm.org/llvm.sh
         chmod +x llvm.sh
-        ./llvm.sh 18
-        update-alternatives --install /usr/bin/clang clang /usr/bin/clang-18 100
-        update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-18 100
-        update-alternatives --set clang /usr/bin/clang-18
-        update-alternatives --set clang++ /usr/bin/clang++-18
+        sudo ./llvm.sh 18
+        sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-18 100
+        sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-18 100
+        sudo update-alternatives --set clang /usr/bin/clang-18
+        sudo update-alternatives --set clang++ /usr/bin/clang++-18
 
     - name: Set up MSVC environment
       if: contains(matrix.os, 'windows')
