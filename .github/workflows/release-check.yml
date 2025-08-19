@@ -60,7 +60,7 @@ jobs:
         sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 100 --slave /usr/bin/g++ g++ /usr/bin/g++-11 --slave /usr/bin/gcov gcov /usr/bin/gcov-11
         sudo update-alternatives --set gcc /usr/bin/gcc-11  
 
-    - name: Install Clang 14
+    - name: Install Clang 18
       if: matrix.c_compiler == 'clang'
       run: |
         wget https://apt.llvm.org/llvm.sh

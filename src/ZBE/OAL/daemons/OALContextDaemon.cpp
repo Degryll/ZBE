@@ -11,6 +11,7 @@
 
 #include <memory>
 #include <string>
+#include <cstdio>
 
 namespace zbe {
 
@@ -24,6 +25,7 @@ void OALContextDaemon::run() {
   }
 
   ALCchar* last = getLastAudioDevice(alcGetString(NULL, ALC_DEVICE_SPECIFIER));
+  printf("Last audio device: %s\n", last);
 
   ALCdevice *device;
   device = alcOpenDevice(last);
