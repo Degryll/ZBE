@@ -7,7 +7,8 @@
  * @brief Main file for ZandBokz game.
  */
 
-#define SDL_MAIN_HANDLED
+
+ #define SDL_MAIN_HANDLED
 #include <iostream>
 
 #include "ZBE/core/zbe.h"
@@ -35,35 +36,50 @@
 
 int main(int /*argc*/, char** /*argv*/) {
 
-   using namespace zbe;
-   using namespace zandbokz;
-   using namespace std::string_literals;
+  using namespace zbe;
+  using namespace zandbokz;
+  using namespace std::string_literals;
 
-   init();
-   printf("Hello ZandBokz\n");
-   BaseFactories::load();
-   printf("Base loaded\n");
-   SDLFactories::load();
-   printf("SDL\n");
-   OGLFactories::load();
-   printf("OGL\n");
-   GLTFFactories::load();
-   printf("GLTF\n");
-   OALFactories::load();
-   printf("OAL\n");
-   ZBEFactories::load();
-   printf("ZBE\n");
-   JSONFactories::load();
-   printf("JSON\n");
-   ZandBokzFactories::load();
-   printf("ZandBokz\n");
+  init(RsrcDictionary<ZBE_K>::getInstance());
+  printf("Hello ZandBokz\n");
+  JSONAppLoader appLoader;
+
+  appLoader.setFactoryStore(&RsrcStore<Factory>::getInstance());
+  appLoader.setConfigStore(&RsrcStore<nlohmann::json>::getInstance());
+  appLoader.setV2DStore(&RsrcDictionary<Vector2D>::getInstance());
+  appLoader.setV3DStore(&RsrcDictionary<Vector3D>::getInstance());
+  appLoader.setIntStore(&RsrcDictionary<int64_t>::getInstance());
+  appLoader.setUIntStore(&RsrcDictionary<uint64_t>::getInstance());
+  appLoader.setFloatStore(&RsrcDictionary<float>::getInstance());
+  appLoader.setDoubleStore(&RsrcDictionary<double>::getInstance());
+  appLoader.setStringStore(&RsrcDictionary<std::string>::getInstance());
+  appLoader.setCallableStore(&RsrcStore<Funct<void>>::getInstance());
+
+  auto& factories = RsrcStore<Factory>::getInstance();
+
+  BaseFactories::load(factories);
+  printf("Base loaded %d\n", factories.contains("SimpleValueFtry"));
+  OGLFactories::load(factories);
+  printf("OGL %d\n", factories.contains("SimpleValueFtry"));
+  GLTFFactories::load(factories);
+  printf("GLTF %d\n", factories.contains("SimpleValueFtry"));
+  OALFactories::load(factories);
+  printf("OAL %d\n", factories.contains("SimpleValueFtry"));
+  ZBEFactories::load(factories);
+  printf("ZBE %d\n", factories.contains("SimpleValueFtry"));
+  JSONFactories::load(factories);
+  printf("JSON %d\n", factories.contains("SimpleValueFtry"));
+  ZandBokzFactories::load(factories);
+  printf("ZandBokz %d\n", factories.contains("SimpleValueFtry"));
+  SDLFactories::load(factories);
+  printf("SDL %d\n", factories.contains("SimpleValueFtry"));
 
   // TODO llevar a factoria
   OALContextDaemon oalContextDmn;
   oalContextDmn.run();
 
   std::cout << SysError::getFirstErrorString() << "\n";
-  JSONAppLoader appLoader;
+  
   appLoader.load("data/ZandBokz/app/main_002.json");
   std::cout << SysError::getFirstErrorString() << "\n";
   // Run App.

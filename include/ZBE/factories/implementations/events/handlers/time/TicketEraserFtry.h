@@ -33,20 +33,45 @@ namespace zbe {
 
 /** \brief Factory for TicketEraser.
  */
-class ZBEAPI TicketEraserFtry : virtual public Factory {
+class TicketEraserFtry : virtual public Factory {
 public:
 
 /** \brief Create the desired tool, probably incomplete.
  *  \param name Name for the created tool.
  *  \param cfgId Tool's configuration id.
  */
-  void create(std::string name, uint64_t) override;
+  void create(std::string name, uint64_t) override {
+    using namespace std::string_literals;
+
+    std::shared_ptr<TicketEraser> te = std::make_shared<TicketEraser>();
+    timeRsrc.insert("TimeHandler."s + name, te);
+    timeEraserRsrc.insert("TicketEraser."s + name, te);
+  }
 
   /** \brief Setup the desired tool. The tool will be complete after this step.
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId) override;
+  void setup(std::string name, uint64_t cfgId) override {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+    if(cfg) {
+      auto j = *cfg;
+      if (j["ticket"].is_string()) {
+        std::string tname = j["ticket"].get<std::string>();
+        std::shared_ptr<Ticket> ticket = ticketRsrc.get("Ticket."s + tname);
+        auto te = timeEraserRsrc.get("TicketEraser."s + name);
+        te->setTicket(ticket);
+
+      } else {
+        SysError::setError("TicketEraserFtry config for "s + j["ticket"].get<std::string>() + ": must be a string."s);
+      }
+    } else {
+      SysError::setError("TicketEraserFtry config for "s + name + " not found."s);
+    }
+  }
 
 private:
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();

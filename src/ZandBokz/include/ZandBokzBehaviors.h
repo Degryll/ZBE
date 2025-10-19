@@ -262,7 +262,7 @@ public:
 
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
-    std::shared_ptr<GravityMotion3D> gm3d = std::shared_ptr<GravityMotion3D>(new GravityMotion3D);
+    std::shared_ptr<GravityMotion3D> gm3d(new GravityMotion3D);
     behaviorRsrc.insert("Behavior."s + name, gm3d);
     gm3dRsrc.insert("GravityMotion3D."s + name, gm3d);
   }
@@ -333,7 +333,7 @@ public:
 
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
-    std::shared_ptr<GravityMotion3D> gm3d = std::shared_ptr<GravityMotion3D>(new GravityMotion3D);
+    std::shared_ptr<GravityMotion3D> gm3d(new GravityMotion3D);
     behaviorRsrc.insert("Behavior."s + name, gm3d);
     gm3dRsrc.insert("GravityMotion3D."s + name, gm3d);
   }
@@ -472,7 +472,7 @@ public:
 
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
-    std::shared_ptr<NonRealGravityVelSetterBhv> nrgvs = std::shared_ptr<NonRealGravityVelSetterBhv>(new NonRealGravityVelSetterBhv);
+    std::shared_ptr<NonRealGravityVelSetterBhv> nrgvs(new NonRealGravityVelSetterBhv);
     behaviorRsrc.insert("Behavior."s + name, nrgvs);
     specifcRsrc.insert("NonRealGravityVelSetterBhv."s + name, nrgvs);
   }

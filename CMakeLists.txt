@@ -1,9 +1,5 @@
-cmake_minimum_required(VERSION 3.21)
-
-# Forzar el uso del runtime DLL en MSVC para evitar conflictos de runtime
-if(MSVC)
-  set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
-endif()
+cmake_minimum_required(VERSION 3.5)
+include(FetchContent)
 
 # This template attempts to be "fetch_content"-able
 # so that it works well with tools like CPM or other
@@ -28,6 +24,13 @@ project(
   DESCRIPTION "A nice & cool game engine"
   HOMEPAGE_URL "https://github.com/Degryll/ZBE"
   LANGUAGES CXX C)
+
+# Forzar el uso del runtime DLL en MSVC para evitar conflictos de runtime
+if(MSVC)
+  set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
+  add_compile_definitions(_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING)
+  # FetchContent_MakeAvailable(fmt)
+endif()
 
 include(cmake/PreventInSourceBuilds.cmake)
 include(ProjectOptions.cmake)
@@ -67,6 +70,8 @@ add_library(ZBE::ZBE_warnings ALIAS ZBE_warnings)
 
 # Adding the src:
 add_subdirectory(src)
+
+# target_compile_definitions(fmt::fmt INTERFACE _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING)
 
 # Don't even look at tests if we're not top level
 if(NOT PROJECT_IS_TOP_LEVEL)

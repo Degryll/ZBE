@@ -2,7 +2,10 @@ add_executable(ZANDBOKZ
     src/zandbokz.cpp
 )
 
+target_compile_definitions(ZANDBOKZ PRIVATE _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING)
+
 if(MSVC)
+    set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT ProgramDatabase)
     target_compile_options(ZANDBOKZ PRIVATE /bigobj)
     set_target_properties(ZANDBOKZ PROPERTIES
         WIN32_EXECUTABLE OFF
@@ -14,10 +17,20 @@ if(MSVC)
         /NOIMPLIB
     )
 endif()
-
 target_link_libraries(ZANDBOKZ
     PRIVATE ZBE_LIB
+    PRIVATE dbghelp
 )
+
+# Copiar automáticamente TODAS las DLL necesarias al lado del exe
+# if (WIN32)
+#     add_custom_command(TARGET ZANDBOKZ POST_BUILD
+#         COMMAND ${CMAKE_COMMAND} -E copy_if_different
+#             $<TARGET_RUNTIME_DLLS:ZANDBOKZ>
+#             $<TARGET_FILE_DIR:ZANDBOKZ>
+#         COMMAND_EXPAND_LISTS
+#     )
+# endif()
 
 target_include_directories(ZANDBOKZ PRIVATE
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>

@@ -40,12 +40,12 @@ public:
   /** \brief It will Load the factories calling the load method.
   */
   void run() override {
-    load();
+    //load();
   };
 
   /** \brief It loads all factories.
   */
-  static void load() {
+  static void load(RsrcStore<Factory>& factories) {
     using namespace std::string_literals;
     using VoidAvtList = TicketedForwardList<Avatar>;
     using VoidAvtBhvr = BehaviorDmnFtry<VoidAvtList, void>;
@@ -107,7 +107,8 @@ public:
     using FourV3DTwoFAvtList = TicketedForwardList<MAvatar<float, float, Vector3D, Vector3D, Vector3D, Vector3D> >;
     using FourV3DTwoFAvtBhvr = BehaviorDmnFtry<FourV3DTwoFAvtList, float, float, Vector3D, Vector3D, Vector3D, Vector3D>;
 
-    auto& factories = RsrcStore<Factory>::getInstance();
+    //auto& factories = RsrcStore<Factory>::getInstance();
+    printf("zbefactories: %p\n", &factories);
     for(int i = 0;i<100;i++) {
         factories.insert(std::to_string(i)+"Ftry"s , std::make_shared<SimpleGenericFtry<int> >(factories::listName));
     }

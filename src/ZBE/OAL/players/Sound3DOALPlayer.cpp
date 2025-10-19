@@ -87,38 +87,4 @@ void Sound3DOALPlayer::apply(std::shared_ptr<MAvatar<uint64_t, uint64_t, uint64_
 void Sound3DOALPlayer::setCamera(std::shared_ptr<Camera> cam) {
   this->cam = cam;
 }
-
-void Sound3DOALPlayerFtry::create(std::string name, uint64_t){
-  using namespace std::string_literals;
-
-  std::shared_ptr<Sound3DOALPlayer> s3daolp = std::shared_ptr<Sound3DOALPlayer>(new Sound3DOALPlayer);
-  mainRsrc.insert("Behavior."s + name, s3daolp);
-  specificRsrc.insert("Sound3DOALPlayer."s + name, s3daolp);
-}
-
-void Sound3DOALPlayerFtry::setup(std::string name, uint64_t cfgId){
-  using namespace std::string_literals;
-  using namespace nlohmann;
-  std::shared_ptr<json> cfg = configRsrc.get(cfgId);
-
-  if(!cfg) {
-    SysError::setError("Sound3DOALPlayerFtry config for "s + name + " not found."s);
-    return;
-  }
-  auto j = *cfg;
-  auto s3daolp = specificRsrc.get("Sound3DOALPlayer."s + name);
-  auto audioStore = JSONFactory::StoreLoader<OALAudioStore>::loadParamCfgStoreP(audioStoreRsrc, j, "OALAudioStore", "audiostore"s, "Sound3DOALPlayerFtry"s);
-  if(!audioStore) {
-    SysError::setError("Sound3DOALPlayerFtry config for audiostore is invalid"s);
-    return;
-  }
-  auto cam = JSONFactory::StoreLoader<Camera>::loadParamCfgStoreP(cameraRsrc, j,"Camera", "camera"s, "Sound3DOALPlayerFtry"s);
-  if(!cam) {
-    SysError::setError("Sound3DOALPlayerFtry config for camera is invalid"s);
-    return;
-  }
-
-  s3daolp->setUp(*audioStore, *cam);
-}
-
 }  // namespace zbe

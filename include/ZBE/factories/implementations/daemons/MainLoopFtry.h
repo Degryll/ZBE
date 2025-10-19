@@ -21,6 +21,8 @@
 #include "ZBE/core/tools/containers/RsrcStore.h"
 #include "ZBE/core/tools/containers/RsrcDictionary.h"
 
+#include "ZBE/core/events/EventStore.h"
+
 #include "ZBE/core/daemons/Daemon.h"
 
 #include "ZBE/factories/Factory.h"
@@ -31,26 +33,84 @@ namespace zbe {
 
 /** \brief Factory for Main Loop.
  */
-class ZBEAPI MainLoopFtry : virtual public Factory {
+class MainLoopFtry : virtual public Factory {
 public:
 
   /** \brief Builds a MainLoop.
    *  \param name Name for the created MainLoopFtry.
    *  \param cfgId MainLoopFtry's configuration id.
    */
-  void create(std::string name, uint64_t) override;
+  void create(std::string name, uint64_t) override {
+    using namespace std::string_literals;
+
+    auto ml = std::make_shared<MainLoop>();
+    daemonRsrc.insert("Daemon."s + name, ml);
+    mainLoopRsrc.insert("MainLoop."s + name, ml);
+  }
 
   /** \brief Setup the desired tool. The tool will be complete after this step.
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId) override;
+  void setup(std::string name, uint64_t cfgId) override {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+    if(cfg) {
+      auto j = *cfg;
+      json pre = j["preDaemon"];
+      json event = j["eventDaemon"];
+      json common = j["commonDaemon"];
+      json react = j["reactDaemon"];
+      json draw = j["drawDaemon"];
+      json post = j["postDaemon"];
+      json cTime = j["contextTime"];
+
+      std::shared_ptr<Daemon> preDm, postDm, eventDm, commonDm, reactDm, drawDm;
+      std::shared_ptr<ContextTime> ctxTime;
+
+      if ((pre.is_string())
+      &&  (event.is_string())
+      &&  (common.is_string())
+      &&  (react.is_string())
+      &&  (draw.is_string())
+      &&  (post.is_string())
+      &&  (cTime.is_string())) {
+
+        preDm    = daemonRsrc.get("Daemon."s + pre.get<std::string>());
+        eventDm  = daemonRsrc.get("Daemon."s + event.get<std::string>());
+        commonDm = daemonRsrc.get("Daemon."s + common.get<std::string>());
+        reactDm  = daemonRsrc.get("Daemon."s + react.get<std::string>());
+        drawDm   = daemonRsrc.get("Daemon."s + draw.get<std::string>());
+        postDm   = daemonRsrc.get("Daemon."s + post.get<std::string>());
+        ctxTime  = timeRsrc.get("ContextTime."s + cTime.get<std::string>());
+
+        auto ml = mainLoopRsrc.get("MainLoop."s + name);
+
+        ml->setPre(preDm);
+        ml->setPost(postDm);
+        ml->setEvent(eventDm);
+        ml->setCommon(commonDm);
+        ml->setReact(reactDm);
+        ml->setDraw(drawDm);
+        ml->setContextTime(ctxTime);
+        ml->setEventStore(&eventStore);
+
+      } else {
+        SysError::setError("Bad config for MainLoopFtry."s);
+      }   // if pre, event, common, react, draw, post
+    } else {
+      SysError::setError("MainLoopFtry config for "s + name + " not found."s);
+    }
+  }
 
 private:
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<Daemon> &daemonRsrc = RsrcStore<Daemon>::getInstance();
   RsrcStore<MainLoop> &mainLoopRsrc = RsrcStore<MainLoop>::getInstance();
   RsrcStore<ContextTime> &timeRsrc = RsrcStore<ContextTime>::getInstance();
+  EventStore &eventStore = EventStore::getInstance();
 };
 
 }  // namespace zbe

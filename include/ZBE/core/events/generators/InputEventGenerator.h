@@ -33,15 +33,13 @@
 
 #include "ZBE/core/system/system.h"
 
-#include "ZBE/factories/Factory.h"
-
 
 namespace zbe {
 
 using HandlerList = std::list<std::shared_ptr<InputHandler> >;
 using HandlerTicket = HandlerList::iterator;
 
-class ZBEAPI InputStatusManager {
+class InputStatusManager {
 public:
 
   virtual ~InputStatusManager() = default;
@@ -72,7 +70,7 @@ protected:
 
 };
 
-class ZBEAPI MappedInputStatusManager : public InputStatusManager {
+class MappedInputStatusManager : public InputStatusManager {
 public:
 
   MappedInputStatusManager() : eventId(), store(EventStore::getInstance()), handlers() {}
@@ -172,7 +170,7 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class ZBEAPI AnyInputStatusManager : public InputStatusManager {
+class AnyInputStatusManager : public InputStatusManager {
 public:
   virtual ~AnyInputStatusManager() {}
 
@@ -180,11 +178,11 @@ public:
 
 };
 
-class ZBEAPI InputEventGeneratorFtry;
+class InputEventGeneratorFtry;
 
-/** \brief This class ZBEAPI will search for input event occurred between two given times and send it to the EventStore.
+/** \brief This class will search for input event occurred between two given times and send it to the EventStore.
  */
-class ZBEAPI InputEventGenerator : virtual public Daemon {
+class InputEventGenerator : virtual public Daemon {
   public:
     friend class InputEventGeneratorFtry;
 
@@ -193,7 +191,7 @@ class ZBEAPI InputEventGenerator : virtual public Daemon {
 
     /** \brief Default constructor.
      */
-    explicit InputEventGenerator(std::shared_ptr<InputBuffer> inputBuffer, std::shared_ptr<InputTextBuffer> inputTextBuffer = nullptr, uint64_t eventId = 0, std::shared_ptr<TextHandler> handler = nullptr, std::shared_ptr<ContextTime> contextTime = nullptr) : inputBuffer(inputBuffer), inputTextBuffer(inputTextBuffer), mism(eventId), eventId(eventId), store(EventStore::getInstance()), handler(handler), contextTime(contextTime) {}
+    explicit InputEventGenerator(std::shared_ptr<InputBuffer> inputBuffer, std::shared_ptr<InputTextBuffer> inputTextBuffer = nullptr, uint64_t eventId = 0, std::shared_ptr<TextHandler> handler = nullptr, std::shared_ptr<ContextTime> contextTime = nullptr) : inputBuffer(inputBuffer), inputTextBuffer(inputTextBuffer), mism(eventId), eventId(eventId), store(nullptr), handler(handler), contextTime(contextTime) {}
 
     /** \brief Empty destructor.
      */
@@ -205,7 +203,35 @@ class ZBEAPI InputEventGenerator : virtual public Daemon {
      * \param initTime Time from which events are generated
      * \param endTime Time until the events are generated
      */
-    void run() override;
+
+    void run() override {
+      std::vector<InputStatus> currentInput;
+      inputBuffer->getRange(contextTime->getInitFrameTime(), contextTime->getEndFrameTime(), currentInput);
+      auto it = currentInput.begin();
+      while (it != currentInput.end() && ! mism.generate(*it)){
+        ++it;
+      }
+
+      if (it!= currentInput.end()) {
+        auto time = it->getTime();
+        ++it;
+        for(; it != currentInput.end(); ++it) {
+          if (it->getTime()!=time) {
+            break;
+          }
+          mism.generate(*it);
+        } // for each currentInput
+      }
+
+      if (handler != nullptr) {
+        std::vector<InputText> itv;
+        inputTextBuffer->getFirstInRange(contextTime->getInitFrameTime(), contextTime->getEndFrameTime(), itv);
+        for(auto input : itv) {
+          TextEvent* e = new TextEvent(eventId, input.getTime(), input.getText(), handler);
+          store->storeEvent(e);
+        } // for each currentInput
+      }
+    }
     inline HandlerTicket addHandler(uint32_t inputId, std::shared_ptr<InputHandler> handler) {
       return mism.addHandler(inputId, handler);
     }
@@ -246,6 +272,10 @@ class ZBEAPI InputEventGenerator : virtual public Daemon {
       this->handler = handler;
     }
 
+    inline void setEventStore(EventStore* store) {
+      this->store = store;
+    }
+
     inline void removeTextHandler() {
       this->handler = nullptr;
     }
@@ -254,7 +284,7 @@ class ZBEAPI InputEventGenerator : virtual public Daemon {
 
   private:
 
-    InputEventGenerator() : inputBuffer(nullptr), inputTextBuffer(nullptr), mism(), eventId(), store(EventStore::getInstance()), handler(nullptr), contextTime(nullptr) {}
+    InputEventGenerator() : inputBuffer(nullptr), inputTextBuffer(nullptr), mism(), eventId(), store(nullptr), handler(nullptr), contextTime(nullptr) {}
 
     inline void setEventID(uint64_t eventId) {
       this->eventId = eventId;
@@ -278,38 +308,11 @@ DISABLE_DLL_WARN
     std::shared_ptr<InputTextBuffer> inputTextBuffer;
     MappedInputStatusManager mism;
     uint64_t eventId;
-    EventStore &store;
+    EventStore* store;
     std::shared_ptr<TextHandler> handler;
     std::shared_ptr<ContextTime> contextTime;
 DISABLE_WARNING_POP()
 };
-
-class ZBEAPI InputEventGeneratorFtry : public Factory {
-public:
-
-  /** \brief Builds a InputEventGenerator.
-   *  \param name Name for the created InputEventGenerator.
-   *  \param cfgId InputEventGenerator's configuration id.
-   */
-  void create(std::string name, uint64_t) override;
-
-  /** \brief Setup the desired tool. The tool will be complete after this step.
-   *  \param name Name of the tool.
-   *  \param cfgId Tool's configuration id.
-   */
-  void setup(std::string name, uint64_t cfgId) override;
-
-private:
-  RsrcDictionary<uint64_t>& uintStore = RsrcDictionary<uint64_t>::getInstance();
-  RsrcStore<nlohmann::json>& configRsrc = RsrcStore<nlohmann::json>::getInstance();
-  RsrcStore<Daemon>& daemonRsrc = RsrcStore<Daemon>::getInstance();
-  RsrcStore<InputEventGenerator>& iegRsrc = RsrcStore<InputEventGenerator>::getInstance();
-  RsrcStore<ContextTime>& cTimeRsrc = RsrcStore<ContextTime>::getInstance();
-  RsrcStore<InputBuffer>& ibuffRsrc = RsrcStore<InputBuffer>::getInstance();
-  RsrcStore<InputTextBuffer>& itBuffRsrc = RsrcStore<InputTextBuffer>::getInstance();
-
-};
-
 }  // namespace zbe
 
 #endif  // ZBE_CORE_EVENTS_GENERATORS_INPUTEVENTGENERATOR_H

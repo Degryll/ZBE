@@ -19,7 +19,7 @@
 
 namespace zbe {
 
-class ZBEAPI BroadcastIH : public InputHandler {
+class BroadcastIH : public InputHandler {
 public:
 
   BroadcastIH() = default;

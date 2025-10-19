@@ -17,7 +17,7 @@ void NetEventGenerator::run() {
   for(auto msg : msgs) {
     SDLSocket s = msg.getSocket();
     NetEvent* e = new NetEvent(eventId, msg.getTime(), msg.getSequence(), s, msg.getMsg(), s.getHandler());
-    store.storeEvent(e);
+    store->storeEvent(e);
   } // for each currentInput
 }
 

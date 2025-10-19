@@ -35,17 +35,17 @@ public:
   /** \brief It will Load the factories calling the load method.
   */
   void run() override {
-    load();
+    //load();
   };
 
   /** \brief It loads all factories.
   */
-  static void load() {
+  static void load(RsrcStore<Factory>& factories) {
     using namespace std::string_literals;
 
-    auto& factories = RsrcStore<Factory>::getInstance();
-    factories.insert("JSONImgDefLoaderFtry"s, std::make_shared<GenericFtry<RsrcDefLoader, JSONImgDefLoader> >("RsrcDefLoader", "JSONImgDefLoader"));
-    factories.insert("JSONMultiSprtSheetLoaderFtry"s, std::make_shared<GenericFtry<RsrcLoader, JSONMultiSpriteSheetLoader> >("RsrcLoader", "JSONMultiSpriteSheetLoader"));
+    //auto& factories = RsrcStore<Factory>::getInstance();
+    factories.insert("JSONImgDefLoaderFtry"s, std::make_shared<JSONImgDefLoaderFtry>());
+    factories.insert("JSONMultiSprtSheetLoaderFtry"s, std::make_shared<JSONMultiSpriteSheetLoaderFtry>());
     factories.insert("JSONLookAtOGLModelSheetLoaderFtry"s, std::make_shared<JSONLookAtOGLModelSheetLoaderFtry>());
     factories.insert("JSONSimpleOGLModelSheetLoaderFtry"s, std::make_shared<JSONSimpleOGLModelSheetLoaderFtry>());
     factories.insert("JSONGLSLProgramLoaderFtry"s, std::make_shared<JSONGLSLProgramLoaderFtry>());

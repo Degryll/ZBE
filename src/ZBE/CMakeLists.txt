@@ -17,9 +17,6 @@ add_library(ZBE_LIB SHARED
   SDL/daemons/SDLOGLWindowDaemon.cpp
   SDL/daemons/IOPreLoopSDL.cpp
   SDL/drawers/SingleSpriteSDLDrawer.cpp
-  SDL/factories/SDLWindowDmnFtry.cpp
-  SDL/factories/drawers/SingleTextSDLDrawerFtry.cpp
-  SDL/factories/system/SDLOGLWindowFtry.cpp
   SDL/starters/SDL_Starter.cpp
   SDL/system/SDLWindow.cpp
   SDL/system/SDLSocket.cpp
@@ -37,43 +34,20 @@ add_library(ZBE_LIB SHARED
   core/events/EventStore.cpp
   core/events/generators/TimeEventGenerator.cpp
   core/events/generators/NetEventGenerator.cpp
-  core/events/generators/InputEventGenerator.cpp
   core/io/FileHandler.cpp
   core/system/SysIdGenerator.cpp
   core/system/SysError.cpp
   core/system/Logger.cpp
   core/tools/math/Vector.cpp
   core/tools/math/collisions/intersections.cpp
-  core/tools/shared/implementations/SimpleValue.cpp
   core/tools/text/utf8.cpp
   core/tools/time/ContextTime.cpp
   daemons/RsrcLoaderDmn.cpp
   daemons/RsrcFolderLoaderDmn.cpp
-  events/handlers/input/TicketTogglerIH.cpp
-  events/handlers/input/ParametricActivatorIH.cpp
-  events/handlers/input/KeyDownTicketEnablerIH.cpp
-  events/handlers/input/ActivatorIH.cpp
-  factories/implementations/RsrcFtry.cpp
-  factories/implementations/behaviors/StateSetterBhvFtry.cpp
-  factories/implementations/behaviors/StateLTEraserBhvFtry.cpp
-  factories/implementations/daemons/StateMachineDmnFtry.cpp
-  factories/implementations/daemons/RsrcLoaderDmnFtry.cpp
-  factories/implementations/daemons/RsrcFolderLoaderDmnFtry.cpp
-  factories/implementations/daemons/MasterDmnFtry.cpp
-  factories/implementations/daemons/MainLoopFtry.cpp
-  factories/implementations/daemons/MainLoopExitFtry.cpp
-  factories/implementations/entities/EntityFtry.cpp
-  factories/implementations/events/generators/TimeEventGnFtry.cpp
-  factories/implementations/events/handlers/input/InputToValueFtry.cpp
-  factories/implementations/events/handlers/input/DaemonClickIHFtry.cpp
-  factories/implementations/events/handlers/input/BroadcastIHFtry.cpp
-  factories/implementations/events/handlers/time/TicketEraserFtry.cpp
-  factories/implementations/events/handlers/time/DaemonTimeHandlerFtry.cpp
   glTF/resources/GlTFResourceLoader.cpp
   resources/contextnames.cpp
   resources/loaders/RsrcFolderLoader.cpp
   resources/loaders/implementations/JSONAppLoader.cpp
-  sytem/SystemResources.cpp
   tools/graphics/Camera.cpp
 )
 
@@ -83,8 +57,11 @@ add_library(ZBE::ZBE_LIB ALIAS ZBE_LIB)
 
 add_library(glew STATIC IMPORTED) # or STATIC instead of SHARED
 
+target_compile_definitions(ZBE_LIB PRIVATE _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING)
+
 IF (MSVC)
   # target_compile_definitions(ZBE_LIB PRIVATE GLEW_STATIC)
+  set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT ProgramDatabase)
   target_compile_definitions(ZBE_LIB PRIVATE ZBE_EXPORTS)
   target_compile_options(ZBE_LIB PRIVATE /bigobj)
   set_target_properties(glew PROPERTIES
@@ -116,6 +93,7 @@ target_link_libraries(ZBE_LIB PUBLIC
   PUBLIC ogg
   PUBLIC vorbis
   PUBLIC vorbisfile
+  PRIVATE dbghelp
   # Vorbis & openal
 )
 

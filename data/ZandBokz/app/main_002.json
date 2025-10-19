@@ -702,7 +702,7 @@
           "name":"zandbokz.modelLoader",
           "config" : {
             "loader" : "zandbokz.gltfLoader",
-            "url" : "data/ZandBokz/models/gltf",
+            "url" : "F:/Creatividad/Programacion/ZBE/data/ZandBokz/models/gltf",
             "urlBack" : "data/graphics3d"
           }
         },

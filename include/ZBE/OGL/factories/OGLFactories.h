@@ -36,13 +36,13 @@ public:
   /** \brief It will Load the factories calling the load method.
   */
   void run() override {
-    load();
+    //load();
   };
 
   /** \brief It loads all factories.
   */
-  static void load() {
-    auto& factories = RsrcStore<Factory>::getInstance();
+  static void load(RsrcStore<Factory>& factories) {
+    //auto& factories = RsrcStore<Factory>::getInstance();
     factories.insert("CameraFtry", std::make_shared<CameraFtry>());
     factories.insert("OGLPostDrawFtry", std::make_shared<OGLPostDrawFtry>());
     factories.insert("OGLPreDrawFtry" , std::make_shared<OGLPreDrawFtry>());

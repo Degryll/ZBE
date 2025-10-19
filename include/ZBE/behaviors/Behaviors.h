@@ -146,7 +146,7 @@ class BoundedAddTriggerBvrFtry : public Factory {
 public:
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
-    std::shared_ptr<BoundedAddTriggerBvr<T>> batb = std::shared_ptr<BoundedAddTriggerBvr<T>>(new BoundedAddTriggerBvr<T>);
+    std::shared_ptr<BoundedAddTriggerBvr<T>> batb(new BoundedAddTriggerBvr<T>);
     behaviorRsrc.insert("Behavior."s + name, batb);
     specificRsrc.insert("BoundedAddTriggerBvr."s + name, batb);
   }
@@ -186,7 +186,7 @@ class ValueSetterFixedBvrFtry : public Factory {
 public:
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
-    std::shared_ptr<ValueSetterFixedBvr<T>> vsfb = std::shared_ptr<ValueSetterFixedBvr<T>>(new ValueSetterFixedBvr<T>);
+    std::shared_ptr<ValueSetterFixedBvr<T>> vsfb(new ValueSetterFixedBvr<T>);
     behaviorRsrc.insert("Behavior."s + name, vsfb);
     vsfbRsrc.insert("ValueSetterFixedBvr."s + name, vsfb);
   }
@@ -268,7 +268,7 @@ class TicketActivatorBvrFtry : public Factory {
 public:
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
-    std::shared_ptr<TicketActivatorBvr> teb = std::shared_ptr<TicketActivatorBvr>(new TicketActivatorBvr);
+    std::shared_ptr<TicketActivatorBvr> teb(new TicketActivatorBvr);
     behaviorRsrc.insert("Behavior."s + name, teb);
     tebRsrc.insert("TicketActivatorBvr."s + name, teb);
   }
@@ -306,7 +306,7 @@ class TicketDeactivatorBvrFtry : public Factory {
 public:
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
-    std::shared_ptr<TicketDeactivatorBvr> tdb = std::shared_ptr<TicketDeactivatorBvr>(new TicketDeactivatorBvr);
+    std::shared_ptr<TicketDeactivatorBvr> tdb(new TicketDeactivatorBvr);
     behaviorRsrc.insert("Behavior."s + name, tdb);
     tdbRsrc.insert("TicketDeactivatorBvr."s + name, tdb);
   }

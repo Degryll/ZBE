@@ -23,17 +23,17 @@ void MainLoop::run() {
     while (contextTime->isFrameRemaining()) {
       // Timed events generator daemon
       dTE->run();
-      contextTime->setEventTime(store.getTime());
+      contextTime->setEventTime(store->getTime());
       if (contextTime->isPartialFrame()) {
         // commonBehaviorMaster
         dCBM->run();
-        store.manageCurrent();
+        store->manageCurrent();
         // reactBehaviorMaster
         dRBM->run();
       } else {
         // commonBehaviorMaster
         dCBM->run();
-        store.clearStore();
+        store->clearStore();
       }
       contextTime->updateInitTime();
     }  // while frame remaining

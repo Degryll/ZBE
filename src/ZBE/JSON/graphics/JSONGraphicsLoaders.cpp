@@ -29,7 +29,7 @@ ImgDef JSONImgDefLoad(nlohmann::json j, uint64_t graphicsId) {
   }
 }
 
-void JSONImgDefFileLoad(std::istream& is, uint64_t graphicsId, RsrcStore<ImgDef>& rsrcImgDef, NameRsrcDictionary& nrd) {
+void JSONImgDefFileLoad(std::istream& is, uint64_t graphicsId, RsrcStore<ImgDef>* rsrcImgDef, NameRsrcDictionary* nrd) {
   using namespace nlohmann;
   json j;
   try {
@@ -40,8 +40,8 @@ void JSONImgDefFileLoad(std::istream& is, uint64_t graphicsId, RsrcStore<ImgDef>
       std::string nodeName = imgNode["name"];
       ImgDef imgDef = JSONImgDefLoad(imgNode, graphicsId);
       uint64_t id = SysIdGenerator::getId();
-      rsrcImgDef.insert(id, std::make_shared<ImgDef>(imgDef));
-      nrd.insert(cn::IMGDEF + cn::SEPARATOR + name + cn::SEPARATOR + nodeName, id);
+      rsrcImgDef->insert(id, std::make_shared<ImgDef>(imgDef));
+      nrd->insert(cn::IMGDEF + cn::SEPARATOR + name + cn::SEPARATOR + nodeName, id);
     }
   } catch (json::parse_error &e) {
     SysError::setError(std::string("JSONImgDefFileLoad - ERROR: Json failed to parse: ") + std::string(e.what()));
@@ -51,12 +51,12 @@ void JSONImgDefFileLoad(std::istream& is, uint64_t graphicsId, RsrcStore<ImgDef>
 
 }
 
-SprtDef JSONSprtDefLoad(nlohmann::json j, RsrcStore<ImgDef>& rsrcImgDef, NameRsrcDictionary& nrd) {
+SprtDef JSONSprtDefLoad(nlohmann::json j, RsrcStore<ImgDef>* rsrcImgDef, NameRsrcDictionary* nrd) {
   try {
     std::string imgName = j["img"];
-    uint64_t imgDefId = nrd.get(cn::IMGDEF + cn::SEPARATOR + imgName);
+    uint64_t imgDefId = nrd->get(cn::IMGDEF + cn::SEPARATOR + imgName);
     if(imgDefId > 0){
-      std::shared_ptr<ImgDef> storedImgDef = rsrcImgDef.get(imgDefId);
+      std::shared_ptr<ImgDef> storedImgDef = rsrcImgDef->get(imgDefId);
       ImgDef imgDef(*storedImgDef);
       Vector2D drawOffset({j["drawOffset"][0],j["drawOffset"][1]});
       Vector2D scale({j["scale"][0],j["scale"][1]});
@@ -70,7 +70,7 @@ SprtDef JSONSprtDefLoad(nlohmann::json j, RsrcStore<ImgDef>& rsrcImgDef, NameRsr
   return SprtDef();  // TODO create default ImgDef & image.
 }
 
-void JSONSpriteOGLModelSheetFileLoad(std::istream& is, std::shared_ptr<SDLOGLWindow> window, RsrcStore<OGLModelSheet<uint64_t, Vector2D, Vector2D>>& rsrcModelSheet, NameRsrcDictionary& nrd, RsrcStore<ImgDef>& rsrcImgDef) {
+void JSONSpriteOGLModelSheetFileLoad(std::istream& is, std::shared_ptr<SDLOGLWindow> window, RsrcStore<OGLModelSheet<uint64_t, Vector2D, Vector2D>>* rsrcModelSheet, NameRsrcDictionary* nrd, RsrcStore<ImgDef>* rsrcImgDef) {
   using namespace nlohmann;
   json j;
   try {
@@ -91,7 +91,7 @@ void JSONSpriteOGLModelSheetFileLoad(std::istream& is, std::shared_ptr<SDLOGLWin
     } else {
       SysError::setError(std::string("ERROR: sprtDefs is empty"));
     }
-    rsrcModelSheet.insert(name, sprtSheet);
+    rsrcModelSheet->insert(name, sprtSheet);
   } catch (json::parse_error &e) {
     SysError::setError(std::string("JSONSpriteOGLModelSheetFileLoad - ERROR: Json failed to parse: ") + std::string(e.what()));
   } catch (nlohmann::detail::type_error &e) {
@@ -99,7 +99,7 @@ void JSONSpriteOGLModelSheetFileLoad(std::istream& is, std::shared_ptr<SDLOGLWin
   }
 }
 
-void JSONParametricSpriteOGLModelSheetFileLoad(std::istream& is, std::shared_ptr<SDLOGLWindow> window, RsrcStore<OGLModelSheet<uint64_t, int64_t, int64_t, Vector2D, Vector2D>>& rsrcModelSheet, NameRsrcDictionary& nrd, RsrcStore<ImgDef>& rsrcImgDef) {
+void JSONParametricSpriteOGLModelSheetFileLoad(std::istream& is, std::shared_ptr<SDLOGLWindow> window, RsrcStore<OGLModelSheet<uint64_t, int64_t, int64_t, Vector2D, Vector2D>>* rsrcModelSheet, NameRsrcDictionary* nrd, RsrcStore<ImgDef>* rsrcImgDef) {
   using namespace nlohmann;
   using namespace std::string_literals;
   json j;
@@ -122,7 +122,7 @@ void JSONParametricSpriteOGLModelSheetFileLoad(std::istream& is, std::shared_ptr
     } else {
       SysError::setError(std::string("ERROR: sprtDefs is empty"));
     }
-    rsrcModelSheet.insert(name, sprtSheet);
+    rsrcModelSheet->insert(name, sprtSheet);
   } catch (json::parse_error &e) {
     SysError::setError(std::string("JSONParametricSpriteOGLModelSheetFileLoad - ERROR: Json failed to parse: ") + std::string(e.what()));
   } catch (nlohmann::detail::type_error &e) {
@@ -130,7 +130,7 @@ void JSONParametricSpriteOGLModelSheetFileLoad(std::istream& is, std::shared_ptr
   }
 }
 
-void JSONMultiSpriteSheetFileLoad(std::istream& is, RsrcStore<zbe::SpriteSheet<uint64_t, int64_t, double, Vector2D, Vector2D> >& rsrcAnimSprt, NameRsrcDictionary& nrd, RsrcStore<zbe::OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> >& , RsrcStore<ImgDef>& rsrcImgDef) {
+void JSONMultiSpriteSheetFileLoad(std::istream& is, RsrcStore<zbe::SpriteSheet<uint64_t, int64_t, double, Vector2D, Vector2D> >* rsrcAnimSprt, NameRsrcDictionary* nrd, RsrcStore<ImgDef>* rsrcImgDef) {
   using namespace nlohmann;
   json j;
   try {
@@ -141,12 +141,12 @@ void JSONMultiSpriteSheetFileLoad(std::istream& is, RsrcStore<zbe::SpriteSheet<u
     for (auto sprtNode : sprtDefs) {
       std::string stateName = sprtNode["name"];
       SprtDef sprtDef = JSONSprtDefLoad(sprtNode, rsrcImgDef, nrd);
-      sprtSheet->setSprite(static_cast<int64_t>(nrd.get(cn::STATE + cn::SEPARATOR + stateName)), sprtDef);
+      sprtSheet->setSprite(static_cast<int64_t>(nrd->get(cn::STATE + cn::SEPARATOR + stateName)), sprtDef);
       if (!sprtNode["default"].is_null() && sprtNode["default"]) {
         sprtSheet->setDefaultSprite(sprtDef);
       }
     }
-    rsrcAnimSprt.insert(name, sprtSheet);
+    rsrcAnimSprt->insert(name, sprtSheet);
   } catch (json::parse_error &e) {
     SysError::setError(std::string("JSONMultiSpriteSheetFileLoad - ERROR: Json failed to parse: ") + std::string(e.what()));
   } catch (nlohmann::detail::type_error &e) {
@@ -154,7 +154,7 @@ void JSONMultiSpriteSheetFileLoad(std::istream& is, RsrcStore<zbe::SpriteSheet<u
   }
 }
 
-void JSONSimpleModelSheetFileLoad(std::istream& is, std::shared_ptr<SDLOGLWindow> window, NameRsrcDictionary& , RsrcStore<zbe::OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> >& rsrcModelSheet, RsrcStore<OGLGraphics> &graphicsStore) {
+void JSONSimpleModelSheetFileLoad(std::istream& is, std::shared_ptr<SDLOGLWindow> window, NameRsrcDictionary* , RsrcStore<zbe::OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> >* rsrcModelSheet, RsrcStore<OGLGraphics>* graphicsStore) {
   using namespace std::string_literals;
   using namespace nlohmann;
   json j;
@@ -169,7 +169,7 @@ void JSONSimpleModelSheetFileLoad(std::istream& is, std::shared_ptr<SDLOGLWindow
     // for (auto graphicdef : graphicdefs) {
     // TODO necesitaremos añadir múltiples definiciones de model a un solo OGLModelSheet en el futuro.
     // }
-    rsrcModelSheet.insert(name, modelSheet);
+    rsrcModelSheet->insert(name, modelSheet);
   } catch (json::parse_error &e) {
     SysError::setError(std::string("JSONMultiSpriteSheetFileLoad - ERROR: Json failed to parse: ") + std::string(e.what()));
   } catch (nlohmann::detail::type_error &e) {
@@ -177,7 +177,7 @@ void JSONSimpleModelSheetFileLoad(std::istream& is, std::shared_ptr<SDLOGLWindow
   }
 }
 
-void JSONLookAtOGLModelSheetFileLoad(std::istream& is, std::shared_ptr<SDLOGLWindow> window, NameRsrcDictionary& , RsrcStore<zbe::OGLModelSheet<uint64_t, double, Vector3D, Vector3D, Vector3D> >& rsrcModelSheet, RsrcStore<OGLGraphics> &graphicsStore) {
+void JSONLookAtOGLModelSheetFileLoad(std::istream& is, std::shared_ptr<SDLOGLWindow> window, NameRsrcDictionary* , RsrcStore<zbe::OGLModelSheet<uint64_t, double, Vector3D, Vector3D, Vector3D> >* rsrcModelSheet, RsrcStore<OGLGraphics>* graphicsStore) {
   using namespace std::string_literals;
   using namespace nlohmann;
   json j;
@@ -192,7 +192,7 @@ void JSONLookAtOGLModelSheetFileLoad(std::istream& is, std::shared_ptr<SDLOGLWin
     // for (auto graphicdef : graphicdefs) {
     // TODO necesitaremos añadir múltiples definiciones de model a un solo OGLModelSheet en el futuro.
     // }
-    rsrcModelSheet.insert(name, modelSheet);
+    rsrcModelSheet->insert(name, modelSheet);
   } catch (json::parse_error &e) {
     SysError::setError(std::string("JSONLookAtOGLModelSheetLoad - ERROR: Json failed to parse: ") + std::string(e.what()));
   } catch (nlohmann::detail::type_error &e) {
@@ -200,7 +200,7 @@ void JSONLookAtOGLModelSheetFileLoad(std::istream& is, std::shared_ptr<SDLOGLWin
   }
 }
 
-void JSONGLSLProgramFileLoad(std::istream& is, std::shared_ptr<SDLOGLWindow> window, RsrcDictionary<uint64_t>& uintStore) {
+void JSONGLSLProgramFileLoad(std::istream& is, std::shared_ptr<SDLOGLWindow> window, RsrcDictionary<uint64_t>* uintStore) {
   using namespace std::string_literals;
   using namespace nlohmann;
   json j;
@@ -222,7 +222,7 @@ void JSONGLSLProgramFileLoad(std::istream& is, std::shared_ptr<SDLOGLWindow> win
       }
     }  // for
     auto programid = window->getShaderStore()->loadShader(shaderDefs);
-    uintStore.insert(name, programid);
+    uintStore->insert(name, programid);
 
   } catch (json::parse_error &e) {
     SysError::setError(std::string("JSONGLSLProgramFileLoad - ERROR: Json failed to parse: ") + std::string(e.what()));

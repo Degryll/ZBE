@@ -102,7 +102,25 @@
         "__memory": "cpp",
         "charconv": "cpp",
         "print": "cpp",
-        "__availability": "cpp"
+        "__availability": "cpp",
+        "xlocale": "cpp",
+        "xlocmes": "cpp",
+        "xlocmon": "cpp",
+        "xlocnum": "cpp",
+        "xloctime": "cpp",
+        "xstring": "cpp",
+        "coroutine": "cpp",
+        "filesystem": "cpp",
+        "source_location": "cpp",
+        "xfacet": "cpp",
+        "xhash": "cpp",
+        "xiosbase": "cpp",
+        "xlocbuf": "cpp",
+        "xlocinfo": "cpp",
+        "xmemory": "cpp",
+        "xtr1common": "cpp",
+        "xtree": "cpp",
+        "xutility": "cpp"
     },
     "DockerRun.DisableAutoGenerateConfig": true
 }

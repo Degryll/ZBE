@@ -195,7 +195,7 @@ public:
    */
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
-    std::shared_ptr<FixedUniformLinearMotion3D> fulm3d = std::shared_ptr<FixedUniformLinearMotion3D>(new FixedUniformLinearMotion3D);
+    std::shared_ptr<FixedUniformLinearMotion3D> fulm3d(new FixedUniformLinearMotion3D);
     behaviorRsrc.insert("Behavior."s + name, fulm3d);
     fulm3dRsrc.insert("FixedUniformLinearMotion3D."s + name, fulm3d);
   }
@@ -248,7 +248,7 @@ public:
 
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
-    std::shared_ptr<RelativeUniformLinearMotion3D> rulm3d = std::shared_ptr<RelativeUniformLinearMotion3D>(new RelativeUniformLinearMotion3D);
+    std::shared_ptr<RelativeUniformLinearMotion3D> rulm3d(new RelativeUniformLinearMotion3D);
     behaviorRsrc.insert("Behavior."s + name, rulm3d);
     rulm3dRsrc.insert("RelativeUniformLinearMotion3D."s + name, rulm3d);
   }

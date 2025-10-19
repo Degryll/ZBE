@@ -72,7 +72,7 @@ class KeyValueSetterIHFtry : public Factory {
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
 
-    auto kvsih = std::shared_ptr<KeyValueSetterIH<T>>(new KeyValueSetterIH<T>());
+    std::shared_ptr<KeyValueSetterIH<T>> kvsih(new KeyValueSetterIH<T>());
     mainRsrcStore.insert("InputHandler."s + name, kvsih);
     specificRsrcStore.insert("KeyValueSetterIH."s + name, kvsih);
   }

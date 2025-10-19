@@ -68,9 +68,12 @@ public:
 // Renombrar load a loadGLTF
 // Crear load que llame a loadGLTF y luego a RsrcDefLoader::load
 
-void setup(OGLTextureStore* texStore,  OGLModelStore* modelStore) {
+void setup(OGLTextureStore* texStore,  OGLModelStore* modelStore, RsrcStore<OGLGraphics>* graphicsStore, RsrcStore<std::forward_list<Triangle3D>>* triangle3DListRsrc, NameRsrcDictionary* dict) {
   this->texStore = texStore;
   this->modelStore = modelStore;
+  this->graphicsStore = graphicsStore;
+  this->triangle3DListRsrc = triangle3DListRsrc;
+  this->dict = dict;
 }
 
 bool isLoadable(std::filesystem::path extension) override {
@@ -80,13 +83,25 @@ bool isLoadable(std::filesystem::path extension) override {
 
 void load(std::filesystem::path filePath) override;
 
+void setGraphicsStore(RsrcStore<OGLGraphics>* graphicsStore) {
+  this->graphicsStore = graphicsStore;
+}
+
+void setTriangle3DListRsrc(RsrcStore<std::forward_list<Triangle3D>>* triangle3DListRsrc) {
+  this->triangle3DListRsrc = triangle3DListRsrc;
+}
+
+void setDict(NameRsrcDictionary* dict) {
+  this->dict = dict;
+}
+
 private:
   OGLTextureStore* texStore = nullptr;
   OGLModelStore* modelStore = nullptr;
 
-  RsrcStore<OGLGraphics>& graphicsStore = RsrcStore<OGLGraphics>::getInstance();
-  RsrcStore<std::forward_list<Triangle3D>> &triangle3DListRsrc = RsrcStore<std::forward_list<Triangle3D>>::getInstance();
-  NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();
+  RsrcStore<OGLGraphics>* graphicsStore = nullptr;
+  RsrcStore<std::forward_list<Triangle3D>>* triangle3DListRsrc = nullptr;
+  NameRsrcDictionary* dict = nullptr;
 
   GLuint bindModel(tinygltf::Model &model);
 
@@ -126,47 +141,48 @@ public:
    *  \param name Name for the created SDLImgLoader.
    *  \param cfgId SDLImgLoader's configuration id.
    */
-   void create(std::string name, uint64_t) override {
-     using namespace std::string_literals;
+  void create(std::string name, uint64_t) override {
+    using namespace std::string_literals;
 
-     auto loader = std::make_shared<GlTFResourceLoader>();
-     gltfLoaderRsrc.insert("GlTFResourceLoader."s + name, loader);
-     rsrcLoaderRsrc.insert("RsrcLoader."s + name, loader);
-   }
+    auto loader = std::make_shared<GlTFResourceLoader>();
+    gltfLoaderRsrc.insert("GlTFResourceLoader."s + name, loader);
+    rsrcLoaderRsrc.insert("RsrcLoader."s + name, loader);
+  }
 
   /** \brief Setup the desired tool. The tool will be complete after this step.
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-   void setup(std::string name, uint64_t cfgId) override {
-     using namespace std::string_literals;
-     using namespace nlohmann;
-     std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+  void setup(std::string name, uint64_t cfgId) override {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
 
-     if(cfg) {
-       auto j = *cfg;
-       json windowname = j["window"];
-       //json extension = j["extension"];
+    if(cfg) {
+      auto j = *cfg;
+      json windowname = j["window"];
+      //json extension = j["extension"];
 
-       if(!windowname.is_string()) {
-         SysError::setError("Bad config for GlTFResourceLoaderFtry - window."s + windowname.get<std::string>());
-         return;
-       }
+      if(!windowname.is_string()) {
+        SysError::setError("Bad config for GlTFResourceLoaderFtry - window."s + windowname.get<std::string>());
+        return;
+      }
 
-       auto loader = gltfLoaderRsrc.get("GlTFResourceLoader."s + name);
-       auto win = sdlWindowRsrc.get("SDLOGLWindow."s + windowname.get<std::string>());
+      auto loader = gltfLoaderRsrc.get("GlTFResourceLoader."s + name);
+      auto win = sdlWindowRsrc.get("SDLOGLWindow."s + windowname.get<std::string>());
 
-       loader->setup(win->getTextureStore(),  win->getModelStore());
+      loader->setup(win->getTextureStore(),  win->getModelStore(), &RsrcStore<OGLGraphics>::getInstance(),
+                     &RsrcStore<std::forward_list<Triangle3D>>::getInstance(), &NameRsrcDictionary::getInstance());
 
-       // if(extension.is_string()) {
-       //   loader->setExtension(extension.get<std::string>());
-       // }
+      // if(extension.is_string()) {
+      //   loader->setExtension(extension.get<std::string>());
+      // }
 
-     } else {
+    } else {
        SysError::setError("GlTFResourceLoader config for "s + name + " not found."s);
-     }
-   }
-
+    }
+  }
+  
 private:
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<GlTFResourceLoader> &gltfLoaderRsrc = RsrcStore<GlTFResourceLoader>::getInstance();

@@ -15,21 +15,34 @@
 
 #include <map>
 
+#define WIN32_LEAN_AND_MEAN
+#define NOMINMAX
+
+#include <windows.h>
+#include <dbghelp.h>
+#include <iostream>
+#include <memory>
+#include <mutex>
+#include <string>
+#include <sstream>
+
 #include "ZBE/core/system/SysError.h"
 #include "ZBE/core/tools/containers/RsrcDictionary.h"
 #include "ZBE/core/system/SysIdGenerator.h"
 
 #include "ZBE/core/system/system.h"
 
-namespace zbe {
+// Linkear la librería de depuración
+#pragma comment(lib, "dbghelp.lib")
 
+namespace zbe {
 /** \brief A class ZBEAPI that relates an id with a resource.
  */
 template <typename T>
 class RsrcStore {
   public:
     using StoredType = std::shared_ptr<T>;
-    RsrcStore(RsrcStore const&)    = delete;  //!< Needed for singleton.
+    RsrcStore(RsrcStore const&)      = delete;  //!< Needed for singleton.
     void operator=(RsrcStore const&) = delete;  //!< Needed for singleton.
 
     /** \brief Singleton implementation.
@@ -133,7 +146,57 @@ class RsrcStore {
     }
 
   private:
-    RsrcStore() = default; //!< Needed for singleton.
+    RsrcStore() {
+        std::string typeName = typeid(T).name();
+        if (typeName.find("RsrcLoader") != std::string::npos) {
+          std::cout << "[Singleton] Creando instancia de " << typeid(T).name() << "\n";
+          print_stacktrace();
+          std::cout << "============================================\n";
+        }        
+    } //= default; //!< Needed for singleton.
+
+
+    void print_stacktrace() {
+      const int MAX_FRAMES = 64;
+      void* stack[MAX_FRAMES];
+
+      // Captura la pila
+      USHORT frames = CaptureStackBackTrace(0, MAX_FRAMES, stack, NULL);
+
+      HANDLE process = GetCurrentProcess();
+      SymInitialize(process, NULL, TRUE);
+
+      SYMBOL_INFO* symbol = (SYMBOL_INFO*)calloc(sizeof(SYMBOL_INFO) + 1024, 1);
+      symbol->MaxNameLen = 1023;
+      symbol->SizeOfStruct = sizeof(SYMBOL_INFO);
+
+      IMAGEHLP_LINE64 *line = (IMAGEHLP_LINE64 *)malloc(sizeof(IMAGEHLP_LINE64));
+      line->SizeOfStruct = sizeof(IMAGEHLP_LINE64);
+      DWORD displacement = 0;
+
+      std::cout << "Call stack (" << frames << " frames):\n";
+
+      for (USHORT i = 0; i < frames; i++) {
+          DWORD64 address = (DWORD64)(stack[i]);
+
+          if (SymFromAddr(process, address, 0, symbol)) {
+              // Intentar obtener el archivo y línea exacta
+              if (SymGetLineFromAddr64(process, address, &displacement, line)) {
+                  std::cout << i << ": " << symbol->Name
+                            << " (" << line->FileName << ":" << line->LineNumber << ")\n";
+              } else {
+                  std::cout << i << ": " << symbol->Name << " [sin info de línea]\n";
+              }
+          } else {
+              std::cout << i << ": [0x" << std::hex << symbol->Address << std::dec << "]\n";
+          }
+      }
+
+      free(symbol);
+      free(line);
+      SymCleanup(process);
+    }
+//TODO Quitar trazas
 
     std::map<uint64_t, std::shared_ptr<T> > l;  //!< Map that associates resources with ids.
     NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();  //!< Nuevo, maho y reshulón-----------------

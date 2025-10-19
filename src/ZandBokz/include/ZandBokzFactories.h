@@ -39,12 +39,12 @@ public:
   /** \brief It will Load the factories calling the load method.
   */
   void run() override {
-    load();
+    //load();
   }
 
   /** \brief It loads all factories.
   */
-  static void load() {
+  static void load(zbe::RsrcStore<zbe::Factory>& factories) {
     using namespace std::string_literals;
 
     //using InatorList = zbe::TicketedForwardList<Inator>;
@@ -62,7 +62,7 @@ public:
     using ProtaResetAvt = zbe::MAvatar<int64_t, double, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D>;
     using ProtaResetList = zbe::TicketedForwardList<ProtaResetAvt>;
 
-    auto& factories = zbe::RsrcStore<zbe::Factory>::getInstance();
+    //auto& factories = zbe::RsrcStore<zbe::Factory>::getInstance();
 
     factories.insert("ZandBockPlayerResetBhvFtry", std::make_shared<zbe::GenericFtry<zbe::Behavior<int64_t, double, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D>, ZandBockPlayerResetBhv>>("Behavior", "ZandBockPlayerResetBhv"));
 

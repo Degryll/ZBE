@@ -35,8 +35,8 @@ public:
 
   /** \brief Empty constructor.
    */
-  JSONAppLoader() : cfgStore(RsrcStore<json>::getInstance()),
-                    ftryStore(RsrcStore<Factory>::getInstance()),
+  JSONAppLoader() : cfgStore(nullptr),
+                    ftryStore(nullptr),
                     appLists(),
                     appFactories() {}
 
@@ -52,6 +52,19 @@ public:
    */
   bool isLoadable(std::filesystem::path extension) override;
 
+  // RsrcStore<Factory>& getFactoryStore() { return *ftryStore; }
+
+  void setFactoryStore(RsrcStore<Factory>* ftryStore) { this->ftryStore = ftryStore;}
+  void setConfigStore(RsrcStore<json>* cfgStore) { this->cfgStore = cfgStore;}
+  void setV2DStore(RsrcDictionary<Vector2D>* v2dStore) { this->v2dStore = v2dStore;}
+  void setV3DStore(RsrcDictionary<Vector3D>* v3dStore) { this->v3dStore = v3dStore;}
+  void setIntStore(RsrcDictionary<int64_t>* intStore) { this->intStore = intStore;}
+  void setUIntStore(RsrcDictionary<uint64_t>* uintStore) { this->uintStore = uintStore;}
+  void setDoubleStore(RsrcDictionary<double>* doubleStore) { this->doubleStore = doubleStore;}
+  void setFloatStore(RsrcDictionary<float>* floatStore) { this->floatStore = floatStore;}
+  void setStringStore(RsrcDictionary<std::string>* stringStore) { this->stringStore = stringStore;}
+  void setCallableStore(RsrcStore<Funct<void>>* callableRsrc) { this->callableRsrc = callableRsrc;}
+
 private:
   struct FtryData {
     FtryData() = default;
@@ -65,19 +78,19 @@ DISABLE_DLL_WARN
   FtryData readFactoryConfig(json ftryCfg);
   void checkAndCall(json& call, json& phase);
 
-  RsrcStore<json>& cfgStore = RsrcStore<json>::getInstance();
-  RsrcStore<Factory>& ftryStore = RsrcStore<Factory>::getInstance();
+  RsrcStore<json>* cfgStore = nullptr;
+  RsrcStore<Factory>* ftryStore = nullptr;
 
-  RsrcDictionary<Vector2D>& v2dStore = RsrcDictionary<Vector2D>::getInstance();
-  RsrcDictionary<Vector3D>& v3dStore = RsrcDictionary<Vector3D>::getInstance();
+  RsrcDictionary<Vector2D>* v2dStore = nullptr;
+  RsrcDictionary<Vector3D>* v3dStore = nullptr;
 
-  RsrcDictionary<int64_t>& intStore = RsrcDictionary<int64_t>::getInstance();
-  RsrcDictionary<uint64_t>& uintStore = RsrcDictionary<uint64_t>::getInstance();
-  RsrcDictionary<double>& doubleStore = RsrcDictionary<double>::getInstance();
-  RsrcDictionary<float>& floatStore = RsrcDictionary<float>::getInstance();
-  RsrcDictionary<std::string>& stringStore = RsrcDictionary<std::string>::getInstance();
+  RsrcDictionary<int64_t>* intStore = nullptr;
+  RsrcDictionary<uint64_t>* uintStore = nullptr;
+  RsrcDictionary<double>* doubleStore = nullptr;
+  RsrcDictionary<float>* floatStore = nullptr;
+  RsrcDictionary<std::string>* stringStore = nullptr;
 
-  RsrcStore<Funct<void>>& callableRsrc = RsrcStore<Funct<void>>::getInstance();
+  RsrcStore<Funct<void>>* callableRsrc = nullptr;
 
   std::forward_list<FtryData> appLists;
   std::forward_list<FtryData> appFactories;

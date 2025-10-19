@@ -69,12 +69,22 @@ DISABLE_WARNING_POP()
     return (ext.compare(extension) == 0);
   }
 
+  void setRsrcModelSheet(RsrcStore<zbe::OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> >* rsrcModelSheet) {
+    this->rsrcModelSheet = rsrcModelSheet;
+  }
+  void setNrd(NameRsrcDictionary* nrd) {
+    this->nrd = nrd;
+  }
+  void setGraphicsStore(RsrcStore<OGLGraphics>* graphicsStore) {
+    this->graphicsStore = graphicsStore;
+  }
+
 private:
 DISABLE_DLL_WARN
   std::shared_ptr<SDLOGLWindow> window = nullptr;
-  RsrcStore<zbe::OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> >& rsrcModelSheet = RsrcStore<zbe::OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> >::getInstance();
-  NameRsrcDictionary& nrd = NameRsrcDictionary::getInstance();
-  RsrcStore<OGLGraphics> &graphicsStore = RsrcStore<OGLGraphics>::getInstance();
+  RsrcStore<zbe::OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> >* rsrcModelSheet = nullptr;
+  NameRsrcDictionary* nrd = nullptr;
+  RsrcStore<OGLGraphics>* graphicsStore = nullptr;
 DISABLE_WARNING_POP()
 };
 
@@ -117,6 +127,9 @@ public:
 
       auto jsoglmsl = jsoglmslRsrc.get("JSONSimpleOGLModelSheetLoader."s + name);
       jsoglmsl->setWindow(win);
+      jsoglmsl->setRsrcModelSheet(&rsrcModelSheet);
+      jsoglmsl->setNrd(&nrd);
+      jsoglmsl->setGraphicsStore(&graphicsStore);
     } else {
       SysError::setError("JSONSimpleOGLModelSheetLoaderFtry config for "s + name + " not found."s);
     }
@@ -128,6 +141,9 @@ DISABLE_DLL_WARN
   RsrcStore<SDLOGLWindow> &sdlOGLWindowRsrc = RsrcStore<SDLOGLWindow>::getInstance();
   RsrcStore<JSONSimpleOGLModelSheetLoader> &jsoglmslRsrc = RsrcStore<JSONSimpleOGLModelSheetLoader>::getInstance();
   RsrcStore<RsrcLoader> &rsrclRsrc = RsrcStore<RsrcLoader>::getInstance();
+  RsrcStore<OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> >& rsrcModelSheet = RsrcStore<OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> >::getInstance();
+  NameRsrcDictionary& nrd = NameRsrcDictionary::getInstance();
+  RsrcStore<OGLGraphics> &graphicsStore = RsrcStore<OGLGraphics>::getInstance();
 DISABLE_WARNING_POP()
 };
 
@@ -141,6 +157,26 @@ DISABLE_DLL_WARN
     this->window = window;
   }
 DISABLE_WARNING_POP()
+
+  /** \brief Sets up the Name Resource Dictionary.
+   *  \param nrd The Name Resource Dictionary.
+   */
+  void setNrd(NameRsrcDictionary* nrd) {
+    this->nrd = nrd;
+  }
+  /** \brief Sets up the Resource Store where the loaded graphics will be stored.
+   *  \param graphicsStore The Resource Store where the loaded graphics will be stored.
+   */
+  void setGraphicsStore(RsrcStore<OGLGraphics>* graphicsStore) {
+    this->graphicsStore = graphicsStore;
+  }
+  /** \brief Sets up the Resource Store where the loaded model sheets will be stored.
+   *  \param rsrcModelSheet The Resource Store where the loaded model sheets will be stored.
+   */
+  void setRsrcModelSheet(RsrcStore<zbe::OGLModelSheet<uint64_t, double, Vector3D, Vector3D, Vector3D> >* rsrcModelSheet) {
+    this->rsrcModelSheet = rsrcModelSheet; 
+  }
+
 
   /** \brief Load an image
   *  \param filePath Path to image file.
@@ -163,9 +199,9 @@ DISABLE_WARNING_POP()
 private:
 DISABLE_DLL_WARN
   std::shared_ptr<SDLOGLWindow> window = nullptr;
-  RsrcStore<zbe::OGLModelSheet<uint64_t, double, Vector3D, Vector3D, Vector3D> >& rsrcModelSheet = RsrcStore<zbe::OGLModelSheet<uint64_t, double, Vector3D, Vector3D, Vector3D> >::getInstance();
-  NameRsrcDictionary& nrd = NameRsrcDictionary::getInstance();
-  RsrcStore<OGLGraphics> &graphicsStore = RsrcStore<OGLGraphics>::getInstance();
+  RsrcStore<zbe::OGLModelSheet<uint64_t, double, Vector3D, Vector3D, Vector3D> >* rsrcModelSheet = nullptr;
+  NameRsrcDictionary* nrd = nullptr;
+  RsrcStore<OGLGraphics>* graphicsStore = nullptr;
 DISABLE_WARNING_POP()
 };
 
@@ -208,6 +244,9 @@ public:
 
       auto jsoglmsl = jsoglmslRsrc.get("JSONLookAtOGLModelSheetLoader."s + name);
       jsoglmsl->setWindow(win);
+      jsoglmsl->setRsrcModelSheet(&rsrcModelSheet);
+      jsoglmsl->setNrd(&nrd);
+      jsoglmsl->setGraphicsStore(&graphicsStore);
     } else {
       SysError::setError("JSONLookAtOGLModelSheetLoaderFtry config for "s + name + " not found."s);
     }
@@ -218,6 +257,9 @@ private:
   RsrcStore<SDLOGLWindow> &sdlOGLWindowRsrc = RsrcStore<SDLOGLWindow>::getInstance();
   RsrcStore<JSONLookAtOGLModelSheetLoader> &jsoglmslRsrc = RsrcStore<JSONLookAtOGLModelSheetLoader>::getInstance();
   RsrcStore<RsrcLoader> &rsrclRsrc = RsrcStore<RsrcLoader>::getInstance();
+  RsrcStore<OGLModelSheet<uint64_t, double, Vector3D, Vector3D, Vector3D> >& rsrcModelSheet = RsrcStore<OGLModelSheet<uint64_t, double, Vector3D, Vector3D, Vector3D> >::getInstance();
+  NameRsrcDictionary& nrd = NameRsrcDictionary::getInstance();
+  RsrcStore<OGLGraphics> &graphicsStore = RsrcStore<OGLGraphics>::getInstance();
 };
 
 //-------------------------
@@ -256,13 +298,25 @@ public:
     return (ext.compare(extension) == 0);
   }
 
+  void setRsrcModelSheet(RsrcStore<OGLModelSheet<uint64_t, Vector2D, Vector2D>>* rsrcModelSheet) {
+    this->rsrcModelSheet = rsrcModelSheet;
+  }
+  void setNrd(NameRsrcDictionary* nrd) {
+    this->nrd = nrd;
+  }
+  void setRsrcImgDef(RsrcStore<ImgDef>* rsrcImgDef) {
+    this->rsrcImgDef = rsrcImgDef;
+  }
+  void setRsrcParamModelSheet(RsrcStore<OGLModelSheet<uint64_t, int64_t, int64_t, Vector2D, Vector2D>>* rsrcParamModelSheet) {
+    this->rsrcParamModelSheet = rsrcParamModelSheet;
+  }
 private:
 DISABLE_DLL_WARN
   std::shared_ptr<SDLOGLWindow> window = nullptr;
-  RsrcStore<OGLModelSheet<uint64_t, Vector2D, Vector2D>> &rsrcModelSheet = RsrcStore<OGLModelSheet<uint64_t, Vector2D, Vector2D>>::getInstance();
-  RsrcStore<OGLModelSheet<uint64_t, int64_t, int64_t, Vector2D, Vector2D>> &rsrcParamModelSheet = RsrcStore<OGLModelSheet<uint64_t, int64_t, int64_t, Vector2D, Vector2D>>::getInstance();
-  RsrcStore<ImgDef> &rsrcImgDef = RsrcStore<ImgDef>::getInstance();
-  NameRsrcDictionary& nrd = NameRsrcDictionary::getInstance();
+  RsrcStore<OGLModelSheet<uint64_t, Vector2D, Vector2D>>* rsrcModelSheet = nullptr;
+  RsrcStore<OGLModelSheet<uint64_t, int64_t, int64_t, Vector2D, Vector2D>>* rsrcParamModelSheet = nullptr;
+  RsrcStore<ImgDef>* rsrcImgDef = nullptr;
+  NameRsrcDictionary* nrd = nullptr;
 DISABLE_WARNING_POP()
 };
 
@@ -302,12 +356,20 @@ public:
 
       auto jsoglmsl = jsoglmslRsrc.get("JSONSpriteOGLModelSheetLoader."s + name);
       jsoglmsl->setWindow(win);
+      jsoglmsl->setRsrcModelSheet(&rsrcModelSheet);
+      jsoglmsl->setRsrcParamModelSheet(&rsrcParamModelSheet);
+      jsoglmsl->setNrd(&nrd);
+      jsoglmsl->setRsrcImgDef(&rsrcImgDef);
     } else {
       SysError::setError("JSONSpriteOGLModelSheetLoaderFtry config for "s + name + " not found."s);
     }
   }
 
 private:
+  RsrcStore<OGLModelSheet<uint64_t, Vector2D, Vector2D>> &rsrcModelSheet = RsrcStore<OGLModelSheet<uint64_t, Vector2D, Vector2D>>::getInstance();
+  RsrcStore<OGLModelSheet<uint64_t, int64_t, int64_t, Vector2D, Vector2D>> &rsrcParamModelSheet = RsrcStore<OGLModelSheet<uint64_t, int64_t, int64_t, Vector2D, Vector2D>>::getInstance();
+  RsrcStore<ImgDef> &rsrcImgDef = RsrcStore<ImgDef>::getInstance();
+  NameRsrcDictionary& nrd = NameRsrcDictionary::getInstance();
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<SDLOGLWindow> &sdlOGLWindowRsrc = RsrcStore<SDLOGLWindow>::getInstance();
   RsrcStore<JSONSpriteOGLModelSheetLoader> &jsoglmslRsrc = RsrcStore<JSONSpriteOGLModelSheetLoader>::getInstance();

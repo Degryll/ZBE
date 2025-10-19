@@ -17,7 +17,10 @@ namespace zbe {
     std::string err;
     std::string warn;
 
-    bool res = loader.LoadASCIIFromFile(&model, &err, &warn, filePath.string());
+    std::string filePathStr = filePath.string();
+    std::replace(filePathStr.begin(), filePathStr.end(), '\\', '/');
+    bool res = loader.LoadASCIIFromFile(&model, &err, &warn, filePathStr);
+    //bool res = loader.LoadASCIIFromFile(&model, &err, &warn, filePath.string());
 
     if (!warn.empty()) {
       SysError::setError(std::string("WARNING: GlTFResourceLoader:") + warn);
@@ -41,12 +44,11 @@ namespace zbe {
     char* off = 0;
     off += model.accessors[static_cast<unsigned>(model.meshes[0u].primitives[0u].indices)].byteOffset;
     const GLvoid* offset = off;
-    NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();
-    dict.insert("model."s + modelName, modelId);
+    dict->insert("model."s + modelName, modelId);
     GLuint texId = bindTextures(model);
 
     // TODO This name will be replaced for another name extracted from a model sheet.
-    graphicsStore.insert("graphics."s + modelName, std::make_shared<OGLGraphics>(OGLGraphics{vao, texId, mode, nvertex, type, offset}));
+    graphicsStore->insert("graphics."s + modelName, std::make_shared<OGLGraphics>(OGLGraphics{vao, texId, mode, nvertex, type, offset}));
   }
 
   GLuint GlTFResourceLoader::bindModel(tinygltf::Model &model) {
@@ -130,7 +132,7 @@ namespace zbe {
           Triangle3D t{a,b,c};
           listT3D->push_front(t);
         }
-        triangle3DListRsrc.insert("TriangleList."s + modelName, listT3D);
+        triangle3DListRsrc->insert("TriangleList."s + modelName, listT3D);
       }
     }  // for model.bufferViews
 
@@ -221,7 +223,7 @@ namespace zbe {
         std::replace(textureName.begin(), textureName.end(), '\\', '.');
         std::replace(textureName.begin(), textureName.end(), '/', '.');
         // "textures.zbe.data.images.Cube_BaseColor.png"
-        dict.insert("texture."s + textureName, textureId);
+        dict->insert("texture."s + textureName, textureId);
         return texid;
       }  // if tex.source
     }  // if model.textures.size

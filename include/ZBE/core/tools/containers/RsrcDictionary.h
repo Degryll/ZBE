@@ -110,8 +110,8 @@ using NameRsrcDictionary = RsrcDictionary<uint64_t>;
  */
 class IdRsrcDictionary {
   public:
-    IdRsrcDictionary(IdRsrcDictionary const&)    = delete;  //!< Needed for singleton.
-    void operator=(IdRsrcDictionary const&) = delete;  //!< Needed for singleton.
+    IdRsrcDictionary(IdRsrcDictionary const&) = delete;  //!< Needed for singleton.
+    void operator=(IdRsrcDictionary const&)   = delete;  //!< Needed for singleton.
 
     /** \brief Singleton implementation.
      *  \return The only instance of the IdRsrcDictionary.

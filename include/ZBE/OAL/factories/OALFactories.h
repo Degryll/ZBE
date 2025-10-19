@@ -31,16 +31,16 @@ public:
   /** \brief It will Load the factories calling the load method.
   */
   void run() override {
-    load();
+    //load();
   };
 
   /** \brief It loads all factories.
   */
-  static void load() {
+  static void load(RsrcStore<Factory>& factories) {
     using OALList = TicketedForwardList<MAvatar<uint64_t, uint64_t, uint64_t, Vector3D, Vector3D> >;
     using OALDrwr = BehaviorDmnFtry<OALList, uint64_t, uint64_t, uint64_t, Vector3D, Vector3D>;
 
-    auto& factories = RsrcStore<Factory>::getInstance();
+    //auto& factories = RsrcStore<Factory>::getInstance();
     factories.insert("Sound3DOALPlayerFtry", std::make_shared<Sound3DOALPlayerFtry>());
     factories.insert("OALAudioLoaderFtry", std::make_shared<OALAudioLoaderFtry>());
     factories.insert("OALudioStoreFtry", std::make_shared<SimpleGenericFtry<OALAudioStore>>("OALAudioStore"));

@@ -34,20 +34,60 @@ namespace zbe {
 
 /** \brief Factory for DaemonTimeHandler.
  */
-class ZBEAPI DaemonTimeHandlerFtry : virtual public Factory {
+class DaemonTimeHandlerFtry : virtual public Factory {
 public:
 
 /** \brief Create the desired tool, probably incomplete.
  *  \param name Name for the created tool.
  *  \param cfgId Tool's configuration id.
  */
-  void create(std::string name, uint64_t) override;
+  void create(std::string name, uint64_t) override {
+    using namespace std::string_literals;
+
+    std::shared_ptr<DaemonTimeHandler> dth = std::make_shared<DaemonTimeHandler>();
+    dmnTimeHandlerRsrc.insert("DaemonTimeHandler."s + name, dth);
+  }
 
   /** \brief Setup the desired tool. The tool will be complete after this step.
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId) override;
+  void setup(std::string name, uint64_t cfgId) override {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+    if(cfg) {
+      auto j = *cfg;
+      if (!j["dmn"].is_string()) {
+        SysError::setError("DaemonTimeHandlerFtry config for dmn "s + j["dmn"].get<std::string>() + ": must be a string."s);
+        return;
+      }
+      if (!j["generator"].is_string()) {
+        SysError::setError("DaemonTimeHandlerFtry config for generator "s + j["generator"].get<std::string>() + ": must be a string."s);
+        return;
+      }
+      if (!j["time"].is_string()){
+        SysError::setError("DaemonTimeHandlerFtry config for time "s + j["time"].get<std::string>() + ": must be a string."s);
+        return;
+      }
+      std::string dname = j["dmn"].get<std::string>();
+      std::string gname = j["generator"].get<std::string>();
+      std::string tname = j["time"].get<std::string>();
+
+      std::shared_ptr<Daemon> daemon = dmnRsrc.get("Daemon."s + dname);
+      std::shared_ptr<TimeEventGenerator> teg = tegRsrc.get("TimeEventGenerator."s + gname);
+      uint64_t time = static_cast<uint64_t>(intStore.get(tname));
+
+      auto dth = dmnTimeHandlerRsrc.remove("DaemonTimeHandler."s + name);
+      dth->setDaemon(daemon);
+
+      teg->addAbsoluteTimer(dth, time);
+
+    } else {
+      SysError::setError("DaemonTimeHandlerFtry config for "s + name + " not found."s);
+    }
+  }
 
 private:
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();

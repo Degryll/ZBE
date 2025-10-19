@@ -170,15 +170,16 @@ int next(const char* &it, unsigned &code_point) {
 int utf8to16(unsigned short *dst, const char* src) {
   const char *it = src;
   unsigned int cp;
-  bool err = false;
+  bool err = next(it,cp);
 
-  while (it[0] != 0 && !(err = next(it,cp))) {
+  while (it[0] != 0 && !(err)) {
     if (cp > 0xffffu) { //make a surrogate pair
       *dst++ = static_cast<unsigned short>((cp >> 10)   + LEAD_OFFSET);
       *dst++ = static_cast<unsigned short>((cp & 0x3ffu) + TRAIL_SURROGATE_MIN);
     } else {
       *dst++ = static_cast<unsigned short>(cp);
     }
+    err = next(it,cp);
   }  // while
   return err;
 }

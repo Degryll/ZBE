@@ -81,11 +81,39 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class ZBEAPI BulletCreatorBhvFtry : virtual public Factory  {
+class BulletCreatorBhvFtry : virtual public Factory  {
 public:
-  void create(std::string name, uint64_t) override;
+  void create(std::string name, uint64_t) override {
+    using namespace std::string_literals;
+    std::shared_ptr<BulletCreatorBhv> bcb(new BulletCreatorBhv);  // std::make_shared<SineOscillator>();
+    behaviorStore.insert("Behavior."s + name, bcb);
+    bulletCreatorBhvStore.insert("BulletCreatorBhv."s + name, bcb);
+  }
 
-  void setup(std::string name, uint64_t cfgId) override;
+  void setup(std::string name, uint64_t cfgId) override {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configStore.get(cfgId);
+
+    if(cfg) {
+      auto j = *cfg;
+      if (!j["creator"].is_string()) {
+        SysError::setError("BulletCreatorBhvFtry " + name + " config for creator: "s + j["creator"].get<std::string>() + ": must be a literal double name."s);
+        return;
+      }
+
+      std::string creatorName = j["creator"].get<std::string>();
+      if(!bulletCreatorStore.contains("BulletCreator."s + creatorName)) {
+        SysError::setError("BulletCreatorBhvFtry " + name + " config for creator: "s + creatorName + " is not a BulletCreator literal."s);
+        return;
+      }
+      auto bcb = bulletCreatorBhvStore.get("BulletCreatorBhv."s + name);
+
+      auto creator = bulletCreatorStore.get("BulletCreator."s + creatorName);
+      bcb->setCreator(creator);
+    }
+  }
+
 private:
   RsrcStore<nlohmann::json>& configStore = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<Behavior<Vector3D, Vector3D>>& behaviorStore = RsrcStore<Behavior<Vector3D, Vector3D>>::getInstance();

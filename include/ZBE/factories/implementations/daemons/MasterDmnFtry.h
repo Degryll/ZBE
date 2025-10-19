@@ -31,20 +31,67 @@ namespace zbe {
 
 /** \brief Factory for Master Daemons.
  */
-class ZBEAPI MasterDmnFtry : public Factory {
+class MasterDmnFtry : public Factory {
 public:
 
   /** \brief Builds a MasterDmnFtry.
    *  \param name Name for the created MasterDmnFtry.
    *  \param cfgId MasterDmnFtry's configuration id.
    */
-  void create(std::string name, uint64_t) override;
+  void create(std::string name, uint64_t) override {
+    using namespace std::string_literals;
+
+    std::shared_ptr<DaemonMaster> dm = std::make_shared<DaemonMaster>();
+
+    uint64_t id = SysIdGenerator::getId();
+    daemonRsrc.insert(id, dm);
+    dict.insert("Daemon."s + name, id);
+    id = SysIdGenerator::getId();
+    dmnMasterRsrc.insert(id, dm);
+    dict.insert("DaemonMaster."s + name, id);
+  }
 
   /** \brief Setup the desired tool. The tool will be complete after this step.
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId) override;
+  void setup(std::string name, uint64_t cfgId) override {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+    if(cfg) {
+      auto j = *cfg;
+      auto dm = dmnMasterRsrc.get("DaemonMaster."s + name);
+
+      json daemons = j["daemons"];
+      for (auto daemon : daemons) {
+        if (daemon.is_string()) {
+          uint64_t dId = dict.get("Daemon."s + daemon.get<std::string>());
+          printf("Adding daemon (name): %s\n", daemon.get<std::string>().c_str());
+          printf("Daemon resource: %p\n", &daemonRsrc);
+          auto ticket = dm->addDaemon(daemonRsrc.get(dId));
+          ticketRsrc.insert(name + "."s + daemon.get<std::string>() + ".ticket"s, ticket);
+        } else {
+          SysError::setError("MasterDmnFtry config for "s + name + " not valid."s);
+        }
+      }
+
+      daemons = j["disabledDaemons"];
+      for (auto daemon : daemons) {
+        if (daemon.is_string()) {
+          uint64_t dId = dict.get("Daemon."s + daemon.get<std::string>());
+          auto ticket = dm->addDaemon(daemonRsrc.get(dId));
+          ticketRsrc.insert(name+"."s + daemon.get<std::string>() + ".ticket"s, ticket);
+          ticket->setINACTIVE();
+        } else {
+          SysError::setError("MasterDmnFtry config for "s + name + " (disabled) not valid."s);
+        }
+      }
+    } else {
+      SysError::setError("MasterDmnFtry config for "s + name + " not found."s);
+    }
+  }
 
 private:
   NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();

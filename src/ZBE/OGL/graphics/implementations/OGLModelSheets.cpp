@@ -18,18 +18,18 @@ namespace zbe {
       textures.push_back(window->getTextureStore()->getTexture(texId));
   }
 
-  SimpleOGLModelSheet::SimpleOGLModelSheet(std::shared_ptr<SDLOGLWindow> , uint64_t graphicsId, RsrcStore<OGLGraphics> &graphicsStore)
-    : graphic(graphicsStore.get(graphicsId)), vao(graphic->vao),  nvertex(graphic->nvertex),  textures{graphic->texid}, 
+  SimpleOGLModelSheet::SimpleOGLModelSheet(std::shared_ptr<SDLOGLWindow> , uint64_t graphicsId, RsrcStore<OGLGraphics> *graphicsStore)
+    : graphic(graphicsStore->get(graphicsId)), vao(graphic->vao),  nvertex(graphic->nvertex),  textures{graphic->texid}, 
       mode(graphic->mode), type(graphic->type), offset(graphic->offset) {}
 
-  SimpleOGLModelSheet::SimpleOGLModelSheet(std::shared_ptr<SDLOGLWindow> , std::string graphicsName, RsrcStore<OGLGraphics> &graphicsStore)
+  SimpleOGLModelSheet::SimpleOGLModelSheet(std::shared_ptr<SDLOGLWindow> , std::string graphicsName, RsrcStore<OGLGraphics> *graphicsStore)
   : graphic(nullptr), vao(0), nvertex(0), textures(), mode(0),  type(0), offset(nullptr) { // TODO Find a way to write this using an initilaizer list
       using namespace std::string_literals;
-      if (!graphicsStore.contains(graphicsName)) {
+      if (!graphicsStore->contains(graphicsName)) {
         SysError::setError("SimpleOGLModelSheet for graphic: "s + graphicsName + " is not a SimpleOGLModelSheet literal."s);
       }
 
-      graphic = graphicsStore.get(graphicsName);
+      graphic = graphicsStore->get(graphicsName);
       vao = graphic->vao;
       textures.push_back(graphic->texid);
       mode = graphic->mode;
@@ -62,18 +62,18 @@ LookAtOGLModelSheet::LookAtOGLModelSheet(std::shared_ptr<SDLOGLWindow> window, u
     textures.push_back(window->getTextureStore()->getTexture(texId));
 }
 
-LookAtOGLModelSheet::LookAtOGLModelSheet(std::shared_ptr<SDLOGLWindow>, uint64_t graphicsId, RsrcStore<OGLGraphics> &graphicsStore)
-  : graphic(graphicsStore.get(graphicsId)), vao(graphic->vao), nvertex(graphic->nvertex), textures{graphic->texid}, mode(graphic->mode),
+LookAtOGLModelSheet::LookAtOGLModelSheet(std::shared_ptr<SDLOGLWindow>, uint64_t graphicsId, RsrcStore<OGLGraphics> *graphicsStore)
+  : graphic(graphicsStore->get(graphicsId)), vao(graphic->vao), nvertex(graphic->nvertex), textures{graphic->texid}, mode(graphic->mode),
     type(graphic->type), offset(graphic->offset) {}
 
-LookAtOGLModelSheet::LookAtOGLModelSheet(std::shared_ptr<SDLOGLWindow>, std::string graphicsName, RsrcStore<OGLGraphics> &graphicsStore)
+LookAtOGLModelSheet::LookAtOGLModelSheet(std::shared_ptr<SDLOGLWindow>, std::string graphicsName, RsrcStore<OGLGraphics> *graphicsStore)
 : graphic(nullptr), vao(0), nvertex(0), textures(), mode(0), type(0), offset(nullptr) { // TODO Find a way to write this using an initilaizer list
   using namespace std::string_literals;
-  if (!graphicsStore.contains(graphicsName)) {
+  if (!graphicsStore->contains(graphicsName)) {
     SysError::setError("LookAtOGLModelSheet for graphic: "s + graphicsName + " is not a LookAtOGLModelSheet literal."s);
   }
 
-  graphic = graphicsStore.get(graphicsName);
+  graphic = graphicsStore->get(graphicsName);
   vao = graphic->vao;
   textures.push_back(graphic->texid);
   mode = graphic->mode;

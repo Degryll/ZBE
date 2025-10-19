@@ -200,6 +200,7 @@ public:
    *
    */
   inline std::shared_ptr<Ticket> addDaemon(std::shared_ptr<Daemon> daemon) {
+    printf("Adding daemon: %p\n", daemon.get());
     return daemonList.push_front(daemon);
   }
 
@@ -258,7 +259,7 @@ public:
   /** \brief Builds an empty MainLoop.
    */
   MainLoop() : dPre(nullptr), dPost(nullptr), dTE(nullptr), dCBM(nullptr), dRBM(nullptr), dDM(nullptr),
-      contextTime(nullptr), store(zbe::EventStore::getInstance()), keep(true) {}
+      contextTime(nullptr), store(nullptr), keep(true) {}
 
   /** \brief Constructor.
    * \param pre Pre loop Daemon.
@@ -270,7 +271,7 @@ public:
    */
   MainLoop(std::shared_ptr<Daemon> pre, std::shared_ptr<Daemon> post, std::shared_ptr<Daemon> event, std::shared_ptr<Daemon> common, std::shared_ptr<Daemon> react, std::shared_ptr<Daemon> draw, std::shared_ptr<ContextTime> contextTime=zbe::SysTime::getInstance())
     : dPre(pre), dPost(post), dTE(event), dCBM(common), dRBM(react), dDM(draw),
-      contextTime(contextTime), store(zbe::EventStore::getInstance()), keep(true) {}
+      contextTime(contextTime), store(nullptr), keep(true) {}
 
   /** \brief Destructor.
    */
@@ -324,6 +325,11 @@ public:
    */
   void setDraw(std::shared_ptr<Daemon> daemon) {dDM = daemon;}
 
+  /** \brief Setter for the store.
+   * \param store Pointer to the EventStore desired to be used.
+   */
+  void setEventStore(EventStore* store) {this->store = store;}
+
   /** \brief Setter for the context time.
    * \param contextTime Pointer to the context time desired to be used.
    */
@@ -343,7 +349,7 @@ DISABLE_DLL_WARN
   std::shared_ptr<Daemon> dDM;
 
   std::shared_ptr<ContextTime> contextTime;
-  zbe::EventStore &store;
+  EventStore* store;
 
   bool keep;
 DISABLE_WARNING_POP()

@@ -7,21 +7,18 @@
 
         {
             "name": "Debug ZandBokz",
-            "type": "cppdbg",
+            "type": "cppvsdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/src/ZandBokz/ZANDBOKZ",
             "args": [],
             "cwd": "${workspaceFolder}",
-            "environment": [],
-            "externalConsole": false,
-            "MIMode": "gdb",
-            "setupCommands": [
+            "environment": [
                 {
-                    "description": "Enable pretty-printing for gdb",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
+                "name": "PATH",
+                "value": "${workspaceFolder}/extlibs/glew/2.2.0/windows/x64;${workspaceFolder}/build/_deps/sdl2-build;${workspaceFolder}/build/_deps/sdl2_image-build;${workspaceFolder}/build/_deps/sdl2_ttf-build;${workspaceFolder}/build/_deps/sdl2_net-build;${workspaceFolder}/build/_deps/openal-soft-build;${workspaceFolder}/build/src/ZBE"
                 }
-            ]
+            ],
+            "externalConsole": true
         }
     ]
 }

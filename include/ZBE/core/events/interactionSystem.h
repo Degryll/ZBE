@@ -481,7 +481,7 @@ public:
 
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
-    std::shared_ptr<IEG> ieg = std::shared_ptr<IEG>(new IEG);  // std::make_shared<SineOscillator>();
+    std::shared_ptr<IEG> ieg(new IEG);  // std::make_shared<SineOscillator>();
     daemonStore.insert("Daemon."s + name, ieg);
     iegStore.insert("InteractionEventGenerator."s + name, ieg);
   }

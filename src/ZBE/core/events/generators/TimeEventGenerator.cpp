@@ -65,11 +65,11 @@ bool TimerTicket::increaseTime(uint64_t increment) {
     iter = timers.insert(data);
     return (false);
   } else {
-    es.storeInstantEvent(
+    store->storeInstantEvent(
       new TimeEvent(
-        eventId,
-        0u,
-        iter->handler)
+      eventId,
+      0u,
+      iter->handler)
       );
     return (true);
   }
@@ -89,7 +89,7 @@ void TimeEventGenerator::run() {
     || (static_cast<int64_t>(it->time) != v)) {
       break;
     }
-    es.storeEvent(new TimeEvent(eventId, static_cast<uint64_t>(v), it->handler));
+    store->storeEvent(new TimeEvent(eventId, static_cast<uint64_t>(v), it->handler));
   }  // for each timer
 }
 

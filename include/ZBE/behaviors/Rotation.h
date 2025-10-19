@@ -110,7 +110,7 @@ public:
    */
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
-    std::shared_ptr<LimitedExcentricalRotation3D> er3d = std::shared_ptr<LimitedExcentricalRotation3D>(new LimitedExcentricalRotation3D);
+    std::shared_ptr<LimitedExcentricalRotation3D> er3d(new LimitedExcentricalRotation3D);
     behaviorStore.insert("Behavior."s + name, er3d);
     rot3DStore.insert("LimitedExcentricalRotation3D."s + name, er3d);
     pmtStore.insert("Parametric."s + name, er3d);
@@ -215,7 +215,7 @@ public:
    */
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
-    std::shared_ptr<ExcentricalRotation3D> er3d = std::shared_ptr<ExcentricalRotation3D>(new ExcentricalRotation3D);
+    std::shared_ptr<ExcentricalRotation3D> er3d(new ExcentricalRotation3D);
     behaviorStore.insert("Behavior."s + name, er3d);
     rot3DStore.insert("ExcentricalRotation3D."s + name, er3d);
     pmtStore.insert("Parametric."s + name, er3d);
@@ -310,7 +310,7 @@ public:
    */
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
-    std::shared_ptr<Rotation3D> rot3D = std::shared_ptr<Rotation3D>(new Rotation3D);
+    std::shared_ptr<Rotation3D> rot3D(new Rotation3D);
     behaviorStore.insert("Behavior."s + name, rot3D);
     rot3DStore.insert("Rotation3D."s + name, rot3D);
     pmtStore.insert("Parametric."s + name, rot3D);

@@ -34,20 +34,45 @@ namespace zbe {
 
 /** \brief Factory for RsrcLoaderDmn.
  */
-class ZBEAPI RsrcFtry : virtual public Factory {
+class RsrcFtry : virtual public Factory {
 public:
 
   /** \brief Builds a RsrcFtry.
    *  \param name Name for the created RsrcLoaderDmn.
    *  \param cfgId RsrcLoaderDmn's configuration id.
    */
-  void create(std::string name, uint64_t) override;
+  void create(std::string name, uint64_t cfgId) override {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+    if(cfg) {
+      auto j = *cfg;
+      json loaderName = j["loader"];
+      json url = j["url"];
+      if(!loaderName.is_string()) {
+        SysError::setError("Bad config for RsrcFtry - loaderName. "s + name);
+        return;
+      }
+      if(!url.is_string()) {
+        SysError::setError("Bad config for RsrcFolderLoaderDmnFtry - url. "s + name);
+        return;
+      }
+      auto rl = rsrcLoaderRsrc.get("RsrcLoader."s + loaderName.get<std::string>());
+      RsrcFolderLoader rsrcfl(rl);
+
+      rsrcfl.load(url);
+    } else {
+      SysError::setError("RsrcFtry config for "s + name + " not found."s);
+    }
+
+  }
 
   /** \brief Setup the desired tool. The tool will be complete after this step.
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId) override;
+  void setup(std::string, uint64_t) override {}
 
 private:
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();

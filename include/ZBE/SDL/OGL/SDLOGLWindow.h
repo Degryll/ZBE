@@ -113,18 +113,20 @@ public:
                            1.0f, 1.0f, 0.0f, 1.0f, 1.0f};
             GLuint i[] = {0, 1, 2, 1, 3, 2};
             uint64_t id = loadModel(mat, i, 4, 6);
-            dict.insert("model.DEFAULT2D"s, id);
+            dict->insert("model.DEFAULT2D"s, id);
     }
 
     uint64_t loadModel(const GLfloat *vertexData, const GLuint *indexData, int vSize ,int iSize);
 
     uint64_t storeModel(const GLuint vao, const GLsizei nvertex);
 
+    void setDict(NameRsrcDictionary* dict) {this->dict = dict;}
+
     std::tuple<GLuint, GLsizei> getModel(uint64_t id);
 
 private:
 DISABLE_DLL_WARN
-  NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();
+  NameRsrcDictionary *dict = nullptr;
   std::vector<std::tuple<GLuint, GLsizei> > modelCollection;  //!< Collection of textures.
   std::mutex m;
 DISABLE_WARNING_POP()
@@ -222,6 +224,14 @@ public:
    *  \sa run, setTitle, setX, setY, setWidth, setHeight, setRenderer_flags
    */
   virtual void setWindow_flags(Uint32 window_flags) override { SDLWindow::setWindow_flags(window_flags | SDL_WINDOW_OPENGL);}
+
+  /** \brief Sets the dictionary for the model store
+   *  \param dict The dictionary
+   *  \sa getModelStore
+   */
+  void setDict(NameRsrcDictionary* dict) {
+    modelStore.setDict(dict);
+  }
 
   /** \brief Creates the widnows (use only width empty constructor and setters)
    *  \sa setTitle, setX, setY, setWidth, setHeight, setWindow_flags

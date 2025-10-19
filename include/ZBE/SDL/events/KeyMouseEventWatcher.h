@@ -160,7 +160,7 @@ public:
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
 
-    auto kmew = std::shared_ptr<KeyMouseEventWatcher>(new KeyMouseEventWatcher);
+    std::shared_ptr<KeyMouseEventWatcher> kmew(new KeyMouseEventWatcher);
     kmewRsrc.insert("KeyMouseEventWatcher."s + name, kmew);
   }
 

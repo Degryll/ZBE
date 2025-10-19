@@ -59,13 +59,13 @@ bool JSONAppLoader::isLoadable(std::filesystem::path extension) {
 void JSONAppLoader::loadLiteralConfig(std::string name, json& value) {
   using namespace std::string_literals;
   if(value.is_number_integer()) {
-    intStore.insert(name, value.get<int64_t>());
-    uintStore.insert(name, value.get<uint64_t>());
+    intStore->insert(name, value.get<int64_t>());
+    uintStore->insert(name, value.get<uint64_t>());
   } else if (value.is_number_float()) {
-    doubleStore.insert(name, value.get<double>());
+    doubleStore->insert(name, value.get<double>());
   } else if (value.is_string()) {
     std::string aux = value.get<std::string>();
-    stringStore.insert(name, aux);
+    stringStore->insert(name, aux);
   } else if (value.is_object()) {
     std::string type = value["type"].get<std::string>();
     bool hasType = false;
@@ -74,33 +74,33 @@ void JSONAppLoader::loadLiteralConfig(std::string name, json& value) {
       auto x = value["value"][0].get<double>();
       auto y = value["value"][1].get<double>();
       auto z = value["value"][2].get<double>();
-      v3dStore.insert(name, Vector3D{x, y, z});
-      doubleStore.insert(name + ".x"s, x);
-      doubleStore.insert(name + ".y"s, y);
-      doubleStore.insert(name + ".z"s, z);
+      v3dStore->insert(name, Vector3D{x, y, z});
+      doubleStore->insert(name + ".x"s, x);
+      doubleStore->insert(name + ".y"s, y);
+      doubleStore->insert(name + ".z"s, z);
       hasType = true;
     } else if(type.find("v2") != std::string::npos) {
       auto x = value["value"][0].get<double>();
       auto y = value["value"][1].get<double>();
-      v2dStore.insert(name, Vector2D{x, y});
-      doubleStore.insert(name + ".x"s, x);
-      doubleStore.insert(name + ".y"s, y);
+      v2dStore->insert(name, Vector2D{x, y});
+      doubleStore->insert(name + ".x"s, x);
+      doubleStore->insert(name + ".y"s, y);
       hasType = true;
     } else {
       if(type.find("u") != std::string::npos) {
-          uintStore.insert(name, value["value"].get<uint64_t>());
+          uintStore->insert(name, value["value"].get<uint64_t>());
           hasType = true;
       }
       if(type.find("i") != std::string::npos) {
-          intStore.insert(name, value["value"].get<int64_t>());
+          intStore->insert(name, value["value"].get<int64_t>());
           hasType = true;
       }
       if(type.find("f") != std::string::npos) {
-          floatStore.insert(name, value["value"].get<float>());
+          floatStore->insert(name, value["value"].get<float>());
           hasType = true;
       }
       if(type.find("d") != std::string::npos) {
-          doubleStore.insert(name, value["value"].get<double>());
+          doubleStore->insert(name, value["value"].get<double>());
           hasType = true;
       }
     }
@@ -117,11 +117,13 @@ void JSONAppLoader::loadLiteralConfig(std::string name, json& value) {
 }
 
 JSONAppLoader::FtryData JSONAppLoader::readFactoryConfig(json ftryCfg) {
+  printf("ftryStore: %p, %d\n", &ftryStore, ftryStore->contains("SimpleValueFtry"));
+  printf("cfgStore: %p, %d\n", &cfgStore, cfgStore->contains("SimpleValueFtry"));
   FtryData fd;
   json aux;
   aux = ftryCfg["factory"];
   if(aux.is_string()) {
-    fd.ftry = ftryStore.get(aux.get<std::string>());
+    fd.ftry = ftryStore->get(aux.get<std::string>());
   } else {
     SysError::setError(std::string("ERROR: Json failed to parse. \"factory\" is not a string."));
   }
@@ -132,14 +134,14 @@ JSONAppLoader::FtryData JSONAppLoader::readFactoryConfig(json ftryCfg) {
   } else {
     SysError::setError(std::string("ERROR: Json failed to parse. \"name\" is not a string."));
   }
-  fd.cfgId = cfgStore.insert(std::make_shared<json>(ftryCfg["config"]));
+  fd.cfgId = cfgStore->insert(std::make_shared<json>(ftryCfg["config"]));
   return fd;
 }
 
 void JSONAppLoader::checkAndCall(json& call, json& phase) {
   using namespace std::string_literals;
   if(call.is_string()) {
-    auto  callable = callableRsrc.get(factories::functionName + factories::separator + call.get<std::string>());
+    auto  callable = callableRsrc->get(factories::functionName + factories::separator + call.get<std::string>());
     (*callable)();
   } else {
     SysError::setError(std::string("ERROR: Non valid call at phase ") + phase["description"].get<std::string>());

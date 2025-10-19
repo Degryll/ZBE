@@ -32,20 +32,46 @@ namespace zbe {
 
 /** \brief Factory for State Machine Daemons.
  */
-class ZBEAPI StateLTEraserBhvFtry : virtual public Factory {
+class StateLTEraserBhvFtry : virtual public Factory {
 public:
 
   /** \brief Builds a StateMachineDaemon.
    *  \param name Name for the created StateMachineDaemon.
    *  \param cfgId StateMachineDaemon's configuration id.
    */
-  void create(std::string name, uint64_t) override;
+  void create(std::string name, uint64_t) override {
+    using namespace std::string_literals;
+
+    std::shared_ptr<StateLTEraser> seb = std::make_shared<StateLTEraser>();
+    behaviorRsrc.insert("Behavior."s + name, seb);
+    StateLTEraserRsrc.insert("StateLTEraser."s + name, seb);
+  }
 
   /** \brief Setup the desired tool. The tool will be complete after this step.
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId) override;
+  void setup(std::string name, uint64_t cfgId) override {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+    if(cfg) {
+      auto j = *cfg;
+      if (j["limit"].is_string()) {
+        std::string cname = j["limit"].get<std::string>();
+        int64_t limit = intStore.get(cname);
+
+        auto ss = StateLTEraserRsrc.get("StateLTEraser."s + name);
+        ss->setLimit(limit);
+
+      } else {
+        SysError::setError("StateLTEraserBhvFtry config for "s + j["limit"].get<std::string>() + ": must be a string."s);
+      }
+    } else {
+      SysError::setError("StateLTEraserBhvFtry config for "s + name + " not found."s);
+    }
+  }
 
 private:
   RsrcDictionary<int64_t>& intStore = RsrcDictionary<int64_t>::getInstance();

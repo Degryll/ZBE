@@ -23,13 +23,19 @@ namespace zbe {
 */
 class ZBEAPI EventStore {
 public:
+
+
+
   EventStore(EventStore const&)    = delete;  //!< Needed for singleton.
   void operator=(EventStore const&) = delete;  //!< Needed for singleton.
 
   /** \brief Singleton implementation.
    *  \return The unique instance of the EventStore.
    */
-  static EventStore& getInstance();
+  static EventStore& getInstance() {
+    static EventStore instance;
+    return (instance);
+  }
 
   ~EventStore() = default;  //!< Empty destructor.
 

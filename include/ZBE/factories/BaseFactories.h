@@ -38,9 +38,8 @@
 #include "ZBE/events/handlers/input/InputHandlers.h"
 #include "ZBE/events/handlers/time/EntityEraser.h"
 #include "ZBE/events/handlers/time/DaemonRecurrentTimeHandler.h"
-
-#include "ZBE/core/events/generators/InputEventGenerator.h"
-#include "ZBE/core/tools/shared/implementations/SimpleValue.h"
+#include "ZBE/factories/implementations/events/generators/InputEventGnFtry.h"
+#include "ZBE/factories/implementations/core/tools/shared/implementations/SimpleValueFtry.h"
 #include "ZBE/core/tools/containers/RsrcStore.h"
 #include "ZBE/core/daemons/Daemon.h"
 #include "ZBE/daemons/OnceDaemon.h"
@@ -68,13 +67,13 @@ public:
   /** \brief It will Load the factories calling the load method.
   */
   void run() override {
-    load();
+    //load();
   };
 
   /** \brief It loads all factories.
   */
-  static void load() {
-    auto& factories = RsrcStore<Factory>::getInstance();
+  static void load(RsrcStore<Factory>& factories) {
+    //auto& factories = RsrcStore<Factory>::getInstance();
 
     RsrcStore<ContextTime>::getInstance().insert("ContextTime.DEFAULT", SysTime::getInstance());
     RsrcStore<Daemon>::getInstance().insert("Daemon.DEFAULT", std::make_shared<VoidDaemon>());

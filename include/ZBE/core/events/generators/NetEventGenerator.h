@@ -37,7 +37,7 @@ public:
 
   /** \brief Default constructor.
    */
-  NetEventGenerator(  uint64_t eventId, std::shared_ptr<NetBuffer> netBuffer) : eventId(eventId), netBuffer(netBuffer), contextTime(zbe::SysTime::getInstance()), store(EventStore::getInstance()) {}
+  NetEventGenerator(  uint64_t eventId, std::shared_ptr<NetBuffer> netBuffer) : eventId(eventId), netBuffer(netBuffer), contextTime(zbe::SysTime::getInstance()), store(nullptr) {}
 
   /** \brief Empty destructor.
    */
@@ -49,12 +49,16 @@ public:
    */
   void run() override;
 
+  void setEventStore(EventStore* store) {
+    this->store = store;
+  }
+
 private:
 DISABLE_DLL_WARN
   uint64_t eventId;
   std::shared_ptr<NetBuffer> netBuffer;
   std::shared_ptr<ContextTime> contextTime;
-  EventStore &store;
+  EventStore* store;
 DISABLE_WARNING_POP()
 };
 

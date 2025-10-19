@@ -30,7 +30,7 @@ namespace zbe {
 
 /** \brief Stores de time of a timer, and the handler that will be launched when timer reaches 0;
  */
-struct ZBEAPI TimerData {
+struct TimerData {
 DISABLE_DLL_WARN
   std::shared_ptr<TimeHandler> handler;    //!< A handler that will be executed when the event is triggered.
   uint64_t time;  //!< When time reaches 0, the time event is triggered.
@@ -57,7 +57,7 @@ public:
    *  \param timers The multiset where the timer is stored.
    *  \param eventId Event Id.
    */
-  TimerTicket(std::multiset<TimerData>::iterator iter, std::multiset<TimerData>& timers, uint64_t eventId, std::shared_ptr<ContextTime> contextTime) : s(ACTIVE), iter(iter), timers(timers), eventId(eventId), es(EventStore::getInstance()), contextTime(contextTime), td((*iter)) {}
+  TimerTicket(std::multiset<TimerData>::iterator iter, std::multiset<TimerData>& timers, uint64_t eventId, std::shared_ptr<ContextTime> contextTime) : s(ACTIVE), iter(iter), timers(timers), eventId(eventId), store(), contextTime(contextTime), td((*iter)) {}
 
   void setACTIVE() override;    //!< Set the state as ACTIVE.
   void setINACTIVE() override;  //!< Set the state as INACTIVE.
@@ -78,6 +78,14 @@ public:
    */
   bool increaseTime(uint64_t increment);
 
+  /** \brief Set the event store to use.
+   * \param store Event store to use.
+  */
+  void setStore(EventStore* store) {
+    this->store = store;
+  }
+
+
   /** \brief Returns the event time.
    * \return The event time.
   */
@@ -91,7 +99,7 @@ DISABLE_DLL_WARN
   std::multiset<TimerData>::iterator iter;
   std::multiset<TimerData>& timers;
   uint64_t eventId;
-  EventStore& es;
+  EventStore* store;
   std::shared_ptr<ContextTime> contextTime;
   TimerData td;
 DISABLE_WARNING_POP()
@@ -103,13 +111,13 @@ class ZBEAPI TimeEventGenerator : virtual public Daemon {
 public:
   /** \brief Empty Constructor.
    */
-  TimeEventGenerator() : eventId(), es(EventStore::getInstance()), timers(), contextTime() {}
+  TimeEventGenerator() : eventId(), store(), timers(), contextTime() {}
 
   /** \brief Parametrized constructor.
    *  \param eventId event id.
    *  \param contextTime ContextTime to use.
    */
-  explicit TimeEventGenerator(uint64_t eventId, std::shared_ptr<ContextTime> contextTime = SysTime::getInstance()) : eventId(eventId), es(EventStore::getInstance()), timers(), contextTime(contextTime) {}
+  explicit TimeEventGenerator(uint64_t eventId, std::shared_ptr<ContextTime> contextTime = SysTime::getInstance()) : eventId(eventId), store(), timers(), contextTime(contextTime) {}
 
   /** Add a new Timer that only triggers onces.
    * \param id Id of the Timer, to identify the action to accomplish when the event is triggered
@@ -138,6 +146,13 @@ public:
     this->eventId = eventId;
   }
 
+  /** \brief Set the event store to use.
+   * \param store Event store to use.
+  */
+  void setStore(EventStore* store) {
+    this->store = store;
+  }
+
   /** Set the ContextTime to use.
    * \param contextTime ContextTime to use.
    */
@@ -152,7 +167,7 @@ public:
 private:
 DISABLE_DLL_WARN
   uint64_t eventId;
-  EventStore& es;
+  EventStore* store;
   std::multiset<TimerData> timers;
   std::shared_ptr<ContextTime> contextTime;
 DISABLE_WARNING_POP()

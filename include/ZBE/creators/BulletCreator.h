@@ -180,7 +180,7 @@ class BulletCreatorFtry : virtual public Factory {
 public:
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
-    std::shared_ptr<BulletCreator> bc = std::shared_ptr<BulletCreator>(new BulletCreator);  // std::make_shared<SineOscillator>();
+    std::shared_ptr<BulletCreator> bc(new BulletCreator);  // std::make_shared<SineOscillator>();
     bulletCreatorStore.insert("BulletCreator."s + name, bc);
   }
 

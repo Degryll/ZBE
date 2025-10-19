@@ -33,6 +33,10 @@ public:
     this->window = window;
   }
 
+  void setUintStore(RsrcDictionary<uint64_t>* uintStore) {
+    this->uintStore = uintStore;
+  }
+
   /** \brief Loads a glsl program
   *  \param filePath Path to image file.
   *  \return An id to the image loaded.
@@ -56,7 +60,7 @@ DISABLE_DLL_WARN
   std::shared_ptr<SDLOGLWindow> window = nullptr;
   //RsrcStore<zbe::SpriteSheet<uint64_t, int64_t, double, Vector2D, Vector2D> >& rsrcAnimSprt = RsrcStore<zbe::SpriteSheet<uint64_t, int64_t, double, Vector2D, Vector2D> >::getInstance();
   //RsrcStore<zbe::OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> >& rsrcModelSheet = RsrcStore<zbe::OGLModelSheet<uint64_t, double, double, Vector3D, Vector3D> >::getInstance();
-  RsrcDictionary<uint64_t>& uintStore = RsrcDictionary<uint64_t>::getInstance();
+  RsrcDictionary<uint64_t>* uintStore = nullptr;
   //NameRsrcDictionary& nrd = NameRsrcDictionary::getInstance();
 DISABLE_WARNING_POP()
 };

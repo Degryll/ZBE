@@ -36,20 +36,83 @@ namespace zbe {
 
 /** \brief Factory for BroadcastIH.
  */
-class ZBEAPI BroadcastIHFtry : virtual public Factory {
+class BroadcastIHFtry : virtual public Factory {
 public:
 
 /** \brief Create the desired tool, probably incomplete.
  *  \param name Name for the created tool.
  *  \param cfgId Tool's configuration id.
  */
-  void create(std::string name, uint64_t) override;
+  void create(std::string name, uint64_t) override {
+    using namespace std::string_literals;
+    std::shared_ptr<BroadcastIH> bih = std::make_shared<BroadcastIH>();
+
+    uint64_t id = SysIdGenerator::getId();
+    inputRsrc.insert(id, bih);
+    dict.insert("InputHandler."s + name, id);
+    id = SysIdGenerator::getId();
+    bihRsrc.insert(id, bih);
+    dict.insert("BroadcastIH."s + name, id);
+  }
 
   /** \brief Setup the desired tool. The tool will be complete after this step.
    *  \param name Name of the tool.
    *  \param cfgId Tool's configuration id.
    */
-  void setup(std::string name, uint64_t cfgId) override;
+  void setup(std::string name, uint64_t cfgId) override {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+    if(!cfg) {
+      SysError::setError("BroadcastIHFtry config for "s + name + " not found."s);
+      return;
+    }
+
+    auto j = *cfg;
+
+
+    bool haskey = j["key"].is_string();
+    bool hasIeg = j["inputEventGenerator"].is_string();
+
+    json handlers = j["handlers"];
+    auto bih = bihRsrc.get("BroadcastIH."s + name);
+    for (auto hnd : handlers) {
+      if (hnd.is_string()){
+        std::string handlerName = hnd.get<std::string>();
+        bih->addHandler(inputRsrc.get("InputHandler."s + handlerName));
+      } else {
+        SysError::setError("BroadcastIHFtry handlers config contains an invalid element ."s);
+      }
+    }
+
+    if(haskey != hasIeg) {
+      if (!hasIeg) {
+        SysError::setError("BroadcastIHFtry config for inputEventGenerator: "s + j["inputEventGenerator"].get<std::string>() + ": must be an inputEventGenerator name."s);
+        return;
+      } else {
+        SysError::setError("BroadcastIHFtry config for key: "s + j["key"].get<std::string>() + ": must be a key name."s);
+        return;
+      }
+    }
+
+    if(haskey) {
+      auto ieg = JSONFactory::StoreLoader<InputEventGenerator>::loadParamCfgStoreP(iegStore, j, "InputEventGenerator"s, "inputEventGenerator"s, "BroadcastIHFtry"s);
+      if(!ieg) {
+        SysError::setError("BroadcastIHFtry config for inputEventGenerator is invalid"s);
+        return;
+      }
+
+      auto key = JSONFactory::DictLoader<ZBE_K>::loadParamCfgDict(keyDict, j, "key"s, "BroadcastIHFtry"s);
+      if(!key) {
+        SysError::setError("BroadcastIHFtry config for key is invalid"s);
+        return;
+      }
+
+      (*ieg)->addHandler(*key, bih);
+    }
+
+  }
 
 private:
   NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();

@@ -20,11 +20,6 @@ static bool deleteAll(Event* e) {
   return true;
 }
 
-EventStore& EventStore::getInstance() {
-  static EventStore instance;
-  return (instance);
-}
-
 void EventStore::clearInstantStore() {
   clearStore(instantStore);
 }

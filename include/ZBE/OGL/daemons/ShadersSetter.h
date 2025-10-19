@@ -110,7 +110,7 @@ public:
    */
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
-    std::shared_ptr<ShadersSetter3D> ss3d = std::shared_ptr<ShadersSetter3D>(new ShadersSetter3D);
+    std::shared_ptr<ShadersSetter3D> ss3d(new ShadersSetter3D);
     daemonStore.insert("Daemon."s + name, ss3d);
     shadersSetter3DStore.insert("ShadersSetter3D."s + name, ss3d);
   }
@@ -192,7 +192,7 @@ public:
    */
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
-    std::shared_ptr<ShadersSetter2D> ss2D = std::shared_ptr<ShadersSetter2D>(new ShadersSetter2D);
+    std::shared_ptr<ShadersSetter2D> ss2D(new ShadersSetter2D);
     daemonStore.insert("Daemon."s + name, ss2D);
     shadersSetter2DStore.insert("ShadersSetter2D."s + name, ss2D);
   }
