@@ -879,7 +879,7 @@ public:
         }
     );
   }
-//TODO: 870 u 877 está añadiendo un null a la lista (Va a ser la 870)
+
 private:
   static const unsigned expectedIndexes = sizeof...(Ts) + 1;
   using FunctionType = Funct<void, std::shared_ptr<Entity>>;

@@ -117,8 +117,6 @@ void JSONAppLoader::loadLiteralConfig(std::string name, json& value) {
 }
 
 JSONAppLoader::FtryData JSONAppLoader::readFactoryConfig(json ftryCfg) {
-  printf("ftryStore: %p, %d\n", &ftryStore, ftryStore->contains("SimpleValueFtry"));
-  printf("cfgStore: %p, %d\n", &cfgStore, cfgStore->contains("SimpleValueFtry"));
   FtryData fd;
   json aux;
   aux = ftryCfg["factory"];

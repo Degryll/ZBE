@@ -200,7 +200,6 @@ public:
    *
    */
   inline std::shared_ptr<Ticket> addDaemon(std::shared_ptr<Daemon> daemon) {
-    printf("Adding daemon: %p\n", daemon.get());
     return daemonList.push_front(daemon);
   }
 

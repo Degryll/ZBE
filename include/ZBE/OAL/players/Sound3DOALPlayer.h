@@ -33,7 +33,7 @@
 
 namespace zbe {
 
-class ZBEAPI Sound3DOALPlayerFtry;
+class Sound3DOALPlayerFtry;
 
 /** \brief A behavior that plays 3d sounds.
  */
@@ -64,52 +64,6 @@ DISABLE_DLL_WARN
 
   std::shared_ptr<OALAudioStore> store;
   std::shared_ptr<Camera> cam;
-DISABLE_WARNING_POP()
-};
-
-
-class Sound3DOALPlayerFtry : public Factory {
-public:
-  void create(std::string name, uint64_t) override {
-    using namespace std::string_literals;
-
-    std::shared_ptr<Sound3DOALPlayer> s3daolp(new Sound3DOALPlayer);
-    mainRsrc.insert("Behavior."s + name, s3daolp);
-    specificRsrc.insert("Sound3DOALPlayer."s + name, s3daolp);
-  }
-
-  void setup(std::string name, uint64_t cfgId) override {
-    using namespace std::string_literals;
-    using namespace nlohmann;
-    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
-
-    if(!cfg) {
-      SysError::setError("Sound3DOALPlayerFtry config for "s + name + " not found."s);
-      return;
-    }
-    auto j = *cfg;
-    auto s3daolp = specificRsrc.get("Sound3DOALPlayer."s + name);
-    auto audioStore = JSONFactory::StoreLoader<OALAudioStore>::loadParamCfgStoreP(audioStoreRsrc, j, "OALAudioStore", "audiostore"s, "Sound3DOALPlayerFtry"s);
-    if(!audioStore) {
-      SysError::setError("Sound3DOALPlayerFtry config for audiostore is invalid"s);
-      return;
-    }
-    auto cam = JSONFactory::StoreLoader<Camera>::loadParamCfgStoreP(cameraRsrc, j,"Camera", "camera"s, "Sound3DOALPlayerFtry"s);
-    if(!cam) {
-      SysError::setError("Sound3DOALPlayerFtry config for camera is invalid"s);
-      return;
-    }
-
-    s3daolp->setUp(*audioStore, *cam);
-  }
-
-private:
-DISABLE_DLL_WARN
-  RsrcStore<nlohmann::json>& configRsrc = RsrcStore<nlohmann::json>::getInstance();
-  RsrcStore<Behavior<uint64_t, uint64_t, uint64_t, Vector3D, Vector3D> >& mainRsrc = RsrcStore<Behavior<uint64_t, uint64_t, uint64_t, Vector3D, Vector3D> >::getInstance();
-  RsrcStore<Sound3DOALPlayer>& specificRsrc = RsrcStore<Sound3DOALPlayer>::getInstance();
-  RsrcStore<OALAudioStore> &audioStoreRsrc = RsrcStore<OALAudioStore>::getInstance();
-  RsrcStore<Camera> &cameraRsrc = RsrcStore<Camera>::getInstance();
 DISABLE_WARNING_POP()
 };
 

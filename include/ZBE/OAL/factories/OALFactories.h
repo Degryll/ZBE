@@ -14,7 +14,7 @@
 
 #include "ZBE/factories/Factory.h"
 #include "ZBE/factories/implementations/GenericFtry.h"
-#include "ZBE/OAL/players/Sound3DOALPlayer.h"
+#include "ZBE/factories/implementations/OAL/players/Sound3DOALPlayerFtry.h"
 #include "ZBE/OAL/resources/OALAudioLoader.h"
 #include "ZBE/JSON/resources/JSONAudioDefLoader.h"
 

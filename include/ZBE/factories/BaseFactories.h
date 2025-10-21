@@ -47,7 +47,7 @@
 
 #include "ZBE/entities/builders/builders.h"
 
-#include "ZBE/behaviors/SineOscillator.h"
+#include "ZBE/factories/implementations/behaviors/SineOscillatorFtry.h"
 #include "ZBE/behaviors/UniformLinearMotion.h"
 #include "ZBE/behaviors/Rotation.h"
 #include "ZBE/behaviors/Behaviors.h"

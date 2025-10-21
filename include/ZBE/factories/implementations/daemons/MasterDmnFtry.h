@@ -68,8 +68,6 @@ public:
       for (auto daemon : daemons) {
         if (daemon.is_string()) {
           uint64_t dId = dict.get("Daemon."s + daemon.get<std::string>());
-          printf("Adding daemon (name): %s\n", daemon.get<std::string>().c_str());
-          printf("Daemon resource: %p\n", &daemonRsrc);
           auto ticket = dm->addDaemon(daemonRsrc.get(dId));
           ticketRsrc.insert(name + "."s + daemon.get<std::string>() + ".ticket"s, ticket);
         } else {
