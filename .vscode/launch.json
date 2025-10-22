@@ -7,7 +7,7 @@
 
         {
             "name": "Debug ZandBokz",
-            "type": "cppvsdbg",
+            "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/src/ZandBokz/ZANDBOKZ",
             "args": [],

@@ -93,7 +93,6 @@ target_link_libraries(ZBE_LIB PUBLIC
   PUBLIC ogg
   PUBLIC vorbis
   PUBLIC vorbisfile
-  PRIVATE dbghelp
   # Vorbis & openal
 )
 

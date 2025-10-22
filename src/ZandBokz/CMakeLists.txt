@@ -19,7 +19,6 @@ if(MSVC)
 endif()
 target_link_libraries(ZANDBOKZ
     PRIVATE ZBE_LIB
-    PRIVATE dbghelp
 )
 
 # Copiar automáticamente TODAS las DLL necesarias al lado del exe

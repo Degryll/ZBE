@@ -93,7 +93,6 @@ void BehaviorDmnFtry<L, E...>::setup(std::string name, uint64_t cfgId) {
     auto dm = behaviorDmnRsrc.get("BehaviorDaemon."s + name);
     auto bhv = behaviorRsrc.get("Behavior."s + bname);
     auto lst = listRsrc.get(lId);
-    printf("name: %s bhv: %p lst: %p\n", name.c_str(), bhv.get(), lst.get());
     dm->setPunish(bhv);
     dm->setList(lst);
   } else {

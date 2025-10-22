@@ -107,8 +107,6 @@ public:
     using FourV3DTwoFAvtList = TicketedForwardList<MAvatar<float, float, Vector3D, Vector3D, Vector3D, Vector3D> >;
     using FourV3DTwoFAvtBhvr = BehaviorDmnFtry<FourV3DTwoFAvtList, float, float, Vector3D, Vector3D, Vector3D, Vector3D>;
 
-    //auto& factories = RsrcStore<Factory>::getInstance();
-    printf("zbefactories: %p\n", &factories);
     for(int i = 0;i<100;i++) {
         factories.insert(std::to_string(i)+"Ftry"s , std::make_shared<SimpleGenericFtry<int> >(factories::listName));
     }

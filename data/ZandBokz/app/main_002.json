@@ -238,12 +238,12 @@
                 "camUp" : [0.0, 1.0, 0.0],
                 "cajaVel" : [0.0, 0.0, 0.0],
                 "cajaPos" : [0.0, 10.0, 0.0],
-                "protaVel" : [7.0, 49.0, 343.0],
+                "protaVel" : [0.0, 0.0, 0.0],
                 "protaPos" : [0.0, 150.0, 0.0],
                 "protaPitchVect" : [1.0, 0.0, 0.0],
                 "protaYawVect" : [0.0, 1.0, 0.0],
                 "protaRollVect" : [0.0, 0.0, 1.0],
-                "protagrav" : [5.0, 25.0, 125.0]
+                "protagrav" : [0.0, 0.0, 0.0]
               }
             }
           }
@@ -702,7 +702,7 @@
           "name":"zandbokz.modelLoader",
           "config" : {
             "loader" : "zandbokz.gltfLoader",
-            "url" : "F:/Creatividad/Programacion/ZBE/data/ZandBokz/models/gltf",
+            "url" : "data/ZandBokz/models/gltf",
             "urlBack" : "data/graphics3d"
           }
         },
@@ -1701,8 +1701,8 @@
             "V3D": {
               "bestCenterIdx" : [0.0, 0.0, 0.0],
               "camposIdx" : "zandbokz.camEye",
-              "velocityPre1Idx" : [2.0, 4.0, 8.0],
-              "velocityPre2Idx" : [3.0, 9.0, 27.0],
+              "velocityPre1Idx" : [0.0, 0.0, 0.0],
+              "velocityPre2Idx" : [0.0, 0.0, 0.0],
               "velocityPre3Idx" : "zandbokz.protagrav", 
               "positionIdx":"zandbokz.protaPos",
               "orientationIdx":[1.0, 0.0, 0.0],
