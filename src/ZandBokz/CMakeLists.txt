@@ -21,16 +21,6 @@ target_link_libraries(ZANDBOKZ
     PRIVATE ZBE_LIB
 )
 
-# Copiar automáticamente TODAS las DLL necesarias al lado del exe
-# if (WIN32)
-#     add_custom_command(TARGET ZANDBOKZ POST_BUILD
-#         COMMAND ${CMAKE_COMMAND} -E copy_if_different
-#             $<TARGET_RUNTIME_DLLS:ZANDBOKZ>
-#             $<TARGET_FILE_DIR:ZANDBOKZ>
-#         COMMAND_EXPAND_LISTS
-#     )
-# endif()
-
 target_include_directories(ZANDBOKZ PRIVATE
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
     $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>

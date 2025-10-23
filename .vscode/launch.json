@@ -6,7 +6,39 @@
     "configurations": [
 
         {
-            "name": "Debug ZandBokz",
+            "name": "Debug ZandBokz (Default)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/src/ZandBokz/ZANDBOKZ",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "environment": [
+                {
+                "name": "PATH",
+                "value": "${workspaceFolder}/extlibs/glew/2.2.0/windows/x64;${workspaceFolder}/build/_deps/sdl2-build;${workspaceFolder}/build/_deps/sdl2_image-build;${workspaceFolder}/build/_deps/sdl2_ttf-build;${workspaceFolder}/build/_deps/sdl2_net-build;${workspaceFolder}/build/_deps/openal-soft-build;${workspaceFolder}/build/src/ZBE"
+                }
+            ],
+            "externalConsole": true
+        },
+
+        {
+            "name": "Debug ZandBokz (Windows)",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/src/ZandBokz/ZANDBOKZ",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "environment": [
+                {
+                "name": "PATH",
+                "value": "${workspaceFolder}/extlibs/glew/2.2.0/windows/x64;${workspaceFolder}/build/_deps/sdl2-build;${workspaceFolder}/build/_deps/sdl2_image-build;${workspaceFolder}/build/_deps/sdl2_ttf-build;${workspaceFolder}/build/_deps/sdl2_net-build;${workspaceFolder}/build/_deps/openal-soft-build;${workspaceFolder}/build/src/ZBE"
+                }
+            ],
+            "externalConsole": true
+        },
+
+        {
+            "name": "Debug ZandBokz (Linux)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/src/ZandBokz/ZANDBOKZ",
