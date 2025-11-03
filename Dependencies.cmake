@@ -30,18 +30,6 @@ function(ZBE_setup_dependencies)
     cpmaddpackage("gh:catchorg/Catch2@3.3.2")
   endif()
 
-  # if(NOT TARGET CLI11::CLI11)
-  #   cpmaddpackage("gh:CLIUtils/CLI11@2.3.2")
-  # endif()
-
-  # if(NOT TARGET ftxui::screen)
-  #   cpmaddpackage("gh:ArthurSonzogni/FTXUI@5.0.0")
-  # endif()
-
-  # if(NOT TARGET tools::tools)
-  #   cpmaddpackage("gh:lefticus/tools#update_build_system")
-  # endif()
-
   cpmaddpackage("gh:nlohmann/json@3.11.3")
 
   cpmaddpackage("gh:g-truc/glm#1.0.1")
@@ -71,7 +59,6 @@ endif()
 cpmaddpackage("gh:nemtrif/utfcpp@4.0.5")
 
 cpmaddpackage("gh:pnggroup/libpng@1.6.43")
-
 
 CPMAddPackage(
   NAME SDL2
@@ -134,26 +121,5 @@ CPMAddPackage(
     GITHUB_REPOSITORY xiph/vorbis
     GIT_TAG v1.3.7
 )
-
-# ChaiScript-6.1.0 
-# X - > GLEW 
-# V - > glm 
-# googletest 
-# V - > imgui-1.76 
-# V - > json 
-# V - > lodePNG 
-# V - > OALSoft 
-# V - > SDL2
-# V - > SDL2_image 
-# V - > SDL2_mixer 
-# V - > SDL2_net 
-# V - > SDL2_ttf
-# E - > stb_image
-# E - > stb_vorbis
-# tinygltf
-# X - > tinyobjloader
-# V - > utf8cpp
-# X - > Vulkan
-# X - > Vulkan/1.1.77.0
 
 endfunction()

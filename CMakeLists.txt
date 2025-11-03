@@ -1,14 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-include(FetchContent)
-
-# This template attempts to be "fetch_content"-able
-# so that it works well with tools like CPM or other
-# manual dependency management
-
-# Only set the cxx_standard if it is not set by someone else
-# if (NOT DEFINED CMAKE_CXX_STANDARD)
-  set(CMAKE_CXX_STANDARD 20)
-# endif()
+set(CMAKE_CXX_STANDARD 20)
 
 # set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -w")
 
@@ -17,7 +8,6 @@ include(FetchContent)
 # when compiling with PCH enabled
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# Set the project name and language
 project(
   ZBE
   VERSION 0.4.0
@@ -29,16 +19,14 @@ project(
 if(MSVC)
   set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
   add_compile_definitions(_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING)
-  # FetchContent_MakeAvailable(fmt)
 endif()
 
 include(cmake/PreventInSourceBuilds.cmake)
+
 include(ProjectOptions.cmake)
-
-
 ZBE_setup_options()
-
 ZBE_global_options()
+
 include(Dependencies.cmake)
 ZBE_setup_dependencies()
 
@@ -65,29 +53,21 @@ add_library(ZBE::ZBE_warnings ALIAS ZBE_warnings)
 #add_library(ZBE::ZBE_options INTERFACE IMPORTED)
 #add_library(ZBE::ZBE_warnings INTERFACE IMPORTED)
 
-# configure files based on CMake configuration options
-#  add_subdirectory(configured_files)
-
-# Adding the src:
 add_subdirectory(src)
-
-# target_compile_definitions(fmt::fmt INTERFACE _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING)
 
 # Don't even look at tests if we're not top level
 if(NOT PROJECT_IS_TOP_LEVEL)
   return()
 endif()
 
-# Adding the tests:
-include(CTest)
+include(CTest) # TODO hacer test unitarios.
 
 # if(BUILD_TESTING)
 #   message(AUTHOR_WARNING "Building Tests. Be sure to check out test/constexpr_tests.cpp for constexpr testing")
 #   add_subdirectory(test)
 # endif()
 
-
-if(ZBE_BUILD_FUZZ_TESTS)
+if(ZBE_BUILD_FUZZ_TESTS) # TODO hacer test borrosos.
   message(AUTHOR_WARNING "Building Fuzz Tests, using fuzzing sanitizer https://www.llvm.org/docs/LibFuzzer.html")
   if (NOT ZBE_ENABLE_ADDRESS_SANITIZER AND NOT ZBE_ENABLE_THREAD_SANITIZER)
     message(WARNING "You need asan or tsan enabled for meaningful fuzz testing")
@@ -113,6 +93,8 @@ endif()
 
 include(cmake/PackageProject.cmake)
 
+
+# TODO averiguar si esto nos puede ayudar con la instalación y el packaging
 # # Add other targets that you want installed here, by default we just package the one executable
 # # we know we want to ship
 # ZBE_package_project(
