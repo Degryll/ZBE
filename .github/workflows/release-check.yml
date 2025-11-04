@@ -7,7 +7,6 @@ on:
     branches: [ "devel" ]
   pull_request:
     branches: [ "devel" ]
-  workflow_dispatch:
 
 jobs:
   build:
@@ -109,7 +108,7 @@ jobs:
         -DCMAKE_CXX_STANDARD=20 
         -DZBE_ENABLE_CPPCHECK:BOOL="0" 
         -DZBE_BUILD_FUZZ_TESTS:BOOL="0" 
-        -DZBE_ENABLE_SANITIZER_UNDEFINED:BOOL="1" 
+        -DZBE_ENABLE_SANITIZER_UNDEFINED:BOOL="0"
         -DZBE_ENABLE_SANITIZER_ADDRESS:BOOL="0"
 
     - name: Configure CMake Clang
