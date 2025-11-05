@@ -34,10 +34,8 @@ add_library(ZBE_LIB SHARED
   core/events/EventStore.cpp
   core/events/generators/TimeEventGenerator.cpp
   core/events/generators/NetEventGenerator.cpp
-  core/io/FileHandler.cpp
   core/system/SysIdGenerator.cpp
   core/system/SysError.cpp
-  core/system/Logger.cpp
   core/tools/math/Vector.cpp
   core/tools/math/collisions/intersections.cpp
   core/tools/text/utf8.cpp
