@@ -74,6 +74,13 @@ jobs:
     - name: Set up MSVC environment
       if: contains(matrix.os, 'windows')
       uses: ilammy/msvc-dev-cmd@v1
+      
+    - name: Install Cppcheck on Windows
+      if: contains(matrix.os, 'windows')
+      shell: powershell
+      run: |
+        choco install cppcheck -y
+        refreshenv
         
     - name: Instalar libpng and zlib through vcpkg
       if: contains(matrix.os, 'windows')
