@@ -75,12 +75,18 @@ jobs:
       if: contains(matrix.os, 'windows')
       uses: ilammy/msvc-dev-cmd@v1
       
-    - name: Install Cppcheck on Windows
+    - name: Install specific Cppcheck version on Windows
       if: contains(matrix.os, 'windows')
       shell: powershell
       run: |
-        choco install cppcheck -y
+        choco list cppcheck --exact --all-versions
+        choco install cppcheck --version=2.14.0 -y
+        if ($LASTEXITCODE -ne 0) {
+          choco install cppcheck -y
+        }
         refreshenv
+        cppcheck --version
+        cppcheck --help | Select-String "Paths:" -Context 0,3
         
     - name: Instalar libpng and zlib through vcpkg
       if: contains(matrix.os, 'windows')
