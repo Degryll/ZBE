@@ -75,20 +75,17 @@ jobs:
       if: contains(matrix.os, 'windows')
       uses: ilammy/msvc-dev-cmd@v1
       
-    - name: Install specific Cppcheck version on Windows
+    - name: Install Cppcheck from portable release on Windows
       if: contains(matrix.os, 'windows')
-      shell: powershell
+      shell: bash
       run: |
-        choco list cppcheck --exact --all-versions
-        choco install cppcheck --version=2.14.0 -y
-        if ($LASTEXITCODE -ne 0) {
-          Write-Host "Chocolatey version not available, downloading portable version..."
-          $ProgressPreference = 'SilentlyContinue'
-          Invoke-WebRequest -Uri "https://github.com/danmar/cppcheck/releases/download/2.14.0/cppcheck-2.14.0-x86_64-w64-mingw32.zip" -OutFile "cppcheck-portable.zip"
-          Expand-Archive -Path "cppcheck-portable.zip" -DestinationPath "cppcheck-extracted"
-          $env:PATH = "$(Get-Location)\cppcheck-extracted;$env:PATH"
-        }
-        refreshenv
+        mkdir -p cppcheck-bin
+        cd cppcheck-bin
+        RELEASE_URL=$(curl -s https://api.github.com/repos/danmar/cppcheck/releases/latest | grep -o '"browser_download_url": "[^"]*x86_64-w64-mingw32.zip"' | head -1 | cut -d'"' -f4)
+        curl -L -o cppcheck.zip "$RELEASE_URL"
+        unzip -q cppcheck.zip
+        cd ..
+        export PATH="$(pwd)/cppcheck-bin:$PATH"
         cppcheck --version
         
     - name: Instalar libpng and zlib through vcpkg
