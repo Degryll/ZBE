@@ -13,10 +13,6 @@ macro(ZBE_enable_cppcheck WARNINGS_AS_ERRORS CPPCHECK_OPTIONS)
       # style should enable the other 3, but we'll be explicit just in case
       set(SUPPRESS_DIR "*:${CMAKE_CURRENT_BINARY_DIR}/_deps/*.h")
       message(STATUS "CPPCHECK_OPTIONS suppress: ${SUPPRESS_DIR}")
-      if(WIN32)
-        set(CPPCHECK_CFG_PATH "C:/Program Files/Cppcheck/cfg")
-      endif()
-
       set(CMAKE_CXX_CPPCHECK
           ${CPPCHECK}
           --template=${CPPCHECK_TEMPLATE}
@@ -34,13 +30,6 @@ macro(ZBE_enable_cppcheck WARNINGS_AS_ERRORS CPPCHECK_OPTIONS)
           --suppress=preprocessorErrorDirective
           --inconclusive
           --suppress=${SUPPRESS_DIR})
-      
-      if(NOT
-         "${CMAKE_CXX_STANDARD}"
-         STREQUAL
-         "")
-        list(APPEND CMAKE_CXX_CPPCHECK --std=c++${CMAKE_CXX_STANDARD})
-      endif()
     else()
       # if the user provides a CPPCHECK_OPTIONS with a template specified, it will override this template
       set(CMAKE_CXX_CPPCHECK ${CPPCHECK} --template=${CPPCHECK_TEMPLATE} ${CPPCHECK_OPTIONS})

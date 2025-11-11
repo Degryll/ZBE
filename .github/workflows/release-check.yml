@@ -74,19 +74,6 @@ jobs:
     - name: Set up MSVC environment
       if: contains(matrix.os, 'windows')
       uses: ilammy/msvc-dev-cmd@v1
-      
-    - name: Install Cppcheck from portable release on Windows
-      if: contains(matrix.os, 'windows')
-      shell: bash
-      run: |
-        mkdir -p cppcheck-bin
-        cd cppcheck-bin
-        RELEASE_URL=$(curl -s https://api.github.com/repos/danmar/cppcheck/releases/latest | grep -o '"browser_download_url": "[^"]*x86_64-w64-mingw32.zip"' | head -1 | cut -d'"' -f4)
-        curl -L -o cppcheck.zip "$RELEASE_URL"
-        unzip -q cppcheck.zip
-        cd ..
-        export PATH="$(pwd)/cppcheck-bin:$PATH"
-        cppcheck --version
         
     - name: Instalar libpng and zlib through vcpkg
       if: contains(matrix.os, 'windows')
