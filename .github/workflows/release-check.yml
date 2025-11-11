@@ -82,11 +82,14 @@ jobs:
         choco list cppcheck --exact --all-versions
         choco install cppcheck --version=2.14.0 -y
         if ($LASTEXITCODE -ne 0) {
-          choco install cppcheck -y
+          Write-Host "Chocolatey version not available, downloading portable version..."
+          $ProgressPreference = 'SilentlyContinue'
+          Invoke-WebRequest -Uri "https://github.com/danmar/cppcheck/releases/download/2.14.0/cppcheck-2.14.0-x86_64-w64-mingw32.zip" -OutFile "cppcheck-portable.zip"
+          Expand-Archive -Path "cppcheck-portable.zip" -DestinationPath "cppcheck-extracted"
+          $env:PATH = "$(Get-Location)\cppcheck-extracted;$env:PATH"
         }
         refreshenv
         cppcheck --version
-        cppcheck --help | Select-String "Paths:" -Context 0,3
         
     - name: Instalar libpng and zlib through vcpkg
       if: contains(matrix.os, 'windows')

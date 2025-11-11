@@ -17,24 +17,6 @@ macro(ZBE_enable_cppcheck WARNINGS_AS_ERRORS CPPCHECK_OPTIONS)
         set(CPPCHECK_CFG_PATH "C:/Program Files/Cppcheck/cfg")
       endif()
 
-      # Detect whether the cppcheck binary supports the --cfg-path option.
-      # Some cppcheck builds don't recognise this flag; only append it when
-      # the help text advertises it and the target cfg directory exists.
-      execute_process(
-        COMMAND ${CPPCHECK} --help
-        OUTPUT_VARIABLE CPPCHECK_HELP
-        RESULT_VARIABLE CPPCHECK_HELP_RC
-        OUTPUT_STRIP_TRAILING_WHITESPACE
-      )
-
-      set(CPPCHECK_SUPPORTS_CFG_PATH FALSE)
-      if(CPPCHECK_HELP_RC EQUAL 0)
-        string(FIND "${CPPCHECK_HELP}" "--cfg-path" CPPCHECK_CFG_FOUND)
-        if(NOT CPPCHECK_CFG_FOUND EQUAL -1)
-          set(CPPCHECK_SUPPORTS_CFG_PATH TRUE)
-        endif()
-      endif()
-
       set(CMAKE_CXX_CPPCHECK
           ${CPPCHECK}
           --template=${CPPCHECK_TEMPLATE}
@@ -52,9 +34,12 @@ macro(ZBE_enable_cppcheck WARNINGS_AS_ERRORS CPPCHECK_OPTIONS)
           --suppress=preprocessorErrorDirective
           --inconclusive
           --suppress=${SUPPRESS_DIR})
-
-      if(WIN32 AND CPPCHECK_SUPPORTS_CFG_PATH AND EXISTS "${CPPCHECK_CFG_PATH}")
-        list(APPEND CMAKE_CXX_CPPCHECK --cfg-path=${CPPCHECK_CFG_PATH})
+      
+      if(NOT
+         "${CMAKE_CXX_STANDARD}"
+         STREQUAL
+         "")
+        list(APPEND CMAKE_CXX_CPPCHECK --std=c++${CMAKE_CXX_STANDARD})
       endif()
     else()
       # if the user provides a CPPCHECK_OPTIONS with a template specified, it will override this template
