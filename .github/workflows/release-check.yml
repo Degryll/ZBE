@@ -90,12 +90,14 @@ jobs:
         $cfgdir = Join-Path $exdir.FullName 'cfg'
         if (-not (Test-Path $cfgdir)) { Write-Error 'cfg dir not found'; exit 1 }
         Write-Host "Using cppcheck cfg: $cfgdir"
-        echo "CPP_CFG_DIR=$cfgdir" >> $env:GITHUB_ENV
+        # Use PowerShell cmdlets to append to the special GitHub env/path files
+        Add-Content -Path ${env:GITHUB_ENV} -Value "CPP_CFG_DIR=$cfgdir"
         # añadir cppcheck bin al PATH (opcional)
         $bin = Get-ChildItem $exdir.FullName -Filter cppcheck.exe -Recurse | Select-Object -First 1
         if ($bin) {
           $binDir = Split-Path $bin.FullName -Parent
-          echo "PATH=$binDir:$env:PATH" >> $env:GITHUB_PATH
+          # Append the bin dir to the GITHUB_PATH file so Actions adds it to PATH for subsequent steps
+          Add-Content -Path ${env:GITHUB_PATH} -Value $binDir
         }
         
     - name: Instalar libpng and zlib through vcpkg
