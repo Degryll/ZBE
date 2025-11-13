@@ -80,9 +80,25 @@ jobs:
       shell: powershell
       run: |
         $ver = '2.11' # ajustar si quieres otra versión
-        $url = "https://github.com/danmar/cppcheck/releases/download/$ver/cppcheck-$ver.zip"
-        Write-Host "Downloading cppcheck $ver from $url"
-        Invoke-WebRequest -Uri $url -OutFile cppcheck.zip
+        $assetName = "cppcheck-$ver.zip"
+        $url = "https://github.com/danmar/cppcheck/releases/download/$ver/$assetName"
+        Write-Host "Attempting direct download of cppcheck $ver from $url"
+        $downloaded = $false
+        try {
+          Invoke-WebRequest -Uri $url -OutFile cppcheck.zip -UseBasicParsing -ErrorAction Stop
+          $downloaded = $true
+        } catch {
+          Write-Host "Direct download failed: $($_.Exception.Message)"
+        }
+        if (-not $downloaded) {
+          Write-Host "Falling back to GitHub API to locate a zip asset for the latest release"
+          $rel = Invoke-RestMethod -Uri "https://api.github.com/repos/danmar/cppcheck/releases/latest" -Headers @{ 'User-Agent' = 'powershell' }
+          $asset = $rel.assets | Where-Object { $_.name -like '*.zip' } | Select-Object -First 1
+          if (-not $asset) { Write-Error 'No zip asset found in latest release'; exit 1 }
+          $dl = $asset.browser_download_url
+          Write-Host "Downloading asset $($asset.name) from $dl"
+          Invoke-WebRequest -Uri $dl -OutFile cppcheck.zip -UseBasicParsing -ErrorAction Stop
+        }
         Expand-Archive -Path cppcheck.zip -DestinationPath cppcheck
         # típico layout: cppcheck\cppcheck-2.11\cppcheck.exe  y cppcheck\cppcheck-2.11\cfg\std.cfg
         $exdir = Get-ChildItem -Path cppcheck -Directory | Where-Object { $_.Name -like 'cppcheck*' } | Select-Object -First 1
