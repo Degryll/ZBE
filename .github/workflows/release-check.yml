@@ -47,6 +47,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+
+    - name: cppcheck
+      uses: chmorgan/cppcheck-action@main
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN}}
+
     - name: Install deps ubuntu
       if: contains(matrix.os, 'ubuntu')
       run: |
@@ -74,47 +80,6 @@ jobs:
     - name: Set up MSVC environment
       if: contains(matrix.os, 'windows')
       uses: ilammy/msvc-dev-cmd@v1
-    
-    - name: Download cppcheck release (Windows)
-      if: contains(matrix.os, 'windows')
-      shell: powershell
-      run: |
-        $ver = '2.11' # ajustar si quieres otra versión
-        $assetName = "cppcheck-$ver.zip"
-        $url = "https://github.com/danmar/cppcheck/releases/download/$ver/$assetName"
-        Write-Host "Attempting direct download of cppcheck $ver from $url"
-        $downloaded = $false
-        try {
-          Invoke-WebRequest -Uri $url -OutFile cppcheck.zip -UseBasicParsing -ErrorAction Stop
-          $downloaded = $true
-        } catch {
-          Write-Host "Direct download failed: $($_.Exception.Message)"
-        }
-        if (-not $downloaded) {
-          Write-Host "Falling back to GitHub API to locate a zip asset for the latest release"
-          $rel = Invoke-RestMethod -Uri "https://api.github.com/repos/danmar/cppcheck/releases/latest" -Headers @{ 'User-Agent' = 'powershell' }
-          $asset = $rel.assets | Where-Object { $_.name -like '*.zip' } | Select-Object -First 1
-          if (-not $asset) { Write-Error 'No zip asset found in latest release'; exit 1 }
-          $dl = $asset.browser_download_url
-          Write-Host "Downloading asset $($asset.name) from $dl"
-          Invoke-WebRequest -Uri $dl -OutFile cppcheck.zip -UseBasicParsing -ErrorAction Stop
-        }
-        Expand-Archive -Path cppcheck.zip -DestinationPath cppcheck
-        # típico layout: cppcheck\cppcheck-2.11\cppcheck.exe  y cppcheck\cppcheck-2.11\cfg\std.cfg
-        $exdir = Get-ChildItem -Path cppcheck -Directory | Where-Object { $_.Name -like 'cppcheck*' } | Select-Object -First 1
-        if (-not $exdir) { Write-Error 'cppcheck folder not found after extract'; exit 1 }
-        $cfgdir = Join-Path $exdir.FullName 'cfg'
-        if (-not (Test-Path $cfgdir)) { Write-Error 'cfg dir not found'; exit 1 }
-        Write-Host "Using cppcheck cfg: $cfgdir"
-        # Use PowerShell cmdlets to append to the special GitHub env/path files
-        Add-Content -Path ${env:GITHUB_ENV} -Value "CPP_CFG_DIR=$cfgdir"
-        # añadir cppcheck bin al PATH (opcional)
-        $bin = Get-ChildItem $exdir.FullName -Filter cppcheck.exe -Recurse | Select-Object -First 1
-        if ($bin) {
-          $binDir = Split-Path $bin.FullName -Parent
-          # Append the bin dir to the GITHUB_PATH file so Actions adds it to PATH for subsequent steps
-          Add-Content -Path ${env:GITHUB_PATH} -Value $binDir
-        }
         
     - name: Instalar libpng and zlib through vcpkg
       if: contains(matrix.os, 'windows')
@@ -181,7 +146,6 @@ jobs:
           -DCMAKE_BUILD_TYPE=Release `
           -DCMAKE_CXX_STANDARD=20 `
           -DZBE_ENABLE_CPPCHECK:BOOL="1" `
-          -DCPPCHECK_LIBRARY_DIR="${{ env.CPP_CFG_DIR }}" `
           -DZBE_BUILD_FUZZ_TESTS:BOOL="0" `
           -DZBE_ENABLE_SANITIZER_UNDEFINED:BOOL="0" `
           -DZBE_ENABLE_SANITIZER_ADDRESS:BOOL="0"
