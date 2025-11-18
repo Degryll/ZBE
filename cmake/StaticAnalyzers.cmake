@@ -1,47 +1,9 @@
 macro(ZBE_enable_cppcheck)
   find_program(CPPCHECK cppcheck)
   if(CPPCHECK)
-    # Optional: user can provide CPPCHECK_LIBRARY_DIR to point to a folder
-    # that contains cppcheck library configuration files (cfg/std.cfg).
-    # Example: -DCPPCHECK_LIBRARY_DIR="C:/tools/cppcheck/cfg"
-    if(DEFINED CPPCHECK_LIBRARY_DIR)
-      set(CPPCHECK_LIBRARY_ARG --library=${CPPCHECK_LIBRARY_DIR}/std.cfg)
-    else()
-      # Try to auto-detect a nearby cfg/std.cfg relative to the cppcheck executable
-      set(CPPCHECK_LIBRARY_ARG )
-      get_filename_component(CPPCHECK_DIR "${CPPCHECK}" DIRECTORY)
-
-      set(_candidate_dirs
-          "${CPPCHECK_DIR}/cfg"
-          "${CPPCHECK_DIR}/../cfg"
-          "${CPPCHECK_DIR}/../../cfg"
-          "/usr/share/cppcheck/cfg"
-          "/usr/local/share/cppcheck/cfg"
-          "/opt/local/share/cppcheck/cfg"
-          "$ENV{ProgramFiles}/cppcheck/cfg"
-          "C:/Program Files (x86)/cppcheck/cfg"
-          "C:/Program Files/cppcheck/cfg"
-      )
-
-      foreach(_d IN LISTS _candidate_dirs)
-        if(_d STREQUAL "")
-          continue()
-        endif()
-        if(EXISTS "${_d}/std.cfg")
-          set(CPPCHECK_LIBRARY_ARG --library=${_d}/std.cfg)
-          message(STATUS "cppcheck: found std.cfg at ${_d}/std.cfg")
-          break()
-        endif()
-      endforeach()
-
-      if("${CPPCHECK_LIBRARY_ARG}" STREQUAL "")
-        message(WARNING "cppcheck found at ${CPPCHECK} but std.cfg not detected automatically; set -DCPPCHECK_LIBRARY_DIR to the cfg folder to silence this warning")
-      endif()
-    endif()
     set(SUPPRESS_DIR "*:${CMAKE_CURRENT_BINARY_DIR}/_deps/*.h")
     set(CMAKE_CXX_CPPCHECK ${CPPCHECK}
           # --template=${CPPCHECK_TEMPLATE}
-          ${CPPCHECK_LIBRARY_ARG}
           --enable=style,performance,warning,portability
           --inline-suppr
           # We cannot act on a bug/missing feature of cppcheck

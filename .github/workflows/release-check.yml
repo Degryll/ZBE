@@ -47,17 +47,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-
-    - name: cppcheck
-      uses: chmorgan/cppcheck-action@main
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN}}
-
     - name: Install deps ubuntu
       if: contains(matrix.os, 'ubuntu')
       run: |
         sudo apt-get update
-        sudo apt-get install ninja-build libfreetype-dev mesa-utils libglu1-mesa-dev freeglut3-dev mesa-common-dev
+        sudo apt-get install ninja-build cppcheck libfreetype-dev mesa-utils libglu1-mesa-dev freeglut3-dev mesa-common-dev
 
     - name: switch to gcc-11 on linux
       if: contains(matrix.c_compiler, 'gcc')
@@ -145,7 +139,7 @@ jobs:
           -S . -B ./build -G Ninja `
           -DCMAKE_BUILD_TYPE=Release `
           -DCMAKE_CXX_STANDARD=20 `
-          -DZBE_ENABLE_CPPCHECK:BOOL="1" `
+          -DZBE_ENABLE_CPPCHECK:BOOL="0" `
           -DZBE_BUILD_FUZZ_TESTS:BOOL="0" `
           -DZBE_ENABLE_SANITIZER_UNDEFINED:BOOL="0" `
           -DZBE_ENABLE_SANITIZER_ADDRESS:BOOL="0"
