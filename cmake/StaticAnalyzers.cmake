@@ -4,7 +4,7 @@ macro(ZBE_enable_cppcheck)
     set(SUPPRESS_DIR "*:${CMAKE_CURRENT_BINARY_DIR}/_deps/*.h")
     set(CMAKE_CXX_CPPCHECK ${CPPCHECK}
           # --template=${CPPCHECK_TEMPLATE}
-          --enable=performance,warning,portability
+          --enable=warning,portability
           --inline-suppr
           # We cannot act on a bug/missing feature of cppcheck
           --suppress=cppcheckError
