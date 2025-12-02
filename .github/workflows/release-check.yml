@@ -48,10 +48,11 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Install deps ubuntu
+      # To install cppcheck us: sudo apt-get install ninja-build cppcheck libfreetype-dev mesa-utils libglu1-mesa-dev freeglut3-dev mesa-common-dev
       if: contains(matrix.os, 'ubuntu')
       run: |
         sudo apt-get update
-        sudo apt-get install ninja-build cppcheck libfreetype-dev mesa-utils libglu1-mesa-dev freeglut3-dev mesa-common-dev
+        sudo apt-get install ninja-build libfreetype-dev mesa-utils libglu1-mesa-dev freeglut3-dev mesa-common-dev
 
     - name: switch to gcc-11 on linux
       if: contains(matrix.c_compiler, 'gcc')
