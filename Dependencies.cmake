@@ -58,6 +58,7 @@ endif()
 
 cpmaddpackage("gh:nemtrif/utfcpp@4.0.5")
 
+set(PNG_TESTS OFF CACHE BOOL "" FORCE)
 cpmaddpackage("gh:pnggroup/libpng@1.6.43")
 
 CPMAddPackage(
