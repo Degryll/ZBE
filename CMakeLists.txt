@@ -36,6 +36,9 @@ ZBE_setup_dependencies()
 # Re-enable tests for ZBE only
 set(BUILD_TESTING ON CACHE BOOL "Build testing" FORCE)
 
+# Enable CTest so that add_test() calls are registered globally
+enable_testing()
+
 ZBE_local_options()
 
 # don't know if this should be set globally from here or not...
@@ -60,13 +63,6 @@ add_library(ZBE::ZBE_warnings ALIAS ZBE_warnings)
 #add_library(ZBE::ZBE_warnings INTERFACE IMPORTED)
 
 add_subdirectory(src)
-
-include(CTest) # TODO hacer test unitarios.
-
-if(BUILD_TESTING AND PROJECT_IS_TOP_LEVEL)
-  message(AUTHOR_WARNING "Building Tests. Be sure to check out test/constexpr_tests.cpp for constexpr testing")
-  add_subdirectory(ZBETest)
-endif()
 
 if(ZBE_BUILD_FUZZ_TESTS) # TODO hacer test borrosos.
   message(AUTHOR_WARNING "Building Fuzz Tests, using fuzzing sanitizer https://www.llvm.org/docs/LibFuzzer.html")
