@@ -92,7 +92,7 @@ TEST_CASE("Entity::setBool and getBool", "[Entity][values]") {
 
 TEST_CASE("Entity::setVector3D and getVector3D", "[Entity][values]") {
   auto entity = std::make_shared<Entity>();
-  Vector3D vec{1.0f, 2.0f, 3.0f};
+  Vector3D vec{1.0, 2.0, 3.0};
   auto value = std::make_shared<SimpleValue<Vector3D>>(vec);
   
   entity->setVector3D(6, value);
@@ -107,7 +107,7 @@ TEST_CASE("Entity::setVector3D and getVector3D", "[Entity][values]") {
 
 TEST_CASE("Entity::setVector2D and getVector2D", "[Entity][values]") {
   auto entity = std::make_shared<Entity>();
-  Vector2D vec{4.5f, 5.5f};
+  Vector2D vec{4.5, 5.5};
   auto value = std::make_shared<SimpleValue<Vector2D>>(vec);
   
   entity->setVector2D(7, value);
