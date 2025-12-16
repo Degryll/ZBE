@@ -4,6 +4,7 @@ include(CTest)
 # Test sources
 set(TEST_SOURCES
   test/core/entities/EntityTest.cpp
+  test/core/tools/containers/RsrcStoreTest.cpp
 )
 
 # Create test executable
