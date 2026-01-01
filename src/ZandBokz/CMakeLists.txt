@@ -17,6 +17,7 @@ if(MSVC)
         /NOIMPLIB
     )
 endif()
+# TODO Revisar si es necesario añadir zbe_warnings y zbe_options aquí también
 target_link_libraries(ZANDBOKZ
     PRIVATE ZBE_LIB
 )

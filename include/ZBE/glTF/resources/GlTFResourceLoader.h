@@ -105,9 +105,9 @@ private:
 
   GLuint bindModel(tinygltf::Model &model);
 
-  void bindModelNodes(std::vector<GLuint> vbos, tinygltf::Model &model, /*tinygltf::Node &node*/ int nodeIdx);
+  void bindModelNodes(std::vector<GLuint>& vbos, tinygltf::Model &model, /*tinygltf::Node &node*/ int nodeIdx);
 
-  void bindMesh(std::vector<GLuint> vbos, tinygltf::Model &model, /*tinygltf::Mesh &mesh*/ int meshIdx);
+  void bindMesh(std::vector<GLuint>& vbos, tinygltf::Model &model, /*tinygltf::Mesh &mesh*/ int meshIdx);
 
   GLuint bindTextures(tinygltf::Model &model);
 

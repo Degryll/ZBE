@@ -71,7 +71,7 @@ namespace zbe {
     return vao;
   }
 
-  void GlTFResourceLoader::bindModelNodes(std::vector<GLuint> vbos, tinygltf::Model &model, /*tinygltf::Node &node*/ int nodeIdx) {
+  void GlTFResourceLoader::bindModelNodes(std::vector<GLuint>& vbos, tinygltf::Model &model, /*tinygltf::Node &node*/ int nodeIdx) {
     tinygltf::Node &node = model.nodes[static_cast<unsigned>(nodeIdx)];
     if ((node.mesh >= 0) && (node.mesh < static_cast<int>(model.meshes.size()))) {
       //bindMesh(vbos, model, model.meshes[node.mesh]);
@@ -85,7 +85,7 @@ namespace zbe {
     }
   }
 
-  void GlTFResourceLoader::bindMesh(std::vector<GLuint> vbos, tinygltf::Model &model, /*tinygltf::Mesh &mesh*/ int meshIdx) {
+  void GlTFResourceLoader::bindMesh(std::vector<GLuint>& vbos, tinygltf::Model &model, /*tinygltf::Mesh &mesh*/ int meshIdx) {
     using namespace std::string_literals;
     tinygltf::Mesh &mesh = model.meshes[static_cast<unsigned>(meshIdx)];
     for (size_t i = 0; i < model.bufferViews.size(); ++i) {
