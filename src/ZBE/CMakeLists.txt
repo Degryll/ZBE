@@ -91,7 +91,7 @@ target_link_libraries(ZBE_LIB PUBLIC
   PUBLIC ogg
   PUBLIC vorbis
   PUBLIC vorbisfile
-  # Vorbis & openal
+  PUBLIC spdlog::spdlog
 )
 
 message(STATUS "PNG includes: ${PNG_INCLUDE_DIRS}")

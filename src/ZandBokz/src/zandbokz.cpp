@@ -10,6 +10,7 @@
 
  #define SDL_MAIN_HANDLED
 #include <iostream>
+#include <string>
 
 #include "ZBE/core/zbe.h"
 #include "ZBE/factories/BaseFactories.h"
@@ -34,7 +35,26 @@
 
 #include "ZBE/OAL/daemons/OALContextDaemon.h"
 
+#include <spdlog/spdlog.h>
+#include <spdlog/sinks/basic_file_sink.h>
+#include <spdlog/sinks/stdout_color_sinks.h>
+#include <spdlog/sinks/rotating_file_sink.h>
+
 int main(int /*argc*/, char** /*argv*/) {
+
+  auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
+  auto rotating_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>("logs/zbe.log", 1024*1024*10, 10);
+  auto logger = std::make_shared<spdlog::logger>("multi_sink", spdlog::sinks_init_list{console_sink, rotating_sink});
+
+  spdlog::set_default_logger(logger);
+
+  // // TODO logs de prueba aquí.
+  // SPDLOG_TRACE("This is a trace message.");
+  // SPDLOG_DEBUG("This is a debug message.");
+  // SPDLOG_INFO("This is an info message.");
+  // SPDLOG_WARN("This is a warning message.");
+  // SPDLOG_ERROR("This is an error message.");
+  // SPDLOG_CRITICAL("This is a critical message.");
 
   using namespace zbe;
   using namespace zandbokz;

@@ -8,6 +8,7 @@
  */
 
 #include "ZBE/core/system/SysError.h"
+#include <spdlog/spdlog.h>
 
 namespace zbe {
 
@@ -23,6 +24,7 @@ std::string SysError::getFirstErrorString() {
 }
 
 void SysError::setError(std::string errorString) {
+  SPDLOG_ERROR("SysError: {}", errorString);
   if (!SysError::nerrors) {
           SysError::errorString = errorString;
   }

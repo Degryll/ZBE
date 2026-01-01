@@ -10,6 +10,7 @@
 #include "ZBE/resources/loaders/implementations/JSONAppLoader.h"
 #include <cstdio>
 #include <iostream>
+#include <spdlog/spdlog.h>
 
 namespace zbe {
 
@@ -18,32 +19,42 @@ void JSONAppLoader::load(std::filesystem::path filePath) {
   std::ifstream ifs(filePath);
   json appCfg;
   try {
+    SPDLOG_INFO("App load started.");
     ifs >> appCfg;
 
+    SPDLOG_INFO("Loading literals.");
     json literals = appCfg["literals"];
     for(auto& literalCfg : literals.items()) {
       loadLiteralConfig(literalCfg.key(), literalCfg.value());
     }
 
+    SPDLOG_INFO("Loading phases.");
     json phases = appCfg["phases"];
     for(auto& phase : phases){
+      SPDLOG_INFO("Loading phase {}.", phase["description"].get<std::string>());
       json factories = phase["factories"];
+      SPDLOG_INFO("Loading factories.");
       for(auto& ftryCfg : factories) {
         appFactories.push_front(readFactoryConfig(ftryCfg));
       }
+      SPDLOG_INFO("Creating factories.");
       for(auto ftryData : appFactories) {
         ftryData.ftry->create(ftryData.name, ftryData.cfgId);
       }
+      SPDLOG_INFO("Setting up factories.");
       for(auto ftryData : appFactories) {
         ftryData.ftry->setup(ftryData.name, ftryData.cfgId);
       }
       appFactories.clear();
       std::cout << SysError::getFirstErrorString() << "\n";
+      SPDLOG_INFO("Executing calls.");
       json calls = phase["calls"];
       for(auto& call : calls) {
         checkAndCall(call, phase);
       }
+      SPDLOG_INFO("Phase {} loaded.", phase["description"].get<std::string>());
     }
+    SPDLOG_INFO("App load finished.");
   } catch (json::parse_error &e) {
     SysError::setError("ERROR: Json on "s + filePath.string() + " failed to parse: "s + std::string(e.what()));
   } catch (nlohmann::detail::type_error &e) {
