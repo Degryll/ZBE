@@ -75,8 +75,9 @@ ENDIF()
 
 target_link_libraries(ZBE_LIB PRIVATE ZLIB::ZLIB)
 
-target_link_libraries(ZBE_LIB PUBLIC 
-  ZBE_options ZBE_warnings
+target_link_libraries(ZBE_LIB
+  PUBLIC ZBE_options
+  PUBLIC ZBE_warnings
   PUBLIC SDL2
   PUBLIC SDL2_image 
   PUBLIC SDL2_net

@@ -42,7 +42,7 @@ void Entity::replaceTicket(uint64_t id, std::shared_ptr<Ticket> ticket) {
 void Entity::setACTIVE(uint64_t id) {
   auto it = tl.find(id);
   if (it == tl.end()) {
-    SysError::setError("Ticket in Entity list is not found for activation.");
+    SysError::setError("Ticket " + std::to_string(id) + " in Entity list is not found for activation.");
   } else {
     it->second->setACTIVE();
   }
@@ -57,7 +57,7 @@ void Entity::setACTIVE() {
 void Entity::setINACTIVE(uint64_t id) {
   auto it = tl.find(id);
   if (it == tl.end()) {
-    SysError::setError("Ticket in Entity list is not found for inactivation.");
+    SysError::setError("Ticket " + std::to_string(id) + " in Entity list is not found for inactivation.");
   } else {
     it->second->setINACTIVE();
   }
@@ -72,7 +72,7 @@ void Entity::setINACTIVE() {
 void Entity::setERASED(uint64_t id) {
   auto it = tl.find(id);
   if (it == tl.end()) {
-    SysError::setError("Ticket in Entity list is not found to erase.");
+    SysError::setError("Ticket " + std::to_string(id) + " in Entity list is not found to erase.");
   } else {
     it->second->setERASED();
     tl.erase(it);
@@ -89,7 +89,7 @@ void Entity::setERASED() {
 void Entity::setDouble(uint64_t id, std::shared_ptr<Value<double> >   val) {
   auto it = dv.find(id);
   if (it != dv.end()) {
-    SysError::setError("Overriding entity double value not allowed.");
+    SysError::setError("Overriding " + std::to_string(id) + " entity double value not allowed.");
   } else {
     dv[id] = val;
   }
@@ -98,7 +98,7 @@ void Entity::setDouble(uint64_t id, std::shared_ptr<Value<double> >   val) {
 void Entity::setFloat(uint64_t id, std::shared_ptr<Value<float> >   val) {
   auto it = fv.find(id);
   if (it != fv.end()) {
-    SysError::setError("Overriding entity double value not allowed.");
+    SysError::setError("Overriding " + std::to_string(id) + " entity float value not allowed.");
   } else {
     fv[id] = val;
   }
@@ -107,7 +107,7 @@ void Entity::setFloat(uint64_t id, std::shared_ptr<Value<float> >   val) {
 void Entity::setUint(uint64_t id, std::shared_ptr<Value<uint64_t> > val) {
   auto it = uv.find(id);
   if (it != uv.end()) {
-    SysError::setError("Overriding entity uint value not allowed.");
+    SysError::setError("Overriding " + std::to_string(id) + " entity uint value not allowed.");
   } else {
     uv[id] = val;
   }
@@ -116,7 +116,7 @@ void Entity::setUint(uint64_t id, std::shared_ptr<Value<uint64_t> > val) {
 void Entity::setInt(uint64_t id, std::shared_ptr<Value<int64_t> >  val) {
   auto it = iv.find(id);
   if (it != iv.end()) {
-    SysError::setError("Overriding entity int value not allowed.");
+    SysError::setError("Overriding " + std::to_string(id) + " entity int value not allowed.");
   } else {
     iv[id] = val;
   }
@@ -125,7 +125,7 @@ void Entity::setInt(uint64_t id, std::shared_ptr<Value<int64_t> >  val) {
 void Entity::setBool(uint64_t id, std::shared_ptr<Value<bool> >  val) {
   auto it = bv.find(id);
   if (it != bv.end()) {
-    SysError::setError("Overriding entity bool value not allowed.");
+    SysError::setError("Overriding " + std::to_string(id) + " entity bool value not allowed.");
   } else {
     bv[id] = val;
   }
@@ -134,7 +134,7 @@ void Entity::setBool(uint64_t id, std::shared_ptr<Value<bool> >  val) {
 void Entity::setVector3D(uint64_t id, std::shared_ptr<Value<Vector3D> > val) {
   auto it = v3v.find(id);
   if (it != v3v.end()) {
-    SysError::setError("Overriding entity Vector3D value not allowed.");
+    SysError::setError("Overriding " + std::to_string(id) + " entity Vector3D value not allowed.");
   } else {
     v3v[id] = val;
   }
@@ -143,7 +143,7 @@ void Entity::setVector3D(uint64_t id, std::shared_ptr<Value<Vector3D> > val) {
 void Entity::setVector2D(uint64_t id, std::shared_ptr<Value<Vector2D> > val) {
   auto it = v2v.find(id);
   if (it != v2v.end()) {
-    SysError::setError("Overriding entity Vector2D value not allowed.");
+    SysError::setError("Overriding " + std::to_string(id) + " entity Vector2D value not allowed.");
   } else {
     v2v[id] = val;
   }
@@ -152,7 +152,7 @@ void Entity::setVector2D(uint64_t id, std::shared_ptr<Value<Vector2D> > val) {
 void Entity::setString(uint64_t id, std::shared_ptr<Value<std::string> > val) {
   auto it = sv.find(id);
   if (it != sv.end()) {
-    SysError::setError("Overriding entity String value not allowed.");
+    SysError::setError("Overriding " + std::to_string(id) + " entity String value not allowed.");
   } else {
     sv[id] = val;
   }
@@ -161,7 +161,7 @@ void Entity::setString(uint64_t id, std::shared_ptr<Value<std::string> > val) {
 void Entity::setStringVector(uint64_t id, std::shared_ptr<Value<std::vector<std::string> > > val) {
   auto it = svv.find(id);
   if (it != svv.end()) {
-    SysError::setError("Overriding entity String vector value not allowed.");
+    SysError::setError("Overriding " + std::to_string(id) + " entity String vector value not allowed.");
   } else {
     svv[id] = val;
   }
@@ -170,7 +170,7 @@ void Entity::setStringVector(uint64_t id, std::shared_ptr<Value<std::vector<std:
 void Entity::overrideDouble(uint64_t id, std::shared_ptr<Value<double> >   val) {
   auto it = dv.find(id);
   if (it == dv.end()) {
-    SysError::setError("Overriding entity double value require a previous value.");
+    SysError::setError("Overriding " + std::to_string(id) + " entity double value require a previous value.");
   } else {
     dv[id] = val;
   }
@@ -179,7 +179,7 @@ void Entity::overrideDouble(uint64_t id, std::shared_ptr<Value<double> >   val) 
 void Entity::overrideFloat(uint64_t id, std::shared_ptr<Value<float> >   val) {
   auto it = fv.find(id);
   if (it == fv.end()) {
-    SysError::setError("Overriding entity double value require a previous value.");
+    SysError::setError("Overriding " + std::to_string(id) + " entity float value require a previous value.");
   } else {
     fv[id] = val;
   }
@@ -188,7 +188,7 @@ void Entity::overrideFloat(uint64_t id, std::shared_ptr<Value<float> >   val) {
 void Entity::overrideUint(uint64_t id, std::shared_ptr<Value<uint64_t> > val) {
   auto it = uv.find(id);
   if (it == uv.end()) {
-    SysError::setError("Overriding entity uint value require a previous value.");
+    SysError::setError("Overriding " + std::to_string(id) + " entity uint value require a previous value.");
   } else {
     uv[id] = val;
   }
@@ -197,7 +197,7 @@ void Entity::overrideUint(uint64_t id, std::shared_ptr<Value<uint64_t> > val) {
 void Entity::overrideInt(uint64_t id, std::shared_ptr<Value<int64_t> >  val) {
   auto it = iv.find(id);
   if (it == iv.end()) {
-    SysError::setError("Overriding entity int value require a previous value.");
+    SysError::setError("Overriding " + std::to_string(id) + " entity int value require a previous value.");
   } else {
     iv[id] = val;
   }
@@ -206,7 +206,7 @@ void Entity::overrideInt(uint64_t id, std::shared_ptr<Value<int64_t> >  val) {
 void Entity::overrideBool(uint64_t id, std::shared_ptr<Value<bool> >  val) {
   auto it = bv.find(id);
   if (it == bv.end()) {
-    SysError::setError("Overriding entity bool value require a previous value.");
+    SysError::setError("Overriding " + std::to_string(id) + " entity bool value require a previous value.");
   } else {
     bv[id] = val;
   }
@@ -215,7 +215,7 @@ void Entity::overrideBool(uint64_t id, std::shared_ptr<Value<bool> >  val) {
 void Entity::overrideVector3D(uint64_t id, std::shared_ptr<Value<Vector3D> > val) {
   auto it = v3v.find(id);
   if (it == v3v.end()) {
-    SysError::setError("Overriding entity Vector3D value require a previous value.");
+    SysError::setError("Overriding " + std::to_string(id) + " entity Vector3D value require a previous value.");
   } else {
     v3v[id] = val;
   }
@@ -224,7 +224,7 @@ void Entity::overrideVector3D(uint64_t id, std::shared_ptr<Value<Vector3D> > val
 void Entity::overrideVector2D(uint64_t id, std::shared_ptr<Value<Vector2D> > val) {
   auto it = v2v.find(id);
   if (it == v2v.end()) {
-    SysError::setError("Overriding entity Vector2D value require a previous value.");
+    SysError::setError("Overriding " + std::to_string(id) + " entity Vector2D value require a previous value.");
   } else {
     v2v[id] = val;
   }
@@ -233,7 +233,7 @@ void Entity::overrideVector2D(uint64_t id, std::shared_ptr<Value<Vector2D> > val
 void Entity::overrideString(uint64_t id, std::shared_ptr<Value<std::string> > val) {
   auto it = sv.find(id);
   if (it == sv.end()) {
-    SysError::setError("Overriding entity String value require a previous value.");
+    SysError::setError("Overriding " + std::to_string(id) + " entity String value require a previous value.");
   } else {
     sv[id] = val;
   }
@@ -242,7 +242,7 @@ void Entity::overrideString(uint64_t id, std::shared_ptr<Value<std::string> > va
 void Entity::overrideStringVector(uint64_t id, std::shared_ptr<Value<std::vector<std::string> > > val) {
   auto it = svv.find(id);
   if (it == svv.end()) {
-    SysError::setError("Overriding entity String vector value require a previous value.");
+    SysError::setError("Overriding " + std::to_string(id) + " entity String vector value require a previous value.");
   } else {
     svv[id] = val;
   }
