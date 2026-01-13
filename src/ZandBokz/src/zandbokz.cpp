@@ -47,6 +47,7 @@ int main(int /*argc*/, char** /*argv*/) {
   auto logger = std::make_shared<spdlog::logger>("multi_sink", spdlog::sinks_init_list{console_sink, rotating_sink});
 
   spdlog::set_default_logger(logger);
+  spdlog::default_logger()->set_level(spdlog::level::trace);
 
   // // TODO logs de prueba aquí.
   // SPDLOG_TRACE("This is a trace message.");
