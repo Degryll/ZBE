@@ -15,11 +15,11 @@
 #pragma comment(lib, "dbghelp.lib")
 #else
 #include <execinfo.h>
+#include <unistd.h>
 #endif
 #include <iostream>
 #include <cstdlib>
 #include <cstring>
-#include <unistd.h>
 #include <cstdio>
 
 std::string print_stacktrace() {
