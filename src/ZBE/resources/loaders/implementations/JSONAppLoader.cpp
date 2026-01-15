@@ -46,7 +46,6 @@ void JSONAppLoader::load(std::filesystem::path filePath) {
         ftryData.ftry->setup(ftryData.name, ftryData.cfgId);
       }
       appFactories.clear();
-      std::cout << SysError::getFirstErrorString() << "\n";
       SPDLOG_INFO("Executing calls.");
       json calls = phase["calls"];
       for(auto& call : calls) {

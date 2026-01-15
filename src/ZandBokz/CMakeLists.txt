@@ -1,8 +1,9 @@
 add_executable(ZANDBOKZ 
     src/zandbokz.cpp
 )
-
-target_compile_definitions(ZANDBOKZ PRIVATE SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_TRACE)
+target_compile_definitions(ZANDBOKZ PRIVATE
+    $<$<CONFIG:Debug>:SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_TRACE>
+    $<$<CONFIG:Release>:SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_WARN>)
 if(MSVC)
     target_compile_definitions(ZANDBOKZ PRIVATE _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING)
     set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT ProgramDatabase)

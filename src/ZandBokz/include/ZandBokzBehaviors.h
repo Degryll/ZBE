@@ -446,13 +446,11 @@ class NonRealGravityVelSetterBhv : virtual public zbe::Behavior<zbe::Vector3D, z
         }
       }
       if (amount > 0) {
-        printf("Attractors: %d\n", amount);
         fflush(stdout);
         x = x / amount;
         y = y / amount;
         z = z / amount;
       } else {
-        printf("No attractors\n");
         fflush(stdout);
       }
       fakeGrav = zbe::Vector3D{x, y, z} - pos;

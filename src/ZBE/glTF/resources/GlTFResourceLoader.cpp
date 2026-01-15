@@ -7,6 +7,8 @@
 */
 
 #include <forward_list>
+#include <spdlog/spdlog.h>
+
 #include "ZBE/glTF/resources/GlTFResourceLoader.h"
 
 namespace zbe {
@@ -91,7 +93,7 @@ namespace zbe {
     for (size_t i = 0; i < model.bufferViews.size(); ++i) {
       const tinygltf::BufferView &bufferView = model.bufferViews[i];
       if (bufferView.target == 0) {  // TODO impl drawarrays
-        std::cout << "WARN: bufferView.target is zero" << std::endl;
+        SPDLOG_WARN("bufferView.target is zero for model "s + mesh.name);
         vbos.push_back(0);
         continue;  // Unsupported bufferView.
                    /*
@@ -105,7 +107,6 @@ namespace zbe {
       }  // if bufferView.target == 0
 
       const tinygltf::Buffer &buffer = model.buffers[static_cast<unsigned>(bufferView.buffer)];
-      // std::cout << "bufferview.target " << bufferView.target << std::endl;
 
       GLuint vbo;
       glGenBuffers(1, &vbo);
@@ -164,7 +165,7 @@ namespace zbe {
                                 accessor.normalized ? GL_TRUE : GL_FALSE,
                                 byteStride, static_cast<const GLvoid *>(pv));
         } else {
-          std::cout << "vaa missing: " << attrib.first << std::endl;
+          SPDLOG_WARN("vaa missing for attribute " + attrib.first + " in model " + mesh.name);
         }
       }  // for attributes
     }  // for primitives

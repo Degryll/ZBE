@@ -62,7 +62,7 @@ int main(int /*argc*/, char** /*argv*/) {
   using namespace std::string_literals;
 
   init(RsrcDictionary<ZBE_K>::getInstance());
-  printf("Hello ZandBokz\n");
+  SPDLOG_TRACE("Hello ZandBokz\n");
   JSONAppLoader appLoader;
 
   appLoader.setFactoryStore(&RsrcStore<Factory>::getInstance());
@@ -79,33 +79,28 @@ int main(int /*argc*/, char** /*argv*/) {
   auto& factories = RsrcStore<Factory>::getInstance();
 
   BaseFactories::load(factories);
-  printf("Base loaded %d\n", factories.contains("SimpleValueFtry"));
+  SPDLOG_INFO("Base loaded");
   OGLFactories::load(factories);
-  printf("OGL %d\n", factories.contains("SimpleValueFtry"));
+  SPDLOG_INFO("OGL");
   GLTFFactories::load(factories);
-  printf("GLTF %d\n", factories.contains("SimpleValueFtry"));
+  SPDLOG_INFO("GLTF");
   OALFactories::load(factories);
-  printf("OAL %d\n", factories.contains("SimpleValueFtry"));
+  SPDLOG_INFO("OAL");
   ZBEFactories::load(factories);
-  printf("ZBE %d\n", factories.contains("SimpleValueFtry"));
+  SPDLOG_INFO("ZBE");
   JSONFactories::load(factories);
-  printf("JSON %d\n", factories.contains("SimpleValueFtry"));
+  SPDLOG_INFO("JSON");
   ZandBokzFactories::load(factories);
-  printf("ZandBokz %d\n", factories.contains("SimpleValueFtry"));
+  SPDLOG_INFO("ZandBokz");
   SDLFactories::load(factories);
-  printf("SDL %d\n", factories.contains("SimpleValueFtry"));
-
+  SPDLOG_INFO("SDL");
   // TODO llevar a factoria
   OALContextDaemon oalContextDmn;
   oalContextDmn.run();
-
-  std::cout << SysError::getFirstErrorString() << "\n";
   
   appLoader.load("data/ZandBokz/app/main_002.json");
-  std::cout << SysError::getFirstErrorString() << "\n";
   // Run App.
   auto d = RsrcStore<Daemon>::getInstance().get("Daemon.Main");
-  std::cout << SysError::getFirstErrorString() << "\n";
   d->run();
   return 0;
 

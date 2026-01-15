@@ -56,7 +56,10 @@ add_library(ZBE::ZBE_LIB ALIAS ZBE_LIB)
 add_library(glew STATIC IMPORTED) # or STATIC instead of SHARED
 
 target_compile_definitions(ZBE_LIB PRIVATE _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING)
-target_compile_definitions(ZBE_LIB PRIVATE SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_TRACE)
+
+target_compile_definitions(ZBE_LIB PRIVATE 
+    $<$<CONFIG:Debug>:SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_TRACE>
+    $<$<CONFIG:Release>:SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_WARN>)
 
 IF (MSVC)
   # target_compile_definitions(ZBE_LIB PRIVATE GLEW_STATIC)
