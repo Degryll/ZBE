@@ -1,10 +1,11 @@
 add_executable(ZANDBOKZ 
     src/zandbokz.cpp
 )
-
-target_compile_definitions(ZANDBOKZ PRIVATE _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING)
-
+target_compile_definitions(ZANDBOKZ PRIVATE
+    $<$<CONFIG:Debug>:SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_TRACE>
+    $<$<CONFIG:Release>:SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_WARN>)
 if(MSVC)
+    target_compile_definitions(ZANDBOKZ PRIVATE _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING)
     set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT ProgramDatabase)
     target_compile_options(ZANDBOKZ PRIVATE /bigobj)
     set_target_properties(ZANDBOKZ PROPERTIES
@@ -36,15 +37,3 @@ target_include_directories(ZANDBOKZ SYSTEM PRIVATE
     ${ogg_SOURCE_DIR}
     ${libpng_SOURCE_DIR}
 )
-
-# --- Debug: comprobar si el ejecutable está generando import library ---
-get_target_property(outimplib ZANDBOKZ IMPORT_LIBRARY)
-if(outimplib)
-    message(WARNING "X ZANDBOKZ está configurado con IMPORT_LIBRARY='${outimplib}' (puede estar tratándose como DLL)")
-else()
-    message(STATUS "V ZANDBOKZ no genera import library (es un ejecutable puro)")
-endif()
-
-# También mostrar WIN32_EXECUTABLE para confirmar
-get_target_property(exe_type ZANDBOKZ WIN32_EXECUTABLE)
-message(STATUS "WIN32_EXECUTABLE for ZANDBOKZ = ${exe_type}")

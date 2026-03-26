@@ -10,10 +10,6 @@ function(ZBE_setup_dependencies)
   # For each dependency, see if it's
   # already been provided to us by a parent project
 
-  if(NOT TARGET fmtlib::fmtlib)
-    cpmaddpackage("gh:fmtlib/fmt#9.1.0")
-  endif()
-
   if(NOT TARGET spdlog::spdlog)
     cpmaddpackage(
       NAME
@@ -21,9 +17,11 @@ function(ZBE_setup_dependencies)
       VERSION
       1.11.0
       GITHUB_REPOSITORY
-      "gabime/spdlog"
-      OPTIONS
-      "SPDLOG_FMT_EXTERNAL ON")
+      "gabime/spdlog")
+    # TODO revisar si es necesario
+    if(spdlog_ADDED)
+      set_target_properties(spdlog PROPERTIES POSITION_INDEPENDENT_CODE TRUE)
+    endif()
   endif()
 
   if(NOT TARGET Catch2::Catch2WithMain)

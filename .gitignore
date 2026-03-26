@@ -16,3 +16,4 @@ out
 *.layout
 *.depend
 Testing
+logs

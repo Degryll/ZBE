@@ -57,6 +57,10 @@ add_library(glew STATIC IMPORTED) # or STATIC instead of SHARED
 
 target_compile_definitions(ZBE_LIB PRIVATE _SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING)
 
+target_compile_definitions(ZBE_LIB PRIVATE 
+    $<$<CONFIG:Debug>:SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_TRACE>
+    $<$<CONFIG:Release>:SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_WARN>)
+
 IF (MSVC)
   # target_compile_definitions(ZBE_LIB PRIVATE GLEW_STATIC)
   set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT ProgramDatabase)
@@ -75,8 +79,9 @@ ENDIF()
 
 target_link_libraries(ZBE_LIB PRIVATE ZLIB::ZLIB)
 
-target_link_libraries(ZBE_LIB PUBLIC 
-  ZBE_options ZBE_warnings
+target_link_libraries(ZBE_LIB
+  PUBLIC ZBE_options
+  PUBLIC ZBE_warnings
   PUBLIC SDL2
   PUBLIC SDL2_image 
   PUBLIC SDL2_net
@@ -91,7 +96,7 @@ target_link_libraries(ZBE_LIB PUBLIC
   PUBLIC ogg
   PUBLIC vorbis
   PUBLIC vorbisfile
-  # Vorbis & openal
+  PUBLIC spdlog::spdlog
 )
 
 message(STATUS "PNG includes: ${PNG_INCLUDE_DIRS}")
