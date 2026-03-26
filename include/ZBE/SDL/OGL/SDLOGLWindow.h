@@ -263,7 +263,7 @@ public:
     return glContext;
   }
 
-private:
+protected:
 
   void createGLContext();
 

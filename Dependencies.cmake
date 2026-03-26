@@ -32,7 +32,8 @@ function(ZBE_setup_dependencies)
 
   cpmaddpackage("gh:g-truc/glm#1.0.1")
 
-  cpmaddpackage("gh:ocornut/imgui@1.90.7")
+  # cpmaddpackage("gh:ocornut/imgui@1.92.5")
+  cpmaddpackage("gh:slint-ui/slint@1.15.0")
 
   if (imgui_ADDED)
     # imgui has no CMake support, so we create our own target

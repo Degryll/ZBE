@@ -1,6 +1,7 @@
 # include(GenerateExportHeader)
 find_package(PNG REQUIRED)
 find_package(OpenGL REQUIRED)
+# find_package(Slint REQUIRED)
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS OFF)
 
 add_library(ZBE_LIB SHARED
@@ -77,9 +78,43 @@ ELSE()
   )
 ENDIF()
 
+# TODO: Cuando no funcione, revisar esta url.
+slint_target_sources(ZBE_LIB "${PROJECT_SOURCE_DIR}/src/ZBE/SLINT/ui.slint")
+
+# # TODO: Cuando no funcione, ver si este trozo es necesario.
+# set_source_files_properties(
+#     ${CMAKE_CURRENT_BINARY_DIR}/slint_generated_ui_1.cpp
+#     PROPERTIES
+#       COMPILE_FLAGS "-fvisibility=default"
+# )
+
+# Desactivar TODOS los warnings en archivo generado por Slint
+# y forzar visibilidad de símbolos para que la librería exporte la UI
+if(MSVC)
+  set_source_files_properties(
+    ${CMAKE_CURRENT_BINARY_DIR}/slint_generated_ui_1.cpp
+    PROPERTIES COMPILE_FLAGS "/W0 /export:SlintUi"
+  )
+  set_source_files_properties(
+    ${CMAKE_CURRENT_BINARY_DIR}/ui.h
+    PROPERTIES COMPILE_FLAGS "/W0"
+  )
+else()
+  # agregar -fvisibility=default para anular la política de visibilidad global
+  set_source_files_properties(
+    ${CMAKE_CURRENT_BINARY_DIR}/slint_generated_ui_1.cpp
+    PROPERTIES COMPILE_FLAGS "-w -fvisibility=default"
+  )
+  set_source_files_properties(
+    ${CMAKE_CURRENT_BINARY_DIR}/ui.h
+    PROPERTIES COMPILE_FLAGS "-w"
+  )
+endif()
+
 target_link_libraries(ZBE_LIB PRIVATE ZLIB::ZLIB)
 
 target_link_libraries(ZBE_LIB
+  PUBLIC Slint::Slint
   PUBLIC ZBE_options
   PUBLIC ZBE_warnings
   PUBLIC SDL2
@@ -113,6 +148,8 @@ target_include_directories(ZBE_LIB SYSTEM PRIVATE ${tinygltf_SOURCE_DIR})
 target_include_directories(ZBE_LIB SYSTEM PRIVATE ${vorbis_SOURCE_DIR}/include)
 target_include_directories(ZBE_LIB SYSTEM PRIVATE ${ogg_SOURCE_DIR})
 target_include_directories(ZBE_LIB SYSTEM PRIVATE ${libpng_SOURCE_DIR})
+target_include_directories(ZBE_LIB SYSTEM PRIVATE ${slint_SOURCE_DIR})
+target_include_directories(ZBE_LIB SYSTEM PRIVATE ${slint_BINARY_DIR})
 # target_include_directories(ZBE_LIB SYSTEM PRIVATE ${nlohmann_SOURCE_DIR}/include)
 # target_include_directories(ZBE_LIB SYSTEM PRIVATE /media/ludo/D4D679EDD679D06A/workspace/ZBE/build/_deps/json-src/include)
 

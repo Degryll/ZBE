@@ -20,6 +20,7 @@
 #include "ZBE/SDL/factories/SDLFactories.h"
 #include "ZBE/OGL/factories/OGLFactories.h"
 #include "ZBE/OAL/factories/OALFactories.h"
+#include "ZBE/SLINT/factories/SLINTFactories.h"
 #include "ZBE/resources/loaders/implementations/JSONAppLoader.h"
 
 #include "ZBE/core/events/interactionSystem.h"
@@ -94,6 +95,8 @@ int main(int /*argc*/, char** /*argv*/) {
   SPDLOG_INFO("ZandBokz");
   SDLFactories::load(factories);
   SPDLOG_INFO("SDL");
+  SLINTFactories::load(factories);
+  SPDLOG_INFO("SLINT");
   // TODO llevar a factoria
   OALContextDaemon oalContextDmn;
   oalContextDmn.run();

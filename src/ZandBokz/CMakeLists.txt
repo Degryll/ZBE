@@ -36,4 +36,6 @@ target_include_directories(ZANDBOKZ SYSTEM PRIVATE
     ${vorbis_SOURCE_DIR}/include
     ${ogg_SOURCE_DIR}
     ${libpng_SOURCE_DIR}
+    ${slint_SOURCE_DIR}/api/cpp/include
+    ${slint_BINARY_DIR}/api/cpp/generated_include
 )

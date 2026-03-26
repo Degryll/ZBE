@@ -523,7 +523,7 @@
           }
         },
         {
-          "factory" : "SDLOGLWindowFtry",
+          "factory" : "SLINTSDLOGLWindowFtry",
           "name" : "zandbokz.mainwindow",
           "config" : {
             "title" : "window_title",
@@ -2304,6 +2304,12 @@
             "window" : "zandbokz.mainwindow"
           }
         },
+        {"factory": "SLINTPostDrawDaemonFtry",
+          "name": "zandbokz.slintPostDaemon",
+          "config" : {
+            "window" : "zandbokz.mainwindow"
+          }
+        },
         {"factory": "IEG3DFtry",
           "name": "zandbokz.interactionEventGenerator",
           "config" : {
@@ -2719,7 +2725,8 @@
               "zandbokz.shadersSetter2D",
               "zandbokz.drawDaemon3D",
               "zandbokz.drawLookAtDaemon3D",
-              "zandbokz.shadersSetter3D"
+              "zandbokz.shadersSetter3D",
+              "zandbokz.slintPostDaemon"
             ]
           }
         },
