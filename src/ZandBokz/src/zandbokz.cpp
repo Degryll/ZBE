@@ -20,6 +20,8 @@
 #include "ZBE/SDL/factories/SDLFactories.h"
 #include "ZBE/OGL/factories/OGLFactories.h"
 #include "ZBE/OAL/factories/OALFactories.h"
+#include "ZBE/ImGui/factories/ImGuiFactories.h"
+
 #include "ZBE/resources/loaders/implementations/JSONAppLoader.h"
 
 #include "ZBE/core/events/interactionSystem.h"
@@ -40,8 +42,103 @@
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/sinks/rotating_file_sink.h>
 
-int main(int /*argc*/, char** /*argv*/) {
+// #include <SDL.h>
+// #include <GL/glew.h>
+// #include "imgui.h"
+// #include "backends/imgui_impl_sdl2.h"
+// #include "backends/imgui_impl_opengl3.h"
+// #include <stdio.h>
 
+int main(int /*argc*/, char** /*argv*/) {
+//   // 1. Inicializar SDL con video
+//     if (SDL_Init(SDL_INIT_VIDEO) != 0)
+//     {
+//         printf("Error inicializando SDL: %s\n", SDL_GetError());
+//         return -1;
+//     }
+
+//     // Configurar OpenGL
+//     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+//     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
+//     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+
+//     // 2. Crear ventana
+//     SDL_Window* window = SDL_CreateWindow("Dear ImGui + SDL2 + GLEW",
+//         SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+//         1280, 720,
+//         SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
+//     if (!window)
+//     {
+//         printf("Error creando ventana: %s\n", SDL_GetError());
+//         return -1;
+//     }
+
+//     // 3. Crear contexto OpenGL
+//     SDL_GLContext gl_context = SDL_GL_CreateContext(window);
+//     SDL_GL_MakeCurrent(window, gl_context);
+//     SDL_GL_SetSwapInterval(1); // V-Sync
+
+//     // 4. Inicializar GLEW
+//     glewExperimental = GL_TRUE;
+//     if (glewInit() != GLEW_OK)
+//     {
+//         printf("Error inicializando GLEW\n");
+//         return -1;
+//     }
+
+//     // 5. Inicializar ImGui
+//     IMGUI_CHECKVERSION();
+//     ImGui::CreateContext();
+//     ImGuiIO& io = ImGui::GetIO(); (void)io;
+
+//     ImGui::StyleColorsDark();
+//     ImGui_ImplSDL2_InitForOpenGL(window, gl_context);
+//     ImGui_ImplOpenGL3_Init("#version 460");
+
+//     // 6. Loop principal
+//     bool show_demo_window = true;
+//     bool running = true;
+//     while (running)
+//     {
+//         SDL_Event event;
+//         while (SDL_PollEvent(&event))
+//         {
+//             ImGui_ImplSDL2_ProcessEvent(&event);
+//             if (event.type == SDL_QUIT)
+//                 running = false;
+//         }
+
+//         // Iniciar frame ImGui
+//         ImGui_ImplOpenGL3_NewFrame();
+//         ImGui_ImplSDL2_NewFrame();
+//         ImGui::NewFrame();
+
+//         // Mostrar ventana demo
+//         if (show_demo_window)
+//             ImGui::ShowDemoWindow(&show_demo_window);
+
+//         // Render
+//         ImGui::Render();
+//         int display_w, display_h;
+//         SDL_GL_GetDrawableSize(window, &display_w, &display_h);
+//         glViewport(0, 0, display_w, display_h);
+//         glClearColor(0.45f, 0.55f, 0.60f, 1.00f);
+//         glClear(GL_COLOR_BUFFER_BIT);
+//         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+//         SDL_GL_SwapWindow(window);
+//     }
+
+//     // 7. Limpieza
+//     ImGui_ImplOpenGL3_Shutdown();
+//     ImGui_ImplSDL2_Shutdown();
+//     ImGui::DestroyContext();
+
+//     SDL_GL_DeleteContext(gl_context);
+//     SDL_DestroyWindow(window);
+//     SDL_Quit();
+
+//     return 0;
   auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
   auto rotating_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>("logs/zbe.log", 1024*1024*10, 10);
   auto logger = std::make_shared<spdlog::logger>("multi_sink", spdlog::sinks_init_list{console_sink, rotating_sink});
@@ -94,6 +191,9 @@ int main(int /*argc*/, char** /*argv*/) {
   SPDLOG_INFO("ZandBokz");
   SDLFactories::load(factories);
   SPDLOG_INFO("SDL");
+  ImGuiFactories::load(factories);
+  SPDLOG_INFO("ImGui");
+
   // TODO llevar a factoria
   OALContextDaemon oalContextDmn;
   oalContextDmn.run();

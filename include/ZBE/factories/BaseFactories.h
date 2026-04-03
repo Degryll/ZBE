@@ -101,8 +101,8 @@ public:
     factories.insert("StatedDaemonFtry", std::make_shared<StatedDaemonFtry>());
 
     // --- Behaviors
-    factories.insert("BoundedAddIntBvr", std::make_shared<GenericFtry<Behavior<int64_t, int64_t, int64_t, int64_t>, BoundedAddBvr<int64_t>>>("Behavior", "BoundedAddBvr"));
-    factories.insert("BoundedAddIntTriggerBvr", std::make_shared<BoundedAddTriggerBvrFtry<int64_t>>());
+    factories.insert("BoundedAddIntBvrFtry", std::make_shared<GenericFtry<Behavior<int64_t, int64_t, int64_t, int64_t>, BoundedAddBvr<int64_t>>>("Behavior", "BoundedAddBvr"));
+    factories.insert("BoundedAddIntTriggerBvrFtry", std::make_shared<BoundedAddTriggerBvrFtry<int64_t>>());
     factories.insert("EraseEnityBhvFtry", std::make_shared<GenericFtry<Behavior<void>, Erase>>("Behavior", "EraseEnityBvr"));
     factories.insert("SineOscillatorFFtry", std::make_shared<SineOscillatorFFtry>());
     factories.insert("SineOscillatorV3DFtry", std::make_shared<SineOscillatorV3DFtry>());

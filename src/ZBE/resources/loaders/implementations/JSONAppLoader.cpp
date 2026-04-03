@@ -39,11 +39,19 @@ void JSONAppLoader::load(std::filesystem::path filePath) {
       }
       SPDLOG_INFO("Creating factories.");
       for(auto ftryData : appFactories) {
-        ftryData.ftry->create(ftryData.name, ftryData.cfgId);
+        if (ftryData.ftry) {
+          ftryData.ftry->create(ftryData.name, ftryData.cfgId);
+        } else {
+          SPDLOG_ERROR("Factory pointer is null for name: {}", ftryData.name);
+        }
       }
       SPDLOG_INFO("Setting up factories.");
       for(auto ftryData : appFactories) {
-        ftryData.ftry->setup(ftryData.name, ftryData.cfgId);
+        if (ftryData.ftry) {
+          ftryData.ftry->setup(ftryData.name, ftryData.cfgId);
+        } else {
+          SPDLOG_ERROR("Factory pointer is null for name: {}", ftryData.name);
+        }
       }
       appFactories.clear();
       SPDLOG_INFO("Executing calls.");

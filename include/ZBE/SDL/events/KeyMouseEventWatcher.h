@@ -162,6 +162,7 @@ public:
 
     std::shared_ptr<KeyMouseEventWatcher> kmew(new KeyMouseEventWatcher);
     kmewRsrc.insert("KeyMouseEventWatcher."s + name, kmew);
+    sdlEWRSrc.insert("SDLEventWatcher."s + name, kmew);
   }
 
   /** \brief Setup the desired tool. The tool will be complete after this step.
@@ -226,6 +227,7 @@ DISABLE_DLL_WARN
   RsrcStore<InputTextBuffer>& itBuffRsrc = RsrcStore<InputTextBuffer>::getInstance();
   RsrcStore<ContextTime>& cTimeRsrc = RsrcStore<ContextTime>::getInstance();
   RsrcStore<SDLEventDispatcher>& sdlEDRsrc = RsrcStore<SDLEventDispatcher>::getInstance();
+  RsrcStore<SDLEventWatcher>& sdlEWRSrc = RsrcStore<SDLEventWatcher>::getInstance();
 DISABLE_WARNING_POP()
 };
 

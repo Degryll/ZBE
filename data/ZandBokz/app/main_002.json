@@ -523,7 +523,7 @@
           }
         },
         {
-          "factory" : "SDLOGLWindowFtry",
+          "factory" : "ImGuiSDLOGLWindowFtry",
           "name" : "zandbokz.mainwindow",
           "config" : {
             "title" : "window_title",
@@ -590,6 +590,12 @@
           "config" : {
             "window" : "zandbokz.mainwindow",
             "contextTime" : "DEFAULT"
+          }
+        },
+        { "factory": "ImGuiEventWatcherFtry",
+          "name":"zandbokz.imguiWatcher",
+          "config" : {
+            "window" : "zandbokz.mainwindow"
           }
         },
         { "factory": "InputEventGeneratorFtry",
@@ -1398,7 +1404,7 @@
             "fixedvalue" : "VZERO"
           }
         },
-        {"factory": "BoundedAddIntTriggerBvr",
+        {"factory": "BoundedAddIntTriggerBvrFtry",
           "name": "zandbokz.intincrementTriggerBvr",
           "description" : "comportamiento suma uibt",
           "config" : {
@@ -2290,7 +2296,7 @@
           "name": "zandbokz.SDLSysTime",
           "config" : {}
         },
-        {"factory": "OGLPreDrawFtry",
+        {"factory": "ImGuiPreLoopDaemonFtry",
           "name": "zandbokz.PreDaemon",
           "config" : {
             "window" : "zandbokz.mainwindow",
@@ -2298,7 +2304,7 @@
             "programId": "base_program"
           }
         },
-        {"factory": "OGLPostDrawFtry",
+        {"factory": "ImGuiPostLoopDaemonFtry",
           "name": "zandbokz.PostDaemon",
           "config" : {
             "window" : "zandbokz.mainwindow"
@@ -2708,6 +2714,11 @@
             ]
           }
         },
+        {"factory": "ImGuiTestDrawDaemonFtry",
+          "name": "zandbokz.pintaImgui",
+          "description" : "pinta la ventana de prueba de imgui",
+          "config" : {}
+        },
         {"factory": "MasterDmnFtry",
           "name": "zandbokz.masterDrawDaemon",
           "description" : "demonio que pintara la pantalla. Faltan tipos",
@@ -2719,7 +2730,8 @@
               "zandbokz.shadersSetter2D",
               "zandbokz.drawDaemon3D",
               "zandbokz.drawLookAtDaemon3D",
-              "zandbokz.shadersSetter3D"
+              "zandbokz.shadersSetter3D",
+              "zandbokz.pintaImgui"
             ]
           }
         },

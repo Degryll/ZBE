@@ -31,8 +31,8 @@
 
 namespace zbe {
 
-const int ZBE_GL_MAJOR_VERSION = 3;
-const int ZBE_GL_MINOR_VERSION = 0;
+const int ZBE_GL_MAJOR_VERSION = 4;
+const int ZBE_GL_MINOR_VERSION = 6;
 
 class ZBEAPI OGLTextureStore {
 public:
@@ -236,7 +236,7 @@ public:
   /** \brief Creates the widnows (use only width empty constructor and setters)
    *  \sa setTitle, setX, setY, setWidth, setHeight, setWindow_flags
    */
-  void run() {
+  virtual void run() {
     SDLWindow::run();
     glContext = SDL_GL_CreateContext(getSDL_Window());
     createGLContext();
@@ -263,7 +263,7 @@ public:
     return glContext;
   }
 
-private:
+protected:
 
   void createGLContext();
 

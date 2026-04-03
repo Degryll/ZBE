@@ -32,7 +32,35 @@ function(ZBE_setup_dependencies)
 
   cpmaddpackage("gh:g-truc/glm#1.0.1")
 
-  cpmaddpackage("gh:ocornut/imgui@1.90.7")
+  CPMAddPackage(
+    NAME imgui
+    GITHUB_REPOSITORY ocornut/imgui
+    VERSION 1.92.6
+  )
+
+  if(imgui_ADDED)
+    message(STATUS "ImGui añadido correctamente en ${imgui_SOURCE_DIR}")
+  endif()
+
+  add_library(imgui STATIC
+      ${imgui_SOURCE_DIR}/imgui.cpp
+      ${imgui_SOURCE_DIR}/imgui_draw.cpp
+      ${imgui_SOURCE_DIR}/imgui_widgets.cpp
+      ${imgui_SOURCE_DIR}/imgui_tables.cpp
+      ${imgui_SOURCE_DIR}/imgui_demo.cpp
+  )
+
+  target_include_directories(imgui SYSTEM PUBLIC
+      ${imgui_SOURCE_DIR}
+  )
+
+  add_library(imgui_backend STATIC
+    ${imgui_SOURCE_DIR}/backends/imgui_impl_sdl2.cpp
+    ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl3.cpp
+  )
+
+  target_link_libraries(imgui_backend PRIVATE imgui SDL2::SDL2)
+
 
   if (imgui_ADDED)
     # imgui has no CMake support, so we create our own target

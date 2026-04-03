@@ -15,13 +15,13 @@
 #include <memory>
 
 #include <imgui.h>
-#include <imgui_impl_sdl.h>
-#include <imgui_impl_opengl3.h>
+#include <backends/imgui_impl_sdl2.h>
+#include <backends/imgui_impl_opengl3.h>
 
 #include "ZBE/SDL/sdl_warning_suppressor.h"
 
 #include "ZBE/core/daemons/Daemon.h"
-#include "ZBE/SDL/OGL/ImGui/SDLOGLImGuiWindow.h"
+#include "ZBE/SDL/OGL/ImGui/ImGuiSDLOGLWindow.h"
 
 #include "ZBE/core/system/system.h"
 
@@ -40,7 +40,7 @@ public:
   /** \brief Builds a ImGuiPostLoopDaemon from a window.
    *  \param window windo to use.
    */
-  ImGuiPostLoopDaemon(std::shared_ptr<zbe::SDLOGLImGuiWindow> window): window(window) {}
+  ImGuiPostLoopDaemon(std::shared_ptr<zbe::ImGuiSDLOGLWindow> window): window(window) {}
 
   /** \brief Destroys the ImGuiPostLoopDaemon
    */
@@ -49,7 +49,7 @@ public:
   /** \brief Sets the the window. Use with empty constructor.
    *  \param window windo to use.
    */
-  void setWindow(std::shared_ptr<zbe::SDLOGLImGuiWindow> window) {
+  void setWindow(std::shared_ptr<zbe::ImGuiSDLOGLWindow> window) {
     this->window = window;
   }
 
@@ -58,13 +58,63 @@ public:
   void run() override {
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-    SDL_GL_SwapWindow(window->getSDL_Window());
+    window->glSwap();
   }
 
 private:
-  std::shared_ptr<zbe::SDLOGLImGuiWindow> window;
+  std::shared_ptr<zbe::ImGuiSDLOGLWindow> window;
+};
+
+class ZBEAPI ImGuiPostLoopDaemonFtry : public Factory {
+  public:
+
+  /** \brief Builds a SDLWindow.
+   *  \param name Name for the created SDLWindow.
+   *  \param cfgId SDLWindow's configuration id.
+   */
+  void create(std::string name, uint64_t) override {
+    using namespace std::string_literals;
+    auto dmn = std::make_shared<ImGuiPostLoopDaemon>();
+    mainRsrc.insert("Daemon."s + name, dmn);
+    specificRsrc.insert("ImGuiPostLoopDaemon."s + name, dmn);
+  }
+
+  /** \brief Setup the desired tool. The tool will be complete after this step.
+   *  \param name Name of the tool.
+   *  \param cfgId Tool's configuration id.
+   */
+  void setup(std::string name, uint64_t cfgId) override {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+    if(cfg) {
+      auto j = *cfg;
+      auto igpld = specificRsrc.get("ImGuiPostLoopDaemon."s + name);
+      json window = j["window"];
+      if(!window.is_string()) {
+        SysError::setError("Bad config for ImGuiPostLoopDaemonFtry - window."s + window.get<std::string>());
+        return;
+      }
+
+      auto winname = j["window"].get<std::string>();
+      auto win = imguiSdloglWindowRsrc.get("ImGuiSDLOGLWindow."s + winname);
+
+      igpld->setWindow(win);
+    } else {
+      SysError::setError("ImGuiSDLOGLWindowFtry config for "s + name + " not found."s);
+    }
+  }
+
+private:
+  RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<ImGuiPostLoopDaemon> &specificRsrc = RsrcStore<ImGuiPostLoopDaemon>::getInstance();
+  RsrcStore<Daemon> &mainRsrc = RsrcStore<Daemon>::getInstance();
+  RsrcStore<ImGuiSDLOGLWindow> &imguiSdloglWindowRsrc = RsrcStore<ImGuiSDLOGLWindow>::getInstance();
 };
 
 }  // namespace zbe
+
+
 
 #endif  // ZBE_SDL_DAEMONS_IMGUIPOSTLOOPDAEMON_H_

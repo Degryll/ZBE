@@ -97,6 +97,7 @@ target_link_libraries(ZBE_LIB
   PUBLIC vorbis
   PUBLIC vorbisfile
   PUBLIC spdlog::spdlog
+  PUBLIC imgui
 )
 
 message(STATUS "PNG includes: ${PNG_INCLUDE_DIRS}")

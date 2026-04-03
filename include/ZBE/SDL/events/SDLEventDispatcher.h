@@ -40,7 +40,7 @@ public:
 
   /** \brief Destructor. It will shutdown SDL subsystems.
    */
-  ~SDLEventDispatcher() {
+  virtual ~SDLEventDispatcher() {
     sdl.quitSubSystem(SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC | SDL_INIT_GAMECONTROLLER | SDL_INIT_EVENTS);
   }
 
@@ -58,7 +58,7 @@ public:
 
   /** \brief Distribute SDL events in the appropriate structures of the system.
    */
-  inline void run() {
+  virtual inline void run() {
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
       for(auto& w : watchers) {

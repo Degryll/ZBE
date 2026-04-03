@@ -1,6 +1,28 @@
+find_package(OpenGL REQUIRED)
+
 add_executable(ZANDBOKZ 
     src/zandbokz.cpp
 )
+
+# TODO Eliminar dependencias de glew e imgui, y usar las que se encuentran en ZBE_LIB
+
+add_library(glew STATIC IMPORTED) # or STATIC instead of SHARED0
+
+IF (MSVC)
+  # target_compile_definitions(ZBE_LIB PRIVATE GLEW_STATIC)
+  set_target_properties(glew PROPERTIES
+    IMPORTED_LOCATION "${PROJECT_SOURCE_DIR}/extlibs/glew/2.2.0/windows/x64/glew32.lib"
+    INTERFACE_INCLUDE_DIRECTORIES "${PROJECT_SOURCE_DIR}/extlibs/glew/2.2.0/include"
+  )
+ELSE()
+  set_target_properties(glew PROPERTIES
+    IMPORTED_LOCATION "${PROJECT_SOURCE_DIR}/extlibs/glew/2.2.0/linux/libGLEW.a"
+    INTERFACE_INCLUDE_DIRECTORIES "${PROJECT_SOURCE_DIR}/extlibs/glew/2.2.0/include"
+  )
+ENDIF()
+
+
+
 target_compile_definitions(ZANDBOKZ PRIVATE
     $<$<CONFIG:Debug>:SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_TRACE>
     $<$<CONFIG:Release>:SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_WARN>)
@@ -21,6 +43,11 @@ endif()
 # TODO Revisar si es necesario añadir zbe_warnings y zbe_options aquí también
 target_link_libraries(ZANDBOKZ
     PRIVATE ZBE_LIB
+    PRIVATE imgui
+    PRIVATE imgui_backend
+    PRIVATE SDL2::SDL2 
+    PRIVATE glew
+    PRIVATE OpenGL::GL
 )
 
 target_include_directories(ZANDBOKZ PRIVATE
