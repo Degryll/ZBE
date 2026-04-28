@@ -67,21 +67,21 @@ public:
     factories.insert("ZandBockPlayerResetBhvFtry", std::make_shared<zbe::GenericFtry<zbe::Behavior<int64_t, double, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D>, ZandBockPlayerResetBhv>>("Behavior", "ZandBockPlayerResetBhv"));
 
     factories.insert("FakeGravityAvtBldrFtry", std::make_shared<zbe::MAvatarBldrFtry<double, double, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D>>());
-    factories.insert("TFAECFakeGravityFtry" , std::make_shared<zbe::SimpleGenericFtry<FakeGravityList> >(zbe::factories::listName));
+    factories.insert("TFAECFakeGravityFtry" , std::make_shared<zbe::GenericFtry<zbe::TickFListBase, FakeGravityList> >(zbe::factories::baseListName, zbe::factories::listName));
     factories.insert("FakeGravityBhvrDmnFtry", std::make_shared<zbe::BehaviorDmnFtry<FakeGravityList, double, double, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D>>());
     
     factories.insert("ProtaResetAvtBldrFtry", std::make_shared<zbe::MAvatarBldrFtry<int64_t, double, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D>>());
-    factories.insert("TFAECProtaResetFtry" , std::make_shared<zbe::SimpleGenericFtry<ProtaResetList> >(zbe::factories::listName));
+    factories.insert("TFAECProtaResetFtry" , std::make_shared<zbe::GenericFtry<zbe::TickFListBase, ProtaResetList> >(zbe::factories::baseListName, zbe::factories::listName));
     factories.insert("ProtaResetBhvrDmnFtry", std::make_shared<zbe::BehaviorDmnFtry<ProtaResetList, int64_t, double, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D, zbe::Vector3D>>());
 
-    factories.insert("InatorListFtry", std::make_shared<zbe::SimpleGenericFtry<InatorList> >(zbe::factories::listName));
-    factories.insert("InerListFtry", std::make_shared<zbe::SimpleGenericFtry<InerList> >(zbe::factories::listName));
+    factories.insert("InatorListFtry", std::make_shared<zbe::GenericFtry<zbe::TickFListBase, InatorList> >(zbe::factories::baseListName, zbe::factories::listName));
+    factories.insert("InerListFtry", std::make_shared<zbe::GenericFtry<zbe::TickFListBase, InerList> >(zbe::factories::baseListName, zbe::factories::listName));
 
-    factories.insert("Inator2DListFtry", std::make_shared<zbe::SimpleGenericFtry<Inator2DList> >(zbe::factories::listName));
-    factories.insert("Iner2DListFtry", std::make_shared<zbe::SimpleGenericFtry<Iner2DList> >(zbe::factories::listName));
+    factories.insert("Inator2DListFtry", std::make_shared<zbe::GenericFtry<zbe::TickFListBase, Inator2DList> >(zbe::factories::baseListName, zbe::factories::listName));
+    factories.insert("Iner2DListFtry", std::make_shared<zbe::GenericFtry<zbe::TickFListBase, Iner2DList> >(zbe::factories::baseListName, zbe::factories::listName));
 
-    factories.insert("InatorFGListFtry", std::make_shared<zbe::SimpleGenericFtry<InatorFGList> >(zbe::factories::listName));
-    factories.insert("InerFGListFtry", std::make_shared<zbe::SimpleGenericFtry<InerFGList> >(zbe::factories::listName));
+    factories.insert("InatorFGListFtry", std::make_shared<zbe::GenericFtry<zbe::TickFListBase, InatorFGList> >(zbe::factories::baseListName, zbe::factories::listName));
+    factories.insert("InerFGListFtry", std::make_shared<zbe::GenericFtry<zbe::TickFListBase, InerFGList> >(zbe::factories::baseListName, zbe::factories::listName));
 
     factories.insert("IEG3DFtry", std::make_shared<IEG3DFtry>());
     factories.insert("IEG2DFtry", std::make_shared<IEG2DFtry>());

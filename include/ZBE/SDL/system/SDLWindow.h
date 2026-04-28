@@ -18,6 +18,7 @@
 #include <memory>
 #include <mutex>
 #include <vector>
+#include <spdlog/spdlog.h>
 
 #include "ZBE/SDL/sdl_warning_suppressor.h"
 

@@ -20,6 +20,7 @@ namespace zbe {
     static const std::string separator = "."s;
 
     static const std::string listName = "List"s;
+    static const std::string baseListName = "BaseList"s;
     static const std::string functionName = "Function"s;
     static const std::string contextimeName = "ContextTime"s;
     static const std::string daemonName = "Daemon"s;

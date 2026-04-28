@@ -13,9 +13,11 @@
 #define ZBE_SDL_DAEMONS_IMGUITESTDRAWDAEMON_H_
 
 #include <memory>
+#include <tuple>
 
 #include <imgui.h>
 #include "ZBE/core/daemons/Daemon.h"
+#include "ZBE/core/tools/containers/TicketedForwardList.h"
 
 namespace zbe {
 
@@ -35,17 +37,106 @@ public:
   /** \brief Runs the daemon.
    */
   void run() override {
-    ImGui::ShowDemoWindow(&show_demo_window);
-    // TODO:
-    // Crear una ventana que muestre info del juego (Tamaños de listas, demonios, blah blah)
-    // Hay poder alternar entre que SDL caputre el ratón para manjear la cámara o no, y mostrar el cursor o no.
-    // SDL_CaptureMouse(????);
-    // SDL_SetRelativeMouseMode(????);
-    // El título de la ventana sigue emputecido.
+
+    if (lists.empty()) {
+      auto allLists = lRsrcStore.getByPrefix(factories::baseListName);
+      for (const auto& list : allLists) {
+        lists.push_back({list.first, list.second});
+      }
+      showSizes.resize(lists.size(), 0);
+    }
+
+    if (punishers.empty()) {
+      auto allPunishers = punisherRsrc.getByPrefix("Punisher");
+      for (const auto& punisher : allPunishers) {
+        auto listPtr = lRsrcStore.get(punisher.second->getListName());
+        if (listPtr) {
+          punishers.push_back({punisher.first, punisher.second, listPtr});
+        } else {
+          SysError::setError(std::string("Punisher ") + punisher.first + " has a non existing list: " + punisher.second->getListName());
+        }
+      }
+      showPunisherDetails.resize(punishers.size(), 0);
+    }
+
+    ImGui::Begin("Estado del sistema");
+
+    // Mostrar FPS
+    ImGuiIO& io = ImGui::GetIO();
+    ImGui::Text("FPS: %.1f", static_cast<double>(io.Framerate));
+
+    ImGui::Separator();
+
+    if (ImGui::CollapsingHeader("Listas")) {
+        bool prevSelectAll = selectAll;
+        ImGui::Checkbox("Seleccionar todos", &selectAll);
+        if (selectAll != prevSelectAll) {
+            for (size_t i = 0; i < showSizes.size(); ++i) {
+                showSizes[i] = selectAll ? 1 : 0;
+            }
+        }
+        ImGui::Separator();
+
+        for (size_t i = 0; i < lists.size(); ++i) {
+            const auto& pair = lists[i];
+            bool checked = showSizes[i];
+            if (checked) {
+                ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0.2f, 0.8f, 0.2f, 1.0f));
+            } else {
+                ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0.8f, 0.2f, 0.2f, 1.0f));
+            }
+            ImGui::Checkbox(pair.first.c_str(), &checked);
+            showSizes[i] = checked;
+            if (checked) {
+                ImGui::SameLine();
+                ImGui::Text("%lu", pair.second->getSize());
+            }
+            ImGui::PopStyleColor();
+        }
+    }
+
+    if (ImGui::CollapsingHeader("Punishers")) {
+        bool prevSelectAllP = selectAllPunishers;
+        ImGui::Checkbox("Seleccionar todos", &selectAllPunishers);
+        if (selectAllPunishers != prevSelectAllP) {
+            for (size_t i = 0; i < showPunisherDetails.size(); ++i) {
+                showPunisherDetails[i] = selectAllPunishers ? 1 : 0;
+            }
+        }
+        ImGui::Separator();
+
+        for (size_t i = 0; i < punishers.size(); ++i) {
+            const auto& tpl = punishers[i];
+            bool checked = showPunisherDetails[i];
+            if (checked) {
+                ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0.2f, 0.8f, 0.2f, 1.0f));
+            } else {
+                ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0.8f, 0.2f, 0.2f, 1.0f));
+            }
+            ImGui::Checkbox(std::get<0>(tpl).c_str(), &checked);
+            showPunisherDetails[i] = checked;
+            if (checked) {
+                ImGui::SameLine();
+                uint64_t size = std::get<2>(tpl)->getSize();
+                ImGui::Text("%s: %lu", std::get<0>(tpl).c_str(), size);
+            }
+            ImGui::PopStyleColor();
+        }
+    }
+
+    ImGui::End();
   }
 
 private:
   bool show_demo_window = true;
+  RsrcStore<TickFListBase>& lRsrcStore = RsrcStore<TickFListBase>::getInstance();
+  RsrcStore<BasePunisher>& punisherRsrc = RsrcStore<BasePunisher>::getInstance();
+  std::vector<std::pair<std::string, std::shared_ptr<TickFListBase>>> lists; // Ejemplo de recurso común para almacenar las listas a mostrar.
+  std::vector<char> showSizes;
+  bool selectAll = false;
+  std::vector<std::tuple<std::string, std::shared_ptr<BasePunisher>, std::shared_ptr<TickFListBase>>> punishers;
+  std::vector<char> showPunisherDetails;
+  bool selectAllPunishers = false;
 };
 
 }  // namespace zbe

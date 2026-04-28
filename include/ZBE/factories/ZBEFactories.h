@@ -174,70 +174,70 @@ public:
     // TODO Todas las listas deben ser renombradas para que no lleven AEC en el nombre. Ya no lo usan.
 
     factories.insert("VoidBvrDmnFtry", std::make_shared<VoidAvtBhvr>());
-    factories.insert("TFAEVoidFtry" , std::make_shared<SimpleGenericFtry<VoidAvtList> >(factories::listName));
+    factories.insert("TFAEVoidFtry" , std::make_shared<GenericFtry<TickFListBase, VoidAvtList> >(factories::baseListName, factories::listName));
 
 
     factories.insert("FourIntBhvrDmnFtry", std::make_shared<FourIntBhvrDmn>());
-    factories.insert("TFAEFourIntFtry" , std::make_shared<SimpleGenericFtry<FourIntList> >(factories::listName));
+    factories.insert("TFAEFourIntFtry" , std::make_shared<GenericFtry<TickFListBase, FourIntList> >(factories::baseListName, factories::listName));
 
     factories.insert("FiveIntBhvrDmnFtry", std::make_shared<FiveIntBhvrDmn>());
-    factories.insert("TFAEFiveIntFtry" , std::make_shared<SimpleGenericFtry<FiveIntList> >(factories::listName));
+    factories.insert("TFAEFiveIntFtry" , std::make_shared<GenericFtry<TickFListBase, FiveIntList> >(factories::baseListName, factories::listName));
 
     factories.insert("DrawerAnimSprtFtry", std::make_shared<AnimDrwr>());
-    factories.insert("TFAECAnimSprtFtry" , std::make_shared<SimpleGenericFtry<AnimList> >(factories::listName));
+    factories.insert("TFAECAnimSprtFtry" , std::make_shared<GenericFtry<TickFListBase, AnimList> >(factories::baseListName, factories::listName));
 
     factories.insert("DrawerModelDaemonFtry", std::make_shared<ModelDrwr>());
-    factories.insert("TFAECModelFtry" , std::make_shared<SimpleGenericFtry<ModelList> >(factories::listName));
+    factories.insert("TFAECModelFtry" , std::make_shared<GenericFtry<TickFListBase, ModelList> >(factories::baseListName, factories::listName));
 
     factories.insert("SimpleSpriteDrwrDaemonFtry", std::make_shared<SimpleSpriteDrwr>());
-    factories.insert("TFAECSimpleSpriteFtry" , std::make_shared<SimpleGenericFtry<SimpleSpriteList> >(factories::listName));
+    factories.insert("TFAECSimpleSpriteFtry" , std::make_shared<GenericFtry<TickFListBase, SimpleSpriteList> >(factories::baseListName, factories::listName));
 
     factories.insert("ParamSpriteDrwrDaemonFtry", std::make_shared<ParamSpriteDrwr>());
-    factories.insert("TFAECParamSpriteFtry" , std::make_shared<SimpleGenericFtry<ParamSpriteList> >(factories::listName));
+    factories.insert("TFAECParamSpriteFtry" , std::make_shared<GenericFtry<TickFListBase, ParamSpriteList> >(factories::baseListName, factories::listName));
 
     factories.insert("FloatBhvDmnFtry", std::make_shared<FloatAvtBhvDmnFtry>());
-    factories.insert("TFAECFloatAvtFtry" , std::make_shared<SimpleGenericFtry<FloatAvtList> >(factories::listName));
+    factories.insert("TFAECFloatAvtFtry" , std::make_shared<GenericFtry<TickFListBase, FloatAvtList> >(factories::baseListName, factories::listName));
 
     factories.insert("IntBhvDmnFtry", std::make_shared<IntAvtBhvDmnFtry>());
-    factories.insert("TFAECIntAvtFtry" , std::make_shared<SimpleGenericFtry<IntAvtList> >(factories::listName));
+    factories.insert("TFAECIntAvtFtry" , std::make_shared<GenericFtry<TickFListBase, IntAvtList> >(factories::baseListName, factories::listName));
 
     factories.insert("DoubleBhvDmnFtry", std::make_shared<DoubleBhvrDmnFtry>());
-    factories.insert("TFAECDoubleAvtFtry" , std::make_shared<SimpleGenericFtry<DoubleAvtList> >(factories::listName));
+    factories.insert("TFAECDoubleAvtFtry" , std::make_shared<GenericFtry<TickFListBase, DoubleAvtList> >(factories::baseListName, factories::listName));
 
     factories.insert("V3DAvtDaemonFtry", std::make_shared<V3DAvtBhvr>());
-    factories.insert("TFAECV3DAvtFtry" , std::make_shared<SimpleGenericFtry<V3DAvtList> >(factories::listName));
+    factories.insert("TFAECV3DAvtFtry" , std::make_shared<GenericFtry<TickFListBase, V3DAvtList> >(factories::baseListName, factories::listName));
 
     factories.insert("ThreeV3DAvtDaemonFtry", std::make_shared<ThreeV3DAvtBhvr>());
-    factories.insert("TFAECThreeV3DAvtFtry" , std::make_shared<SimpleGenericFtry<ThreeV3DAvtList> >(factories::listName));
+    factories.insert("TFAECThreeV3DAvtFtry" , std::make_shared<GenericFtry<TickFListBase, ThreeV3DAvtList> >(factories::baseListName, factories::listName));
 
     factories.insert("FourV3DAvtDaemonFtry", std::make_shared<FourV3DAvtBhvr>());
-    factories.insert("TFAECFourV3DAvtFtry" , std::make_shared<SimpleGenericFtry<FourV3DAvtList> >(factories::listName));
+    factories.insert("TFAECFourV3DAvtFtry" , std::make_shared<GenericFtry<TickFListBase, FourV3DAvtList> >(factories::baseListName, factories::listName));
 
     factories.insert("V2DThreeV3DAvtDaemonFtry", std::make_shared<V2DThreeV3DAvtBhvr>());
-    factories.insert("TFAECV2DThreeV3DAvtFtry" , std::make_shared<SimpleGenericFtry<V2DThreeV3DAvtList> >(factories::listName));
+    factories.insert("TFAECV2DThreeV3DAvtFtry" , std::make_shared<GenericFtry<TickFListBase, V2DThreeV3DAvtList> >(factories::baseListName, factories::listName));
 
     factories.insert("DoubleTwoV3DAvtDaemonFtry", std::make_shared<DoubleTwoV3DAvtBhvr>());
-    factories.insert("DoubleTFAECTwoV3DAvtFtry" , std::make_shared<SimpleGenericFtry<DoubleTwoV3DAvtList> >(factories::listName));
+    factories.insert("DoubleTFAECTwoV3DAvtFtry" , std::make_shared<GenericFtry<TickFListBase, DoubleTwoV3DAvtList> >(factories::baseListName, factories::listName));
 
     factories.insert("TwoV3DAvtDaemonFtry", std::make_shared<TwoV3DAvtBhvr>());
-    factories.insert("TFAECTwoV3DAvtFtry" , std::make_shared<SimpleGenericFtry<TwoV3DAvtList> >(factories::listName));
+    factories.insert("TFAECTwoV3DAvtFtry" , std::make_shared<GenericFtry<TickFListBase, TwoV3DAvtList> >(factories::baseListName, factories::listName));
 
     factories.insert("PosVel3DAvtDaemonFtry", std::make_shared<PosVel3DAvtBhvr>());
-    factories.insert("TFAECPosVelV3DAvtFtry" , std::make_shared<SimpleGenericFtry<PosVel3DAvtList> >(factories::listName));
+    factories.insert("TFAECPosVelV3DAvtFtry" , std::make_shared<GenericFtry<TickFListBase, PosVel3DAvtList> >(factories::baseListName, factories::listName));
 
     factories.insert("LookAtAvtDaemonFtry", std::make_shared<LookAtAvtBhvr>());
-    factories.insert("TFAECLookAtAvtFtry" , std::make_shared<SimpleGenericFtry<LookAtAvtList> >(factories::listName));
+    factories.insert("TFAECLookAtAvtFtry" , std::make_shared<GenericFtry<TickFListBase, LookAtAvtList> >(factories::baseListName, factories::listName));
 
     factories.insert("3DOn2DAvtDaemonFtry", std::make_shared<M3DOn2DAvtBhvr>());
-    factories.insert("TFAEC3DOn2DAvtFtry" , std::make_shared<SimpleGenericFtry<M3DOn2DAvtList> >(factories::listName));
+    factories.insert("TFAEC3DOn2DAvtFtry" , std::make_shared<GenericFtry<TickFListBase, M3DOn2DAvtList> >(factories::baseListName, factories::listName));
 
-    factories.insert("TFAECTwoDoubleThreeV3DFtry", std::make_shared<SimpleGenericFtry<TicketedForwardList<MAvatar<double,  double, Vector3D, Vector3D, Vector3D>>>>(factories::listName));
+    factories.insert("TFAECTwoDoubleThreeV3DFtry", std::make_shared<GenericFtry<TickFListBase, TicketedForwardList<MAvatar<double,  double, Vector3D, Vector3D, Vector3D>>>>(factories::baseListName, factories::listName));
     factories.insert("TwoDoubleThreeV3DBhvDmnFtry", std::make_shared<BehaviorDmnFtry<TicketedForwardList<MAvatar<double,  double, Vector3D, Vector3D, Vector3D>>, double, double, Vector3D, Vector3D, Vector3D>>());
 
-    factories.insert("TFAECTwoDoubleTwoV2DFtry", std::make_shared<SimpleGenericFtry<TicketedForwardList<MAvatar<double,  double, Vector2D, Vector2D>>>>(factories::listName));
+    factories.insert("TFAECTwoDoubleTwoV2DFtry", std::make_shared<GenericFtry<TickFListBase, TicketedForwardList<MAvatar<double,  double, Vector2D, Vector2D>>>>(factories::baseListName, factories::listName));
     factories.insert("TwoDoubleTwoV2DBhvDmnFtry", std::make_shared<BehaviorDmnFtry<TicketedForwardList<MAvatar<double,  double, Vector2D, Vector2D>>, double, double, Vector2D, Vector2D>>());
 
-    factories.insert("TFAECDoubleTwoV3DFtry", std::make_shared<SimpleGenericFtry<TicketedForwardList<MAvatar<double, Vector3D, Vector3D>>>>(factories::listName));
+    factories.insert("TFAECDoubleTwoV3DFtry", std::make_shared<GenericFtry<TickFListBase, TicketedForwardList<MAvatar<double, Vector3D, Vector3D>>>>(factories::baseListName, factories::listName));
     factories.insert("DoubleTwoV3DBhvDmnFtry", std::make_shared<BehaviorDmnFtry<TicketedForwardList<MAvatar<double, Vector3D, Vector3D>>, double, Vector3D, Vector3D>>());
 
     factories.insert("TwoV3DAvtFtry", std::make_shared<BaseAvatarFtry<Vector3D, Vector3D> >());
@@ -245,7 +245,7 @@ public:
     factories.insert("DoubleTwoV3DDAvtFtry", std::make_shared<BaseAvatarFtry<double, Vector3D, Vector3D> >());
 
     factories.insert("FourV3DTwoFDaemonFtry", std::make_shared<FourV3DTwoFAvtBhvr>());
-    factories.insert("TFAECFourV3DTwoFAvtFtry" , std::make_shared<SimpleGenericFtry<FourV3DTwoFAvtList> >(factories::listName));
+    factories.insert("TFAECFourV3DTwoFAvtFtry" , std::make_shared<GenericFtry<TickFListBase, FourV3DTwoFAvtList> >(factories::baseListName, factories::listName));
     factories.insert("FourV3DTwoFAvtFtry", std::make_shared<BaseAvatarFtry<float,  float, Vector3D, Vector3D, Vector3D, Vector3D> >());
 
   }

@@ -13,6 +13,7 @@
 #include <memory>
 #include <string>
 #include <map>
+#include <vector>
 
 #include "ZBE/core/system/SysError.h"
 
@@ -96,6 +97,20 @@ class RsrcDictionary {
      */
     void clear() {
       l.clear();
+    }
+
+    /** \brief Returns a list of all resources whose names start with the given prefix.
+     *  \param prefix The prefix to filter by. If empty, returns all resources.
+     *  \return A vector of pairs (name, resource).
+     */
+    std::vector<std::pair<std::string, T>> getByPrefix(std::string prefix) {
+      std::vector<std::pair<std::string, T>> result;
+      for (const auto& entry : l) {
+        if (prefix.empty() || entry.first.compare(0, prefix.length(), prefix) == 0) {
+            result.push_back({entry.first, entry.second});
+        }
+      }
+      return result;
     }
 
   private:

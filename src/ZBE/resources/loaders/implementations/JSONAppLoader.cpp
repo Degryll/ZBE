@@ -137,20 +137,25 @@ void JSONAppLoader::loadLiteralConfig(std::string name, json& value) {
 JSONAppLoader::FtryData JSONAppLoader::readFactoryConfig(json ftryCfg) {
   FtryData fd;
   json aux;
-  aux = ftryCfg["factory"];
-  if(aux.is_string()) {
-    fd.ftry = ftryStore->get(aux.get<std::string>());
-  } else {
-    SysError::setError(std::string("ERROR: Json failed to parse. \"factory\" is not a string."));
-  }
 
   aux = ftryCfg["name"];
   if(aux.is_string()) {
     fd.name = aux.get<std::string>();
   } else {
-    SysError::setError(std::string("ERROR: Json failed to parse. \"name\" is not a string."));
+    SysError::setError(std::string("ERROR: Json failed to parse. \"name\" is not a string. This factotry config will not work properly. Value: ") + aux.dump());
   }
   fd.cfgId = cfgStore->insert(std::make_shared<json>(ftryCfg["config"]));
+
+  aux = ftryCfg["factory"];
+  if(aux.is_string()) {
+    if(!ftryStore->contains(aux.get<std::string>())) {
+      SysError::setError(std::string("ERROR: Json failed to parse. Factory ") + aux.get<std::string>() + std::string(" does not exist."));
+    } else {
+      fd.ftry = ftryStore->get(aux.get<std::string>());
+    }
+  } else {
+    SysError::setError(std::string("ERROR: Json failed to parse. \"factory\" is not a string."));
+  }
   return fd;
 }
 

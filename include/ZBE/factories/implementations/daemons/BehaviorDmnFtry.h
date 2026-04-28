@@ -53,7 +53,7 @@ private:
   RsrcStore<BehaviorDaemon<L, E...> > &behaviorDmnRsrc = RsrcStore<BehaviorDaemon<L, E...> >::getInstance();
   RsrcStore<Behavior<E...> > &behaviorRsrc = RsrcStore<Behavior<E...> >::getInstance();
   RsrcStore<L> &listRsrc = RsrcStore<L>::getInstance();
-
+  RsrcStore<BasePunisher> &punisherRsrc = RsrcStore<BasePunisher>::getInstance();
 };
 
 template<typename L, typename ...E>
@@ -61,12 +61,10 @@ void BehaviorDmnFtry<L, E...>::create(std::string name, uint64_t) {
   using namespace std::string_literals;
 
   auto dm = std::make_shared<BehaviorDaemon<L, E...> >();
-  uint64_t id = SysIdGenerator::getId();
-  daemonRsrc.insert(id, dm);
-  dict.insert("Daemon."s + name, id);
-  id = SysIdGenerator::getId();
-  behaviorDmnRsrc.insert(id, dm);
-  dict.insert("BehaviorDaemon."s + name, id);
+  daemonRsrc.insert("Daemon."s + name, dm);
+  behaviorDmnRsrc.insert("BehaviorDaemon."s + name, dm);
+  punisherRsrc.insert("Punisher."s + name, dm);
+
 }
 
 template<typename L, typename ...E>
@@ -95,6 +93,8 @@ void BehaviorDmnFtry<L, E...>::setup(std::string name, uint64_t cfgId) {
     auto lst = listRsrc.get(lId);
     dm->setPunish(bhv);
     dm->setList(lst);
+    dm->setName(bname);
+    dm->setListName(lname);
   } else {
     SysError::setError("BehaviorDmnFtry config for "s + name + " not found."s);
   }

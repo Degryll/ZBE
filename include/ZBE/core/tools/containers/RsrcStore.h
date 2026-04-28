@@ -23,6 +23,7 @@
 #include <mutex>
 #include <string>
 #include <sstream>
+#include <spdlog/spdlog.h>
 
 #include "ZBE/core/system/SysError.h"
 #include "ZBE/core/tools/containers/RsrcDictionary.h"
@@ -141,6 +142,19 @@ class RsrcStore {
     */
     void clear() {
       l.clear();
+    }
+
+    std::vector<std::pair<std::string, std::shared_ptr<T>>> getByPrefix(std::string prefix) {
+      std::vector<std::pair<std::string, std::shared_ptr<T>>> result;
+      auto entries = dict.getByPrefix(prefix);
+      for (const auto& entry : entries) {
+        auto resource = this->get(entry.second);
+        if (resource) {
+          result.push_back({entry.first, resource});
+        }
+      }
+      SPDLOG_DEBUG("RsrcStore", "getByPrefix", "Found " + std::to_string(result.size()) + " resources with prefix '" + prefix + "'.");
+      return result;
     }
 
   private:

@@ -53,15 +53,15 @@ void SDLOGLWindow::createGLContext() {
      SysError::setError(std::string("ERROR: SDL could not create an OGL context. SDL ERROR: ") + SDL_GetError());
   }
   SDL_GL_MakeCurrent(getSDL_Window(), glContext);
-  SDL_GL_SetSwapInterval(1); // Enable vsync
-  //SDL_GL_SetSwapInterval(0);
+  // SDL_GL_SetSwapInterval(1); // Enable vsync
+  SDL_GL_SetSwapInterval(0);
 
   glewExperimental = GL_TRUE;
   GLenum glewError = glewInit();
   if( glewError != GLEW_OK ) {
     SysError::setError(std::string("ERROR: Error initializing GLEW: ") + std::string(reinterpret_cast<const char*>(glewGetErrorString( glewError ))));
   }
-  glClearColor(0.1f,0.1f,0.1f,0.0f);
+  glClearColor(0.4f,0.4f,0.8f,0.0f);
   // During init, enable debug output
   glEnable              ( GL_DEBUG_OUTPUT );
   // glDebugMessageCallback( MessageCallback, 0 );

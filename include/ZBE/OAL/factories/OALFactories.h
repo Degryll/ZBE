@@ -49,7 +49,7 @@ public:
     //factories.insert("BehaviorEntityBldrFtry", std::make_shared<zbe::BehaviorEntityBldrFtry<zbe::Vector3D, zbe::Vector3D>>());
 
     factories.insert("OALPlayerDaemon", std::make_shared<OALDrwr>());
-    factories.insert("TFOALAvtFtry", std::make_shared<SimpleGenericFtry<OALList> >(factories::listName));
+    factories.insert("TFOALAvtFtry", std::make_shared<GenericFtry<TickFListBase, OALList> >(factories::baseListName, factories::listName));
 
     // Demonio y lista de avatares para el demonio.
     // Crear avatar al vuelo para una entidad en un evento.

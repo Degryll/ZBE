@@ -402,10 +402,20 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
+
+class BasePunisher {
+public:
+  BasePunisher() {}
+  virtual ~BasePunisher() = default;
+  virtual std::string getName() = 0;
+
+  virtual std::string getListName() = 0;
+};
+
 /** \brief Daemon that applies a "punish" over a list of elements.
  */
 template<typename P, typename L>
-class PunisherDaemon : public Daemon {
+class PunisherDaemon : public Daemon, public BasePunisher {
 public:
 
   PunisherDaemon(const PunisherDaemon&) = delete; //!< Avoid copy.
@@ -443,10 +453,28 @@ public:
     }
   }
 
+  std::string getName() override {
+    return name;
+  }
+
+  std::string getListName() override {
+    return listName;
+  }
+
+  void setName(std::string name) {
+    this->name = name;
+  }
+
+  void setListName(std::string listName) {
+    this->listName = listName;
+  }
+
 private:
 DISABLE_DLL_WARN
   std::shared_ptr<P> punish;
   std::shared_ptr<L> list;
+  std::string name;
+  std::string listName;
 DISABLE_WARNING_POP()
 };
 

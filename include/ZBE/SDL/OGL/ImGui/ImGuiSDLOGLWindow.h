@@ -142,7 +142,6 @@ public:
       auto sdloglwin = imguiSdloglWindowRsrc.get("ImGuiSDLOGLWindow."s + name);
       SDLOGLWindowFtry sldogWinFtry = SDLOGLWindowFtry();
       sldogWinFtry.configure(cfg, sdloglwin, "ImGuiSDLOGLWindowFtry");
-      sdloglwin->run();
     } else {
       SysError::setError("ImGuiSDLOGLWindowFtry config for "s + name + " not found."s);
     }

@@ -13,6 +13,7 @@
 #include <string>
 
 #include "ZBE/factories/Factory.h"
+#include "ZBE/factories/implementations/GenericFtry.h"
 
 #include "ZBE/SDL/factories/system/SDLWindowFtry.h"
 #include "ZBE/SDL/factories/system/SDLOGLWindowFtry.h"
@@ -22,6 +23,8 @@
 #include "ZBE/SDL/factories/drawers/SpriteSheetSDLDrawerFtry.h"
 #include "ZBE/SDL/factories/daemons/BasicPreLoopSDLDaemonFtry.h"
 #include "ZBE/SDL/factories/daemons/BasicPostLoopSDLDaemonFtry.h"
+
+#include "ZBE/SDL/daemons/SDLCaptureToggleDaemon.h"
 
 #include "ZBE/SDL/events/KeyMouseEventWatcher.h"
 
@@ -58,6 +61,7 @@ public:
     factories.insert("BasicPostLoopSDLDaemonFtry", std::make_shared<BasicPostLoopSDLDaemonFtry>());
 
     factories.insert("KeyMouseEventWatcherFtry", std::make_shared<KeyMouseEventWatcherFtry>());
+    factories.insert("SDLCaptureToggleDaemonFtry", std::make_shared<GenericFtry<Daemon, SDLCaptureToggleDaemon>>("Daemon", "SDLCaptureToggleDaemon"));
   }
 
 };

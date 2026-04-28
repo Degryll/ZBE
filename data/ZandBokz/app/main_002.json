@@ -12,8 +12,8 @@
     "ONE" : {"type":"uifd", "value":1},
     "NEGATIVEONE" : {"type":"ifd", "value":-1},
     "tolerance" : {"type":"fd", "value":0.01},
-    "width" : {"type":"uifd", "value":1280},
-    "height" : {"type":"uifd", "value":768},
+    "width" : {"type":"uifd", "value":1440},
+    "height" : {"type":"uifd", "value":900},
     "second" : {"type":"uifd", "value":65536},
     "gidIdx" : 1000,
     "stateIdx" : 1010,
@@ -2342,6 +2342,11 @@
             "outValue" : "mainExitState"
           }
         },
+        {"factory": "SDLCaptureToggleDaemonFtry",
+          "name": "zandbokz.toggleMenuDaemon",
+          "config" : {}
+
+        },
         {"factory": "DaemonTimeHandlerFtry",
           "name": "zandbokz.exitTimeHandler",
           "config" : {
@@ -3132,6 +3137,14 @@
             "daemon" : "zandbokz.exitDaemon",
             "inputEventGenerator" : "zandbokz.inputEventGenerator",
             "key":"ZBEK_ESCAPE"
+          }
+        },
+        {"factory": "DaemonIHFtry",
+          "name": "zandbokz.menuKeyHandler",
+          "config" : {
+            "daemon" : "zandbokz.toggleMenuDaemon",
+            "inputEventGenerator" : "zandbokz.inputEventGenerator",
+            "key":"ZBEK_TAB"
           }
         },
         {"factory": "DoubleKeyValueSetterIHFtry",

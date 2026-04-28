@@ -39,13 +39,19 @@ namespace zbe {
 template <typename T, typename UnqualifiedType = std::remove_cv<T> >
 class TicketedForwardListIterator;
 
+class TickFListBase {
+public:
+  virtual ~TickFListBase() = default;
+  virtual uint64_t getSize() = 0;
+};
+
 /** \brief A wrapper for c++ forward_list using Tickets.
  *
  *  Stored elements with an state.
  *  \sa Ticket
  */
 template <typename T>
-class TicketedForwardList {
+class TicketedForwardList : public TickFListBase {
 public:
   TicketedForwardList(const TicketedForwardList&) = delete;
   void operator=(const TicketedForwardList&) = delete;
@@ -62,6 +68,7 @@ public:
   std::shared_ptr< TicketedElement<T> > push_front(std::shared_ptr<T> val) {
     std::shared_ptr< TicketedElement<T> > t =std::make_shared<TicketedElement<T> >(val);
     l.push_front(t);
+    s++;
     return (t);
   }
 
@@ -72,7 +79,7 @@ public:
     auto p = l.before_begin();
     auto i = l.begin();
     auto e = l.end();
-    return (iterator(&l, p, i, e));
+    return (iterator(&l, p, i, e, &s));
   }
 
   /** \brief Returns an iterator referring to the past-the-end element in the forward_list container.
@@ -80,7 +87,7 @@ public:
    */
   iterator end() {
     auto e = l.end();
-    return (iterator(&l, e, e, e));
+    return (iterator(&l, e, e, e, &s));
   }
 
   /** \brief Returns an iterator referring to the past-the-end element in the forward_list container.
@@ -90,18 +97,27 @@ public:
     return (this->begin() == this->end());
   }
 
+  /** \brief Returns the number of elements in the forward_list container.
+   *  \return The number of elements in the container.
+   */
+  uint64_t getSize() override {
+    return s;
+  }
+
   /** \brief Removes all elements from the container (which are destroyed), and leaving the container with a size of 0.
    */
   void clear() {
     for(auto it = this->begin(); it != this->end(); ++it) {
       it.setERASED();
     }
+    s = 0;
     begin();
   }
 
 private:
 
   std::forward_list< std::shared_ptr< TicketedElement<T> > > l;  //!< The STL forward list
+  uint64_t s;
 };
 
 template <typename T, typename UnqualifiedType>
@@ -130,7 +146,8 @@ class TicketedForwardListIterator {
   TicketedForwardListIterator(std::forward_list< std::shared_ptr< TicketedElement<T> > >* fl,
                             typename std::forward_list< std::shared_ptr< TicketedElement<T> > >::iterator pre,
                             typename std::forward_list< std::shared_ptr< TicketedElement<T> > >::iterator it,
-                            typename std::forward_list< std::shared_ptr< TicketedElement<T> > >::iterator end) : fl(fl), p(pre), i(it), e(end) {
+                            typename std::forward_list< std::shared_ptr< TicketedElement<T> > >::iterator end,
+                            uint64_t *s) : fl(fl), p(pre), i(it), e(end), s(s) {
     checkForACTIVE();
   }
 
@@ -209,6 +226,7 @@ protected:
     while(i != e && i->get()->isNotACTIVE()) {
       if(i->get()->isERASED()) {
         i = fl->erase_after(p);
+        (*s)--;
       } else {
         ++p;
         ++i;
@@ -221,6 +239,7 @@ private:
   typename std::forward_list< std::shared_ptr< TicketedElement<T> > >::iterator p;  //!< An iterator before the real iterator
   typename std::forward_list< std::shared_ptr< TicketedElement<T> > >::iterator i;  //!< The real iterator (the one that points to the right element)
   typename std::forward_list< std::shared_ptr< TicketedElement<T> > >::iterator e;  //!< An iterator to the end of the list.
+  uint64_t *s; //!< Pointer to the size of the container, to update it when an element is erased.
 };
 
   /** \brief An alias to the TicketedForwardListIterator.
