@@ -124,7 +124,9 @@ class ActivatorIHFtry : public Factory {
       auto ih     = paihStore.get("ActivatorIH."s + name);
 
       ih->setTicket(ticket);
-      ieg->addHandler(key, ih);
+      auto handlerTicket = ieg->addHandler(key, ih);
+      SysError::setDebug("ActivatorIHFtry adding ticket HandlerTicket."s + name, false);
+      handlerTicketStore.insert("HandlerTicket."s + name, handlerTicket);
 
     } else {
       SysError::setError("ActivatorIHFtry config for "s + name + " not found."s);
@@ -138,6 +140,7 @@ private:
   RsrcStore<InputHandler>& ihStore               = RsrcStore<InputHandler>::getInstance();
   RsrcStore<Ticket>& ticketStore                 = RsrcStore<Ticket>::getInstance();
   RsrcStore<InputEventGenerator>& iegStore       = RsrcStore<InputEventGenerator>::getInstance();
+  RsrcStore<HandlerTicket>& handlerTicketStore = RsrcStore<HandlerTicket>::getInstance();
 };
 
 //TODO Si una clase está siendo referenciada desde algún cpp su factoría no puede estar en el mismo .h en el que se declara la clase 

@@ -122,6 +122,8 @@ public:
 
     void setDict(NameRsrcDictionary* dict) {this->dict = dict;}
 
+    NameRsrcDictionary* getDict() {return dict;}
+
     std::tuple<GLuint, GLsizei> getModel(uint64_t id);
 
 private:
@@ -231,6 +233,14 @@ public:
    */
   void setDict(NameRsrcDictionary* dict) {
     modelStore.setDict(dict);
+  }
+
+  /** \brief Gets de dictionary for the model store
+   *  \return The dictionary
+   *  \sa setDict
+   */
+  NameRsrcDictionary* getDict() {
+    return modelStore.getDict();
   }
 
   /** \brief Creates the widnows (use only width empty constructor and setters)

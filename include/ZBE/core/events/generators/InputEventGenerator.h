@@ -37,7 +37,15 @@
 namespace zbe {
 
 using HandlerList = std::list<std::shared_ptr<InputHandler> >;
-using HandlerTicket = HandlerList::iterator;
+// using HandlerTicket = HandlerList::iterator;
+
+class HandlerTicket;
+
+struct Handlers {
+  HandlerList active{};
+  HandlerList inactive{};
+};
+
 
 class InputStatusManager {
 public:
@@ -63,15 +71,12 @@ protected:
     return range_contains(l.begin(), l.end(), candidate);
   }
 
-  struct Handlers {
-    HandlerList active{};
-    HandlerList inactive{};
-  };
-
 };
+
 
 class MappedInputStatusManager : public InputStatusManager {
 public:
+  friend class HandlerTicket;
 
   MappedInputStatusManager() : eventId(), store(EventStore::getInstance()), handlers() {}
   explicit MappedInputStatusManager(uint64_t eventId) : eventId(eventId), store(EventStore::getInstance()), handlers() {}
@@ -81,16 +86,16 @@ public:
    * \param id Id of the key
    * \param handler Handler to run when key pressed
    */
-  inline HandlerTicket addHandler(uint32_t inputId, std::shared_ptr<InputHandler> handler) {
+  inline HandlerList::iterator addHandler(uint32_t inputId, std::shared_ptr<InputHandler> handler) {
     ensureListExists(inputId);
     handlers[inputId].active.push_front(handler);
     return handlers[inputId].active.begin();
   }
-
+  // TODO todos esto serán privados.
   /** Remove a handler from an input event.
    * \param id Id of the key
    */
-  inline void removeHandler(uint32_t inputId, HandlerTicket ticket) {
+  inline void removeHandler(uint32_t inputId, HandlerList::iterator ticket) {
     if (list_contains(handlers[inputId].active, ticket)) {
       handlers[inputId].active.erase(ticket);
     } else if (list_contains(handlers[inputId].inactive, ticket)) {
@@ -103,9 +108,9 @@ public:
   /** Remove a handler from an input event.
    * \param id Id of the key
    */
-  inline void disableHandler(uint32_t inputId, HandlerTicket ticket) {
+  inline void disableHandler(uint32_t inputId, HandlerList::iterator ticket) {
     if (list_contains(handlers[inputId].active, ticket)) {
-      handlers[inputId].active.splice(ticket, handlers[inputId].inactive);
+      handlers[inputId].inactive.splice(handlers[inputId].inactive.begin(), handlers[inputId].active, ticket);
     } else if (!list_contains(handlers[inputId].inactive, ticket)) {
       SysError::setError("ERROR: Handler cant be disabled, handler not found (wrong key?).");
     }
@@ -114,9 +119,9 @@ public:
   /** Remove a handler from an input event.
    * \param id Id of the key
    */
-  inline void enableHandler(uint32_t inputId, HandlerTicket ticket) {
+  inline void enableHandler(uint32_t inputId, HandlerList::iterator ticket) {
     if (list_contains(handlers[inputId].inactive, ticket)) {
-      handlers[inputId].inactive.splice(ticket, handlers[inputId].active);
+      handlers[inputId].active.splice(handlers[inputId].active.begin(), handlers[inputId].inactive, ticket);
     } else if (!list_contains(handlers[inputId].active, ticket)) {
       SysError::setError("ERROR: Handler cant be enabled, handler not found (wrong key?).");
     }
@@ -125,7 +130,7 @@ public:
   /** Remove a handler from an input event.
    * \param id Id of the key
    */
-  inline void moveHandler(uint32_t srcInputId, uint32_t dstInputId, HandlerTicket ticket) {
+  inline void moveHandler(uint32_t srcInputId, uint32_t dstInputId, HandlerList::iterator ticket) {
     if (list_contains(handlers[srcInputId].active, ticket)) {
       ensureListExists(dstInputId);
       handlers[srcInputId].active.splice(ticket, handlers[dstInputId].active);
@@ -136,6 +141,8 @@ public:
       SysError::setError("ERROR: Handler cant be moved, handler not found (wrong key?).");
     }
   }
+
+  // TODO hay que hacer un ¿move handler? para cambiar la tecla asociada a un handler.
 
   bool generate(const InputStatus& is) override {
     bool is_generated = false;
@@ -168,6 +175,85 @@ DISABLE_DLL_WARN
   EventStore &store;
   std::unordered_map<uint32_t, Handlers> handlers;
 DISABLE_WARNING_POP()
+};
+
+struct HandlerTicket {
+public:
+
+  HandlerTicket(bool active, HandlerList::iterator iterator, MappedInputStatusManager* manager, uint32_t inputId) : inputIds(), active(active), manager(manager), iterator(iterator) {
+    inputIds.push_back(inputId);
+  }
+
+  void setActive() {
+    if (active) {
+      SysError::setDebug("Handler is already active.", false);
+      return;
+    }
+    for(const auto& inputId : inputIds) {
+      SysError::setDebug("Activating handler for input " + std::to_string(inputId), false);
+      manager->enableHandler(inputId, iterator);
+    }
+    active = true;
+  }
+
+  void setInactive() {
+    if (!active) {
+      SysError::setDebug("Handler is already inactive.", false);
+      return;
+    }
+    for(const auto& inputId : inputIds) {
+      SysError::setDebug("Deactivating handler for input " + std::to_string(inputId), false);
+      manager->disableHandler(inputId, iterator);
+    }
+    active = false;
+  }
+
+  void setActiveWarn() {
+    if (active) {
+      SysError::setError("Handler is already active.");
+      return;
+    }
+    for(const auto& inputId : inputIds) {
+      manager->enableHandler(inputId, iterator);
+    }
+    active = true;
+  }
+
+  void setInactiveWarn() {
+    if (!active) {
+      SysError::setError("Handler is already inactive.");
+      return;
+    }
+    for(const auto& inputId : inputIds) {
+      manager->disableHandler(inputId, iterator);
+    }
+    active = false;
+  }
+
+  void addInputId(uint32_t inputId) {
+    // Añade tecla
+    // debería añadir a la lista local el inputId.
+    inputIds.push_back(inputId);
+    // debería modificar el mapa del MappedInputStatusManager para añadir el handler.
+    manager->addHandler(inputId, *iterator);
+    // ¿Como actuamos si ya existe?
+  }
+
+  void removeInputId(uint32_t inputId) {
+    // Elimina tecla
+    // debería eliminar de la lista local el inputId.
+    inputIds.erase(std::remove(inputIds.begin(), inputIds.end(), inputId), inputIds.end());
+    // debería modificar el mapa del MappedInputStatusManager para eliminar el handler.
+    manager->removeHandler(inputId, iterator);
+    // ¿Como actuamos si no existe? ¿Y si es la única tecla asociada al handler?
+  }
+
+  // Uno que devuelva la lista de teclas asociadas al handler, para poder mostrarla por ejemplo en un menu de controles.
+  
+  std::vector<uint32_t> inputIds;
+  bool active;
+  MappedInputStatusManager* manager;
+  HandlerList::iterator iterator;
 };
 
 class AnyInputStatusManager : public InputStatusManager {
@@ -232,36 +318,35 @@ class InputEventGenerator : virtual public Daemon {
         } // for each currentInput
       }
     }
-    inline HandlerTicket addHandler(uint32_t inputId, std::shared_ptr<InputHandler> handler) {
-      return mism.addHandler(inputId, handler);
-    }
 
-    /** Remove a handler from an input event.
-     * \param id Id of the key
-     */
-    inline void removeHandler(uint32_t inputId, HandlerTicket ticket) {
-      mism.removeHandler(inputId, ticket);
+    // TODO: implementar posibilidad de añadir un handler sin tecla.
+    // TODO: implementar posibilidad de añadir un handler adesactivado.
+    // TODO: implementar posibilidad de añadir un handler asocidado inicialmente a varias teclas.
+
+    inline std::shared_ptr<HandlerTicket> addHandler(uint32_t inputId, std::shared_ptr<InputHandler> handler) {
+      auto ticket = std::make_shared<HandlerTicket>(true, mism.addHandler(inputId, handler), &mism, inputId);
+      return ticket;
     }
 
     /** Remove a handler from an input event.
      * \param id Id of the key
      */
     inline void disableHandler(uint32_t inputId, HandlerTicket ticket) {
-      mism.disableHandler(inputId, ticket);
+      mism.disableHandler(inputId, ticket.iterator);
     }
 
     /** Remove a handler from an input event.
      * \param id Id of the key
      */
     inline void enableHandler(uint32_t inputId, HandlerTicket ticket) {
-      mism.enableHandler(inputId, ticket);
+      mism.enableHandler(inputId, ticket.iterator);
     }
 
     /** Remove a handler from an input event.
      * \param id Id of the key
      */
     inline void moveHandler(uint32_t srcInputId, uint32_t dstInputId, HandlerTicket ticket) {
-      mism.moveHandler(srcInputId, dstInputId, ticket);
+      mism.moveHandler(srcInputId, dstInputId, ticket.iterator);
     }
 
     inline void setTextHandler(std::shared_ptr<TextHandler> handler) {

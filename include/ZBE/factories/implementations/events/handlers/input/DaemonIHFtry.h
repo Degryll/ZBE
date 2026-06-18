@@ -115,7 +115,9 @@ public:
 
         auto ieg    = iegStore.get("InputEventGenerator."s + inputEventGeneratorName);
         auto key    = keyDict.get(keyName);
-        ieg->addHandler(key, ih);
+        auto handlerTicket = ieg->addHandler(key, ih);
+        SysError::setDebug("DaemonIHFtry adding ticket HandlerTicket."s + name, false);
+        handlerTicketStore.insert("HandlerTicket."s + name, handlerTicket);
       }
 
     } else {
@@ -131,6 +133,7 @@ private:
   RsrcStore<Daemon> &daemonStore           = RsrcStore<Daemon>::getInstance();
   RsrcDictionary<ZBE_K> &keyDict           = RsrcDictionary<ZBE_K>::getInstance();
   RsrcStore<InputEventGenerator> &iegStore = RsrcStore<InputEventGenerator>::getInstance();
+  RsrcStore<HandlerTicket>& handlerTicketStore = RsrcStore<HandlerTicket>::getInstance();
 };
 
 /** \brief Factory for DaemonIH.
@@ -238,7 +241,9 @@ void setup(std::string name, uint64_t cfgId) override {
 
       auto ieg    = iegStore.get("InputEventGenerator."s + inputEventGeneratorName);
       auto key    = keyDict.get(keyName);
-      ieg->addHandler(key, ih);
+      auto handlerTicket = ieg->addHandler(key, ih);
+      SysError::setDebug("DaemonIHFtry adding ticket HandlerTicket."s + name, false);
+      handlerTicketStore.insert("HandlerTicket."s + name, handlerTicket);
     }
 
   } else {
@@ -257,6 +262,7 @@ private:
   RsrcStore<InputEventGenerator> &iegStore    = RsrcStore<InputEventGenerator>::getInstance();
   RsrcStore<Value<T>> &valueRsrc              = RsrcStore<Value<T>>::getInstance();
   RsrcDictionary<T> &tDict                    = RsrcDictionary<T>::getInstance();
+  RsrcStore<HandlerTicket>& handlerTicketStore = RsrcStore<HandlerTicket>::getInstance();
 };
 
 
@@ -356,7 +362,9 @@ void setup(std::string name, uint64_t cfgId) override {
 
       auto ieg    = iegStore.get("InputEventGenerator."s + inputEventGeneratorName);
       auto key    = keyDict.get(keyName);
-      ieg->addHandler(key, ih);
+      auto handlerTicket = ieg->addHandler(key, ih);
+      SysError::setDebug("ConditionalCompositeIHFtry adding ticket HandlerTicket."s + name, false);
+      handlerTicketStore.insert("HandlerTicket."s + name, handlerTicket);
     }
 
   } else {
@@ -374,6 +382,7 @@ private:
   RsrcStore<InputEventGenerator> &iegStore    = RsrcStore<InputEventGenerator>::getInstance();
   RsrcStore<Value<T>> &valueRsrc              = RsrcStore<Value<T>>::getInstance();
   RsrcDictionary<T> &tDict                    = RsrcDictionary<T>::getInstance();
+  RsrcStore<HandlerTicket>& handlerTicketStore = RsrcStore<HandlerTicket>::getInstance();
 };
 
 }  // namespace zbe

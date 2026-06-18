@@ -138,7 +138,9 @@ class KeyValueSetterIHFtry : public Factory {
       return;
       }
 
-      (*ieg)->addHandler(*key, kvsih);
+      auto handlerTicket = (*ieg)->addHandler(*key, kvsih);
+      SysError::setDebug("KeyValueSetterIHFtry adding ticket HandlerTicket."s + name, false);
+      handlerTicketStore.insert("HandlerTicket."s + name, handlerTicket);
     }
   }
 
@@ -151,6 +153,7 @@ private:
   RsrcStore<KeyValueSetterIH<T>>& specificRsrcStore = RsrcStore<KeyValueSetterIH<T>>::getInstance();
   RsrcStore<InputHandler>& mainRsrcStore            = RsrcStore<InputHandler>::getInstance();
   RsrcStore<InputEventGenerator>& iegStore          = RsrcStore<InputEventGenerator>::getInstance();
+  RsrcStore<HandlerTicket>& handlerTicketStore      = RsrcStore<HandlerTicket>::getInstance();
 };
 
 }  // namespace zbe

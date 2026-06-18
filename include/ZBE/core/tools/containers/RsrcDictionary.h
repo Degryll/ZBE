@@ -61,7 +61,7 @@ class RsrcDictionary {
       auto it = l.find(name);
       if (it == l.end()) {
         SysError::setError("Resource id not found:" + name);
-        return T();
+        return T{};
       } else {
         return (it->second);
       }
@@ -75,7 +75,7 @@ class RsrcDictionary {
       auto it = l.find(name);
       if (it == l.end()) {
         SysError::setError("Resource id not found:" + name);
-        return (T());
+        return (T{});
       } else {
         auto aux = it->second;
         l.erase(it);

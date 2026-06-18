@@ -1,0 +1,256 @@
+/**
+ * Copyright 2015 Batis Degryll Ludo
+ * @file OnceDaemon.h
+ * @since 2015-05-04
+ * @date 2018-02-25
+ * @author Degryll Ludo
+ * @brief Daemon that applies a "punish" over a list of elements.
+ */
+
+#ifndef ZBE_CORE_DAEMONS_HANDLER_TICKET_TOGGLER_DMN_H_
+#define ZBE_CORE_DAEMONS_HANDLER_TICKET_TOGGLER_DMN_H_
+
+#include <cstdint>
+#include <memory>
+#include <vector>
+
+#include "ZBE/core/daemons/Daemon.h"
+#include "ZBE/core/tools/containers/RsrcStore.h"
+#include "ZBE/core/events/generators/InputEventGenerator.h"
+
+#include "ZBE/core/system/system.h"
+
+namespace zbe {
+/** \brief Daemon that takes a collection of HandlerTickets and toggles all of them when it runs.
+ */
+class HandlerTicketTogglerDmn : public Daemon {
+public:
+
+  virtual ~HandlerTicketTogglerDmn() = default;
+
+  void addTicket(std::shared_ptr<HandlerTicket> ticket) {
+    tickets.push_back(ticket);
+  }
+
+  void setState( bool state) {
+    this->active = state;
+  }
+
+  /** \brief It will run the Daemons and deactivate it.
+   */
+  void run() override {
+    for(auto t : tickets) {
+      // TODO no parece estar funcionando el código de activar/desactivar 
+      if (this->active) {
+        SysError::setDebug("Activating handler ticket ", false);
+        t->setActive();
+      } else {
+        SysError::setDebug("Deactivating handler ticket ", false);
+        t->setInactive();
+      }
+    }
+    this->active = !this->active;
+  }
+
+private:
+DISABLE_DLL_WARN
+  std::vector<std::shared_ptr<HandlerTicket> > tickets;
+  bool active = false;
+DISABLE_WARNING_POP()
+};
+
+class HandlerTicketTogglerDmnFtry : public Factory {
+public:
+
+  /** \brief Creates a OnceDaemon from a file.
+   *  \param name Name for the created OnceDaemon.
+   *  \param cfgId item's configuration id.
+   */
+  void create(std::string name, uint64_t) override {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<HandlerTicketTogglerDmn> od = std::make_shared<HandlerTicketTogglerDmn>();
+    handlerTicketTogglerDmnStore.insert("HandlerTicketTogglerDmn."s + name, od);
+    daemonStore.insert("Daemon."s + name, od);
+  }
+
+  /** \brief Set-up a HandlerTicketTogglerDmn.
+   *  \param name Name for the created item.
+   *  \param cfgId item's configuration id.
+   */
+  void setup(std::string name, uint64_t cfgId) override {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+    auto httd = handlerTicketTogglerDmnStore.get("HandlerTicketTogglerDmn."s + name);
+    if(cfg) {
+      auto j = *cfg;
+      if (!j["tickets"].is_array()) {
+        SysError::setError("HandlerTicketTogglerDmn " + name + " config for tickets must be an array."s);
+        return;
+      }
+
+      json tickets = j["tickets"];
+      for (auto ticket : tickets) {
+        if (ticket.is_string()) {
+          auto handlerTicket = ticketStore.get("HandlerTicket."s + ticket.get<std::string>());
+          if (handlerTicket) {
+            httd->addTicket(handlerTicket);
+            SysError::setDebug("HandlerTicketTogglerDmn "s + name + " adding ticket "s + ticket.get<std::string>() + " successfully.", false);
+          } else {
+            SysError::setError("HandlerTicketTogglerDmn config for "s + name + " has a ticket that was not found."s);
+          }
+        }
+      }
+
+    } else {
+      SysError::setError("HandlerTicketTogglerDmn config for "s + name + " not found."s);
+    }
+  }
+
+private:
+  RsrcStore<nlohmann::json>& configRsrc = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<Daemon>& daemonStore = RsrcStore<Daemon>::getInstance();
+  RsrcStore<HandlerTicketTogglerDmn>& handlerTicketTogglerDmnStore = RsrcStore<HandlerTicketTogglerDmn>::getInstance();
+  RsrcStore<HandlerTicket>& ticketStore = RsrcStore<HandlerTicket>::getInstance();
+};
+
+class HandlerTicketActivatorDmn : public Daemon {
+public:
+
+  virtual ~HandlerTicketActivatorDmn() = default;
+
+  void addTicket(std::shared_ptr<HandlerTicket> ticket) {
+    tickets.push_back(ticket);
+  }
+
+  /** \brief It will run the Daemons and deactivate it.
+   */
+  void run() override {
+    for(auto t : tickets) {
+      t->setActive();
+    }
+  }
+
+private:
+DISABLE_DLL_WARN
+  std::vector<std::shared_ptr<HandlerTicket> > tickets;
+DISABLE_WARNING_POP()
+};
+
+class HandlerTicketDeactivatorDmn : public Daemon {
+public:
+
+  virtual ~HandlerTicketDeactivatorDmn() = default;
+
+  void addTicket(std::shared_ptr<HandlerTicket> ticket) {
+    tickets.push_back(ticket);
+  }
+
+  /** \brief It will run the Daemons and deactivate it.
+   */
+  void run() override {
+    for(auto t : tickets) {
+      t->setInactive();
+    }
+  }
+
+private:
+DISABLE_DLL_WARN
+  std::vector<std::shared_ptr<HandlerTicket> > tickets;
+DISABLE_WARNING_POP()
+};
+
+class HandlerTicketActivatorDmnFtry : public Factory {
+public: 
+
+  void create(std::string name, uint64_t) override {
+    using namespace std::string_literals;
+    std::shared_ptr<HandlerTicketActivatorDmn> htad = std::make_shared<HandlerTicketActivatorDmn>();
+    handlerTicketActivatorDmnStore.insert("HandlerTicketActivatorDmn."s + name, htad);
+    daemonStore.insert("Daemon."s + name, htad);
+  }
+
+  void setup(std::string name, uint64_t cfgId) override {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+    auto htad = handlerTicketActivatorDmnStore.get("HandlerTicketActivatorDmn."s + name);
+    if(cfg) {
+      auto j = *cfg;
+      if (!j["tickets"].is_array()) {
+        SysError::setError("HandlerTicketActivatorDmn " + name + " config for tickets must be an array."s);
+        return;
+      }
+
+      json tickets = j["tickets"];
+      for (auto ticket : tickets) {
+        if (ticket.is_string()) {
+          auto handlerTicket = ticketStore.get("HandlerTicket."s + ticket.get<std::string>());
+          if (handlerTicket) {
+            htad->addTicket(handlerTicket);
+          } else {
+            SysError::setError("HandlerTicketActivatorDmn config for "s + name + " has a ticket that was not found."s);
+          }
+        }
+      }
+
+    } else {
+      SysError::setError("HandlerTicketActivatorDmn config for "s + name + " not found."s);
+    }
+  }
+private:
+  RsrcStore<nlohmann::json>& configRsrc = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<Daemon>& daemonStore = RsrcStore<Daemon>::getInstance();
+  RsrcStore<HandlerTicketActivatorDmn>& handlerTicketActivatorDmnStore = RsrcStore<HandlerTicketActivatorDmn>::getInstance();
+  RsrcStore<HandlerTicket>& ticketStore = RsrcStore<HandlerTicket>::getInstance();
+}; 
+
+
+class HandlerTicketDeactivatorDmnFtry : public Factory {
+public:
+  void create(std::string name, uint64_t) override {
+    using namespace std::string_literals;
+    std::shared_ptr<HandlerTicketDeactivatorDmn> htdad = std::make_shared<HandlerTicketDeactivatorDmn>();
+    handlerTicketDeactivatorDmnStore.insert("HandlerTicketDeactivatorDmn."s + name, htdad);
+    daemonStore.insert("Daemon."s + name, htdad);
+  }
+
+  void setup(std::string name, uint64_t cfgId) override {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+    auto htdad = handlerTicketDeactivatorDmnStore.get("HandlerTicketDeactivatorDmn."s + name);
+    if(cfg) {
+      auto j = *cfg;
+      if (!j["tickets"].is_array()) {
+        SysError::setError("HandlerTicketDeactivatorDmn " + name + " config for tickets must be an array."s);
+        return;
+      }
+
+      json tickets = j["tickets"];
+      for (auto ticket : tickets) {
+        if (ticket.is_string()) {
+          auto handlerTicket = ticketStore.get("HandlerTicket."s + ticket.get<std::string>());
+          if (handlerTicket) {
+            htdad->addTicket(handlerTicket);
+          } else {
+            SysError::setError("HandlerTicketDeactivatorDmn config for "s + name + " has a ticket that was not found."s);
+          }
+        }
+      }
+
+    } else {
+      SysError::setError("HandlerTicketDeactivatorDmn config for "s + name + " not found."s);
+    }
+  }
+private:
+  RsrcStore<nlohmann::json>& configRsrc = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<Daemon>& daemonStore = RsrcStore<Daemon>::getInstance();
+  RsrcStore<HandlerTicketDeactivatorDmn>& handlerTicketDeactivatorDmnStore = RsrcStore<HandlerTicketDeactivatorDmn>::getInstance();
+  RsrcStore<HandlerTicket>& ticketStore = RsrcStore<HandlerTicket>::getInstance();
+}; 
+
+}  // namespace zbe
+
+#endif  // ZBE_CORE_DAEMONS_HANDLER_TICKET_TOGGLER_DMN_H_

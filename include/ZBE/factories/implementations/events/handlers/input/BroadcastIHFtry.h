@@ -109,7 +109,9 @@ public:
         return;
       }
 
-      (*ieg)->addHandler(*key, bih);
+      auto handlerTicket = (*ieg)->addHandler(*key, bih);
+      SysError::setDebug("BroadcastIHFtry adding ticket HandlerTicket."s + name, false);
+      handlerTicketStore.insert("HandlerTicket."s + name, handlerTicket);
     }
 
   }
@@ -121,6 +123,7 @@ private:
   RsrcStore<BroadcastIH> &bihRsrc = RsrcStore<BroadcastIH>::getInstance();
   RsrcDictionary<ZBE_K> &keyDict           = RsrcDictionary<ZBE_K>::getInstance();
   RsrcStore<InputEventGenerator>& iegStore = RsrcStore<InputEventGenerator>::getInstance();
+  RsrcStore<HandlerTicket>& handlerTicketStore = RsrcStore<HandlerTicket>::getInstance();
 };
 
 }  // namespace zbe

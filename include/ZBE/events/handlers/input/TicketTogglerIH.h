@@ -127,7 +127,9 @@ class TicketTogglerIHFtry : public Factory {
       auto ih     = ttihRsrc.get("TicketTogglerIH."s + name);
 
       ih->setTicket(ticket);
-      ieg->addHandler(key, ih);
+      auto handlerTicket = ieg->addHandler(key, ih);
+      SysError::setDebug("TicketTogglerIHFtry adding ticket HandlerTicket."s + name, false);
+      handlerTicketStore.insert("HandlerTicket."s + name, handlerTicket);
 
     } else {
       SysError::setError("TicketTogglerIHFtry config for "s + name + " not found."s);
@@ -141,6 +143,7 @@ private:
   RsrcStore<InputHandler>& ihRsrc          = RsrcStore<InputHandler>::getInstance();
   RsrcStore<Ticket>& ticketStore           = RsrcStore<Ticket>::getInstance();
   RsrcStore<InputEventGenerator>& iegStore = RsrcStore<InputEventGenerator>::getInstance();
+  RsrcStore<HandlerTicket>& handlerTicketStore = RsrcStore<HandlerTicket>::getInstance();
 };
 
 }  // namespace zbe

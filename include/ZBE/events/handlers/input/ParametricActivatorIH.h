@@ -145,8 +145,9 @@ class ParametricActivatorIHFtry : public Factory {
 
       ih->setTicket(ticket);
       ih->setParametric(parametric);
-      ieg->addHandler(key, ih);
-
+      auto handlerTicket = ieg->addHandler(key, ih);
+      SysError::setDebug("ParametricActivatorIH HandlerTicket."s +name + " created and configured."s, false);
+      handlerTicketStore.insert("HandlerTicket."s + name, handlerTicket);
     } else {
       SysError::setError("ParametricActivatorIHFtry config for "s + name + " not found."s);
     }
@@ -160,6 +161,7 @@ private:
   RsrcStore<Ticket>& ticketStore                 = RsrcStore<Ticket>::getInstance();
   RsrcStore<InputEventGenerator>& iegStore       = RsrcStore<InputEventGenerator>::getInstance();
   RsrcStore<Parametric<float> >& parametricStore = RsrcStore<Parametric<float> >::getInstance();
+  RsrcStore<HandlerTicket>& handlerTicketStore = RsrcStore<HandlerTicket>::getInstance();
 };
 
 }  // namespace zbe

@@ -103,7 +103,7 @@ public:
   SpriteOGLModelSheet(std::shared_ptr<SDLOGLWindow> window)
     : spriteDefintion(), vao(), textures(), mode(), nvertex(),  type(), offset(nullptr), window(window) {
     using namespace std::string_literals;
-    auto id = dict.get("model.DEFAULT2D"s);
+    auto id = window->getDict()->get("model.DEFAULT2D"s);
     auto modelInfo = window->getModelStore()->getModel(id);
     this->vao = std::get<0>(modelInfo);
     this->nvertex = std::get<1>(modelInfo);
@@ -155,7 +155,6 @@ public:
 
 private:
 DISABLE_DLL_WARN
-  NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();
   SprtDef spriteDefintion;
   GLuint vao;
   std::vector<GLuint> textures;
@@ -180,7 +179,7 @@ public:
   ParametricSpriteOGLModelSheet(std::shared_ptr<SDLOGLWindow> window)
     : spriteDefintion(), vao(), textures(), mode(), nvertex(),  type(), offset(nullptr), window(window) {
     using namespace std::string_literals;
-    auto id = dict.get("model.DEFAULT2D"s);
+    auto id = window->getDict()->get("model.DEFAULT2D"s);
     auto modelInfo = window->getModelStore()->getModel(id);
     this->vao = std::get<0>(modelInfo);
     this->nvertex = std::get<1>(modelInfo);
@@ -235,7 +234,6 @@ public:
 
 private:
 DISABLE_DLL_WARN
-  NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();
   SprtDef spriteDefintion;
   GLuint vao;
   std::vector<GLuint> textures;

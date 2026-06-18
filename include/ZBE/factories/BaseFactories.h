@@ -43,6 +43,7 @@
 #include "ZBE/core/tools/containers/RsrcStore.h"
 #include "ZBE/core/daemons/Daemon.h"
 #include "ZBE/daemons/OnceDaemon.h"
+#include "ZBE/daemons/HandlerTicketTogglerDmn.h"
 #include "ZBE/core/system/system.h"
 
 #include "ZBE/entities/builders/builders.h"
@@ -99,6 +100,9 @@ public:
     factories.insert("RsrcFolderLoaderDmnFtry", std::make_shared<RsrcFolderLoaderDmnFtry>());
     factories.insert("ConditionalIntDaemonFtry", std::make_shared<ConditionalIntDaemonFtry>());
     factories.insert("StatedDaemonFtry", std::make_shared<StatedDaemonFtry>());
+    factories.insert("HandlerTicketTogglerDmnFtry", std::make_shared<HandlerTicketTogglerDmnFtry>());
+    factories.insert("HandlerTicketActivatorDmnFtry", std::make_shared<HandlerTicketActivatorDmnFtry>());
+    factories.insert("HandlerTicketDeactivatorDmnFtry", std::make_shared<HandlerTicketDeactivatorDmnFtry>());
 
     // --- Behaviors
     factories.insert("BoundedAddIntBvrFtry", std::make_shared<GenericFtry<Behavior<int64_t, int64_t, int64_t, int64_t>, BoundedAddBvr<int64_t>>>("Behavior", "BoundedAddBvr"));

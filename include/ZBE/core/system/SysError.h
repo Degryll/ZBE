@@ -26,41 +26,32 @@ public:
 
   /** \brief Set a new error
    *
-   *  Increment the error counter in 1. If this is the first call, also stores
-   *  the errorString string.
-   *
    * \param errorString the description of the error
    * \sa getNErrors() and getFirstErrorString()
    */
   static void setError(std::string errorString);
 
-  /** \brief Return the number of calls to setError.
+  /** \brief Set a new warning
    *
-   * \return the number of errors so far.
-   * \sa setError() and clear()
+   * \param msgString the description of the warning
+   * \sa getNErrors() and getFirstErrorString()
    */
-  static int getNErrors();
+  static void setWarning(std::string msgString);
 
-  /** \brief Return the error message of the first error.
+    /** \brief Set a new info message
+    *
+    * \param msgString the description of the info message
+    * \sa getNErrors() and getFirstErrorString()
+    */
+  static void setInfo(std::string msgString);
+
+
+  /** \brief Set a new debug message
    *
-   *  If there is, at least, one call to setError, this function
-   *  return the string message of the first error, empty string otherwise.
-   *
-   * \return the first (if any) error string.
-   * \sa setError() and clear()
+   * \param msgString the description of the debug message
+   * \sa getNErrors() and getFirstErrorString()
    */
-  static std::string getFirstErrorString();
-
-  /** \brief Set error counter to 0 and empty the error string.
-   */
-  static void clear();
-
-private:
-DISABLE_DLL_WARN
-  static int nerrors;
-  static std::string errorString;
-DISABLE_WARNING_POP()
-
+  static void setDebug(std::string msgString, bool trace = false);
 };
 
 }  // namespace zbe

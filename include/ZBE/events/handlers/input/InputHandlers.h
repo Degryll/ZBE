@@ -92,7 +92,9 @@ public:
     avt->setupEntity(ent, idxs);
     std::shared_ptr<AddVelIH<dim>> ih = std::make_shared<AddVelIH<dim>>(avt);
     ih->setConfig(down, multiplier, tolerance);
-
+    // TODO Esto no deja el HandlerTicket disponible. Estos handlers no se pueden reconfigurar desde fuera.
+    // Además, este builder siempre va a sobreescribir la misma tecla. ¿Cual es su utilidad?
+    // No se usa en el main.json real.
     ieg->addHandler(key, ih);
   }
 

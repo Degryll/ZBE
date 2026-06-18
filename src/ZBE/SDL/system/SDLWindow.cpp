@@ -37,7 +37,7 @@ SDLWindow::~SDLWindow() {
 
 void SDLWindow::run() {
   window = SDL_CreateWindow(title, x, y, width, height, window_flags);
-  SysError::setError("Window created:");
+  SysError::setDebug("Window created:");
   renderer = SDL_CreateRenderer(window, -1, renderer_flags);
   output = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, width, height);
   imgStore = std::make_shared<SDLImageStore>(renderer);

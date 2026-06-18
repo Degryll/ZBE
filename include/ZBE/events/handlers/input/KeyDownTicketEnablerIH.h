@@ -132,7 +132,9 @@ class KeyDownTicketEnablerIHFtry : public Factory {
       auto ih     = ttihRsrc.get("KeyDownTicketEnablerIH."s + name);
 
       ih->setTicket(ticket);
-      ieg->addHandler(key, ih);
+      auto handlerTicket = ieg->addHandler(key, ih);
+      SysError::setDebug("KeyDownTicketEnablerIHFtry adding ticket HandlerTicket."s + name, false);
+      handlerTicketStore.insert("HandlerTicket."s + name, handlerTicket);
 
     } else {
       SysError::setError("KeyDownTicketEnablerIHFtry config for "s + name + " not found."s);
@@ -147,6 +149,7 @@ private:
   RsrcStore<InputHandler>& ihRsrc          = RsrcStore<InputHandler>::getInstance();
   RsrcStore<Ticket>& ticketStore           = RsrcStore<Ticket>::getInstance();
   RsrcStore<InputEventGenerator>& iegStore = RsrcStore<InputEventGenerator>::getInstance();
+  RsrcStore<HandlerTicket>& handlerTicketStore = RsrcStore<HandlerTicket>::getInstance();
 };
 
 }  // namespace zbe

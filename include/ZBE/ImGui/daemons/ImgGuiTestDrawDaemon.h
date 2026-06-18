@@ -46,18 +46,18 @@ public:
       showSizes.resize(lists.size(), 0);
     }
 
-    if (punishers.empty()) {
-      auto allPunishers = punisherRsrc.getByPrefix("Punisher");
-      for (const auto& punisher : allPunishers) {
-        auto listPtr = lRsrcStore.get(punisher.second->getListName());
-        if (listPtr) {
-          punishers.push_back({punisher.first, punisher.second, listPtr});
-        } else {
-          SysError::setError(std::string("Punisher ") + punisher.first + " has a non existing list: " + punisher.second->getListName());
-        }
-      }
-      showPunisherDetails.resize(punishers.size(), 0);
-    }
+    // if (punishers.empty()) {
+    //   auto allPunishers = punisherRsrc.getByPrefix("Punisher");
+    //   for (const auto& punisher : allPunishers) {
+    //     auto listPtr = lRsrcStore.get(punisher.second->getListName());
+    //     if (listPtr) {
+    //       punishers.push_back({punisher.first, punisher.second, listPtr});
+    //     } else {
+    //       SysError::setError(std::string("Punisher ") + punisher.first + " has a non existing list: " + punisher.second->getListName());
+    //     }
+    //   }
+    //   showPunisherDetails.resize(punishers.size(), 0);
+    // }
 
     ImGui::Begin("Estado del sistema");
 

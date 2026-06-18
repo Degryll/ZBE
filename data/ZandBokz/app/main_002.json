@@ -3218,6 +3218,26 @@
           }
         }
       ]
+    },
+    {"description" : "Setting tickets",
+      "factories" : [
+        {"factory": "HandlerTicketTogglerDmnFtry",
+          "name": "zandbokz.togglecontrolesdmn",
+          "config" : {
+            "key":"ZBEK_TAB",
+            "tickets" : ["zandbokz.pitchInputH","zandbokz.yawInputH","zandbokz.BulletCreatorIH","zandbokz.cajanorteSihaysangre","zandbokz.cajasurSihaysangre","zandbokz.cajaesteSihaysangre","zandbokz.cajaoesteSihaysangre","zandbokz.chofhandlerDmn","zandbokz.saltahandlerSihaysangre","zandbokz.bajahandlerSihaysangre"],
+            "ticketsBackup" : []
+          }
+        },
+        {"factory": "DaemonIHFtry",
+          "name": "zandbokz.togglecontroles",
+          "config" : {
+            "daemon" : "zandbokz.togglecontrolesdmn",
+            "inputEventGenerator" : "zandbokz.inputEventGenerator",
+            "key":"ZBEK_TAB"
+          }
+        }
+      ]
     }
   ]
 }
