@@ -403,6 +403,80 @@ DISABLE_WARNING_POP()
 };
 
 
+/** \brief Factory for Main Loop.
+ */
+class MainLoopExitFtry : virtual public Factory {
+public:
+
+  /** \brief Builds a MainLoop.
+   *  \param name Name for the created MainLoopFtry.
+   *  \param cfgId MainLoopFtry's configuration id.
+   */
+  void create(std::string name, uint64_t) override {
+    using namespace std::string_literals;
+
+    auto ml = std::make_shared<MainLoopExit>();
+    uint64_t id = SysIdGenerator::getId();
+    daemonRsrc.insert(id, ml);
+    dict.insert("Daemon."s + name, id);
+    id = SysIdGenerator::getId();
+    mainLoopExitRsrc.insert(id, ml);
+    dict.insert("MainLoopExit."s + name, id);
+  }
+  
+  /** \brief Setup the desired tool. The tool will be complete after this step.
+   *  \param name Name of the tool.
+   *  \param cfgId Tool's configuration id.
+   */
+  void setup(std::string name, uint64_t cfgId) override {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+    if(cfg) {
+      auto j = *cfg;
+      json mainloopName = j["mainloop"];
+      json valueHolderName = j["valueHolder"];
+      json outValueName = j["outValue"];
+      if(!mainloopName.is_string()) {
+        SysError::setError("Bad config for MainLoopExitFtry - mainloop."s + name);
+        return;
+      }
+      if(!valueHolderName.is_string()) {
+        SysError::setError("Bad config for MainLoopExitFtry - valueHolder."s + name);
+        return;
+      }
+      //TODO allow to use numbers or strings
+      // if(!outValue.is_number()) {
+      //   SysError::setError("Bad config for MainLoopExitFtry - outValue."s + name);
+      //   return;
+      // }
+      if(!outValueName.is_string()) {
+        SysError::setError("Bad config for MainLoopExitFtry - outValue."s + name);
+        return;
+      }
+      auto mle = mainLoopExitRsrc.get("MainLoopExit."s + name);
+      auto ml = mainLoopRsrc.get("MainLoop."s + mainloopName.get<std::string>());
+      auto valueHolder = valueRsrc.get(valueHolderName.get<std::string>());
+      uint64_t value = uintStore.get(outValueName.get<std::string>());
+      mle->setMainLoop(ml);
+      mle->setValue(valueHolder);
+      mle->setExitValue(static_cast<int64_t>(value));
+    } else {
+      SysError::setError("MainLoopExitFtry config for "s + name + " not found."s);
+    }
+  }
+
+private:
+  NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();
+  RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<Daemon> &daemonRsrc = RsrcStore<Daemon>::getInstance();
+  RsrcStore<MainLoop> &mainLoopRsrc = RsrcStore<MainLoop>::getInstance();
+  RsrcStore<MainLoopExit> &mainLoopExitRsrc = RsrcStore<MainLoopExit>::getInstance();
+  RsrcStore<Value<int64_t> > &valueRsrc = RsrcStore<Value<int64_t> >::getInstance();
+  RsrcDictionary<uint64_t>& uintStore = RsrcDictionary<uint64_t>::getInstance();
+};
+
 class BasePunisher {
 public:
   BasePunisher() {}
@@ -735,6 +809,79 @@ DISABLE_DLL_WARN
   RsrcStore<ConditionalIntDaemon>& specificRsrc = RsrcStore<ConditionalIntDaemon>::getInstance();
   RsrcStore<Value<int64_t> > &valueIRsrc = RsrcStore<Value<int64_t> >::getInstance();
   RsrcDictionary<int64_t>& intStore = RsrcDictionary<int64_t>::getInstance();
+DISABLE_WARNING_POP()
+};
+
+class BValueTogglerDaemon : public Daemon {
+public:
+  BValueTogglerDaemon() = default;
+
+  void run() override {
+    val->set(!val->get());
+  }
+
+  void setValue(std::shared_ptr<Value<bool>> val) {
+    this->val = val;
+  }
+
+private:
+DISABLE_DLL_WARN
+  std::shared_ptr<Value<bool>> val;
+DISABLE_WARNING_POP()
+};
+
+class BValueTogglerDaemonFtry : public Factory {
+public:
+  void create(std::string name, uint64_t) override {
+    using namespace std::string_literals;
+    std::shared_ptr<BValueTogglerDaemon> bvt = std::make_shared<BValueTogglerDaemon>();
+    mainRsrc.insert("Daemon."s + name, bvt);
+    specificRsrc.insert("BValueTogglerDaemon."s + name, bvt);
+  }
+
+  void setup(std::string name, uint64_t cfgId) override {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);
+    auto bvt = specificRsrc.get("BValueTogglerDaemon."s + name);
+    if(cfg) {
+      auto j = *cfg;
+      if (!j["entity"].is_string()) {
+        SysError::setError("BValueTogglerDaemon " + name + " config for entity must be a string."s);
+        return;
+      }
+      auto entity = entityStore.get("Entity."s + j["entity"].get<std::string>());
+      if (!entity) {
+        SysError::setError("BValueTogglerDaemon " + name + " config for entity not found."s);
+        return;
+      }
+      if (!j["valueIdx"].is_string()) {
+        SysError::setError("BValueTogglerDaemon " + name + " config for valueIdx must be a string."s);
+        return;
+      }
+
+      uint64_t valueIdx = uintStore.get(j["valueIdx"].get<std::string>());
+
+      auto value = entity->getBool(valueIdx);
+      if (!value) {
+        SysError::setError("BValueTogglerDaemon " + name + " config for valueIdx not found."s);
+        return;
+      }
+      bvt->setValue(value);
+      
+    } else {
+      SysError::setError("BValueTogglerDaemon config for "s + name + " not found."s);
+    }
+  }
+
+private:
+DISABLE_DLL_WARN
+  RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<Daemon>& mainRsrc = RsrcStore<Daemon>::getInstance();
+  RsrcStore<BValueTogglerDaemon>& specificRsrc = RsrcStore<BValueTogglerDaemon>::getInstance();
+  RsrcStore<Entity>& entityStore = RsrcStore<Entity>::getInstance();
+  RsrcStore<Value<bool>> &valueBRsrc = RsrcStore<Value<bool>>::getInstance();
+  RsrcDictionary<uint64_t>& uintStore = RsrcDictionary<uint64_t>::getInstance();
 DISABLE_WARNING_POP()
 };
 

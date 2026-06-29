@@ -196,7 +196,9 @@
     "Level4" :{"type":"ui", "value": 4},
 
     "VOLANDO" : 0,
-    "RODANDO" : 1
+    "RODANDO" : 1,
+
+    "onGameIdx" : 30103
   },
   "phases":[
       {
@@ -2172,6 +2174,16 @@
       "description" : "Creating entity",
       "factories" : [
         {"factory": "EntityFtry",
+          "name": "Game",
+          "description" : "Entidad con los valores comunes del juego",
+          "config" : {
+            "contextTime":"DEFAULT",
+            "bool": {
+              "onGameIdx" : true
+            }
+          }
+        },
+        {"factory": "EntityFtry",
           "name": "cameraControllerFree",
           "description" : "Entidad asociada a la camara",
           "config" : {
@@ -2339,13 +2351,9 @@
           "config" : {
             "mainloop" : "zandbokz.MainLoop",
             "valueHolder" : "zandbokz.loadState",
-            "outValue" : "mainExitState"
+            "outValue" : "mainExitState",
+            "TODO" : "Esto debe leer el value de una entidad"
           }
-        },
-        {"factory": "SDLCaptureToggleDaemonFtry",
-          "name": "zandbokz.toggleMenuDaemon",
-          "config" : {}
-
         },
         {"factory": "DaemonTimeHandlerFtry",
           "name": "zandbokz.exitTimeHandler",
@@ -3139,14 +3147,6 @@
             "key":"ZBEK_ESCAPE"
           }
         },
-        {"factory": "DaemonIHFtry",
-          "name": "zandbokz.menuKeyHandler",
-          "config" : {
-            "daemon" : "zandbokz.toggleMenuDaemon",
-            "inputEventGenerator" : "zandbokz.inputEventGenerator",
-            "key":"ZBEK_TAB"
-          }
-        },
         {"factory": "DoubleKeyValueSetterIHFtry",
           "name": "zandbokz.saltahandlerVal",
           "config" : {
@@ -3221,18 +3221,43 @@
     },
     {"description" : "Setting tickets",
       "factories" : [
-        {"factory": "HandlerTicketTogglerDmnFtry",
+        {"factory": "ParametricHandlerTicketTogglerDmnFtry",
           "name": "zandbokz.togglecontrolesdmn",
           "config" : {
-            "key":"ZBEK_TAB",
             "tickets" : ["zandbokz.pitchInputH","zandbokz.yawInputH","zandbokz.BulletCreatorIH","zandbokz.cajanorteSihaysangre","zandbokz.cajasurSihaysangre","zandbokz.cajaesteSihaysangre","zandbokz.cajaoesteSihaysangre","zandbokz.chofhandlerDmn","zandbokz.saltahandlerSihaysangre","zandbokz.bajahandlerSihaysangre"],
+            "entity" : "Game",
+            "valueIdx" : "onGameIdx",
             "ticketsBackup" : []
+          }
+        },
+        {"factory": "ParametricSDLCaptureToggleDaemonFtry",
+          "name": "zandbokz.toggleMenuDaemon",
+          "config" : {
+            "entity" : "Game",
+            "valueIdx" : "onGameIdx"
+          }
+        },
+        {"factory": "BValueTogglerDaemonFtry",
+          "name": "zandbokz.onMenuToggleHandler",
+          "config" : {
+            "entity" : "Game",
+            "valueIdx" : "onGameIdx"
+          }
+        },
+        {"factory": "MasterDmnFtry",
+          "name": "zandbokz.menuHandlerMasterDmn",
+          "config" : {
+            "daemons" : [
+              "zandbokz.toggleMenuDaemon",
+              "zandbokz.togglecontrolesdmn",
+              "zandbokz.onMenuToggleHandler"
+            ]
           }
         },
         {"factory": "DaemonIHFtry",
           "name": "zandbokz.togglecontroles",
           "config" : {
-            "daemon" : "zandbokz.togglecontrolesdmn",
+            "daemon" : "zandbokz.menuHandlerMasterDmn",
             "inputEventGenerator" : "zandbokz.inputEventGenerator",
             "key":"ZBEK_TAB"
           }

@@ -17,7 +17,6 @@
 #include "ZBE/factories/implementations/entities/EntityFtry.h"
 #include "ZBE/factories/implementations/GenericFtry.h"
 #include "ZBE/factories/implementations/daemons/BehaviorDmnFtry.h"
-#include "ZBE/factories/implementations/daemons/MainLoopExitFtry.h"
 #include "ZBE/factories/implementations/daemons/MainLoopFtry.h"
 #include "ZBE/factories/implementations/daemons/MasterDmnFtry.h"
 #include "ZBE/factories/implementations/daemons/StateMachineDmnFtry.h"
@@ -103,6 +102,8 @@ public:
     factories.insert("HandlerTicketTogglerDmnFtry", std::make_shared<HandlerTicketTogglerDmnFtry>());
     factories.insert("HandlerTicketActivatorDmnFtry", std::make_shared<HandlerTicketActivatorDmnFtry>());
     factories.insert("HandlerTicketDeactivatorDmnFtry", std::make_shared<HandlerTicketDeactivatorDmnFtry>());
+    factories.insert("ParametricHandlerTicketTogglerDmnFtry", std::make_shared<ParametricHandlerTicketTogglerDmnFtry>());
+    factories.insert("BValueTogglerDaemonFtry", std::make_shared<BValueTogglerDaemonFtry>());
 
     // --- Behaviors
     factories.insert("BoundedAddIntBvrFtry", std::make_shared<GenericFtry<Behavior<int64_t, int64_t, int64_t, int64_t>, BoundedAddBvr<int64_t>>>("Behavior", "BoundedAddBvr"));

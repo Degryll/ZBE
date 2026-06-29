@@ -62,6 +62,7 @@ public:
 
     factories.insert("KeyMouseEventWatcherFtry", std::make_shared<KeyMouseEventWatcherFtry>());
     factories.insert("SDLCaptureToggleDaemonFtry", std::make_shared<GenericFtry<Daemon, SDLCaptureToggleDaemon>>("Daemon", "SDLCaptureToggleDaemon"));
+    factories.insert("ParametricSDLCaptureToggleDaemonFtry", std::make_shared<ParametricSDLCaptureToggleDaemonFtry>());
   }
 
 };

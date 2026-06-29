@@ -31,11 +31,11 @@ public:
   /** \brief Singleton implementation to start SDL subsystems.
    *  \return The only instance of the SDL_Starter.
    */
-  static SDL_Starter& getInstance(Uint32 flags = 0, Uint32 other = 0) {
+  static SDL_Starter& getInstance(Uint32 flags = 0, Uint32 other = 1) {
     static SDL_Starter instance;
     SDL_InitSubSystem(flags);
-    SDL_CaptureMouse(SDL_FALSE);
-    SDL_SetRelativeMouseMode(SDL_FALSE);
+    SDL_CaptureMouse(other ? SDL_TRUE : SDL_FALSE); // TODO esto, si lleva mas valores, deberá usar una mascara.
+    SDL_SetRelativeMouseMode(other ? SDL_TRUE : SDL_FALSE); // TODO lo mismo.
     if (other & SDLNET) {
       SDLNet_Init();
       sdlnetrefs++;
