@@ -186,11 +186,9 @@ public:
 
   void setActive() {
     if (active) {
-      SysError::setDebug("Handler is already active.", false);
       return;
     }
     for(const auto& inputId : inputIds) {
-      SysError::setDebug("Activating handler for input " + std::to_string(inputId), false);
       manager->enableHandler(inputId, iterator);
     }
     active = true;
@@ -198,11 +196,9 @@ public:
 
   void setInactive() {
     if (!active) {
-      SysError::setDebug("Handler is already inactive.", false);
       return;
     }
     for(const auto& inputId : inputIds) {
-      SysError::setDebug("Deactivating handler for input " + std::to_string(inputId), false);
       manager->disableHandler(inputId, iterator);
     }
     active = false;

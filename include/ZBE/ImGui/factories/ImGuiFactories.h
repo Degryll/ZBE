@@ -20,7 +20,10 @@
 #include "ZBE/ImGui/daemons/ImGuiPostLoopDaemon.h"
 #include "ZBE/ImGui/daemons/ImGuiPreLoopDaemon.h"
 #include "ZBE/ImGui/events/ImGuiEventWatcher.h"
-#include "ZBE/ImGui/daemons/ImgGuiTestDrawDaemon.h"
+#include "ZBE/ImGui/daemons/ImGuiStatusDrawDaemon.h"
+#include "ZBE/ImGui/daemons/ImGuiMenuDrawDaemon.h"
+#include "ZBE/ImGui/daemons/ImGuiStyleEditorDaemon.h"
+#include "ZBE/ImGui/daemons/ImGuiStyleLoadDaemon.h"
 
 namespace zbe {
 
@@ -44,7 +47,10 @@ public:
     factories.insert("ImGuiPostLoopDaemonFtry", std::make_shared<ImGuiPostLoopDaemonFtry>());
     factories.insert("ImGuiPreLoopDaemonFtry", std::make_shared<ImGuiPreLoopDaemonFtry>());
     factories.insert("ImGuiEventWatcherFtry", std::make_shared<ImGuiEventWatcherFtry>());
-    factories.insert("ImGuiTestDrawDaemonFtry", std::make_shared<GenericFtry<Daemon, ImGuiTestDrawDaemon>>("Daemon", "ImGuiTestDrawDaemon"));
+    factories.insert("ImGuiStatusDrawDaemonFtry", std::make_shared<GenericFtry<Daemon, ImGuiStatusDrawDaemon>>("Daemon", "ImGuiStatusDrawDaemon"));
+    factories.insert("ImGuiMenuDrawDaemonFtry", std::make_shared<ImGuiMenuDrawDaemonFtry>());
+    factories.insert("ImGuiStyleEditorDaemonFtry", std::make_shared<GenericFtry<Daemon, ImGuiStyleEditorDaemon>>("Daemon", "ImGuiStyleEditorDaemon"));
+    factories.insert("ImGuiStyleLoadDaemonFtry", std::make_shared<ImGuiStyleLoadDaemonFtry>());
   }
 
 };

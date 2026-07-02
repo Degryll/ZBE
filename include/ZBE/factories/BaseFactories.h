@@ -104,6 +104,8 @@ public:
     factories.insert("HandlerTicketDeactivatorDmnFtry", std::make_shared<HandlerTicketDeactivatorDmnFtry>());
     factories.insert("ParametricHandlerTicketTogglerDmnFtry", std::make_shared<ParametricHandlerTicketTogglerDmnFtry>());
     factories.insert("BValueTogglerDaemonFtry", std::make_shared<BValueTogglerDaemonFtry>());
+    factories.insert("ParametricTicketToggleDaemonFtry", std::make_shared<ParametricTicketToggleDaemonFtry>());
+    factories.insert("TicketToggleDaemonFtry", std::make_shared<TicketToggleDaemonFtry>());
 
     // --- Behaviors
     factories.insert("BoundedAddIntBvrFtry", std::make_shared<GenericFtry<Behavior<int64_t, int64_t, int64_t, int64_t>, BoundedAddBvr<int64_t>>>("Behavior", "BoundedAddBvr"));

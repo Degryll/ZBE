@@ -95,7 +95,6 @@ public:
           auto handlerTicket = ticketStore.get("HandlerTicket."s + ticket.get<std::string>());
           if (handlerTicket) {
             httd->addTicket(handlerTicket);
-            SysError::setDebug("HandlerTicketTogglerDmn "s + name + " adding ticket "s + ticket.get<std::string>() + " successfully.", false);
           } else {
             SysError::setError("HandlerTicketTogglerDmn config for "s + name + " has a ticket that was not found."s);
           }
@@ -186,7 +185,6 @@ public:
           auto handlerTicket = ticketStore.get("HandlerTicket."s + ticket.get<std::string>());
           if (handlerTicket) {
             httd->addTicket(handlerTicket);
-            SysError::setDebug("ParametricHandlerTicketTogglerDmn "s + name + " adding ticket "s + ticket.get<std::string>() + " successfully.", false);
           } else {
             SysError::setError("ParametricHandlerTicketTogglerDmn config for "s + name + " has a ticket that was not found."s);
           }

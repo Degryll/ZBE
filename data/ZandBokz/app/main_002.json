@@ -2309,11 +2309,29 @@
           "config" : {}
         },
         {"factory": "ImGuiPreLoopDaemonFtry",
-          "name": "zandbokz.PreDaemon",
+          "name": "zandbokz.imGuiPre",
           "config" : {
             "window" : "zandbokz.mainwindow",
             "camera" : "zandbokz.cam",
             "programId": "base_program"
+          }
+        },
+        {"factory": "ImGuiStyleLoadDaemonFtry",
+          "name": "zandbokz.styleLoad",
+          "config" : {
+            "font": {
+              "path": "data/fonts/Hack-Bold.ttf",
+              "size": 20.0
+            }
+          }
+        },
+        {"factory": "MasterDmnFtry",
+          "name": "zandbokz.PreDaemon",
+          "config" : {
+            "daemons": [
+              "zandbokz.imGuiPre",
+              "zandbokz.styleLoad"
+            ]
           }
         },
         {"factory": "ImGuiPostLoopDaemonFtry",
@@ -2727,10 +2745,51 @@
             ]
           }
         },
-        {"factory": "ImGuiTestDrawDaemonFtry",
-          "name": "zandbokz.pintaImgui",
+        {"factory": "ImGuiStatusDrawDaemonFtry",
+          "name": "zandbokz.imguiStats",
           "description" : "pinta la ventana de prueba de imgui",
           "config" : {}
+        },
+        {"factory": "TicketToggleDaemonFtry",
+          "name": "zandbokz.toggleStyleEditorDaemon",
+          "config" : {
+            "ticket" : "zandbokz.masterDrawDaemon.zandbokz.imguiStyleEditor.ticket",
+            "initialState" : false
+          }
+        },
+        {"factory": "TicketToggleDaemonFtry",
+          "name": "zandbokz.toggleStats",
+          "config" : {
+            "ticket" : "zandbokz.masterDrawDaemon.zandbokz.imguiStats.ticket",
+            "initialState" : false
+          }
+        },
+        {"factory": "ImGuiMenuDrawDaemonFtry",
+          "name": "zandbokz.mainMenuDrawDaemon",
+          "config" : {
+            "title": "Menu principal",
+            "horizontalAlign": 0.5,
+            "verticalAlign": 0.5,
+            "items": [
+              {
+                "label": "Editor estilo ImGui",
+                "daemon": "zandbokz.toggleStyleEditorDaemon"
+              },
+              {
+                "label": "Estado del juego",
+                "daemon": "zandbokz.toggleStats"
+              },
+              {
+                "label": "Salir",
+                "daemon": "zandbokz.exitDaemon"
+              }
+            ]
+          }
+        },
+        {"factory": "ImGuiStyleEditorDaemonFtry",
+          "name": "zandbokz.imguiStyleEditor",
+          "config" : {
+          }
         },
         {"factory": "MasterDmnFtry",
           "name": "zandbokz.masterDrawDaemon",
@@ -2743,9 +2802,9 @@
               "zandbokz.shadersSetter2D",
               "zandbokz.drawDaemon3D",
               "zandbokz.drawLookAtDaemon3D",
-              "zandbokz.shadersSetter3D",
-              "zandbokz.pintaImgui"
-            ]
+              "zandbokz.shadersSetter3D"
+            ],
+            "disabledDaemons": ["zandbokz.mainMenuDrawDaemon", "zandbokz.imguiStats", "zandbokz.imguiStyleEditor"]
           }
         },
         {"factory": "ShadersSetter2DFtry",
@@ -3139,14 +3198,6 @@
             "value" : "zandbokz.protaVelLateral"
           }
         },
-        {"factory": "DaemonIHFtry",
-          "name": "zandbokz.exitKeyHandler",
-          "config" : {
-            "daemon" : "zandbokz.exitDaemon",
-            "inputEventGenerator" : "zandbokz.inputEventGenerator",
-            "key":"ZBEK_ESCAPE"
-          }
-        },
         {"factory": "DoubleKeyValueSetterIHFtry",
           "name": "zandbokz.saltahandlerVal",
           "config" : {
@@ -3219,8 +3270,17 @@
         }
       ]
     },
-    {"description" : "Setting tickets",
+    {"description" : "Controles de menu",
       "factories" : [
+        {"factory": "ParametricTicketToggleDaemonFtry",
+          "name": "zandbokz.toggleMainMenuDaemon",
+          "config" : {
+            "ticket" : "zandbokz.masterDrawDaemon.zandbokz.mainMenuDrawDaemon.ticket",
+            "entity" : "Game",
+            "valueIdx" : "onGameIdx",
+            "negate": true
+          }
+        },
         {"factory": "ParametricHandlerTicketTogglerDmnFtry",
           "name": "zandbokz.togglecontrolesdmn",
           "config" : {
@@ -3249,6 +3309,7 @@
           "config" : {
             "daemons" : [
               "zandbokz.toggleMenuDaemon",
+              "zandbokz.toggleMainMenuDaemon",
               "zandbokz.togglecontrolesdmn",
               "zandbokz.onMenuToggleHandler"
             ]
@@ -3259,7 +3320,23 @@
           "config" : {
             "daemon" : "zandbokz.menuHandlerMasterDmn",
             "inputEventGenerator" : "zandbokz.inputEventGenerator",
-            "key":"ZBEK_TAB"
+            "key":"ZBEK_ESCAPE"
+          }
+        },
+        {"factory": "DaemonIHFtry",
+          "name": "zandbokz.handlerStyleEditor",
+          "config" : {
+            "daemon" : "zandbokz.toggleStyleEditorDaemon",
+            "inputEventGenerator" : "zandbokz.inputEventGenerator",
+            "key":"ZBEK_p"
+          }
+        },
+        {"factory": "DaemonIHFtry",
+          "name": "zandbokz.handlerStats",
+          "config" : {
+            "daemon" : "zandbokz.toggleStats",
+            "inputEventGenerator" : "zandbokz.inputEventGenerator",
+            "key":"ZBEK_o"
           }
         }
       ]

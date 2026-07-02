@@ -1,6 +1,6 @@
 /**
  * Copyright 2015 Batis Degryll Ludo
- * @file ImGuiPostLoopDaemon.h
+ * @file ImGuiStatusDrawDaemon.h
  * @since 2017-05-11
  * @date 2018-02-25
  * @author Batis Degryll Ludo
@@ -9,8 +9,8 @@
  * Shows the window (if double buffer changes it).
  */
 
-#ifndef ZBE_SDL_DAEMONS_IMGUITESTDRAWDAEMON_H_
-#define ZBE_SDL_DAEMONS_IMGUITESTDRAWDAEMON_H_
+#ifndef ZBE_SDL_DAEMONS_IMGUISTATUSDRAWDAEMON_H_
+#define ZBE_SDL_DAEMONS_IMGUISTATUSDRAWDAEMON_H_
 
 #include <memory>
 #include <tuple>
@@ -21,18 +21,18 @@
 
 namespace zbe {
 
-class ZBEAPI ImGuiTestDrawDaemon : public Daemon {
+class ZBEAPI ImGuiStatusDrawDaemon : public Daemon {
 public:
-  ImGuiTestDrawDaemon(const ImGuiTestDrawDaemon&) = delete; //!< Avoid copy.
-  void operator=(const ImGuiTestDrawDaemon&) = delete; //!< Avoid copy.
+  ImGuiStatusDrawDaemon(const ImGuiStatusDrawDaemon&) = delete; //!< Avoid copy.
+  void operator=(const ImGuiStatusDrawDaemon&) = delete; //!< Avoid copy.
 
   /** \brief Empty builder.
    */
-  ImGuiTestDrawDaemon() {}
+  ImGuiStatusDrawDaemon() {}
 
-  /** \brief Destroys the ImGuiTestDrawDaemon
+  /** \brief Destroys the ImGuiStatusDrawDaemon
    */
-  ~ImGuiTestDrawDaemon() = default;
+  ~ImGuiStatusDrawDaemon() = default;
 
   /** \brief Runs the daemon.
    */
@@ -141,4 +141,4 @@ private:
 
 }  // namespace zbe
 
-#endif  // ZBE_SDL_DAEMONS_IMGUITESTDRAWDAEMON_H_
+#endif  // ZBE_SDL_DAEMONS_IMGUISTATUSDRAWDAEMON_H_

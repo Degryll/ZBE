@@ -67,22 +67,22 @@ std::string print_stacktrace() {
 namespace zbe {
 
 void SysError::setError(std::string errorString) {
-  SPDLOG_ERROR("SysError: {}", errorString);
+  SPDLOG_ERROR("{}", errorString);
   // TODO ¿Esta es la forma en la que queremos mostrar el stack trace?
   SPDLOG_TRACE("Generating stack trace:" + print_stacktrace());
 }
 
 void SysError::setWarning(std::string msgString) {
-  SPDLOG_WARN("SysError: {}", msgString);
+  SPDLOG_WARN("{}", msgString);
   SPDLOG_TRACE("Generating stack trace:" + print_stacktrace());
 }
 
 void SysError::setInfo(std::string msgString) {
-  SPDLOG_INFO("SysError: {}", msgString);
+  SPDLOG_INFO("{}", msgString);
 }
 
 void SysError::setDebug(std::string msgString, bool trace) {
-  SPDLOG_DEBUG("SysError: {}", msgString);
+  SPDLOG_DEBUG("{}", msgString);
   if (trace) {
     SPDLOG_TRACE("Generating stack trace:" + print_stacktrace());
   }

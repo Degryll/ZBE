@@ -885,6 +885,194 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
+class ParametricTicketToggleDaemon : public Daemon {
+public:
+  ParametricTicketToggleDaemon() : negate(false) {}
+
+  void run() override {
+    bool active = val->get();
+    if (negate) {
+      active = !active;
+    }
+
+    if (active) {
+      ticket->setACTIVE();
+    } else {
+      ticket->setINACTIVE();
+    }
+  }
+
+  void setTicket(std::shared_ptr<Ticket> ticket) {
+    this->ticket = ticket;
+  }
+
+  void setValue(std::shared_ptr<Value<bool>> val) {
+    this->val = val;
+  }
+
+  void setNegate(bool negate) {
+    this->negate = negate;
+  }
+
+private:
+DISABLE_DLL_WARN
+  std::shared_ptr<Ticket> ticket;
+  std::shared_ptr<Value<bool>> val;
+  bool negate;
+DISABLE_WARNING_POP()
+};
+
+class ParametricTicketToggleDaemonFtry : public Factory {
+public:
+  void create(std::string name, uint64_t) override {
+    using namespace std::string_literals;
+    std::shared_ptr<ParametricTicketToggleDaemon> pttd = std::make_shared<ParametricTicketToggleDaemon>();
+    mainRsrc.insert("Daemon."s + name, pttd);
+    specificRsrc.insert("ParametricTicketToggleDaemon."s + name, pttd);
+  }
+
+  void setup(std::string name, uint64_t cfgId) override {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);
+    auto pttd = specificRsrc.get("ParametricTicketToggleDaemon."s + name);
+    if(cfg) {
+      auto j = *cfg;
+      if (!j["entity"].is_string()) {
+        SysError::setError("ParametricTicketToggleDaemon " + name + " config for entity must be a string."s);
+        return;
+      }
+      auto entity = entityStore.get("Entity."s + j["entity"].get<std::string>());
+      if (!entity) {
+        SysError::setError("ParametricTicketToggleDaemon " + name + " config for entity not found."s);
+        return;
+      }
+      if (!j["valueIdx"].is_string()) {
+        SysError::setError("ParametricTicketToggleDaemon " + name + " config for valueIdx must be a string."s);
+        return;
+      }
+
+      uint64_t valueIdx = uintStore.get(j["valueIdx"].get<std::string>());
+      auto value = entity->getBool(valueIdx);
+      if (!value) {
+        SysError::setError("ParametricTicketToggleDaemon " + name + " config for valueIdx not found."s);
+        return;
+      }
+
+      if (!j["ticket"].is_string()) {
+        SysError::setError("ParametricTicketToggleDaemon " + name + " config for ticket must be a string."s);
+        return;
+      }
+
+      std::string ticketName = j["ticket"].get<std::string>();
+      auto ticket = ticketRsrc.get(ticketName);
+      if (!ticket) {
+        SysError::setError("ParametricTicketToggleDaemon " + name + " config for ticket not found."s);
+        return;
+      }
+
+      bool negate = false;
+      if (j.contains("negate") && j["negate"].is_boolean()) {
+        negate = j["negate"].get<bool>();
+      }
+
+      pttd->setValue(value);
+      pttd->setTicket(ticket);
+      pttd->setNegate(negate);
+    } else {
+      SysError::setError("ParametricTicketToggleDaemon config for "s + name + " not found."s);
+    }
+  }
+
+private:
+DISABLE_DLL_WARN
+  RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<Daemon>& mainRsrc = RsrcStore<Daemon>::getInstance();
+  RsrcStore<ParametricTicketToggleDaemon>& specificRsrc = RsrcStore<ParametricTicketToggleDaemon>::getInstance();
+  RsrcStore<Entity>& entityStore = RsrcStore<Entity>::getInstance();
+  RsrcStore<Ticket>& ticketRsrc = RsrcStore<Ticket>::getInstance();
+  RsrcDictionary<uint64_t>& uintStore = RsrcDictionary<uint64_t>::getInstance();
+DISABLE_WARNING_POP()
+};
+
+/** \brief Daemon that toggles a Ticket using internal state.
+ */
+class TicketToggleDaemon : public Daemon {
+public:
+  TicketToggleDaemon() : active(false) {}
+
+  void run() override {
+    active = !active;
+    if (active) {
+      ticket->setACTIVE();
+    } else {
+      ticket->setINACTIVE();
+    }
+  }
+
+  void setTicket(std::shared_ptr<Ticket> ticket) {
+    this->ticket = ticket;
+  }
+
+  void setInitialState(bool active) {
+    this->active = active;
+  }
+
+private:
+DISABLE_DLL_WARN
+  std::shared_ptr<Ticket> ticket;
+  bool active;
+DISABLE_WARNING_POP()
+};
+
+class TicketToggleDaemonFtry : public Factory {
+public:
+  void create(std::string name, uint64_t) override {
+    using namespace std::string_literals;
+    std::shared_ptr<TicketToggleDaemon> ttd = std::make_shared<TicketToggleDaemon>();
+    mainRsrc.insert("Daemon."s + name, ttd);
+    specificRsrc.insert("TicketToggleDaemon."s + name, ttd);
+  }
+
+  void setup(std::string name, uint64_t cfgId) override {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);
+    auto ttd = specificRsrc.get("TicketToggleDaemon."s + name);
+    if(cfg) {
+      auto j = *cfg;
+
+      if (!j["ticket"].is_string()) {
+        SysError::setError("TicketToggleDaemon " + name + " config for ticket must be a string."s);
+        return;
+      }
+      std::string ticketName = j["ticket"].get<std::string>();
+      auto ticket = ticketRsrc.get(ticketName);
+      if (!ticket) {
+        SysError::setError("TicketToggleDaemon " + name + " config for ticket not found."s);
+        return;
+      }
+      ttd->setTicket(ticket);
+
+      bool initialState = false;
+      if (j.contains("initialState") && j["initialState"].is_boolean()) {
+        initialState = j["initialState"].get<bool>();
+      }
+      ttd->setInitialState(initialState);
+    } else {
+      SysError::setError("TicketToggleDaemon config for "s + name + " not found."s);
+    }
+  }
+
+private:
+DISABLE_DLL_WARN
+  RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<Daemon>& mainRsrc = RsrcStore<Daemon>::getInstance();
+  RsrcStore<TicketToggleDaemon>& specificRsrc = RsrcStore<TicketToggleDaemon>::getInstance();
+  RsrcStore<Ticket>& ticketRsrc = RsrcStore<Ticket>::getInstance();
+DISABLE_WARNING_POP()
+};
+
 }  // namespace zbe
 
 #endif  // ZBE_CORE_DAEMONS_DAEMON_H
