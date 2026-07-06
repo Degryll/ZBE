@@ -61,7 +61,7 @@
     "pointAIdx" : 1310,
     "pointBIdx" : 1320,
     "pointCIdx" : 1330,
-    "lifespan" : 662144,
+    "lifespan" : 1324288,
     "bloodrestTime" : 6553,
     "bloodburnTime" : 8192,
     "fovIdx" : 3100,
@@ -124,6 +124,7 @@
     "deleteAtResetTicket" : 666667,
     "protaResetTicket" : 666668,
     "levelIncrementTicket" : 666669,
+    "deleteManualTicket" : 666670,
     "state.static" : 0,
     "testwflags": 0,
     "testrflags": 0,
@@ -416,6 +417,12 @@
           "config" : {}
         },
         {
+          "factory": "TFAEVoidFtry",
+          "description" : "delete castañas",
+          "name": "zandbokz.deleteManualList",
+          "config" : {}
+        },
+        {
           "factory": "TFAECProtaResetFtry",
           "description" : "list reset de prota",
           "name": "zandbokz.protaResetList",
@@ -567,6 +574,14 @@
           "description" : "demonio limpia la sangre",
           "config" : {
             "list" : "zandbokz.deleteAtResetList",
+            "behavior" : "zandbokz.demonioborrador"
+          }
+        },
+        {"factory": "VoidBvrDmnFtry",
+          "name": "zandbokz.deleteManualDmn",
+          "description" : "demonio cuajarones",
+          "config" : {
+            "list" : "zandbokz.deleteManualList",
             "behavior" : "zandbokz.demonioborrador"
           }
         },
@@ -766,6 +781,13 @@
           "name" : "zandbokz.aborrarentreniveles",
           "config" : {
             "lists":{"zandbokz.deleteAtResetList":"deleteAtResetTicket"}
+          }
+        },
+        {
+          "factory" :"VoidAvtBldrFtry",
+          "name" : "zandbokz.aborrarmanualmente",
+          "config" : {
+            "lists":{"zandbokz.deleteManualList":"deleteManualTicket"}
           }
         },
         {
@@ -1105,7 +1127,7 @@
           "config" : {
             "uint": {
               "sourcestateIdx":["ZERO"],
-              "sourceIdx":["audio.mortar"],
+              "sourceIdx":["audio.poc"],
               "soundstateIdx":["ZERO"]
             }
           }
@@ -1123,7 +1145,7 @@
           "name" : "zandbokz.dropcuajarona",
           "config" : {
             "contextTime":"DEFAULT",
-            "builders" : ["zandbokz.aborrarentreniveles","zandbokz.cuajaronvalues", "zandbokz.diositocachetriangulo2D", "zandbokz.cuajaronsolidosocializa", "zandbokz.cuajaronsolidosocializa2D", "zandbokz.cuajaronapintar", "zandbokz.plataformaatrae"],
+            "builders" : ["zandbokz.aborrarentreniveles","zandbokz.aborrarmanualmente","zandbokz.cuajaronvalues", "zandbokz.diositocachetriangulo2D", "zandbokz.cuajaronsolidosocializa", "zandbokz.cuajaronsolidosocializa2D", "zandbokz.cuajaronapintar", "zandbokz.plataformaatrae"],
             "Vector3D" : {
               "positionIdx" : "zandbokz.copypos3v",
               "orientationIdx" : "zandbokz.UpDirToOri",
@@ -1139,7 +1161,7 @@
           "name" : "zandbokz.dropcuajaronb",
           "config" : {
             "contextTime":"DEFAULT",
-            "builders" : ["zandbokz.aborrarentreniveles","zandbokz.cuajaronvalues", "zandbokz.diositocachetriangulo2D", "zandbokz.cuajaronsolidosocializa", "zandbokz.cuajaronsolidosocializa2D", "zandbokz.cuajaronapintar", "zandbokz.plataformaatrae", "zandbokz.diositoattractorsocializa"],
+            "builders" : ["zandbokz.aborrarentreniveles","zandbokz.aborrarmanualmente","zandbokz.cuajaronvalues", "zandbokz.diositocachetriangulo2D", "zandbokz.cuajaronsolidosocializa", "zandbokz.cuajaronsolidosocializa2D", "zandbokz.cuajaronapintar", "zandbokz.plataformaatrae", "zandbokz.diositoattractorsocializa"],
             "Vector3D" : {
               "positionIdx" : "zandbokz.copypos3v",
               "orientationIdx" : "zandbokz.UpDirToOriRot",
@@ -2320,8 +2342,8 @@
           "name": "zandbokz.styleLoad",
           "config" : {
             "font": {
-              "path": "data/fonts/Hack-Bold.ttf",
-              "size": 20.0
+              "path": "data/fonts/Lenka.ttf",
+              "size": 12.0
             }
           }
         },
@@ -2767,9 +2789,11 @@
         {"factory": "ImGuiMenuDrawDaemonFtry",
           "name": "zandbokz.mainMenuDrawDaemon",
           "config" : {
-            "title": "Menu principal",
+            "title": "ZandBokz",
             "horizontalAlign": 0.5,
             "verticalAlign": 0.5,
+            "titleFontScale" : 4.0,
+            "itemsFontScale" : 1.5,
             "items": [
               {
                 "label": "Editor estilo ImGui",
@@ -2778,6 +2802,10 @@
               {
                 "label": "Estado del juego",
                 "daemon": "zandbokz.toggleStats"
+              },
+              {
+                "label": "Borrar plataformas",
+                "daemon": "zandbokz.deleteManualDmn"
               },
               {
                 "label": "Salir",

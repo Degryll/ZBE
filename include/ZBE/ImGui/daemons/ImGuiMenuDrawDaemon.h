@@ -79,7 +79,7 @@ public:
 
     // Dibujar título centrado
     if (!menuTitle.empty()) {
-        ImGui::SetWindowFontScale(1.538f); // Font size 20
+        ImGui::SetWindowFontScale(titleFontScale);
         const float titleWidth = ImGui::CalcTextSize(menuTitle.c_str()).x;
         ImGui::SetCursorPosX((displaySize.x - titleWidth) * horizontalAlign);
         ImGui::TextUnformatted(menuTitle.c_str());
@@ -88,6 +88,7 @@ public:
     }
 
     // Dibujar botones centrados
+    ImGui::SetWindowFontScale(itemsFontScale);
     for (const auto& item : menuItems) {
       ImGui::SetCursorPosX((displaySize.x - buttonWidth) * horizontalAlign);
 
@@ -99,6 +100,7 @@ public:
 
         ImGui::Dummy(ImVec2(0.0f, itemSpacing));
     }
+    ImGui::SetWindowFontScale(1.0f); // Restore scale
 
     ImGui::End();
   }
@@ -115,12 +117,16 @@ public:
 
   void setHorizontalAlign(float a) { horizontalAlign = std::clamp(a, 0.0f, 1.0f); }
   void setVerticalAlign(float a)   { verticalAlign   = std::clamp(a, 0.0f, 1.0f); }
+  void setTitleFontScale(float scale) { titleFontScale = std::max(scale, 0.1f); }
+  void setItemsFontScale(float scale) { itemsFontScale = std::max(scale, 0.1f); }
 
 private:
   std::vector<std::pair<std::string, std::shared_ptr<Daemon>>> menuItems;
   std::string menuTitle;
   float horizontalAlign = 0.5f;
   float verticalAlign = 0.5f;
+  float titleFontScale = 1.5f;
+  float itemsFontScale = 1.0f;
 };
 
 class ZBEAPI ImGuiMenuDrawDaemonFtry : public Factory {
@@ -170,6 +176,22 @@ public:
         SysError::setError("Bad config for ImGuiMenuDrawDaemonFtry - verticalAlign must be a number."s);
       } else {
         dmn->setVerticalAlign(j["verticalAlign"].get<float>());
+      }
+    }
+
+    if (j.contains("titleFontScale")) {
+      if (!j["titleFontScale"].is_number()) {
+        SysError::setError("Bad config for ImGuiMenuDrawDaemonFtry - titleFontScale must be a number."s);
+      } else {
+        dmn->setTitleFontScale(j["titleFontScale"].get<float>());
+      }
+    }
+
+    if (j.contains("itemsFontScale")) {
+      if (!j["itemsFontScale"].is_number()) {
+        SysError::setError("Bad config for ImGuiMenuDrawDaemonFtry - itemsFontScale must be a number."s);
+      } else {
+        dmn->setItemsFontScale(j["itemsFontScale"].get<float>());
       }
     }
 
