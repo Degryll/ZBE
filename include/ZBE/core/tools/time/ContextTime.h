@@ -14,6 +14,7 @@
 #include <memory>
 
 #include "ZBE/core/system/system.h"
+#include "ZBE/core/system/SysError.h"
 
 namespace zbe {
 
@@ -141,7 +142,7 @@ public:
 
   /** \brief Resume the ContextTime.
    */
-  void resume(uint64_t resumeTime) {
+  virtual void resume(uint64_t resumeTime) {
     if (paused) {
       endT = resumeTime;
       paused = false;
@@ -150,7 +151,7 @@ public:
 
   /** \brief Refreshes the SystemTime info using given Timer.
    */
-  inline void update() {
+  virtual void update() {
     if (paused) {return;}
     initT = _getInitTime();
     uint64_t finalTime = _getTotalTime();
@@ -170,6 +171,9 @@ public:
     remainT = endT - eventT;
   }
 
+  virtual uint64_t _getTotalTime() = 0;
+  virtual uint64_t _getInitTime() = 0;
+
 protected:
   uint64_t frame;     //!< Last frame duration
   uint64_t lostTime;  //!< Accumulated Total Time - Max frame time
@@ -183,9 +187,6 @@ protected:
   bool resumed;      //!< Time is resumed
   static uint64_t maxFrameTime;  //!< No frame will be longer than this.
 
-private:
-  virtual uint64_t _getTotalTime() = 0;
-  virtual uint64_t _getInitTime() = 0;
 };
 
 }  // namespace zbe

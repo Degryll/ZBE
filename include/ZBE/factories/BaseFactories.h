@@ -40,6 +40,7 @@
 #include "ZBE/factories/implementations/events/generators/InputEventGnFtry.h"
 #include "ZBE/factories/implementations/core/tools/shared/implementations/SimpleValueFtry.h"
 #include "ZBE/core/tools/containers/RsrcStore.h"
+#include "ZBE/core/tools/time/SubordinateTime.h"
 #include "ZBE/core/daemons/Daemon.h"
 #include "ZBE/daemons/OnceDaemon.h"
 #include "ZBE/daemons/HandlerTicketTogglerDmn.h"
@@ -75,6 +76,7 @@ public:
   static void load(RsrcStore<Factory>& factories) {
     //auto& factories = RsrcStore<Factory>::getInstance();
 
+    // TODO esto deberia ir en otro sitio, no en las factories.
     RsrcStore<ContextTime>::getInstance().insert("ContextTime.DEFAULT", SysTime::getInstance());
     RsrcStore<Daemon>::getInstance().insert("Daemon.DEFAULT", std::make_shared<VoidDaemon>());
 
@@ -88,6 +90,7 @@ public:
 
     // --- Values
     factories.insert("SimpleValueFtry", std::make_shared<SimpleValueFtry>());
+    factories.insert("SubordinateTimeFtry", std::make_shared<SubordinateTimeFtry>());
 
     // --- Daemons
     factories.insert("MainLoopExitFtry", std::make_shared<MainLoopExitFtry>());
@@ -106,6 +109,7 @@ public:
     factories.insert("BValueTogglerDaemonFtry", std::make_shared<BValueTogglerDaemonFtry>());
     factories.insert("ParametricTicketToggleDaemonFtry", std::make_shared<ParametricTicketToggleDaemonFtry>());
     factories.insert("TicketToggleDaemonFtry", std::make_shared<TicketToggleDaemonFtry>());
+    factories.insert("ParametricCTXTimePauseDaemonFtry", std::make_shared<ParametricCTXTimePauseDaemonFtry>());
 
     // --- Behaviors
     factories.insert("BoundedAddIntBvrFtry", std::make_shared<GenericFtry<Behavior<int64_t, int64_t, int64_t, int64_t>, BoundedAddBvr<int64_t>>>("Behavior", "BoundedAddBvr"));

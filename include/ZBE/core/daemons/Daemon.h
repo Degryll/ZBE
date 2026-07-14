@@ -1073,6 +1073,135 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
+class ParametricCTXTimePauseDaemon : public Daemon {
+public:
+  ParametricCTXTimePauseDaemon() : negate(false) {}
+
+  void run() override {
+    bool isPaused = paused->get();
+    if (negate) {
+      isPaused = !isPaused;
+    }
+
+    if (isPaused) {
+      ctxTime->pause();
+    } else {
+      ctxTime->resume(parentTime->getEventTime());
+    }
+    paused->set(!paused->get());
+  }
+
+  void setContextTime(std::shared_ptr<ContextTime> ctxTime) {
+    this->ctxTime = ctxTime;
+  }
+
+  void setParentTime(std::shared_ptr<ContextTime> parentTime) {
+    this->parentTime = parentTime;
+  }
+
+  void setValue(std::shared_ptr<Value<bool>> paused) {
+    this->paused = paused;
+  }
+
+  void setNegate(bool negate) {
+    this->negate = negate;
+  }
+
+private:
+DISABLE_DLL_WARN
+  std::shared_ptr<ContextTime> ctxTime;
+  std::shared_ptr<ContextTime> parentTime;
+  std::shared_ptr<Value<bool>> paused;
+  bool negate;
+DISABLE_WARNING_POP()
+};
+
+class ParametricCTXTimePauseDaemonFtry : public Factory {
+public:
+  void create(std::string name, uint64_t) override {
+    using namespace std::string_literals;
+    std::shared_ptr<ParametricCTXTimePauseDaemon> pctpd = std::make_shared<ParametricCTXTimePauseDaemon>();
+    mainRsrc.insert("Daemon."s + name, pctpd);
+    specificRsrc.insert("ParametricCTXTimePauseDaemon."s + name, pctpd);
+  }
+
+  void setup(std::string name, uint64_t cfgId) override {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<nlohmann::json> cfg = configRsrc.get(cfgId);
+    auto pctpd = specificRsrc.get("ParametricCTXTimePauseDaemon."s + name);
+    if(cfg) {
+      auto j = *cfg;
+      if (!j["entity"].is_string()) {
+        SysError::setError("ParametricCTXTimePauseDaemon " + name + " config for entity must be a string."s);
+        return;
+      }
+      auto entity = entityStore.get("Entity."s + j["entity"].get<std::string>());
+      if (!entity) {
+        SysError::setError("ParametricCTXTimePauseDaemon " + name + " config for entity not found."s);
+        return;
+      }
+      if (!j["valueIdx"].is_string()) {
+        SysError::setError("ParametricCTXTimePauseDaemon " + name + " config for valueIdx must be a string."s);
+        return;
+      }
+
+      uint64_t valueIdx = uintStore.get(j["valueIdx"].get<std::string>());
+      auto value = entity->getBool(valueIdx);
+      if (!value) {
+        SysError::setError("ParametricCTXTimePauseDaemon " + name + " config for valueIdx not found."s);
+        return;
+      }
+
+      if (!j["contextTime"].is_string()) {
+        SysError::setError("ParametricCTXTimePauseDaemon " + name + " config for contextTime must be a string."s);
+        return;
+      }
+
+      std::string ctxTimeName = j["contextTime"].get<std::string>();
+      auto ctxTime = ctxTimeRsrc.get("ContextTime."s + ctxTimeName);
+      if (!ctxTime) {
+        SysError::setError("ParametricCTXTimePauseDaemon " + name + " config for contextTime not found."s);
+        return;
+      }
+
+      if (!j["parentTime"].is_string()) {
+        SysError::setError("ParametricCTXTimePauseDaemon " + name + " config for parentTime must be a string."s);
+        return;
+      }
+
+      std::string parentTimeName = j["parentTime"].get<std::string>();
+      auto parentTime = ctxTimeRsrc.get("ContextTime."s + parentTimeName);
+      if (!parentTime) {
+        SysError::setError("ParametricCTXTimePauseDaemon " + name + " config for parentTime not found."s);
+        return;
+      }
+
+      bool negate = false;
+      if (j.contains("negate") && j["negate"].is_boolean()) {
+        negate = j["negate"].get<bool>();
+      }
+
+      pctpd->setValue(value);
+      pctpd->setContextTime(ctxTime);
+      pctpd->setParentTime(parentTime);
+      pctpd->setNegate(negate);
+    } else {
+      SysError::setError("ParametricCTXTimePauseDaemon config for "s + name + " not found."s);
+    }
+  }
+
+private:
+DISABLE_DLL_WARN
+  RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<Daemon>& mainRsrc = RsrcStore<Daemon>::getInstance();
+  RsrcStore<ParametricCTXTimePauseDaemon>& specificRsrc = RsrcStore<ParametricCTXTimePauseDaemon>::getInstance();
+  RsrcStore<Entity>& entityStore = RsrcStore<Entity>::getInstance();
+  RsrcStore<ContextTime>& ctxTimeRsrc = RsrcStore<ContextTime>::getInstance();
+  RsrcDictionary<uint64_t>& uintStore = RsrcDictionary<uint64_t>::getInstance();
+DISABLE_WARNING_POP()
+};
+
 }  // namespace zbe
 
 #endif  // ZBE_CORE_DAEMONS_DAEMON_H

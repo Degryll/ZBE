@@ -78,6 +78,14 @@ public:
         }
       }
 
+      // TODO encontrar la forma de cargar ficheros fnt o semejante con fuentes bitmap o vectoriales con Color.
+      // ImGuiIO& io = ImGui::GetIO();
+      // // Cargamos el archivo .fnt (ImGui buscará el .png automáticamente en la misma ruta)
+      // ImFont* miFuenteTerror = io.Fonts->AddFontFromFileTTF("data/fonts/fuente.fnt", 32.0f);
+      // // ... Después compilas el Atlas como siempre en tu backend ...
+      // io.Fonts->Build();
+      // ImGui::PushFont(miFuenteTerror);
+
       applied = true;
     }
   }

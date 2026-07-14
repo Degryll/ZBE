@@ -199,12 +199,23 @@
     "VOLANDO" : 0,
     "RODANDO" : 1,
 
-    "onGameIdx" : 30103
+    "onGameIdx" : 30103,
+    "pausedIdx" : 30104
   },
   "phases":[
       {
         "description" : "Loading los valiu",
         "factories" : [
+          {"factory": "SDLSysTimeFtry",
+            "name": "zandbokz.SDLSysTime",
+            "config" : {}
+          },
+          {"factory": "SubordinateTimeFtry",
+            "name": "zandbokz.gameTime",
+            "config": {
+              "parent": "DEFAULT"
+            }
+          },
           {
             "factory" : "SimpleValueFtry",
             "name" : "zandbokz",
@@ -548,7 +559,7 @@
           "name": "zandbokz.timeEventGenerator",
           "config" : {
             "eventId" : "timeEventId",
-            "contextTime" : "DEFAULT"
+            "contextTime" : "zandbokz.gameTime"
           }
         },
         {"factory": "IntSimpleIncrementBvrFtry",
@@ -606,7 +617,7 @@
           "name":"zandbokz.KBMWatcher",
           "config" : {
             "window" : "zandbokz.mainwindow",
-            "contextTime" : "DEFAULT"
+            "contextTime" : "zandbokz.gameTime"
           }
         },
         { "factory": "ImGuiEventWatcherFtry",
@@ -619,7 +630,7 @@
           "name":"zandbokz.inputEventGenerator",
           "config" : {
             "eventId":"inputEventId",
-            "contextTime":"DEFAULT",
+            "contextTime" : "DEFAULT",
             "inputBuffer":"SDLOGLWindow.zandbokz.mainwindow.InputBuffer",
             "inputTextBuffer":"SDLOGLWindow.zandbokz.mainwindow.InputTextBuffer"
           }
@@ -794,7 +805,7 @@
           "factory" : "EntityBldrFtry",
           "name" : "zandbokz.thirdviewcambldr",
           "config" : {
-            "contextTime":"DEFAULT",
+            "contextTime" : "zandbokz.gameTime",
             "builders" : ["zandbokz.thirdviewcamvalues", "zandbokz.thirdviewcammove"]
           }
         },
@@ -827,7 +838,7 @@
           "factory" : "EntityBldrFtry",
           "name" : "zandbokz.pepinobuilder",
           "config" : {
-            "contextTime":"DEFAULT",
+            "contextTime" : "zandbokz.gameTime",
             "builders" : ["zandbokz.pepinovalues", "zandbokz.pepinoapintar", "zandbokz.pepinoabailar"]
           }
         },
@@ -1113,7 +1124,7 @@
           "factory" : "BehaviorEntityBldrFtry2V",
           "name" : "zandbokz.suenacatapun",
           "config" : {
-            "contextTime":"DEFAULT",
+            "contextTime" : "zandbokz.gameTime",
             "builders" : ["zandbokz.audiovalues", "zandbokz.suena"],
             "Vector3D" : {
               "positionIdx" : "zandbokz.copypos2v",
@@ -1144,7 +1155,7 @@
           "factory" : "BehaviorEntityBldrFtry3V",
           "name" : "zandbokz.dropcuajarona",
           "config" : {
-            "contextTime":"DEFAULT",
+            "contextTime" : "zandbokz.gameTime",
             "builders" : ["zandbokz.aborrarentreniveles","zandbokz.aborrarmanualmente","zandbokz.cuajaronvalues", "zandbokz.diositocachetriangulo2D", "zandbokz.cuajaronsolidosocializa", "zandbokz.cuajaronsolidosocializa2D", "zandbokz.cuajaronapintar", "zandbokz.plataformaatrae"],
             "Vector3D" : {
               "positionIdx" : "zandbokz.copypos3v",
@@ -1160,7 +1171,7 @@
           "factory" : "BehaviorEntityBldrFtry3V",
           "name" : "zandbokz.dropcuajaronb",
           "config" : {
-            "contextTime":"DEFAULT",
+            "contextTime" : "zandbokz.gameTime",
             "builders" : ["zandbokz.aborrarentreniveles","zandbokz.aborrarmanualmente","zandbokz.cuajaronvalues", "zandbokz.diositocachetriangulo2D", "zandbokz.cuajaronsolidosocializa", "zandbokz.cuajaronsolidosocializa2D", "zandbokz.cuajaronapintar", "zandbokz.plataformaatrae", "zandbokz.diositoattractorsocializa"],
             "Vector3D" : {
               "positionIdx" : "zandbokz.copypos3v",
@@ -1239,7 +1250,7 @@
           "factory" : "BehaviorEntityBldrFtry3V",
           "name" : "zandbokz.dropcastaña",
           "config" : {
-            "contextTime":"DEFAULT",
+            "contextTime" : "zandbokz.gameTime",
             "builders" : ["zandbokz.aborrarentreniveles","zandbokz.castañavalues", "zandbokz.castañaapintar", "zandbokz.castañaefimera", "zandbokz.castañapalante", "zandbokz.castañasolidosocializa", "zandbokz.castañachof", "zandbokz.castañaseborra"],
             "Vector3D" : {
               "positionIdx" : "zandbokz.copypos3v",
@@ -1252,7 +1263,7 @@
           "factory" : "EntityBldrFtry",
           "name" : "zandbokz.creaunicorniorosa",
           "config" : {
-            "contextTime":"DEFAULT",
+            "contextTime" : "zandbokz.gameTime",
             "builders" : ["zandbokz.unicorniorosavalues", "zandbokz.castañasolidosocializa"]
           }
         },
@@ -1479,7 +1490,7 @@
             "teg" : "zandbokz.timeEventGenerator",
             "time" : "bloodrestTime",
             "ticketId" : "bloodfillerTHTicket",
-            "contextTime" : "DEFAULT",
+            "contextTime" : "zandbokz.gameTime",
             "enabled" : false
           }
         },
@@ -1501,7 +1512,7 @@
             "teg" : "zandbokz.timeEventGenerator",
             "time" : "bloodburnTime",
             "ticketId" : "bloodburnerTHTicket",
-            "contextTime" : "DEFAULT"
+            "contextTime" : "zandbokz.gameTime"
           }
         },
         {
@@ -1526,7 +1537,7 @@
             "teg" : "zandbokz.timeEventGenerator",
             "time" : "lifespan",
             "ticketId" : "lifeSpanTHTicket",
-            "contextTime" : "DEFAULT"
+            "contextTime" : "zandbokz.gameTime"
           }
         },
         {
@@ -1638,7 +1649,7 @@
           "factory" : "EntityBldrFtry",
           "name" : "zandbokz.protabuilder",
           "config" : {
-            "contextTime":"DEFAULT",
+            "contextTime" : "zandbokz.gameTime",
             "builders" : ["zandbokz.protavalues", "zandbokz.protaapintar", "zandbokz.protaamover", "zandbokz.protacalculavel", 
                           "zandbokz.protacalculaori", "zandbokz.protamirapaondebe", "zandbokz.protaorientationcalcbuild", 
                           "zandbokz.protadispara", "zandbokz.protadisparasuena", "zandbokz.protaacaer",  "zandbokz.protafinalvel", 
@@ -2132,7 +2143,7 @@
           "name" : "zandbokz.diositobuilderfichero",
           "description" : "Está ahí, mirando. Pero no hace na",
           "config" : {
-            "contextTime":"DEFAULT",
+            "contextTime" : "zandbokz.gameTime",
             "builders" : ["zandbokz.aborrarentreniveles","zandbokz.diositocachetriangulo2D", "zandbokz.diositoapintar","zandbokz.diositosolidosocializa", "zandbokz.diositosolidosocializa2D", "zandbokz.diositodesactiva", "zandbokz.plataformaatrae", "zandbokz.diositoattractorsocializa"],
             "path" : "data/ZandBokz/app/levels/1/plataformas.json"
           }
@@ -2142,7 +2153,7 @@
           "name" : "zandbokz.goalbuilderfichero",
           "description" : "Está ahí, mirando. Pero no hace na",
           "config" : {
-            "contextTime":"DEFAULT",
+            "contextTime" : "zandbokz.gameTime",
             "builders" : ["zandbokz.aborrarentreniveles", "zandbokz.goalapintar", "zandbokz.goalfisica3d"],
             "path" : "data/ZandBokz/app/levels/1/goal.json"
           }
@@ -2152,7 +2163,7 @@
           "name" : "zandbokz.diositobuilderfichero1",
           "description" : "Está ahí, mirando. Pero no hace na",
           "config" : {
-            "contextTime":"DEFAULT",
+            "contextTime" : "zandbokz.gameTime",
             "builders" : ["zandbokz.aborrarentreniveles","zandbokz.diositocachetriangulo2D", "zandbokz.diositoapintar","zandbokz.diositosolidosocializa", "zandbokz.diositosolidosocializa2D", "zandbokz.diositodesactiva", "zandbokz.plataformaatrae", "zandbokz.diositoattractorsocializa"],
             "path" : "data/ZandBokz/app/levels/1/plataformas.json"
           }
@@ -2162,7 +2173,7 @@
           "name" : "zandbokz.goalbuilderfichero1",
           "description" : "Está ahí, mirando. Pero no hace na",
           "config" : {
-            "contextTime":"DEFAULT",
+            "contextTime" : "zandbokz.gameTime",
             "builders" : ["zandbokz.aborrarentreniveles", "zandbokz.goalapintar", "zandbokz.goalfisica3d"],
             "path" : "data/ZandBokz/app/levels/1/goal.json"
           }
@@ -2172,7 +2183,7 @@
           "name" : "zandbokz.diositobuilderfichero2",
           "description" : "Está ahí, mirando. Pero no hace na",
           "config" : {
-            "contextTime":"DEFAULT",
+            "contextTime" : "zandbokz.gameTime",
             "builders" : ["zandbokz.aborrarentreniveles","zandbokz.diositocachetriangulo2D", "zandbokz.diositoapintar","zandbokz.diositosolidosocializa", "zandbokz.diositosolidosocializa2D", "zandbokz.diositodesactiva", "zandbokz.plataformaatrae", "zandbokz.diositoattractorsocializa"],
             "path" : "data/ZandBokz/app/levels/2/plataformas.json"
           }
@@ -2182,7 +2193,7 @@
           "name" : "zandbokz.goalbuilderfichero2",
           "description" : "Está ahí, mirando. Pero no hace na",
           "config" : {
-            "contextTime":"DEFAULT",
+            "contextTime" : "zandbokz.gameTime",
             "builders" : ["zandbokz.aborrarentreniveles", "zandbokz.goalapintar", "zandbokz.goalfisica3d"],
             "path" : "data/ZandBokz/app/levels/2/goal.json"
           }
@@ -2199,9 +2210,10 @@
           "name": "Game",
           "description" : "Entidad con los valores comunes del juego",
           "config" : {
-            "contextTime":"DEFAULT",
+            "contextTime" : "zandbokz.gameTime",
             "bool": {
-              "onGameIdx" : true
+              "onGameIdx" : true,
+              "pausedIdx" : false
             }
           }
         },
@@ -2209,7 +2221,7 @@
           "name": "cameraControllerFree",
           "description" : "Entidad asociada a la camara",
           "config" : {
-            "contextTime":"DEFAULT",
+            "contextTime" : "zandbokz.gameTime",
             "float": {
               "fovIdx":"zandbokz.fov",
               "camScaleIdx":"zandbokz.camScale",
@@ -2237,7 +2249,7 @@
           "name": "HUD",
           "description" : "Entidad asociada a la mirilla",
           "config" : {
-            "contextTime":"DEFAULT",
+            "contextTime" : "zandbokz.gameTime",
             "V2D": {
               "hudcrossPosIdx":["crosshairsPos"],
               "hudcrossSizeIdx":["crosshairsSize"],
@@ -2322,13 +2334,9 @@
             "drawDaemonDesc":"Pues a pintar la pantalla de carga",
             "postDaemon":"zandbokz.PostDaemon",
             "postDaemonDesc":"Hacer cosas de sdl",
-            "contextTime":"DEFAULT",
+            "contextTime" : "zandbokz.gameTime",
             "contextTimeDesc":"el systime"
           }
-        },
-        {"factory": "SDLSysTimeFtry",
-          "name": "zandbokz.SDLSysTime",
-          "config" : {}
         },
         {"factory": "ImGuiPreLoopDaemonFtry",
           "name": "zandbokz.imGuiPre",
@@ -2366,7 +2374,7 @@
           "name": "zandbokz.interactionEventGenerator",
           "config" : {
             "eventId" : "interactionEventId",
-            "contextTime" : "DEFAULT",
+            "contextTime" : "zandbokz.gameTime",
             "interactionators" : "zandbokz.inatorList"
           }
         },
@@ -2374,7 +2382,7 @@
           "name": "zandbokz.interactionEventGenerator2D",
           "config" : {
             "eventId" : "interaction2DEventId",
-            "contextTime" : "DEFAULT",
+            "contextTime" : "zandbokz.gameTime",
             "interactionators" : "zandbokz.inator2DList"
           }
         },
@@ -2382,7 +2390,7 @@
           "name": "zandbokz.interactionEventGeneratorFG",
           "config" : {
             "eventId" : "interactionFGEventId",
-            "contextTime" : "DEFAULT",
+            "contextTime" : "zandbokz.gameTime",
             "interactionators" : "zandbokz.inatorFGList"
           }
         },
@@ -2449,7 +2457,7 @@
           "config" : {
             "min" : "cam.fovMin",
             "max" : "cam.fovMax",
-            "contextTime" : "DEFAULT",
+            "contextTime" : "zandbokz.gameTime",
             "period" : "cam.fovPeriod"
           }
         },
@@ -2459,7 +2467,7 @@
           "config" : {
             "min" : "model.coordMin",
             "max" : "model.coordMax",
-            "contextTime" : "DEFAULT",
+            "contextTime" : "zandbokz.gameTime",
             "period" : "model.coordPeriod",
             "component" : "model.sineComponent"
           }
@@ -2608,7 +2616,7 @@
           "description" : "Comportamiento que menea el obojeto to palante",
           "config" : {
             "velocity" : "model.fixedForwardVelocity",
-            "contextTime" : "DEFAULT"
+            "contextTime" : "zandbokz.gameTime"
           }
         },
         {"factory": "RelativeUniformLinearMotion3DFtry",
@@ -2616,7 +2624,7 @@
           "description" : "Comportamiento que menea el obojeto to patras",
           "config" : {
             "velocity" : "model.fixedBackwardVelocity",
-            "contextTime" : "DEFAULT"
+            "contextTime" : "zandbokz.gameTime"
           }
         },
         {"factory": "RelativeUniformLinearMotion3DFtry",
@@ -2624,7 +2632,7 @@
           "description" : "Comportamiento que menea el obojeto pa la siniestra",
           "config" : {
             "velocity" : "model.fixedLeftVelocity",
-            "contextTime" : "DEFAULT"
+            "contextTime" : "zandbokz.gameTime"
           }
         },
         {"factory": "RelativeUniformLinearMotion3DFtry",
@@ -2632,21 +2640,21 @@
           "description" : "Comportamiento que menea el obojeto pa la diestra",
           "config" : {
             "velocity" : "model.fixedRightVelocity",
-            "contextTime" : "DEFAULT"
+            "contextTime" : "zandbokz.gameTime"
           }
         },
         {"factory": "UniformLinearMotion3DFtry",
           "name": "zandbokz.ULM3DBhv",
           "description" : "Comportamiento que menea la bala palante",
           "config" : {
-            "contextTime" : "DEFAULT"
+            "contextTime" : "zandbokz.gameTime"
           }
         },
         {"factory": "UniformLinearMotion2DOnPlane",
           "name": "zandbokz.ULM3DOn2D",
           "description" : "Comportamiento que menea cosas sobre planos",
           "config" : {
-            "contextTime" : "DEFAULT"
+            "contextTime" : "zandbokz.gameTime"
           }
         },
         {"factory": "OrientationRelativeVelSetterFtry",
@@ -2786,6 +2794,17 @@
             "initialState" : false
           }
         },
+        {
+          "factory": "ParametricCTXTimePauseDaemonFtry",
+          "name": "zandbokz.pauseDaemon",
+          "description" : "demonio que pausa el juego",
+          "config" : {
+            "contextTime" : "zandbokz.gameTime",
+            "parentTime" : "DEFAULT",
+            "entity" : "Game",
+            "valueIdx" : "onGameIdx"
+          }
+        },
         {"factory": "ImGuiMenuDrawDaemonFtry",
           "name": "zandbokz.mainMenuDrawDaemon",
           "config" : {
@@ -2798,6 +2817,10 @@
               {
                 "label": "Editor estilo ImGui",
                 "daemon": "zandbokz.toggleStyleEditorDaemon"
+              },
+              {
+                "label": "Pausar juego",
+                "daemon": "zandbokz.pauseDaemon"
               },
               {
                 "label": "Estado del juego",
@@ -3356,7 +3379,7 @@
           "config" : {
             "daemon" : "zandbokz.toggleStyleEditorDaemon",
             "inputEventGenerator" : "zandbokz.inputEventGenerator",
-            "key":"ZBEK_p"
+            "key":"ZBEK_n"
           }
         },
         {"factory": "DaemonIHFtry",
@@ -3364,7 +3387,15 @@
           "config" : {
             "daemon" : "zandbokz.toggleStats",
             "inputEventGenerator" : "zandbokz.inputEventGenerator",
-            "key":"ZBEK_o"
+            "key":"ZBEK_m"
+          }
+        },
+        {"factory": "DaemonIHFtry",
+          "name": "zandbokz.handlerPause",
+          "config" : {
+            "daemon" : "zandbokz.pauseDaemon",
+            "inputEventGenerator" : "zandbokz.inputEventGenerator",
+            "key":"ZBEK_p"
           }
         }
       ]

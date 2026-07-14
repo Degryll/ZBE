@@ -49,17 +49,11 @@ public:
 
   inline void setSystemTimer(std::shared_ptr<Timer> timer) {
     if (!timer) {
-      zbe::SysError::setError(std::string("ERROR: System timer can only be set once"));
+      SysError::setError(std::string("ERROR: System timer can only be set once"));
     } else {
       this->timer = timer;
     }
   }
-
-private:
-  DISABLE_DLL_WARN
-  SysTime() : timer(nullptr) {}  //!< Basic constructor to be used internally.
-
-  std::shared_ptr<Timer> timer;      //!< Actual implementation of Timer to be used.
 
   uint64_t _getTotalTime() override {
     return static_cast<uint64_t>(timer->totalTime()) - lostTime;
@@ -68,6 +62,12 @@ private:
   uint64_t _getInitTime() override {
     return endT;
   }
+  
+private:
+  DISABLE_DLL_WARN
+  SysTime() : timer(nullptr) {}  //!< Basic constructor to be used internally.
+
+  std::shared_ptr<Timer> timer;      //!< Actual implementation of Timer to be used.
   
   DISABLE_WARNING_POP()
 };
