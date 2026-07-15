@@ -66,26 +66,40 @@ std::string print_stacktrace() {
 
 namespace zbe {
 
+// En este método no se han puedos las macros porque no se deberían desactivar errores en ningún caso.
 void SysError::setError(std::string errorString) {
   SPDLOG_ERROR("{}", errorString);
   // TODO ¿Esta es la forma en la que queremos mostrar el stack trace?
   SPDLOG_TRACE("Generating stack trace:" + print_stacktrace());
 }
 
+#if defined(SPDLOG_ACTIVE_LEVEL) && SPDLOG_ACTIVE_LEVEL <= SPDLOG_LEVEL_WARN
 void SysError::setWarning(std::string msgString) {
   SPDLOG_WARN("{}", msgString);
   SPDLOG_TRACE("Generating stack trace:" + print_stacktrace());
 }
+#else
+void SysError::setWarning(std::string) {}
+#endif
 
+#if defined(SPDLOG_ACTIVE_LEVEL) && SPDLOG_ACTIVE_LEVEL <= SPDLOG_LEVEL_INFO
 void SysError::setInfo(std::string msgString) {
   SPDLOG_INFO("{}", msgString);
 }
+#else
+void SysError::setInfo(std::string) {}
+#endif
 
+#if defined(SPDLOG_ACTIVE_LEVEL) && SPDLOG_ACTIVE_LEVEL <= SPDLOG_LEVEL_DEBUG
 void SysError::setDebug(std::string msgString, bool trace) {
   SPDLOG_DEBUG("{}", msgString);
   if (trace) {
     SPDLOG_TRACE("Generating stack trace:" + print_stacktrace());
   }
 }
+#else
+void SysError::setDebug(std::string, bool) {}
+#endif
+
 
 }  // namespace zbe

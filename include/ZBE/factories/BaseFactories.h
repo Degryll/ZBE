@@ -17,7 +17,7 @@
 #include "ZBE/factories/implementations/entities/EntityFtry.h"
 #include "ZBE/factories/implementations/GenericFtry.h"
 #include "ZBE/factories/implementations/daemons/BehaviorDmnFtry.h"
-#include "ZBE/factories/implementations/daemons/MainLoopFtry.h"
+#include "ZBE/factories/implementations/daemons/SimpleMainLoopFtry.h"
 #include "ZBE/factories/implementations/daemons/MasterDmnFtry.h"
 #include "ZBE/factories/implementations/daemons/StateMachineDmnFtry.h"
 #include "ZBE/factories/implementations/daemons/RsrcFolderLoaderDmnFtry.h"
@@ -94,7 +94,7 @@ public:
 
     // --- Daemons
     factories.insert("MainLoopExitFtry", std::make_shared<MainLoopExitFtry>());
-    factories.insert("MainLoopFtry", std::make_shared<MainLoopFtry>());
+    factories.insert("SimpleMainLoopFtry", std::make_shared<SimpleMainLoopFtry>());
     factories.insert("MasterDmnFtry", std::make_shared<MasterDmnFtry>());
     factories.insert("CallDmnFtry", std::make_shared<CallDmnFtry>());
     factories.insert("OnceDaemonFtry", std::make_shared<OnceDaemonFtry>());

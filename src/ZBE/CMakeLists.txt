@@ -26,7 +26,7 @@ add_library(ZBE_LIB SHARED
   behaviors/BulletCreatorBhv.cpp
   core/zbe.cpp
   core/daemons/StateMachineDaemon.cpp
-  core/daemons/MainLoop.cpp
+  core/daemons/SimpleMainLoop.cpp
   core/daemons/DaemonMaster.cpp
   core/entities/Entity.cpp
   core/events/TextEvent.cpp

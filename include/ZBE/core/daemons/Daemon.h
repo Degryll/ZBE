@@ -249,15 +249,185 @@ DISABLE_WARNING_POP()
 
 // };
 
+class ZBEAPI BaseLoop : virtual public Daemon {
+public:
+
+  /** \brief Builds an empty BaseLoop.
+   */
+  BaseLoop() : dPre(nullptr), dFrame(nullptr), keep(true) {}
+
+  /** \brief Constructor.
+   * \param pre Pre loop Daemon.
+   * \param post Post Loop Daemon.
+   * \param frame Frame Daemon.
+   * \param common Common Behavior Daemon.
+   * \param react React Behavior Daemon.
+   * \param draw Drawer daemon.
+   */
+  BaseLoop(std::shared_ptr<Daemon> pre, std::shared_ptr<Daemon> frame, std::shared_ptr<ContextTime> contextTime=zbe::SysTime::getInstance())
+    : dPre(pre), dFrame(frame), contextTime(contextTime), keep(true) {}
+
+  /** \brief Destructor.
+   */
+  virtual ~BaseLoop() = default;
+
+  /** \brief It will run until stop() is called.
+   */
+  void run() override {
+    keep = true;
+    while(keep) {  // Each iteration generates a frame.
+      // Pre daemon
+      contextTime->update();
+      dPre->run();
+      dFrame->run();
+    }  // while keep
+  }
+
+  /** \brief Setter for the Pre-loop daemon.
+   * \param daemon Pointer to the Daemon desired to be used.
+   */
+  void setPre(std::shared_ptr<Daemon> daemon) {dPre = daemon;}
+
+  /** \brief Setter for the Frame daemon.
+   * \param daemon Pointer to the Daemon desired to be used.
+   */
+  void setFrame(std::shared_ptr<Daemon> daemon) {dFrame = daemon;}
+
+  /** \brief Setter for the context time.
+   * \param contextTime Pointer to the context time desired to be used.
+   */
+  inline void setContextTime(std::shared_ptr<ContextTime> contextTime) {this->contextTime = contextTime;}
+
+  /** \brief Stops current loop.
+   */
+  inline void stop() {keep = false;}
+
+private:
+DISABLE_DLL_WARN
+  std::shared_ptr<Daemon> dPre;
+  std::shared_ptr<Daemon> dFrame;
+  std::shared_ptr<ContextTime> contextTime;
+  bool keep;
+DISABLE_WARNING_POP()
+};
+
+class ZBEAPI FrameDaemon : virtual public Daemon {
+
+  /** \brief Builds an empty FrameDaemon.
+   */
+  FrameDaemon() : dPre(nullptr), dPost(nullptr), dTE(nullptr), dCBM(nullptr), dRBM(nullptr), dDM(nullptr),
+      contextTime(nullptr), store(nullptr) {}
+
+  /** \brief Constructor.
+   * \param pre Pre loop Daemon.
+   * \param post Post Loop Daemon.
+   * \param event Event genration Daemon.
+   * \param common Common Behavior Daemon.
+   * \param react React Behavior Daemon.
+   * \param draw Drawer daemon.
+   */
+  FrameDaemon(std::shared_ptr<Daemon> pre, std::shared_ptr<Daemon> post, std::shared_ptr<Daemon> event, std::shared_ptr<Daemon> common, std::shared_ptr<Daemon> react, std::shared_ptr<Daemon> draw, std::shared_ptr<ContextTime> contextTime=zbe::SysTime::getInstance())
+    : dPre(pre), dPost(post), dTE(event), dCBM(common), dRBM(react), dDM(draw),
+      contextTime(contextTime), store(nullptr) {}
+
+  /** \brief Destructor.
+   */
+  virtual ~FrameDaemon() = default;
+
+  /** \brief It will run once per frame.
+   */
+  void run() override {
+    // Pre daemon
+    contextTime->update();
+    dPre->run();
+
+    // Inner loop
+    while (contextTime->isFrameRemaining()) {
+      // Timed events generator daemon
+      dTE->run();
+      contextTime->setEventTime(store->getTime());
+      if (contextTime->isPartialFrame()) {
+        // commonBehaviorMaster
+        dCBM->run();
+        store->manageCurrent();
+        // reactBehaviorMaster
+        dRBM->run();
+      } else {
+        // commonBehaviorMaster
+        dCBM->run();
+        store->clearStore();
+      }
+      contextTime->updateInitTime();
+    }  // while frame remaining
+    // Drawer daemon
+    dDM->run();
+    // Post daemon
+    dPost->run();
+  }
+
+  /** \brief Setter for the Pre-loop daemon.
+   * \param daemon Pointer to the Daemon desired to be used.
+   */
+  void setPre(std::shared_ptr<Daemon> daemon) {dPre = daemon;}
+
+  /** \brief Setter for the Post-loop daemon.
+   * \param daemon Pointer to the Daemon desired to be used.
+   */
+  void setPost(std::shared_ptr<Daemon> daemon) {dPost = daemon;}
+
+  /** \brief Setter for the Timed Events daemon.
+   * \param daemon Pointer to the Daemon desired to be used.
+   */
+  void setEvent(std::shared_ptr<Daemon> daemon) {dTE = daemon;}
+
+  /** \brief Setter for the Common Behavior Daemon Master.
+   * \param daemon Pointer to the Daemon desired to be used.
+   */
+  void setCommon(std::shared_ptr<Daemon> daemon) {dCBM = daemon;}
+
+  /** \brief Setter for the React Behavior Daemon Master.
+   * \param daemon Pointer to the Daemon desired to be used.
+   */
+  void setReact(std::shared_ptr<Daemon> daemon) {dRBM = daemon;}
+
+  /** \brief Setter for the Drawlo  Master.
+   * \param daemon Pointer to the Daemon desired to be used.
+   */
+  void setDraw(std::shared_ptr<Daemon> daemon) {dDM = daemon;}
+
+  /** \brief Setter for the store.
+   * \param store Pointer to the EventStore desired to be used.
+   */
+  void setEventStore(EventStore* store) {this->store = store;}
+
+  /** \brief Setter for the context time.
+   * \param contextTime Pointer to the context time desired to be used.
+   */
+  inline void setContextTime(std::shared_ptr<ContextTime> contextTime) {this->contextTime = contextTime;}
+
+private:
+DISABLE_DLL_WARN
+  std::shared_ptr<Daemon> dPre;
+  std::shared_ptr<Daemon> dPost;
+  std::shared_ptr<Daemon> dTE;
+  std::shared_ptr<Daemon> dCBM;
+  std::shared_ptr<Daemon> dRBM;
+  std::shared_ptr<Daemon> dDM;
+
+  std::shared_ptr<ContextTime> contextTime;
+  EventStore* store;
+
+DISABLE_WARNING_POP()
+};
 
 /** \brief The Main Loop of the game.
  */
-class ZBEAPI MainLoop : virtual public Daemon {
+class ZBEAPI SimpleMainLoop : virtual public Daemon {
 public:
 
   /** \brief Builds an empty MainLoop.
    */
-  MainLoop() : dPre(nullptr), dPost(nullptr), dTE(nullptr), dCBM(nullptr), dRBM(nullptr), dDM(nullptr),
+  SimpleMainLoop() : dPre(nullptr), dPost(nullptr), dTE(nullptr), dCBM(nullptr), dRBM(nullptr), dDM(nullptr),
       contextTime(nullptr), store(nullptr), keep(true) {}
 
   /** \brief Constructor.
@@ -268,13 +438,13 @@ public:
    * \param react React Behavior Daemon.
    * \param draw Drawer daemon.
    */
-  MainLoop(std::shared_ptr<Daemon> pre, std::shared_ptr<Daemon> post, std::shared_ptr<Daemon> event, std::shared_ptr<Daemon> common, std::shared_ptr<Daemon> react, std::shared_ptr<Daemon> draw, std::shared_ptr<ContextTime> contextTime=zbe::SysTime::getInstance())
+  SimpleMainLoop(std::shared_ptr<Daemon> pre, std::shared_ptr<Daemon> post, std::shared_ptr<Daemon> event, std::shared_ptr<Daemon> common, std::shared_ptr<Daemon> react, std::shared_ptr<Daemon> draw, std::shared_ptr<ContextTime> contextTime=zbe::SysTime::getInstance())
     : dPre(pre), dPost(post), dTE(event), dCBM(common), dRBM(react), dDM(draw),
       contextTime(contextTime), store(nullptr), keep(true) {}
 
   /** \brief Destructor.
    */
-  virtual ~MainLoop() = default;
+  virtual ~SimpleMainLoop() = default;
 
   /** \brief It will run until stop() is called.
    *  For each frame it will:
@@ -368,14 +538,14 @@ public:
    * \param value Value where exit value will be saved.
    * \param exitValue value to save.
    */
-  MainLoopExit(std::shared_ptr<MainLoop> mainLoop, std::shared_ptr< Value<int64_t> > value, int64_t exitValue)
+  MainLoopExit(std::shared_ptr<SimpleMainLoop> mainLoop, std::shared_ptr< Value<int64_t> > value, int64_t exitValue)
     : mainLoop(mainLoop), value(value), exitValue(exitValue) {}
 
   /** \brief Virtual destructor.
    */
   ~MainLoopExit() = default;
 
-  void setMainLoop(std::shared_ptr<MainLoop> mainLoop) {
+  void setMainLoop(std::shared_ptr<SimpleMainLoop> mainLoop) {
     this->mainLoop = mainLoop;
   }
 
@@ -396,7 +566,7 @@ public:
 
 private:
 DISABLE_DLL_WARN
-  std::shared_ptr<MainLoop> mainLoop;
+  std::shared_ptr<SimpleMainLoop> mainLoop;
   std::shared_ptr< Value<int64_t> > value;
   int64_t exitValue;
 DISABLE_WARNING_POP()
@@ -456,7 +626,7 @@ public:
         return;
       }
       auto mle = mainLoopExitRsrc.get("MainLoopExit."s + name);
-      auto ml = mainLoopRsrc.get("MainLoop."s + mainloopName.get<std::string>());
+      auto ml = mainLoopRsrc.get("SimpleMainLoop."s + mainloopName.get<std::string>());
       auto valueHolder = valueRsrc.get(valueHolderName.get<std::string>());
       uint64_t value = uintStore.get(outValueName.get<std::string>());
       mle->setMainLoop(ml);
@@ -471,7 +641,7 @@ private:
   NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<Daemon> &daemonRsrc = RsrcStore<Daemon>::getInstance();
-  RsrcStore<MainLoop> &mainLoopRsrc = RsrcStore<MainLoop>::getInstance();
+  RsrcStore<SimpleMainLoop> &mainLoopRsrc = RsrcStore<SimpleMainLoop>::getInstance();
   RsrcStore<MainLoopExit> &mainLoopExitRsrc = RsrcStore<MainLoopExit>::getInstance();
   RsrcStore<Value<int64_t> > &valueRsrc = RsrcStore<Value<int64_t> >::getInstance();
   RsrcDictionary<uint64_t>& uintStore = RsrcDictionary<uint64_t>::getInstance();

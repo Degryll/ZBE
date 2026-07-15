@@ -1,14 +1,14 @@
 /**
  * Copyright 2012 Batis Degryll Ludo
- * @file MainLoopFtry.h .h
+ * @file SimpleMainLoopFtry.h .h
  * @since 2018-09-24
  * @date 2018-09-24
  * @author Ludo Degryll Batis
  * @brief Factory for Main Loop Daemons.
  */
 
-#ifndef ZBE_FACTORIES_IMPLEMENTATIONS_DAEMONS_MAINLOOPFTRY_H_
-#define ZBE_FACTORIES_IMPLEMENTATIONS_DAEMONS_MAINLOOPFTRY_H_
+#ifndef ZBE_FACTORIES_IMPLEMENTATIONS_DAEMONS_SIMPLEMAINLOOPFTRY_H_
+#define ZBE_FACTORIES_IMPLEMENTATIONS_DAEMONS_SIMPLEMAINLOOPFTRY_H_
 
 #include <string>
 
@@ -33,19 +33,19 @@ namespace zbe {
 
 /** \brief Factory for Main Loop.
  */
-class MainLoopFtry : virtual public Factory {
+class SimpleMainLoopFtry : virtual public Factory {
 public:
 
-  /** \brief Builds a MainLoop.
-   *  \param name Name for the created MainLoopFtry.
-   *  \param cfgId MainLoopFtry's configuration id.
+  /** \brief Builds a SimpleMainLoop.
+   *  \param name Name for the created SimpleMainLoopFtry.
+   *  \param cfgId SimpleMainLoopFtry's configuration id.
    */
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
 
-    auto ml = std::make_shared<MainLoop>();
+    auto ml = std::make_shared<SimpleMainLoop>();
     daemonRsrc.insert("Daemon."s + name, ml);
-    mainLoopRsrc.insert("MainLoop."s + name, ml);
+    mainLoopRsrc.insert("SimpleMainLoop."s + name, ml);
   }
 
   /** \brief Setup the desired tool. The tool will be complete after this step.
@@ -86,7 +86,7 @@ public:
         postDm   = daemonRsrc.get("Daemon."s + post.get<std::string>());
         ctxTime  = timeRsrc.get("ContextTime."s + cTime.get<std::string>());
 
-        auto ml = mainLoopRsrc.get("MainLoop."s + name);
+        auto ml = mainLoopRsrc.get("SimpleMainLoop."s + name);
 
         ml->setPre(preDm);
         ml->setPost(postDm);
@@ -98,21 +98,21 @@ public:
         ml->setEventStore(&eventStore);
 
       } else {
-        SysError::setError("Bad config for MainLoopFtry."s);
+        SysError::setError("Bad config for SimpleMainLoopFtry."s);
       }   // if pre, event, common, react, draw, post
     } else {
-      SysError::setError("MainLoopFtry config for "s + name + " not found."s);
+      SysError::setError("SimpleMainLoopFtry config for "s + name + " not found."s);
     }
   }
 
 private:
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<Daemon> &daemonRsrc = RsrcStore<Daemon>::getInstance();
-  RsrcStore<MainLoop> &mainLoopRsrc = RsrcStore<MainLoop>::getInstance();
+  RsrcStore<SimpleMainLoop> &mainLoopRsrc = RsrcStore<SimpleMainLoop>::getInstance();
   RsrcStore<ContextTime> &timeRsrc = RsrcStore<ContextTime>::getInstance();
   EventStore &eventStore = EventStore::getInstance();
 };
 
 }  // namespace zbe
 
-#endif  // ZBE_FACTORIES_IMPLEMENTATIONS_DAEMONS_MAINLOOPFTRY_H_
+#endif  // ZBE_FACTORIES_IMPLEMENTATIONS_DAEMONS_SIMPLEMAINLOOPFTRY_H_

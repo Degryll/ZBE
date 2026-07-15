@@ -630,7 +630,7 @@
           "name":"zandbokz.inputEventGenerator",
           "config" : {
             "eventId":"inputEventId",
-            "contextTime" : "DEFAULT",
+            "contextTime" : "zandbokz.gameTime",
             "inputBuffer":"SDLOGLWindow.zandbokz.mainwindow.InputBuffer",
             "inputTextBuffer":"SDLOGLWindow.zandbokz.mainwindow.InputTextBuffer"
           }
@@ -2319,7 +2319,7 @@
             ]
           }
         },
-        {"factory": "MainLoopFtry",
+        {"factory": "SimpleMainLoopFtry",
           "name": "zandbokz.MainLoop",
           "config" : {
             "preDaemon":"zandbokz.PreDaemon",
