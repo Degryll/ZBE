@@ -13,6 +13,7 @@
 #include <memory>
 #include <string>
 #include <map>
+#include <sstream>
 #include <vector>
 
 #include "ZBE/core/system/SysError.h"
@@ -61,6 +62,7 @@ class RsrcDictionary {
       auto it = l.find(name);
       if (it == l.end()) {
         SysError::setError("Resource id not found:" + name);
+SysError::setDebug("RsrcDictionary debug trace - current entries: " + getDebugEntries(), false);
         return T{};
       } else {
         return (it->second);
@@ -75,6 +77,7 @@ class RsrcDictionary {
       auto it = l.find(name);
       if (it == l.end()) {
         SysError::setError("Resource id not found:" + name);
+        SysError::setDebug("RsrcDictionary debug trace - current entries: " + getDebugEntries(), false);
         return (T{});
       } else {
         auto aux = it->second;
@@ -115,6 +118,21 @@ class RsrcDictionary {
 
   private:
     RsrcDictionary() = default;  //!< Needed for singleton.
+
+    std::string getDebugEntries() const {
+      std::ostringstream oss;
+      oss << "{";
+      bool first = true;
+      for (const auto& entry : l) {
+        if (!first) {
+          oss << ", ";
+        }
+        oss << entry.first;
+        first = false;
+      }
+      oss << "}";
+      return oss.str();
+    }
 
     std::map<std::string, T> l;  //!< Map that associates resources with ids.
 };
@@ -161,6 +179,7 @@ class IdRsrcDictionary {
       auto it = l.find(local);
       if (it == l.end()) {
         SysError::setError("Resource id not found:" + std::to_string(local));
+        SysError::setDebug("IdRsrcDictionary debug trace - current entries: " + getDebugEntries(), false);
         return (0);
       } else {
         return (it->second);
@@ -175,6 +194,7 @@ class IdRsrcDictionary {
       auto it = l.find(local);
       if (it == l.end()) {
         SysError::setError("Resource id not found:" + std::to_string(local));
+        SysError::setDebug("IdRsrcDictionary debug trace - current entries: " + getDebugEntries(), false);
         return (0);
       } else {
         auto aux = it->second;
@@ -191,6 +211,21 @@ class IdRsrcDictionary {
 
   private:
     IdRsrcDictionary() = default;  //!< Needed for singleton.
+
+    std::string getDebugEntries() const {
+      std::ostringstream oss;
+      oss << "{";
+      bool first = true;
+      for (const auto& entry : l) {
+        if (!first) {
+          oss << ", ";
+        }
+        oss << entry.first << "->" << entry.second;
+        first = false;
+      }
+      oss << "}";
+      return oss.str();
+    }
 
 DISABLE_DLL_WARN
     std::map<uint64_t, uint64_t> l;  //!< Map that associates resources with ids.

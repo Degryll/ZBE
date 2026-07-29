@@ -37,7 +37,6 @@
 #include "ZBE/factories/Factory.h"
 #include "ZBE/factories/genericFactoryConstants.h"
 #include "ZBE/JSON/JSONFactory.h"
-
 namespace zbe {
 
 /** \brief Interface for all daemons. Daemons are responsible for execute automated processes. Basically Daemons rules the world.
@@ -249,12 +248,12 @@ DISABLE_WARNING_POP()
 
 // };
 
-class ZBEAPI BaseLoop : virtual public Daemon {
+class ZBEAPI BaseLoopDaemon : virtual public Daemon, virtual public Stoppable {
 public:
 
   /** \brief Builds an empty BaseLoop.
    */
-  BaseLoop() : dPre(nullptr), dFrame(nullptr), keep(true) {}
+  BaseLoopDaemon() : dPre(nullptr), dFrame(nullptr), keep(true) {}
 
   /** \brief Constructor.
    * \param pre Pre loop Daemon.
@@ -264,22 +263,25 @@ public:
    * \param react React Behavior Daemon.
    * \param draw Drawer daemon.
    */
-  BaseLoop(std::shared_ptr<Daemon> pre, std::shared_ptr<Daemon> frame, std::shared_ptr<ContextTime> contextTime=zbe::SysTime::getInstance())
+  BaseLoopDaemon(std::shared_ptr<Daemon> pre, std::shared_ptr<Daemon> frame, std::shared_ptr<ContextTime> contextTime=zbe::SysTime::getInstance())
     : dPre(pre), dFrame(frame), contextTime(contextTime), keep(true) {}
 
   /** \brief Destructor.
    */
-  virtual ~BaseLoop() = default;
+  virtual ~BaseLoopDaemon() = default;
 
   /** \brief It will run until stop() is called.
    */
   void run() override {
     keep = true;
+    int frame = 0;
     while(keep) {  // Each iteration generates a frame.
       // Pre daemon
       contextTime->update();
       dPre->run();
       dFrame->run();
+      SysError::setDebug("--------------- Frame: " + std::to_string(frame) + "---------------");
+      frame++;
     }  // while keep
   }
 
@@ -300,7 +302,7 @@ public:
 
   /** \brief Stops current loop.
    */
-  inline void stop() {keep = false;}
+  inline void stop() override {keep = false;}
 
 private:
 DISABLE_DLL_WARN
@@ -311,8 +313,74 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
-class ZBEAPI FrameDaemon : virtual public Daemon {
+class BaseLoopDaemonFtry : virtual public Factory {
+public:
 
+  /** \brief Builds a BaseLoopDaemonFtry
+   *  \param name Name for the created BaseLoopDaemonFtry
+   *  \param cfgId BaseLoopDaemonFtry's configuration id.
+   */
+  void create(std::string name, uint64_t) override {
+    using namespace std::string_literals;
+
+    auto ml = std::make_shared<BaseLoopDaemon>();
+    daemonRsrc.insert("Daemon."s + name, ml);
+    mainLoopRsrc.insert("BaseLoopDaemon."s + name, ml);
+    stoppableRsrc.insert("Stoppable."s + name, ml);
+  }
+
+  /** \brief Setup the desired tool. The tool will be complete after this step.
+   *  \param name Name of the tool.
+   *  \param cfgId Tool's configuration id.
+   */
+  void setup(std::string name, uint64_t cfgId) override {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+    if(cfg) {
+      auto j = *cfg;
+      json pre = j["preDaemon"];
+      json frame = j["frameDaemon"];
+      json cTime = j["contextTime"];
+
+      std::shared_ptr<Daemon> preDm, frameDm;
+      std::shared_ptr<ContextTime> ctxTime;
+
+      if ((pre.is_string())
+      &&  (frame.is_string())
+      &&  (cTime.is_string())) {
+
+        preDm    = daemonRsrc.get("Daemon."s + pre.get<std::string>());
+        frameDm  = daemonRsrc.get("Daemon."s + frame.get<std::string>());
+        ctxTime  = timeRsrc.get("ContextTime."s + cTime.get<std::string>());
+
+        auto ml = mainLoopRsrc.get("BaseLoopDaemon."s + name);
+
+        ml->setPre(preDm);
+        ml->setFrame(frameDm);
+        ml->setContextTime(ctxTime);
+
+      } else {
+        SysError::setError("Bad config for BaseLoopDaemonFtry"s);
+      }   // if pre, frame
+
+    } else {
+      SysError::setError("BaseLoopDaemonFtry config for "s + name + " not found."s);
+    }
+  }
+
+private:
+  RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<Daemon> &daemonRsrc = RsrcStore<Daemon>::getInstance();
+  RsrcStore<BaseLoopDaemon> &mainLoopRsrc = RsrcStore<BaseLoopDaemon>::getInstance();
+  RsrcStore<Stoppable> &stoppableRsrc = RsrcStore<Stoppable>::getInstance();
+  RsrcStore<ContextTime> &timeRsrc = RsrcStore<ContextTime>::getInstance();
+  EventStore &eventStore = EventStore::getInstance();
+};
+
+class ZBEAPI FrameDaemon : virtual public Daemon {
+public:
   /** \brief Builds an empty FrameDaemon.
    */
   FrameDaemon() : dPre(nullptr), dPost(nullptr), dTE(nullptr), dCBM(nullptr), dRBM(nullptr), dDM(nullptr),
@@ -340,20 +408,26 @@ class ZBEAPI FrameDaemon : virtual public Daemon {
     // Pre daemon
     contextTime->update();
     dPre->run();
-
+    SysError::setDebug("FrameDaemon: Frame time: " + std::to_string(contextTime->getFrameTime()) + "ms, Lost time: " + std::to_string(contextTime->getLostTime()) + "ms");
     // Inner loop
     while (contextTime->isFrameRemaining()) {
       // Timed events generator daemon
+      SysError::setDebug("FrameDaemon: Running timed events generator daemon.");
       dTE->run();
       contextTime->setEventTime(store->getTime());
-      if (contextTime->isPartialFrame()) {
+      if (contextTime->isPartialFrame() ) {
+        if(contextTime->getCurrentTime() == 0) {
+          break;
+        }
         // commonBehaviorMaster
+        SysError::setDebug("FrameDaemon: partial:" + std::to_string(contextTime->getCurrentTime()));
         dCBM->run();
         store->manageCurrent();
         // reactBehaviorMaster
         dRBM->run();
       } else {
         // commonBehaviorMaster
+        SysError::setDebug("FrameDaemon: remaining.");
         dCBM->run();
         store->clearStore();
       }
@@ -420,9 +494,90 @@ DISABLE_DLL_WARN
 DISABLE_WARNING_POP()
 };
 
+
+class FrameDaemonFtry : virtual public Factory {
+public:
+
+  /** \brief Builds a FrameDaemonFtry
+   *  \param name Name for the created FrameDaemonFtry
+   *  \param cfgId FrameDaemonFtry's configuration id.
+   */
+  void create(std::string name, uint64_t) override {
+    using namespace std::string_literals;
+
+    auto ml = std::make_shared<FrameDaemon>();
+    daemonRsrc.insert("Daemon."s + name, ml);
+    mainLoopRsrc.insert("FrameDaemon."s + name, ml);
+  }
+
+  /** \brief Setup the desired tool. The tool will be complete after this step.
+   *  \param name Name of the tool.
+   *  \param cfgId Tool's configuration id.
+   */
+  void setup(std::string name, uint64_t cfgId) override {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+    if(cfg) {
+      auto j = *cfg;
+      json pre = j["preDaemon"];
+      json event = j["eventDaemon"];
+      json common = j["commonDaemon"];
+      json react = j["reactDaemon"];
+      json draw = j["drawDaemon"];
+      json post = j["postDaemon"];
+      json cTime = j["contextTime"];
+
+      std::shared_ptr<Daemon> preDm, postDm, eventDm, commonDm, reactDm, drawDm;
+      std::shared_ptr<ContextTime> ctxTime;
+
+      if ((pre.is_string())
+      &&  (event.is_string())
+      &&  (common.is_string())
+      &&  (react.is_string())
+      &&  (draw.is_string())
+      &&  (post.is_string())
+      &&  (cTime.is_string())) {
+
+        preDm    = daemonRsrc.get("Daemon."s + pre.get<std::string>());
+        eventDm  = daemonRsrc.get("Daemon."s + event.get<std::string>());
+        commonDm = daemonRsrc.get("Daemon."s + common.get<std::string>());
+        reactDm  = daemonRsrc.get("Daemon."s + react.get<std::string>());
+        drawDm   = daemonRsrc.get("Daemon."s + draw.get<std::string>());
+        postDm   = daemonRsrc.get("Daemon."s + post.get<std::string>());
+        ctxTime  = timeRsrc.get("ContextTime."s + cTime.get<std::string>());
+
+        auto ml = mainLoopRsrc.get("FrameDaemon."s + name);
+
+        ml->setPre(preDm);
+        ml->setPost(postDm);
+        ml->setEvent(eventDm);
+        ml->setCommon(commonDm);
+        ml->setReact(reactDm);
+        ml->setDraw(drawDm);
+        ml->setContextTime(ctxTime);
+        ml->setEventStore(&eventStore);
+
+      } else {
+        SysError::setError("Bad config for FrameDaemonFtry"s);
+      }   // if pre, event, common, react, draw, post
+    } else {
+      SysError::setError("FrameDaemonFtry config for "s + name + " not found."s);
+    }
+  }
+
+private:
+  RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<Daemon> &daemonRsrc = RsrcStore<Daemon>::getInstance();
+  RsrcStore<FrameDaemon> &mainLoopRsrc = RsrcStore<FrameDaemon>::getInstance();
+  RsrcStore<ContextTime> &timeRsrc = RsrcStore<ContextTime>::getInstance();
+  EventStore &eventStore = EventStore::getInstance();
+};
+
 /** \brief The Main Loop of the game.
  */
-class ZBEAPI SimpleMainLoop : virtual public Daemon {
+class ZBEAPI SimpleMainLoop : virtual public Daemon, virtual public Stoppable {
 public:
 
   /** \brief Builds an empty MainLoop.
@@ -506,7 +661,7 @@ public:
 
   /** \brief Stops current loop.
    */
-  inline void stop() {keep = false;}
+  inline void stop() override {keep = false;}
 
 private:
 DISABLE_DLL_WARN
@@ -526,27 +681,27 @@ DISABLE_WARNING_POP()
 
 /** \brief Daemon capable of end a MainLoop
  */
-class MainLoopExit : virtual public Daemon {
+class StopperDaemon : virtual public Daemon {
 public:
 
   /** \brief Builds an empty MainLoopExit.
    */
-  MainLoopExit() : mainLoop(nullptr), value(nullptr), exitValue(0) {}
+  StopperDaemon() : stoppable(nullptr), value(nullptr), exitValue(0) {}
 
   /** \brief Builds a MainLoopExit from its raw data.
    * \param mainLoop main loop to end.
    * \param value Value where exit value will be saved.
    * \param exitValue value to save.
    */
-  MainLoopExit(std::shared_ptr<SimpleMainLoop> mainLoop, std::shared_ptr< Value<int64_t> > value, int64_t exitValue)
-    : mainLoop(mainLoop), value(value), exitValue(exitValue) {}
+  StopperDaemon(std::shared_ptr<SimpleMainLoop> mainLoop, std::shared_ptr< Value<int64_t> > value, int64_t exitValue)
+    : stoppable(mainLoop), value(value), exitValue(exitValue) {}
 
   /** \brief Virtual destructor.
    */
-  ~MainLoopExit() = default;
+  ~StopperDaemon() = default;
 
-  void setMainLoop(std::shared_ptr<SimpleMainLoop> mainLoop) {
-    this->mainLoop = mainLoop;
+  void setStoppable(std::shared_ptr<Stoppable> stoppable) {
+    this->stoppable = stoppable;
   }
 
   void setValue(std::shared_ptr< Value<int64_t> > value) {
@@ -561,37 +716,105 @@ public:
    */
   void run() override {
     value->set(exitValue);
-    mainLoop->stop();
+    stoppable->stop();
   }
 
 private:
 DISABLE_DLL_WARN
-  std::shared_ptr<SimpleMainLoop> mainLoop;
+  std::shared_ptr<Stoppable> stoppable;
   std::shared_ptr< Value<int64_t> > value;
   int64_t exitValue;
 DISABLE_WARNING_POP()
 };
 
+class MainLoopConfigDaemon : virtual public Daemon {
+public:
+  MainLoopConfigDaemon(std::shared_ptr<BaseLoopDaemon> baseLoop, std::shared_ptr<FrameDaemon> frameLoop) : baseLoop(baseLoop), frameLoop(frameLoop) {}
+  MainLoopConfigDaemon() : baseLoop(nullptr), frameLoop(nullptr) {}
+
+  ~MainLoopConfigDaemon() = default;
+
+  void run() override {
+    baseLoop->setFrame(frameLoop);
+  }
+
+  void setBaseLoop(std::shared_ptr<BaseLoopDaemon> baseLoop) {
+    this->baseLoop = baseLoop;
+  }
+
+  void setFrameLoop(std::shared_ptr<Daemon> frameLoop) {
+    this->frameLoop = frameLoop;
+  }
+private:
+  std::shared_ptr<BaseLoopDaemon> baseLoop;
+  std::shared_ptr<Daemon> frameLoop;
+};
+
+class MainLoopConfigDaemonFtry : virtual public Factory {
+public:
+  void create(std::string name, uint64_t) override {
+    using namespace std::string_literals;
+
+    auto ml = std::make_shared<MainLoopConfigDaemon>();
+    daemonRsrc.insert("Daemon."s + name, ml);
+    mainLoopConfigRsrc.insert("MainLoopConfigDaemon."s + name, ml);
+  }
+
+  void setup(std::string name, uint64_t cfgId) override {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+
+    if(cfg) {
+      auto j = *cfg;
+      json baseLoopName = j["baseLoop"];
+      json frameDaemonName = j["frameDaemon"];
+
+      if(!baseLoopName.is_string()) {
+        SysError::setError("Bad config for MainLoopConfigDaemonFtry - baseLoop."s + name);
+        return;
+      }
+      if(!frameDaemonName.is_string()) {
+        SysError::setError("Bad config for MainLoopConfigDaemonFtry - frameDaemon."s + name);
+        return;
+      }
+
+      auto mlc = mainLoopConfigRsrc.get("MainLoopConfigDaemon."s + name);
+      auto baseLoop = baseLoopRsrc.get("BaseLoopDaemon."s + baseLoopName.get<std::string>());
+      auto frameLoop = daemonRsrc.get("Daemon."s + frameDaemonName.get<std::string>());
+      mlc->setBaseLoop(baseLoop);
+      mlc->setFrameLoop(frameLoop);
+    } else {
+      SysError::setError("MainLoopConfigDaemonFtry config for "s + name + " not found."s);
+    }
+  }
+
+private:
+  RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<Daemon> &daemonRsrc = RsrcStore<Daemon>::getInstance();
+  RsrcStore<MainLoopConfigDaemon> &mainLoopConfigRsrc = RsrcStore<MainLoopConfigDaemon>::getInstance();
+  RsrcStore<BaseLoopDaemon> &baseLoopRsrc = RsrcStore<BaseLoopDaemon>::getInstance();
+};
 
 /** \brief Factory for Main Loop.
  */
-class MainLoopExitFtry : virtual public Factory {
+class StopperDaemonFtry : virtual public Factory {
 public:
 
   /** \brief Builds a MainLoop.
-   *  \param name Name for the created MainLoopFtry.
+   *  \param name Name for the created MainLoopFtry
    *  \param cfgId MainLoopFtry's configuration id.
    */
   void create(std::string name, uint64_t) override {
     using namespace std::string_literals;
 
-    auto ml = std::make_shared<MainLoopExit>();
+    auto ml = std::make_shared<StopperDaemon>();
     uint64_t id = SysIdGenerator::getId();
     daemonRsrc.insert(id, ml);
     dict.insert("Daemon."s + name, id);
     id = SysIdGenerator::getId();
-    mainLoopExitRsrc.insert(id, ml);
-    dict.insert("MainLoopExit."s + name, id);
+    stopperDaemonRsrc.insert(id, ml);
+    dict.insert("StopperDaemon."s + name, id);
   }
   
   /** \brief Setup the desired tool. The tool will be complete after this step.
@@ -609,31 +832,31 @@ public:
       json valueHolderName = j["valueHolder"];
       json outValueName = j["outValue"];
       if(!mainloopName.is_string()) {
-        SysError::setError("Bad config for MainLoopExitFtry - mainloop."s + name);
+        SysError::setError("Bad config for StopperDaemonFtry - mainloop."s + name);
         return;
       }
       if(!valueHolderName.is_string()) {
-        SysError::setError("Bad config for MainLoopExitFtry - valueHolder."s + name);
+        SysError::setError("Bad config for StopperDaemonFtry - valueHolder."s + name);
         return;
       }
       //TODO allow to use numbers or strings
       // if(!outValue.is_number()) {
-      //   SysError::setError("Bad config for MainLoopExitFtry - outValue."s + name);
+      //   SysError::setError("Bad config for StopperDaemonFtry - outValue."s + name);
       //   return;
       // }
       if(!outValueName.is_string()) {
-        SysError::setError("Bad config for MainLoopExitFtry - outValue."s + name);
+        SysError::setError("Bad config for StopperDaemonFtry - outValue."s + name);
         return;
       }
-      auto mle = mainLoopExitRsrc.get("MainLoopExit."s + name);
-      auto ml = mainLoopRsrc.get("SimpleMainLoop."s + mainloopName.get<std::string>());
+      auto mle = stopperDaemonRsrc.get("StopperDaemon."s + name);
+      auto ml = stoppableRsrc.get("Stoppable."s + mainloopName.get<std::string>());
       auto valueHolder = valueRsrc.get(valueHolderName.get<std::string>());
       uint64_t value = uintStore.get(outValueName.get<std::string>());
-      mle->setMainLoop(ml);
+      mle->setStoppable(ml);
       mle->setValue(valueHolder);
       mle->setExitValue(static_cast<int64_t>(value));
     } else {
-      SysError::setError("MainLoopExitFtry config for "s + name + " not found."s);
+      SysError::setError("StopperDaemonFtry config for "s + name + " not found."s);
     }
   }
 
@@ -641,8 +864,8 @@ private:
   NameRsrcDictionary &dict = NameRsrcDictionary::getInstance();
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<Daemon> &daemonRsrc = RsrcStore<Daemon>::getInstance();
-  RsrcStore<SimpleMainLoop> &mainLoopRsrc = RsrcStore<SimpleMainLoop>::getInstance();
-  RsrcStore<MainLoopExit> &mainLoopExitRsrc = RsrcStore<MainLoopExit>::getInstance();
+  RsrcStore<Stoppable> &stoppableRsrc = RsrcStore<Stoppable>::getInstance();
+  RsrcStore<StopperDaemon> &stopperDaemonRsrc = RsrcStore<StopperDaemon>::getInstance();
   RsrcStore<Value<int64_t> > &valueRsrc = RsrcStore<Value<int64_t> >::getInstance();
   RsrcDictionary<uint64_t>& uintStore = RsrcDictionary<uint64_t>::getInstance();
 };
@@ -1250,15 +1473,18 @@ public:
   void run() override {
     bool isPaused = paused->get();
     if (negate) {
+      SysError::setDebug("Negado");
       isPaused = !isPaused;
     }
 
     if (isPaused) {
+      SysError::setDebug("Y pausando");
       ctxTime->pause();
     } else {
-      ctxTime->resume(parentTime->getEventTime());
+      SysError::setDebug("Y despausando");
+      ctxTime->resume(0);
     }
-    paused->set(!paused->get());
+    // paused->set(!paused->get());
   }
 
   void setContextTime(std::shared_ptr<ContextTime> ctxTime) {
@@ -1348,8 +1574,12 @@ public:
       }
 
       bool negate = false;
-      if (j.contains("negate") && j["negate"].is_boolean()) {
-        negate = j["negate"].get<bool>();
+      if (j.contains("negate")) {
+        if(j["negate"].is_boolean()) {
+          negate = j["negate"].get<bool>();
+        } else {
+          SysError::setError("ParametricCTXTimePauseDaemon " + name + " config for negate must be a boolean."s);
+        }
       }
 
       pctpd->setValue(value);
@@ -1369,6 +1599,223 @@ DISABLE_DLL_WARN
   RsrcStore<Entity>& entityStore = RsrcStore<Entity>::getInstance();
   RsrcStore<ContextTime>& ctxTimeRsrc = RsrcStore<ContextTime>::getInstance();
   RsrcDictionary<uint64_t>& uintStore = RsrcDictionary<uint64_t>::getInstance();
+DISABLE_WARNING_POP()
+};
+
+class ValueBoolSelectorDaemon : public Daemon {
+public:
+  ValueBoolSelectorDaemon() = default;
+
+  void run() override {
+    if(val->get()) {
+      SysError::setDebug("######################## Running true");
+      trueDaemon->run();
+    } else {
+      SysError::setDebug("######################## Running false");
+      falseDaemon->run();
+    }
+  }
+
+  void setValue(std::shared_ptr<Value<bool>> val) {
+    this->val = val;
+  }
+
+  void setTrueDaemon(std::shared_ptr<Daemon> daemon) {
+    this->trueDaemon = daemon;
+  }
+
+  void setFalseDaemon(std::shared_ptr<Daemon> daemon) {
+    this->falseDaemon = daemon;
+  }
+
+private:
+DISABLE_DLL_WARN
+  std::shared_ptr<Value<bool>> val;
+  std::shared_ptr<Daemon> trueDaemon;
+  std::shared_ptr<Daemon> falseDaemon;
+DISABLE_WARNING_POP()
+};
+
+class ValueBoolSelectorDaemonFtry : public Factory {
+public:
+  void create(std::string name, uint64_t) override {
+    using namespace std::string_literals;
+    std::shared_ptr<ValueBoolSelectorDaemon> vbstd = std::make_shared<ValueBoolSelectorDaemon>();
+    mainRsrc.insert("Daemon."s + name, vbstd);
+    specificRsrc.insert("ValueBoolSelectorDaemon."s + name, vbstd);
+  }
+
+  void setup(std::string name, uint64_t cfgId) override {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+    auto vbstd = specificRsrc.get("ValueBoolSelectorDaemon."s + name);
+
+    if(!cfg) {
+      SysError::setError("ValueBoolSelectorDaemonFtry config for "s + name + " not found."s);
+      return;
+    }
+
+    auto j = *cfg;
+    if(!j["entity"].is_string()) {
+      SysError::setError("ValueBoolSelectorDaemonFtry config for entity must be a string."s);
+      return;
+    }
+
+    auto entity = entityStore.get("Entity."s + j["entity"].get<std::string>());
+    if(!entity) {
+      SysError::setError("ValueBoolSelectorDaemonFtry config for entity not found."s);
+      return;
+    }
+
+    if(!j["valueIdx"].is_string()) {
+      SysError::setError("ValueBoolSelectorDaemonFtry config for valueIdx must be a string."s);
+      return;
+    }
+
+    uint64_t valueIdx = uintStore.get(j["valueIdx"].get<std::string>());
+    auto value = entity->getBool(valueIdx);
+    if(!value) {
+      SysError::setError("ValueBoolSelectorDaemonFtry config for valueIdx not found."s);
+      return;
+    }
+
+    if(auto trueDaemon = JSONFactory::StoreLoader<Daemon>::loadParamCfgStoreP(mainRsrc, j, zbe::factories::daemonName, "trueDaemon", "ValueBoolSelectorDaemonFtry"s)) {
+      vbstd->setTrueDaemon(*trueDaemon);
+    } else {
+      SysError::setError("ValueBoolSelectorDaemonFtry config for trueDaemon is not an adecuate daemon name."s);
+      return;
+    }
+
+    if(auto falseDaemon = JSONFactory::StoreLoader<Daemon>::loadParamCfgStoreP(mainRsrc, j, zbe::factories::daemonName, "falseDaemon", "ValueBoolSelectorDaemonFtry"s)) {
+      vbstd->setFalseDaemon(*falseDaemon);
+    } else {
+      SysError::setError("ValueBoolSelectorDaemonFtry config for falseDaemon is not an adecuate daemon name."s);
+      return;
+    }
+
+    vbstd->setValue(value);
+  }
+
+private:
+DISABLE_DLL_WARN
+  RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<Daemon>& mainRsrc = RsrcStore<Daemon>::getInstance();
+  RsrcStore<ValueBoolSelectorDaemon>& specificRsrc = RsrcStore<ValueBoolSelectorDaemon>::getInstance();
+  RsrcStore<Entity>& entityStore = RsrcStore<Entity>::getInstance();
+  RsrcDictionary<uint64_t>& uintStore = RsrcDictionary<uint64_t>::getInstance();
+DISABLE_WARNING_POP()
+};
+
+class ValueIntSelectorDaemon : public Daemon {
+public:
+  ValueIntSelectorDaemon() = default;
+
+  void run() override {
+    auto current = val->get();
+    auto it = daemons.find(current);
+    if(it != daemons.end() && it->second) {
+      it->second->run();
+    } else if(defaultDaemon) {
+      defaultDaemon->run();
+    }
+  }
+
+  void setValue(std::shared_ptr<Value<int64_t>> val) {
+    this->val = val;
+  }
+
+  void setDaemon(int64_t value, std::shared_ptr<Daemon> daemon) {
+    daemons[value] = daemon;
+  }
+
+  void setDefaultDaemon(std::shared_ptr<Daemon> daemon) {
+    defaultDaemon = daemon;
+  }
+
+private:
+DISABLE_DLL_WARN
+  std::shared_ptr<Value<int64_t>> val;
+  std::unordered_map<int64_t, std::shared_ptr<Daemon>> daemons;
+  std::shared_ptr<Daemon> defaultDaemon;
+DISABLE_WARNING_POP()
+};
+
+class ValueIntSelectorDaemonFtry : public Factory {
+public:
+  void create(std::string name, uint64_t) override {
+    using namespace std::string_literals;
+    std::shared_ptr<ValueIntSelectorDaemon> vistd = std::make_shared<ValueIntSelectorDaemon>();
+    mainRsrc.insert("Daemon."s + name, vistd);
+    specificRsrc.insert("ValueIntSelectorDaemon."s + name, vistd);
+  }
+
+  void setup(std::string name, uint64_t cfgId) override {
+    using namespace std::string_literals;
+    using namespace nlohmann;
+    std::shared_ptr<json> cfg = configRsrc.get(cfgId);
+    auto vistd = specificRsrc.get("ValueIntSelectorDaemon."s + name);
+
+    if(!cfg) {
+      SysError::setError("ValueIntSelectorDaemonFtry config for "s + name + " not found."s);
+      return;
+    }
+
+    auto j = *cfg;
+    if(!j["entity"].is_string()) {
+      SysError::setError("ValueIntSelectorDaemonFtry config for entity must be a string."s);
+      return;
+    }
+
+    auto entity = entityStore.get("Entity."s + j["entity"].get<std::string>());
+    if(!entity) {
+      SysError::setError("ValueIntSelectorDaemonFtry config for entity not found."s);
+      return;
+    }
+
+    if(!j["valueIdx"].is_string()) {
+      SysError::setError("ValueIntSelectorDaemonFtry config for valueIdx must be a string."s);
+      return;
+    }
+
+    uint64_t valueIdx = uintStore.get(j["valueIdx"].get<std::string>());
+    auto value = entity->getInt(valueIdx);
+    if(!value) {
+      SysError::setError("ValueIntSelectorDaemonFtry config for valueIdx not found."s);
+      return;
+    }
+
+    if(!j["daemons"].is_object()) {
+      SysError::setError("ValueIntSelectorDaemonFtry config for daemons must be an object."s);
+      return;
+    }
+
+    if(!JSONFactory::loadAllIndexedRev<Daemon, int64_t>(mainRsrc, intStore, j, zbe::factories::daemonName, "daemons"s, "ValueIntSelectorDaemonFtry"s,
+      [&](int64_t idx, std::shared_ptr<Daemon> daemon) {
+        vistd->setDaemon(idx, daemon);
+        return true;
+      })) {
+      return;
+    }
+
+    if(auto defaultDaemon = JSONFactory::StoreLoader<Daemon>::loadParamCfgStoreP(mainRsrc, j, zbe::factories::daemonName, "defaultDaemon", "ValueIntSelectorDaemonFtry"s)) {
+      vistd->setDefaultDaemon(*defaultDaemon);
+    } else {
+      SysError::setError("ValueIntSelectorDaemonFtry config for defaultDaemon is not an adecuate daemon name."s);
+      return;
+    }
+
+    vistd->setValue(value);
+  }
+
+private:
+DISABLE_DLL_WARN
+  RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<Daemon>& mainRsrc = RsrcStore<Daemon>::getInstance();
+  RsrcStore<ValueIntSelectorDaemon>& specificRsrc = RsrcStore<ValueIntSelectorDaemon>::getInstance();
+  RsrcStore<Entity>& entityStore = RsrcStore<Entity>::getInstance();
+  RsrcDictionary<uint64_t>& uintStore = RsrcDictionary<uint64_t>::getInstance();
+  RsrcDictionary<int64_t>& intStore = RsrcDictionary<int64_t>::getInstance();
 DISABLE_WARNING_POP()
 };
 

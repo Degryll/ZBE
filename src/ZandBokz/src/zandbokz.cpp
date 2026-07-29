@@ -140,7 +140,7 @@ int main(int /*argc*/, char** /*argv*/) {
 
 //     return 0;
   auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
-  auto rotating_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>("logs/zbe.log", 1024*1024*10, 10);
+  auto rotating_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>("logs/zbe.log", 1024*1024*100, 10);
   auto logger = std::make_shared<spdlog::logger>("multi_sink", spdlog::sinks_init_list{console_sink, rotating_sink});
 
   spdlog::set_default_logger(logger);

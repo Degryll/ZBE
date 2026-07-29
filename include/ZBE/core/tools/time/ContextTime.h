@@ -71,14 +71,16 @@ public:
   /** \brief Return true if remains time to finish the actual frame.
    * \return True if the actual frame is not finished yet.
    */
-  inline void updateInitTime() {
+  virtual void updateInitTime() {
+    SysError::setDebug("CT. up init. pre init time" + std::to_string(initT) + " eventT:" + std::to_string(eventT) );
     initT = eventT;
   }
 
   /** \brief Set the time of the first interrupt, probably an event.
    *  \param eventTime time in which current events occured
    */
-  inline void setEventTime(uint64_t eventTime) {
+  virtual void setEventTime(uint64_t eventTime) {
+    SysError::setDebug("CT. event time:" + std::to_string(eventTime));
     if (eventTime <= endT) {
       eventT = eventTime;
       is_partFrame = true;
@@ -143,6 +145,7 @@ public:
   /** \brief Resume the ContextTime.
    */
   virtual void resume(uint64_t resumeTime) {
+    SysError::setDebug("CT resumeTime:" + std::to_string(resumeTime));
     if (paused) {
       endT = resumeTime;
       paused = false;
@@ -169,6 +172,7 @@ public:
     eventT = initT;
     currentT = eventT - initT;
     remainT = endT - eventT;
+    SysError::setDebug("CT. endT:" + std::to_string(endT) + " Frame time: " + std::to_string(frame) + "ms, Lost time: " + std::to_string(lostTime) + "ms, Current time:" + std::to_string(currentT));
   }
 
   virtual uint64_t _getTotalTime() = 0;

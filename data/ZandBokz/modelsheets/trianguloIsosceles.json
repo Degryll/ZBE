@@ -1,9 +1,9 @@
 {
-  "name" : "Triangulo",
+  "name" : "TrianguloIsosceles",
   "capability" : "001",
   "graphicdefs" : [
     {
-      "name" : "Triangulo"
+      "name" : "TrianguloIsosceles"
     }
   ]
   }

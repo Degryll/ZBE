@@ -49,22 +49,31 @@ public:
     this->parent = parent;
   }
 
+  void  setName(std::string name) {
+    this->name = name;
+  }
+
+  void updateInitTime() override {
+    parent->updateInitTime();
+    copyParentData();
+  }
+
+  void setEventTime(uint64_t eventTime) override {
+    parent->setEventTime(eventTime);
+    copyParentData();
+  }
+
   void resume(uint64_t resumeTime) override {
-    ContextTime::resume((resumeTime ? resumeTime : parent->getCurrentTime()));
+    SysError::setDebug(name + " resumeTime:" + std::to_string(resumeTime));
+    ContextTime::resume((resumeTime ? resumeTime : parent->getInitFrameTime() + parent->getCurrentTime()));
   }
 
   void update() override {
-    parent->update();
-    if (parent && !paused) {
-      frame = parent->getFrameTime();
-      lostTime = parent->getLostTime();
-      initT = parent->getInitFrameTime();
-      endT = parent->getEndFrameTime();
-      eventT = parent->getEventTime();
-      is_partFrame = parent->isPartialFrame();
-      currentT = parent->getCurrentTime();
-      remainT = parent->getRemainTime();
+    // parent->update();
+    if (!paused) {
+      copyParentData();
     }
+    SysError::setDebug(name + ": Frame time: " + std::to_string(frame) + "ms, Lost time: " + std::to_string(lostTime) + "ms, Current time:" + std::to_string(currentT));
   }
   
   uint64_t _getTotalTime() override {
@@ -80,8 +89,19 @@ public:
   // TODO por lo que sea este tiempo hace que el input event generator reciba siempre 0 - 2048 como tiempo de frame.
   // Revisa las instancias.
 private:
+  void copyParentData() {
+    frame = parent->getFrameTime();
+    lostTime = parent->getLostTime();
+    initT = parent->getInitFrameTime();
+    endT = parent->getEndFrameTime();
+    eventT = parent->getEventTime();
+    is_partFrame = parent->isPartialFrame();
+    currentT = parent->getCurrentTime();
+    remainT = parent->getRemainTime();
+  }
 DISABLE_DLL_WARN
   std::shared_ptr<ContextTime> parent;
+  std::string name;
 DISABLE_WARNING_POP()
 
 };
@@ -125,6 +145,7 @@ public:
     }
 
     subordinateTime->setParent(parent);
+    subordinateTime->setName(name);
   }
 
   // TODO probar todo esto.

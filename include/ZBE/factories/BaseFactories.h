@@ -93,7 +93,7 @@ public:
     factories.insert("SubordinateTimeFtry", std::make_shared<SubordinateTimeFtry>());
 
     // --- Daemons
-    factories.insert("MainLoopExitFtry", std::make_shared<MainLoopExitFtry>());
+    factories.insert("StopperDaemonFtry", std::make_shared<StopperDaemonFtry>());
     factories.insert("SimpleMainLoopFtry", std::make_shared<SimpleMainLoopFtry>());
     factories.insert("MasterDmnFtry", std::make_shared<MasterDmnFtry>());
     factories.insert("CallDmnFtry", std::make_shared<CallDmnFtry>());
@@ -110,6 +110,11 @@ public:
     factories.insert("ParametricTicketToggleDaemonFtry", std::make_shared<ParametricTicketToggleDaemonFtry>());
     factories.insert("TicketToggleDaemonFtry", std::make_shared<TicketToggleDaemonFtry>());
     factories.insert("ParametricCTXTimePauseDaemonFtry", std::make_shared<ParametricCTXTimePauseDaemonFtry>());
+    factories.insert("ValueBoolSelectorDaemonFtry", std::make_shared<ValueBoolSelectorDaemonFtry>());
+    factories.insert("ValueIntSelectorDaemonFtry", std::make_shared<ValueIntSelectorDaemonFtry>());
+    factories.insert("BaseLoopDaemonFtry", std::make_shared<BaseLoopDaemonFtry>());
+    factories.insert("FrameDaemonFtry", std::make_shared<FrameDaemonFtry>());
+    factories.insert("MainLoopConfigDaemonFtry", std::make_shared<MainLoopConfigDaemonFtry>());
 
     // --- Behaviors
     factories.insert("BoundedAddIntBvrFtry", std::make_shared<GenericFtry<Behavior<int64_t, int64_t, int64_t, int64_t>, BoundedAddBvr<int64_t>>>("Behavior", "BoundedAddBvr"));

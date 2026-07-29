@@ -46,6 +46,7 @@ public:
     auto ml = std::make_shared<SimpleMainLoop>();
     daemonRsrc.insert("Daemon."s + name, ml);
     mainLoopRsrc.insert("SimpleMainLoop."s + name, ml);
+    stoppableRsrc.insert("Stoppable."s + name, ml);
   }
 
   /** \brief Setup the desired tool. The tool will be complete after this step.
@@ -109,6 +110,7 @@ private:
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<Daemon> &daemonRsrc = RsrcStore<Daemon>::getInstance();
   RsrcStore<SimpleMainLoop> &mainLoopRsrc = RsrcStore<SimpleMainLoop>::getInstance();
+  RsrcStore<Stoppable> &stoppableRsrc = RsrcStore<Stoppable>::getInstance();
   RsrcStore<ContextTime> &timeRsrc = RsrcStore<ContextTime>::getInstance();
   EventStore &eventStore = EventStore::getInstance();
 };

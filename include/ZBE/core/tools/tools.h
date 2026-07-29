@@ -102,6 +102,12 @@ private:
   std::function<RetVal(Ts...)> callable;
 };
 
+class Stoppable {
+public:
+  virtual ~Stoppable() = default;
+  virtual void stop() = 0;
+};
+
 }  // namespace zbe
 
 #endif  // ZBE_CORE_TOOLS_TOOLS_H_

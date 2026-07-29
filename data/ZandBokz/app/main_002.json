@@ -199,8 +199,7 @@
     "VOLANDO" : 0,
     "RODANDO" : 1,
 
-    "onGameIdx" : 30103,
-    "pausedIdx" : 30104
+    "onGameIdx" : 30103
   },
   "phases":[
       {
@@ -212,6 +211,12 @@
           },
           {"factory": "SubordinateTimeFtry",
             "name": "zandbokz.gameTime",
+            "config": {
+              "parent": "DEFAULT"
+            }
+          },
+          {"factory": "SubordinateTimeFtry",
+            "name": "zandbokz.menuTime",
             "config": {
               "parent": "DEFAULT"
             }
@@ -630,7 +635,7 @@
           "name":"zandbokz.inputEventGenerator",
           "config" : {
             "eventId":"inputEventId",
-            "contextTime" : "zandbokz.gameTime",
+            "contextTime" : "DEFAULT",
             "inputBuffer":"SDLOGLWindow.zandbokz.mainwindow.InputBuffer",
             "inputTextBuffer":"SDLOGLWindow.zandbokz.mainwindow.InputTextBuffer"
           }
@@ -1188,7 +1193,7 @@
           "name" : "zandbokz.cuajaronvalues",
           "config" : {
             "uint": {
-              "gidIdx":["FleshTriangulo"]
+              "gidIdx":["Triangulo"]
             },
             "double": {
               "scaleIdx":[500.0]
@@ -2212,8 +2217,7 @@
           "config" : {
             "contextTime" : "zandbokz.gameTime",
             "bool": {
-              "onGameIdx" : true,
-              "pausedIdx" : false
+              "onGameIdx" : true
             }
           }
         },
@@ -2319,23 +2323,50 @@
             ]
           }
         },
-        {"factory": "SimpleMainLoopFtry",
+        {"factory": "BaseLoopDaemonFtry",
           "name": "zandbokz.MainLoop",
           "config" : {
+            "preDaemon":"DEFAULT",
+            "frameDaemon" : "zandbokz.gameFrame",
+            "contextTime" : "DEFAULT"
+          }
+        },
+        {"factory": "FrameDaemonFtry",
+          "name": "zandbokz.gameFrame",
+          "config" : {
             "preDaemon":"zandbokz.PreDaemon",
-            "preDaemonDesc":"done",
             "eventDaemon":"zandbokz.eventGenerator",
-            "eventDaemonDesc":"done",
             "commonDaemon":"BehaviorsMD",
-            "commonDaemonDesc":"nada?vacio?",
             "reactDaemon":"DEFAULT",
-            "reactDaemonDesc":"si hay evento de tiempo: se llama al exit... pero esto lo hace el eventStore.manage(): que esto se queda vacio",
             "drawDaemon":"zandbokz.masterDrawDaemon",
-            "drawDaemonDesc":"Pues a pintar la pantalla de carga",
             "postDaemon":"zandbokz.PostDaemon",
-            "postDaemonDesc":"Hacer cosas de sdl",
-            "contextTime" : "zandbokz.gameTime",
-            "contextTimeDesc":"el systime"
+            "contextTime" : "zandbokz.gameTime"
+          }
+        },
+        {"factory": "FrameDaemonFtry",
+          "name": "zandbokz.menuFrame",
+          "config" : {
+            "preDaemon":"zandbokz.PreDaemon",
+            "eventDaemon":"zandbokz.eventGenerator",
+            "commonDaemon":"DEFAULT",
+            "reactDaemon":"DEFAULT",
+            "drawDaemon":"zandbokz.masterDrawDaemon",
+            "postDaemon":"zandbokz.PostDaemon",
+            "contextTime" : "zandbokz.menuTime"
+          }
+        },
+        {"factory": "MainLoopConfigDaemonFtry",
+          "name": "zandbokz.setGameFrame",
+          "config" : {
+            "baseLoop" : "zandbokz.MainLoop",
+            "frameDaemon" : "zandbokz.gameFrame"
+          }
+        },
+        {"factory": "MainLoopConfigDaemonFtry",
+          "name": "zandbokz.setMenuFrame",
+          "config" : {
+            "baseLoop" : "zandbokz.MainLoop",
+            "frameDaemon" : "zandbokz.menuFrame"
           }
         },
         {"factory": "ImGuiPreLoopDaemonFtry",
@@ -2394,7 +2425,7 @@
             "interactionators" : "zandbokz.inatorFGList"
           }
         },
-        {"factory": "MainLoopExitFtry",
+        {"factory": "StopperDaemonFtry",
           "name": "zandbokz.exitDaemon",
           "config" : {
             "mainloop" : "zandbokz.MainLoop",
@@ -2795,14 +2826,45 @@
           }
         },
         {
+          "factory": "BValueTogglerDaemonFtry",
+          "name": "zandbokz.pauseValueToggle",
+          "description" : "demonio que pausa el juego",
+          "config" : {
+            "entity" : "Game",
+            "valueIdx" : "onGameIdx"
+          }
+        },
+        {
           "factory": "ParametricCTXTimePauseDaemonFtry",
-          "name": "zandbokz.pauseDaemon",
+          "name": "zandbokz.pauseGameTime",
           "description" : "demonio que pausa el juego",
           "config" : {
             "contextTime" : "zandbokz.gameTime",
             "parentTime" : "DEFAULT",
             "entity" : "Game",
+            "negate" : true,
             "valueIdx" : "onGameIdx"
+          }
+        },
+        {"factory": "ValueBoolSelectorDaemonFtry",
+          "name": "zandbokz.pauseGameFrameSelector",
+          "description" : "demonio que pausa el juego",
+          "config" : {
+            "entity" : "Game",
+            "valueIdx" : "onGameIdx",
+            "trueDaemon" : "zandbokz.setGameFrame",
+            "falseDaemon" : "zandbokz.setMenuFrame"
+          }
+        },
+        {"factory": "MasterDmnFtry",
+          "name": "zandbokz.pauseDaemon",
+          "description" : "demonio que pausa el juego",
+          "config" : {
+            "daemons": [
+              "zandbokz.pauseValueToggle",
+              "zandbokz.pauseGameTime",
+              "zandbokz.pauseGameFrameSelector"
+            ]
           }
         },
         {"factory": "ImGuiMenuDrawDaemonFtry",
