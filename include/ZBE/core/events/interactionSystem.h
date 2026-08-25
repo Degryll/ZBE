@@ -34,7 +34,7 @@
 #include "ZBE/core/tools/tools.h"
 #include "ZBE/factories/Factory.h"
 #include "ZBE/factories/genericFactoryConstants.h"
-
+#include "ZBE/core/system/SysError.h"
 
 namespace zbe {
 
@@ -429,6 +429,9 @@ public:
   }
 
   void run() override {
+    if(contextTime->isPaused()) {
+      return;
+    }
     uint64_t timeLimit = contextTime->getRemainTime();
     for(auto iator : (*ators)) {
       getCollision(iator, timeLimit);

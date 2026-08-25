@@ -408,11 +408,11 @@ public:
     // Pre daemon
     contextTime->update();
     dPre->run();
-    SysError::setDebug("FrameDaemon: Frame time: " + std::to_string(contextTime->getFrameTime()) + "ms, Lost time: " + std::to_string(contextTime->getLostTime()) + "ms");
+    // SysError::setDebug("FrameDaemon: Frame time: " + std::to_string(contextTime->getFrameTime()) + "ms, Lost time: " + std::to_string(contextTime->getLostTime()) + "ms");
     // Inner loop
     while (contextTime->isFrameRemaining()) {
       // Timed events generator daemon
-      SysError::setDebug("FrameDaemon: Running timed events generator daemon.");
+      // SysError::setDebug("FrameDaemon: Running timed events generator daemon.");
       dTE->run();
       contextTime->setEventTime(store->getTime());
       if (contextTime->isPartialFrame() ) {
@@ -420,14 +420,14 @@ public:
           break;
         }
         // commonBehaviorMaster
-        SysError::setDebug("FrameDaemon: partial:" + std::to_string(contextTime->getCurrentTime()));
+        // SysError::setDebug("FrameDaemon: partial:" + std::to_string(contextTime->getCurrentTime()));
         dCBM->run();
         store->manageCurrent();
         // reactBehaviorMaster
         dRBM->run();
       } else {
         // commonBehaviorMaster
-        SysError::setDebug("FrameDaemon: remaining.");
+        // SysError::setDebug("FrameDaemon: remaining.");
         dCBM->run();
         store->clearStore();
       }

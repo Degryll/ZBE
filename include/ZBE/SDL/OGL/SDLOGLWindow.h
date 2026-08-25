@@ -225,7 +225,7 @@ public:
    *  \param window_flags The widnow flags, like borderless, resizable, etc.
    *  \sa run, setTitle, setX, setY, setWidth, setHeight, setRenderer_flags
    */
-  virtual void setWindow_flags(Uint32 window_flags) override { SDLWindow::setWindow_flags(window_flags | SDL_WINDOW_OPENGL);}
+  virtual void setWindow_flags(Uint32 window_flags) override { SDLWindow::setWindow_flags(window_flags | SDL_WINDOW_OPENGL /* | SDL_WINDOW_RESIZABLE*/);}
 
   /** \brief Sets the dictionary for the model store
    *  \param dict The dictionary

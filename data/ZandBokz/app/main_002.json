@@ -61,7 +61,7 @@
     "pointAIdx" : 1310,
     "pointBIdx" : 1320,
     "pointCIdx" : 1330,
-    "lifespan" : 1324288,
+    "lifespan" : 13242880,
     "bloodrestTime" : 6553,
     "bloodburnTime" : 8192,
     "fovIdx" : 3100,
@@ -218,7 +218,8 @@
           {"factory": "SubordinateTimeFtry",
             "name": "zandbokz.menuTime",
             "config": {
-              "parent": "DEFAULT"
+              "parent": "DEFAULT",
+              "startPaused": true
             }
           },
           {
@@ -2296,6 +2297,14 @@
           }
         },
         {"factory": "MasterDmnFtry",
+          "name": "zandbokz.eventGeneratorMenu",
+          "config" : {
+            "daemons": [
+              "zandbokz.inputEventGenerator"
+            ]
+          }
+        },
+        {"factory": "MasterDmnFtry",
           "name": "BehaviorsMD",
           "config" : {
             "daemons": [
@@ -2347,7 +2356,7 @@
           "name": "zandbokz.menuFrame",
           "config" : {
             "preDaemon":"zandbokz.PreDaemon",
-            "eventDaemon":"zandbokz.eventGenerator",
+            "eventDaemon":"zandbokz.eventGeneratorMenu",
             "commonDaemon":"DEFAULT",
             "reactDaemon":"DEFAULT",
             "drawDaemon":"zandbokz.masterDrawDaemon",
@@ -2846,6 +2855,18 @@
             "valueIdx" : "onGameIdx"
           }
         },
+        {
+          "factory": "ParametricCTXTimePauseDaemonFtry",
+          "name": "zandbokz.pauseMenuTime",
+          "description" : "demonio que pausa el juego",
+          "config" : {
+            "contextTime" : "zandbokz.menuTime",
+            "parentTime" : "DEFAULT",
+            "entity" : "Game",
+            "negate" : false,
+            "valueIdx" : "onGameIdx"
+          }
+        },
         {"factory": "ValueBoolSelectorDaemonFtry",
           "name": "zandbokz.pauseGameFrameSelector",
           "description" : "demonio que pausa el juego",
@@ -2863,6 +2884,7 @@
             "daemons": [
               "zandbokz.pauseValueToggle",
               "zandbokz.pauseGameTime",
+              "zandbokz.pauseMenuTime",
               "zandbokz.pauseGameFrameSelector"
             ]
           }

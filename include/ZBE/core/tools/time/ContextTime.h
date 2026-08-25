@@ -16,6 +16,8 @@
 #include "ZBE/core/system/system.h"
 #include "ZBE/core/system/SysError.h"
 
+#include "ZBE/core/tools/math/math.h"
+
 namespace zbe {
 
 /** \brief
@@ -72,7 +74,6 @@ public:
    * \return True if the actual frame is not finished yet.
    */
   virtual void updateInitTime() {
-    SysError::setDebug("CT. up init. pre init time" + std::to_string(initT) + " eventT:" + std::to_string(eventT) );
     initT = eventT;
   }
 
@@ -81,6 +82,9 @@ public:
    */
   virtual void setEventTime(uint64_t eventTime) {
     SysError::setDebug("CT. event time:" + std::to_string(eventTime));
+    if (paused) {
+      return;
+    }
     if (eventTime <= endT) {
       eventT = eventTime;
       is_partFrame = true;
@@ -88,6 +92,13 @@ public:
       eventT = endT;
       is_partFrame = false;
     }
+    // if(initT>eventT) {
+    //   SysError::setDebug("initT>eventT");
+    //   // TODO: El problema venía de que se seguían generando eventos con el InteractionEventGenerator de la gravedad. (Que genera siempre un evento por plataforma)
+    //   // Lo razonable es que ningún event generator genere eventos si está sus ContextTime pausado.
+    //   // Hay que añadir esa lógica y dar un repaso a todas las ñapas incluidas para trampear la pausa.
+    //   eventT = initT + TIME_QUANTUM;
+    // }
     currentT = eventT - initT;
     remainT = endT - eventT;
   }
@@ -145,7 +156,6 @@ public:
   /** \brief Resume the ContextTime.
    */
   virtual void resume(uint64_t resumeTime) {
-    SysError::setDebug("CT resumeTime:" + std::to_string(resumeTime));
     if (paused) {
       endT = resumeTime;
       paused = false;
@@ -172,7 +182,10 @@ public:
     eventT = initT;
     currentT = eventT - initT;
     remainT = endT - eventT;
-    SysError::setDebug("CT. endT:" + std::to_string(endT) + " Frame time: " + std::to_string(frame) + "ms, Lost time: " + std::to_string(lostTime) + "ms, Current time:" + std::to_string(currentT));
+  }
+
+  virtual bool isPaused() {
+    return this->paused;
   }
 
   virtual uint64_t _getTotalTime() = 0;

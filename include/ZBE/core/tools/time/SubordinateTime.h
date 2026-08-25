@@ -65,15 +65,15 @@ public:
 
   void resume(uint64_t resumeTime) override {
     SysError::setDebug(name + " resumeTime:" + std::to_string(resumeTime));
+    copyParentData();
     ContextTime::resume((resumeTime ? resumeTime : parent->getInitFrameTime() + parent->getCurrentTime()));
   }
 
   void update() override {
-    // parent->update();
+    // parent->update();    
     if (!paused) {
       copyParentData();
     }
-    SysError::setDebug(name + ": Frame time: " + std::to_string(frame) + "ms, Lost time: " + std::to_string(lostTime) + "ms, Current time:" + std::to_string(currentT));
   }
   
   uint64_t _getTotalTime() override {
@@ -146,6 +146,9 @@ public:
 
     subordinateTime->setParent(parent);
     subordinateTime->setName(name);
+    if (j.contains("startPaused") && j["startPaused"].is_boolean() && j["startPaused"].get<bool>()) {
+      subordinateTime->pause();
+    }
   }
 
   // TODO probar todo esto.
