@@ -65,11 +65,11 @@ public:
       auto dm = dmnMasterRsrc.get("DaemonMaster."s + name);
 
       json daemons = j["daemons"];
-      for (auto daemon : daemons) {
-        if (daemon.is_string()) {
-          uint64_t dId = dict.get("Daemon."s + daemon.get<std::string>());
+      for (auto daemon = daemons.rbegin(); daemon != daemons.rend(); ++daemon) {
+        if (daemon->is_string()) {
+          uint64_t dId = dict.get("Daemon."s + daemon->get<std::string>());
           auto ticket = dm->addDaemon(daemonRsrc.get(dId));
-          ticketRsrc.insert(name + "."s + daemon.get<std::string>() + ".ticket"s, ticket);
+          ticketRsrc.insert(name + "."s + daemon->get<std::string>() + ".ticket"s, ticket);
         } else {
           SysError::setError("MasterDmnFtry config for "s + name + " not valid."s);
         }

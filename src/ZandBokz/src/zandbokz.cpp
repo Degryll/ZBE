@@ -9,7 +9,12 @@
 
 
  #define SDL_MAIN_HANDLED
+#include <chrono>
+#include <ctime>
+#include <filesystem>
+#include <iomanip>
 #include <iostream>
+#include <sstream>
 #include <string>
 
 #include "ZBE/core/zbe.h"
@@ -48,6 +53,35 @@
 // #include "backends/imgui_impl_sdl2.h"
 // #include "backends/imgui_impl_opengl3.h"
 // #include <stdio.h>
+
+namespace {
+
+void archivePreviousLog() {
+  namespace fs = std::filesystem;
+  const fs::path logPath{"logs/zbe.log"};
+
+  if (!fs::exists(logPath)) {
+    return;
+  }
+
+  const auto now = std::chrono::system_clock::now();
+  const auto time = std::chrono::system_clock::to_time_t(now);
+  std::tm localTime{};
+#ifdef _WIN32
+  localtime_s(&localTime, &time);
+#else
+  localtime_r(&time, &localTime);
+#endif
+
+  std::ostringstream suffix;
+  suffix << std::put_time(&localTime, "%Y%m%d-%H%M%S")
+         << '-' << std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()).count() % 1000;
+  const fs::path archivedPath = logPath.parent_path() / ("zbe.log." + suffix.str());
+
+  fs::rename(logPath, archivedPath);
+}
+
+} // namespace
 
 int main(int /*argc*/, char** /*argv*/) {
 //   // 1. Inicializar SDL con video
@@ -139,6 +173,7 @@ int main(int /*argc*/, char** /*argv*/) {
 //     SDL_Quit();
 
 //     return 0;
+  archivePreviousLog();
   auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
   auto rotating_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>("logs/zbe.log", 1024*1024*100, 10);
   auto logger = std::make_shared<spdlog::logger>("multi_sink", spdlog::sinks_init_list{console_sink, rotating_sink});

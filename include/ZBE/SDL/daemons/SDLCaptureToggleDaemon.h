@@ -73,7 +73,6 @@ public:
   void run() override {
 
     bool captureVal = this->capture->get();
-
     SDL_CaptureMouse(captureVal ? SDL_TRUE : SDL_FALSE);
     SDL_SetRelativeMouseMode(captureVal ? SDL_TRUE : SDL_FALSE);
   };

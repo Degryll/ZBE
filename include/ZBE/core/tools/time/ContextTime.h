@@ -81,7 +81,6 @@ public:
    *  \param eventTime time in which current events occured
    */
   virtual void setEventTime(uint64_t eventTime) {
-    SysError::setDebug("CT. event time:" + std::to_string(eventTime));
     if (paused) {
       return;
     }
@@ -92,13 +91,6 @@ public:
       eventT = endT;
       is_partFrame = false;
     }
-    // if(initT>eventT) {
-    //   SysError::setDebug("initT>eventT");
-    //   // TODO: El problema venía de que se seguían generando eventos con el InteractionEventGenerator de la gravedad. (Que genera siempre un evento por plataforma)
-    //   // Lo razonable es que ningún event generator genere eventos si está sus ContextTime pausado.
-    //   // Hay que añadir esa lógica y dar un repaso a todas las ñapas incluidas para trampear la pausa.
-    //   eventT = initT + TIME_QUANTUM;
-    // }
     currentT = eventT - initT;
     remainT = endT - eventT;
   }

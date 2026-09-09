@@ -61,7 +61,7 @@
     "pointAIdx" : 1310,
     "pointBIdx" : 1320,
     "pointCIdx" : 1330,
-    "lifespan" : 13242880,
+    "lifespan" : 1324288,
     "bloodrestTime" : 6553,
     "bloodburnTime" : 8192,
     "fovIdx" : 3100,
@@ -162,7 +162,7 @@
     "gravity" : {"type":"v3", "value":[0.0, -100.0, 0.0]},
     "attractorsRadius" : {"type":"uifd", "value":2000},
     "attractionRatio" : {"type":"uifd", "value":500},
-    "bullet.speed" : {"type":"d", "value":800.0},
+    "bullet.speed" : {"type":"d", "value":160.0},
     "MAXDOUBLE" : {"type":"d", "value":179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368.0},
 
 
@@ -199,7 +199,8 @@
     "VOLANDO" : 0,
     "RODANDO" : 1,
 
-    "onGameIdx" : 30103
+    "onGameIdx" : 30103,
+    "gameRunningIdx" : 30104
   },
   "phases":[
       {
@@ -218,8 +219,7 @@
           {"factory": "SubordinateTimeFtry",
             "name": "zandbokz.menuTime",
             "config": {
-              "parent": "DEFAULT",
-              "startPaused": true
+              "parent": "DEFAULT"
             }
           },
           {
@@ -1422,8 +1422,8 @@
           "name": "zandbokz.sangresefo",
           "config" : {
             "daemons": [
-              "zandbokz.elprotasecae",
-              "zandbokz.resetmovimiento"
+              "zandbokz.resetmovimiento",
+              "zandbokz.elprotasecae"
             ]
           }
         },
@@ -1925,7 +1925,10 @@
           "name": "zandbokz.demoniofinnivel",
           "config" : {
             "daemons": [
-              "zandbokz.protaResetDmn", "zandbokz.levelselectDaemon", "zandbokz.levelIncrementDmn", "zandbokz.deleteAtResetDmn"
+              "zandbokz.deleteAtResetDmn",
+              "zandbokz.levelIncrementDmn",
+              "zandbokz.levelselectDaemon",
+              "zandbokz.protaResetDmn"
             ]
           }
         },
@@ -2218,7 +2221,8 @@
           "config" : {
             "contextTime" : "zandbokz.gameTime",
             "bool": {
-              "onGameIdx" : true
+              "onGameIdx" : true,
+              "gameRunningIdx" : true
             }
           }
         },
@@ -2308,20 +2312,20 @@
           "name": "BehaviorsMD",
           "config" : {
             "daemons": [
-              "zandbokz.relativevelDmn",
-              "zandbokz.relative2dvelDmn",
-              "zandbokz.fovOscillatorDaemon",
-              "zandbokz.coordOscillatorDaemon",
-              "zandbokz.cajaponvelocidadsaltoDmn",
-              "zandbokz.calculaprotavelDMN",
-              "zandbokz.proyectaorientacionDMN",
-              "zandbokz.vel2oriDMN",
-              "zandbokz.ULM3DOn2DDaemon",
-              "zandbokz.velAccumDMN",
-              "zandbokz.ULM3DDaemon",
-              "zandbokz.gravityDMN",
+              "zandbokz.resetdistancia",
               "zandbokz.keepdistanceDmn",
-              "zandbokz.resetdistancia"
+              "zandbokz.gravityDMN",
+              "zandbokz.ULM3DDaemon",
+              "zandbokz.velAccumDMN",
+              "zandbokz.ULM3DOn2DDaemon",
+              "zandbokz.vel2oriDMN",
+              "zandbokz.proyectaorientacionDMN",
+              "zandbokz.calculaprotavelDMN",
+              "zandbokz.cajaponvelocidadsaltoDmn",
+              "zandbokz.coordOscillatorDaemon",
+              "zandbokz.fovOscillatorDaemon",
+              "zandbokz.relative2dvelDmn",
+              "zandbokz.relativevelDmn"
             ],
             "disabledDaemons": [
               "zandbokz.goForwardDaemon",
@@ -2399,8 +2403,8 @@
           "name": "zandbokz.PreDaemon",
           "config" : {
             "daemons": [
-              "zandbokz.imGuiPre",
-              "zandbokz.styleLoad"
+              "zandbokz.styleLoad",
+              "zandbokz.imGuiPre"
             ]
           }
         },
@@ -2766,9 +2770,9 @@
           "config" : {
             "daemons": [
               "zandbokz.bloodburnDaemon",
-              "zandbokz.chofdaemonborra",
               "zandbokz.chofdaemona",
-              "zandbokz.chofdaemonb"
+              "zandbokz.chofdaemonb",
+              "zandbokz.chofdaemonborra"
             ]
           }
         },
@@ -2840,7 +2844,7 @@
           "description" : "demonio que pausa el juego",
           "config" : {
             "entity" : "Game",
-            "valueIdx" : "onGameIdx"
+            "valueIdx" : "gameRunningIdx"
           }
         },
         {
@@ -2852,19 +2856,7 @@
             "parentTime" : "DEFAULT",
             "entity" : "Game",
             "negate" : true,
-            "valueIdx" : "onGameIdx"
-          }
-        },
-        {
-          "factory": "ParametricCTXTimePauseDaemonFtry",
-          "name": "zandbokz.pauseMenuTime",
-          "description" : "demonio que pausa el juego",
-          "config" : {
-            "contextTime" : "zandbokz.menuTime",
-            "parentTime" : "DEFAULT",
-            "entity" : "Game",
-            "negate" : false,
-            "valueIdx" : "onGameIdx"
+            "valueIdx" : "gameRunningIdx"
           }
         },
         {"factory": "ValueBoolSelectorDaemonFtry",
@@ -2872,7 +2864,7 @@
           "description" : "demonio que pausa el juego",
           "config" : {
             "entity" : "Game",
-            "valueIdx" : "onGameIdx",
+            "valueIdx" : "gameRunningIdx",
             "trueDaemon" : "zandbokz.setGameFrame",
             "falseDaemon" : "zandbokz.setMenuFrame"
           }
@@ -2884,7 +2876,6 @@
             "daemons": [
               "zandbokz.pauseValueToggle",
               "zandbokz.pauseGameTime",
-              "zandbokz.pauseMenuTime",
               "zandbokz.pauseGameFrameSelector"
             ]
           }
@@ -2931,13 +2922,13 @@
           "description" : "demonio que pintara la pantalla. Faltan tipos",
           "config" : {
             "daemons": [
-              "zandbokz.audioplayerDaemon",
-              "zandbokz.drawDaemon2D",
-              "zandbokz.drawDaemon2Dparam",
-              "zandbokz.shadersSetter2D",
-              "zandbokz.drawDaemon3D",
+              "zandbokz.shadersSetter3D",
               "zandbokz.drawLookAtDaemon3D",
-              "zandbokz.shadersSetter3D"
+              "zandbokz.drawDaemon3D",
+              "zandbokz.shadersSetter2D",
+              "zandbokz.drawDaemon2Dparam",
+              "zandbokz.drawDaemon2D",
+              "zandbokz.audioplayerDaemon"
             ],
             "disabledDaemons": ["zandbokz.mainMenuDrawDaemon", "zandbokz.imguiStats", "zandbokz.imguiStyleEditor"]
           }
@@ -3408,7 +3399,7 @@
     {"description" : "Controles de menu",
       "factories" : [
         {"factory": "ParametricTicketToggleDaemonFtry",
-          "name": "zandbokz.toggleMainMenuDaemon",
+          "name": "zandbokz.toggleMainMenuTicketDaemon",
           "config" : {
             "ticket" : "zandbokz.masterDrawDaemon.zandbokz.mainMenuDrawDaemon.ticket",
             "entity" : "Game",
@@ -3422,18 +3413,19 @@
             "tickets" : ["zandbokz.pitchInputH","zandbokz.yawInputH","zandbokz.BulletCreatorIH","zandbokz.cajanorteSihaysangre","zandbokz.cajasurSihaysangre","zandbokz.cajaesteSihaysangre","zandbokz.cajaoesteSihaysangre","zandbokz.chofhandlerDmn","zandbokz.saltahandlerSihaysangre","zandbokz.bajahandlerSihaysangre"],
             "entity" : "Game",
             "valueIdx" : "onGameIdx",
-            "ticketsBackup" : []
+            "TODO" : "Hay que meter la opción de negar"
           }
         },
         {"factory": "ParametricSDLCaptureToggleDaemonFtry",
-          "name": "zandbokz.toggleMenuDaemon",
+          "name": "zandbokz.toggleMouseCapture",
           "config" : {
             "entity" : "Game",
-            "valueIdx" : "onGameIdx"
+            "valueIdx" : "onGameIdx",
+            "TODO" : "Hay que meter la opción de negar"
           }
         },
         {"factory": "BValueTogglerDaemonFtry",
-          "name": "zandbokz.onMenuToggleHandler",
+          "name": "zandbokz.onMenuValToggleHandler",
           "config" : {
             "entity" : "Game",
             "valueIdx" : "onGameIdx"
@@ -3443,10 +3435,20 @@
           "name": "zandbokz.menuHandlerMasterDmn",
           "config" : {
             "daemons" : [
-              "zandbokz.toggleMenuDaemon",
-              "zandbokz.toggleMainMenuDaemon",
-              "zandbokz.togglecontrolesdmn",
-              "zandbokz.onMenuToggleHandler"
+              "zandbokz.onMenuValToggleHandler",
+              "zandbokz.toggleMouseCapture",
+              "zandbokz.toggleMainMenuTicketDaemon",
+              "zandbokz.togglecontrolesdmn"
+            ]
+          }
+        },
+        {"factory": "MasterDmnFtry",
+          "name": "zandbokz.inGamePauseDaemon",
+          "description" : "demonio que pausa el juego",
+          "config" : {
+            "daemons": [
+              "zandbokz.menuHandlerMasterDmn",
+              "zandbokz.pauseDaemon"
             ]
           }
         },
@@ -3475,11 +3477,21 @@
           }
         },
         {"factory": "DaemonIHFtry",
-          "name": "zandbokz.handlerPause",
+          "name": "zandbokz.handlerExit",
           "config" : {
-            "daemon" : "zandbokz.pauseDaemon",
+            "daemon" : "zandbokz.exitDaemon",
             "inputEventGenerator" : "zandbokz.inputEventGenerator",
-            "key":"ZBEK_p"
+            "key":"ZBEK_k"
+          }
+        },
+        {"factory": "DaemonIHFtry",
+        "name": "zandbokz.handlerPause",
+          "config" : {
+            "daemon" : "zandbokz.inGamePauseDaemon",
+            "inputEventGenerator" : "zandbokz.inputEventGenerator",
+            "key":"ZBEK_p",
+            "TODO1" : "Al tocar una plataforma tras la pausa, castañazo.",
+            "TODO2" : "El timer que quita sangre puede ser el responsable."
           }
         }
       ]

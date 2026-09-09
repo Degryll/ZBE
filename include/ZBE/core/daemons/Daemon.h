@@ -274,14 +274,11 @@ public:
    */
   void run() override {
     keep = true;
-    int frame = 0;
     while(keep) {  // Each iteration generates a frame.
       // Pre daemon
       contextTime->update();
       dPre->run();
       dFrame->run();
-      SysError::setDebug("--------------- Frame: " + std::to_string(frame) + "---------------");
-      frame++;
     }  // while keep
   }
 
@@ -408,11 +405,9 @@ public:
     // Pre daemon
     contextTime->update();
     dPre->run();
-    // SysError::setDebug("FrameDaemon: Frame time: " + std::to_string(contextTime->getFrameTime()) + "ms, Lost time: " + std::to_string(contextTime->getLostTime()) + "ms");
     // Inner loop
     while (contextTime->isFrameRemaining()) {
       // Timed events generator daemon
-      // SysError::setDebug("FrameDaemon: Running timed events generator daemon.");
       dTE->run();
       contextTime->setEventTime(store->getTime());
       if (contextTime->isPartialFrame() ) {
@@ -420,14 +415,12 @@ public:
           break;
         }
         // commonBehaviorMaster
-        // SysError::setDebug("FrameDaemon: partial:" + std::to_string(contextTime->getCurrentTime()));
         dCBM->run();
         store->manageCurrent();
         // reactBehaviorMaster
         dRBM->run();
       } else {
         // commonBehaviorMaster
-        // SysError::setDebug("FrameDaemon: remaining.");
         dCBM->run();
         store->clearStore();
       }
@@ -1261,7 +1254,7 @@ public:
         return;
       }
       bvt->setValue(value);
-      
+
     } else {
       SysError::setError("BValueTogglerDaemon config for "s + name + " not found."s);
     }
