@@ -24,7 +24,7 @@ namespace zbe {
 */
 class ZBEAPI ContextTime {
 public:
-  ContextTime() : frame(0), lostTime(0), initT(0), endT(0), eventT(0), is_partFrame(false), currentT(0), remainT(0), paused(false), resumed(false) {}  //!< Basic constructor to be used internally.
+  ContextTime() : frame(0), lostTime(0), initT(0), endT(0), eventT(0), is_partFrame(false), currentT(0), remainT(0), paused(false), initPausedT(0), totalPausedT(0), resumed(false) {}  //!< Basic constructor to be used internally.
 
   virtual ~ContextTime() = default;
 
@@ -143,6 +143,7 @@ public:
     paused = true;
     remainT = 0;
     initT = endT;
+    initPausedT = eventT;
   }
 
   /** \brief Resume the ContextTime.
@@ -151,7 +152,16 @@ public:
     if (paused) {
       endT = resumeTime;
       paused = false;
+      totalPausedT += (resumeTime - initPausedT);
+      SysError::setDebug("ContextTime resumed at " + std::to_string(resumeTime) + " after being paused at " + std::to_string(initPausedT) + ". Total paused time is now " + std::to_string(totalPausedT) + ".");
     }
+  }
+
+  /** \brief Returns the total time paused.
+   * \return Total time paused.
+   */
+  inline uint64_t getTotalPausedTime() const {
+    return totalPausedT;
   }
 
   /** \brief Refreshes the SystemTime info using given Timer.
@@ -193,6 +203,8 @@ protected:
   uint64_t currentT;  //!< Time available to behave.
   uint64_t remainT;   //!< Time available to new events.
   bool paused;       //!< Time is paused
+  uint64_t initPausedT;  //!< Time when paused
+  uint64_t totalPausedT;  //!< Accumulated paused time
   bool resumed;      //!< Time is resumed
   static uint64_t maxFrameTime;  //!< No frame will be longer than this.
 

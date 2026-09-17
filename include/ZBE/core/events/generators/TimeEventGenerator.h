@@ -11,8 +11,11 @@
 #define ZBE_CORE_EVENTS_TIMEEVENTGENERATOR_H
 
 #include <cstdint>
+#include <iterator>
 #include <memory>
 #include <set>
+#include <utility>
+#include <vector>
 
 #include "ZBE/core/daemons/Daemon.h"
 
@@ -90,10 +93,12 @@ public:
    * \return The event time.
   */
   int64_t getTime() const {
-    return static_cast<int64_t>(iter->time);
+    return (s == ACTIVE) ? static_cast<int64_t>(iter->time) : 0;
   }
 
 private:
+  friend class TimeEventGenerator;
+
 DISABLE_DLL_WARN
   State s;  //!< State of the object
   std::multiset<TimerData>::iterator iter;
@@ -111,13 +116,13 @@ class ZBEAPI TimeEventGenerator : virtual public Daemon {
 public:
   /** \brief Empty Constructor.
    */
-  TimeEventGenerator() : eventId(), store(), timers(), contextTime() {}
+  TimeEventGenerator() : eventId(), store(), timers(), contextTime(), lastTotalPausedTime() {}
 
   /** \brief Parametrized constructor.
    *  \param eventId event id.
    *  \param contextTime ContextTime to use.
    */
-  explicit TimeEventGenerator(uint64_t eventId, std::shared_ptr<ContextTime> contextTime = SysTime::getInstance()) : eventId(eventId), store(), timers(), contextTime(contextTime) {}
+  explicit TimeEventGenerator(uint64_t eventId, std::shared_ptr<ContextTime> contextTime = SysTime::getInstance()) : eventId(eventId), store(), timers(), contextTime(contextTime), lastTotalPausedTime() {}
 
   /** Add a new Timer that only triggers onces.
    * \param id Id of the Timer, to identify the action to accomplish when the event is triggered
@@ -126,7 +131,9 @@ public:
    * \sa eraseTimer
    */
   inline std::shared_ptr<TimerTicket> addAbsoluteTimer(std::shared_ptr<TimeHandler> handler, uint64_t time) {
-    return (std::make_shared<TimerTicket>(timers.insert(TimerData(handler,quantizeTime(time))), timers, eventId, contextTime));
+    auto ticket = std::make_shared<TimerTicket>(timers.insert(TimerData(handler,quantizeTime(time))), timers, eventId, contextTime);
+    timerTickets.push_back(ticket);
+    return ticket;
   }
 
   /** Add a new Timer that only triggers onces.
@@ -170,6 +177,8 @@ DISABLE_DLL_WARN
   EventStore* store;
   std::multiset<TimerData> timers;
   std::shared_ptr<ContextTime> contextTime;
+  uint64_t lastTotalPausedTime;
+  std::vector<std::weak_ptr<TimerTicket>> timerTickets;
 DISABLE_WARNING_POP()
 };
 
