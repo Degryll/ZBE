@@ -125,6 +125,15 @@ class KeyDownTicketEnablerIHFtry : public Factory {
         SysError::setError("KeyDownTicketEnablerIHFtry config for key: "s + keyName + " is not a key name."s);
         return;
       }
+      
+      bool activated = true;
+      if(j.contains("activated")) {
+        if(!j["activated"].is_boolean()) {
+          SysError::setError("KeyDownTicketEnablerIHFtry config for activated: must be a boolean.");
+          return;
+        }
+        activated = j["activated"].get<bool>();
+      }
 
       auto ticket = ticketStore.get(ticketName);
       auto ieg    = iegStore.get("InputEventGenerator."s + inputEventGeneratorName);
@@ -133,6 +142,11 @@ class KeyDownTicketEnablerIHFtry : public Factory {
 
       ih->setTicket(ticket);
       auto handlerTicket = ieg->addHandler(key, ih);
+
+      if(!activated) {
+        handlerTicket->setInactive();
+      }
+
       SysError::setDebug("KeyDownTicketEnablerIHFtry adding ticket HandlerTicket."s + name, false);
       handlerTicketStore.insert("HandlerTicket."s + name, handlerTicket);
 

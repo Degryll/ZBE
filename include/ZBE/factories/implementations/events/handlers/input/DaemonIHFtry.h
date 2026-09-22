@@ -95,6 +95,15 @@ public:
         }
       }
 
+      bool activated = true;
+      if(j.contains("activated")) {
+        if(!j["activated"].is_boolean()) {
+          SysError::setError("DaemonIHFtry config for activated: must be a boolean.");
+          return;
+        }
+        activated = j["activated"].get<bool>();
+      }
+
       if(hasValue) {
         float val = j["value"].get<float>();
         ih->setValue(val);
@@ -116,6 +125,9 @@ public:
         auto ieg    = iegStore.get("InputEventGenerator."s + inputEventGeneratorName);
         auto key    = keyDict.get(keyName);
         auto handlerTicket = ieg->addHandler(key, ih);
+        if(!activated) {
+          handlerTicket->setInactive();
+        }
         SysError::setDebug("DaemonIHFtry adding ticket HandlerTicket."s + name, false);
         handlerTicketStore.insert("HandlerTicket."s + name, handlerTicket);
       }
@@ -221,6 +233,15 @@ void setup(std::string name, uint64_t cfgId) override {
       }
     }
 
+    bool activated = true;
+    if(j.contains("activated")) {
+      if(!j["activated"].is_boolean()) {
+        SysError::setError("ConditionalDaemonIHFtry config for activated: must be a boolean.");
+        return;
+      }
+      activated = j["activated"].get<bool>();
+    }
+
     if(hasValue) {
       float val = j["value"].get<float>();
       ih->setValue(val);
@@ -242,6 +263,9 @@ void setup(std::string name, uint64_t cfgId) override {
       auto ieg    = iegStore.get("InputEventGenerator."s + inputEventGeneratorName);
       auto key    = keyDict.get(keyName);
       auto handlerTicket = ieg->addHandler(key, ih);
+      if(!activated) {
+        handlerTicket->setInactive();
+      }
       SysError::setDebug("DaemonIHFtry adding ticket HandlerTicket."s + name, false);
       handlerTicketStore.insert("HandlerTicket."s + name, handlerTicket);
     }
@@ -347,6 +371,15 @@ void setup(std::string name, uint64_t cfgId) override {
       }
     }
 
+    bool activated = true;
+    if(j.contains("activated")) {
+      if(!j["activated"].is_boolean()) {
+        SysError::setError("ConditionalCompositeIHFtry config for activated: must be a boolean.");
+        return;
+      }
+      activated = j["activated"].get<bool>();
+    }
+
     if(haskey) {
       std::string inputEventGeneratorName = j["inputEventGenerator"].get<std::string>();
       if(!iegStore.contains("InputEventGenerator."s + inputEventGeneratorName)) {
@@ -363,6 +396,9 @@ void setup(std::string name, uint64_t cfgId) override {
       auto ieg    = iegStore.get("InputEventGenerator."s + inputEventGeneratorName);
       auto key    = keyDict.get(keyName);
       auto handlerTicket = ieg->addHandler(key, ih);
+      if(!activated) {
+        handlerTicket->setInactive();
+      }
       SysError::setDebug("ConditionalCompositeIHFtry adding ticket HandlerTicket."s + name, false);
       handlerTicketStore.insert("HandlerTicket."s + name, handlerTicket);
     }

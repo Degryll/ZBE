@@ -111,13 +111,21 @@ class KeyValueSetterIHFtry : public Factory {
 
     bool haskey = j["key"].is_string();
     bool hasIeg = j["inputEventGenerator"].is_string();
+    bool activated = true;
+    if(j.contains("activated")) {
+      if(!j["activated"].is_boolean()) {
+        SysError::setError("KeyValueSetterIHFtry config for activated: must be a boolean.");
+        return;
+      }
+      activated = j["activated"].get<bool>();
+    }
 
     if(haskey != hasIeg) {
       if (!hasIeg) {
-        SysError::setError("DaemonIHFtry config for inputEventGenerator: "s + j["inputEventGenerator"].get<std::string>() + ": must be an inputEventGenerator name."s);
+        SysError::setError("KeyValueSetterIHFtry config for inputEventGenerator: "s + j["inputEventGenerator"].get<std::string>() + ": must be an inputEventGenerator name."s);
         return;
       } else {
-        SysError::setError("DaemonIHFtry config for key: "s + j["key"].get<std::string>() + ": must be a key name."s);
+        SysError::setError("KeyValueSetterIHFtry config for key: "s + j["key"].get<std::string>() + ": must be a key name."s);
         return;
       }
     }
@@ -139,6 +147,9 @@ class KeyValueSetterIHFtry : public Factory {
       }
 
       auto handlerTicket = (*ieg)->addHandler(*key, kvsih);
+      if(!activated) {
+        handlerTicket->setInactive();
+      }
       SysError::setDebug("KeyValueSetterIHFtry adding ticket HandlerTicket."s + name, false);
       handlerTicketStore.insert("HandlerTicket."s + name, handlerTicket);
     }

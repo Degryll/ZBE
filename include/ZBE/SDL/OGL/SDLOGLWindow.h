@@ -272,6 +272,8 @@ public:
   SDL_GLContext getGLContext() const {
     return glContext;
   }
+  
+  void captureMouse(bool capture);
 
 protected:
 

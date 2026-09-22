@@ -1266,7 +1266,6 @@ DISABLE_DLL_WARN
   RsrcStore<Daemon>& mainRsrc = RsrcStore<Daemon>::getInstance();
   RsrcStore<BValueTogglerDaemon>& specificRsrc = RsrcStore<BValueTogglerDaemon>::getInstance();
   RsrcStore<Entity>& entityStore = RsrcStore<Entity>::getInstance();
-  RsrcStore<Value<bool>> &valueBRsrc = RsrcStore<Value<bool>>::getInstance();
   RsrcDictionary<uint64_t>& uintStore = RsrcDictionary<uint64_t>::getInstance();
 DISABLE_WARNING_POP()
 };

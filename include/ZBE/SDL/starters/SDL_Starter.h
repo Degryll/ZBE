@@ -34,13 +34,17 @@ public:
   static SDL_Starter& getInstance(Uint32 flags = 0, Uint32 other = 1) {
     static SDL_Starter instance;
     SDL_InitSubSystem(flags);
-    SDL_CaptureMouse(other ? SDL_TRUE : SDL_FALSE); // TODO esto, si lleva mas valores, deberá usar una mascara.
-    SDL_SetRelativeMouseMode(other ? SDL_TRUE : SDL_FALSE); // TODO lo mismo.
+    captureMouse(other ? SDL_TRUE : SDL_FALSE);
     if (other & SDLNET) {
       SDLNet_Init();
       sdlnetrefs++;
     }
     return (instance);
+  }
+
+  static void captureMouse(bool capture) {
+    SDL_CaptureMouse(capture ? SDL_TRUE : SDL_FALSE);
+    SDL_SetRelativeMouseMode(capture ? SDL_TRUE : SDL_FALSE);
   }
 
   /** \brief Shutdowns all SDL subsystems.

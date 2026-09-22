@@ -25,7 +25,6 @@
 
 #include "ZBE/core/system/SysError.h"
 
-#include "ZBE/SDL/starters/SDL_Starter.h"
 #include "ZBE/SDL/OGL/SDLOGLWindow.h"
 
 #include "ZBE/core/system/system.h"
@@ -123,6 +122,12 @@ public:
         auto sdlED = std::make_shared<SDLEventDispatcher>();
         sdlEvenDWindowRsrc.insert("SDLOGLWindow."s + name + ".SDLEventDispatcher", sdlED);
         sdlEvenDWindowRsrc.insert("ImGuiSDLOGLWindow."s + name + ".SDLEventDispatcher", sdlED);
+      }
+
+      json caputureMouseAtInit = j["captureMouseAtInit"];
+      if(caputureMouseAtInit.is_boolean()) {
+        auto sdlwin = imguiSdloglWindowRsrc.get("ImGuiSDLOGLWindow."s + name);
+        sdlwin->captureMouse(caputureMouseAtInit.get<bool>());
       }
     } else {
       SysError::setError("ImGuiSDLOGLWindowFtry config for "s + name + " not found."s);

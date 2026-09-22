@@ -118,6 +118,15 @@ class ActivatorIHFtry : public Factory {
         return;
       }
 
+      bool activated = true;
+      if(j.contains("activated")) {
+        if(!j["activated"].is_boolean()) {
+          SysError::setError("ActivatorIHFtry config for activated: must be a boolean.");
+          return;
+        }
+        activated = j["activated"].get<bool>();
+      }
+
       auto ticket = ticketStore.get(ticketName);
       auto ieg    = iegStore.get("InputEventGenerator."s + inputEventGeneratorName);
       auto key    = keyDict.get(keyName);
@@ -125,6 +134,10 @@ class ActivatorIHFtry : public Factory {
 
       ih->setTicket(ticket);
       auto handlerTicket = ieg->addHandler(key, ih);
+      if(!activated) {
+        handlerTicket->setInactive();
+      }
+
       SysError::setDebug("ActivatorIHFtry adding ticket HandlerTicket."s + name, false);
       handlerTicketStore.insert("HandlerTicket."s + name, handlerTicket);
 

@@ -17,6 +17,7 @@
 #include "ZBE/core/daemons/Daemon.h"
 #include "ZBE/SDL/system/SDLWindow.h"
 #include "ZBE/SDL/events/SDLEventDispatcher.h"
+#include "ZBE/SDL/starters/SDL_Starter.h"
 
 #include "ZBE/core/system/system.h"
 
@@ -41,8 +42,7 @@ class ZBEAPI SDLCaptureToggleDaemon : public Daemon {
      */
     void run() override {
       capture = !capture;
-      SDL_CaptureMouse(capture ? SDL_FALSE : SDL_TRUE);
-      SDL_SetRelativeMouseMode(capture ? SDL_FALSE : SDL_TRUE);
+      SDL_Starter::captureMouse(capture);
       // TODO esto también tiene que estár asociado al value de la entidad game.
     };
   private:

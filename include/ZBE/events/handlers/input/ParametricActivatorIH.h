@@ -136,6 +136,15 @@ class ParametricActivatorIHFtry : public Factory {
         return;
       }
 
+      bool activated = true;
+      if(j.contains("activated")) {
+        if(!j["activated"].is_boolean()) {
+          SysError::setError("ParametricActivatorIHFtry config for activated: must be a boolean.");
+          return;
+        }
+        activated = j["activated"].get<bool>();
+      }
+
       // TODO Asegurar que se guardar el comportamiento como parametrico.
       auto ticket = ticketStore.get(ticketName);
       auto parametric = parametricStore.get("Parametric."s + parametricName);
@@ -146,6 +155,9 @@ class ParametricActivatorIHFtry : public Factory {
       ih->setTicket(ticket);
       ih->setParametric(parametric);
       auto handlerTicket = ieg->addHandler(key, ih);
+      if(!activated) {
+        handlerTicket->setInactive();
+      }
       SysError::setDebug("ParametricActivatorIH HandlerTicket."s +name + " created and configured."s, false);
       handlerTicketStore.insert("HandlerTicket."s + name, handlerTicket);
     } else {

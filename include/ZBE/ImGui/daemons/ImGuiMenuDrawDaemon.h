@@ -26,6 +26,13 @@
 
 namespace zbe {
 
+struct ImgGuiMenuItem {
+  std::string label;
+  std::shared_ptr<Daemon> daemon;
+  std::shared_ptr<Value<bool> > activated;
+  bool negated = false;
+};
+
 class ZBEAPI ImGuiMenuDrawDaemon : public Daemon {
 public:
   ImGuiMenuDrawDaemon(const ImGuiMenuDrawDaemon&) = delete; //!< Avoid copy.
@@ -90,11 +97,25 @@ public:
     // Dibujar botones centrados
     ImGui::SetWindowFontScale(itemsFontScale);
     for (const auto& item : menuItems) {
+      if (item.activated!= nullptr) {
+        SysError::setDebug("Value for menu item: " + item.label + " is " + std::to_string(item.activated->get()) + " and negated is " + std::to_string(item.negated), false);
+        if (item.negated) {
+          if (item.activated->get()) {
+            // SysError::setDebug("Skipping menu item: " + item.label + " because it is negated and activated.", false);
+            continue;
+          }
+        } else {
+          if (!item.activated->get()) {
+            // SysError::setDebug("Skipping menu item: " + item.label + " because it is not activated.", false);
+            continue;
+          }
+        }
+      }
       ImGui::SetCursorPosX((displaySize.x - buttonWidth) * horizontalAlign);
 
-        if (ImGui::Button(item.first.c_str(), ImVec2(buttonWidth, itemHeight))) {
-            if (item.second) {
-                item.second->run();
+        if (ImGui::Button(item.label.c_str(), ImVec2(buttonWidth, itemHeight))) {
+            if (item.daemon) {
+                item.daemon->run();
             }
         }
 
@@ -105,9 +126,9 @@ public:
     ImGui::End();
   }
 
-  void addMenuItem(const std::string& label, const std::shared_ptr<Daemon>& daemon) {
-    SysError::setDebug("Adding menu item: " + label, false);
-    menuItems.emplace_back(label, daemon);
+  void addMenuItem(const ImgGuiMenuItem& item) {
+    SysError::setDebug("Adding menu item: " + item.label, false);
+    menuItems.push_back(item);
   }
 
   void setMenuTitle(const std::string& title) {
@@ -121,7 +142,7 @@ public:
   void setItemsFontScale(float scale) { itemsFontScale = std::max(scale, 0.1f); }
 
 private:
-  std::vector<std::pair<std::string, std::shared_ptr<Daemon>>> menuItems;
+  std::vector<ImgGuiMenuItem> menuItems;
   std::string menuTitle;
   float horizontalAlign = 0.5f;
   float verticalAlign = 0.5f;
@@ -200,6 +221,12 @@ public:
       return;
     }
 
+    auto entity = entityStore.get("Entity."s + j["entity"].get<std::string>());
+    if (!entity) {
+      SysError::setError("ImGuiMenuDrawDaemonFtry " + name + " config for entity not found."s);
+      return;
+    }
+
     for (const auto& item : j["items"]) {
       if (!item.is_object()) {
         continue;
@@ -219,7 +246,36 @@ public:
         SysError::setError("ImGuiMenuDrawDaemonFtry daemon not found: "s + daemonName);
         continue;
       }
-      dmn->addMenuItem(label, daemon);
+
+      ImgGuiMenuItem menuItem;
+      menuItem.label = label;
+      menuItem.daemon = daemon;
+      
+      if (entity != nullptr && item.contains("valueIdx")) {
+        if (!item["valueIdx"].is_string()) {
+          SysError::setError("ImGuiMenuDrawDaemonFtry config for valueIdx for label " + label + " must be a string."s);
+          return;
+        }
+        uint64_t valueIdx = uintStore.get(item["valueIdx"].get<std::string>());
+        auto value = entity->getBool(valueIdx);
+        if (!value) {
+          SysError::setError("ImGuiMenuDrawDaemonFtry " + name + " config for valueIdx not found."s);
+          return;
+        }
+        menuItem.activated = value;
+
+        if (item.contains("negated")) {
+          if (!item["negated"].is_boolean()) {
+            SysError::setError("ImGuiMenuDrawDaemonFtry config for negated for label " + label + " must be a boolean."s);
+            return;
+          }
+          menuItem.negated = item["negated"].get<bool>();
+        }
+      } else {
+        menuItem.activated = nullptr;
+      }
+
+      dmn->addMenuItem(menuItem);
     //   TODO: No está entrando a pintar. aparentemente no activa el ticket del demonio del menú.
     //   ¿Igual se pintan y no se ven?
     }
@@ -229,6 +285,8 @@ private:
   RsrcStore<nlohmann::json>& configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<Daemon>& mainRsrc = RsrcStore<Daemon>::getInstance();
   RsrcStore<ImGuiMenuDrawDaemon>& specificRsrc = RsrcStore<ImGuiMenuDrawDaemon>::getInstance();
+  RsrcStore<Entity>& entityStore = RsrcStore<Entity>::getInstance();
+  RsrcDictionary<uint64_t>& uintStore = RsrcDictionary<uint64_t>::getInstance();
 };
 
 }  // namespace zbe

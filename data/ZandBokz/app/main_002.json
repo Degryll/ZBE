@@ -162,7 +162,7 @@
     "gravity" : {"type":"v3", "value":[0.0, -100.0, 0.0]},
     "attractorsRadius" : {"type":"uifd", "value":2000},
     "attractionRatio" : {"type":"uifd", "value":500},
-    "bullet.speed" : {"type":"d", "value":320.0},
+    "bullet.speed" : {"type":"d", "value":480.0},
     "MAXDOUBLE" : {"type":"d", "value":179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368.0},
 
 
@@ -200,7 +200,8 @@
     "RODANDO" : 1,
 
     "onGameIdx" : 30103,
-    "gameRunningIdx" : 30104
+    "gameRunningIdx" : 30104,
+    "onCameraConfigIdx" : 30105
   },
   "phases":[
       {
@@ -213,7 +214,8 @@
           {"factory": "SubordinateTimeFtry",
             "name": "zandbokz.gameTime",
             "config": {
-              "parent": "DEFAULT"
+              "parent": "DEFAULT",
+              "startPaused": true
             }
           },
           {"factory": "SubordinateTimeFtry",
@@ -558,7 +560,8 @@
             "w" : "width",
             "h" : "height",
             "wflags":"testwflags",
-            "rflags":"testrflags"
+            "rflags":"testrflags",
+            "captureMouseAtInit" : false
           }
         },
         {"factory": "TimeEventGnFtry",
@@ -2221,8 +2224,9 @@
           "config" : {
             "contextTime" : "zandbokz.gameTime",
             "bool": {
-              "onGameIdx" : true,
-              "gameRunningIdx" : true
+              "onGameIdx" : false,
+              "gameRunningIdx" : false,
+              "onCameraConfigIdx" : false
             }
           }
         },
@@ -2340,7 +2344,7 @@
           "name": "zandbokz.MainLoop",
           "config" : {
             "preDaemon":"DEFAULT",
-            "frameDaemon" : "zandbokz.gameFrame",
+            "frameDaemon" : "zandbokz.menuFrame",
             "contextTime" : "DEFAULT"
           }
         },
@@ -2884,10 +2888,11 @@
           "name": "zandbokz.mainMenuDrawDaemon",
           "config" : {
             "title": "ZandBokz",
-            "horizontalAlign": 0.5,
+            "horizontalAlign": 0.20,
             "verticalAlign": 0.5,
             "titleFontScale" : 4.0,
             "itemsFontScale" : 1.5,
+            "entity" : "Game",
             "items": [
               {
                 "label": "Editor estilo ImGui",
@@ -2895,11 +2900,22 @@
               },
               {
                 "label": "Pausar juego",
-                "daemon": "zandbokz.pauseDaemon"
+                "daemon": "zandbokz.pauseDaemon",
+                "valueIdx" : "gameRunningIdx"
+              },
+              {
+                "label": "Despausar juego",
+                "daemon": "zandbokz.pauseDaemon",
+                "valueIdx" : "gameRunningIdx",
+                "negated" : true
               },
               {
                 "label": "Estado del juego",
                 "daemon": "zandbokz.toggleStats"
+              },
+              {
+                "label": "Configurar cámara",
+                "daemon": "zandbokz.cameraConfigMasterDmn"
               },
               {
                 "label": "Borrar plataformas",
@@ -2908,6 +2924,62 @@
               {
                 "label": "Salir",
                 "daemon": "zandbokz.exitDaemon"
+              }
+            ],
+            "TODO1" : "Esto tendría que representar los datos de una entidad.",
+            "TODO2" : "La entidad debería, de alguna forma, guardar los nombres y los ids de los demonios",
+            "TODO3" : "A corto plazo nos vale con una versión active sus entradas en funcion de los valores de una entidad"
+          }
+        },
+        {"factory": "ParametricTicketToggleDaemonFtry",
+          "name": "zandbokz.toggleCameraConfigTicketDaemon",
+          "config" : {
+            "ticket" : "zandbokz.masterDrawDaemon.zandbokz.cameraConfigDrawDaemon.ticket",
+            "entity" : "Game",
+            "valueIdx" : "onCameraConfigIdx"
+          }
+        },
+        {"factory": "BValueTogglerDaemonFtry",
+          "name": "zandbokz.onCameraConfigValToggleHandler",
+          "config" : {
+            "entity" : "Game",
+            "valueIdx" : "onCameraConfigIdx"
+          }
+        },
+        {"factory": "MasterDmnFtry",
+          "name": "zandbokz.cameraConfigMasterDmn",
+          "config" : {
+            "daemons" : [
+              "zandbokz.onCameraConfigValToggleHandler",
+              "zandbokz.toggleCameraConfigTicketDaemon"
+            ]
+          }
+        },
+        {"factory": "ImGuiCFGDrawDaemonFtry",
+          "name": "zandbokz.cameraConfigDrawDaemon",
+          "config" : {
+            "title": "Configuración de la cámara",
+            "entity": "cameraControllerFree",
+            "horizontalAlign": 0.7,
+            "verticalAlign": 0.5,
+            "titleFontScale": 1.5,
+            "itemsFontScale": 1.0,
+            "items": [
+              {
+                "label": "Campo de visión",
+                "valueIdx": "fovIdx",
+                "type": "float",
+                "min": 1.0,
+                "max": 180.0,
+                "step": 0.1
+              },
+              {
+                "label": "Distancia de cámara",
+                "valueIdx": "cameraDistanceIdx",
+                "type": "double",
+                "min": 50.0,
+                "max": 1000.0,
+                "step": 0.1
               }
             ]
           }
@@ -2928,9 +3000,14 @@
               "zandbokz.shadersSetter2D",
               "zandbokz.drawDaemon2Dparam",
               "zandbokz.drawDaemon2D",
-              "zandbokz.audioplayerDaemon"
+              "zandbokz.audioplayerDaemon",
+              "zandbokz.mainMenuDrawDaemon"
             ],
-            "disabledDaemons": ["zandbokz.mainMenuDrawDaemon", "zandbokz.imguiStats", "zandbokz.imguiStyleEditor"]
+            "disabledDaemons": [
+              "zandbokz.imguiStats",
+              "zandbokz.imguiStyleEditor",
+              "zandbokz.cameraConfigDrawDaemon"
+            ]
           }
         },
         {"factory": "ShadersSetter2DFtry",
@@ -3225,7 +3302,8 @@
             "ticket" : "BehaviorsMD.zandbokz.oncePitchDaemon.ticket",
             "parametric" : "zandbokz.pitchBhv",
             "inputEventGenerator" : "zandbokz.inputEventGenerator",
-            "key":"ZBEK_MOUSE_OFFSET_Y"
+            "key":"ZBEK_MOUSE_OFFSET_Y",
+            "activated" : false
           }
         },
         {"factory": "ParametricActivatorIHFtry",
@@ -3234,7 +3312,8 @@
             "ticket" : "BehaviorsMD.zandbokz.onceYawPlayerDaemon.ticket",
             "parametric" : "zandbokz.yawBhv",
             "inputEventGenerator" : "zandbokz.inputEventGenerator",
-            "key":"ZBEK_MOUSE_OFFSET_X"
+            "key":"ZBEK_MOUSE_OFFSET_X",
+            "activated" : false
           }
         },
         {"factory": "ConditionalIntDaemonIHFtry",
@@ -3245,7 +3324,8 @@
             "condition":"zandbokz.protaCurrentBlood",
             "expected":"ZERO",
             "equal":false,
-            "key":"ZBEK_MOUSE_LEFT"
+            "key":"ZBEK_MOUSE_LEFT",
+            "activated" : false
           }
         },
         {"factory": "ConditionalIntCompositeIHFtry",
@@ -3256,7 +3336,8 @@
             "key":"ZBEK_w",
             "condition" : "zandbokz.protaCurrentBlood",
             "expected" : "ZERO",
-            "equal" : false
+            "equal" : false,
+            "activated" : false
           }
         },
         {"factory": "DoubleKeyValueSetterIHFtry",
@@ -3275,7 +3356,8 @@
             "key":"ZBEK_s",
             "condition" : "zandbokz.protaCurrentBlood",
             "expected" : "ZERO",
-            "equal" : false
+            "equal" : false,
+            "activated" : false
           }
         },
         {"factory": "DoubleKeyValueSetterIHFtry",
@@ -3294,7 +3376,8 @@
             "key":"ZBEK_d",
             "condition" : "zandbokz.protaCurrentBlood",
             "expected" : "ZERO",
-            "equal" : false
+            "equal" : false,
+            "activated" : false
           }
         },
         {"factory": "DoubleKeyValueSetterIHFtry",
@@ -3313,7 +3396,8 @@
             "key":"ZBEK_a",
             "condition" : "zandbokz.protaCurrentBlood",
             "expected" : "ZERO",
-            "equal" : false
+            "equal" : false,
+            "activated" : false
           }
         },
         {"factory": "DoubleKeyValueSetterIHFtry",
@@ -3343,7 +3427,8 @@
           "config" : {
             "daemon" : "zandbokz.chofdaemon",
             "inputEventGenerator" : "zandbokz.inputEventGenerator",
-            "key":"ZBEK_e"
+            "key":"ZBEK_e",
+            "activated" : false
           }
         },
         {"factory": "ConditionalIntCompositeIHFtry",
@@ -3354,7 +3439,8 @@
             "key":"ZBEK_SPACE",
             "condition" : "zandbokz.protaCurrentBlood",
             "expected" : "ZERO",
-            "equal" : false
+            "equal" : false,
+            "activated" : false
           }
         },
         {"factory": "BroadcastIHFtry",
@@ -3385,7 +3471,8 @@
             "key":"ZBEK_LCTRL",
             "condition" : "zandbokz.protaCurrentBlood",
             "expected" : "ZERO",
-            "equal" : false
+            "equal" : false,
+            "activated" : false
           }
         },
         {"factory": "BroadcastIHFtry",
@@ -3489,9 +3576,7 @@
           "config" : {
             "daemon" : "zandbokz.inGamePauseDaemon",
             "inputEventGenerator" : "zandbokz.inputEventGenerator",
-            "key":"ZBEK_p",
-            "TODO1" : "Al tocar una plataforma tras la pausa, castañazo.",
-            "TODO2" : "El timer que quita sangre puede ser el responsable."
+            "key":"ZBEK_p"
           }
         }
       ]

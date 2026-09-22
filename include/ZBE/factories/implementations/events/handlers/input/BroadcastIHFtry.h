@@ -96,6 +96,15 @@ public:
       }
     }
 
+    bool activated = true;
+    if(j.contains("activated")) {
+      if(!j["activated"].is_boolean()) {
+        SysError::setError("BroadcastIHFtry config for activated: must be a boolean.");
+        return;
+      }
+      activated = j["activated"].get<bool>();
+    }
+
     if(haskey) {
       auto ieg = JSONFactory::StoreLoader<InputEventGenerator>::loadParamCfgStoreP(iegStore, j, "InputEventGenerator"s, "inputEventGenerator"s, "BroadcastIHFtry"s);
       if(!ieg) {
@@ -110,6 +119,9 @@ public:
       }
 
       auto handlerTicket = (*ieg)->addHandler(*key, bih);
+      if(!activated) {
+        handlerTicket->setInactive();
+      }
       SysError::setDebug("BroadcastIHFtry adding ticket HandlerTicket."s + name, false);
       handlerTicketStore.insert("HandlerTicket."s + name, handlerTicket);
     }

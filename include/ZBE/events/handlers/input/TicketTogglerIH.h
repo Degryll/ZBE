@@ -121,6 +121,15 @@ class TicketTogglerIHFtry : public Factory {
         return;
       }
 
+      bool activated = true;
+      if(j.contains("activated")) {
+        if(!j["activated"].is_boolean()) {
+          SysError::setError("TicketTogglerIHFtry config for activated: must be a boolean.");
+          return;
+        }
+        activated = j["activated"].get<bool>();
+      }
+
       auto ticket = ticketStore.get(ticketName);
       auto ieg    = iegStore.get("InputEventGenerator."s + inputEventGeneratorName);
       auto key    = keyStore.get(keyName);
@@ -128,6 +137,9 @@ class TicketTogglerIHFtry : public Factory {
 
       ih->setTicket(ticket);
       auto handlerTicket = ieg->addHandler(key, ih);
+      if(!activated) {
+        handlerTicket->setInactive();
+      }
       SysError::setDebug("TicketTogglerIHFtry adding ticket HandlerTicket."s + name, false);
       handlerTicketStore.insert("HandlerTicket."s + name, handlerTicket);
 

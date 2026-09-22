@@ -95,7 +95,10 @@ public:
     // TODO Esto no deja el HandlerTicket disponible. Estos handlers no se pueden reconfigurar desde fuera.
     // Además, este builder siempre va a sobreescribir la misma tecla. ¿Cual es su utilidad?
     // No se usa en el main.json real.
-    ieg->addHandler(key, ih);
+    auto handlerTicket = ieg->addHandler(key, ih);
+    if(!activated) {
+      handlerTicket->setInactive();
+    }
   }
 
   void setupIdx(std::array<uint64_t, 3> idxs) {
@@ -113,6 +116,10 @@ public:
     this->ieg = ieg;
   }
 
+  void setActivated(bool activated) {
+    this->activated = activated;
+  }
+
 private:
   std::array<uint64_t, 3> idxs{};
   bool down{};
@@ -120,6 +127,7 @@ private:
   double tolerance{};
   std::shared_ptr<InputEventGenerator> ieg{};
   ZBE_K key;
+  bool activated{true};
 };
 
 
@@ -200,12 +208,22 @@ class AddVelIHBldrFtry : public Factory {
       return;
     }
 
+    bool activated = true;
+    if(j.contains("activated")) {
+      if(!j["activated"].is_boolean()) {
+        SysError::setError("Add2DVelIHBldrFtry config for activated: must be a boolean."s);
+        return;
+      }
+      activated = j["activated"].get<bool>();
+    }
+
     auto isdown = down.get<bool>();
     std::array<uint64_t, 3> idx{*orientation2DIdx, *velocity2DIdx, *velocity2DsrcIds};
 
     avihb->setupIdx(idx);
     avihb->setConfig(isdown, *multiplier, *tolerance, *key);
     avihb->setIEG(*ieg);
+    avihb->setActivated(activated);
 
   }
 

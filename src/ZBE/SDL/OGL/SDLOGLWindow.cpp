@@ -95,6 +95,10 @@ void SDLOGLWindow::createGLContext() {
   modelStore.loadDefault();
 }
 
+void SDLOGLWindow::captureMouse(bool capture) {
+  SDL_Starter::captureMouse(capture);
+}
+
 //----- OGLTextureStore -----//
 
 OGLTextureStore::OGLTextureStore() : texCollection(), m() {
