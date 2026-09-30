@@ -56,39 +56,23 @@ public:
     const float itemSpacing = style.ItemSpacing.y;
     const float itemHeight = ImGui::GetFrameHeight();
 
-    const float itemCount = static_cast<float>(menuItems.size());
-
-    const float titleHeight =
-        menuTitle.empty()
-            ? 0.0f
-            : ImGui::CalcTextSize(menuTitle.c_str()).y + itemSpacing;
-
-    const float totalButtonsHeight =
-        (itemCount * itemHeight) +
-        (itemCount > 0.0f ? (itemCount - 1.0f) * itemSpacing : 0.0f);
-
-    const float totalHeight = titleHeight + totalButtonsHeight;
-
-    // Overlay invisible ocupando toda la pantalla
-    ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f));
-    ImGui::SetNextWindowSize(displaySize);
+    ImGui::SetNextWindowPos(
+        ImVec2(displaySize.x * horizontalAlign, displaySize.y * verticalAlign),
+        ImGuiCond_Always, ImVec2(horizontalAlign, verticalAlign));
 
     ImGui::Begin("##menu_overlay", nullptr,
         ImGuiWindowFlags_NoDecoration |
         ImGuiWindowFlags_NoMove |
         ImGuiWindowFlags_NoResize |
         ImGuiWindowFlags_NoSavedSettings |
-        ImGuiWindowFlags_NoBackground);
-
-    // Punto inicial centrado verticalmente
-    float startY = (displaySize.y - totalHeight) * verticalAlign;
-    ImGui::SetCursorPos(ImVec2(0.0f, startY));
+        ImGuiWindowFlags_NoBackground |
+        ImGuiWindowFlags_AlwaysAutoResize);
 
     // Dibujar título centrado
     if (!menuTitle.empty()) {
         ImGui::SetWindowFontScale(titleFontScale);
         const float titleWidth = ImGui::CalcTextSize(menuTitle.c_str()).x;
-        ImGui::SetCursorPosX((displaySize.x - titleWidth) * horizontalAlign);
+        ImGui::SetCursorPosX((ImGui::GetWindowWidth() - titleWidth) * 0.5f);
         ImGui::TextUnformatted(menuTitle.c_str());
         ImGui::SetWindowFontScale(1.0f); // Restore scale
         ImGui::Dummy(ImVec2(0.0f, itemSpacing));
@@ -111,7 +95,7 @@ public:
           }
         }
       }
-      ImGui::SetCursorPosX((displaySize.x - buttonWidth) * horizontalAlign);
+      ImGui::SetCursorPosX((ImGui::GetWindowWidth() - buttonWidth) * 0.5f);
 
         if (ImGui::Button(item.label.c_str(), ImVec2(buttonWidth, itemHeight))) {
             if (item.daemon) {

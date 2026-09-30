@@ -111,8 +111,8 @@
     "maxPitchIdx" : 8050,
     "jumpSpeedIdx" : 9000,
     "currentbloodIdx" : 20001,
-    "maxbloodIdx" : 20002,
-    "minbloodIdx" : 20003,
+    "maxBloodIdx" : 20002,
+    "minBloodIdx" : 20003,
     "blooddecrementIdx" : 20004,
     "bloodincrementIdx" : 20005,
     "bloodTriggerIdx" : 20006,
@@ -201,7 +201,8 @@
 
     "onGameIdx" : 30103,
     "gameRunningIdx" : 30104,
-    "onCameraConfigIdx" : 30105
+    "onCameraConfigIdx" : 30105,
+    "onGameConfigIdx" : 30106
   },
   "phases":[
       {
@@ -1468,7 +1469,7 @@
           "name": "zandbokz.protaganasangre",
           "description" : "",
           "config" : {
-            "attribIndexes" : ["bloodTriggerIdx", "maxbloodIdx", "minbloodIdx", "bloodincrementIdx", "currentbloodIdx"],
+            "attribIndexes" : ["bloodTriggerIdx", "maxBloodIdx", "minBloodIdx", "bloodincrementIdx", "currentbloodIdx"],
             "lists":{"zandbokz.bloodincrementlist":"bloodincrementTicket"},
             "deactivatedlists":{}
           }
@@ -1693,8 +1694,8 @@
             },
             "int": {
               "currentbloodIdx" : "zandbokz.protaCurrentBlood",
-              "maxbloodIdx" : "zandbokz.protaMaxBlood",
-              "minbloodIdx" : "zandbokz.protaMinBlood",
+              "maxBloodIdx" : "zandbokz.protaMaxBlood",
+              "minBloodIdx" : "zandbokz.protaMinBlood",
               "blooddecrementIdx" : "zandbokz.shootbloodDecrement",
               "bloodincrementIdx" : "zandbokz.restbloodIncrement",
               "bloodTriggerIdx" : [0],
@@ -1851,7 +1852,7 @@
           "name": "zandbokz.protapierdesangre",
           "description" : "",
           "config" : {
-            "attribIndexes" : ["bloodTriggerIdx", "maxbloodIdx", "minbloodIdx", "blooddecrementIdx", "currentbloodIdx"],
+            "attribIndexes" : ["bloodTriggerIdx", "maxBloodIdx", "minBloodIdx", "blooddecrementIdx", "currentbloodIdx"],
             "lists":{"zandbokz.blooddecrementlist":"blooddecrementTicket"},
             "deactivatedlists":{}
           }
@@ -2226,7 +2227,20 @@
             "bool": {
               "onGameIdx" : false,
               "gameRunningIdx" : false,
-              "onCameraConfigIdx" : false
+              "onCameraConfigIdx" : false,
+              "onGameConfigIdx" : false
+            },
+            "int": {
+              "maxBloodIdx" : "zandbokz.protaMaxBlood",
+              "minBloodIdx" : "zandbokz.protaMinBlood",
+              "blooddecrementIdx" : "zandbokz.shootbloodDecrement",
+              "bloodincrementIdx" : "zandbokz.restbloodIncrement"
+            },
+            "double": {
+              "attractionRatioIdx" : "zandbokz.attractionRatio",
+              "velocityForwardIdx":"zandbokz.protaVelForward",
+              "velocityLateralIdx":"zandbokz.protaVelLateral",
+              "jumpSpeedIdx": "zandbokz.protaVelVertical"
             }
           }
         },
@@ -2275,7 +2289,7 @@
             },
             "int": {
               "currentbloodIdx" : "zandbokz.protaCurrentBlood",
-              "maxbloodIdx" : "zandbokz.protaMaxBlood"
+              "maxBloodIdx" : "zandbokz.protaMaxBlood"
             }
           }
         }
@@ -2918,6 +2932,11 @@
                 "daemon": "zandbokz.cameraConfigMasterDmn"
               },
               {
+                "label": "Configurar juego",
+                "daemon": "zandbokz.gameConfigMasterDmn",
+                "TODO": "La configuracion de este menú está rota"
+              },
+              {
                 "label": "Borrar plataformas",
                 "daemon": "zandbokz.deleteManualDmn"
               },
@@ -2960,8 +2979,8 @@
           "config" : {
             "title": "Configuración de la cámara",
             "entity": "cameraControllerFree",
-            "horizontalAlign": 0.7,
-            "verticalAlign": 0.5,
+            "horizontalAlign": 0.8,
+            "verticalAlign": 0.1,
             "titleFontScale": 1.5,
             "itemsFontScale": 1.0,
             "items": [
@@ -2980,6 +2999,84 @@
                 "min": 50.0,
                 "max": 1000.0,
                 "step": 0.1
+              }
+            ]
+          }
+        },
+        {"factory": "ParametricTicketToggleDaemonFtry",
+          "name": "zandbokz.toggleGameConfigTicketDaemon",
+          "config" : {
+            "ticket" : "zandbokz.masterDrawDaemon.zandbokz.gameConfigDrawDaemon.ticket",
+            "entity" : "Game",
+            "valueIdx" : "onGameConfigIdx"
+          }
+        },
+        {"factory": "BValueTogglerDaemonFtry",
+          "name": "zandbokz.onGameConfigValToggleHandler",
+          "config" : {
+            "entity" : "Game",
+            "valueIdx" : "onGameConfigIdx"
+          }
+        },
+        {"factory": "MasterDmnFtry",
+          "name": "zandbokz.gameConfigMasterDmn",
+          "config" : {
+            "daemons" : [
+              "zandbokz.onGameConfigValToggleHandler",
+              "zandbokz.toggleGameConfigTicketDaemon"
+            ]
+          }
+        },
+        {"factory": "ImGuiCFGDrawDaemonFtry",
+          "name": "zandbokz.gameConfigDrawDaemon",
+          "description" : "Configurará los parámetros de Game",
+          "config" : {
+            "title": "Configuración del juego",
+            "entity": "Game",
+            "horizontalAlign": 0.8,
+            "verticalAlign": 0.3,
+            "titleFontScale": 1.5,
+            "itemsFontScale": 1.0,
+            "items": [
+              {
+                "label" : "Sangre maxima",
+                "valueIdx" : "maxBloodIdx",
+                "type" : "int",
+                "min" : 0,
+                "max" : 1000,
+                "step" : 1
+              },
+              {
+                "label" : "Sangre minima",
+                "valueIdx" : "minBloodIdx",
+                "type" : "int",
+                "min" : 0,
+                "max" : 1000,
+                "step" : 1
+              },
+              {
+                "label" : "Incremento de sangre",
+                "valueIdx" : "bloodincrementIdx",
+                "type" : "int",
+                "min" : 0,
+                "max" : 1000,
+                "step" : 1
+              },
+              {
+                "label" : "Coste de sangre",
+                "valueIdx" : "blooddecrementIdx",
+                "type" : "int",
+                "min" : -1000,
+                "max" : 0,
+                "step" : 1
+              },
+              {
+                "label" : "Radio de atracción",
+                "valueIdx" : "attractionRatioIdx",
+                "type" : "double",
+                "min" : 1,
+                "max" : 5000,
+                "step" : 10
               }
             ]
           }
@@ -3006,7 +3103,8 @@
             "disabledDaemons": [
               "zandbokz.imguiStats",
               "zandbokz.imguiStyleEditor",
-              "zandbokz.cameraConfigDrawDaemon"
+              "zandbokz.cameraConfigDrawDaemon",
+              "zandbokz.gameConfigDrawDaemon"
             ]
           }
         },
@@ -3208,7 +3306,7 @@
           "name": "zandbokz.bloodbaravt",
           "config" : {
             "entity" : "HUD",
-            "attribIndexes" : ["hudbloodbarGidIdx", "currentbloodIdx", "maxbloodIdx", "hudbloodbarSizeIdx", "hudbloodbarPosIdx"],
+            "attribIndexes" : ["hudbloodbarGidIdx", "currentbloodIdx", "maxBloodIdx", "hudbloodbarSizeIdx", "hudbloodbarPosIdx"],
             "lists":{"zandbokz.drawList2Dparam":"hudbloodbarDrawticket"}
           }
         },
