@@ -13,7 +13,9 @@
 #include <string>
 #include <nlohmann/json.hpp>
 #include "ZBE/core/system/SysError.h"
+#include "ZBE/core/entities/Entity.h"
 #include "ZBE/core/tools/containers/RsrcStore.h"
+#include "ZBE/core/tools/containers/RsrcDictionary.h"
 #include "ZBE/core/behaviors/Behavior.h"
 #include "ZBE/OAL/players/Sound3DOALPlayer.h"
 #include "ZBE/factories/Factory.h"
@@ -53,12 +55,38 @@ public:
       return;
     }
 
-    s3daolp->setUp(*audioStore, *cam);
+    std::shared_ptr<Value<float> > volume;
+    const bool hasEntity = j.contains("entity");
+    const bool hasValueIdx = j.contains("valueIdx");
+    if (hasEntity != hasValueIdx) {
+      SysError::setError("Sound3DOALPlayerFtry config for entity and valueIdx must be specified together"s);
+      return;
+    }
+    if (hasEntity) {
+      if (!j["entity"].is_string() || !j["valueIdx"].is_string()) {
+        SysError::setError("Sound3DOALPlayerFtry config for entity and valueIdx must be strings"s);
+        return;
+      }
+      auto entity = entityRsrc.get("Entity."s + j["entity"].get<std::string>());
+      if (!entity) {
+        SysError::setError("Sound3DOALPlayerFtry config entity is invalid"s);
+        return;
+      }
+      volume = entity->getFloat(dict.get(j["valueIdx"].get<std::string>()));
+      if (!volume) {
+        SysError::setError("Sound3DOALPlayerFtry config valueIdx must refer to a float value"s);
+        return;
+      }
+    }
+
+    s3daolp->setUp(*audioStore, *cam, volume);
   }
 
 private:
 DISABLE_DLL_WARN
   RsrcStore<nlohmann::json>& configRsrc = RsrcStore<nlohmann::json>::getInstance();
+  RsrcStore<Entity>& entityRsrc = RsrcStore<Entity>::getInstance();
+  NameRsrcDictionary& dict = NameRsrcDictionary::getInstance();
   RsrcStore<Behavior<uint64_t, uint64_t, uint64_t, Vector3D, Vector3D> >& mainRsrc = RsrcStore<Behavior<uint64_t, uint64_t, uint64_t, Vector3D, Vector3D> >::getInstance();
   RsrcStore<Sound3DOALPlayer>& specificRsrc = RsrcStore<Sound3DOALPlayer>::getInstance();
   RsrcStore<OALAudioStore> &audioStoreRsrc = RsrcStore<OALAudioStore>::getInstance();

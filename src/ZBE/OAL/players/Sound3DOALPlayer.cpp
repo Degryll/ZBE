@@ -33,6 +33,7 @@ Vector3D transformAudioPos(Vector3D p, std::vector<float>& tm) {
 
 void Sound3DOALPlayer::apply(std::shared_ptr<MAvatar<uint64_t, uint64_t, uint64_t, Vector3D, Vector3D> > avatar) {
   ALint source_state;
+  const ALfloat gain = volume ? volume->get() : 0.4f;
 
   auto pV = AvtUtil::get<1, Vector3D>(avatar);
   auto vV = AvtUtil::get<2, Vector3D>(avatar);
@@ -51,7 +52,7 @@ void Sound3DOALPlayer::apply(std::shared_ptr<MAvatar<uint64_t, uint64_t, uint64_
     alGenSources(static_cast<ALuint>(1), &source);
     alSourcei(source, AL_LOOPING, AL_FALSE);
     alSourcef(source, AL_PITCH, 1);
-    alSourcef(source, AL_GAIN, 0.4f);
+    alSourcef(source, AL_GAIN, gain);
     alSource3f(source, AL_POSITION, static_cast<ALfloat>(p.x), static_cast<ALfloat>(p.y), static_cast<ALfloat>(p.z));
     alSource3f(source, AL_VELOCITY, static_cast<ALfloat>(v.x), static_cast<ALfloat>(v.y), static_cast<ALfloat>(p.z));
     ALuint buffer = store->getAudio(id);
@@ -76,6 +77,7 @@ void Sound3DOALPlayer::apply(std::shared_ptr<MAvatar<uint64_t, uint64_t, uint64_
       p = transformAudioPos(p, cam->getTransformMat());
       v = transformAudioPos(v, cam->getTransformMat());
       source = static_cast<ALuint>(sourceV->get());
+      alSourcef(source, AL_GAIN, gain);
       alSource3f(source, AL_POSITION, static_cast<ALfloat>(p.x), static_cast<ALfloat>(p.y), static_cast<ALfloat>(p.z));
       alSource3f(source, AL_VELOCITY, static_cast<ALfloat>(v.x), static_cast<ALfloat>(v.y), static_cast<ALfloat>(p.z));
     }

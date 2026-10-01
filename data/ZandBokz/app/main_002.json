@@ -202,7 +202,8 @@
     "onGameIdx" : 30103,
     "gameRunningIdx" : 30104,
     "onCameraConfigIdx" : 30105,
-    "onGameConfigIdx" : 30106
+    "onGameConfigIdx" : 30106,
+    "gameVolumeIdx" : 30107
   },
   "phases":[
       {
@@ -2241,6 +2242,9 @@
               "velocityForwardIdx":"zandbokz.protaVelForward",
               "velocityLateralIdx":"zandbokz.protaVelLateral",
               "jumpSpeedIdx": "zandbokz.protaVelVertical"
+            },
+            "float": {
+              "gameVolumeIdx": 0.4
             }
           }
         },
@@ -2510,7 +2514,9 @@
           "description" : "comportamiento que reproduce sonidos",
           "config" : {
             "camera" : "zandbokz.cam",
-            "audiostore" : "zandbokz.audiostore"
+            "audiostore" : "zandbokz.audiostore",
+            "entity" : "Game",
+            "valueIdx" : "gameVolumeIdx"
           }
         },
         {"factory": "SineOscillatorFFtry",
@@ -3077,6 +3083,14 @@
                 "min" : 1,
                 "max" : 5000,
                 "step" : 10
+              },
+              {
+                "label" : "Volumen del juego",
+                "valueIdx" : "gameVolumeIdx",
+                "type" : "float",
+                "min" : 0.0,
+                "max" : 1.0,
+                "step" : 0.05
               }
             ]
           }

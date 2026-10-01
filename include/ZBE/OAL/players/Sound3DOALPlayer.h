@@ -20,6 +20,7 @@
 #include "ZBE/core/entities/avatars/Avatar.h"
 #include "ZBE/core/tools/math/Vector.h"
 #include "ZBE/core/tools/containers/RsrcStore.h"
+#include "ZBE/core/tools/shared/Value.h"
 
 #include "ZBE/OAL/system/OALAudioStore.h"
 #include "ZBE/OAL/tools/OALUtils.h"
@@ -57,13 +58,15 @@ public:
 private:
 DISABLE_DLL_WARN
   Sound3DOALPlayer() = default;
-  void setUp(std::shared_ptr<OALAudioStore> store, std::shared_ptr<Camera> cam) {
+  void setUp(std::shared_ptr<OALAudioStore> store, std::shared_ptr<Camera> cam, std::shared_ptr<Value<float> > volume) {
     this->store = store;
     this->cam = cam;
+    this->volume = volume;
   }
 
   std::shared_ptr<OALAudioStore> store;
   std::shared_ptr<Camera> cam;
+  std::shared_ptr<Value<float> > volume;
 DISABLE_WARNING_POP()
 };
 
