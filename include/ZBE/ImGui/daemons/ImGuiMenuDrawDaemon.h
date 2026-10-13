@@ -82,15 +82,12 @@ public:
     ImGui::SetWindowFontScale(itemsFontScale);
     for (const auto& item : menuItems) {
       if (item.activated!= nullptr) {
-        SysError::setDebug("Value for menu item: " + item.label + " is " + std::to_string(item.activated->get()) + " and negated is " + std::to_string(item.negated), false);
         if (item.negated) {
           if (item.activated->get()) {
-            // SysError::setDebug("Skipping menu item: " + item.label + " because it is negated and activated.", false);
             continue;
           }
         } else {
           if (!item.activated->get()) {
-            // SysError::setDebug("Skipping menu item: " + item.label + " because it is not activated.", false);
             continue;
           }
         }

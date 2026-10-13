@@ -98,6 +98,7 @@ public:
     json h = j["h"];
     json wflags = j["wflags"];
     json rflags = j["rflags"];
+    json hasAspectValue = j["aspectValue"];
     if(!title.is_string()) {
       SysError::setError("Bad config for " + factoryName + " - title."s + title.get<std::string>());
       return;
@@ -127,6 +128,11 @@ public:
       return;
     }
 
+    if(!hasAspectValue.is_string()) { 
+      SysError::setError("Bad config for " + factoryName + " - aspectValue."s + hasAspectValue.get<std::string>());
+      return;
+    }
+
     auto aux = j["title"].get<std::string>();
     std::string ctitle = strStore.get(aux);
     aux = j["x"].get<std::string>();
@@ -141,6 +147,9 @@ public:
     Uint32 cwflags = static_cast<Uint32>(intStore.get(aux));
     aux = j["rflags"].get<std::string>();
     Uint32 crflags = static_cast<Uint32>(intStore.get(aux));
+    aux = j["aspectValue"].get<std::string>();
+    SysError::setDebug("Aspect value name: " + aux, false);
+    auto aspectValue = vfloatRsrc.get(aux);
 
     window->setTitle(ctitle.c_str());
     window->setX(cx);
@@ -149,6 +158,7 @@ public:
     window->setHeight(ch);
     window->setWindow_flags(cwflags);
     window->setRenderer_flags(crflags);
+    window->setAspectHolder(aspectValue);
     window->setDict(&dict);
     window->run();
   }
@@ -163,6 +173,7 @@ private:
   RsrcStore<InputBuffer>& ibuffRsrc = RsrcStore<InputBuffer>::getInstance();
   RsrcStore<InputTextBuffer>& itBuffRsrc = RsrcStore<InputTextBuffer>::getInstance();
   NameRsrcDictionary& dict = NameRsrcDictionary::getInstance();
+  RsrcStore<Value<float> > &vfloatRsrc = RsrcStore<Value<float> >::getInstance();
 };
 
 }  // namespace zbe

@@ -139,7 +139,6 @@
     "zandbokz.loadTime" : 262144000,
     "cam.fov" :{"type":"f", "value":90.0},
     "cam.scale" :{"type":"f", "value":50.0},
-    "cam.aspect" :{"type":"f", "value":1.6666666},
     "cam.znear" :{"type":"f", "value":1.0},
     "cam.zfar" :{"type":"f", "value":15000.0},
     "cam.fovMin" :{"type":"f", "value":99.5},
@@ -242,7 +241,7 @@
               "float" : {
                 "fov" : ["cam.fov"],
                 "camScale" : ["cam.scale"],
-                "aspect" : ["cam.aspect"],
+                "aspect" : 1.0,
                 "znear" : ["cam.znear"],
                 "zfar" : ["cam.zfar"],
                 "pitchmin" : 0.15 ,
@@ -563,7 +562,8 @@
             "h" : "height",
             "wflags":"testwflags",
             "rflags":"testrflags",
-            "captureMouseAtInit" : false
+            "captureMouseAtInit" : false,
+            "aspectValue" : "zandbokz.aspect"
           }
         },
         {"factory": "TimeEventGnFtry",

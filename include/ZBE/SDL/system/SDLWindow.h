@@ -28,6 +28,8 @@
 
 #include "ZBE/core/system/system.h"
 
+#include "ZBE/core/tools/shared/Value.h"
+
 namespace zbe {
 
 class SDLTextFontStore;
@@ -118,6 +120,12 @@ public:
    *  \sa run, setTitle, setX, setY, setWidth, setHeight, setWindow_flags
    */
   void setRenderer_flags(Uint32 renderer_flags) {this->renderer_flags = renderer_flags;}
+
+  /** \brief Sets the aspect ratio holder
+   *  \param aspectHolder The aspect ratio holder
+   *  \sa run, setTitle, setX, setY, setWidth, setHeight, setWindow_flags
+   */
+  void setAspectHolder(std::shared_ptr<Value<float>> aspectHolder) {this->aspectHolder = aspectHolder;}
 
   /** \brief Creates the widnows (use only width empty constructor and setters)
    *  \sa setTitle, setX, setY, setWidth, setHeight, setWindow_flags
@@ -259,6 +267,7 @@ DISABLE_DLL_WARN
   SDL_Texture* output;                         //!< Output texture.
   std::shared_ptr<SDLImageStore> imgStore;     //!< Store for images.
   std::shared_ptr<SDLTextFontStore> fontStore; //!< Store for text fonts.
+  std::shared_ptr<Value<float>> aspectHolder;  //!< Holder for the aspect ratio of the window.
 DISABLE_WARNING_POP()
 };
 

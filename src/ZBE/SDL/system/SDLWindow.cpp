@@ -36,12 +36,41 @@ SDLWindow::~SDLWindow() {
 }
 
 void SDLWindow::run() {
-  window = SDL_CreateWindow(title, x, y, width, height, window_flags);
+  window = SDL_CreateWindow(title, x, y, width, height, window_flags | SDL_WINDOW_RESIZABLE);
   SysError::setDebug("Window created:");
   renderer = SDL_CreateRenderer(window, -1, renderer_flags);
   output = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, width, height);
   imgStore = std::make_shared<SDLImageStore>(renderer);
   fontStore = std::make_shared<SDLTextFontStore>(imgStore, renderer);
+
+  aspectHolder->set(static_cast<float>(width) / static_cast<float>(height));
+
+//   zbe::SysError::setDebug(
+//     "SDL video driver: " +
+//     std::string(SDL_GetCurrentVideoDriver()),
+//     false
+// );
+
+//   int displays = SDL_GetNumVideoDisplays();
+//   zbe::SysError::setDebug("Number of video displays: " + std::to_string(displays), false);
+
+//   for (int d = 0; d < displays; ++d) {
+//     SDL_Rect bounds{};
+//     SDL_GetDisplayBounds(d, &bounds);
+
+//     zbe::SysError::setDebug("Display " + std::to_string(d) + " (" + std::string(SDL_GetDisplayName(d)) + ")", false);
+//     zbe::SysError::setDebug("  Area: " + std::to_string(bounds.w) + "x" + std::to_string(bounds.h) + " en " + std::to_string(bounds.x) + "," + std::to_string(bounds.y), false);
+
+//     int modes = SDL_GetNumDisplayModes(d);
+
+//     for (int i = 0; i < modes; ++i) {
+//         SDL_DisplayMode mode{};
+
+//         if (SDL_GetDisplayMode(d, i, &mode) == 0) {
+//             zbe::SysError::setDebug("  " + std::to_string(mode.w) + "x" + std::to_string(mode.h) + " @ " + std::to_string(mode.refresh_rate) + " Hz", false);
+//         }
+//     }
+//   }
 
   checkWidowCreation();
 }
