@@ -127,6 +127,14 @@ public:
    */
   void setAspectHolder(std::shared_ptr<Value<float>> aspectHolder) {this->aspectHolder = aspectHolder;}
 
+  /** \brief Changes the window resolution and fullscreen state.
+   *  \param width The new width.
+   *  \param height The new height.
+   *  \param fullscreen Whether the window should use fullscreen mode.
+   *  \param displayIndex The target display, or -1 to keep the current display.
+   */
+  void setResolution(int width, int height, bool fullscreen, int displayIndex = -1);
+
   /** \brief Creates the widnows (use only width empty constructor and setters)
    *  \sa setTitle, setX, setY, setWidth, setHeight, setWindow_flags
    */

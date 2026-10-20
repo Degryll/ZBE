@@ -202,7 +202,8 @@
     "gameRunningIdx" : 30104,
     "onCameraConfigIdx" : 30105,
     "onGameConfigIdx" : 30106,
-    "gameVolumeIdx" : 30107
+    "gameVolumeIdx" : 30107,
+    "onResmenuIdx" : 30108
   },
   "phases":[
       {
@@ -564,6 +565,15 @@
             "rflags":"testrflags",
             "captureMouseAtInit" : false,
             "aspectValue" : "zandbokz.aspect"
+          }
+        },
+        {
+          "factory" : "ImGuiResSelectorDrawDaemonFtry",
+          "name" : "zandbokz.resmenuDrawDaemon",
+          "config" : {
+            "window" : "zandbokz.mainwindow",
+            "horizontalAlign": 0.8,
+            "verticalAlign": 0.5
           }
         },
         {"factory": "TimeEventGnFtry",
@@ -2229,7 +2239,8 @@
               "onGameIdx" : false,
               "gameRunningIdx" : false,
               "onCameraConfigIdx" : false,
-              "onGameConfigIdx" : false
+              "onGameConfigIdx" : false,
+              "onResmenuIdx" : false
             },
             "int": {
               "maxBloodIdx" : "zandbokz.protaMaxBlood",
@@ -2938,6 +2949,10 @@
                 "daemon": "zandbokz.cameraConfigMasterDmn"
               },
               {
+                "label": "Configurar resolución",
+                "daemon": "zandbokz.cameraResMasterDmn"
+              },
+              {
                 "label": "Configurar juego",
                 "daemon": "zandbokz.gameConfigMasterDmn",
                 "TODO": "La configuracion de este menú está rota"
@@ -2977,6 +2992,30 @@
             "daemons" : [
               "zandbokz.onCameraConfigValToggleHandler",
               "zandbokz.toggleCameraConfigTicketDaemon"
+            ]
+          }
+        },
+        {"factory": "ParametricTicketToggleDaemonFtry",
+          "name": "zandbokz.toggleResmenuTicketDaemon",
+          "config" : {
+            "ticket" : "zandbokz.masterDrawDaemon.zandbokz.resmenuDrawDaemon.ticket",
+            "entity" : "Game",
+            "valueIdx" : "onResmenuIdx"
+          }
+        },
+        {"factory": "BValueTogglerDaemonFtry",
+          "name": "zandbokz.onResmenuValToggleHandler",
+          "config" : {
+            "entity" : "Game",
+            "valueIdx" : "onResmenuIdx"
+          }
+        },
+        {"factory": "MasterDmnFtry",
+          "name": "zandbokz.cameraResMasterDmn",
+          "config" : {
+            "daemons" : [
+              "zandbokz.onResmenuValToggleHandler",
+              "zandbokz.toggleResmenuTicketDaemon"
             ]
           }
         },
@@ -3118,6 +3157,7 @@
               "zandbokz.imguiStats",
               "zandbokz.imguiStyleEditor",
               "zandbokz.cameraConfigDrawDaemon",
+              "zandbokz.resmenuDrawDaemon",
               "zandbokz.gameConfigDrawDaemon"
             ]
           }

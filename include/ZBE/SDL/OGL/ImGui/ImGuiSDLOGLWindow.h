@@ -98,6 +98,7 @@ public:
     auto sdlwin = std::make_shared<ImGuiSDLOGLWindow>();
     imguiSdloglWindowRsrc.insert("ImGuiSDLOGLWindow."s + name, sdlwin);
     sdloglWindowRsrc.insert("SDLOGLWindow."s + name, sdlwin);
+    sdlWindowRsrc.insert("SDLWindow."s + name, sdlwin);
 
     auto ib = std::make_shared<InputBuffer>();
     ibuffRsrc.insert("SDLOGLWindow."s + name + ".InputBuffer", ib);
@@ -156,6 +157,7 @@ private:
   RsrcStore<nlohmann::json> &configRsrc = RsrcStore<nlohmann::json>::getInstance();
   RsrcStore<ImGuiSDLOGLWindow> &imguiSdloglWindowRsrc = RsrcStore<ImGuiSDLOGLWindow>::getInstance();
   RsrcStore<SDLOGLWindow> &sdloglWindowRsrc = RsrcStore<SDLOGLWindow>::getInstance();
+  RsrcStore<SDLWindow> &sdlWindowRsrc = RsrcStore<SDLWindow>::getInstance();
   RsrcStore<SDLEventDispatcher> &sdlEvenDWindowRsrc = RsrcStore<SDLEventDispatcher>::getInstance();
   RsrcStore<InputBuffer>& ibuffRsrc = RsrcStore<InputBuffer>::getInstance();
   RsrcStore<InputTextBuffer>& itBuffRsrc = RsrcStore<InputTextBuffer>::getInstance();

@@ -42,37 +42,61 @@ void SDLWindow::run() {
   output = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, width, height);
   imgStore = std::make_shared<SDLImageStore>(renderer);
   fontStore = std::make_shared<SDLTextFontStore>(imgStore, renderer);
-
-  aspectHolder->set(static_cast<float>(width) / static_cast<float>(height));
-
-//   zbe::SysError::setDebug(
-//     "SDL video driver: " +
-//     std::string(SDL_GetCurrentVideoDriver()),
-//     false
-// );
-
-//   int displays = SDL_GetNumVideoDisplays();
-//   zbe::SysError::setDebug("Number of video displays: " + std::to_string(displays), false);
-
-//   for (int d = 0; d < displays; ++d) {
-//     SDL_Rect bounds{};
-//     SDL_GetDisplayBounds(d, &bounds);
-
-//     zbe::SysError::setDebug("Display " + std::to_string(d) + " (" + std::string(SDL_GetDisplayName(d)) + ")", false);
-//     zbe::SysError::setDebug("  Area: " + std::to_string(bounds.w) + "x" + std::to_string(bounds.h) + " en " + std::to_string(bounds.x) + "," + std::to_string(bounds.y), false);
-
-//     int modes = SDL_GetNumDisplayModes(d);
-
-//     for (int i = 0; i < modes; ++i) {
-//         SDL_DisplayMode mode{};
-
-//         if (SDL_GetDisplayMode(d, i, &mode) == 0) {
-//             zbe::SysError::setDebug("  " + std::to_string(mode.w) + "x" + std::to_string(mode.h) + " @ " + std::to_string(mode.refresh_rate) + " Hz", false);
-//         }
-//     }
-//   }
-
+  if (aspectHolder) {
+    aspectHolder->set(static_cast<float>(width) / static_cast<float>(height));
+  }
   checkWidowCreation();
+}
+
+void SDLWindow::setResolution(int width, int height, bool fullscreen, int displayIndex) {
+  if (width <= 0 || height <= 0) {
+    SysError::setError("ERROR: SDL window resolution must be positive.");
+    return;
+  }
+  if (window == nullptr) {
+    SysError::setError("ERROR: SDL window must be created before changing its resolution.");
+    return;
+  }
+  if (displayIndex >= 0) {
+    const int displayCount = SDL_GetNumVideoDisplays();
+    if (displayCount < 0) {
+      SysError::setError(std::string("ERROR: SDL could not list displays: ") + SDL_GetError());
+      return;
+    }
+    if (displayIndex >= displayCount) {
+      SysError::setError("ERROR: SDL window display index is out of range.");
+      return;
+    }
+    const int centeredPosition = static_cast<int>(
+        SDL_WINDOWPOS_CENTERED_DISPLAY(static_cast<unsigned int>(displayIndex)));
+    SDL_SetWindowPosition(window, centeredPosition, centeredPosition);
+  }
+
+  if (fullscreen) {
+    SDL_DisplayMode mode{};
+    mode.w = width;
+    mode.h = height;
+    if (SDL_SetWindowDisplayMode(window, &mode) != 0) {
+      SysError::setError(std::string("ERROR: SDL could not set the window display mode! SDL ERROR: ") + SDL_GetError());
+      return;
+    }
+    if (SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN) != 0) {
+      SysError::setError(std::string("ERROR: SDL could not enable fullscreen! SDL ERROR: ") + SDL_GetError());
+      return;
+    }
+  } else {
+    if (SDL_SetWindowFullscreen(window, 0) != 0) {
+      SysError::setError(std::string("ERROR: SDL could not disable fullscreen! SDL ERROR: ") + SDL_GetError());
+      return;
+    }
+    SDL_SetWindowSize(window, width, height);
+  }
+
+  this->width = width;
+  this->height = height;
+  if (aspectHolder) {
+    aspectHolder->set(static_cast<float>(width) / static_cast<float>(height));
+  }
 }
 
 

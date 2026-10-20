@@ -23,6 +23,7 @@
 #include "ZBE/ImGui/daemons/ImGuiStatusDrawDaemon.h"
 #include "ZBE/ImGui/daemons/ImGuiMenuDrawDaemon.h"
 #include "ZBE/ImGui/daemons/ImGuiCFGDrawDaemon.h"
+#include "ZBE/ImGui/daemons/ImGuiResSelectorDrawDaemon.h"
 #include "ZBE/ImGui/daemons/ImGuiStyleEditorDaemon.h"
 #include "ZBE/ImGui/daemons/ImGuiStyleLoadDaemon.h"
 
@@ -51,6 +52,7 @@ public:
     factories.insert("ImGuiStatusDrawDaemonFtry", std::make_shared<GenericFtry<Daemon, ImGuiStatusDrawDaemon>>("Daemon", "ImGuiStatusDrawDaemon"));
     factories.insert("ImGuiMenuDrawDaemonFtry", std::make_shared<ImGuiMenuDrawDaemonFtry>());
     factories.insert("ImGuiCFGDrawDaemonFtry", std::make_shared<ImGuiCFGDrawDaemonFtry>());
+    factories.insert("ImGuiResSelectorDrawDaemonFtry", std::make_shared<ImGuiResSelectorDrawDaemonFtry>());
     factories.insert("ImGuiStyleEditorDaemonFtry", std::make_shared<GenericFtry<Daemon, ImGuiStyleEditorDaemon>>("Daemon", "ImGuiStyleEditorDaemon"));
     factories.insert("ImGuiStyleLoadDaemonFtry", std::make_shared<ImGuiStyleLoadDaemonFtry>());
   }

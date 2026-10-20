@@ -67,6 +67,42 @@ public:
   }
 };
 
+// template<typename T, typename U>
+// class BoundedMultiplyBvr : virtual public Behavior<T, U, T, T, T> {
+// public:
+//   void apply(std::shared_ptr<MAvatar<T, U, T, T, T>> avatar) override {
+//     auto vinput = AvtUtil::get<1, T>(avatar);
+//     auto vmultiplier = AvtUtil::get<2, U>(avatar);
+//     auto vmin = AvtUtil::get<3, T>(avatar);
+//     auto vmax = AvtUtil::get<4, T>(avatar);
+//     auto voutput = AvtUtil::get<5, T>(avatar);
+
+//     auto input = vinput->get();
+//     auto multiplier = vmultiplier->get();
+//     auto min = vmin->get();
+//     auto max = vmax->get();
+
+//     auto product = static_cast<long double>(input) * static_cast<long double>(multiplier);
+//     T result;
+//     if(product >= static_cast<long double>(max)) {
+//       result = max;
+//     } else if(product <= static_cast<long double>(min)) {
+//       result = min;
+//     } else {
+//       result = static_cast<T>(product);
+//     }
+
+//     if(result>max) {
+//       result = max;
+//     }
+
+//     if(result<min) {
+//       result = min;
+//     }
+//     voutput->set(result);
+//   }
+// };
+
 template<typename T>
 class SimpleIncrementBvr : virtual public Behavior<T> {
 public:

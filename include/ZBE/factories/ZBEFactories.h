@@ -56,6 +56,9 @@ public:
     using FourIntList = TicketedForwardList<MAvatar<int64_t, int64_t, int64_t, int64_t> >;
     using FourIntBhvrDmn = BehaviorDmnFtry<FourIntList, int64_t, int64_t, int64_t, int64_t>;
 
+    // using IntFloatIntIntIntAvtList = TicketedForwardList<MAvatar<int64_t, float, int64_t, int64_t, int64_t> >;
+    // using IntFloatIntIntIntAvtBhvrDmn = BehaviorDmnFtry<IntFloatIntIntIntAvtList, int64_t, float, int64_t, int64_t, int64_t>;
+
     using FiveIntList = TicketedForwardList<MAvatar<int64_t, int64_t, int64_t, int64_t, int64_t> >;
     using FiveIntBhvrDmn = BehaviorDmnFtry<FiveIntList, int64_t, int64_t, int64_t, int64_t, int64_t>;
 
@@ -125,6 +128,7 @@ public:
     factories.insert("DoubleAvtBldrFtry", std::make_shared<SAvatarBldrFtry<double> >());
     factories.insert("VoidAvtBldrFtry", std::make_shared<AvatarBldrFtry>());
     factories.insert("FourIntAvtBldrFtry", std::make_shared<MAvatarBldrFtry<int64_t, int64_t, int64_t, int64_t> >());
+    // factories.insert("IntFloatIntIntIntAvtBldrFtry", std::make_shared<MAvatarBldrFtry<int64_t, float, int64_t, int64_t, int64_t> >());
     factories.insert("FiveIntAvtBldrFtry", std::make_shared<MAvatarBldrFtry<int64_t, int64_t, int64_t, int64_t, int64_t> >());
     factories.insert("TwoV3DDoubleAvtBldrFtry", std::make_shared<MAvatarBldrFtry<Vector3D, Vector3D, double> >());
 
@@ -179,6 +183,9 @@ public:
 
     factories.insert("FourIntBhvrDmnFtry", std::make_shared<FourIntBhvrDmn>());
     factories.insert("TFAEFourIntFtry" , std::make_shared<GenericFtry<TickFListBase, FourIntList> >(factories::baseListName, factories::listName));
+
+    // factories.insert("IntFloatIntIntIntAvtDaemonFtry", std::make_shared<IntFloatIntIntIntAvtBhvrDmn>());
+    // factories.insert("TFAECIntFloatIntIntIntAvtFtry", std::make_shared<GenericFtry<TickFListBase, IntFloatIntIntIntAvtList> >(factories::baseListName, factories::listName));
 
     factories.insert("FiveIntBhvrDmnFtry", std::make_shared<FiveIntBhvrDmn>());
     factories.insert("TFAEFiveIntFtry" , std::make_shared<GenericFtry<TickFListBase, FiveIntList> >(factories::baseListName, factories::listName));
@@ -243,6 +250,7 @@ public:
     factories.insert("TwoV3DAvtFtry", std::make_shared<BaseAvatarFtry<Vector3D, Vector3D> >());
     factories.insert("ThreeV3DAvtFtry", std::make_shared<BaseAvatarFtry<Vector3D, Vector3D, Vector3D> >());
     factories.insert("DoubleTwoV3DDAvtFtry", std::make_shared<BaseAvatarFtry<double, Vector3D, Vector3D> >());
+    // factories.insert("IntFloatIntIntIntAvtFtry", std::make_shared<BaseAvatarFtry<int64_t, float, int64_t, int64_t, int64_t> >());
 
     factories.insert("FourV3DTwoFDaemonFtry", std::make_shared<FourV3DTwoFAvtBhvr>());
     factories.insert("TFAECFourV3DTwoFAvtFtry" , std::make_shared<GenericFtry<TickFListBase, FourV3DTwoFAvtList> >(factories::baseListName, factories::listName));
