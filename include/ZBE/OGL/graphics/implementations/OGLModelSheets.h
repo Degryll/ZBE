@@ -201,7 +201,6 @@ public:
     int64_t max = avatar->get<3, int64_t>()->get();
     int64_t current = avatar->get<4, int64_t>()->get();
 
-
     double maxFrame = static_cast<double>(spriteDefintion.img.frameAmount - 1);  // Max index frame. IE: 24 frames = 0..23
     double valueRatio = static_cast<double>(max)/maxFrame;
     int64_t frame = static_cast<int64_t>(ceil(static_cast<double>(current) / valueRatio));

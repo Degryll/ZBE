@@ -153,6 +153,11 @@ namespace AvtUtil {
   inline std::shared_ptr<zbe::Value<T> > get(std::shared_ptr<_Avatar<idx, T> > avatar) {
     return avatar->get();
   }
+
+  template<uint64_t idx, typename T, typename U, typename... Ts>
+  inline std::shared_ptr<zbe::Value<T> > get(std::shared_ptr<_Avatar<sizeof...(Ts) + 2, T, U, Ts...> > avatar) {
+    return avatar->template get<idx, T>();
+  }
 }
 
 }  // namespace zbe

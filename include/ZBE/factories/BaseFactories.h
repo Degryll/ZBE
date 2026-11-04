@@ -118,7 +118,9 @@ public:
 
     // --- Behaviors
     factories.insert("BoundedAddIntBvrFtry", std::make_shared<GenericFtry<Behavior<int64_t, int64_t, int64_t, int64_t>, BoundedAddBvr<int64_t>>>("Behavior", "BoundedAddBvr"));
-    // factories.insert("BoundedMultiplyIntFloatBvrFtry", std::make_shared<GenericFtry<Behavior<int64_t, float, int64_t, int64_t, int64_t>, BoundedMultiplyBvr<int64_t, float>>>("Behavior", "BoundedMultiplyBvr"));
+    factories.insert("BoundedMultiplyIntFloatBvrFtry", std::make_shared<GenericFtry<Behavior<int64_t, float, int64_t, int64_t, int64_t>, BoundedMultiplyBvr<int64_t, float>>>("Behavior", "BoundedMultiplyBvr"));
+    factories.insert("HadamardProductVector2DBvrFtry", std::make_shared<GenericFtry<Behavior<Vector2D, Vector2D, Vector2D>, HadamardProductVector2DBvr>>("Behavior", "HadamardProductVector2DBvr"));
+    factories.insert("HudRelativePositionBvrFtry", std::make_shared<GenericFtry<Behavior<int64_t, int64_t, float, float, Vector2D>, HudRelativePositionBvr>>("Behavior", "HudRelativePositionBvr"));
     factories.insert("BoundedAddIntTriggerBvrFtry", std::make_shared<BoundedAddTriggerBvrFtry<int64_t>>());
     factories.insert("EraseEnityBhvFtry", std::make_shared<GenericFtry<Behavior<void>, Erase>>("Behavior", "EraseEnityBvr"));
     factories.insert("SineOscillatorFFtry", std::make_shared<SineOscillatorFFtry>());

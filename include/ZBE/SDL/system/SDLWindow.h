@@ -251,6 +251,8 @@ public:
 
 protected:
 
+  virtual void onResolutionChanged() {}
+
   /** \brief Checks if the window is correctly created
    */
   void checkWidowCreation() {

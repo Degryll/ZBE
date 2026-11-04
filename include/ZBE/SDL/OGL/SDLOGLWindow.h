@@ -278,6 +278,8 @@ public:
 protected:
 
   void createGLContext();
+  void onResolutionChanged() override { updateViewport(); }
+  void updateViewport();
 
   SDL_GLContext glContext;
   OGLTextureStore texStore;

@@ -133,6 +133,7 @@ public:
       auto p = uintStore.get(pidName);
 
       auto imGuiPreLoopDaemon = imGuiPreLoopDaemonRsrc.get("ImGuiPreLoopDaemon."s + name);
+      imGuiPreLoopDaemon->setWindow(win);
       imGuiPreLoopDaemon->setProgram(win, p);
       imGuiPreLoopDaemon->setCamera(cam);
       imGuiPreLoopDaemon->setSDLEventDispatcher(sdled);

@@ -69,7 +69,7 @@ void SDLWindow::setResolution(int width, int height, bool fullscreen, int displa
     }
     const int centeredPosition = static_cast<int>(
         SDL_WINDOWPOS_CENTERED_DISPLAY(static_cast<unsigned int>(displayIndex)));
-    SDL_SetWindowPosition(window, centeredPosition, centeredPosition);
+    SDL_SetWindowPosition(window, centeredPosition, centeredPosition);    
   }
 
   if (fullscreen) {
@@ -97,6 +97,7 @@ void SDLWindow::setResolution(int width, int height, bool fullscreen, int displa
   if (aspectHolder) {
     aspectHolder->set(static_cast<float>(width) / static_cast<float>(height));
   }
+  onResolutionChanged();
 }
 
 

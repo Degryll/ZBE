@@ -1600,10 +1600,8 @@ public:
 
   void run() override {
     if(val->get()) {
-      SysError::setDebug("######################## Running true");
       trueDaemon->run();
     } else {
-      SysError::setDebug("######################## Running false");
       falseDaemon->run();
     }
   }

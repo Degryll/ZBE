@@ -93,6 +93,16 @@ void SDLOGLWindow::createGLContext() {
 //  ImGui_ImplOpenGL3_Init(glsl_version);
 
   modelStore.loadDefault();
+  updateViewport();
+}
+
+void SDLOGLWindow::updateViewport() {
+  int drawableWidth = 0;
+  int drawableHeight = 0;
+  SDL_GL_GetDrawableSize(getSDL_Window(), &drawableWidth, &drawableHeight);
+  if (drawableWidth > 0 && drawableHeight > 0) {
+    glViewport(0, 0, drawableWidth, drawableHeight);
+  }
 }
 
 void SDLOGLWindow::captureMouse(bool capture) {

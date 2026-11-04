@@ -67,41 +67,75 @@ public:
   }
 };
 
-// template<typename T, typename U>
-// class BoundedMultiplyBvr : virtual public Behavior<T, U, T, T, T> {
-// public:
-//   void apply(std::shared_ptr<MAvatar<T, U, T, T, T>> avatar) override {
-//     auto vinput = AvtUtil::get<1, T>(avatar);
-//     auto vmultiplier = AvtUtil::get<2, U>(avatar);
-//     auto vmin = AvtUtil::get<3, T>(avatar);
-//     auto vmax = AvtUtil::get<4, T>(avatar);
-//     auto voutput = AvtUtil::get<5, T>(avatar);
+template<typename T, typename U>
+class BoundedMultiplyBvr : virtual public Behavior<T, U, T, T, T> {
+public:
+  void apply(std::shared_ptr<MAvatar<T, U, T, T, T>> avatar) override {
+    auto vinput = AvtUtil::get<5, T>(avatar);
+    auto vmultiplier = AvtUtil::get<4, U>(avatar);
+    auto vmin = AvtUtil::get<3, T>(avatar);
+    auto vmax = AvtUtil::get<2, T>(avatar);
+    auto voutput = AvtUtil::get<1, T>(avatar);
 
-//     auto input = vinput->get();
-//     auto multiplier = vmultiplier->get();
-//     auto min = vmin->get();
-//     auto max = vmax->get();
+    auto input = vinput->get();
+    auto multiplier = vmultiplier->get();
+    auto min = vmin->get();
+    auto max = vmax->get();
 
-//     auto product = static_cast<long double>(input) * static_cast<long double>(multiplier);
-//     T result;
-//     if(product >= static_cast<long double>(max)) {
-//       result = max;
-//     } else if(product <= static_cast<long double>(min)) {
-//       result = min;
-//     } else {
-//       result = static_cast<T>(product);
-//     }
+    auto product = static_cast<long double>(input) * static_cast<long double>(multiplier);
+    T result;
+    if(product >= static_cast<long double>(max)) {
+      result = max;
+    } else if(product <= static_cast<long double>(min)) {
+      result = min;
+    } else {
+      result = static_cast<T>(product);
+    }
 
-//     if(result>max) {
-//       result = max;
-//     }
+    if(result>max) {
+      result = max;
+    }
 
-//     if(result<min) {
-//       result = min;
-//     }
-//     voutput->set(result);
-//   }
-// };
+    if(result<min) {
+      result = min;
+    }
+    voutput->set(result);
+  }
+};
+
+class HadamardProductVector2DBvr : virtual public Behavior<Vector2D, Vector2D, Vector2D> {
+public:
+  void apply(std::shared_ptr<MAvatar<Vector2D, Vector2D, Vector2D>> avatar) override {
+    auto vinput = AvtUtil::get<3, Vector2D>(avatar);
+    auto vmultiplier = AvtUtil::get<2, Vector2D>(avatar);
+    auto voutput = AvtUtil::get<1, Vector2D>(avatar);
+
+    auto input = vinput->get();
+    auto multiplier = vmultiplier->get();
+
+    Vector2D result;
+    result[0] = input[0] * multiplier[0];
+    result[1] = input[1] * multiplier[1];
+    voutput->set(result);
+  }
+};
+
+class HudRelativePositionBvr : virtual public Behavior<int64_t, int64_t, float, float, Vector2D> {
+public:
+  void apply(std::shared_ptr<MAvatar<int64_t, int64_t, float, float, Vector2D>> avatar) override {
+    auto vresolutionX = AvtUtil::get<5, int64_t>(avatar);
+    auto vresolutionY = AvtUtil::get<4, int64_t>(avatar);
+    auto vrelativeX = AvtUtil::get<3, float>(avatar);
+    auto vrelativeY = AvtUtil::get<2, float>(avatar);
+    auto voutput = AvtUtil::get<1, Vector2D>(avatar);
+
+    Vector2D result;
+    result[0] = static_cast<double>(vresolutionX->get()) * static_cast<double>(vrelativeX->get());
+    result[1] = static_cast<double>(vresolutionY->get()) * static_cast<double>(vrelativeY->get());
+    voutput->set(result);
+  }
+};
+
 
 template<typename T>
 class SimpleIncrementBvr : virtual public Behavior<T> {
