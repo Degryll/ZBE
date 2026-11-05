@@ -647,6 +647,12 @@
             "window" : "zandbokz.mainwindow"
           }
         },
+        { "factory": "SDLOGLWindowViewportDaemonFtry",
+          "name":"zandbokz.updateViewportOnResize",
+          "config" : {
+            "window" : "zandbokz.mainwindow"
+          }
+        },
         { "factory": "InputEventGeneratorFtry",
           "name":"zandbokz.inputEventGenerator",
           "config" : {
@@ -3705,6 +3711,22 @@
             "daemon" : "zandbokz.toggleStyleEditorDaemon",
             "inputEventGenerator" : "zandbokz.inputEventGenerator",
             "key":"ZBEK_n"
+          }
+        },
+        {"factory": "DaemonIHFtry",
+          "name": "zandbokz.updateViewportOnResizeHandler",
+          "config" : {
+            "daemon" : "zandbokz.updateViewportOnResize",
+            "inputEventGenerator" : "zandbokz.inputEventGenerator",
+            "key":"ZBEK_WINDOWEVENT_SIZE_CHANGED"
+          }
+        },
+        {"factory": "DaemonIHFtry",
+          "name": "zandbokz.updateViewportOnResizedHandler",
+          "config" : {
+            "daemon" : "zandbokz.updateViewportOnResize",
+            "inputEventGenerator" : "zandbokz.inputEventGenerator",
+            "key":"ZBEK_WINDOWEVENT_RESIZED"
           }
         },
         {"factory": "DaemonIHFtry",
