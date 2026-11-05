@@ -135,6 +135,10 @@ public:
    */
   void setResolution(int width, int height, bool fullscreen, int displayIndex = -1);
 
+  /** \brief Updates the stored size and aspect ratio from the current SDL window size.
+   */
+  void updateResolutionFromWindow();
+
   /** \brief Creates the widnows (use only width empty constructor and setters)
    *  \sa setTitle, setX, setY, setWidth, setHeight, setWindow_flags
    */

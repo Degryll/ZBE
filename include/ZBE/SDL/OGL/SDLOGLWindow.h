@@ -272,6 +272,8 @@ public:
   SDL_GLContext getGLContext() const {
     return glContext;
   }
+
+  void updateViewport();
   
   void captureMouse(bool capture);
 
@@ -279,7 +281,6 @@ protected:
 
   void createGLContext();
   void onResolutionChanged() override { updateViewport(); }
-  void updateViewport();
 
   SDL_GLContext glContext;
   OGLTextureStore texStore;

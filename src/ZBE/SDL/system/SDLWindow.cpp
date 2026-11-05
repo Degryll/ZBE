@@ -100,6 +100,28 @@ void SDLWindow::setResolution(int width, int height, bool fullscreen, int displa
   onResolutionChanged();
 }
 
+void SDLWindow::updateResolutionFromWindow() {
+  if (window == nullptr) {
+    SysError::setError("ERROR: SDL window must be created before updating its resolution.");
+    return;
+  }
+
+  int actualWidth = 0;
+  int actualHeight = 0;
+  SDL_GetWindowSize(window, &actualWidth, &actualHeight);
+  if (actualWidth <= 0 || actualHeight <= 0) {
+    SysError::setError("ERROR: SDL window size must be positive.");
+    return;
+  }
+
+  width = actualWidth;
+  height = actualHeight;
+  if (aspectHolder) {
+    aspectHolder->set(static_cast<float>(width) / static_cast<float>(height));
+  }
+  onResolutionChanged();
+}
+
 
 void SDLWindow::clear() {
   if(SDL_RenderClear(renderer)) {

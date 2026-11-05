@@ -8,6 +8,7 @@
  */
 
 #include "ZBE/core/zbe.h"
+#include "ZBE/SDL/sdl_warning_suppressor.h"
 
 namespace zbe {
 
@@ -250,6 +251,9 @@ void init(RsrcDictionary<ZBE_K>& zbekRsrc) {
   zbekRsrc.insert("ZBEK_EJECT", 1073742105);
   zbekRsrc.insert("ZBEK_SLEEP", 1073742106);
 
+  // SDL window events
+  zbekRsrc.insert("ZBEK_WINDOWEVENT_SIZE_CHANGED", static_cast<ZBE_K>(SDL_WINDOWEVENT_SIZE_CHANGED));
+  zbekRsrc.insert("ZBEK_WINDOWEVENT_RESIZED", static_cast<ZBE_K>(SDL_WINDOWEVENT_RESIZED));
   // Mouse state
   zbekRsrc.insert("ZBEK_MOUSE_LEFT", 2048);
   zbekRsrc.insert("ZBEK_MOUSE_RIGHT", 2049);

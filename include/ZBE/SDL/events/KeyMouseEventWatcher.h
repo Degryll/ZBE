@@ -44,7 +44,9 @@ public:
 
   void watch(SDL_Event event) override {
     if (!tryKeyboardEvent(event)) {
-      tryMouseEvent(event);
+      if (!tryMouseEvent(event)) {
+        tryWindowEvent(event);
+      }
     }
   }
 
@@ -85,6 +87,19 @@ private:
       return true;
     } else if (event.type == SDL_MOUSEMOTION) {
       setMouseCoordsState(event);
+      return true;
+    }
+    return false;
+  }
+
+  bool tryWindowEvent(const SDL_Event &event) {
+    if (event.type == SDL_WINDOWEVENT &&
+        (event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED ||
+         event.window.event == SDL_WINDOWEVENT_RESIZED)) {
+      const uint32_t key = event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED
+                               ? ZBEK_WINDOWEVENT_SIZE_CHANGED
+                               : ZBEK_WINDOWEVENT_RESIZED;
+      setState(key, ZBE_KEYDOWN, event.window.timestamp);
       return true;
     }
     return false;
