@@ -288,7 +288,7 @@ class InputEventGenerator : virtual public Daemon {
 
     void run() override {
       std::vector<InputStatus> currentInput;
-      inputBuffer->getRange(contextTime->getInitFrameTime(), contextTime->getEndFrameTime(), currentInput);
+      inputBuffer->getRange(contextTime->getInitFrameTime() + contextTime->getTotalPausedTime(), contextTime->getEndFrameTime() + contextTime->getTotalPausedTime(), currentInput);
       auto it = currentInput.begin();
       while (it != currentInput.end() && ! mism.generate(*it)){
         ++it;
@@ -307,7 +307,7 @@ class InputEventGenerator : virtual public Daemon {
 
       if (handler != nullptr) {
         std::vector<InputText> itv;
-        inputTextBuffer->getFirstInRange(contextTime->getInitFrameTime(), contextTime->getEndFrameTime(), itv);
+        inputTextBuffer->getFirstInRange(contextTime->getInitFrameTime() + contextTime->getTotalPausedTime(), contextTime->getEndFrameTime() + contextTime->getTotalPausedTime(), itv);
         for(auto input : itv) {
           TextEvent* e = new TextEvent(eventId, input.getTime(), input.getText(), handler);
           store->storeEvent(e);

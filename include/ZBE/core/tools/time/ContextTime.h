@@ -95,6 +95,11 @@ public:
     remainT = endT - eventT;
   }
 
+  inline void initialFrame() {
+    endT = _getTotalTime();
+    lostTime = 0;
+  }
+
   /** \brief Return true if we're resolving a partial frame.
    * \return True if the actual frame is partial.
    */
@@ -168,8 +173,8 @@ public:
    */
   virtual void update() {
     if (paused) {return;}
-    initT = _getInitTime();
-    uint64_t finalTime = _getTotalTime();
+    initT = _getInitTime() - totalPausedT;
+    uint64_t finalTime = _getTotalTime() - totalPausedT;
     uint64_t realFrameTime = finalTime - initT;
     uint64_t total;
     if (realFrameTime < maxFrameTime) {
@@ -177,7 +182,8 @@ public:
       frame = realFrameTime;
     } else {
       total = initT + maxFrameTime;
-      lostTime += (realFrameTime - maxFrameTime);
+      uint64_t localLostTime = realFrameTime - maxFrameTime;
+      lostTime += localLostTime;
       frame = maxFrameTime;
     }
     endT = total;

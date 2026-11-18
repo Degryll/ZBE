@@ -56,7 +56,8 @@ public:
   }
 
   uint64_t _getTotalTime() override {
-    return static_cast<uint64_t>(timer->totalTime()) - lostTime;
+    auto totalTime = static_cast<uint64_t>(timer->totalTime());
+    return totalTime - lostTime;
   }
 
   uint64_t _getInitTime() override {

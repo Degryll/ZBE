@@ -264,7 +264,7 @@ public:
    * \param draw Drawer daemon.
    */
   BaseLoopDaemon(std::shared_ptr<Daemon> pre, std::shared_ptr<Daemon> frame, std::shared_ptr<ContextTime> contextTime=zbe::SysTime::getInstance())
-    : dPre(pre), dFrame(frame), contextTime(contextTime), keep(true) {}
+    : dPre(pre), dFrame(frame), contextTime(contextTime), keep(true), initialFrame(false) {}
 
   /** \brief Destructor.
    */
@@ -273,6 +273,10 @@ public:
   /** \brief It will run until stop() is called.
    */
   void run() override {
+    if (initialFrame) {
+      SysError::setDebug("BaseLoopDaemon will reset lost time.", false);
+      contextTime->initialFrame();
+    }
     keep = true;
     while(keep) {  // Each iteration generates a frame.
       // Pre daemon
@@ -292,6 +296,11 @@ public:
    */
   void setFrame(std::shared_ptr<Daemon> daemon) {dFrame = daemon;}
 
+  /** \brief Resets the lost time at the first execution.
+   * \param reset Boolean indicating whether to reset the lost time.
+   */
+  void setInitialFrame(bool reset) {initialFrame = reset;}
+
   /** \brief Setter for the context time.
    * \param contextTime Pointer to the context time desired to be used.
    */
@@ -307,6 +316,7 @@ DISABLE_DLL_WARN
   std::shared_ptr<Daemon> dFrame;
   std::shared_ptr<ContextTime> contextTime;
   bool keep;
+  bool initialFrame;
 DISABLE_WARNING_POP()
 };
 
@@ -340,6 +350,7 @@ public:
       json pre = j["preDaemon"];
       json frame = j["frameDaemon"];
       json cTime = j["contextTime"];
+      json initialFrame = j["initialFrame"];
 
       std::shared_ptr<Daemon> preDm, frameDm;
       std::shared_ptr<ContextTime> ctxTime;
@@ -357,6 +368,11 @@ public:
         ml->setPre(preDm);
         ml->setFrame(frameDm);
         ml->setContextTime(ctxTime);
+        if (initialFrame.is_boolean()) {
+          if (initialFrame.get<bool>()) {
+            ml->setInitialFrame(true);
+          }
+        }
 
       } else {
         SysError::setError("Bad config for BaseLoopDaemonFtry"s);

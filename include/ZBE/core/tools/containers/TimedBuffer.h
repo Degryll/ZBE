@@ -19,6 +19,8 @@
 
 #include "ZBE/core/system/system.h"
 
+#include "ZBE/core/system/SysError.h"
+
 namespace zbe {
 
 /** \brief Stores a ordered collection of Elements.
@@ -34,7 +36,9 @@ public:
   /** \brief inserts a timedElement into the buffer in order.
    *  \param element timedElement with the info.
    */
-  inline void insert(T const& element) {buffer.insert(TimedElement<T>(element, element.getTime()));}
+  inline void insert(T const& element) {
+    buffer.insert(TimedElement<T>(element, element.getTime()));
+  }
 
   uint64_t size() const {return buffer.size();}
 
@@ -54,7 +58,9 @@ private:
 template <typename T>
 void TimedBuffer<T>::getRange(uint64_t initT, uint64_t endT, std::vector<T>& store) {
   TimedElement<T> upper(initT);
-  buffer.erase(buffer.begin(),buffer.upper_bound(upper));
+  auto eraseBegin = buffer.begin();
+  auto eraseEnd = buffer.upper_bound(upper);
+  buffer.erase(eraseBegin, eraseEnd);
   if(!buffer.empty()) {
     for(auto& te : buffer) {
       if(te.getTime() > endT) {
@@ -69,7 +75,9 @@ void TimedBuffer<T>::getRange(uint64_t initT, uint64_t endT, std::vector<T>& sto
 template <typename T>
 void TimedBuffer<T>::getFirstInRange(uint64_t initT, uint64_t endT, std::vector<T>& store) {
   TimedElement<T> upper(initT);
-  buffer.erase(buffer.begin(),buffer.upper_bound(upper));
+  auto eraseBegin = buffer.begin();
+  auto eraseEnd = buffer.upper_bound(upper);
+  buffer.erase(eraseBegin, eraseEnd);
   if(!buffer.empty()) {
     auto it = buffer.begin();
     uint64_t first = it->getTime();

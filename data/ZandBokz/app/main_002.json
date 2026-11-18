@@ -61,7 +61,7 @@
     "pointAIdx" : 1310,
     "pointBIdx" : 1320,
     "pointCIdx" : 1330,
-    "lifespan" : 1324288,
+    "lifespan" : 331072,
     "bloodrestTime" : 6553,
     "bloodburnTime" : 8192,
     "fovIdx" : 3100,
@@ -2380,7 +2380,8 @@
           "config" : {
             "preDaemon":"DEFAULT",
             "frameDaemon" : "zandbokz.menuFrame",
-            "contextTime" : "DEFAULT"
+            "contextTime" : "DEFAULT",
+            "initialFrame" : true
           }
         },
         {"factory": "FrameDaemonFtry",
